@@ -182,7 +182,7 @@
 	return @[@"privmsg"];
 }
 
-- (IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input senderInfo:(IRCPrefix *)senderInfo client:(IRCClient *)client
+- (IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input client:(IRCClient *)client
 {
 	NSString *s = [input paramAt:1];
 
@@ -196,10 +196,14 @@
 	return input;
 }
 
-- (IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input senderInfo:(IRCPrefix *)senderInfo client:(IRCClient *)client
+- (IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input client:(IRCClient *)client
 {
 	/* Begin processing data. */
-	NSMutableArray *mutparams = [[input params] mutableCopy];
+	IRCMessageMutable *inputMutable = [input mutableCopy];
+
+	IRCPrefixMutable *senderMutable = [[inputMutable sender] mutableCopy];
+
+	NSMutableArray *mutparams = [[inputMutable params] mutableCopy];
 	
 	NSMutableString *s = [mutparams[1] mutableCopy];
 	
@@ -207,7 +211,7 @@
 	NSString *hostmask = [s getToken];
 	
 	if ([hostmask length] <= 0) {
-		return input;
+		return inputMutable;
 	}
 	
 	NSString *nicknameInt = nil;
@@ -219,21 +223,23 @@
 			return nil; // Do not post these events for self.
 		}
 
-		[senderInfo setNickname:nicknameInt];
-		[senderInfo setUsername:usernameInt];
-		[senderInfo setAddress:addressInt];
+		[senderMutable setNickname:nicknameInt];
+		[senderMutable setUsername:usernameInt];
+		[senderMutable setAddress:addressInt];
 	} else {
-		[senderInfo setNickname:hostmask];
+		[senderMutable setNickname:hostmask];
 		
-		[senderInfo setIsServer:YES];
+		[senderMutable setIsServer:YES];
 	}
 
-	[senderInfo setHostmask:hostmask];
+	[senderMutable setHostmask:hostmask];
 
-	[senderInfo setIsServer:NO];
+	[senderMutable setIsServer:NO];
+
+	[inputMutable setSender:senderMutable];
 	
 	/* Let Textual know to treat this message as a special event. */
-	[input setIsPrintOnlyMessage:YES];
+	[inputMutable setIsPrintOnlyMessage:YES];
 	
 	/* Start actual work. */
 	if ([s hasPrefix:@"is now known as "]) {
@@ -242,9 +248,9 @@
 		
 		NSString *newNickname = [s getToken];
 		
-		NSObjectIsEmptyAssertReturn(newNickname, input);
+		NSObjectIsEmptyAssertReturn(newNickname, inputMutable);
 		
-		[input setCommand:IRCPrivateCommandIndex("nick")];
+		[inputMutable setCommand:IRCPrivateCommandIndex("nick")];
 		
 		[mutparams removeObjectAtIndex:1];
 		
@@ -254,7 +260,7 @@
 	else if ([s isEqualToString:@"joined"])
 	{
 		/* Begin channel join. */
-		[input setCommand:IRCPrivateCommandIndex("join")];
+		[inputMutable setCommand:IRCPrivateCommandIndex("join")];
 		
 		[mutparams removeObjectAtIndex:1];
 		/* End channel join. */
@@ -264,11 +270,11 @@
 		/* Begin mode processing. */
 		[s deleteCharactersInRange:NSMakeRange(0, [@"set mode: " length])];
 		
-		[input setCommand:IRCPrivateCommandIndex("mode")];
+		[inputMutable setCommand:IRCPrivateCommandIndex("mode")];
 		
 		NSString *modesSet = [s getToken];
 		
-		NSObjectIsEmptyAssertReturn(modesSet, input);
+		NSObjectIsEmptyAssertReturn(modesSet, inputMutable);
 		
 		[mutparams removeObjectAtIndex:1];
 		
@@ -282,7 +288,7 @@
 		[s deleteCharactersInRange:NSMakeRange(0, [@"quit with message: [" length])];	// Remove front.
 		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];					// Remove trailing character.
 		
-		[input setCommand:IRCPrivateCommandIndex("quit")];
+		[inputMutable setCommand:IRCPrivateCommandIndex("quit")];
 		
 		[mutparams removeObjectAtIndex:1];
 		
@@ -295,7 +301,7 @@
 		[s deleteCharactersInRange:NSMakeRange(0, [@"parted with message: [" length])];		// Remove front.
 		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];						// Remove trailing character.
 		
-		[input setCommand:IRCPrivateCommandIndex("part")];
+		[inputMutable setCommand:IRCPrivateCommandIndex("part")];
 		
 		[mutparams removeObjectAtIndex:1];
 		
@@ -311,12 +317,12 @@
 		NSString *whoKicked = [s getToken];
 		
 		if (NSObjectIsEmpty(whoKicked) || [s hasPrefix:@"Reason: ["] == NO) {
-			return input;
+			return inputMutable;
 		}
 		
 		[s deleteCharactersInRange:NSMakeRange(0, [@"Reason: [" length])];
 		
-		[input setCommand:IRCPrivateCommandIndex("kick")];
+		[inputMutable setCommand:IRCPrivateCommandIndex("kick")];
 		
 		[mutparams removeObjectAtIndex:1];
 		
@@ -333,9 +339,9 @@
 		/* End topic change. */
 	}
 	
-	[input setParams:mutparams];
+	[inputMutable setParams:mutparams];
 	
-	return input;
+	return inputMutable;
 }
 
 - (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
@@ -361,10 +367,10 @@
 	NSString *senderNickname = [senderInfo nickname];
 	
 	if (NSObjectsAreEqual(senderNickname, [client nicknameWithZNCUserPrefix:@"buffextras"])) {
-		return [self interceptBufferExtrasZNCModule:input senderInfo:senderInfo client:client];
+		return [self interceptBufferExtrasZNCModule:input client:client];
 	} else if (NSObjectsAreEqual(senderNickname, [client nicknameWithZNCUserPrefix:@"playback"])) {
 		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-			return [self interceptBufferExtrasPlaybackModule:input senderInfo:senderInfo client:client];
+			return [self interceptBufferExtrasPlaybackModule:input client:client];
 		} else {
 			return input;
 		}

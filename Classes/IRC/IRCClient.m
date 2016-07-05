@@ -144,7 +144,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.supportInfo = [IRCISupportInfo new];
+		self.supportInfo = [[IRCISupportInfo alloc] initWithClient:self];
 
 		self.batchMessages = [IRCMessageBatchMessageContainer new];
 
@@ -2156,7 +2156,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("omsg")]) {
-				destinationPrefix = [self.supportInfo userModePrefixSymbolWithMode:@"o"];
+				destinationPrefix = [self.supportInfo userPrefixForModeSymbol:@"o"];
 
 				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umsg")]) {
@@ -2166,7 +2166,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("notice")]) {
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("onotice")]) {
-				destinationPrefix = [self.supportInfo userModePrefixSymbolWithMode:@"o"];
+				destinationPrefix = [self.supportInfo userPrefixForModeSymbol:@"o"];
 
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("unotice")]) {
@@ -2214,10 +2214,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 			
 			NSObjectIsEmptyAssert(targetChannelName);
-			
-			NSArray *userModePrefixes = [self.supportInfo userModePrefixes];
 
-			NSString *validTargetPrefixes = [self.supportInfo channelNamePrefixes];
+			NSArray *channelNamePrefixes = [self.supportInfo channelNamePrefixes];
+
+			NSArray *userModePrefixes = [self.supportInfo userModeSymbols][IRCISupportUserModeSymbolsCharactersKey];
 
 			NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 
@@ -2226,14 +2226,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			for (NSString *target in targets) {
 				NSString *destinationChannelName = target;
 
-				for (NSArray *prefixData in userModePrefixes) {
-					NSString *symbol = prefixData[1];
-
-					if ([destinationChannelName hasPrefix:symbol]) {
+				for (NSString *prefix in userModePrefixes) {
+					if ([destinationChannelName hasPrefix:prefix]) {
 						NSString *nch = [destinationChannelName stringCharacterAtIndex:1];
 
-						if ([validTargetPrefixes contains:nch]) {
-							destinationPrefix = symbol;
+						if ([channelNamePrefixes containsObject:nch]) {
+							destinationPrefix = prefix;
 
 							destinationChannelName = [destinationChannelName substringFromIndex:1];
 						}
@@ -2524,7 +2522,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[uppercaseCommand isEqualToString:IRCPublicCommandIndex("dehalfop")])
 			{
 				/* Do not try mode changes when they are not supported. */
-				BOOL modeHSupported = [[self supportInfo] modeIsSupportedUserPrefix:@"h"];
+				BOOL modeHSupported = [[self supportInfo] modeSymbolIsUserPrefix:@"h"];
 
 				if (modeHSupported == NO) {
 					[self printDebugInformation:TXTLS(@"IRC[1021]")];
@@ -2815,10 +2813,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[self printDebugInformation:TXTLS(@"IRC[1091]")];
 
 				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1093]"))
-			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
-				[TPCPreferences setDeveloperModeEnabled:YES];
-			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
-				[TPCPreferences setDeveloperModeEnabled:NO];
 			} else {
 				[self printDebugInformation:uncutInput];
 			}
@@ -4068,11 +4062,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		s = [s stripIRCEffects];
 	}
 
-	IRCMessage *m = [IRCMessage new];
-
-	[m parseLine:s forClient:self];
+	IRCMessage *m = [[IRCMessage alloc] initWithLine:s onClient:self];
 	
-	PointerIsEmptyAssert([m params]);
+	PointerIsEmptyAssert(m);
 
 	m = [THOPluginDispatcher interceptServerInput:m for:self];
 
@@ -4096,7 +4088,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					 set as historic so we set any lines above our current reference
 					 date as not historic to avoid collisions. */
 					if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-						[m setIsHistoric:NO];
+						[m markAsNotHistoric];
 					}
 					
 					/* Update last server time flag. */
@@ -4186,8 +4178,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				break;
 			}
 			case 1038: // Command: WALLOPS
-			{;
-				NSMutableArray *params = [NSMutableArray arrayWithArray:[m params]];
+			{
+				IRCMessageMutable *mm = [m mutableCopy];
+
+				NSMutableArray *params = [[mm params] mutableCopy];
 
 				[params insertObject:[self localNickname] atIndex:0];
 
@@ -4197,11 +4191,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				
 				[params insertObject:[NSString stringWithFormat:TVCLogLineSpecialNoticeMessageFormat, [m command], text]  atIndex:1];
 				
-				[m setParams:params];
+				[mm setParams:params];
 				
-				[m setCommand:IRCPrivateCommandIndex("notice")];
+				[mm setCommand:IRCPrivateCommandIndex("notice")];
 
-				[self receivePrivmsgAndNotice:m];
+				[self receivePrivmsgAndNotice:[mm copy]];
 
 				break;
 			}
@@ -4403,21 +4397,19 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		 be used for channels instead of being confused about the channel named
 		 "+channel" and thinking it is being addressed to all users in the channel
 		 named "channel" with a +, we must take this into account. */
-		NSArray *userModePrefixes = [self.supportInfo userModePrefixes];
+		NSArray *channelNamePrefixes = [self.supportInfo channelNamePrefixes];
 
-		for (NSArray *prefixData in userModePrefixes) {
-			NSString *symbol = prefixData[1];
+		NSArray *userModePrefixes = [self.supportInfo userModeSymbols][IRCISupportUserModeSymbolsCharactersKey];
 
-			if ([target hasPrefix:symbol]) {
+		for (NSString *prefix in userModePrefixes) {
+			if ([target hasPrefix:prefix]) {
 				/* We detected a possible prefix match. At this point, we scan ahead
 				 and see the next character in our sequence. If the next character is a
 				 known channel name prefix, then we count this mode prefix as valid. */
 				/* As we are always checking for a prefix, the next character is index 1 */
 				NSString *nch = [target stringCharacterAtIndex:1];
 
-				NSString *validTargetPrefixes = [self.supportInfo channelNamePrefixes];
-
-				if ([validTargetPrefixes contains:nch]) {
+				if ([channelNamePrefixes containsObject:nch]) {
 					target = [target substringFromIndex:1];
 				}
 
@@ -5563,10 +5555,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		PointerIsEmptyAssert(c);
 		
 		if ([m isPrintOnlyMessage] == NO) {
-			NSArray *info = [[c modeInfo] update:modestr];
+			NSArray *info = [[c modeInfo] updateModes:modestr];
 
 			for (IRCModeInfo *h in info) {
-				[c changeMember:[h modeParamater] mode:[h modeToken] value:[h modeIsSet]];
+				[c changeMember:[h modeParamater] mode:[h modeSymbol] value:[h modeIsSet]];
 			}
 		}
 
@@ -6519,10 +6511,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5: // RPL_ISUPPORT
 		{
-            [self.supportInfo update:[m sequence:1] client:self];
+			[self.supportInfo processConfigurationData:[m sequence:1]];
 
 			if (printMessage) {
-				NSString *configRep = [self.supportInfo buildConfigurationRepresentationForLastEntry];
+				NSString *configRep = [self.supportInfo stringValueForLastUpdate];
 
 				[self printDebugInformationToConsole:configRep forCommand:[m command]];
 			}
@@ -6915,14 +6907,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			if ([c isActive]) {
 				[[c modeInfo] clear];
-				[[c modeInfo] update:modestr];
+				[[c modeInfo] updateModes:modestr];
 			}
 
 			printMessage = [self postReceivedMessage:m withText:modestr destinedFor:c];
 
 			if (self.inUserInvokedModeRequest || c.inUserInvokedModeRequest) {
 				if (printMessage) {
-					NSString *fmodestr = [[c modeInfo] format:YES];
+					NSString *fmodestr = [[c modeInfo] stringWithMaskedPassword];
 
 					[self print:c
 						   type:TVCLogLineModeType
@@ -7225,7 +7217,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			for (NSUInteger i = 0; i < [flfields length]; i++) {
 				NSString *prefix = [flfields stringCharacterAtIndex:i];
 
-				NSString *mode = [self.supportInfo modeCharacterFromUserPrefixSymbol:prefix];
+				NSString *mode = [self.supportInfo modeSymbolForUserPrefix:prefix];
 
 				if (mode == nil) {
 					break;
@@ -7296,7 +7288,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				for (i = 0; i < [nickname length]; i++) {
 					NSString *prefix = [nickname stringCharacterAtIndex:i];
 
-					NSString *mode = [self.supportInfo modeCharacterFromUserPrefixSymbol:prefix];
+					NSString *mode = [self.supportInfo modeSymbolForUserPrefix:prefix];
 
 					if (mode == nil) {
 						break;

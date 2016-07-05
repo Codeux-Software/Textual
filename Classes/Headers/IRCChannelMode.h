@@ -38,26 +38,32 @@
 
 #import "TextualApplication.h"
 
-@interface IRCChannelMode : NSObject <NSCopying>
-@property (nonatomic, weak) IRCISupportInfo *supportInfo;
+NS_ASSUME_NONNULL_BEGIN
 
-- (void)clear;
+@interface IRCChannelMode : NSObject
+- (BOOL)modeIsDefined:(NSString *)modeSymbol;
 
-- (NSArray *)update:(NSString *)str;
+- (nullable IRCModeInfo *)modeInfoFor:(NSString *)modeSymbol;
 
-- (IRCModeInfo *)modeInfoFor:(NSString *)mode;
-
-// -modeInformation returns a copy of the internal storage for this class. The objects
-// in the dictionary are the same that are maintained by the class so any direct changes
-// to any returned values will have a direct impact on everything else. 
-@property (readonly, copy) NSDictionary *modeInformation;
+@property (readonly, copy) IRCChannelModeContainer *modes;
 
 @property (readonly, copy) NSString *string;
-@property (readonly, copy) NSString *titleString;
+@property (readonly, copy) NSString *stringWithMaskedPassword;
 
-- (NSString *)format:(BOOL)maskK;
-
-- (NSString *)getChangeCommand:(IRCChannelMode *)mode;
-
-- (BOOL)modeIsDefined:(NSString *)mode;
+- (NSString *)getChangeCommand:(IRCChannelModeContainer *)modes;
 @end
+
+#pragma mark -
+
+@interface IRCChannelModeContainer : NSObject <NSCopying>
+@property (readonly, copy) NSDictionary<NSString *, IRCModeInfo *> *modes;
+
+- (BOOL)modeIsDefined:(NSString *)modeSymbol;
+
+- (nullable IRCModeInfo *)modeInfoFor:(NSString *)modeSymbol;
+
+- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet;
+- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater;
+@end
+
+NS_ASSUME_NONNULL_END

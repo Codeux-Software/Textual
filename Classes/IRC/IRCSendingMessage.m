@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSString *argument in arguments) {
 		[builtString appendString:NSStringWhitespacePlaceholder];
 
-		if (colonIndexBase == (-1)) {
+		if (colonIndexBase == NSNotFound) {
 			// Guess where the colon (:) should go.
 			//
 			// A colon is supposed to represent a section of an outgoing command

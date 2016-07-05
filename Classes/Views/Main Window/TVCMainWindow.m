@@ -1851,7 +1851,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
 
-			NSString *modeSymbols = c.modeInfo.titleString;
+			NSString *modeSymbols = c.modeInfo.stringWithMaskedPassword;
 
 			if (modeSymbols.length > 1) {
 				[title appendString:TXTLS(@"TVCMainWindow[1013]", modeSymbols)];

@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite) IRCChannel *channel;
 @property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, copy, readwrite) NSString *channelId;
-@property (nonatomic, strong) IRCChannelMode *modes;
+@property (nonatomic, strong) IRCChannelModeContainer *modes;
 @property (nonatomic, weak) IBOutlet NSButton *sCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pCheck;
 @property (nonatomic, weak) IBOutlet NSButton *nCheck;
@@ -74,7 +74,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.channel = channel;
 		self.channelId = channel.uniqueIdentifier;
 
-		self.modes = [channel.modeInfo copy];
+		self.modes = [channel.modeInfo.modes copy];
 
 		[self prepareInitialState];
 
@@ -112,7 +112,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.lCheck.state = lModeInfo.modeIsSet;
 
-	self.channelUserLimitMode = lModeInfo.modeParamater; // Set to local property for validation
+	if (lModeInfo.modeIsSet) {
+		self.channelUserLimitMode = lModeInfo.modeParamater; // Set to local property for validation
+	}
 
 	[self updateTextFields];
 }
@@ -161,24 +163,31 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)ok:(id)sender
 {
-	[self.modes modeInfoFor:@"i"].modeIsSet = (self.iCheck.state == NSOnState);
-	[self.modes modeInfoFor:@"m"].modeIsSet = (self.mCheck.state == NSOnState);
-	[self.modes modeInfoFor:@"n"].modeIsSet = (self.nCheck.state == NSOnState);
-	[self.modes modeInfoFor:@"p"].modeIsSet = (self.pCheck.state == NSOnState);
-	[self.modes modeInfoFor:@"s"].modeIsSet = (self.sCheck.state == NSOnState);
-	[self.modes modeInfoFor:@"t"].modeIsSet = (self.tCheck.state == NSOnState);
+	[self.modes changeMode:@"i"
+				 modeIsSet:(self.iCheck.state == NSOnState)];
 
-	IRCModeInfo *kModeInfo = [self.modes modeInfoFor:@"k"];
+	[self.modes changeMode:@"m"
+				 modeIsSet:(self.mCheck.state == NSOnState)];
 
-	kModeInfo.modeIsSet = (self.kCheck.state == NSOnState);
+	[self.modes changeMode:@"n"
+				 modeIsSet:(self.nCheck.state == NSOnState)];
+	
+	[self.modes changeMode:@"p"
+				 modeIsSet:(self.pCheck.state == NSOnState)];
+	
+	[self.modes changeMode:@"s"
+				 modeIsSet:(self.sCheck.state == NSOnState)];
 
-	kModeInfo.modeParamater = self.kText.stringValue;
+	[self.modes changeMode:@"t"
+				 modeIsSet:(self.tCheck.state == NSOnState)];
 
-	IRCModeInfo *lModeInfo = [self.modes modeInfoFor:@"l"];
+	[self.modes changeMode:@"k"
+				 modeIsSet:(self.kCheck.state == NSOnState)
+			 modeParamater:self.kText.stringValue];
 
-	lModeInfo.modeIsSet = (self.lCheck.state == NSOnState);
-
-	lModeInfo.modeParamater = self.lText.stringValue;
+	[self.modes changeMode:@"l"
+				 modeIsSet:(self.lCheck.state == NSOnState)
+			 modeParamater:self.lText.stringValue];
 	
 	if ([self.delegate respondsToSelector:@selector(channelModifyModesSheet:onOk:)]) {
 		[self.delegate channelModifyModesSheet:self onOk:self.modes];

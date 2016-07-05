@@ -165,7 +165,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	NSUInteger maximumLength = TXMaximumIRCNicknameLength;
 
 	if (client) {
-		maximumLength = client.supportInfo.nicknameLength;
+		maximumLength = client.supportInfo.maximumNicknameLength;
 	}
 
 	if (maximumLength == 0) {
@@ -191,12 +191,12 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		return NO;
 	}
 
-	NSString *namePrefixes = client.supportInfo.channelNamePrefixes;
+	NSArray *channelNamePrefixes = client.supportInfo.channelNamePrefixes;
 
 	if (self.length == 1) {
 		NSString *character = [self stringCharacterAtIndex:0];
 
-		return [namePrefixes contains:character];
+		return [channelNamePrefixes containsObject:character];
 	}
 
 	NSString *character1 = [self stringCharacterAtIndex:0];
@@ -205,7 +205,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
 	BOOL isPartyline = ([character1 isEqualToString:@"~"] && [character2 isEqualToString:@"#"]);
 
-	return (isPartyline || [namePrefixes contains:character1]);
+	return (isPartyline || [channelNamePrefixes containsObject:character1]);
 }
 
 - (BOOL)isChannelName
@@ -260,11 +260,11 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		return self;
 	}
 
-	NSString *namePrefixes = client.supportInfo.channelNamePrefixes;
+	NSArray *channelNamePrefixes = client.supportInfo.channelNamePrefixes;
 
 	NSString *character = [self stringCharacterAtIndex:0];
 
-	if ([namePrefixes contains:character]) {
+	if ([channelNamePrefixes containsObject:character]) {
 		return [self substringFromIndex:1];
 	}
 

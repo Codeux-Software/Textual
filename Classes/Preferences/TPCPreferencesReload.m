@@ -146,6 +146,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 #endif
 
+	/* Developer mode */
+	if ([keys containsObject:@"TextualDeveloperEnvironment"]) {
+		reloadAction |= TPCPreferencesReloadIRCCommandCacheAction;
+	}
+
 	/* After this is all complete; we call -preferencesChanged just to take 
 	 care of everything else that does not need specific reloads. */
 	reloadAction |= TPCPreferencesReloadPreferencesChangedAction;
@@ -298,6 +303,11 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Inline media cache */
 	if ((reloadAction & TPCPreferencesReloadInlineMediaCacheAction) == TPCPreferencesReloadInlineMediaCacheAction) {
 		[TVCImageURLoader invalidateInternalCache];
+	}
+
+	/* Command index cache */
+	if ((reloadAction & TPCPreferencesReloadIRCCommandCacheAction) == TPCPreferencesReloadIRCCommandCacheAction) {
+		[IRCCommandIndex _invalidateCaches];
 	}
 
 	/* World controller preferences changed call */

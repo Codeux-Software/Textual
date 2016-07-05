@@ -36,13 +36,138 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCModeInfoInternal.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCModeInfo
 
-+ (IRCModeInfo *)modeInfo
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)init
 {
-	return [IRCModeInfo new];
+	if ((self = [super init])) {
+		[self populateDefaultsPostflight];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (instancetype)initWithModeSymbol:(NSString *)modeSymbol
+{
+	return [self initWithModeSymbol:modeSymbol modeIsSet:NO modeParamater:nil];
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (instancetype)initWithModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater
+{
+	NSParameterAssert(modeSymbol.length == 1);
+
+	if ((self = [super init])) {
+		self->_modeSymbol = [modeSymbol copy];
+		self->_modeIsSet = modeIsSet;
+		self->_modeParamater = [modeParamater copy];
+
+		[self populateDefaultsPostflight];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)populateDefaultsPostflight
+{
+	SetVariableIfNilCopy(self->_modeSymbol, NSStringEmptyPlaceholder)
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	IRCModeInfo *object = [[IRCModeInfo allocWithZone:zone] init];
+
+	object->_modeIsSet = self.modeIsSet;
+	object->_modeSymbol = [self.modeSymbol copyWithZone:zone];
+	object->_modeParamater = [self.modeParamater copyWithZone:zone];
+
+	return object;
+}
+
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
+{
+	IRCModeInfoMutable *object = [[IRCModeInfoMutable allocWithZone:zone] init];
+
+	object.modeIsSet = self.modeIsSet;
+	object.modeSymbol = self.modeSymbol;
+	object.modeParamater = self.modeParamater;
+
+	return object;
+}
+
+- (BOOL)isEqual:(id)object
+{
+	if (object == nil) {
+		return NO;
+	}
+
+	if (object == self) {
+		return YES;
+	}
+
+	if ([object isKindOfClass:[IRCModeInfo class]] == NO) {
+		return NO;
+	}
+
+	IRCModeInfo *objectCast = (IRCModeInfo *)object;
+
+	return (self.modeIsSet == objectCast.modeIsSet &&
+			NSObjectsAreEqual(self.modeSymbol, objectCast.modeSymbol) &&
+			NSObjectsAreEqual(self.modeParamater, objectCast.modeParamater));
+}
+
+- (BOOL)isMutable
+{
+	return NO;
 }
 
 @end
+
+#pragma mark -
+
+@implementation IRCModeInfoMutable
+
+@dynamic modeIsSet;
+@dynamic modeSymbol;
+@dynamic modeParamater;
+
+- (BOOL)isMutable
+{
+	return YES;
+}
+
+- (void)setModeIsSet:(BOOL)modeIsSet
+{
+	if (self->_modeIsSet != modeIsSet) {
+		self->_modeIsSet = modeIsSet;
+	}
+}
+
+- (void)setModeSymbol:(NSString *)modeSymbol
+{
+	NSParameterAssert(modeSymbol.length == 1);
+
+	if (self->_modeSymbol != modeSymbol) {
+		self->_modeSymbol = [modeSymbol copy];
+	}
+}
+
+- (void)setModeParamater:(nullable NSString *)modeParamater
+{
+	if (self->_modeParamater != modeParamater) {
+		self->_modeParamater = [modeParamater copy];
+	}
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

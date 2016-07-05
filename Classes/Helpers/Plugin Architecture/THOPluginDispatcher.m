@@ -145,11 +145,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 		if (returnedValue == nil) {
 			return nil;
 		} else if (NSObjectsAreEqual(returnedValue, returnValue) == NO) {
-//			if ([returnedValue isKindOfClass:[IRCMessageMutable class]]) {
-//				returnValue = [returnedValue copy];
-//			} else {
+			if ([returnedValue isKindOfClass:[IRCMessageMutable class]]) {
+				returnValue = [returnedValue copy];
+			} else {
 				returnValue = returnedValue;
-//			}
+			}
 		}
 	}
 

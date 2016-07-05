@@ -36,212 +36,321 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCChannelMode ()
-@property (nonatomic, strong) NSMutableDictionary *allModes;
+@property (nonatomic, strong) IRCClient *client;
+@property (nonatomic, strong) IRCChannel *channel;
+@property (nonatomic, copy, readwrite) IRCChannelModeContainer *modes;
+@end
+
+@interface IRCChannelModeContainer ()
+@property (nonatomic, strong) IRCISupportInfo *supportInfo;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, IRCModeInfo *> *modeObjects;
+@property (readonly, copy) NSArray<NSString *> *unwantedModes;
+
+- (instancetype)initWithSupportInfo:(IRCISupportInfo *)supportInfo;
 @end
 
 @implementation IRCChannelMode
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithChannel:(IRCChannel *)channel
 {
+	NSParameterAssert(channel != nil);
+
 	if ((self = [super init])) {
-		self.allModes = [NSMutableDictionary dictionary];
+		self.client = channel.associatedClient;
+		self.channel = channel;
+
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self->_modes = [[IRCChannelModeContainer alloc] initWithSupportInfo:self.client.supportInfo];
+}
+
+- (NSArray<IRCModeInfo *> *)updateModes:(NSString *)modeString
+{
+	NSParameterAssert(modeString != nil);
+
+	IRCISupportInfo *supportInfo = self.client.supportInfo;
+
+	NSArray *modes = [supportInfo parseModes:modeString];
+
+	[self.modes applyModes:modes];
+
+	return modes;
+}
+
+- (NSString *)getChangeCommand:(IRCChannelModeContainer *)modes
+{
+	NSParameterAssert(modes != nil);
+
+	NSDictionary *modesSetOld = self.modes.modes;
+
+	NSDictionary *modesSetNew = modes.modes;
+
+	NSMutableString *modeAddString = [NSMutableString string];
+	NSMutableString *modeRemoveString = [NSMutableString string];
+	NSMutableString *modeParamString = [NSMutableString string];
+
+	/* Look over the set of modes that are currently set. If a mode is present
+	 in that set, but not in the new set, then mark that mode for removal. */
+	[modesSetOld enumerateKeysAndObjectsUsingBlock:^(NSString *modeSymbol, IRCModeInfo *mode, BOOL *stop) {
+		if (modesSetNew[modeSymbol] != nil) {
+			return;
+		}
+
+		if (modeRemoveString.length == 0) {
+			[modeRemoveString appendFormat:@"-%@", modeSymbol];
+		} else {
+			[modeRemoveString appendString:modeSymbol];
+		}
+	}];
+
+	/* Look over the new set of modes and compare them to the old set.
+	 If a mode has changed (check for equality), then perform action. */
+	[modesSetNew enumerateKeysAndObjectsUsingBlock:^(NSString *modeSymbol, IRCModeInfo *mode, BOOL *stop) {
+		IRCModeInfo *modeOld = modesSetOld[modeSymbol];
+
+		if (NSObjectsAreEqual(mode, modeOld)) {
+			return;
+		}
+
+		if (mode.modeIsSet) {
+			if (modeAddString.length == 0) {
+				[modeAddString appendFormat:@"+%@", modeSymbol];
+			} else {
+				[modeAddString appendString:modeSymbol];
+			}
+		} else {
+			if (modeRemoveString.length == 0) {
+				[modeRemoveString appendFormat:@"-%@", modeSymbol];
+			} else {
+				[modeRemoveString appendString:modeSymbol];
+			}
+		}
+
+		NSString *modeParamater = mode.modeParamater;
+
+		if (modeParamater.length == 0) {
+			return;
+		}
+
+		[modeParamString appendFormat:@" %@", modeParamater];
+	}];
+
+	return [NSString stringWithFormat:@"%@%@%@", modeRemoveString, modeAddString, modeParamString];
 }
 
 - (void)clear
 {
-	@synchronized(self.allModes) {
-		[self.allModes removeAllObjects];
-	}
+	[self.modes clear];
 }
 
-- (NSDictionary *)modeInformation
+- (BOOL)modeIsDefined:(NSString *)modeSymbol
 {
-	@synchronized(self.allModes) {
-		return [NSDictionary dictionaryWithDictionary:self.allModes];
-	}
+	return [self.modes modeIsDefined:modeSymbol];
 }
 
-- (NSArray *)badModes
+- (nullable IRCModeInfo *)modeInfoFor:(NSString *)modeSymbol
 {
-	return @[@"b", @"e", @"I", @"q"];
+	return [self.modes modeInfoFor:modeSymbol];
 }
 
-- (NSArray *)update:(NSString *)str
+- (NSString *)stringWithMaskedPassword:(BOOL)maskPassword
 {
-	NSArray *ary = [self.supportInfo parseMode:str];
+	NSMutableString *modeSetString = [NSMutableString string];
+	NSMutableString *modeParamString = [NSMutableString string];
 
-	@synchronized(self.allModes) {
-		for (IRCModeInfo *h in ary) {
-			/* Get basic info. */
-			NSString *modeSymbol = [h modeToken];
+	NSDictionary *modes = self.modes.modes;
+	
+	NSArray *modesSorted = modes.sortedDictionaryKeys;
 
-			/* Do not allow a predefined list of modes. */
-			if ([[self badModes] containsObject:modeSymbol]) {
-				continue;
-			}
-			
-			/* Do not allow user symbols. */
-			if ([[self supportInfo] modeIsSupportedUserPrefix:modeSymbol]) {
-				continue;
-			}
-			
-			/* Populate new info. */
-			self.allModes[modeSymbol] = h;
+	for (NSString *modeSymbol in modesSorted) {
+		IRCModeInfo *mode = modes[modeSymbol];
+
+		if (mode.modeIsSet == NO) {
+			continue;
+		}
+
+		if (modeSetString.length == 0) {
+			[modeSetString appendFormat:@"+%@", modeSymbol];
+		} else {
+			[modeSetString appendString:modeSymbol];
+		}
+
+		NSString *modeParamater = mode.modeParamater;
+
+		if (modeParamater.length == 0) {
+			continue;
+		}
+
+		if ([modeSymbol isEqualToString:@"k"] && maskPassword) {
+			[modeParamString appendFormat:@" ******"];
+		} else {
+			[modeParamString appendFormat:@" %@", modeParamater];
 		}
 	}
 
-	return ary;
-}
-
-- (NSString *)getChangeCommand:(IRCChannelMode *)mode
-{
-	NSMutableString *frstr = [NSMutableString string];
-	NSMutableString *trail = [NSMutableString string];
-	NSMutableString *track = [NSMutableString string];
-
-	NSDictionary *modeInfo = [mode modeInformation];
-	
-	NSArray *modes = [modeInfo sortedDictionaryKeys];
-
-	/* Build the removals first. */
-	for (NSString *mkey in modes) {
-		IRCModeInfo *h = modeInfo[mkey];
-		
-		NSString *symbol = [h modeToken];
-		NSString *param = [h modeParamater];
-
-		if ([h modeIsSet]) {
-			if ([param length] > 0) {
-				[trail appendFormat:@" %@", param];
-			}
-
-			[track appendString:symbol];
-
-			if ([symbol isEqualToString:@"k"]) {
-				[h setModeParamater:NSStringEmptyPlaceholder];
-			} else {
-				if ([symbol isEqualToString:@"l"]) {
-					[h setModeParamater:@"0"];
-				}
-			}
-		}
-	}
-
-	if (track) {
-		[frstr appendString:@"+"];
-		[frstr appendString:track];
-
-		[track setString:NSStringEmptyPlaceholder];
-	}
-
-	/* Build the additions next. */
-	for (NSString *mkey in modes) {
-		IRCModeInfo *h = modeInfo[mkey];
-		
-		NSString *symbol = [h modeToken];
-		NSString *param = [h modeParamater];
-
-		if ([h modeIsSet] == NO) {
-			if ([param length] > 0) {
-				[trail appendFormat:@" %@", param];
-			}
-
-			[track appendString:symbol];
-		}
-	}
-	
-	if (track) {
-		[frstr appendString:@"-"];
-		[frstr appendString:track];
-	}
-
-	return [frstr stringByAppendingString:trail];
-}
-
-- (BOOL)modeIsDefined:(NSString *)mode
-{
-	@synchronized(self.allModes) {
-		return [self.allModes containsKey:mode];
-	}
-}
-
-- (IRCModeInfo *)modeInfoFor:(NSString *)mode
-{
-	NSObjectIsEmptyAssertReturn(mode, nil);
-	
-	if ([self modeIsDefined:mode] == NO) {
-		IRCModeInfo *m = [self.supportInfo createMode:mode];
-		
-		@synchronized(self.allModes) {
-			self.allModes[mode] = m;
-		}
-	}
-	
-	@synchronized(self.allModes) {
-		return self.allModes[mode];
-	}
-}
-
-- (NSString *)format:(BOOL)maskK
-{
-	NSMutableString *frstr = [NSMutableString string];
-	NSMutableString *trail = [NSMutableString string];
-
-	[frstr appendString:@"+"];
-
-	NSDictionary *modeInfo = [self modeInformation];
-	
-	NSArray *modes = [modeInfo sortedDictionaryKeys];
-
-	for (NSString *mkey in modes) {
-		IRCModeInfo *h = modeInfo[mkey];
-		
-		NSString *symbol = [h modeToken];
-		NSString *param = [h modeParamater];
-
-		if ([h modeIsSet]) {
-			if ([param length] > 0) {
-				if ([symbol isEqualToString:@"k"] && maskK) {
-					[trail appendFormat:@" ******"];
-				} else {
-					[trail appendFormat:@" %@", param];
-				}
-			}
-
-			[frstr appendFormat:@"%@", symbol];
-		}
-	}
-
-	return [frstr stringByAppendingString:trail];
+	return [modeSetString stringByAppendingString:modeParamString];
 }
 
 - (NSString *)string
 {
-	return [self format:NO];
+	return [self stringWithMaskedPassword:NO];
 }
 
-- (NSString *)titleString
+- (NSString *)stringWithMaskedPassword
 {
-	return [self format:YES];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-	IRCChannelMode *newInstance = [[IRCChannelMode allocWithZone:zone] init];
-
-	[newInstance setSupportInfo:self.supportInfo];
-
-	@synchronized(self.allModes) {
-		[[newInstance allModes] addEntriesFromDictionary:self.allModes];
-	}
-	
-	return newInstance;
+	return [self stringWithMaskedPassword:YES];
 }
 
 @end
+
+#pragma mark -
+
+@implementation IRCChannelModeContainer
+
+- (instancetype)initWithSupportInfo:(IRCISupportInfo *)supportInfo
+{
+	NSParameterAssert(supportInfo != nil);
+
+	if ((self = [super init])) {
+		self.supportInfo = supportInfo;
+
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.modeObjects = [NSMutableDictionary dictionary];
+}
+
+- (void)clear
+{
+	@synchronized(self.modeObjects) {
+		[self.modeObjects removeAllObjects];
+	}
+}
+
+- (NSDictionary<NSString *, IRCModeInfo *> *)modes
+{
+	@synchronized(self.modeObjects) {
+		return [self.modeObjects copy];
+	}
+}
+
+- (NSArray<NSString *> *)unwantedModes
+{
+	return @[@"b", @"e", @"I", @"q"];
+}
+
+- (BOOL)modeIsPermitted:(NSString *)modeSymbol
+{
+	NSParameterAssert(modeSymbol != nil);
+
+	if ([self.unwantedModes containsObject:modeSymbol]) {
+		return NO;
+	}
+
+	if ([self.supportInfo modeSymbolIsUserPrefix:modeSymbol]) {
+		return NO;
+	}
+
+	return YES;
+}
+
+- (BOOL)modeIsDefined:(NSString *)modeSymbol
+{
+	NSParameterAssert(modeSymbol != nil);
+
+	return (self.modes[modeSymbol] != nil);
+}
+
+- (nullable IRCModeInfo *)modeInfoFor:(NSString *)modeSymbol
+{
+	NSParameterAssert(modeSymbol != nil);
+
+	@synchronized (self.modeObjects) {
+		IRCModeInfo *mode = self.modeObjects[modeSymbol];
+
+		if (mode) {
+			return mode;
+		}
+
+		if ([self modeIsPermitted:modeSymbol] == NO) {
+			return nil;
+		}
+
+		mode = [[IRCModeInfo alloc] initWithModeSymbol:modeSymbol];
+
+		self.modeObjects[modeSymbol] = mode;
+
+		return mode;
+	}
+}
+
+- (void)applyModes:(NSArray<IRCModeInfo *> *)modes
+{
+	NSParameterAssert(modes != nil);
+
+	for (IRCModeInfo *mode in modes) {
+		[self changeMode:mode.modeSymbol
+			   modeIsSet:mode.modeIsSet
+		   modeParamater:mode.modeParamater];
+	}
+}
+
+- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet
+{
+	[self changeMode:modeSymbol modeIsSet:modeIsSet modeParamater:nil];
+}
+
+- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater
+{
+	NSParameterAssert(modeSymbol != nil);
+
+	IRCModeInfo *mode = [self modeInfoFor:modeSymbol];
+
+	if (mode == nil) {
+		return;
+	}
+
+	IRCModeInfoMutable *modeMutable = [mode mutableCopy];
+
+	modeMutable.modeSymbol = modeSymbol;
+	modeMutable.modeIsSet = modeIsSet;
+	modeMutable.modeParamater = modeParamater;
+
+	@synchronized (self.modeObjects) {
+		self.modeObjects[modeSymbol] = [modeMutable copy];
+	}
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	IRCChannelModeContainer *object =
+	[[IRCChannelModeContainer alloc] initWithSupportInfo:self.supportInfo];
+
+	object.modeObjects = [self.modeObjects copyDeepMutable]; // Copy all hosted IRCModeInfo objects
+
+	return object;
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

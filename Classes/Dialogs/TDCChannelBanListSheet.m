@@ -192,7 +192,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		numberOfEntries += 1;
 
-		if (numberOfEntries == self.client.supportInfo.modesCount) {
+		if (numberOfEntries == self.client.supportInfo.maximumModeCount) {
 			numberOfEntries = 0;
 			
 			NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];

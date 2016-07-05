@@ -58,6 +58,7 @@
 	@class IRCChannel;
 	@class IRCChannelConfig;
 	@class IRCChannelMode;
+	@class IRCChannelModeContainer;
 	@class IRCClient;
 	@class IRCClientConfig;
 	@class IRCCommandIndex;
@@ -68,10 +69,11 @@
 	@class IRCHighlightMatchConditionMutable;
 	@class IRCISupportInfo;
 	@class IRCMessage;
-	@class IRCMessageBatchMessage;
-	@class IRCMessageBatchMessageContainer;
+	@class IRCMessageMutable;
 	@class IRCModeInfo;
+	@class IRCModeInfoMutable;
 	@class IRCPrefix;
+	@class IRCPrefixMutable;
 	@class IRCSendingMessage;
 	@class IRCTreeItem;
 	@class IRCUser;
