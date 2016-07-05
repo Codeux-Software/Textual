@@ -257,7 +257,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		self->_commandNumeric = command.integerValue;
 	} else {
-		self->_command = [command.lowercaseString copy];
+		self->_command = [command.uppercaseString copy];
 
 		self->_commandNumeric = 0;
 	}
