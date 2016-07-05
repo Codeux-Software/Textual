@@ -1775,17 +1775,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSTitlebarAccessoryViewController *accessoryView = self.titlebarAccessoryViewController;
 
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
-
-#ifdef TXSystemIsOSXSierraOrLater
-		accessoryView.layoutAttribute = NSLayoutAttributeTrailing;
-#else
-		[accessoryView setLayoutAttribute:NSLayoutAttributeLeft];
-#endif
-
-	} else {
-		accessoryView.layoutAttribute = NSLayoutAttributeRight;
-	}
+	accessoryView.layoutAttribute = NSLayoutAttributeRight;
 
 	[self addTitlebarAccessoryViewController:accessoryView];
 }
