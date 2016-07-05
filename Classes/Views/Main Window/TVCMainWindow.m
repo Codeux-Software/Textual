@@ -1815,6 +1815,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableString *title = [NSMutableString string];
 
+	if (u.isConnected == NO && u.isConnecting == NO) {
+		if (u.reconnecting) {
+			[title appendString:TXTLS(@"TVCMainWindow[1021]")];
+		} else {
+			[title appendString:TXTLS(@"TVCMainWindow[1016]")];
+		}
+	} else if (u.isConnecting && u.isLoggedIn == NO) {
+		if (u.connectType == IRCClientConnectRetryMode || u.connectType == IRCClientConnectReconnectMode) {
+			[title appendString:TXTLS(@"TVCMainWindow[1020]")];
+		} else {
+			[title appendString:TXTLS(@"TVCMainWindow[1018]")];
+		}
+	} else if (u.isConnected && u.isLoggedIn == NO) {
+		[title appendString:TXTLS(@"TVCMainWindow[1019]")];
+	} else if (u.isQuitting) {
+		[title appendString:TXTLS(@"TVCMainWindow[1017]")];
+	}
+
 	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.localNickname, u.altNetworkName)];
 
 	if (u && c == nil) // = Client

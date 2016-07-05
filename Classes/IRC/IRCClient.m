@@ -3982,6 +3982,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	[self.supportInfo reset];
 
+	[mainWindow() updateTitleFor:self];
+
 	NSString *username = self.config.username;
 	NSString *realname = self.config.realName;
 	
@@ -8515,6 +8517,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	self.reconnectEnabled = YES;
 
+	[mainWindow() updateTitleFor:self];
+
 	/* Begin populating configuration. */
 	NSString *socketAddress = nil;
 
@@ -8673,6 +8677,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	[self send:IRCPrivateCommandIndex("quit"), comment, nil];
 
+	[mainWindow() updateTitleFor:self];
+
 	/* We give it two seconds before forcefully breaking so that the graceful
 	 quit with the quit message above can be performed. */
 	[self performSelector:@selector(disconnect) withObject:nil afterDelay:2.0];
@@ -8684,6 +8690,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	self.reconnectEnabledBecauseOfSleepMode = NO;
 
 	[self stopReconnectTimer];
+
+	[mainWindow() updateTitleFor:self];
 }
 
 - (void)changeNickname:(NSString *)newNick
