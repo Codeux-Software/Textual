@@ -1146,6 +1146,8 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 		[RZUserDefaults() registerDefaults:@{@"ScrollbackMaximumLineCount" : @(scrollbackLineCount)}];
 	}
+
+	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:NSWindowAutosaveFrameMovesToActiveDisplay];
 }
 
 + (void)initPreferences
