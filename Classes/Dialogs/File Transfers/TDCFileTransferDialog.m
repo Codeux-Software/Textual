@@ -73,7 +73,7 @@
 		
 		[self.maintenanceTimer setTarget:self];
 		[self.maintenanceTimer setAction:@selector(onMaintenanceTimer:)];
-		[self.maintenanceTimer setReqeatTimer:YES];
+		[self.maintenanceTimer setRepeatTimer:YES];
 	}
 	
 	return self;

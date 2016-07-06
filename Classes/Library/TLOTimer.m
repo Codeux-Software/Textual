@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitalState
 {
-	self.reqeatTimer = YES;
+	self.repeatTimer = YES;
 }
 
 - (void)dealloc
@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 									 target:self
 								   selector:@selector(onTimer:)
 								   userInfo:nil
-									repeats:self.reqeatTimer];
+									repeats:self.repeatTimer];
 
 	[RZCurrentRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }
@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	if (self.reqeatTimer == NO) {
+	if (self.repeatTimer == NO) {
 		[self stop];
 	}
 

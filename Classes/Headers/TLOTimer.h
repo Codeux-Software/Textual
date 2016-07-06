@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TLOTimer : NSObject
 @property (nonatomic, weak, nullable) id target;
 @property (nonatomic, assign, nullable) SEL action;
-@property (nonatomic, assign) BOOL reqeatTimer;
+@property (nonatomic, assign) BOOL repeatTimer; // defaults to YES
 
 @property (readonly) BOOL timerIsActive;
 

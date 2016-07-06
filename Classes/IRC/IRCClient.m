@@ -215,27 +215,27 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		self.serverRedirectPortTemporaryStore = 0;
 
 		 self.reconnectTimer = [TLOTimer new];
-		[self.reconnectTimer setReqeatTimer:YES];
+		[self.reconnectTimer setRepeatTimer:YES];
 		[self.reconnectTimer setTarget:self];
 		[self.reconnectTimer setAction:@selector(onReconnectTimer:)];
 
 		 self.retryTimer = [TLOTimer new];
-		[self.retryTimer setReqeatTimer:NO];
+		[self.retryTimer setRepeatTimer:NO];
 		[self.retryTimer setTarget:self];
 		[self.retryTimer setAction:@selector(onRetryTimer:)];
 
 		 self.commandQueueTimer = [TLOTimer new];
-		[self.commandQueueTimer setReqeatTimer:NO];
+		[self.commandQueueTimer setRepeatTimer:NO];
 		[self.commandQueueTimer setTarget:self];
 		[self.commandQueueTimer setAction:@selector(onCommandQueueTimer:)];
 
 		 self.pongTimer = [TLOTimer new];
-		[self.pongTimer setReqeatTimer:YES];
+		[self.pongTimer setRepeatTimer:YES];
 		[self.pongTimer setTarget:self];
 		[self.pongTimer setAction:@selector(onPongTimer:)];
 
 	  	 self.isonTimer	= [TLOTimer new];
-		[self.isonTimer setReqeatTimer:YES];
+		[self.isonTimer setRepeatTimer:YES];
 		[self.isonTimer setTarget:self];
 		[self.isonTimer setAction:@selector(onISONTimer:)];
 	}
