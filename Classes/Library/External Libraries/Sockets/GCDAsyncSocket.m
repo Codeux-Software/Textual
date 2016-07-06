@@ -29,6 +29,8 @@
 #import <sys/un.h>
 #import <unistd.h>
 
+#define GCDAsyncSocketUsesStrictTimers		1
+
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 // For more information see: https://github.com/robbiehanson/CocoaAsyncSocket/wiki/ARC
@@ -3010,7 +3012,11 @@ enum GCDAsyncSocketConfig
 {
 	if (timeout >= 0.0)
 	{
+#if GCDAsyncSocketUsesStrictTimers == 1
+		connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, socketQueue);
+#else
 		connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
+#endif
 		
 		__weak GCDAsyncSocket *weakSelf = self;
 		
@@ -5664,8 +5670,12 @@ enum GCDAsyncSocketConfig
 {
 	if (timeout >= 0.0)
 	{
+#if GCDAsyncSocketUsesStrictTimers == 1
+		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, socketQueue);
+#else
 		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
-		
+#endif
+
 		__weak GCDAsyncSocket *weakSelf = self;
 		
 		dispatch_source_set_event_handler(readTimer, ^{ @autoreleasepool {
@@ -6307,8 +6317,12 @@ enum GCDAsyncSocketConfig
 {
 	if (timeout >= 0.0)
 	{
+#if GCDAsyncSocketUsesStrictTimers == 1
+		writeTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, socketQueue);
+#else
 		writeTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
-		
+#endif
+
 		__weak GCDAsyncSocket *weakSelf = self;
 		
 		dispatch_source_set_event_handler(writeTimer, ^{ @autoreleasepool {
