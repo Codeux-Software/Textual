@@ -134,10 +134,10 @@
 "IRC[1053]" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "IRC[1054]" = "%.0f minutes have elapsed since last response from this connection. It's possible the connection is timing out.";
 "IRC[1055]" = "Message(%1$d): %2$@";
-"IRC[1056]" = "Connecting to [%1$@] on port %2$ld";
-"IRC[1057]" = "Connecting using SOCKS4 proxy [%1$@] on port %2$ld";
-"IRC[1058]" = "Connecting using SOCKS5 proxy [%1$@] on port %2$ld";
-"IRC[1059]" = "Connecting using HTTP proxy [%1$@] on port %2$ld";
+"IRC[1056]" = "Connecting to [%1$@] on port %2$hu";
+"IRC[1057]" = "Connecting using SOCKS4 proxy [%1$@] on port %2$hu";
+"IRC[1058]" = "Connecting using SOCKS5 proxy [%1$@] on port %2$hu";
+"IRC[1059]" = "Connecting using HTTP proxy [%1$@] on port %2$hu";
 "IRC[1060]" = "Reconnecting…";
 "IRC[1061]" = "Retrying…";
 "IRC[1062]" = "\002%1$@\002 sets mode \002%2$@\002";

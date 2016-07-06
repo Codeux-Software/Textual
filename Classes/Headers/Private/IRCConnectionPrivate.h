@@ -35,28 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection ()
-@property (readwrite, assign) BOOL isConnected;
-@property (readwrite, assign) BOOL isConnecting;
-@property (readwrite, assign) BOOL isSending;
-@property (readwrite, assign) BOOL isSecured;
-@property (readwrite, assign) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, strong) NSMutableArray *sendQueue;
-@property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
-@property (nonatomic, strong) dispatch_queue_t dispatchQueue;
-@property (nonatomic, strong) dispatch_queue_t socketQueue;
-@property (nonatomic, strong) id socketConnection;
-@property (nonatomic, copy) NSError *alternateDisconnectError;
+- (nullable NSString *)convertFromCommonEncoding:(NSData *)data;
+- (nullable NSData *)convertToCommonEncoding:(NSString *)data;
 
 - (void)tcpClientDidConnect;
-- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort;
+- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
 - (void)tcpClientDidError:(NSString *)error;
-- (void)tcpClientDidDisconnect:(NSError *)distcError;
+- (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError;
 - (void)tcpClientDidReceiveData:(NSString *)data;
 - (void)tcpClientDidSecureConnection;
 - (void)tcpClientDidReceivedAnInsecureCertificate;
+- (void)tcpClientWillSendData:(NSData *)data;
 - (void)tcpClientDidSendData;
 @end
 
+NS_ASSUME_NONNULL_END

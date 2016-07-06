@@ -2942,7 +2942,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			[IRCExtras createConnectionAndJoinChannel:uncutInput channel:nil autoConnect:YES];
+			[IRCExtras createConnectionToServer:uncutInput channelList:nil connectWhenCreated:YES];
 
 			break;
 		}
@@ -3210,7 +3210,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5087: // Command: FAKERAWDATA
 		{
-			[self ircConnectionDidReceive:[s string]];
+			[self ircConnection:nil didReceiveData:[s string]];
 
 			break;
 		}
@@ -3929,23 +3929,25 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[mainWindow() updateTitleFor:self];
 }
 
-- (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort
+- (void)ircConnection:(IRCConnection *)sender willConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort
 {
-	if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType) {
+	IRCConnectionSocketProxyType proxyType = self.socket.config.proxyType;
+
+	if (proxyType == IRCConnectionSocketSocks4ProxyType) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1057]", proxyHost, proxyPort)];
-	} else if (self.socket.proxyType == IRCConnectionSocketSocks5ProxyType) {
+	} else if (proxyType == IRCConnectionSocketSocks5ProxyType) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1058]", proxyHost, proxyPort)];
-	} else if (self.socket.proxyType == IRCConnectionSocketHTTPProxyType) {
+	} else if (proxyType == IRCConnectionSocketHTTPProxyType) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1059]", proxyHost, proxyPort)];
 	}
 }
 
-- (void)ircConnectionDidReceivedAnInsecureCertificate
+- (void)ircConnectionDidReceivedAnInsecureCertificate:(IRCConnection *)sender
 {
 	[self setDisconnectType:IRCClientDisconnectBadSSLCertificateMode];
 }
 
-- (void)ircConnectionDidSecureConnection
+- (void)ircConnectionDidSecureConnection:(IRCConnection *)sender
 {
 	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString:NO];
 
@@ -3966,7 +3968,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	 then we report back the actual IP address it was resolved to. */
 	NSString *connectedAddress = [self.socket connectedAddress];
 
-	if (connectedAddress == nil || [self.socket.serverAddress isIPAddress]) {
+	if (connectedAddress == nil || [self.socket.config.serverAddress isIPAddress]) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1045]")];
 	} else {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1046]", connectedAddress)];
@@ -4015,7 +4017,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 #pragma mark -
 
-- (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError
+- (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(NSError *)disconnectError
 {
 	if ([self isTerminating] == NO) {
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
@@ -4031,7 +4033,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 #pragma mark -
 
-- (void)ircConnectionDidError:(NSString *)error
+- (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error
 {
 	if ([self isTerminating]) {
 		return; // No reason to show this.
@@ -4040,7 +4042,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self printError:error forCommand:TVCLogLineDefaultCommandValue];
 }
 
-- (void)ircConnectionDidReceive:(NSString *)data
+- (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data
 {
 	if ([self isTerminating]) {
 		return; // No reason to show this.
@@ -4245,13 +4247,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self processBundlesServerMessage:m];
 }
 
-- (void)ircConnectionWillSend:(NSString *)line
+- (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data
 {
 	if ([self isTerminating]) {
 		return; // No reason to show this.
 	}
 	
-	[self logToConsoleOutgoingTraffic:line];
+	[self logToConsoleOutgoingTraffic:data];
 }
 
 - (void)logToConsoleOutgoingTraffic:(NSString *)line
@@ -8551,42 +8553,41 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1061]")];
 	}
 
-	/* Create socket. */
-	self.socket = [IRCConnection new];
-		
-	self.socket.associatedClient = self;
+	/* Create socket */
+	IRCConnectionConfigMutable *socketConfig = [IRCConnectionConfigMutable new];
 
-	/* Begin populating configuration. */
-	self.socket.serverAddress = socketAddress;
-	self.socket.serverPort = socketPort;
+	socketConfig.serverAddress = socketAddress;
+	socketConfig.serverPort = socketPort;
 
-	self.socket.connectionPrefersIPv4 = preferIPv4;
+	socketConfig.connectionPrefersIPv4 = preferIPv4;
 
-	self.socket.connectionPrefersSecuredConnection = self.config.prefersSecuredConnection;
-	self.socket.connectionPrefersModernCiphers = self.config.connectionPrefersModernCiphers;
-	self.socket.connectionShouldValidateCertificateChain = self.config.validateServerCertificateChain;
+	socketConfig.connectionPrefersSecuredConnection = self.config.prefersSecuredConnection;
+	socketConfig.connectionPrefersModernCiphers = self.config.connectionPrefersModernCiphers;
+	socketConfig.connectionShouldValidateCertificateChain = self.config.validateServerCertificateChain;
 
-	self.socket.identityClientSideCertificate = self.config.identityClientSideCertificate;
+	socketConfig.identityClientSideCertificate = self.config.identityClientSideCertificate;
 
-	self.socket.proxyType = self.config.proxyType;
+	socketConfig.proxyType = self.config.proxyType;
 
-	if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType ||
-		self.socket.proxyType == IRCConnectionSocketSocks5ProxyType ||
-		self.socket.proxyType == IRCConnectionSocketHTTPProxyType ||
-		self.socket.proxyType == IRCConnectionSocketHTTPSProxyType)
+	if (socketConfig.proxyType == IRCConnectionSocketSocks4ProxyType ||
+		socketConfig.proxyType == IRCConnectionSocketSocks5ProxyType ||
+		socketConfig.proxyType == IRCConnectionSocketHTTPProxyType ||
+		socketConfig.proxyType == IRCConnectionSocketHTTPSProxyType)
 	{
-		self.socket.proxyPort = self.config.proxyPort;
-		self.socket.proxyAddress = self.config.proxyAddress;
-		self.socket.proxyPassword = self.config.proxyPassword;
-		self.socket.proxyUsername = self.config.proxyUsername;
+		socketConfig.proxyPort = self.config.proxyPort;
+		socketConfig.proxyAddress = self.config.proxyAddress;
+		socketConfig.proxyPassword = self.config.proxyPassword;
+		socketConfig.proxyUsername = self.config.proxyUsername;
 	}
 
+	socketConfig.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
+	socketConfig.floodControlMaximumMessages = self.config.floodControlMaximumMessages;
+
+	self.socket = [[IRCConnection alloc] initWithConfig:socketConfig onClient:self];
+
+	/* Try to establish connection */
 	[self printDebugInformationToConsole:TXTLS(@"IRC[1056]", socketAddress, socketPort)];
 
-	self.socket.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
-	self.socket.floodControlMaximumMessageCount = self.config.floodControlMaximumMessages;
-
-	/* Try to establish connection. */
 	[self.socket open];
 }
 
@@ -8869,10 +8870,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)presentCertificateTrustInformation
 {
-	if (     self.socket.isSecured) {
-		if ( self.socket.connectionPrefersSecuredConnection) {
-			[self.socket openSSLCertificateTrustDialog];
-		}
+	if (self.socket.isSecured) {
+		[self.socket openSSLCertificateTrustDialog];
 	}
 }
 

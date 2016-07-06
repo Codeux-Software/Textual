@@ -124,6 +124,27 @@
 		4C056F261D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C056F161D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h */; };
 		4C056F271D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C056F161D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h */; };
 		4C056F281D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C056F161D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h */; };
+		4C083F9F1D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083F9E1D2D5F4400192F09 /* IRCConnectionConfigInternal.h */; };
+		4C083FA01D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083F9E1D2D5F4400192F09 /* IRCConnectionConfigInternal.h */; };
+		4C083FA11D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083F9E1D2D5F4400192F09 /* IRCConnectionConfigInternal.h */; };
+		4C083FA81D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */; };
+		4C083FA91D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */; };
+		4C083FAA1D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */; };
+		4C083FAE1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */; };
+		4C083FAF1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */; };
+		4C083FB01D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */; };
+		4C083FB11D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */; };
+		4C083FB21D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */; };
+		4C083FB31D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */; };
+		4C083FB41D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAD1D2D5F5B00192F09 /* IRCExtrasPrivate.h */; };
+		4C083FB51D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAD1D2D5F5B00192F09 /* IRCExtrasPrivate.h */; };
+		4C083FB61D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAD1D2D5F5B00192F09 /* IRCExtrasPrivate.h */; };
+		4C083FB81D2D603E00192F09 /* IRCConnectionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */; };
+		4C083FB91D2D603E00192F09 /* IRCConnectionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */; };
+		4C083FBA1D2D603E00192F09 /* IRCConnectionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */; };
+		4C083FBC1D2D624000192F09 /* IRCConnectionInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */; };
+		4C083FBD1D2D624000192F09 /* IRCConnectionInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */; };
+		4C083FBE1D2D624000192F09 /* IRCConnectionInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */; };
 		4C0879CF187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */; };
 		4C0879D0187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */; };
 		4C0879D3187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */; };
@@ -628,8 +649,6 @@
 		4C7B03421D1210A100295E82 /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53A158E99520026668C /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03431D1210A100295E82 /* IRCCommandIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB26C7219529016005F927C /* IRCCommandIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03441D1210A100295E82 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53B158E99520026668C /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03451D1210A100295E82 /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03461D1210A100295E82 /* IRCExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53C158E99520026668C /* IRCExtras.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03471D1210A100295E82 /* IRCISupportInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53D158E99520026668C /* IRCISupportInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03481D1210A100295E82 /* IRCMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53E158E99520026668C /* IRCMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03491D1210A100295E82 /* IRCModeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53F158E99520026668C /* IRCModeInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -705,8 +724,6 @@
 		4C7B03C31D1210A800295E82 /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53A158E99520026668C /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03C41D1210A800295E82 /* IRCCommandIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB26C7219529016005F927C /* IRCCommandIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03C51D1210A800295E82 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53B158E99520026668C /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03C61D1210A800295E82 /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03C71D1210A800295E82 /* IRCExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53C158E99520026668C /* IRCExtras.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03C81D1210A800295E82 /* IRCISupportInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53D158E99520026668C /* IRCISupportInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03C91D1210A800295E82 /* IRCMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53E158E99520026668C /* IRCMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03CA1D1210A800295E82 /* IRCModeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53F158E99520026668C /* IRCModeInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -782,8 +799,6 @@
 		4C7B04441D1210B000295E82 /* IRCColorFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53A158E99520026668C /* IRCColorFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04451D1210B000295E82 /* IRCCommandIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB26C7219529016005F927C /* IRCCommandIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04461D1210B000295E82 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53B158E99520026668C /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04471D1210B000295E82 /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04481D1210B000295E82 /* IRCExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53C158E99520026668C /* IRCExtras.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04491D1210B000295E82 /* IRCISupportInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53D158E99520026668C /* IRCISupportInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B044A1D1210B000295E82 /* IRCMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53E158E99520026668C /* IRCMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B044B1D1210B000295E82 /* IRCModeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF53F158E99520026668C /* IRCModeInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1796,6 +1811,13 @@
 		4C056F141D1D89A100D85CEA /* TVCMemberListSharedUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListSharedUserInterfacePrivate.h; path = Headers/Private/TVCMemberListSharedUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C056F151D1D89A100D85CEA /* TVCMemberListUserInfoPopoverPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListUserInfoPopoverPrivate.h; path = Headers/Private/TVCMemberListUserInfoPopoverPrivate.h; sourceTree = "<group>"; };
 		4C056F161D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListYosemiteUserInterfacePrivate.h; path = Headers/Private/TVCMemberListYosemiteUserInterfacePrivate.h; sourceTree = "<group>"; };
+		4C083F9E1D2D5F4400192F09 /* IRCConnectionConfigInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionConfigInternal.h; sourceTree = "<group>"; };
+		4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfig.h; path = Headers/IRCConnectionConfig.h; sourceTree = "<group>"; };
+		4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionPrivate.h; path = Headers/Private/IRCConnectionPrivate.h; sourceTree = "<group>"; };
+		4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocketPrivate.h; path = Headers/Private/IRCConnectionSocketPrivate.h; sourceTree = "<group>"; };
+		4C083FAD1D2D5F5B00192F09 /* IRCExtrasPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCExtrasPrivate.h; path = Headers/Private/IRCExtrasPrivate.h; sourceTree = "<group>"; };
+		4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionConfig.m; path = IRC/IRCConnectionConfig.m; sourceTree = "<group>"; };
+		4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionInternal.h; sourceTree = "<group>"; };
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1814,7 +1836,6 @@
 		4C1818B01B656C310068FAD9 /* TextualAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualAppStore.entitlements; path = Resources/Sandbox/Entitlements/TextualAppStore.entitlements; sourceTree = SOURCE_ROOT; };
 		4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSViewHelper.m; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
 		4C24DC751A93C9CE0098D1BE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
@@ -2014,8 +2035,7 @@
 		4C8AF538158E99520026668C /* IRCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCClient.h; sourceTree = "<group>"; };
 		4C8AF539158E99520026668C /* IRCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCClientConfig.h; sourceTree = "<group>"; };
 		4C8AF53A158E99520026668C /* IRCColorFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCColorFormat.h; path = Headers/IRCColorFormat.h; sourceTree = "<group>"; };
-		4C8AF53B158E99520026668C /* IRCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnection.h; sourceTree = "<group>"; };
-		4C8AF53C158E99520026668C /* IRCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCExtras.h; sourceTree = "<group>"; };
+		4C8AF53B158E99520026668C /* IRCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnection.h; path = Headers/IRCConnection.h; sourceTree = "<group>"; };
 		4C8AF53D158E99520026668C /* IRCISupportInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfo.h; path = Headers/IRCISupportInfo.h; sourceTree = "<group>"; };
 		4C8AF53E158E99520026668C /* IRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCMessage.h; path = Headers/IRCMessage.h; sourceTree = "<group>"; };
 		4C8AF53F158E99520026668C /* IRCModeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCModeInfo.h; path = Headers/IRCModeInfo.h; sourceTree = "<group>"; };
@@ -2480,6 +2500,10 @@
 			children = (
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
 				4CB26C6F19529003005F927C /* IRCCommandIndex.m */,
+				4C8AF5BB158E99520026668C /* IRCConnection.m */,
+				4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */,
+				4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */,
+				4C8AF5BC158E99520026668C /* IRCExtras.m */,
 				4CB17ECF1D125E0100FAEAD4 /* IRCHighlightLogEntry.m */,
 				4CB17ED01D125E0100FAEAD4 /* IRCHighlightMatchCondition.m */,
 				4C8AF5BD158E99520026668C /* IRCISupportInfo.m */,
@@ -2811,6 +2835,9 @@
 				4CB9E3CC1D2B199900ED395A /* IRCChannelModePrivate.h */,
 				4CEA29BF1D2091F200AADC69 /* IRCColorFormatPrivate.h */,
 				4CB9E3C01D2B155500ED395A /* IRCCommandIndexPrivate.h */,
+				4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */,
+				4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */,
+				4C083FAD1D2D5F5B00192F09 /* IRCExtrasPrivate.h */,
 				4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */,
 				4CB17ED71D12603300FAEAD4 /* IRCHighlightLogEntryPrivate.h */,
 				4C0DEB6B1D2B79050040DA91 /* IRCISupportInfoPrivate.h */,
@@ -3092,9 +3119,6 @@
 				4C8AF536158E99520026668C /* IRCChannelConfig.h */,
 				4C8AF538158E99520026668C /* IRCClient.h */,
 				4C8AF539158E99520026668C /* IRCClientConfig.h */,
-				4C8AF53B158E99520026668C /* IRCConnection.h */,
-				4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */,
-				4C8AF53C158E99520026668C /* IRCExtras.h */,
 				4C8AF543158E99520026668C /* IRCUser.h */,
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
 				4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */,
@@ -3195,6 +3219,8 @@
 				4C8AF537158E99520026668C /* IRCChannelMode.h */,
 				4C8AF53A158E99520026668C /* IRCColorFormat.h */,
 				4CB26C7219529016005F927C /* IRCCommandIndex.h */,
+				4C8AF53B158E99520026668C /* IRCConnection.h */,
+				4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */,
 				4CB17EBA1D125B3700FAEAD4 /* IRCHighlightLogEntry.h */,
 				4CB17EBB1D125B3700FAEAD4 /* IRCHighlightMatchCondition.h */,
 				4C8AF53D158E99520026668C /* IRCISupportInfo.h */,
@@ -3352,9 +3378,6 @@
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
 				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
-				4C8AF5BB158E99520026668C /* IRCConnection.m */,
-				4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */,
-				4C8AF5BC158E99520026668C /* IRCExtras.m */,
 				4C8AF5C3158E99520026668C /* IRCUser.m */,
 			);
 			name = IRC;
@@ -3363,6 +3386,8 @@
 		4CB17EC21D125BBA00FAEAD4 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				4C083F9E1D2D5F4400192F09 /* IRCConnectionConfigInternal.h */,
+				4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */,
 				4CB17EC31D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h */,
 				4CB17EC41D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h */,
 				4CBC54241D2B26FC0067242C /* IRCMessageInternal.h */,
@@ -3746,6 +3771,7 @@
 				4C7B033A1D1210A100295E82 /* OELReachability.h in Headers */,
 				4C7B033B1D1210A100295E82 /* IRC.h in Headers */,
 				4C7B033C1D1210A100295E82 /* IRCAddressBook.h in Headers */,
+				4C083F9F1D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */,
 				4C7B033D1D1210A100295E82 /* IRCChannel.h in Headers */,
 				4C7B033E1D1210A100295E82 /* IRCChannelConfig.h in Headers */,
 				4C7B033F1D1210A100295E82 /* IRCChannelMode.h in Headers */,
@@ -3755,8 +3781,6 @@
 				4C7B03421D1210A100295E82 /* IRCColorFormat.h in Headers */,
 				4C7B03431D1210A100295E82 /* IRCCommandIndex.h in Headers */,
 				4C7B03441D1210A100295E82 /* IRCConnection.h in Headers */,
-				4C7B03451D1210A100295E82 /* IRCConnectionSocket.h in Headers */,
-				4C7B03461D1210A100295E82 /* IRCExtras.h in Headers */,
 				4C056F261D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B03471D1210A100295E82 /* IRCISupportInfo.h in Headers */,
 				4C7B03481D1210A100295E82 /* IRCMessage.h in Headers */,
@@ -3769,6 +3793,7 @@
 				4C7B034C1D1210A100295E82 /* IRCTreeItem.h in Headers */,
 				4CF1F4D31D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */,
 				4CC215D71D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */,
+				4C083FAE1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */,
 				4CEA29BC1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4C2D6ACA1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C056F231D1D89A100D85CEA /* TVCMemberListUserInfoPopoverPrivate.h in Headers */,
@@ -3798,6 +3823,7 @@
 				4C7B050D1D12168C00295E82 /* THOPluginManagerPrivate.h in Headers */,
 				4C7B050A1D12168C00295E82 /* THOPluginItemPrivate.h in Headers */,
 				4C7B036C1D1210A100295E82 /* TLOGrowlController.h in Headers */,
+				4C083FB41D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */,
 				4C7B036E1D1210A100295E82 /* TLOKeyEventHandler.h in Headers */,
 				4CD1C4C61D1F18A50034F6A1 /* TXMasterControllerPrivate.h in Headers */,
 				4CB2FA961D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */,
@@ -3827,9 +3853,11 @@
 				4C5DD5071D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h in Headers */,
 				4C7B03871D1210A100295E82 /* TVCLogView.h in Headers */,
 				4CCD4CA31D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h in Headers */,
+				4C083FBC1D2D624000192F09 /* IRCConnectionInternal.h in Headers */,
 				4C7B03881D1210A100295E82 /* TVCMainWindow.h in Headers */,
 				4C7B038A1D1210A100295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C7B038D1D1210A100295E82 /* TVCMainWindowSplitView.h in Headers */,
+				4C083FB11D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */,
 				4C7B038E1D1210A100295E82 /* TVCMainWindowTextView.h in Headers */,
 				4C7B49101D131A2A008D7926 /* TVCLogViewInternalWK2.h in Headers */,
 				4C7B03921D1210A100295E82 /* TVCMemberList.h in Headers */,
@@ -3856,6 +3884,7 @@
 				4C7B03A41D1210A100295E82 /* TXMenuController.h in Headers */,
 				4C76CC931D1DC6ED005CDDA9 /* TVCMainWindowTextViewYosemiteUserInteracePrivate.h in Headers */,
 				4C7B03A51D1210A100295E82 /* TXSharedApplication.h in Headers */,
+				4C083FA81D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */,
 				4C7B490D1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B03A61D1210A100295E82 /* TXUserInterface.h in Headers */,
 				4C3D4A651D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
@@ -3903,6 +3932,7 @@
 				4C7B02FD1D12105D00295E82 /* TextualApplication.h in Headers */,
 				4C7B02FE1D12105D00295E82 /* TPCApplicationInfo.h in Headers */,
 				4C7B02FF1D12105D00295E82 /* TPCPathInfo.h in Headers */,
+				4C083FBD1D2D624000192F09 /* IRCConnectionInternal.h in Headers */,
 				4CD1C4C71D1F18A50034F6A1 /* TXMasterControllerPrivate.h in Headers */,
 				4C2D6ABF1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */,
 				4C7B03001D12105D00295E82 /* TPCPreferences.h in Headers */,
@@ -3949,6 +3979,7 @@
 				4C7B03BD1D1210A800295E82 /* IRCAddressBook.h in Headers */,
 				4C7B03BE1D1210A800295E82 /* IRCChannel.h in Headers */,
 				4CB9E3CE1D2B199900ED395A /* IRCChannelModePrivate.h in Headers */,
+				4C083FA01D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */,
 				4C7B03BF1D1210A800295E82 /* IRCChannelConfig.h in Headers */,
 				4C7B03C01D1210A800295E82 /* IRCChannelMode.h in Headers */,
 				4C7B03C11D1210A800295E82 /* IRCClient.h in Headers */,
@@ -3958,9 +3989,7 @@
 				4C7B03C41D1210A800295E82 /* IRCCommandIndex.h in Headers */,
 				4CB2FA971D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */,
 				4C7B03C51D1210A800295E82 /* IRCConnection.h in Headers */,
-				4C7B03C61D1210A800295E82 /* IRCConnectionSocket.h in Headers */,
 				4C7B48FC1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
-				4C7B03C71D1210A800295E82 /* IRCExtras.h in Headers */,
 				4CEA29C11D2091F200AADC69 /* IRCColorFormatPrivate.h in Headers */,
 				4CB9E3BE1D2B14C400ED395A /* IRCMessageBatchPrivate.h in Headers */,
 				4C10B37B1D23283000868A74 /* TDCLicenseManagerDialogPrivate.h in Headers */,
@@ -3969,6 +3998,7 @@
 				4C7B03CA1D1210A800295E82 /* IRCModeInfo.h in Headers */,
 				4C7B03CB1D1210A800295E82 /* IRCPrefix.h in Headers */,
 				4C7B03CC1D1210A800295E82 /* IRCSendingMessage.h in Headers */,
+				4C083FA91D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */,
 				4C7B03CD1D1210A800295E82 /* IRCTreeItem.h in Headers */,
 				4C5DD50B1D1E098600F2E1AE /* TVCDockIconPrivate.h in Headers */,
 				4C056F211D1D89A100D85CEA /* TVCMemberListSharedUserInterfacePrivate.h in Headers */,
@@ -4023,6 +4053,7 @@
 				4C10B3811D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
 				4C4A1AE91D12245B004FBF12 /* TXGlobalModelsPrivate.h in Headers */,
 				4C7B04081D1210A800295E82 /* TVCLogView.h in Headers */,
+				4C083FB51D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */,
 				4C7B04091D1210A800295E82 /* TVCMainWindow.h in Headers */,
 				4CCD4CA81D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C2D6ACB1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
@@ -4069,6 +4100,7 @@
 				4C5DD51A1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C7B04B41D1210DA00295E82 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04B51D1210DA00295E82 /* IRCUserPrivate.h in Headers */,
+				4C083FAF1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04B61D1210DA00295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04B81D1210DA00295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04B91D1210DA00295E82 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -4088,6 +4120,7 @@
 				4CAAAE4B1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
 				4C76CC911D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04C31D1210DA00295E82 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
+				4C083FB21D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */,
 				4C7B04C41D1210DA00295E82 /* TPCResourceManagerPrivate.h in Headers */,
 				4C7B04C51D1210DA00295E82 /* TPCThemeControllerPrivate.h in Headers */,
 				4C10B3891D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -4114,6 +4147,7 @@
 				4C7B030C1D12106300295E82 /* TextualApplication.h in Headers */,
 				4C7B030D1D12106300295E82 /* TPCApplicationInfo.h in Headers */,
 				4C7B030E1D12106300295E82 /* TPCPathInfo.h in Headers */,
+				4C083FBE1D2D624000192F09 /* IRCConnectionInternal.h in Headers */,
 				4CD1C4C81D1F18A50034F6A1 /* TXMasterControllerPrivate.h in Headers */,
 				4C2D6AC01D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */,
 				4C7B030F1D12106300295E82 /* TPCPreferences.h in Headers */,
@@ -4160,6 +4194,7 @@
 				4C7B043E1D1210B000295E82 /* IRCAddressBook.h in Headers */,
 				4C7B043F1D1210B000295E82 /* IRCChannel.h in Headers */,
 				4CB9E3CF1D2B199900ED395A /* IRCChannelModePrivate.h in Headers */,
+				4C083FA11D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */,
 				4C7B04401D1210B000295E82 /* IRCChannelConfig.h in Headers */,
 				4C7B04411D1210B000295E82 /* IRCChannelMode.h in Headers */,
 				4C7B04421D1210B000295E82 /* IRCClient.h in Headers */,
@@ -4169,9 +4204,7 @@
 				4C7B04451D1210B000295E82 /* IRCCommandIndex.h in Headers */,
 				4CB2FA981D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */,
 				4C7B04461D1210B000295E82 /* IRCConnection.h in Headers */,
-				4C7B04471D1210B000295E82 /* IRCConnectionSocket.h in Headers */,
 				4C7B48FD1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
-				4C7B04481D1210B000295E82 /* IRCExtras.h in Headers */,
 				4CEA29C21D2091F200AADC69 /* IRCColorFormatPrivate.h in Headers */,
 				4CB9E3BF1D2B14C400ED395A /* IRCMessageBatchPrivate.h in Headers */,
 				4C10B37C1D23283000868A74 /* TDCLicenseManagerDialogPrivate.h in Headers */,
@@ -4180,6 +4213,7 @@
 				4C7B044B1D1210B000295E82 /* IRCModeInfo.h in Headers */,
 				4C7B044C1D1210B000295E82 /* IRCPrefix.h in Headers */,
 				4C7B044D1D1210B000295E82 /* IRCSendingMessage.h in Headers */,
+				4C083FAA1D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */,
 				4C7B044E1D1210B000295E82 /* IRCTreeItem.h in Headers */,
 				4C5DD50C1D1E098600F2E1AE /* TVCDockIconPrivate.h in Headers */,
 				4C056F221D1D89A100D85CEA /* TVCMemberListSharedUserInterfacePrivate.h in Headers */,
@@ -4234,6 +4268,7 @@
 				4C10B3821D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
 				4C4A1AEA1D12245B004FBF12 /* TXGlobalModelsPrivate.h in Headers */,
 				4C7B04891D1210B000295E82 /* TVCLogView.h in Headers */,
+				4C083FB61D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */,
 				4C7B048A1D1210B000295E82 /* TVCMainWindow.h in Headers */,
 				4CCD4CA91D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
@@ -4280,6 +4315,7 @@
 				4C5DD51B1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C7B04CD1D1210E000295E82 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04CE1D1210E000295E82 /* IRCUserPrivate.h in Headers */,
+				4C083FB01D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04CF1D1210E000295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04D11D1210E000295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04D21D1210E000295E82 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -4299,6 +4335,7 @@
 				4CAAAE4C1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
 				4C76CC921D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04DC1D1210E000295E82 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
+				4C083FB31D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */,
 				4C7B04DD1D1210E000295E82 /* TPCResourceManagerPrivate.h in Headers */,
 				4C7B04DE1D1210E000295E82 /* TPCThemeControllerPrivate.h in Headers */,
 				4C10B38A1D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -5112,6 +5149,7 @@
 				4CF40DEB1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */,
 				4C74FBBF1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
+				4C083FB91D2D603E00192F09 /* IRCConnectionConfig.m in Sources */,
 				4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
 				4C790FCE1B82725C00EB318C /* TXWindowController.m in Sources */,
@@ -5348,6 +5386,7 @@
 				4C0BA6C11990798800857343 /* TLOSpeechSynthesizer.m in Sources */,
 				4C0BA6C41990798800857343 /* OELReachability.m in Sources */,
 				4C0BA6C61990798800857343 /* TDCHighlightEntrySheet.m in Sources */,
+				4C083FB81D2D603E00192F09 /* IRCConnectionConfig.m in Sources */,
 				4C0EC1281AB49DE400D0015C /* TPCResourceManager.m in Sources */,
 				4CF304D61CCD343F0005EA64 /* TVCAutoExpandingTextField.m in Sources */,
 				4CF304DD1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m in Sources */,
@@ -5410,6 +5449,7 @@
 				4CF40DEC1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */,
 				4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
+				4C083FBA1D2D603E00192F09 /* IRCConnectionConfig.m in Sources */,
 				4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C790FCF1B82725C00EB318C /* TXWindowController.m in Sources */,

@@ -63,7 +63,8 @@
 	@class IRCClientConfig;
 	@class IRCCommandIndex;
 	@class IRCConnection;
-	@class IRCExtras;
+	@class IRCConnectionConfig;
+	@class IRCConnectionConfigMutable;
 	@class IRCHighlightLogEntry;
 	@class IRCHighlightMatchCondition;
 	@class IRCHighlightMatchConditionMutable;
@@ -209,8 +210,7 @@
 	#import "IRCColorFormat.h"
 	#import "IRCCommandIndex.h"
 	#import "IRCConnection.h"
-	#import "IRCConnectionSocket.h"
-	#import "IRCExtras.h"
+	#import "IRCConnectionConfig.h"
 	#import "IRCHighlightLogEntry.h"
 	#import "IRCHighlightMatchCondition.h"
 	#import "IRCISupportInfo.h"

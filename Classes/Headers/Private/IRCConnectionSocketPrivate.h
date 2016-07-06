@@ -36,24 +36,26 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection (IRCConnectionSocket)
 - (void)openSocket;
 - (void)closeSocket;
 
-@property (readonly, copy) NSString *localizedSecureConnectionProtocolString;
+@property (readonly, copy, nullable) NSString *localizedSecureConnectionProtocolString;
 
-- (NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText;
+- (nullable NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText;
 
 // When using a proxy, -connectedAddress will always return nil
 // In proxy mode we do not know the actual address that the proxy
 // connected to, only the proxy address itself. While we could
 // return the address the proxy was instructed to connect to, that
 // does not equal the resolved address.
-@property (readonly, copy) NSString *connectedAddress;
+@property (readonly, copy, nullable) NSString *connectedAddress;
 
 - (void)writeDataToSocket:(NSData *)data;
 
 - (void)openSSLCertificateTrustDialog;
 @end
+
+NS_ASSUME_NONNULL_END

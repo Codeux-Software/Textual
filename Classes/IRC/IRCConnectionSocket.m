@@ -47,12 +47,12 @@
 //  Copyright (c) 2013 ChatSecure. All rights reserved.
 //
 
-#import "TextualApplication.h"
-
-#import "IRCConnectionPrivate.h"
+#import "IRCConnectionInternal.h"
 
 #include <sys/socket.h>
 #include <netinet/in.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 #define SOCKS_PROXY_OPEN_TAG					10100
 #define SOCKS_PROXY_CONNECT_TAG					10200
@@ -68,6 +68,12 @@
 NSString * const IRCConnectionSocketTorBrowserTypeProxyAddress = @"127.0.0.1";
 NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
+@interface IRCConnection ()
+@property (readonly) BOOL usesSocksProxy;
+@property (readonly) BOOL socksProxyInUse;
+@property (readonly) BOOL socksProxyCanAuthenticate;
+@end
+
 @implementation IRCConnection (IRCConnectionSocket)
 
 #pragma mark -
@@ -82,18 +88,15 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)createDispatchQueue
 {
-	NSString *dispatchID = [NSString stringWithUUID];
+	NSString *dispatchId = [NSString stringWithUUID];
 
-	// A socket queue exists regardless of what library is in use.
-	// This class reads on data on this queue just so the work is not passed to the main thread.
-	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:dispatchID];
+	NSString *dispatchQueueName = [@"socketDispatchQueue." stringByAppendingString:dispatchId];
 
-	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], DISPATCH_QUEUE_SERIAL);
+	self.dispatchQueue = dispatch_queue_create(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
 
-	// Create secondary queue incase we are using GCDAsyncSocket
-	NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:dispatchID];
+	NSString *socketQueueName = [@"socketReadWriteQueue." stringByAppendingString:dispatchId];
 
-	self.socketQueue = dispatch_queue_create([sqname UTF8String], DISPATCH_QUEUE_SERIAL);
+	self.socketQueue = dispatch_queue_create(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
 }
 
 #pragma mark -
@@ -109,12 +112,10 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 												 delegateQueue:self.dispatchQueue
 												   socketQueue:self.socketQueue];
 
-	[self.socketConnection setIPv4PreferredOverIPv6:self.connectionPrefersIPv4];
+	self.socketConnection.IPv4PreferredOverIPv6 = self.config.connectionPrefersIPv4;
 
 	/* Attempt to connect using a configured proxy */
-	BOOL connectedUsingProxy = NO;
-
-	if ([self usesSocksProxy]) {
+	if (self.usesSocksProxy) {
 		NSString *proxyPopulateError = nil;
 
 		if ([self socksProxyPopulateSystemSocksProxy:&proxyPopulateError] == NO) {
@@ -122,29 +123,32 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 				LogToConsoleError("%{public}@", proxyPopulateError)
 			}
 		} else {
-			connectedUsingProxy = YES;
+			[self tpcClientWillConnectToProxy:self.config.proxyAddress port:self.config.proxyPort];
 
-			[self tpcClientWillConnectToProxy:self.proxyAddress port:self.proxyPort];
+			[self performConnectToHost:self.config.proxyAddress onPort:self.config.proxyPort];
 
-			[self performConnectToHost:self.proxyAddress onPort:self.proxyPort];
+			return;
 		}
 	}
 
-	if (connectedUsingProxy == NO) {
-		[self performConnectToHost:self.serverAddress onPort:self.serverPort];
-	}
+	[self performConnectToHost:self.config.serverAddress onPort:self.config.serverPort];
 }
 
 - (void)performConnectToHost:(NSString *)serverAddress onPort:(uint16_t)serverPort
 {
-	NSError *connError = nil;
+	NSParameterAssert(serverAddress != nil);
+	NSParameterAssert(serverPort > 0);
 
-	if ([self.socketConnection connectToHost:serverAddress
-									  onPort:serverPort
-								 withTimeout:CONNECT_TIMEOUT
-									   error:&connError] == NO)
-	{
-		[self socketDidDisconnect:self.socketConnection withError:connError];
+	NSError *connectError = nil;
+
+	BOOL connectResult =
+	[self.socketConnection connectToHost:serverAddress
+								  onPort:serverPort
+							 withTimeout:CONNECT_TIMEOUT
+								   error:&connectError];
+
+	if (connectResult == NO) {
+		[self socketDidDisconnect:self.socketConnection withError:connectError];
 	}
 }
 
@@ -157,7 +161,9 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)closeSocketWithError:(NSString *)errorMessage
 {
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errorMessage forKey:NSLocalizedDescriptionKey];
+	NSParameterAssert(errorMessage != nil);
+
+	NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorMessage};
 
 	self.alternateDisconnectError = [NSError errorWithDomain:GCDAsyncSocketErrorDomain code:GCDAsyncSocketOtherError userInfo:userInfo];
 
@@ -168,10 +174,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 {
 	[self tearDownQueuedCertificateTrustDialog];
 
-	if ( self.socketConnection) {
-		[self.socketConnection setDelegate:nil];
-		 self.socketConnection = nil;
-	}
+	self.socketConnection = nil;
 
 	[self destroyDispatchQueue];
 
@@ -195,61 +198,78 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)writeDataToSocket:(NSData *)data
 {
-	if (self.isConnected) {
-		[self.socketConnection writeData:data withTimeout:(-1) tag:0];
+	NSParameterAssert(data != nil);
+
+	if (self.isConnected == NO) {
+		return;
 	}
+
+	[self.socketConnection writeData:data withTimeout:(-1) tag:0];
 }
 
 - (void)waitForData
 {
-	if (self.isConnected) {
-		[self.socketConnection readDataToData:[GCDAsyncSocket LFData] withTimeout:(-1) tag:0];
+	if (self.isConnected == NO) {
+		return;
 	}
+
+	[self.socketConnection readDataToData:[GCDAsyncSocket LFData] withTimeout:(-1) tag:0];
 }
 
 #pragma mark -
 #pragma mark Properties
 
-- (NSString *)connectedAddress
+- (nullable NSString *)connectedAddress
 {
-	if ([self socksProxyInUse]) {
+	if (self.socksProxyInUse) {
 		return nil;
-	} else {
-		return [self.socketConnection connectedHost];
 	}
+
+	return self.socketConnection.connectedHost;
 }
 
 - (NSArray *)clientSideCertificateForAuthentication
 {
-	NSData *localCertData = self.identityClientSideCertificate;
+	NSData *certificateDataIn = self.config.identityClientSideCertificate;
 
-	id returnValue = nil;
-
-	if (localCertData) {
-		SecKeychainItemRef cert;
-
-		CFDataRef rawCertData = (__bridge CFDataRef)(localCertData);
-
-		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
-
-		if (status == noErr) {
-			SecIdentityRef identity;
-
-			status = SecIdentityCreateWithCertificate(NULL, (SecCertificateRef)cert, &identity);
-
-			if (status == noErr) {
-				returnValue = @[(__bridge id)identity, (__bridge id)cert];
-
-				CFRelease(identity);
-			} else {
-				LogToConsoleError("User supplied client-side certificate produced an error trying to read it: %{public}i (#2)", status)
-			}
-
-			CFRelease(cert);
-		} else {
-			LogToConsoleError("User supplied client-side certificate produced an error trying to read it: %{public}i (#1)", status)
-		}
+	if (certificateDataIn == nil) {
+		return @[];
 	}
+
+	/* ====================================== */
+
+	SecKeychainItemRef certificateRef;
+
+	CFDataRef certificateDataInRef = (__bridge CFDataRef)certificateDataIn;
+
+	OSStatus status = SecKeychainItemCopyFromPersistentReference(certificateDataInRef, &certificateRef);
+
+	if (status != noErr) {
+		LogToConsoleError("Operation Failed (1): %i", status)
+
+		return @[];
+	}
+
+	/* ====================================== */
+
+	SecIdentityRef identityRef;
+
+	status = SecIdentityCreateWithCertificate(NULL, (SecCertificateRef)certificateRef, &identityRef);
+
+	if (status != noErr) {
+		CFRelease(certificateRef);
+
+		LogToConsoleError("Operation Failed (2): %i", status)
+
+		return @[];
+	}
+
+	/* ====================================== */
+
+	NSArray *returnValue = @[(__bridge id)identityRef, (__bridge id)certificateRef];
+
+	CFRelease(identityRef);
+	CFRelease(certificateRef);
 
 	return returnValue;
 }
@@ -257,57 +277,60 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 #pragma mark -
 #pragma mark Primary Socket Delegate
 
-- (void)socket:(id)sock didReceiveTrust:(SecTrustRef)trust completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler
+- (void)socket:(GCDAsyncSocket *)sock didReceiveTrust:(SecTrustRef)trust completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler
 {
-	if (self.connectionShouldValidateCertificateChain == NO) {
+	if (self.config.connectionShouldValidateCertificateChain == NO) {
 		completionHandler(YES);
-	} else {
-		SecTrustResultType result;
 
-		OSStatus trustEvalStatus = SecTrustEvaluate(trust, &result);
+		return;
+	}
 
-		if (trustEvalStatus == errSecSuccess)
-		{
-			if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
-				completionHandler(YES);
-			} else if (result == kSecTrustResultRecoverableTrustFailure) {
-				[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:self.socketConnection withCompletionBlock:completionHandler];
-			} else {
-				completionHandler(NO);
-			}
-		}
-		else
-		{
-			completionHandler(NO);
+	SecTrustResultType evaluationResult;
+
+	OSStatus evaluationStatus = SecTrustEvaluate(trust, &evaluationResult);
+
+	if (evaluationStatus == errSecSuccess) {
+		if (evaluationResult == kSecTrustResultUnspecified || evaluationResult == kSecTrustResultProceed) {
+			completionHandler(YES);
+
+			return;
+		} else if (evaluationResult == kSecTrustResultRecoverableTrustFailure) {
+			[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:self.socketConnection withCompletionBlock:completionHandler];
+
+			return;
 		}
 	}
+
+	completionHandler(NO);
 }
 
 - (void)maybeBeginTLSNegotation
 {
-	if (self.connectionPrefersSecuredConnection) {
-		NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-
-		settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
-
-		settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
-
-		settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
-
-		settings[(id)kCFStreamSSLPeerName] = (id)self.serverAddress;
-
-		NSArray *localCertData = [self clientSideCertificateForAuthentication];
-
-		if (localCertData) {
-			settings[(id)kCFStreamSSLCertificates] = (id)localCertData;
-		}
-
-		if (self.connectionPrefersModernCiphers) {
-			settings[GCDAsyncSocketSSLCipherSuites] = [GCDAsyncSocket cipherList];
-		}
-
-		[self.socketConnection startTLS:settings];
+	if (self.config.connectionPrefersSecuredConnection == NO) {
+		return;
 	}
+
+	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+
+	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
+
+	if (self.config.connectionPrefersModernCiphers) {
+		settings[GCDAsyncSocketSSLCipherSuites] = [GCDAsyncSocket cipherList];
+	}
+
+	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
+
+	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
+
+	settings[(id)kCFStreamSSLPeerName] = (id)self.config.serverAddress;
+
+	NSArray *clientSideCertificate = [self clientSideCertificateForAuthentication];
+
+	if (clientSideCertificate.count > 0) {
+		settings[(id)kCFStreamSSLCertificates] = (id)clientSideCertificate;
+	}
+
+	[self.socketConnection startTLS:settings];
 }
 
 - (void)onSocketConnectedToHost
@@ -324,16 +347,18 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	});
 }
 
-- (void)socket:(id)sock didConnectToHost:(NSString *)host port:(UInt16)port
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
-	if ([self socksProxyInUse]) {
+	if (self.socksProxyInUse) {
 		[self socksProxyOpen];
-	} else {
-		[self onSocketConnectedToHost];
+
+		return;
 	}
+
+	[self onSocketConnectedToHost];
 }
 
-- (void)_socketDidDisconnect:(id)sock withError:(NSError *)error
+- (void)_socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error
 {
 	[self closeSocket];
 
@@ -342,42 +367,42 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	[self tcpClientDidDisconnect:error];
 }
 
-- (void)socketDidDisconnect:(id)sock withError:(NSError *)error
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error
 {
-	if (error == nil && self.alternateDisconnectError) {
-		error =         self.alternateDisconnectError;
+	if (error == nil) {
+		error = self.alternateDisconnectError;
 	}
 
-	if (error == nil || [error code] == errSSLClosedGraceful) {
+	if (error == nil || error.code == errSSLClosedGraceful) {
 		[self _socketDidDisconnect:sock withError:nil];
-	} else {
-		NSString *errorMessage = nil;
 
-		if (error) {
-			if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
-				errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
-			} else if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
-				errorMessage = [GCDAsyncSocket sslHandshakeErrorStringFromError:[error code]];
-
-				if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
-					[self tcpClientDidReceivedAnInsecureCertificate];
-				}
-			}
-
-			if (NSObjectIsEmpty(errorMessage)) {
-				errorMessage = [error localizedDescription];
-			}
-
-			[self tcpClientDidError:errorMessage];
-		}
-
-		[self _socketDidDisconnect:sock withError:error];
+		return;
 	}
+
+	NSString *errorMessage = nil;
+
+	if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
+		errorMessage = [GCDAsyncSocket posixErrorStringFromError:error.code];
+	} else if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
+		errorMessage = [GCDAsyncSocket sslHandshakeErrorStringFromError:error.code];
+
+		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
+			[self tcpClientDidReceivedAnInsecureCertificate];
+		}
+	}
+
+	if (errorMessage == nil) {
+		errorMessage = error.localizedDescription;
+	}
+
+	[self tcpClientDidError:errorMessage];
+
+	[self _socketDidDisconnect:sock withError:error];
 }
 
 - (void)completeReadForNormalData:(NSData *)data
 {
-	id readData = data;
+	NSData *readData = data;
 
 	NSUInteger readDataTrimLength = 0;
 
@@ -392,19 +417,19 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	if (readDataTrimLength > 0) {
 		NSMutableData *mutableReadData = [readData mutableCopy];
 
-		[mutableReadData setLength:([mutableReadData length] - readDataTrimLength)];
+		mutableReadData.length = (mutableReadData.length - readDataTrimLength);
 
-		readData = mutableReadData;
+		readData = [mutableReadData copy];
 	}
 
-	NSString *sdata = [self convertFromCommonEncoding:readData];
+	NSString *dataAsString = [self convertFromCommonEncoding:readData];
 
-	if (sdata == nil) {
+	if (dataAsString == nil) {
 		return;
 	}
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self tcpClientDidReceiveData:sdata];
+		[self tcpClientDidReceiveData:dataAsString];
 	});
 }
 
@@ -415,9 +440,9 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	[self waitForData];
 }
 
-- (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	if ([self socksProxyInUse]) {
+	if (self.socksProxyInUse) {
 		if ([self socksProxyDidReadData:data withTag:tag] == NO) {
 			[self didReadNormalData:data];
 		}
@@ -426,14 +451,14 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	}
 }
 
-- (void)socket:(id)sock didWriteDataWithTag:(long)tag
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self tcpClientDidSendData];
 	});
 }
 
-- (void)socketDidSecure:(id)sock
+- (void)socketDidSecure:(GCDAsyncSocket *)sock
 {
 	self.isSecured = YES;
 
@@ -445,24 +470,24 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 #pragma mark -
 #pragma mark SSL Certificate Trust Message
 
-- (NSString *)localizedSecureConnectionProtocolString
+- (nullable NSString *)localizedSecureConnectionProtocolString
 {
 	return [self localizedSecureConnectionProtocolString:YES];
 }
 
-- (NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText
+- (nullable NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText
 {
-	NSString *protocol = [self.socketConnection sslNegotiatedProtocolString];
+	NSString *protocol = self.socketConnection.sslNegotiatedProtocolString;
 
-	NSString *cipher = [self.socketConnection sslNegotiatedCipherSuiteString];
+	NSString *cipher = self.socketConnection.sslNegotiatedCipherSuiteString;
 
-	BOOL cipherDeprecated = [self.socketConnection sslConnectedWithDeprecatedCipher];
+	BOOL cipherIsDeprecated = self.socketConnection.sslConnectedWithDeprecatedCipher;
 
-	if (plainText && cipherDeprecated) {
+	if (plainText && cipherIsDeprecated) {
 		return TXTLS(@"Prompts[1122][2]", protocol, cipher);
-	} else if (plainText && cipherDeprecated == NO) {
+	} else if (plainText && cipherIsDeprecated == NO) {
 		return TXTLS(@"Prompts[1122][1]", protocol, cipher);
-	} else if (plainText == NO && cipherDeprecated) {
+	} else if (plainText == NO && cipherIsDeprecated) {
 		return TXTLS(@"IRC[1112][2]", protocol, cipher);
 	} else {
 		return TXTLS(@"IRC[1112][1]", protocol, cipher);
@@ -471,17 +496,20 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)openSSLCertificateTrustDialog
 {
-	SecTrustRef trust = [self.socketConnection sslCertificateTrustInformation];
+	SecTrustRef trustRef = self.socketConnection.sslCertificateTrustInformation;
 
-	PointerIsEmptyAssert(trust);
+	if (trustRef == NULL) {
+		return;
+	}
 
 	NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
 
-	NSString *policyName = [self.socketConnection sslCertificateTrustPolicyName];
+	NSString *policyName = self.socketConnection.sslCertificateTrustPolicyName;
 
 	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
 	[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
+
 	[panel setAlternateButtonTitle:nil];
 
 	if (protocolString == nil) {
@@ -490,11 +518,11 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		[panel setInformativeText:TXTLS(@"Prompts[1121][3]", policyName, protocolString)];
 	}
 
-	[panel beginSheetForWindow:[NSApp mainWindow]
+	[panel beginSheetForWindow:[NSApp keyWindow]
 				 modalDelegate:nil
 				didEndSelector:NULL
 				   contextInfo:NULL
-						 trust:trust
+						 trust:trustRef
 					   message:TXTLS(@"Prompts[1121][1]", policyName)];
 }
 
@@ -503,140 +531,158 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (BOOL)usesSocksProxy
 {
-	return (	self.proxyType == IRCConnectionSocketSystemSocksProxyType	||
-				self.proxyType == IRCConnectionSocketSocks4ProxyType		||
-				self.proxyType == IRCConnectionSocketSocks5ProxyType		||
-				self.proxyType == IRCConnectionSocketHTTPProxyType			||
-				self.proxyType == IRCConnectionSocketTorBrowserType);
+	IRCConnectionSocketProxyType proxyType = self.config.proxyType;
+
+	return (	proxyType == IRCConnectionSocketSystemSocksProxyType	||
+				proxyType == IRCConnectionSocketSocks4ProxyType			||
+				proxyType == IRCConnectionSocketSocks5ProxyType			||
+				proxyType == IRCConnectionSocketHTTPProxyType			||
+				proxyType == IRCConnectionSocketTorBrowserType);
 }
 
 - (BOOL)socksProxyInUse
 {
-	return (self.proxyType == IRCConnectionSocketSocks4ProxyType ||
-			self.proxyType == IRCConnectionSocketSocks5ProxyType ||
-			self.proxyType == IRCConnectionSocketHTTPProxyType);
+	IRCConnectionSocketProxyType proxyType = self.config.proxyType;
+
+	return (proxyType == IRCConnectionSocketSocks4ProxyType ||
+			proxyType == IRCConnectionSocketSocks5ProxyType ||
+			proxyType == IRCConnectionSocketHTTPProxyType);
 }
 
 - (BOOL)socksProxyCanAuthenticate
 {
-	return (NSObjectIsNotEmpty(self.proxyUsername) &&
-			NSObjectIsNotEmpty(self.proxyPassword));
+	return (self.config.proxyUsername.length > 0 &&
+			self.config.proxyPassword.length > 0);
 }
 
 - (BOOL)socksProxyPopulateSystemSocksProxy:(NSString **)errorString
 {
-	if (self.proxyType == IRCConnectionSocketSystemSocksProxyType)
+	IRCConnectionSocketProxyType proxyType = self.config.proxyType;
+
+	if (proxyType == IRCConnectionSocketSystemSocksProxyType)
 	{
-		NSDictionary *settings = (__bridge_transfer NSDictionary *)(SCDynamicStoreCopyProxies(NULL));
+		NSDictionary *proxySettings = (__bridge_transfer NSDictionary *)(SCDynamicStoreCopyProxies(NULL));
 
-		if ([settings boolForKey:@"SOCKSEnable"]) {
-			id socksProxyHost = [settings objectForKey:@"SOCKSProxy"];
-			id socksProxyPort = [settings objectForKey:@"SOCKSPort"];
+		if ([proxySettings boolForKey:@"SOCKSEnable"] == NO) {
+			return NO;
+		}
 
-			id socksProxyUsername = [settings objectForKey:@"SOCKSUser"];
-			id socksProxyPassword = nil;
+		id socksProxyHost = proxySettings[@"SOCKSProxy"];
+		id socksProxyPort = proxySettings[@"SOCKSPort"];
 
-			if (socksProxyHost && socksProxyPort) {
-				/* Search keychain for a password related to this SOCKS proxy */
-				if (socksProxyUsername) {
-					NSDictionary *keychainSearchDict = @{
-						(id)kSecClass : (id)kSecClassInternetPassword,
-						(id)kSecAttrServer : socksProxyHost,
-						(id)kSecAttrProtocol : (id)kSecAttrProtocolSOCKS,
-						(id)kSecReturnData : (id)kCFBooleanTrue,
-						(id)kSecMatchLimit : (id)kSecMatchLimitOne
-					};
+		if (socksProxyHost == nil || socksProxyPort == nil) {
+			return NO;
+		}
 
-					CFDataRef result = nil;
+		id socksProxyUsername = proxySettings[@"SOCKSUser"];
+		id socksProxyPassword = nil;
 
-					OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)keychainSearchDict, (CFTypeRef *)&result);
+		/* Search keychain for a password related to this SOCKS proxy */
+		if (socksProxyUsername) {
+			NSDictionary *queryParamaters = @{
+				(id)kSecClass : (id)kSecClassInternetPassword,
+				(id)kSecAttrServer : socksProxyHost,
+				(id)kSecAttrProtocol : (id)kSecAttrProtocolSOCKS,
+				(id)kSecReturnData : (id)kCFBooleanTrue,
+				(id)kSecMatchLimit : (id)kSecMatchLimitOne
+			};
 
-					if (status == noErr) {
-						NSData *passwordData = (__bridge_transfer NSData *)result;
+			CFDataRef queryResultRef = nil;
 
-						if (NSObjectIsEmpty(passwordData) == NO) {
-							socksProxyPassword = [NSString stringWithData:passwordData encoding:NSUTF8StringEncoding];
-						}
-					} else {
-						*errorString = @"SOCKS Error: Textual encountered a problem trying to retrieve the SOCKS proxy password from System Preferences";
+			OSStatus queryStatus = SecItemCopyMatching((__bridge CFDictionaryRef)queryParamaters, (CFTypeRef *)&queryResultRef);
 
-						return NO;
-					}
-				}
+			if (queryStatus != noErr) {
+				*errorString = @"SOCKS Error: Textual encountered a problem trying to retrieve the SOCKS proxy password from System Preferences";
 
-				/* Assign results to the local keys */
-				self.proxyAddress = socksProxyHost;
-				self.proxyPort = [socksProxyPort integerValue];
+				return NO;
+			}
 
-				self.proxyType = IRCConnectionSocketSocks5ProxyType;
-				
-				self.proxyUsername = socksProxyUsername;
-				self.proxyPassword = socksProxyPassword;
+			NSData *queryResult = (__bridge_transfer NSData *)queryResultRef;
 
-				return YES; // Successful result
+			if (queryResult != nil) {
+				socksProxyPassword = [NSString stringWithData:queryResult encoding:NSUTF8StringEncoding];
 			}
 		}
 
-		return NO; // Tell caller that this request failed
-	}
-	else if (self.proxyType == IRCConnectionSocketTorBrowserType)
-	{
-		self.proxyType = IRCConnectionSocketSocks5ProxyType;
+		/* Assign results to the local keys */
+		IRCConnectionConfigMutable *mutableConfig = [self.config mutableCopy];
 
-		self.proxyAddress = IRCConnectionSocketTorBrowserTypeProxyAddress;
-		self.proxyPort = IRCConnectionSocketTorBrowserTypeProxyPort;
+		mutableConfig.proxyAddress = socksProxyHost;
+		mutableConfig.proxyPort = [socksProxyPort integerValue];
 
-		self.proxyUsername = nil;
-		self.proxyPassword = nil;
+		mutableConfig.proxyType = IRCConnectionSocketSocks5ProxyType;
+		
+		mutableConfig.proxyUsername = socksProxyUsername;
+		mutableConfig.proxyPassword = socksProxyPassword;
 
-		return YES; // Successful result
-	}
-	else
-	{
+		self.config = mutableConfig;
+
 		return YES;
 	}
+	else if (proxyType == IRCConnectionSocketTorBrowserType)
+	{
+		IRCConnectionConfigMutable *mutableConfig = [self.config mutableCopy];
+
+		mutableConfig.proxyType = IRCConnectionSocketSocks5ProxyType;
+
+		mutableConfig.proxyAddress = IRCConnectionSocketTorBrowserTypeProxyAddress;
+		mutableConfig.proxyPort = IRCConnectionSocketTorBrowserTypeProxyPort;
+
+		mutableConfig.proxyUsername = nil;
+		mutableConfig.proxyPassword = nil;
+
+		self.config = mutableConfig;
+
+		return YES;
+	}
+
+	return YES;
 }
 
 - (void)socksProxyOpen
 {
-	if (self.proxyType == IRCConnectionSocketSocks4ProxyType) {
+	IRCConnectionSocketProxyType proxyType = self.config.proxyType;
+
+	if (proxyType == IRCConnectionSocketSocks4ProxyType) {
 		[self socks4ProxyOpen];
-	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
+	} else if (proxyType == IRCConnectionSocketSocks5ProxyType) {
 		[self socks5ProxyOpen];
-	} else if (self.proxyType == IRCConnectionSocketHTTPProxyType) {
+	} else if (proxyType == IRCConnectionSocketHTTPProxyType) {
 		[self httpProxyOpen];
 	}
 }
 
 - (BOOL)socksProxyDidReadData:(NSData *)data withTag:(long)tag
 {
-	if (self.proxyType == IRCConnectionSocketSocks4ProxyType) {
+	IRCConnectionSocketProxyType proxyType = self.config.proxyType;
+
+	if (proxyType == IRCConnectionSocketSocks4ProxyType) {
 		return [self socks4ProxyDidReadData:data withTag:tag];
-	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
+	} else if (proxyType == IRCConnectionSocketSocks5ProxyType) {
 		return [self socks5ProxyDidReadData:data withTag:tag];
-	} else if (self.proxyType == IRCConnectionSocketHTTPProxyType) {
+	} else if (proxyType == IRCConnectionSocketHTTPProxyType) {
 		return [self httpProxyDidReadData:data withTag:tag];
-	} else {
-		return NO;
 	}
+
+	return NO;
 }
 
 - (void)httpProxyOpen
 {
 	/* Build connect command that will be sent to the HTTP server */
-	NSString *connectionAddress = self.serverAddress;
+	NSString *connectionAddress = self.config.serverAddress;
 
-	NSUInteger connectionPort = self.serverPort;
+	uint16_t connectionPort = self.config.serverPort;
 
-	NSString *combinedDestinationAddress = nil;
+	NSString *connectionAddressCombined = nil;
 
-	if ([connectionAddress isIPv6Address]) {
-		combinedDestinationAddress = [NSString stringWithFormat:@"[%@]:%lu", connectionAddress, connectionPort];
+	if (connectionAddress.IPv6Address) {
+		connectionAddressCombined = [NSString stringWithFormat:@"[%@]:%hu", connectionAddress, connectionPort];
 	} else {
-		combinedDestinationAddress = [NSString stringWithFormat:@"%@:%lu", connectionAddress, connectionPort];
+		connectionAddressCombined = [NSString stringWithFormat:@"%@:%hu", connectionAddress, connectionPort];
 	}
 
-	NSString *connectCommand = [NSString stringWithFormat:@"CONNECT %@ HTTP/1.1\x0d\x0a\x0d\x0a", combinedDestinationAddress];
+	NSString *connectCommand = [NSString stringWithFormat:@"CONNECT %@ HTTP/1.1\x0d\x0a\x0d\x0a", connectionAddressCombined];
 
 	/* Pass the data along to the HTTP server */
 	NSData *connectCommandData = [connectCommand dataUsingEncoding:NSASCIIStringEncoding];
@@ -657,10 +703,10 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		NSArray *headerComponents = [dataAsString componentsSeparatedByString:@"\x0d\x0a"];
 
-		if ([headerComponents count] <= 2) {
+		if (headerComponents.count <= 2) {
 			[self closeSocketWithError:@"HTTP Error: Server responded with a malformed packet"];
 
-			return YES; // Tell caller we handled the data...
+			return YES;
 		}
 
 		/* Try our best to extract the status code from the response */
@@ -669,54 +715,52 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		// It is possible to split the response into its components using
 		// the space character but by using regular expression we are not
 		// only getting the components, we are also validating its format.
-		NSRange statusResponseRegexRange = NSMakeRange(0, [statusResponse length]);
+		NSRange statusResponseRegexRange = NSMakeRange(0, statusResponse.length);
 
 		NSRegularExpression *statusResponseRegex = [NSRegularExpression regularExpressionWithPattern:_httpHeaderResponseStatusRegularExpression options:0 error:NULL];
 
 		NSTextCheckingResult *statusResponseRegexResult = [statusResponseRegex firstMatchInString:statusResponse options:0 range:statusResponseRegexRange];
 
-		if ([statusResponseRegexResult numberOfRanges] == 6) {
-			//
-			// Index values:
-			//
-			// Complete Line		(0): HTTP/1.1 200 Connection established
-			// Major Version		(1): 1
-			// Minor Version		(2): .1
-			// Minor Version		(3): 1
-			// Status Code			(4): 200
-			// Status Message		(5): Connection established
-			//
-
-			NSRange statusCodeRange = [statusResponseRegexResult rangeAtIndex:4];
-			NSRange statusMessageRange = [statusResponseRegexResult rangeAtIndex:5];
-
-			NSString *statusCode = [statusResponse substringWithRange:statusCodeRange];
-			NSString *statusMessage = [statusResponse substringWithRange:statusMessageRange];
-
-			if ([statusCode integerValue] == 200) {
-				[self onSocketConnectedToHost];
-			} else {
-				NSString *errorMessage = [NSString stringWithFormat:@"HTTP Error: HTTP proxy server returned status code %@ with the message “%@“", statusCode, statusMessage];
-
-				[self closeSocketWithError:errorMessage];
-			}
-
-			return YES;
-		} else {
+		if (statusResponseRegexResult.numberOfRanges != 6) {
 			[self closeSocketWithError:@"HTTP Error: Server responded with a malformed packet"];
 
-			return YES; // Tell caller we handled the data...
+			return YES;
 		}
+
+		//
+		// Index values:
+		//
+		// Complete Line		(0): HTTP/1.1 200 Connection established
+		// Major Version		(1): 1
+		// Minor Version		(2): .1
+		// Minor Version		(3): 1
+		// Status Code			(4): 200
+		// Status Message		(5): Connection established
+		//
+
+		NSRange statusCodeRange = [statusResponseRegexResult rangeAtIndex:4];
+		NSString *statusCode = [statusResponse substringWithRange:statusCodeRange];
+
+		NSRange statusMessageRange = [statusResponseRegexResult rangeAtIndex:5];
+		NSString *statusMessage = [statusResponse substringWithRange:statusMessageRange];
+
+		if (statusCode.integerValue == 200) {
+			[self onSocketConnectedToHost];
+		} else {
+			NSString *errorMessage = [NSString stringWithFormat:@"HTTP Error: HTTP proxy server returned status code %@ with the message “%@“", statusCode, statusMessage];
+
+			[self closeSocketWithError:errorMessage];
+		}
+
+		return YES;
 
 #undef _httpHeaderResponseStatusRegularExpression
 	}
-	else
-	{
-		return NO;
-	}
+
+	return NO;
 }
 
-- (NSString *)socks4ProxyResolvedAddress
+- (nullable NSString *)socks4ProxyResolvedAddress
 {
 	/* SOCKS4 proxies do not support anything other than IPv4 addresses 
 	 (unless you support SOCKS4a, which Textual does not) which means we
@@ -725,7 +769,9 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	NSData *resolvedAddress4 = nil;
 
-	NSArray *resolvedAddresses = [GCDAsyncSocket lookupHost:self.serverAddress port:self.serverPort error:NULL];
+	NSArray *resolvedAddresses = [GCDAsyncSocket lookupHost:self.config.serverAddress
+													   port:self.config.serverPort
+													  error:NULL];
 
 	for (NSData *address in resolvedAddresses) {
 		if (resolvedAddress4 == nil && [GCDAsyncSocket isIPv4Address:address]) {
@@ -771,20 +817,20 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	//      +-----+-----+-----+------+------+------+
 	//
 
-	BOOL isVersion4Socks = (self.proxyType == IRCConnectionSocketSocks4ProxyType);
+	BOOL isVersion4Socks = (self.config.proxyType == IRCConnectionSocketSocks4ProxyType);
 
 	NSString *connectionAddress = nil;
 
 	if (isVersion4Socks) {
 		connectionAddress = [self socks4ProxyResolvedAddress];
 	} else {
-		connectionAddress = self.serverAddress;
+		connectionAddress = self.config.serverAddress;
 	}
 
-	NSData *connectionAddressBytes4 = [connectionAddress IPv4AddressBytes];
-	NSData *connectionAddressBytes6 = [connectionAddress IPv6AddressBytes];
+	NSData *connectionAddressBytes4 = connectionAddress.IPv4AddressBytes;
+	NSData *connectionAddressBytes6 = connectionAddress.IPv6AddressBytes;
 
-	uint16_t connectionPort = htons(self.serverPort);
+	uint16_t connectionPort = htons(self.config.serverPort);
 
 	/* Assemble the packet of data that will be sent */
 	NSMutableData *packetData = [NSMutableData data];
@@ -820,13 +866,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 			[self closeSocketWithError:@"Error: SOCKS 4 proxies only support IPv4 addresses"];
 
 			return;
-		} else {
-			[packetData appendBytes:&connectionPort length:2];
-
-			[packetData appendData:connectionAddressBytes4];
-
-			[packetData appendBytes:"\x00" length:1];
 		}
+
+		[packetData appendBytes:&connectionPort length:2];
+
+		[packetData appendData:connectionAddressBytes4];
+
+		[packetData appendBytes:"\x00" length:1];
 	}
 	else // isVersion4Socks
 	{
@@ -835,13 +881,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		} else if (connectionAddressBytes4) {
 			[packetData appendData:connectionAddressBytes4];
 		} else {
-			NSData *connectionAddressBytes = [connectionAddress dataUsingEncoding:NSASCIIStringEncoding];
+			NSData *connectionAddressData = [connectionAddress dataUsingEncoding:NSASCIIStringEncoding];
 
-			NSInteger connectionAddressLength = [connectionAddressBytes length];
+			NSUInteger connectionAddressLength = connectionAddressData.length;
 
 			[packetData appendBytes:&connectionAddressLength length:1];
 
-			[packetData appendBytes:[connectionAddressBytes bytes] length:connectionAddressLength];
+			[packetData appendBytes:connectionAddressData.bytes length:connectionAddressLength];
 		}
 
 		[packetData appendBytes:&connectionPort length:2];
@@ -875,23 +921,23 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 {
 	if (tag == SOCKS_PROXY_CONNECT_REPLY_1_TAG)
 	{
-		if (NSDissimilarObjects([data length], 8)) {
+		if (data.length != 8) {
 			[self closeSocketWithError:@"SOCKS4 Error: Server responded with a malformed packet"];
 
-			return YES; // Tell caller we handled the data...
+			return YES;
 		}
 
-		uint8_t *bytes = (uint8_t*)[data bytes];
+		uint8_t *bytes = (uint8_t*)data.bytes;
 
-		uint8_t rep = bytes[1];
+		uint8_t reply = bytes[1];
 
-		if (rep == 0x5a) {
+		if (reply == 0x5a) {
 			[self onSocketConnectedToHost];
-		} else if (rep == 0x5b) {
+		} else if (reply == 0x5b) {
 			[self closeSocketWithError:@"SOCKS4 Error: Request rejected or failed"];
-		} else if (rep == 0x5c) {
+		} else if (reply == 0x5c) {
 			[self closeSocketWithError:@"SOCKS4 Error: Request failed because client is not running an identd (or not reachable from server)"];
-		} else if (rep == 0x5d) {
+		} else if (reply == 0x5d) {
 			[self closeSocketWithError:@"SOCKS4 Error: Request failed because client's identd could not confirm the user ID string in the request"];
 		} else {
 			[self closeSocketWithError:@"SOCKS4 Error: Server replied with unknown status code"];
@@ -899,74 +945,67 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		return YES;
 	}
-	else
-	{
-		return NO;
-	}
+
+	return NO;
 }
 
 - (BOOL)socks5ProxyDidReadData:(NSData *)data withTag:(long)tag
 {
 	if (tag == SOCKS_PROXY_OPEN_TAG)
 	{
-		if (NSDissimilarObjects([data length], 2)) {
+		if (data.length != 2) {
 			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 
-			return YES; // Tell caller we handled the data...
+			return YES;
 		}
 
-		uint8_t *bytes = (uint8_t *)[data bytes];
+		uint8_t *bytes = (uint8_t *)data.bytes;
 
 		uint8_t version = bytes[0];
 		uint8_t method = bytes[1];
 
-		if (version == 5) {
-			if (method == 0)
-			{
-				[self socksProxyConnect];
-			}
-			else if (method == 2)
-			{
-				if ([self socksProxyCanAuthenticate]) {
-					[self socks5ProxyUserPassAuth];
-				} else {
-					[self closeSocketWithError:@"SOCKS5 Error: Server requested that we authenticate but a username and/or password is not configured"];
-				}
-			}
-			else
-			{
-				[self closeSocketWithError:@"SOCKS5 Error: Server requested authentication method that is not supported"];
+		if (version != 5) {
+			[self closeSocketWithError:@"SOCKS5 Error: Server greeting reply contained incorrect version number"];
+
+			return YES;
+		}
+
+		if (method == 0) {
+			[self socksProxyConnect];
+		} else if (method == 2) {
+			if (self.socksProxyCanAuthenticate) {
+				[self socks5ProxyUserPassAuth];
+			} else {
+				[self closeSocketWithError:@"SOCKS5 Error: Server requested that we authenticate but a username and/or password is not configured"];
 			}
 		} else {
-			[self closeSocketWithError:@"SOCKS5 Error: Server greeting reply contained incorrect version number"];
+			[self closeSocketWithError:@"SOCKS5 Error: Server requested authentication method that is not supported"];
 		}
 
 		return YES;
 	}
 	else if (tag == SOCKS_PROXY_CONNECT_REPLY_1_TAG)
 	{
-		if ([data length] <= 8) { // first 4 bytes + 2 for port
+		if (data.length <= 8) { // first 4 bytes + 2 for port
 			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 
-			return YES; // Tell caller we handled the data...
+			return YES;
 		}
 
-		uint8_t *bytes = (uint8_t *)[data bytes];
+		uint8_t *bytes = (uint8_t *)data.bytes;
 
-		uint8_t ver = bytes[0];
-		uint8_t rep = bytes[1];
+		uint8_t version = bytes[0];
+		uint8_t reply = bytes[1];
 
-		if (ver == 5 && rep == 0)
-		{
+		if (version == 5 && reply == 0) {
 			[self onSocketConnectedToHost];
-		}
-		else
+		} else
 		{
-#define _dr(cda, reason)			cda: { failureReason = (reason); break; }
+#define _dr(case, reason)			case: { failureReason = (reason); break; }
 
 			NSString *failureReason = nil;
 			
-			switch (rep) {
+			switch (reply) {
 				_dr(case 1,  @"SOCKS5 Error: General SOCKS server failure")
 				_dr(case 2,  @"SOCKS5 Error: Connection not allowed by ruleset")
 				_dr(case 3,  @"SOCKS5 Error: Network unreachable")
@@ -986,35 +1025,35 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	}
 	else if (tag == SOCKS_PROXY_AUTH_USERPASS_TAG)
 	{
-		/*
-		 Server response for username/password authentication:
+		//
+		// Server response for username/password authentication:
+		//
+		// field 1: version, 1 byte
+		// field 2: status code, 1 byte.
+		// 0x00 = success
+		// any other value = failure, connection must be closed
+		//
 
-		 field 1: version, 1 byte
-		 field 2: status code, 1 byte.
-		 0x00 = success
-		 any other value = failure, connection must be closed
-		 */
-
-		if ([data length] == 2) {
-			uint8_t *bytes = (uint8_t *)[data bytes];
-
-			uint8_t status = bytes[1];
-
-			if (status == 0x00) {
-				[self socksProxyConnect];
-			} else {
-				[self closeSocketWithError:@"SOCKS5 Error: Authentication failed for unknown reason"];
-			}
-		} else {
+		if (data.length != 2) {
 			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
+
+			return YES;
+		}
+
+		uint8_t *bytes = (uint8_t *)data.bytes;
+
+		uint8_t status = bytes[1];
+
+		if (status == 0x00) {
+			[self socksProxyConnect];
+		} else {
+			[self closeSocketWithError:@"SOCKS5 Error: Authentication failed for unknown reason"];
 		}
 
 		return YES;
 	}
-	else
-	{
-		return NO;
-	}
+
+	return NO;
 }
 
 - (void)socks5ProxySendGreeting
@@ -1032,7 +1071,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	/* Assemble the packet of data that will be sent */
 	NSData *packetData = nil;
 
-	if ([self socksProxyCanAuthenticate] == NO) {
+	if (self.socksProxyCanAuthenticate == NO) {
 		/* Send instructions that we are asking for version 5 of the SOCKS protocol
 		 with one authentication method: anonymous access */
 
@@ -1061,32 +1100,32 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	[self.socketConnection readDataWithTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_OPEN_TAG];
 }
 
-/*
- For username/password authentication the client's authentication request is
-
- field 1: version number, 1 byte (must be 0x01)
- field 2: username length, 1 byte
- field 3: username
- field 4: password length, 1 byte
- field 5: password
- */
+//
+// For username/password authentication the client's authentication request is
+//
+// field 1: version number, 1 byte (must be 0x01)
+// field 2: username length, 1 byte
+// field 3: username
+// field 4: password length, 1 byte
+// field 5: password
+//
 
 - (void)socks5ProxyUserPassAuth
 {
 	/* Assemble the packet of data that will be sent */
-	NSData *usernameData = [self.proxyUsername dataUsingEncoding:NSUTF8StringEncoding];
-	NSData *passwordData = [self.proxyPassword dataUsingEncoding:NSUTF8StringEncoding];
+	NSData *usernameData = [self.config.proxyUsername dataUsingEncoding:NSUTF8StringEncoding];
+	NSData *passwordData = [self.config.proxyPassword dataUsingEncoding:NSUTF8StringEncoding];
 
-	uint8_t usernameLength = (uint8_t)[usernameData length];
-	uint8_t passwordLength = (uint8_t)[passwordData length];
+	uint8_t usernameLength = (uint8_t)usernameData.length;
+	uint8_t passwordLength = (uint8_t)passwordData.length;
 
 	NSMutableData *authData = [NSMutableData dataWithCapacity:(1 + 1 + usernameLength + 1 + passwordLength)];
 
 	[authData appendBytes:"\x01" length:1];
 	[authData appendBytes:&usernameLength length:1];
-	[authData appendBytes:[usernameData bytes] length:usernameLength];
+	[authData appendBytes:usernameData.bytes length:usernameLength];
 	[authData appendBytes:&passwordLength length:1];
-	[authData appendBytes:[passwordData bytes] length:passwordLength];
+	[authData appendBytes:passwordData.bytes length:passwordLength];
 
 	/* Write the packet to the socket */
 	[self.socketConnection writeData:authData withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
@@ -1096,3 +1135,5 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

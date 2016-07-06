@@ -36,40 +36,23 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection : NSObject
-@property (readonly, strong) IRCClient *cilent;
-@property (readonly, copy) IRCConnectionConfig *config;
-@property (readonly) BOOL isConnected;
-@property (readonly) BOOL isConnectedWithClientSideCertificate;
-@property (readonly) BOOL isConnecting;
-@property (readonly) BOOL isSecured;
-@property (readonly) BOOL isSending;
+@interface IRCExtras : NSObject
++ (void)parseIRCProtocolURI:(NSString *)location;
 
-- (instancetype)initWithConfig:(IRCConnectionConfig *)config onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
++ (void)parseIRCProtocolURI:(NSString *)location
+			 withDescriptor:(nullable NSAppleEventDescriptor *)event;
 
-- (void)open;
-- (void)close;
++ (void)createConnectionToServer:(NSString *)serverInfo
+					 channelList:(nullable NSString *)channelList
+			  connectWhenCreated:(BOOL)connectWhenCreated;
 
-- (void)sendLine:(NSString *)line;
-
-- (void)clearSendQueue;
-@end
-
-@protocol IRCConnectionDelegate <NSObject>
-@required
-
-- (void)ircConnectionDidConnect:(IRCConnection *)sender;
-- (void)ircConnection:(IRCConnection *)sender willConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
-- (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError;
-- (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error;
-- (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data;
-- (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data;
-- (void)ircConnectionDidSecureConnection:(IRCConnection *)sender;
-- (void)ircConnectionDidReceivedAnInsecureCertificate:(IRCConnection *)sender;
++ (void)createConnectionToServer:(NSString *)serverInfo
+					 channelList:(nullable NSString *)channelList
+			  connectWhenCreated:(BOOL)connectWhenCreated
+	   mergeConnectionIfPossible:(BOOL)mergeConnectionIfPossible
+		 selectFirstChannelAdded:(BOOL)selectFirstChannelAdded;
 @end
 
 NS_ASSUME_NONNULL_END

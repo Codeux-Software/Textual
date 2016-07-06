@@ -2813,12 +2813,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)connectToTextualHelpChannel:(id)sender 
 {
-	[IRCExtras createConnectionAndJoinChannel:@"chat.freenode.net +6697" channel:@"#textual" autoConnect:YES focusChannel:YES mergeConnectionIfPossible:YES];
+	[IRCExtras createConnectionToServer:@"chat.freenode.net +6697" channelList:@"#textual" connectWhenCreated:YES mergeConnectionIfPossible:YES selectFirstChannelAdded:YES];
 }
 
 - (void)connectToTextualTestingChannel:(id)sender
 {
-	[IRCExtras createConnectionAndJoinChannel:@"chat.freenode.net +6697" channel:@"#textual-testing" autoConnect:YES focusChannel:YES mergeConnectionIfPossible:YES];
+	[IRCExtras createConnectionToServer:@"chat.freenode.net +6697" channelList:@"#textual-testing" connectWhenCreated:YES mergeConnectionIfPossible:YES selectFirstChannelAdded:YES];
 }
 
 - (void)_showSetVhostPromptOpenDialog:(id)sender
