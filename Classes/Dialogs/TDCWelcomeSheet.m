@@ -176,7 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-		if ([channelName isChannelName] == NO) {
+		if (channelName.isChannelName == NO) {
 			channelName = [@"#" stringByAppendingString:channelName];
 		}
 
@@ -209,7 +209,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onDeleteChannel:(id)sender
 {
-	NSInteger selectedRow = [self.channelTable selectedRow];
+	NSInteger selectedRow = self.channelTable.selectedRow;
 
 	if (selectedRow < 0) {
 		return;

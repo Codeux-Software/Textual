@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 			self.internalBatchEntries = [NSMutableDictionary dictionary];
 		}
 
-		[self.internalBatchEntries setObject:entry forKey:batchToken];
+		self.internalBatchEntries[batchToken] = entry;
 	}
 }
 
@@ -119,7 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return nil;
 		}
 
-		return [self.internalBatchEntries objectForKey:batchToken];
+		return self.internalBatchEntries[batchToken];
 	}
 }
 

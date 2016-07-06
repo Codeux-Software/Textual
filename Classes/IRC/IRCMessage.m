@@ -221,7 +221,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Parse extension information (if present) */
 	if ([lineMutable hasPrefix:@"@"]) {
-		NSString *extensionInfo = [lineMutable getToken];
+		NSString *extensionInfo = lineMutable.token;
 
 		if (extensionInfo.length <= 1) {
 			return NO;
@@ -234,7 +234,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Parse sender information (if present) */
 	if ([lineMutable hasPrefix:@":"]) {
-		NSString *senderInfo = [lineMutable getToken];
+		NSString *senderInfo = lineMutable.token;
 
 		if (senderInfo.length <= 1) {
 			return NO;
@@ -246,7 +246,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Parse command */
-	NSString *command = [lineMutable getToken];
+	NSString *command = lineMutable.token;
 
 	if (command.length < 1) {
 		return NO;
@@ -265,7 +265,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Parse remaining data */
 	NSMutableArray<NSString *> *paramaters = [NSMutableArray new];
 
-	while ([lineMutable length] > 0) {
+	while (lineMutable.length > 0) {
 		if ([lineMutable hasPrefix:@":"])
 		{
 			NSString *sequence = [lineMutable substringFromIndex:1];
@@ -276,7 +276,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		else
 		{
-			NSString *sequence = [lineMutable getToken];
+			NSString *sequence = lineMutable.token;
 
 			[paramaters addObject:sequence];
 		}
