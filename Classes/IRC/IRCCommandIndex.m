@@ -182,7 +182,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 {
 	NSParameterAssert(indexKey != nil);
 
-	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", __PRETTY_FUNCTION__, indexKey];
+	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", _cmd, indexKey];
 
 	NSString *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:publicSearch];
 
@@ -263,7 +263,7 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 {
 	NSParameterAssert(command != nil);
 
-	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", __PRETTY_FUNCTION__, command];
+	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", _cmd, command];
 
 	NSNumber *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:publicSearch];
 
@@ -323,7 +323,7 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 {
 	NSParameterAssert(command != nil);
 
-	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", __PRETTY_FUNCTION__, command];
+	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", _cmd, command];
 
 	NSNumber *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:NO];
 
