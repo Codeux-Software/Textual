@@ -3264,17 +3264,40 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)manageLicense:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	[self manageLicense:sender activateLicenseKey:nil licenseKeyPassedByArgument:NO];
+#endif
 }
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey
 {
 	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
 }
 
+- (void)manageLicense:(id)sender activateLicenseKeyWithURL:(NSURL *)licenseKeyURL
+{
+	NSParameterAssert(licenseKeyURL != nil);
+
+	NSString *path = licenseKeyURL.path;
+
+	if (path == nil) {
+		return;
+	}
+
+	NSCharacterSet *slashCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
+
+	NSString *licenseKey = [path stringByTrimmingCharactersInSet:slashCharacterSet];
+
+	if (licenseKey.length == 0) {
+		return;
+	}
+
+	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
+}
+
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument
 {
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	_popWindowViewIfExists(@"TDCLicenseManagerDialog");
 
 	TDCLicenseManagerDialog *licensePanel = [TDCLicenseManagerDialog new];
@@ -3290,10 +3313,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[windowController() addWindowToWindowList:licensePanel];
-#endif
 }
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
