@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-		if ([channelsAdded containsObject:channelName] == NO) {
+		if ([channelsAdded containsObjectIgnoringCase:channelName] == NO) {
 			[channelsAdded addObject:channelName];
 		} else {
 			continue;
