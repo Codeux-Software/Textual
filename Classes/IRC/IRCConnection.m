@@ -36,38 +36,56 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCConnectionInternal.h"
 
-#import "IRCConnectionPrivate.h"
+NS_ASSUME_NONNULL_BEGIN
 
-/* The actual socket is handled by IRCConnectionSocket.m,
- which is an extension of this class. */
+@interface IRCConnection ()
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, strong) NSMutableArray<NSString *> *sendQueue;
+@property (nonatomic, strong) TLOTimer *floodControlTimer;
+@property (nonatomic, assign) NSUInteger floodControlCurrentMessageCount;
+@end
 
 @implementation IRCConnection
 
 #pragma mark -
 #pragma mark Initialization 
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithConfig:(IRCConnectionConfig *)config onClient:(IRCClient *)client
 {
+	NSParameterAssert(config != nil);
+	NSParameterAssert(client != nil);
+
 	if ((self = [super init])) {
-		self.sendQueue = [NSMutableArray new];
-		
-		self.floodTimer = [TLOTimer new];
-		
-		[self.floodTimer setTarget:self];
-		[self.floodTimer setAction:@selector(timerOnTimer:)];
-		
-		self.floodControlCurrentMessageCount = 0;
+		self.client = client;
+
+		self.config = config;
+
+		[self prepareInitialState];
 	}
 	
 	return self;
 }
 
+- (void)prepareInitialState
+{
+	self.sendQueue = [NSMutableArray new];
+
+	self.floodControlTimer = [TLOTimer new];
+
+	self.floodControlTimer.repeatTimer = YES;
+
+	self.floodControlTimer.target = self;
+	self.floodControlTimer.action = @selector(onFloodControlTimer:);
+}
+
 - (void)dealloc
 {
-	[self.floodTimer stop];
-	[self.floodTimer setTarget:nil];
+	[self.floodControlTimer stop];
+	 self.floodControlTimer = nil;
 
 	[self close];
 }
@@ -77,7 +95,7 @@
 
 - (void)open
 {
-	[self startTimer];
+	[self startFloodControlTimer];
 
 	[self openSocket];
 }
@@ -90,7 +108,7 @@
 
 	[self.sendQueue removeAllObjects];
 	
-	[self stopTimer];
+	[self stopFloodControlTimer];
 	
 	[self closeSocket];
 }
@@ -98,14 +116,14 @@
 #pragma mark -
 #pragma mark Encode Data
 
-- (NSString *)convertFromCommonEncoding:(NSData *)data
+- (nullable NSString *)convertFromCommonEncoding:(NSData *)data
 {
-	return [self.associatedClient convertFromCommonEncoding:data];
+	return [self.client convertFromCommonEncoding:data];
 }
 
-- (NSData *)convertToCommonEncoding:(NSString *)data
+- (nullable NSData *)convertToCommonEncoding:(NSString *)data
 {
-	return [self.associatedClient convertToCommonEncoding:data];
+	return [self.client convertToCommonEncoding:data];
 }
 
 #pragma mark -
@@ -113,19 +131,18 @@
 
 - (void)sendLine:(NSString *)line
 {
+	NSParameterAssert(line != nil);
+
 	/* PONG replies are extremely important. There is no reason they should be
 	 placed in the flood control queue. This writes them directly to the socket
 	 instead of actuallying waiting for the queue. We only need this check if
 	 we actually have flood control enabled. */
-	BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
-
-	if (isPong) {
+	if ([line hasPrefix:@"PONG"]) {
 		[self sendData:line removeFromQueue:NO];
 
-		return; // Exit from entering the queue.
+		return;
 	}
 
-	/* Normal send. */
 	[self.sendQueue addObject:line];
 
 	[self tryToSend];
@@ -137,12 +154,12 @@
 		return NO;
 	}
 
-	if ([self.sendQueue count] == 0) {
+	if (self.sendQueue.count == 0) {
 		return NO;
 	}
 
-	if ([self.associatedClient isLoggedIn]) {
-		if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
+	if (self.client.isLoggedIn) {
+		if (self.floodControlCurrentMessageCount >= self.config.floodControlMaximumMessages) {
 			return NO;
 		}
 
@@ -156,32 +173,38 @@
 
 - (void)sendNextLine
 {
-	if ([self.sendQueue count] > 0) {
-		self.isSending = YES;
+	NSString *line = self.sendQueue.firstObject;
 
-		[self sendData:self.sendQueue[0] removeFromQueue:YES];
+	if (line == nil) {
+		return;
 	}
+
+	self.isSending = YES;
+
+	[self sendData:line removeFromQueue:YES];
 }
 
-- (void)sendData:(NSString *)dataToSend
+- (void)sendData:(NSString *)stringToSend
 {
-	[self sendData:dataToSend removeFromQueue:NO];
+	[self sendData:stringToSend removeFromQueue:NO];
 }
 
-- (void)sendData:(NSString *)dataToSend removeFromQueue:(BOOL)removeFromQueue
+- (void)sendData:(NSString *)stringToSend removeFromQueue:(BOOL)removeFromQueue
 {
-	NSString *firstItem = [dataToSend stringByAppendingString:@"\x0d\x0a"];
+	NSParameterAssert(stringToSend != nil);
 
 	if (removeFromQueue) {
 		[self.sendQueue removeObjectAtIndex:0];
 	}
+	
+	stringToSend = [stringToSend stringByAppendingString:@"\x0d\x0a"];
 
-	NSData *data = [self convertToCommonEncoding:firstItem];
+	NSData *dataToSend = [self convertToCommonEncoding:stringToSend];
 
-	if (data) {
-		[self writeDataToSocket:data];
+	if (dataToSend) {
+		[self writeDataToSocket:dataToSend];
 
-		[self.associatedClient ircConnectionWillSend:firstItem];
+		[self tcpClientWillSendData:stringToSend];
 	}
 }
 
@@ -193,25 +216,25 @@
 #pragma mark -
 #pragma mark Flood Control Timer
 
-- (void)startTimer
+- (void)startFloodControlTimer
 {
-	if ([self.floodTimer timerIsActive] == NO) {
-		[self.floodTimer start:self.floodControlDelayInterval];
+	if (self.floodControlTimer.timerIsActive == NO) {
+		[self.floodControlTimer start:self.config.floodControlDelayInterval];
 	}
 }
 
-- (void)stopTimer
+- (void)stopFloodControlTimer
 {
-	if ([self.floodTimer timerIsActive]) {
-		[self.floodTimer stop];
+	if (self.floodControlTimer.timerIsActive) {
+		[self.floodControlTimer stop];
 	}
 }
 
-- (void)timerOnTimer:(id)sender
+- (void)onFloodControlTimer:(id)sender
 {
 	self.floodControlCurrentMessageCount = 0;
 
-	while ([self tryToSend] == YES) {
+	while ([self tryToSend] != NO) {
 		;
 	}
 }
@@ -222,42 +245,47 @@
 - (void)tcpClientDidConnect
 {
 	[self clearSendQueue];
-	
-	[self.associatedClient ircConnectionDidConnect:self];
+
+	[self.client ircConnectionDidConnect:self];
 }
 
-- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort
+- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort
 {
-	[self.associatedClient ircConnectionWillConnectToProxy:proxyHost port:proxyPort];
+	[self.client ircConnection:self willConnectToProxy:proxyHost port:proxyPort];
 }
 
 - (void)tcpClientDidError:(NSString *)error
 {
 	[self clearSendQueue];
-	
-	[self.associatedClient ircConnectionDidError:error];
+
+	[self.client ircConnection:self didError:error];
 }
 
-- (void)tcpClientDidDisconnect:(NSError *)distcError
+- (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError
 {
 	[self clearSendQueue];
-	
-	[self.associatedClient ircConnectionDidDisconnect:self withError:distcError];
+
+	[self.client ircConnection:self didDisconnectWithError:disconnectError];
 }
 
 - (void)tcpClientDidReceiveData:(NSString *)data
 {
-	[self.associatedClient ircConnectionDidReceive:data];
+	[self.client ircConnection:self didReceiveData:data];
 }
 
 - (void)tcpClientDidSecureConnection
 {
-	[self.associatedClient ircConnectionDidSecureConnection];
+	[self.client ircConnectionDidSecureConnection:self];
 }
 
 - (void)tcpClientDidReceivedAnInsecureCertificate
 {
-	[self.associatedClient ircConnectionDidReceivedAnInsecureCertificate];
+	[self.client ircConnectionDidReceivedAnInsecureCertificate:self];
+}
+
+- (void)tcpClientWillSendData:(NSString *)data
+{
+	[self.client ircConnection:self willSendData:data];
 }
 
 - (void)tcpClientDidSendData
@@ -268,3 +296,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
