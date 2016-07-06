@@ -280,7 +280,7 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 	}
 
 	if (cachedValue) {
-		return [cachedValue unsignedIntegerValue];
+		return cachedValue.unsignedIntegerValue;
 	}
 
 	return NSNotFound;
@@ -340,7 +340,7 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 	}
 
 	if (cachedValue) {
-		return [cachedValue unsignedIntegerValue];
+		return cachedValue.unsignedIntegerValue;
 	}
 
 	return NSNotFound;

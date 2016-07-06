@@ -114,7 +114,7 @@ ClassWithDesignatedInitializerInitMethod
 		configurationData = [configurationData substringToIndex:(configurationData.length - IRCISupportRawSuffix.length)];
 	}
 
-	configurationData = [configurationData trim];
+	configurationData = configurationData.trim;
 
 	if (configurationData.length == 0) {
 		return;
@@ -146,9 +146,9 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if (segmentValue) {
-			[configuration setObject:segmentValue forKey:segmentKey];
+			configuration[segmentKey] = segmentValue;
 		} else {
-			[configuration setObject:@(YES) forKey:segmentKey];
+			configuration[segmentKey] = @(YES);
 		}
 
 		if (segmentValue) {
@@ -157,13 +157,13 @@ ClassWithDesignatedInitializerInitMethod
 			} else if ([segmentKey isEqualIgnoringCase:@"CHANMODES"]) {
 				[self parseChannelModes:segmentValue];
 			} else if ([segmentKey isEqualIgnoringCase:@"MODES"]) {
-				NSInteger maximumModesCount = [segmentValue integerValue];
+				NSInteger maximumModesCount = segmentValue.integerValue;
 
 				if (maximumModesCount > 0) {
 					self.maximumModeCount = maximumModesCount;
 				}
 			} else if ([segmentKey isEqualIgnoringCase:@"NICKLEN"]) {
-				NSInteger maximumNicknameLength = [segmentValue integerValue];
+				NSInteger maximumNicknameLength = segmentValue.integerValue;
 
 				if (maximumNicknameLength > 0) {
 					self.maximumNicknameLength = maximumNicknameLength;
@@ -172,7 +172,7 @@ ClassWithDesignatedInitializerInitMethod
 				self.networkName = segmentValue;
 				self.networkNameFormatted = TXTLS(@"IRC[1067]", segmentValue);
 			} else if ([segmentKey isEqualIgnoringCase:@"CHANTYPES"]) {
-				NSArray *channelNamePrefixes = [segmentValue characterStringBuffer];
+				NSArray *channelNamePrefixes = segmentValue.characterStringBuffer;
 
 				if (channelNamePrefixes.count > 0) {
 					self.channelNamePrefixes = channelNamePrefixes;
@@ -258,7 +258,7 @@ ClassWithDesignatedInitializerInitMethod
 	BOOL modeIsSet = NO;
 	
 	do {
-		NSString *nextToken = [modeStringMutable getToken];
+		NSString *nextToken = modeStringMutable.token;
 
 		if (nextToken.length == 0) {
 			break;
@@ -290,7 +290,7 @@ ClassWithDesignatedInitializerInitMethod
 				mode.modeIsSet = modeIsSet;
 
 				if ([self modeHasParameter:modeSymbol whenModeIsSet:modeIsSet]) {
-					mode.modeParamater = [modeStringMutable getToken];
+					mode.modeParamater = modeStringMutable.token;
 				}
 
 				[modes addObject:[mode copy]];
@@ -330,8 +330,8 @@ ClassWithDesignatedInitializerInitMethod
 	/* The mode symbols and characters are stored in separate arrays because
 	 NSDictionary has no sense of order and the order of the user mode
 	 symbols is very important to establish rank. */
-	NSArray *modeSymbolsArray = [modeSymbols characterStringBuffer];
-	NSArray *charactersArray = [characters characterStringBuffer];
+	NSArray *modeSymbolsArray = modeSymbols.characterStringBuffer;
+	NSArray *charactersArray = characters.characterStringBuffer;
 
 	self.userModeSymbols = @{
 		 @"modeSymbols" : modeSymbolsArray,
