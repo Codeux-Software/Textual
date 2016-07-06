@@ -63,8 +63,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable NSString *)context;
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)manageLicense:(id)sender activateLicenseKeyWithURL:(NSURL *)licenseKeyURL;
+
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey;
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument;
+#endif
 
 - (void)toggleMuteOnNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
