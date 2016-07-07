@@ -544,9 +544,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSInteger rowIndex = [mainWindowMemberList() rowForItem:member];
 	
 	if (rowIndex >= 0) {
-		[mainWindowMemberList() removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
-											inParent:nil
-									   withAnimation:NSTableViewAnimationEffectNone];
+		[mainWindowMemberList() removeItemFromListAtIndex:rowIndex];
 	}
 }
 
@@ -713,6 +711,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (lengthSortedMemberIndex != NSNotFound) {
 			self.memberListLengthSortedContainer[lengthSortedMemberIndex] = member2;
 		}
+	});
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[mainWindowMemberList() reloadItem:member1];
 	});
 }
 

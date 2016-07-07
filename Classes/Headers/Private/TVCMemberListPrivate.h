@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addItemToList:(NSUInteger)rowIndex;
 
 - (void)removeItemFromList:(id)object;
+- (void)removeItemFromListAtIndex:(NSUInteger)rowIndex;
 
 - (void)reloadAllDrawings;
 
