@@ -35,9 +35,13 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCAddressBookInternal.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCAddressBookEntry
+
+NSString * const IRCAddressBookDictionaryValueEntryTypeKey						= @"entryType";
 
 NSString * const IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey			= @"ignoreNoticeMessages";
 NSString * const IRCAddressBookDictionaryValueIgnorePublicMessagesKey			= @"ignorePublicMessages";
@@ -50,222 +54,372 @@ NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey	= 
 
 NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackUserActivity";
 
+- (void)populateDefaultsPreflight
+{
+	ObjectIsAlreadyInitializedAssert
+
+	self->_defaults = @{
+	  @"entryType" : @(IRCAddressBookIgnoreEntryType),
+	  @"ignoreClientToClientProtocol" : @(NO),
+	  @"ignoreFileTransferRequests"	: @(NO),
+	  @"ignoreGeneralEventMessages"	: @(NO),
+	  @"ignoreNoticeMessages" : @(NO),
+	  @"ignorePrivateMessageHighlights" : @(NO),
+	  @"ignorePrivateMessages" : @(NO),
+	  @"ignorePublicMessageHighlights" : @(NO),
+	  @"ignorePublicMessages" : @(NO),
+	  @"trackUserActivity" : @(NO)
+	};
+}
+
+- (void)populateDefaultsPostflight
+{
+	ObjectIsAlreadyInitializedAssert
+
+	SetVariableIfNilCopy(self->_hostmask, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_hostmaskRegularExpression, NSStringEmptyPlaceholder)
+
+	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+}
+
 + (instancetype)newIgnoreEntry
 {
-	IRCAddressBookEntry *newEntry = [IRCAddressBookEntry new];
+	return [self newIgnoreEntryForHostmask:nil];
+}
 
-	[newEntry setEntryType:IRCAddressBookIgnoreEntryType];
++ (instancetype)newIgnoreEntryForHostmask:(nullable NSString *)hostmask
+{
+	if (hostmask == nil) {
+		hostmask = NSStringEmptyPlaceholder;
+	}
 
-	[newEntry setIgnoreClientToClientProtocol:YES];
-	[newEntry setIgnoreFileTransferRequests:YES];
-	[newEntry setIgnoreGeneralEventMessages:YES];
-	[newEntry setIgnoreNoticeMessages:YES];
-	[newEntry setIgnorePrivateMessageHighlights:YES];
-	[newEntry setIgnorePrivateMessages:YES];
-	[newEntry setIgnorePublicMessageHighlights:YES];
-	[newEntry setIgnorePublicMessages:YES];
+	NSDictionary *dic = @{
+		@"hostmask" : hostmask,
+		IRCAddressBookDictionaryValueEntryTypeKey : @(IRCAddressBookIgnoreEntryType),
+		IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey : @(YES),
+		IRCAddressBookDictionaryValueIgnorePublicMessagesKey : @(YES),
+		IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey : @(YES),
+		IRCAddressBookDictionaryValueIgnorePrivateMessagesKey : @(YES),
+		IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey : @(YES),
+		IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey : @(YES),
+		IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey : @(YES),
+		IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey : @(YES),
+	};
 
-	[newEntry setTrackUserActivity:NO];
-
-	return newEntry;
+	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
+	
+	return object;
 }
 
 + (instancetype)newUserTrackingEntry
 {
-	IRCAddressBookEntry *newEntry = [IRCAddressBookEntry new];
+	NSDictionary *dic = @{
+		IRCAddressBookDictionaryValueEntryTypeKey : @(IRCAddressBookUserTrackingEntryType),
+		IRCAddressBookDictionaryValueTrackUserActivityKey : @(YES)
+	};
 
-	[newEntry setEntryType:IRCAddressBookUserTrackingEntryType];
-
-	[newEntry setIgnoreClientToClientProtocol:NO];
-	[newEntry setIgnoreFileTransferRequests:NO];
-	[newEntry setIgnoreGeneralEventMessages:NO];
-	[newEntry setIgnoreNoticeMessages:NO];
-	[newEntry setIgnorePrivateMessageHighlights:NO];
-	[newEntry setIgnorePrivateMessages:NO];
-	[newEntry setIgnorePublicMessageHighlights:NO];
-	[newEntry setIgnorePublicMessages:NO];
-
-	[newEntry setTrackUserActivity:YES];
-
-	return newEntry;
+	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
+	
+	return object;
 }
 
-- (NSDictionary *)defaults
-{
-	static id _defaults = nil;
-
-	if (_defaults == nil) {
-		NSDictionary *defaults = @{
-			 @"entryType"							: @(IRCAddressBookIgnoreEntryType),
-
-			 @"trackUserActivity"					: @(NO),
-
-			 @"ignoreClientToClientProtocol"		: @(NO),
-			 @"ignoreGeneralEventMessages"			: @(NO),
-			 @"ignoreNoticeMessages"				: @(NO),
-			 @"ignorePrivateMessages"				: @(NO),
-			 @"ignorePrivateMessageHighlights"		: @(NO),
-			 @"ignorePublicMessages"				: @(NO),
-			 @"ignorePublicMessageHighlights"		: @(NO),
-			 @"ignoreFileTransferRequests"			: @(NO),
-		 };
-
-		_defaults = [defaults copy];
-	}
-
-	return _defaults;
-}
-
-- (void)populateDefaults
-{
-	NSDictionary *defaults = [self defaults];
-
-	self.itemUUID							= [NSString stringWithUUID];
-
-	self.entryType							= [defaults integerForKey:@"entryType"];
-
-	self.trackUserActivity					= [defaults boolForKey:@"trackUserActivity"];
-
-	self.ignoreClientToClientProtocol		= [defaults boolForKey:@"ignoreClientToClientProtocol"];
-	self.ignoreFileTransferRequests			= [defaults boolForKey:@"ignoreFileTransferRequests"];
-	self.ignoreGeneralEventMessages			= [defaults boolForKey:@"ignoreGeneralEventMessages"];
-	self.ignoreNoticeMessages				= [defaults boolForKey:@"ignoreNoticeMessages"];
-	self.ignorePrivateMessageHighlights		= [defaults boolForKey:@"ignorePrivateMessageHighlights"];
-	self.ignorePrivateMessages				= [defaults boolForKey:@"ignorePrivateMessages"];
-	self.ignorePublicMessageHighlights		= [defaults boolForKey:@"ignorePublicMessageHighlights"];
-	self.ignorePublicMessages				= [defaults boolForKey:@"ignorePublicMessages"];
-}
-
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
+	ObjectIsAlreadyInitializedAssert
+
 	if ((self = [super init])) {
-		[self populateDefaults];
+		[self populateDefaultsPreflight];
+
+		[self populateDefaultsPostflight];
+
+		[self rebuildCache];
+
+		self->_objectInitialized = YES;
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic
 {
-	if ((self = [self init])) {
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		[self populateDefaultsPreflight];
+
 		[self populateDictionaryValues:dic];
+
+		[self populateDefaultsPostflight];
+
+		[self rebuildCache];
+
+		self->_objectInitialized = YES;
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)populateDictionaryValues:(NSDictionary *)dic
+- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
 {
-	/* With the old keys populated, try to fill in the new ones. */
-	[dic assignBoolTo:&_trackUserActivity				forKey:@"trackUserActivity"];
+	NSParameterAssert(dic != nil);
 
-	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreClientToClientProtocol"];
-	[dic assignBoolTo:&_ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
-	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
-	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNoticeMessages"];
-	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePrivateMessageHighlights"];
-	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMessages"];
-	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignorePublicMessageHighlights"];
-	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMessages"];
-
-	[dic assignStringTo:&_itemUUID						forKey:@"uniqueIdentifier"];
-
-	[dic assignUnsignedIntegerTo:&_entryType			forKey:@"entryType"];
-
-	/* First try to assign legacy keys. If these keys do not exist in the
-	 dictionary, then there is no sadness in losing them. The new key names
-	 will be used in -dictionaryValue after the first pass. */
-	[dic assignBoolTo:&_trackUserActivity				forKey:@"notifyJoins"];
-
-	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreCTCP"];
-	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreJPQE"];
-	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNotices"];
-	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePMHighlights"];
-	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMsg"];
-	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignoreHighlights"];
-	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMsg"];
-
-	/* Cannot use assign* on self.hostmask because it uses a custom setter. */
-	self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
-}
-
-- (BOOL)checkIgnore:(NSString *)thehost
-{
-	if (thehost) {
-		if (self.hostmaskRegularExpression) {
-			return [XRRegularExpression string:thehost isMatchedByRegex:self.hostmaskRegularExpression withoutCase:YES];
-		}
+	if ([self isMutable] == NO) {
+		ObjectIsAlreadyInitializedAssert
 	}
 
+	NSMutableDictionary<NSString *, id> *defaultsMutable = [self->_defaults mutableCopy];
+
+	[defaultsMutable addEntriesFromDictionary:dic];
+
+	[dic assignUnsignedIntegerTo:&self->_entryType forKey:@"entryType"];
+
+	if (self->_entryType == IRCAddressBookIgnoreEntryType) {
+		/* Load the newest set of keys */
+		[dic assignBoolTo:&self->_ignoreClientToClientProtocol forKey:@"ignoreClientToClientProtocol"];
+		[dic assignBoolTo:&self->_ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
+		[dic assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+		[dic assignBoolTo:&self->_ignoreNoticeMessages forKey:@"ignoreNoticeMessages"];
+		[dic assignBoolTo:&self->_ignorePrivateMessageHighlights forKey:@"ignorePrivateMessageHighlights"];
+		[dic assignBoolTo:&self->_ignorePrivateMessages forKey:@"ignorePrivateMessages"];
+		[dic assignBoolTo:&self->_ignorePublicMessageHighlights forKey:@"ignorePublicMessageHighlights"];
+		[dic assignBoolTo:&self->_ignorePublicMessages forKey:@"ignorePublicMessages"];
+
+		/* Load legacy keys (if they exist) */
+		[dic assignBoolTo:&self->_ignoreClientToClientProtocol forKey:@"ignoreCTCP"];
+		[dic assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreJPQE"];
+		[dic assignBoolTo:&self->_ignoreNoticeMessages forKey:@"ignoreNotices"];
+		[dic assignBoolTo:&self->_ignorePrivateMessageHighlights forKey:@"ignorePMHighlights"];
+		[dic assignBoolTo:&self->_ignorePrivateMessages forKey:@"ignorePrivateMsg"];
+		[dic assignBoolTo:&self->_ignorePublicMessageHighlights forKey:@"ignoreHighlights"];
+		[dic assignBoolTo:&self->_ignorePublicMessages forKey:@"ignorePublicMsg"];
+	}
+	else if (self->_entryType == IRCAddressBookUserTrackingEntryType)
+	{
+		/* Load the newest set of keys */
+		[dic assignBoolTo:&self->_trackUserActivity forKey:@"trackUserActivity"];
+
+		/* Load legacy keys (if they exist) */
+		[dic assignBoolTo:&self->_trackUserActivity forKey:@"notifyJoins"];
+	}
+
+	[dic assignStringTo:&self->_hostmask forKey:@"hostmask"];
+	[dic assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
+}
+
+- (void)rebuildCache
+{
+	[self rebuildHostmaskRegularExpression];
+
+	[self rebuildTrackingNickname];
+}
+
+- (void)rebuildHostmaskRegularExpression
+{
+	NSString *hostmask = self.hostmask;
+
+	if (self.entryType == IRCAddressBookIgnoreEntryType) {
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
+		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
+	} else if (self.entryType == IRCAddressBookUserTrackingEntryType) {
+		hostmask = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
+	}
+
+	self->_hostmaskRegularExpression = [hostmask copy];
+}
+
+- (void)rebuildTrackingNickname
+{
+	if (self.entryType != IRCAddressBookUserTrackingEntryType) {
+		return;
+	}
+
+	NSString *hostmask = self.hostmask;
+
+	hostmask = hostmask.nicknameFromHostmask;
+	hostmask = hostmask.lowercaseString;
+
+	self->_trackingNickname = [hostmask copy];
+}
+
+- (BOOL)checkMatch:(NSString *)hostmask
+{
+	NSParameterAssert(hostmask != nil);
+
+	return [XRRegularExpression string:hostmask isMatchedByRegex:self.hostmaskRegularExpression withoutCase:YES];
+}
+
+- (NSDictionary<NSString *, id> *)dictionaryValue
+{
+	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
+
+	[dic maybeSetObject:self.hostmask forKey:@"hostmask"];
+	[dic maybeSetObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
+
+	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	{
+		[dic setBool:self.ignoreClientToClientProtocol forKey:@"ignoreClientToClientProtocol"];
+		[dic setBool:self.ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
+		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+		[dic setBool:self.ignoreMessagesContainingMatch forKey:@"ignoreMessagesContainingMatch"];
+		[dic setBool:self.ignoreNoticeMessages forKey:@"ignoreNoticeMessages"];
+		[dic setBool:self.ignorePrivateMessageHighlights forKey:@"ignorePrivateMessageHighlights"];
+		[dic setBool:self.ignorePrivateMessages forKey:@"ignorePrivateMessages"];
+		[dic setBool:self.ignorePublicMessageHighlights forKey:@"ignorePublicMessageHighlights"];
+		[dic setBool:self.ignorePublicMessages forKey:@"ignorePublicMessages"];
+	}
+	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	{
+		[dic setBool:self.trackUserActivity forKey:@"trackUserActivity"];
+	}
+
+	[dic setUnsignedInteger:self.entryType forKey:@"entryType"];
+
+	return [dic dictionaryByRemovingDefaults:self->_defaults];
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	  IRCAddressBookEntry *object =
+	[[IRCAddressBookEntry alloc] initWithDictionary:[self dictionaryValue]];
+
+	return object;
+}
+
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
+{
+	  IRCAddressBookEntryMutable *object =
+	[[IRCAddressBookEntryMutable alloc] initWithDictionary:[self dictionaryValue]];
+
+	return object;
+}
+
+- (BOOL)isMutable
+{
 	return NO;
 }
 
-- (NSString *)trackingNickname
-{
-	NSString *nickname = [self.hostmask nicknameFromHostmask];
+@end
 
-	return [nickname lowercaseString];
+#pragma mark -
+
+@implementation IRCAddressBookEntryMutable
+
+@dynamic entryType;
+@dynamic hostmask;
+@dynamic ignoreClientToClientProtocol;
+@dynamic ignoreFileTransferRequests;
+@dynamic ignoreGeneralEventMessages;
+@dynamic ignoreMessagesContainingMatch;
+@dynamic ignoreNoticeMessages;
+@dynamic ignorePrivateMessageHighlights;
+@dynamic ignorePrivateMessages;
+@dynamic ignorePublicMessageHighlights;
+@dynamic ignorePublicMessages;
+@dynamic trackUserActivity;
+
+- (BOOL)isMutable
+{
+	return YES;
+}
+
+- (void)setEntryType:(IRCAddressBookEntryType)entryType
+{
+	if (self->_entryType != entryType) {
+		self->_entryType = entryType;
+
+		[self rebuildCache];
+	}
 }
 
 - (void)setHostmask:(NSString *)hostmask
 {
-	if ([hostmask isEqualToString:_hostmask]) {
-		return; // Do not write out duplicate hostmask.
-	}
+	NSParameterAssert(hostmask != nil);
 
-	if (self.entryType == IRCAddressBookUserTrackingEntryType) {
-		_hostmask = [hostmask copy];
+	if (self->_hostmask != hostmask) {
+		self->_hostmask = [hostmask copy];
 
-		self.hostmaskRegularExpression = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
-	} else {
-		/* There probably is an easier way to escape characters before making
-		 our regular expression, but let us do it the hard way instead. More fun. */
-		NSString *new_hostmask = hostmask;
-
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
-
-		_hostmask = [hostmask copy];
-
-		self.hostmaskRegularExpression = [NSString stringWithFormat:@"^%@$", new_hostmask];
+		[self rebuildCache];
 	}
 }
 
-- (NSDictionary *)dictionaryValue
+- (void)setIgnoreClientToClientProtocol:(BOOL)ignoreClientToClientProtocol
 {
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-	[dic maybeSetObject:self.itemUUID				forKey:@"uniqueIdentifier"];
-	[dic maybeSetObject:self.hostmask				forKey:@"hostmask"];
-
-	[dic setInteger:self.entryType					forKey:@"entryType"];
-
-	[dic setBool:self.ignoreClientToClientProtocol		forKey:@"ignoreClientToClientProtocol"];
-	[dic setBool:self.ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
-	[dic setBool:self.ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
-	[dic setBool:self.ignoreNoticeMessages				forKey:@"ignoreNoticeMessages"];
-	[dic setBool:self.ignorePublicMessages				forKey:@"ignorePublicMessages"];
-	[dic setBool:self.ignorePrivateMessages				forKey:@"ignorePrivateMessages"];
-	[dic setBool:self.ignorePublicMessageHighlights		forKey:@"ignorePublicMessageHighlights"];
-	[dic setBool:self.ignorePrivateMessageHighlights	forKey:@"ignorePrivateMessageHighlights"];
-    
-	[dic setBool:self.trackUserActivity				forKey:@"trackUserActivity"];
-
-	return [dic dictionaryByRemovingDefaults:[self defaults]];
+	if (self->_ignoreClientToClientProtocol != ignoreClientToClientProtocol) {
+		self->_ignoreClientToClientProtocol = ignoreClientToClientProtocol;
+	}
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (void)setIgnoreFileTransferRequests:(BOOL)ignoreFileTransferRequests
 {
-	return [[IRCAddressBookEntry allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	if (self->_ignoreFileTransferRequests != ignoreFileTransferRequests) {
+		self->_ignoreFileTransferRequests = ignoreFileTransferRequests;
+	}
+}
+
+- (void)setIgnoreGeneralEventMessages:(BOOL)ignoreGeneralEventMessages
+{
+	if (self->_ignoreGeneralEventMessages != ignoreGeneralEventMessages) {
+		self->_ignoreGeneralEventMessages = ignoreGeneralEventMessages;
+	}
+}
+
+- (void)setIgnoreNoticeMessages:(BOOL)ignoreNoticeMessages
+{
+	if (self->_ignoreNoticeMessages != ignoreNoticeMessages) {
+		self->_ignoreNoticeMessages = ignoreNoticeMessages;
+	}
+}
+
+- (void)setIgnorePrivateMessageHighlights:(BOOL)ignorePrivateMessageHighlights
+{
+	if (self->_ignorePrivateMessageHighlights != ignorePrivateMessageHighlights) {
+		self->_ignorePrivateMessageHighlights = ignorePrivateMessageHighlights;
+	}
+}
+
+- (void)setIgnorePrivateMessages:(BOOL)ignorePrivateMessages
+{
+	if (self->_ignorePrivateMessages != ignorePrivateMessages) {
+		self->_ignorePrivateMessages = ignorePrivateMessages;
+	}
+}
+
+- (void)setIgnorePublicMessageHighlights:(BOOL)ignorePublicMessageHighlights
+{
+	if (self->_ignorePublicMessageHighlights != ignorePublicMessageHighlights) {
+		self->_ignorePublicMessageHighlights = ignorePublicMessageHighlights;
+	}
+}
+
+- (void)setIgnorePublicMessages:(BOOL)ignorePublicMessages
+{
+	if (self->_ignorePublicMessages != ignorePublicMessages) {
+		self->_ignorePublicMessages = ignorePublicMessages;
+	}
+}
+
+- (void)setTrackUserActivity:(BOOL)trackUserActivity
+{
+	if (self->_trackUserActivity != trackUserActivity) {
+		self->_trackUserActivity = trackUserActivity;
+	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

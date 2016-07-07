@@ -970,7 +970,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSString *hostmask = [host lowercaseString];
 
 	for (IRCAddressBookEntry *g in self.config.ignoreList) {
-		if ([g checkIgnore:hostmask]) {
+		if ([g checkMatch:hostmask]) {
 			NSDictionary *ignoreDict = [g dictionaryValue];
 
 			for (NSString *matchkey in matches) {
@@ -2671,20 +2671,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					return;
 				}
 				
-				IRCAddressBookEntry *g = [IRCAddressBookEntry new];
-				
-				[g setHostmask:[user banMask]];
-
-				[g setIgnoreClientToClientProtocol:YES];
-				[g setIgnoreGeneralEventMessages:YES];
-				[g setIgnoreFileTransferRequests:YES];
-				[g setIgnoreNoticeMessages:YES];
-				[g setIgnorePrivateMessageHighlights:YES];
-				[g setIgnorePrivateMessages:YES];
-				[g setIgnorePublicMessageHighlights:YES];
-				[g setIgnorePublicMessages:YES];
-
-				[g setTrackUserActivity:NO];
+				IRCAddressBookEntry *g =
+				[IRCAddressBookEntry newIgnoreEntryForHostmask:[user banMask]];
 				
 				if (isIgnoreCommand) {
 					BOOL found = NO;

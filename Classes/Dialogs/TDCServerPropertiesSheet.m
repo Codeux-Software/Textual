@@ -1507,9 +1507,8 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCAddressBookSheet *sheet = nil;
 
 	if (hostmask) {
-		IRCAddressBookEntry *config = [IRCAddressBookEntry newIgnoreEntry];
-
-		config.hostmask = hostmask;
+		IRCAddressBookEntry *config =
+		[IRCAddressBookEntry newIgnoreEntryForHostmask:hostmask];
 
 		sheet = [[TDCAddressBookSheet alloc] initWithConfig:config];
 	} else {
@@ -1574,7 +1573,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSUInteger entryIndex =
 	[self.mutableAddressBookList indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
-		if ([[object itemUUID] isEqualToString:config.itemUUID]) {
+		if ([[object uniqueIdentifier] isEqualToString:config.uniqueIdentifier]) {
 			return YES;
 		} else {
 			return NO;

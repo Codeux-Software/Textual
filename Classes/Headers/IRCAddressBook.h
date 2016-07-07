@@ -37,8 +37,10 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, IRCAddressBookEntryType) {
-	IRCAddressBookIgnoreEntryType,
+	IRCAddressBookIgnoreEntryType = 0,
 	IRCAddressBookUserTrackingEntryType
 };
 
@@ -55,29 +57,53 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreClientToClien
 
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey;
 
-@interface IRCAddressBookEntry : NSObject <NSCopying>
-@property (nonatomic, assign) IRCAddressBookEntryType entryType;
-@property (nonatomic, copy) NSString *hostmask;
-@property (nonatomic, copy) NSString *hostmaskRegularExpression;
-@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, assign) BOOL ignoreClientToClientProtocol;
-@property (nonatomic, assign) BOOL ignoreGeneralEventMessages;
-@property (nonatomic, assign) BOOL ignoreNoticeMessages;
-@property (nonatomic, assign) BOOL ignorePrivateMessageHighlights;
-@property (nonatomic, assign) BOOL ignorePrivateMessages;
-@property (nonatomic, assign) BOOL ignorePublicMessageHighlights;
-@property (nonatomic, assign) BOOL ignorePublicMessages;
-@property (nonatomic, assign) BOOL ignoreFileTransferRequests;
-@property (nonatomic, assign) BOOL trackUserActivity;
+#pragma mark -
+#pragma mark Immutable Object
+
+@interface IRCAddressBookEntry : NSObject <NSCopying, NSMutableCopying>
+@property (readonly) IRCAddressBookEntryType entryType;
+@property (readonly, copy) NSString *uniqueIdentifier;
+@property (readonly, copy) NSString *hostmask;
+@property (readonly, copy) NSString *hostmaskRegularExpression;
+@property (readonly, copy, nullable) NSString *trackingNickname;
+@property (readonly) BOOL ignoreClientToClientProtocol;
+@property (readonly) BOOL ignoreGeneralEventMessages;
+@property (readonly) BOOL ignoreNoticeMessages;
+@property (readonly) BOOL ignorePrivateMessageHighlights;
+@property (readonly) BOOL ignorePrivateMessages;
+@property (readonly) BOOL ignorePublicMessageHighlights;
+@property (readonly) BOOL ignorePublicMessages;
+@property (readonly) BOOL ignoreFileTransferRequests;
+@property (readonly) BOOL ignoreMessagesContainingMatch;
+@property (readonly) BOOL trackUserActivity;
 
 + (instancetype)newIgnoreEntry;
++ (instancetype)newIgnoreEntryForHostmask:(nullable NSString *)hostmask;
+
 + (instancetype)newUserTrackingEntry;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic;
-- (NSDictionary *)dictionaryValue;
-- (void)populateDictionaryValues:(NSDictionary *)dic;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
+- (NSDictionary<NSString *, id> *)dictionaryValue;
 
-@property (readonly, copy) NSString *trackingNickname;
-
-- (BOOL)checkIgnore:(NSString *)thehost;
+- (BOOL)checkMatch:(NSString *)hostmask;
 @end
+
+#pragma mark -
+#pragma mark Mutable Object
+
+@interface IRCAddressBookEntryMutable : IRCAddressBookEntry
+@property (nonatomic, assign, readwrite) IRCAddressBookEntryType entryType;
+@property (nonatomic, copy, readwrite) NSString *hostmask;
+@property (nonatomic, assign, readwrite) BOOL ignoreClientToClientProtocol;
+@property (nonatomic, assign, readwrite) BOOL ignoreGeneralEventMessages;
+@property (nonatomic, assign, readwrite) BOOL ignoreNoticeMessages;
+@property (nonatomic, assign, readwrite) BOOL ignorePrivateMessageHighlights;
+@property (nonatomic, assign, readwrite) BOOL ignorePrivateMessages;
+@property (nonatomic, assign, readwrite) BOOL ignorePublicMessageHighlights;
+@property (nonatomic, assign, readwrite) BOOL ignorePublicMessages;
+@property (nonatomic, assign, readwrite) BOOL ignoreFileTransferRequests;
+@property (nonatomic, assign, readwrite) BOOL ignoreMessagesContainingMatch;
+@property (nonatomic, assign, readwrite) BOOL trackUserActivity;
+@end
+
+NS_ASSUME_NONNULL_END

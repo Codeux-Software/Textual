@@ -385,6 +385,9 @@
 		4C3D4A651D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */; };
 		4C3D4A661D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */; };
 		4C3D4A671D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */; };
+		4C3F5D391D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
+		4C3F5D3A1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
+		4C3F5D3B1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
 		4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBE1580469E00846B64 /* Foundation.framework */; };
@@ -1879,6 +1882,7 @@
 		4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldPrivateCloudExtension.h; path = Headers/Private/IRCWorldPrivateCloudExtension.h; sourceTree = "<group>"; };
 		4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXMenuControllerPrivate.h; path = Headers/Private/TXMenuControllerPrivate.h; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THOUnicodeHelper.h; path = Headers/THOUnicodeHelper.h; sourceTree = "<group>"; };
+		4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCAddressBookInternal.h; sourceTree = "<group>"; };
 		4C46CCBB1580469E00846B64 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		4C46CCBC1580469E00846B64 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		4C46CCBE1580469E00846B64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -2049,7 +2053,7 @@
 		4C8AF525158E99520026668C /* TDCChannelModifyTopicSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCChannelModifyTopicSheet.m; path = Dialogs/TDCChannelModifyTopicSheet.m; sourceTree = "<group>"; };
 		4C8AF526158E99520026668C /* TDCWelcomeSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCWelcomeSheet.m; path = Dialogs/TDCWelcomeSheet.m; sourceTree = "<group>"; };
 		4C8AF533158E99520026668C /* IRC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRC.h; path = Headers/IRC.h; sourceTree = "<group>"; };
-		4C8AF534158E99520026668C /* IRCAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCAddressBook.h; sourceTree = "<group>"; };
+		4C8AF534158E99520026668C /* IRCAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCAddressBook.h; path = Headers/IRCAddressBook.h; sourceTree = "<group>"; };
 		4C8AF535158E99520026668C /* IRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannel.h; path = Headers/IRCChannel.h; sourceTree = "<group>"; };
 		4C8AF536158E99520026668C /* IRCChannelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelConfig.h; path = Headers/IRCChannelConfig.h; sourceTree = "<group>"; };
 		4C8AF537158E99520026668C /* IRCChannelMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelMode.h; path = Headers/IRCChannelMode.h; sourceTree = "<group>"; };
@@ -2526,6 +2530,7 @@
 		4C1424781D1238C6005D4846 /* IRC */ = {
 			isa = PBXGroup;
 			children = (
+				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
 				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
@@ -3150,7 +3155,6 @@
 		4C8AF527158E99520026668C /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF534158E99520026668C /* IRCAddressBook.h */,
 				4C8AF538158E99520026668C /* IRCClient.h */,
 				4C8AF539158E99520026668C /* IRCClientConfig.h */,
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
@@ -3247,8 +3251,8 @@
 			children = (
 				4C8AF73E158EB6CA0026668C /* External Libraries */,
 				4CB17EC21D125BBA00FAEAD4 /* Internal */,
-				4C673F201D10FBD300979B60 /* Private */,
 				4C8AF533158E99520026668C /* IRC.h */,
+				4C8AF534158E99520026668C /* IRCAddressBook.h */,
 				4C8AF535158E99520026668C /* IRCChannel.h */,
 				4C8AF536158E99520026668C /* IRCChannelConfig.h */,
 				4C8AF537158E99520026668C /* IRCChannelMode.h */,
@@ -3269,6 +3273,7 @@
 				4C8AF548158E99520026668C /* NSColorHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */,
+				4C673F201D10FBD300979B60 /* Private */,
 				4C8AF557158E99520026668C /* StaticDefinitions.h */,
 				4C8AF567158E99520026668C /* TDCSheetBase.h */,
 				4C8AF56A158E99520026668C /* TextualApplication.h */,
@@ -3409,7 +3414,6 @@
 		4CA8AD2D195B47D400B99BFB /* IRC */ = {
 			isa = PBXGroup;
 			children = (
-				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
 				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
 			);
@@ -3419,6 +3423,7 @@
 		4CB17EC21D125BBA00FAEAD4 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */,
 				4CF642EF1D2DC34100CB9165 /* IRCChannelConfigInternal.h */,
 				4C083F9E1D2D5F4400192F09 /* IRCConnectionConfigInternal.h */,
 				4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */,
@@ -3797,6 +3802,7 @@
 				4C7B03331D1210A100295E82 /* GRMustacheRendering.h in Headers */,
 				4C7B03341D1210A100295E82 /* GRMustacheSafeKeyAccess.h in Headers */,
 				4C7B05101D12168C00295E82 /* THOPluginProtocolPrivate.h in Headers */,
+				4C3F5D391D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */,
 				4C7B03351D1210A100295E82 /* GRMustacheTag.h in Headers */,
 				4C4A1AEB1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B03361D1210A100295E82 /* GRMustacheTagDelegate.h in Headers */,
@@ -4095,6 +4101,7 @@
 				4C7B04041D1210A800295E82 /* TVCLogLine.h in Headers */,
 				4C7B04061D1210A800295E82 /* TVCLogRenderer.h in Headers */,
 				4C5DD5201D1E1CB700F2E1AE /* TVCMainWindowTextViewPrivate.h in Headers */,
+				4C3F5D3A1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */,
 				4C10B3811D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
 				4C4A1AE91D12245B004FBF12 /* TXGlobalModelsPrivate.h in Headers */,
 				4C7B04081D1210A800295E82 /* TVCLogView.h in Headers */,
@@ -4316,6 +4323,7 @@
 				4C7B04851D1210B000295E82 /* TVCLogLine.h in Headers */,
 				4C7B04871D1210B000295E82 /* TVCLogRenderer.h in Headers */,
 				4C5DD5211D1E1CB700F2E1AE /* TVCMainWindowTextViewPrivate.h in Headers */,
+				4C3F5D3B1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */,
 				4C10B3821D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
 				4C4A1AEA1D12245B004FBF12 /* TXGlobalModelsPrivate.h in Headers */,
 				4C7B04891D1210B000295E82 /* TVCLogView.h in Headers */,
