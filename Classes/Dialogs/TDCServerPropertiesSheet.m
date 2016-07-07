@@ -1445,7 +1445,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSUInteger entryIndex =
 	[self.mutableChannelList indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
-		if ([[object itemUUID] isEqualToString:config.itemUUID]) {
+		if ([[object uniqueIdentifier] isEqualToString:config.uniqueIdentifier]) {
 			return YES;
 		} else {
 			return NO;
@@ -1648,7 +1648,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		else if ([columnId isEqualToString:@"pass"])
 		{
-			NSString *secretKeyValue = config.secretKeyValue;
+			NSString *secretKeyValue = config.secretKey;
 			
 			if (secretKeyValue) {
 				return secretKeyValue;
@@ -1675,7 +1675,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (matchChannelId) {
 				for (IRCChannelConfig *channel in self.mutableChannelList) {
-					if (NSObjectsAreEqual(channel.itemUUID, matchChannelId) == NO) {
+					if (NSObjectsAreEqual(channel.uniqueIdentifier, matchChannelId) == NO) {
 						continue;
 					}
 
@@ -1726,11 +1726,13 @@ NS_ASSUME_NONNULL_BEGIN
 		
 	if (tableView == self.channelListTable)
 	{
-		IRCChannelConfig *config = self.mutableChannelList[row];
+		IRCChannelConfigMutable *config = [self.mutableChannelList[row] mutableCopy];
 		
 		if ([columnId isEqualToString:@"join"]) {
 			config.autoJoin = [object boolValue];
 		}
+
+		(self.mutableChannelList)[row] = [config copy];
 	}
 }
 

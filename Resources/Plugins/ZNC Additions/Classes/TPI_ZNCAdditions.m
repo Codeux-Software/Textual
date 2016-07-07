@@ -159,7 +159,7 @@
 		}
 		
 		if (matchedChannel) {
-			[[matchedChannel config] setAutoJoin:isAttach];
+			[matchedChannel setAutoJoin:isAttach];
 			
 			if (isDetach) {
 				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, [matchedChannel name]]];

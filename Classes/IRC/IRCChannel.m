@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #include <objc/message.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelConfigurationWasUpdatedNotification";
 
@@ -47,21 +47,21 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 											}
 
 @interface IRCChannel ()
+@property (nonatomic, assign) BOOL statusChangedByAction;
+@property (nonatomic, copy, readwrite) IRCChannelConfig *config;
+@property (nonatomic, assign, readwrite) NSTimeInterval channelJoinTime;
+@property (nonatomic, strong, readwrite, nullable) IRCChannelMode *modeInfo;
+@property (nonatomic, strong) TLOFileLogger *logFile;
+
 /* memberListStandardSortedContainer is a copy of the member list sorted by the channel
- rank of each member. As it is a mutable array, it is not thread safe. It is not recommended 
- to access this property directly. Use the APIs defined in IRCChannel.h as they have been
- designed to synchronize changes on a proper queue. */
-@property (nonatomic, strong) NSMutableArray *memberListStandardSortedContainer;
+ rank of each member.*/
+@property (nonatomic, strong) NSMutableArray<IRCUser *> *memberListStandardSortedContainer;
 
 /* memberListLengthSortedContainer is a copy of the member list sorted by the length of
- nicknames. TVCLogRenderer is requires the member list to be in a specific order each time
+ nicknames. TVCLogRenderer requires the member list to be in a specific order each time
  it renders a message and it is too costly to sort our container thousands of times 
- every minute. That is why we maintain a local cache. Again, do not access directly as
- NSMutableArray by itself is not thread safe. */
-@property (nonatomic, strong) NSMutableArray *memberListLengthSortedContainer;
-
-/* Misc. private properties. */
-@property (nonatomic, strong) TLOFileLogger *logFile;
+ every minute.*/
+@property (nonatomic, strong) NSMutableArray<IRCUser *> *memberListLengthSortedContainer;
 @end
 
 @implementation IRCChannel
@@ -69,65 +69,90 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 @synthesize associatedClient = _associatedClient;
 @synthesize printingQueue = _printingQueue;
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)initWithConfigDictionary:(NSDictionary<NSString *, id> *)dic
+{
+	NSParameterAssert(dic != nil);
+
+	IRCChannelConfig *config = [[IRCChannelConfig alloc] initWithDictionary:dic];
+
+	return [self initWithConfig:config];
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (instancetype)initWithConfig:(IRCChannelConfig *)config
 {
 	if ((self = [super init])) {
-		self.memberListStandardSortedContainer = [NSMutableArray array];
-		self.memberListLengthSortedContainer = [NSMutableArray array];
+		self.config = config;
+
+		[self.config writeItemsToKeychain];
+
+		[self prepareInitialState];
 	}
 	
 	return self;
 }
 
+- (void)prepareInitialState
+{
+	self.memberListStandardSortedContainer = [NSMutableArray array];
+	self.memberListLengthSortedContainer = [NSMutableArray array];
+}
+
+- (void)updateConfig:(IRCChannelConfig *)config
+{
+	[self updateConfig:config fireChangedNotification:YES updateStoredChannelList:YES];
+}
+
+- (void)updateConfig:(IRCChannelConfig *)config fireChangedNotification:(BOOL)fireChangedNotification
+{
+	[self updateConfig:config fireChangedNotification:fireChangedNotification updateStoredChannelList:YES];
+}
+
+- (void)updateConfig:(IRCChannelConfig *)config fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList
+{
+	NSParameterAssert(config != nil);
+
+	IRCChannelConfig *currentConfig = self.config;
+
+	if (currentConfig) {
+		if ([config isEqual:currentConfig]) {
+			return;
+		}
+
+		if (currentConfig.type != config.type ||
+			NSObjectsAreEqual(currentConfig.channelName, config.channelName) == NO ||
+			NSObjectsAreEqual(currentConfig.uniqueIdentifier, config.uniqueIdentifier) == NO)
+		{
+			LogToConsoleError("Tried to load configuration for incorrect channel")
+
+			return;
+		}
+	}
+
+	self.config = config;
+
+	[self.config writeItemsToKeychain];
+
+	if (updateStoredChannelList) {
+		[self.associatedClient updateStoredChannelList];
+	}
+
+	if (fireChangedNotification) {
+		[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification object:self];
+	}
+}
+
+- (NSDictionary<NSString *, id> *)configurationDictionary
+{
+	return self.config.dictionaryValue;
+}
+
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", self.associatedClient, self.name];
-}
-
-#pragma mark -
-#pragma mark Configuration
-
-- (void)setup:(IRCChannelConfig *)seed
-{
-	if (seed) {
-		if (self.config == nil) {
-			self.config = seed;
-		}
-	}
-}
-
-- (void)updateConfig:(IRCChannelConfig *)seed
-{
-	[self updateConfig:seed fireChangedNotification:YES updateStoredChannelList:YES];
-}
-
-- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification
-{
-	[self updateConfig:seed fireChangedNotification:fireChangedNotification updateStoredChannelList:YES];
-}
-
-- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList
-{
-	if (seed) {
-		NSAssertReturn([seed isEqualToChannelConfiguration:self.config] == NO);
-
-		[self setConfig:seed]; // Value is copied on assign.
-
-		[self.config writeKeychainItemsToDisk];
-
-		if (updateStoredChannelList) {
-			[self.associatedClient updateStoredChannelList];
-		}
-
-		if (fireChangedNotification) {
-			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification object:self];
-		}
-	}
-}
-
-- (NSDictionary *)dictionaryValue
-{
-	return [self.config dictionaryValue];
+	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", self.associatedClient.description, self.name];
 }
 
 #pragma mark -
@@ -135,74 +160,110 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (NSString *)uniqueIdentifier
 {
-	return [self.config itemUUID];
+	return self.config.uniqueIdentifier;
 }
 
 - (NSString *)name
 {
-	return [self.config channelName];
+	return self.config.channelName;
 }
 
-- (NSString *)secretKey
+- (nullable NSString *)secretKey
 {
-	return [self.config secretKey];
+	return self.config.secretKey;
+}
+
+- (BOOL)autoJoin
+{
+	return self.config.autoJoin;
 }
 
 - (BOOL)isChannel
 {
-	return ([self.config type] == IRCChannelChannelType);
+	return (self.config.type == IRCChannelChannelType);
 }
 
 - (BOOL)isPrivateMessage
 {
-	return ([self.config type] == IRCChannelPrivateMessageType);
+	return (self.config.type == IRCChannelPrivateMessageType);
 }
 
-- (BOOL)isPrivateMessageOwnedByZNC
+- (BOOL)isPrivateMessageForZNCUser
 {
-	if ([self isPrivateMessage]) {
-		IRCClient *u = [self associatedClient];
-
-		return [u nicknameIsPrivateZNCUser:[self name]];
+	if (self.isPrivateMessage == NO) {
+		return NO;
 	}
-	
-	return NO;
+
+	IRCClient *client = self.associatedClient;
+
+	return [client nicknameIsPrivateZNCUser:self.name];
 }
 
 - (NSString *)channelTypeString
 {
-	if ([self.config type] == IRCChannelPrivateMessageType) {
+	if (self.isPrivateMessage) {
 		return @"query";
 	} else {
 		return @"channel";
 	}
 }
 
-- (NSURL *)logFilePath
+- (nullable NSURL *)logFilePath
 {
-	if (self.logFile) {
-		NSString *writePath = [[self.logFile writePath] stringByDeletingLastPathComponent];
-
-		return [NSURL fileURLWithPath:writePath];
-	} else {
+	if (self.logFile == nil) {
 		return nil;
 	}
+
+	NSString *writePath = self.logFile.writePath.stringByDeletingLastPathComponent;
+
+	return [NSURL fileURLWithPath:writePath];
 }
 
 #pragma mark -
 #pragma mark Property Setter
 
-- (void)setName:(NSString *)value
+- (void)setAutoJoin:(BOOL)autoJoin
 {
-	[self.config setChannelName:value];
+	if (self.isPrivateMessage) {
+		return;
+	}
+
+	if (self.autoJoin == autoJoin) {
+		return;
+	}
+
+	IRCChannelConfigMutable *mutableConfig = [self.config mutableCopy];
+
+	mutableConfig.autoJoin = autoJoin;
+
+	self.config = mutableConfig;
 }
 
-- (void)setTopic:(NSString *)topic
+- (void)setName:(NSString *)name
 {
-	if ([_topic isEqualToString:topic] == NO) {
-		_topic = [topic copy];
+	NSParameterAssert(name != nil);
 
-		[[self viewController] setTopic:_topic]; // Set even for queries incase a style wants to use it...
+	if (self.isPrivateMessage == NO) {
+		return;
+	}
+
+	if ([self.name isEqualToString:name]) {
+		return;
+	}
+
+	IRCChannelConfigMutable *mutableConfig = [self.config mutableCopy];
+
+	mutableConfig.channelName = name;
+
+	self.config = mutableConfig;
+}
+
+- (void)setTopic:(nullable NSString *)topic
+{
+	if (self->_topic != topic) {
+		self->_topic = [topic copy];
+
+		[self.viewController setTopic:self->_topic];
 	}
 }
 
@@ -211,11 +272,11 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)preferencesChanged
 {
-	[[self viewController] preferencesChanged];
+	[self.viewController preferencesChanged];
 
 	if ([TPCPreferences displayPublicMessageCountOnDockBadge] == NO) {
-		if ([self isPrivateMessage] == NO) {
-			[self setDockUnreadCount:0]; // Reset counter on changes.
+		if (self.isChannel) {
+			self.dockUnreadCount = 0;
 		}
 	}
 
@@ -225,65 +286,89 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (OTRKitMessageState)encryptionState
 {
-	if ([TPCPreferences textEncryptionIsEnabled]) {
-		IRCClient *u = [self associatedClient];
-
-		return [sharedEncryptionManager() messageStateFor:[u encryptionAccountNameForUser:[self name]]
-													 from:[u encryptionAccountNameForLocalUser]];
-	} else {
+	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
 		return OTRKitMessageStatePlaintext;
 	}
+
+	if (self.isPrivateMessage == NO) {
+		return OTRKitMessageStatePlaintext;
+	}
+
+	IRCClient *client = self.associatedClient;
+
+	return [sharedEncryptionManager() messageStateFor:[client encryptionAccountNameForUser:self.name]
+												 from:[client encryptionAccountNameForLocalUser]];
 }
 
 - (BOOL)encryptionStateIsEncrypted
 {
-	if ([TPCPreferences textEncryptionIsEnabled]) {
-		if ([self isPrivateMessage]) {
-			return ([self encryptionState] == OTRKitMessageStateEncrypted);
-		} else {
-			return NO;
-		}
-	} else {
-		return NO;
-	}
+	return ([self encryptionState] == OTRKitMessageStateEncrypted);
 }
 
 - (void)noteEncryptionStateDidChange
 {
-	[[self viewController] setEncrypted:[self encryptionStateIsEncrypted]];
+	self.viewController.encrypted = self.encryptionStateIsEncrypted;
 
 	[mainWindow() updateTitleFor:self];
 }
 
 - (void)closeOpenEncryptionSessions
 {
-	if ([TPCPreferences textEncryptionIsEnabled]) {
-		if ([self encryptionStateIsEncrypted]) {
-			IRCClient *u = [self associatedClient];
-
-			[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[self name]]
-													  from:[u encryptionAccountNameForLocalUser]];
-		}
+	if (self.encryptionStateIsEncrypted == NO) {
+		return;
 	}
+
+	IRCClient *client = self.associatedClient;
+
+	[sharedEncryptionManager() endConversationWith:[client encryptionAccountNameForUser:self.name]
+											  from:[client encryptionAccountNameForLocalUser]];
 }
 #endif
 
 #pragma mark -
 #pragma mark Channel Status
 
-- (void)resetStatus:(IRCChannelStatus)newStatus
+- (void)setStatus:(IRCChannelStatus)status
 {
+	if (self->_status != status) {
+		self->_status = status;
+
+		[self performActionOnStatusChange];
+	}
+}
+
+- (void)performActionOnStatusChange
+{
+	if (self.statusChangedByAction) {
+		self.statusChangedByAction = NO;
+
+		return;
+	}
+
+	if (self.status == IRCChannelStatusJoined) {
+		[self activate];
+	} else if (self.status == IRCChannelStatusParted) {
+		[self deactivate];
+	}
+}
+
+- (void)resetStatus:(IRCChannelStatus)toStatus
+{
+	if (toStatus == IRCChannelStatusJoining) {
+		return;
+	}
+
 	self.errorOnLastJoinAttempt = NO;
 	self.inUserInvokedModeRequest = NO;
 	self.sentInitialWhoRequest = NO;
 
-	self.channelJoinTime = -1;
-	
-	self.status = newStatus;
-
-    self.topic = nil;
+	self.channelJoinTime = 0;
 
 	self.modeInfo = nil;
+	
+	self.status = toStatus;
+
+    self.topic = nil;
 
 	[self clearMembers];
 
@@ -292,20 +377,26 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)activate
 {
+	self.statusChangedByAction = YES;
+
 	[self resetStatus:IRCChannelStatusJoined];
 
-	if ([self isChannel]) {
-		[self.associatedClient postEventToViewController:@"channelJoined" forChannel:self];
+	IRCClient *client = self.associatedClient;
+
+	if (self.isChannel) {
+		[client postEventToViewController:@"channelJoined" forChannel:self];
 
 		self.modeInfo = [[IRCChannelMode alloc] initWithChannel:self];
     }
 
-	if ([self isPrivateMessage]) {
-		IRCUser *m1 = [IRCUser newUserOnClient:self.associatedClient withNickname:[self.associatedClient localNickname]];
-		IRCUser *m2 = [IRCUser newUserOnClient:self.associatedClient withNickname:[self name]];
+	if (self.isPrivateMessage) {
+		IRCUser *member1 = [[IRCUser alloc] initWithNickname:self.name onClient:client];
 
-		[self addMember:m1];
-		[self addMember:m2];
+		[self addMember:member1];
+
+		IRCUser *member2 = [[IRCUser alloc] initWithNickname:client.localNickname onClient:client];
+
+		[self addMember:member2];
 	}
 
 	self.channelJoinTime = [NSDate timeIntervalSince1970];
@@ -314,53 +405,60 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)deactivate
 {
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	if ([self isPrivateMessage]) {
+	if (self.isPrivateMessage) {
 		[self closeOpenEncryptionSessions];
 	}
 #endif
 
+	self.statusChangedByAction = YES;
+
 	[self resetStatus:IRCChannelStatusParted];
   
-	if ([self isChannel]) {
+	if (self.isChannel) {
 		[self.associatedClient postEventToViewController:@"channelParted" forChannel:self];
     }
 }
 
 - (void)prepareForPermanentDestruction
 {
+	self.statusChangedByAction = YES;
+
 	[self resetStatus:IRCChannelStatusTerminated];
 	
 	[self closeLogFile];
 	
-	[self.config destroyKeychains];
+	[self.config destroyKeychainItems];
 
-	NSArray *openWindows = [windowController() windowsFromWindowList:@[@"TDCChannelPropertiesSheet",
-																	   @"TDCChannelModifyTopicSheet",
-																	   @"TDCChannelModifyModesSheet",
-																	   @"TDCChannelBanListSheet"]];
-	
+	NSArray *openWindows = [windowController()
+							windowsFromWindowList:@[@"TDCChannelPropertiesSheet",
+													@"TDCChannelModifyTopicSheet",
+													@"TDCChannelModifyModesSheet",
+													@"TDCChannelBanListSheet"]];
+
 	for (TDCSheetBase <TDCChannelPrototype> *windowObject in openWindows) {
-		if (NSObjectsAreEqual([windowObject channelId], [self uniqueIdentifier])) {
-			[windowObject cancel:nil];
+		if (NSObjectsAreEqual(windowObject.channelId, self.uniqueIdentifier)) {
+			[windowObject close];
 		}
 	}
 
 	[[mainWindow() inputHistoryManager] destroy:self];
 	
-	[[self viewController] prepareForPermanentDestruction];
+	[self.viewController prepareForPermanentDestruction];
 }
 
 - (void)prepareForApplicationTermination
 {
+	self.statusChangedByAction = YES;
+
 	[self resetStatus:IRCChannelStatusTerminated];
 	
 	[self closeLogFile];
 	
-	if ([self isPrivateMessage]) {
-		[self.config destroyKeychains];
+	if (self.isPrivateMessage) {
+		[self.config destroyKeychainItems];
 	}
 
-	[[self viewController] prepareForApplicationTermination];
+	[self.viewController prepareForApplicationTermination];
 }
 
 #pragma mark -
@@ -379,23 +477,29 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)closeLogFile
 {
-	if ( self.logFile) {
-		[self.logFile close];
+	if (self.logFile == nil) {
+		return;
 	}
+
+	[self.logFile close];
 }
 
 #pragma mark -
 #pragma mark Printing
 
-- (void)writeToLogFile:(TVCLogLine *)line
+- (void)writeToLogLineToLogFile:(TVCLogLine *)logLine
 {
-	if ([TPCPreferences logToDiskIsEnabled]) {
-		if (self.logFile == nil) {
-			self.logFile = [[TLOFileLogger alloc] initWithChannel:self];
-		}
+	NSParameterAssert(logLine != nil);
 
-		[self.logFile writeLogLine:line];
+	if ([TPCPreferences logToDiskIsEnabled] == NO) {
+		return;
 	}
+
+	if (self.logFile == nil) {
+		self.logFile = [[TLOFileLogger alloc] initWithChannel:self];
+	}
+
+	[self.logFile writeLogLine:logLine];
 }
 
 - (void)print:(TVCLogLine *)logLine
@@ -405,220 +509,268 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock
 {
+	NSParameterAssert(logLine != nil);
+
 	[self.viewController print:logLine completionBlock:completionBlock];
 	
-	[self writeToLogFile:logLine];
+	[self writeToLogLineToLogFile:logLine];
 }
 
 #pragma mark -
 #pragma mark Member List
 
-- (NSInteger)_sortedInsert:(IRCUser *)item
+- (NSUInteger)_sortedInsertMember:(IRCUser *)member
 {
-	NSInteger insertedIndex = 0;
-	
-	/* Insert into normal list and maybe tree view. */
-	@synchronized(self.memberListStandardSortedContainer) {
-		insertedIndex = [self.memberListStandardSortedContainer insertSortedObject:item usingComparator:NSDefaultComparator];
+	NSParameterAssert(member != nil);
+
+	if ([member isKindOfClass:[IRCUserMutable class]]) {
+		member = [member copy];
 	}
-	
-	/* Conversation tracking scans based on nickname length. */
-	@synchronized(self.memberListLengthSortedContainer) {
-		(void)[self.memberListLengthSortedContainer insertSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
-	}
+
+	NSUInteger insertedIndex =
+	[self.memberListStandardSortedContainer insertSortedObject:member usingComparator:NSDefaultComparator];
+
+	(void)[self.memberListLengthSortedContainer insertSortedObject:member usingComparator:[IRCUser nicknameLengthComparator]];
 	
 	return insertedIndex;
 }
 
-- (void)_removeMemberFromTreeView:(IRCUser *)user
+- (void)_removeMemberFromTableView:(IRCUser *)member
 {
-	/* It is possible for a member to exist in our local cache and but 
-	 not exist in the actual tree view. This tries its best to catch 
-	 all cases where it exists in member list. */
+	NSParameterAssert(member != nil);
+
 	_cancelOnNotSelectedChannel
+
+	NSInteger rowIndex = [mainWindowMemberList() rowForItem:member];
 	
-	NSInteger idx = [mainWindowMemberList() rowForItem:user];
-	
-	if (idx > -1) {
-		[mainWindowMemberList() removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:idx]
+	if (rowIndex >= 0) {
+		[mainWindowMemberList() removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
 											inParent:nil
-									   withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
+									   withAnimation:NSTableViewAnimationEffectNone];
 	}
 }
 
-- (BOOL)_removeMemberWithNickname:(NSString *)nickname
+- (BOOL)_removeMember:(IRCUser *)member
 {
-	/* Find in normal member list. */
-	/* This also removes matched user from tree view. */
-	BOOL removedUser = NO;
+	BOOL removedMember = NO;
 
-	@synchronized(self.memberListStandardSortedContainer) {
-		/* Remove from internal list. */
-		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
-		
-		if (NSDissimilarObjects(crmi, NSNotFound)) {
-			/* Get matched user. */
-			IRCUser *userToRemove = self.memberListStandardSortedContainer[crmi];
+	NSUInteger standardSortedMemberIndex =
+	[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member];
 
-			/* Maybe remove from tree view. */
-			XRPerformBlockSynchronouslyOnMainQueue(^{
-				[self _removeMemberFromTreeView:userToRemove];
-			});
-			
-			/* Remove from array archive. */
-			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
+	if (standardSortedMemberIndex != NSNotFound) {
+		removedMember = YES;
 
-			/* Remove from alternate arrays */
-			@synchronized(self.memberListLengthSortedContainer) {
-				[self.memberListLengthSortedContainer removeObject:userToRemove];
-			}
-
-			/* Update state information */
-			removedUser = YES;
-		}
+		[self.memberListStandardSortedContainer removeObjectAtIndex:standardSortedMemberIndex];
 	}
 
-	return removedUser;
+	NSUInteger lengthSortedMemberIndex =
+	[self.memberListLengthSortedContainer indexOfObjectIdenticalTo:member];
+
+	if (lengthSortedMemberIndex != NSNotFound) {
+		[self.memberListLengthSortedContainer removeObjectAtIndex:lengthSortedMemberIndex];
+	}
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self _removeMemberFromTableView:member];
+	});
+
+	return removedMember;
 }
 
-- (void)_removeMember:(IRCUser *)user
+- (void)addMember:(IRCUser *)member
 {
-	[self _removeMemberWithNickname:[user nickname]];
-}
+	NSParameterAssert(member != nil);
 
-- (void)addMember:(IRCUser *)user
-{
-	PointerIsEmptyAssert(user);
-	
-	__block NSInteger insertedIndex = -1;
+	__block NSInteger insertedIndex = (-1);
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		insertedIndex = [self _sortedInsert:user];
+		insertedIndex = [self _sortedInsertMember:member];
 	});
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		/* Update the actual member list view. */
-		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
-		
-		/* Post event to the style. */
-		if ([self isChannel]) {
+		[self informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+
+		if (self.isChannel) {
 			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
 		}
 	});
 }
 
-- (void)removeMember:(NSString *)nickname
+- (void)removeMemberWithNickname:(NSString *)nickname
 {
-	NSObjectIsEmptyAssert(nickname);
+	NSParameterAssert(nickname != nil);
 
-	__block BOOL userRemoved = NO;
+	IRCUser *member = [self findMember:nickname options:NSCaseInsensitiveSearch];
+
+	if (member) {
+		[self removeMember:member];
+	}
+}
+
+- (void)removeMember:(IRCUser *)member
+{
+	NSParameterAssert(member != nil);
+
+	__block BOOL memberRemoved = NO;
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		userRemoved = [self _removeMemberWithNickname:nickname];
+		memberRemoved = [self _removeMember:member];
 	});
 
-	if (userRemoved) {
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			if ([self isChannel]) {
-				[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
-			}
-		});
+	if (memberRemoved == NO || self.isChannel == NO) {
+		return;
 	}
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
+	});
 }
 
 - (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname
 {
-	NSObjectIsEmptyAssert(fromNickname);
-	NSObjectIsEmptyAssert(toNickname);
+	NSParameterAssert(fromNickname != nil);
+	NSParameterAssert(toNickname != nil);
 
-	/* Find user. */
-	__block NSInteger insertedIndex = -1;
-	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		IRCUser *user = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
-	
-		if (user) {
-			/* Remove existing user from user list. */
-			[self _removeMember:user];
-			
-			/* Update nickname. */
-			[user setNickname:toNickname];
-			
-			/* Insert new copy of user. */
-			insertedIndex = [self _sortedInsert:user];
+		IRCUser *member = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
+
+		if (member == nil) {
+			return;
 		}
-	});
-	
-	/* Update the actual member list view. */
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
+
+		IRCUserMutable *memberMutable = [member mutableCopy];
+
+		memberMutable.nickname = toNickname;
+
+		[self replaceMember:member byInsertingMember:memberMutable];
 	});
 }
 
 #pragma mark -
 
-- (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2
+- (BOOL)memberRequiresRedraw:(IRCUser *)member1 comparedTo:(IRCUser *)member2
 {
-	PointerIsEmptyAssertReturn(user1, NO);
-	PointerIsEmptyAssertReturn(user2, NO);
+	NSParameterAssert(member1 != nil);
+	NSParameterAssert(member2 != nil);
 
-	/* When changing certain conditions of a user in the visible member list tree, we create
-	 a copy of the user, change what we want changed, then compare the copy with original. If
-	 any of these conditions fault, then that means the appearnce of the user in member list 
-	 tree will need to be updated. */
-	BOOL hasEqualStatus = (NSObjectsAreEqual([user1 modes], [user2 modes])				&&
-							                 [user1 isCop]		== [user2 isCop]		&&
-						                     [user1 isAway]		== [user2 isAway]);
-	
-	return (hasEqualStatus == NO);
+	/* If the user has been changed in a way which does not require them to be
+	 resorted, then we will replace them in the arrays instead of removing then
+	 inserting again, incurring the cost of performing sort on hundreds of users. */
+	return (NSObjectsAreEqual(member1.modes, member2.modes) == NO ||
+			member1.isAway != member2.isAway ||
+			member1.isCop != member2.isCop);
+}
+
+- (void)replaceMember:(IRCUser *)member1 withMember:(IRCUser *)member2
+{
+	if ([self memberRequiresRedraw:member1 comparedTo:member2]) {
+		[self replaceMember:member1 byInsertingMember:member2];
+	} else {
+		[self replaceMember:member1 byReplacingMember:member2];
+	}
+}
+
+- (void)replaceMember:(IRCUser *)member1 byInsertingMember:(IRCUser *)member2
+{
+	NSParameterAssert(member1 != nil);
+	NSParameterAssert(member2 != nil);
+
+	__block NSInteger insertedIndex = (-1);
+
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		[self _removeMember:member1];
+
+		insertedIndex = [self _sortedInsertMember:member2];
+	});
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+	});
+}
+
+- (void)replaceMember:(IRCUser *)member1 byReplacingMember:(IRCUser *)member2
+{
+	NSParameterAssert(member1 != nil);
+	NSParameterAssert(member2 != nil);
+
+	if ([member2 isKindOfClass:[IRCUserMutable class]]) {
+		member2 = [member2 copy];
+	}
+
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		// Replace member in standard sorted container
+		NSUInteger standardSortedMemberIndex =
+		[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member1];
+
+		if (standardSortedMemberIndex != NSNotFound) {
+			self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
+		}
+
+		// Replace member in length sorted container
+		NSUInteger lengthSortedMemberIndex =
+		[self.memberListLengthSortedContainer indexOfObjectIdenticalTo:member1];
+
+		if (lengthSortedMemberIndex != NSNotFound) {
+			self.memberListLengthSortedContainer[lengthSortedMemberIndex] = member2;
+		}
+	});
 }
 
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value
 {
-	NSObjectIsEmptyAssert(nickname);
-	NSObjectIsEmptyAssert(mode);
+	NSParameterAssert(nickname != nil);
+	NSParameterAssert(mode.length == 1);
 
-	NSParameterAssert(([mode length] == 1));
-	
-	/* Find user. */
-	IRCUser *user = [self findMember:nickname options:NSCaseInsensitiveSearch];
-	
-	PointerIsEmptyAssert(user); // What are we removing?
+	// Find member and create mutable copy for editing
+	IRCUser *member = [self findMember:nickname options:NSCaseInsensitiveSearch];
 
-	/* We create new copy of this user in order to compare them and deterine if there 
-	 are changes when we are done. Modifying /user/ directly would change all instances 
-	 inside our member lists and we don't want to do  that right away. */
-	IRCUser *newUser = [user copy];
+	if (member == nil) {
+		return;
+	}
 
-	NSString *existingModeValues = [newUser modes];
+	IRCUserMutable *memberMutable = [member mutableCopy];
 
-	if (existingModeValues == nil || [existingModeValues length] == 0) {
+	NSString *oldMemberModes = memberMutable.modes;
+
+	// If the member has no modes already and we are setting a mode, then
+	// all we have to do is set the value of -modes to new mode
+	BOOL processModes = YES;
+
+	if (oldMemberModes.length == 0) {
 		if (value) {
-			[newUser setModes:mode];
+			processModes = NO;
+
+			memberMutable.modes = mode;
+		} else {
+			return; // Can't remove mode from empty string
 		}
 	} else {
-		if ([existingModeValues contains:mode]) {
-			if (value) {
-				return; // Why add what already exists...
-			}
+		if (value && [oldMemberModes contains:mode]) {
+			return; // Mode is already in string
 		}
+	}
 
-		IRCISupportInfo *supportInfo = [[self associatedClient] supportInfo];
+	// Split up the current user modes into an array of characters.
+	// Enumerate over the array of characters to find which mode in the
+	// current set has a rank lower than the mode being inserted.
+	// Insert before the lower ranked mode or insert at end.
+	if (processModes) {
+		IRCISupportInfo *clientSupportInfo = self.associatedClient.supportInfo;
 
-		NSInteger rankOfNewMode = [supportInfo rankForUserPrefixWithMode:mode];
+		NSArray *oldModeSymbols = oldMemberModes.characterStringBuffer;
 
-		NSArray *existingModes = [existingModeValues characterStringBuffer];
-
-		NSMutableArray *existingModesMutable = [existingModes mutableCopy];
+		NSMutableArray *newModeSymbols = [oldModeSymbols mutableCopy];
 
 		if (value == NO) {
-			[existingModesMutable removeObject:mode];
+			[newModeSymbols removeObject:mode];
 		} else {
-			NSUInteger lowerRankedMode =
-			[existingModes indexOfObjectPassingTest:^BOOL(NSString *existingMode, NSUInteger index, BOOL *stop) {
-				NSInteger rankOfExistingMode = [supportInfo rankForUserPrefixWithMode:existingMode];
+			NSUInteger rankOfNewMode = [clientSupportInfo rankForUserPrefixWithMode:mode];
 
-				if (rankOfExistingMode < rankOfNewMode) {
+			NSUInteger lowerRankedMode =
+			[oldModeSymbols indexOfObjectPassingTest:^BOOL(NSString *oldModeSymbol, NSUInteger index, BOOL *stop) {
+				NSInteger rankOfOldMode = [clientSupportInfo rankForUserPrefixWithMode:oldModeSymbol];
+
+				if (rankOfOldMode < rankOfNewMode) {
 					return YES;
 				} else {
 					return NO;
@@ -626,58 +778,27 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 			}];
 
 			if (lowerRankedMode != NSNotFound) {
-				[existingModesMutable insertObject:mode atIndex:lowerRankedMode];
+				[newModeSymbols insertObject:mode atIndex:lowerRankedMode];
 			} else {
-				[existingModesMutable addObject:mode];
+				[newModeSymbols addObject:mode];
 			}
 		}
 
-		NSString *newModeValues = [existingModesMutable componentsJoinedByString:NSStringEmptyPlaceholder];
+		NSString *newMemberModes = [newModeSymbols componentsJoinedByString:NSStringEmptyPlaceholder];
 
-		if ([newModeValues length] == 0) {
-			[newUser setModes:nil]; // Do not set a string of zero length
-		} else {
-			[newUser setModes:newModeValues];
-		}
+		memberMutable.modes = newMemberModes;
 	}
 
-	/* Make special exceptions. */
-	if (value) {
+	if (value && [mode isEqualToString:@"Y"]) {
 		/* InspIRCd treats +Y as an IRCop. */
+		/* If the user wasn't already marked as an IRCop, then we
+		 mark them at this point. */
 
-		if (NSObjectsAreEqual(mode, @"Y")) {
-			/* If the user wasn't already marked as an IRCop, then we
-			 mark them at this point. However, if they were already
-			 marked and it was -Y, then we do not remove it. We still
-			 want to know they are an IRCop even if mode isn't set in
-			 this particular channel. */
-
-			if ([newUser isCop] == NO) {
-				[newUser setIsCop:YES];
-			}
-		}
+		memberMutable.isCop = YES;
 	}
 
-	/* Did something change. */
-	__block NSInteger insertedIndex = -1;
-
-	if ([self memberRequiresRedraw:user comparedTo:newUser]) {
-		XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-			/* Remove existing user from user list. */
-			[self _removeMember:user];
-			
-			/* Merge the settings of the new user with those of the old. */
-			[user migrate:newUser];
-			
-			/* Insert new copy of user. */
-			insertedIndex = [self _sortedInsert:user];
-		});
-		
-		/* Update the actual member list view. */
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
-		});
-	}
+	// Remove the user from the member list and insert sorted
+	[self replaceMember:member withMember:memberMutable];
 }
 
 #pragma mark -
@@ -685,57 +806,43 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)clearMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			[self.memberListStandardSortedContainer removeAllObjects];
-		}
+		[self.memberListStandardSortedContainer removeAllObjects];
 		
-		@synchronized(self.memberListLengthSortedContainer) {
-			[self.memberListLengthSortedContainer removeAllObjects];
-		}
+		[self.memberListLengthSortedContainer removeAllObjects];
 	});
 }
 
-- (NSInteger)numberOfMembers
+- (NSUInteger)numberOfMembers
 {
 	__block NSUInteger memberCount = 0;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			memberCount = [self.memberListStandardSortedContainer count];
-		}
+		memberCount = self.memberListStandardSortedContainer.count;
 	});
 	
 	return memberCount;
 }
 
-- (NSArray *)memberList
+- (NSArray<IRCUser *> *)memberList
 {
-	__block NSMutableArray *mutlist = [NSMutableArray array];
-	
+	__block NSArray<IRCUser *> *memberList = nil;
+
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			for (IRCUser *user in self.memberListStandardSortedContainer) {
-				[mutlist addObject:user];
-			}
-		}
+		memberList = [self.memberListStandardSortedContainer copy];
 	});
-	
-	return mutlist;
+
+	return memberList;
 }
 
-- (NSArray *)memberListSortedByNicknameLength
+- (NSArray<IRCUser *> *)memberListSortedByNicknameLength
 {
-	__block NSMutableArray *mutlist = [NSMutableArray array];
+	__block NSArray<IRCUser *> *memberList = nil;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListLengthSortedContainer) {
-			for (IRCUser *user in self.memberListLengthSortedContainer) {
-				[mutlist addObject:user];
-			}
-		}
+		memberList = [self.memberListLengthSortedContainer copy];
 	});
 	
-	return mutlist;
+	return memberList;
 }
 
 #pragma mark -
@@ -743,72 +850,62 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (BOOL)memberExists:(NSString *)nickname
 {
-	__block BOOL foundUser;
+	__block BOOL memberExists = NO;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
-			
-			if (somi == NSNotFound) {
-				foundUser = NO;
-			} else {
-				foundUser = YES;
-			}
+		NSUInteger memberIndex = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+
+		memberExists = (memberIndex != NSNotFound);
+	});
+	
+	return memberExists;
+}
+
+- (nullable IRCUser *)findMember:(NSString *)nickname
+{
+	return [self findMember:nickname options:NSCaseInsensitiveSearch];
+}
+
+- (nullable IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)options
+{
+	NSParameterAssert(nickname != nil);
+
+	__block IRCUser *member = nil;
+	
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		NSUInteger memberIndex = [self indexOfMember:nickname options:options inList:self.memberListStandardSortedContainer];
+		
+		if (memberIndex != NSNotFound) {
+			member = self.memberListStandardSortedContainer[memberIndex];
 		}
 	});
 	
-	return foundUser;
+	return member;
 }
 
-- (IRCUser *)findMember:(NSString *)nickname
+- (IRCUser *)memberAtIndex:(NSUInteger)index
 {
-	return [self findMember:nickname options:0];
-}
-
-- (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask
-{
-	__block IRCUser *foundUser;
+	__block IRCUser *member = nil;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
-			
-			if (somi == NSNotFound) {
-				foundUser = nil;
-			} else {
-				foundUser = self.memberListStandardSortedContainer[somi];
-			}
-		}
+		member = self.memberListStandardSortedContainer[index];
 	});
 	
-	return foundUser;
+	return member;
 }
 
-- (IRCUser *)memberAtIndex:(NSInteger)index
+- (NSUInteger)indexOfMember:(NSString *)nickname options:(NSStringCompareOptions)options inList:(NSArray *)memberList
 {
-	__block IRCUser *foundUser;
-	
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			foundUser = (self.memberListStandardSortedContainer)[index];
-		}
-	});
-	
-	return foundUser;
-}
+	NSParameterAssert(nickname != nil);
 
-- (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask inList:(NSArray *)memberList
-{
-	NSObjectIsEmptyAssertReturn(nick, NSNotFound);
+	NSUInteger memberIndex =
+	[memberList indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
+		NSString *nickname2 = ((IRCUser *)object).nickname;
 
-	NSInteger memberIndex =
-	[memberList indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-		NSString *nick2 = [(IRCUser *)obj nickname];
-
-		if (mask & NSCaseInsensitiveSearch) {
-			return [nick isEqualIgnoringCase:nick2];
+		if ((options & NSCaseInsensitiveSearch) == NSCaseInsensitiveSearch) {
+			return [nickname isEqualIgnoringCase:nickname2];
 		} else {
-			return [nick isEqualToString:nick2];
+			return [nickname isEqualToString:nickname2];
 		}
 	}];
 
@@ -818,7 +915,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 #pragma mark -
 #pragma mark Table View Internal Management
 
-- (void)informMemberListViewOfAdditionalUserAtIndex:(NSUInteger)insertedIndex
+- (void)informMemberListViewOfAdditionalMemberAtIndex:(NSUInteger)insertedIndex
 {
 	_cancelOnNotSelectedChannel;
 
@@ -828,11 +925,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)reloadDataForTableViewBySortingMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
-			
-			[self reloadDataForTableView];
-		}
+		[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
+		
+		[self reloadDataForTableView];
 	});
 }
 
@@ -840,7 +935,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 {
 	_cancelOnNotSelectedChannel;
 
-	[mainWindowMemberList() performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+	[self performBlockOnMainThread:^{
+		[mainWindowMemberList() reloadData];
+	}];
 }
 
 - (void)updateAllMembersOnTableView
@@ -850,19 +947,23 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	[mainWindowMemberList() reloadAllDrawings];
 }
 
-- (void)updateMemberOnTableView:(IRCUser *)user
+- (void)updateMemberOnTableView:(IRCUser *)member
 {
 	_cancelOnNotSelectedChannel;
 
-	[mainWindowMemberList() updateDrawingForMember:user];
+	[mainWindowMemberList() updateDrawingForMember:member];
 }
 
 #pragma mark -
 #pragma mark Table View Delegate
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item
 {
-	return [self numberOfMembers];
+	if (item == nil) {
+		return self.numberOfMembers;
+	}
+
+	return 0;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -870,32 +971,28 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	return NO;
 }
 
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item;
 {
 	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
 	
 	return [userInterfaceObjects cellRowHeight];
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
 {
 	return [self memberAtIndex:index];
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
 	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
 
-	if ([newView isKindOfClass:[TVCMemberListCell class]]) {
-		TVCMemberListCell *groupItem = (TVCMemberListCell *)newView;
-
-		[groupItem setCellItem:item];
-	}
+	((TVCMemberListCell *)newView).cellItem = item;
 
 	return newView;
 }
 
-- (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
+- (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
 	TVCMemberListRowCell *rowView = [[TVCMemberListRowCell alloc] initWithFrame:NSZeroRect];
 
@@ -912,7 +1009,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (BOOL)isSelectedChannel
 {
-	return [self isEqual:[mainWindow() selectedChannel]];
+	return (self == mainWindow().selectedItem);
 }
 
 - (BOOL)isActive
@@ -937,7 +1034,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (NSString *)label
 {
-	return [self name];
+	return self.name;
 }
 
 - (IRCClient *)associatedClient
@@ -945,14 +1042,16 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	return _associatedClient;
 }
 
-- (IRCChannel *)associatedChannel
+- (nullable IRCChannel *)associatedChannel
 {
 	return self;
 }
 
 - (TVCLogControllerOperationQueue *)printingQueue
 {
-    return [self.associatedClient printingQueue];
+	return self.associatedClient.printingQueue;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

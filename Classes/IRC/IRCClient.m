@@ -319,11 +319,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	/* Did the ignore list change at all? */
 	BOOL ignoreListIsSame = NSObjectsAreEqual(self.config.ignoreList, [seed ignoreList]);
 	
-	/* Write all channel keychains before copying over new configuration. */
-	for (IRCChannelConfig *i in [seed channelList]) {
-		[i writeKeychainItemsToDisk];
-	}
-	
 	/* Populate new seed. */
 	/* When dealing with an IRCClientConfig instance from iCloud, we populate the existing
 	 configuration with its value instead of copying over the new values. There are certain
@@ -547,7 +542,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
 		if ([channel numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
 			for (IRCUser *u in [channel memberList]) {
-				u.isAway = NO;
+				[u markAsReturned];
 			}
 		}
 	}
@@ -556,7 +551,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)willDestroyChannel:(IRCChannel *)channel
 {
 	if ([channel isPrivateMessage] &&
-		[channel isPrivateMessageOwnedByZNC] == NO)
+		[channel isPrivateMessageForZNCUser] == NO)
 	{
 		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
 			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"clear", [channel name], nil];
@@ -1659,9 +1654,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		if (isPM) {
 			return [worldController() createPrivateMessage:name onClient:self];
 		} else {
-			IRCChannelConfig *seed = [IRCChannelConfig new];
-
-			[seed setChannelName:name];
+			IRCChannelConfig *seed = [IRCChannelConfig seedWithName:name];
 
 			return [worldController() createChannelWithConfig:seed onClient:self adjust:YES reload:YES];
 		}
@@ -3505,9 +3498,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	@synchronized(self.channels) {
 		for (IRCChannel *channel in self.channels) {
-			[channel writeToLogFile:topLine];
-			[channel writeToLogFile:middleLine];
-			[channel writeToLogFile:bottomLine];
+			[channel writeToLogLineToLogFile:topLine];
+			[channel writeToLogLineToLogFile:middleLine];
+			[channel writeToLogLineToLogFile:bottomLine];
 		}
 	}
 
@@ -5068,7 +5061,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if ([m isPrintOnlyMessage] == NO) {
 		if ([c memberExists:sendern] == NO) {
-			IRCUser *u = [IRCUser newUserOnClient:self withNickname:[m senderNickname]];
+			IRCUserMutable *u = [[IRCUserMutable alloc] initWithNickname:sendern onClient:self];
 			
 			[u setUsername:[m senderUsername]];
 			[u setAddress:[m senderAddress]];
@@ -5167,7 +5160,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[mainWindow() reloadTreeItem:c];
 		}
 
-		[c removeMember:sendern];
+		[c removeMemberWithNickname:sendern];
 	}
 
 	BOOL printMessage = [self postReceivedMessage:m withText:comment destinedFor:c];
@@ -5242,7 +5235,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 		}
 		
-		[c removeMember:targetu];
+		[c removeMemberWithNickname:targetu];
 	}
 
 	BOOL printMessage = [self postReceivedMessage:m withText:comment destinedFor:c];
@@ -5369,7 +5362,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 						command:[m command]];
 				}
 
-				[c removeMember:sendern];
+				[c removeMemberWithNickname:sendern];
 
 				if (myself || [c isPrivateMessage]) {
 					[c deactivate];
@@ -5399,7 +5392,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
-			[c removeMember:target];
+			[c removeMemberWithNickname:target];
 		}
 	}
 }
@@ -5562,6 +5555,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSArray *info = [[c modeInfo] updateModes:modestr];
 
 			for (IRCModeInfo *h in info) {
+				if ([h isModeForChangingMemberModeOn:self] == NO) {
+					continue;
+				}
+
 				[c changeMember:[h modeParamater] mode:[h modeSymbol] value:[h modeIsSet]];
 			}
 		}
@@ -6374,7 +6371,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			IRCUser *user = [channel findMember:nickname];
 
 			if (user) {
-				[user setIsAway:isAway];
+				if (isAway) {
+					[user markAsAway];
+				} else {
+					[user markAsReturned];
+				}
 				
 				[channel updateMemberOnTableView:user]; // Redraw the user in the user list.
 			}
@@ -6667,7 +6668,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				IRCUser *user = [ac findMember:awaynick];
 
 				if ( user) {
-					[user setIsAway:YES];
+					[user markAsAway];
 
 					if ([user presentAwayMessageFor301] == NO) {
 						return;
@@ -6704,7 +6705,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					IRCUser *myself = [channel findMember:[self localNickname]];
 					
 					if (myself) {
-						[myself setIsAway:self.isAway];
+						if (self.isAway) {
+							[myself markAsAway];
+						} else {
+							[myself markAsReturned];
+						}
 						
 						[channel updateMemberOnTableView:myself];
 					}
@@ -7177,31 +7182,21 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
                 isIRCop = YES;
 			}
 
-			/* Textual handles changes from the WHO command differently than you may expect.
-			 Given a user, a copy of that user is created. The copy of the user is then
-			 modified based on the changes in the WHO reply. Once changed, the original 
-			 user and the copied user is compared and based on some predetermined if 
-			 statements, we will decide if the actual instance of the user in the visible
-			 user list requires a redraw. If it does, the only then is the user removed
-			 from the internal user list of the associated channel and readded. */
-			IRCUser *oldUser = [c findMember:nickname];
-			IRCUser *newUser = nil;
-			
-			BOOL insertNewUser = NO;
+			IRCUser *member = [c findMember:nickname];
 
-			if (oldUser == nil) {
-				newUser = [IRCUser newUserOnClient:self withNickname:nickname];
-				
-				insertNewUser = YES;
+			IRCUserMutable *memberMutable = nil;
+
+			if (member == nil) {
+				memberMutable = [[IRCUserMutable alloc] initWithNickname:nickname onClient:self];
 			} else {
-				newUser = [oldUser copy];
+				memberMutable = [member mutableCopy];
 			}
 			
-			[newUser setUsername:username];
-			[newUser setAddress:hostmask];
+			[memberMutable setUsername:username];
+			[memberMutable setAddress:hostmask];
 
-			[newUser setIsAway:isAway];
-			[newUser setIsCop:isIRCop];
+			[memberMutable setIsAway:isAway];
+			[memberMutable setIsCop:isIRCop];
 
 			/* Paramater 7 includes the hop count and real name because it begins with a :
 			 Therefore, we cut after the first space to get the real, real name value. */
@@ -7213,7 +7208,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				}
 			}
 
-			[newUser setRealname:realname];
+			[memberMutable setRealName:realname];
 
 			/* Update user modes */
 			NSMutableString *userModes = [NSMutableString string];
@@ -7231,7 +7226,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			if ([userModes length] > 0) {
-				[newUser setModes:userModes];
+				[memberMutable setModes:userModes];
 			}
 
 			/* Update local cache of our hostmask. */
@@ -7242,20 +7237,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			/* Continue normal WHO reply tracking. */
-			if (insertNewUser) {
-				[c addMember:newUser];
+			if (member == nil) {
+				[c addMember:memberMutable];
 			} else {
-				BOOL requiresRedraw = [c memberRequiresRedraw:oldUser comparedTo:newUser];
-				
-				[oldUser migrate:newUser];
-				
-				if (requiresRedraw) {
-					if ([c isChannel]) {
-						[c removeMember:[oldUser nickname]];
-						
-						[c addMember:oldUser];
-					}
-				}
+				[c replaceMember:member withMember:memberMutable];
 			}
 
 			break;
@@ -7281,8 +7266,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			for (NSString *nickname in items) {
 				NSObjectIsEmptyAssertLoopContinue(nickname); // Some networks append empty spaces...
-				
-				IRCUser *member = [IRCUser newUserOnClient:self withNickname:nil];
+
+				IRCUserMutable *memberMutable = [[IRCUserMutable alloc] initWithClient:self];
 
 				NSUInteger i;
 				
@@ -7302,7 +7287,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				}
 
 				if ([userModes length] > 0) {
-					[member setModes:userModes];
+					[memberMutable setModes:userModes];
 				}
 				
 #undef _userModeSymbol
@@ -7321,16 +7306,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					nicknameInt = newNickname;
 				}
 
-				[member setNickname:nicknameInt];
-				[member setUsername:usernameInt];
-				[member setAddress:addressInt];
+				[memberMutable setNickname:nicknameInt];
+				[memberMutable setUsername:usernameInt];
+				[memberMutable setAddress:addressInt];
 				
 				/* Populate user list. */
 				/* This data is populated if the user invoked the NAMES command
 				 directly so we must remove any placement of the user. */
-				[c removeMember:nicknameInt];
+				[c removeMemberWithNickname:nicknameInt];
 				
-				[c addMember:member];
+				[c addMember:memberMutable];
 			}
 
 			break;

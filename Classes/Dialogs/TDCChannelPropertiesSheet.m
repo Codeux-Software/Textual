@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite, nullable) IRCChannel *channel;
 @property (nonatomic, copy, readwrite, nullable) NSString *clientId;
 @property (nonatomic, copy, readwrite, nullable) NSString *channelId;
-@property (nonatomic, strong) IRCChannelConfig *config;
+@property (nonatomic, strong) IRCChannelConfigMutable *config;
 @property (nonatomic, assign) BOOL isNewConfiguration;
 @property (nonatomic, copy) NSArray *navigationTree;
 @property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
@@ -98,9 +98,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		self.channelId = channel.uniqueIdentifier;
 
 		if (channel) {
-			self.config = [channel.config copy];
+			self.config = [channel.config mutableCopy];
 		} else {
-			self.config = [IRCChannelConfig new];
+			self.config = [IRCChannelConfigMutable new];
 		}
 
 		[self prepareInitialState];
@@ -125,9 +125,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		self.clientId = client.uniqueIdentifier;
 
 		if (config) {
-			self.config = [config copy];
+			self.config = [config mutableCopy];
 		} else {
-			self.config = [IRCChannelConfig new];
+			self.config = [IRCChannelConfigMutable new];
 		}
 
 		[self prepareInitialState];
@@ -146,9 +146,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		self.clientId = clientId;
 
 		if (config) {
-			self.config = [config copy];
+			self.config = [config mutableCopy];
 		} else {
-			self.config = [IRCChannelConfig new];
+			self.config = [IRCChannelConfigMutable new];
 		}
 
 		[self prepareInitialState];
@@ -193,7 +193,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.defaultModesTextField.stringValue = self.config.defaultModes;
 	self.defaultTopicTextField.stringValue = self.config.defaultTopic;
 
-	self.secretKeyTextField.stringValue = self.config.secretKeyValue;
+	self.secretKeyTextField.stringValue = self.config.secretKey;
 
 	self.autoJoinCheck.state = self.config.autoJoin;
 	self.pushNotificationsCheck.state = self.config.pushNotifications;
@@ -203,9 +203,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.ignoreHighlightsCheck.state = self.config.ignoreHighlights;
 
 	if ([TPCPreferences showInlineImages]) {
-		self.disableInlineImagesCheck.state = self.config.ignoreInlineImages;
+		self.disableInlineImagesCheck.state = self.config.ignoreInlineMedia;
 	} else {
-		self.enableInlineImagesCheck.state = self.config.ignoreInlineImages;
+		self.enableInlineImagesCheck.state = self.config.ignoreInlineMedia;
 	}
 }
 
@@ -329,9 +329,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.config.ignoreHighlights = self.ignoreHighlightsCheck.state;
 
 	if ([TPCPreferences showInlineImages]) {
-		self.config.ignoreInlineImages = self.disableInlineImagesCheck.state;
+		self.config.ignoreInlineMedia = self.disableInlineImagesCheck.state;
 	} else {
-		self.config.ignoreInlineImages = self.enableInlineImagesCheck.state;
+		self.config.ignoreInlineMedia = self.enableInlineImagesCheck.state;
 	}
 	
 	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheet:onOk:)]) {

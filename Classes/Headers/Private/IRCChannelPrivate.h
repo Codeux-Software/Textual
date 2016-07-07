@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,16 +37,43 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCUser ()
-- (instancetype)initWithClient:(IRCClient *)client;
+@interface IRCChannel ()
+@property (nonatomic, assign, readwrite) IRCChannelStatus status;
+@property (nonatomic, assign) BOOL sentInitialWhoRequest;
+@property (nonatomic, assign) BOOL inUserInvokedModeRequest;
+@property (nonatomic, assign, readwrite) BOOL errorOnLastJoinAttempt;
 
-- (void)conversation;
-- (void)incomingConversation;
-- (void)outgoingConversation;
+- (instancetype)initWithConfig:(IRCChannelConfig *)config NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConfigDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 
-- (NSComparisonResult)compare:(id)other;
+- (void)updateConfig:(IRCChannelConfig *)config;
+- (void)updateConfig:(IRCChannelConfig *)config fireChangedNotification:(BOOL)fireChangedNotification;
+- (void)updateConfig:(IRCChannelConfig *)config fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList;
 
-+ (NSComparator)nicknameLengthComparator;
+- (NSDictionary<NSString *, id> *)configurationDictionary;
+
+- (void)noteEncryptionStateDidChange;
+
+- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
+- (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
+
+- (void)clearMembers; // This will not reload table view
+
+- (BOOL)memberRequiresRedraw:(IRCUser *)member1 comparedTo:(IRCUser *)member2;
+
+- (void)replaceMember:(IRCUser *)member1 withMember:(IRCUser *)member2;
+
+- (void)updateAllMembersOnTableView;
+
+- (void)updateMemberOnTableView:(IRCUser *)member;
+
+- (void)reloadDataForTableView;
+- (void)reloadDataForTableViewBySortingMembers;
+
+- (void)writeToLogLineToLogFile:(TVCLogLine *)logLine;
+
+- (void)print:(TVCLogLine *)logLine;
+- (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END
