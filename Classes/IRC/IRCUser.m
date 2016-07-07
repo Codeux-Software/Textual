@@ -155,7 +155,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [NSString stringWithFormat:@"%@!%@@%@", nickname, username, address];
 }
 
-- (nullable NSString *)banMask
+- (NSString *)banMask
 {
 	NSString *nickname = self.nickname;
 	NSString *username = self.username;
