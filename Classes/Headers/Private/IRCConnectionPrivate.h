@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tcpClientDidReceiveData:(NSString *)data;
 - (void)tcpClientDidSecureConnection;
 - (void)tcpClientDidReceivedAnInsecureCertificate;
-- (void)tcpClientWillSendData:(NSData *)data;
+- (void)tcpClientWillSendData:(NSString *)data;
 - (void)tcpClientDidSendData;
 @end
 
