@@ -89,6 +89,11 @@ NS_ASSUME_NONNULL_BEGIN
 	NSAssert((rowIndex >= 0),
 		@"Object does not exist on outline view");
 
+	[self removeItemFromListAtIndex:rowIndex];
+}
+
+- (void)removeItemFromListAtIndex:(NSUInteger)rowIndex
+{
 	[self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
 					  inParent:nil
 				 withAnimation:NSTableViewAnimationEffectNone];
