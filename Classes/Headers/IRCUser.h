@@ -76,7 +76,7 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (getter=isOp, readonly) BOOL op;
 @property (getter=isHalfOp, readonly) BOOL halfOp;
 
-@property (readonly, copy, nullable) NSString *banMask;
+@property (readonly, copy) NSString *banMask;
 
 @property (readonly, copy) NSString *lowercaseNickname;
 @property (readonly, copy) NSString *uppercaseNickname;
