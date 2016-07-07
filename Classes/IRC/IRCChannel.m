@@ -959,11 +959,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item
 {
-	if (item == nil) {
-		return self.numberOfMembers;
-	}
-
-	return 0;
+	return self.numberOfMembers;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
