@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCAddressBookSheet ()
-@property (nonatomic, strong) IRCAddressBookEntry *config;
+@property (nonatomic, strong) IRCAddressBookEntryMutable *config;
 @property (nonatomic, assign) IRCAddressBookEntryType entryType;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
@@ -65,9 +65,9 @@ ClassWithDesignatedInitializerInitMethod
 {
 	if ((self = [super init])) {
 		if (entryType == IRCAddressBookIgnoreEntryType) {
-			self.config = [IRCAddressBookEntry newIgnoreEntry];
+			self.config = [IRCAddressBookEntryMutable newIgnoreEntry];
 		} else if (entryType == IRCAddressBookUserTrackingEntryType) {
-			self.config = [IRCAddressBookEntry newUserTrackingEntry];
+			self.config = [IRCAddressBookEntryMutable newUserTrackingEntry];
 		}
 
 		self.entryType = entryType;
@@ -87,7 +87,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(config != nil);
 
 	if ((self = [super init])) {
-		self.config = [config copy];
+		self.config = [config mutableCopy];
 
 		self.entryType = config.entryType;
 
