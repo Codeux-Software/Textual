@@ -987,7 +987,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
 
-	((TVCMemberListCell *)newView).cellItem = item;
+	if ([newView isKindOfClass:[TVCMemberListCell class]]) {
+		TVCMemberListCell *groupItem = (TVCMemberListCell *)newView;
+
+		groupItem.cellItem = item;
+	}
 
 	return newView;
 }
