@@ -53,7 +53,9 @@
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
+#import "IRCChannelConfigPrivate.h"
 #import "IRCChannelModePrivate.h"
+#import "IRCChannelPrivate.h"
 #import "IRCColorFormatPrivate.h"
 #import "IRCCommandIndexPrivate.h"
 #import "IRCConnectionPrivate.h"
@@ -65,6 +67,7 @@
 #import "IRCMessagePrivate.h"
 #import "IRCTimerCommandPrivate.h"
 #import "IRCTreeItemPrivate.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 #import "IRCUserPrivate.h"
 #import "IRCWorldPrivate.h"
 #import "IRCWorldPrivateCloudExtension.h"

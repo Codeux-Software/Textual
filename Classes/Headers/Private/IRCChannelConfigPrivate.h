@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,16 +37,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCUser ()
-- (instancetype)initWithClient:(IRCClient *)client;
+@interface IRCChannelConfig ()
+- (NSDictionary<NSString *, id> *)dictionaryValue:(BOOL)isCloudDictionary;
 
-- (void)conversation;
-- (void)incomingConversation;
-- (void)outgoingConversation;
+- (void)destroyKeychainItems;
 
-- (NSComparisonResult)compare:(id)other;
+- (void)writeItemsToKeychain;
 
-+ (NSComparator)nicknameLengthComparator;
+- (void)writeSecretKeyToKeychain;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -130,6 +130,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return NO;
 }
 
+- (BOOL)isModeForChangingMemberModeOn:(IRCClient *)client
+{
+	NSParameterAssert(client != nil);
+
+	if (self.modeParamater.length == 0) {
+		return NO;
+	}
+
+	return [client.supportInfo modeSymbolIsUserPrefix:self.modeSymbol];
+}
+
 @end
 
 #pragma mark -

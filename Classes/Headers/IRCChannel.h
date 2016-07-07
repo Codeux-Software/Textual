@@ -36,11 +36,14 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 #import "IRCTreeItem.h"
-#import "TVCLogController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
-	IRCChannelStatusParted,
+	IRCChannelStatusParted = 0,
 	IRCChannelStatusJoining,
 	IRCChannelStatusJoined,
 	IRCChannelStatusTerminated,
@@ -48,82 +51,44 @@ typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 
 TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
-@interface IRCChannel : IRCTreeItem <NSOutlineViewDataSource, NSOutlineViewDelegate>
-@property (readonly, copy) NSString *name;
-@property (nonatomic, copy) NSString *topic;
-@property (nonatomic, copy) IRCChannelConfig *config;
-@property (nonatomic, strong) IRCChannelMode *modeInfo;
-@property (nonatomic, assign) IRCChannelStatus status;
-@property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
-@property (nonatomic, assign) BOOL sentInitialWhoRequest;
-@property (nonatomic, assign) BOOL inUserInvokedModeRequest;
-@property (nonatomic, assign) NSInteger channelJoinTime;
+@interface IRCChannel : IRCTreeItem
+@property (readonly, copy) IRCChannelConfig *config;
+@property (nonatomic, copy) NSString *name; // -setName: will do nothing if type != IRCChannelPrivateMessageType
+@property (nonatomic, copy, nullable) NSString *topic;
+@property (nonatomic, assign) BOOL autoJoin;
+@property (getter=isChannel, readonly) BOOL channel;
+@property (getter=isPrivateMessage, readonly) BOOL privateMessage;
+@property (getter=isPrivateMessageForZNCUser, readonly) BOOL privateMessageForZNCUser; // For example: *status, *nickserv, etc.
+@property (readonly) IRCChannelStatus status;
+@property (readonly) BOOL errorOnLastJoinAttempt;
+@property (readonly) NSTimeInterval channelJoinTime;
+@property (readonly, copy) NSString *channelTypeString;
+@property (readonly, strong, nullable) IRCChannelMode *modeInfo;
+@property (readonly, copy, nullable) NSString *secretKey;
+@property (readonly, copy, nullable) NSURL *logFilePath;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (readonly) BOOL encryptionStateIsEncrypted;
-
-- (void)noteEncryptionStateDidChange;
 #endif
-
-- (void)setup:(IRCChannelConfig *)seed;
-
-- (void)updateConfig:(IRCChannelConfig *)seed;
-- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
-- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList;
-
-- (NSDictionary *)dictionaryValue;
-
-- (void)setName:(NSString *)value;
-
-@property (readonly, copy) NSString *secretKey;
-
-@property (getter=isChannel, readonly) BOOL channel;
-@property (getter=isPrivateMessage, readonly) BOOL privateMessage;
-@property (getter=isPrivateMessageOwnedByZNC, readonly) BOOL privateMessageOwnedByZNC; // For example: *status, *nickserv, etc.
-
-@property (readonly, copy) NSString *channelTypeString;
-
-- (void)prepareForApplicationTermination;
-- (void)prepareForPermanentDestruction;
-
-- (void)preferencesChanged;
 
 - (void)activate;
 - (void)deactivate;
 
-@property (readonly, copy) NSURL *logFilePath;
+- (void)addMember:(IRCUser *)member;
+- (void)removeMember:(IRCUser *)member;
+- (void)removeMemberWithNickname:(NSString *)nickname;
 
-- (void)writeToLogFile:(TVCLogLine *)line;
-
-- (void)print:(TVCLogLine *)logLine;
-- (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock;
+- (void)replaceMember:(IRCUser *)member1 withMember:(IRCUser *)member2;
 
 - (BOOL)memberExists:(NSString *)nickname;
 
-- (IRCUser *)findMember:(NSString *)nickname;
-- (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
+- (nullable IRCUser *)findMember:(NSString *)nickname;
+- (nullable IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
 
-- (void)addMember:(IRCUser *)user;
-- (void)removeMember:(NSString *)nickname;
-- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
-- (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
+@property (readonly) NSUInteger numberOfMembers;
 
-- (void)clearMembers; // This will not reload table view. 
-
-@property (readonly) NSInteger numberOfMembers;
-
-/* The member list methods returns the actual instance of user stored in 
- the channels internal cache. IRCUser is not KVO based so if you modify a
- user returned, then do Textual the kindness of reloading that member in 
- the member list view. */
-@property (readonly, copy) NSArray *memberList; // Automatically sorted by channel rank
-@property (readonly, copy) NSArray *memberListSortedByNicknameLength; // Copy of member list automatically sorted by longest nickname to shortest nickname
-
-- (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
-
-- (void)updateAllMembersOnTableView;
-- (void)updateMemberOnTableView:(IRCUser *)user;
-
-- (void)reloadDataForTableView;
-- (void)reloadDataForTableViewBySortingMembers;
+@property (readonly, copy) NSArray<IRCUser *> *memberList; // Automatically sorted by channel rank
+@property (readonly, copy) NSArray<IRCUser *> *memberListSortedByNicknameLength; // Automatically sorted by longest nickname to shortest nickname
 @end
+
+NS_ASSUME_NONNULL_END

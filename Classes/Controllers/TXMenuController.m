@@ -1651,15 +1651,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[config writeKeychainItemsToDisk];
 
-	for (IRCChannelConfig *channelConfig in config.channelList) {
-		NSString *secretKey = channelConfig.secretKey;
+	NSArray *channelListIn = config.channelList;
 
-		channelConfig.itemUUID = [NSString stringWithUUID];
+	NSMutableArray *channelListOut = [NSMutableArray arrayWithCapacity:channelListIn.count];
 
-		channelConfig.secretKey = secretKey;
+	for (IRCChannelConfigMutable *channelConfig in channelListIn) {
+		IRCClientConfig *channelConfigNew = [channelConfig uniqueCopy];
 
-		[channelConfig writeKeychainItemsToDisk];
+		[channelConfigNew writeKeychainItemsToDisk];
 	}
+
+	config.channelList = channelListOut;
 	
 	IRCClient *newClient = [worldController() createClientWithConfig:config reload:YES];
 	
@@ -2074,8 +2076,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (c == nil) {
 		c = [worldController() createChannelWithConfig:config onClient:u adjust:YES reload:YES];
-
-		[c.config writeKeychainItemsToDisk];
 
 		[mainWindow() expandClient:u];
 

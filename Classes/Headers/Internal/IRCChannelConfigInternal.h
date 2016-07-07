@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,16 +37,28 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCUser ()
-- (instancetype)initWithClient:(IRCClient *)client;
+@interface IRCChannelConfig ()
+{
+@protected
+	BOOL _autoJoin;
+	BOOL _ignoreGeneralEventMessages;
+	BOOL _ignoreHighlights;
+	BOOL _ignoreInlineMedia;
+	BOOL _pushNotifications;
+	BOOL _showTreeBadgeCount;
+	IRCChannelType _type;
+	NSString *_channelName;
+	NSString *_defaultModes;
+	NSString *_defaultTopic;
+	NSString *_secretKey;
 
-- (void)conversation;
-- (void)incomingConversation;
-- (void)outgoingConversation;
+@private
+	BOOL _objectInitialized;
+	NSString *_uniqueIdentifier;
+	NSDictionary *_defaults;
+}
 
-- (NSComparisonResult)compare:(id)other;
-
-+ (NSComparator)nicknameLengthComparator;
+- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

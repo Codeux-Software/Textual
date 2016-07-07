@@ -488,11 +488,9 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	NSParameterAssert(config != nil);
 	NSParameterAssert(client != nil);
 
-	IRCChannel *channel = [IRCChannel new];
+	IRCChannel *channel = [[IRCChannel alloc] initWithConfig:config];
 
 	channel.associatedClient = client;
-
-	[channel setup:config];
 
 	channel.viewController = [self createViewControllerWithClient:client channel:channel];
 
@@ -518,13 +516,13 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(client != nil);
 
-	IRCChannelConfig *seed = [IRCChannelConfig new];
+	IRCChannelConfigMutable *config = [IRCChannelConfigMutable new];
 
-	seed.channelName = nickname;
+	config.channelName = nickname;
 
-	seed.type = IRCChannelPrivateMessageType;
+	config.type = IRCChannelPrivateMessageType;
 
-	IRCChannel *channel = [self createChannelWithConfig:seed onClient:client adjust:YES reload:YES];
+	IRCChannel *channel = [self createChannelWithConfig:config onClient:client adjust:YES reload:YES];
 
 	if (client.isLoggedIn) {
 		[channel activate];

@@ -36,126 +36,46 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCChannelConfigInternal.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCChannelConfig
 
-@synthesize secretKey = _secretKey;
-
-- (NSDictionary *)defaults
-{
-	static id _defaults = nil;
-
-	if (_defaults == nil) {
-		NSDictionary *defaults = @{
-			 @"channelType"						: @(IRCChannelChannelType),
-
-			 @"joinOnConnect"					:	@(YES),
-
-			 @"ignoreGeneralEventMessages"		: @(NO),
-			 @"ignoreHighlights"				: @(NO),
-			 @"ignoreInlineMedia"				: @(NO),
-
-			 @"enableNotifications"				: @(YES),
-			 @"enableTreeBadgeCountDrawing"		: @(YES)
-		 };
-
-		_defaults = [defaults copy];
-	}
-
-	return _defaults;
-}
-
-- (void)populateDefaults
-{
-	NSDictionary *defaults = [self defaults];
-
-	self.itemUUID						= [NSString stringWithUUID];
-
-	self.type							= [defaults integerForKey:@"channelType"];
-
-	self.autoJoin						= [defaults boolForKey:@"joinOnConnect"];
-	self.pushNotifications				= [defaults boolForKey:@"enableNotifications"];
-	self.showTreeBadgeCount				= [defaults boolForKey:@"enableTreeBadgeCountDrawing"];
-
-	self.ignoreGeneralEventMessages		= [defaults boolForKey:@"ignoreGeneralEventMessages"];
-	self.ignoreHighlights				= [defaults boolForKey:@"ignoreHighlights"];
-	self.ignoreInlineImages				= [defaults boolForKey:@"ignoreInlineMedia"];
-}
-
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		[self populateDefaults];
-	}
-    
-	return self;
-}
-
 #pragma mark -
-#pragma mark Keychain Management
+#pragma mark Defaults
 
-- (NSString *)secretKey
+- (void)populateDefaultsPreflight
 {
-	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
-													  withItemKind:@"application password"
-													   forUsername:nil
-													   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+	ObjectIsAlreadyInitializedAssert
 
-	return kcPassword;
+	self->_defaults = @{
+	  @"autoJoin" : @(YES),
+	  @"channelType" : @(IRCChannelChannelType),
+	  @"ignoreGeneralEventMessages"	: @(NO),
+	  @"ignoreHighlights" : @(NO),
+	  @"ignoreInlineMedia" : @(NO),
+	  @"pushNotifications" : @(YES),
+	  @"showTreeBadgeCount" : @(YES)
+	};
 }
 
-- (void)setSecretKey:(NSString *)pass
+- (void)populateDefaultsPostflight
 {
-	_secretKey = [pass copy];
+	ObjectIsAlreadyInitializedAssert
+
+	SetVariableIfNilCopy(self->_channelName, NSStringEmptyPlaceholder)
+
+	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
 }
 
-- (NSString *)temporarySecretKey
+- (void)populateDefaultsByAppendingDictionary:(NSDictionary<NSString *, id> *)defaultsToAppend
 {
-	return _secretKey;
-}
+	NSParameterAssert(defaultsToAppend != nil);
 
-- (NSString *)secretKeyValue
-{
-	if (_secretKey) {
-		return _secretKey;
-	} else {
-		return [self secretKey];
-	}
-}
+	ObjectIsAlreadyInitializedAssert
 
-- (void)writeKeychainItemsToDisk
-{
-	[self writeSecretKeyKeychainItemToDisk];
-}
-
-- (void)writeSecretKeyKeychainItemToDisk
-{
-	if (_secretKey) {
-		[XRKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:_secretKey
-								serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-	}
-	
-	_secretKey = nil;
-}
-
-- (void)destroyKeychains
-{
-	[XRKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-
-	[self resetKeychainStatus];
-}
-
-- (void)resetKeychainStatus
-{
-	/* Reset temporary store. */
-	_secretKey = nil;
+	self->_defaults = [self->_defaults dictionaryByAddingEntries:defaultsToAppend];
 }
 
 #pragma mark -
@@ -163,93 +83,361 @@
 
 + (IRCChannelConfig *)seedWithName:(NSString *)channelName
 {
-	IRCChannelConfig *seed = [IRCChannelConfig new];
+	NSParameterAssert(channelName != nil);
+
+	NSDictionary *dic = @{@"channelName" : channelName};
+
+	IRCChannelConfig *config = [[self alloc] initWithDictionary:dic];
 		
-	[seed setChannelName:channelName];
-		
-	return seed;
+	return config;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)init
 {
-	if ((self = [self init])) {
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		[self populateDefaultsPreflight];
+
+		[self populateDefaultsPostflight];
+
+		self->_objectInitialized = YES;
+
+		return self;
+	}
+	
+	return nil;
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic
+{
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		[self populateDefaultsPreflight];
+
 		[self populateDictionaryValues:dic];
+
+		[self populateDefaultsPostflight];
+
+		self->_objectInitialized = YES;
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)populateDictionaryValues:(NSDictionary *)dic
+- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
 {
-	/* Load the newest set of keys. */
-	[dic assignUnsignedIntegerTo:&_type			forKey:@"channelType"];
+	NSParameterAssert(dic != nil);
 
-	[dic assignStringTo:&_itemUUID		forKey:@"uniqueIdentifier"];
-	[dic assignStringTo:&_channelName	forKey:@"channelName"];
+	if ([self isMutable] == NO) {
+		ObjectIsAlreadyInitializedAssert
+	}
 
-	[dic assignBoolTo:&_autoJoin					forKey:@"joinOnConnect"];
-	[dic assignBoolTo:&_pushNotifications			forKey:@"enableNotifications"];
-	[dic assignBoolTo:&_showTreeBadgeCount			forKey:@"enableTreeBadgeCountDrawing"];
+	NSMutableDictionary<NSString *, id> *defaultsMutable = [self->_defaults mutableCopy];
 
-	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreGeneralEventMessages"];
-	[dic assignBoolTo:&_ignoreHighlights			forKey:@"ignoreHighlights"];
-	[dic assignBoolTo:&_ignoreInlineImages			forKey:@"ignoreInlineMedia"];
+	[defaultsMutable addEntriesFromDictionary:dic];
 
-	[dic assignStringTo:&_defaultModes	forKey:@"defaultMode"];
-	[dic assignStringTo:&_defaultTopic	forKey:@"defaultTopic"];
+	[defaultsMutable assignStringTo:&self->_channelName forKey:@"channelName"];
+	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 
-	/* Load legacy keys (if they exist) */
-	[dic assignBoolTo:&_ignoreInlineImages			forKey:@"disableInlineMedia"];
+	[defaultsMutable assignUnsignedIntegerTo:&self->_type forKey:@"channelType"];
 
-	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
+	if (self->_type == IRCChannelChannelType) {
+		/* Load the newest set of keys */
+		[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"autoJoin"];
+		[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+		[defaultsMutable assignBoolTo:&self->_ignoreHighlights forKey:@"ignoreHighlights"];
+		[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"ignoreInlineMedia"];
+		[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"pushNotifications"];
+		[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"showTreeBadgeCount"];
+
+		[defaultsMutable assignStringTo:&self->_defaultModes forKey:@"defaultMode"];
+		[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
+
+		/* Load legacy keys (if they exist) */
+		[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"joinOnConnect"];
+		[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreJPQActivity"];
+		[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"disableInlineMedia"];
+		[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
+		[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
+	}
+
+	/* Sanity check */
+	NSParameterAssert(self->_channelName.length > 0);
 }
 
-- (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed
+- (NSDictionary<NSString *, id> *)dictionaryValue
 {
-	PointerIsEmptyAssertReturn(seed, NO);
-	
-	NSDictionary *s1 = [seed dictionaryValue];
-	
-	NSDictionary *s2 = [self dictionaryValue];
-	
-	/* Only declare ourselves as equal when we do not have any 
-	 temporary keychain items stored in memory. */
-	return (NSObjectsAreEqual(s1, s2) &&
-			NSObjectsAreEqual(_secretKey, [seed temporarySecretKey]));
+	return [self dictionaryValue:NO];
 }
 
-- (NSDictionary *)dictionaryValue
+- (NSDictionary<NSString *, id> *)dictionaryValue:(BOOL)isCloudDictionary
 {
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	[dic setInteger:self.type forKey:@"channelType"];
-
-	[dic maybeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
-	[dic maybeSetObject:self.channelName		forKey:@"channelName"];
+	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
 	if (self.type == IRCChannelChannelType) {
-		[dic setBool:self.autoJoin							forKey:@"joinOnConnect"];
-		[dic setBool:self.pushNotifications					forKey:@"enableNotifications"];
-		[dic setBool:self.showTreeBadgeCount				forKey:@"enableTreeBadgeCountDrawing"];
+		[dic maybeSetObject:self.defaultModes forKey:@"defaultMode"];
+		[dic maybeSetObject:self.defaultTopic forKey:@"defaultTopic"];
 
-		[dic setBool:self.ignoreHighlights					forKey:@"ignoreHighlights"];
-		[dic setBool:self.ignoreInlineImages				forKey:@"ignoreInlineMedia"];
-		[dic setBool:self.ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
-
-		[dic maybeSetObject:self.defaultModes				forKey:@"defaultMode"];
-		[dic maybeSetObject:self.defaultTopic				forKey:@"defaultTopic"];
+		[dic setBool:self.autoJoin forKey:@"autoJoin"];
+		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+		[dic setBool:self.ignoreHighlights forKey:@"ignoreHighlights"];
+		[dic setBool:self.ignoreInlineMedia forKey:@"ignoreInlineMedia"];
+		[dic setBool:self.pushNotifications	forKey:@"pushNotifications"];
+		[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
 	}
 
-	return [dic dictionaryByRemovingDefaults:[self defaults]];
+	[dic maybeSetObject:self.channelName forKey:@"channelName"];
+	[dic maybeSetObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
+
+	[dic setUnsignedInteger:self.type forKey:@"channelType"];
+
+	return [dic dictionaryByRemovingDefaults:self->_defaults allowEmptyValues:YES];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (BOOL)isEqual:(id)object
 {
-	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
-	
-	[mut setSecretKey:_secretKey];
-	
-	return mut;
+	if (object == nil) {
+		return NO;
+	}
+
+	if (object == self) {
+		return YES;
+	}
+
+	if ([object isKindOfClass:[IRCChannelConfig class]] == NO) {
+		return NO;
+	}
+
+	NSDictionary *s1 = self.dictionaryValue;
+
+	NSDictionary *s2 = ((IRCChannelConfig *)object).dictionaryValue;
+
+	return (NSObjectsAreEqual(s1, s2) &&
+			NSObjectsAreEqual(self->_secretKey, ((IRCChannelConfig *)object)->_secretKey));
+}
+
+- (NSUInteger)hash
+{
+	return self.uniqueIdentifier.hash;
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	  IRCChannelConfig *config =
+	[[IRCChannelConfig allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+
+	config->_secretKey = [self->_secretKey copyWithZone:zone];
+
+	return config;
+}
+
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
+{
+	  IRCChannelConfigMutable *config =
+	[[IRCChannelConfigMutable allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+
+	config.secretKey = self->_secretKey;
+
+	return config;
+}
+
+- (id)uniqueCopy
+{
+	/* Given self, create a copy and replace unique identifier
+	 with new identifier to make this copy of object unique. */
+	IRCChannelConfig *object = nil;
+
+	if ([self isMutable] == NO) {
+		object = [self copy];
+	} else {
+		object = [self mutableCopy];
+	}
+
+	NSString *secretKey = self.secretKey;
+
+	object->_secretKey = [secretKey copy];
+
+	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+
+	return object;
+}
+
+- (BOOL)isMutable
+{
+	return NO;
+}
+
+#pragma mark -
+#pragma mark Keychain Management
+
+- (nullable NSString *)secretKey
+{
+	if (self->_secretKey) {
+		return self->_secretKey;
+	}
+
+	return self.secretKeyFromKeychain;
+}
+
+- (nullable NSString *)secretKeyFromKeychain
+{
+	NSString *secretKeyServiceName = [NSString stringWithFormat:@"textual.cjoinkey.%@", self.uniqueIdentifier];
+
+	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
+													  withItemKind:@"application password"
+													   forUsername:nil
+													   serviceName:secretKeyServiceName];
+
+	return kcPassword;
+}
+
+- (void)writeItemsToKeychain
+{
+	[self writeSecretKeyToKeychain];
+}
+
+- (void)writeSecretKeyToKeychain
+{
+	if (self->_secretKey == nil) {
+		return;
+	}
+
+	NSString *secretKeyServiceName = [NSString stringWithFormat:@"textual.cjoinkey.%@", self.uniqueIdentifier];
+
+	[XRKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+						   withItemKind:@"application password"
+							forUsername:nil
+						withNewPassword:self->_secretKey
+							serviceName:secretKeyServiceName];
+
+	self->_secretKey = nil;
+}
+
+- (void)destroyKeychainItems
+{
+	NSString *secretKeyServiceName = [NSString stringWithFormat:@"textual.cjoinkey.%@", self.uniqueIdentifier];
+
+	[XRKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:secretKeyServiceName];
+
+	[self resetTemporaryKeychainItems];
+}
+
+- (void)resetTemporaryKeychainItems
+{
+	self->_secretKey = nil;
 }
 
 @end
+
+#pragma mark -
+
+@implementation IRCChannelConfigMutable
+
+@dynamic type;
+@dynamic autoJoin;
+@dynamic channelName;
+@dynamic defaultModes;
+@dynamic defaultTopic;
+@dynamic ignoreGeneralEventMessages;
+@dynamic ignoreHighlights;
+@dynamic ignoreInlineMedia;
+@dynamic pushNotifications;
+@dynamic secretKey;
+@dynamic showTreeBadgeCount;
+
+- (BOOL)isMutable
+{
+	return YES;
+}
+
+- (void)setType:(IRCChannelType)type
+{
+	if (self->_type != type) {
+		self->_type = type;
+	}
+}
+
+- (void)setAutoJoin:(BOOL)autoJoin
+{
+	if (self->_autoJoin != autoJoin) {
+		self->_autoJoin = autoJoin;
+	}
+}
+
+- (void)setIgnoreGeneralEventMessages:(BOOL)ignoreGeneralEventMessages
+{
+	if (self->_ignoreGeneralEventMessages != ignoreGeneralEventMessages) {
+		self->_ignoreGeneralEventMessages = ignoreGeneralEventMessages;
+	}
+}
+
+- (void)setIgnoreHighlights:(BOOL)ignoreHighlights
+{
+	if (self->_ignoreHighlights != ignoreHighlights) {
+		self->_ignoreHighlights = ignoreHighlights;
+	}
+}
+
+- (void)setIgnoreInlineMedia:(BOOL)ignoreInlineMedia
+{
+	if (self->_ignoreInlineMedia != ignoreInlineMedia) {
+		self->_ignoreInlineMedia = ignoreInlineMedia;
+	}
+}
+
+- (void)setPushNotifications:(BOOL)pushNotifications
+{
+	if (self->_pushNotifications != pushNotifications) {
+		self->_pushNotifications = pushNotifications;
+	}
+}
+
+- (void)setShowTreeBadgeCount:(BOOL)showTreeBadgeCount
+{
+	if (self->_showTreeBadgeCount != showTreeBadgeCount) {
+		self->_showTreeBadgeCount = showTreeBadgeCount;
+	}
+}
+
+- (void)setChannelName:(NSString *)channelName
+{
+	NSParameterAssert(channelName != nil);
+
+	if (self->_channelName != channelName) {
+		self->_channelName = [channelName copy];
+	}
+}
+
+- (void)setDefaultModes:(nullable NSString *)defaultModes
+{
+	if (self->_defaultModes != defaultModes) {
+		self->_defaultModes = [defaultModes copy];
+	}
+}
+
+- (void)setDefaultTopic:(nullable NSString *)defaultTopic
+{
+	if (self->_defaultTopic != defaultTopic) {
+		self->_defaultTopic = [defaultTopic copy];
+	}
+}
+
+- (void)setSecretKey:(nullable NSString *)secretKey
+{
+	if (self->_secretKey != secretKey) {
+		self->_secretKey = [secretKey copy];
+	}
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

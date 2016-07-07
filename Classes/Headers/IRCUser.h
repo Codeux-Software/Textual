@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 	IRCUserNoRank				= 1 << 0,	// nothing
 	IRCUserIRCopByModeRank		= 1 << 1,	// +y/+Y
@@ -48,20 +50,18 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 	IRCUserVoicedRank			= 1 << 6	// +v
 };
 
-@interface IRCUser : NSObject <NSCopying>
-@property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *address;
-@property (nonatomic, copy) NSString *realname;
-@property (nonatomic, copy) NSString *modes; // List of all user modes, ranked highest to lowest
-@property (nonatomic, assign) BOOL isCop; 
-@property (nonatomic, assign) BOOL isAway;
-@property (readonly) CGFloat totalWeight;
-@property (nonatomic, assign) CGFloat incomingWeight;
-@property (nonatomic, assign) CGFloat outgoingWeight;
-@property (nonatomic, assign) CFAbsoluteTime lastWeightFade;
+#pragma mark -
+#pragma mark Immutable Object
 
-+ (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname;
+@interface IRCUser : NSObject <NSCopying, NSMutableCopying>
+@property (readonly, copy) NSString *nickname;
+@property (readonly, copy, nullable) NSString *username;
+@property (readonly, copy, nullable) NSString *address;
+@property (readonly, copy, nullable) NSString *hostmask;
+@property (readonly, copy, nullable) NSString *realName;
+@property (readonly) BOOL isAway;
+@property (readonly) BOOL isCop;
+@property (readonly) double totalWeight;
 
 // Custom user modes are becoming more and more popular so it is better
 // to move away from hard coded booleans for these modes and instead use
@@ -76,10 +76,10 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (getter=isOp, readonly) BOOL op;
 @property (getter=isHalfOp, readonly) BOOL halfOp;
 
-@property (readonly, copy) NSString *banMask;
-@property (readonly, copy) NSString *hostmask;
+@property (readonly, copy, nullable) NSString *banMask;
 
 @property (readonly, copy) NSString *lowercaseNickname;
+@property (readonly, copy) NSString *uppercaseNickname;
 
 // -rank(s) returns IRCUserIRCopByModeRank if the +Y/+y modes defined
 // by InspIRCd-2.0 for IRC operators are in use by this user. It does not
@@ -88,20 +88,31 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (readonly) IRCUserRank rank; // Highest rank user has
 @property (readonly) IRCUserRank ranks; // All ranks user as a bitmask
 
+@property (readonly, copy) NSString *modes; // List of all user modes, ranked highest to lowest
 @property (readonly, copy) NSString *mark; // Returns mode symbol for highest rank (-modes)
 
-/* -presentAwayMessageFor301 keeps track of the last time raw numeric 
+/* -presentAwayMessageFor301 keeps track of the last time raw numeric
  301 (away message) is recieved and will return YES if the message
  should be presented, NO otherwise. */
 @property (readonly) BOOL presentAwayMessageFor301;
 
-- (void)outgoingConversation;
-- (void)incomingConversation;
-- (void)conversation;
+- (instancetype)initWithNickname:(NSString *)nickname onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
-- (void)migrate:(IRCUser *)from;
-
-- (NSComparisonResult)compare:(IRCUser *)other;
-
-+ (NSComparator)nicknameLengthComparator;
+- (void)markAsAway;
+- (void)markAsReturned;
 @end
+
+#pragma mark -
+#pragma mark Mutable Object
+
+@interface IRCUserMutable : IRCUser
+@property (nonatomic, copy, readwrite) NSString *nickname;
+@property (nonatomic, copy, readwrite, nullable) NSString *username;
+@property (nonatomic, copy, readwrite, nullable) NSString *address;
+@property (nonatomic, copy, readwrite, nullable) NSString *realName;
+@property (nonatomic, copy, readwrite) NSString *modes;
+@property (nonatomic, assign, readwrite) BOOL isAway;
+@property (nonatomic, assign, readwrite) BOOL isCop;
+@end
+
+NS_ASSUME_NONNULL_END

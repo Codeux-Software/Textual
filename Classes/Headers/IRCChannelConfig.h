@@ -38,39 +38,54 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, IRCChannelType) {
-	IRCChannelChannelType,
+	IRCChannelChannelType = 0,
 	IRCChannelPrivateMessageType,
 };
 
-@interface IRCChannelConfig : NSObject <NSCopying>
-@property (nonatomic, assign) IRCChannelType type;
-@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, copy) NSString *channelName;
-@property (nonatomic, copy) NSString *defaultTopic;
-@property (nonatomic, copy) NSString *defaultModes;
-@property (nonatomic, copy) NSString *secretKey;
-@property (nonatomic, assign) BOOL autoJoin;
-@property (nonatomic, assign) BOOL pushNotifications;
-@property (nonatomic, assign) BOOL showTreeBadgeCount;
-@property (nonatomic, assign) BOOL ignoreHighlights;
-@property (nonatomic, assign) BOOL ignoreInlineImages;
-@property (nonatomic, assign) BOOL ignoreGeneralEventMessages;
+#pragma mark -
+#pragma mark Immutable Object
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic;
-- (NSDictionary *)dictionaryValue;
-- (void)populateDictionaryValues:(NSDictionary *)dic;
-
-- (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed;
+@interface IRCChannelConfig : NSObject <NSCopying, NSMutableCopying>
+@property (readonly) BOOL autoJoin;
+@property (readonly) BOOL ignoreGeneralEventMessages;
+@property (readonly) BOOL ignoreHighlights;
+@property (readonly) BOOL ignoreInlineMedia;
+@property (readonly) BOOL pushNotifications;
+@property (readonly) BOOL showTreeBadgeCount;
+@property (readonly) IRCChannelType type;
+@property (readonly, copy) NSString *channelName;
+@property (readonly, copy) NSString *uniqueIdentifier;
+@property (readonly, copy, nullable) NSString *defaultModes;
+@property (readonly, copy, nullable) NSString *defaultTopic;
+@property (readonly, copy, nullable) NSString *secretKey;
+@property (readonly, copy, nullable) NSString *secretKeyFromKeychain;
 
 + (IRCChannelConfig *)seedWithName:(NSString *)channelName;
 
-- (void)destroyKeychains;
-- (void)writeKeychainItemsToDisk;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
+- (NSDictionary<NSString *, id> *)dictionaryValue;
 
-- (void)writeSecretKeyKeychainItemToDisk;
-
-@property (readonly, copy) NSString *temporarySecretKey;
-
-@property (readonly, copy) NSString *secretKeyValue;
+- (id)uniqueCopy;
 @end
+
+#pragma mark -
+#pragma mark Mutable Object
+
+@interface IRCChannelConfigMutable : IRCChannelConfig
+@property (nonatomic, assign, readwrite) IRCChannelType type;
+@property (nonatomic, assign, readwrite) BOOL autoJoin;
+@property (nonatomic, assign, readwrite) BOOL ignoreGeneralEventMessages;
+@property (nonatomic, assign, readwrite) BOOL ignoreHighlights;
+@property (nonatomic, assign, readwrite) BOOL ignoreInlineMedia;
+@property (nonatomic, assign, readwrite) BOOL pushNotifications;
+@property (nonatomic, assign, readwrite) BOOL showTreeBadgeCount;
+@property (nonatomic, copy, readwrite) NSString *channelName;
+@property (nonatomic, copy, readwrite, nullable) NSString *defaultModes;
+@property (nonatomic, copy, readwrite, nullable) NSString *defaultTopic;
+@property (nonatomic, copy, readwrite, nullable) NSString *secretKey;
+@end
+
+NS_ASSUME_NONNULL_END

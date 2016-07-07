@@ -516,7 +516,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-	NSString *realName = cellItem.realname;
+	NSString *realName = cellItem.realName;
 
 	if (realName.length == 0) {
 		realName = TXTLS(@"TVCMainWindow[1010]");

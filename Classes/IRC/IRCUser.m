@@ -36,62 +36,92 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCUserInternal.h"
 
-#import "IRCUserPrivate.h"
-
-#import <CommonCrypto/CommonDigest.h>
-
-#define _colorNumberMax				 30
+NS_ASSUME_NONNULL_BEGIN
 
 #define _presentAwayMessageFor301Threshold			300.0
 
 @interface IRCUser ()
-@property (nonatomic, weak) IRCISupportInfo *supportInfo;
+@property (nonatomic, strong) IRCClient *client;
 @property (nonatomic, assign) CFAbsoluteTime presentAwayMessageFor301LastEvent;
+@property (readonly) NSString *highestRankedUserMode;
 @end
 
 @implementation IRCUser
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)initWithClient:(IRCClient *)client
 {
+	NSParameterAssert(client != nil);
+
 	if ((self = [super init])) {
-		self.lastWeightFade = CFAbsoluteTimeGetCurrent();
+		self.client = client;
+
+		[self prepareInitialState];
+
+		[self populateDefaultsPostflight];
+
+		return self;
+	}
+
+	return nil;
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (instancetype)initWithNickname:(NSString *)nickname onClient:(IRCClient *)client
+{
+	NSParameterAssert(nickname != nil);
+	NSParameterAssert(client != nil);
+
+	if ((self = [super init])) {
+		self.client = client;
+
+		self->_nickname = [nickname copy];
+
+		[self prepareInitialState];
+
+		[self populateDefaultsPostflight];
 	}
 	
 	return self;
 }
 
-- (instancetype)initWithUser:(IRCUser *)otherUser
+- (void)prepareInitialState
 {
-	if ((self = [super init])) {
-		[self migrate:otherUser];
-	}
-	
-	return self;
+	self->_lastWeightFade = CFAbsoluteTimeGetCurrent();
 }
 
-+ (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname
+- (void)populateDefaultsPostflight
 {
-	IRCUser *newUser = [IRCUser new];
+	SetVariableIfNilCopy(self->_modes, NSStringEmptyPlaceholder)
+}
 
-	[newUser setSupportInfo:[client supportInfo]];
+- (void)markAsAway
+{
+	[self setIsAway:YES];
+}
 
-	[newUser setNickname:nickname];
-	
-	return newUser;
+- (void)markAsReturned
+{
+	[self setIsAway:NO];
 }
 
 - (void)setIsAway:(BOOL)isAway
 {
-	if (NSDissimilarObjects(isAway, _isAway)) {
-		_isAway = isAway;
+	if (self->_isAway != isAway) {
+		self->_isAway = isAway;
 
-		if (_isAway == NO) {
-			if (self.presentAwayMessageFor301LastEvent > 0.0) {
-				self.presentAwayMessageFor301LastEvent = 0.0;
-			}
-		}
+		[self updatePresentAwayMessageFor301Status];
+	}
+}
+
+- (void)updatePresentAwayMessageFor301Status
+{
+	if (self.isAway == NO) {
+		self.presentAwayMessageFor301LastEvent = 0.0;
 	}
 }
 
@@ -107,35 +137,51 @@
 		 self.presentAwayMessageFor301LastEvent = now;
 
 		return YES;
-	} else {
-		return NO;
 	}
+
+	return NO;
 }
 
-- (NSString *)hostmask
+- (nullable NSString *)hostmask
 {
-	NSObjectIsEmptyAssertReturn(self.nickname, nil);
-	NSObjectIsEmptyAssertReturn(self.username, nil);
-	NSObjectIsEmptyAssertReturn(self.address, nil);
-	
-	return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];
-}
+	NSString *nickname = self.nickname;
+	NSString *username = self.username;
+	NSString *address = self.address;
 
-- (NSString *)banMask
-{
-	if (NSObjectIsEmpty(self.nickname)) {
+	if (username == nil || address == nil) {
 		return nil;
 	}
 
-	if (NSObjectIsEmpty(self.username) || NSObjectIsEmpty(self.address)) {
-		return [NSString stringWithFormat:@"%@!*@*", self.nickname];
+	return [NSString stringWithFormat:@"%@!%@@%@", nickname, username, address];
+}
+
+- (nullable NSString *)banMask
+{
+	NSString *nickname = self.nickname;
+	NSString *username = self.username;
+	NSString *address = self.address;
+
+	if (username == nil || address == nil) {
+		return [NSString stringWithFormat:@"%@!*@*", nickname];
 	}
 
 	switch ([TPCPreferences banFormat]) {
-		case TXHostmaskBanWHNINFormat: {	return [NSString stringWithFormat:@"*!*@%@", self.address];										}
-		case TXHostmaskBanWHAINNFormat: {	return [NSString stringWithFormat:@"*!%@@%@", self.username, self.address];						}
-		case TXHostmaskBanWHANNIFormat: {	return [NSString stringWithFormat:@"%@!*%@", self.nickname, self.address];						}
-		case TXHostmaskBanExactFormat: {	return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];		}
+		case TXHostmaskBanWHNINFormat:
+		{
+			return [NSString stringWithFormat:@"*!*@%@", address];
+		}
+		case TXHostmaskBanWHAINNFormat:
+		{
+			return [NSString stringWithFormat:@"*!%@@%@", username, address];
+		}
+		case TXHostmaskBanWHANNIFormat:
+		{
+			return [NSString stringWithFormat:@"%@!*%@", nickname, address];
+		}
+		case TXHostmaskBanExactFormat:
+		{
+			return [NSString stringWithFormat:@"%@!%@@%@", nickname, username, address];
+		}
 	}
 	
 	return nil;
@@ -143,109 +189,99 @@
 
 - (BOOL)userModesContainsMode:(NSString *)mode
 {
-	NSParameterAssert(([mode length] == 1));
-
-	if (NSObjectIsEmpty(self.modes)) {
-		return NO;
-	} else {
-		return [self.modes contains:mode];
-	}
+	return [self.modes contains:mode];
 }
 
 - (NSString *)highestRankedUserMode
 {
-	if (NSObjectIsEmpty(self.modes)) {
-		return nil;
-	} else {
-		return [self.modes stringCharacterAtIndex:0];
+	NSString *modes = self.modes;
+
+	if (modes.length == 0) {
+		return modes;
 	}
+
+	return [modes stringCharacterAtIndex:0];
 }
 
 - (NSString *)mark
 {
-	NSString *highestRank = [self highestRankedUserMode];
+	IRCISupportInfo *supportInfo = self.client.supportInfo;
 
-	if (highestRank) {
-		return [self.supportInfo userPrefixForModeSymbol:highestRank];
-	} else {
-		return NSStringEmptyPlaceholder;
+	NSString *mode = self.highestRankedUserMode;
+
+	NSString *mark = [supportInfo userPrefixForModeSymbol:mode];
+
+	if (mark) {
+		return mark;
 	}
+
+	return NSStringEmptyPlaceholder;
 }
 
-- (NSInteger)channelRank
+- (NSUInteger)channelRank
 {
-	NSString *highestRank = [self highestRankedUserMode];
+	IRCISupportInfo *supportInfo = self.client.supportInfo;
 
-	if (highestRank) {
-		return [self.supportInfo rankForUserPrefixWithMode:highestRank];
-	} else {
-		return 0; // Furthest that can be gone down.
-	}
+	NSString *mode = self.highestRankedUserMode;
+
+	return [supportInfo rankForUserPrefixWithMode:mode];
 }
 
 - (BOOL)isOp
 {
-	if (NSObjectIsEmpty(self.modes)) {
-		return NO;
-	} else {
-		return [self.modes containsCharacters:@"qOao"];
-	}
+	return [self.modes containsCharacters:@"qOao"];
 }
 
 - (BOOL)isHalfOp 
 {
-	if (NSObjectIsEmpty(self.modes)) {
-		return NO;
-	} else {
-		return [self.modes containsCharacters:@"qOaoh"];
-	}
+	return [self.modes containsCharacters:@"qOaoh"];
 }
 
 - (BOOL)q
 {
-	return (([self ranks] & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
+	return ((self.ranks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
 }
 
 - (BOOL)a
 {
-	return (([self ranks] & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
+	return ((self.ranks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
 }
 
 - (BOOL)o
 {
-	return (([self ranks] & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+	return ((self.ranks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
 }
 
 - (BOOL)h
 {
-	return (([self ranks] & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+	return ((self.ranks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 }
 
 - (BOOL)v
 {
-	return (([self ranks] & IRCUserVoicedRank) == IRCUserVoicedRank);
+	return ((self.ranks & IRCUserVoicedRank) == IRCUserVoicedRank);
 }
 
 - (IRCUserRank)rank
 {
-	NSString *highestMark = [self highestRankedUserMode];
+	NSString *mode = self.highestRankedUserMode;
 
-	return [self rankWithMark:highestMark];
+	return [self rankForModeSymbol:mode];
 }
 
 - (IRCUserRank)ranks
 {
 	IRCUserRank ranks = 0;
 
-	if (NSObjectIsEmpty(self.modes) == NO) {
-		for (NSInteger i = 0; i < [self.modes length]; i++) {
-			NSString *cc = [self.modes stringCharacterAtIndex:i];
+	NSString *modes = self.modes;
 
-			IRCUserRank rank = [self rankWithMark:cc];
+	for (NSUInteger i = 0; i < modes.length; i++) {
+		NSString *mode = [modes stringCharacterAtIndex:i];
 
-			if (NSDissimilarObjects(rank, IRCUserNoRank)) {
-				ranks |= rank;
-			}
+		IRCUserRank rank = [self rankForModeSymbol:mode];
+
+		if (rank != IRCUserNoRank) {
+			ranks |= rank;
 		}
 	}
 
@@ -256,167 +292,158 @@
 	return ranks;
 }
 
-- (IRCUserRank)rankWithMark:(NSString *)mark
+- (IRCUserRank)rankForModeSymbol:(nullable NSString *)modeSymbol
 {
-	if (mark == nil) {
-		return IRCUserNoRank; // Furthest that can be gone down.
-	}
-
-#define _mm(mode)			NSObjectsAreEqual(mark, (mode))
-
-	// +Y/+y is used by InspIRCd-2.0 to represent an IRCop
-	// +O is used by binircd-1.0.0 for channel owner
-	if (_mm(@"y") || _mm(@"Y")) {
-		return IRCUserIRCopByModeRank;
-	} else if (_mm(@"q") || _mm(@"O")) {
-		return IRCUserChannelOwnerRank;
-	} else if (_mm(@"a")) {
-		return IRCUserSuperOperatorRank;
-	} else if (_mm(@"o")) {
-		return IRCUserNormalOperatorRank;
-	} else if (_mm(@"h")) {
-		return IRCUserHalfOperatorRank;
-	} else if (_mm(@"v")) {
-		return IRCUserVoicedRank;
-	} else {
+	if (modeSymbol == nil) {
 		return IRCUserNoRank;
 	}
 
-#undef _mm
+	if ([modeSymbol isEqualToString:@"y"] ||
+		[modeSymbol isEqualToString:@"Y"])
+	{
+		return IRCUserIRCopByModeRank;
+	}
+	else if ([modeSymbol isEqualToString:@"q"] ||
+			 [modeSymbol isEqualToString:@"O"])
+	{
+		return IRCUserChannelOwnerRank;
+	} else if ([modeSymbol isEqualToString:@"a"]) {
+		return IRCUserSuperOperatorRank;
+	} else if ([modeSymbol isEqualToString:@"o"]) {
+		return IRCUserNormalOperatorRank;
+	} else if ([modeSymbol isEqualToString:@"h"]) {
+		return IRCUserHalfOperatorRank;
+	} else if ([modeSymbol isEqualToString:@"v"]) {
+		return IRCUserVoicedRank;
+	}
+
+	return IRCUserNoRank;
 }
 
-- (BOOL)isEqual:(id)other
+- (BOOL)isEqual:(id)object
 {
-	if ([other isKindOfClass:[IRCUser class]] == NO) {
+	if (object == nil) {
 		return NO;
-	} else {
-		return NSObjectsAreEqual([self lowercaseNickname], [other lowercaseNickname]);
 	}
+
+	if (object == self) {
+		return YES;
+	}
+
+	if ([object isKindOfClass:[IRCUser class]] == NO) {
+		return NO;
+	}
+
+	IRCUser *objectCast = (IRCUser *)object;
+
+	return NSObjectsAreEqual(self.lowercaseNickname, objectCast.lowercaseNickname);
 }
 
 - (NSUInteger)hash
 {
-	return [self.lowercaseNickname hash];
+	return self.nickname.lowercaseString.hash;
 }
 
 - (NSString *)lowercaseNickname
 {
-	return [self.nickname lowercaseString];
+	return self.nickname.lowercaseString;
 }
 
-- (CGFloat)totalWeight
+- (double)totalWeight
 {
 	[self decayConversation];
 
-	return (self.incomingWeight + self.outgoingWeight);
+	return (self->_incomingWeight + self->_outgoingWeight);
 }
 
 - (void)outgoingConversation
 {
-	CGFloat change = ((lrint(self.outgoingWeight) == 0) ? 20 : 5);
+	double change = ((lrint(self->_outgoingWeight) == 0) ? 20 : 5);
 
-	self.outgoingWeight += change;
+	self->_outgoingWeight += change;
 }
 
 - (void)incomingConversation
 {
-	CGFloat change = ((lrint(self.incomingWeight) == 0) ? 100 : 20);
+	double change = ((lrint(self->_incomingWeight) == 0) ? 100 : 20);
 
-	self.incomingWeight += change;
+	self->_incomingWeight += change;
 }
 
 - (void)conversation
 {
-	CGFloat change = ((lrint(self.incomingWeight) == 0) ? 4 : 1);
+	double change = ((lrint(self->_incomingWeight) == 0) ? 4 : 1);
 
-	self.incomingWeight += change;
+	self->_incomingWeight += change;
 }
 
 - (void)decayConversation
 {
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 
-	CGFloat minutes = ((now - self.lastWeightFade) / 60);
+	double minutes = ((now - self->_lastWeightFade) / 60);
 
 	if (minutes > 1) {
-		self.lastWeightFade = now;
+		self->_lastWeightFade = now;
 
-		if (self.incomingWeight > 0) {
-			self.incomingWeight /= pow(2, minutes);
+		if (self->_incomingWeight > 0) {
+			self->_incomingWeight /= pow(2, minutes);
 		}
 
-		if (self.outgoingWeight > 0) {
-			self.outgoingWeight /= pow(2, minutes);
+		if (self->_outgoingWeight > 0) {
+			self->_outgoingWeight /= pow(2, minutes);
 		}
 	}
 }
 
 - (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
-	CGFloat local = self.totalWeight;
+	double localWeight = self.totalWeight;
 
-	CGFloat remote = [other totalWeight];
+	double remoteWeight = other.totalWeight;
 
-	if (local > remote) {
+	if (localWeight > remoteWeight) {
 		return NSOrderedAscending;
-	}
-	
-	if (local < remote) {
+	} else if (localWeight < remoteWeight) {
 		return NSOrderedDescending;
 	}
 
 	return [self compare:other];
 }
 
-- (NSComparisonResult)compare:(IRCUser *)other
+- (NSComparisonResult)compare:(id)other
 {
 	if ([other isKindOfClass:[IRCUser class]] == NO) {
 		return NSOrderedSame;
+	}
+
+	NSNumber *localRank = @([self channelRank]);
+
+	NSNumber *remoteRank = @([other channelRank]);
+
+	NSComparisonResult normalRank = [localRank compare:remoteRank];
+
+	NSComparisonResult invertedRank = NSInvertedComparisonResult(normalRank);
+
+	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+
+	if (favorIRCop && self.isCop && [other isCop] == NO) {
+		return NSOrderedAscending;
+	} else if (favorIRCop && self.isCop == NO && [other isCop]) {
+		return NSOrderedDescending;
+	} else if (invertedRank == NSOrderedSame) {
+		return [self.nickname caseInsensitiveCompare:[other nickname]];
 	} else {
-		NSNumber *localRank = [NSNumber numberWithInteger:[self channelRank]];
-
-		NSNumber *remoteRank = [NSNumber numberWithInteger:[other channelRank]];
-
-		NSComparisonResult normalRank = [localRank compare:remoteRank];
-
-		NSComparisonResult invertedRank = NSInvertedComparisonResult(normalRank);
-
-		BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-
-		if (favorIRCop && [self isCop] && [other isCop] == NO) {
-			return NSOrderedAscending;
-		} else if (favorIRCop && [self isCop] == NO && [other isCop]) {
-			return NSOrderedDescending;
-		} else if (invertedRank == NSOrderedSame) {
-			return [[self nickname] caseInsensitiveCompare:[other nickname]];
-		} else {
-			return invertedRank;
-		}
+		return invertedRank;
 	}
 }
 
 + (NSComparator)nicknameLengthComparator
 {
-	return [^(IRCUser *obj1, IRCUser *obj2){
-		return ([[obj1 nickname] length] <=
-				[[obj2 nickname] length]);
+	return [^(IRCUser *object1, IRCUser *object2){
+		return (object1.nickname.length <=
+				object2.nickname.length);
 	} copy];
-}
-
-- (void)migrate:(IRCUser *)from
-{
-	self.supportInfo = [from supportInfo];
-	
-	self.nickname = [from nickname];
-	self.username = [from username];
-	self.address = [from address];
-
-	self.realname = [from realname];
-
-	self.modes = [from modes];
-
-	self.isCop = [from isCop];
-	self.isAway = [from isAway];
 }
 
 - (NSString *)description
@@ -424,246 +451,121 @@
 	return [NSString stringWithFormat:@"<IRCUser %@%@>", self.mark, self.nickname];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(nullable NSZone *)zone
 {
-	return [[IRCUser allocWithZone:zone] initWithUser:self];
+	IRCUser *object = [[IRCUser alloc] initWithNickname:self.nickname onClient:self.client];
+
+	object->_username = [self.username copyWithZone:zone];
+	object->_address = [self.address copyWithZone:zone];
+	object->_realName = [self.realName copyWithZone:zone];
+	object->_modes = [self.modes copyWithZone:zone];
+
+	object->_isAway = self.isAway;
+	object->_isCop = self.isCop ;
+
+	object->_incomingWeight = self->_incomingWeight;
+	object->_outgoingWeight = self->_outgoingWeight;
+	object->_lastWeightFade = self->_lastWeightFade;
+
+	return object;
+}
+
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
+{
+	IRCUserMutable *object = [[IRCUserMutable alloc] initWithNickname:self.nickname onClient:self.client];
+
+	object.username = self.username;
+	object.address = self.address;
+	object.realName = self.realName;
+	object.modes = self.modes;
+
+	object.isAway = self.isAway;
+	object.isCop = self.isCop;
+
+	((IRCUser *)object)->_incomingWeight = self->_incomingWeight;
+	((IRCUser *)object)->_outgoingWeight = self->_outgoingWeight;
+	((IRCUser *)object)->_lastWeightFade = self->_lastWeightFade;
+
+	return object;
+}
+
+- (BOOL)isMutable
+{
+	return NO;
 }
 
 @end
 
 #pragma mark -
-#pragma mark Nickname Color Style Generator 
 
-@implementation IRCUserNicknameColorStyleGenerator
+@implementation IRCUserMutable
 
-#define _overridesDefaultsKey		@"Nickname Color Style Overrides"
+@dynamic nickname;
+@dynamic username;
+@dynamic address;
+@dynamic realName;
+@dynamic modes;
+@dynamic isAway;
+@dynamic isCop;
 
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString
+- (BOOL)isMutable
 {
-	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:inputString isOverride:NULL];
+	return YES;
 }
 
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString isOverride:(BOOL *)isOverride
+- (void)setNickname:(NSString *)nickname
 {
-	NSObjectIsEmptyAssertReturn(inputString, nil);
+	NSParameterAssert(nickname != nil);
 
-	NSString *unshuffledString = [inputString lowercaseString];
-
-	NSColor *styleOverride =
-	[IRCUserNicknameColorStyleGenerator nicknameColorStyleOverrideForKey:unshuffledString];
-
-	if (styleOverride) {
-		if ( isOverride) {
-			*isOverride = YES;
-		}
-
-		return [NSString stringWithFormat:@"#%@", [styleOverride hexadecimalValue]];
-	} else {
-		if ( isOverride) {
-			*isOverride = NO;
-		}
-	}
-
-	TPCThemeSettingsNicknameColorStyle colorStyle = [themeSettings() nicknameColorStyle];
-
-	NSNumber *stringHash =
-	[IRCUserNicknameColorStyleGenerator hashForString:unshuffledString colorStyle:colorStyle];
-
-	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
-}
-
-+ (NSString *)nicknameColorStyleForHash:(NSNumber *)stringHash colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
-{
-	if (colorStyle == TPCThemeSettingsNicknameColorLegacyStyle)
-	{
-		NSInteger stringHash64 = [stringHash integerValue];
-
-		return [NSString stringWithInteger:(stringHash64 % _colorNumberMax)];
-	}
-	else if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-			 colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-	{
-		/* Define base pair */
-		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
-
-		unsigned int stringHash32 = [stringHash intValue];
-
-		int shash = (stringHash32 >> 1);
-		int lhash = (stringHash32 >> 2);
-
-		int h = (stringHash32 % 360);
-
-		int s;
-		int l;
-
-		if (onLightBackground)
-		{
-			s = (shash % 50 + 35);   // 35 - 85
-			l = (lhash % 38 + 20);   // 20 - 58
-
-			// Lower lightness for Yello, Green, Cyan
-			if (h > 45 && h <= 195) {
-				l = (lhash % 21 + 20);   // 20 - 41
-
-				if (l > 31) {
-					s = (shash % 40 + 55);   // 55 - 95
-				} else {
-					s = (shash % 35 + 65);   // 65 - 95
-				}
-			}
-
-			// Give the reds a bit more saturation
-			if (h <= 25 || h >= 335) {
-				s = (shash % 33 + 45); // 45 - 78
-			}
-		}
-		else
-		{
-			s = (shash % 50 + 45);   // 50 - 95
-			l = (lhash % 36 + 45);   // 45 - 81
-
-			// give the pinks a wee bit more lightness
-			if (h >= 280 && h < 335) {
-				l = (lhash % 36 + 50); // 50 - 86
-			}
-
-			// Give the blues a smaller (but lighter) range
-			if (h >= 210 && h < 240) {
-				l = (lhash % 30 + 60); // 60 - 90
-			}
-
-			// Tone down very specific range of blue/purple
-			if (h >= 240 && h < 280) {
-				s = (shash % 55 + 40); // 40 - 95
-				l = (lhash % 20 + 65); // 65 - 85
-			}
-
-			// Give the reds a bit less saturation
-			if (h <= 25 || h >= 335) {
-				s = (shash % 33 + 45); // 45 - 78
-			}
-
-			// Give the yellows and greens a bit less saturation as well
-			if (h >= 50 && h <= 150) {
-				s = (shash % 50 + 40); // 40 - 90
-			}
-		}
-
-		return [NSString stringWithFormat:@"hsl(%i,%i%%,%i%%)", h, s, l];
-	} else {
-		return nil;
+	if (self->_nickname	!= nickname) {
+		self->_nickname = [nickname copy];
 	}
 }
 
-+ (NSString *)preprocessString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
+- (void)setUsername:(nullable NSString *)username
 {
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-	{
-		return [NSString stringWithFormat:@"a-%@", inputString];
-	} else {
-		return inputString;
+	if (self->_username != username) {
+		self->_username = [username copy];
 	}
 }
 
-+ (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
+- (void)setAddress:(nullable NSString *)address
 {
-	NSString *stringToHash =
-	[IRCUserNicknameColorStyleGenerator preprocessString:inputString colorStyle:colorStyle];
-
-	NSInteger stringToHashLength = [stringToHash length];
-
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-	{
-		NSData *stringToHashData = [stringToHash dataUsingEncoding:NSUTF8StringEncoding];
-
-		NSMutableData *hashedData = [NSMutableData dataWithLength:CC_MD5_DIGEST_LENGTH];
-
-		CC_MD5([stringToHashData bytes], (CC_LONG)[stringToHashData length], [hashedData mutableBytes]);
-
-		unsigned int hashedValue;
-		[hashedData getBytes:&hashedValue length:sizeof(unsigned int)];
-
-		return @(hashedValue);
-	}
-	else
-	{
-		NSInteger hashedValue = 0;
-
-		for (NSInteger i = 0; i < stringToHashLength; i++) {
-			UniChar c = [stringToHash characterAtIndex:i];
-
-			hashedValue = ((hashedValue << 6) + hashedValue + c);
-		}
-
-		return @(hashedValue);
+	if (self->_address != address) {
+		self->_address = [address copy];
 	}
 }
 
-/* 
- *   Color override storage talks in NSColor instead of hexadecimal strings for a few reasons:
- *    1. Easier to work with when modifying. No need to perform messy string conversion.
- *    2. Easier to change output format in another update (if that decision is made)
- */
-+ (NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey
+- (void)setRealName:(nullable NSString *)realName
 {
-	NSDictionary *colorStyleOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
-
-	if (colorStyleOverrides) {
-		id objectValue = [colorStyleOverrides objectForKey:styleKey];
-
-		if (objectValue == nil || [objectValue isKindOfClass:[NSData class]] == NO) {
-			return nil;
-		}
-
-		id objectValueObj = [NSUnarchiver unarchiveObjectWithData:objectValue];
-
-		if (objectValueObj == nil || [objectValueObj isKindOfClass:[NSColor class]] == NO) {
-			return nil;
-		}
-
-		return objectValueObj;
+	if (self->_realName != realName) {
+		self->_realName = [realName copy];
 	}
-
-	return nil;
 }
 
-+ (void)setNicknameColorStyleOverride:(NSColor *)styleValue forKey:(NSString *)styleKey
+- (void)setModes:(NSString *)modes
 {
-	NSObjectIsEmptyAssert(styleKey);
+	NSParameterAssert(modes != nil);
 
-	NSDictionary *colorStyleOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
-
-	if (styleValue == nil) {
-		if (colorStyleOverrides == nil) {
-			return;
-		} else if ([colorStyleOverrides count] == 1) {
-			[RZUserDefaults() removeObjectForKey:_overridesDefaultsKey];
-
-			return;
-		}
+	if (self->_modes != modes) {
+		self->_modes = modes;
 	}
+}
 
-	NSData *styleValueRolled = nil;
-
-	if (styleValue) {
-		styleValueRolled = [NSArchiver archivedDataWithRootObject:styleValue];
-
-		if (colorStyleOverrides == nil) {
-			colorStyleOverrides = [NSDictionary new];
-		}
+- (void)setIsAway:(BOOL)isAway
+{
+	if (self->_isAway != isAway) {
+		self->_isAway = isAway;
 	}
+}
 
-	NSMutableDictionary *colorStyleOverridesMut = [colorStyleOverrides mutableCopy];
-
-	if (styleValue == nil) {
-		[colorStyleOverridesMut removeObjectForKey:styleKey];
-	} else {
-		[colorStyleOverridesMut setObject:styleValueRolled forKey:styleKey];
+- (void)setIsCop:(BOOL)isCop
+{
+	if (self->_isCop != isCop) {
+		self->_isCop = isCop;
 	}
-
-	[RZUserDefaults() setObject:[colorStyleOverridesMut copy] forKey:_overridesDefaultsKey];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

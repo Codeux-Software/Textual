@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,15 +38,24 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCUser ()
-- (instancetype)initWithClient:(IRCClient *)client;
+{
+@protected
+	NSString *_nickname;
+	NSString *_username;
+	NSString *_address;
+	NSString *_realName;
+	NSString *_modes;
+	BOOL _isAway;
+	BOOL _isCop;
+	double _incomingWeight;
+	double _outgoingWeight;
+	CFAbsoluteTime _lastWeightFade;
 
-- (void)conversation;
-- (void)incomingConversation;
-- (void)outgoingConversation;
+@private
+	BOOL _objectInitialized;
+}
 
-- (NSComparisonResult)compare:(id)other;
-
-+ (NSComparator)nicknameLengthComparator;
+- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

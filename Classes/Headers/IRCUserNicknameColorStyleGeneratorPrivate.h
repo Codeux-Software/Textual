@@ -37,16 +37,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCUser ()
-- (instancetype)initWithClient:(IRCClient *)client;
+@interface IRCUserNicknameColorStyleGenerator : NSObject
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString;
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString isOverride:(BOOL * _Nullable)isOverride;
 
-- (void)conversation;
-- (void)incomingConversation;
-- (void)outgoingConversation;
++ (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle;
 
-- (NSComparisonResult)compare:(id)other;
-
-+ (NSComparator)nicknameLengthComparator;
++ (nullable NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey;
++ (void)setNicknameColorStyleOverride:(nullable NSColor *)styleValue forKey:(NSString *)styleKey;
 @end
 
 NS_ASSUME_NONNULL_END
