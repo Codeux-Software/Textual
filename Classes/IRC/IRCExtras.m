@@ -511,7 +511,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else // existingClient
 	{
-		IRCClientConfig *baseConfig = [IRCClientConfig new];
+		IRCClientConfigMutable *baseConfig = [IRCClientConfigMutable new];
 
 		baseConfig.connectionName = serverAddress;
 
@@ -535,8 +535,6 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		IRCClient *client = [worldController() createClientWithConfig:baseConfig reload:YES];
-
-		[client.config writeKeychainItemsToDisk];
 
 		[worldController() save];
 

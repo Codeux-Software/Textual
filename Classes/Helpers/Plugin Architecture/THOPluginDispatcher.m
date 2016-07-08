@@ -313,7 +313,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 		THOPluginDidReceiveServerInputConcreteObject *messageObject =
 		inputObject.didReceiveServerInputConcreteObject;
 
-		messageObject.networkAddress = client.networkAddress;
+		messageObject.networkAddress = client.serverAddress;
 		messageObject.networkName = client.networkName;
 
 		NSString *lowercaseCommand = inputObject.command.lowercaseString;

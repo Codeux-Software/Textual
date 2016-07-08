@@ -269,7 +269,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((reloadAction & TPCPreferencesReloadHighlightLoggingAction) == TPCPreferencesReloadHighlightLoggingAction) {
 		if ([TPCPreferences logHighlights] == NO) {
 			for (IRCClient *u in worldController().clientList) {
-				[u setCachedHighlights:nil];
+				[u clearCachedHighlights];
 			}
 		}
 	}

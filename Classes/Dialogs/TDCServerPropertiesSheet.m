@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDCServerPropertiesSheet ()
 @property (nonatomic, strong, readwrite, nullable) IRCClient *client;
 @property (nonatomic, copy, readwrite, nullable) NSString *clientId;
-@property (nonatomic, strong) IRCClientConfig *config;
+@property (nonatomic, strong) IRCClientConfigMutable *config;
 @property (nonatomic, copy) NSArray *navigationTreeMatrix;
 @property (nonatomic, copy) NSDictionary *encodingList;
 @property (nonatomic, copy) NSDictionary *serverList;
@@ -182,9 +182,9 @@ NS_ASSUME_NONNULL_BEGIN
 			self.client = client;
 			self.clientId = client.uniqueIdentifier;
 
-			self.config = client.copyOfStoredConfig;
+			self.config = [client.config mutableCopy];
 		} else {
-			self.config = [IRCClientConfig new];
+			self.config = [IRCClientConfigMutable new];
 		}
 
 		[self prepareInitialState];
@@ -663,7 +663,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 							   [self close];
 
-							   self.config = client.copyOfStoredConfig;
+							   self.config = [client.config mutableCopy];
 
 							   [self loadConfig];
 							   

@@ -201,7 +201,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCClient *client = self.associatedClient;
 
-	return [client nicknameIsPrivateZNCUser:self.name];
+	return [client nicknameIsZNCUser:self.name];
 }
 
 - (NSString *)channelTypeString
@@ -399,7 +399,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self addMember:member1];
 
-		IRCUser *member2 = [[IRCUser alloc] initWithNickname:client.localNickname onClient:client];
+		IRCUser *member2 = [[IRCUser alloc] initWithNickname:client.userNickname onClient:client];
 
 		[self addMember:member2];
 	}

@@ -124,7 +124,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	NSMutableArray *ary = [NSMutableArray array];
 
 	for (IRCClient *u in self.clientList) {
-		[ary addObject:[u dictionaryValue]];
+		[ary addObject:[u configurationDictionary]];
 	}
 
 	return [ary copy];
@@ -219,7 +219,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		return;
 	}
 
-	NSInteger delay = 0;
+	NSUInteger delay = 0;
 
 	if (afterWakeUp) {
 		delay += _reconnectAfterWakeupDelay;
@@ -233,7 +233,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 			continue;
 		}
 
-		[u autoConnect:delay afterWakeUp:afterWakeUp];
+		[u autoConnectWithDelay:delay afterWakeUp:afterWakeUp];
 
 		delay += _autoConnectDelay;
 	}
@@ -253,9 +253,11 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 			continue;
 		}
 
+#warning TODO: -quit should auto fill -sleepModeLeavingComment when \
+	the value of disconnectType is IRCClientDisconnectComputerSleepMode
 		u.disconnectType = IRCClientDisconnectComputerSleepMode;
 
-		[u quit:u.config.sleepModeLeavingComment];
+		[u quit];
 	}
 }
 
@@ -284,7 +286,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (void)noteReachabilityChanged:(BOOL)reachable
 {
 	for (IRCClient *u in self.clientList) {
-		[u reachabilityChanged:reachable];
+		[u noteReachabilityChanged:reachable];
 	}
 }
 
@@ -443,13 +445,11 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 {
 	NSParameterAssert(config != nil);
 
-	IRCClient *client = [IRCClient new];
-
-	[client setup:config];
-
-	client.viewController = [self createViewControllerWithClient:client channel:nil];
+	IRCClient *client = [[IRCClient alloc] initWithConfig:config];
 
 	client.printingQueue = [TVCLogControllerOperationQueue new];
+
+	client.viewController = [self createViewControllerWithClient:client channel:nil];
 
 	for (IRCChannelConfig *channel in client.config.channelList) {
 		[self createChannelWithConfig:channel onClient:client adjust:NO reload:NO];
