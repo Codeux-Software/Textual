@@ -150,6 +150,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.config.dictionaryValue;
 }
 
+- (NSDictionary<NSString *, id> *)configurationDictionaryForCloud
+{
+	return [self.config dictionaryValue:YES];
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", self.associatedClient.description, self.name];
