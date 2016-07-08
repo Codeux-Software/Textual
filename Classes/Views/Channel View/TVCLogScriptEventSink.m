@@ -578,12 +578,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.localHostmask;
+	return context.associatedClient.userHostmask;
 }
 
 - (id)_localUserNickname:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.localNickname;
+	return context.associatedClient.userNickname;
 }
 
 - (void)_logToConsole:(TVCLogScriptEventSinkContext *)context
@@ -629,7 +629,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	[context.associatedClient printDebugInformation:message channel:context.associatedChannel];
+	[context.associatedClient printDebugInformation:message inChannel:context.associatedChannel];
 }
 
 - (void)_printDebugInformationToConsole:(TVCLogScriptEventSinkContext *)context
@@ -707,7 +707,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (id)_serverAddress:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.networkAddress;
+	return context.associatedClient.serverAddress;
 }
 
 - (id)_serverChannelCount:(TVCLogScriptEventSinkContext *)context

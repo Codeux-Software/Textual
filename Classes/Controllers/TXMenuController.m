@@ -471,7 +471,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case 502: // "Cancel Reconnect"
 		{
-			BOOL condition = u.reconnecting;
+			BOOL condition = u.isReconnecting;
 			
 			menuItem.hidden = (condition == NO);
 			
@@ -595,7 +595,7 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 				case TXCommandWKeyDisconnectAction:
 				{
-					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.altNetworkName);
+					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.networkNameAlt);
 					
 					if (_clientIsntConnected) {
 						return NO;
@@ -1632,40 +1632,14 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClient) {
 		return;
 	}
+
+	IRCClientConfigMutable *config = [u.config uniqueCopyMutable];
 	
-	IRCClientConfig *config = u.copyOfStoredConfig;
-	
-	NSString *connectionName = [config.connectionName stringByAppendingString:@"_"];
-
-	NSString *nicknamePassword = config.nicknamePassword;
-	NSString *proxyPassword = config.proxyPassword;
-	NSString *serverPassword = config.serverPassword;
-
-	config.connectionName = connectionName;
-
-	config.itemUUID = [NSString stringWithUUID];
-
-	config.nicknamePassword = nicknamePassword;
-	config.proxyPassword = proxyPassword;
-	config.serverPassword = serverPassword;
-
-	[config writeKeychainItemsToDisk];
-
-	NSArray *channelListIn = config.channelList;
-
-	NSMutableArray *channelListOut = [NSMutableArray arrayWithCapacity:channelListIn.count];
-
-	for (IRCChannelConfigMutable *channelConfig in channelListIn) {
-		IRCChannelConfig *channelConfigNew = [channelConfig uniqueCopy];
-
-		[channelConfigNew writeItemsToKeychain];
-	}
-
-	config.channelList = channelListOut;
+	config.connectionName = [config.connectionName stringByAppendingString:@"_"];
 	
 	IRCClient *newClient = [worldController() createClientWithConfig:config reload:YES];
 	
-	if (u.config.sidebarItemExpanded) { // Only expand new client if old was expanded already.
+	if (newClient.config.sidebarItemExpanded) { // Only expand new client if old was expanded already.
 		[mainWindow() expandClient:newClient];
 	}
 
@@ -1762,8 +1736,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (u == nil) {
 		u = [worldController() createClientWithConfig:config reload:YES];
-		
-		[u.config writeKeychainItemsToDisk];
 
 		return;
 	}
@@ -2572,7 +2544,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u kick:c target:nickname];
+		[u kick:nickname inChannel:c];
 	}
 	
 	[self deselectMembers:sender];
@@ -2642,8 +2614,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-        if ([nickname isEqualIgnoringCase:u.localNickname]) {
-            [u printDebugInformation:TXTLS(@"IRC[1004]", u.networkAddress) channel:c];
+        if ([nickname isEqualIgnoringCase:u.userNickname]) {
+			[u printDebugInformation:TXTLS(@"IRC[1004]", u.serverAddress) inChannel:c];
 
 			continue;
 		}
@@ -2977,6 +2949,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)sortChannelListNames:(id)sender
 {
+#warning TODO: This should take into consideration that private messages \
+	are supposed to appear below channels
+
 	for (IRCClient *u in worldController().clientList) {
 		NSMutableArray *channelList = [u.channelList mutableCopy];
 		
@@ -2988,8 +2963,6 @@ NS_ASSUME_NONNULL_BEGIN
 		}];
 		
 		u.channelList = channelList;
-		
-		[u updateConfig:u.copyOfStoredConfig];
 	}
 	
 	[worldController() save];

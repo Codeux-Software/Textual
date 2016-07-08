@@ -1152,8 +1152,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSString *stringValue = [THOPluginDispatcher interceptUserInput:string command:command];
-	
-	[self.selectedClient inputText:stringValue command:command];
+
+	[self.selectedClient inputText:stringValue asCommand:command];
 }
 
 #pragma mark -
@@ -1721,7 +1721,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.titlebarAccessoryViewLockButton.title = NSStringEmptyPlaceholder;
 
-		if (u.connectionIsSecured) {
+		if (u.isSecured) {
 			[self.titlebarAccessoryViewLockButton setIconAsLocked];
 
 			self.titlebarAccessoryView.hidden = NO;
@@ -1816,7 +1816,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableString *title = [NSMutableString string];
 
 	if (u.isConnected == NO && u.isConnecting == NO) {
-		if (u.reconnecting) {
+		if (u.isReconnecting) {
 			[title appendString:TXTLS(@"TVCMainWindow[1021]")];
 		} else {
 			[title appendString:TXTLS(@"TVCMainWindow[1016]")];
@@ -1833,18 +1833,18 @@ NS_ASSUME_NONNULL_BEGIN
 		[title appendString:TXTLS(@"TVCMainWindow[1017]")];
 	}
 
-	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.localNickname, u.altNetworkName)];
+	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.userNickname, u.networkNameAlt)];
 
 	if (u && c == nil) // = Client
 	{
 		/* If we have the actual server that the client is connected
 		 to, then we we append that. Otherwise, we just leave it blank. */
-		NSString *networkAddress = u.networkAddress;
+		NSString *serverAddress = u.serverAddress;
 		
-		if (networkAddress) {
+		if (serverAddress) {
 			[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
 
-			[title appendString:networkAddress];
+			[title appendString:serverAddress];
 		}
 	}
 	else
@@ -2456,7 +2456,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	IRCClient *u = [itemBeingCollapsed associatedClient];
 
-	u.config.sidebarItemExpanded = NO;
+	u.sidebarItemIsExpanded = NO;
 }
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
@@ -2465,7 +2465,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	IRCClient *u = [itemBeingCollapsed associatedClient];
 
-	u.config.sidebarItemExpanded = YES;
+	u.sidebarItemIsExpanded = YES;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item

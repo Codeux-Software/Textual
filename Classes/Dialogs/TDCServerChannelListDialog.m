@@ -94,7 +94,7 @@ ClassWithDesignatedInitializerInitMethod
 		[NSSortDescriptor sortDescriptorWithKey:@"channelMemberCount" ascending:NO selector:@selector(compare:)]
 	];
 
-	self.networkNameTextField.stringValue = TXTLS(@"TDCServerChannelListDialog[1000]", self.client.altNetworkName);
+	self.networkNameTextField.stringValue = TXTLS(@"TDCServerChannelListDialog[1000]", self.client.networkNameAlt);
 }
 
 - (void)show

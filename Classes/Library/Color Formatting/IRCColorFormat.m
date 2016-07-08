@@ -92,7 +92,7 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 	 and the command being sent part of this message. */
 	NSString *channelName = channel.name;
 
-	NSString *userHostmask = client.localHostmask;
+	NSString *userHostmask = client.userHostmask;
 
 	NSUInteger baseMath = channelName.length; // Start with the channel name's length
 
