@@ -249,11 +249,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (id)uniqueCopy
 {
+	return [self uniqueCopyAsMutable:NO];
+}
+
+- (id)uniqueCopyMutable
+{
+	return [self uniqueCopyAsMutable:YES];
+}
+
+- (id)uniqueCopyAsMutable:(BOOL)asMutable
+{
 	/* Given self, create a copy and replace unique identifier
 	 with new identifier to make this copy of object unique. */
 	IRCChannelConfig *object = nil;
 
-	if ([self isMutable] == NO) {
+	if (asMutable == NO) {
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];

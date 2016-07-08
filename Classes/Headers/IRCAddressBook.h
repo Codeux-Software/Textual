@@ -85,6 +85,9 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKe
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary<NSString *, id> *)dictionaryValue;
 
+- (id)uniqueCopy;
+- (id)uniqueCopyMutable;
+
 - (BOOL)checkMatch:(NSString *)hostmask;
 @end
 
