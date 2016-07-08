@@ -49,13 +49,4 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)writeServerPasswordToKeychain;
 @end
 
-@interface IRCClientConfigMutable ()
-/* When importing from the cloud, the configuration will exclude some keys
- that cannot be synced. To make importing these as simple as possible, we
- use the following method. We create a mutable copy of the existing config
- and populate the values with those from the cloud so the only values that
- change are those that are present in the imported dictionary. */
-- (void)populateDictionaryValue:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages applyDefaults:(BOOL)applyDefaults;
-@end
-
 NS_ASSUME_NONNULL_END

@@ -209,6 +209,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return nil;
 }
 
++ (instancetype)newConfigByMerging:(IRCClientConfig *)config1 with:(IRCClientConfig *)config2
+{
+	NSParameterAssert(config1 != nil);
+	NSParameterAssert(config2 != nil);
+
+	IRCClientConfigMutable *config1Mutable = [config1 mutableCopy];
+
+	[config1Mutable populateDictionaryValue:config2.dictionaryValue ignorePrivateMessages:NO applyDefaults:NO];
+
+	return [config1Mutable copy];
+}
+
 - (void)populateDictionaryValue:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages applyDefaults:(BOOL)applyDefaults
 {
 	NSParameterAssert(dic != nil);
@@ -836,11 +848,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic zncIgnoreConfiguredAutojoin;
 @dynamic zncIgnorePlaybackNotifications;
 @dynamic zncIgnoreUserNotifications;
-
-- (void)populateDictionaryValue:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages applyDefaults:(BOOL)applyDefaults
-{
-	[super populateDictionaryValue:dic ignorePrivateMessages:ignorePrivateMessages applyDefaults:applyDefaults];
-}
 
 - (BOOL)isMutable
 {

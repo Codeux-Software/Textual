@@ -107,6 +107,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages NS_DESIGNATED_INITIALIZER;
 - (NSDictionary<NSString *, id> *)dictionaryValue;
 
++ (instancetype)newConfigByMerging:(IRCClientConfig *)config1 with:(IRCClientConfig *)config2;
+
 - (id)uniqueCopy;
 - (id)uniqueCopyMutable;
 @end
