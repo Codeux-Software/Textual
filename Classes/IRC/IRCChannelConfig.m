@@ -142,6 +142,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable addEntriesFromDictionary:dic];
 
+	[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"pushNotifications"];
+	[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"showTreeBadgeCount"];
+
 	[defaultsMutable assignStringTo:&self->_channelName forKey:@"channelName"];
 	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 
@@ -153,8 +156,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
 		[defaultsMutable assignBoolTo:&self->_ignoreHighlights forKey:@"ignoreHighlights"];
 		[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"ignoreInlineMedia"];
-		[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"pushNotifications"];
-		[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"showTreeBadgeCount"];
 
 		[defaultsMutable assignStringTo:&self->_defaultModes forKey:@"defaultMode"];
 		[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
