@@ -469,9 +469,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (id)uniqueCopy
 {
+	return [self uniqueCopyAsMutable:NO];
+}
+
+- (id)uniqueCopyMutable
+{
+	return [self uniqueCopyAsMutable:YES];
+}
+
+- (id)uniqueCopyAsMutable:(BOOL)asMutable
+{
 	IRCClientConfig *object = nil;
 
-	if ([self isMutable] == NO) {
+	if (asMutable == NO) {
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];
@@ -486,6 +496,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	object->_serverAddress = [serverPassword copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+
+	NSMutableArray *channelList = [self.channelList mutableCopy];
+	NSMutableArray *highlightList = [self.highlightList mutableCopy];
+	NSMutableArray *ignoreList = [self.ignoreList mutableCopy];
+
+	[channelList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
+	[highlightList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
+	[ignoreList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
+
+	object->_channelList = [channelList copy];
+	object->_highlightList = [highlightList copy];
+	object->_ignoreList = [ignoreList copy];
 
 	return object;
 }

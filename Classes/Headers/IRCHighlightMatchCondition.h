@@ -50,6 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary<NSString *, id> *)dictionaryValue;
+
+- (id)uniqueCopy;
+- (id)uniqueCopyMutable;
 @end
 
 #pragma mark -
