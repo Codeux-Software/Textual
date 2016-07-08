@@ -56,6 +56,7 @@
 #import "IRCChannelConfigPrivate.h"
 #import "IRCChannelModePrivate.h"
 #import "IRCChannelPrivate.h"
+#import "IRCClientConfigPrivate.h"
 #import "IRCColorFormatPrivate.h"
 #import "IRCCommandIndexPrivate.h"
 #import "IRCConnectionPrivate.h"
