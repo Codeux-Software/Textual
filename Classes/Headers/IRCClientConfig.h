@@ -79,9 +79,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSUInteger floodControlMaximumMessages;
 @property (readonly) uint16_t proxyPort;
 @property (readonly) uint16_t serverPort;
-@property (readonly, copy) NSArray<IRCAddressBookEntry *> *ignoreList;
 @property (readonly, copy) NSArray<IRCChannelConfig *> *channelList;
 @property (readonly, copy) NSArray<IRCHighlightMatchCondition *> *highlightList;
+@property (readonly, copy) NSArray<IRCAddressBookEntry *> *ignoreList;
 @property (readonly, copy) NSArray<NSString *> *alternateNicknames;
 @property (readonly, copy) NSArray<NSString *> *loginCommands;
 @property (readonly, copy) NSString *connectionName;
@@ -148,9 +148,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) NSUInteger floodControlMaximumMessages;
 @property (nonatomic, assign, readwrite) uint16_t proxyPort;
 @property (nonatomic, assign, readwrite) uint16_t serverPort;
-@property (nonatomic, copy, readwrite) NSArray<IRCAddressBookEntry *> *ignoreList;
 @property (nonatomic, copy, readwrite) NSArray<IRCChannelConfig *> *channelList;
 @property (nonatomic, copy, readwrite) NSArray<IRCHighlightMatchCondition *> *highlightList;
+@property (nonatomic, copy, readwrite) NSArray<IRCAddressBookEntry *> *ignoreList;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *alternateNicknames;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *loginCommands;
 @property (nonatomic, copy, readwrite) NSString *connectionName;
