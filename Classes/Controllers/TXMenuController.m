@@ -1656,9 +1656,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableArray *channelListOut = [NSMutableArray arrayWithCapacity:channelListIn.count];
 
 	for (IRCChannelConfigMutable *channelConfig in channelListIn) {
-		IRCClientConfig *channelConfigNew = [channelConfig uniqueCopy];
+		IRCChannelConfig *channelConfigNew = [channelConfig uniqueCopy];
 
-		[channelConfigNew writeKeychainItemsToDisk];
+		[channelConfigNew writeItemsToKeychain];
 	}
 
 	config.channelList = channelListOut;
