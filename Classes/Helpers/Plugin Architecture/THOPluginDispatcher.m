@@ -82,7 +82,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	return dispatchQueue;
 }
 
-+ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
++ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
 {
 	NSParameterAssert(command != nil);
 	NSParameterAssert(client != nil);

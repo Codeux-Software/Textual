@@ -121,13 +121,13 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (NSArray *)clientConfigurations
 {
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableArray *configurations = [NSMutableArray array];
 
 	for (IRCClient *u in self.clientList) {
-		[ary addObject:[u configurationDictionary]];
+		[configurations addObject:[u configurationDictionary]];
 	}
 
-	return [ary copy];
+	return [configurations copy];
 }
 
 - (void)save
@@ -183,7 +183,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (NSArray<IRCClient *> *)clientList
 {
 	@synchronized(self.clients) {
-		return [NSArray arrayWithArray:self.clients];
+		return [self.clients copy];
 	}
 }
 
@@ -245,16 +245,14 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (void)prepareForSleep
 {
 	for (IRCClient *u in self.clientList) {
-		if (u.config.autoSleepModeDisconnect == NO) {
-			continue;
-		}
-
 		if (u.isLoggedIn == NO) {
 			continue;
 		}
 
-#warning TODO: -quit should auto fill -sleepModeLeavingComment when \
-	the value of disconnectType is IRCClientDisconnectComputerSleepMode
+		if (u.config.autoSleepModeDisconnect == NO) {
+			continue;
+		}
+
 		u.disconnectType = IRCClientDisconnectComputerSleepMode;
 
 		[u quit];

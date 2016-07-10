@@ -300,8 +300,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	for (NSUserNotification *note in notifications) {
 		NSDictionary *context = note.userInfo;
 
-		NSString *clientId = context[@"client"];
-		NSString *channelId = context[@"channel"];
+		NSString *clientId = context[@"clientId"];
+		NSString *channelId = context[@"channelId"];
 
 		if (NSObjectsAreEqual(clientId, client.uniqueIdentifier) &&
 			NSObjectsAreEqual(channelId, channel.uniqueIdentifier))
@@ -439,8 +439,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	/* Handle all other IRC related notifications. */
 	else
 	{
-		NSString *clientId = context[@"client"];
-		NSString *channelId = context[@"channel"];
+		NSString *clientId = context[@"clientId"];
+		NSString *channelId = context[@"channelId"];
 
 		if (clientId == nil && channelId == nil) {
 			return;
@@ -471,13 +471,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			return;
 		}
 
-		if (message.length > 1 && [message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO) {
-			message = [message substringFromIndex:1];
-			
-			[channel.associatedClient sendCommand:message completeTarget:YES target:channel.name];
-		} else {
-			[channel.associatedClient sendPrivmsg:message toChannel:channel];
-		}
+		[channel.associatedClient inputText:message destination:channel];
 	}
 }
 

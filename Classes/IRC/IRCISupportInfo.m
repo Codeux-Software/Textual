@@ -83,7 +83,7 @@ ClassWithDesignatedInitializerInitMethod
 {
     self.cachedConfiguration = @[];
     
-	self.networkAddress = nil;
+	self.serverAddress = nil;
 	
 	self.networkName = nil;
 	self.networkNameFormatted = nil;

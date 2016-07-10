@@ -504,6 +504,40 @@ return_method:
 	return [encodedString splitWithMaximumLength:lineLength];
 }
 
+- (nullable NSString *)padNicknameWithCharacter:(UniChar)padCharacter maximumLength:(NSUInteger)maximumLength
+{
+	NSParameterAssert(padCharacter != 0);
+	NSParameterAssert(maximumLength > 0);
+
+	NSString *padCharacterString = [NSString stringWithUniChar:padCharacter];
+
+	if (self.length < maximumLength) {
+		return [self stringByAppendingString:padCharacterString];
+	}
+
+	NSString *substring = [self substringToIndex:maximumLength];
+
+	for (NSInteger i = (substring.length - 1); i >= 0; i--) {
+		UniChar subsringCharacter = [substring characterAtIndex:i];
+
+		if (subsringCharacter == padCharacter) {
+			continue;
+		}
+
+		NSString *stringHead = [substring substringToIndex:i];
+
+		NSMutableString *stringHeadMutable = [stringHead mutableCopy];
+
+		for (NSUInteger j = i; j < substring.length; j++) {
+			[stringHeadMutable appendString:@"_"];
+		}
+
+		return [stringHeadMutable copy];
+	}
+
+	return nil;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

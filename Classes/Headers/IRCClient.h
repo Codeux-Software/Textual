@@ -124,12 +124,12 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 @property (readonly, copy, nullable) NSData *zncBouncerCertificateChainData;
 
 - (void)connect;
-- (void)connect:(IRCClientConnectMode)mode;
-- (void)connect:(IRCClientConnectMode)mode preferringIPv4:(BOOL)preferIPv4;
+- (void)connect:(IRCClientConnectMode)connectMode;
+- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4;
 
-- (void)disconnect;
 - (void)quit;
 - (void)quitWithComment:(NSString *)comment;
+
 - (void)cancelReconnect;
 
 @property (readonly) ClientIRCv3SupportedCapacities capacities;
@@ -140,24 +140,56 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
 
 - (void)joinChannel:(IRCChannel *)channel;
-- (void)joinChannel:(IRCChannel *)channel password:(NSString *)password;
+- (void)joinChannel:(IRCChannel *)channel password:(nullable NSString *)password;
 - (void)joinUnlistedChannel:(NSString *)channel;
-- (void)joinUnlistedChannel:(NSString *)channel password:(NSString *)password;
-- (void)forceJoinChannel:(NSString *)channel password:(NSString *)password;
-- (void)partChannel:(IRCChannel *)channel;
-- (void)partChannel:(IRCChannel *)channel withComment:(NSString *)comment;
-- (void)partUnlistedChannel:(NSString *)channel;
-- (void)partUnlistedChannel:(NSString *)channel withComment:(NSString *)comment;
+- (void)joinUnlistedChannel:(NSString *)channel password:(nullable NSString *)password;
+- (void)forceJoinChannel:(NSString *)channel password:(nullable NSString *)password;
 
-- (void)sendWhois:(NSString *)nickname;
+- (void)partChannel:(IRCChannel *)channel;
+- (void)partChannel:(IRCChannel *)channel withComment:(nullable NSString *)comment;
+- (void)partUnlistedChannel:(NSString *)channel;
+- (void)partUnlistedChannel:(NSString *)channel withComment:(nullable NSString *)comment;
+
 - (void)changeNickname:(NSString *)newNickname;
+
 - (void)kick:(NSString *)nickname inChannel:(IRCChannel *)channel;
+
 - (void)sendCTCPQuery:(NSString *)nickname command:(NSString *)command text:(nullable NSString *)text;
 - (void)sendCTCPReply:(NSString *)nickname command:(NSString *)command text:(nullable NSString *)text;
 - (void)sendCTCPPing:(NSString *)nickname;
 
+- (void)sendWhois:(NSString *)nickname;
+
+- (void)sendWhoToChannel:(IRCChannel *)channel;
+- (void)sendWhoToChannelNamed:(NSString *)channel;
+
 - (void)toggleAwayStatus:(BOOL)setAway;
-- (void)toggleAwayStatus:(BOOL)setAway withComment:(NSString *)comment;
+- (void)toggleAwayStatus:(BOOL)setAway withComment:(nullable NSString *)comment;
+
+- (void)setModes:(NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannel:(IRCChannel *)channel;
+- (void)setModes:(NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannel:(IRCChannel *)channel;
+
+- (void)setModes:(NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannelNamed:(NSString *)channel;
+- (void)setModes:(NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannelNamed:(NSString *)channel;
+
+- (void)sendPing:(NSString *)tokenString;
+- (void)sendPong:(NSString *)tokenString;
+
+- (void)sendInviteTo:(NSString *)nickname toJoinChannel:(IRCChannel *)channel;
+- (void)sendInviteTo:(NSString *)nickname toJoinChannelNamed:(NSString *)channel;
+
+- (void)requestTopicForChannel:(IRCChannel *)channel;
+- (void)requestTopicForChannelNamed:(NSString *)channel;
+
+- (void)setTopicTo:(NSString *)topic inChannel:(IRCChannel *)channel;
+- (void)setTopicTo:(NSString *)topic inChannelNamed:(NSString *)channel;
+
+- (void)sendCapacity:(NSString *)subcommand data:(nullable NSString *)data;
+
+- (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames;
+- (void)sendIsonForNicknamesString:(NSString *)nicknames;
+
+- (void)requestChannelList;
 
 - (void)createChannelListDialog;
 - (void)createChannelInviteExceptionListSheet;
@@ -168,24 +200,31 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)closeDialogs;
 
-- (void)clearCachedHighlights;
+#pragma mark -
 
-- (nullable IRCChannel *)findChannel:(NSString *)name;
-- (nullable IRCChannel *)findChannelOrCreate:(NSString *)name;
-- (nullable IRCChannel *)findChannelOrCreate:(NSString *)name isPrivateMessage:(BOOL)isPrivateMessage;
+- (nullable IRCChannel *)findChannel:(NSString *)withName;
+- (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName;
+- (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isPrivateMessage:(BOOL)isPrivateMessage;
 
-- (nullable NSData *)convertToCommonEncoding:(NSString *)data;
+- (nullable NSData *)convertToCommonEncoding:(NSString *)string;
 - (nullable NSString *)convertFromCommonEncoding:(NSData *)data;
 
-- (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel;
-- (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel withFormat:(nullable NSString *)format;
+- (NSString *)formatNickname:(NSString *)nickname inChannel:(nullable IRCChannel *)channel;
+- (NSString *)formatNickname:(NSString *)nickname inChannel:(nullable IRCChannel *)channel withFormat:(nullable NSString *)format;
 
 - (BOOL)nicknameIsZNCUser:(NSString *)nickname;
-- (NSString *)nicknameAsZNCUser:(NSString *)nickname;
+- (nullable NSString *)nicknameAsZNCUser:(NSString *)nickname; // Returns nil if not connected to ZNC
 
 - (nullable IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)hostmask withMatches:(NSArray<NSString *> *)matches;
 
-- (BOOL)outputRuleMatchedInMessage:(NSString *)message inChannel:(IRCChannel *)channel withLineType:(TVCLogLineType)type;
+- (BOOL)outputRuleMatchedInMessage:(NSString *)message inChannel:(nullable IRCChannel *)channel withLineType:(TVCLogLineType)lineType;
+
+#pragma mark -
+
+- (void)setUnreadStateForChannel:(IRCChannel *)channel;
+- (void)setUnreadStateForChannel:(IRCChannel *)channel isHighlight:(BOOL)isHighlight;
+
+- (void)setHighlightStateForChannel:(IRCChannel *)channel;
 
 #pragma mark -
 
@@ -208,6 +247,8 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
  However, it will remain functional for plugin authors who wish to use it. */
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED("Use sendPrivmsg:toChannel: instead");
 
+#pragma mark -
+
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (NSUInteger)lengthOfEncryptedMessageDirectedAt:(NSString *)messageTo thatFitsWithinBounds:(NSUInteger)maximumLength;
 
@@ -222,14 +263,24 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 #pragma mark -
 
-// nil channel = server console
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel asCommand:(nullable NSString *)command;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel asCommand:(nullable NSString *)command asType:(TVCLogLineType)lineType;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel asCommand:(nullable NSString *)command asType:(TVCLogLineType)lineType receivedAt:(NSDate *)receivedAt;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel asCommand:(nullable NSString *)command asType:(TVCLogLineType)lineType receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel asCommand:(nullable NSString *)command asType:(TVCLogLineType)lineType receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted withReferenceMessage:(nullable IRCMessage *)referenceMessage;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable id)channel asCommand:(nullable NSString *)command asType:(TVCLogLineType)lineType receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted withReferenceMessage:(nullable IRCMessage *)referenceMessage completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
+// nil channel prints the message to the server console
+// referenceMessage.command is used if command == nil
+// referenceMessage and command cannot be nil together (this throws exceptions)
+- (void)			print:(NSString *)messageBody
+					   by:(nullable NSString *)nickname
+				inChannel:(nullable IRCChannel *)channel
+				   asType:(TVCLogLineType)lineType
+				  command:(nullable NSString *)command
+			   receivedAt:(NSDate *)receivedAt
+			  isEncrypted:(BOOL)isEncrypted
+	 withReferenceMessage:(nullable IRCMessage *)referenceMessage
+ 		  completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
+
+
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command;
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt;
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted;
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted withReferenceMessage:(nullable IRCMessage *)referenceMessage;
 
 - (void)printDebugInformationToConsole:(NSString *)message;
 - (void)printDebugInformationToConsole:(NSString *)message asCommand:(NSString *)command;
@@ -239,6 +290,17 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel;
 - (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel asCommand:(NSString *)command;
+
+#pragma mark -
+
+- (void)clearCachedHighlights;
+
+/* -config may not always reflect the current state of the client.
+ * This is because its too costly to mutate it for stuff that changes
+ * many times a second. The client instead saves a copy of its
+ * configuration periodically. This method will force it to perform
+ * a save if you need to rely on most recent version. */
+- (void)updateStoredConfiguration;
 @end
 
 NS_ASSUME_NONNULL_END

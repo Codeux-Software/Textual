@@ -1512,7 +1512,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	[u connect:IRCClientConnectNormalMode preferringIPv4:NO];
+	[u connect:IRCClientConnectNormalMode preferIPv4:NO];
 
 	[mainWindow() expandClient:u];
 }
@@ -1525,7 +1525,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode preferringIPv4:YES];
+	[u connect:IRCClientConnectNormalMode preferIPv4:YES];
 
 	[mainWindow() expandClient:u];
 }
@@ -1605,8 +1605,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelListDialog];
-	
-	[u send:IRCPrivateCommandIndex("list"), nil];
+
+	[u requestChannelList];
 }
 
 - (void)addServer:(id)sender
@@ -1902,7 +1902,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u send:IRCPrivateCommandIndex("topic"), c.name, topic, nil];
+	[u setTopicTo:topic inChannel:c];
 }
 
 - (void)channelModifyTopicSheetWillClose:(TDCChannelModifyTopicSheet *)sender
@@ -1951,7 +1951,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), c.name, changeString]];
+	[u setModes:changeString withParamaters:nil inChannel:c];
 }
 
 - (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender
@@ -2241,7 +2241,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in sender.nicknames) {
-		[u send:IRCPrivateCommandIndex("invite"), nickname, channelName, nil];
+		[u sendInviteTo:nickname toJoinChannelNamed:channelName];
 	}
 }
 
@@ -2850,8 +2850,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelBanListSheet];
-	
-	[u send:IRCPrivateCommandIndex("mode"), c.name, @"+b", nil];
+
+	[u setModes:@"+b" withParamaters:nil inChannel:c];
 }
 
 - (void)showChannelBanExceptionList:(id)sender
@@ -2864,8 +2864,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelBanExceptionListSheet];
-	
-	[u send:IRCPrivateCommandIndex("mode"), c.name, @"+e", nil];
+
+	[u setModes:@"+e" withParamaters:nil inChannel:c];
 }
 
 - (void)showChannelInviteExceptionList:(id)sender
@@ -2878,8 +2878,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelInviteExceptionListSheet];
-	
-	[u send:IRCPrivateCommandIndex("mode"), c.name, @"+I", nil];
+
+	[u setModes:@"+I" withParamaters:nil inChannel:c];
 }
 
 - (void)openHelpMenuItem:(id)sender
@@ -3003,9 +3003,7 @@ NS_ASSUME_NONNULL_BEGIN
 		modeSymbol = @"+m";
 	}
 
-	NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), c.name, modeSymbol];
-
-	[u sendCommand:command];
+	[u setModes:modeSymbol withParamaters:nil inChannel:c];
 
 #undef _toggleChannelModerationModeOffTag
 }
@@ -3029,9 +3027,7 @@ NS_ASSUME_NONNULL_BEGIN
 		modeSymbol = @"+i";
 	}
 
-	NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), c.name, modeSymbol];
-
-	[u sendCommand:command];
+	[u setModes:modeSymbol withParamaters:nil inChannel:c];
 
 #undef _toggleChannelInviteStatusModeOffTag
 }
