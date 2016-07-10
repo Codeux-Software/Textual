@@ -96,6 +96,8 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 - (NSUInteger)colorCodesStartingAt:(NSUInteger)rangeStart
 				   foregroundColor:(NSUInteger *)foregroundColor
 				   backgroundColor:(NSUInteger *)backgroundColor;
+
+- (nullable NSString *)padNicknameWithCharacter:(UniChar)padCharacter maximumLength:(NSUInteger)maximumLength;
 @end
 
 NS_ASSUME_NONNULL_END

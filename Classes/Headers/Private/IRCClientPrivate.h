@@ -57,10 +57,10 @@ enum {
 - (instancetype)initWithConfig:(IRCClientConfig *)config NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithConfigDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 
-- (void)updateConfig:(IRCClientConfig *)seed;
-- (void)updateConfig:(IRCClientConfig *)seed updateSelection:(BOOL)updateSelection;
+- (void)updateConfig:(IRCClientConfig *)config;
+- (void)updateConfig:(IRCClientConfig *)config updateSelection:(BOOL)updateSelection;
 
-- (void)updateConfigFromTheCloud:(IRCClientConfig *)seed;
+- (void)updateConfigFromTheCloud:(IRCClientConfig *)config;
 
 - (NSDictionary<NSString *, id> *)configurationDictionary;
 - (NSDictionary<NSString *, id> *)configurationDictionaryForCloud;
@@ -80,7 +80,10 @@ enum {
 
 - (void)willDestroyChannel:(IRCChannel *)channel; // Callback for IRCWorld
 
+- (void)inputText:(id)string destination:(IRCTreeItem *)destination;
+
 - (void)inputText:(id)string asCommand:(NSString *)command;
+- (void)inputText:(id)string asCommand:(NSString *)command destination:(IRCTreeItem *)destination;
 
 - (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 - (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;

@@ -524,8 +524,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[client print:message
 			   by:nil
 		inChannel:channel
-		asCommand:TVCLogLineDefaultCommandValue
-		   asType:TVCLogLineOffTheRecordEncryptionStatusType];
+		   asType:TVCLogLineOffTheRecordEncryptionStatusType
+		  command:TVCLogLineDefaultCommandValue];
 }
 
 - (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName

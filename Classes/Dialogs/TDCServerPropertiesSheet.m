@@ -182,6 +182,8 @@ NS_ASSUME_NONNULL_BEGIN
 			self.client = client;
 			self.clientId = client.uniqueIdentifier;
 
+			[client updateStoredConfiguration];
+
 			self.config = [client.config mutableCopy];
 		} else {
 			self.config = [IRCClientConfigMutable new];
@@ -662,6 +664,8 @@ NS_ASSUME_NONNULL_BEGIN
 							   }
 
 							   [self close];
+
+							   [client updateStoredConfiguration];
 
 							   self.config = [client.config mutableCopy];
 

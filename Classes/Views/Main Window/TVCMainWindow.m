@@ -1134,19 +1134,6 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(string != nil);
 	NSParameterAssert(command != nil);
 
-	if ([string isKindOfClass:[NSString class]] == NO &&
-		[string isKindOfClass:[NSAttributedString class]] == NO)
-	{
-		NSAssert(NO, @"'string' must be NSString or NSAttributedString");
-	}
-
-	if ([command isEqualToString:IRCPrivateCommandIndex("privmsg")] == NO &&
-		[command isEqualToString:IRCPrivateCommandIndex("action")] == NO &&
-		[command isEqualToString:IRCPrivateCommandIndex("notice")] == NO)
-	{
-		NSAssert(NO, @"Bad 'command' value");
-	}
-
 	if (self.selectedItem == nil) {
 		return;
 	}
