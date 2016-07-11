@@ -169,19 +169,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
-	ObjectIsAlreadyInitializedAssert
-
-	if ((self = [super init])) {
-		[self populateDefaultsPreflight];
-
-		[self populateDefaultsPostflight];
-
-		self->_objectInitialized = YES;
-
-		return self;
-	}
-
-	return nil;
+	return [self initWithDictionary:@{}];
 }
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic
@@ -201,12 +189,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self populateDefaultsPostflight];
 
+		[self initializedClassHealthCheck];
+
 		self->_objectInitialized = YES;
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)initializedClassHealthCheck
+{
+	ObjectIsAlreadyInitializedAssert
+
+	if ([self isMutable]) {
+		return;
+	}
+
+	NSParameterAssert(self->_connectionName.length > 0);
+	NSParameterAssert(self->_serverAddress.length > 0);
+	NSParameterAssert(self->_serverPort > 0 && self->_serverPort <= TXMaximumTCPPort);
+	NSParameterAssert(self->_proxyPort > 0 && self->_proxyPort <= TXMaximumTCPPort);
 }
 
 + (instancetype)newConfigByMerging:(IRCClientConfig *)config1 with:(IRCClientConfig *)config2
@@ -411,12 +415,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self writeProxyPasswordToKeychain];
 	}
-
-	/* Sanity check */
-	NSParameterAssert(self->_connectionName.length > 0);
-	NSParameterAssert(self->_serverAddress.length > 0);
-	NSParameterAssert(self->_serverPort > 0 && self->_serverPort <= TXMaximumTCPPort);
-	NSParameterAssert(self->_proxyPort > 0 && self->_proxyPort <= TXMaximumTCPPort);
 }
 
 - (BOOL)isEqual:(id)object

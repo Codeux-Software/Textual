@@ -44,15 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
-	ObjectIsAlreadyInitializedAssert
-
-	if ((self = [super init])) {
-		[self populateDefaultsPostflight];
-
-		return self;
-	}
-
-	return nil;
+	return [self initWithDictionary:@{}];
 }
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
