@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)noteReachabilityChanged:(BOOL)reachable;
 
 - (IRCClient *)createClientWithConfig:(IRCClientConfig *)config reload:(BOOL)reload;
-- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client adjust:(BOOL)adjust reload:(BOOL)reload;
+- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client add:(BOOL)add adjust:(BOOL)adjust reload:(BOOL)reload;
 
 - (void)destroyClient:(IRCClient *)client skipCloud:(BOOL)skipCloud;
 
