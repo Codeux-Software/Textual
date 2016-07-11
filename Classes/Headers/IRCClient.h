@@ -166,11 +166,14 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)toggleAwayStatus:(BOOL)setAway;
 - (void)toggleAwayStatus:(BOOL)setAway withComment:(nullable NSString *)comment;
 
-- (void)setModes:(NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannel:(IRCChannel *)channel;
-- (void)setModes:(NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannel:(IRCChannel *)channel;
+- (void)requestModesForChannel:(IRCChannel *)channel;
+- (void)requestModesForChannelNamed:(NSString *)channel;
 
-- (void)setModes:(NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannelNamed:(NSString *)channel;
-- (void)setModes:(NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannelNamed:(NSString *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannel:(IRCChannel *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannel:(IRCChannel *)channel;
+
+- (void)sendModes:(nullable NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannelNamed:(NSString *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannelNamed:(NSString *)channel;
 
 - (void)sendPing:(NSString *)tokenString;
 - (void)sendPong:(NSString *)tokenString;
@@ -181,8 +184,8 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)requestTopicForChannel:(IRCChannel *)channel;
 - (void)requestTopicForChannelNamed:(NSString *)channel;
 
-- (void)setTopicTo:(NSString *)topic inChannel:(IRCChannel *)channel;
-- (void)setTopicTo:(NSString *)topic inChannelNamed:(NSString *)channel;
+- (void)sendTopicTo:(nullable NSString *)topic inChannel:(IRCChannel *)channel;
+- (void)sendTopicTo:(nullable NSString *)topic inChannelNamed:(NSString *)channel;
 
 - (void)sendCapacity:(NSString *)subcommand data:(nullable NSString *)data;
 
@@ -217,7 +220,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (nullable IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)hostmask withMatches:(NSArray<NSString *> *)matches;
 
-- (BOOL)outputRuleMatchedInMessage:(NSString *)message inChannel:(nullable IRCChannel *)channel withLineType:(TVCLogLineType)lineType;
+- (BOOL)outputRuleMatchedInMessage:(NSString *)message inChannel:(nullable IRCChannel *)channel;
 
 #pragma mark -
 
