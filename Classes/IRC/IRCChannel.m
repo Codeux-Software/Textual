@@ -629,18 +629,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 }
 
-- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname
+- (void)renameMemberWithNickname:(NSString *)fromNickname to:(NSString *)toNickname
 {
 	NSParameterAssert(fromNickname != nil);
+
+	IRCUser *member = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
+
+	if (member) {
+		[self renameMember:member to:toNickname];
+	}
+}
+
+- (void)renameMember:(IRCUser *)member to:(NSString *)toNickname
+{
+	NSParameterAssert(member != nil);
 	NSParameterAssert(toNickname != nil);
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		IRCUser *member = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
-
-		if (member == nil) {
-			return;
-		}
-
 		IRCUserMutable *memberMutable = [member mutableCopy];
 
 		memberMutable.nickname = toNickname;
