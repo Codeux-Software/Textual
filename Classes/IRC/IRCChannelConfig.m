@@ -178,6 +178,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
+	[dic setBool:self.pushNotifications	forKey:@"pushNotifications"];
+	[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
+
 	if (self.type == IRCChannelChannelType) {
 		[dic maybeSetObject:self.defaultModes forKey:@"defaultMode"];
 		[dic maybeSetObject:self.defaultTopic forKey:@"defaultTopic"];
@@ -186,8 +189,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
 		[dic setBool:self.ignoreHighlights forKey:@"ignoreHighlights"];
 		[dic setBool:self.ignoreInlineMedia forKey:@"ignoreInlineMedia"];
-		[dic setBool:self.pushNotifications	forKey:@"pushNotifications"];
-		[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
 	}
 
 	[dic maybeSetObject:self.channelName forKey:@"channelName"];
