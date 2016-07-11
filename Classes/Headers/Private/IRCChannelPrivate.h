@@ -55,7 +55,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)noteEncryptionStateDidChange;
 
-- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
+- (void)renameMember:(IRCUser *)member to:(NSString *)toNickname;
+- (void)renameMemberWithNickname:(NSString *)fromNickname to:(NSString *)toNickname;
+
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
 - (void)clearMembers; // This will not reload table view
