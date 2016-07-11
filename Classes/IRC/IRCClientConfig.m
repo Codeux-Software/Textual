@@ -503,7 +503,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	object->_nicknamePassword = [nicknamePassword copy];
 	object->_proxyPassword = [proxyPassword copy];
-	object->_serverAddress = [serverPassword copy];
+	object->_serverPassword = [serverPassword copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 
