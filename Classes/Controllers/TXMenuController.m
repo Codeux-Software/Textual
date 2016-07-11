@@ -2047,7 +2047,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = sender.channel;
 
 	if (c == nil) {
-		c = [worldController() createChannelWithConfig:config onClient:u adjust:YES reload:YES];
+		c = [worldController() createChannelWithConfig:config onClient:u];
 
 		[mainWindow() expandClient:u];
 

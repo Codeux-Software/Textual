@@ -445,13 +445,20 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	IRCClient *client = [[IRCClient alloc] initWithConfig:config];
 
+	NSMutableArray<IRCChannel *> *channelList = [NSMutableArray array];
+
+	for (IRCChannelConfig *channelConfig in client.config.channelList) {
+		IRCChannel *channel =
+		[self createChannelWithConfig:channelConfig onClient:client add:NO adjust:NO reload:NO];
+
+		[channelList addObject:channel];
+	}
+
+	client.channelList = channelList;
+
 	client.printingQueue = [TVCLogControllerOperationQueue new];
 
 	client.viewController = [self createViewControllerWithClient:client channel:nil];
-
-	for (IRCChannelConfig *channel in client.config.channelList) {
-		[self createChannelWithConfig:channel onClient:client adjust:NO reload:NO];
-	}
 
 	@synchronized(self.clients) {
 		[self.clients addObject:client];
@@ -478,10 +485,10 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client
 {
-	return [self createChannelWithConfig:config onClient:client adjust:YES reload:YES];
+	return [self createChannelWithConfig:config onClient:client add:YES adjust:YES reload:YES];
 }
 
-- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client adjust:(BOOL)adjust reload:(BOOL)reload
+- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client add:(BOOL)add adjust:(BOOL)adjust reload:(BOOL)reload
 {
 	NSParameterAssert(config != nil);
 	NSParameterAssert(client != nil);
@@ -492,7 +499,9 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	channel.viewController = [self createViewControllerWithClient:client channel:channel];
 
-	[client addChannel:channel];
+	if (add) {
+		[client addChannel:channel];
+	}
 
 	if (reload) {
 		NSInteger index = [client.channelList indexOfObject:channel];
@@ -520,7 +529,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	config.type = IRCChannelPrivateMessageType;
 
-	IRCChannel *channel = [self createChannelWithConfig:config onClient:client adjust:YES reload:YES];
+	IRCChannel *channel = [self createChannelWithConfig:config onClient:client add:YES adjust:YES reload:YES];
 
 	if (client.isLoggedIn) {
 		[channel activate];
