@@ -481,6 +481,10 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	NSString *cipher = self.socketConnection.sslNegotiatedCipherSuiteString;
 
+	if (protocol == nil || cipher == nil) {
+		return nil;
+	}
+
 	BOOL cipherIsDeprecated = self.socketConnection.sslConnectedWithDeprecatedCipher;
 
 	if (plainText && cipherIsDeprecated) {
