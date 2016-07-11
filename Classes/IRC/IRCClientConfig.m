@@ -381,7 +381,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSDictionary *floodControlDic = [defaultsMutable dictionaryForKey:@"floodControl"];
 
 	if (floodControlDic) {
-		NSNumber *serviceEnabled = [floodControlDic objectForKey:@"serviceEnabled"];
+		NSNumber *serviceEnabled = floodControlDic[@"serviceEnabled"];
 
 		if (serviceEnabled && serviceEnabled.boolValue == NO) {
 			floodControlSetToDisabled = YES;
@@ -392,7 +392,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (floodControlSetToDisabled == NO) {
-		NSNumber *floodControlEnabled = [defaultsMutable objectForKey:@"isOutgoingFloodControlEnabled"];
+		NSNumber *floodControlEnabled = defaultsMutable[@"isOutgoingFloodControlEnabled"];
 
 		if (floodControlEnabled && floodControlEnabled.boolValue == NO) {
 			floodControlSetToDisabled = YES;
@@ -599,7 +599,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (channelListOut.count > 0) {
-		[dic setObject:[channelListOut copy] forKey:@"channelList"];
+		dic[@"channelList"] = [channelListOut copy];
 	}
 
 	/* Highlight list */
@@ -612,7 +612,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (highlightListOut.count > 0) {
-		[dic setObject:[highlightListOut copy] forKey:@"highlightList"];
+		dic[@"highlightList"] = [highlightListOut copy];
 	}
 
 	/* Ignore list */
@@ -625,7 +625,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (ignoreListOut.count > 0) {
-		[dic setObject:[ignoreListOut copy] forKey:@"ignoreList"];
+		dic[@"ignoreList"] = [ignoreListOut copy];
 	}
 
 	return [dic dictionaryByRemovingDefaults:self->_defaults allowEmptyValues:YES];

@@ -440,7 +440,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 + (NSComparator)nicknameLengthComparator
 {
-	return [^(IRCUser *object1, IRCUser *object2){
+	return [^(IRCUser *object1, IRCUser *object2) {
 		return (object1.nickname.length <=
 				object2.nickname.length);
 	} copy];
