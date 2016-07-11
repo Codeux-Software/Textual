@@ -95,19 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
-	ObjectIsAlreadyInitializedAssert
-
-	if ((self = [super init])) {
-		[self populateDefaultsPreflight];
-
-		[self populateDefaultsPostflight];
-
-		self->_objectInitialized = YES;
-
-		return self;
-	}
-	
-	return nil;
+	return [self initWithDictionary:@{}];
 }
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
@@ -122,12 +110,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self populateDefaultsPostflight];
 
+		[self initializedClassHealthCheck];
+
 		self->_objectInitialized = YES;
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)initializedClassHealthCheck
+{
+	ObjectIsAlreadyInitializedAssert
+
+	if ([self isMutable]) {
+		return;
+	}
+
+	NSParameterAssert(self->_channelName.length > 0);
 }
 
 - (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
@@ -166,9 +167,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
 		[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
 	}
-
-	/* Sanity check */
-	NSParameterAssert(self->_channelName.length > 0);
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
