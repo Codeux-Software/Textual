@@ -2611,6 +2611,96 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case 5029: // Command: IGNORE
+		case 5073: // Command: UNIGNORE
+		{
+			BOOL isIgnoreCommand = (commandNumeric == 5029);
+
+			if (stringInStringLength == 0 || targetChannel == nil) {
+				if (isIgnoreCommand) {
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:nil];
+				} else {
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection context:nil];
+				}
+
+				break;
+			}
+
+			NSString *nickname = stringIn.tokenAsString;
+
+			IRCUser *member = [targetChannel findMember:nickname];
+
+			if (member == nil) {
+				if (isIgnoreCommand) {
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:nickname];
+				} else {
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection context:nil];
+				}
+
+				break;
+			}
+
+			/* Build list of ignores that already match the user's host */
+			NSString *hostmask = member.hostmask;
+
+			if (hostmask == nil) {
+				hostmask = [NSString stringWithFormat:@"%@!*@*", nickname];
+			}
+
+			NSMutableArray *matchedIgnores = [NSMutableArray array];
+
+			for (IRCAddressBookEntry *ignore in self.config.ignoreList) {
+				if (ignore.entryType != IRCAddressBookIgnoreEntryType) {
+					continue;
+				}
+
+				if ([ignore checkMatch:hostmask]) {
+					[matchedIgnores addObject:ignore];
+				}
+			}
+
+			/* Cancel if there is nothing to change */
+			if (isIgnoreCommand) {
+				if (matchedIgnores.count > 0) {
+					[self printDebugInformation:TXTLS(@"IRC[1118]", member.nickname)];
+
+					break;
+				}
+			} else {
+				if (matchedIgnores.count == 0) {
+					[self printDebugInformation:TXTLS(@"IRC[1117]", member.nickname)];
+
+					break;
+				}
+			}
+
+			/* Modify ignore list and inform user of change */
+			NSMutableArray *mutableIgnoreList = [self.config.ignoreList mutableCopy];
+
+			if (isIgnoreCommand) {
+				IRCAddressBookEntry *ignore =
+				[IRCAddressBookEntry newIgnoreEntryForHostmask:member.banMask];
+
+				[self printDebugInformation:TXTLS(@"IRC[1115]", member.nickname, ignore.hostmask)];
+
+				[mutableIgnoreList addObject:ignore];
+			} else{
+				for (IRCAddressBookEntry *ignore in matchedIgnores) {
+					[self printDebugInformation:TXTLS(@"IRC[1116]", member.nickname, ignore.hostmask)];
+
+					[mutableIgnoreList removeObjectIdenticalTo:ignore];
+				}
+			}
+
+			/* Save modified ignore list */
+			IRCClientConfigMutable *mutableClientConfig = [self.config mutableCopy];
+
+			mutableClientConfig.ignoreList = mutableIgnoreList;
+			
+			self.config = mutableClientConfig;
+			
+			break;
+		}
 		case 5100: // Command: ISON
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
