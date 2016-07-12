@@ -2475,33 +2475,15 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	NSMutableString *modeChanges = [NSMutableString string];
-	
-	NSUInteger modeChangesCount = 0;
-	
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[modeChanges appendFormat:@"%@ ", nickname];
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
 
-		modeChangesCount += 1;
-
-		if (modeChangesCount == u.supportInfo.maximumModeCount) {
-			modeChangesCount = 0;
-
-			NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, modeChanges];
-
-			[u sendCommand:command completeTarget:YES target:c.name];
-
-			[modeChanges setString:NSStringEmptyPlaceholder];
-		}
-	}
-	
-	if (modeChanges.length > 0) {
-		NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, modeChanges];
-
-		[u sendCommand:command completeTarget:YES target:c.name];
-	}
-	
 	[self deselectMembers:sender];
+
+	NSString *nicknamesString = [nicknames componentsJoinedByString:NSStringWhitespacePlaceholder];
+
+	NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, nicknamesString];
+
+	[u sendCommand:command completeTarget:YES target:c.name];
 }
 
 - (void)memberModeGiveOp:(id)sender

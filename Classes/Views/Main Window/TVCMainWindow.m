@@ -934,7 +934,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendMessageAsAction:(NSEvent *)e
 {
 	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
-		[self inputTextAsCommand:IRCPrivateCommandIndex("action")];
+		[self inputTextAsCommand:IRCPrivateCommandPrivmsgActionIndex];
 
 		return;
 	}
@@ -1107,13 +1107,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)textEntered
 {
-	[self inputTextAsCommand:IRCPrivateCommandIndex("privmsg")];
+	[self inputTextAsCommand:IRCPrivateCommandPrivmsgIndex];
 }
 
-- (void)inputTextAsCommand:(NSString *)command
+- (void)inputTextAsCommand:(IRCPrivateCommand)command
 {
-	NSParameterAssert(command != nil);
-
 	[self.nicknameCompletionStatus clear];
 
 	NSAttributedString *stringValue = self.inputTextField.attributedStringValue;
@@ -1129,10 +1127,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[self inputText:stringValue asCommand:command];
 }
 
-- (void)inputText:(id)string asCommand:(NSString *)command
+- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command
 {
 	NSParameterAssert(string != nil);
-	NSParameterAssert(command != nil);
 
 	if (self.selectedItem == nil) {
 		return;

@@ -84,8 +84,8 @@ enum {
 
 - (void)inputText:(id)string destination:(IRCTreeItem *)destination;
 
-- (void)inputText:(id)string asCommand:(NSString *)command;
-- (void)inputText:(id)string asCommand:(NSString *)command destination:(IRCTreeItem *)destination;
+- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command;
+- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command destination:(IRCTreeItem *)destination;
 
 - (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 - (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
