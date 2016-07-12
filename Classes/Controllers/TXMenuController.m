@@ -2949,20 +2949,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)sortChannelListNames:(id)sender
 {
-#warning TODO: This should take into consideration that private messages \
-	are supposed to appear below channels
-
 	for (IRCClient *u in worldController().clientList) {
 		NSMutableArray *channelList = [u.channelList mutableCopy];
 		
 		[channelList sortUsingComparator:^NSComparisonResult(IRCChannel *channel1, IRCChannel *channel2) {
+			if (channel1.isChannel && channel2.isPrivateMessage) {
+				return NSOrderedAscending;
+			}
+
 			NSString *name1 = channel1.name.lowercaseString;
 			NSString *name2 = channel2.name.lowercaseString;
 			
 			return [name1 compare:name2];
 		}];
+
+		if (NSObjectsAreEqual(u.channelList, channelList)) {
+			continue;
+		}
 		
 		u.channelList = channelList;
+
+		[u reloadServerListItems];
 	}
 	
 	[worldController() save];
