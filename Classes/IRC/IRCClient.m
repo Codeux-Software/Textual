@@ -828,6 +828,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSUInteger numberOfEntries = 0;
 
 	for (NSString *modeParamater in modeParamaters) {
+		if (modeParamater.length == 0) {
+			continue;
+		}
+
 		if (modeSetString.length == 0) {
 			if (modeIsSet) {
 				[modeSetString appendFormat:@"+%@", modeSymbol];
