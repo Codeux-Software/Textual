@@ -135,7 +135,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 @property (readonly) ClientIRCv3SupportedCapacities capacities;
 @property (readonly, copy) NSString *enabledCapacitiesStringValue;
 
-- (BOOL)isCapacityAvailable:(NSString *)capacity;
+- (BOOL)isCapacitySupported:(NSString *)capacityString;
 
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
 
@@ -191,6 +191,10 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames;
 - (void)sendIsonForNicknamesString:(NSString *)nicknames;
+
+- (void)modifyWatchListBy:(BOOL)adding nicknames:(NSArray<NSString *> *)nicknames;
+
+- (BOOL)nicknameIsMyself:(NSString *)nickname;
 
 - (void)requestChannelList;
 
@@ -260,7 +264,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 
-- (NSString *)encryptionAccountNameForLocalUser;
+@property (nonatomic, readonly, copy) NSString * _Nonnull encryptionAccountNameForLocalUser;
 - (NSString *)encryptionAccountNameForUser:(NSString *)nickname;
 #endif
 
@@ -269,21 +273,20 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 // nil channel prints the message to the server console
 // referenceMessage.command is used if command == nil
 // referenceMessage and command cannot be nil together (this throws exceptions)
-- (void)			print:(NSString *)messageBody
-					   by:(nullable NSString *)nickname
-				inChannel:(nullable IRCChannel *)channel
-				   asType:(TVCLogLineType)lineType
-				  command:(nullable NSString *)command
-			   receivedAt:(NSDate *)receivedAt
-			  isEncrypted:(BOOL)isEncrypted
-	 withReferenceMessage:(nullable IRCMessage *)referenceMessage
- 		  completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
-
+- (void)		print:(NSString *)messageBody
+				   by:(nullable NSString *)nickname
+		    inChannel:(nullable IRCChannel *)channel
+			   asType:(TVCLogLineType)lineType
+			  command:(nullable NSString *)command
+		   receivedAt:(NSDate *)receivedAt
+		  isEncrypted:(BOOL)isEncrypted
+	 referenceMessage:(nullable IRCMessage *)referenceMessage
+	  completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command;
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt;
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted;
-- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted withReferenceMessage:(nullable IRCMessage *)referenceMessage;
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted referenceMessage:(nullable IRCMessage *)referenceMessage;
 
 - (void)printDebugInformationToConsole:(NSString *)message;
 - (void)printDebugInformationToConsole:(NSString *)message asCommand:(NSString *)command;

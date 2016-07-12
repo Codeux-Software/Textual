@@ -74,6 +74,8 @@ enum {
 
 - (void)selectFirstChannelInChannelList;
 
+- (void)reloadServerListItems;
+
 - (void)updateStoredChannelList;
 
 - (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;

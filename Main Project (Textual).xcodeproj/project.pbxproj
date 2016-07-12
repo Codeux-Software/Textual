@@ -6080,6 +6080,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				WARNING_LDFLAGS = "-Wdirect-ivar-access";
 			};
 			name = Debug;
 		};
@@ -6088,6 +6089,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				WARNING_LDFLAGS = "-Wdirect-ivar-access";
 			};
 			name = Release;
 		};
@@ -6096,6 +6098,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				WARNING_LDFLAGS = "-Wdirect-ivar-access";
 			};
 			name = "Release (App Store)";
 		};
