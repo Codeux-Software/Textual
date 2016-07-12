@@ -37,6 +37,8 @@
 
 #import "TPISpammerParadise.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation TPISpammerParadise
 
 #pragma mark -
@@ -46,16 +48,20 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	IRCChannel *channel = [mainWindow() selectedChannel];
+	IRCChannel *channel = mainWindow().selectedChannel;
 
-	if ([channel isChannel]) {
-		if ([commandString isEqualToString:@"CLONES"]) {
-			[self findAllClonesIn:channel on:client];
-		} else if ([commandString isEqualToString:@"NAMEL"]) {
-			[self buildListOfUsersOn:channel on:client withParameters:messageString];
-		} else if ([commandString isEqualToString:@"FINDUSER"]) {
-			[self findAllUsersMatchingHost:[messageString trim] in:channel on:client];
-		}
+	if (channel.isChannel == NO) {
+		return;
+	}
+
+	messageString = messageString.trim;
+
+	if ([commandString isEqualToString:@"CLONES"]) {
+		[self findAllClonesInChannel:channel onClient:client];
+	} else if ([commandString isEqualToString:@"NAMEL"]) {
+		[self buildListOfUsersInChannel:channel onClient:client parameters:messageString];
+	} else if ([commandString isEqualToString:@"FINDUSER"]) {
+		[self findAllUsersMatchingString:messageString inChannel:channel onClient:client];
 	}
 }
 
@@ -64,172 +70,192 @@
 	return @[@"clones", @"namel", @"finduser"];
 }
 
-- (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client withParameters:(NSString *)parameters
+- (void)buildListOfUsersInChannel:(IRCChannel *)channel onClient:(IRCClient *)client parameters:(NSString *)parameters
 {
-	if ([channel numberOfMembers] <= 0) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]", [channel name]) channel:channel];
+	NSParameterAssert(channel != nil);
+	NSParameterAssert(client != nil);
+	NSParameterAssert(parameters != nil);
 
-		return; // We cannot do anything with no users now can we?
+	NSArray *memberList = channel.memberList;
+
+	if (memberList.count == 0) {
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]", channel.name) inChannel:channel];
+
+		return;
 	}
 
 	/* Process parameters */
-	BOOL sortByRank = NO;
 	BOOL displayRank = NO;
+	BOOL sortByRank = NO;
 
-	if ([parameters length] > 1 && [parameters hasPrefix:@"-"]) {
-		for (NSInteger i = 1; i < [parameters length]; i++) {
-			UniChar parameter = [parameters characterAtIndex:i];
+	if ([parameters hasPrefix:@"-"]) {
+		NSString *flagsString = [parameters substringFromIndex:1];
 
-			if (parameter == 'r') {
-				sortByRank = YES;
-			} else if (parameter == 'd') {
-				displayRank = YES;
-			}
-		}
+		NSArray *flags = flagsString.characterStringBuffer;
+
+		displayRank = [flags containsObject:@"d"];
+		sortByRank = [flags containsObject:@"r"];
 	}
-
-	/* Build list of users and print it. */
-	NSArray *userObjects = [channel memberList];
 
 	/* -memberList returns a list sorted by rank by default.
 	 If we are not sorting by rank, then we have to first get
 	 the member list then sort it another way. */
 	if (sortByRank == NO) {
 		/* Sort user objects alphabetically by comparing nicknames */
-		userObjects = [userObjects sortedArrayUsingComparator:^NSComparisonResult(IRCUser *obj1, IRCUser *obj2) {
-			return [[obj1 nickname] compare:[obj2 nickname]];
+
+		memberList =
+		[memberList sortedArrayUsingComparator:^NSComparisonResult(IRCUser *member1, IRCUser *member2) {
+			NSString *nickname1 = member1.nickname;
+			NSString *nickname2 = member2.nickname;
+
+			return [nickname1 caseInsensitiveCompare:nickname2];
 		}];
 	}
 
 	/* Join user objects into string */
-	NSMutableString *userString = [NSMutableString string];
+	NSMutableString *resultString = [NSMutableString string];
 
-	for (IRCUser *user in userObjects) {
-		NSString *rank = [user mark];
-
-		if (rank && displayRank) {
-			[userString appendString:rank];
+	for (IRCUser *member in memberList) {
+		if (displayRank) {
+			[resultString appendString:member.mark];
 		}
 
-		[userString appendString:[user nickname]];
+		[resultString appendString:member.nickname];
 
-		[userString appendString:NSStringWhitespacePlaceholder];
+		[resultString appendString:NSStringWhitespacePlaceholder];
 	}
 
-	[client printDebugInformation:userString channel:channel];
+	[client printDebugInformation:[resultString copy] inChannel:channel];
 }
 
-- (void)findAllUsersMatchingHost:(NSString *)matchString in:(IRCChannel *)channel on:(IRCClient *)client
+- (void)findAllUsersMatchingString:(NSString *)matchString inChannel:(IRCChannel *)channel onClient:(IRCClient *)client
 {
-	/* Validate input. */
+	NSParameterAssert(matchString != nil);
+	NSParameterAssert(channel != nil);
+	NSParameterAssert(client != nil);
+
 	BOOL hasSearchCondition = NSObjectIsNotEmpty(matchString);
 
-	/* Check number of users. */
-	if ([channel numberOfMembers] <= 0) {
+	NSArray *memberList = channel.memberList;
+
+	if (memberList.count == 0) {
 		if (hasSearchCondition) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", channel.name, matchString) inChannel:channel];
 		} else {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		}
-
-		return; // We cannot do anything with no users now can we?
-	}
-
-	/* Build list of users. */
-	NSMutableArray *userlist = [NSMutableArray array];
-
-	for (IRCUser *user in [channel memberList]) {
-		NSString *userAddress = [user hostmask];
-
-        NSObjectIsEmptyAssertLoopContinue(userAddress);
-
-		if (hasSearchCondition) {
-			if ([userAddress containsIgnoringCase:matchString]) {
-				[userlist addObject:user];
-			}
-		} else {
-			[userlist addObject:user];
-		}
-	}
-
-	/* Do we even have any matches? */
-	if ([userlist count] <= 0) {
-		if (hasSearchCondition) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
-		} else {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", channel.name) inChannel:channel];
 		}
 
 		return;
 	}
 
-	/* We have results, so let's skim them. */
-	if (hasSearchCondition) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [userlist count], [channel name], matchString) channel:channel];
-	} else {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]", [userlist count], [channel name]) channel:channel];
+	NSMutableArray<IRCUser *> *membersMatched = [NSMutableArray array];
+
+	for (IRCUser *member in memberList) {
+		NSString *hostmask = member.hostmask;
+
+		if (hostmask == nil) {
+			continue;
+		}
+
+		if (hasSearchCondition) {
+			if ([hostmask containsIgnoringCase:matchString] == NO) {
+				continue;
+			}
+		}
+
+		[membersMatched addObject:member];
 	}
 
-	[userlist sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-		return [[obj1 nickname] compare:[obj2 nickname]];
+	if (membersMatched.count <= 0) {
+		if (hasSearchCondition) {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", channel.name, matchString) inChannel:channel];
+		} else {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", channel.name) inChannel:channel];
+		}
+
+		return;
+	}
+
+	if (hasSearchCondition) {
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", membersMatched.count, channel.name, matchString) inChannel:channel];
+	} else {
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]", membersMatched.count, channel.name) inChannel:channel];
+	}
+
+	[membersMatched sortUsingComparator:^NSComparisonResult(IRCUser *member1, IRCUser *member2) {
+		NSString *nickname1 = member1.nickname;
+		NSString *nickname2 = member2.nickname;
+
+		return [nickname1 caseInsensitiveCompare:nickname2];
 	}];
 
-	for (IRCUser *user in userlist) {
-        NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", [user nickname], [user hostmask]];
+	for (IRCUser *member in membersMatched) {
+        NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", member.nickname, member.hostmask];
 
-        [client printDebugInformation:resultString channel:channel];
+        [client printDebugInformation:resultString inChannel:channel];
 	}
 }
 
-- (void)findAllClonesIn:(IRCChannel *)channel on:(IRCClient *)client
+- (void)findAllClonesInChannel:(IRCChannel *)channel onClient:(IRCClient *)client
 {
-    NSMutableDictionary *allUsers = [NSMutableDictionary dictionary];
+	NSParameterAssert(channel != nil);
+	NSParameterAssert(client != nil);
+
+    NSMutableDictionary<NSString *, NSArray *> *members = [NSMutableDictionary dictionary];
 
     /* Populate our list by matching an array of users to that of the address. */
-    for (IRCUser *user in [channel memberList]) {
-        NSObjectIsEmptyAssertLoopContinue([user address]);
+	for (IRCUser *member in channel.memberList) {
+		NSString *address = member.address;
 
-        NSArray *clones = [allUsers arrayForKey:[user address]];
+		if (address == nil) {
+			continue;
+		}
 
-        if (NSObjectIsEmpty(clones)) {
-            allUsers[[user address]] = @[[user nickname]];
-        } else {
-            clones = [clones arrayByAddingObject:[user nickname]];
+		NSString *nickname = member.nickname;
 
-            allUsers[[user address]] = clones;
+		NSArray *clones = members[address];
+
+		if (clones) {
+			clones = [clones arrayByAddingObject:nickname];
+
+			members[address] = clones;
+		} else {
+			members[address] = @[nickname];
         }
     }
 
     /* Filter the new list by removing users with less than two matches. */
-    NSArray *listKeys = [allUsers allKeys];
+	NSArray *memberHosts = members.allKeys;
 
-    for (NSString *dictKey in listKeys) {
-        NSArray *userArray = [allUsers arrayForKey:dictKey];
+    for (NSString *memberHost in memberHosts) {
+        NSArray *clones = [members arrayForKey:memberHost];
 
-        if ([userArray count] <= 1) {
-            [allUsers removeObjectForKey:dictKey];
+        if (clones.count < 2) {
+            [members removeObjectForKey:memberHost];
         }
     }
 
-    /* Now that we have our list made, sort it & present it. */
-
-    /* No cloes found. */
-    if (NSObjectIsEmpty(allUsers)) {
-        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]") channel:channel];
+    /* No cloes found */
+    if (members.count == 0) {
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]") inChannel:channel];
 
         return;
     }
 
-    /* Build clone list. */
-    [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]", [allUsers count], [channel name]) channel:channel];
+    /* Build result string */
+    [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]", members.count, channel.name) inChannel:channel];
     
-    for (NSString *dictKey in allUsers) {
-        NSArray *userArray = [allUsers arrayForKey:dictKey];
+    for (NSString *memberHost in members) {
+        NSArray *clones = [members arrayForKey:memberHost];
 
-        NSString *resultString = [NSString stringWithFormat:@"*!*@%@ -> %@", dictKey, [userArray componentsJoinedByString:@", "]];
+		NSString *clonesString = [clones componentsJoinedByString:@", "];
 
-        [client printDebugInformation:resultString channel:channel];
+        NSString *resultString = [NSString stringWithFormat:@"*!*@%@ -> %@", memberHost, clonesString];
+
+        [client printDebugInformation:resultString inChannel:channel];
     }
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
