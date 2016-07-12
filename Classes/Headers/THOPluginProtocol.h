@@ -552,7 +552,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief The payload contents
  */
-@property (readonly, copy, nullable) id payloadContents;
+@property (readonly, copy, nullable) id <NSCopying> payloadContents;
 @end
 
 #pragma mark -
