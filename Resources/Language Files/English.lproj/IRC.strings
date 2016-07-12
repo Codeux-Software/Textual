@@ -151,7 +151,7 @@
 "IRC[1069]" = "\002%1$@\002 (%2$@@%3$@) left IRC";
 "IRC[1070]" = "\002%1$@\002 left the query by disconnecting from IRC";
 "IRC[1071]" = "\002%1$@\002 joined the query by connecting to IRC";
-"IRC[1072]" = "%@, your user modes are %@";
+"IRC[1072]" = "%@, your user modes are \002%@\002";
 "IRC[1073]" = "Inviting %1$@ to join %2$@";
 "IRC[1074]" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC[1075]" = "%1$@ is away (%2$@)";
