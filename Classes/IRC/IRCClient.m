@@ -2599,6 +2599,60 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandDehalfopIndex: // Command: DEHALFOP
+		case IRCPublicCommandDeopIndex: // Command: DEOP
+		case IRCPublicCommandDevoiceIndex: // Command: DEVOICE
+		case IRCPublicCommandHalfopIndex: // Command: HALFOP
+		case IRCPublicCommandOpIndex: // Command: OP
+		case IRCPublicCommandVoiceIndex: // Command: VOICE
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			BOOL modeIsSet = (commandNumeric == IRCPublicCommandOpIndex ||
+							  commandNumeric == IRCPublicCommandHalfopIndex ||
+							  commandNumeric == IRCPublicCommandVoiceIndex);
+
+			NSString *modeSymbol = nil;
+
+			if (commandNumeric == IRCPublicCommandOpIndex || commandNumeric == IRCPublicCommandDeopIndex) {
+				modeSymbol = @"o";
+			} else if (commandNumeric == IRCPublicCommandHalfopIndex || commandNumeric == IRCPublicCommandDehalfopIndex) {
+				modeSymbol = @"h";
+			} else if (commandNumeric == IRCPublicCommandVoiceIndex || commandNumeric == IRCPublicCommandDevoiceIndex) {
+				modeSymbol = @"v";
+			}
+
+			if ([self.supportInfo modeSymbolIsUserPrefix:modeSymbol] == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[1021]", modeSymbol)];
+
+				break;
+			}
+
+			if ([self stringIsChannelName:stringInString] == NO) {
+				if (targetChannel && targetChannel.isChannel) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
+			} else {
+				targetChannelName = stringIn.tokenAsString;
+			}
+
+			NSString *nicknamesString = stringIn.string;
+
+			NSArray *modeChanges =
+			[self compileListOfModeChangesForModeSymbol:modeSymbol
+											  modeIsSet:modeIsSet
+										paramaterString:nicknamesString];
+
+			for (NSString *modeChange in modeChanges) {
+				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, modeChange, nil];
+			}
+			
+			break;
+		}
 		case IRCPublicCommandDebugIndex: // Command: DEBUG
 		case IRCPublicCommandEchoIndex: // Command: ECHO
 		{
