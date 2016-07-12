@@ -168,49 +168,20 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)onRemoveEntry:(id)sender
 {
-	NSString *modeSymbol = self.modeSymbol;
-	
-	NSMutableArray<NSString *> *listOfChanges = [NSMutableArray array];
-
-	NSMutableString *modeSetString = [NSMutableString string];
-	NSMutableString *modeParamString = [NSMutableString string];
-
 	NSIndexSet *selectedRows = self.entryTable.selectedRowIndexes;
 
-	__block NSUInteger numberOfEntries = 0;
+	NSMutableArray<NSString *> *selectedEntries = [NSMutableArray arrayWithCapacity:selectedRows.count];
 
 	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 		TDCChannelBanListSheetEntry *entryItem = self.entryTableController.arrangedObjects[index];
 
-		if (modeSetString.length == 0) {
-			[modeSetString appendFormat:@"-%@", modeSymbol];
-		} else {
-			[modeSetString appendString:modeSymbol];
-		}
-
-		[modeParamString appendFormat:@" %@", entryItem.entryMask];
-
-		numberOfEntries += 1;
-
-		if (numberOfEntries == self.client.supportInfo.maximumModeCount) {
-			numberOfEntries = 0;
-			
-			NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];
-
-			[listOfChanges addObject:modeSetCombined];
-
-			[modeSetString setString:NSStringEmptyPlaceholder];
-			[modeParamString setString:NSStringEmptyPlaceholder];
-		}
+		[selectedEntries addObject:entryItem.entryMask];
 	}];
 
-	if (modeSetString.length > 0 && modeParamString.length > 0) {
-		NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];
-
-		[listOfChanges addObject:modeSetCombined];
-	}
-
-	self.listOfChanges = listOfChanges;
+	self.listOfChanges =
+	[self.client compileListOfModeChangesForModeSymbol:self.modeSymbol
+											 modeIsSet:NO
+										modeParamaters:selectedEntries];
 
 	[super cancel:nil];
 }

@@ -796,6 +796,73 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return ([self stringIsChannelName:string] || [string isEqualToString:@"0"]);
 }
 
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString
+{
+	return [self compileListOfModeChangesForModeSymbol:modeSymbol modeIsSet:modeIsSet paramaterString:paramaterString characterSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString characterSet:(NSCharacterSet *)characterList
+{
+	NSParameterAssert(paramaterString != nil);
+	NSParameterAssert(characterList != nil);
+
+	NSArray *modeParamaters = [paramaterString componentsSeparatedByCharactersInSet:characterList];
+
+	return [self compileListOfModeChangesForModeSymbol:modeSymbol modeIsSet:modeIsSet modeParamaters:modeParamaters];
+}
+
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamaters:(NSArray<NSString *> *)modeParamaters
+{
+	NSParameterAssert(modeSymbol.length == 1);
+	NSParameterAssert(modeParamaters != nil);
+
+	if (modeParamaters.count == 0) {
+		return @[];
+	}
+
+	NSMutableArray<NSString *> *listOfChanges = [NSMutableArray array];
+
+	NSMutableString *modeSetString = [NSMutableString string];
+	NSMutableString *modeParamString = [NSMutableString string];
+
+	NSUInteger numberOfEntries = 0;
+
+	for (NSString *modeParamater in modeParamaters) {
+		if (modeSetString.length == 0) {
+			if (modeIsSet) {
+				[modeSetString appendFormat:@"+%@", modeSymbol];
+			} else {
+				[modeSetString appendFormat:@"-%@", modeSymbol];
+			}
+		} else {
+			[modeSetString appendString:modeSymbol];
+		}
+
+		[modeParamString appendFormat:@" %@", modeParamater];
+
+		numberOfEntries += 1;
+
+		if (numberOfEntries == self.supportInfo.maximumModeCount) {
+			numberOfEntries = 0;
+
+			NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];
+
+			[listOfChanges addObject:modeSetCombined];
+
+			[modeSetString setString:NSStringEmptyPlaceholder];
+			[modeParamString setString:NSStringEmptyPlaceholder];
+		}
+	}
+
+	if (modeSetString.length > 0 && modeParamString.length > 0) {
+		NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];
+
+		[listOfChanges addObject:modeSetCombined];
+	}
+
+	return [listOfChanges copy];
+}
+
 #pragma mark -
 #pragma mark Highlights (Signed)
 
