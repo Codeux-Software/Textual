@@ -57,6 +57,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSInteger colonIndexCount = 0;
 
 	for (NSString *argument in arguments) {
+		if (argument.length == 0) {
+			break;
+		}
+
 		[builtString appendString:NSStringWhitespacePlaceholder];
 
 		if (colonIndexBase == NSNotFound) {
