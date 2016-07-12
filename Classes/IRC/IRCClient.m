@@ -2683,6 +2683,109 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case IRCPublicCommandDefaultsIndex: // Command: DEFAULTS
+		{
+			if (stringInStringLength == 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1012]")];
+
+				break;
+			}
+
+			NSString *action = stringIn.tokenAsString;
+
+			/* Present help */
+			if (NSObjectsAreEqual(action, @"help"))
+			{
+				[self printDebugInformation:TXTLS(@"IRC[1013][01]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][02]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][03]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][04]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][05]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][06]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][07]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][08]")];
+
+				break;
+			}
+
+			/* Present list of features */
+			else if (NSObjectsAreEqual(action, @"features"))
+			{
+				[TLOpenLink openWithString:@"https://help.codeux.com/textual/Command-Reference.kb#cr=defaults"];
+
+				break;
+			}
+
+			/* Prepare to toggle feature */
+			NSString *feature = stringIn.tokenIncludingQuotes.string;
+
+			BOOL applyToAll = NSObjectsAreEqual(feature, @"-a");
+
+			if (applyToAll) {
+				feature = stringIn.tokenIncludingQuotes.string;
+			}
+
+			NSDictionary *features = @{
+				@"Ignore Notifications by Private ZNC Users"		: @"setZncIgnoreUserNotifications:",
+				@"Send Authentication Requests to UserServ"			: @"setSendAuthenticationRequestsToUserServ:",
+				@"SASL Authentication Uses External Mechanism"		: @"setSaslAuthenticationUsesExternalMechanism:",
+				@"Send WHO Command Requests to Channels"			: @"setSendWhoCommandRequestsToChannels:",
+			};
+
+			BOOL enableFeature = NSObjectsAreEqual(action, @"enable");
+
+			/* Cannot toggle feature if the user doesn't tell us which */
+			if (feature.length == 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1012]")];
+
+				break;
+			}
+
+			/* Make sure the feature exists */
+			if ([features containsKey:feature] == NO) {
+				if (enableFeature) {
+					[self printDebugInformation:TXTLS(@"IRC[1014]", feature)];
+				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1015]", feature)];
+				}
+
+				break;
+			}
+
+			/* Toggle the feature by mutating the client's configuration,
+			 invoking the appropriate method, then saving it. */
+			void (^toggleFeature)(IRCClient *, NSString *, BOOL) = ^(IRCClient *client, NSString *featureKey, BOOL featureValue) {
+				NSString *selectorString = features[featureKey];
+
+				SEL selector = NSSelectorFromString(selectorString);
+
+				IRCClientConfigMutable *mutableClientConfig = [client.config mutableCopy];
+
+				(void)objc_msgSend(mutableClientConfig, selector, featureValue);
+
+				client.config = mutableClientConfig;
+			};
+
+			/* Toggle feature */
+			for (IRCClient *client in worldController().clientList) {
+				if (client != self && applyToAll == NO) {
+					continue;
+				}
+
+				toggleFeature(client, feature, enableFeature);
+
+				if (enableFeature) {
+					[client printDebugInformation:TXTLS(@"IRC[1016]", feature)];
+				} else {
+					[client printDebugInformation:TXTLS(@"IRC[1017]", feature)];
+				}
+			}
+			
+			/* Save modified client */
+			[worldController() save];
+			
+			break;
+		}
 		case IRCPublicCommandFakerawdataIndex: // Command: FAKERAWDATA
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
@@ -2826,6 +2929,34 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			self.config = mutableClientConfig;
 			
+			break;
+		}
+		case IRCPublicCommandInviteIndex:
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			NSArray *nicknames = [stringInString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			if ([self stringIsChannelName:nicknames.lastObject]) {
+				targetChannelName = nicknames.lastObject;
+			} else {
+				if (targetChannel && targetChannel.isChannel) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
+			}
+
+			for (NSString *nickname in nicknames) {
+				if ([self stringIsNickname:nickname] == NO) {
+					continue;
+				}
+
+				[self send:IRCPrivateCommandIndex("invite"), nickname, targetChannelName, nil];
+			}
+
 			break;
 		}
 		case IRCPublicCommandIsonIndex: // Command: ISON
