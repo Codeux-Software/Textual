@@ -789,6 +789,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [string isChannelNameOn:self];
 }
 
+- (BOOL)stringIsChannelNameOrZero:(NSString *)string
+{
+	NSParameterAssert(string != nil);
+
+	return ([self stringIsChannelName:string] || [string isEqualToString:@"0"]);
+}
+
 #pragma mark -
 #pragma mark Highlights (Signed)
 
