@@ -9680,12 +9680,6 @@ present_error:
 
 			IRCChannel *channel = (IRCChannel *)[worldController() findItemWithId:command.channelId];
 
-			if (channel == nil) {
-				LogToConsoleInfo("A timer was skipped over because the channel can't be found")
-
-				continue;
-			}
-
 			[self sendCommand:command.rawInput completeTarget:YES target:channel.name];
 		}
 
