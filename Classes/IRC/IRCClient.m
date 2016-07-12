@@ -2248,6 +2248,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		stringIn = [string mutableCopy];
 	}
 
+	if ([stringIn.string hasPrefix:@"/"]) {
+		[stringIn deleteCharactersInRange:NSMakeRange(0, 1)];
+	}
+
 	NSString *command = stringIn.tokenAsString;
 
 	NSString *lowercaseCommand = command.lowercaseString;
