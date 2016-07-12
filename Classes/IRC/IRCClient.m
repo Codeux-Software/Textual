@@ -3000,6 +3000,36 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandMIndex:
+		case IRCPublicCommandModeIndex:
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if (stringInStringLength == 0 ||
+				([stringInString hasPrefix:@"+"] ||
+				 [stringInString hasPrefix:@"-"]))
+			{
+				if (targetChannel) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
+			} else {
+				targetChannelName = stringIn.tokenAsString;
+			}
+
+			NSString *modeString = stringIn.string;
+
+			if (modeString.length == 0) {
+				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
+
+				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, nil];
+			} else {
+				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, modeString, nil];
+			}
+
+			break;
+		}
 		case IRCPublicCommandMuteIndex: // Command: MUTE
 		{
 			if ([TPCPreferences soundIsMuted]) {
@@ -3215,6 +3245,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, nil];
 			} else {
 				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, topic, nil];
+			}
+
+			break;
+		}
+		case IRCPublicCommandUmodeIndex:
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if (stringInStringLength == 0) {
+				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, nil];
+			} else {
+				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, stringInString, nil];
 			}
 
 			break;
