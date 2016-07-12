@@ -3082,7 +3082,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				targetChannelName = stringIn.tokenAsString;
 			}
 
-			NSString *topic = [stringIn attributedStringToASCIIFormatting];
+			NSString *topic = stringIn.attributedStringToASCIIFormatting;
 
 			if (topic.length == 0) {
 				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, nil];
@@ -3325,7 +3325,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				/* Break text up into substrings which can then be sent. */
 				NSMutableAttributedString *lineMutable = [stringIn mutableCopy];
 
-				while ([lineMutable length] > 0)
+				while (lineMutable.length > 0)
 				{
 					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&lineMutable inChannel:destination onClient:self withLineType:lineType];
 
