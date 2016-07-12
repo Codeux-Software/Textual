@@ -2800,6 +2800,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandGlineIndex: // Command: GLINE
+		case IRCPublicCommandGzlineIndex: // Command: GZLINE
+		case IRCPublicCommandShunIndex:  // Command: SHUN
+		case IRCPublicCommandTempshunIndex: // Command: TEMPSHUN
+		case IRCPublicCommandZlineIndex: // Command: ZLINE
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			NSString *segment1 = stringIn.getTokenAsString;
+			NSString *segment2 = stringIn.getTokenAsString;
+
+			[self send:uppercaseCommand, segment1, segment2, stringIn.string, nil];
+
+			break;
+		}
 		case IRCPublicCommandGotoIndex: // Command: GOTO
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
