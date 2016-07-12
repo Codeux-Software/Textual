@@ -39,6 +39,7 @@
 #import "TextualApplication.h"
 
 #import "IRCClientConfig.h"
+#import "IRCCommandIndex.h"
 #import "IRCConnection.h"
 #import "IRCTreeItem.h"
 
@@ -243,8 +244,8 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)sendCommand:(id)string;
 - (void)sendCommand:(id)string completeTarget:(BOOL)completeTarget target:(nullable NSString *)targetChannelName;
 
-- (void)sendText:(NSAttributedString *)string asCommand:(NSString *)command toChannel:(IRCChannel *)channel;
-- (void)sendText:(NSAttributedString *)string asCommand:(NSString *)command toChannel:(IRCChannel *)channel withEncryption:(BOOL)encryptText;
+- (void)sendText:(NSAttributedString *)string asCommand:(IRCPrivateCommand)command toChannel:(IRCChannel *)channel;
+- (void)sendText:(NSAttributedString *)string asCommand:(IRCPrivateCommand)command toChannel:(IRCChannel *)channel withEncryption:(BOOL)encryptText;
 
 - (void)sendLine:(NSString *)string;
 - (void)send:(NSString *)string, ...;

@@ -81,7 +81,7 @@
 "IRC[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
 
 /* /mode/ command */
-"IRC[1021]" = "The half-op (+h) mode is not supported on this server";
+"IRC[1021]" = "The mode \002+%@\002 is not supported on this server";
 
 /* /lagcheck/ command */
 "IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
