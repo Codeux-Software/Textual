@@ -37,8 +37,10 @@
 
 #import "TPI_Caffeine.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPI_Caffeine ()
-@property (nonatomic, strong) NSMutableArray *observedClients;
+@property (nonatomic, strong) NSMutableArray<IRCClient *> *observedClients;
 @property (nonatomic, strong) NSProgress *progressObject;
 @property (nonatomic, strong) IBOutlet NSView *preferencesPaneView;
 @end
@@ -62,11 +64,13 @@
 
 - (void)enableSleepMode
 {
-	if (self.progressObject) {
-		[RZProcessInfo() endActivity:self.progressObject];
-
-		self.progressObject = nil;
+	if (self.progressObject == nil) {
+		return;
 	}
+
+	[RZProcessInfo() endActivity:self.progressObject];
+
+	self.progressObject = nil;
 
 	LogToConsole("Enabled sleep mode")
 }
@@ -77,11 +81,13 @@
 
 	@synchronized(self.observedClients) {
 		for (IRCClient *client in self.observedClients) {
-			if ([client isLoggedIn]) {
-				oneClientLoggedIn = YES;
-
-				break;
+			if (client.isLoggedIn == NO) {
+				continue;
 			}
+
+			oneClientLoggedIn = YES;
+
+			break;
 		}
 	}
 
@@ -107,7 +113,7 @@
 	@synchronized(self.observedClients) {
 		BOOL observeClients = [self disableSleepModeWhenConnected];
 
-		NSArray *clientList = [worldController() clientList];
+		NSArray *clientList = worldController().clientList;
 
 		for (IRCClient *client in self.observedClients) {
 			/* Only stop observing client if they are still in -clientList */
@@ -149,7 +155,7 @@
 	}
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context
 {
 	[self toggleSleepMode];
 }
@@ -178,7 +184,7 @@
 	[RZNotificationCenter() addObserverForName:IRCWorldClientListWasModifiedNotification
 										object:nil
 										 queue:nil
-									usingBlock:^(NSNotification * _Nonnull note) {
+									usingBlock:^(NSNotification *note) {
 										[self rebuildObservedClients];
 									}];
 
@@ -206,3 +212,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -37,19 +37,21 @@
 
 #import "TPIBragSpam.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation TPIBragSpam
 
-- (void)appendPluralOrSingular:(NSString **)resultString valueToken:(NSInteger)valueToken value:(NSInteger)valueActual
+- (void)appendPluralOrSingular:(NSMutableString *)resultString valueToken:(NSUInteger)valueToken value:(NSInteger)value
 {
 	NSString *valueKey = nil;
 
-	if (NSDissimilarObjects(valueActual, 1)) {
+	if (value != 1) {
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][1]", valueToken];
 	} else {
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][0]", valueToken];
 	}
 
-	*resultString = [*resultString stringByAppendingString:TPILocalizedString(valueKey, valueActual)];
+	[resultString appendString:TPILocalizedString(valueKey, value)];
 }
 
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
@@ -57,41 +59,43 @@
 						  messageString:(NSString *)messageString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
-		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
+		IRCChannel *selectedChannel = mainWindow().selectedChannel;
 
-		NSAssertReturn([selectedChannel isChannel]);
+		if (selectedChannel == nil) {
+			return;
+		}
 		
-		NSInteger operCount      = 0;
-		NSInteger chanOpCount    = 0;
-		NSInteger chanHopCount   = 0;
-		NSInteger chanVopCount   = 0;
-		NSInteger channelCount   = 0;
-		NSInteger networkCount   = 0;
-		NSInteger powerOverCount = 0;
+		NSUInteger operCount = 0;
+		NSUInteger channelOpCount = 0;
+		NSUInteger channelHalfopCount = 0;
+		NSUInteger channelVoiceCount = 0;
+		NSUInteger channelCount = 0;
+		NSUInteger networkCount = 0;
+		NSUInteger powerOverCount = 0;
 		
-		for (IRCClient *c in [worldController() clientList]) {
-			if ([c isConnected] == NO) {
+		for (IRCClient *client in worldController().clientList) {
+			if (client.isConnected == NO) {
 				continue;
 			}
 			
 			networkCount++;
 			
-			if ([c hasIRCopAccess] == YES) {
+			if (client.userIsIRCop == YES) {
 				operCount++;
 			}
 			
-			NSMutableArray *trackedUsers = [NSMutableArray new];
+			NSMutableArray<NSString *> *trackedUsers = [NSMutableArray new];
 			
-			for (IRCChannel *ch in [c channelList]) {
-				if ([ch isActive] == NO || [ch isChannel] == NO) {
+			for (IRCChannel *channel in client.channelList) {
+				if (channel.isActive == NO || channel.isChannel == NO) {
 					continue;
 				}
 
 				channelCount += 1;
 				
-				IRCUser *myself = [ch findMember:[c localNickname]];
+				IRCUser *myself = [channel findMember:client.userNickname];
 
-				IRCUserRank myRanks = [myself ranks];
+				IRCUserRank myRanks = myself.ranks;
 
 				BOOL IHaveModeQ = ((myRanks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
 				BOOL IHaveModeA = ((myRanks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
@@ -99,37 +103,35 @@
 				BOOL IHaveModeH = ((myRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 				BOOL IHaveModeV = ((myRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
 
-				if ([c hasIRCopAccess] == NO) {
-					if ([myself isCop]) {
-						[c setHasIRCopAccess:YES];
-						
+				if (client.userIsIRCop == NO) {
+					if (myself.isCop) {
 						operCount++;
 					}
 				}
 
 				if (IHaveModeQ || IHaveModeA || IHaveModeO) {
-					chanOpCount++;
+					channelOpCount++;
 				} else if (IHaveModeH) {
-					chanHopCount++;
+					channelHalfopCount++;
 				} else if (IHaveModeV) {
-					chanVopCount++;
+					channelVoiceCount++;
 				}
 				
-				for (IRCUser *m in [ch memberList]) {
-					if ([m isEqual:myself]) {
+				for (IRCUser *member in channel.memberList) {
+					if ([member isEqual:myself]) {
 						continue;
 					}
 				
 					BOOL addUser = NO;
 
-					IRCUserRank userRanks = [m ranks];
+					IRCUserRank userRanks = member.ranks;
 
 					BOOL UserHasModeQ = ((userRanks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
 					BOOL UserHasModeA = ((userRanks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
 					BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
 					BOOL UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 
-					if ([c hasIRCopAccess] && [m isCop] == NO) {
+					if (client.userIsIRCop && member.isCop == NO) {
 						addUser = YES;
 					} else if (IHaveModeQ && UserHasModeQ == NO) {
 						addUser = YES;
@@ -142,10 +144,10 @@
 					}
 					
 					if (addUser == YES) {
-						if ([trackedUsers containsObject:[m nickname]] == NO) {
+						if ([trackedUsers containsObject:member.nickname] == NO) {
+							[trackedUsers addObject:member.nickname];
+
 							powerOverCount++;
-							
-							[trackedUsers addObject:[m nickname]];
 						}
 					}
 				}
@@ -153,24 +155,22 @@
 			
 		}
 
-		NSString *resultString = NSStringEmptyPlaceholder;
+		NSMutableString *resultString = [NSMutableString string];
 
-		[self appendPluralOrSingular:&resultString valueToken:1000 value:channelCount];
-		[self appendPluralOrSingular:&resultString valueToken:1001 value:networkCount];
+		[self appendPluralOrSingular:resultString valueToken:1000 value:channelCount];
+		[self appendPluralOrSingular:resultString valueToken:1001 value:networkCount];
 
 		if (powerOverCount == 0) {
-			resultString = [resultString stringByAppendingString:TPILocalizedString(@"BasicLanguage[1007]")];
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1007]")];
 		} else {
-			[self appendPluralOrSingular:&resultString valueToken:1002 value:operCount];
-			[self appendPluralOrSingular:&resultString valueToken:1003 value:chanOpCount];
-			[self appendPluralOrSingular:&resultString valueToken:1004 value:chanHopCount];
-			[self appendPluralOrSingular:&resultString valueToken:1005 value:chanVopCount];
-			[self appendPluralOrSingular:&resultString valueToken:1006 value:powerOverCount];
+			[self appendPluralOrSingular:resultString valueToken:1002 value:operCount];
+			[self appendPluralOrSingular:resultString valueToken:1003 value:channelOpCount];
+			[self appendPluralOrSingular:resultString valueToken:1004 value:channelHalfopCount];
+			[self appendPluralOrSingular:resultString valueToken:1005 value:channelVoiceCount];
+			[self appendPluralOrSingular:resultString valueToken:1006 value:powerOverCount];
 		}
 
-		[client sendText:[NSAttributedString attributedStringWithString:resultString]
-				 command:IRCPrivateCommandIndex("privmsg")
-				 channel:selectedChannel];
+		[client sendPrivmsg:[resultString copy] toChannel:selectedChannel];
 	}
 }
 
@@ -180,3 +180,5 @@
 }	
 
 @end
+
+NS_ASSUME_NONNULL_END
