@@ -2284,6 +2284,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	switch (commandNumeric) {
+		case 5002: // Command: AME
+		case 5003: // Command: AMSG
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSString *command = nil;
+
+			if (commandNumeric == 5003) {
+				command = IRCPrivateCommandIndex("privmsg");
+			} else {
+				command = IRCPrivateCommandIndex("action");
+			}
+
+			for (IRCClient *client in worldController().clientList) {
+				if (client != self && [TPCPreferences amsgAllConnections] == NO) {
+					continue;
+				}
+
+				for (IRCChannel *channel in client.channelList) {
+					if (channel.isActive == NO || channel.isChannel == NO) {
+						continue;
+					}
+
+					[client sendText:stringIn asCommand:command toChannel:channel];
+
+					[client setUnreadStateForChannel:channel];
+				}
+			}
+
+			break;
+		}
 		case 5095: // Command: AQUOTE
 		case 5096: // Command: ARAW
 		{
@@ -2328,6 +2359,46 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				[client toggleAwayStatus:NO withComment:nil];
 			}
+		}
+		case 5006: // Command: CAP
+		case 5007: // Command: CAPS
+		{
+			NSString *capacities = self.enabledCapacitiesStringValue;
+
+			if (capacities.length == 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1036]")];
+			} else {
+				[self printDebugInformation:TXTLS(@"IRC[1037]", capacities)];
+			}
+
+			break;
+		}
+		case 5008: // Command: CCBADGE
+		{
+			NSString *channelName = stringIn.tokenAsString;
+			NSString *badgeCount = stringIn.tokenAsString;
+
+			if (channelName.length == 0 || badgeCount.length == 0) {
+				break;
+			}
+
+			IRCChannel *channel = [self findChannel:channelName];
+
+			if (channel == nil) {
+				break;
+			}
+
+			channel.treeUnreadCount = badgeCount.integerValue;
+
+			NSString *isHighlightFlag = stringIn.tokenAsString;
+
+			if ([isHighlightFlag isEqualToString:@"-h"]) {
+				channel.nicknameHighlightCount = 1;
+			}
+
+			[mainWindow() reloadTreeItem:channel];
+			
+			break;
 		}
 		case 5010: // Command: CLEAR
 		{
@@ -2376,17 +2447,49 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case 5013: // Command: CONN
+		{
+			if (stringInStringLength > 0) {
+				NSString *serverAddress = stringIn.lowercaseGetToken;
+
+				if (serverAddress.isValidInternetAddress == NO) {
+					LogToConsoleInfo("Silently ignoring bad server address")
+
+					return;
+				}
+
+				self.temporaryServerAddressOverride = serverAddress;
+			}
+
+			if (self.isConnected) {
+				__weak IRCClient *weakSelf = self;
+
+				self.disconnectCallback = ^{
+					[weakSelf connect];
+				};
+
+				[self quit];
+
+				break;
+			}
+
+			[self connect];
+			
+			break;
+		}
 		case 5014: // Command: CTCP
 		case 5015: // Command: CTCPREPLY
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if (targetChannel && targetChannel.isPrivateMessage && [self stringIsNickname:stringInString] == NO) {
-				targetChannelName = targetChannel.name;
+			if ([self stringIsChannelName:stringInString] == NO) {
+				if (targetChannel && targetChannel.isPrivateMessage) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
 			} else {
-				targetChannelName = stringIn.getTokenAsString;
+				targetChannelName = stringIn.tokenAsString;
 			}
 
 			NSString *subCommand = stringIn.uppercaseGetToken;
@@ -2421,6 +2524,36 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self forceJoinChannel:targetChannel.name password:targetChannel.secretKey];
 
+			break;
+		}
+		case 5018: // Command: DEBUG
+		case 5022: // Command: ECHO
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			if ([stringInString isEqualIgnoringCase:@"raw on"])
+			{
+				self.rawModeEnabled = YES;
+
+				(void)[RZWorkspace() launchApplication:@"Console"];
+
+				[self printDebugInformation:TXTLS(@"IRC[1092]")];
+
+				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1094]"))
+			}
+			else if ([stringInString isEqualIgnoringCase:@"raw off"])
+			{
+				self.rawModeEnabled = NO;
+
+				[self printDebugInformation:TXTLS(@"IRC[1091]")];
+
+				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1093]"))
+			}
+			else
+			{
+				[self printDebugInformation:stringInString];
+			}
+			
 			break;
 		}
 		case 5087: // Command: FAKERAWDATA
@@ -2463,6 +2596,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case 5028: // Command: ICBADGE
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSArray *components = [stringInString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			if (components.count != 2) {
+				return;
+			}
+
+			[TVCDockIcon drawWithHighlightCount:[components unsignedLongAtIndex:0]
+								   messageCount:[components unsignedLongAtIndex:1]];
+
+			break;
+		}
 		case 5100: // Command: ISON
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
@@ -2472,6 +2620,106 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedIsonRequest];
 
 			[self send:IRCPrivateCommandIndex("ison"), stringInString, nil];
+
+			break;
+		}
+		case 5031: // Command: J
+		case 5032:  // Command: JOIN
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if (stringInStringLength == 0) {
+				if (targetChannel && targetChannel.isChannel) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
+			} else {
+				targetChannelName = stringIn.tokenAsString;
+
+				if ([self stringIsChannelNameOrZero:targetChannelName] == NO) {
+					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
+				}
+			}
+
+			[self enableInUserInvokedCommandProperty:&_inUserInvokedJoinRequest];
+
+			[self send:IRCPrivateCommandIndex("join"), targetChannelName, stringIn.string, nil];
+
+			break;
+		}
+		case 5033: // Command: KICK
+		case 5034: // Command: KICKBAN
+		case 5083: // Command: KB
+		case 5005: // Command: BAN
+		case 5072: // Command: UNBAN
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if ([self stringIsChannelName:stringInString] == NO) {
+				if (targetChannel && targetChannel.isChannel) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
+			} else {
+				targetChannelName = stringIn.tokenAsString;
+
+				targetChannel = [self findChannel:targetChannelName];
+			}
+
+			NSString *nickname = stringIn.tokenAsString;
+
+			if (nickname.length == 0) {
+				break;
+			}
+
+			if (commandNumeric == 5034 || // Command: KICKBAN
+				commandNumeric == 5083 || // Command: KB
+				commandNumeric == 5005 || // Command: BAN
+				commandNumeric == 5072)   // Command: UNBAN
+			{
+				IRCUser *member = [targetChannel findMember:nickname];
+
+				NSString *banMask = member.banMask;
+
+				if (banMask == nil) {
+					banMask = nickname;
+				}
+
+				if (commandNumeric == 5072) { // UNBAN
+					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, @"-b", banMask, nil];
+				} else {
+					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, @"+b", banMask, nil];
+				}
+			}
+
+			if (commandNumeric == 5034 || commandNumeric == 5083) {
+				NSString *reason = stringIn.tokenAsString;
+
+				if (reason.length == 0) {
+					reason = [TPCPreferences defaultKickMessage];
+				}
+
+				[self send:IRCPrivateCommandIndex("kick"), targetChannelName, nickname, reason, nil];
+			}
+			
+			break;
+		}
+		case 5035: // Command: KILL
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			NSString *nickname = stringIn.getTokenAsString;
+			NSString *reason = stringIn.getTokenAsString;
+
+			if (reason.length == 0) {
+				reason = [TPCPreferences IRCopDefaultKillMessage];
+			}
+
+			[self send:IRCPrivateCommandIndex("kill"), nickname, reason, nil];
 
 			break;
 		}
@@ -2492,6 +2740,35 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case 5036: // Command: LEAVE
+		case 5054: // Command: PART
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if ([self stringIsChannelName:stringInString] == NO) {
+				if (targetChannel && targetChannel.isChannel) {
+					targetChannelName = targetChannel.name;
+				} else if (targetChannel && targetChannel.isPrivateMessage) {
+					[worldController() destroyChannel:targetChannel];
+
+					break;
+				} else {
+					break;
+				}
+			} else {
+				targetChannelName = stringIn.tokenAsString;
+			}
+
+			NSString *reason = stringIn.tokenAsString;
+
+			if (reason.length == 0) {
+				reason = self.config.normalLeavingComment;
+			}
+
+			[self send:IRCPrivateCommandIndex("part"), targetChannelName, reason, nil];
+			
+			break;
+		}
 		case 5037: // Command: LIST
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
@@ -2504,6 +2781,45 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self requestChannelList];
 
+			break;
+		}
+		case 5044: // Command: MUTE
+		{
+			if ([TPCPreferences soundIsMuted]) {
+				[self printDebugInformation:TXTLS(@"IRC[1097]")];
+			} else {
+				[self printDebugInformation:TXTLS(@"IRC[1100]")];
+
+				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
+			}
+
+			break;
+		}
+		case 5046: // Command: MYVERSION
+		{
+			NSString *applicationName = [TPCApplicationInfo applicationName];
+			NSString *versionLong = [TPCApplicationInfo applicationVersion];
+			NSString *versionShort = [TPCApplicationInfo applicationVersionShort];
+			NSString *buildScheme = [TPCApplicationInfo applicationBuildScheme];
+
+			NSString *downloadSource = nil;
+
+			if ([buildScheme isEqualToString:@"appstore"]) {
+				downloadSource = TXTLS(@"IRC[1028]");
+			} else {
+				downloadSource = TXTLS(@"IRC[1029]");
+			}
+
+			NSString *message = TXTLS(@"IRC[1027]", applicationName, versionShort, versionLong, downloadSource);
+
+			if (targetChannel) {
+				message = TXTLS(@"IRC[1030]", message);
+
+				[self sendPrivmsg:message toChannel:targetChannel];
+			} else {
+				[self printDebugInformationToConsole:message];
+			}
+			
 			break;
 		}
 		case 5048: // Command: NICK
@@ -2603,9 +2919,98 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case 5062: // Command: SERVER
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			[IRCExtras createConnectionToServer:stringInString channelList:nil connectWhenCreated:YES];
+
+			break;
+		}
 		case 5066: // Command: SSLCONTEXT
 		{
 			[self presentCertificateTrustInformation];
+
+			break;
+		}
+		case 5093: // Command: TAGE
+		{
+			NSTimeInterval timePassed = [NSDate timeIntervalSinceNow:TXBirthdayReferenceDate];
+
+			NSString *message = TXTLS(@"IRC[1101]", TXHumanReadableTimeInterval(timePassed, NO, 0));
+
+			if (targetChannel) {
+				[self sendPrivmsg:message toChannel:targetChannel];
+			} else {
+				[self printDebugInformationToConsole:message];
+			}
+
+			break;
+		}
+		case 5069: // Command: TIMER
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSInteger timerInterval = stringIn.tokenAsString.integerValue;
+
+			if (timerInterval <= 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1090]")];
+
+				break;
+			}
+
+			NSString *timerCommand = stringIn.string;
+
+			if (timerCommand.length == 0) {
+				break;
+			}
+
+			IRCTimerCommandContext *timer = [IRCTimerCommandContext new];
+
+			timer.channelId = targetChannel.uniqueIdentifier;
+
+			timer.rawInput = timerCommand;
+
+			timer.timerInterval = ([NSDate timeIntervalSince1970] + timerInterval);
+
+			[self addCommandToCommandQueue:timer];
+			
+			break;
+		}
+		case 5070: // Command: TOPIC
+		case 5067: // Command: T
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if ([self stringIsChannelName:stringInString] == NO) {
+				if (targetChannel && targetChannel.isChannel) {
+					targetChannelName = targetChannel.name;
+				} else {
+					break;
+				}
+			} else {
+				targetChannelName = stringIn.tokenAsString;
+			}
+
+			NSString *topic = [stringIn attributedStringToASCIIFormatting];
+
+			if (topic.length == 0) {
+				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, nil];
+			} else {
+				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, topic, nil];
+			}
+
+			break;
+		}
+		case 5075: // Command: UNMUTE
+		{
+			if ([TPCPreferences soundIsMuted] == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[1099]")];
+			} else {
+				[self printDebugInformation:TXTLS(@"IRC[1098]")];
+
+				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOffState];
+			}
 
 			break;
 		}
