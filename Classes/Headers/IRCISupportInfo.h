@@ -64,6 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)rankForUserPrefixWithMode:(NSString *)modeSymbol; // Starts at 100; 100 = highest rank
 
+- (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel;
+
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol;
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater;
 @end
