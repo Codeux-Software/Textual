@@ -7232,11 +7232,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					nicknameInt = newNickname;
 				}
 
-				/* We already inserted ourselves when we joined. */
-				if ([self nicknameIsMyself:nicknameInt]) {
-					continue;
-				}
-
 				IRCUserMutable *memberMutable = [[IRCUserMutable alloc] initWithClient:self];
 
 				memberMutable.modes = memberModes;
@@ -7244,6 +7239,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				memberMutable.nickname = nicknameInt;
 				memberMutable.username = usernameInt;
 				memberMutable.address = addressInt;
+
+				/* We already inserted ourselves when we joined. */
+				if ([self nicknameIsMyself:nicknameInt]) {
+					[channel removeMemberWithNickname:nicknameInt];
+				}
 				
 				/* Populate user list */
 				[channel addMember:memberMutable];
