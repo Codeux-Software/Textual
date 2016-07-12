@@ -65,8 +65,6 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 @property (getter=isIPv6Address, readonly) BOOL IPv6Address;
 @property (getter=isIPAddress, readonly) BOOL IPAddress;
 
-@property (getter=isModeChannelName, readonly) BOOL modeChannelName;
-
 - (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname
 				  username:(NSString * _Nullable * _Nullable)username
 				   address:(NSString * _Nullable * _Nullable)address;
