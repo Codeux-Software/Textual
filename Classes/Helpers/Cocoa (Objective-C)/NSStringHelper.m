@@ -224,21 +224,6 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 			c == '?');
 }
 
-- (BOOL)isModeChannelName
-{
-	if (self.length == 0) {
-		return NO;
-	}
-
-	UniChar c = [self characterAtIndex:0];
-
-	return (c == '#' ||
-		    c == '&' ||
-		    c == '!' ||
-		    c == '~' ||
-		    c == '?');
-}
-
 - (nullable NSString *)channelNameWithoutBang
 {
 	if (self.isChannelName == NO) {
