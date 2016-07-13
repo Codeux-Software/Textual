@@ -10041,7 +10041,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			goto present_error;
 		}
 
-		if ((isResumeRequest && e.transferStatus != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus) ||
+		if ((isResumeRequest && (e.transferStatus != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus &&
+								 e.transferStatus != TDCFileTransferDialogTransferIsListeningAsSenderStatus)) ||
 			(isAcceptRequest && e.transferStatus != TDCFileTransferDialogTransferWaitingForResumeAcceptStatus))
 		{
 			LogToConsoleError("Fatal error: Bad transfer status")
