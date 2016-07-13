@@ -9968,7 +9968,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	long long filesizeInt = filesize.longLongValue;
 
-	if (filesizeInt <= 0 || filesizeInt > (1000^4)) { // 1 TB
+	if (filesizeInt <= 0 || filesizeInt > powl(1000, 4)) { // 1 TB
 		LogToConsoleError("Fatal error: Filesize is silly")
 
 		goto present_error;
