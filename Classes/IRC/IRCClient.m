@@ -2139,7 +2139,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	TVCLogLineType lineType = TVCLogLineUndefinedType;
 
 	if (command == IRCPrivateCommandPrivmsgIndex) {
-		commandToSend = IRCPrivateCommandIndex("notice");
+		commandToSend = IRCPrivateCommandIndex("privmsg");
 
 		lineType = TVCLogLinePrivateMessageType;
 	} else if (command == IRCPrivateCommandPrivmsgActionIndex) {
