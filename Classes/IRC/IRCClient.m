@@ -5996,7 +5996,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Inform file transfer controller of name change */
-	[[self fileTransferController] nicknameChanged:oldNickname toNickname:newNickname client:self];
+	[[self fileTransferController] noteNicknameChanged:oldNickname toNickname:newNickname onClient:self];
 }
 
 - (void)receiveMode:(IRCMessage *)m
@@ -10007,11 +10007,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					goto present_error;
 				}
 
-				e.hostAddress = hostAddress;
-
-				e.transferPort = hostPortInt;
-
-				[e didReceiveSendRequestFromClient];
+				[e didReceiveSendRequest:hostAddress hostPort:hostPortInt];
 
 				return;
 			}
@@ -10054,9 +10050,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		if (isResumeRequest) {
-			[e didReceiveResumeRequestFromClient:filesizeInt];
+			[e didReceiveResumeRequest:filesizeInt];
 		} else {
-			[e didReceiveResumeAcceptFromClient:filesizeInt];
+			[e didReceiveResumeAccept:filesizeInt];
 		}
 
 		return;
@@ -10169,7 +10165,7 @@ present_error:
 
 - (nullable NSString *)DCCTransferAddress
 {
-	NSString *address = [self fileTransferController].cachedIPAddress;
+	NSString *address = [self fileTransferController].IPAddress;
 
 	if (address == nil) {
 		return nil;

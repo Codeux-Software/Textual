@@ -415,23 +415,25 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 		NSString *uniqueIdentifier = context[@"fileTransferUniqeIdentifier"];
 
-		TDCFileTransferDialogTransferController *transfer = [menuController().fileTransferController fileTransferFromUniqueIdentifier:uniqueIdentifier];
+		TDCFileTransferDialogTransferController *fileTransfer = [menuController().fileTransferController fileTransferWithUniqueIdentifier:uniqueIdentifier];
 
-		if (transfer == nil) {
+		if (fileTransfer == nil) {
 			return;
 		}
 
-		TDCFileTransferDialogTransferStatus transferStatus = transfer.transferStatus;
+		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
 		if (transferStatus != TDCFileTransferDialogTransferStoppedStatus) {
 			return;
 		}
 
-		if (transfer.path == nil) {
-			transfer.path = [TPCPathInfo userDownloadsFolderPath];
+		NSString *savePath = fileTransfer.path;
+
+		if (savePath == nil) {
+			savePath = [TPCPathInfo userDownloadsFolderPath];
 		}
 
-		[transfer open];
+		[fileTransfer openWithPath:savePath];
 
 		[menuController().fileTransferController show:YES restorePosition:NO];
 	}

@@ -79,10 +79,6 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class TDCFileTransferDialog;
-	@class TDCFileTransferDialogRemoteAddressLookup;
-	@class TDCFileTransferDialogTableCell;
-	@class TDCFileTransferDialogTransferController;
 	@class TDCSheetBase;
 	@class THOUnicodeHelper;
 	@class TLOGrowlController;
@@ -229,10 +225,6 @@
 
 	/* Dialogs */
 	#import "TDCSheetBase.h"
-	#import "TDCFileTransferDialog.h"
-	#import "TDCFileTransferDialogRemoteAddressLookup.h"
-	#import "TDCFileTransferDialogTableCell.h"
-	#import "TDCFileTransferDialogTransferController.h"
 
 	/* Helpers */
 	#import "THOPluginProtocol.h"
