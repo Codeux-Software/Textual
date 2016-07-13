@@ -138,7 +138,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSString *address = self.address;
 
-	if (address == nil) {
+	if (address) {
 		[self informDelegateLookupReturnedAddress:address];
 	} else {
 		[self informDelegateLookupFailed];
