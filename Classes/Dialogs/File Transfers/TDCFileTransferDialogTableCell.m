@@ -372,6 +372,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSArray *speedRecords = self.speedRecords;
 
+	if (speedRecords.count == 0) {
+		return 0;
+	}
+
 	TXUnsignedLongLong totalTransferred = 0;
 
 	for (NSNumber *record in speedRecords) {
