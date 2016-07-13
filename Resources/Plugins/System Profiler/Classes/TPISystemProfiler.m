@@ -121,7 +121,7 @@
 	NSArray *messages = [message split:NSStringNewlinePlaceholder];
 
 	for (NSString *messageSplit in messages) {
-		[client printDebugInformation:messageSplit channel:channel];
+		[client printDebugInformation:messageSplit inChannel:channel];
 	}
 }
 
@@ -130,9 +130,7 @@
 	NSArray *messages = [message split:NSStringNewlinePlaceholder];
 
 	for (NSString *messageSplit in messages) {
-		[client sendText:[NSAttributedString attributedStringWithString:messageSplit]
-				 command:IRCPrivateCommandIndex("privmsg")
-				 channel:channel];
+		[client sendPrivmsg:messageSplit toChannel:channel];
 	}
 }
 
