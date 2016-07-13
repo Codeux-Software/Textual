@@ -177,7 +177,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @return The original and/or modified copy of input or `nil` to prevent the data from
  *  being processed altogether.
  */
-- (nullable id)interceptUserInput:(id)input command:(NSString *)command;
+- (nullable id)interceptUserInput:(id)input command:(IRCPrivateCommand)command;
 
 #pragma mark -
 #pragma mark Preferences Pane
@@ -552,7 +552,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief The payload contents
  */
-@property (readonly, copy, nullable) id payloadContents;
+@property (readonly, copy, nullable) id <NSCopying> payloadContents;
 @end
 
 #pragma mark -

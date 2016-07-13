@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1115 */
+/* Next unusued key: 1119 */
 
 /* Script errors */
 "IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
@@ -81,7 +81,7 @@
 "IRC[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
 
 /* /mode/ command */
-"IRC[1021]" = "The half-op (+h) mode is not supported on this server";
+"IRC[1021]" = "The mode \002+%@\002 is not supported on this server";
 
 /* /lagcheck/ command */
 "IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
@@ -151,7 +151,7 @@
 "IRC[1069]" = "\002%1$@\002 (%2$@@%3$@) left IRC";
 "IRC[1070]" = "\002%1$@\002 left the query by disconnecting from IRC";
 "IRC[1071]" = "\002%1$@\002 joined the query by connecting to IRC";
-"IRC[1072]" = "%@, your user modes are %@";
+"IRC[1072]" = "%@, your user modes are \002%@\002";
 "IRC[1073]" = "Inviting %1$@ to join %2$@";
 "IRC[1074]" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRC[1075]" = "%1$@ is away (%2$@)";
@@ -213,3 +213,9 @@
 /* Cipher suite information */
 "IRC[1112][1]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "IRC[1112][2]" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
+
+/* /ignore/ command */
+"IRC[1115]" = "Added ignore that matches \002%1$@\002 with pattern: %2$@";
+"IRC[1116]" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
+"IRC[1117]" = "No ignores could be found that matches \002%@\002";
+"IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";

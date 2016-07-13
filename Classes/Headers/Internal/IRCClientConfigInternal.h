@@ -37,19 +37,69 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface THOPluginDispatcher : NSObject
-+ (dispatch_queue_t)dispatchQueue;
+@interface IRCClientConfig ()
+{
+@protected
+	BOOL _autoConnect;
+	BOOL _autoReconnect;
+	BOOL _autoSleepModeDisconnect;
+	BOOL _autojoinWaitsForNickServ;
+	BOOL _connectionPrefersIPv4;
+	BOOL _connectionPrefersModernCiphers;
 
-+ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
-+ (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted;
-+ (nullable IRCMessage *)interceptServerInput:(IRCMessage *)inputObject for:(IRCClient *)client;
-+ (nullable id)interceptUserInput:(id)inputObject command:(IRCPrivateCommand)commandString;
-+ (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType;
-+ (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
-+ (void)userInputCommandInvokedOnClient:(IRCClient *)client commandString:(NSString *)commandString messageString:(NSString *)messageString;
-+ (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)viewController;
-+ (void)didReceiveServerInput:(IRCMessage *)inputObject onClient:(IRCClient *)client;
-+ (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)viewController;
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	BOOL _excludedFromCloudSyncing;
+#endif
+
+	BOOL _hideNetworkUnavailabilityNotices;
+	BOOL _performDisconnectOnPongTimer;
+	BOOL _performDisconnectOnReachabilityChange;
+	BOOL _performPongTimer;
+	BOOL _prefersSecuredConnection;
+	BOOL _saslAuthenticationUsesExternalMechanism;
+	BOOL _sendAuthenticationRequestsToUserServ;
+	BOOL _sendWhoCommandRequestsToChannels;
+	BOOL _setInvisibleModeOnConnect;
+	BOOL _sidebarItemExpanded;
+	BOOL _validateServerCertificateChain;
+	BOOL _zncIgnoreConfiguredAutojoin;
+	BOOL _zncIgnorePlaybackNotifications;
+	BOOL _zncIgnoreUserNotifications;
+	IRCConnectionSocketProxyType _proxyType;
+	NSArray<IRCAddressBookEntry *> *_ignoreList;
+	NSArray<IRCChannelConfig *> *_channelList;
+	NSArray<IRCHighlightMatchCondition *> *_highlightList;
+	NSArray<NSString *> *_alternateNicknames;
+	NSArray<NSString *> *_loginCommands;
+	NSData *_identityClientSideCertificate;
+	NSString *_awayNickname;
+	NSString *_connectionName;
+	NSString *_nickname;
+	NSString *_nicknamePassword;
+	NSString *_normalLeavingComment;
+	NSString *_proxyAddress;
+	NSString *_proxyPassword;
+	NSString *_proxyUsername;
+	NSString *_realName;
+	NSString *_serverAddress;
+	NSString *_serverPassword;
+	NSString *_sleepModeLeavingComment;
+	NSString *_username;
+	NSStringEncoding _fallbackEncoding;
+	NSStringEncoding _primaryEncoding;
+	NSTimeInterval _lastMessageServerTime;
+	NSUInteger _floodControlDelayTimerInterval;
+	NSUInteger _floodControlMaximumMessages;
+	uint16_t _proxyPort;
+	uint16_t _serverPort;
+
+@private
+	BOOL _objectInitialized;
+	NSString *_uniqueIdentifier;
+	NSDictionary *_defaults;
+}
+
+- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

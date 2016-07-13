@@ -44,6 +44,19 @@ NS_ASSUME_NONNULL_BEGIN
 #define IRCConnectionConfigFloodControlMinimumMessageCount					1
 #define IRCConnectionConfigFloodControlMaximumMessageCount					60
 
+TEXTUAL_EXTERN uint16_t const IRCConnectionDefaultServerPort;
+TEXTUAL_EXTERN uint16_t const IRCConnectionDefaultProxyPort;
+
+typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
+	IRCConnectionSocketNoProxyType = 0,
+	IRCConnectionSocketSystemSocksProxyType = 1,
+	IRCConnectionSocketSocks4ProxyType = 4,
+	IRCConnectionSocketSocks5ProxyType = 5,
+	IRCConnectionSocketHTTPProxyType = 6,
+	IRCConnectionSocketHTTPSProxyType = 7,
+	IRCConnectionSocketTorBrowserType = 8
+};
+
 #pragma mark -
 #pragma mark Immutable Object
 

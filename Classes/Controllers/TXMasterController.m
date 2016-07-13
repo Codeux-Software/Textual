@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL applicationIsActive;
 @property (nonatomic, assign, readwrite) BOOL applicationIsTerminating;
 @property (nonatomic, assign, readwrite) BOOL applicationIsChangingActiveState;
+@property (readonly) BOOL isSafeToPerformApplicationTermination;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
 @end
@@ -369,21 +370,21 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (BOOL)isNotSafeToPerformApplicationTermination
+- (BOOL)isSafeToPerformApplicationTermination
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (sharedCloudManager()) {
 		return (
 			/* Clients are still disconnecting */
-			self.terminatingClientCount > 0 ||
+			self.terminatingClientCount == 0 ||
 
 			/* iCloud is syncing */
-			[sharedCloudManager() isTerminated] == NO
+			[sharedCloudManager() isTerminated]
 		);
 	}
 #endif
 
-	return (self.terminatingClientCount > 0);
+	return (self.terminatingClientCount == 0);
 }
 
 - (void)performApplicationTerminationStepOne
@@ -416,19 +417,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[TVCLogControllerHistoricLogFile prepareForPermanentDestruction];
 
-	if (self.skipTerminateSave == NO) {
-		self.terminatingClientCount = worldController().clientCount;
+	[self performApplicationTerminationStepTwo];
+}
 
-		[self.world prepareForApplicationTermination];
+- (void)performApplicationTerminationStepTwo
+{
+	if (self.applicationIsTerminating == NO) {
+		return;
+	}
 
-		[self.world save];
+	self.terminatingClientCount = worldController().clientCount;
 
-		while ([self isNotSafeToPerformApplicationTermination])
-		{
-			NSDate *nextPass = [NSDate dateWithTimeIntervalSinceNow:0.1];
+	[self.world prepareForApplicationTermination];
 
-			[RZMainRunLoop() runUntilDate:nextPass];
+	if (self.isSafeToPerformApplicationTermination) {
+		[self performApplicationTerminationStepThree];
+
+		return;
+	}
+
+	[self performBlockOnGlobalQueue:^{
+		while (self.isSafeToPerformApplicationTermination == NO) {
+			[NSThread sleepForTimeInterval:0.5];
 		}
+
+		[self performApplicationTerminationStepThree];
+	}];
+}
+
+- (void)performApplicationTerminationStepThree
+{
+	if (self.applicationIsTerminating == NO) {
+		return;
+	}
+
+	if (self.skipTerminateSave == NO) {
+		[self.world save];
 	}
 
 	[sharedPluginManager() unloadPlugins];

@@ -104,11 +104,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	return [RZUserDefaults() objectForKey:@"ChannelOperatorDefaultLocalization -> Kick Reason"];
 }
 
-+ (BOOL)appendReasonToCommonIRCopCommands
-{
-	return [RZUserDefaults() boolForKey:@"AutomaticallyAppendReasonToCommonIRCopCommands"];
-}
-
 + (NSString *)IRCopDefaultKillMessage
 {
 	return [RZUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Kill Reason"];

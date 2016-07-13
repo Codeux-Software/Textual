@@ -82,7 +82,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	return dispatchQueue;
 }
 
-+ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
++ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
 {
 	NSParameterAssert(command != nil);
 	NSParameterAssert(client != nil);
@@ -156,10 +156,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	return returnValue;
 }
 
-+ (nullable id)interceptUserInput:(id)inputObject command:(NSString *)commandString
++ (nullable id)interceptUserInput:(id)inputObject command:(IRCPrivateCommand)commandString
 {
 	NSParameterAssert(inputObject != nil);
-	NSParameterAssert(commandString != nil);
 
 	id returnValue = inputObject;
 
@@ -313,7 +312,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 		THOPluginDidReceiveServerInputConcreteObject *messageObject =
 		inputObject.didReceiveServerInputConcreteObject;
 
-		messageObject.networkAddress = client.networkAddress;
+		messageObject.networkAddress = client.serverAddress;
 		messageObject.networkName = client.networkName;
 
 		NSString *lowercaseCommand = inputObject.command.lowercaseString;

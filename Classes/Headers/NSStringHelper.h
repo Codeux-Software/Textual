@@ -65,8 +65,6 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 @property (getter=isIPv6Address, readonly) BOOL IPv6Address;
 @property (getter=isIPAddress, readonly) BOOL IPAddress;
 
-@property (getter=isModeChannelName, readonly) BOOL modeChannelName;
-
 - (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname
 				  username:(NSString * _Nullable * _Nullable)username
 				   address:(NSString * _Nullable * _Nullable)address;
@@ -96,6 +94,8 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 - (NSUInteger)colorCodesStartingAt:(NSUInteger)rangeStart
 				   foregroundColor:(NSUInteger *)foregroundColor
 				   backgroundColor:(NSUInteger *)backgroundColor;
+
+- (nullable NSString *)padNicknameWithCharacter:(UniChar)padCharacter maximumLength:(NSUInteger)maximumLength;
 @end
 
 NS_ASSUME_NONNULL_END

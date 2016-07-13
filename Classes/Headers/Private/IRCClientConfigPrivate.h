@@ -4,9 +4,8 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,19 +35,18 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCFileTransferDialogTableCell : NSTableCellView
-@property (nonatomic, weak) id associatedController;
+@interface IRCClientConfig ()
+- (NSDictionary<NSString *, id> *)dictionaryValue:(BOOL)isCloudDictionary;
 
-@property (readonly, copy) NSString *completePath;
+- (void)destroyKeychainItems;
 
-@property (readonly) TXUnsignedLongLong currentSpeed;
+- (void)writeItemsToKeychain;
 
-- (void)populateBasicInformation;
-
-- (void)onMaintenanceTimer;
-- (void)prepareForDestruction;
-
-- (void)reloadStatusInformation;
+- (void)writeNicknamePasswordToKeychain;
+- (void)writeProxyPasswordToKeychain;
+- (void)writeServerPasswordToKeychain;
 @end
+
+NS_ASSUME_NONNULL_END

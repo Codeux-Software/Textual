@@ -1184,7 +1184,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ---- //
 
-	NSString *serverName = self.associatedClient.altNetworkName;
+	NSString *serverName = self.associatedClient.networkNameAlt;
 	
 	if (serverName) {
 		templateAttributes[@"configuredServerName"] = serverName;
@@ -1269,7 +1269,7 @@ ClassWithDesignatedInitializerInitMethod
 	
 	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResourcesFolderPath];
 
-    templateTokens[@"configuredServerName"] = self.associatedClient.altNetworkName;
+    templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
 
 	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
 

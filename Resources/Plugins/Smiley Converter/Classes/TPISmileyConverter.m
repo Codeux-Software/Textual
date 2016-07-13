@@ -37,9 +37,11 @@
 
 #import "TPISmileyConverter.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPISmileyConverter ()
-@property (nonatomic, copy) NSDictionary *conversionTable;
-@property (nonatomic, copy) NSArray *sortedSmileyList;
+@property (nonatomic, copy) NSDictionary<NSString *, NSString *> *conversionTable;
+@property (nonatomic, copy) NSArray<NSString *> *sortedSmileyList;
 @property (nonatomic, strong) IBOutlet NSView *preferencesPane;
 
 - (IBAction)preferenceChanged:(id)sender;
@@ -52,9 +54,8 @@
 
 - (void)pluginLoadedIntoMemory
 {
-	/* Load Interface. */
 	[self performBlockOnMainThread:^{
-		[TPIBundleFromClass() loadNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
+		(void)[TPIBundleFromClass() loadNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
 	}];
 
 	[self maybeBuildConversionTable];
@@ -64,47 +65,43 @@
 {
 	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
 
-	if (serviceEnabled) {
-		[self buildConversionTable];
+	if (serviceEnabled == NO) {
+		return;
 	}
+
+	[self buildConversionTable];
 }
 
 - (void)buildConversionTable
 {
-	NSMutableDictionary *converstionTable = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, NSString *> *converstionTable = [NSMutableDictionary dictionary];
 
-	/* Load primary table. */
-	/* Find ourselves. */
 	NSURL *tablePath = [TPIBundleFromClass() URLForResource:@"conversionTable" withExtension:@"plist"];
-	
-	/* Load dictionary. */
+
+	/* Load primary table */
 	NSDictionary *tableData = [NSDictionary dictionaryWithContentsOfURL:tablePath];
-	
-	if (NSObjectIsEmpty(tableData)) {
-		NSAssert(NO, @"Failed to find conversion table.");
-	}
+
+	NSAssert((tableData != nil),
+		@"Failed to load conversion table");
 
 	[converstionTable addEntriesFromDictionary:tableData];
 
-	/* Maybe load extras. */
+	/* Load larger table */
 	if ([RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Extra Emoticons"]) {
-		/* Find ourselves. */
 		NSURL *tablePath2 = [TPIBundleFromClass() URLForResource:@"conversionTable2" withExtension:@"plist"];
 
-		/* Load dictionary. */
 		NSDictionary *tableData2 = [NSDictionary dictionaryWithContentsOfURL:tablePath2];
 
-		if (NSObjectIsEmpty(tableData)) {
-			NSAssert(NO, @"Failed to find conversion table.");
-		}
+		NSAssert((tableData2 != nil),
+			@"Failed to load conversion table");
 
 		[converstionTable addEntriesFromDictionary:tableData2];
 	}
 	
-	/* Save dictionary contents. */
-	self.conversionTable	=  converstionTable;
+	/* Save table contents */
+	self.conversionTable = converstionTable;
 
-	self.sortedSmileyList	= [converstionTable sortedDictionaryReversedKeys];
+	self.sortedSmileyList = converstionTable.sortedDictionaryReversedKeys;
 }
 
 - (void)destroyConversionTable
@@ -143,9 +140,9 @@
 		lineType == TVCLogLinePrivateMessageType)
 	{
 		return [self convertStringToEmoji:newMessage];
-	} else {
-		return newMessage;
 	}
+
+	return newMessage;
 }
 
 #pragma mark -
@@ -171,14 +168,14 @@
 		/* The body length is dynamic based on replaces so we have to check 
 		 it every time compared to start. */
 
-		if (start >= [body length]) {
+		if (start >= body.length) {
 			break;
 		}
 
 		/* Find smiley. */
 		NSRange r = [body rangeOfString:smiley
 								options:NSCaseInsensitiveSearch // Search is not case sensitive.
-								  range:NSMakeRange(start, ([body length] - start))];
+								  range:NSMakeRange(start, (body.length - start))];
 
 		/* Anything found? */
 		if (r.location == NSNotFound) {
@@ -191,7 +188,7 @@
 		if (enabled) {
 			NSInteger prev = (r.location - 1);
 
-			if (0 <= prev && prev < [body length]) {
+			if (0 <= prev && prev < body.length) {
 				UniChar c = [body characterAtIndex:prev];
 
 				/* Only allow certain characters. */
@@ -204,7 +201,7 @@
 		if (enabled) {
 			NSInteger next = NSMaxRange(r);
 
-			if (next < [body length]) {
+			if (next < body.length) {
 				UniChar c = [body characterAtIndex:next];
 
 				/* Only accept a space. */
@@ -226,7 +223,7 @@
 			 newly added addition. By asking for the actual emoji length, instead of assuming
 			 a length of one, we support future expansion if we make the conversion table more
 			 complex. */
-			start = (r.location + [theEmoji length] + 1);
+			start = (r.location + theEmoji.length + 1);
 		} else {
 			start = (NSMaxRange(r) + 1);
 		}
@@ -236,3 +233,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

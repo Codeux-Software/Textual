@@ -217,7 +217,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCClientConfig *clientConfig = [[IRCClientConfig alloc] initWithDictionary:config];
 
-	IRCClient *client = [worldController() findClientWithId:clientConfig.itemUUID];
+	IRCClient *client = [worldController() findClientWithId:clientConfig.uniqueIdentifier];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (isImportedFromCloud) {

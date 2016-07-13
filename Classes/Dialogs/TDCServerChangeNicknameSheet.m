@@ -80,7 +80,7 @@ ClassWithDesignatedInitializerInitMethod
 		return currentValue.isHostmaskNickname;
 	};
 
-	NSString *nickname = self.client.localNickname;
+	NSString *nickname = self.client.userNickname;
 
 	self.tnewNicknameTextField.stringValue = nickname;
 

@@ -51,10 +51,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateConfig:(IRCChannelConfig *)config fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList;
 
 - (NSDictionary<NSString *, id> *)configurationDictionary;
+- (NSDictionary<NSString *, id> *)configurationDictionaryForCloud;
 
 - (void)noteEncryptionStateDidChange;
 
-- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
+- (void)renameMember:(IRCUser *)member to:(NSString *)toNickname;
+- (void)renameMemberWithNickname:(NSString *)fromNickname to:(NSString *)toNickname;
+
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
 - (void)clearMembers; // This will not reload table view

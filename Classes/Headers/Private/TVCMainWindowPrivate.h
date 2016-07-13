@@ -80,7 +80,7 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 
 - (void)redirectKeyDown:(NSEvent *)e;
 
-- (void)inputText:(id)string asCommand:(NSString *)command;
+- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command;
 
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem;
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView;

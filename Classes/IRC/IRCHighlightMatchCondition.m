@@ -44,15 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
-	ObjectIsAlreadyInitializedAssert
-
-	if ((self = [super init])) {
-		[self populateDefaultsPostflight];
-
-		return self;
-	}
-
-	return nil;
+	return [self initWithDictionary:@{}];
 }
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
@@ -128,6 +120,31 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return object;
 }
 
+- (id)uniqueCopy
+{
+	return [self uniqueCopyAsMutable:NO];
+}
+
+- (id)uniqueCopyMutable
+{
+	return [self uniqueCopyAsMutable:YES];
+}
+
+- (id)uniqueCopyAsMutable:(BOOL)asMutable
+{
+	IRCHighlightMatchCondition *object = nil;
+
+	if (asMutable == NO) {
+		object = [self copy];
+	} else {
+		object = [self mutableCopy];
+	}
+
+	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+
+	return object;
+}
+
 - (BOOL)isMutable
 {
 	return NO;
@@ -142,11 +159,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic matchChannelId;
 @dynamic matchIsExcluded;
 @dynamic matchKeyword;
-
-- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
-{
-	[super populateDictionaryValues:dic];
-}
 
 - (BOOL)isMutable
 {

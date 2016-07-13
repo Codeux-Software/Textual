@@ -37,13 +37,24 @@
 
 #import "TextualApplication.h"
 
-@interface TDCFileTransferDialogRemoteAddressLookup : NSObject
-- (void)requestRemoteIPAddressFromExternalSource:(id)delegate;
+NS_ASSUME_NONNULL_BEGIN
+ 
+@protocol TLOInternetAddressLookupDelegate;
+
+@interface TLOInternetAddressLookup : NSObject
+@property (nonatomic, assign) BOOL IPv4AddressIsValid; // Defaults to YES
+@property (nonatomic, assign) BOOL IPv6AddressIsValid; // ^
+
+- (instancetype)initWithDelegate:(id <TLOInternetAddressLookupDelegate>)delegate NS_DESIGNATED_INITIALIZER;
+
+- (void)performLookup;
 @end
 
-@protocol TDCFileTransferDialogRemoteAddressLookupDelegate <NSObject>
+@protocol TLOInternetAddressLookupDelegate <NSObject>
 @required
 
-- (void)fileTransferRemoteAddressRequestDidDetectAddress:(NSString *)address;
-- (void)fileTransferRemoteAddressRequestDidCloseWithError:(NSError *)errPntr;
+- (void)internetAddressLookupReturnedAddress:(NSString *)address;
+- (void)internetAddressLookupFailed;
 @end
+
+NS_ASSUME_NONNULL_END

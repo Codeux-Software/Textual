@@ -521,10 +521,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(channel != nil);
 	NSParameterAssert(client != nil);
 
-	[client print:channel
-			 type:TVCLogLineOffTheRecordEncryptionStatusType
-		 nickname:nil
-	  messageBody:message
+	[client print:message
+			   by:nil
+		inChannel:channel
+		   asType:TVCLogLineOffTheRecordEncryptionStatusType
 		  command:TVCLogLineDefaultCommandValue];
 }
 

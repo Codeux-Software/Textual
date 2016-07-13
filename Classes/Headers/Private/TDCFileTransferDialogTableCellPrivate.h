@@ -4,8 +4,9 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
-
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ 
+ Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
+ Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,19 +38,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface THOPluginDispatcher : NSObject
-+ (dispatch_queue_t)dispatchQueue;
+@class TDCFileTransferDialogTransferController;
 
-+ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
-+ (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted;
-+ (nullable IRCMessage *)interceptServerInput:(IRCMessage *)inputObject for:(IRCClient *)client;
-+ (nullable id)interceptUserInput:(id)inputObject command:(IRCPrivateCommand)commandString;
-+ (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType;
-+ (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
-+ (void)userInputCommandInvokedOnClient:(IRCClient *)client commandString:(NSString *)commandString messageString:(NSString *)messageString;
-+ (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)viewController;
-+ (void)didReceiveServerInput:(IRCMessage *)inputObject onClient:(IRCClient *)client;
-+ (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)viewController;
+@interface TDCFileTransferDialogTableCell : NSTableCellView
+@property (nonatomic, weak) TDCFileTransferDialogTransferController *cellItem;
+
+- (void)onMaintenanceTimer;
+
+- (void)reloadStatusInformation;
 @end
 
 NS_ASSUME_NONNULL_END
