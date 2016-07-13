@@ -1859,9 +1859,9 @@
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOInternetAddressLookup.m; path = Library/TLOInternetAddressLookup.m; sourceTree = "<group>"; };
 		4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOInternetAddressLookup.h; path = Headers/TLOInternetAddressLookup.h; sourceTree = "<group>"; };
-		4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogPrivate.h; path = Private/TDCFileTransferDialogPrivate.h; sourceTree = "<group>"; };
-		4C0D978C1D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogTableCellPrivate.h; path = Private/TDCFileTransferDialogTableCellPrivate.h; sourceTree = "<group>"; };
-		4C0D978D1D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogTransferControllerPrivate.h; path = Private/TDCFileTransferDialogTransferControllerPrivate.h; sourceTree = "<group>"; };
+		4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogPrivate.h; path = Headers/Private/TDCFileTransferDialogPrivate.h; sourceTree = "<group>"; };
+		4C0D978C1D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogTableCellPrivate.h; path = Headers/Private/TDCFileTransferDialogTableCellPrivate.h; sourceTree = "<group>"; };
+		4C0D978D1D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogTransferControllerPrivate.h; path = Headers/Private/TDCFileTransferDialogTransferControllerPrivate.h; sourceTree = "<group>"; };
 		4C0DEB6B1D2B79050040DA91 /* IRCISupportInfoPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfoPrivate.h; path = Headers/Private/IRCISupportInfoPrivate.h; sourceTree = "<group>"; };
 		4C10B36A1D23247600868A74 /* TDCProgressIndicatorSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressIndicatorSheet.m; path = Dialogs/TDCProgressIndicatorSheet.m; sourceTree = "<group>"; };
 		4C10B3731D23249100868A74 /* TDCProgressIndicatorSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCProgressIndicatorSheetPrivate.h; path = Headers/Private/TDCProgressIndicatorSheetPrivate.h; sourceTree = "<group>"; };
@@ -2264,7 +2264,7 @@
 		4CC215D31D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCPreferencesSoundWrapperPrivate.h; path = Headers/Private/TDCPreferencesSoundWrapperPrivate.h; sourceTree = "<group>"; };
 		4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewHelper.m; sourceTree = "<group>"; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
-		4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogInternal.h; sourceTree = "<group>"; };
+		4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogInternal.h; path = ../TDCFileTransferDialogInternal.h; sourceTree = "<group>"; };
 		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -2636,7 +2636,6 @@
 			isa = PBXGroup;
 			children = (
 				4C7408FD1CCDA336002F026F /* Textual 6 */,
-				4CA8AD25195B475600B99BFB /* Textual 5 */,
 			);
 			name = "Source Code";
 			path = Classes;
@@ -2903,7 +2902,6 @@
 				4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */,
 				4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */,
 				4CF642FB1D2DC48200CB9165 /* IRCUserNicknameColorStyleGeneratorPrivate.h */,
-				4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */,
 				4C673ED51D10FB5000979B60 /* IRCUserPrivate.h */,
 				4C673ED61D10FB5000979B60 /* IRCWorldPrivate.h */,
 				4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */,
@@ -2917,6 +2915,9 @@
 				4CAAAE461D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h */,
 				4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */,
 				4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */,
+				4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */,
+				4C0D978C1D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h */,
+				4C0D978D1D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h */,
 				4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */,
 				4C10B3771D23283000868A74 /* TDCLicenseManagerDialogPrivate.h */,
 				4C10B3781D23283000868A74 /* TDCLicenseManagerMigrateAppStoreSheetPrivate.h */,
@@ -2936,6 +2937,7 @@
 				4C7B05041D12168C00295E82 /* THOPluginItemPrivate.h */,
 				4C7B05051D12168C00295E82 /* THOPluginManagerPrivate.h */,
 				4C7B05061D12168C00295E82 /* THOPluginProtocolPrivate.h */,
+				4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */,
 				4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */,
 				4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */,
 				4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */,
@@ -3171,17 +3173,6 @@
 			path = Dialogs/Preferences;
 			sourceTree = "<group>";
 		};
-		4C8AF527158E99520026668C /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */,
-				4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */,
-				4C0D978C1D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h */,
-				4C0D978D1D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h */,
-			);
-			path = Headers;
-			sourceTree = "<group>";
-		};
 		4C8AF599158E99520026668C /* Cocoa (Objective-C) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3413,23 +3404,6 @@
 			name = WebKit;
 			sourceTree = "<group>";
 		};
-		4CA8AD25195B475600B99BFB /* Textual 5 */ = {
-			isa = PBXGroup;
-			children = (
-				4CA8AD2C195B476700B99BFB /* Dialogs */,
-				4C8AF527158E99520026668C /* Headers */,
-			);
-			name = "Textual 5";
-			sourceTree = "<group>";
-		};
-		4CA8AD2C195B476700B99BFB /* Dialogs */ = {
-			isa = PBXGroup;
-			children = (
-				4C0879C4187061920034F5EB /* File Transfers */,
-			);
-			name = Dialogs;
-			sourceTree = "<group>";
-		};
 		4CB17EC21D125BBA00FAEAD4 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -3444,6 +3418,7 @@
 				4CB9E3AF1D2B144200ED395A /* IRCModeInfoInternal.h */,
 				4CB9E3B01D2B144200ED395A /* IRCPrefixInternal.h */,
 				4CF642F01D2DC34100CB9165 /* IRCUserInternal.h */,
+				4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */,
 				4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */,
 			);
 			name = Internal;
@@ -3523,6 +3498,7 @@
 		4CB2FA9E1D219C97004736D2 /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
+				4C0879C4187061920034F5EB /* File Transfers */,
 				4C74FBB91B557A6200DD1615 /* License Manager */,
 				4C8AF514158E99520026668C /* Preferences */,
 				4C8AF518158E99520026668C /* TDCAboutDialog.m */,
