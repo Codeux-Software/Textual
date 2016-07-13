@@ -205,7 +205,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		if (NSObjectsAreEqual(fileTransfer.peerNickname, fromNickname)) {
-			[fileTransfer notePeerNicknameChangedFrom:fromNickname toNickname:toNickname];
+			[fileTransfer notePeerNicknameChangedTo:toNickname];
 		}
 	}];
 }

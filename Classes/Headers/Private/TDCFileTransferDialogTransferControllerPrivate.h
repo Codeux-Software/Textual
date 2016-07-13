@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didReceiveResumeAccept:(TXUnsignedLongLong)proposedPosition;
 - (void)didReceiveResumeRequest:(TXUnsignedLongLong)proposedPosition;
 
-- (void)notePeerNicknameChangedFrom:(NSString *)fromNickname toNickname:(NSString *)toNickname;
+- (void)notePeerNicknameChangedTo:(NSString *)toNickname;
 
 - (void)onMaintenanceTimer;
 
