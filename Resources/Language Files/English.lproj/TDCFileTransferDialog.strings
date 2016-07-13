@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1024 */
+/* Next unusued key: 1025 */
 
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
@@ -61,11 +61,12 @@
 
 "TDCFileTransferDialog[1016]" = "Connecting to %@";
 
-"TDCFileTransferDialog[1017]" = "Transfer with %@ failed. Could not establish connection.";
-"TDCFileTransferDialog[1018]" = "Transfer with %@ failed. There is no open port.";
-"TDCFileTransferDialog[1019]" = "Transfer with %@ failed. Could not read source file.";
-"TDCFileTransferDialog[1020]" = "Transfer with %@ failed. Unknown source IP address.";
-"TDCFileTransferDialog[1021]" = "Transfer with %@ failed. Connection was disconnected.";
-"TDCFileTransferDialog[1022]" = "Transfer with %@ failed. Proposed resume position is bad.";
+"TDCFileTransferDialog[1017]" = "Transfer with %@ failed. Could not establish connection";
+"TDCFileTransferDialog[1018]" = "Transfer with %@ failed. There is no open port";
+"TDCFileTransferDialog[1019]" = "Transfer with %@ failed. Could not read source file";
+"TDCFileTransferDialog[1020]" = "Transfer with %@ failed. Unknown source IP address";
+"TDCFileTransferDialog[1021]" = "Transfer with %@ failed. Connection was disconnected";
+"TDCFileTransferDialog[1022]" = "Transfer with %@ failed. Proposed resume position is bad";
+"TDCFileTransferDialog[1024]" = "Transfer with %@ failed: %@";
 
 "TDCFileTransferDialog[1023]" = "Select the folder in which this file will be saved";

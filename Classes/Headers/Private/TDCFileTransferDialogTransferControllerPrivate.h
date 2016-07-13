@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TXUnsignedLongLong processedFilesize;
 @property (readonly) TXUnsignedLongLong currentRecord;
 @property (readonly, copy) NSArray<NSNumber *> *speedRecords;
-@property (readonly, copy, nullable) NSString *errorMessageToken;
+@property (readonly, copy, nullable) NSString *errorMessageDescription;
 @property (readonly, copy, nullable) NSString *path;
 @property (readonly, copy) NSString *filename;
 @property (readonly, copy, nullable) NSString *filePath;

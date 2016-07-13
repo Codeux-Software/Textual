@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TXUnsignedLongLong totalFilesize;
 @property (readonly) TXUnsignedLongLong currentRecord;
 @property (readonly, copy) NSArray<NSNumber *> *speedRecords;
-@property (readonly, copy, nullable) NSString *errorMessageToken;
+@property (readonly, copy, nullable) NSString *errorMessageDescription;
 @property (readonly, copy, nullable) NSString *path;
 @property (readonly, copy) NSString *filename;
 @property (readonly, copy, nullable) NSString *filePath;
@@ -210,7 +210,7 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferFatalErrorStatus:
 		case TDCFileTransferDialogTransferRecoverableErrorStatus:
 		{
-			self.transferProgressTextField.stringValue = TXTLS(self.errorMessageToken, self.peerNickname);
+			self.transferProgressTextField.stringValue = self.errorMessageDescription;
 			
 			break;
 		}
@@ -338,9 +338,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.cellItem.peerNickname;
 }
 
-- (nullable NSString *)errorMessageToken
+- (nullable NSString *)errorMessageDescription
 {
-	return self.cellItem.errorMessageToken;
+	return self.cellItem.errorMessageDescription;
 }
 
 - (NSString *)hostAddress
