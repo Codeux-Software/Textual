@@ -61,6 +61,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (instancetype)initWithDelegate:(id <TLOInternetAddressLookupDelegate>)delegate
 {
+	NSParameterAssert(delegate != nil);
+
 	ObjectIsAlreadyInitializedAssert
 	
 	if ((self = [super init])) {
