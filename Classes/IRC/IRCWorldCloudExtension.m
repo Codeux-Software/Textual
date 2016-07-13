@@ -52,7 +52,7 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 			continue;
 		}
 
-		NSDictionary *dictionaryValue = [u dictionaryValue:YES];
+		NSDictionary *dictionaryValue = [u configurationDictionaryForCloud];
 		
 		NSString *dictionaryKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:u.uniqueIdentifier];
 		
