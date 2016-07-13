@@ -46,7 +46,7 @@
 
 - (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
 {
-	if ([client isZNCBouncerConnection]) {
+	if ([client isConnectedToZNC]) {
 		NSString *sender = [inputObject senderNickname];
 
 		NSString *message = [inputObject messageSequence];
@@ -72,7 +72,7 @@
 {
 	/* Throw error if user tries to invoke a command that requires the
 	 user to be connected to a ZNC bouncer */
-	if ([client isZNCBouncerConnection] == NO) {
+	if ([client isConnectedToZNC] == NO) {
 		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]")];
 
 		return;
@@ -164,7 +164,7 @@
 			if (isDetach) {
 				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, [matchedChannel name]]];
 			
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [matchedChannel name]) channel:matchedChannel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [matchedChannel name]) inChannel:matchedChannel];
 			} else {
 				[client joinUnlistedChannel:[matchedChannel name]];
 			}
@@ -219,7 +219,7 @@
 	NSString *addressInt = nil;
 	
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
-		if (NSObjectsAreEqual(nicknameInt, [client localNickname])) {
+		if (NSObjectsAreEqual(nicknameInt, [client userNickname])) {
 			return nil; // Do not post these events for self.
 		}
 
@@ -347,7 +347,7 @@
 - (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
 	/* Only do work if client is even detected as ZNC. */
-	if ([client isZNCBouncerConnection] == NO) {
+	if ([client isConnectedToZNC] == NO) {
 		return input;
 	}
 	
@@ -366,9 +366,9 @@
 	
 	NSString *senderNickname = [senderInfo nickname];
 	
-	if (NSObjectsAreEqual(senderNickname, [client nicknameWithZNCUserPrefix:@"buffextras"])) {
+	if (NSObjectsAreEqual(senderNickname, [client nicknameAsZNCUser:@"buffextras"])) {
 		return [self interceptBufferExtrasZNCModule:input client:client];
-	} else if (NSObjectsAreEqual(senderNickname, [client nicknameWithZNCUserPrefix:@"playback"])) {
+	} else if (NSObjectsAreEqual(senderNickname, [client nicknameAsZNCUser:@"playback"])) {
 		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
 			return [self interceptBufferExtrasPlaybackModule:input client:client];
 		} else {

@@ -60,13 +60,6 @@
 - (IBAction)filterEdit:(id)sender;
 @end
 
-@interface IRCClient (IRCClientPrivate)
-- (void)setKeywordState:(IRCChannel *)t;
-
-- (void)setUnreadState:(IRCChannel *)t;
-- (void)setUnreadState:(IRCChannel *)t isHighlight:(BOOL)isHighlight;
-@end
-
 @implementation TPI_ChatFilterExtension
 
 #pragma mark -
@@ -120,7 +113,7 @@
 {
 	/* Check whether the sender is the local user */
 	if ([filter filterLimitedToMyself]) {
-		NSString *comparisonValue1 = [client localNickname];
+		NSString *comparisonValue1 = [client userNickname];
 
 		NSString *comparisonValue2 = [textAuthor nickname];
 
@@ -327,27 +320,28 @@
 						fakeMessageCommand = @"NOTICE";
 					}
 
-					[client printToWebView:destinationChannel
-									  type:lineType
-								   command:fakeMessageCommand
-								  nickname:[textAuthor nickname]
-							   messageBody:text
-							   isEncrypted:wasEncrypted
-								receivedAt:receivedAt
-						  referenceMessage:nil
-						   completionBlock:^(TVCLogControllerPrintOperationContext *context) {
-							   BOOL isHighlight = [context isHighlight];
+					[client print:text
+							   by:textAuthor.nickname
+						inChannel:destinationChannel
+						   asType:lineType
+						  command:fakeMessageCommand
+					 receivedAt:receivedAt
+					  isEncrypted:wasEncrypted
+				 referenceMessage:nil
+					 completionBlock:^(TVCLogControllerPrintOperationContext *context) {
+						 BOOL isHighlight = [context isHighlight];
 
-							   if (lineType == TVCLogLineNoticeType) {
-								   [client setUnreadState:destinationChannel];
-							   } else {
-								   if (isHighlight) {
-									   [client setKeywordState:destinationChannel];
-								   }
+						 if (lineType != TVCLogLineNoticeType) {
+							 [client setUnreadStateForChannel:destinationChannel];
+						 } else {
+							 if (isHighlight) {
+								 [client setHighlightStateForChannel:destinationChannel];
+							 }
 
-								   [client setUnreadState:destinationChannel isHighlight:isHighlight];
-							   }
-						   }];
+							 [client setUnreadStateForChannel:destinationChannel isHighlight:isHighlight];
+							 [client setUnreadStateForChannel:destinationChannel isHighlight:isHighlight];
+						 }
+					 }];
 				}
 
 				if ([filter filterIgnoreContent]) {
@@ -385,14 +379,14 @@
 												}
 
 	_maybeReplaceValue(@"%_channelName_%", [textDestination name])
-	_maybeReplaceValue(@"%_localNickname_%", [client localNickname])
+	_maybeReplaceValue(@"%_localNickname_%", [client userNickname])
 	_maybeReplaceValue(@"%_networkName_%", [[client supportInfo] networkName])
 	_maybeReplaceValue(@"%_originalMessage_%", text)
 	_maybeReplaceValue(@"%_senderAddress_%", [textAuthor address])
 	_maybeReplaceValue(@"%_senderHostmask_%", [textAuthor hostmask])
 	_maybeReplaceValue(@"%_senderNickname_%", [textAuthor nickname])
 	_maybeReplaceValue(@"%_senderUsername_%", [textAuthor username])
-	_maybeReplaceValue(@"%_serverAddress_%", [client networkAddress])
+	_maybeReplaceValue(@"%_serverAddress_%", [client serverAddress])
 
 #undef _maybeReplaceValue
 
@@ -418,9 +412,13 @@
 			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0003]", [filter filterTitle], [textAuthor nickname], [textDestination name]);
 		}
 
-		[client print:filterActionReportQuery type:TVCLogLinePrivateMessageType nickname:nil messageBody:formattedMessage command:TVCLogLineDefaultCommandValue];
+		[client print:formattedMessage
+				   by:nil
+			inChannel:filterActionReportQuery
+			   asType:TVCLogLinePrivateMessageType
+			  command:IRCPrivateCommandIndex("privmsg")];
 
-		[client setUnreadState:filterActionReportQuery];
+		[client setUnreadStateForChannel:filterActionReportQuery];
 	}
 }
 
