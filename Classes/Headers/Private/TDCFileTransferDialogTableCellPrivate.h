@@ -36,19 +36,16 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
+
+@class TDCFileTransferDialogTransferController;
 
 @interface TDCFileTransferDialogTableCell : NSTableCellView
-@property (nonatomic, weak) id associatedController;
-
-@property (readonly, copy) NSString *completePath;
-
-@property (readonly) TXUnsignedLongLong currentSpeed;
-
-- (void)populateBasicInformation;
+@property (nonatomic, weak) TDCFileTransferDialogTransferController *cellItem;
 
 - (void)onMaintenanceTimer;
-- (void)prepareForDestruction;
 
 - (void)reloadStatusInformation;
 @end
+
+NS_ASSUME_NONNULL_END
