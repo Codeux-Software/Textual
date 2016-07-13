@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
  	 self.fileTransferController = [TDCFileTransferDialog new];
 
-	[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
+	[self.fileTransferController startUsingDownloadDestinationURL];
 }
 
 - (void)prepareForApplicationTermination
@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)preferencesChanged
 {
-	[self.fileTransferController clearCachedIPAddress];
+	[self.fileTransferController clearIPAddress];
 }
 
 - (void)mainWindowSelectionDidChange
