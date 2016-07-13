@@ -242,6 +242,7 @@
 	#import "TLOEncryptionManager.h"
 	#import "TLOGrowlController.h"
 	#import "TLOKeyEventHandler.h"
+	#import "TLOInternetAddressLookup.h"
 	#import "TLOLanguagePreferences.h"
 	#import "TLOLinkParser.h"
 	#import "TLOPopupPrompts.h"
