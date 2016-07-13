@@ -150,7 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	NSString *nickname = self.nicknameTextField.value;
 
-	IRCClientConfig *config = [IRCClientConfig new];
+	IRCClientConfigMutable *config = [IRCClientConfigMutable new];
 
 	config.autoConnect = autoConnect;
 

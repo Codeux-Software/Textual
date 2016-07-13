@@ -224,21 +224,6 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 			c == '?');
 }
 
-- (BOOL)isModeChannelName
-{
-	if (self.length == 0) {
-		return NO;
-	}
-
-	UniChar c = [self characterAtIndex:0];
-
-	return (c == '#' ||
-		    c == '&' ||
-		    c == '!' ||
-		    c == '~' ||
-		    c == '?');
-}
-
 - (nullable NSString *)channelNameWithoutBang
 {
 	if (self.isChannelName == NO) {
@@ -502,6 +487,40 @@ return_method:
 	NSString *encodedString = [XRBase64Encoding encodeData:selfData];
 
 	return [encodedString splitWithMaximumLength:lineLength];
+}
+
+- (nullable NSString *)padNicknameWithCharacter:(UniChar)padCharacter maximumLength:(NSUInteger)maximumLength
+{
+	NSParameterAssert(padCharacter != 0);
+	NSParameterAssert(maximumLength > 0);
+
+	NSString *padCharacterString = [NSString stringWithUniChar:padCharacter];
+
+	if (self.length < maximumLength) {
+		return [self stringByAppendingString:padCharacterString];
+	}
+
+	NSString *substring = [self substringToIndex:maximumLength];
+
+	for (NSInteger i = (substring.length - 1); i >= 0; i--) {
+		UniChar subsringCharacter = [substring characterAtIndex:i];
+
+		if (subsringCharacter == padCharacter) {
+			continue;
+		}
+
+		NSString *stringHead = [substring substringToIndex:i];
+
+		NSMutableString *stringHeadMutable = [stringHead mutableCopy];
+
+		for (NSUInteger j = i; j < substring.length; j++) {
+			[stringHeadMutable appendString:@"_"];
+		}
+
+		return [stringHeadMutable copy];
+	}
+
+	return nil;
 }
 
 @end

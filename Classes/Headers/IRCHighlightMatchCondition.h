@@ -50,6 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary<NSString *, id> *)dictionaryValue;
+
+- (id)uniqueCopy;
+- (id)uniqueCopyMutable;
 @end
 
 #pragma mark -
@@ -59,8 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *matchKeyword;
 @property (nonatomic, copy, readwrite, nullable) NSString *matchChannelId;
 @property (nonatomic, assign, readwrite) BOOL matchIsExcluded;
-
-- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

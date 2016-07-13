@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
  	 self.fileTransferController = [TDCFileTransferDialog new];
 
-	[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
+	[self.fileTransferController startUsingDownloadDestinationURL];
 }
 
 - (void)prepareForApplicationTermination
@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)preferencesChanged
 {
-	[self.fileTransferController clearCachedIPAddress];
+	[self.fileTransferController clearIPAddress];
 }
 
 - (void)mainWindowSelectionDidChange
@@ -471,7 +471,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case 502: // "Cancel Reconnect"
 		{
-			BOOL condition = u.reconnecting;
+			BOOL condition = u.isReconnecting;
 			
 			menuItem.hidden = (condition == NO);
 			
@@ -595,7 +595,7 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 				case TXCommandWKeyDisconnectAction:
 				{
-					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.altNetworkName);
+					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.networkNameAlt);
 					
 					if (_clientIsntConnected) {
 						return NO;
@@ -1512,7 +1512,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	[u connect:IRCClientConnectNormalMode preferringIPv4:NO];
+	[u connect:IRCClientConnectNormalMode preferIPv4:NO];
 
 	[mainWindow() expandClient:u];
 }
@@ -1525,7 +1525,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode preferringIPv4:YES];
+	[u connect:IRCClientConnectNormalMode preferIPv4:YES];
 
 	[mainWindow() expandClient:u];
 }
@@ -1605,8 +1605,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelListDialog];
-	
-	[u send:IRCPrivateCommandIndex("list"), nil];
+
+	[u requestChannelList];
 }
 
 - (void)addServer:(id)sender
@@ -1632,40 +1632,14 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClient) {
 		return;
 	}
+
+	IRCClientConfigMutable *config = [u.config uniqueCopyMutable];
 	
-	IRCClientConfig *config = u.copyOfStoredConfig;
-	
-	NSString *connectionName = [config.connectionName stringByAppendingString:@"_"];
-
-	NSString *nicknamePassword = config.nicknamePassword;
-	NSString *proxyPassword = config.proxyPassword;
-	NSString *serverPassword = config.serverPassword;
-
-	config.connectionName = connectionName;
-
-	config.itemUUID = [NSString stringWithUUID];
-
-	config.nicknamePassword = nicknamePassword;
-	config.proxyPassword = proxyPassword;
-	config.serverPassword = serverPassword;
-
-	[config writeKeychainItemsToDisk];
-
-	NSArray *channelListIn = config.channelList;
-
-	NSMutableArray *channelListOut = [NSMutableArray arrayWithCapacity:channelListIn.count];
-
-	for (IRCChannelConfigMutable *channelConfig in channelListIn) {
-		IRCChannelConfig *channelConfigNew = [channelConfig uniqueCopy];
-
-		[channelConfigNew writeItemsToKeychain];
-	}
-
-	config.channelList = channelListOut;
+	config.connectionName = [config.connectionName stringByAppendingString:@"_"];
 	
 	IRCClient *newClient = [worldController() createClientWithConfig:config reload:YES];
 	
-	if (u.config.sidebarItemExpanded) { // Only expand new client if old was expanded already.
+	if (newClient.config.sidebarItemExpanded) { // Only expand new client if old was expanded already.
 		[mainWindow() expandClient:newClient];
 	}
 
@@ -1762,8 +1736,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (u == nil) {
 		u = [worldController() createClientWithConfig:config reload:YES];
-		
-		[u.config writeKeychainItemsToDisk];
 
 		return;
 	}
@@ -1930,7 +1902,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u send:IRCPrivateCommandIndex("topic"), c.name, topic, nil];
+	[u sendTopicTo:topic inChannel:c];
 }
 
 - (void)channelModifyTopicSheetWillClose:(TDCChannelModifyTopicSheet *)sender
@@ -1979,7 +1951,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), c.name, changeString]];
+	[u sendModes:changeString withParamaters:nil inChannel:c];
 }
 
 - (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender
@@ -2075,7 +2047,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = sender.channel;
 
 	if (c == nil) {
-		c = [worldController() createChannelWithConfig:config onClient:u adjust:YES reload:YES];
+		c = [worldController() createChannelWithConfig:config onClient:u];
 
 		[mainWindow() expandClient:u];
 
@@ -2269,7 +2241,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in sender.nicknames) {
-		[u send:IRCPrivateCommandIndex("invite"), nickname, channelName, nil];
+		[u sendInviteTo:nickname toJoinChannelNamed:channelName];
 	}
 }
 
@@ -2503,33 +2475,15 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	NSMutableString *modeChanges = [NSMutableString string];
-	
-	NSUInteger modeChangesCount = 0;
-	
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[modeChanges appendFormat:@"%@ ", nickname];
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
 
-		modeChangesCount += 1;
-
-		if (modeChangesCount == u.supportInfo.maximumModeCount) {
-			modeChangesCount = 0;
-
-			NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, modeChanges];
-
-			[u sendCommand:command completeTarget:YES target:c.name];
-
-			[modeChanges setString:NSStringEmptyPlaceholder];
-		}
-	}
-	
-	if (modeChanges.length > 0) {
-		NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, modeChanges];
-
-		[u sendCommand:command completeTarget:YES target:c.name];
-	}
-	
 	[self deselectMembers:sender];
+
+	NSString *nicknamesString = [nicknames componentsJoinedByString:NSStringWhitespacePlaceholder];
+
+	NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, nicknamesString];
+
+	[u sendCommand:command completeTarget:YES target:c.name];
 }
 
 - (void)memberModeGiveOp:(id)sender
@@ -2572,7 +2526,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u kick:c target:nickname];
+		[u kick:nickname inChannel:c];
 	}
 	
 	[self deselectMembers:sender];
@@ -2642,8 +2596,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-        if ([nickname isEqualIgnoringCase:u.localNickname]) {
-            [u printDebugInformation:TXTLS(@"IRC[1004]", u.networkAddress) channel:c];
+        if ([nickname isEqualIgnoringCase:u.userNickname]) {
+			[u printDebugInformation:TXTLS(@"IRC[1004]", u.serverAddress) inChannel:c];
 
 			continue;
 		}
@@ -2878,8 +2832,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelBanListSheet];
-	
-	[u send:IRCPrivateCommandIndex("mode"), c.name, @"+b", nil];
+
+	[u sendModes:@"+b" withParamaters:nil inChannel:c];
 }
 
 - (void)showChannelBanExceptionList:(id)sender
@@ -2892,8 +2846,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelBanExceptionListSheet];
-	
-	[u send:IRCPrivateCommandIndex("mode"), c.name, @"+e", nil];
+
+	[u sendModes:@"+e" withParamaters:nil inChannel:c];
 }
 
 - (void)showChannelInviteExceptionList:(id)sender
@@ -2906,8 +2860,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	[u createChannelInviteExceptionListSheet];
-	
-	[u send:IRCPrivateCommandIndex("mode"), c.name, @"+I", nil];
+
+	[u sendModes:@"+I" withParamaters:nil inChannel:c];
 }
 
 - (void)openHelpMenuItem:(id)sender
@@ -2981,15 +2935,23 @@ NS_ASSUME_NONNULL_BEGIN
 		NSMutableArray *channelList = [u.channelList mutableCopy];
 		
 		[channelList sortUsingComparator:^NSComparisonResult(IRCChannel *channel1, IRCChannel *channel2) {
+			if (channel1.isChannel && channel2.isPrivateMessage) {
+				return NSOrderedAscending;
+			}
+
 			NSString *name1 = channel1.name.lowercaseString;
 			NSString *name2 = channel2.name.lowercaseString;
 			
 			return [name1 compare:name2];
 		}];
+
+		if (NSObjectsAreEqual(u.channelList, channelList)) {
+			continue;
+		}
 		
 		u.channelList = channelList;
-		
-		[u updateConfig:u.copyOfStoredConfig];
+
+		[u reloadServerListItems];
 	}
 	
 	[worldController() save];
@@ -3030,9 +2992,7 @@ NS_ASSUME_NONNULL_BEGIN
 		modeSymbol = @"+m";
 	}
 
-	NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), c.name, modeSymbol];
-
-	[u sendCommand:command];
+	[u sendModes:modeSymbol withParamaters:nil inChannel:c];
 
 #undef _toggleChannelModerationModeOffTag
 }
@@ -3056,9 +3016,7 @@ NS_ASSUME_NONNULL_BEGIN
 		modeSymbol = @"+i";
 	}
 
-	NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), c.name, modeSymbol];
-
-	[u sendCommand:command];
+	[u sendModes:modeSymbol withParamaters:nil inChannel:c];
 
 #undef _toggleChannelInviteStatusModeOffTag
 }

@@ -95,19 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
-	ObjectIsAlreadyInitializedAssert
-
-	if ((self = [super init])) {
-		[self populateDefaultsPreflight];
-
-		[self populateDefaultsPostflight];
-
-		self->_objectInitialized = YES;
-
-		return self;
-	}
-	
-	return nil;
+	return [self initWithDictionary:@{}];
 }
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
@@ -122,12 +110,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self populateDefaultsPostflight];
 
+		[self initializedClassHealthCheck];
+
 		self->_objectInitialized = YES;
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)initializedClassHealthCheck
+{
+	ObjectIsAlreadyInitializedAssert
+
+	if ([self isMutable]) {
+		return;
+	}
+
+	NSParameterAssert(self->_channelName.length > 0);
 }
 
 - (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
@@ -167,9 +168,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
 		[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
 	}
-
-	/* Sanity check */
-	NSParameterAssert(self->_channelName.length > 0);
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
@@ -181,6 +179,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
+	[dic setBool:self.pushNotifications	forKey:@"pushNotifications"];
+	[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
+
 	if (self.type == IRCChannelChannelType) {
 		[dic maybeSetObject:self.defaultModes forKey:@"defaultMode"];
 		[dic maybeSetObject:self.defaultTopic forKey:@"defaultTopic"];
@@ -189,8 +190,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
 		[dic setBool:self.ignoreHighlights forKey:@"ignoreHighlights"];
 		[dic setBool:self.ignoreInlineMedia forKey:@"ignoreInlineMedia"];
-		[dic setBool:self.pushNotifications	forKey:@"pushNotifications"];
-		[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
 	}
 
 	[dic maybeSetObject:self.channelName forKey:@"channelName"];
@@ -250,11 +249,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (id)uniqueCopy
 {
+	return [self uniqueCopyAsMutable:NO];
+}
+
+- (id)uniqueCopyMutable
+{
+	return [self uniqueCopyAsMutable:YES];
+}
+
+- (id)uniqueCopyAsMutable:(BOOL)asMutable
+{
 	/* Given self, create a copy and replace unique identifier
 	 with new identifier to make this copy of object unique. */
 	IRCChannelConfig *object = nil;
 
-	if ([self isMutable] == NO) {
+	if (asMutable == NO) {
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];

@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;
 @property (readonly, copy) NSDictionary<NSString *, NSNumber *> *channelModes;
 @property (readonly, copy) NSDictionary<NSString *, NSArray *> *userModeSymbols;
-@property (readonly, copy, nullable) NSString *networkAddress;
+@property (readonly, copy, nullable) NSString *serverAddress;
 @property (readonly, copy, nullable) NSString *networkName;
 @property (readonly, copy, nullable) NSString *networkNameFormatted;
 @property (readonly, copy, nullable) NSString *privateMessageNicknamePrefix;
@@ -63,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)modeSymbolIsUserPrefix:(NSString *)modeSymbol;
 
 - (NSUInteger)rankForUserPrefixWithMode:(NSString *)modeSymbol; // Starts at 100; 100 = highest rank
+
+- (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel;
 
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol;
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater;

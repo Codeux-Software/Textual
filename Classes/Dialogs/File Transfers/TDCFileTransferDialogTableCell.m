@@ -36,13 +36,13 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define _filenameFieldWithProgressBarYCord				4
 #define _filenameFieldWithoutProgressBarYCord			12
 
 #define _transferInfoFieldWithProgressBarYCord			6
 #define _transferInfoFieldWithoutProgressBarYCord		16
-
-#import "TextualApplication.h"
 
 @interface TDCFileTransferDialogTableCell ()
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressIndicator;
@@ -52,6 +52,19 @@
 @property (nonatomic, weak) IBOutlet NSTextField *transferProgressTextField;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *filenameTextFieldConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferProgressTextFieldConstraint;
+@property (readonly) BOOL isReceiving;
+@property (readonly) TDCFileTransferDialogTransferStatus transferStatus;
+@property (readonly) TXUnsignedLongLong processedFilesize;
+@property (readonly) TXUnsignedLongLong totalFilesize;
+@property (readonly) TXUnsignedLongLong currentRecord;
+@property (readonly, copy) NSArray<NSNumber *> *speedRecords;
+@property (readonly, copy, nullable) NSString *errorMessageDescription;
+@property (readonly, copy, nullable) NSString *path;
+@property (readonly, copy) NSString *filename;
+@property (readonly, copy, nullable) NSString *filePath;
+@property (readonly, copy) NSString *hostAddress;
+@property (readonly, copy) NSString *peerNickname;
+@property (readonly) uint16_t hostPort;
 @end
 
 @implementation TDCFileTransferDialogTableCell
@@ -59,246 +72,237 @@
 #pragma mark -
 #pragma mark Status Information
 
-- (void)populateBasicInformation
+- (void)prepareInitialState
 {
-	/* Progress bar. */
-	[self.progressIndicator setDoubleValue:0];
-	[self.progressIndicator setMinValue:0];
-	[self.progressIndicator setMaxValue:[self totalFilesize]];
+	NSString *filename = self.filename;
+
+	self.filenameTextField.stringValue = filename;
+
+	TXUnsignedLongLong totalFilesize = self.totalFilesize;
+
+	NSString *totalFilesizeString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:totalFilesize];
+
+	self.filesizeTextField.stringValue = totalFilesizeString;
 	
-	/* File information. */
-	NSString *totalFilesize = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:[self totalFilesize]];
+	self.progressIndicator.doubleValue = 0;
+	self.progressIndicator.minValue = 0;
+	self.progressIndicator.maxValue = totalFilesize;
+
+	NSImage *iconImage = [RZWorkspace() iconForFileType:filename.pathExtension];
 	
-	[self.filesizeTextField setStringValue:totalFilesize];
-	[self.filenameTextField setStringValue:[self filename]];
-	
-	/* File icon. */
-	NSImage *iconImage = [RZWorkspace() iconForFileType:[[self filename] pathExtension]];
-	
-	[self.fileIconView setImage:iconImage];
+	self.fileIconView.image = iconImage;
+
+	[self reloadStatusInformation];
 }
 
 - (void)reloadStatusInformation
 {
 	[self performBlockOnMainThread:^{
-		/* Don't bother with updates if we are hidden. */
-		NSAssertReturn([self isHidden] == NO);
-		
-		/* Set info into some relevant vars. */
-		BOOL transferIsStopped = ([self transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferFatalErrorStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferRecoverableErrorStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferStoppedStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferIsListeningAsSenderStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferIsListeningAsReceiverStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferInitializingStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferMappingListeningPortStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForResumeAcceptStatus);
-		
-		/* Update position of text fields. */
-		if (transferIsStopped) {
-			if ([self.progressIndicator isHidden] == NO) {
-				[self.progressIndicator setHidden:YES];
-
-				[self.filenameTextFieldConstraint setConstant:_filenameFieldWithoutProgressBarYCord];
-
-				[self.transferProgressTextFieldConstraint setConstant:_transferInfoFieldWithoutProgressBarYCord];
-
-				[self layoutSubtreeIfNeeded];
-			}
-		} else {
-			if ([self.progressIndicator isHidden]) {
-				[self.progressIndicator setHidden:NO];
-
-				[self.filenameTextFieldConstraint setConstant:_filenameFieldWithProgressBarYCord];
-
-				[self.transferProgressTextFieldConstraint setConstant:_transferInfoFieldWithProgressBarYCord];
-
-				[self layoutSubtreeIfNeeded];
-			}
-		}
-		
-		/* Update type of progress bar, if any... */
-		if (transferIsStopped == NO) {
-			if ([self transferStatus] == TDCFileTransferDialogTransferConnectingStatus) {
-				[self.progressIndicator setIndeterminate:YES];
-				[self.progressIndicator startAnimation:nil];
-			} else {
-				[self.progressIndicator setIndeterminate:NO];
-
-				[self.progressIndicator setDoubleValue:[self processedFilesize]];
-			}
-		}
-		
-		/* Start notifying of specific events. */
-		switch ([self transferStatus]) {
-			case TDCFileTransferDialogTransferStoppedStatus:
-			{
-				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1009]", [self peerNickname])];
-				} else {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1001]", [self peerNickname])];
-				}
-				
-				break;
-			}
-			case TDCFileTransferDialogTransferMappingListeningPortStatus:
-			{
-				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1010]", [self peerNickname])];
-				} else {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1002]", [self peerNickname])];
-				}
-
-				break;
-			}
-			case TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus:
-			{
-				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1011]", [self peerNickname])];
-				} else {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1003]", [self peerNickname])];
-				}
-
-				break;
-			}
-			case TDCFileTransferDialogTransferInitializingStatus:
-			{
-				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1013]", [self peerNickname])];
-				} else {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1004]", [self peerNickname])];
-				}
-
-				break;
-			}
-			case TDCFileTransferDialogTransferIsListeningAsSenderStatus:
-			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1005]", [self peerNickname])];
-
-				break;
-			}
-			case TDCFileTransferDialogTransferIsListeningAsReceiverStatus:
-			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1014]", [self peerNickname])];
-				
-				break;
-			}
-			case TDCFileTransferDialogTransferFatalErrorStatus:
-			case TDCFileTransferDialogTransferRecoverableErrorStatus:
-			{
-				[self.transferProgressTextField setStringValue:TXTLS([self errorMessageToken], [self peerNickname])];
-				
-				break;
-			}
-			case TDCFileTransferDialogTransferCompleteStatus:
-			{
-				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1015]", [self peerNickname])];
-				} else {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1006]", [self peerNickname])];
-				}
-
-				break;
-			}
-			case TDCFileTransferDialogTransferSendingStatus:
-			case TDCFileTransferDialogTransferReceivingStatus:
-			{
-				/* Format time remaining. */
-				NSInteger timeleft = 0;
-				
-				NSString *remainingTime = nil;
-				
-				if ([self currentSpeed] > 0) {
-					timeleft = (([self totalFilesize] - [self processedFilesize]) / [self currentSpeed]);
-					
-					if (timeleft > 0) {
-						remainingTime = TXHumanReadableTimeInterval(timeleft, YES, (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond));
-					}
-				}
-				
-				/* Update status. */
-				NSString *totalFilesize = [self.filesizeTextField stringValue];
-				
-				NSString *processedSize = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:[self processedFilesize]];
-				NSString *transferSpeed = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:[self currentSpeed]];
-				
-				NSString *status = nil;
-				
-				if ([self isReceiving]) {
-					if (remainingTime) {
-						status = TXTLS(@"TDCFileTransferDialog[1008][2]", processedSize, totalFilesize, transferSpeed, [self peerNickname], remainingTime);
-					} else {
-						status = TXTLS(@"TDCFileTransferDialog[1008][1]", processedSize, totalFilesize, transferSpeed, [self peerNickname]);
-					}
-				} else {
-					if (remainingTime) {
-						status = TXTLS(@"TDCFileTransferDialog[1000][2]", processedSize, totalFilesize, transferSpeed, [self peerNickname], remainingTime);
-					} else {
-						status = TXTLS(@"TDCFileTransferDialog[1000][1]", processedSize, totalFilesize, transferSpeed, [self peerNickname]);
-					}
-				}
-				
-				[self.transferProgressTextField setStringValue:status];
-				
-				break;
-			}
-			case TDCFileTransferDialogTransferConnectingStatus:
-			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1016]", [self peerNickname])];
-				
-				break;
-			}
-			case TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus:
-			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1007]", [self peerNickname])];
-
-				break;
-			}
-			case TDCFileTransferDialogTransferWaitingForResumeAcceptStatus:
-			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1012]", [self peerNickname])];
-
-				break;
-			}
-		}
-		
-		/* Update clear button. */
-		[self updateClearButton];
+		[self _reloadStatusInformation];
 	}];
 }
 
-- (TXUnsignedLongLong)currentSpeed
+- (void)_reloadStatusInformation
 {
-	NSObjectIsEmptyAssertReturn([self speedRecords], 0);
+	TDCFileTransferDialogTransferStatus transferStatus = self.transferStatus;
+
+	BOOL transferIsStopped = (transferStatus == TDCFileTransferDialogTransferCompleteStatus ||
+							  transferStatus == TDCFileTransferDialogTransferFatalErrorStatus ||
+							  transferStatus == TDCFileTransferDialogTransferRecoverableErrorStatus ||
+							  transferStatus == TDCFileTransferDialogTransferStoppedStatus ||
+							  transferStatus == TDCFileTransferDialogTransferIsListeningAsSenderStatus ||
+							  transferStatus == TDCFileTransferDialogTransferIsListeningAsReceiverStatus ||
+							  transferStatus == TDCFileTransferDialogTransferInitializingStatus ||
+							  transferStatus == TDCFileTransferDialogTransferMappingListeningPortStatus ||
+							  transferStatus == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus ||
+							  transferStatus == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus ||
+							  transferStatus == TDCFileTransferDialogTransferWaitingForResumeAcceptStatus);
+
+	TXUnsignedLongLong processedFilesize = self.processedFilesize;
+
+	if (transferIsStopped) {
+		if (self.progressIndicator.hidden == NO) {
+			self.progressIndicator.hidden = YES;
+
+			self.filenameTextFieldConstraint.constant = _filenameFieldWithoutProgressBarYCord;
+
+			self.transferProgressTextFieldConstraint.constant = _transferInfoFieldWithoutProgressBarYCord;
+
+			[self layoutSubtreeIfNeeded];
+		}
+	} else {
+		if (self.progressIndicator.hidden) {
+			self.progressIndicator.hidden = NO;
+
+			self.filenameTextFieldConstraint.constant = _filenameFieldWithProgressBarYCord;
+
+			self.transferProgressTextFieldConstraint.constant = _transferInfoFieldWithProgressBarYCord;
+
+			[self layoutSubtreeIfNeeded];
+		}
+	}
+
+	if (transferIsStopped == NO) {
+		if (transferStatus == TDCFileTransferDialogTransferConnectingStatus) {
+			self.progressIndicator.indeterminate = YES;
+
+			[self.progressIndicator startAnimation:nil];
+		} else {
+			self.progressIndicator.indeterminate = NO;
+
+			self.progressIndicator.doubleValue = self.processedFilesize;
+		}
+	}
+
+	switch (transferStatus) {
+		case TDCFileTransferDialogTransferStoppedStatus:
+		{
+			if (self.isReceiving) {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1009]", self.peerNickname);
+			} else {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1001]", self.peerNickname);
+			}
+			
+			break;
+		}
+		case TDCFileTransferDialogTransferMappingListeningPortStatus:
+		{
+			if (self.isReceiving) {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1010]", self.peerNickname);
+			} else {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1002]", self.peerNickname);
+			}
+
+			break;
+		}
+		case TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus:
+		{
+			if (self.isReceiving) {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1011]", self.peerNickname);
+			} else {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1003]", self.peerNickname);
+			}
+
+			break;
+		}
+		case TDCFileTransferDialogTransferInitializingStatus:
+		{
+			if (self.isReceiving) {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1013]", self.peerNickname);
+			} else {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1004]", self.peerNickname);
+			}
+
+			break;
+		}
+		case TDCFileTransferDialogTransferIsListeningAsSenderStatus:
+		{
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1005]", self.peerNickname);
+
+			break;
+		}
+		case TDCFileTransferDialogTransferIsListeningAsReceiverStatus:
+		{
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1014]", self.peerNickname);
+			
+			break;
+		}
+		case TDCFileTransferDialogTransferFatalErrorStatus:
+		case TDCFileTransferDialogTransferRecoverableErrorStatus:
+		{
+			self.transferProgressTextField.stringValue = self.errorMessageDescription;
+			
+			break;
+		}
+		case TDCFileTransferDialogTransferCompleteStatus:
+		{
+			if (self.isReceiving) {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1015]", self.peerNickname);
+			} else {
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1006]", self.peerNickname);
+			}
+
+			break;
+		}
+		case TDCFileTransferDialogTransferSendingStatus:
+		case TDCFileTransferDialogTransferReceivingStatus:
+		{
+			/* Format time remaining */
+			NSTimeInterval timeRemaining = 0;
+			
+			NSString *timeRemainingString = nil;
+
+			TXUnsignedLongLong currentSpeed = self.currentSpeed;
+			
+			if (currentSpeed > 0) {
+				timeRemaining = ((self.totalFilesize - processedFilesize) / currentSpeed);
+				
+				if (timeRemaining > 0) {
+					timeRemainingString = TXHumanReadableTimeInterval(timeRemaining, YES, (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond));
+				}
+			}
+			
+			/* Update status */
+			NSString *totalFilesizeString = self.filesizeTextField.stringValue;
+
+			NSString *currentSpeedString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:currentSpeed];
+			NSString *processedFilesizeString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:processedFilesize];
+			
+			NSString *statusString = nil;
+
+			if (self.isReceiving) {
+				if (timeRemainingString) {
+					statusString = TXTLS(@"TDCFileTransferDialog[1008][2]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname, timeRemainingString);
+				} else {
+					statusString = TXTLS(@"TDCFileTransferDialog[1008][1]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
+				}
+			} else {
+				if (timeRemainingString) {
+					statusString = TXTLS(@"TDCFileTransferDialog[1000][2]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname, timeRemainingString);
+				} else {
+					statusString = TXTLS(@"TDCFileTransferDialog[1000][1]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
+				}
+			}
+			
+			self.transferProgressTextField.stringValue = statusString;
+			
+			break;
+		}
+		case TDCFileTransferDialogTransferConnectingStatus:
+		{
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1016]", self.peerNickname);
+			
+			break;
+		}
+		case TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus:
+		{
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1007]", self.peerNickname);
+
+			break;
+		}
+		case TDCFileTransferDialogTransferWaitingForResumeAcceptStatus:
+		{
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1012]", self.peerNickname);
+
+			break;
+		}
+	}
 	
-	TXUnsignedLongLong total = 0;
-	
-    for (NSNumber *num in [self speedRecords]) {
-        total += [num longLongValue];
-    }
-	
-    return (total / [[self speedRecords] count]);
+	/* Update clear button */
+	[self updateClearButton];
 }
 
 #pragma mark -
 #pragma mark Proxy Methods
 
-- (void)prepareForDestruction
+- (void)updateClearButton
 {
-	[self.associatedController prepareForDestruction];
+	[self.cellItem updateClearButton];
 }
 
 - (void)onMaintenanceTimer
 {
-	[self.associatedController onMaintenanceTimer];
-}
-
-- (void)updateClearButton
-{
-	[self.associatedController updateClearButton];
+	[self.cellItem onMaintenanceTimer];
 }
 
 #pragma mark -
@@ -306,74 +310,86 @@
 
 - (TDCFileTransferDialogTransferStatus)transferStatus
 {
-	return [self.associatedController transferStatus];
+	return self.cellItem.transferStatus;
 }
 
 - (BOOL)isReceiving
 {
-	return ([self.associatedController isSender] == NO);
+	return (self.cellItem.isSender == NO);
 }
 
-- (BOOL)isHidden
+- (nullable NSString *)path
 {
-	return [self.associatedController isHidden];
-}
-
-- (NSString *)path
-{
-	return [self.associatedController path];
+	return self.cellItem.path;
 }
 
 - (NSString *)filename
 {
-	return [self.associatedController filename];
+	return self.cellItem.filename;
+}
+
+- (nullable NSString *)filePath
+{
+	return self.cellItem.filePath;
 }
 
 - (NSString *)peerNickname
 {
-	return [self.associatedController peerNickname];
+	return self.cellItem.peerNickname;
 }
 
-- (NSString *)errorMessageToken
+- (nullable NSString *)errorMessageDescription
 {
-	return [self.associatedController errorMessageToken];
+	return self.cellItem.errorMessageDescription;
 }
 
 - (NSString *)hostAddress
 {
-	return [self.associatedController hostAddress];
+	return self.cellItem.hostAddress;
 }
 
-- (NSInteger)transferPort
+- (uint16_t)hostPort
 {
-	return [self.associatedController transferPort];
+	return self.cellItem.hostPort;
 }
 
 - (TXUnsignedLongLong)totalFilesize
 {
-	return [self.associatedController totalFilesize];
+	return self.cellItem.totalFilesize;
 }
 
 - (TXUnsignedLongLong)processedFilesize
 {
-	return [self.associatedController processedFilesize];
+	return self.cellItem.processedFilesize;
 }
 
 - (TXUnsignedLongLong)currentRecord
 {
-	return [self.associatedController currentRecord];
+	return self.cellItem.currentRecord;
 }
 
-- (NSArray *)speedRecords
+- (TXUnsignedLongLong)currentSpeed
 {
-	@synchronized([self.associatedController speedRecords]) {
-		return [self.associatedController speedRecords];
+	NSArray *speedRecords = self.speedRecords;
+
+	if (speedRecords.count == 0) {
+		return 0;
 	}
+
+	TXUnsignedLongLong totalTransferred = 0;
+
+	for (NSNumber *record in speedRecords) {
+		totalTransferred += record.unsignedLongLongValue;
+	}
+
+	return (totalTransferred / speedRecords.count);
 }
 
-- (NSString *)completePath
+- (NSArray<NSNumber *> *)speedRecords
 {
-	return [self.associatedController completePath];
+	return self.cellItem.speedRecords;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

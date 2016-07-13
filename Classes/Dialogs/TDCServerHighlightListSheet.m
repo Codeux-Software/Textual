@@ -78,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[NSSortDescriptor sortDescriptorWithKey:@"channelName" ascending:NO selector:@selector(caseInsensitiveCompare:)]
 	];
 
-	NSString *headerTitle = [NSString stringWithFormat:self.headerTitleTextField.stringValue, self.client.altNetworkName];
+	NSString *headerTitle = [NSString stringWithFormat:self.headerTitleTextField.stringValue, self.client.networkNameAlt];
 
 	self.headerTitleTextField.stringValue = headerTitle;
 

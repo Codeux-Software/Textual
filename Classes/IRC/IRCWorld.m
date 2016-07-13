@@ -121,13 +121,13 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (NSArray *)clientConfigurations
 {
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableArray *configurations = [NSMutableArray array];
 
 	for (IRCClient *u in self.clientList) {
-		[ary addObject:[u dictionaryValue]];
+		[configurations addObject:[u configurationDictionary]];
 	}
 
-	return [ary copy];
+	return [configurations copy];
 }
 
 - (void)save
@@ -183,7 +183,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (NSArray<IRCClient *> *)clientList
 {
 	@synchronized(self.clients) {
-		return [NSArray arrayWithArray:self.clients];
+		return [self.clients copy];
 	}
 }
 
@@ -219,7 +219,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		return;
 	}
 
-	NSInteger delay = 0;
+	NSUInteger delay = 0;
 
 	if (afterWakeUp) {
 		delay += _reconnectAfterWakeupDelay;
@@ -233,7 +233,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 			continue;
 		}
 
-		[u autoConnect:delay afterWakeUp:afterWakeUp];
+		[u autoConnectWithDelay:delay afterWakeUp:afterWakeUp];
 
 		delay += _autoConnectDelay;
 	}
@@ -245,17 +245,17 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (void)prepareForSleep
 {
 	for (IRCClient *u in self.clientList) {
-		if (u.config.autoSleepModeDisconnect == NO) {
+		if (u.isLoggedIn == NO) {
 			continue;
 		}
 
-		if (u.isLoggedIn == NO) {
+		if (u.config.autoSleepModeDisconnect == NO) {
 			continue;
 		}
 
 		u.disconnectType = IRCClientDisconnectComputerSleepMode;
 
-		[u quit:u.config.sleepModeLeavingComment];
+		[u quit];
 	}
 }
 
@@ -284,7 +284,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (void)noteReachabilityChanged:(BOOL)reachable
 {
 	for (IRCClient *u in self.clientList) {
-		[u reachabilityChanged:reachable];
+		[u noteReachabilityChanged:reachable];
 	}
 }
 
@@ -443,17 +443,22 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 {
 	NSParameterAssert(config != nil);
 
-	IRCClient *client = [IRCClient new];
+	IRCClient *client = [[IRCClient alloc] initWithConfig:config];
 
-	[client setup:config];
+	NSMutableArray<IRCChannel *> *channelList = [NSMutableArray array];
 
-	client.viewController = [self createViewControllerWithClient:client channel:nil];
+	for (IRCChannelConfig *channelConfig in client.config.channelList) {
+		IRCChannel *channel =
+		[self createChannelWithConfig:channelConfig onClient:client add:NO adjust:NO reload:NO];
+
+		[channelList addObject:channel];
+	}
+
+	client.channelList = channelList;
 
 	client.printingQueue = [TVCLogControllerOperationQueue new];
 
-	for (IRCChannelConfig *channel in client.config.channelList) {
-		[self createChannelWithConfig:channel onClient:client adjust:NO reload:NO];
-	}
+	client.viewController = [self createViewControllerWithClient:client channel:nil];
 
 	@synchronized(self.clients) {
 		[self.clients addObject:client];
@@ -480,10 +485,10 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client
 {
-	return [self createChannelWithConfig:config onClient:client adjust:YES reload:YES];
+	return [self createChannelWithConfig:config onClient:client add:YES adjust:YES reload:YES];
 }
 
-- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client adjust:(BOOL)adjust reload:(BOOL)reload
+- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client add:(BOOL)add adjust:(BOOL)adjust reload:(BOOL)reload
 {
 	NSParameterAssert(config != nil);
 	NSParameterAssert(client != nil);
@@ -494,7 +499,9 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	channel.viewController = [self createViewControllerWithClient:client channel:channel];
 
-	[client addChannel:channel];
+	if (add) {
+		[client addChannel:channel];
+	}
 
 	if (reload) {
 		NSInteger index = [client.channelList indexOfObject:channel];
@@ -522,7 +529,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	config.type = IRCChannelPrivateMessageType;
 
-	IRCChannel *channel = [self createChannelWithConfig:config onClient:client adjust:YES reload:YES];
+	IRCChannel *channel = [self createChannelWithConfig:config onClient:client add:YES adjust:YES reload:YES];
 
 	if (client.isLoggedIn) {
 		[channel activate];

@@ -773,7 +773,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TDCFileTransferDialog *transferController = menuController().fileTransferController;
 
-	NSURL *path = transferController.downloadDestination;
+	NSURL *path = transferController.downloadDestinationURL;
 	
 	NSMenuItem *item = [self.fileTransferDownloadDestinationButton itemAtIndex:0];
 	
@@ -830,7 +830,7 @@ NS_ASSUME_NONNULL_BEGIN
 						path, bookmarkError.localizedDescription)
 			}
 
-			[transferController setDownloadDestinationFolder:bookmark];
+			[transferController setDownloadDestinationURL:bookmark];
 			
 			[self updateFileTransferDownloadDestinationFolder];
 		}];
@@ -839,7 +839,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
 
-		[transferController setDownloadDestinationFolder:nil];
+		[transferController setDownloadDestinationURL:nil];
 
 		[self updateFileTransferDownloadDestinationFolder];
 	}

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11163.2" systemVersion="16A239j" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11163.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCFileTransferDialog">
             <connections>
                 <outlet property="clearButton" destination="117" id="KoN-Uc-Nhi"/>
                 <outlet property="fileTransferTable" destination="xso-Ti-Pvf" id="qiD-QC-Rrt"/>
+                <outlet property="fileTransfersController" destination="5qZ-cx-fmP" id="muB-vK-w9U"/>
                 <outlet property="navigationControllerCell" destination="nY8-F3-7sa" id="LNN-nZ-NGY"/>
                 <outlet property="window" destination="5" id="oY6-kl-EqU"/>
             </connections>
@@ -125,13 +125,14 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <binding destination="5qZ-cx-fmP" name="content" keyPath="arrangedObjects" id="Twb-iu-nDP"/>
+                                        <binding destination="5qZ-cx-fmP" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="Twb-iu-nDP" id="S8O-8l-LA3"/>
                                         <outlet property="dataSource" destination="-2" id="l7d-fh-IVr"/>
                                         <outlet property="delegate" destination="-2" id="Lbq-dF-k8b"/>
                                         <outlet property="menu" destination="34" id="EY2-ub-icM"/>
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="jCb-ZR-rm0">
                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
@@ -154,6 +155,7 @@
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S61-G4-yuP">
                         <rect key="frame" x="-2" y="-3" width="24" height="27"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="SeN-Yp-yzc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -208,6 +210,7 @@ Gw
             <contentBorderThickness minY="33"/>
             <point key="canvasLocation" x="605" y="361.5"/>
         </window>
+        <arrayController objectClassName="TDCFileTransferDialogTransferController" editable="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="5qZ-cx-fmP"/>
         <menu title="Menu" id="34" userLabel="TableMenu">
             <items>
                 <menuItem title="Start Transfer" tag="3001" id="35">

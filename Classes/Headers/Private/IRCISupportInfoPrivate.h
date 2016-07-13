@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCISupportInfo ()
-@property (nonatomic, copy, readwrite, nullable) NSString *networkAddress;
+@property (nonatomic, copy, readwrite, nullable) NSString *serverAddress;
 
 @property (readonly, copy, nullable) NSString *stringValueForLastUpdate;
 

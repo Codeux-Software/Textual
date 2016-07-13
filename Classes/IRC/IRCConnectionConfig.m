@@ -39,6 +39,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+uint16_t const IRCConnectionDefaultServerPort = 6667;
+uint16_t const IRCConnectionDefaultProxyPort = 1080;
+
 @implementation IRCConnectionConfig
 
 - (instancetype)init
@@ -55,6 +58,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)populateDefaultsPostflight
 {
 	SetVariableIfNilCopy(self->_serverAddress, NSStringEmptyPlaceholder)
+
+	self->_proxyPort = IRCConnectionDefaultProxyPort;
+
+	self->_serverPort = IRCConnectionDefaultServerPort;
 
 	self->_floodControlDelayInterval = IRCConnectionConfigFloodControlDefaultDelayInterval;
 

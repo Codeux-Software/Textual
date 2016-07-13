@@ -83,7 +83,7 @@ ClassWithDesignatedInitializerInitMethod
 {
     self.cachedConfiguration = @[];
     
-	self.networkAddress = nil;
+	self.serverAddress = nil;
 	
 	self.networkName = nil;
 	self.networkNameFormatted = nil;
@@ -459,6 +459,33 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	return (IRCISupportInfoHighestUserPrefixRank - modeSymbolIndex);
+}
+
+- (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	if (channel.length < 2) {
+		return NSStringEmptyPlaceholder;
+	}
+
+	NSArray *channelNamePrefixes = self.channelNamePrefixes;
+
+	NSArray *characters = self.userModeSymbols[@"characters"];
+
+	for (NSString *character in characters) {
+		if ([channel hasPrefix:character] == NO) {
+			continue;
+		}
+
+		NSString *nextCharacter = [channel stringCharacterAtIndex:1];
+
+		if ([channelNamePrefixes containsObject:nextCharacter]) {
+			return character;
+		}
+	}
+
+	return NSStringEmptyPlaceholder;
 }
 
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol

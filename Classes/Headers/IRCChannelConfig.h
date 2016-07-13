@@ -69,6 +69,7 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 - (NSDictionary<NSString *, id> *)dictionaryValue;
 
 - (id)uniqueCopy;
+- (id)uniqueCopyMutable;
 @end
 
 #pragma mark -

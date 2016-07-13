@@ -147,7 +147,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSDictionary<NSString *, id> *)configurationDictionary
 {
-	return self.config.dictionaryValue;
+	return [self.config dictionaryValue];
+}
+
+- (NSDictionary<NSString *, id> *)configurationDictionaryForCloud
+{
+	return [self.config dictionaryValue:YES];
 }
 
 - (NSString *)description
@@ -196,7 +201,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCClient *client = self.associatedClient;
 
-	return [client nicknameIsPrivateZNCUser:self.name];
+	return [client nicknameIsZNCUser:self.name];
 }
 
 - (NSString *)channelTypeString
@@ -394,7 +399,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self addMember:member1];
 
-		IRCUser *member2 = [[IRCUser alloc] initWithNickname:client.localNickname onClient:client];
+		IRCUser *member2 = [[IRCUser alloc] initWithNickname:client.userNickname onClient:client];
 
 		[self addMember:member2];
 	}
@@ -624,18 +629,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 }
 
-- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname
+- (void)renameMemberWithNickname:(NSString *)fromNickname to:(NSString *)toNickname
 {
 	NSParameterAssert(fromNickname != nil);
+
+	IRCUser *member = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
+
+	if (member) {
+		[self renameMember:member to:toNickname];
+	}
+}
+
+- (void)renameMember:(IRCUser *)member to:(NSString *)toNickname
+{
+	NSParameterAssert(member != nil);
 	NSParameterAssert(toNickname != nil);
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		IRCUser *member = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
-
-		if (member == nil) {
-			return;
-		}
-
 		IRCUserMutable *memberMutable = [member mutableCopy];
 
 		memberMutable.nickname = toNickname;

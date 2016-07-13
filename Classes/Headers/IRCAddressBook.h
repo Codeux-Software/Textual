@@ -44,6 +44,13 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookEntryType) {
 	IRCAddressBookUserTrackingEntryType
 };
 
+typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
+	IRCAddressBookUserTrackingUnknownStatus = 0,
+	IRCAddressBookUserTrackingSignedOffStatus,
+	IRCAddressBookUserTrackingSignedOnStatus,
+	IRCAddressBookUserTrackingIsAvailalbeStatus
+};
+
 /* Keys that can be accessed by -dictionaryValue. It is recommended to only access
  these keys as any other are used internally and may change without notice. */
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey;
@@ -84,6 +91,9 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKe
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary<NSString *, id> *)dictionaryValue;
+
+- (id)uniqueCopy;
+- (id)uniqueCopyMutable;
 
 - (BOOL)checkMatch:(NSString *)hostmask;
 @end
