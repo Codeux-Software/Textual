@@ -321,6 +321,12 @@
 		4C0BA6D01990798800857343 /* SmileyConverter.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C956893194A8862003D97FD /* SmileyConverter.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D11990798800857343 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D31990798800857343 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
+		4C0D977F1D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
+		4C0D97801D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
+		4C0D97811D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
+		4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; };
+		4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; };
+		4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; };
 		4C0DEB6C1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0DEB6B1D2B79050040DA91 /* IRCISupportInfoPrivate.h */; };
 		4C0DEB6D1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0DEB6B1D2B79050040DA91 /* IRCISupportInfoPrivate.h */; };
 		4C0DEB6E1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0DEB6B1D2B79050040DA91 /* IRCISupportInfoPrivate.h */; };
@@ -1854,6 +1860,8 @@
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOInternetAddressLookup.m; path = Library/TLOInternetAddressLookup.m; sourceTree = "<group>"; };
+		4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOInternetAddressLookup.h; path = Headers/TLOInternetAddressLookup.h; sourceTree = "<group>"; };
 		4C0DEB6B1D2B79050040DA91 /* IRCISupportInfoPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfoPrivate.h; path = Headers/Private/IRCISupportInfoPrivate.h; sourceTree = "<group>"; };
 		4C10B36A1D23247600868A74 /* TDCProgressIndicatorSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressIndicatorSheet.m; path = Dialogs/TDCProgressIndicatorSheet.m; sourceTree = "<group>"; };
 		4C10B3731D23249100868A74 /* TDCProgressIndicatorSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCProgressIndicatorSheetPrivate.h; path = Headers/Private/TDCProgressIndicatorSheetPrivate.h; sourceTree = "<group>"; };
@@ -3123,6 +3131,7 @@
 				4C8AF5D8158E99520026668C /* TLOFileLogger.m */,
 				4C8AF5DA158E99520026668C /* TLOGrowlController.m */,
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
+				4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */,
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
 				4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */,
 				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
@@ -3296,6 +3305,7 @@
 				4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */,
 				4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */,
 				4C8AF570158E99520026668C /* TLOGrowlController.h */,
+				4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */,
 				4C8AF572158E99520026668C /* TLOKeyEventHandler.h */,
 				4C8AF573158E99520026668C /* TLOLanguagePreferences.h */,
 				4C8AF574158E99520026668C /* TLOLinkParser.h */,
@@ -3782,6 +3792,7 @@
 				4C7B03251D12107500295E82 /* TPCThemeController.h in Headers */,
 				4C4A1AFA1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C4A1AF71D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
+				4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4CEA29C41D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C038F531D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C7B03261D12107500295E82 /* TPCThemeSettings.h in Headers */,
@@ -4131,6 +4142,7 @@
 				4C99A7311D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4CAAAE4E1D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h in Headers */,
 				4C7B04131D1210A800295E82 /* TVCMemberList.h in Headers */,
+				4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C7B49141D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
@@ -4356,6 +4368,7 @@
 				4C99A7321D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4CAAAE4F1D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h in Headers */,
 				4C7B04941D1210B000295E82 /* TVCMemberList.h in Headers */,
+				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C7B49151D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
@@ -5222,6 +5235,7 @@
 				4CF40E231AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CF40E3B1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
+				4C0D97801D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
 				4CF40DEB1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */,
 				4C74FBBF1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
@@ -5402,6 +5416,7 @@
 				4CF40DE21AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */,
 				4C0BA67C1990798800857343 /* TPCPreferencesUserDefaults.m in Sources */,
 				4CF40E2E1AC1A4AC00A26BE0 /* TVCMainWindowSegmentedControl.m in Sources */,
+				4C0D977F1D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
 				4CF40E721AC1A4AC00A26BE0 /* TVCMemberListCell.m in Sources */,
 				4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */,
 				4CF40E661AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */,
@@ -5524,6 +5539,7 @@
 				4C8AF6A4158E99520026668C /* IRCChannel.m in Sources */,
 				4C8AF6A5158E99520026668C /* IRCChannelConfig.m in Sources */,
 				4CF40E3C1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
+				4C0D97811D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
 				4CF40DEC1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */,
 				4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
