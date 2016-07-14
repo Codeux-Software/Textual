@@ -9196,7 +9196,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", connectDelay)];
 
-	[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:connectDelay];
+	[self performSelector:@selector(autoConnectAfterWakeUpPerformConnect) withObject:nil afterDelay:connectDelay];
 }
 
 - (void)autoConnectAfterWakeUpPerformConnect
