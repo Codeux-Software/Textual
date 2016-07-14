@@ -524,6 +524,16 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[TPCPreferences setTextEncryptionIsOpportunistic:value];
 }
+#else
+- (BOOL)textEncryptionIsOpportunistic
+{
+	return NO;
+}
+
+- (void)setTextEncryptionIsOpportunistic:(BOOL)value
+{
+	;
+}
 #endif
 
 - (BOOL)highlightCurrentNickname
