@@ -155,7 +155,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+#ifdef TXSystemIsOSXSierraOrLater
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context
+#else
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+#endif
 {
 	[self toggleSleepMode];
 }
