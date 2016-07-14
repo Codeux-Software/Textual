@@ -39,6 +39,8 @@
 #import "TPISystemProfiler.h"
 #import "TPI_SP_SysInfo.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPISystemProfiler ()
 @property (nonatomic, strong) NSView *preferencePaneView;
 
@@ -78,7 +80,7 @@
 /* Preference Pane */
 - (NSView *)pluginPreferencesPaneView
 {
-	return [self preferencePaneView];
+	return self.preferencePaneView;
 }
 
 - (NSString *)pluginPreferencesPaneMenuItemName
@@ -95,14 +97,16 @@
 {
 	BOOL featureEnabled = [RZUserDefaults() boolForKey:@"System Profiler Extension -> Request Model Information from Apple"];
 
-	if (featureEnabled) {
-		static BOOL _performedRequest = NO;
+	if (featureEnabled == NO) {
+		return;
+	}
 
-		if (_performedRequest == NO) {
-			_performedRequest = YES;
+	static BOOL _performedRequest = NO;
 
-			[[TPISystemProfilerModelIDRequestController sharedController] requestIdentifier];
-		}
+	if (_performedRequest == NO) {
+		_performedRequest = YES;
+
+		[[TPISystemProfilerModelIDRequestController sharedController] requestIdentifier];
 	}
 }
 
@@ -118,7 +122,7 @@
 
 - (void)printDebugInformation:(NSString *)message onClient:(IRCClient *)client inChannel:(IRCChannel *)channel
 {
-	NSArray *messages = [message split:NSStringNewlinePlaceholder];
+	NSArray *messages = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
 	for (NSString *messageSplit in messages) {
 		[client printDebugInformation:messageSplit inChannel:channel];
@@ -127,7 +131,7 @@
 
 - (void)sendMessage:(NSString *)message onClient:(IRCClient *)client toChannel:(IRCChannel *)channel
 {
-	NSArray *messages = [message split:NSStringNewlinePlaceholder];
+	NSArray *messages = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
 	for (NSString *messageSplit in messages) {
 		[client sendPrivmsg:messageSplit toChannel:channel];
@@ -138,33 +142,41 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	IRCChannel *channel = [mainWindow() selectedChannel];
+	IRCChannel *channel = mainWindow().selectedChannel;
 	
-	if (channel) {
-		if ([commandString isEqualToString:@"SYSINFO"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput systemInformation] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"MEMORY"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput applicationMemoryUsage] onClient:client toChannel:channel];
+	if (channel == nil) {
+		return;
+	}
 
-			[self printDebugInformation:[TPI_SP_CompiledOutput webKitFrameworkMemoryUsage] onClient:client inChannel:channel];
-		} else if ([commandString isEqualToString:@"UPTIME"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput applicationAndSystemUptime] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"NETSTATS"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput systemNetworkInformation] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput applicationBandwidthStatistics] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput systemDiskspaceInformation] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"STYLE"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput applicationActiveStyle] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"SCREENS"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput systemDisplayInformation] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput applicationRuntimeStatistics] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"SYSMEM"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput systemMemoryInformation] onClient:client toChannel:channel];
+	if ([commandString isEqualToString:@"SYSINFO"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput systemInformation] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"MEMORY"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput applicationMemoryUsage] onClient:client toChannel:channel];
+
+		NSString *webKitMemoryUse = [TPI_SP_CompiledOutput webKitFrameworkMemoryUsage];
+
+		if (webKitMemoryUse) {
+			[self printDebugInformation:webKitMemoryUse onClient:client inChannel:channel];
 		}
+	} else if ([commandString isEqualToString:@"UPTIME"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput applicationAndSystemUptime] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"NETSTATS"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput systemNetworkInformation] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput applicationBandwidthStatistics] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"DISKSPACE"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput systemDiskspaceInformation] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"STYLE"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput applicationActiveStyle] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"SCREENS"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput systemDisplayInformation] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput applicationRuntimeStatistics] onClient:client toChannel:channel];
+	} else if ([commandString isEqualToString:@"SYSMEM"]) {
+		[self sendMessage:[TPI_SP_CompiledOutput systemMemoryInformation] onClient:client toChannel:channel];
 	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

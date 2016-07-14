@@ -37,10 +37,14 @@
 
 #include "SystemProfiler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPISystemProfilerModelIDRequestController : NSObject
-+ (instancetype)sharedController;
++ (TPISystemProfilerModelIDRequestController *)sharedController;
 
 - (void)requestIdentifier;
 
-@property (readonly, copy) NSString *cachedIdentifier;
+@property (readonly, copy, nullable) NSString *cachedIdentifier;
 @end
+
+NS_ASSUME_NONNULL_END
