@@ -96,7 +96,7 @@
 				NSString *newstr = [EKBlowfishEncryption encodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding];
 
 				if ([newstr length] < 5) {
-					[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1023]") channel:targetChannel];
+					[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1023]") inChannel:targetChannel];
 				} else {
 					if (encodingCallback) {
 						encodingCallback(messageBody, YES);
@@ -143,10 +143,10 @@
 					NSString *newstr = [EKBlowfishEncryption decodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding lostBytes:&lostBytes];
 
 					if (newstr == nil) {
-						[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]") channel:targetChannel];
+						[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]") inChannel:targetChannel];
 					} else {
 						if (lostBytes > 0) {
-							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1031]", lostBytes) channel:targetChannel];
+							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1031]", lostBytes) inChannel:targetChannel];
 						}
 
 						if (NSObjectIsNotEmpty(newstr)) {
