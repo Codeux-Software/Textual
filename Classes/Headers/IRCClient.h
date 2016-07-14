@@ -195,8 +195,6 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)modifyWatchListBy:(BOOL)adding nicknames:(NSArray<NSString *> *)nicknames;
 
-- (BOOL)nicknameIsMyself:(NSString *)nickname;
-
 - (void)requestChannelList;
 
 - (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString;
@@ -227,6 +225,11 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (BOOL)nicknameIsZNCUser:(NSString *)nickname;
 - (nullable NSString *)nicknameAsZNCUser:(NSString *)nickname; // Returns nil if not connected to ZNC
+
+- (BOOL)nicknameIsMyself:(NSString *)nickname;
+
+- (BOOL)stringIsNickname:(NSString *)string;
+- (BOOL)stringIsChannelName:(NSString *)string;
 
 - (nullable IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)hostmask withMatches:(NSArray<NSString *> *)matches;
 
