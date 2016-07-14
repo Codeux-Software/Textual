@@ -186,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return @[@"privmsg"];
 }
 
-- (IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input forClient:(IRCClient *)client
+- (nullable IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
 	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule] == NO) {
 		return input;
@@ -204,7 +204,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return input;
 }
 
-- (IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input forClient:(IRCClient *)client
+- (nullable IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
 	/* Define user information */
 	NSMutableArray *paramsMutable = [input.params mutableCopy];
@@ -360,7 +360,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return inputMutable;
 }
 
-- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
+- (nullable IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
 	if (input.paramsCount != 2) {
 		return input;

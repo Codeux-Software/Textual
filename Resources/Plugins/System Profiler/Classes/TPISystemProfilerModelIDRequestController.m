@@ -104,7 +104,7 @@ NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> Syst
 	/* Cached failed, check with Apple */
 	self.internalObject = [TPISystemProfilerModelIDRequestControllerInternal new];
 
-	[self.internalObject setSerialNumberValue:serialNumber];
+	[self.internalObject setSerialNumber:serialNumber];
 
 	[self.internalObject setupConnectionRequest];
 }
@@ -282,7 +282,7 @@ NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> Syst
 	[self tearDownInternalObject];
 }
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName attributes:(NSDictionary<NSString *, NSString *> *)attributeDict;
 {
 	if ([elementName isEqualToString:@"configCode"] == NO) {
 		return;
@@ -300,7 +300,7 @@ NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> Syst
 	[self.modelInformation appendString:string];
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName
 {
 	if ([elementName isEqualToString:@"configCode"] == NO) {
 		return;
