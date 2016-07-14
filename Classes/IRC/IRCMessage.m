@@ -243,6 +243,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		senderInfo = [senderInfo substringFromIndex:1];
 
 		[self parseSender:senderInfo forClient:client];
+	} else {
+		/* If the line does not have a sender, then we use the 
+		 server address as the sender. If that isn't known, then
+		 we use the the address the user has configured. */
+		NSString *serverAddress = client.serverAddress;
+
+		IRCPrefixMutable *sender = [IRCPrefixMutable new];
+
+		sender.nickname = serverAddress;
+
+		sender.hostmask = serverAddress;
+
+		sender.isServer = YES;
+
+		self->_sender = [sender copy];
 	}
 
 	/* Parse command */

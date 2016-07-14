@@ -136,8 +136,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)setNickname:(nullable NSString *)nickname
+- (void)setNickname:(NSString *)nickname
 {
+	NSParameterAssert(nickname != nil);
+
 	if (self->_nickname != nickname) {
 		self->_nickname = [nickname copy];
 	}
@@ -157,8 +159,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)setHostmask:(nullable NSString *)hostmask
+- (void)setHostmask:(NSString *)hostmask
 {
+	NSParameterAssert(hostmask != nil);
+
 	if (self->_hostmask != hostmask) {
 		self->_hostmask = [hostmask copy];
 	}
