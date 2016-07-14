@@ -40,19 +40,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* It is possible (though very rare) that -nickname is nil. */
-/* Most content with a nil nickname is ignored. The PING command 
- is pretty much the only exception. */
-
 #pragma mark -
 #pragma mark Immutable Object
 
 @interface IRCPrefix : NSObject <NSCopying, NSMutableCopying>
 @property (readonly) BOOL isServer;
-@property (readonly, copy, nullable) NSString *nickname;
+@property (readonly, copy) NSString *nickname;
 @property (readonly, copy, nullable) NSString *username;
 @property (readonly, copy, nullable) NSString *address;
-@property (readonly, copy, nullable) NSString *hostmask;
+@property (readonly, copy) NSString *hostmask;
 @end
 
 #pragma mark -
@@ -60,10 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCPrefixMutable : IRCPrefix
 @property (nonatomic, assign, readwrite) BOOL isServer;
-@property (nonatomic, copy, readwrite, nullable) NSString *nickname;
+@property (nonatomic, copy, readwrite) NSString *nickname;
 @property (nonatomic, copy, readwrite, nullable) NSString *username;
 @property (nonatomic, copy, readwrite, nullable) NSString *address;
-@property (nonatomic, copy, readwrite, nullable) NSString *hostmask;
+@property (nonatomic, copy, readwrite) NSString *hostmask;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -123,7 +123,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, copy, readwrite) NSArray<IRCHighlightLogEntry *> *cachedHighlights;
 @property (nonatomic, copy, readwrite, nullable) NSString *userHostmask;
 @property (nonatomic, copy, readwrite) NSString *userNickname;
-@property (nonatomic, copy, readwrite, nullable) NSString *serverAddress;
+@property (nonatomic, copy, readwrite) NSString *serverAddress;
 @property (nonatomic, copy, readwrite, nullable) NSString *preAwayUserNickname;
 
 // Properties private
@@ -628,9 +628,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.config.connectionName;
 }
 
-- (nullable NSString *)serverAddress
+- (NSString *)serverAddress
 {
-	return self.supportInfo.serverAddress;
+	NSString *serverAddress = self.supportInfo.serverAddress;
+
+	if (serverAddress) {
+		return serverAddress;
+	}
+
+	NSString *serverAddressOnSocket = self.socket.config.serverAddress;
+
+	if (serverAddressOnSocket) {
+		return serverAddressOnSocket;
+	}
+
+	return self.config.serverAddress;
 }
 
 - (NSString *)userNickname
