@@ -37,6 +37,8 @@
 
 #include "SystemProfiler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPI_SP_CompiledOutput : NSObject
 + (NSString *)applicationActiveStyle;
 + (NSString *)applicationAndSystemUptime;
@@ -48,33 +50,7 @@
 + (NSString *)systemInformation;
 + (NSString *)systemMemoryInformation;
 + (NSString *)systemNetworkInformation;
-+ (NSString *)webKitFrameworkMemoryUsage;
++ (nullable NSString *)webKitFrameworkMemoryUsage;
 @end
 
-@interface TPI_SP_SysInfo : NSObject
-+ (NSString *)model;
-
-+ (NSString *)processor;
-+ (NSUInteger)processorPhysicalCoreCount;
-+ (NSUInteger)processorVirtualCoreCount;
-+ (NSString *)processorClockSpeed;
-
-+ (NSInteger)systemUptime;
-+ (NSInteger)applicationUptime;
-
-+ (TXUnsignedLongLong)freeMemorySize;
-+ (TXUnsignedLongLong)totalMemorySize;
-
-+ (NSInteger)applicationMemoryInformation;
-
-+ (NSString *)formattedGraphicsCardInformation;
-+ (NSString *)formattedLocalVolumeDiskUsage;
-+ (NSString *)formattedTotalMemorySize;
-+ (NSString *)formattedDiskSize:(TXUnsignedLongLong)size;
-+ (NSString *)formattedCPUFrequency:(double)rate;
-
-+ (NSInteger)memoryUseForProcess:(pid_t)processIdentifier;
-
-+ (NSArray *)webViewProcessIdentifiers;
-+ (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem;
-@end
+NS_ASSUME_NONNULL_END

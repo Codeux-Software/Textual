@@ -37,18 +37,18 @@
 
 #import "TPISystemProfilerModelIDRequestController.h"
 
-/* This is a sloppy, self-contained mess which I wrote in 1 hour. Give me a break! */
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Private Declarations
 
 #define _requestTimeoutInterval			30.0
 
-NSString * const _userDefaultsModelCacheKey		= @"Private Extension Store -> System Profiler Extension -> Cached Model Identifier Value";
-NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> System Profiler Extension -> Cached Serial Number Value";
+NSString * const _userDefaultsModelCacheKey	= @"Private Extension Store -> System Profiler Extension -> Cached Model Identifier Value";
+NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> System Profiler Extension -> Cached Serial Number Value";
 
 @interface TPISystemProfilerModelIDRequestController ()
-@property (nonatomic, strong) id internalObject;
+@property (nonatomic, strong, nullable) id internalObject;
 
 - (void)tearDownInternalObject;
 @end
@@ -56,11 +56,11 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 @interface TPISystemProfilerModelIDRequestControllerInternal : NSObject <NSXMLParserDelegate, NSURLConnectionDelegate>
 @property (nonatomic, assign) BOOL xmlParserIsOnTargetElement; /* We are only targetting a single value so a BOOL is enough. */
 @property (nonatomic, strong) NSXMLParser *xmlParserObject;
-@property (nonatomic, strong) NSMutableString *xmlParsedTemporaryStore;
-@property (nonatomic, strong) NSMutableData *responseData;
+@property (nonatomic, strong) NSMutableString *modelInformation;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
-@property (nonatomic, copy) NSString *serialNumberValue;
+@property (nonatomic, strong) NSMutableData *requestResponseData;
+@property (nonatomic, copy) NSString *serialNumber;
 
 - (void)setupConnectionRequest;
 @end
@@ -70,7 +70,7 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 
 @implementation TPISystemProfilerModelIDRequestController
 
-+ (instancetype)sharedController
++ (TPISystemProfilerModelIDRequestController *)sharedController
 {
 	static id sharedSelf = nil;
 
@@ -85,53 +85,59 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 
 - (void)requestIdentifier
 {
-	/* Check cache before requesting a new identifier */
-	NSString *currentSerial = [self serialNumberCharacters];
+	NSString *serialNumber = [self serialNumberCharacters];
 
-	id cachedValue = [RZUserDefaults() objectForKey:_userDefaultsModelCacheKey];
+	id cachedModel = [RZUserDefaults() objectForKey:_userDefaultsModelCacheKey];
 
-	if (cachedValue) {
-		id cachedSerialNumber = [RZUserDefaults() objectForKey:_userDefaultsSerialCacheKey];
+	id cachedSerialNumber = [RZUserDefaults() objectForKey:_userDefaultsSerialCacheKey];
 
-		if (cachedSerialNumber) {
-			if ([cachedSerialNumber isEqual:currentSerial]) {
-				return; // Matching serial numbers...
-			} else {
-				/* Invalidate cache. */
-				[RZUserDefaults() removeObjectForKey:_userDefaultsModelCacheKey];
+	if (cachedModel != nil && cachedSerialNumber != nil) {
+		if ([cachedSerialNumber isEqual:serialNumber]) {
+			return;
+		} else {
+			[RZUserDefaults() removeObjectForKey:_userDefaultsModelCacheKey];
 
-				[RZUserDefaults() removeObjectForKey:_userDefaultsSerialCacheKey];
-			}
+			[RZUserDefaults() removeObjectForKey:_userDefaultsSerialCacheKey];
 		}
 	}
 
 	/* Cached failed, check with Apple */
-	[self setInternalObject:[TPISystemProfilerModelIDRequestControllerInternal new]];
+	self.internalObject = [TPISystemProfilerModelIDRequestControllerInternal new];
 
-	[[self internalObject] setSerialNumberValue:currentSerial];
-	[[self internalObject] setupConnectionRequest];
+	[self.internalObject setSerialNumberValue:serialNumber];
+
+	[self.internalObject setupConnectionRequest];
 }
 
-- (NSString *)cachedIdentifier
+- (nullable NSString *)cachedIdentifier
 {
 	return [RZUserDefaults() objectForKey:_userDefaultsModelCacheKey];
 }
 
 - (void)tearDownInternalObject
 {
-	[self setInternalObject:nil];
+	self.internalObject = nil;
 }
 
-- (NSString *)serialNumberCharacters
+- (nullable NSString *)serialNumberCharacters
 {
-	/* Retrieve serial number of this Mac. */
+	/* For those concerned about security, take note of the following:
+	 This method reads your Mac's serial number, but only uses the last
+	 few characters in it are used. Those last few characters are what 
+	 is sent to Apple. The characters are the same for every Mac of the 
+	 same model and does not uniquely identify you. */
+	/* This is the same request that the About My Mac dialog performs. */
+	/* The reason that a dictionary of these values is not maintained is
+	 because this approach allows the model to be obtained without 
+	 updating the dictionary every time there is a new model. */
+
+	/* Retrieve serial number of this Mac */
 	NSString *serial = nil;
 
 	io_service_t platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"));
 
 	if (platformExpert) {
 		CFTypeRef serialNumberAsCFString =
-
 		IORegistryEntryCreateCFProperty(platformExpert, CFSTR(kIOPlatformSerialNumberKey), kCFAllocatorDefault, 0);
 
 		if (serialNumberAsCFString) {
@@ -141,13 +147,16 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 		IOObjectRelease(platformExpert);
 	}
 
-	/* The format of serial numbers changed a few years back so we check length
-	 to know how many characters to give Apple. This entire thing is a hack. */
-	if ([serial length] == 11) {
-		serial = [serial substringFromIndex:([serial length] - 3)];
-	} else if ([serial length] == 12) {
-		serial = [serial substringFromIndex:([serial length] - 4)];
+	/* The format of serial numbers changed a few years back so we 
+	 check length to know how many characters to give Apple. */
+	if (serial.length == 11) {
+		serial = [serial substringFromIndex:(serial.length - 3)];
+	} else if (serial.length == 12) {
+		serial = [serial substringFromIndex:(serial.length - 4)];
 	} else {
+		/* If the serial number length is unexpected, then do not
+		 return it at all incase it may identify the sender. */
+
 		serial = nil;
 	}
 
@@ -155,6 +164,8 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 }
 
 @end
+
+#pragma mark -
 
 @implementation TPISystemProfilerModelIDRequestControllerInternal
 
@@ -180,40 +191,41 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 
 - (void)destroyConnectionRequest
 {
-	if ( [self requestConnection]) {
-		[[self requestConnection] cancel];
+	if ( self.requestConnection) {
+		[self.requestConnection cancel];
 	}
 
-	[self setRequestConnection:nil];
-	[self setRequestResponse:nil];
-	[self setResponseData:nil];
+	self.requestConnection = nil;
+	self.requestResponse = nil;
+	self.requestResponseData = nil;
 }
 
 - (void)setupConnectionRequest
 {
-	[self setResponseData:[NSMutableData data]];
+	self.requestResponseData = [NSMutableData data];
 
 	NSURL *requestURL = [NSURL URLWithString:[self addressSourceURL]];
 
-	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
-															   cachePolicy:NSURLRequestReloadIgnoringCacheData
-														   timeoutInterval:_requestTimeoutInterval];
+	NSMutableURLRequest *baseRequest =
+	[NSMutableURLRequest requestWithURL:requestURL
+							cachePolicy:NSURLRequestReloadIgnoringCacheData
+						timeoutInterval:_requestTimeoutInterval];
 
-	[baseRequest setHTTPMethod:@"GET"];
+	baseRequest.HTTPMethod = @"GET";
 
 	NSURLConnection *reqeust = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
-	[self setRequestConnection:reqeust];
+	self.requestConnection = reqeust;
 
-	[[self requestConnection] start];
+	[self.requestConnection start];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	BOOL isValidResponse = ([[self requestResponse] statusCode] == 200);
+	BOOL isValidResponse = (self.requestResponse.statusCode == 200);
 
 	if (isValidResponse) {
-		[self didRecieveXMLData:[self responseData]];
+		[self didRecieveXMLData:self.requestResponseData];
 	} else {
 		[self tearDownInternalObject];
 	}
@@ -223,24 +235,24 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	[self destroyConnectionRequest]; // Destroy the existing request.
+	[self destroyConnectionRequest];
 
 	[self tearDownInternalObject];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-	[[self responseData] appendData:data];
+	[self.requestResponseData appendData:data];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	[self setRequestResponse:(id)response]; // Save a reference to our response.
+	self.requestResponse = (id)response; // Save a reference to our response.
 }
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+- (nullable NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
 {
-	return nil; /* Do not return any cache. */
+	return nil; /* Do not return any cache */
 }
 
 #pragma mark -
@@ -248,50 +260,59 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 
 - (void)didRecieveXMLData:(NSData *)incomingData
 {
+	self.modelInformation = [NSMutableString string];
+
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:incomingData];
 
-	[self setXmlParserObject:parser];
-
-	[self setXmlParsedTemporaryStore:[NSMutableString string]];
-
-	[parser setDelegate:self];
+	parser.delegate = self;
 
 	[parser parse];
+
+	self.xmlParserObject = parser;
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-	[self setXmlParserIsOnTargetElement:NO];
+	self.xmlParserIsOnTargetElement = NO;
 
-	[self setXmlParserObject:nil];
-	[self setXmlParsedTemporaryStore:nil];
+	self.xmlParserObject = nil;
+
+	self.modelInformation = nil;
 
 	[self tearDownInternalObject];
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-	if ([elementName isEqualToString:@"configCode"]) {
-		[self setXmlParserIsOnTargetElement:YES];
+	if ([elementName isEqualToString:@"configCode"] == NO) {
+		return;
 	}
+
+	self.xmlParserIsOnTargetElement = YES;
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-	if ([self xmlParserIsOnTargetElement]) {
-		[[self xmlParsedTemporaryStore] appendString:string];
+	if (self.xmlParserIsOnTargetElement == NO) {
+		return;
 	}
+
+	[self.modelInformation appendString:string];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-	if ([elementName isEqualToString:@"configCode"]) {
-		[RZUserDefaults() setObject:[self xmlParsedTemporaryStore] forKey:_userDefaultsModelCacheKey];
-
-		[RZUserDefaults() setObject:[self serialNumberValue] forKey:_userDefaultsSerialCacheKey];
-
-		[self setXmlParserIsOnTargetElement:NO];
+	if ([elementName isEqualToString:@"configCode"] == NO) {
+		return;
 	}
+
+	[RZUserDefaults() setObject:self.modelInformation forKey:_userDefaultsModelCacheKey];
+
+	[RZUserDefaults() setObject:self.serialNumber forKey:_userDefaultsSerialCacheKey];
+
+	self.xmlParserIsOnTargetElement = NO;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

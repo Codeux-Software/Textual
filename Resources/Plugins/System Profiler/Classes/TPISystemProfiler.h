@@ -37,5 +37,9 @@
 
 #include "SystemProfiler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPISystemProfiler : NSObject <THOPluginProtocol>
 @end
+
+NS_ASSUME_NONNULL_END

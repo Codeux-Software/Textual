@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -39,6 +39,8 @@
 
 #import "TPISystemProfilerModelIDRequestController.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define _localVolumeBaseDirectory		@"/Volumes"
 
 #define _systemMemoryDivisor			1.073741824
@@ -50,7 +52,35 @@
 @interface TPI_SP_WebViewProcessInfo : NSObject
 @property (nonatomic, assign) pid_t processIdentifier;
 @property (nonatomic, assign) TXUnsignedLongLong processMemoryUse;
-@property (nonatomic, strong) NSArray *processViewNames;
+@property (nonatomic, strong) NSArray<NSString *> *processViewNames;
+@end
+
+@interface TPI_SP_SysInfo : NSObject
++ (nullable NSString *)modelIdentifier;
+
++ (nullable NSString *)processor;
++ (NSUInteger)processorPhysicalCoreCount;
++ (NSUInteger)processorVirtualCoreCount;
++ (nullable NSString *)processorClockSpeed;
+
++ (NSTimeInterval)systemUptime;
++ (NSTimeInterval)applicationUptime;
+
++ (TXUnsignedLongLong)freeMemorySize;
++ (TXUnsignedLongLong)totalMemorySize;
+
++ (TXUnsignedLongLong)applicationMemoryInformation;
+
++ (nullable NSString *)formattedGraphicsCardInformation;
++ (nullable NSString *)formattedLocalVolumeDiskUsage;
++ (NSString *)formattedTotalMemorySize;
++ (NSString *)formattedDiskSize:(TXUnsignedLongLong)diskSize;
++ (NSString *)formattedCPUFrequency:(double)frequency;
+
++ (TXUnsignedLongLong)memoryUseForProcess:(pid_t)processIdentifier;
+
++ (NSArray<TPI_SP_WebViewProcessInfo *> *)webViewProcessIdentifiers;
++ (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem;
 @end
 
 @implementation TPI_SP_CompiledOutput
@@ -59,16 +89,16 @@
 {
 	NSMutableString *resultString = [NSMutableString string];
 
-	NSString *fname = [themeController() name];
+	NSString *themeName = themeController().name;
 	
-	TPCThemeControllerStorageLocation storageLocation = [themeController() storageLocation];
+	TPCThemeControllerStorageLocation storageLocation = themeController().storageLocation;
 	
     if (storageLocation == TPCThemeControllerStorageBundleLocation) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1033]", fname)];
+		[resultString appendString:TPILocalizedString(@"BasicLanguage[1033]", themeName)];
     } else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1034]", fname)];
+		[resultString appendString:TPILocalizedString(@"BasicLanguage[1034]", themeName)];
     } else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1035]", fname)];
+		[resultString appendString:TPILocalizedString(@"BasicLanguage[1035]", themeName)];
 	}
 
 	if ([TPCPreferences invertSidebarColors] == NO) {
@@ -91,12 +121,12 @@
 		}
 	}
 
-	return resultString;
+	return [resultString copy];
 }
 
 + (NSString *)applicationAndSystemUptime
 {
-	NSInteger dateFormat = (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond);
+	NSUInteger dateFormat = (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond);
 	
 	NSString *systemUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], NO, dateFormat);
 	NSString *textualUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo applicationUptime], NO, dateFormat);
@@ -106,27 +136,27 @@
 
 + (NSString *)applicationBandwidthStatistics
 {
-	IRCClient *client = [mainWindow() selectedClient];
+	IRCClient *client = mainWindow().selectedClient;
 
-	NSTimeInterval lastMsg = [NSDate timeIntervalSinceNow:[client lastMessageReceived]];
+	NSTimeInterval lastMessage = [NSDate timeIntervalSinceNow:client.lastMessageReceived];
 	
 	return TPILocalizedString(@"BasicLanguage[1049]",
-				  TXFormattedNumber([worldController() messagesSent]),
-				  TXFormattedNumber([worldController() messagesReceived]),
-				  TXHumanReadableTimeInterval(lastMsg, YES, NSCalendarUnitSecond),
-				  [TPI_SP_SysInfo formattedDiskSize:[worldController() bandwidthIn]],
-				  [TPI_SP_SysInfo formattedDiskSize:[worldController() bandwidthOut]]);
+			  TXFormattedNumber(worldController().messagesSent),
+			  TXFormattedNumber(worldController().messagesReceived),
+			  TXHumanReadableTimeInterval(lastMessage, YES, NSCalendarUnitSecond),
+			  [TPI_SP_SysInfo formattedDiskSize:worldController().bandwidthIn],
+			  [TPI_SP_SysInfo formattedDiskSize:worldController().bandwidthOut]);
 }
 
 + (NSString *)applicationMemoryUsage
 {
-	NSInteger totalScrollbackSize = 0;
+	NSUInteger totalScrollbackSize = 0;
 
-	for (IRCClient *u in [worldController() clientList]) {
-		totalScrollbackSize += [[u viewController] numberOfLines];
+	for (IRCClient *u in worldController().clientList) {
+		totalScrollbackSize += u.viewController.numberOfLines;
 
-		for (IRCChannel *c in [u channelList]) {
-			totalScrollbackSize += [[c viewController] numberOfLines];
+		for (IRCChannel *c in u.channelList) {
+			totalScrollbackSize += c.viewController.numberOfLines;
 		}
 	}
 
@@ -137,58 +167,58 @@
 		 TXFormattedNumber(totalScrollbackSize));
 }
 
-+ (NSString *)webKitFrameworkMemoryUsage
++ (nullable NSString *)webKitFrameworkMemoryUsage
 {
-	if ([TPCPreferences webKit2Enabled]) {
-		NSArray *webViewProcesses = [TPI_SP_SysInfo webViewProcessIdentifiers];
-
-		if ([webViewProcesses count] == 0) {
-			return nil;
-		}
-
-		TPI_SP_WebViewProcessInfo *topProcess = webViewProcesses[0];
-
-		NSArray *viewNameArray = [topProcess processViewNames];
-
-		if ([viewNameArray count] == 0) {
-			return nil;
-		}
-
-		NSString *viewName = [viewNameArray componentsJoinedByString:@", "];
-
-		NSMutableString *resultString = [NSMutableString string];
-
-		if ([viewNameArray count] == 1) {
-			[resultString appendString:
-			 TPILocalizedString(@"BasicLanguage[1052]",
-				[topProcess processIdentifier],
-				 viewName,
-				[TPI_SP_SysInfo formattedDiskSize:[topProcess processMemoryUse]])];
-		} else {
-			[resultString appendString:
-			 TPILocalizedString(@"BasicLanguage[1053]",
-				[topProcess processIdentifier],
-				 viewName,
-				[TPI_SP_SysInfo formattedDiskSize:[topProcess processMemoryUse]])];
-		}
-
-		[resultString appendString:NSStringNewlinePlaceholder];
-
-		TXUnsignedLongLong totalMemoryUse = 0;
-
-		for (TPI_SP_WebViewProcessInfo *processInfo in webViewProcesses) {
-			totalMemoryUse += [processInfo processMemoryUse];
-		}
-
-		[resultString appendString:
-		 TPILocalizedString(@"BasicLanguage[1054]",
-			[webViewProcesses count],
-			[TPI_SP_SysInfo formattedDiskSize:totalMemoryUse])];
-
-		return [resultString copy];
+	if ([TPCPreferences webKit2Enabled] == NO) {
+		return nil;
 	}
 
-	return nil;
+	NSArray *webViewProcesses = [TPI_SP_SysInfo webViewProcessIdentifiers];
+
+	if (webViewProcesses.count == 0) {
+		return nil;
+	}
+
+	TPI_SP_WebViewProcessInfo *topProcess = webViewProcesses[0];
+
+	NSArray *viewNameArray = topProcess.processViewNames;
+
+	if (viewNameArray.count == 0) {
+		return nil;
+	}
+
+	NSString *viewName = [viewNameArray componentsJoinedByString:@", "];
+
+	NSMutableString *resultString = [NSMutableString string];
+
+	if (viewNameArray.count == 1) {
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1052]",
+			topProcess.processIdentifier,
+			 viewName,
+			[TPI_SP_SysInfo formattedDiskSize:topProcess.processMemoryUse])];
+	} else {
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1053]",
+			topProcess.processIdentifier,
+			 viewName,
+			[TPI_SP_SysInfo formattedDiskSize:topProcess.processMemoryUse])];
+	}
+
+	[resultString appendString:NSStringNewlinePlaceholder];
+
+	TXUnsignedLongLong totalMemoryUse = 0;
+
+	for (TPI_SP_WebViewProcessInfo *processInfo in webViewProcesses) {
+		totalMemoryUse += processInfo.processMemoryUse;
+	}
+
+	[resultString appendString:
+	 TPILocalizedString(@"BasicLanguage[1054]",
+		webViewProcesses.count,
+		[TPI_SP_SysInfo formattedDiskSize:totalMemoryUse])];
+
+	return [resultString copy];
 }
 
 + (NSString *)applicationRuntimeStatistics
@@ -202,356 +232,308 @@
 	}
 
 	return TPILocalizedString(@"BasicLanguage[1047]",
-				  TXFormattedNumber([TPCApplicationInfo applicationRunCount]),
-				  TXHumanReadableTimeInterval(runtime, NO, 0));
+			TXFormattedNumber([TPCApplicationInfo applicationRunCount]),
+			TXHumanReadableTimeInterval(runtime, NO, 0));
 }
 
 + (NSString *)systemDiskspaceInformation
 {
-	NSMutableString *result = [NSMutableString string];
+	NSMutableString *resultString = [NSMutableString string];
 
-	NSArray *drives = [RZFileManager() contentsOfDirectoryAtPath:_localVolumeBaseDirectory error:NULL];
+	NSArray *volumeAttributes = @[NSURLVolumeNameKey, NSURLVolumeTotalCapacityKey, NSURLVolumeAvailableCapacityKey];
 
-	NSInteger objectIndex = 0;
+	NSArray *volumes = [RZFileManager() mountedVolumeURLsIncludingResourceValuesForKeys:volumeAttributes options:NSVolumeEnumerationSkipHiddenVolumes];
 
-	for (NSString *name in drives) {
-		NSString *fullpath = [_localVolumeBaseDirectory stringByAppendingPathComponent:name];
+	[volumes enumerateObjectsUsingBlock:^(NSURL *volume, NSUInteger index, BOOL *stop) {
+		NSString *volumeName = [volume resourceValueForKey:NSURLVolumeNameKey];
 
-		FSRef fsRef;
-		FSCatalogInfo catalogInfo;
+		TXUnsignedLongLong totalSpace = [[volume resourceValueForKey:NSURLVolumeTotalCapacityKey] longLongValue];;
+		TXUnsignedLongLong freeSpace = [[volume resourceValueForKey:NSURLVolumeAvailableCapacityKey] longLongValue];
 
-		struct statfs stat;
-
-		const char *fsRep = [fullpath fileSystemRepresentation];
-		
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-		if ((FSPathMakeRef((const UInt8 *)fsRep, &fsRef, NULL) == 0) == NO) {
-			continue;
+		if (index == 0) {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1022]", volumeName,
+										[TPI_SP_SysInfo formattedDiskSize:totalSpace],
+										[TPI_SP_SysInfo formattedDiskSize:freeSpace])];
+		} else {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1023]", volumeName,
+										 [TPI_SP_SysInfo formattedDiskSize:totalSpace],
+										 [TPI_SP_SysInfo formattedDiskSize:freeSpace])];
 		}
+	}];
 
-		if ((FSGetCatalogInfo(&fsRef, kFSCatInfoParentDirID, &catalogInfo, NULL, NULL, NULL) == 0) == NO) {
-			continue;
-		}
-TEXTUAL_IGNORE_DEPRECATION_END
-		
-		BOOL isVolume = (catalogInfo.parentDirID == fsRtParID);
-
-		if (isVolume) {
-			if (statfs(fsRep, &stat) == 0) {
-				NSString *fileSystemName = [RZFileManager() stringWithFileSystemRepresentation:stat.f_fstypename length:strlen(stat.f_fstypename)];
-
-				if ([fileSystemName isEqualToString:@"hfs"]) {
-					NSDictionary *diskInfo = [RZFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
-
-					if (diskInfo) {
-						TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
-						TXUnsignedLongLong freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
-
-						if (objectIndex == 0) {
-							[result appendString:TPILocalizedString(@"BasicLanguage[1022]", name,
-														[TPI_SP_SysInfo formattedDiskSize:totalSpace],
-														[TPI_SP_SysInfo formattedDiskSize:freeSpace])];
-						} else {
-							[result appendString:TPILocalizedString(@"BasicLanguage[1023]", name,
-														[TPI_SP_SysInfo formattedDiskSize:totalSpace],
-														[TPI_SP_SysInfo formattedDiskSize:freeSpace])];
-						}
-
-						objectIndex++;
-					}
-				}
-			}
-		}
-	}
-
-	if (NSObjectIsEmpty(result)) {
+	if (resultString.length == 0) {
 		return TPILocalizedString(@"BasicLanguage[1024]");
 	} else {
-		return TPILocalizedString(@"BasicLanguage[1021]", result);
+		return TPILocalizedString(@"BasicLanguage[1021]", resultString);
 	}
 }
 
 + (NSString *)systemDisplayInformation
 {
+	NSMutableString *rsultString = [NSMutableString string];
+
 	NSArray *screens = [NSScreen screens];
 
-	if ([screens count] == 1) {
-		NSScreen *maiScreen = RZMainScreen();
+	[screens enumerateObjectsUsingBlock:^(NSScreen *screen, NSUInteger index, BOOL *stop) {
+		NSInteger screenNumber = (index + 1);
 
-		NSString *result = TPILocalizedString(@"BasicLanguage[1040]",
-								  [maiScreen frame].size.width,
-								  [maiScreen frame].size.height);
+		NSString *localization = nil;
 
-		if ([maiScreen runningInHighResolutionMode]) {
-			result = [result stringByAppendingString:TPILocalizedString(@"BasicLanguage[1043]")];
-		}
-
-		return result;
-	} else {
-		NSMutableString *result = [NSMutableString string];
-
-		for (NSScreen *screen in screens) {
-			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
-
-			if (screenNumber == 1) {
-				[result appendString:TPILocalizedString(@"BasicLanguage[1041]",
-											screenNumber,
-											[screen frame].size.width,
-											[screen frame].size.height)];
+		if (screenNumber == 1) {
+			if (screens.count == 1) {
+				localization = @"BasicLanguage[1040]";
 			} else {
-				[result appendString:TPILocalizedString(@"BasicLanguage[1042]",
-											screenNumber,
-											[screen frame].size.width,
-											[screen frame].size.height)];
+				localization = @"BasicLanguage[1041]";
 			}
-
-			if ([screen runningInHighResolutionMode]) {
-				[result appendString:TPILocalizedString(@"BasicLanguage[1043]")];
-			}
+		} else {
+			localization = @"BasicLanguage[1042]";
 		}
 
-		return result;
-	}
+		[rsultString appendString:
+		 TPILocalizedString(localization,
+			screenNumber,
+			screen.frame.size.width,
+			screen.frame.size.height)];
+
+		if (screen.runningInHighResolutionMode) {
+			[rsultString appendString:TPILocalizedString(@"BasicLanguage[1043]")];
+		}
+	}];
+
+	return [rsultString copy];
 }
 
 + (NSString *)systemInformation
 {
-	NSString *sysinfo = TPILocalizedString(@"BasicLanguage[1001]");
+	BOOL showCPUModel = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> CPU Model"] == NO);
+	BOOL showGPUModel = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> GPU Model"] == NO);
+	BOOL showDiskInfo = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Disk Information"] == NO);
+	BOOL showMemory = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Memory Information"] == NO);
+	BOOL showOperatingSystem = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> OS Version"] == NO);
+	BOOL showScreenResolution = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] == NO);
+	BOOL showUptime = ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> System Uptime"] == NO);
 
-	NSString *_new = nil;
+	NSMutableString *resultString = [NSMutableString string];
 
-	NSString *_model			= [TPI_SP_SysInfo model];
-	NSString *_cpu_model		= [TPI_SP_SysInfo processor];
-	NSString *_cpu_speed		= [TPI_SP_SysInfo processorClockSpeed];
+	[resultString appendString:TPILocalizedString(@"BasicLanguage[1001]")];
 
-	NSUInteger _cpu_count_p		= [TPI_SP_SysInfo processorPhysicalCoreCount];
-	NSUInteger _cpu_count_v		= [TPI_SP_SysInfo processorVirtualCoreCount];
+	NSString *modelIdentifier = [TPI_SP_SysInfo modelIdentifier];
 
-	NSString *_memory		= [TPI_SP_SysInfo formattedTotalMemorySize];
-	NSString *_gpu_model	= [TPI_SP_SysInfo formattedGraphicsCardInformation];
+	if (modelIdentifier.length > 0) {
+		NSString *modelTitle = nil;
 
-	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
+		NSString *modelTitleApple = [TPISystemProfilerModelIDRequestController sharedController].cachedIdentifier;
 
-	_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSStringWhitespacePlaceholder];
-	_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSStringWhitespacePlaceholder];
-
-	_cpu_model = [_cpu_model trim];
-
-	BOOL _show_cpu_model	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> CPU Model"] == NO);
-	BOOL _show_gpu_model	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> GPU Model"] == NO);
-	BOOL _show_diskinfo		= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Disk Information"] == NO);
-	BOOL _show_sys_uptime	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> System Uptime"] == NO);
-	BOOL _show_sys_memory	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Memory Information"] == NO);
-	BOOL _show_screen_res	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] == NO);
-	BOOL _show_os_version	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> OS Version"] == NO);
-
-	/* Mac Model. */
-	if (NSObjectIsNotEmpty(_model)) {
-		NSString *_exact_model = nil;
-
-		NSString *_realModel = [[TPISystemProfilerModelIDRequestController sharedController] cachedIdentifier];
-
-		if (_realModel) {
-			_exact_model = _realModel;
+		if (modelTitleApple) {
+			modelTitle = modelTitleApple;
 		} else {
-			NSString *_all_models_path = [_bundle pathForResource:@"MacintoshModels" ofType:@"plist"];
+			NSString *modelsDictionaryPath = [TPIBundleFromClass() pathForResource:@"MacintoshModels" ofType:@"plist"];
 
-			NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:_all_models_path];
+			NSDictionary *modelsDictionary = [NSDictionary dictionaryWithContentsOfFile:modelsDictionaryPath];
 
-			if (NSObjectIsEmpty(_all_models)) {
-				NSAssert(NO, @"_all_models");
-			}
-
-			if ([_model hasPrefix:@"VMware"]) {
-				_exact_model = _all_models[@"VMware"];
-			} else if ([_model hasPrefix:@"Parallels"]) {
-				_exact_model = _all_models[@"Parallels"];
+			if ([modelIdentifier hasPrefix:@"VMware"]) {
+				modelTitle = modelsDictionary[@"VMware"];
+			} else if ([modelIdentifier hasPrefix:@"Parallels"]) {
+				modelTitle = modelsDictionary[@"Parallels"];
 			} else {
-				_exact_model = [XRSystemInformation systemModelName];
+				modelTitle = modelsDictionary[modelIdentifier];
+			}
 
-				if ([_all_models containsKey:_model]) {
-					_exact_model = _all_models[_model];
-				}
+			if (modelTitle == nil) {
+				modelTitle = [XRSystemInformation systemModelName];
 			}
 		}
 
-		_new = TPILocalizedString(@"BasicLanguage[1002]", _exact_model);
-
-		sysinfo = [sysinfo stringByAppendingString:_new];
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1002]", modelTitle)];
 	}
 
-	if (_show_cpu_model) {
-		/* CPU Information. */
-		if (_cpu_count_p >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
-			_new = TPILocalizedString(@"BasicLanguage[1003]", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_speed);
+	if (showCPUModel) {
+		NSString *_cpu_model = [TPI_SP_SysInfo processor];
+		NSString *_cpu_speed = [TPI_SP_SysInfo processorClockSpeed];
 
-			sysinfo = [sysinfo stringByAppendingString:_new];
+		NSUInteger _cpu_count_p	= [TPI_SP_SysInfo processorPhysicalCoreCount];
+		NSUInteger _cpu_count_v	= [TPI_SP_SysInfo processorVirtualCoreCount];
+
+		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSStringWhitespacePlaceholder];
+		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSStringWhitespacePlaceholder];
+
+		_cpu_model = _cpu_model.trim;
+
+		if (_cpu_model.length > 0 && _cpu_speed.length > 0) {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1003]",
+					_cpu_model,
+					_cpu_count_v,
+					_cpu_count_p,
+					_cpu_speed)];
 		}
 	}
 
-	if (_show_sys_memory && _memory) {
-		_new = TPILocalizedString(@"BasicLanguage[1004]", _memory);
-
-		sysinfo = [sysinfo stringByAppendingString:_new];
+	if (showMemory) {
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1004]",
+			[TPI_SP_SysInfo formattedTotalMemorySize])];
 	}
 
-	if (_show_sys_uptime) {
-		/* System Uptime. */
-		_new = TPILocalizedString(@"BasicLanguage[1005]", TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], YES, 0));
-
-		sysinfo = [sysinfo stringByAppendingString:_new];
+	if (showUptime) {
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1005]",
+			TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], YES, 0))];
 	}
 
-	if (_show_diskinfo) {
-		/* Disk Space Information. */
-		_new = TPILocalizedString(@"BasicLanguage[1006]", [TPI_SP_SysInfo formattedLocalVolumeDiskUsage]);
+	if (showDiskInfo) {
+		NSString *_disk_info = [TPI_SP_SysInfo formattedLocalVolumeDiskUsage];
 
-		sysinfo = [sysinfo stringByAppendingString:_new];
-	}
-
-	if (_show_gpu_model) {
-		/* GPU Information. */
-		if (NSObjectIsNotEmpty(_gpu_model)) {
-			_new = TPILocalizedString(@"BasicLanguage[1008]", _gpu_model);
-
-			sysinfo = [sysinfo stringByAppendingString:_new];
+		if (_disk_info != nil) {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1006]", _disk_info)];
 		}
 	}
 
-	if (_show_screen_res) {
-		/* Screen Resolution. */
-		NSScreen *maiScreen = RZMainScreen();
+	if (showGPUModel) {
+		NSString *_gpu_model = [TPI_SP_SysInfo formattedGraphicsCardInformation];
 
-		if ([maiScreen runningInHighResolutionMode]) {
-			_new = TPILocalizedString(@"BasicLanguage[1010]",
-						  [maiScreen frame].size.width,
-						  [maiScreen frame].size.height);
+		if (_gpu_model != nil) {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1008]", _gpu_model)];
+		}
+	}
+
+	if (showScreenResolution) {
+		NSScreen *mainScreen = RZMainScreen();
+
+		if (mainScreen.runningInHighResolutionMode) {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1010]",
+				mainScreen.frame.size.width,
+				mainScreen.frame.size.height)];
 		} else {
-			_new = TPILocalizedString(@"BasicLanguage[1009]",
-						  [maiScreen frame].size.width,
-						  [maiScreen frame].size.height);
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1009]",
+				mainScreen.frame.size.width,
+				mainScreen.frame.size.height)];
 		}
-
-		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 
-	if (_show_os_version) {
-		/* Operating System. */
-		_new = TPILocalizedString(@"BasicLanguage[1012]",
-					  [XRSystemInformation systemOperatingSystemName],
-					  [XRSystemInformation systemStandardVersion],
-					  [XRSystemInformation systemBuildVersion]);
-
-		sysinfo = [sysinfo stringByAppendingString:_new];
+	if (showOperatingSystem) {
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1012]",
+			[XRSystemInformation systemOperatingSystemName],
+			[XRSystemInformation systemStandardVersion],
+			[XRSystemInformation systemBuildVersion])];
 	}
 
-	if ([sysinfo hasSuffix:@" \002•\002"]) {
-		sysinfo = [sysinfo substringToIndex:([sysinfo length] - 3)];
+	if ([resultString hasSuffix:@" \002•\002"]) {
+		[resultString deleteCharactersInRange:NSMakeRange((resultString.length - 4), 4)];
 	}
 
-	/* Compiled Output. */
-	return sysinfo;
+	return [resultString copy];
 }
 
 + (NSString *)systemMemoryInformation
 {
 	TXUnsignedLongLong totalMemory = [TPI_SP_SysInfo totalMemorySize];
-	TXUnsignedLongLong freeMemory  = [TPI_SP_SysInfo freeMemorySize];
-	TXUnsignedLongLong usedMemory  = (totalMemory - freeMemory);
+	TXUnsignedLongLong freeMemory = [TPI_SP_SysInfo freeMemorySize];
 
-	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
-	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
-	CGFloat rightCount = (10.0f - memPercent);
+	TXUnsignedLongLong usedMemory = (totalMemory - freeMemory);
 
-	NSMutableString *result = [NSMutableString string];
+	long double memoryUsedPercent = (((long double)usedMemory / (long double)totalMemory) * 100.0);
 
-	[result appendFormat:@"%c04", 0x03];
+	NSMutableString *resultString = [NSMutableString string];
 
-	for (NSInteger i = 0; i <= memPercent; i++) {
-		[result appendString:@"❙"];
+	/* ======================================== */
+
+	[resultString appendFormat:@"%c04", 0x03];
+
+	NSUInteger leftCount = (memoryUsedPercent / 10);
+
+	for (NSUInteger i = 0; i <= leftCount; i++) {
+		[resultString appendString:@"❙"];
 	}
 
-	[result appendFormat:@"%c|%c03", 0x03, 0x03];
+	/* ======================================== */
 
-	for (NSInteger i = 0; i <= rightCount; i++) {
-		[result appendString:@"❙"];
+	[resultString appendFormat:@"%c|%c03", 0x03, 0x03];
+
+	/* ======================================== */
+
+	NSUInteger rightCount = (10 - leftCount);
+
+	for (NSUInteger i = 0; i <= rightCount; i++) {
+		[resultString appendString:@"❙"];
 	}
 
-	[result appendFormat:@"%c", 0x03];
+	[resultString appendFormat:@"%c", 0x03];
+
+	/* ======================================== */
 
 	return TPILocalizedString(@"BasicLanguage[1046]",
-				  [TPI_SP_SysInfo formattedDiskSize:freeMemory],
-				  [TPI_SP_SysInfo formattedDiskSize:usedMemory],
-				  [TPI_SP_SysInfo formattedDiskSize:totalMemory], result);
+			[TPI_SP_SysInfo formattedDiskSize:freeMemory],
+			[TPI_SP_SysInfo formattedDiskSize:usedMemory],
+			[TPI_SP_SysInfo formattedDiskSize:totalMemory],
+					resultString);
 }
 
 + (NSString *)systemNetworkInformation
 {
 	/* Based off the source code of "libtop.c" */
 
-	NSMutableString *netstat = [NSMutableString string];
+	NSMutableString *resultString = [NSMutableString string];
 
-	long net_ibytes = 0;
-	long net_obytes = 0;
+	struct ifaddrs *ifa_list = 0;
 
-	struct ifaddrs *ifa_list = 0, *ifa;
-
-	if (getifaddrs(&ifa_list) == -1) {
-		return nil;
+	if (getifaddrs(&ifa_list) == (-1)) {
+		return TPILocalizedString(@"BasicLanguage[1028]");
 	}
 
-	NSInteger objectIndex = 0;
+	NSUInteger objectIndex = 0;
 
-	for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
+	for (struct ifaddrs *ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
 		if ((AF_LINK == ifa->ifa_addr->sa_family) == NO) {
 			continue;
-		}
-		
-		if ((ifa->ifa_flags & IFF_UP) == NO && (ifa->ifa_flags & IFF_RUNNING) == NO) {
+		} else if ((ifa->ifa_flags & IFF_UP) == NO && (ifa->ifa_flags & IFF_RUNNING) == NO) {
+			continue;
+		} else if (ifa->ifa_data == 0) {
 			continue;
 		}
 
-		if (ifa->ifa_data == 0) {
+		if (strncmp(ifa->ifa_name, "lo", 2) == 0) {
 			continue;
 		}
 
-		if (strncmp(ifa->ifa_name, "lo", 2)) {
-			struct if_data *if_data = (struct if_data *)ifa->ifa_data;
+		struct if_data *if_data = (struct if_data *)ifa->ifa_data;
 
-			if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) {
-				continue;
-			}
-
-			net_obytes += if_data->ifi_obytes;
-			net_ibytes += if_data->ifi_ibytes;
-
-			if (objectIndex == 0) {
-				[netstat appendString:TPILocalizedString(@"BasicLanguage[1026]",
-											 @(ifa->ifa_name),
-											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_ibytes],
-											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_obytes])];
-			} else {
-				[netstat appendString:TPILocalizedString(@"BasicLanguage[1027]",
-											 @(ifa->ifa_name),
-											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_ibytes],
-											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_obytes])];
-			}
-
-			objectIndex += 1;
+		if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) {
+			continue;
 		}
+
+		if (objectIndex == 0) {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1026]",
+										 @(ifa->ifa_name),
+										 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_ibytes],
+										 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_obytes])];
+		} else {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1027]",
+										 @(ifa->ifa_name),
+										 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_ibytes],
+										 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_obytes])];
+		}
+
+		objectIndex += 1;
 	}
 
 	if (ifa_list) {
 	    freeifaddrs(ifa_list);
 	}
 
-	if (NSObjectIsEmpty(netstat)) {
+	if (resultString.length == 0) {
 		return TPILocalizedString(@"BasicLanguage[1028]");
 	} else {
-		return TPILocalizedString(@"BasicLanguage[1025]", netstat);
+		return TPILocalizedString(@"BasicLanguage[1025]", resultString);
 	}
 
-	return netstat;
+	return resultString;
 }
 
 @end
@@ -561,17 +543,17 @@ TEXTUAL_IGNORE_DEPRECATION_END
 #pragma mark -
 #pragma mark Formatting/Processing 
 
-+ (NSString *)formattedDiskSize:(TXUnsignedLongLong)size
++ (NSString *)formattedDiskSize:(TXUnsignedLongLong)diskSize
 {
-	return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:size];
+	return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:diskSize];
 }
 
-+ (NSString *)formattedCPUFrequency:(double)rate
++ (NSString *)formattedCPUFrequency:(double)frequency
 {
-	if ((rate / 1000000) >= 990) {
-		return TPILocalizedString(@"BasicLanguage[1018]", ((rate / 100000000.0) / 10.0));
+	if ((frequency / 1000000) >= 990) {
+		return TPILocalizedString(@"BasicLanguage[1018]", ((frequency / 100000000.0) / 10.0));
 	} else {
-		return TPILocalizedString(@"BasicLanguage[1019]", rate);
+		return TPILocalizedString(@"BasicLanguage[1019]", frequency);
 	}
 }
 
@@ -580,218 +562,226 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	return [self formattedDiskSize:[self totalMemorySize]];
 }
 
-+ (NSString *)formattedLocalVolumeDiskUsage
++ (nullable NSString *)formattedLocalVolumeDiskUsage
 {
 	NSDictionary *diskInfo = [RZFileManager() attributesOfFileSystemForPath:@"/" error:nil];
 
-	if (diskInfo) {
-		TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
-
-		return [self formattedDiskSize:totalSpace];
-	} else {
+	if (diskInfo == nil) {
 		return nil;
 	}
+	
+	TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+
+	return [self formattedDiskSize:totalSpace];
 }
 
-+ (NSString *)formattedGraphicsCardInformation
++ (nullable NSString *)formattedGraphicsCardInformation
 {
     CFMutableDictionaryRef pciDevices = IOServiceMatching("IOPCIDevice");
 
-    io_iterator_t entry_iterator;
+    io_iterator_t entryIterator;
 
-    if (IOServiceGetMatchingServices(kIOMasterPortDefault, pciDevices, &entry_iterator) == kIOReturnSuccess) {
-        NSMutableArray *gpuList = [NSMutableArray new];
+    if (IOServiceGetMatchingServices(kIOMasterPortDefault, pciDevices, &entryIterator) != kIOReturnSuccess) {
+		return nil;
+	}
 
-        io_iterator_t serviceObject;
+	NSMutableArray<NSString *> *gpuModels = [NSMutableArray new];
 
-        while ((serviceObject = IOIteratorNext(entry_iterator))) {
-            CFMutableDictionaryRef serviceDictionary;
+	io_iterator_t serviceObject;
 
-			kern_return_t status = IORegistryEntryCreateCFProperties(serviceObject,
-																	 &serviceDictionary,
-																	 kCFAllocatorDefault,
-																	 kNilOptions);
+	while ((serviceObject = IOIteratorNext(entryIterator))) {
+		CFMutableDictionaryRef serviceDictionary;
 
-			if (NSDissimilarObjects(status, kIOReturnSuccess)) {
-                IOObjectRelease(serviceObject);
+		kern_return_t status =
+		IORegistryEntryCreateCFProperties(serviceObject,
+										  &serviceDictionary,
+										  kCFAllocatorDefault,
+										  kNilOptions);
 
-                continue;
-            }
+		if (status != kIOReturnSuccess) {
+			IOObjectRelease(serviceObject);
 
-			const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
-			const void *class = CFDictionaryGetValue(serviceDictionary, @"class-code");
-
-			if (PointerIsEmpty(model) || PointerIsEmpty(class)) {
-				continue;
-			}
-
-			if (CFGetTypeID(class) == CFDataGetTypeID() && CFDataGetLength(class) > 1) {
-				if ((*(UInt32 *)CFDataGetBytePtr(class) == 0x30000) == NO) {
-					continue;
-				}
-			}
-
-			if (CFGetTypeID(model) == CFDataGetTypeID() && CFDataGetLength(model) > 1) {
-				NSString *s = [NSString stringWithBytes:[(__bridge NSData *)model bytes] length:CFDataGetLength(model) encoding:NSASCIIStringEncoding];
-
-				s = [s stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
-
-				[gpuList addObject:s];
-			}
-
-            CFRelease(serviceDictionary);
-        }
-
-		// ---- //
-
-		NSInteger objectIndex = 0;
-
-        NSMutableString *result = [NSMutableString string];
-
-		for (NSString *model in gpuList) {
-			if (objectIndex == 0) {
-				[result appendString:TPILocalizedString(@"BasicLanguage[1013]", model)];
-			} else {
-				[result appendString:TPILocalizedString(@"BasicLanguage[1014]", model)];
-			}
-
-			objectIndex++;
+			continue;
 		}
-		
-        return result;
-    }
+
+		BOOL cleanResult = YES;
+
+		const void *classCode = CFDictionaryGetValue(serviceDictionary, @"class-code");
+
+		if (classCode == NULL) {
+			cleanResult = NO;
+		} if (CFGetTypeID(classCode) != CFDataGetTypeID()) {
+			cleanResult = NO;
+		} else if (CFDataGetLength(classCode) == 0) {
+			cleanResult = NO;
+		} else if (*(UInt32 *)CFDataGetBytePtr(classCode) != 0x30000) {
+			cleanResult = NO;
+		}
+
+		const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
+
+		if (model == NULL) {
+			cleanResult = NO;
+		} else if (CFGetTypeID(model) != CFDataGetTypeID()) {
+			cleanResult = NO;
+		} else if (CFDataGetLength(model) == 0) {
+			cleanResult = NO;
+		}
+
+		if (cleanResult) {
+			NSString *modelString = [NSString stringWithData:(__bridge NSData *)(CFDataRef)model encoding:NSASCIIStringEncoding];
+
+			modelString = [modelString stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
+
+			[gpuModels addObject:modelString];
+		}
+
+		CFRelease(serviceDictionary);
+	}
+
+	// ---- //
+
+	NSMutableString *resultString = [NSMutableString string];
+
+	[gpuModels enumerateObjectsUsingBlock:^(NSString *gpuModel, NSUInteger index, BOOL *stop) {
+		if (index == 0) {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1013]", gpuModel)];
+		} else {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1014]", gpuModel)];
+		}
+	}];
 	
-    return nil;
+	return [resultString copy];
 }
 
 #pragma mark -
 #pragma mark System Information
 
-+ (NSInteger)systemUptime
++ (NSTimeInterval)systemUptime
 {
-	struct timeval boottime;
+	struct timeval bootTime;
 	
-	size_t size = sizeof(boottime);
+	size_t bootTimeSize = sizeof(bootTime);
 	
-	if (sysctlbyname("kern.boottime", &boottime, &size, NULL, 0) == -1) {
-		boottime.tv_sec = 0;
+	if (sysctlbyname("kern.boottime", &bootTime, &bootTimeSize, NULL, 0) != 0) {
+		bootTime.tv_sec = 0;
 	}
 	
-	return [NSDate timeIntervalSinceNow:boottime.tv_sec];
+	return [NSDate timeIntervalSinceNow:bootTime.tv_sec];
 }
 
-+ (NSInteger)applicationUptime
++ (NSTimeInterval)applicationUptime
 {
 	return [TPCApplicationInfo timeIntervalSinceApplicationLaunch];
 }
 
-+ (NSString *)processor
++ (nullable NSString *)processor
 {
 	char buffer[256];
 	
-	size_t sz = sizeof(buffer);
+	size_t bufferSize = sizeof(buffer);
 	
-	if (sysctlbyname("machdep.cpu.brand_string", buffer, &sz, NULL, 0) == 0) {
-		buffer[(sizeof(buffer) - 1)] = 0;
-		
-		return @(buffer);
+	if (sysctlbyname("machdep.cpu.brand_string", buffer, &bufferSize, NULL, 0) != 0) {
+		return nil;
 	}
 
-	return nil;
+	buffer[(bufferSize - 1)] = 0;
+
+	return @(buffer);
 }
 
-+ (NSString *)model
++ (nullable NSString *)modelIdentifier
 {
-	char modelBuffer[256];
+	char buffer[256];
 	
-	size_t sz = sizeof(modelBuffer);
+	size_t bufferSize = sizeof(buffer);
 	
-	if (sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0) == 0) {
-		modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
-		
-		return @(modelBuffer);
+	if (sysctlbyname("hw.model", buffer, &bufferSize, NULL, 0) != 0) {
+		return nil;
 	}
 
-	return nil;
+	buffer[(bufferSize - 1)] = 0;
+
+	return @(buffer);
 }
 
 + (NSUInteger)processorPhysicalCoreCount
 {
-	u_int64_t size = 0L;
+	u_int64_t coreCount = 0L;
 
-	size_t len = sizeof(size);
+	size_t coreCountSize = sizeof(coreCount);
 
-	if (sysctlbyname("hw.physicalcpu", &size, &len, NULL, 0) == 0) {
-		return size;
+	if (sysctlbyname("hw.physicalcpu", &coreCount, &coreCountSize, NULL, 0) != 0) {
+		return 0;
 	}
 
-	return 0;
+	return coreCount;
 }
 
 + (NSUInteger)processorVirtualCoreCount
 {
-	u_int64_t size = 0L;
+	u_int64_t coreCount = 0L;
 
-	size_t len = sizeof(size);
+	size_t coreCountSize = sizeof(coreCount);
 
-	if (sysctlbyname("hw.logicalcpu", &size, &len, NULL, 0) == 0) {
-		return size;
+	if (sysctlbyname("hw.logicalcpu", &coreCount, &coreCountSize, NULL, 0) != 0) {
+		return 0;
 	}
 
-	return 0;
+	return coreCount;
 }
 
-+ (NSString *)processorClockSpeed
++ (nullable NSString *)processorClockSpeed
 {
-	u_int64_t clockrate = 0L;
+	u_int64_t clockSpeed = 0L;
 	
-	size_t len = sizeof(clockrate);
+	size_t clockSpeedSize = sizeof(clockSpeed);
 	
-	if (sysctlbyname("hw.cpufrequency", &clockrate, &len, NULL, 0) >= 0) {
-		return [self formattedCPUFrequency:clockrate];
+	if (sysctlbyname("hw.cpufrequency", &clockSpeed, &clockSpeedSize, NULL, 0) != 0) {
+		return nil;
 	}
 
-	return nil;
+	return [self formattedCPUFrequency:clockSpeed];
 }
 
 + (TXUnsignedLongLong)freeMemorySize
 {
-	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(natural_t));
+	vm_size_t page_size;
 	
-	vm_size_t  pagesize;
-	
-	host_page_size(mach_host_self(), &pagesize);
+	host_page_size(mach_host_self(), &page_size);
 
-	vm_statistics_data_t vm_stat;
-	
-	if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vm_stat, &infoCount) == KERN_SUCCESS) {
-		return ((vm_stat.inactive_count + vm_stat.free_count) * pagesize);
+	vm_statistics_data_t host_info_out;
+
+	mach_msg_type_number_t host_info_outCnt = (sizeof(vm_statistics_data_t) / sizeof(natural_t));
+
+	if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&host_info_out, &host_info_outCnt) != KERN_SUCCESS) {
+		return 0;
 	}
-	
-	return -1;
+
+	return ((host_info_out.inactive_count + host_info_out.free_count) * page_size);
 }
 
 + (TXUnsignedLongLong)totalMemorySize
 {
-	uint64_t linesize = 0L;
+	uint64_t memoryTotal = 0L;
 	
-	size_t len = sizeof(linesize);
+	size_t memoryTotalSize = sizeof(memoryTotal);
 	
-	if (sysctlbyname("hw.memsize", &linesize, &len, NULL, 0) >= 0) {
-		return (linesize / _systemMemoryDivisor);
+	if (sysctlbyname("hw.memsize", &memoryTotal, &memoryTotalSize, NULL, 0) != 0) {
+		return 0;
 	} 
-	
-	return -1;
+
+	return (memoryTotal / _systemMemoryDivisor);
 }
 
-+ (NSInteger)applicationMemoryInformation
++ (TXUnsignedLongLong)applicationMemoryInformation
 {
-	pid_t processIdentifier = (pid_t)[[NSProcessInfo processInfo] processIdentifier];
+	pid_t processIdentifier = (pid_t)[NSProcessInfo processInfo].processIdentifier;
 
 	return [TPI_SP_SysInfo memoryUseForProcess:processIdentifier];
 }
 
-+ (NSInteger)memoryUseForProcess:(pid_t)processIdentifier
++ (TXUnsignedLongLong)memoryUseForProcess:(pid_t)processIdentifier
 {
 	if (processIdentifier == 0) {
 		return 0;
@@ -816,53 +806,53 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		if (processRegionInfo.pri_share_mode == SM_PRIVATE) {
 			memoryUse += (processRegionInfo.pri_private_pages_resident * memoryPageSize);
 		}
-	}
-	while (processLookupResult > 0);
+	} while (processLookupResult > 0);
 
 	return memoryUse;
 }
 
-+ (NSArray *)webViewProcessIdentifiers
++ (NSArray<TPI_SP_WebViewProcessInfo *> *)webViewProcessIdentifiers
 {
 	/* Create a dictionary with key as identifier and value as an array of 
 	 views managed by the process. */
-	NSMutableDictionary *webViewProcesses = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSNumber *, __kindof NSArray *> *webViewProcesses = [NSMutableDictionary dictionary];
 
 	void (^_addEntry)(IRCTreeItem *) = ^void (IRCTreeItem *treeItem)
 	{
 		pid_t processIdentifier = [TPI_SP_SysInfo webViewProcessIdentifierForTreeItem:treeItem];
 
-		if (processIdentifier == 0)
+		if (processIdentifier == 0) {
 			return;
+		}
 
-		NSNumber *processIdentifierObj = [NSNumber numberWithInt:processIdentifier];
+		NSNumber *processIdentifierObj = @(processIdentifier);
 
-		NSMutableArray *viewArray = webViewProcesses[processIdentifierObj];
+		NSMutableArray<NSString *> *viewArray = webViewProcesses[processIdentifierObj];
 
 		if (viewArray == nil) {
 			viewArray = [NSMutableArray array];
 
-			[webViewProcesses setObject:viewArray forKey:processIdentifierObj];
+			webViewProcesses[processIdentifierObj] = viewArray;
 		}
 
-		if ([treeItem isClient])
+		if (treeItem.isChannel == NO && treeItem.isPrivateMessage == NO) {
 			return;
+		}
 
-		[viewArray addObject:[treeItem name]];
+		[viewArray addObject:treeItem.name];
 	};
 
-
-	for (IRCClient *u in [worldController() clientList]) {
+	for (IRCClient *u in worldController().clientList) {
 		_addEntry(u);
 
-		for (IRCChannel *c in [u channelList]) {
+		for (IRCChannel *c in u.channelList) {
 			_addEntry(c);
 		}
 	}
 
 	/* Create array of TPI_SP_WebViewProcessInfo objects */
-	NSMutableArray *webViewProcessObjects =
-	[NSMutableArray arrayWithCapacity:[webViewProcesses count]];
+	NSMutableArray<TPI_SP_WebViewProcessInfo *> *webViewProcessObjects =
+	[NSMutableArray arrayWithCapacity:webViewProcesses.count];
 
 	[webViewProcesses enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 		/* Object values */
@@ -872,14 +862,14 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 		NSArray *processViewNames = [object sortedArrayUsingSelector:@selector(compare:)];
 
+		/* Set values */
 		TPI_SP_WebViewProcessInfo *processInfoObject = [TPI_SP_WebViewProcessInfo new];
 
-		/* Set values */
-		[processInfoObject setProcessIdentifier:processIdentifier];
+		processInfoObject.processIdentifier = processIdentifier;
 
-		[processInfoObject setProcessMemoryUse:processMemoryUse];
+		processInfoObject.processMemoryUse = processMemoryUse;
 
-		[processInfoObject setProcessViewNames:processViewNames];
+		processInfoObject.processViewNames = processViewNames;
 
 		/* Add object */
 		[webViewProcessObjects addObject:processInfoObject];
@@ -905,9 +895,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 + (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem
 {
-	TVCLogView *backingView = [[treeItem viewController] backingView];
+	TVCLogView *backingView = treeItem.viewController.backingView;
 
-	id webView = [backingView webView];
+	id webView = backingView.webView;
 
 	if ([webView respondsToSelector:@selector(_webProcessIdentifier)]) {
 		return [webView _webProcessIdentifier];
@@ -918,5 +908,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 @end
 
+#pragma mark -
+
 @implementation TPI_SP_WebViewProcessInfo
 @end
+
+NS_ASSUME_NONNULL_END
