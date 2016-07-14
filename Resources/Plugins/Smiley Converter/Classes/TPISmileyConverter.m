@@ -153,83 +153,63 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableString *finalString = [string mutableCopy];
 
 	for (NSString *smiley in self.sortedSmileyList) {
-		finalString = [self stringWithReplacedSmiley:smiley inString:finalString];
+		[self stringWithReplacedSmiley:smiley inString:finalString];
 	}
 
-	return finalString;
+	return [finalString copy];;
 }
 
 /* The replacement call uses a lot of work done by the actual Textual renderring engine. */
-- (NSMutableString *)stringWithReplacedSmiley:(NSString *)smiley inString:(NSMutableString *)body
+- (void)stringWithReplacedSmiley:(NSString *)smiley inString:(NSMutableString *)inString
 {
-	NSInteger start = 0;
+	NSUInteger currentPosition = 0;
 
-	while (1 == 1) {
-		/* The body length is dynamic based on replaces so we have to check 
-		 it every time compared to start. */
+	while (currentPosition < inString.length) {
+		NSRange range = [inString rangeOfString:smiley
+										options:NSCaseInsensitiveSearch
+										  range:NSMakeRange(currentPosition, (inString.length - currentPosition))];
 
-		if (start >= body.length) {
-			break;
-		}
-
-		/* Find smiley. */
-		NSRange r = [body rangeOfString:smiley
-								options:NSCaseInsensitiveSearch // Search is not case sensitive.
-								  range:NSMakeRange(start, (body.length - start))];
-
-		/* Anything found? */
-		if (r.location == NSNotFound) {
+		if (range.location == NSNotFound) {
 			break;
 		}
 
 		BOOL enabled = YES;
 
-		/* Validate the surroundings if it is strict matching. */
-		if (enabled) {
-			NSInteger prev = (r.location - 1);
+		NSInteger leftLocation = (range.location - 1);
 
-			if (0 <= prev && prev < body.length) {
-				UniChar c = [body characterAtIndex:prev];
+		if (leftLocation >= 0 && leftLocation < inString.length) {
+			UniChar c = [inString characterAtIndex:leftLocation];
 
-				/* Only allow certain characters. */
-				if (NSDissimilarObjects(c, ' ')) {
-					enabled = NO;
-				}
+			if (c != ' ') {
+				enabled = NO;
+
+				goto next_pass;
 			}
 		}
 
-		if (enabled) {
-			NSInteger next = NSMaxRange(r);
+		NSInteger rightLocation = NSMaxRange(range);
 
-			if (next < body.length) {
-				UniChar c = [body characterAtIndex:next];
+		if (rightLocation < inString.length) {
+			UniChar c = [inString characterAtIndex:rightLocation];
 
-				/* Only accept a space. */
-				if (NSDissimilarObjects(c, ' ')) {
-					enabled = NO;
-				}
+			if (c != ' ') {
+				enabled = NO;
+
+				goto next_pass;
 			}
 		}
 
-		/* Replace the actual smiley. */
+next_pass:
 		if (enabled) {
-			/* Build the emoji. */
-			NSString *theEmoji = (self.conversionTable)[smiley];
-			
-			/* Replace the smiley. */
-			[body replaceCharactersInRange:r withString:theEmoji];
+			NSString *emoji = self.conversionTable[smiley];
 
-			/* The new start is the location where the smiley began plus the length of the
-			 newly added addition. By asking for the actual emoji length, instead of assuming
-			 a length of one, we support future expansion if we make the conversion table more
-			 complex. */
-			start = (r.location + theEmoji.length + 1);
+			[inString replaceCharactersInRange:range withString:emoji];
+
+			currentPosition = (range.location + emoji.length + 1);
 		} else {
-			start = (NSMaxRange(r) + 1);
+			currentPosition = (NSMaxRange(range) + 1);
 		}
 	}
-
-	return body;
 }
 
 @end
