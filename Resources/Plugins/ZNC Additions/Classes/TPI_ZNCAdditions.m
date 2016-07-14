@@ -39,6 +39,8 @@
 
 #import "TextualApplicationPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation TPI_ZNCAdditions
 
 #pragma mark -
@@ -46,23 +48,22 @@
 
 - (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
 {
-	if ([client isConnectedToZNC]) {
-		NSString *sender = [inputObject senderNickname];
+	if (client.isConnectedToZNC == NO) {
+		return;
+	}
 
-		NSString *message = [inputObject messageSequence];
+	NSString *sender = inputObject.senderNickname;
 
-		if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
-			/* We listen for ZNC disconnects so that we can terminate channels when we
-			 disconnect from the server ZNC was connected to. ZNC does not localize 
-			 itself so detecting these disconnects is not very hard... */
+	NSString *message = inputObject.messageSequence;
 
-			/* handleIRCSideDisconnect: calls -deactivate on IRCChannel. That call in 
-			 IRCChannel posts a script event to the active style. Therefore, we have to
-			 invoke the calls on the main thread because WebKit is not thread safe. */
-			[self performBlockOnMainThread:^{
-				[self handleIRCSideDisconnect:client];
-			}];
-		}
+	if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
+		/* We listen for ZNC disconnects so that we can terminate channels when we
+		 disconnect from the server ZNC was connected to. ZNC does not localize 
+		 itself so detecting these disconnects is not very hard... */
+
+		[self performBlockOnMainThread:^{
+			[self handleIRCSideDisconnect:client];
+		}];
 	}
 }
 
@@ -72,7 +73,7 @@
 {
 	/* Throw error if user tries to invoke a command that requires the
 	 user to be connected to a ZNC bouncer */
-	if ([client isConnectedToZNC] == NO) {
+	if (client.isConnectedToZNC == NO) {
 		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]")];
 
 		return;
@@ -83,7 +84,7 @@
 	{
 		/* Textual is designed not to import partial content. It will either
 		 return the complete certificate chain at this point, or nil. */
-		NSData *certificateData = [client zncBouncerCertificateChainData];
+		NSData *certificateData = client.zncBouncerCertificateChainData;
 
 		if (certificateData == nil) {
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]")];
@@ -94,16 +95,16 @@
 		/* Given the raw, base64 encoded data, convert it into certificate objects. */
 		SecItemImportExportKeyParameters importParameters;
 
-		importParameters.version = SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION;
 		importParameters.flags = kSecKeyNoAccessControl;
+		importParameters.version = SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION;
 
-		importParameters.passphrase = NULL;
+		importParameters.accessRef = NULL;
 		importParameters.alertTitle = NULL;
 		importParameters.alertPrompt = NULL;
-		importParameters.accessRef = NULL;
+		importParameters.passphrase = NULL;
 
-		importParameters.keyUsage = NULL;
 		importParameters.keyAttributes = NULL;
+		importParameters.keyUsage = NULL;
 
 		SecExternalItemType itemType = kSecItemTypeCertificate;
 
@@ -116,28 +117,30 @@
 		OSStatus operationStatus =
 		SecItemImport((__bridge CFDataRef)(certificateData), NULL, &externalFormat, &itemType, flags, &importParameters, NULL, &certificateArray);
 
-		/* Display an error or hand the certificate chain off to Apple's own
-		 APIs to display them in a dialog. */
-		if (operationStatus == noErr) {
-			[self performBlockOnMainThread:^{
-				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
-
-				[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
-
-				[panel setAlternateButtonTitle:nil];
-
-				[panel beginSheetForWindow:[NSApp mainWindow]
-							 modalDelegate:nil
-							didEndSelector:NULL
-							   contextInfo:NULL
-							  certificates:(__bridge NSArray *)certificateArray
-								 showGroup:YES];
-			}];
-
-			CFRelease(certificateArray);
-		} else {
+		/* Display an error or hand the certificate chain off 
+		 to Apple's own APIs to display them in a dialog. */
+		if (operationStatus != noErr) {
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]")];
+
+			return;
 		}
+
+		[self performBlockOnMainThread:^{
+			SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+
+			[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
+
+			[panel setAlternateButtonTitle:nil];
+
+			[panel beginSheetForWindow:[NSApp mainWindow]
+						 modalDelegate:nil
+						didEndSelector:NULL
+						   contextInfo:NULL
+						  certificates:(__bridge NSArray *)certificateArray
+							 showGroup:YES];
+		}];
+
+		CFRelease(certificateArray);
 	}
 
 	/* ------ */
@@ -145,29 +148,30 @@
 	else if ([commandString isEqualIgnoringCase:@"DETACH"] ||
 			 [commandString isEqualIgnoringCase:@"ATTACH"])
 	{
-		BOOL isDetach = [commandString isEqualIgnoringCase:@"DETACH"];
-		BOOL isAttach = [commandString isEqualIgnoringCase:@"ATTACH"];
-
-		messageString = [messageString trim];
+		messageString = messageString.trim;
 		
 		IRCChannel *matchedChannel = nil;
-		
-		if ([messageString isChannelNameOn:client]) {
+
+		if ([client stringIsChannelName:messageString]) {
 			matchedChannel = [client findChannel:messageString];
 		} else {
-			matchedChannel = [mainWindow() selectedChannel];
+			matchedChannel = mainWindow().selectedChannel;
 		}
 		
-		if (matchedChannel) {
-			[matchedChannel setAutoJoin:isAttach];
-			
-			if (isDetach) {
-				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, [matchedChannel name]]];
-			
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [matchedChannel name]) inChannel:matchedChannel];
-			} else {
-				[client joinUnlistedChannel:[matchedChannel name]];
-			}
+		if (matchedChannel == nil) {
+			return;
+		}
+
+		BOOL isAttachEvent = [commandString isEqualIgnoringCase:@"ATTACH"];
+
+		matchedChannel.autoJoin = isAttachEvent;
+		
+		if (isAttachEvent) {
+			[client joinUnlistedChannel:matchedChannel.name];
+		} else {
+			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, matchedChannel.name]];
+		
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", matchedChannel.name) inChannel:matchedChannel];
 		}
 	}
 }
@@ -182,13 +186,17 @@
 	return @[@"privmsg"];
 }
 
-- (IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input client:(IRCClient *)client
+- (IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
-	NSString *s = [input paramAt:1];
+	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule] == NO) {
+		return input;
+	}
 
-	if ([s hasPrefix:@"The playback buffer for ["]		&&
-		[s contains:@"] channels matching ["]			&& // This is much cleaner than regular expression...
-		[s hasSuffix:@"] has been cleared."])
+	NSString *stringIn = [input paramAt:1];
+
+	if ([stringIn hasPrefix:@"The playback buffer for ["]	&&
+		[stringIn contains:@"] channels matching ["]		&& // This is much cleaner than regular expression...
+		[stringIn hasSuffix:@"] has been cleared."])
 	{
 		return nil; // Ignore this event
 	}
@@ -196,187 +204,187 @@
 	return input;
 }
 
-- (IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input client:(IRCClient *)client
+- (IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
-	/* Begin processing data. */
-	IRCMessageMutable *inputMutable = [input mutableCopy];
+	/* Define user information */
+	NSMutableArray *paramsMutable = [input.params mutableCopy];
 
-	IRCPrefixMutable *senderMutable = [[inputMutable sender] mutableCopy];
+	NSMutableString *stringIn = [paramsMutable[1] mutableCopy];
 
-	NSMutableArray *mutparams = [[inputMutable params] mutableCopy];
+	NSString *hostmask = stringIn.token;
 	
-	NSMutableString *s = [mutparams[1] mutableCopy];
-	
-	/* Define user information. */
-	NSString *hostmask = [s getToken];
-	
-	if ([hostmask length] <= 0) {
-		return inputMutable;
+	if (hostmask.length == 0) {
+		return input; // Return original; bad input
 	}
-	
+
+	IRCPrefixMutable *senderMutable = [input.sender mutableCopy];
+
 	NSString *nicknameInt = nil;
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
 	
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
-		if (NSObjectsAreEqual(nicknameInt, [client userNickname])) {
-			return nil; // Do not post these events for self.
+		if (NSObjectsAreEqual(nicknameInt, client.userNickname)) {
+			return nil; // Do not post these events for self
 		}
 
-		[senderMutable setNickname:nicknameInt];
-		[senderMutable setUsername:usernameInt];
-		[senderMutable setAddress:addressInt];
+		senderMutable.nickname = nicknameInt;
+		senderMutable.username = usernameInt;
+		senderMutable.address = addressInt;
+
+		senderMutable.isServer = NO;
 	} else {
-		[senderMutable setNickname:hostmask];
-		
-		[senderMutable setIsServer:YES];
+		senderMutable.nickname = hostmask;
+
+		senderMutable.isServer = YES;
 	}
 
-	[senderMutable setHostmask:hostmask];
+	senderMutable.hostmask = hostmask;
 
-	[senderMutable setIsServer:NO];
+	/* Process string */
+	IRCMessageMutable *inputMutable = [input mutableCopy];
 
-	[inputMutable setSender:senderMutable];
-	
-	/* Let Textual know to treat this message as a special event. */
-	[inputMutable setIsPrintOnlyMessage:YES];
-	
-	/* Start actual work. */
-	if ([s hasPrefix:@"is now known as "]) {
-		/* Begin nickname change. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"is now known as " length])];
+	if ([stringIn hasPrefix:@"is now known as "]) {
+		/* Begin nickname change */
+		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"is now known as ").length)];
 		
-		NSString *newNickname = [s getToken];
-		
-		NSObjectIsEmptyAssertReturn(newNickname, inputMutable);
-		
-		[inputMutable setCommand:IRCPrivateCommandIndex("nick")];
-		
-		[mutparams removeObjectAtIndex:1];
-		
-		[mutparams addObject:newNickname];
-		/* End nickname change. */
-	}
-	else if ([s isEqualToString:@"joined"])
-	{
-		/* Begin channel join. */
-		[inputMutable setCommand:IRCPrivateCommandIndex("join")];
-		
-		[mutparams removeObjectAtIndex:1];
-		/* End channel join. */
-	}
-	else if ([s hasPrefix:@"set mode: "])
-	{
-		/* Begin mode processing. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"set mode: " length])];
-		
-		[inputMutable setCommand:IRCPrivateCommandIndex("mode")];
-		
-		NSString *modesSet = [s getToken];
-		
-		NSObjectIsEmptyAssertReturn(modesSet, inputMutable);
-		
-		[mutparams removeObjectAtIndex:1];
-		
-		[mutparams addObject:modesSet];
-		[mutparams addObject:s];
-		/* End mode processing. */
-	}
-	else if ([s hasPrefix:@"quit with message: ["] && [s hasSuffix:@"]"])
-	{
-		/* Begin quit message. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"quit with message: [" length])];	// Remove front.
-		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];					// Remove trailing character.
-		
-		[inputMutable setCommand:IRCPrivateCommandIndex("quit")];
-		
-		[mutparams removeObjectAtIndex:1];
-		
-		[mutparams addObject:s];
-		/* End quit message. */
-	}
-	else if ([s hasPrefix:@"parted with message: ["] && [s hasSuffix:@"]"])
-	{
-		/* Begin part message. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"parted with message: [" length])];		// Remove front.
-		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];						// Remove trailing character.
-		
-		[inputMutable setCommand:IRCPrivateCommandIndex("part")];
-		
-		[mutparams removeObjectAtIndex:1];
-		
-		[mutparams addObject:s];
-		/* End part message. */
-	}
-	else if ([s hasPrefix:@"kicked "] && [s hasSuffix:@"]"])
-	{
-		/* Begin kick message. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"kicked " length])];	// Remove front.
-		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];		// Remove trailing character.
-		
-		NSString *whoKicked = [s getToken];
-		
-		if (NSObjectIsEmpty(whoKicked) || [s hasPrefix:@"Reason: ["] == NO) {
-			return inputMutable;
+		NSString *newNickname = stringIn.token;
+
+		if (newNickname.length == 0) {
+			return input;
 		}
 		
-		[s deleteCharactersInRange:NSMakeRange(0, [@"Reason: [" length])];
+		inputMutable.command = IRCPrivateCommandIndex("nick");
+
+		[paramsMutable removeObjectAtIndex:1];
 		
-		[inputMutable setCommand:IRCPrivateCommandIndex("kick")];
+		[paramsMutable addObject:newNickname];
+		/* End nickname change */
+	}
+	else if ([stringIn isEqualToString:@"joined"])
+	{
+		/* Begin channel join */
+		inputMutable.command = IRCPrivateCommandIndex("join");
 		
-		[mutparams removeObjectAtIndex:1];
+		[paramsMutable removeObjectAtIndex:1];
+		/* End channel join */
+	}
+	else if ([stringIn hasPrefix:@"set mode: "])
+	{
+		/* Begin mode processing */
+		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"set mode: ").length)];
+
+		NSString *modeChanges = stringIn.token;
+
+		if (modeChanges.length == 0) {
+			return input;
+		}
+
+		inputMutable.command = IRCPrivateCommandIndex("mode");
+
+		[paramsMutable removeObjectAtIndex:1];
 		
-		[mutparams addObject:whoKicked];
-		[mutparams addObject:s];
+		[paramsMutable addObject:modeChanges];
+
+		[paramsMutable addObject:stringIn];
+		/* End mode processing */
+	}
+	else if ([stringIn hasPrefix:@"quit with message: ["] && [stringIn hasSuffix:@"]"])
+	{
+		/* Begin quit message */
+		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"quit with message: [").length)];	// Remove leading
+
+		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];				// Remove trailing
+		
+		inputMutable.command = IRCPrivateCommandIndex("quit");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		
+		[paramsMutable addObject:stringIn];
+		/* End quit message */
+	}
+	else if ([stringIn hasPrefix:@"parted with message: ["] && [stringIn hasSuffix:@"]"])
+	{
+		/* Begin part message */
+		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"parted with message: [").length)];		// Remove leading
+
+		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];					// Remove trailing
+		
+		inputMutable.command = IRCPrivateCommandIndex("part");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		
+		[paramsMutable addObject:stringIn];
+		/* End part message */
+	}
+	else if ([stringIn hasPrefix:@"kicked "] && [stringIn hasSuffix:@"]"])
+	{
+		/* Begin kick message */
+		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"kicked ").length)];		// Remove leading
+
+		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];	// Remove trailing
+		
+		NSString *kickedNickname = stringIn.token;
+		
+		if (kickedNickname.length == 0 || [stringIn hasPrefix:@"Reason: ["] == NO) {
+			return input;
+		}
+		
+		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"Reason: [").length)];
+
+		inputMutable.command = IRCPrivateCommandIndex("kick");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		
+		[paramsMutable addObject:kickedNickname];
+
+		[paramsMutable addObject:stringIn];
 		/* End kick message. */
 	}
-	else if ([s hasPrefix:@"changed the topic to: "])
+	else if ([stringIn hasPrefix:@"changed the topic to: "])
 	{
-		/* Begin topic change. */
+		/* Begin topic change */
 		/* We get the latest topic on join so we tell Textual to ignore this line. */
 		
 		return nil;
-		/* End topic change. */
+		/* End topic change */
 	}
+
+	/* Return modified input */
+	inputMutable.isPrintOnlyMessage = YES;
 	
-	[inputMutable setParams:mutparams];
+	inputMutable.params = paramsMutable;
+
+	inputMutable.sender = senderMutable;
 	
 	return inputMutable;
 }
 
 - (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
-	/* Only do work if client is even detected as ZNC. */
-	if ([client isConnectedToZNC] == NO) {
+	if (input.paramsCount != 2) {
 		return input;
 	}
-	
-	/* What type of message is this person sending? */
-	if (NSObjectsAreEqual([input command], IRCPrivateCommandIndex("privmsg")) == NO) {
+
+	if (client.isConnectedToZNC == NO) {
 		return input;
 	}
-	
-	/* Check our count. */
-	if (([input paramsCount] == 2) == NO) {
+
+	if (NSObjectsAreEqual(input.command, IRCPrivateCommandIndex("privmsg")) == NO) {
 		return input;
 	}
+
+	IRCPrefix *senderInfo = input.sender;
 	
-	/* Who is sending this message? */
-	IRCPrefix *senderInfo = [input sender];
+	NSString *sender = senderInfo.nickname;
 	
-	NSString *senderNickname = [senderInfo nickname];
-	
-	if (NSObjectsAreEqual(senderNickname, [client nicknameAsZNCUser:@"buffextras"])) {
-		return [self interceptBufferExtrasZNCModule:input client:client];
-	} else if (NSObjectsAreEqual(senderNickname, [client nicknameAsZNCUser:@"playback"])) {
-		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-			return [self interceptBufferExtrasPlaybackModule:input client:client];
-		} else {
-			return input;
-		}
-	} else {
-		return input;
+	if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"buffextras"])) {
+		return [self interceptBufferExtrasZNCModule:input forClient:client];
+	} else if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"playback"])) {
+		return [self interceptBufferExtrasPlaybackModule:input forClient:client];
 	}
+
+	return input;
 }
 
 #pragma mark -
@@ -384,14 +392,21 @@
 
 - (void)handleIRCSideDisconnect:(IRCClient *)client
 {
-	for (IRCChannel *c in [client channelList]) {
-		NSAssertReturnLoopContinue( [c isActive]);
-        NSAssertReturnLoopContinue([[c name] hasPrefix:@"~#"] == NO);
-		
-        [c deactivate];
+	for (IRCChannel *channel in client.channelList) {
+		if (channel.isActive == NO) {
+			continue;
+		}
+
+		if ([channel.name hasPrefix:@"~#"]) { // Don't leave internal channels
+			continue;
+		}
+
+        [channel deactivate];
 	}
 
 	[mainWindow() reloadTreeGroup:client];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
