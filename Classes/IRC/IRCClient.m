@@ -3651,7 +3651,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			/* Send input to server */
-			[self send:uppercaseCommand, stringInString, nil];
+			NSString *stringToSend = [NSString stringWithFormat:@"%@ %@", uppercaseCommand, stringInString];
+
+			[self sendLine:stringToSend];
 			
 			break;
 		}
