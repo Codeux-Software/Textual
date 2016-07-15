@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager ()
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *messageSendQueue;
 @property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
 @end
 
@@ -69,6 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+	self.messageSendQueue = [NSMutableDictionary dictionary];
+
 	[self setupEncryptionManager];
 }
 
@@ -554,6 +557,67 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
+#pragma mark Send Queue
+
+/* The send queue is used to keep track of messages that OTR injects. */
+/* This queue is maintained so that when messages are echoed back to the user
+ with the echo-message capacity, we can choose not to display a message. */
+- (void)queueMessage:(NSString *)message to:(NSString *)messageTo
+{
+	NSParameterAssert(message != nil);
+	NSParameterAssert(messageTo != nil);
+
+	@synchronized (self.messageSendQueue) {
+		NSMutableArray *sendQueue = self.messageSendQueue[messageTo];
+
+		if (sendQueue == nil) {
+			sendQueue = [NSMutableArray array];
+
+			self.messageSendQueue[messageTo] = sendQueue;
+		}
+
+		[sendQueue addObject:message];
+	}
+}
+
+- (BOOL)dequeueMessage:(NSString *)message to:(NSString *)messageTo
+{
+	NSParameterAssert(message != nil);
+	NSParameterAssert(messageTo != nil);
+
+	@synchronized (self.messageSendQueue) {
+		NSMutableArray *sendQueue = self.messageSendQueue[messageTo];
+
+		if (sendQueue == nil) {
+			return NO;
+		}
+
+		NSUInteger messageIndex = [sendQueue indexOfObject:message];
+
+		if (messageIndex == NSNotFound) {
+			return NO;
+		}
+
+		[sendQueue removeObjectAtIndex:messageIndex];
+
+		if (sendQueue.count == 0) {
+			self.messageSendQueue[messageTo] = nil;
+		}
+	}
+
+	return YES;
+}
+
+- (void)clearQueueFor:(NSString *)messageTo
+{
+	NSParameterAssert(messageTo != nil);
+
+	@synchronized (self.messageSendQueue) {
+		self.messageSendQueue[messageTo] = nil;
+	}
+}
+
+#pragma mark -
 #pragma mark Off-the-Record Kit Delegate
 
 - (void)updatePolicy
@@ -620,6 +684,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+			[self queueMessage:message to:username];
+		}
+
 		[client send:IRCPrivateCommandIndex("privmsg"), channel.name, message, nil];
 	}];
 }
@@ -656,6 +724,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)otrKit:(OTRKit *)otrKit updateMessageState:(OTRKitMessageState)messageState username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
+	if (messageState == OTRKitMessageStateFinished) {
+		[self clearQueueFor:username];
+	}
+
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[channel noteEncryptionStateDidChange];
 	}];

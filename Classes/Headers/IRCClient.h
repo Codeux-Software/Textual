@@ -77,7 +77,8 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
 	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 14, // YES if the ZNC vendor specific CAP supported
 	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 15, // YES if the ZNC vendor specific CAP supported
 	ClientIRCv3SupportedCapacityBatch					= 1 << 16, // YES if batch CAP supported
-	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 17  // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 17, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapacityEchoMessageModule		= 1 << 18 // YES if echo-message CAP supported
 };
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
