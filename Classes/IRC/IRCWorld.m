@@ -445,6 +445,10 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	IRCClient *client = [[IRCClient alloc] initWithConfig:config];
 
+	client.printingQueue = [TVCLogControllerOperationQueue new];
+
+	client.viewController = [self createViewControllerWithClient:client channel:nil];
+
 	NSMutableArray<IRCChannel *> *channelList = [NSMutableArray array];
 
 	for (IRCChannelConfig *channelConfig in client.config.channelList) {
@@ -455,10 +459,6 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	}
 
 	client.channelList = channelList;
-
-	client.printingQueue = [TVCLogControllerOperationQueue new];
-
-	client.viewController = [self createViewControllerWithClient:client channel:nil];
 
 	@synchronized(self.clients) {
 		[self.clients addObject:client];
