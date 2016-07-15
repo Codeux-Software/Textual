@@ -10596,6 +10596,10 @@ present_error:
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand]) {
 		return;
 	}
+
+	if (addressBookEntry.entryType != IRCAddressBookUserTrackingEntryType) {
+		return;
+	}
 	
     NSString *trackingNickname = addressBookEntry.trackingNickname;
 
