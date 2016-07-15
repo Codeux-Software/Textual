@@ -1702,7 +1702,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(channel != nil);
 
-	if (channel.isPrivateMessageForZNCUser == NO) {
+	if (channel.isPrivateMessage == NO || channel.isPrivateMessageForZNCUser) {
 		return;
 	}
 
