@@ -1674,7 +1674,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case TXNotificationInviteType:
 		{
-			NSParameterAssert(target != nil);
 			NSParameterAssert(nickname != nil);
 			NSParameterAssert(text != nil);
 
