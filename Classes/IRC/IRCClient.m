@@ -1266,7 +1266,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if ([self encryptionAllowedForNickname:messageTo] == NO) {
+	if (messageBody.length == 0 || [self encryptionAllowedForNickname:messageTo] == NO) {
 #endif
 		if (encodingCallback) {
 			encodingCallback(messageBody, NO);
@@ -1313,7 +1313,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if ([self encryptionAllowedForNickname:messageTo] == NO) {
+	if (messageBody.length == 0 || [self encryptionAllowedForNickname:messageTo] == NO) {
 #endif
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
