@@ -1709,9 +1709,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	NSString *nickname = [self nicknameAsZNCUser:@"playback"];
+	NSString *command = [NSString stringWithFormat:@"clear %@", channel.name];
 
-	[self send:IRCPrivateCommandIndex("privmsg"), nickname, @"clear", channel.name, nil];
+	[self sendCommand:command toZNCModuleNamed:@"playback"];
 }
 
 - (BOOL)nicknameIsZNCUser:(NSString *)nickname
@@ -1790,6 +1790,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		LogToConsoleInfo("ZNC detected...")
 	}
+}
+
+- (void)sendCommand:(NSString *)command toZNCModuleNamed:(NSString *)module
+{
+	NSParameterAssert(command != nil);
+	NSParameterAssert(module != nil);
+
+	NSString *destination = [self nicknameAsZNCUser:module];
+
+	if (destination == nil) {
+		return;
+	}
+
+	NSString *stringToSend = [NSString stringWithFormat:@"ZNC %@ %@", destination, command];
+
+	[self sendLine:stringToSend];
 }
 
 #pragma mark -
@@ -7010,9 +7026,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Request certificate information */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCCertInfoModule]) {
-		NSString *nickname = [self nicknameAsZNCUser:@"tlsinfo"];
-
-		[self send:IRCPrivateCommandIndex("privmsg"), nickname, @"send-data", nil];
+		[self sendCommand:@"send-data" toZNCModuleNamed:@"tlsinfo"];
 	}
 
 	/* Request playback since the last seen message when previously connected */
@@ -7020,13 +7034,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* For our first connect, only playback using timestamp if logging was enabled. */
 		/* For all other connects, then playback timestamp regardless of logging. */
 
-		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDiskIsEnabled])) && self.lastMessageServerTime > 0) {
-			NSString *timeToSend = [NSString stringWithFormat:@"%.0f", self.lastMessageServerTime];
+		NSString *command = nil;
 
-			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameAsZNCUser:@"playback"], @"play", @"*", timeToSend, nil];
+		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDiskIsEnabled])) && self.lastMessageServerTime > 0) {
+			command = [NSString stringWithFormat:@"play * %.0f", self.lastMessageServerTime];
 		} else {
-			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameAsZNCUser:@"playback"], @"play", @"*", @"0", nil];
+			command = @"play * 0";
 		}
+
+		[self sendCommand:command toZNCModuleNamed:@"playback"];
 	}
 
 	/* Activate existing queries */
