@@ -196,50 +196,52 @@ Textual.documentHTML = function()
 	return document.documentElement.innerHTML;
 };
 
-Textual.reduceNumberOfLines = function(countOfLinesToRemove)
+Textual.reduceNumberOfLines = function(countOfLinesToRemove) 
 {
-	var removedChildren = [];
-
-	var documentBody = Textual.documentBodyElement();
+	var removedChildren = []
 
 	var historicMessages = document.getElementById("historic_messages")
 
-	var historicRemoveCount = 0;
-	
-	if (historicMessages.children.length < countOfLinesToRemove) {
-		historicRemoveCount = historicMessages.children.length;
-	} else {
-		historicRemoveCount = countOfLinesToRemove;
-	}
-
-	while (historicRemoveCount > 0) {
-		var childNode = historicElements.firstChild;
-		
-		var childNodeId = childNode.id;
-
-		if (childNodeId && childNodeId.indexOf("line-") === 0) {
-			removedChildren.push(childNodeId);
-
-			documentBody.removeChild(childNode);
-		}
-
-		historicRemoveCount -= 1
-	}
-
-	countOfLinesToRemove -= removedChildren.length;
+	var nextElement = historicMessages.childNodes[0];
 
 	while (countOfLinesToRemove > 0) {
-		var childNode = documentBody.firstChild;
+		if (nextElement === undefined) {
+			break;
+		}
 		
-		var childNodeId = childNode.id;
+		var nextElementId = nextElement.id;
 
-		if (childNodeId && childNodeId.indexOf("line-") === 0) {
-			removedChildren.push(childNodeId);
-
-			documentBody.removeChild(childNode);
+		if (nextElementId && nextElementId.indexOf("line-") === 0) {
+			removedChildren.push(nextElementId);
+			
+			historicMessages.removeChild(nextElement);
+			
+			countOfLinesToRemove -= 1;
 		}
 
-		countOfLinesToRemove -= 1;
+		nextElement = nextElement.nextSibling;
+	}
+	
+	var documentBody = Textual.documentBodyElement();
+
+	nextElement = documentBody.childNodes[0];
+	
+	while (countOfLinesToRemove > 0) {
+		if (nextElement === undefined) {
+			break;
+		}
+		
+		var nextElementId = nextElement.id;
+
+		if (nextElementId && nextElementId.indexOf("line-") === 0) {
+			removedChildren.push(nextElementId);
+			
+			documentBody.removeChild(nextElement);
+			
+			countOfLinesToRemove -= 1;
+		}
+
+		nextElement = nextElement.nextSibling;
 	}
 
 	return removedChildren;
