@@ -2085,6 +2085,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&lineMutable inChannel:channel onClient:self withLineType:lineType];
 
 			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
+				if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule] && wasEncrypted == NO) {
+					return;
+				}
+
 				[self print:originalString
 						 by:self.userNickname
 				  inChannel:channel
@@ -3560,6 +3564,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 							return;
 						}
 
+						if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule] && wasEncrypted == NO) {
+							return;
+						}
+
 						[self print:originalString
 								 by:self.userNickname
 						  inChannel:destination
@@ -4863,18 +4871,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 module need the correct behavior which the self-message CAP evolved into. */
 	BOOL isSelfMessage = NO;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] || self.isConnectedToZNC) {
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule] ||
+		[self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] ||
+		self.isConnectedToZNC)
+	{
 		isSelfMessage = [self nicknameIsMyself:sender];
 	}
 
 	/* Does the query for the sender already exist?... */
 	IRCChannel *query = nil;
 
-	if (isSelfMessage == YES) {
+	if (isSelfMessage) {
 		query = [self findChannel:target]; // Look for a query related to target, rather than sender
 	} else {
 		query = [self findChannel:sender];
 	}
+
+
+	/* If the incoming message is present in the the queue of encrypted messages,
+	 then do not print this message becasue it would just be gibberish to the user. */
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	if (isSelfMessage) {
+		NSString *messageFrom = [self encryptionAccountNameForUser:target];
+
+		BOOL messageDequed = 
+		[sharedEncryptionManager() dequeueMessage:text to:messageFrom];
+
+		if (messageDequed) {
+			return;
+		}
+	}
+#endif
 
 	BOOL newPrivateMessage = NO;
 
@@ -6418,6 +6445,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case ClientIRCv3SupportedCapacityEchoMessageModule:
+		{
+			stringValue = @"echo-message";
+
+			break;
+		}
 		case ClientIRCv3SupportedCapacityIdentifyCTCP:
 		{
 			stringValue = @"identify-ctcp";
@@ -6505,7 +6538,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(capacityString != nil);
 
-	if ([capacityString isEqualIgnoringCase:@"userhost-in-names"]) {
+	if ([capacityString isEqualIgnoringCase:@"echo-message"]) {
+		return ClientIRCv3SupportedCapacityEchoMessageModule;
+	} else if ([capacityString isEqualIgnoringCase:@"userhost-in-names"]) {
 		return ClientIRCv3SupportedCapacityUserhostInNames;
 	} else if ([capacityString isEqualIgnoringCase:@"multi-prefix"]) {
 		return ClientIRCv3SupportedCapacityMultiPreifx;
@@ -6554,6 +6589,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	appendValue(ClientIRCv3SupportedCapacityAwayNotify);
 	appendValue(ClientIRCv3SupportedCapacityBatch);
+	appendValue(ClientIRCv3SupportedCapacityEchoMessageModule);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyCTCP);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
 	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
@@ -6587,6 +6623,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			(capacity == ClientIRCv3SupportedCapacitySASLGeneric			||
 			 capacity == ClientIRCv3SupportedCapacityAwayNotify				||
 			 capacity == ClientIRCv3SupportedCapacityBatch					||
+			 capacity == ClientIRCv3SupportedCapacityEchoMessageModule		||
 			 capacity == ClientIRCv3SupportedCapacityIdentifyCTCP			||
 			 capacity == ClientIRCv3SupportedCapacityIdentifyMsg			||
 			 capacity == ClientIRCv3SupportedCapacityMultiPreifx			||
@@ -6634,6 +6671,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	// Information about several of these supported CAP
 	// extensions can be found at: http://ircv3.atheme.org
+
+	if ([capacityString isEqualIgnoringCase:@"echo-message"]) {
+		return [TPCPreferences enableEchoMessageCapacity];
+	}
 
 	return
 	([capacityString isEqualIgnoringCase:@"sasl"]					||

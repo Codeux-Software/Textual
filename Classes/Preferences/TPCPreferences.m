@@ -181,6 +181,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 }
 #endif
 
++ (BOOL)enableEchoMessageCapacity
+{
+	return [RZUserDefaults() boolForKey:@"IRC -> Enable echo-message Capacity"];
+}
+
 + (BOOL)displayServerMOTD
 {
 	return [RZUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];

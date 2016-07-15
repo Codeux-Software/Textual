@@ -150,6 +150,8 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)textEncryptionIsEnabled;
 #endif
 
++ (BOOL)enableEchoMessageCapacity;
+
 + (BOOL)giveFocusOnMessageCommand;
 
 + (BOOL)amsgAllConnections;

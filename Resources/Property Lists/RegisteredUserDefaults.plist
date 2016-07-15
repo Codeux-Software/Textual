@@ -113,6 +113,8 @@
 	<integer>300</integer>
 	<key>InvertSidebarColors</key>
 	<false/>
+	<key>IRC -&gt; Enable echo-message Capacity</key>
+	<false/>
 	<key>Keyboard -&gt; Command+W Key Action</key>
 	<integer>0</integer>
 	<key>Keyboard -&gt; Tab Key Action</key>
