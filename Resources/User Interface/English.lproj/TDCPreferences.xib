@@ -918,11 +918,11 @@
             <point key="canvasLocation" x="10" y="-648"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="09H-hp-iIC" userLabel="Alerts">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="380"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="408"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="GjT-uP-Qs3">
-                    <rect key="frame" x="49" y="108" width="479.5" height="18"/>
-                    <buttonCell key="cell" type="check" title="Display a badge on the dock to indicate a new highlight or private message" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2zu-lB-mQq">
+                    <rect key="frame" x="49" y="136" width="479.5" height="18"/>
+                    <buttonCell key="cell" type="check" title="Display number of unread private messages on Textual's Dock icon" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2zu-lB-mQq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -931,8 +931,8 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="aAm-Wb-rMO">
-                    <rect key="frame" x="49" y="80" width="420" height="18"/>
-                    <buttonCell key="cell" type="check" title="Include public channel messages in the above mentioned badge count" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="NHa-ip-Ihi">
+                    <rect key="frame" x="49" y="108" width="406" height="18"/>
+                    <buttonCell key="cell" type="check" title="Display number of unread channel messages on Textual's Dock icon" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="NHa-ip-Ihi">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -941,7 +941,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1jd-UU-VQN">
-                    <rect key="frame" x="133" y="332" width="87" height="17"/>
+                    <rect key="frame" x="133" y="360" width="87" height="17"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Current Alert:" id="AuT-BU-VxX">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -949,7 +949,7 @@
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="pyR-Yq-9tk">
-                    <rect key="frame" x="117" y="220" width="22" height="18"/>
+                    <rect key="frame" x="117" y="248" width="22" height="18"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hlg-Zw-rVE">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -959,7 +959,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Hy-Fo-BoC">
-                    <rect key="frame" x="135" y="166" width="116" height="16"/>
+                    <rect key="frame" x="135" y="194" width="116" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="x2w-3m-KRM"/>
                     </constraints>
@@ -970,10 +970,10 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="AJU-jn-Xt1">
-                    <rect key="frame" x="49" y="337" width="78" height="5"/>
+                    <rect key="frame" x="49" y="365" width="78" height="5"/>
                 </box>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="pPF-N7-ZNY">
-                    <rect key="frame" x="117" y="247" width="168" height="18"/>
+                    <rect key="frame" x="117" y="275" width="168" height="18"/>
                     <buttonCell key="cell" type="check" title="Speak using system voice" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="jPT-kI-nWE">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -983,16 +983,16 @@
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nkc-Mt-osY">
-                    <rect key="frame" x="434" y="337" width="106" height="5"/>
+                    <rect key="frame" x="434" y="365" width="106" height="5"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="SM5-3p-JK0">
-                    <rect key="frame" x="62" y="140" width="464" height="5"/>
+                    <rect key="frame" x="62" y="168" width="464" height="5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="464" id="Op5-Ll-gYi"/>
                     </constraints>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O82-On-A00">
-                    <rect key="frame" x="135" y="274" width="282" height="14"/>
+                    <rect key="frame" x="135" y="302" width="282" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="9fD-5A-S0y">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -1003,10 +1003,10 @@
                     </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="yuH-wc-F3c">
-                    <rect key="frame" x="62" y="61" width="464" height="5"/>
+                    <rect key="frame" x="62" y="89" width="464" height="5"/>
                 </box>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WuE-Q5-q8G">
-                    <rect key="frame" x="231" y="326" width="198" height="26"/>
+                    <rect key="frame" x="231" y="354" width="198" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="193" id="x8U-tb-tNr"/>
                     </constraints>
@@ -1027,7 +1027,7 @@
                     </connections>
                 </popUpButton>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="fyC-tf-kOI">
-                    <rect key="frame" x="117" y="294" width="179" height="18"/>
+                    <rect key="frame" x="117" y="322" width="179" height="18"/>
                     <buttonCell key="cell" type="check" title="Display notification for alert" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="kuK-CY-8vo">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -1037,7 +1037,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="lHl-sy-SBb">
-                    <rect key="frame" x="117" y="192" width="123" height="18"/>
+                    <rect key="frame" x="117" y="220" width="123" height="18"/>
                     <buttonCell key="cell" type="check" title="Bounce dock icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QLU-i1-tIY">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -1047,7 +1047,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Izn-3U-WFY">
-                    <rect key="frame" x="244" y="192" width="86" height="18"/>
+                    <rect key="frame" x="244" y="220" width="86" height="18"/>
                     <buttonCell key="cell" type="check" title="Repeatedly" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bko-ZV-lwT">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -1057,7 +1057,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="7gR-L1-aOU">
-                    <rect key="frame" x="49" y="29" width="276" height="18"/>
+                    <rect key="frame" x="49" y="57" width="276" height="18"/>
                     <buttonCell key="cell" type="check" title="Display notifications when Textual is focused" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="rbi-o7-6Hw">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -1067,7 +1067,7 @@
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="hTp-FD-YPZ">
-                    <rect key="frame" x="132" y="219" width="320" height="17"/>
+                    <rect key="frame" x="132" y="247" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aR8-Ov-hTp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1120,7 +1120,7 @@
                     </scroller>
                 </scrollView>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xvN-SN-jAW">
-                    <rect key="frame" x="254" y="161" width="142" height="22"/>
+                    <rect key="frame" x="254" y="189" width="142" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="136" id="32x-It-iDT"/>
                     </constraints>
@@ -1140,6 +1140,16 @@
                         <action selector="onChangedAlertSound:" target="-2" id="eU1-DB-IBY"/>
                     </connections>
                 </popUpButton>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="le1-Ag-Mg9">
+                    <rect key="frame" x="49" y="29" width="334" height="18"/>
+                    <buttonCell key="cell" type="check" title="Only speak channel messages for the selected channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="nZR-t5-7Zc">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.OnlySpeakNotificationsForSelection" id="bqD-Pl-XiV"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="SM5-3p-JK0" firstAttribute="centerX" secondItem="09H-hp-iIC" secondAttribute="centerX" id="1zu-jU-3ZX"/>
@@ -1177,14 +1187,16 @@
                 <constraint firstItem="1jd-UU-VQN" firstAttribute="leading" secondItem="AJU-jn-Xt1" secondAttribute="trailing" constant="8" id="pqM-Zj-IEo"/>
                 <constraint firstItem="yuH-wc-F3c" firstAttribute="trailing" secondItem="SM5-3p-JK0" secondAttribute="trailing" id="r8p-ci-joP"/>
                 <constraint firstItem="pyR-Yq-9tk" firstAttribute="leading" secondItem="pPF-N7-ZNY" secondAttribute="leading" id="sa5-tk-dXN"/>
+                <constraint firstItem="le1-Ag-Mg9" firstAttribute="leading" secondItem="7gR-L1-aOU" secondAttribute="leading" id="tSG-Hh-RMC"/>
                 <constraint firstItem="yuH-wc-F3c" firstAttribute="top" secondItem="aAm-Wb-rMO" secondAttribute="bottom" constant="18" id="tfR-o2-pob"/>
                 <constraint firstItem="pyR-Yq-9tk" firstAttribute="leading" secondItem="lHl-sy-SBb" secondAttribute="leading" id="tq2-tC-ihV"/>
                 <constraint firstItem="GjT-uP-Qs3" firstAttribute="leading" secondItem="09H-hp-iIC" secondAttribute="leading" constant="51" id="ufO-aA-Mk8"/>
                 <constraint firstItem="pPF-N7-ZNY" firstAttribute="leading" secondItem="fyC-tf-kOI" secondAttribute="leading" id="vBN-fl-4Vx"/>
+                <constraint firstItem="le1-Ag-Mg9" firstAttribute="top" secondItem="7gR-L1-aOU" secondAttribute="bottom" constant="14" id="vys-77-NHs"/>
                 <constraint firstItem="nkc-Mt-osY" firstAttribute="centerY" secondItem="WuE-Q5-q8G" secondAttribute="centerY" id="x2D-tJ-2Wo"/>
                 <constraint firstItem="fyC-tf-kOI" firstAttribute="top" secondItem="WuE-Q5-q8G" secondAttribute="bottom" constant="19" id="yG1-DB-JH7"/>
             </constraints>
-            <point key="canvasLocation" x="687.5" y="-361"/>
+            <point key="canvasLocation" x="687.5" y="-347"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="DPg-Nu-HcZ" userLabel="Log Location">
             <rect key="frame" x="0.0" y="0.0" width="589" height="114"/>
@@ -1730,7 +1742,7 @@
                     <rect key="frame" x="94" y="141" width="371" height="31"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Dog-4X-w01">
                         <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="Ncp-xZ-uCx">
                                 <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>

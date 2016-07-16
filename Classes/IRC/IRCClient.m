@@ -1377,8 +1377,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCChannel *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
 {
-#warning TODO: Option to have speak events only occur for selected channel
-
 	if (text) {
 		text = text.trim;
 
@@ -1552,9 +1550,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL postNotificationsWhileFocused = [TPCPreferences postNotificationsWhileInFocus];
 
-	BOOL onlySpeakEvent = (postNotificationsWhileFocused &&
-						   mainWindowIsFocused &&
-						   [mainWindow() isItemSelected:target]);
+	BOOL targetIsSelected = [mainWindow() isItemSelected:target];
+
+	BOOL onlySpeakEvent = (postNotificationsWhileFocused && mainWindowIsFocused && targetIsSelected);
+
+	BOOL onlySpeakEventsForSelection = [TPCPreferences onlySpeakEventsForSelection];
+
+	BOOL speakEvent =
+	/* 1 */ (onlySpeakEventsForSelection == NO ||
+	/* 2 */ (onlySpeakEventsForSelection && targetIsSelected) ||
+	/* 3 */ (onlySpeakEventsForSelection && targetIsSelected == NO &&
+			 eventType != TXNotificationChannelMessageType &&
+			 eventType != TXNotificationChannelNoticeType));
 
 	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
@@ -1565,7 +1572,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 		}
 
-		if ([TPCPreferences speakEvent:eventType]) {
+		if (speakEvent) {
 			[self speakEvent:eventType lineType:lineType target:target nickname:nickname text:text];
 		}
 	}
