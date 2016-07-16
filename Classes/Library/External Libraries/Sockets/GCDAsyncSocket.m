@@ -3012,11 +3012,15 @@ enum GCDAsyncSocketConfig
 {
 	if (timeout >= 0.0)
 	{
+		unsigned long connectTimerMask = 0;
+
 #if GCDAsyncSocketUsesStrictTimers == 1
-		connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, socketQueue);
-#else
-		connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
+		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+			connectTimerMask = DISPATCH_TIMER_STRICT;
+		}
 #endif
+
+		connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, connectTimerMask, socketQueue);
 		
 		__weak GCDAsyncSocket *weakSelf = self;
 		
@@ -5670,11 +5674,15 @@ enum GCDAsyncSocketConfig
 {
 	if (timeout >= 0.0)
 	{
+		unsigned long readTimerMask = 0;
+
 #if GCDAsyncSocketUsesStrictTimers == 1
-		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, socketQueue);
-#else
-		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
+		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+			readTimerMask = DISPATCH_TIMER_STRICT;
+		}
 #endif
+
+		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, readTimerMask, socketQueue);
 
 		__weak GCDAsyncSocket *weakSelf = self;
 		
@@ -6317,11 +6325,15 @@ enum GCDAsyncSocketConfig
 {
 	if (timeout >= 0.0)
 	{
+		unsigned long writeTimerMask = 0;
+
 #if GCDAsyncSocketUsesStrictTimers == 1
-		writeTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, socketQueue);
-#else
-		writeTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, socketQueue);
+		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+			writeTimerMask = DISPATCH_TIMER_STRICT;
+		}
 #endif
+
+		writeTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, writeTimerMask, socketQueue);
 
 		__weak GCDAsyncSocket *weakSelf = self;
 		
