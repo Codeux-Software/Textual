@@ -2487,12 +2487,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if ([self stringIsChannelName:stringInString] == NO) {
-				if (targetChannel && targetChannel.isPrivateMessage) {
-					targetChannelName = targetChannel.name;
-				} else {
-					break;
-				}
+			if (targetChannel && targetChannel != selectedChannel) {
+				targetChannelName = targetChannel.name;
 			} else {
 				targetChannelName = stringIn.tokenAsString;
 			}
