@@ -415,7 +415,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			BOOL condition = (_isChannel || _isQuery);
 
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_1].hidden = _noChannel;
+			[hostMenu itemWithTag:_channelMenuSeparatorTag_1].hidden = (_isChannel == NO);
 
 			[hostMenu itemWithTag:_channelMenuSeparatorTag_2].hidden = (condition == NO);
 			[hostMenu itemWithTag:_channelMenuSeparatorTag_3].hidden = (condition == NO);
