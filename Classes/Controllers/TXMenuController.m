@@ -269,7 +269,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			/* If certain items are hidden because of sheet but not because of
 			 the trial being expired, then enable additional items. */
-			if (returnValue == NO && defaultToNoForSheet == YES && isTrialExpired == NO) {
+			if (returnValue == NO && defaultToNoForSheet && isTrialExpired == NO) {
 				switch (tag) {
 					case 100: // "About Textual"
 					case 101: // "Preferences…"
@@ -793,7 +793,7 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 				
 				BOOL hideTakeSepItem = (UserHasModeO == NO  || UserHasModeH == NO  || UserHasModeV == NO);
-				BOOL hideGiveSepItem = (UserHasModeO == YES || UserHasModeH == YES || UserHasModeV == YES);
+				BOOL hideGiveSepItem = (UserHasModeO || UserHasModeH || UserHasModeV);
 
 				_ui(_userControlsMenuAllModesTakenMenuTag, hideGiveSepItem)
 				_ui(_userControlsMenuAllModesGivenMenuTag, hideTakeSepItem)

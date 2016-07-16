@@ -4746,7 +4746,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 																			IRCAddressBookDictionaryValueIgnorePublicMessagesKey,
 																			IRCAddressBookDictionaryValueIgnorePrivateMessagesKey	]];
 
-	if (ignoreInfo.ignorePublicMessageHighlights == YES) {
+	if (ignoreInfo.ignorePublicMessageHighlights) {
 		if (lineType == TVCLogLineActionType) {
 			lineType = TVCLogLineActionNoHighlightType;
 		} else if (lineType == TVCLogLinePrivateMessageType) {
