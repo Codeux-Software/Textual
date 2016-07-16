@@ -1557,11 +1557,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	BOOL onlySpeakEventsForSelection = [TPCPreferences onlySpeakEventsForSelection];
 
 	BOOL speakEvent =
-	/* 1 */ (onlySpeakEventsForSelection == NO ||
-	/* 2 */ (onlySpeakEventsForSelection && targetIsSelected) ||
-	/* 3 */ (onlySpeakEventsForSelection && targetIsSelected == NO &&
-			 eventType != TXNotificationChannelMessageType &&
-			 eventType != TXNotificationChannelNoticeType));
+	/* 1 */ ((onlySpeakEventsForSelection == NO ||
+	/* 2 */  (onlySpeakEventsForSelection && targetIsSelected) ||
+	/* 3 */  (onlySpeakEventsForSelection && targetIsSelected == NO &&
+			  eventType != TXNotificationChannelMessageType &&
+			  eventType != TXNotificationChannelNoticeType)) &&
+	/* 4 */		[TPCPreferences speakEvent:eventType]);
 
 	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
