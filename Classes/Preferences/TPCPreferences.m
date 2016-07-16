@@ -996,6 +996,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
++ (BOOL)onlySpeakEventsForSelection
+{
+	return [RZUserDefaults() boolForKey:@"OnlySpeakNotificationsForSelection"];
+}
+
 #pragma mark -
 #pragma mark World
 

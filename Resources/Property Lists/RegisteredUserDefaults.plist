@@ -185,6 +185,8 @@
 	<true/>
 	<key>Off-the-Record Messaging -&gt; Require Encryption</key>
 	<false/>
+	<key>OnlySpeakNotificationsForSelection</key>
+	<true/>
 	<key>OpenClickedLinksInBackgroundBrowser</key>
 	<false/>
 	<key>PostNotificationsWhileInFocus</key>
