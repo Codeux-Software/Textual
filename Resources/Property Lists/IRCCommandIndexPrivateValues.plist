@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>1056</real>
+		<real>1057</real>
 	</dict>
 	<key>action</key>
 	<dict>
@@ -343,6 +343,17 @@
 		<string>MODE</string>
 		<key>indexValue</key>
 		<integer>1026</integer>
+		<key>isStandalone</key>
+		<true/>
+		<key>outgoingColonIndex</key>
+		<integer>-1</integer>
+	</dict>
+	<key>monitor</key>
+	<dict>
+		<key>command</key>
+		<string>MONITOR</string>
+		<key>indexValue</key>
+		<real>1056</real>
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>

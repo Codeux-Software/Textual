@@ -160,6 +160,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, copy) NSString *temporaryServerAddressOverride;
 @property (nonatomic, assign) uint16_t temporaryServerPortOverride;
 @property (readonly) BOOL isBrokenIRCd_aka_Twitch;
+@property (readonly) BOOL supportsAdvancedTracking;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedNeedIdentificationTokens;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedSuccessfulIdentificationTokens;
 @end
@@ -730,6 +731,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (BOOL)isBrokenIRCd_aka_Twitch
 {
 	return [self.serverAddress hasSuffix:@".twitch.tv"];
+}
+
+- (BOOL)supportsAdvancedTracking
+{
+	return ([self isCapacityEnabled:ClientIRCv3SupportedCapacityMonitorCommand] ||
+			[self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand]);
 }
 
 #pragma mark -
@@ -3357,13 +3364,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandMonitorIndex: // Command: MONITOR
 		case IRCPublicCommandWatchIndex: // Command: WATCH
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
+			if ([stringInString hasSuffix:@"-"] || [stringInString hasSuffix:@"+"] ) {
+				break;
+			}
+
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWatchRequest];
 
-			[self send:IRCPrivateCommandIndex("watch"), nil];
+			[self sendCommand:uppercaseCommand withData:stringInString];
 
 			break;
 		}
@@ -3663,13 +3675,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			/* Send input to server */
-			NSString *stringToSend = [NSString stringWithFormat:@"%@ %@", uppercaseCommand, stringInString];
-
-			[self sendLine:stringToSend];
+			[self sendCommand:uppercaseCommand withData:stringInString];
 			
 			break;
 		}
 	}
+}
+
+- (void)sendCommand:(NSString *)command withData:(NSString *)data
+{
+	NSParameterAssert(command != nil);
+	NSParameterAssert(data != nil);
+
+	NSString *stringToSend = [NSString stringWithFormat:@"%@ %@", command, data];
+
+	[self sendLine:stringToSend];
 }
 
 #pragma mark -
@@ -6504,6 +6524,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case ClientIRCv3SupportedCapacityMonitorCommand:
+		{
+			stringValue = @"monitor-command";
+
+			break;
+		}
 		case ClientIRCv3SupportedCapacityWatchCommand:
 		{
 			stringValue = @"watch-command";
@@ -8210,6 +8236,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case 606: // RPL_WATCHLIST
 		case 607: // RPL_ENDOFWATCHLIST
 		case 608: // RPL_CLEARWATCH
+		case 732: // RPL_MONLIST
+		case 733: // RPL_ENDOFMONLIST
+		case 734: // ERR_MONLISTFULL
 		{
 			if (self.inUserInvokedWatchRequest) {
 				if (printMessage) {
@@ -8217,7 +8246,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
-			if (numeric == 608 || numeric == 607) {
+			if (numeric == 608 || numeric == 607 || numeric == 733) {
 				[self disableInUserInvokedCommandProperty:&self->_inUserInvokedWatchRequest];
 			}
 
@@ -8273,6 +8302,61 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				@synchronized(self.trackedNicknames) {
 					self.trackedNicknames[trackingNickname] = @(numeric == 604);
+				}
+			}
+
+			break;
+		}
+		case 730: // RPL_MONONLINE
+		case 731: // RPL_MONOFFLINE
+		{
+			NSAssertReturn([m paramsCount] == 2);
+
+			if (self.inUserInvokedWatchRequest) {
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
+
+				break;
+			}
+
+			NSString *changedUsersString = [m paramAt:1];
+
+			NSArray *changedUsers = [changedUsersString componentsSeparatedByString:@","];
+
+			for (NSString *changedUser in changedUsers) {
+				NSString *hostmask = nil;
+
+				NSString *nicknameInt = nil;
+				NSString *usernameInt = nil;
+				NSString *addressInt = nil;
+
+				if ([changedUser hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:self]) {
+					hostmask = changedUser;
+				} else {
+					hostmask = [NSString stringWithFormat:@"%@!*@*", changedUser];
+
+					nicknameInt = changedUser;
+				}
+
+				IRCAddressBookEntry *addressBookEntry =
+				[self checkIgnoreAgainstHostmask:hostmask
+									 withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
+
+				if (addressBookEntry == nil) {
+					continue;
+				}
+
+				NSString *trackingNickname = addressBookEntry.trackingNickname;
+
+				@synchronized(self.trackedNicknames) {
+					self.trackedNicknames[trackingNickname] = @(numeric == 730);
+				}
+
+				if (numeric == 730) { // logged online
+					[self notifyTrackingStatusOfNickname:nicknameInt changedTo:IRCAddressBookUserTrackingSignedOnStatus];
+				} else {
+					[self notifyTrackingStatusOfNickname:nicknameInt changedTo:IRCAddressBookUserTrackingSignedOffStatus];
 				}
 			}
 
@@ -9826,21 +9910,34 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand] == NO) {
-		return;
-	}
+	NSString *command = nil;
 
 	NSString *modifier = nil;
 
-	if (adding) {
-		modifier = @" +";
-	} else {
-		modifier = @" -";
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityMonitorCommand])
+	{
+		if (adding) {
+			modifier = @"+";
+		} else {
+			modifier = @"-";
+		}
+
+		NSString *nicknamesString = [nicknames componentsJoinedByString:@","];
+
+		[self send:IRCPrivateCommandIndex("monitor"), modifier, nicknamesString, nil];
 	}
+	else if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand])
+	{
+		if (adding) {
+			modifier = @" +";
+		} else {
+			modifier = @" -";
+		}
 
-	NSString *nicknamesString = [nicknames componentsJoinedByString:modifier];
+		NSString *nicknamesString = [nicknames componentsJoinedByString:modifier];
 
-	[self send:IRCPrivateCommandIndex("watch"), [modifier stringByAppendingString:nicknamesString], nil];
+		[self send:IRCPrivateCommandIndex("watch"), [modifier stringByAppendingString:nicknamesString], nil];
+	}
 }
 
 #pragma mark -
@@ -10370,15 +10467,11 @@ present_error:
 
 - (void)populateISONTrackedUsersList
 {
-#warning TODO: Support MONITOR instead of WATCH
-
 	if (self.isLoggedIn == NO) {
 		return;
 	}
 
 	/* Additions & Removels for WATCH command. ISON does not access these. */
-	BOOL usesWatchCommand = [self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand];
-
 	NSMutableArray<NSString *> *watchAdditions = [NSMutableArray array];
 	NSMutableArray<NSString *> *watchRemovals = [NSMutableArray array];
 
@@ -10409,21 +10502,17 @@ present_error:
 			/* Add new entry for nickname not already tracked */
 			trackedNicknamesNew[trackingNickname] = @(NO);
 					
-			if (usesWatchCommand) {
-				[watchAdditions addObject:trackingNickname];
-			}
+			[watchAdditions addObject:trackingNickname];
 		}
 
-		if (usesWatchCommand) {
-			/* Compare old list of tracked nicknames to new list to find
-			 those that no longer appear. Mark those for removal. */
-			for (NSString *trackedNickname in self.trackedNicknames) {
-				if ([trackedNicknamesNew containsKey:trackedNickname]) {
-					continue;
-				}
-
-				[watchRemovals addObject:trackedNickname];
+		/* Compare old list of tracked nicknames to new list to find
+		 those that no longer appear. Mark those for removal. */
+		for (NSString *trackedNickname in self.trackedNicknames) {
+			if ([trackedNicknamesNew containsKey:trackedNickname]) {
+				continue;
 			}
+
+			[watchRemovals addObject:trackedNickname];
 		}
 
 		/* Set new entries */
@@ -10483,7 +10572,8 @@ present_error:
 	[self sendIsonForNicknames:nicknames];
 
 	// Request ISON status for tracked users
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand]) {
+
+	if (self.supportsAdvancedTracking) {
 		return;
 	}
 
@@ -10607,7 +10697,7 @@ present_error:
 	NSParameterAssert(addressBookEntry != nil);
 	NSParameterAssert(message != nil);
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand]) {
+	if (self.supportsAdvancedTracking) {
 		return;
 	}
 

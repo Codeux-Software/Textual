@@ -182,10 +182,10 @@ ClassWithDesignatedInitializerInitMethod
 			}
 		}
 
-		if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
-			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand] == NO) {
-				[client enableCapacity:ClientIRCv3SupportedCapacityWatchCommand];
-			}
+		if ([segmentKey isEqualIgnoringCase:@"MONITOR"]) {
+			[client enableCapacity:ClientIRCv3SupportedCapacityMonitorCommand];
+		} else if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
+			[client enableCapacity:ClientIRCv3SupportedCapacityWatchCommand];
 		} else if ([segmentKey isEqualIgnoringCase:@"NAMESX"]) {
 			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityMultiPreifx] == NO) {
 				[client sendLine:@"PROTOCTL NAMESX"];
