@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 			
 			networkCount++;
 			
-			if (client.userIsIRCop == YES) {
+			if (client.userIsIRCop) {
 				operCount++;
 			}
 			
@@ -143,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 						addUser = YES;	
 					}
 					
-					if (addUser == YES) {
+					if (addUser) {
 						if ([trackedUsers containsObject:member.nickname] == NO) {
 							[trackedUsers addObject:member.nickname];
 

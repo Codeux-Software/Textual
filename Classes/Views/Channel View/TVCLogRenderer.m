@@ -764,7 +764,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	{
 		templateTokens[@"messageFragment"] = fragmentEscaped;
 
-		if ([TPCPreferences disableNicknameColorHashing] == YES) {
+		if ([TPCPreferences disableNicknameColorHashing]) {
 			templateTokens[@"inlineNicknameMatchFound"] = @(NO);
 		} else {
 			IRCChannel *channel = self->_viewController.associatedChannel;
