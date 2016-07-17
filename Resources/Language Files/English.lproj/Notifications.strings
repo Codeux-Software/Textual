@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1061 */
+/* Next unusued key: 1063 */
 
 /* Notification spoken text */
 /* Address Book spoken text uses the actual notification message for that
@@ -43,6 +43,8 @@
 "Notifications[1001]" = "Channel Message in %1$@ by %2$@, %3$@";
 "Notifications[1002]" = "Channel Notice in %1$@ by %2$@, %3$@";
 "Notifications[1003]" = "Highlight in %1$@ by %2$@, %3$@";
+"Notifications[1061]" = "Channel Message by %1$@, %2$@";
+"Notifications[1062]" = "Channel Notice by %1$@, %2$@";
 "Notifications[1004]" = "Invited to %1$@ by %2$@";
 "Notifications[1005]" = "Kicked from %1$@ by %2$@";
 "Notifications[1006]" = "New Private Message from %1$@, %2$@";

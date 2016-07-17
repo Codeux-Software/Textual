@@ -1341,40 +1341,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Growl
 
-/* Spoken events are only called from within the following calls so we are going to 
- shove the key value matching in here to make it all in one place for management. */
-- (NSString *)localizedSpokenMessageForEvent:(TXNotificationType)event
-{
-#define _dv(event, value)			case (event): {return (value); }
-
-	switch (event) {
-		_dv(TXNotificationChannelMessageType, @"Notifications[1001]")
-		_dv(TXNotificationChannelNoticeType, @"Notifications[1002]")
-		_dv(TXNotificationConnectType, @"Notifications[1009]")
-		_dv(TXNotificationDisconnectType, @"Notifications[1010]")
-		_dv(TXNotificationInviteType, @"Notifications[1004]")
-		_dv(TXNotificationKickType, @"Notifications[1005]")
-		_dv(TXNotificationNewPrivateMessageType, @"Notifications[1006]")
-		_dv(TXNotificationPrivateMessageType, @"Notifications[1007]")
-		_dv(TXNotificationPrivateNoticeType, @"Notifications[1008]")
-		_dv(TXNotificationHighlightType, @"Notifications[1003]")
-		_dv(TXNotificationFileTransferSendSuccessfulType, @"Notifications[1011]")
-		_dv(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[1012]")
-		_dv(TXNotificationFileTransferSendFailedType, @"Notifications[1012]")
-		_dv(TXNotificationFileTransferReceiveFailedType, @"Notifications[1014]")
-		_dv(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1015]")
-
-		default:
-		{
-			break;
-		}
-	}
-
-#undef _dc
-
-	return nil;
-}
-
 - (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCChannel *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
 {
 	if (text) {
@@ -1400,9 +1366,35 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			NSString *formatter = [self localizedSpokenMessageForEvent:eventType];
-			
-			formattedMessage = TXTLS(formatter, target.name.channelNameWithoutBang, nickname, text);
+			BOOL includeChannelName = YES;
+
+			NSString *formatter = nil;
+
+			if (eventType == TXNotificationChannelMessageType) {
+				if ([TPCPreferences onlySpeakEventsForSelection]) {
+					includeChannelName = NO;
+
+					formatter = @"Notifications[1061]";
+				} else {
+					formatter = @"Notifications[1001]";
+				}
+			} else if (eventType == TXNotificationChannelNoticeType) {
+				if ([TPCPreferences onlySpeakEventsForSelection]) {
+					includeChannelName = NO;
+
+					formatter = @"Notifications[1062]";
+				} else {
+					formatter = @"Notifications[1002]";
+				}
+			} else if (eventType == TXNotificationHighlightType) {
+				formatter = @"Notifications[1063]";
+			}
+
+			if (includeChannelName == NO) {
+				formattedMessage = TXTLS(formatter, nickname, text);
+			} else {
+				formattedMessage = TXTLS(formatter, target.name.channelNameWithoutBang, nickname, text);
+			}
 
 			break;
 		}
@@ -1417,7 +1409,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			NSString *formatter = [self localizedSpokenMessageForEvent:eventType];
+			NSString *formatter = nil;
+
+			if (eventType == TXNotificationNewPrivateMessageType) {
+				formatter = @"Notifications[1006]";
+			} else if (eventType == TXNotificationPrivateMessageType) {
+				formatter = @"Notifications[1007]";
+			} else if (eventType == TXNotificationPrivateNoticeType) {
+				formatter = @"Notifications[1008]";
+			}
 
 			formattedMessage = TXTLS(formatter, nickname, text);
 			
@@ -1428,7 +1428,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSParameterAssert(target != nil);
 			NSParameterAssert(nickname != nil);
 
-			NSString *formatter = [self localizedSpokenMessageForEvent:eventType];
+			NSString *formatter = @"Notifications[1005]";
 
 			formattedMessage = TXTLS(formatter, target.name.channelNameWithoutBang, nickname);
 
@@ -1439,7 +1439,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSParameterAssert(nickname != nil);
 			NSParameterAssert(text != nil);
 
-			NSString *formatter = [self localizedSpokenMessageForEvent:eventType];
+			NSString *formatter = @"Notifications[1004]";
 
 			formattedMessage = TXTLS(formatter, text.channelNameWithoutBang, nickname);
 
@@ -1448,7 +1448,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case TXNotificationConnectType:
 		case TXNotificationDisconnectType:
 		{
-			NSString *formatter = [self localizedSpokenMessageForEvent:eventType];
+			NSString *formatter = nil;
+
+			if (eventType == TXNotificationConnectType) {
+				formatter = @"Notifications[1009]";
+			} else if (eventType == TXNotificationDisconnectType) {
+				formatter = @"Notifications[1010]";
+			}
 
 			formattedMessage = TXTLS(formatter, self.networkNameAlt);
 			
@@ -1470,8 +1476,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSParameterAssert(nickname != nil);
 
-			NSString *formatter = [self localizedSpokenMessageForEvent:eventType];
-			
+			NSString *formatter = nil;
+
+			if (eventType == TXNotificationFileTransferSendSuccessfulType) {
+				formatter = @"Notifications[1011]";
+			} else if (eventType == TXNotificationFileTransferReceiveSuccessfulType) {
+				formatter = @"Notifications[1012]";
+			} else if (eventType == TXNotificationFileTransferSendFailedType) {
+				formatter = @"Notifications[1012]";
+			} else if (eventType == TXNotificationFileTransferReceiveFailedType) {
+				formatter = @"Notifications[1014]";
+			} else if (eventType == TXNotificationFileTransferReceiveRequestedType) {
+				formatter = @"Notifications[1015]";
+			}
+
 			formattedMessage = TXTLS(formatter, nickname);
 
 			break;
