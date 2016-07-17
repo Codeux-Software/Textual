@@ -57,12 +57,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self populateDefaultsPostflight];
 
+		[self initializedClassHealthCheck];
+
 		self->_objectInitialized = YES;
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)initializedClassHealthCheck
+{
+	ObjectIsAlreadyInitializedAssert
+
+	if ([self isMutable]) {
+		return;
+	}
+
+	NSParameterAssert(self->_matchKeyword.length > 0);
 }
 
 - (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
@@ -78,8 +91,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic assignStringTo:&self->_matchChannelId forKey:@"matchChannelID"];
 	[dic assignStringTo:&self->_matchKeyword forKey:@"matchKeyword"];
 	[dic assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
-
-	NSParameterAssert(self->_matchKeyword.length > 0);
 }
 
 - (void)populateDefaultsPostflight
