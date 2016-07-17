@@ -313,7 +313,9 @@
 					NSString *fakeMessageCommand = nil;
 
 					if (lineType == TVCLogLinePrivateMessageType ||
-						lineType == TVCLogLineActionType)
+						lineType == TVCLogLinePrivateMessageNoHighlightType ||
+						lineType == TVCLogLineActionType ||
+						lineType == TVCLogLineActionNoHighlightType)
 					{
 						fakeMessageCommand = @"PRIVMSG";
 					} else if (lineType == TVCLogLineNoticeType) {
@@ -325,7 +327,7 @@
 						inChannel:destinationChannel
 						   asType:lineType
 						  command:fakeMessageCommand
-					 receivedAt:receivedAt
+					   receivedAt:receivedAt
 					  isEncrypted:wasEncrypted
 				 referenceMessage:nil
 					 completionBlock:^(TVCLogControllerPrintOperationContext *context) {
