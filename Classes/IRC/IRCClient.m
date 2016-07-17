@@ -3001,7 +3001,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (commandNumeric == IRCPublicCommandKickIndex || commandNumeric == IRCPublicCommandKickbanIndex) {
-				NSString *reason = stringIn.tokenAsString;
+				NSString *reason = stringIn.string;
 
 				if (reason.length == 0) {
 					reason = [TPCPreferences defaultKickMessage];
