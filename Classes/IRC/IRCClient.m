@@ -4803,6 +4803,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *sender = m.senderNickname;
 
+	BOOL isSelfMessage = NO;
+
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+		isSelfMessage = [self nicknameIsMyself:sender];
+	}
+
 	TVCLogControllerPrintOperationCompletionBlock printCompletionBlock = nil;
 
 	BOOL isPlainText = (lineType != TVCLogLineNoticeType);
@@ -4823,6 +4829,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		printCompletionBlock =
 		^(TVCLogControllerPrintOperationContext *context)
 		{
+			if (isSelfMessage) {
+				return;
+			}
+	
 			BOOL isHighlight = context.highlight;
 
 			BOOL postEvent = YES;
@@ -5260,6 +5270,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(m != nil);
 	NSParameterAssert(text != nil);
 
+	/* Ignore messages echoed back to ourselves */
+	NSString *sender = m.senderNickname;
+
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+		if ([self nicknameIsMyself:sender]) {
+			return;
+		}
+	}
+
 	/* Find ignore for sender and possibly exit method */
 	IRCAddressBookEntry *ignoreInfo = [self checkIgnoreAgainstHostmask:m.senderHostmask
 														   withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey,
@@ -5271,8 +5290,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Context */
 	NSMutableString *textMutable = [text mutableCopy];
-
-	NSString *sender = m.senderNickname;
 
 	NSString *command = textMutable.uppercaseGetToken;
 
