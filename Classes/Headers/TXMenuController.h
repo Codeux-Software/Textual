@@ -145,6 +145,7 @@ NS_ASSUME_NONNULL_BEGIN
 	715: "Next Highlight"
 	716: "Previous Highlight"
 	717: "Channel List…"
+	718: "Search channels…"
 
 	800: "Minimize"
 	801: "Zoom"
@@ -392,6 +393,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)showChannelModifyModesSheet:(id)sender;
 - (IBAction)showChannelModifyTopicSheet:(id)sender;
 - (IBAction)showChannelPropertiesSheet:(id)sender;
+- (IBAction)showChannelSpotlightWindow:(id)sender NS_AVAILABLE_MAC(10_10);
 - (IBAction)showFileTransfersWindow:(id)sender;
 - (IBAction)showFindPrompt:(id)sender;
 - (IBAction)showIgnoreList:(id)sender;
