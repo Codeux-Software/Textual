@@ -47,6 +47,13 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 //	TVCMainWindowShiftSelectionPerformDeselectAllFlag		= 1 << 2  // deselect all
 };
 
+typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
+	TVCMainWindowMouseLocationOutsideWindow					= 0,
+	TVCMainWindowMouseLocationInsideWindow					= 1 << 1,
+	TVCMainWindowMouseLocationInsideWindowTitle				= 1 << 2,
+	TVCMainWindowMouseLocationOnTopOfWindowTitleControl		= 1 << 3
+};
+
 @interface TVCMainWindow ()
 @property (nonatomic, assign) BOOL ignoreOutlineViewSelectionChanges;
 @property (nonatomic, assign) BOOL ignoreNextOutlineViewSelectionChange;
@@ -58,6 +65,9 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 - (TVCMainWindowTitlebarAccessoryViewLockButton *)titlebarAccessoryViewLockButton;
 - (TVCTextViewIRCFormattingMenu *)formattingMenu;
 - (TXMenuControllerMainWindowProxy *)mainMenuProxy;
+
+- (TVCMainWindowMouseLocation)locationOfMouseInWindow NS_AVAILABLE_MAC(10_10);
+- (TVCMainWindowMouseLocation)locationOfMouse:(NSPoint)mouseLocation NS_AVAILABLE_MAC(10_10);
 
 - (BOOL)reloadLoadingScreen;
 
