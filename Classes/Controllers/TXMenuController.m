@@ -1960,6 +1960,35 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
+#pragma mark Channel Spotlight
+
+- (void)showChannelSpotlightWindow:(id)sender
+{
+	NSAssert([XRSystemInformation isUsingOSXYosemiteOrLater],
+		@"This feature requires OS X Yosemite or later");
+
+	_popWindowViewIfExists(@"TDCChannelSpotlightController");
+
+	TDCChannelSpotlightController *dialog = [TDCChannelSpotlightController new];
+
+	dialog.delegate = (id)self;
+
+	[dialog showAboveWindow:mainWindow()];
+
+	[windowController() addWindowToWindowList:dialog];
+}
+
+- (void)channelSpotlightController:(TDCChannelSpotlightController *)sender selectChannel:(IRCChannel *)channel
+{
+	[mainWindow() select:channel];
+}
+
+- (void)channelSpotlightControllerWillClose:(TDCChannelSpotlightController *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
 #pragma mark Menu Item Actions
 
 - (void)addChannel:(id)sender

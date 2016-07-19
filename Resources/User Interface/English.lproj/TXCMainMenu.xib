@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -318,7 +318,8 @@
                                     <action selector="addServer:" target="267" id="2605"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Duplicate Server" tag="506" keyEquivalent="d" id="304">
+                            <menuItem title="Duplicate Server" tag="506" id="304">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="duplicateServer:" target="267" id="Ged-g2-cAh"/>
                                 </connections>
@@ -616,6 +617,17 @@ CQ
                                         </menuItem>
                                     </items>
                                 </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="rFI-Dq-HBe">
+                                <connections>
+                                    <binding destination="TlT-Ik-3QP" name="enabled" keyPath="values.System -&gt; Running Mac OS Yosemite Or Newer" id="pHW-3O-g5a"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Search channels…" tag="718" keyEquivalent="d" id="Orl-sv-wC7">
+                                <connections>
+                                    <action selector="showChannelSpotlightWindow:" target="267" id="Oeh-B1-SHC"/>
+                                    <binding destination="TlT-Ik-3QP" name="enabled" keyPath="values.System -&gt; Running Mac OS Yosemite Or Newer" id="ADq-j4-ILO"/>
+                                </connections>
                             </menuItem>
                         </items>
                         <connections>
@@ -962,7 +974,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-290" y="-210"/>
+            <point key="canvasLocation" x="-146" y="-220"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
