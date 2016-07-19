@@ -1254,6 +1254,64 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 #pragma mark -
 #pragma mark Misc
 
+- (TVCMainWindowMouseLocation)locationOfMouseInWindow
+{
+	NSPoint mouseLocation = [NSEvent mouseLocation];
+
+	return [self locationOfMouse:mouseLocation];
+}
+
+- (TVCMainWindowMouseLocation)locationOfMouse:(NSPoint)mouseLocation
+{
+	TVCMainWindowMouseLocation mouseLocationEnum = 0;
+
+	NSRect windowFrame = self.frame;
+
+	if (NSPointInRect(mouseLocation, windowFrame) == NO) {
+		return mouseLocationEnum;
+	}
+
+	mouseLocationEnum |= TVCMainWindowMouseLocationInsideWindow;
+
+	NSRect titlebarFrame = self.titlebarFrame;
+
+	if (NSPointInRect(mouseLocation, titlebarFrame) == NO) {
+		return mouseLocationEnum;
+	}
+
+	mouseLocationEnum |= TVCMainWindowMouseLocationInsideWindowTitle;
+
+#define ConvertRectToScreen(rect)	\
+	NSMakeRect( (titlebarFrame.origin.x + rect.origin.x),	\
+				(titlebarFrame.origin.y + rect.origin.y),	\
+				rect.size.width,	\
+				rect.size.height)	\
+
+#define PointInRect(view)	\
+	NSPointInRect(mouseLocation, ConvertRectToScreen(view.frame))
+
+	if (PointInRect([self standardWindowButton:NSWindowCloseButton]) ||
+		PointInRect([self standardWindowButton:NSWindowMiniaturizeButton]) ||
+		PointInRect([self standardWindowButton:NSWindowZoomButton]))
+	{
+		mouseLocationEnum |= TVCMainWindowMouseLocationOnTopOfWindowTitleControl;
+
+		return mouseLocationEnum;
+	}
+
+	for (NSTitlebarAccessoryViewController *viewController in self.titlebarAccessoryViewControllers) {
+		/* NSTitlebarAccessoryViewController will have an origin of 0,0 which means we have
+		 to check the frame of it's superview, NSTitlebarAccessoryViewClipView */
+		if (PointInRect(viewController.view.superview) == NO) {
+			continue;
+		}
+
+		mouseLocationEnum |= TVCMainWindowMouseLocationOnTopOfWindowTitleControl;
+
+		return mouseLocationEnum;
+	}
+
+	return mouseLocationEnum;
 - (void)preferencesChanged
 {
 	if ([TPCPreferences displayDockBadge] == NO) {
