@@ -52,6 +52,8 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 	TVCServerListNavigationSelectionServerType,		// Move to next server item
 };
 
+TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
+
 @interface TVCMainWindow : NSWindow
 @property (readonly, weak) TVCMainWindowLoadingScreenView *loadingScreen;
 @property (readonly, weak) TVCMainWindowSplitView *contentSplitView;

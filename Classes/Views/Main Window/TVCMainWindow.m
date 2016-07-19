@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowAppearanceChangedNotification";
+
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
@@ -222,6 +224,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.serverList updateBackgroundColor];
 
 	self.contentView.needsDisplay = YES;
+
+	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification object:self];
 }
 
 - (void)updateAlphaValueToReflectPreferences
