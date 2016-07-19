@@ -1280,41 +1280,6 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	}
 }
 
-- (BOOL)isOccluded
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
-		return NO;
-	}
-
-	return ((self.occlusionState & NSWindowOcclusionStateVisible) == 0);
-}
-
-- (BOOL)isInactive
-{
-	return (self.keyWindow == NO && self.mainWindow == NO);
-}
-
-- (BOOL)isActiveForDrawing
-{
-	if (self.inFullscreenMode) {
-		return YES;
-	}
-
-	BOOL applicationHasNoModal = ([NSApp modalWindow] == nil);
-
-	BOOL applicationIsActive = masterController().applicationIsActive;
-
-	BOOL windowIsMainWindow = self.mainWindow;
-	BOOL windowIsOnActiveSpace = self.onActiveSpace;
-	BOOL windowIsVisible = self.visible;
-
-	return (windowIsMainWindow &&
-			windowIsOnActiveSpace &&
-			windowIsVisible &&
-			applicationIsActive &&
-			applicationHasNoModal);
-}
-
 - (BOOL)canBecomeMainWindow
 {
 	return YES;

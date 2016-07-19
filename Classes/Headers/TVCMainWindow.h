@@ -101,10 +101,6 @@ TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
-@property (getter=isOccluded, readonly) BOOL occluded;
-@property (getter=isInactive, readonly) BOOL inactive;
-@property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
-
 @property (getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO
 
 @property (readonly) double textSizeMultiplier;
