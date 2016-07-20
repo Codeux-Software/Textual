@@ -164,6 +164,19 @@ ClassWithDesignatedInitializerInitMethod
 
 @implementation TVCLogView (TVCLogViewBackingProxy)
 
+- (void)recreateTemporaryCopyOfThemeIfNecessary
+{
+	if (mainWindow().reloadingTheme) {
+		return;
+	}
+
+	if ([TPCApplicationInfo timeIntervalSinceApplicationLaunch] < (2 * 60)) {
+		return;
+	}
+
+	[themeController() recreateTemporaryCopyOfThemeIfNecessary];
+}
+
 - (NSView *)webView
 {
 	return self.webViewBacking;
@@ -183,6 +196,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (self.isUsingWebKit2)
 	{
+		[self recreateTemporaryCopyOfThemeIfNecessary];
+
 		WKWebView *webView = self.webViewBacking;
 
 		if (themeController().usesTemporaryPath) {
