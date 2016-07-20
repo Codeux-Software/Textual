@@ -253,6 +253,21 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	[self maybePresentCompatibilityWarningDialog];
 }
 
+- (void)recreateTemporaryCopyOfThemeIfNecessary
+{
+	if (self.usesTemporaryPath == NO) {
+		return;
+	}
+
+	NSString *temporaryPath = self.temporaryPath;
+
+	if ([RZFileManager() fileExistsAtPath:temporaryPath]) {
+		return;
+	}
+
+	[self createTemporaryCopyOfTheme];
+}
+
 - (void)removeTemporaryCopyOfTheme
 {
 	if (self.usesTemporaryPath == NO) {

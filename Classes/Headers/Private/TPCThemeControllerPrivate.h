@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)reloadMonitoringActiveThemePath;
 
+- (void)recreateTemporaryCopyOfThemeIfNecessary;
+
 - (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openOnCopy:(BOOL)openOnCopy;
 @end
 
