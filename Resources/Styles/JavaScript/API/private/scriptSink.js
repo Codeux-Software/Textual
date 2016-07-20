@@ -94,6 +94,15 @@ appInternal.isWebKit2 = function()
 	}
 };
 
+app.finishedLayingOutView = function()
+{
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.finishedLayingOutView.postMessage(null);
+	} else {
+		TextualScriptSink.finishedLayingOutView();
+	}
+};
+
 app.setURLAddress = function(object)
 {
 	if (appInternal.isWebKit2()) {

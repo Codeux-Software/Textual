@@ -528,6 +528,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_topicBarDoubleClicked:)];
 }
 
+- (void)finishedLayingOutView:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_finishedLayingOutView:)];
+}
+
 #pragma mark -
 #pragma mark Private Implementation
 
@@ -808,6 +813,11 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_topicBarDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
 	[context.webViewPolicy topicBarDoubleClicked];
+}
+
+- (void)_finishedLayingOutView:(TVCLogScriptEventSinkContext *)context
+{
+	[context.webView setViewFinishedLayout];
 }
 
 @end

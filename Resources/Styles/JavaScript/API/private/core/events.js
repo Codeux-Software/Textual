@@ -41,6 +41,8 @@
 /*                                                    */
 /* ************************************************** */
 
+Textual.viewBodyDidLoadIntAnimationFrame = null;
+
 /* State management */
 Textual.notifyDidBecomeVisible = function()
 {
@@ -63,6 +65,31 @@ Textual.notifySelectionChanged = function(isSelected)
 	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
 };
 
+Textual.viewBodyDidLoadInt = function()
+{
+	/* On styles with a dark background, a white flash occurs because there is a very
+	 small delay between the view being created and the background process laying out
+	 its contents. To work around this, Textual presents an overlay view that matches
+	 the background color of the style. We then request an animation frame that calls
+	 app.finishedLayingOutView), instructing Textual that it can destroy the overlay view. */
+
+	if (appInternal.isWebKit2()) {
+		Textual.viewBodyDidLoadIntAnimationFrame =
+		window.requestAnimationFrame(function() {
+			Textual.viewBodyDidLoadIntTimed();
+		});
+	} else {
+		Textual.viewBodyDidLoadIntTimed();
+	}
+};
+
+Textual.viewBodyDidLoadIntTimed = function()
+{
+	app.finishedLayingOutView();
+
+	Textual.viewBodyDidLoad();
+};
+
 Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingBacklog, textSizeMultiplier)
 {
 	if (isVisible) {
@@ -79,6 +106,18 @@ Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingBack
 		Textual.viewFinishedReload();
 	} else {
 		Textual.viewFinishedLoading();
+	}
+
+	/* If this view is not visible to the user, then cancel the animation
+	 frame set by Textual.viewBodyDidLoadInt() because there is no use for it. */
+	if (isVisible === false && isSelected === false) {
+		if (Textual.viewBodyDidLoadIntAnimationFrame !== null) {
+			window.cancelAnimationFrame(Textual.viewBodyDidLoadIntAnimationFrame);
+
+			Textual.viewBodyDidLoadIntAnimationFrame = null;
+
+			Textual.viewBodyDidLoadIntTimed();
+		}
 	}
 	
 	Textual.changeTextSizeMultiplier(textSizeMultiplier);

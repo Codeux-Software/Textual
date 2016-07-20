@@ -104,6 +104,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"styleSettingsSetValue"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"topicBarDoubleClicked"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"finishedLayingOutView"];
 
 		_sharedWebViewConfiguration.userContentController = _sharedUserContentController;
 
@@ -392,8 +393,6 @@ create_normal_pool:
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		XRExchangeInstanceMethod(@"WKView", @"updateLayer", @"__t_priv_updateLayer");
-
 		XRExchangeInstanceMethod(@"WKView", @"performDragOperation:", @"__t_priv_performDragOperation:");
 	});
 }
@@ -409,18 +408,6 @@ create_normal_pool:
 	}
 
 	return NO;
-}
-
-- (void)__t_priv_updateLayer
-{
-	/* Set the style defined background color for the layer. */
-	NSColor *windowColor = themeSettings().underlyingWindowColor;
-
-	if (windowColor == nil) {
-		windowColor = [NSColor blackColor];
-	}
-
-	self.layer.backgroundColor = windowColor.CGColor;
 }
 
 @end

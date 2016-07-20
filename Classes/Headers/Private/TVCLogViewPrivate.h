@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)informDelegateWebViewClosedUnexpectedly;
 - (void)informDelegateWebViewFinishedLoading;
 
+- (void)setViewFinishedLayout;
+
 - (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view;
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
