@@ -50,6 +50,8 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @property (readonly) BOOL isUsingWebKit2;
 
 @property (readonly) NSView *webView;
+
+@property (readonly, getter=isLayingOutView) BOOL layingOutView;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)

@@ -41,10 +41,4 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)populateSubviews;
 @end
 
-@interface TVCMainWindowChannelViewSubview : NSView
-@end
-
-@interface TVCMainWindowChannelViewSubviewOverlayView : NSView
-@end
-
 NS_ASSUME_NONNULL_END

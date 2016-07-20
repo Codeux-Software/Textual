@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
 @property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;
+@property (nonatomic, getter=isLayingOutView, readwrite) BOOL layingOutView;
 @end
 
 @implementation TVCLogView
@@ -153,6 +154,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self.viewController logViewWebViewClosedUnexpectedly];
 }
 
+- (void)setViewFinishedLayout
+{
+	self.layingOutView = NO;
+}
+
 - (TVCLogPolicy *)webViewPolicy
 {
 	return [self.webViewBacking webViewPolicy];
@@ -184,6 +190,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
+	self.layingOutView = YES;
+
 	[self.webViewBacking emptyCaches:^{
 		[self _loadHTMLString:string baseURL:baseURL];
 	}];
@@ -235,6 +243,8 @@ ClassWithDesignatedInitializerInitMethod
 
 		[webViewFrame stopLoading];
 	}
+
+	self.layingOutView = NO;
 }
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward

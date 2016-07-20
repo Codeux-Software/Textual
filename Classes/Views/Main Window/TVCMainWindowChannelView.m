@@ -37,13 +37,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowChannelViewSubview ()
+@class TVCMainWindowChannelViewSubviewOverlayView;
+
+@interface TVCMainWindowChannelViewSubview : NSView
 @property (nonatomic, assign) NSUInteger itemIndex;
+@property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, assign) BOOL overlayVisible;
+@property (nonatomic, assign) BOOL isObservingBackingView;
+@property (nonatomic, assign) BOOL backingViewIsLoading;
 @property (nonatomic, copy) NSString *uniqueIdentifier;
-@property (nonatomic, weak, nullable) NSView *webView;
+@property (nonatomic, strong, nullable) TVCLogView *backingView;
 @property (nonatomic, weak) TVCMainWindowChannelView *parentView;
 @property (nonatomic, strong, nullable) TVCMainWindowChannelViewSubviewOverlayView *overlayView;
+@end
+
+@interface TVCMainWindowChannelViewSubviewOverlayView : NSView
 @end
 
 @interface TVCMainWindowChannelView ()
@@ -150,21 +158,21 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 			subview = [self subviewForItem:item];
 		}
 
-		NSView *webView = [self webViewForItem:item];
+		TVCLogView *backingView = [self backingViewForItem:item];
+
+		subview.backingView = backingView;
 
 		subview.itemIndex = index;
 
 		if (itemSelected == item) {
 			itemSelectedIndex = index;
 
-			subview.overlayVisible = NO;
+			subview.isSelected = YES;
 		} else {
-			subview.overlayVisible = YES;
+			subview.isSelected = NO;
 		}
 
 		subview.uniqueIdentifier = uniqueIdentifier;
-
-		subview.webView = webView;
 
 		if (subviewIsNew) {
 			[self addSubview:subview];
@@ -210,17 +218,17 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	TVCMainWindowChannelViewSubview *newItemView = subviews[itemIndex];
 	TVCMainWindowChannelViewSubview *oldItemView = subviews[itemIndexSelected];
 
-	newItemView.overlayVisible = NO;
-	oldItemView.overlayVisible = YES;
+	newItemView.isSelected = YES;
+	oldItemView.isSelected = NO;
 
 	self.itemIndexSelected = itemIndex;
 
 	[mainWindow channelViewSelectionChangeTo:newItem];
 }
 
-- (NSView *)webViewForItem:(IRCTreeItem *)item
+- (TVCLogView *)backingViewForItem:(IRCTreeItem *)item
 {
-	return item.viewController.backingView.webView;
+	return item.viewController.backingView;
 }
 
 - (TVCMainWindowChannelViewSubview *)subviewForItem:(IRCTreeItem *)item
@@ -339,27 +347,54 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	return nil;
 }
 
+- (void)dealloc
+{
+	[self teardownBackingView];
+}
+
 - (void)prepareInitialState
 {
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
-- (void)setWebView:(nullable NSView *)webView
+- (BOOL)backingViewIsLoading
 {
-	if (self->_webView != webView) {
-		self->_webView = webView;
+	return self.backingView.isLayingOutView;
+}
+
+- (void)setBackingView:(nullable TVCLogView *)backingView
+{
+	if (self->_backingView != backingView) {
+		[self teardownBackingView];
+
+		self->_backingView = backingView;
 
 		[self setupWebView];
 	}
 }
 
-- (void)setupWebView
+- (void)teardownBackingView
 {
-	NSView *webView = self.webView;
-
-	if (webView == nil) {
+	if (self.isObservingBackingView == NO) {
 		return;
 	}
+
+	[self.backingView removeObserver:self forKeyPath:@"layingOutView"];
+}
+
+- (void)setupWebView
+{
+	TVCLogView *backingView = self.backingView;
+
+	if (backingView == nil) {
+		return;
+	}
+
+	self.isObservingBackingView = YES;
+
+	[backingView addObserver:self forKeyPath:@"layingOutView" options:NSKeyValueObservingOptionNew context:NULL];
+
+	NSView *webView = backingView.webView;
 
 	if (self.overlayVisible) {
 		[self addSubview:webView positioned:NSWindowBelow relativeTo:self.overlayView];
@@ -378,6 +413,13 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(webView)]];
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context
+{
+	if ([keyPath isEqualToString:@"layingOutView"]) {
+		[self toggleOverlayView];
+	}
 }
 
 - (void)constructOverlayView
@@ -411,23 +453,27 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(overlayView)]];
+
+	self.overlayVisible = YES;
 }
 
 - (void)toggleOverlayView
 {
-	if (self.overlayVisible == NO) {
+	if (self.backingViewIsLoading || self.isSelected == NO) {
+		[self addOverlayView];
+	} else {
 		if ( self.overlayView) {
 			[self.overlayView removeFromSuperview];
+
+			self.overlayVisible = NO;
 		}
-	} else {
-		[self addOverlayView];
 	}
 }
 
-- (void)setOverlayVisible:(BOOL)overlayVisible
+- (void)setIsSelected:(BOOL)isSelected
 {
-	if (self->_overlayVisible != overlayVisible) {
-		self->_overlayVisible = overlayVisible;
+	if (self->_isSelected != isSelected) {
+		self->_isSelected = isSelected;
 
 		[self toggleOverlayView];
 	}
@@ -435,6 +481,10 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 - (void)mouseDownSelectionChange
 {
+	if (self.backingViewIsLoading) {
+		return;
+	}
+
 	[self.parentView selectionChangeTo:self.itemIndex];
 }
 
@@ -511,12 +561,24 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 		return;
 	}
 
+	TVCMainWindowChannelViewSubview *subview = (id)self.superview;
+
 	NSColor *backgroundColor = nil;
 
-	if ([TPCPreferences invertSidebarColors]) {
-		backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
+	if (subview.backingViewIsLoading) {
+		NSColor *windowColor = themeSettings().underlyingWindowColor;
+
+		if (windowColor == nil) {
+			windowColor = [NSColor blackColor];
+		}
+
+		backgroundColor = windowColor;
 	} else {
-		backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.2];
+		if ([TPCPreferences invertSidebarColors]) {
+			backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
+		} else {
+			backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.2];
+		}
 	}
 
 	[backgroundColor set];
