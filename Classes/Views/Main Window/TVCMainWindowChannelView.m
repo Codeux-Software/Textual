@@ -415,7 +415,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 											   views:NSDictionaryOfVariableBindings(webView)]];
 }
 
-- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
 {
 	if ([keyPath isEqualToString:@"layingOutView"]) {
 		[self toggleOverlayView];
