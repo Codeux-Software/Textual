@@ -63,6 +63,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy, nullable) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
+@property (nonatomic, assign, readwrite) BOOL reloadingTheme;
 @end
 
 #define _treeDragItemType		@"tree"
@@ -844,6 +845,8 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 
 - (void)reloadThemeAndUserInterface:(BOOL)reloadUserInterface
 {
+	self.reloadingTheme = YES;
+
 	[themeController() reload];
 
 	for (IRCClient *u in worldController().clientList) {
@@ -857,6 +860,8 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	if (reloadUserInterface) {
 		[self updateBackgroundColor];
 	}
+
+	self.reloadingTheme = NO;
 }
 
 - (void)clearContentsOfClient:(IRCClient *)client

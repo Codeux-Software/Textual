@@ -69,6 +69,8 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
 - (TVCMainWindowMouseLocation)locationOfMouseInWindow NS_AVAILABLE_MAC(10_10);
 - (TVCMainWindowMouseLocation)locationOfMouse:(NSPoint)mouseLocation NS_AVAILABLE_MAC(10_10);
 
+- (BOOL)reloadingTheme;
+
 - (BOOL)reloadLoadingScreen;
 
 - (void)updateTitle;
