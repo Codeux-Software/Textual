@@ -1387,7 +1387,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					formatter = @"Notifications[1002]";
 				}
 			} else if (eventType == TXNotificationHighlightType) {
-				formatter = @"Notifications[1063]";
+				formatter = @"Notifications[1003]";
 			}
 
 			if (includeChannelName == NO) {
