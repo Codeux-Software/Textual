@@ -1312,6 +1312,12 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	}
 
 	return mouseLocationEnum;
+
+#undef ConvertRectToScreen
+
+#undef PointInRect
+}
+
 - (void)preferencesChanged
 {
 	if ([TPCPreferences displayDockBadge] == NO) {
@@ -1338,9 +1344,14 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	}
 }
 
+- (BOOL)canBecomeKeyWindow
+{
+	return (self.childWindows.count == 0);
+}
+
 - (BOOL)canBecomeMainWindow
 {
-	return YES;
+	return (self.childWindows.count == 0);
 }
 
 - (NSRect)defaultWindowFrame

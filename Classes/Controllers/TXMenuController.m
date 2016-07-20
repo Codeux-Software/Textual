@@ -1969,11 +1969,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	_popWindowViewIfExists(@"TDCChannelSpotlightController");
 
-	TDCChannelSpotlightController *dialog = [TDCChannelSpotlightController new];
+	TDCChannelSpotlightController *dialog =
+	[[TDCChannelSpotlightController alloc] initWithParentWindow:mainWindow()];
 
 	dialog.delegate = (id)self;
 
-	[dialog showAboveWindow:mainWindow()];
+	[dialog show];
 
 	[windowController() addWindowToWindowList:dialog];
 }
