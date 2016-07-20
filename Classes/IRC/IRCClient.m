@@ -1543,12 +1543,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return NO;
 		}
 
-		if (target.config.pushNotifications == NO) {
-			return YES;
-		}
-
-		if (target.config.ignoreHighlights && eventType == TXNotificationHighlightType) {
-			return YES;
+		if (eventType == TXNotificationHighlightType) {
+			if (target.config.ignoreHighlights) {
+				return YES;
+			}
+		} else {
+			if (target.config.pushNotifications == NO) {
+				return YES;
+			}
 		}
 	}
 
