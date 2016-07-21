@@ -89,7 +89,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 											  return [self respondToLocalEvent:event];
 										  }];
 
-	self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5"];
+	if ([TPCPreferences channelNavigationIsServerSpecific]) {
+		NSString *clientId = mainWindow().selectedClient.uniqueIdentifier;
+
+		self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5 && clientId LIKE[c] %@", clientId];
+	} else {
+		self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5"];
+	}
 
 	self.searchResultsController.sortDescriptors = @[
 		[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:NO selector:@selector(compare:)]
