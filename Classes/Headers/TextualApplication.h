@@ -73,6 +73,8 @@
 	@class IRCMessageMutable;
 	@class IRCModeInfo;
 	@class IRCModeInfoMutable;
+	@class IRCNetwork;
+	@class IRCNetworkList;
 	@class IRCPrefix;
 	@class IRCPrefixMutable;
 	@class IRCSendingMessage;
@@ -212,6 +214,7 @@
 	#import "IRCISupportInfo.h"
 	#import "IRCMessage.h"
 	#import "IRCModeInfo.h"
+	#import "IRCNetworkList.h"
 	#import "IRCPrefix.h"
 	#import "IRCSendingMessage.h"
 	#import "IRCTreeItem.h"
