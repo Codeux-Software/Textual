@@ -620,13 +620,14 @@ CQ
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="rFI-Dq-HBe">
                                 <connections>
+                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; Running Mac OS Yosemite Or Newer" previousBinding="pHW-3O-g5a" id="zDH-fr-yZ3"/>
                                     <binding destination="TlT-Ik-3QP" name="enabled" keyPath="values.System -&gt; Running Mac OS Yosemite Or Newer" id="pHW-3O-g5a"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Search channels…" tag="718" keyEquivalent="d" id="Orl-sv-wC7">
                                 <connections>
                                     <action selector="showChannelSpotlightWindow:" target="267" id="Oeh-B1-SHC"/>
-                                    <binding destination="TlT-Ik-3QP" name="enabled" keyPath="values.System -&gt; Running Mac OS Yosemite Or Newer" id="ADq-j4-ILO"/>
+                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; Running Mac OS Yosemite Or Newer" id="vYN-uh-PpO"/>
                                 </connections>
                             </menuItem>
                         </items>
