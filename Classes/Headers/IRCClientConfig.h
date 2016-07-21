@@ -109,6 +109,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)newConfigByMerging:(IRCClientConfig *)config1 with:(IRCClientConfig *)config2;
 
++ (instancetype)newConfigWithNetwork:(IRCNetwork *)network;
+
 - (id)uniqueCopy;
 - (id)uniqueCopyMutable;
 @end
