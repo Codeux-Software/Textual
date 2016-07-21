@@ -4291,7 +4291,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 then we report back the actual IP address it was resolved to. */
 	NSString *connectedAddress = self.socket.connectedAddress;
 
-	if (connectedAddress == nil || connectedAddress.isIPAddress) {
+	if (connectedAddress == nil || self.socket.config.serverAddress.IPAddress) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1045]")];
 	} else {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1046]", connectedAddress)];
