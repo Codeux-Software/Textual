@@ -35,9 +35,10 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1007 */
+/* Next unusued key: 1008 */
 
-"TDCChannelSpotlightController[1001]" = "%1$@ on %2$@";
+"TDCChannelSpotlightController[1001]" = "%@";
+"TDCChannelSpotlightController[1007]" = " on %@";
 
 "TDCChannelSpotlightController[1002]" = "%@ unread message";
 "TDCChannelSpotlightController[1003]" = "%@ unread messages";
