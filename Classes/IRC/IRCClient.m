@@ -4704,7 +4704,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			lineType == TVCLogLinePrivateMessageType ||
 			lineType == TVCLogLineNoticeType)
 		{
-			[self receiveText:m lineType:lineType text:text wasEncrypted:wasEncrypted];
+			[self receiveText:m lineType:lineType text:originalString wasEncrypted:wasEncrypted];
 		} else if (lineType == TVCLogLineCTCPQueryType) {
 			[self receiveCTCPQuery:m text:originalString wasEncrypted:wasEncrypted];
 		} else if (lineType == TVCLogLineCTCPReplyType) {
