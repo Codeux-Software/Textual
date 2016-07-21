@@ -369,7 +369,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *tempServerPort = nil;
 
 	if ([tempStore hasPrefix:@":"]) {
-		tempServerPort = [tempServerPort substringFromIndex:1];
+		tempServerPort = [tempStore substringFromIndex:1];
 	} else if (serverInfoMutable.length > 0) {
 		tempServerPort = serverInfoMutable.token;
 	}
