@@ -306,6 +306,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			{
 				return [self handleCommandNumberEvent:event];
 			}
+
+			return event;
 		}
 		case 36: // return
 		case 76: // enter
