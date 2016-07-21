@@ -8,7 +8,7 @@
 		<string>irc.alphachat.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>DALnet</key>
@@ -17,7 +17,7 @@
 		<string>irc.dal.net</string>
 		<key>serverPort</key>
 		<integer>6667</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<false/>
 	</dict>
 	<key>EFnet</key>
@@ -26,7 +26,7 @@
 		<string>irc.efnet.info</string>
 		<key>serverPort</key>
 		<real>6667</real>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<false/>
 	</dict>
 	<key>EsperNet</key>
@@ -35,7 +35,7 @@
 		<string>irc.esper.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Ewnix</key>
@@ -44,7 +44,7 @@
 		<string>irc.ewnix.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>GameSurge</key>
@@ -53,7 +53,7 @@
 		<string>irc.gamesurge.net</string>
 		<key>serverPort</key>
 		<integer>6667</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<false/>
 	</dict>
 	<key>GeeksIRC</key>
@@ -62,7 +62,7 @@
 		<string>irc.geeksirc.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>German-Elite</key>
@@ -71,7 +71,7 @@
 		<string>irc.german-elite.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Global Gamers</key>
@@ -80,7 +80,7 @@
 		<string>irc.globalgamers.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>IRCHighWay</key>
@@ -89,7 +89,7 @@
 		<string>irc.irchighway.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Interlinked</key>
@@ -98,7 +98,7 @@
 		<string>irc.interlinked.me</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Mibbit</key>
@@ -107,7 +107,7 @@
 		<string>irc.mibbit.com</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>MindForge</key>
@@ -116,7 +116,7 @@
 		<string>irc.mindforge.org</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Mozilla</key>
@@ -125,7 +125,7 @@
 		<string>irc.mozilla.org</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Mozor</key>
@@ -134,7 +134,7 @@
 		<string>irc.mozor.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>NixtrixIRC</key>
@@ -143,7 +143,7 @@
 		<string>irc.nixtrixirc.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>OFTC</key>
@@ -152,7 +152,7 @@
 		<string>irc.oftc.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>PonyChat</key>
@@ -161,7 +161,7 @@
 		<string>irc.ponychat.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>QuakeNet</key>
@@ -170,7 +170,7 @@
 		<string>irc.quakenet.org</string>
 		<key>serverPort</key>
 		<integer>6667</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<false/>
 	</dict>
 	<key>Rizon</key>
@@ -179,7 +179,7 @@
 		<string>irc.rizon.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Snoonet</key>
@@ -188,7 +188,7 @@
 		<string>irc.snoonet.org</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Snyde</key>
@@ -197,7 +197,7 @@
 		<string>irc.snyde.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>StormBit</key>
@@ -206,7 +206,7 @@
 		<string>irc.stormbit.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>TWiT</key>
@@ -215,7 +215,7 @@
 		<string>irc.twit.tv</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Thinkstack</key>
@@ -224,7 +224,7 @@
 		<string>irc.thinstack.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>TinyCrab</key>
@@ -233,7 +233,7 @@
 		<string>irc.tinycrab.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 	<key>Undernet</key>
@@ -242,7 +242,7 @@
 		<string>irc.undernet.org</string>
 		<key>serverPort</key>
 		<integer>6667</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<false/>
 	</dict>
 	<key>freenode</key>
@@ -251,7 +251,7 @@
 		<string>chat.freenode.net</string>
 		<key>serverPort</key>
 		<integer>6697</integer>
-		<key>connectionPrefersSecuredConnection</key>
+		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
 </dict>
