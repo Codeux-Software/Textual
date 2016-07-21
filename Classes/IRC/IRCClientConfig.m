@@ -225,6 +225,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [config1Mutable copy];
 }
 
++ (instancetype)newConfigWithNetwork:(IRCNetwork *)network
+{
+	NSParameterAssert(network != nil);
+
+	IRCClientConfigMutable *configMutable = [IRCClientConfigMutable new];
+
+	configMutable.connectionName = network.networkName;
+
+	configMutable.serverAddress = network.serverAddress;
+	configMutable.serverPort = network.serverPort;
+
+	configMutable.prefersSecuredConnection = network.prefersSecuredConnection;
+
+	if ([self isMutable]) {
+		return configMutable;
+	} else {
+		return [configMutable copy];
+	}
+}
+
 - (void)populateDictionaryValue:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages applyDefaults:(BOOL)applyDefaults
 {
 	NSParameterAssert(dic != nil);
@@ -444,6 +464,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (NSUInteger)hash
 {
 	return self.uniqueIdentifier.hash;
+}
+
++ (BOOL)isMutable
+{
+	return NO;
 }
 
 - (BOOL)isMutable
@@ -846,6 +871,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic zncIgnoreConfiguredAutojoin;
 @dynamic zncIgnorePlaybackNotifications;
 @dynamic zncIgnoreUserNotifications;
+
++ (BOOL)isMutable
+{
+	return YES;
+}
 
 - (BOOL)isMutable
 {

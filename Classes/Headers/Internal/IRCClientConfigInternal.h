@@ -99,6 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *_defaults;
 }
 
++ (BOOL)isMutable;
 - (BOOL)isMutable;
 @end
 
