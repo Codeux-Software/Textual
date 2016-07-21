@@ -2070,7 +2070,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self sendCommand:line];
 
-			return;
+			continue;
 		}
 
 		NSUInteger lineLength = line.length;
