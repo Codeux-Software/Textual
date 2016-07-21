@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) TVCLogView *backingView;
 @property (nonatomic, weak) TVCMainWindowChannelView *parentView;
 @property (nonatomic, strong, nullable) TVCMainWindowChannelViewSubviewOverlayView *overlayView;
+
+- (void)toggleOverlayView;
 @end
 
 @interface TVCMainWindowChannelViewSubviewOverlayView : NSView
@@ -219,7 +221,10 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	TVCMainWindowChannelViewSubview *oldItemView = subviews[itemIndexSelected];
 
 	newItemView.isSelected = YES;
+	[newItemView toggleOverlayView];
+
 	oldItemView.isSelected = NO;
+	[oldItemView toggleOverlayView];
 
 	self.itemIndexSelected = itemIndex;
 
@@ -357,6 +362,11 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+- (void)viewDidMoveToSuperview
+{
+	[self toggleOverlayView];
+}
+
 - (BOOL)backingViewIsLoading
 {
 	return self.backingView.isLayingOutView;
@@ -434,6 +444,10 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 - (void)addOverlayView
 {
+	if (self.overlayVisible) {
+		return;
+	}
+
 	if (self.overlayView == nil) {
 		[self constructOverlayView];
 	}
@@ -467,15 +481,6 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 			self.overlayVisible = NO;
 		}
-	}
-}
-
-- (void)setIsSelected:(BOOL)isSelected
-{
-	if (self->_isSelected != isSelected) {
-		self->_isSelected = isSelected;
-
-		[self toggleOverlayView];
 	}
 }
 
