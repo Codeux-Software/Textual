@@ -4414,6 +4414,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(message != nil);
 
+	if (self.isLoggedIn == NO) {
+		return;
+	}
+
 	if (message.isHistoric == NO) {
 		return;
 	}
