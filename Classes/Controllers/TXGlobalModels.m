@@ -221,7 +221,7 @@ NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 	if (_isoStandardDateFormatter == nil) {
 		NSDateFormatter *dateFormatter = [NSDateFormatter new];
 		
-		dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+		dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
 
 		dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"; //2011-10-19T16:40:51.620Z
 		
