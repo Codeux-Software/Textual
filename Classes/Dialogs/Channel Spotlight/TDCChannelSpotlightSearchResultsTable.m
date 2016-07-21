@@ -86,19 +86,42 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (NSString *)channelName
+- (NSAttributedString *)channelName
 {
 	TDCChannelSpotlightSearchResult *searchResult = self.objectValue;
 
 	if (searchResult == nil) {
-		return NSStringEmptyPlaceholder;
+		return [NSAttributedString attributedString];
 	}
 
 	NSString *channelName = searchResult.channel.name;
 
+	NSFont *channelNameFieldFont = self.channelNameField.font;
+
+	NSMutableAttributedString *resultString =
+	[NSMutableAttributedString
+	 mutableAttributedStringWithString:TXTLS(@"TDCChannelSpotlightController[1001]", channelName)
+							attributes:@{
+								NSFontAttributeName : channelNameFieldFont
+							}];
+
+	TDCChannelSpotlightController *controller = searchResult.controller;
+
+	NSString *searchString = controller.searchField.stringValue;
+
+	[resultString.string
+	 enumerateFirstOccurrenceOfCharactersInString:searchString
+										withBlock:^(NSRange range, BOOL *stop) {
+											NSFont *boldFont = [RZFontManager() convertFont:channelNameFieldFont toHaveTrait:NSBoldFontMask];
+
+											[resultString addAttribute:NSFontAttributeName value:boldFont range:range];
+										} options:NSCaseInsensitiveSearch];
+
 	NSString *networkName = searchResult.channel.associatedClient.networkNameAlt;
 
-	return TXTLS(@"TDCChannelSpotlightController[1001]", channelName, networkName);
+	[resultString appendString:TXTLS(@"TDCChannelSpotlightController[1007]", networkName)];
+
+	return resultString;
 }
 
 - (NSColor *)channelNameTextColorSelected
