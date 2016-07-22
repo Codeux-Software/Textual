@@ -184,6 +184,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)informCallbackTextDidChange
 {
+	if (self.doNotInformCallbackOfNextChange) {
+		self.doNotInformCallbackOfNextChange = NO;
+
+		return;
+	}
+
 	if (self.textDidChangeCallback == nil) {
 		return;
 	}
