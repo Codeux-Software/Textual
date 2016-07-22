@@ -1108,6 +1108,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateAttributes[@"formattedTimestamp"] = logLine.formattedTimestamp;
 
+	templateAttributes[@"localizedTimestamp"] = TXFormatDateLongStyle(logLine.receivedAt, NO);
+
 	// ---- //
 
 	NSString *nickname = [logLine formattedNicknameInChannel:self.associatedChannel];
