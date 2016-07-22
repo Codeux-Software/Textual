@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray<NSString *> *channelList;
-@property (nonatomic, copy) NSDictionary<NSString *, NSString *> *serverList;
+@property (nonatomic, strong) IRCNetworkList *networkList;
 
 - (IBAction)onAddChannel:(id)sender;
 - (IBAction)onDeleteChannel:(id)sender;
@@ -73,14 +73,12 @@ NS_ASSUME_NONNULL_BEGIN
 	(void)[RZMainBundle() loadNibNamed:@"TDCWelcomeSheet" owner:self topLevelObjects:nil];
 
 	/* Populate server list combo box */
-	self.serverList = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCNetworks"];
+	self.networkList = [IRCNetworkList new];
 
-	NSArray *serverListKeysUnsorted = self.serverList.allKeys;
+	NSArray *listOfNetworks = self.networkList.listOfNetworks;
 
-	NSArray *serverListKeysSorted = [serverListKeysUnsorted sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-
-	for (NSString *server in serverListKeysSorted) {
-		[self.serverAddressComboBox addItemWithObjectValue:server];
+	for (IRCNetwork *network in listOfNetworks) {
+		[self.serverAddressComboBox addItemWithObjectValue:network.networkName];
 	}
 
 	/* Nickname */
@@ -136,28 +134,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)ok:(id)sender
 {
+	IRCClientConfigMutable *config = nil;
+
 	NSString *serverAddress = self.serverAddressComboBox.value;
 
-	NSString *serverName = [self.serverList keyIgnoringCase:serverAddress];
+	IRCNetwork *serverAddressNetwork = [self.networkList networkNamed:serverAddress];
 
-	if (serverName) {
-		serverAddress = self.serverList[serverName];
-	} else {
-		serverAddress = serverAddress.lowercaseString;
+	if (serverAddressNetwork == nil) {
+		serverAddressNetwork = [self.networkList networkWithServerAddress:serverAddress];
 	}
 
-	BOOL autoConnect = (self.autoConnectCheck.state == NSOnState);
-	
-	NSString *nickname = self.nicknameTextField.value;
+	if (serverAddressNetwork) {
+		config = [IRCClientConfigMutable newConfigWithNetwork:serverAddressNetwork];
+	} else {
+		serverAddress = serverAddress.lowercaseString;
 
-	IRCClientConfigMutable *config = [IRCClientConfigMutable new];
+		config = [IRCClientConfigMutable new];
 
-	config.autoConnect = autoConnect;
+		config.connectionName = serverAddress;
 
-	config.nickname = nickname;
-	
-	config.connectionName = serverAddress;
-	config.serverAddress = serverAddress;
+		config.serverAddress = serverAddress;
+	}
+
+	config.autoConnect = (self.autoConnectCheck.state == NSOnState);
+
+	config.nickname = self.nicknameTextField.value;
 
 	NSMutableArray<IRCChannelConfig *> *channelList = [NSMutableArray array];
 
