@@ -193,12 +193,12 @@ NSString * _Nullable TXFormatDate(id dateObject, NSDateFormatterStyle dateStyle,
 
 	NSDateFormatter *dateFormatter = [NSDateFormatter new];
 
-	dateFormatter.doesRelativeDateFormatting = NO;
+	dateFormatter.doesRelativeDateFormatting = relativeOutput;
 
 	dateFormatter.lenient = YES;
 
-	dateFormatter.dateStyle = NSDateFormatterLongStyle;
-	dateFormatter.timeStyle = NSDateFormatterLongStyle;
+	dateFormatter.dateStyle = dateStyle;
+	dateFormatter.timeStyle = timeStyle;
 
 	NSString *resultString = nil;
 
