@@ -182,36 +182,33 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 	return [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][second]")];
 }
 
-NSString * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalForNil)
+NSString * _Nullable TXFormatDateLongStyle(id dateObject, BOOL relativeOutput)
 {
-	NSCParameterAssert(dateTime != nil);
+	return TXFormatDate(dateObject, NSDateFormatterLongStyle, NSDateFormatterLongStyle, relativeOutput);
+}
 
-	NSDateFormatter *formatter = [NSDateFormatter new];
+NSString * _Nullable TXFormatDate(id dateObject, NSDateFormatterStyle dateStyle, NSDateFormatterStyle timeStyle, BOOL relativeOutput)
+{
+	NSCParameterAssert(dateObject != nil);
 
-	[formatter setDoesRelativeDateFormatting:YES];
+	NSDateFormatter *dateFormatter = [NSDateFormatter new];
 
-	[formatter setLenient:YES];
+	dateFormatter.doesRelativeDateFormatting = NO;
 
-	formatter.dateStyle = NSDateFormatterLongStyle;
-	formatter.timeStyle = NSDateFormatterLongStyle;
+	dateFormatter.lenient = YES;
 
-	NSString *timeInfo = nil;
+	dateFormatter.dateStyle = NSDateFormatterLongStyle;
+	dateFormatter.timeStyle = NSDateFormatterLongStyle;
 
-	if ([dateTime isKindOfClass:[NSString class]]) {
-		timeInfo = [formatter stringForObjectValue:dateTime];
-	} else if ([dateTime isKindOfClass:[NSDate class]]) {
-		timeInfo = [formatter stringFromDate:dateTime];
+	NSString *resultString = nil;
+
+	if ([dateObject isKindOfClass:[NSString class]]) {
+		resultString = [dateFormatter stringForObjectValue:dateObject];
+	} else if ([dateObject isKindOfClass:[NSDate class]]) {
+		resultString = [dateFormatter stringFromDate:dateObject];
 	}
 
-	if (timeInfo) {
-		return timeInfo;
-	}
-
-	if (returnOriginalForNil) {
-		return dateTime;
-	}
-
-	return nil;
+	return resultString;
 }
 
 NSDateFormatter *TXSharedISOStandardDateFormatter(void)

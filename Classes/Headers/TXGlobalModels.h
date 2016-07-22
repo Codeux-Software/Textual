@@ -50,6 +50,9 @@ TEXTUAL_EXTERN NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString 
 
 TEXTUAL_EXTERN NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
 
+TEXTUAL_EXTERN NSString * _Nullable TXFormatDate(id dateObject, NSDateFormatterStyle dateStyle, NSDateFormatterStyle timeStyle, BOOL relativeOutput);
+TEXTUAL_EXTERN NSString * _Nullable TXFormatDateLongStyle(id dateObject, BOOL relativeOutput);
+
 /* Everything else */
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 

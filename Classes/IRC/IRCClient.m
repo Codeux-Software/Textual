@@ -7521,7 +7521,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *message = nil;
 
 			if (self.inUserInvokedWhowasRequest) {
-				NSString *timeInfo = TXFormatDateTimeStringToCommonFormat(serverInfo, YES);
+				NSString *timeInfo = TXFormatDateLongStyle(serverInfo, YES);
+
+				if (timeInfo == nil) {
+					timeInfo = serverInfo;
+				}
 				
 				message = TXTLS(@"IRC[1085]", nickname, serverAddress, timeInfo);
 			} else {
@@ -7551,7 +7555,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSDate *connTimeDate = [NSDate dateWithTimeIntervalSince1970:connectTime.doubleValue];
 
-			connectTime = TXFormatDateTimeStringToCommonFormat(connTimeDate, NO);
+			connectTime = TXFormatDateLongStyle(connTimeDate, YES);
 
 			NSString *message = TXTLS(@"IRC[1084]", nickname, connectTime, idleTime);
 
@@ -7676,9 +7680,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			topicSetter = topicSetter.nicknameFromHostmask;
 
-			NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:setTime.doubleValue];
+			NSDate *setTimeDate = [NSDate dateWithTimeIntervalSince1970:setTime.doubleValue];
 
-			setTime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
+			setTime = TXFormatDateLongStyle(setTimeDate, YES);
 
 			IRCChannel *channel = [self findChannel:channelName];
 
