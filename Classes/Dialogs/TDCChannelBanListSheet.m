@@ -210,7 +210,7 @@ ClassWithDesignatedInitializerInitMethod
 		return TXTLS(@"BasicLanguage[1002]"); // "Unknown"
 	}
 
-	return TXFormatDateTimeStringToCommonFormat(entryCreationDate, NO);
+	return TXFormatDateLongStyle(entryCreationDate, YES);
 }
 
 @end
