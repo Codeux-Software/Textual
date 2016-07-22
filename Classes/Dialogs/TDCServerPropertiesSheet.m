@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IRCClientConfigMutable *config;
 @property (nonatomic, copy) NSArray *navigationTreeMatrix;
 @property (nonatomic, copy) NSDictionary *encodingList;
-@property (nonatomic, copy) NSDictionary *serverList;
+@property (nonatomic, strong) IRCNetworkList *networkList;
 @property (nonatomic, strong) IBOutlet NSMenu *addAddressBookEntryMenu;
 @property (nonatomic, strong) IBOutlet NSView *contentViewAddressBook;
 @property (nonatomic, strong) IBOutlet NSView *contentViewAutojoin;
@@ -204,14 +204,12 @@ NS_ASSUME_NONNULL_BEGIN
 	(void)[RZMainBundle() loadNibNamed:@"TDCServerPropertiesSheet" owner:self topLevelObjects:nil];
 
 	/* Populate server list combo box */
-	self.serverList = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCNetworks"];
+	self.networkList = [IRCNetworkList new];
 
-	NSArray *serverListKeysUnsorted = self.serverList.allKeys;
+	NSArray *listOfNetworks = self.networkList.listOfNetworks;
 
-	NSArray *serverListKeysSorted = [serverListKeysUnsorted sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-
-	for (NSString *server in serverListKeysSorted) {
-		[self.serverAddressComboBox addItemWithObjectValue:server];
+	for (IRCNetwork *network in listOfNetworks) {
+		[self.serverAddressComboBox addItemWithObjectValue:network.networkName];
 	}
 
 	/* Create temporary stores */
@@ -683,10 +681,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *serverAddress = self.config.serverAddress;
 
 	if (serverAddress) {
-		NSString *serverName = [self.serverList firstKeyForObject:serverAddress];
+		IRCNetwork *serverAddressNetwork = [self.networkList networkWithServerAddress:serverAddress];
 
-		if (serverName) {
-			self.serverAddressComboBox.stringValue = serverName;
+		if (serverAddressNetwork) {
+			self.serverAddressComboBox.stringValue = serverAddressNetwork.networkName;
 		} else {
 			self.serverAddressComboBox.stringValue = serverAddress;
 		}
@@ -814,10 +812,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *serverAddress = self.serverAddressComboBox.value;
 
-	NSString *serverName = [self.serverList keyIgnoringCase:serverAddress];
+	IRCNetwork *serverAddressNetwork = [self.networkList networkNamed:serverAddress];
 
-	if (serverName) {
-		self.config.serverAddress = self.serverList[serverName];
+	if (serverAddressNetwork) {
+		self.config.serverAddress = serverAddressNetwork.serverAddress;
 	} else {
 		self.config.serverAddress = serverAddress.lowercaseString;
 	}
@@ -913,6 +911,40 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
 	[self updateConnectionPage];
+
+	if (sender == self.serverAddressComboBox) {
+		[self populateDefaultsForPreconfiguredNetwork];
+	}
+}
+
+- (void)populateDefaultsForPreconfiguredNetwork
+{
+	NSString *serverAddress = self.serverAddressComboBox.value;
+
+	IRCNetwork *network = [self.networkList networkNamed:serverAddress];
+
+	BOOL networkSetFromServerAddress = YES;
+
+	if (network == nil) {
+		network = [self.networkList networkWithServerAddress:serverAddress];
+	}
+
+	if (network == nil) {
+		return;
+	}
+
+	/* If the combo box is set to a server address that matches a known
+	 server address, then replace the combox box value with network name. */
+	if (networkSetFromServerAddress) {
+		self.serverAddressComboBox.doNotInformCallbackOfNextChange = YES;
+
+		self.serverAddressComboBox.stringValue = network.networkName;
+	}
+
+	/* Populate other defaults */
+	self.serverPortTextField.integerValue = network.serverPort;
+
+	self.prefersSecuredConnectionCheck.state = network.prefersSecuredConnection;
 }
 
 - (void)updateConnectionPage
