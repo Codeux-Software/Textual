@@ -3600,14 +3600,14 @@
             <point key="canvasLocation" x="334.5" y="-4252.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="KpN-mD-prv" userLabel="Incoming Data">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="152"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="213"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="30" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="qfG-DF-6ev">
-                    <rect key="frame" x="104" y="106" width="333" height="18"/>
+                    <rect key="frame" x="104" y="167" width="333" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically reply to Client-to-Client (CTCP) requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MT3-bO-x65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -3617,7 +3617,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="uSb-WR-Mph">
-                    <rect key="frame" x="104" y="78" width="227" height="18"/>
+                    <rect key="frame" x="104" y="139" width="227" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically handle highlight spam" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9iB-R9-pX3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -3627,7 +3627,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyl-Dm-Tsm">
-                    <rect key="frame" x="122" y="30" width="361" height="42"/>
+                    <rect key="frame" x="122" y="91" width="361" height="42"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="34J-sn-YZe">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">For a message to qualify as “highlight spam”, a minimum of ten (10) nicknames must be present in the message with at least 75% of the message consisting solely of nicknames.</string>
@@ -3638,17 +3638,42 @@
                         <accessibilityConnection property="link" destination="uSb-WR-Mph" id="9gI-fO-CqF"/>
                     </connections>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="RP8-vi-u0X">
+                    <rect key="frame" x="104" y="64" width="271" height="18"/>
+                    <buttonCell key="cell" type="check" title="Replace Combining Diacritical Marks with �" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="nGd-LX-rxu">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyFilterUnicodeTextSpam" id="N77-BH-TuM"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPo-O3-udJ">
+                    <rect key="frame" x="122" y="30" width="360" height="28"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These characters are often combined to form “Zalgo text”, which is used by some users to disrupt chatrooms." id="1Vl-Us-7KM">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="uSb-WR-Mph" id="fxn-N4-SjE"/>
+                    </connections>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="nyl-Dm-Tsm" secondAttribute="bottom" constant="30" id="6L0-Pk-nid"/>
+                <constraint firstItem="gPo-O3-udJ" firstAttribute="top" secondItem="RP8-vi-u0X" secondAttribute="bottom" constant="8" id="1Ic-Bw-OlR"/>
+                <constraint firstItem="gPo-O3-udJ" firstAttribute="leading" secondItem="KpN-mD-prv" secondAttribute="leading" constant="124" id="1J4-R7-I5H"/>
+                <constraint firstItem="RP8-vi-u0X" firstAttribute="leading" secondItem="uSb-WR-Mph" secondAttribute="leading" id="3Lq-kk-xwg"/>
+                <constraint firstItem="RP8-vi-u0X" firstAttribute="top" secondItem="nyl-Dm-Tsm" secondAttribute="bottom" constant="11" id="YQa-56-bYy"/>
                 <constraint firstItem="nyl-Dm-Tsm" firstAttribute="leading" secondItem="KpN-mD-prv" secondAttribute="leading" constant="124" id="YRH-R9-Fqz"/>
+                <constraint firstAttribute="bottom" secondItem="gPo-O3-udJ" secondAttribute="bottom" constant="30" id="eWr-fB-kQd"/>
                 <constraint firstItem="qfG-DF-6ev" firstAttribute="leading" secondItem="KpN-mD-prv" secondAttribute="leading" constant="106" id="iHD-IK-L9N"/>
                 <constraint firstItem="qfG-DF-6ev" firstAttribute="leading" secondItem="uSb-WR-Mph" secondAttribute="leading" id="r3F-1o-ag0"/>
                 <constraint firstItem="uSb-WR-Mph" firstAttribute="top" secondItem="qfG-DF-6ev" secondAttribute="bottom" constant="14" id="vED-86-7ih"/>
                 <constraint firstItem="qfG-DF-6ev" firstAttribute="top" secondItem="KpN-mD-prv" secondAttribute="top" constant="30" id="wHj-jD-1cO"/>
                 <constraint firstItem="nyl-Dm-Tsm" firstAttribute="top" secondItem="uSb-WR-Mph" secondAttribute="bottom" constant="8" symbolic="YES" id="xm8-Gy-2C7"/>
             </constraints>
-            <point key="canvasLocation" x="466.5" y="-4164.5"/>
+            <point key="canvasLocation" x="466.5" y="-4136"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-23-zvA" userLabel="Off-the-Record Messaging">
             <rect key="frame" x="0.0" y="0.0" width="589" height="152"/>
