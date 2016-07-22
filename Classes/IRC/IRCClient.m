@@ -5623,7 +5623,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		} else if (channel.config.ignoreGeneralEventMessages) {
 			printMessage = NO;
 		} else {
-			if (ignoreInfo) {
+			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 				printMessage = ignoreInfo.ignoreGeneralEventMessages;
 			}
 		}
@@ -5702,7 +5702,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[self checkIgnoreAgainstHostmask:m.senderHostmask
 								 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
-			if (ignoreInfo) {
+			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 				printMessage = ignoreInfo.ignoreGeneralEventMessages;
 			}
 		}
@@ -5789,7 +5789,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[self checkIgnoreAgainstHostmask:m.senderHostmask
 								 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
-			if (ignoreInfo) {
+			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 				printMessage = ignoreInfo.ignoreGeneralEventMessages;
 			}
 		}
@@ -5891,7 +5891,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				} else if (channel.config.ignoreGeneralEventMessages) {
 					printMessage = NO;
 				} else {
-					if (ignoreInfo) {
+					if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 						printMessage = ignoreInfo.ignoreGeneralEventMessages;
 					}
 				}
@@ -6073,7 +6073,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				} else if (channel.config.ignoreGeneralEventMessages) {
 					printMessage = NO;
 				} else {
-					if (oldNicknameIgnoreInfo) {
+					if (oldNicknameIgnoreInfo && oldNicknameIgnoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 						printMessage = oldNicknameIgnoreInfo.ignoreGeneralEventMessages;
 					}
 				}
