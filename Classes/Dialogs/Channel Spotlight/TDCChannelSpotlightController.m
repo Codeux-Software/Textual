@@ -301,9 +301,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (keyboardKeys == NSCommandKeyMask) {
 				[self close];
+
+				return nil;
 			}
 
-			return nil;
+			return event;
 		}
 		case 18 ... 23: // 0-9 (top row)
 		case 25 ... 26:
