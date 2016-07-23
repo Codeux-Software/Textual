@@ -323,9 +323,9 @@
 		4C0D977F1D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
 		4C0D97801D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
 		4C0D97811D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
-		4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; };
-		4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; };
-		4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; };
+		4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D97871D36352B001CD6D9 /* TLOInternetAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0D978E1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */; };
 		4C0D978F1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */; };
 		4C0D97901D363953001CD6D9 /* TDCFileTransferDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */; };
@@ -3812,6 +3812,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD71D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C5DD5261D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4CF642E61D2DC33700CB9165 /* IRCChannelConfigPrivate.h in Headers */,
@@ -3843,7 +3844,6 @@
 				4C7B03251D12107500295E82 /* TPCThemeController.h in Headers */,
 				4C4A1AFA1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C4A1AF71D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
-				4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4CEA29C41D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C038F531D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C7B03261D12107500295E82 /* TPCThemeSettings.h in Headers */,
@@ -4046,6 +4046,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD81D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B02FA1D12105D00295E82 /* NSColorHelper.h in Headers */,
@@ -4200,7 +4201,6 @@
 				4C99A7311D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4CAAAE4E1D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h in Headers */,
 				4C7B04131D1210A800295E82 /* TVCMemberList.h in Headers */,
-				4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C7B49141D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
@@ -4278,6 +4278,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD91D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B03091D12106300295E82 /* NSColorHelper.h in Headers */,
@@ -4432,7 +4433,6 @@
 				4C99A7321D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4CAAAE4F1D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h in Headers */,
 				4C7B04941D1210B000295E82 /* TVCMemberList.h in Headers */,
-				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C7B49151D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
