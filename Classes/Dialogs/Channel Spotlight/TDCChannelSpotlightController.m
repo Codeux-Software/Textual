@@ -294,6 +294,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (nullable NSEvent *)respondToKeyDownEvent:(NSEvent *)event
 {
 	switch (event.keyCode) {
+		case 2: // d
+		{
+			/* Close dialog using keyboard shortcut used to open it */
+			NSUInteger keyboardKeys = (event.modifierFlags & NSDeviceIndependentModifierFlagsMask);
+
+			if (keyboardKeys == NSCommandKeyMask) {
+				[self close];
+			}
+
+			return nil;
+		}
 		case 18 ... 23: // 0-9 (top row)
 		case 25 ... 26:
 		case 28 ... 29:
