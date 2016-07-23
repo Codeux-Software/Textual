@@ -328,6 +328,12 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = mainWindow().selectedChannel;
 
 	switch (tag) {
+		case 718: // "Search channels…"
+		{
+			menuItem.hidden = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+
+			return YES;
+		}
 		case 315: // "Search With Google"
 		case 1601: // "Search With Google"
 		{
