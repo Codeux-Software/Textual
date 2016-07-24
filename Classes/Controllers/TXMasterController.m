@@ -236,7 +236,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #endif
 
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 		[BITHockeyManager sharedHockeyManager].disableMetricsManager = YES;
+#endif
 
 #if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
 	}
