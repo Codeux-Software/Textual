@@ -34,22 +34,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="manageLicense:" target="267" id="9xt-Qu-8UP"/>
-                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; Built with License Manager Backend" id="IDd-Dg-lgS">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for updates…" tag="103" id="SKm-yR-9hI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="checkForUpdates:" target="267" id="Khl-F9-d2t"/>
-                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="vec-P9-FTp">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
@@ -923,42 +913,18 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showWelcomeSheet:" target="267" id="8jJ-Pr-Y90"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="Umk-2C-Q0h">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="2725">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="dSn-1k-aJE">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Simulate a Crash" tag="923" id="DCt-W4-lfW">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden2" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with HockeyApp Framework" previousBinding="7Og-fT-eNz" id="sM0-K5-2WZ">
-                                                    <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                                        <integer key="NSNullPlaceholder" value="-1"/>
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="7Og-fT-eNz">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3085"/>
@@ -987,7 +953,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-146" y="-220"/>
+            <point key="canvasLocation" x="-376" y="-351"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
