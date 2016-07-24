@@ -1210,7 +1210,6 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	/* Sandbox Check */
 	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
-	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXLionOrLater]				forKey:@"System -> Running Mac OS Lion Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMavericksOrLater]			forKey:@"System -> Running Mac OS Mavericks Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXYosemiteOrLater]			forKey:@"System -> Running Mac OS Yosemite Or Newer"];
@@ -1235,14 +1234,10 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
 #endif
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
-	[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	[RZUserDefaults() setBool:YES forKey:@"System -> Built with iCloud Support"];
 #else
-	if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
-		[RZUserDefaults() setBool:YES forKey:@"System -> Built with iCloud Support"];
-	} else {
-		[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
-	}
+	[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
 #endif
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
