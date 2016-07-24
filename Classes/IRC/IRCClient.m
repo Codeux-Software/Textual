@@ -5624,7 +5624,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			printMessage = NO;
 		} else {
 			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
-				printMessage = ignoreInfo.ignoreGeneralEventMessages;
+				printMessage = (ignoreInfo.ignoreGeneralEventMessages == NO);
 			}
 		}
 	}
@@ -5703,7 +5703,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 								 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
 			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
-				printMessage = ignoreInfo.ignoreGeneralEventMessages;
+				printMessage = (ignoreInfo.ignoreGeneralEventMessages == NO);
 			}
 		}
 	}
@@ -5790,7 +5790,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 								 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
 			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
-				printMessage = ignoreInfo.ignoreGeneralEventMessages;
+				printMessage = (ignoreInfo.ignoreGeneralEventMessages == NO);
 			}
 		}
 	}
@@ -5892,7 +5892,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					printMessage = NO;
 				} else {
 					if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
-						printMessage = ignoreInfo.ignoreGeneralEventMessages;
+						printMessage = (ignoreInfo.ignoreGeneralEventMessages == NO);
 					}
 				}
 			}
@@ -6074,7 +6074,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					printMessage = NO;
 				} else {
 					if (oldNicknameIgnoreInfo && oldNicknameIgnoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
-						printMessage = oldNicknameIgnoreInfo.ignoreGeneralEventMessages;
+						printMessage = (oldNicknameIgnoreInfo.ignoreGeneralEventMessages == NO);
 					}
 				}
 			}
