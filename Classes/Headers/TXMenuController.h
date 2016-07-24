@@ -197,6 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 	926: "Download Beta Updates"
 	927: "End User License Agreement"
 	928: "Enable App Nap"
+	929: "Collect Anonymous Statistics"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
@@ -426,9 +427,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)manageLicense:(id)sender;
 
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 - (IBAction)simulateCrash:(id)sender;
-#endif
+- (IBAction)toggleCollectAnonymousStatistics:(id)sender;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;

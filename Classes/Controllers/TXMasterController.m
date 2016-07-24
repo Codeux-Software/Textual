@@ -210,8 +210,72 @@ NS_ASSUME_NONNULL_BEGIN
 	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:(id)self];
 
 	[[BITHockeyManager sharedHockeyManager] startManager];
+
+	[self hockeyAppToggleCollectAnonymousStatistics];
 #endif
 }
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+#warning TODO: Disable metrics when Textual 6 is final
+#endif
+
+- (void)hockeyAppToggleCollectAnonymousStatistics
+{
+	[self hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:YES];
+}
+
+- (void)hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:(BOOL)askPermission
+{
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	if ([TPCPreferences collectAnonymousStatistics]) {
+		[BITHockeyManager sharedHockeyManager].disableMetricsManager = NO;
+	} else {
+		if (askPermission) {
+			[self hockeyAppAskPermissionToCollectAnonymousStatistics];
+		}
+
+#endif
+
+		[BITHockeyManager sharedHockeyManager].disableMetricsManager = YES;
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	}
+#endif
+}
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+- (void)hockeyAppAskPermissionToCollectAnonymousStatistics
+{
+	if ([TPCPreferences collectAnonymousStatisticsPermissionAsked]) {
+		return;
+	}
+
+	[TLOPopupPrompts sheetWindowWithWindow:self.mainWindow
+									  body:TXTLS(@"Prompts[1135][2]")
+									 title:TXTLS(@"Prompts[1135][1]")
+							 defaultButton:TXTLS(@"Prompts[1135][3]")
+						   alternateButton:TXTLS(@"Prompts[1135][4]")
+							   otherButton:TXTLS(@"Prompts[1135][5]")
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse)
+							{
+								if (buttonClicked == TLOPopupPromptReturnPrimaryType ||
+									buttonClicked == TLOPopupPromptReturnSecondaryType)
+								{
+									[TPCPreferences setCollectAnonymousStatistics:(buttonClicked == TLOPopupPromptReturnPrimaryType)];
+
+									[TPCPreferences setCollectAnonymousStatisticsPermissionAsked:YES];
+								}
+								else if (buttonClicked == TLOPopupPromptReturnOtherType)
+								{
+									[TPCPreferences setCollectAnonymousStatistics:NO];
+
+									[TLOpenLink openWithString:@"https://www.hockeyapp.net/features/user-metrics/"];
+								}
+
+								[self hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:NO];
+						   }];
+}
+#endif
 
 - (void)prepareThirdPartyServiceSparkleFramework
 {

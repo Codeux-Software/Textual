@@ -64,6 +64,10 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
 
 	TPCPreferencesReloadInlineMediaCacheAction						= 1 << 18,
 	TPCPreferencesReloadIRCCommandCacheAction						= 1 << 19,
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	TPCPreferencesReloadCollectAnonymousStatisticsAction			= 1 << 20,
+#endif
 };
 
 @interface TPCPreferences (TPCPreferencesReload)

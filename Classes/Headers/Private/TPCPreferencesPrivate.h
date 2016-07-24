@@ -48,6 +48,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates;
 #endif
 
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
++ (void)setCollectAnonymousStatistics:(BOOL)collectAnonymousStatistics;
++ (void)setCollectAnonymousStatisticsPermissionAsked:(BOOL)collectAnonymousStatisticsPermissionAsked;
+#endif
+
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
 #endif

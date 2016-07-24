@@ -438,6 +438,31 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 }
 
 #pragma mark -
+#pragma mark Statistics
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
++ (BOOL)collectAnonymousStatistics
+{
+	return [RZUserDefaults() boolForKey:@"HockeySDK -> Collect Anonymous Statistics"];
+}
+
++ (void)setCollectAnonymousStatistics:(BOOL)collectAnonymousStatistics
+{
+	[RZUserDefaults() setBool:collectAnonymousStatistics forKey:@"HockeySDK -> Collect Anonymous Statistics"];
+}
+
++ (BOOL)collectAnonymousStatisticsPermissionAsked
+{
+	return [RZUserDefaults() boolForKey:@"HockeySDK -> Collect Anonymous Statistics Permission Asked"];
+}
+
++ (void)setCollectAnonymousStatisticsPermissionAsked:(BOOL)collectAnonymousStatisticsPermissionAsked
+{
+	[RZUserDefaults() setBool:collectAnonymousStatisticsPermissionAsked forKey:@"HockeySDK -> Collect Anonymous Statistics Permission Asked"];
+}
+#endif
+
+#pragma mark -
 #pragma mark App Nap 
 
 + (BOOL)appNapEnabled
@@ -1196,6 +1221,12 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[RZUserDefaults() setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
 #else
 	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
+#endif
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	[RZUserDefaults() setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework Metrics"];
+#else
+	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework Metrics"];
 #endif
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1

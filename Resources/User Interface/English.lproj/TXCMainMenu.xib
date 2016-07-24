@@ -762,6 +762,21 @@ CQ
                                     <action selector="openHelpMenuItem:" target="267" id="7cF-3R-5pW"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="5Mm-1o-ObO">
+                                <connections>
+                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with HockeyApp Framework Metrics" id="mdU-gU-Lu8">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Collect Anonymous Statistics" tag="929" id="caT-5T-9yC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleCollectAnonymousStatistics:" target="267" id="6AX-tD-7Ux"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1661"/>
                             <menuItem title="Frequently Asked Questions" tag="902" id="gkX-Of-Y5Q">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -887,11 +902,6 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="toggleBetaUpdates:" target="267" id="fwr-f1-tOW"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="L10-Te-cBX">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enable Developer Mode" tag="920" id="2280">
