@@ -334,6 +334,39 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
+		case 102: // "Manage license…"
+		{
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 0
+			menuItem.hidden = YES;
+#endif
+
+			return YES;
+		}
+		case 103: // "Check for updates…"
+		{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+			menuItem.hidden = YES;
+#endif
+
+			return YES;
+		}
+		case 921: // "Open 'Welcome to Textual' Dialog"
+		case 922: // "Reset 'Don't Ask Me' Warnings"
+		case 923: // "Simulate a Crash"
+		{
+			BOOL condition = [TPCPreferences developerModeEnabled];
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+			if (tag == 923) {
+				condition = NO;
+			}
+#endif
+
+			menuItem.hidden = (condition == NO);
+
+			return condition;
+
+		}
 		case 315: // "Search With Google"
 		case 1601: // "Search With Google"
 		{
@@ -642,18 +675,21 @@ NS_ASSUME_NONNULL_BEGIN
             return YES;
 		}
 
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 		case 926: // Download Beta Updates
 		{
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+			menuItem.hidden = YES;
+#else
 			if ([TPCPreferences receiveBetaUpdates]) {
 				menuItem.state = NSOnState;
 			} else {
 				menuItem.state = NSOffState;
 			}
+#endif
 
 			return YES;
 		}
-#endif
 
 		case 928: // Enable App Nap
 		{
