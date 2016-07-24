@@ -9963,8 +9963,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	NSString *command = nil;
-
 	NSString *modifier = nil;
 
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityMonitorCommand])
