@@ -310,6 +310,12 @@ NS_ASSUME_NONNULL_BEGIN
 		[IRCCommandIndex _invalidateCaches];
 	}
 
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	if ((reloadAction & TPCPreferencesReloadCollectAnonymousStatisticsAction) == TPCPreferencesReloadCollectAnonymousStatisticsAction) {
+		[masterController() hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:NO];
+	}
+#endif
+
 	/* World controller preferences changed call */
 	if ((reloadAction & TPCPreferencesReloadPreferencesChangedAction) == TPCPreferencesReloadPreferencesChangedAction) {
 		[worldController() preferencesChanged];

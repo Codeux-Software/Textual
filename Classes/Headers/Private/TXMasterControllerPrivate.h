@@ -44,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performAwakeningAfterMainWindowDidLoad;
 
 - (void)prepareThirdPartyServiceSparkleFramework;
+
+- (void)hockeyAppToggleCollectAnonymousStatistics;
+- (void)hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:(BOOL)askPermission;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -250,7 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				/* Disable everything by default except tag 900 through 916. These are various
 				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || (tag > 916 && tag < 927)) {
+				if (tag < 900 || (tag > 916 && tag < 929)) {
 					returnValue = NO;
 				}
 
@@ -664,6 +664,22 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			return YES;
+		}
+
+		case 929: // Collect Anonymous Statistics
+		{
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 0
+			menuItem.hidden = YES;
+#else
+			if ([TPCPreferences collectAnonymousStatistics]) {
+				menuItem.state = NSOnState;
+			} else {
+				menuItem.state = NSOffState;
+			}
+#endif
+
+			 return YES;
 		}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -3322,6 +3338,15 @@ NS_ASSUME_NONNULL_BEGIN
 {
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[[BITHockeyManager sharedHockeyManager].crashManager generateTestCrash];
+#endif
+}
+
+- (void)toggleCollectAnonymousStatistics:(id)sender
+{
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	[TPCPreferences setCollectAnonymousStatistics:([TPCPreferences collectAnonymousStatistics] == NO)];
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadCollectAnonymousStatisticsAction];
 #endif
 }
 
