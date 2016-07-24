@@ -39,11 +39,11 @@
 "TPI_ChatFilterEditFilterSheet[0002]" = "My Nickname";
 "TPI_ChatFilterEditFilterSheet[0003]" = "Network Name";
 "TPI_ChatFilterEditFilterSheet[0004]" = "Original Message";
-"TPI_ChatFilterEditFilterSheet[0005]" = "Server Address";
+"TPI_ChatFilterEditFilterSheet[0005]" = "Sender Address";
 "TPI_ChatFilterEditFilterSheet[0006]" = "Sender Hostmask";
 "TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
 "TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
-"TPI_ChatFilterEditFilterSheet[0009]" = "Sender Address";
+"TPI_ChatFilterEditFilterSheet[0009]" = "Server Address";
 
 "TPI_ChatFilterEditFilterSheet[0010][1]" = "Are you sure that you want to delete this filter?";
 "TPI_ChatFilterEditFilterSheet[0010][2]" = "There is no undo and all data related to this filter will be erased.";
