@@ -98,7 +98,7 @@ SUCH DAMAGE.
 Unless stated otherwise by Textual's [Acknowledgements.pdf](Acknowledgements.pdf) document, the license presented below shall govern the distribution of and modifications to; the work hosted by this repository.
 
 <pre>
-Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
       Please see Acknowledgements.pdf for additional information.
 
 Redistribution and use in source and binary forms, with or without
