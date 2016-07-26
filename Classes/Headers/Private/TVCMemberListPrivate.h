@@ -55,8 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateBackgroundColor;
 
 - (void)windowDidChangeKeyState;
-
-- (void)destroyUserInfoPopoverOnWindowKeyChange;
 @end
 
 @protocol TVCMemberListDelegate <NSObject>
