@@ -375,6 +375,12 @@
 		4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
 		4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
+		4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; };
+		4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; };
+		4C2065361D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; };
+		4C20653D1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
+		4C20653E1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
+		4C20653F1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C2D6ABE1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */; };
@@ -1920,6 +1926,8 @@
 		4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSViewHelper.m; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
+		4C2065331D47929300D42CD2 /* TDCWindowBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCWindowBase.h; path = Headers/Private/TDCWindowBase.h; sourceTree = "<group>"; };
+		4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCWindowBase.m; path = Dialogs/TDCWindowBase.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
 		4C24DC751A93C9CE0098D1BE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -3361,6 +3369,7 @@
 				4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */,
 				4C8AF557158E99520026668C /* StaticDefinitions.h */,
 				4C8AF567158E99520026668C /* TDCSheetBase.h */,
+				4C2065331D47929300D42CD2 /* TDCWindowBase.h */,
 				4C8AF56A158E99520026668C /* TextualApplication.h */,
 				4C8AF56C158E99520026668C /* THOPluginProtocol.h */,
 				4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */,
@@ -3594,6 +3603,7 @@
 				4C8AF51E158E99520026668C /* TDCServerHighlightListSheet.m */,
 				4C8AF523158E99520026668C /* TDCServerPropertiesSheet.m */,
 				4C8AF524158E99520026668C /* TDCSheetBase.m */,
+				4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */,
 				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
 			);
 			name = Dialogs;
@@ -3915,6 +3925,7 @@
 				4C7B034E1D1210A100295E82 /* IRCWorld.h in Headers */,
 				4C0DEB6C1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */,
 				4C5DD51C1D1E1CB700F2E1AE /* TVCMainWindowSplitViewPrivate.h in Headers */,
+				4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B490A1D131A2A008D7926 /* TVCLogScriptEventSinkPrivate.h in Headers */,
 				4C7B48F51D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
 				4CAAAE4A1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
@@ -4073,6 +4084,7 @@
 				4CE474451D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C7B03071D12105D00295E82 /* TPCThemeController.h in Headers */,
 				4CB17EC91D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
+				4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B03081D12105D00295E82 /* TPCThemeSettings.h in Headers */,
 				4CD9FF821D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */,
 				4C7B050E1D12168C00295E82 /* THOPluginManagerPrivate.h in Headers */,
@@ -4305,6 +4317,7 @@
 				4C7B03151D12106300295E82 /* TPCResourceManager.h in Headers */,
 				4CE474461D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C7B03161D12106300295E82 /* TPCThemeController.h in Headers */,
+				4C2065361D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4CB17ECA1D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
 				4C7B03171D12106300295E82 /* TPCThemeSettings.h in Headers */,
 				4CD9FF831D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */,
@@ -5324,6 +5337,7 @@
 				4C77FF1C1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */,
 				4C9234AC195330D30009AAAE /* TXUserInterface.m in Sources */,
+				4C20653E1D47931C00D42CD2 /* TDCWindowBase.m in Sources */,
 				4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */,
 				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
 				4CC2DC5C1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
@@ -5447,6 +5461,7 @@
 				4C0BA64C1990798800857343 /* TDCServerChangeNicknameSheet.m in Sources */,
 				4C14E1251C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */,
 				4CF40DF61AC1A4AC00A26BE0 /* TVCLogLine.m in Sources */,
+				4C20653D1D47931C00D42CD2 /* TDCWindowBase.m in Sources */,
 				4C0BA64D1990798800857343 /* TDCServerPropertiesSheet.m in Sources */,
 				4C741C421C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C0BA64E1990798800857343 /* TDCSheetBase.m in Sources */,
@@ -5636,6 +5651,7 @@
 				4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */,
 				4C77FF1B1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C8AF6A7158E99520026668C /* IRCClient.m in Sources */,
+				4C20653F1D47931C00D42CD2 /* TDCWindowBase.m in Sources */,
 				4C9234AB195330D30009AAAE /* TXUserInterface.m in Sources */,
 				4C8AF6A8158E99520026668C /* IRCClientConfig.m in Sources */,
 				4CC2DC5D1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
