@@ -217,6 +217,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		filePath = [[TPCPathInfo bundledThemeFolderPath] stringByAppendingPathComponent:fileName];
 	}
 
+	if (filePath == nil) {
+		return nil;
+	}
+
 	if ([TPCThemeController themeAtPathIsValid:filePath]) {
 		if ( storageLocation) {
 			*storageLocation = fileLocation;

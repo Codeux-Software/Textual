@@ -118,6 +118,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performAwakeningBeforeMainWindowDidLoad
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	/* Cloud files are synced regardless of user preference
+	 so we still have to initalize it at some point. */
+	[sharedCloudManager() prepareInitialState];
+#endif
+	
 	self.world = [IRCWorld new];
 }
 
@@ -128,12 +134,6 @@ NS_ASSUME_NONNULL_BEGIN
 	 after the main window has loaded so the user has that to
 	 stare at while its wound up. */
 	[self checkForOtherCopiesOfTextualRunning];
-#endif
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	/* Cloud files are synced regardless of user preference
-	 so we still have to initalize it at some point. */
-	[sharedCloudManager() prepareInitialState];
 #endif
 
 	[IRCCommandIndex populateCommandIndex];
