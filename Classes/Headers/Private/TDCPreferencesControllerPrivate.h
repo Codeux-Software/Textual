@@ -40,11 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol TDCPreferencesControllerDelegate;
 
-@interface TDCPreferencesController : NSWindowController
-@property (nonatomic, weak, nullable) id <TDCPreferencesControllerDelegate> delegate;
-
-- (void)show;
-
+@interface TDCPreferencesController : TDCWindowBase
 + (void)showTorAnonymityNetworkInlineMediaWarning;
 @end
 

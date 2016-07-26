@@ -39,10 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol TDCAboutDialogDelegate;
 
-@interface TDCAboutDialog : NSWindowController
-@property (nonatomic, weak, nullable) id <TDCAboutDialogDelegate> delegate;
-
-- (void)show;
+@interface TDCAboutDialog : TDCWindowBase
 @end
 
 @protocol TDCAboutDialogDelegate <NSObject>

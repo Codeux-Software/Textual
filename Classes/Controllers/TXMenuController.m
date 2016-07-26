@@ -63,22 +63,22 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *currentSearchPhrase;
 @property (readonly, nullable) TVCLogController *selectedViewController;
 @property (readonly, nullable) TVCLogView *selectedViewControllerBackingView;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *channelViewChannelNameMenu;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *channelViewDefaultMenu;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *channelViewURLMenu;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *dockMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewChannelNameMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewDefaultMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewURLMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *dockMenu;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *encryptionManagerStatusMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *encryptionManagerStatusMenu;
 #endif
 
 @property (nonatomic, weak, readwrite) IBOutlet NSMenu *mainMenuNavigationChannelListMenu;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuCloseWindowMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuChannelMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuServerMenuItem;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *mainWindowSegmentedControllerCell0Menu;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *serverListNoSelectionMenu;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenu *userControlMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *mainWindowSegmentedControllerCell0Menu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *serverListNoSelectionMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *userControlMenu;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *muteNotificationsFileMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;

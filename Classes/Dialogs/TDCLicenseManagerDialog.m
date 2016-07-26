@@ -87,12 +87,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	[RZMainBundle() loadNibNamed:@"TDCLicenseManagerDialog" owner:self topLevelObjects:nil];
+	(void)[RZMainBundle() loadNibNamed:@"TDCLicenseManagerDialog" owner:self topLevelObjects:nil];
 }
 
 - (void)show
 {
-	[self.window makeKeyAndOrderFront:nil];
+	[super show];
 
 	[self populateMacAppStoreIconImageView];
 
@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)unregisteredViewCancel:(id)sender
 {
-	[self.window close];
+	[self close];
 }
 
 - (void)updateUnregisteredViewActivationButton

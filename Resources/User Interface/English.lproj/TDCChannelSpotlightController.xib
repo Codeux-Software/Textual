@@ -31,7 +31,7 @@
                 <string key="libraryAssetSourceID">Xcode.InterfaceBuilderKit.ClassDescriptions.Cocoa:IBLibrary-ArrayController</string>
             </metadata>
         </arrayController>
-        <window title="Channel Spotlight" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="BfF-sG-KJr" customClass="TDCChannelSpotlightControllerPanel">
+        <window title="Channel Spotlight" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="BfF-sG-KJr" customClass="TDCChannelSpotlightControllerPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="272" y="172" width="600" height="221"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>

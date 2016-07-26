@@ -40,11 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @protocol TDCLicenseManagerDialogDelegate;
 
-@interface TDCLicenseManagerDialog : NSWindowController
-@property (nonatomic, weak, nullable) id <TDCLicenseManagerDialogDelegate> delegate;
+@interface TDCLicenseManagerDialog : TDCWindowBase
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
-
-- (void)show;
 
 - (void)activateLicenseKey:(NSString *)licenseKey;
 

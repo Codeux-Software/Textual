@@ -68,6 +68,11 @@ ClassWithDesignatedInitializerInitMethod
 	self.codeHandlerMap = [NSMutableDictionary new];
 }
 
+- (void)dealloc
+{
+	self.target = nil;
+}
+
 - (void)setKeyHandlerTarget:(id)target
 {
 	NSParameterAssert(target != nil);

@@ -3603,8 +3603,8 @@
 				4C8AF51E158E99520026668C /* TDCServerHighlightListSheet.m */,
 				4C8AF523158E99520026668C /* TDCServerPropertiesSheet.m */,
 				4C8AF524158E99520026668C /* TDCSheetBase.m */,
-				4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */,
 				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
+				4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";

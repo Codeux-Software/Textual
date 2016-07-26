@@ -80,23 +80,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray *alertSounds;
 @property (nonatomic, strong) IBOutlet NSArrayController *excludeKeywordsArrayController;
 @property (nonatomic, strong) IBOutlet NSArrayController *highlightKeywordsArrayController;
-@property (nonatomic, strong) IBOutlet NSButton *addExcludeKeywordButton;
-@property (nonatomic, strong) IBOutlet NSButton *alertBounceDockIconButton;
-@property (nonatomic, strong) IBOutlet NSButton *alertBounceDockIconRepeatedlyButton;
-@property (nonatomic, strong) IBOutlet NSButton *alertDisableWhileAwayButton;
-@property (nonatomic, strong) IBOutlet NSButton *alertPushNotificationButton;
-@property (nonatomic, strong) IBOutlet NSButton *alertSpeakEventButton;
-@property (nonatomic, strong) IBOutlet NSButton *highlightNicknameButton;
-@property (nonatomic, strong) IBOutlet NSPopUpButton *alertSoundChoiceButton;
-@property (nonatomic, strong) IBOutlet NSPopUpButton *alertTypeChoiceButton;
-@property (nonatomic, strong) IBOutlet NSPopUpButton *themeSelectionButton;
-@property (nonatomic, strong) IBOutlet NSPopUpButton *transcriptFolderButton;
-@property (nonatomic, strong) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
-@property (nonatomic, strong) IBOutlet NSTableView *excludeKeywordsTable;
-@property (nonatomic, strong) IBOutlet NSTableView *installedScriptsTable;
-@property (nonatomic, strong) IBOutlet NSTableView *highlightKeywordsTable;
-@property (nonatomic, strong) IBOutlet NSTextField *alertNotificationDestinationTextField;
-@property (nonatomic, strong) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
+@property (nonatomic, strong) IBOutlet NSArrayController *installedScriptsController;
+@property (nonatomic, weak) IBOutlet NSButton *addExcludeKeywordButton;
+@property (nonatomic, weak) IBOutlet NSButton *alertBounceDockIconButton;
+@property (nonatomic, weak) IBOutlet NSButton *alertBounceDockIconRepeatedlyButton;
+@property (nonatomic, weak) IBOutlet NSButton *alertDisableWhileAwayButton;
+@property (nonatomic, weak) IBOutlet NSButton *alertPushNotificationButton;
+@property (nonatomic, weak) IBOutlet NSButton *alertSpeakEventButton;
+@property (nonatomic, weak) IBOutlet NSButton *highlightNicknameButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *themeSelectionButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
+@property (nonatomic, weak) IBOutlet NSTableView *excludeKeywordsTable;
+@property (nonatomic, weak) IBOutlet NSTableView *installedScriptsTable;
+@property (nonatomic, weak) IBOutlet NSTableView *highlightKeywordsTable;
+@property (nonatomic, weak) IBOutlet NSTextField *alertNotificationDestinationTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
 @property (nonatomic, strong) IBOutlet NSView *contentViewNotifications;
 @property (nonatomic, strong) IBOutlet NSView *contentViewChannelManagement;
 @property (nonatomic, strong) IBOutlet NSView *contentViewCommandScope;
@@ -120,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
-@property (nonatomic, weak) IBOutlet NSView *shareDataBetweenDevicesView;
+@property (nonatomic, strong) IBOutlet NSView *shareDataBetweenDevicesView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *shareDataBetweenDevicesViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
@@ -290,7 +291,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[self firstPane:self.contentViewGeneral selectedItem:_toolbarItemIndexGeneral];
 	}
 
-	[self.window makeKeyAndOrderFront:nil];
+	[super show];
 }
 
 #pragma mark -

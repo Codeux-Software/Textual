@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11163.2" systemVersion="16A239j" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11163.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -45,6 +45,7 @@
                 <outlet property="highlightKeywordsTable" destination="nIO-jH-FEm" id="rwr-Mr-P5g"/>
                 <outlet property="highlightNicknameButton" destination="IVv-zw-dDv" id="5mn-VV-cM3"/>
                 <outlet property="installedAddonsMenu" destination="mgV-ad-4kQ" id="ysw-NY-ZxI"/>
+                <outlet property="installedScriptsController" destination="92m-WJ-gkY" id="Wsq-Rt-t4M"/>
                 <outlet property="installedScriptsTable" destination="rGf-Ih-C97" id="v8k-0K-zxF"/>
                 <outlet property="mountainLionDeprecationWarningView" destination="e8H-uo-073" id="C2e-iz-pUP"/>
                 <outlet property="navigationToolbar" destination="T7o-OY-4Q7" id="4u5-Ls-XuU"/>
@@ -81,7 +82,7 @@
                 </binding>
             </connections>
         </arrayController>
-        <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="4929" userLabel="Toolbar Window">
+        <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="367" y="318" width="589" height="240"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>

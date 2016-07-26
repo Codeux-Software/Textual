@@ -962,6 +962,7 @@ CQ
         </customObject>
         <customObject id="267" userLabel="MenuController" customClass="TXMenuController">
             <connections>
+                <outlet property="channelViewChannelNameMenu" destination="963" id="Apn-Xd-gl8"/>
                 <outlet property="channelViewDefaultMenu" destination="374" id="jud-oP-p2n"/>
                 <outlet property="channelViewURLMenu" destination="426" id="abE-mI-Ckx"/>
                 <outlet property="dockMenu" destination="Q9Y-E0-gAT" id="930-9r-xqt"/>
@@ -1424,26 +1425,23 @@ CA
                 <outlet property="delegate" destination="267" id="Up9-R6-U8F"/>
             </connections>
         </menu>
-        <menuItem title="File" tag="2" id="DYg-n3-mPQ" userLabel="Menu Item - Dock Menu">
-            <modifierMask key="keyEquivalentModifierMask"/>
-            <menu key="submenu" title="File" id="Q9Y-E0-gAT" userLabel="Menu - Dock Menu">
-                <items>
-                    <menuItem title="Disable All Notifications" tag="1700" id="dnc-ku-aQ3">
-                        <modifierMask key="keyEquivalentModifierMask"/>
-                        <connections>
-                            <action selector="toggleMuteOnNotifications:" target="267" id="Hrx-oO-Zow"/>
-                        </connections>
-                    </menuItem>
-                    <menuItem title="Disable All Notification Sounds" tag="1701" keyEquivalent="M" id="5jG-1t-WG4">
-                        <connections>
-                            <action selector="toggleMuteOnNotificationSounds:" target="267" id="rBT-LB-lUy"/>
-                        </connections>
-                    </menuItem>
-                </items>
-                <connections>
-                    <outlet property="delegate" destination="267" id="2RV-vm-dLp"/>
-                </connections>
-            </menu>
-        </menuItem>
+        <menu title="File" id="Q9Y-E0-gAT" userLabel="Menu - Dock Menu">
+            <items>
+                <menuItem title="Disable All Notifications" tag="1700" id="dnc-ku-aQ3">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleMuteOnNotifications:" target="267" id="Hrx-oO-Zow"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Disable All Notification Sounds" tag="1701" keyEquivalent="M" id="5jG-1t-WG4">
+                    <connections>
+                        <action selector="toggleMuteOnNotificationSounds:" target="267" id="rBT-LB-lUy"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="2RV-vm-dLp"/>
+            </connections>
+        </menu>
     </objects>
 </document>

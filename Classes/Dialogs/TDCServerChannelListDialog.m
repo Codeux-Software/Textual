@@ -70,7 +70,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(client != nil);
 
-	if ((self = [super initWithWindow:nil])) {
+	if ((self = [super init])) {
 		self.client = client;
 		self.clientId = client.uniqueIdentifier;
 		
@@ -100,13 +100,8 @@ ClassWithDesignatedInitializerInitMethod
 - (void)show
 {
 	[self.window restoreWindowStateForClass:self.class];
-	
-	[self.window makeKeyAndOrderFront:nil];
-}
 
-- (void)close
-{
-	[self.window close];
+	[super show];
 }
 
 - (void)clear
@@ -252,6 +247,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self cancelPerformRequests];
+
 	self.channelListTable.dataSource = nil;
 	self.channelListTable.delegate = nil;
 

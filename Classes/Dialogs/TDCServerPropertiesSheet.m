@@ -410,6 +410,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[self populateTabViewList];
 }
 
+- (void)dealloc
+{
+	self.connectCommandsField = nil;
+}
+
 - (void)populateTabViewList
 {
 #define _navigationIndexForAddressBook				1

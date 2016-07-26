@@ -48,17 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
-- (nullable instancetype)initWithCoder:(NSCoder *)coder
-{
-	return [super initWithCoder:coder];
-}
-
-- (instancetype)initWithWindow:(nullable NSWindow *)window
-{
-	return [super initWithWindow:window];
-}
-
 - (instancetype)initWithParentWindow:(TVCMainWindow *)parentWindow
 {
 	NSParameterAssert(parentWindow != nil);
@@ -73,7 +62,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	return nil;
 }
-DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)prepareInitialState
 {

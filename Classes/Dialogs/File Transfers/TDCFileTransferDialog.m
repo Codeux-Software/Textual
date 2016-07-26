@@ -117,11 +117,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)close
-{
-	[self.window close];
-}
-
 - (nullable TDCFileTransferDialogTransferController *)fileTransferMatchingPort:(uint16_t)port
 {
 	TDCFileTransferDialogTransferController *fileTransfer =
