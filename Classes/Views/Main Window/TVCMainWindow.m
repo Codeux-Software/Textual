@@ -64,6 +64,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 @property (nonatomic, copy, nullable) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @property (nonatomic, assign, readwrite) BOOL reloadingTheme;
+@property (nonatomic, assign, readwrite) BOOL channelSpotlightPanelAttached;
 @end
 
 #define _treeDragItemType		@"tree"
@@ -1349,12 +1350,12 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 
 - (BOOL)canBecomeKeyWindow
 {
-	return (self.childWindows.count == 0);
+	return (self.channelSpotlightPanelAttached == NO);
 }
 
 - (BOOL)canBecomeMainWindow
 {
-	return (self.childWindows.count == 0);
+	return (self.channelSpotlightPanelAttached == NO);
 }
 
 - (NSRect)defaultWindowFrame
@@ -1365,6 +1366,31 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	windowFrame.size.height = TVCMainWindowDefaultFrameHeight;
 	
 	return windowFrame;
+}
+
+#pragma mark -
+#pragma mark Child Window Management
+
+- (void)addChildWindow:(NSWindow *)childWindow ordered:(NSWindowOrderingMode)order
+{
+	[super addChildWindow:childWindow ordered:order];
+
+	if (self.channelSpotlightPanelAttached == NO) {
+		if ([childWindow isMemberOfClass:[TDCChannelSpotlightControllerPanel class]]) {
+			self.channelSpotlightPanelAttached = YES;
+		}
+	}
+}
+
+- (void)removeChildWindow:(NSWindow *)childWindow
+{
+	[super removeChildWindow:childWindow];
+
+	if (self.channelSpotlightPanelAttached) {
+		if ([childWindow isMemberOfClass:[TDCChannelSpotlightControllerPanel class]]) {
+			self.channelSpotlightPanelAttached = NO;
+		}
+	}
 }
 
 #pragma mark -

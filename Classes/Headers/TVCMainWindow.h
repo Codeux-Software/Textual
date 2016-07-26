@@ -123,6 +123,8 @@ TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
 @property (getter=isMemberListVisible, readonly) BOOL memberListVisible;
 @property (getter=isServerListVisible, readonly) BOOL serverListVisible;
 
+@property (getter=isChannelSpotlightPanelAttached, readonly) BOOL channelSpotlightPanelAttached;
+
 - (NSRect)defaultWindowFrame;
 @end
 
