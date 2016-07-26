@@ -51,15 +51,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMemberList
 
-- (instancetype)initWithFrame:(NSRect)frame
+- (nullable instancetype)initWithCoder:(NSCoder *)coder
 {
-	if ((self = [super initWithFrame:frame])) {
-		[self updateTrackingAreas];
+	if ((self = [super initWithCoder:coder])) {
+		[self prepareInitialState];
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (instancetype)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	[self updateTrackingAreas];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:nil];
 }
 
 - (void)dealloc
@@ -110,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.userPopoverTrackingArea =
 	[[NSTrackingArea alloc] initWithRect:self.frame
-								 options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+								 options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInActiveApp)
 								   owner:self
 								userInfo:nil];
 
@@ -149,6 +167,15 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	if (notification.object != self.window) {
+		return;
+	}
+
+	[self destroyUserInfoPopoverOnWindowKeyChange];
+}
+
 - (void)mouseExited:(NSEvent *)theEvent
 {
 	[self destroyUserInfoPopover];
@@ -171,6 +198,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (self.userPopoverTimerIsActive && ignoreTimer == NO) {
 		return; // Only allow the timer to pop it
+	}
+
+	if (self.window.keyWindow == NO) {
+		return;
 	}
 
 	NSInteger row = [self rowAtPoint:localPoint];
@@ -216,13 +247,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[self registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
-- (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote
+- (void)scrollViewBoundsDidChangeNotification:(NSNotification *)notification
 {
 	if ([TPCPreferences memberListUpdatesUserInfoPopoverOnScroll] == NO) {
 		return;
 	}
 
-	if (aNote.object != [self scrollViewContentView]) {
+	if (notification.object != [self scrollViewContentView]) {
 		return;
 	}
 

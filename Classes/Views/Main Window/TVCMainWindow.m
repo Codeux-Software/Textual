@@ -376,8 +376,6 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	self.lastKeyWindowStateChange = [NSDate timeIntervalSince1970];
 
 	[self reloadSubviewDrawings];
-
-	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 
 - (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
@@ -1524,9 +1522,6 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	if (itemChangedFrom) {
 		[itemChangedFrom.viewController notifySelectionChanged];
 	}
-
-	/* Destroy any floating popup */
-	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 
 	/* Destroy member list if we have no selection */
 	if (itemChangedTo == nil) {
