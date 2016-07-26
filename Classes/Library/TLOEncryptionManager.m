@@ -279,6 +279,18 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(messageFrom != nil);
 	NSParameterAssert(messageBody != nil);
 
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	if (currentState == OTRKitMessageStatePlaintext) {
+		if (decodingCallback) {
+			decodingCallback(messageBody, NO);
+		}
+
+		return;
+	}
+
 	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
 	messageObject.messageTo = messageTo;
