@@ -39,12 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol TDCChannelSpotlightControllerDelegate;
 
-@interface TDCChannelSpotlightController : NSWindowController
-@property (nonatomic, weak, nullable) id <TDCChannelSpotlightControllerDelegate> delegate;
-
+@interface TDCChannelSpotlightController : TDCWindowBase
 - (instancetype)initWithParentWindow:(TVCMainWindow *)parentWindow NS_DESIGNATED_INITIALIZER;
-
-- (void)show;
 @end
 
 @protocol TDCChannelSpotlightControllerDelegate <NSObject>

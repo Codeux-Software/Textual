@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, copy, readwrite) NSString *channelId;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, unsafe_unretained) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
+@property (nonatomic, strong) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
 @end
 
 @implementation TDCChannelModifyTopicSheet

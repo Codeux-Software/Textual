@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTextField *defaultModesTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultTopicTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *secretKeyTextField;
-@property (nonatomic, weak) IBOutlet NSView *contentView;
+@property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;

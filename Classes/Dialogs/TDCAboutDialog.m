@@ -68,8 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)show
 {
 	[self.window restoreWindowStateForClass:self.class];
-	
-	[self.window makeKeyAndOrderFront:nil];
+
+	[super show];
 }
 
 - (void)displayAcknowledgments:(id)sender

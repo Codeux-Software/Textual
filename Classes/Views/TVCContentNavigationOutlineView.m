@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCContentNavigationOutlineView ()
-@property (nonatomic, weak) IBOutlet NSView *contentView;
+@property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, weak, nullable) id lastSelectionWeakRef;

@@ -63,16 +63,13 @@ typedef NS_ENUM(NSUInteger, TDCFileTransferDialogNavigationSelectedTab) {
 
 @class TDCFileTransferDialogTransferController;
 
-@interface TDCFileTransferDialog : NSWindowController
+@interface TDCFileTransferDialog : TDCWindowBase
 @property (readonly, weak) TVCBasicTableView *fileTransferTable;
 @property (readonly) BOOL IPAddressRequestPending;
 @property (readonly, copy, nullable) NSString *IPAddress;
 
-- (void)show;
 - (void)show:(BOOL)makeKeyWindow;
 - (void)show:(BOOL)makeKeyWindow restorePosition:(BOOL)restorePosition;
-
-- (void)close;
 
 - (void)requestIPAddress; // from external source
 - (void)clearIPAddress;

@@ -271,14 +271,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 @interface TXMenuController : NSObject
-@property (readonly, weak) NSMenu *channelViewChannelNameMenu;
-@property (readonly, weak) NSMenu *channelViewDefaultMenu;
-@property (readonly, weak) NSMenu *channelViewURLMenu;
+@property (readonly, strong) NSMenu *channelViewChannelNameMenu;
+@property (readonly, strong) NSMenu *channelViewDefaultMenu;
+@property (readonly, strong) NSMenu *channelViewURLMenu;
 
-@property (readonly, weak) NSMenu *dockMenu;
+@property (readonly, strong) NSMenu *dockMenu;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-@property (readonly, weak) NSMenu *encryptionManagerStatusMenu;
+@property (readonly,strong) NSMenu *encryptionManagerStatusMenu;
 #endif
 
 @property (readonly, weak) NSMenu *mainMenuNavigationChannelListMenu;
@@ -286,11 +286,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, weak) NSMenuItem *mainMenuChannelMenuItem;
 @property (readonly, weak) NSMenuItem *mainMenuServerMenuItem;
 
-@property (readonly, weak) NSMenu *mainWindowSegmentedControllerCell0Menu;
+@property (readonly, strong) NSMenu *mainWindowSegmentedControllerCell0Menu;
 
-@property (readonly, weak) NSMenu *serverListNoSelectionMenu;
+@property (readonly, strong) NSMenu *serverListNoSelectionMenu;
 
-@property (readonly, weak) NSMenu *userControlMenu;
+@property (readonly, strong) NSMenu *userControlMenu;
 
 @property (readonly, weak) NSMenuItem *muteNotificationsDockMenuItem;
 @property (readonly, weak) NSMenuItem *muteNotificationsFileMenuItem;
