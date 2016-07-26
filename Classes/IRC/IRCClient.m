@@ -2215,12 +2215,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(command != nil);
 
-	TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
-		NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, encodedString, 0x01];
-
-		[self send:IRCPrivateCommandIndex("privmsg"), nickname, message, nil];
-	};
-
 	NSString *stringToSend = nil;
 
 	if (text == nil) {
@@ -2229,7 +2223,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		stringToSend = [NSString stringWithFormat:@"%@ %@", command, text];
 	}
 
-	injectionBlock(stringToSend);
+	NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, stringToSend, 0x01];
+
+	[self send:IRCPrivateCommandIndex("privmsg"), nickname, message, nil];
 }
 
 - (void)sendCTCPReply:(NSString *)nickname command:(NSString *)command text:(nullable NSString *)text
@@ -2237,12 +2233,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(command != nil);
 
-	TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
-		NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, encodedString, 0x01];
-
-		[self send:IRCPrivateCommandIndex("notice"), nickname, message, nil];
-	};
-
 	NSString *stringToSend = nil;
 
 	if (text == nil) {
@@ -2251,7 +2241,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		stringToSend = [NSString stringWithFormat:@"%@ %@", command, text];
 	}
 
-	injectionBlock(stringToSend);
+	NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, stringToSend, 0x01];
+
+	[self send:IRCPrivateCommandIndex("notice"), nickname, message, nil];
 }
 
 - (void)sendCTCPPing:(NSString *)nickname
