@@ -143,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateControlsAppearance
 {
-	if ([self appearsVibrantDark]) {
+	if ([TDCChannelSpotlightController appearsVibrantDark]) {
 		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantDark];
 	} else {
 		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantLight];
@@ -193,13 +193,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
-- (BOOL)appearsVibrantDark
++ (BOOL)appearsVibrantDark
 {
-	NSAppearance *appearance = self.visualEffectView.appearance;
-
-	NSString *appearanceName = appearance.name;
-
-	return ([appearanceName isEqualToString:NSAppearanceNameVibrantDark]);
+	return [TPCPreferences invertSidebarColors];
 }
 
 #pragma mark -

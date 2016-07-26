@@ -243,11 +243,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)appearsVibrantDark
 {
-	NSAppearance *appearance = self.effectiveAppearance;
-
-	NSString *appearanceName = appearance.name;
-
-	return ([appearanceName isEqualToString:NSAppearanceNameVibrantDark]);
+	return [TDCChannelSpotlightController appearsVibrantDark];
 }
 
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
