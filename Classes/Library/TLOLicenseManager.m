@@ -83,6 +83,7 @@ NSUInteger const TLOLicenseManagerLicenseKeyExpectedLength = 45;
 
 NSInteger const TLOLicenseManagerTrialModeMaximumLifespan = (-2592000); // 30 days in seconds
 
+BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey);
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary<NSString *, id> *licenseDictionary);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
@@ -747,6 +748,23 @@ NSString * _Nullable TLOLicenseManagerLicenseCreationDateFormatted(void)
 	dateFormatter.timeStyle = NSDateFormatterNoStyle;
 
 	return [dateFormatter stringFromDate:creationDate];
+}
+
+#pragma mark -
+
+BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey)
+{
+	NSCParameterAssert(licenseKey != nil);
+
+	NSArray<NSString *> *blacklistedLicenseKeys = nil;
+
+	if (blacklistedLicenseKeys == nil) {
+		blacklistedLicenseKeys = @[
+			@"mushy-argyle-oryx-428112186934176870777339608",
+		];
+	}
+
+	return [blacklistedLicenseKeys containsObject:licenseKey];
 }
 
 #endif
