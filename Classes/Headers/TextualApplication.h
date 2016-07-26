@@ -82,6 +82,7 @@
 	@class IRCUser;
 	@class IRCWorld;
 	@class TDCSheetBase;
+	@class TDCWindowBase;
 	@class THOUnicodeHelper;
 	@class TLOGrowlController;
 	@class TLOKeyEventHandler;
@@ -236,6 +237,7 @@
 
 	/* Dialogs */
 	#import "TDCSheetBase.h"
+	#import "TDCWindowBase.h"
 
 	/* Helpers */
 	#import "THOPluginProtocol.h"
