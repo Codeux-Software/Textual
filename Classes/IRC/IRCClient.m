@@ -219,10 +219,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.lastMessageServerTime = self.config.lastMessageServerTime;
 
-#if defined(DEBUG)
-	self.rawModeEnabled = YES;
-#endif
-
 	self.commandQueueTimer = [TLOTimer new];
 	self.commandQueueTimer.repeatTimer = NO;
 	self.commandQueueTimer.target = self;
