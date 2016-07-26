@@ -83,7 +83,7 @@ NSUInteger const TLOLicenseManagerLicenseKeyExpectedLength = 45;
 
 NSInteger const TLOLicenseManagerTrialModeMaximumLifespan = (-2592000); // 30 days in seconds
 
-void TLOLicenseManagerResetUserLicenseFileIfBlacklisted(void);
+void TLOLicenseManagerDeleteUserLicenseFileIfBlacklisted(void);
 BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey);
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary<NSString *, id> *licenseDictionary);
@@ -122,7 +122,7 @@ void TLOLicenseManagerSetup(void)
 		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
 			TLOLicenseManagerSetPublicKeyIsGenuine();
 
-			TLOLicenseManagerResetUserLicenseFileIfBlacklisted();
+			TLOLicenseManagerDeleteUserLicenseFileIfBlacklisted();
 		});
 	}
 }
@@ -756,7 +756,7 @@ NSString * _Nullable TLOLicenseManagerLicenseCreationDateFormatted(void)
 #pragma mark -
 #pragma mark Blacklist
 
-void TLOLicenseManagerResetUserLicenseFileIfBlacklisted(void)
+void TLOLicenseManagerDeleteUserLicenseFileIfBlacklisted(void)
 {
 	NSString *licenseKey = TLOLicenseManagerLicenseKey();
 
