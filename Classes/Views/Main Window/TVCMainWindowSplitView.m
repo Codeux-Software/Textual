@@ -96,6 +96,13 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	return proposedEffectiveRect;
 }
 
+- (void)splitViewDidResizeSubviews:(NSNotification *)notification
+{
+	if (self.restoredPositions) {
+		[self updateSavedFrames];
+	}
+}
+
 - (BOOL)allowsVibrancy
 {
 	return YES;
@@ -298,15 +305,6 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 - (nullable NSDictionary<NSString *, NSNumber *> *)savedFrames
 {
 	return [RZUserDefaults() objectForKey:_userDefaultsKey];
-}
-
-- (void)resizeWithOldSuperviewSize:(NSSize)oldSize
-{
-	if (self.restoredPositions) {
-		[self updateSavedFrames];
-	}
-	
-	[super resizeWithOldSuperviewSize:oldSize];
 }
 
 - (BOOL)isServerListCollapsed
