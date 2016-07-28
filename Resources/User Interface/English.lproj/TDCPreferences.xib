@@ -1566,7 +1566,7 @@
                     <rect key="frame" x="44" y="70" width="503" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">Textual sends a WHO command to five (5) channels per-server every thirty (30) seconds to monitor the away status of users. This preference will define the maximum number of users a channel can have before Textual does not check the channel. Zero (0) disables this behavior with four-hundred (400) as a recommended value.</string>
+                        <string key="title">Textual sends a WHO command to four (4) channels per-server every two minutes to monitor the away status of users. This preference will define the maximum number of users a channel can have before Textual does not check the channel. Zero (0) disables this behavior with three-hundred (300) as a recommended value.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

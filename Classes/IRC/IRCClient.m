@@ -88,6 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _reconnectInterval			20
 #define _retryInterval				240
 #define _timeoutInterval			360
+#define _whoCheckInterval			120
 
 NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfigurationWasUpdatedNotification";
 
@@ -136,6 +137,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
+@property (nonatomic, strong) TLOTimer *whoTimer;
 @property (nonatomic, weak, nullable) IRCChannel *lagCheckDestinationChannel;
 @property (nonatomic, assign) BOOL capacityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
@@ -243,6 +245,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.pongTimer.repeatTimer = YES;
 	self.pongTimer.target = self;
 	self.pongTimer.action = @selector(onPongTimer:);
+
+	self.whoTimer = [TLOTimer new];
+	self.whoTimer.repeatTimer = YES;
+	self.whoTimer.target = self;
+	self.whoTimer.action = @selector(onWhoTimer:);
 }
 
 - (void)dealloc
@@ -254,12 +261,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.pongTimer	stop];
 	[self.reconnectTimer stop];
 	[self.retryTimer stop];
+	[self.whoTimer stop];
 
 	self.commandQueueTimer = nil;
 	self.isonTimer = nil;
 	self.pongTimer = nil;
 	self.reconnectTimer = nil;
 	self.retryTimer = nil;
+	self.whoTimer = nil;
 
 	[self cancelPerformRequests];
 }
@@ -10574,6 +10583,8 @@ present_error:
 	}
 
 	[self.isonTimer start:_isonCheckInterval];
+
+	[self startWhoTimer];
 }
 
 - (void)stopISONTimer
@@ -10583,6 +10594,8 @@ present_error:
 	}
 
 	[self.isonTimer stop];
+
+	[self stopWhoTimer];
 	
 	@synchronized(self.trackedNicknames) {
 		[self.trackedNicknames removeAllObjects];
@@ -10594,10 +10607,6 @@ present_error:
 	if (self.isLoggedIn == NO || self.isBrokenIRCd_aka_Twitch) {
 		return;
 	}
-
-	NSArray *channelList = self.channelList;
-
-	[self sendTimedWhoRequestsToChannels:channelList];
 
 	// Request ISON status for private messages
 	NSMutableArray<NSString *> *nicknames = [NSMutableArray array];
@@ -10627,6 +10636,35 @@ present_error:
 	[self sendIsonForNicknames:nicknames];
 }
 
+- (void)startWhoTimer
+{
+	if (self.whoTimer.timerIsActive) {
+		return;
+	}
+
+	[self.whoTimer start:_whoCheckInterval];
+}
+
+- (void)stopWhoTimer
+{
+	if (self.whoTimer.timerIsActive == NO) {
+		return;
+	}
+
+	[self.whoTimer stop];
+}
+
+- (void)onWhoTimer:(id)sender
+{
+	if (self.isLoggedIn == NO || self.isBrokenIRCd_aka_Twitch) {
+		return;
+	}
+
+	NSArray *channelList = self.channelList;
+
+	[self sendTimedWhoRequestsToChannels:channelList];
+}
+
 - (void)sendTimedWhoRequestsToChannels:(NSArray<IRCChannel *> *)channelList
 {
 	NSParameterAssert(channelList != nil);
@@ -10635,7 +10673,7 @@ present_error:
 		return;
 	}
 
-#define _maximumChannelCountPerWhoBatchRequest			5
+#define _maximumChannelCountPerWhoBatchRequest			4
 #define _maximumSingleChannelSizePerWhoBatchRequest		5000
 #define _maximumTotalChannelSizePerWhoBatchRequest		2000
 
