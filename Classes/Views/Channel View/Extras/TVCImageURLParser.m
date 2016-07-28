@@ -229,6 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 	else if ([urlHost hasSuffix:@"leetfil.es"] ||
+			 [urlHost hasSuffix:@"lfil.es"] ||
 			 [urlHost hasSuffix:@"i.leetfil.es"])
 	{
 		NSObjectIsEmptyAssertReturn(urlPath, nil);
@@ -238,6 +239,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (s.alphabeticNumericOnly) {
 				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
+			}
+		} else if ([urlHost hasSuffix:@"lfil.es"]) {
+			if ([urlPath hasPrefix:@"/i/"]) {
+				NSString *s = [urlPath substringFromIndex:3];
+
+				if (s.alphabeticNumericOnly) {
+					return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
+				}
+			} else if ([urlPath hasPrefix:@"/v/"]) {
+				NSString *v = [urlPath substringFromIndex:3];
+
+				if (v.alphabeticNumericOnly) {
+					return [NSString stringWithFormat:@"https://v.leetfil.es/%@_thumb", v];
+				}
 			}
 		} else {
 			if ([urlPath hasPrefix:@"/image/"]) {
