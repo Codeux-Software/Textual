@@ -274,7 +274,7 @@
 	<key>TrackNicknameHighlightsOfLocalUser</key>
 	<true/>
 	<key>TrackUserAwayStatusMaximumChannelSize</key>
-	<integer>400</integer>
+	<integer>300</integer>
 	<key>User List Mode Badge Colors -&gt; +a</key>
 	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg5HtHD8Ag/ypsT4Bhg==</data>
 	<key>User List Mode Badge Colors -&gt; +h</key>
