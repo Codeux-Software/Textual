@@ -1220,6 +1220,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname
 {
+	return [self encryptionAllowedForNickname:nickname allowMyself:NO];
+}
+
+- (BOOL)encryptionAllowedForNickname:(NSString *)nickname allowMyself:(BOOL)allowMyself
+{
 	NSParameterAssert(nickname != nil);
 
 	/* Encryption is disabled */
@@ -1230,7 +1235,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* General rules */
 	if ([self stringIsChannelName:nickname]) { // Do not allow channel names
 		return NO;
-	} else if ([self nicknameIsMyself:nickname]) { // Do not allow the local user
+	} else if ([self nicknameIsMyself:nickname] && allowMyself == NO) { // Do not allow the local user
 		return NO;
 	} else if ([self nicknameIsZNCUser:nickname]) { // Do not allow a ZNC private user
 		return NO;
@@ -1325,7 +1330,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if (messageBody.length == 0 || [self encryptionAllowedForNickname:messageTo] == NO) {
+	if (messageBody.length == 0 || [self encryptionAllowedForNickname:messageTo allowMyself:YES] == NO) {
 #endif
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
