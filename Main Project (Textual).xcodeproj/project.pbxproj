@@ -2329,7 +2329,7 @@
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogInternal.h; path = ../TDCFileTransferDialogInternal.h; sourceTree = "<group>"; };
 		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
+		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/Scripting/Script Files/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCD4CA21D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerChannelListDialogPrivate.h; path = Headers/Private/TDCServerChannelListDialogPrivate.h; sourceTree = "<group>"; };
@@ -2639,6 +2639,14 @@
 			name = IRC;
 			sourceTree = "<group>";
 		};
+		4C184D951D4A49C700593D4B /* Scripting */ = {
+			isa = PBXGroup;
+			children = (
+				4CCC6B60158E8C48003A102B /* Scripts */,
+			);
+			name = Scripting;
+			sourceTree = "<group>";
+		};
 		4C1DC5471580420500A47BC9 = {
 			isa = PBXGroup;
 			children = (
@@ -2672,6 +2680,7 @@
 		4C1DC55C1580420500A47BC9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C184D951D4A49C700593D4B /* Scripting */,
 				4CCC6B46158E8C1B003A102B /* Build Settings */,
 				4C46CCA21580437400846B64 /* Documentation */,
 				4C46CCA6158043BB00846B64 /* Extensions */,
@@ -2681,7 +2690,6 @@
 				4C51B8B7196ACDBB00003A87 /* Language Files */,
 				4C699C681B1FB04D001CD1C3 /* License Manager */,
 				4C46CCA31580437B00846B64 /* Property Lists */,
-				4CCC6B60158E8C48003A102B /* Scripts */,
 				4C52379115C0E0CA00414852 /* Styles */,
 				4C46CC5A158042B600846B64 /* User Interface */,
 			);
