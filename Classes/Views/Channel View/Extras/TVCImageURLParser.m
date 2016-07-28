@@ -270,6 +270,32 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 	}
+	else if ([urlHost hasSuffix:@"i.4cdn.org"])
+	{
+		NSObjectIsEmptyAssertReturn(urlPath, nil);
+
+		if ([urlPath hasSuffix:@".webm"] == NO) {
+			return nil;
+		}
+
+		NSString *filenameWithoutExtension = [urlPath stringByDeletingPathExtension];
+
+		return [NSString stringWithFormat:@"%@://%@%@s.jpg", urlScheme, urlHost, filenameWithoutExtension];
+	}
+	else if ([urlHost hasSuffix:@"8ch.net"])
+	{
+		NSObjectIsEmptyAssertReturn(urlPath, nil);
+
+		if ([urlPath hasSuffix:@".webm"] == NO) {
+			return nil;
+		}
+
+		NSString *filename = [urlPath lastPathComponent];
+
+		NSString *filenameWithoutExtension = [filename stringByDeletingPathExtension];
+
+		return [NSString stringWithFormat:@"%@://%@/webm/thumb/%@.jpg", urlScheme, urlHost, filenameWithoutExtension];
+	}
 	else if ([urlHost hasSuffix:@"movapic.com"])
 	{
 		if ([urlPath hasPrefix:@"/pic/"] == NO) {
