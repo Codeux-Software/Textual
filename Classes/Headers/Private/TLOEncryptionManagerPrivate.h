@@ -76,11 +76,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)safeToTransferFile:(NSString *)filename to:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer;
 
-/* Message queue */
-- (void)queueMessage:(NSString *)message to:(NSString *)messageTo;
-
-- (BOOL)dequeueMessage:(NSString *)message to:(NSString *)messageTo;
-
 /* Define configuration options */
 - (void)updatePolicy;
 

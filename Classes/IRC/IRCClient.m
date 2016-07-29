@@ -4964,22 +4964,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		query = [self findChannel:sender];
 	}
 
-
-	/* If the incoming message is present in the the queue of encrypted messages,
-	 then do not print this message becasue it would just be gibberish to the user. */
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	if (isSelfMessage) {
-		NSString *messageFrom = [self encryptionAccountNameForUser:target];
-
-		BOOL messageDequed = 
-		[sharedEncryptionManager() dequeueMessage:text to:messageFrom];
-
-		if (messageDequed) {
-			return;
-		}
-	}
-#endif
-
 	BOOL newPrivateMessage = NO;
 
 	if (isPlainText == NO) {

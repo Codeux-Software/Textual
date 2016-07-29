@@ -39,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager ()
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *messageSendQueue;
 @property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
 @end
 
@@ -70,8 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	self.messageSendQueue = [NSMutableDictionary dictionary];
-
 	[self setupEncryptionManager];
 }
 
@@ -403,7 +400,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)performBlockInRelationToAccountName:(NSString *)accountName block:(void (^)(NSString *nickname, IRCClient *client, IRCChannel *channel))block
+- (void)performBlock:(void (^)(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel))block inRelationToAccountName:(NSString *)accountName
+{
+	[self performBlock:block inRelationToAccountName:accountName createWindowIfMissing:NO];
+}
+
+- (void)performBlock:(void (^)(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel))block inRelationToAccountName:(NSString *)accountName createWindowIfMissing:(BOOL)createWindowIfMissing
 {
 	[self performBlockOnMainThread:^{
 		NSString *nickname = [self nicknameFromAccountName:accountName];
@@ -411,9 +413,15 @@ NS_ASSUME_NONNULL_BEGIN
 		IRCClient *client = [self connectionFromAccountName:accountName];
 
 		NSAssert((client != nil),
-			@"-connectionFromAccountName: returned a nil value, failing");
+			@"-connectionFromAccountName: returned a nil value; failing");
 
-		IRCChannel *channel = [client findChannelOrCreate:nickname isPrivateMessage:YES];
+		IRCChannel *channel = nil;
+
+		if (createWindowIfMissing) {
+			channel = [client findChannelOrCreate:nickname isPrivateMessage:YES];
+		} else {
+			channel = [client findChannel:nickname];
+		}
 
 		block(nickname, client, channel);
 	}];
@@ -494,9 +502,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName
 {
-	[self performBlockInRelationToAccountName:accountName block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		if (channel == nil) {
+			return;
+		}
+
 		[self printMessage:message inChannel:channel onClient:client];
-	}];
+	} inRelationToAccountName:accountName
+		createWindowIfMissing:YES];
 }
 
 - (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName
@@ -506,7 +519,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)authenticationStatusChangedForAccountName:(NSString *)accountName isVerified:(BOOL)isVerified
 {
-	[self performBlockInRelationToAccountName:accountName block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		if (channel == nil) {
+			return;
+		}
+
 		if (isVerified) {
 			[self printMessage:TXTLS(@"OffTheRecord[1002]", nickname) inChannel:channel onClient:client];
 		} else {
@@ -514,68 +531,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		[channel noteEncryptionStateDidChange];
-	}];
-}
-
-#pragma mark -
-#pragma mark Send Queue
-
-/* The send queue is used to keep track of messages that OTR injects. */
-/* This queue is maintained so that when messages are echoed back to the user
- with the echo-message capacity, we can choose not to display a message. */
-- (void)queueMessage:(NSString *)message to:(NSString *)messageTo
-{
-	NSParameterAssert(message != nil);
-	NSParameterAssert(messageTo != nil);
-
-	@synchronized (self.messageSendQueue) {
-		NSMutableArray *sendQueue = self.messageSendQueue[messageTo];
-
-		if (sendQueue == nil) {
-			sendQueue = [NSMutableArray array];
-
-			self.messageSendQueue[messageTo] = sendQueue;
-		}
-
-		[sendQueue addObject:message];
-	}
-}
-
-- (BOOL)dequeueMessage:(NSString *)message to:(NSString *)messageTo
-{
-	NSParameterAssert(message != nil);
-	NSParameterAssert(messageTo != nil);
-
-	@synchronized (self.messageSendQueue) {
-		NSMutableArray *sendQueue = self.messageSendQueue[messageTo];
-
-		if (sendQueue == nil) {
-			return NO;
-		}
-
-		NSUInteger messageIndex = [sendQueue indexOfObject:message];
-
-		if (messageIndex == NSNotFound) {
-			return NO;
-		}
-
-		[sendQueue removeObjectAtIndex:messageIndex];
-
-		if (sendQueue.count == 0) {
-			self.messageSendQueue[messageTo] = nil;
-		}
-	}
-
-	return YES;
-}
-
-- (void)clearQueueFor:(NSString *)messageTo
-{
-	NSParameterAssert(messageTo != nil);
-
-	@synchronized (self.messageSendQueue) {
-		self.messageSendQueue[messageTo] = nil;
-	}
+	} inRelationToAccountName:accountName];
 }
 
 #pragma mark -
@@ -585,12 +541,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if ([TPCPreferences textEncryptionIsRequired]) {
 		[OTRKit sharedInstance].otrPolicy = OTRKitPolicyAlways;
+	} else if ([TPCPreferences textEncryptionIsOpportunistic]) {
+		[OTRKit sharedInstance].otrPolicy = OTRKitPolicyOpportunistic;
 	} else {
-		if ([TPCPreferences textEncryptionIsOpportunistic]) {
-			[OTRKit sharedInstance].otrPolicy = OTRKitPolicyOpportunistic;
-		} else {
-			[OTRKit sharedInstance].otrPolicy = OTRKitPolicyManual;
-		}
+		[OTRKit sharedInstance].otrPolicy = OTRKitPolicyManual;
 	}
 }
 
@@ -644,13 +598,9 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
-	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
-			[self queueMessage:message to:username];
-		}
-
-		[client send:IRCPrivateCommandIndex("privmsg"), channel.name, message, nil];
-	}];
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		[client send:IRCPrivateCommandIndex("privmsg"), nickname, message, nil];
+	} inRelationToAccountName:username];
 }
 
 - (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(NSError *)error
@@ -685,13 +635,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)otrKit:(OTRKit *)otrKit updateMessageState:(OTRKitMessageState)messageState username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	if (messageState == OTRKitMessageStateFinished) {
-		[self clearQueueFor:username];
-	}
+	/* We do not force create window if it does not exist when updating encryption
+	 status because status changes are only important if one is open. When a new
+	 window is created, it will populate the latest state regardless of delegate. */
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		if (channel == nil) {
+			return;
+		}
 
-	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[channel noteEncryptionStateDidChange];
-	}];
+	} inRelationToAccountName:username];
 
 	if (messageState ==  OTRKitMessageStateEncrypted) {
 		BOOL isVerified = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:username
@@ -714,9 +667,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	__block BOOL userIsActive = NO;
 
-	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		if (channel == nil) {
+			return;
+		}
+
 		userIsActive = channel.isActive;
-	}];
+	} inRelationToAccountName:username];
 
 	return userIsActive;
 }
@@ -769,6 +726,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)otrKitFingerprintManagerDialogDidClose:(OTRKitFingerprintManagerDialog *)otrkitFingerprintManager
 {
 	self.fingerprintManagerDialog = nil;
+}
+
+- (BOOL)otrKit:(OTRKit *)otrKit ignoreMessage:(NSString *)message messageType:(OTRKitMessageType)messageType username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
+{
+	__block BOOL ignoreMessage = NO;
+
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		if (messageType == OTRKitMessageTypeNotOTR) {
+			return;
+		}
+
+		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+			ignoreMessage = [client nicknameIsMyself:nickname];
+		}
+	} inRelationToAccountName:username];
+
+	return ignoreMessage;
 }
 
 #pragma mark -
