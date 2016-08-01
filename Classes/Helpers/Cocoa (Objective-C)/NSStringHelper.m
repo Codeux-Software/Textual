@@ -165,7 +165,19 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	NSUInteger maximumLength = TXMaximumIRCNicknameLength;
 
 	if (client) {
-		maximumLength = client.supportInfo.maximumNicknameLength;
+		/* At least one server has been found (gitter.im) has been found
+		 which does not send a configuration profile. They allow a 
+		 nickname length larger than IRCISupportInfo uses as a default
+		 which means parsing will go wonky. */
+		/* A smarter workaround would probably to check if specific 
+		 configuration options were received (e.g. "NICKLEN"), but that 
+		 has more overhead than using a boolean. */
+
+		if (client.supportInfo.configurationReceived) {
+			maximumLength = client.supportInfo.maximumNicknameLength;
+		} else {
+			maximumLength = 0;
+		}
 	}
 
 	if (maximumLength == 0) {
