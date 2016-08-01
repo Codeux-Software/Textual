@@ -69,6 +69,8 @@ ClassWithDesignatedInitializerInitMethod
 {
 	(void)[RZMainBundle() loadNibNamed:@"TDCChannelSpotlightController" owner:self topLevelObjects:nil];
 
+	self.searchResultsTable.doubleAction = @selector(delegatePostSelectChannelForDoubleClickedRow:);
+
 	self.mouseEventMonitor =
 	[NSEvent addLocalMonitorForEventsMatchingMask:(NSLeftMouseDownMask |
 												   NSOtherMouseDownMask |
@@ -381,6 +383,13 @@ ClassWithDesignatedInitializerInitMethod
 	[self delegatePostSelectChannelForSearchResultAtIndex:arrayIndex];
 
 	return nil;
+}
+
+- (void)delegatePostSelectChannelForDoubleClickedRow:(id)sender
+{
+	NSInteger clickedRow = self.searchResultsTable.clickedRow;
+
+	[self delegatePostSelectChannelForSearchResultAtIndex:clickedRow];
 }
 
 - (void)delegatePostSelectChannelForSelectedRow
