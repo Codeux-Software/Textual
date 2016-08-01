@@ -35,12 +35,15 @@
 
  *********************************************************************** */
 
-"TPI_ChatFilterEditFilterSheet[0001]" = "Channel Name";
-"TPI_ChatFilterEditFilterSheet[0002]" = "My Nickname";
-"TPI_ChatFilterEditFilterSheet[0003]" = "Network Name";
-"TPI_ChatFilterEditFilterSheet[0004]" = "Original Message";
-"TPI_ChatFilterEditFilterSheet[0005]" = "Sender Address";
-"TPI_ChatFilterEditFilterSheet[0006]" = "Sender Hostmask";
-"TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
-"TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
-"TPI_ChatFilterEditFilterSheet[0009]" = "Server Address";
+#import "TextualApplication.h"
+
+#import "TPI_ChatFilter.h"
+#import "TPI_ChatFilterExtension.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TPI_ChatFilterLogic : NSObject <THOPluginProtocol>
+- (instancetype)initWithParentObject:(TPI_ChatFilterExtension *)parentObject;
+@end
+
+NS_ASSUME_NONNULL_END

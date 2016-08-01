@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, TPI_ChatFilterLimitToValue) {
 	TPI_ChatFilterLimitToNoLimitValue				= 0,
 	TPI_ChatFilterLimitToChannelsValue				= 1,
@@ -60,27 +62,55 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 	TPI_ChatFilterChannelModeChangedEventType		= 1 << 12
 };
 
-@interface TPI_ChatFilter : NSObject <NSCopying>
-@property (nonatomic, assign) BOOL filterIgnoreContent;
-@property (nonatomic, assign) BOOL filterIgnoresOperators;
-@property (nonatomic, assign) BOOL filterLogMatch;
-@property (nonatomic, assign) BOOL filterLimitedToMyself;
-@property (nonatomic, assign) TPI_ChatFilterEventType filterEvents;
-@property (nonatomic, assign) TPI_ChatFilterLimitToValue filterLimitedToValue;
-@property (nonatomic, copy) NSArray *filterLimitedToChannelsIDs;
-@property (nonatomic, copy) NSArray *filterLimitedToClientsIDs;
-@property (nonatomic, copy) NSArray *filterEventsNumerics;
-@property (nonatomic, copy) NSString *filterAction;
-@property (nonatomic, copy) NSString *filterForwardToDestination;
-@property (nonatomic, copy) NSString *filterItemID;
-@property (nonatomic, copy) NSString *filterMatch;
-@property (nonatomic, copy) NSString *filterNotes;
-@property (nonatomic, copy) NSString *filterSenderMatch;
-@property (nonatomic, copy) NSString *filterTitle;
+@interface TPI_ChatFilter : NSObject <NSCopying, NSMutableCopying>
+@property (readonly) BOOL filterIgnoreContent;
+@property (readonly) BOOL filterIgnoreOperators;
+@property (readonly) BOOL filterLogMatch;
+@property (readonly) BOOL filterLimitedToMyself;
+@property (readonly) TPI_ChatFilterEventType filterEvents;
+@property (readonly) TPI_ChatFilterLimitToValue filterLimitedToValue;
+@property (readonly, copy) NSArray<NSString *> *filterLimitedToChannelsIDs;
+@property (readonly, copy) NSArray<NSString *> *filterLimitedToClientsIDs;
+@property (readonly, copy) NSArray<NSString *> *filterEventsNumerics;
+@property (readonly, copy) NSString *filterAction;
 @property (readonly, copy) NSString *filterDescription;
+@property (readonly, copy) NSString *filterForwardToDestination;
+@property (readonly, copy) NSString *filterMatch;
+@property (readonly, copy) NSString *filterNotes;
+@property (readonly, copy) NSString *filterSenderMatch;
+@property (readonly, copy) NSString *filterTitle;
+@property (readonly, copy) NSString *uniqueIdentifier;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
-- (NSDictionary *)dictionaryValue;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
+- (NSDictionary<NSString *, id> *)dictionaryValue;
 
 - (BOOL)isEventTypeEnabled:(TPI_ChatFilterEventType)eventType;
+
+- (nullable instancetype)initWithContentsOfPath:(NSString *)path;
+- (nullable instancetype)initWithContentsOfURL:(NSURL *)url;
+
+- (BOOL)writeToPath:(NSString *)path;
+- (BOOL)writeToURL:(NSURL *)url;
 @end
+
+#pragma mark -
+
+@interface TPI_ChatFilterMutable : TPI_ChatFilter
+@property (nonatomic, assign, readwrite) BOOL filterIgnoreContent;
+@property (nonatomic, assign, readwrite) BOOL filterIgnoreOperators;
+@property (nonatomic, assign, readwrite) BOOL filterLogMatch;
+@property (nonatomic, assign, readwrite) BOOL filterLimitedToMyself;
+@property (nonatomic, assign, readwrite) TPI_ChatFilterEventType filterEvents;
+@property (nonatomic, assign, readwrite) TPI_ChatFilterLimitToValue filterLimitedToValue;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *filterLimitedToChannelsIDs;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *filterLimitedToClientsIDs;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *filterEventsNumerics;
+@property (nonatomic, copy, readwrite) NSString *filterAction;
+@property (nonatomic, copy, readwrite) NSString *filterForwardToDestination;
+@property (nonatomic, copy, readwrite) NSString *filterMatch;
+@property (nonatomic, copy, readwrite) NSString *filterNotes;
+@property (nonatomic, copy, readwrite) NSString *filterSenderMatch;
+@property (nonatomic, copy, readwrite) NSString *filterTitle;
+@end
+
+NS_ASSUME_NONNULL_END

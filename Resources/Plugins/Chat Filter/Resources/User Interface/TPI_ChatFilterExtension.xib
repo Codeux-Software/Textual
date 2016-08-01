@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterExtension">
             <connections>
                 <outlet property="filterAddButton" destination="un4-9j-DSX" id="3et-fU-PBu"/>
+                <outlet property="filterAddMenu" destination="hfa-1J-jSi" id="UPi-cO-5S5"/>
                 <outlet property="filterArrayController" destination="gVm-uR-B4M" id="Cp9-Xf-cPv"/>
                 <outlet property="filterEditButton" destination="1aY-QC-Kzo" id="PC2-Ob-yAg"/>
                 <outlet property="filterRemoveButton" destination="p1g-v9-KVk" id="Gu2-Tk-deg"/>
@@ -21,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="589" height="413"/>
             <userGuides>
                 <userLayoutGuide location="345" affinity="minY"/>
-                <userLayoutGuide location="33" affinity="minY"/>
+                <userLayoutGuide location="30" affinity="minY"/>
             </userGuides>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gPh-Vf-Ty1">
@@ -85,10 +86,10 @@
                                     <binding destination="gVm-uR-B4M" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="hDO-mw-Iyw" id="SuY-E9-KPr"/>
                                     <outlet property="dataSource" destination="-2" id="o37-CJ-sxy"/>
                                     <outlet property="delegate" destination="-2" id="xtu-9K-hYu"/>
+                                    <outlet property="menu" destination="xvv-Hr-20R" id="Uda-fG-2QF"/>
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="iJb-x6-x6a">
                         <rect key="frame" x="1" y="119" width="223" height="15"/>
@@ -99,7 +100,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="KyR-f3-84p">
-                        <rect key="frame" x="0.0" y="0.0" width="547" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="547" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="List of Filters"/>
@@ -111,7 +112,7 @@
                         <string key="title">The “Chat Filter” addon is a very powerful tool which can be used to ignore specific content or automatically perform one or more commands (including external scripts) based on the contents of a message.
 
 Click the + button in the bottom left corner to add your first filter.</string>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -127,7 +128,7 @@ Click the + button in the bottom left corner to add your first filter.</string>
                     </buttonCell>
                     <accessibility description="Add Filter"/>
                     <connections>
-                        <action selector="filterAdd:" target="-2" id="5bL-Qf-LPm"/>
+                        <action selector="presentFilterAddMenu:" target="-2" id="Gln-vg-wH7"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p1g-v9-KVk">
@@ -139,7 +140,7 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
-                    <accessibility description="Remove Filter"/>
+                    <accessibility description="Delete Filter"/>
                     <connections>
                         <action selector="filterRemove:" target="-2" id="whW-fQ-9Ve"/>
                         <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="9H4-zs-t6R"/>
@@ -184,6 +185,46 @@ Click the + button in the bottom left corner to add your first filter.</string>
                 <string>filterDescription</string>
             </declaredKeys>
         </arrayController>
+        <menu id="xvv-Hr-20R" userLabel="Selected Filter Menu">
+            <items>
+                <menuItem title="Delete" id="cB7-Fc-maJ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="filterRemove:" target="-2" id="4xy-7T-ORQ"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit" id="5PY-LI-i48">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="filterEdit:" target="-2" id="OV8-vE-f2V"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Export" id="IZ6-4O-w7q">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="filterExport:" target="-2" id="fwc-MA-z19"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="275" y="-88"/>
+        </menu>
+        <menu id="hfa-1J-jSi" userLabel="Add Filter Menu">
+            <items>
+                <menuItem title="New filter…" id="twd-cR-KxM">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="filterAdd:" target="-2" id="Bgf-xu-DpK"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Import filter…" id="t1G-eO-sJ4">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="filterImport:" target="-2" id="KaQ-Zp-pwf"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <menuItem isSeparatorItem="YES" id="01e-IR-FUy"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

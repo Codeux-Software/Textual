@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,12 +35,36 @@
 
  *********************************************************************** */
 
-"TPI_ChatFilterEditFilterSheet[0001]" = "Channel Name";
-"TPI_ChatFilterEditFilterSheet[0002]" = "My Nickname";
-"TPI_ChatFilterEditFilterSheet[0003]" = "Network Name";
-"TPI_ChatFilterEditFilterSheet[0004]" = "Original Message";
-"TPI_ChatFilterEditFilterSheet[0005]" = "Sender Address";
-"TPI_ChatFilterEditFilterSheet[0006]" = "Sender Hostmask";
-"TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
-"TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
-"TPI_ChatFilterEditFilterSheet[0009]" = "Server Address";
+#import "TPI_ChatFilter.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TPI_ChatFilter ()
+{
+@protected
+	BOOL _filterIgnoreContent;
+	BOOL _filterIgnoreOperators;
+	BOOL _filterLogMatch;
+	BOOL _filterLimitedToMyself;
+	TPI_ChatFilterEventType _filterEvents;
+	TPI_ChatFilterLimitToValue _filterLimitedToValue;
+	NSArray<NSString *> *_filterLimitedToChannelsIDs;
+	NSArray<NSString *> *_filterLimitedToClientsIDs;
+	NSArray<NSString *> *_filterEventsNumerics;
+	NSString *_filterAction;
+	NSString *_filterForwardToDestination;
+	NSString *_filterMatch;
+	NSString *_filterNotes;
+	NSString *_filterSenderMatch;
+	NSString *_filterTitle;
+
+@private
+	BOOL _objectInitialized;
+	NSString *_uniqueIdentifier;
+	NSDictionary *_defaults;
+}
+
+- (BOOL)isMutable;
+@end
+
+NS_ASSUME_NONNULL_END
