@@ -216,18 +216,6 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"https://www.instagram.com/p/%@/media/?size=l", s];
 		}
 	}
-
-#warning TODO: Remove 'img.ly' entry; service will no longer exist after July 31, 2015
-	else if ([urlHost isEqualToString:@"img.ly"])
-	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
-
-		NSString *s = [urlPath substringFromIndex:1];
-
-		if (s.alphabeticNumericOnly) {
-			return [NSString stringWithFormat:@"http://img.ly/show/large/%@", s];
-		}
-	}
 	else if ([urlHost hasSuffix:@"leetfil.es"] ||
 			 [urlHost hasSuffix:@"lfil.es"] ||
 			 [urlHost hasSuffix:@"i.leetfil.es"])
