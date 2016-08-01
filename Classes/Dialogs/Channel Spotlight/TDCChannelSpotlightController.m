@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
+ClassWithDesignatedInitializerInitMethod
+
 - (instancetype)initWithParentWindow:(TVCMainWindow *)parentWindow
 {
 	NSParameterAssert(parentWindow != nil);
