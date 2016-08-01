@@ -36,7 +36,19 @@
  *********************************************************************** */
 
 "TPI_ChatFilterExtension[0001]" = "Chat Filter";
+
 "TPI_ChatFilterExtension[0002]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“";
 "TPI_ChatFilterExtension[0003]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“ in the channel “%3$@“";
 
 "TPI_ChatFilterExtension[0004]" = "Filter “%@“";
+
+"TPI_ChatFilterExtension[0005][1]" = "Are you sure that you want to delete this filter?";
+"TPI_ChatFilterExtension[0005][2]" = "There is no undo and all data related to this filter will be erased.";
+"TPI_ChatFilterExtension[0005][3]" = "Yes";
+"TPI_ChatFilterExtension[0005][4]" = "No";
+
+"TPI_ChatFilterExtension[0006][1]" = "Select filter configuration file to import";
+"TPI_ChatFilterExtension[0006][2]" = "Select";
+
+"TPI_ChatFilterExtension[0007][1]" = "Configuration file is in format that cannot be read";
+"TPI_ChatFilterExtension[0007][2]" = "OK";

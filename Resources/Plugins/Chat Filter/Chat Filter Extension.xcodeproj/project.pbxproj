@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C51BE9412D0471600E79CEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C51BE9312D0471600E79CEB /* Cocoa.framework */; };
 		4C9AD1CE1B8A1634000B63EF /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9AD1CD1B8A1634000B63EF /* CocoaExtensions.framework */; };
+		4C9F47601D4EB3D200392083 /* TPI_ChatFilterLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F475F1D4EB3D200392083 /* TPI_ChatFilterLogic.m */; };
 		4CEEB1FE1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CEEB1FA1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings */; };
 		4CEEB1FF1CC72F8E00FFA43D /* TPI_ChatFilterExtension.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CEEB1FC1CC72F8E00FFA43D /* TPI_ChatFilterExtension.strings */; };
 		4CF4880E1BA7B43800A87EED /* TPI_ChatFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF488091BA7B43800A87EED /* TPI_ChatFilter.m */; };
@@ -21,6 +22,9 @@
 /* Begin PBXFileReference section */
 		4C51BE9312D0471600E79CEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C9AD1CD1B8A1634000B63EF /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = /Applications/Textual.app/Contents/Frameworks/CocoaExtensions.framework; sourceTree = "<absolute>"; };
+		4C9F475D1D4EB3D200392083 /* TPI_ChatFilterInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilterInternal.h; path = Classes/TPI_ChatFilterInternal.h; sourceTree = "<group>"; };
+		4C9F475E1D4EB3D200392083 /* TPI_ChatFilterLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilterLogic.h; path = Classes/TPI_ChatFilterLogic.h; sourceTree = "<group>"; };
+		4C9F475F1D4EB3D200392083 /* TPI_ChatFilterLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPI_ChatFilterLogic.m; path = Classes/TPI_ChatFilterLogic.m; sourceTree = "<group>"; };
 		4CAA730D1BA9B06D00A38456 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CAA730E1BA9B06D00A38456 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4CAA73111BA9B06D00A38456 /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Configuration for Extensions.xcconfig"; sourceTree = "<group>"; };
@@ -85,12 +89,13 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4CF488081BA7B43800A87EED /* TPI_ChatFilter.h */,
-				4CF488091BA7B43800A87EED /* TPI_ChatFilter.m */,
+				4C4277EA1D4CDD2E00384265 /* Configuration */,
 				4CF4880A1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.h */,
 				4CF4880B1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.m */,
 				4CF4880C1BA7B43800A87EED /* TPI_ChatFilterExtension.h */,
 				4CF4880D1BA7B43800A87EED /* TPI_ChatFilterExtension.m */,
+				4C9F475E1D4EB3D200392083 /* TPI_ChatFilterLogic.h */,
+				4C9F475F1D4EB3D200392083 /* TPI_ChatFilterLogic.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -101,6 +106,16 @@
 				8D576316048677EA00EA77CD /* ChatFilterExtension.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4C4277EA1D4CDD2E00384265 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				4CF488081BA7B43800A87EED /* TPI_ChatFilter.h */,
+				4CF488091BA7B43800A87EED /* TPI_ChatFilter.m */,
+				4C9F475D1D4EB3D200392083 /* TPI_ChatFilterInternal.h */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 		4C51BE9912D0472300E79CEB /* Property Lists */ = {
@@ -167,7 +182,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Chat Filter Extension" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -207,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9F47601D4EB3D200392083 /* TPI_ChatFilterLogic.m in Sources */,
 				4CF4880E1BA7B43800A87EED /* TPI_ChatFilter.m in Sources */,
 				4CF4880F1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.m in Sources */,
 				4CF488101BA7B43800A87EED /* TPI_ChatFilterExtension.m in Sources */,

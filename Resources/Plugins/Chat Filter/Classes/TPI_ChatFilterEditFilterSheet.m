@@ -37,8 +37,10 @@
 
 #import "TPI_ChatFilterEditFilterSheet.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPI_ChatFilterEditFilterSheet ()
-@property (nonatomic, copy) TPI_ChatFilter *filter;
+@property (nonatomic, strong) TPI_ChatFilterMutable *filter;
 @property (nonatomic, weak) IBOutlet NSTextField *filterMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterSenderMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterTitleTextField;
@@ -58,7 +60,7 @@
 @property (nonatomic, weak) IBOutlet NSView *filterLimitedToTableHostView;
 @property (nonatomic, weak) IBOutlet NSMatrix *filterLimitToMatrix;
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoreContentCheck;
-@property (nonatomic, weak) IBOutlet NSButton *filterIgnoresOperatorsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterIgnoreOperatorsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLogMatchCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventPlainTextMessageCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventActionMessageCheck;
@@ -74,70 +76,83 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitedToMyselfCheck;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
-@property (nonatomic, copy) NSArray *filterActionAutoCompletedTokens;
-@property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
-@property (nonatomic, strong) NSMutableArray *filterLimitedToChannelsIDs;
-@property (nonatomic, copy) NSArray *cachedClientList;
-@property (nonatomic, copy) NSDictionary *cachedChannelList;
+@property (nonatomic, copy) NSArray<NSString *> *filterActionAutoCompletedTokens;
+@property (nonatomic, strong) NSMutableArray<NSString *> *filterLimitedToClientsIDs;
+@property (nonatomic, strong) NSMutableArray<NSString *> *filterLimitedToChannelsIDs;
+@property (nonatomic, copy) NSArray<IRCClient *> *cachedClientList;
+@property (nonatomic, copy) NSDictionary<NSString *, NSArray *> *cachedChannelList;
 
 - (IBAction)viewFilterMatchHelpText:(id)sender;
 - (IBAction)viewFilterActionHelpText:(id)sender;
 - (IBAction)viewFilterSenderMatchHelpText:(id)sender;
 - (IBAction)viewFilterForwardToDestinationHelpText:(id)sender;
 
-- (IBAction)filteredLimitedToMatrixChanged:(id)sender;
+- (IBAction)filterLimitedToMatrixChanged:(id)sender;
 - (IBAction)filterIgnoreContentCheckChanged:(id)sender;
 - (IBAction)filterEventTypeChanged:(id)sender;
 - (IBAction)filterLimitedToMyselfChanged:(id)sender;
 @end
 
+#pragma mark -
+
 @interface TPI_ChatFilterFilterActionToken : NSObject
 @property (nonatomic, copy) NSString *token;
-@property (nonatomic, copy, readonly) NSString *tokenTitle;
+@property (nonatomic, copy, readonly, nullable) NSString *tokenTitle;
 
 + (TPI_ChatFilterFilterActionToken *)tokenWithToken:(NSString *)token;
-+ (TPI_ChatFilterFilterActionToken *)tokenWithTokenTitle:(NSString *)tokenTitle;
++ (nullable TPI_ChatFilterFilterActionToken *)tokenWithTokenTitle:(NSString *)tokenTitle;
 
 + (NSArray *)tokens;
 + (NSArray *)tokenTitles;
 
-+ (NSString *)titleForToken:(NSString *)token;
++ (nullable NSString *)titleForToken:(NSString *)token;
 
 + (BOOL)isToken:(NSString *)token;
 @end
 
+#pragma mark -
+
 @interface TPI_ChatFilterLimitToTableCellView : NSTableCellView
 @property (nonatomic, weak) TPI_ChatFilterEditFilterSheet *parentDialog;
-@property (nonatomic, weak) IRCTreeItem *associatedItem;
+@property (nonatomic, weak) IRCTreeItem *cellItem;
 @property (nonatomic, weak) IBOutlet NSButton *checkbox;
+@property (readonly) TPI_ChatFilterLimitToTableCellView *parentCellViewOrSelf;
+@property (readonly) NSOutlineView *parentOutlineView;
 
 - (void)populateDefaults;
+
 - (void)reloadCheckboxForChildren;
 
 - (IBAction)checkboxToggled:(id)sender;
 @end
+
+#pragma mark -
 
 @implementation TPI_ChatFilterEditFilterSheet
 
 #pragma mark -
 #pragma mark Primary Sheet Structure
 
-- (instancetype)init
+- (instancetype)initWithFilter:(nullable TPI_ChatFilter *)filter
 {
 	if ((self = [super init])) {
-		(void)[TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterEditFilterSheet" owner:self topLevelObjects:nil];
+		if (filter == nil) {
+			self.filter = [TPI_ChatFilterMutable new];
+		} else {
+			self.filter = [filter mutableCopy];
+		}
+
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)startWithFilter:(TPI_ChatFilter *)filter
+- (void)prepareInitialState
 {
-	if (filter == nil) {
-		self.filter = [TPI_ChatFilter new];
-	} else {
-		self.filter = filter;
-	}
+	(void)[TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterEditFilterSheet" owner:self topLevelObjects:nil];
 
 	[self addObserverForChannelListUpdates];
 
@@ -156,60 +171,63 @@
 	[self rebuildCachedChannelList];
 
 	[self toggleOkButton];
+}
 
+- (void)start
+{
 	[self startSheet];
 }
 
 - (void)loadFilter
 {
-	[self.filterMatchTextField setStringValue:[self.filter filterMatch]];
+	self.filterMatchTextField.stringValue = self.filter.filterMatch;
 
-	[self setTokens:[self.filter filterAction] inTokenField:self.filterActionTokenField];
+	[self setTokens:self.filter.filterAction inTokenField:self.filterActionTokenField];
 
-	[self.filterTitleTextField setStringValue:[self.filter filterTitle]];
-	[self.filterNotesTextField setStringValue:[self.filter filterNotes]];
+	self.filterTitleTextField.stringValue = self.filter.filterTitle;
+	self.filterNotesTextField.stringValue = self.filter.filterNotes;
 
-	[self.filterSenderMatchTextField setStringValue:[self.filter filterSenderMatch]];
+	self.filterSenderMatchTextField.stringValue = self.filter.filterSenderMatch;
 
-	[self.filterForwardToDestinationTextField setStringValue:[self.filter filterForwardToDestination]];
+	self.filterForwardToDestinationTextField.stringValue = self.filter.filterForwardToDestination;
 
-	[self.filterIgnoresOperatorsCheck setState:[self.filter filterIgnoresOperators]];
+	self.filterIgnoreOperatorsCheck.state = self.filter.filterIgnoreOperators;
 
-	[self.filterIgnoreContentCheck setState:[self.filter filterIgnoreContent]];
+	self.filterIgnoreContentCheck.state = self.filter.filterIgnoreContent;
 
-	[self.filterLogMatchCheck setState:[self.filter filterLogMatch]];
+	self.filterLogMatchCheck.state = self.filter.filterLogMatch;
 
-	[self.filterLimitedToMyselfCheck setState:[self.filter filterLimitedToMyself]];
+	self.filterLimitedToMyselfCheck.state = self.filter.filterLimitedToMyself;
 
-	[self.filterEventPlainTextMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType]];
-	[self.filterEventActionMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]];
-	[self.filterEventNoticeMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType]];
-	[self.filterEventUserJoinedChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserJoinedChannelEventType]];
-	[self.filterEventUserLeftChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserLeftChannelEventType]];
-	[self.filterEventUserKickedFromChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserKickedFromChannelEventType]];
-	[self.filterEventUserDisconnectedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserDisconnectedEventType]];
-	[self.filterEventUserChangedNicknameCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserChangedNicknameEventType]];
-	[self.filterEventChannelTopicReceivedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicReceivedEventType]];
-	[self.filterEventChannelTopicChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicChangedEventType]];
-	[self.filterEventChannelModeReceivedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeReceivedEventType]];
-	[self.filterEventChannelModeChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeChangedEventType]];
+	self.filterEventPlainTextMessageCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType];
+	self.filterEventActionMessageCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType];
+	self.filterEventNoticeMessageCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType];
+	self.filterEventUserJoinedChannelCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterUserJoinedChannelEventType];
+	self.filterEventUserLeftChannelCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterUserLeftChannelEventType];
+	self.filterEventUserKickedFromChannelCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterUserKickedFromChannelEventType];
+	self.filterEventUserDisconnectedCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterUserDisconnectedEventType];
+	self.filterEventUserChangedNicknameCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterUserChangedNicknameEventType];
+	self.filterEventChannelTopicReceivedCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicReceivedEventType];
+	self.filterEventChannelTopicChangedCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicChangedEventType];
+	self.filterEventChannelModeReceivedCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeReceivedEventType];
+	self.filterEventChannelModeChangedCheck.state = [self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeChangedEventType];
 
-	NSArray *filterEventsNumerics = [self.filter filterEventsNumerics];
+	NSArray *filterEventsNumerics = self.filter.filterEventsNumerics;
 
 	if (filterEventsNumerics) {
 		NSString *filterEventsNumericsJoined = [filterEventsNumerics componentsJoinedByString:@", "];
 
-		[self.filterEventNumericTextField setStringValue:filterEventsNumericsJoined];
+		self.filterEventNumericTextField.stringValue = filterEventsNumericsJoined;
 	} else {
 		[self.filterEventNumericTextField performValidation];
 	}
 
-	NSCell *filterLimitedToMatrixCell = [self.filterLimitToMatrix cellWithTag:[self.filter filterLimitedToValue]];
+	NSCell *filterLimitedToMatrixCell = [self.filterLimitToMatrix cellWithTag:self.filter.filterLimitedToValue];
 
 	[self.filterLimitToMatrix selectCell:filterLimitedToMatrixCell];
 
-	NSArray *filterLimitedToClientsIDs = [self.filter filterLimitedToClientsIDs];
-	NSArray *filterLimitedToChannelsIDs = [self.filter filterLimitedToChannelsIDs];
+	NSArray *filterLimitedToClientsIDs = self.filter.filterLimitedToClientsIDs;
+	NSArray *filterLimitedToChannelsIDs = self.filter.filterLimitedToChannelsIDs;
 
 	if (filterLimitedToClientsIDs == nil) {
 		self.filterLimitedToClientsIDs = [NSMutableArray array];
@@ -226,65 +244,74 @@
 
 - (void)saveFilter
 {
-	[self.filter setFilterMatch:[self.filterMatchTextField stringValue]];
+	self.filter.filterMatch = self.filterMatchTextField.stringValue;
 
 	NSString *filterActionStringValue = [self stringValueForTokenField:self.filterActionTokenField];;
 
-	[self.filter setFilterAction:filterActionStringValue];
+	self.filter.filterAction = filterActionStringValue;
 
-	[self.filter setFilterTitle:[self.filterTitleTextField stringValue]];
-	[self.filter setFilterNotes:[self.filterNotesTextField stringValue]];
+	self.filter.filterTitle = self.filterTitleTextField.stringValue;
+	self.filter.filterNotes = self.filterNotesTextField.stringValue;
 
-	[self.filter setFilterSenderMatch:[self.filterSenderMatchTextField stringValue]];
+	self.filter.filterSenderMatch = self.filterSenderMatchTextField.stringValue;
 
-	[self.filter setFilterForwardToDestination:[self.filterForwardToDestinationTextField stringValue]];
+	self.filter.filterForwardToDestination = self.filterForwardToDestinationTextField.stringValue;
 
-	[self.filter setFilterIgnoresOperators:([self.filterIgnoresOperatorsCheck state] == NSOnState)];
+	self.filter.filterIgnoreOperators = (self.filterIgnoreOperatorsCheck.state == NSOnState);
 
-	[self.filter setFilterIgnoreContent:([self.filterIgnoreContentCheck state] == NSOnState)];
+	self.filter.filterIgnoreContent = (self.filterIgnoreContentCheck.state == NSOnState);
 
-	[self.filter setFilterLimitedToValue:[self.filterLimitToMatrix selectedTag]];
+	self.filter.filterLimitedToValue = [self.filterLimitToMatrix selectedTag];
 
-	[self.filter setFilterLogMatch:([self.filterLogMatchCheck state] == NSOnState)];
+	self.filter.filterLogMatch = (self.filterLogMatchCheck.state == NSOnState);
 
-	[self.filter setFilterLimitedToMyself:([self.filterLimitedToMyselfCheck state] == NSOnState)];
+	self.filter.filterLimitedToMyself = (self.filterLimitedToMyselfCheck.state == NSOnState);
 
-	[self.filter setFilterEvents:[self compileFilterEvents]];
+	self.filter.filterEvents = [self compileFilterEvents];
 
-	[self.filter setFilterEventsNumerics:[self compileFilterEventsNumerics]];
+	self.filter.filterEventsNumerics = [self compileFilterEventsNumericsOrReturnEmptyArray];
 
-	[self.filter setFilterLimitedToClientsIDs:self.filterLimitedToClientsIDs];
-	[self.filter setFilterLimitedToChannelsIDs:self.filterLimitedToChannelsIDs];
+	self.filter.filterLimitedToClientsIDs = self.filterLimitedToClientsIDs;
+	self.filter.filterLimitedToChannelsIDs = self.filterLimitedToChannelsIDs;
 }
 
-- (NSArray *)compileFilterEventsNumerics
+- (NSArray<NSString *> *)compileFilterEventsNumericsOrReturnEmptyArray
 {
-	NSString *numericsString = [self.filterEventNumericTextField value];
+	NSArray *filterEventNumerics = [self compileFilterEventsNumerics];
 
-	NSArray *numericsArray = [numericsString componentsSeparatedByString:@","];
+	if (filterEventNumerics == nil) {
+		return @[];
+	}
+
+	return filterEventNumerics;
+}
+
+- (nullable NSArray<NSString *> *)compileFilterEventsNumerics
+{
+	NSString *numericsString = self.filterEventNumericTextField.value;
+
+	NSArray *numerics = [numericsString componentsSeparatedByString:@","];
 
 	NSMutableArray *filterEventsNumerics = nil; // Create later so we don't waste memory if error.
 
-	for (NSString *numeric in numericsArray) {
-		NSString *numericTrimmed = [numeric trim];
-
-		if ([numericTrimmed length] == 0) {
+	for (__strong NSString *numeric in numerics) {
+		if (numeric.length == 0) {
 			continue; // Empty segment. We can ignore.
 		}
 
-		if ([numericTrimmed isNumericOnly]) {
-			if ([numericTrimmed length] > 3) {
+		if (numeric.numericOnly) {
+			if (numeric.length > 3) {
 				return nil; // Bad value, fail completely
 			}
 
 			// Convert to integer and back to remove leading zeros
-			numericTrimmed = [NSString stringWithFormat:@"%ld", [numericTrimmed integerValue]];
-		} else if ([numericTrimmed isAlphabeticNumericOnly]) {
-			if ([numericTrimmed length] > 20) {
+			numeric = [NSString stringWithFormat:@"%ld", numeric.integerValue];
+		} else if (numeric.alphabeticNumericOnly) {
+			if (numeric.length > 20) {
 				return nil; // Bad value, fail completely
 			}
 
-			numericTrimmed = [numericTrimmed uppercaseString];
+			numeric = numeric.uppercaseString;
 		} else {
 			return nil; // Bad value, fail completely
 		}
@@ -293,8 +320,8 @@
 			filterEventsNumerics = [NSMutableArray array];
 		}
 
-		if ([filterEventsNumerics containsObject:numericTrimmed] == NO) {
-			[filterEventsNumerics addObject:numericTrimmed];
+		if ([filterEventsNumerics containsObject:numeric] == NO) {
+			[filterEventsNumerics addObject:numeric];
 		}
 	}
 
@@ -305,40 +332,40 @@
 {
 	TPI_ChatFilterEventType filterEvents = 0;
 
-	if ([self.filterEventPlainTextMessageCheck state] == NSOnState)
+	if (self.filterEventPlainTextMessageCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterPlainTextMessageEventType;
 
-	if ([self.filterEventActionMessageCheck state] == NSOnState)
+	if (self.filterEventActionMessageCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterActionMessageEventType;
 
-	if ([self.filterEventNoticeMessageCheck state] == NSOnState)
+	if (self.filterEventNoticeMessageCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterNoticeMessageEventType;
 
-	if ([self.filterEventUserJoinedChannelCheck state] == NSOnState)
+	if (self.filterEventUserJoinedChannelCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterUserJoinedChannelEventType;
 
-	if ([self.filterEventUserLeftChannelCheck state] == NSOnState)
+	if (self.filterEventUserLeftChannelCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterUserLeftChannelEventType;
 
-	if ([self.filterEventUserKickedFromChannelCheck state] == NSOnState)
+	if (self.filterEventUserKickedFromChannelCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterUserKickedFromChannelEventType;
 
-	if ([self.filterEventUserDisconnectedCheck state] == NSOnState)
+	if (self.filterEventUserDisconnectedCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterUserDisconnectedEventType;
 
-	if ([self.filterEventUserChangedNicknameCheck state] == NSOnState)
+	if (self.filterEventUserChangedNicknameCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterUserChangedNicknameEventType;
 
-	if ([self.filterEventChannelTopicReceivedCheck state] == NSOnState)
+	if (self.filterEventChannelTopicReceivedCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelTopicReceivedEventType;
 
-	if ([self.filterEventChannelTopicChangedCheck state] == NSOnState)
+	if (self.filterEventChannelTopicChangedCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelTopicChangedEventType;
 
-	if ([self.filterEventChannelModeReceivedCheck state] == NSOnState)
+	if (self.filterEventChannelModeReceivedCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelModeReceivedEventType;
 
-	if ([self.filterEventChannelModeChangedCheck state] == NSOnState)
+	if (self.filterEventChannelModeChangedCheck.state == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelModeChangedEventType;
 
 	return filterEvents;
@@ -348,8 +375,8 @@
 {
 	[self saveFilter];
 
-	if ([[self delegate] respondsToSelector:@selector(chatFilterEditFilterSheet:onOK:)]) {
-		[[self delegate] chatFilterEditFilterSheet:self onOK:self.filter];
+	if ([self.delegate respondsToSelector:@selector(chatFilterEditFilterSheet:onOk:)]) {
+		[self.delegate chatFilterEditFilterSheet:self onOk:[self.filter copy]];
 	}
 
 	[super ok:nil];
@@ -357,13 +384,13 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.filterLimitToSelectionOutlineView setDelegate:nil];
-	[self.filterLimitToSelectionOutlineView setDataSource:nil];
+	self.filterLimitToSelectionOutlineView.delegate = nil;
+	self.filterLimitToSelectionOutlineView.dataSource = nil;
 
 	[RZNotificationCenter() removeObserver:self];
 
-	if ([[self delegate] respondsToSelector:@selector(chatFilterEditFilterSheetWillClose:)]) {
-		[[self delegate] chatFilterEditFilterSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(chatFilterEditFilterSheetWillClose:)]) {
+		[self.delegate chatFilterEditFilterSheetWillClose:self];
 	}
 }
 
@@ -374,24 +401,24 @@
 {
 	NSCharacterSet *emptyCharacterSet = [NSCharacterSet characterSetWithCharactersInString:NSStringEmptyPlaceholder];
 
-	[self.filterActionTokenField setTokenizingCharacterSet:emptyCharacterSet];
+	self.filterActionTokenField.tokenizingCharacterSet = emptyCharacterSet;
 
-	[self.filterActionTokenField setCompletionDelay:0.2];
+	self.filterActionTokenField.completionDelay = 0.2;
 
 	[self setToken:@"%_channelName_%" inTokenField:self.filterActionTokenChannelName];
 	[self setToken:@"%_localNickname_%" inTokenField:self.filterActionTokenLocalNickname];
 	[self setToken:@"%_networkName_%" inTokenField:self.filterActionTokenNetworkName];
 	[self setToken:@"%_originalMessage_%" inTokenField:self.filterActionTokenOriginalMessage];
-	[self setToken:@"%_senderAddress_%" inTokenField:self.filterActionTokenSenderAddress];
-	[self setToken:@"%_senderHostmask_%" inTokenField:self.filterActionTokenSenderHostmask];
 	[self setToken:@"%_senderNickname_%" inTokenField:self.filterActionTokenSenderNickname];
 	[self setToken:@"%_senderUsername_%" inTokenField:self.filterActionTokenSenderUsername];
+	[self setToken:@"%_senderAddress_%" inTokenField:self.filterActionTokenSenderAddress];
+	[self setToken:@"%_senderHostmask_%" inTokenField:self.filterActionTokenSenderHostmask];
 	[self setToken:@"%_serverAddress_%" inTokenField:self.filterActionTokenServerAddress];
 }
 
-- (NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard
+- (nullable NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard;
 {
-	NSString *stringContent = [pboard stringContent];
+	NSString *stringContent = pboard.stringContent;
 
 	return [self tokensFromString:stringContent];
 }
@@ -400,7 +427,7 @@
 {
 	NSString *stringContent = [objects componentsJoinedByString:NSStringEmptyPlaceholder];
 
-	[pboard setStringContent:stringContent];
+	pboard.stringContent = stringContent;
 
 	return YES;
 }
@@ -409,12 +436,12 @@
 {
 	if ([representedObject isKindOfClass:[TPI_ChatFilterFilterActionToken class]]) {
 		return NSRoundedTokenStyle;
-	} else {
-		return NSPlainTextTokenStyle;
 	}
+
+	return NSPlainTextTokenStyle;
 }
 
-- (NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject
+- (nullable NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject
 {
 	if ([representedObject isKindOfClass:[TPI_ChatFilterFilterActionToken class]]) {
 		return [representedObject tokenTitle];
@@ -429,8 +456,8 @@
 		NSArray *tokenTitles = [self.filterActionAutoCompletedTokens filteredArrayUsingPredicate:
 				[NSPredicate predicateWithFormat:@"SELF beginswith[cd] %@", editingString]];
 
-		if ([tokenTitles count] > 0) {
-			NSString *tokenTitle = [tokenTitles firstObject];
+		if (tokenTitles.count > 0) {
+			NSString *tokenTitle = tokenTitles.firstObject;
 
 			return [TPI_ChatFilterFilterActionToken tokenWithTokenTitle:tokenTitle];
 		}
@@ -439,7 +466,7 @@
 	return editingString;
 }
 
-- (NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(NSInteger *)selectedIndex
+- (nullable NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(nullable NSInteger *)selectedIndex;
 {
 	if (tokenField == self.filterActionTokenField) {
 		NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
@@ -462,14 +489,14 @@
 
 - (NSString *)stringValueForTokenField:(NSTokenField *)tokenField
 {
-	return [[tokenField objectValue] componentsJoinedByString:NSStringEmptyPlaceholder];
+	return [tokenField.objectValue componentsJoinedByString:NSStringEmptyPlaceholder];
 }
 
 - (void)setTokens:(NSString *)tokens inTokenField:(NSTokenField *)tokenField
 {
 	NSArray *tokenObjects = [self tokensFromString:tokens];
 
-	[tokenField setObjectValue:tokenObjects];
+	tokenField.objectValue = tokenObjects;
 }
 
 - (void)setToken:(NSString *)token inTokenField:(NSTokenField *)tokenField
@@ -477,31 +504,31 @@
 	 TPI_ChatFilterFilterActionToken *tokenObject =
 	[TPI_ChatFilterFilterActionToken tokenWithToken:token];
 
-	[tokenField setObjectValue:@[tokenObject]];
+	tokenField.objectValue = @[tokenObject];
 }
 
-- (NSArray *)tokensFromString:(NSString *)string
+- (NSArray *)tokensFromString:(nullable NSString *)string
 {
 	NSString *tokenString = string;
 
 	if (tokenString == nil) {
-		tokenString = NSStringEmptyPlaceholder;
+		return @[];
 	}
-
-	NSInteger start = 0;
-
-	NSInteger length = [tokenString length];
 
 	NSMutableArray *tokens = [NSMutableArray array];
 
-	while (start < length) {
-		NSRange searchRange = NSMakeRange(start, (length - start));
+	NSInteger currentPosition = 0;
 
-		NSRange r = [tokenString rangeOfString:@"%_([a-zA-Z]+)_%"
-									   options:NSRegularExpressionSearch
-										 range:searchRange];
+	NSInteger tokenStringLength = tokenString.length;
 
-		if (r.location == NSNotFound) {
+	while (currentPosition < tokenStringLength) {
+		NSRange searchRange = NSMakeRange(currentPosition, (tokenStringLength - currentPosition));
+
+		NSRange range = [tokenString rangeOfString:@"%_([a-zA-Z]+)_%"
+										   options:NSRegularExpressionSearch
+											 range:searchRange];
+
+		if (range.location == NSNotFound) {
 			NSString *tokenStringPrefix = [tokenString substringWithRange:searchRange];
 
 			[tokens addObject:tokenStringPrefix];
@@ -509,7 +536,7 @@
 			break;
 		}
 
-		NSRange tokenStringPrefixRange = NSMakeRange(start, (r.location - start));
+		NSRange tokenStringPrefixRange = NSMakeRange(currentPosition, (range.location - currentPosition));
 
 		if (tokenStringPrefixRange.length > 0) {
 			NSString *tokenStringPrefix = [tokenString substringWithRange:tokenStringPrefixRange];
@@ -517,7 +544,7 @@
 			[tokens addObject:tokenStringPrefix];
 		}
 
-		NSString *tokenStringToken = [tokenString substringWithRange:r];
+		NSString *tokenStringToken = [tokenString substringWithRange:range];
 
 		if ([TPI_ChatFilterFilterActionToken isToken:tokenStringToken]) {
 			 TPI_ChatFilterFilterActionToken *token =
@@ -528,10 +555,10 @@
 			[tokens addObject:tokenStringToken];
 		}
 
-		start = NSMaxRange(r);
+		currentPosition = NSMaxRange(range);
 	}
 
-	if ([tokens count] == 0) {
+	if (tokens.count == 0) {
 		[tokens addObject:tokenString];
 	}
 
@@ -555,7 +582,7 @@
 
 	if (commandSelector == @selector(insertNewline:))
 	{
-		NSRange editedRange = [[textView textStorage] editedRange];
+		NSRange editedRange = textView.textStorage.editedRange;
 
 		if (editedRange.length > 1) {
 			return NO;
@@ -565,19 +592,11 @@
 
 		return YES;
 	}
-	else if (commandSelector == @selector(insertTab:))
-	{
-//		if (control == self.filterActionTokenField) {
-//			[self performFilterActionTokenCompletion];
-//
-//			return YES;
-//		}
-	}
 
 	return NO;
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj
+- (void)controlTextDidChange:(NSNotification *)notification
 {
 	[self toggleOkButton];
 }
@@ -591,89 +610,78 @@
 {
 	BOOL disabled = NO;
 
-	if ([[self.filterTitleTextField stringValue] length] == 0) {
+	if (self.filterTitleTextField.stringValue.length == 0) {
 		disabled = YES;
 	}
 
 	if (disabled == NO) {
-		if ([self.filterEventNumericTextField valueIsValid] == NO) {
+		if (self.filterEventNumericTextField.valueIsValid == NO) {
 			disabled = YES;
-		} else if ([self.filterForwardToDestinationTextField valueIsValid] == NO) {
+		} else if (self.filterForwardToDestinationTextField.valueIsValid == NO) {
 			disabled = YES;
 		}
 	}
 
-/*	if (disabled == NO) {
-		if ([[self.filterMatchTextField stringValue] length] == 0 &&
-			[[self.filterSenderMatchTextField stringValue] length] == 0 &&
-			([self.filterEventPlainTextMessageCheck state] == NSOnState ||
-			 [self.filterEventActionMessageCheck state] == NSOnState ||
-			 [self.filterEventNoticeMessageCheck state] == NSOnState))
-		{
-			disabled = YES;
-		}
-	} */
-
 	if (disabled == NO) {
-		if ([self.filterIgnoreContentCheck state] == NSOffState &&
-			[[self.filterForwardToDestinationTextField stringValue] length] == 0)
+		if (self.filterIgnoreContentCheck.state == NSOffState &&
+			self.filterForwardToDestinationTextField.stringValue.length == 0)
 		{
-			if ([[self.filterActionTokenField stringValue] length] == 0) {
+			if (self.filterActionTokenField.stringValue.length == 0) {
 				disabled = YES;
 			}
 		}
 	}
 
-	[[self okButton] setEnabled:(disabled == NO)];
+	self.okButton.enabled = (disabled == NO);
 }
 
 - (void)setupTextFieldRules
 {
 	/* "Forward To" text field */
-	[self.filterForwardToDestinationTextField setTextDidChangeCallback:self];
+	self.filterForwardToDestinationTextField.textDidChangeCallback = self;
 
-	[self.filterForwardToDestinationTextField setPerformValidationWhenEmpty:NO];
+	self.filterForwardToDestinationTextField.performValidationWhenEmpty = NO;
 
-	[self.filterForwardToDestinationTextField setOnlyShowStatusIfErrorOccurs:YES];
+	self.filterForwardToDestinationTextField.onlyShowStatusIfErrorOccurs = YES;
 
-	[self.filterForwardToDestinationTextField setStringValueIsInvalidOnEmpty:NO];
-	[self.filterForwardToDestinationTextField setStringValueIsTrimmed:YES];
-	[self.filterForwardToDestinationTextField setStringValueUsesOnlyFirstToken:NO];
+	self.filterForwardToDestinationTextField.stringValueIsInvalidOnEmpty = NO;
+	self.filterForwardToDestinationTextField.stringValueIsTrimmed = YES;
+	self.filterForwardToDestinationTextField.stringValueUsesOnlyFirstToken = NO;
 
-	[self.filterForwardToDestinationTextField setValidationBlock:^BOOL(NSString *currentValue) {
-		if ([currentValue length] > 125) {
+	self.filterForwardToDestinationTextField.validationBlock = ^BOOL(NSString *currentValue) {
+		if (currentValue.length > 125) {
 			return NO;
 		}
 
-		if ([XRRegularExpression string:currentValue isMatchedByRegex:@"^([a-zA-Z0-9\\-\\_\\s]+)$"]) {
-			return YES;
-		} else {
+		if ([XRRegularExpression string:currentValue isMatchedByRegex:@"^([a-zA-Z0-9\\-\\_\\s]+)$"] == NO) {
 			return NO;
 		}
-	}];
+
+		return YES;
+	};
 
 	/* "Numerics" text field */
-	[self.filterEventNumericTextField setTextDidChangeCallback:self];
+	self.filterEventNumericTextField.textDidChangeCallback = self;
 
-	[self.filterEventNumericTextField setPerformValidationWhenEmpty:NO];
+	self.filterEventNumericTextField.performValidationWhenEmpty = NO;
 
-	[self.filterEventNumericTextField setOnlyShowStatusIfErrorOccurs:YES];
+	self.filterEventNumericTextField.onlyShowStatusIfErrorOccurs = YES;
 
-	[self.filterEventNumericTextField setStringValueIsInvalidOnEmpty:NO];
-	[self.filterEventNumericTextField setStringValueIsTrimmed:NO];
-	[self.filterEventNumericTextField setStringValueUsesOnlyFirstToken:NO];
+	self.filterEventNumericTextField.stringValueIsInvalidOnEmpty = NO;
+	self.filterEventNumericTextField.stringValueIsTrimmed = NO;
+	self.filterEventNumericTextField.stringValueUsesOnlyFirstToken = NO;
 
-	[self.filterEventNumericTextField setValidationBlock:^BOOL(NSString *currentValue) {
+	self.filterEventNumericTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		return ([self compileFilterEventsNumerics] != nil);
-	}];
+	};
 }
 
 - (void)updateVisibilityOfLimitedToTableHostView
 {
-	if ([self.filterLimitToMatrix selectedTag] == TPI_ChatFilterLimitToSpecificItemsValue) {
-		[self.filterLimitedToTableHostView setHidden:NO];
+	if (self.filterLimitToMatrix.selectedTag == TPI_ChatFilterLimitToSpecificItemsValue) {
+		self.filterLimitedToTableHostView.hidden = NO;
 	} else {
-		[self.filterLimitedToTableHostView setHidden:YES];
+		self.filterLimitedToTableHostView.hidden = YES;
 	}
 }
 
@@ -684,35 +692,35 @@
 
 - (void)updateEnabledStateOfFilterEvents
 {
-	BOOL enabled = ([self.filterLimitToMatrix selectedTag] != TPI_ChatFilterLimitToPrivateMessagesValue);
+	BOOL enabled = (self.filterLimitToMatrix.selectedTag != TPI_ChatFilterLimitToPrivateMessagesValue);
 
-	[self.filterEventUserJoinedChannelCheck setEnabled:enabled];
-	[self.filterEventUserLeftChannelCheck setEnabled:enabled];
-	[self.filterEventUserKickedFromChannelCheck setEnabled:enabled];
-	[self.filterEventUserDisconnectedCheck setEnabled:enabled];
-	[self.filterEventUserChangedNicknameCheck setEnabled:enabled];
-	[self.filterEventChannelTopicReceivedCheck setEnabled:enabled];
-	[self.filterEventChannelTopicChangedCheck setEnabled:enabled];
-	[self.filterEventChannelModeReceivedCheck setEnabled:enabled];
-	[self.filterEventChannelModeChangedCheck setEnabled:enabled];
+	self.filterEventUserJoinedChannelCheck.enabled = enabled;
+	self.filterEventUserLeftChannelCheck.enabled = enabled;
+	self.filterEventUserKickedFromChannelCheck.enabled = enabled;
+	self.filterEventUserDisconnectedCheck.enabled = enabled;
+	self.filterEventUserChangedNicknameCheck.enabled = enabled;
+	self.filterEventChannelTopicReceivedCheck.enabled = enabled;
+	self.filterEventChannelTopicChangedCheck.enabled = enabled;
+	self.filterEventChannelModeReceivedCheck.enabled = enabled;
+	self.filterEventChannelModeChangedCheck.enabled = enabled;
 }
 
 - (void)updateEnabledStateOfComponentsConstrainedByFilterEvents
 {
-	BOOL enabled1 = ([self.filterEventPlainTextMessageCheck state] == NSOnState ||
-					 [self.filterEventActionMessageCheck state] == NSOnState ||
-					 [self.filterEventNoticeMessageCheck state] == NSOnState);
+	BOOL enabled = (self.filterEventPlainTextMessageCheck.state == NSOnState ||
+					self.filterEventActionMessageCheck.state == NSOnState ||
+					self.filterEventNoticeMessageCheck.state == NSOnState);
 
-	[self.filterForwardToDestinationTextField setEnabled:enabled1];
+	self.filterForwardToDestinationTextField.enabled = enabled;
 
-	[self.filterIgnoresOperatorsCheck setEnabled:enabled1];
+	self.filterIgnoreOperatorsCheck.enabled = enabled;
 }
 
 - (void)updateEnabledStateOfSenderMatch
 {
-	BOOL enabled1 = ([self.filterLimitedToMyselfCheck state] == NSOffState);
+	BOOL enabled = (self.filterLimitedToMyselfCheck.state == NSOffState);
 
-	[self.filterSenderMatchTextField setEnabled:enabled1];
+	self.filterSenderMatchTextField.enabled = enabled;
 }
 
 - (void)filterLimitedToMyselfChanged:(id)sender
@@ -745,7 +753,7 @@
 	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-4"];
 }
 
-- (void)filteredLimitedToMatrixChanged:(id)sender
+- (void)filterLimitedToMatrixChanged:(id)sender
 {
 	[self updateVisibilityOfLimitedToTableHostView];
 
@@ -761,9 +769,9 @@
 
 - (void)addObserverForChannelListUpdates
 {
-	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:@"IRCWorldClientListWasModifiedNotification" object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCWorldClientListWasModifiedNotification object:nil];
 
-	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:@"IRCClientChannelListWasModifiedNotification" object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCClientChannelListWasModifiedNotification object:nil];
 }
 
 - (void)channelListChanged:(id)sender
@@ -778,56 +786,56 @@
 
 - (void)rebuildCachedChannelList
 {
-	NSArray *cachedClientList = [worldController() clientList];
+	NSArray *clientList = worldController().clientList;
 
-	NSMutableDictionary *cachedChannelList = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, NSArray *> *cachedChannelList = [NSMutableDictionary dictionary];
 
-	for (IRCClient *u in cachedClientList) {
+	for (IRCClient *u in clientList) {
 		NSMutableArray *uChannelList = [NSMutableArray array];
 
-		for (IRCChannel *c in [u channelList]) {
-			if ([c isChannel]) {
+		for (IRCChannel *c in u.channelList) {
+			if (c.isChannel) {
 				[uChannelList addObject:c];
 			}
 		}
 
-		[cachedChannelList setObject:[uChannelList copy] forKey:[u uniqueIdentifier]];
+		cachedChannelList[u.uniqueIdentifier] = [uChannelList copy];
 	}
 
-	self.cachedClientList = cachedClientList;
+	self.cachedClientList = clientList;
 
 	self.cachedChannelList = cachedChannelList;
 }
 
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item;
 {
 	if (item) {
 		NSString *uniqueIdentifier = [item uniqueIdentifier];
 
-		return [self.cachedChannelList[uniqueIdentifier] count];
-	} else {
-		return [self.cachedClientList count];
+		return self.cachedChannelList[uniqueIdentifier].count;
 	}
+
+	return self.cachedClientList.count;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item;
 {
 	if (item) {
 		NSString *uniqueIdentifier = [item uniqueIdentifier];
 
 		return self.cachedChannelList[uniqueIdentifier][index];
-	} else {
-		return self.cachedClientList[index];
 	}
+
+	return self.cachedClientList[index];
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
 	TPI_ChatFilterLimitToTableCellView *newView = (id)[outlineView makeViewWithIdentifier:@"tableEntry" owner:self];
 
-	[newView setParentDialog:self];
+	newView.cellItem = item;
 
-	[newView setAssociatedItem:item];
+	newView.parentDialog = self;
 
 	[newView populateDefaults];
 
@@ -842,7 +850,7 @@
 		[(id)cellView reloadCheckboxForChildren];
 	});
 
-	if ((row + 1) == [outlineView numberOfRows]) {
+	if ((row + 1) == outlineView.numberOfRows) {
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			[outlineView expandItem:nil expandChildren:YES];
 		});
@@ -853,7 +861,7 @@
 {
 	NSString *uniqueIdentifier = [item uniqueIdentifier];
 
-	return ([self.cachedChannelList[uniqueIdentifier] count] > 0);
+	return (self.cachedChannelList[uniqueIdentifier].count > 0);
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
@@ -875,106 +883,102 @@
 
 - (void)populateDefaults
 {
-	/* Define context for current operation. */
-	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+	NSOutlineView *outlineView = self.parentOutlineView;
 
-	NSOutlineView *outlineView = [parentDialog filterLimitToSelectionOutlineView];
+	IRCTreeItem *cellItem = self.cellItem;
 
-	id currentItem = [self associatedItem];
+	BOOL isGroupItem = [outlineView isGroupItem:cellItem];
 
-	BOOL isGroupItem = [outlineView isGroupItem:currentItem];
+	self.textField.stringValue = cellItem.label;
 
-	/* Update related content */
-	[[self textField] setStringValue:[currentItem label]];
-
-	[[self checkbox] setAllowsMixedState:isGroupItem];
+	self.checkbox.allowsMixedState = isGroupItem;
 }
 
 - (void)reloadCheckboxForChildren
 {
-	/* Define context for current operation. */
-	NSOutlineView *outlineView = [self parentOutlineView];
+	/* Define context for current operation */
+	TPI_ChatFilterEditFilterSheet *parentDialog = self.parentDialog;
 
-	TPI_ChatFilterLimitToTableCellView *parentItemView = [self parentCellViewOrSelf];
+	NSOutlineView *outlineView = parentDialog.filterLimitToSelectionOutlineView;
 
-	id parentItem = [parentItemView associatedItem];
+	TPI_ChatFilterLimitToTableCellView *parentCellItemView = self.parentCellViewOrSelf;
+
+	IRCTreeItem *parentCellItem = parentCellItemView.cellItem;
 
 	/* Process child items */
 	BOOL atleastOneChildChecked = NO;
 
-	BOOL parentItemInFilter = [[self filterLimitedToClientsIDs] containsObject:[parentItem uniqueIdentifier]];
+	BOOL parentItemInFilter = [parentDialog.filterLimitedToClientsIDs containsObject:parentCellItem.uniqueIdentifier];
 
-	NSArray *childrenItems = [outlineView itemsInGroup:parentItem];
+	NSArray *childrenItems = [outlineView itemsInGroup:parentCellItem];
 
-	for (id childItem in childrenItems) {
+	for (IRCTreeItem *childItem in childrenItems) {
 		NSInteger childItemRow = [outlineView rowForItem:childItem];
 
 		TPI_ChatFilterLimitToTableCellView *childItemView = [outlineView viewAtColumn:0 row:childItemRow makeIfNecessary:NO];
 
-		BOOL childItemInFilter = [[self filterLimitedToChannelsIDs] containsObject:[childItem uniqueIdentifier]];
+		BOOL childItemInFilter = [parentDialog.filterLimitedToChannelsIDs containsObject:childItem.uniqueIdentifier];
 
 		if (parentItemInFilter) {
-			[[childItemView checkbox] setState:NSOnState];
+			childItemView.checkbox.state = NSOnState;
 		} else if (childItemInFilter) {
 			if (atleastOneChildChecked == NO) {
 				atleastOneChildChecked = YES;
 			}
 
-			[[childItemView checkbox] setState:NSOnState];
+			childItemView.checkbox.state = NSOnState;
 		} else {
-			[[childItemView checkbox] setState:NSOffState];
+			childItemView.checkbox.state = NSOffState;
 		}
 
-		[[childItemView checkbox] setEnabled:(parentItemInFilter == NO)];
+		childItemView.checkbox.enabled = (parentItemInFilter == NO);
 	}
 
 	/* Process parent item */
 	if (parentItemInFilter) {
-		[[parentItemView checkbox] setState:NSOnState];
+		parentCellItemView.checkbox.state = NSOnState;
+	} else if (atleastOneChildChecked) {
+		parentCellItemView.checkbox.state = NSMixedState;
 	} else {
-		if (atleastOneChildChecked) {
-			[[parentItemView checkbox] setState:NSMixedState];
-		} else {
-			[[parentItemView checkbox] setState:NSOffState];
-		}
+		parentCellItemView.checkbox.state = NSOffState;
 	}
 }
 
 - (void)checkboxToggled:(NSButton *)sender
 {
-	/* Define context for current operation. */
-	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+	/* Define context for current operation.\ */
+	TPI_ChatFilterEditFilterSheet *parentDialog = self.parentDialog;
 
-	NSOutlineView *outlineView = [parentDialog filterLimitToSelectionOutlineView];
+	NSOutlineView *outlineView = parentDialog.filterLimitToSelectionOutlineView;
 
-	id currentItem = [self associatedItem];
+	IRCTreeItem *cellItem = self.cellItem;
 
-	BOOL isGroupItem = [outlineView isGroupItem:currentItem];
+	BOOL isGroupItem = [outlineView isGroupItem:cellItem];
 
-	BOOL isEnablingItem = ([sender state] == NSOnState ||
-						   [sender state] == NSMixedState);
+	BOOL isEnablingItem = (sender.state == NSOnState ||
+						   sender.state == NSMixedState);
 
 	/* Add or remove item from appropriate filter */
 	if (isGroupItem) {
 		if (isEnablingItem) {
-			[[parentDialog filterLimitedToClientsIDs] addObject:[currentItem uniqueIdentifier]];
+			[parentDialog.filterLimitedToClientsIDs addObject:cellItem.uniqueIdentifier];
 		} else {
-			[[parentDialog filterLimitedToClientsIDs] removeObject:[currentItem uniqueIdentifier]];
+			[parentDialog.filterLimitedToClientsIDs removeObject:cellItem.uniqueIdentifier];
 		}
 	} else {
 		if (isEnablingItem) {
-			[[parentDialog filterLimitedToChannelsIDs] addObject:[currentItem uniqueIdentifier]];
+			[parentDialog.filterLimitedToChannelsIDs addObject:cellItem.uniqueIdentifier];
 		} else {
-			[[parentDialog filterLimitedToChannelsIDs] removeObject:[currentItem uniqueIdentifier]];
+			[parentDialog.filterLimitedToChannelsIDs removeObject:cellItem.uniqueIdentifier];
 		}
 	}
 
 	/* Further process filters depending on state of other items */
 	if (isGroupItem && isEnablingItem) {
-		NSArray *childrenItems = [outlineView itemsFromParentGroup:currentItem];
+		NSArray *childrenItems = [outlineView itemsFromParentGroup:cellItem];
 
-		for (id childItem in childrenItems) {
-			[[parentDialog filterLimitedToChannelsIDs] removeObject:[childItem uniqueIdentifier]];
+		for (IRCTreeItem *childItem in childrenItems) {
+			[parentDialog.filterLimitedToChannelsIDs removeObject:childItem.uniqueIdentifier];
 		}
 	}
 
@@ -982,42 +986,28 @@
 	[self reloadCheckboxForChildren];
 }
 
-- (NSMutableArray *)filterLimitedToClientsIDs
-{
-	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
-
-	return [parentDialog filterLimitedToClientsIDs];
-}
-
-- (NSMutableArray *)filterLimitedToChannelsIDs
-{
-	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
-
-	return [parentDialog filterLimitedToChannelsIDs];
-}
-
 - (NSOutlineView *)parentOutlineView
 {
-	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+	TPI_ChatFilterEditFilterSheet *parentDialog = self.parentDialog;
 
-	return [parentDialog filterLimitToSelectionOutlineView];
+	return parentDialog.filterLimitToSelectionOutlineView;
 }
 
 - (TPI_ChatFilterLimitToTableCellView *)parentCellViewOrSelf
 {
-	NSOutlineView *outlineView = [self parentOutlineView];
+	NSOutlineView *outlineView = self.parentOutlineView;
 
-	id currentItem = [self associatedItem];
+	IRCTreeItem *cellItem = self.cellItem;
 
-	if ([outlineView isGroupItem:currentItem]) {
+	id parentCellItem = [outlineView parentForItem:cellItem];
+
+	if (parentCellItem == nil) {
 		return self;
-	} else {
-		id parentItem = [outlineView parentForItem:currentItem];
-
-		NSInteger parentItemViewRow = [outlineView rowForItem:parentItem];
-
-		return [outlineView viewAtColumn:0 row:parentItemViewRow makeIfNecessary:NO];
 	}
+
+	NSInteger parentCellItemRow = [outlineView rowForItem:parentCellItem];
+
+	return [outlineView viewAtColumn:0 row:parentCellItemRow makeIfNecessary:NO];
 }
 
 @end
@@ -1031,12 +1021,12 @@
 {
 	TPI_ChatFilterFilterActionToken *tokenField = [TPI_ChatFilterFilterActionToken new];
 
-	[tokenField setToken:token];
+	tokenField.token = token;
 
 	return tokenField;
 }
 
-+ (TPI_ChatFilterFilterActionToken *)tokenWithTokenTitle:(NSString *)tokenTitle
++ (nullable TPI_ChatFilterFilterActionToken *)tokenWithTokenTitle:(NSString *)tokenTitle
 {
 	NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
 
@@ -1048,7 +1038,7 @@
 
 	NSArray *tokens = [TPI_ChatFilterFilterActionToken tokens];
 
-	NSString *token = [tokens objectAtIndex:tokenTitleIndex];
+	NSString *token = tokens[tokenTitleIndex];
 
 	return [TPI_ChatFilterFilterActionToken tokenWithToken:token];
 }
@@ -1060,7 +1050,7 @@
 	return ([tokens indexOfObject:token] != NSNotFound);
 }
 
-+ (NSArray *)tokens
++ (NSArray<NSString *> *)tokens
 {
 	/* The index of this array should match the index of -tokenTitles */
 	static NSArray *tokens = nil;
@@ -1071,10 +1061,10 @@
 		   @"%_localNickname_%",
 		   @"%_networkName_%",
 		   @"%_originalMessage_%",
-		   @"%_senderAddress_%",
-		   @"%_senderHostmask_%",
 		   @"%_senderNickname_%",
 		   @"%_senderUsername_%",
+		   @"%_senderAddress_%",
+		   @"%_senderHostmask_%",
 		   @"%_serverAddress_%"
 		];
 	}
@@ -1082,7 +1072,7 @@
 	return tokens;
 }
 
-+ (NSArray *)tokenTitles
++ (NSArray<NSString *> *)tokenTitles
 {
 	/* The index of this array should match the index of -tokens */
 	static NSArray *tokens = nil;
@@ -1093,10 +1083,10 @@
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0002]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0003]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0004]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0005]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0006]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0007]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0008]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0005]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0006]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0009]")
 		];
 	}
@@ -1104,7 +1094,7 @@
 	return tokens;
 }
 
-+ (NSString *)titleForToken:(NSString *)token
++ (nullable NSString *)titleForToken:(NSString *)token
 {
 	NSArray *tokens = [TPI_ChatFilterFilterActionToken tokens];
 
@@ -1116,17 +1106,19 @@
 
 	NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
 
-	return [tokenTitles objectAtIndex:tokenIndex];
+	return tokenTitles[tokenIndex];
 }
 
-- (NSString *)tokenTitle
+- (nullable NSString *)tokenTitle
 {
-	return [TPI_ChatFilterFilterActionToken titleForToken:[self token]];
+	return [TPI_ChatFilterFilterActionToken titleForToken:self.token];
 }
 
 - (NSString *)description
 {
-	return [self token];
+	return self.token;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

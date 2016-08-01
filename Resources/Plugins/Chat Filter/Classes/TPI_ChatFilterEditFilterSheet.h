@@ -39,27 +39,33 @@
 
 #import "TPI_ChatFilter.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, TPI_ChatFilterActionTokenTag) {
 	TPI_ChatFilterActionTokenChannelNameTag = 1,
 	TPI_ChatFilterActionTokenLocalNicknameTag = 2,
 	TPI_ChatFilterActionTokenNetworkNameTag = 3,
 	TPI_ChatFilterActionTokenOriginalMessage = 4,
-	TPI_ChatFilterActionTokenSenderAddressTag = 5,
-	TPI_ChatFilterActionTokenSenderHostmaskTag = 6,
-	TPI_ChatFilterActionTokenSenderNicknameTag = 7,
-	TPI_ChatFilterActionTokenSenderUsernameTag = 8,
+	TPI_ChatFilterActionTokenSenderNicknameTag = 5,
+	TPI_ChatFilterActionTokenSenderAddressTag = 6,
+	TPI_ChatFilterActionTokenSenderUsernameTag = 7,
+	TPI_ChatFilterActionTokenSenderHostmaskTag = 8,
 	TPI_ChatFilterActionTokenServerAddressTag = 9
 };
 
 @protocol TPI_ChatFilterEditFilterSheetDelegate;
 
 @interface TPI_ChatFilterEditFilterSheet : TDCSheetBase <NSTokenFieldDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
-- (void)startWithFilter:(TPI_ChatFilter *)filter;
+- (instancetype)initWithFilter:(nullable TPI_ChatFilter *)filter NS_DESIGNATED_INITIALIZER;
+
+- (void)start;
 @end
 
 @protocol TPI_ChatFilterEditFilterSheetDelegate <NSObject>
 @optional
 
-- (void)chatFilterEditFilterSheet:(TPI_ChatFilterEditFilterSheet *)sender onOK:(TPI_ChatFilter *)filter;
+- (void)chatFilterEditFilterSheet:(TPI_ChatFilterEditFilterSheet *)sender onOk:(TPI_ChatFilter *)filter;
 - (void)chatFilterEditFilterSheetWillClose:(TPI_ChatFilterEditFilterSheet *)sender;
 @end
+
+NS_ASSUME_NONNULL_END

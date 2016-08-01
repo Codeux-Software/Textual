@@ -37,5 +37,10 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPI_ChatFilterExtension : NSObject <THOPluginProtocol, NSTableViewDataSource, NSTableViewDelegate>
+@property (readonly) NSArrayController *filterArrayController;
 @end
+
+NS_ASSUME_NONNULL_END

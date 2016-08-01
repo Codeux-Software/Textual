@@ -36,163 +36,416 @@
  *********************************************************************** */
 
 #import "TPI_ChatFilter.h"
+#import "TPI_ChatFilterInternal.h"
+
+#import "NSObjectHelperPrivate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPI_ChatFilter
 
+- (void)populateDefaultsPreflight
+{
+	ObjectIsAlreadyInitializedAssert
+
+	self->_defaults = @{
+		@"filterEvents"					: @(TPI_ChatFilterPlainTextMessageEventType |
+											TPI_ChatFilterActionMessageEventType),
+
+		@"filterIgnoreContent"			: @(NO),
+		@"filterIgnoresOperators"		: @(YES),
+		@"filterLimitedToMyself"		: @(NO),
+		@"filterLogMatch"				: @(NO),
+
+		@"filterLimitedToValue"			: @(TPI_ChatFilterLimitToNoLimitValue),
+	};
+}
+
+- (void)populateDefaultsPostflight
+{
+	ObjectIsAlreadyInitializedAssert
+
+	SetVariableIfNilCopy(self->_filterLimitedToChannelsIDs, @[])
+	SetVariableIfNilCopy(self->_filterLimitedToClientsIDs, @[])
+	SetVariableIfNilCopy(self->_filterEventsNumerics, @[])
+
+	SetVariableIfNilCopy(self->_filterAction, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_filterForwardToDestination, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_filterMatch, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_filterNotes, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_filterSenderMatch, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_filterTitle, NSStringEmptyPlaceholder)
+
+	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+}
+
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
+	return [self initWithDictionary:@{}];
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic
+{
+	ObjectIsAlreadyInitializedAssert
+
 	if ((self = [super init])) {
-		[self populateDefaults];
-	}
-	
-	return self;
-}
+		[self populateDefaultsPreflight];
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic
-{
-	if ((self = [self init])) {
 		[self populateDictionaryValues:dic];
+
+		[self populateDefaultsPostflight];
+
+		self->_objectInitialized = YES;
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (NSDictionary *)defaults
+- (nullable instancetype)initWithContentsOfPath:(NSString *)path
 {
-	static id _defaults = nil;
+	NSParameterAssert(path != nil);
 
-	if (_defaults == nil) {
-		NSDictionary *defaults = @{
-			@"filterEvents"						: @(TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType),
+	NSURL *url = [NSURL fileURLWithPath:path];
 
-			@"filterIgnoreContent"				: @(NO),
-			@"filterIgnoresOperators"			: @(YES),
-			@"filterLogMatch"					: @(NO),
-			@"filterLimitedToMyself"			: @(NO),
+	return [self initWithContentsOfURL:url];
+}
 
-			@"filterLimitedToValue"				: @(TPI_ChatFilterLimitToNoLimitValue),
-		};
+- (nullable instancetype)initWithContentsOfURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
 
-		_defaults = [defaults copy];
+	NSDictionary *dic = [NSDictionary dictionaryWithContentsOfURL:url];
+
+	if (dic == nil) {
+		return nil;
 	}
-	
-	return _defaults;
+
+	return [self initWithDictionary:dic];
 }
 
-- (void)populateDefaults
+- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
 {
-	NSDictionary *defaults = [self defaults];
+	NSParameterAssert(dic != nil);
 
-	self.filterItemID = [NSString stringWithUUID];
+	if ([self isMutable] == NO) {
+		ObjectIsAlreadyInitializedAssert
+	}
 
-	self.filterLimitedToValue = [defaults integerForKey:@"filterLimitedToValue"];
+	NSMutableDictionary<NSString *, id> *defaultsMutable = [self->_defaults mutableCopy];
 
-	self.filterLimitedToMyself = [defaults boolForKey:@"filterLimitedToMyself"];
+	[defaultsMutable addEntriesFromDictionary:dic];
 
-	self.filterIgnoresOperators = [defaults boolForKey:@"filterIgnoresOperators"];
-
-	self.filterIgnoreContent = [defaults boolForKey:@"filterIgnoreContent"];
-
-	self.filterLogMatch = [defaults boolForKey:@"filterLogMatch"];
-
-	self.filterEvents = [defaults integerForKey:@"filterEvents"];
-}
-
-- (void)populateDictionaryValues:(NSDictionary *)dic
-{
 	/* Set regular key names */
-	[dic assignArrayTo:&_filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
-	[dic assignArrayTo:&_filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
+	[defaultsMutable assignArrayTo:&self->_filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
+	[defaultsMutable assignArrayTo:&self->_filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
+	[defaultsMutable assignArrayTo:&self->_filterEventsNumerics forKey:@"filterEventsNumerics"];
 
-	[dic assignArrayTo:&_filterEventsNumerics forKey:@"filterEventsNumerics"];
+	[defaultsMutable assignBoolTo:&self->_filterIgnoreContent forKey:@"filterIgnoreContent"];
+	[defaultsMutable assignBoolTo:&self->_filterIgnoreOperators forKey:@"filterIgnoresOperators"];
+	[defaultsMutable assignBoolTo:&self->_filterLimitedToMyself forKey:@"filterLimitedToMyself"];
+	[defaultsMutable assignBoolTo:&self->_filterLogMatch forKey:@"filterLogMatch"];
 
-	[dic assignBoolTo:&_filterIgnoreContent forKey:@"filterIgnoreContent"];
-	[dic assignBoolTo:&_filterIgnoresOperators forKey:@"filterIgnoresOperators"];
-	[dic assignBoolTo:&_filterLimitedToMyself forKey:@"filterLimitedToMyself"];
-	[dic assignBoolTo:&_filterLogMatch forKey:@"filterLogMatch"];
+	[defaultsMutable assignStringTo:&self->_filterAction forKey:@"filterAction"];
+	[defaultsMutable assignStringTo:&self->_filterForwardToDestination forKey:@"filterForwardToDestination"];
+	[defaultsMutable assignStringTo:&self->_filterMatch forKey:@"filterMatch"];
+	[defaultsMutable assignStringTo:&self->_filterNotes forKey:@"filterNotes"];
+	[defaultsMutable assignStringTo:&self->_filterSenderMatch forKey:@"filterSenderMatch"];
+	[defaultsMutable assignStringTo:&self->_filterTitle forKey:@"filterTitle"];
 
-	[dic assignStringTo:&_filterAction forKey:@"filterAction"];
-	[dic assignStringTo:&_filterForwardToDestination forKey:@"filterForwardToDestination"];
-	[dic assignStringTo:&_filterItemID forKey:@"filterItemID"];
-	[dic assignStringTo:&_filterMatch forKey:@"filterMatch"];
-	[dic assignStringTo:&_filterNotes forKey:@"filterNotes"];
-	[dic assignStringTo:&_filterSenderMatch forKey:@"filterSenderMatch"];
-	[dic assignStringTo:&_filterTitle forKey:@"filterTitle"];
+	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 
-	[dic assignUnsignedIntegerTo:&_filterLimitedToValue forKey:@"filterLimitedToValue"];
+	[defaultsMutable assignUnsignedIntegerTo:&self->_filterLimitedToValue forKey:@"filterLimitedToValue"];
 
 	/* Maintain backwards compatibility by setting old key names */
+	/* dic is accessed instead of defaultsMutable because filterEvents will always 
+	 exist in defaultsMutable */
 	id filterEvents = dic[@"filterEvents"];
 
-	if (filterEvents && [filterEvents isKindOfClass:[NSNumber class]]) {
-		self.filterEvents = [filterEvents unsignedIntegerValue];
-	} else {
-		TPI_ChatFilterEventType filterEventsOld = (TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType);
+	if (filterEvents && [filterEvents isKindOfClass:[NSNumber class]])
+	{
+		self->_filterEvents = [filterEvents unsignedIntegerValue];
+	}
+	else
+	{
+		TPI_ChatFilterEventType filterEventsMask = (TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType);
 
-		id filterCommandPRIVMSG = dic[@"filterCommandPRIVMSG"];
-		id filterCommandPRIVMSG_ACTION = dic[@"filterCommandPRIVMSG_ACTION"];
+		id filterCommandPRIVMSG = defaultsMutable[@"filterCommandPRIVMSG"];
 
-		if ([dic boolForKey:@"filterCommandNOTICE"])
-			filterEventsOld |= TPI_ChatFilterNoticeMessageEventType;
+		if (filterCommandPRIVMSG && [filterCommandPRIVMSG boolValue] == NO) {
+			filterEventsMask &= ~TPI_ChatFilterPlainTextMessageEventType;
+		}
 
-		if (filterCommandPRIVMSG && [filterCommandPRIVMSG boolValue] == NO)
-			filterEventsOld &= ~TPI_ChatFilterPlainTextMessageEventType;
+		id filterCommandPRIVMSG_ACTION = defaultsMutable[@"filterCommandPRIVMSG_ACTION"];
 
-		if (filterCommandPRIVMSG_ACTION && [filterCommandPRIVMSG_ACTION boolValue] == NO)
-			filterEventsOld &= ~TPI_ChatFilterActionMessageEventType;
+		if (filterCommandPRIVMSG_ACTION && [filterCommandPRIVMSG_ACTION boolValue] == NO) {
+			filterEventsMask &= ~TPI_ChatFilterActionMessageEventType;
+		}
 
-		self.filterEvents = filterEventsOld;
+		if ([defaultsMutable boolForKey:@"filterCommandNOTICE"]) {
+			filterEventsMask |= TPI_ChatFilterNoticeMessageEventType;
+		}
+
+		self->_filterEvents = filterEventsMask;
 	}
 }
 
-- (NSDictionary *)dictionaryValue
+- (NSDictionary<NSString *, id> *)dictionaryValue
 {
-	NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:6];
+	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
 	/* Maintain backwards compatibility by setting old key names */
-	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType]		forKey:@"filterCommandNOTICE"];
-	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType]	forKey:@"filterCommandPRIVMSG"];
-	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]		forKey:@"filterCommandPRIVMSG_ACTION"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] forKey:@"filterCommandPRIVMSG"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]	forKey:@"filterCommandPRIVMSG_ACTION"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType]	forKey:@"filterCommandNOTICE"];
 
 	/* Set regular key names */
 	[dic maybeSetObject:self.filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
 	[dic maybeSetObject:self.filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
-
 	[dic maybeSetObject:self.filterEventsNumerics forKey:@"filterEventsNumerics"];
 
 	[dic maybeSetObject:self.filterAction forKey:@"filterAction"];
 	[dic maybeSetObject:self.filterForwardToDestination forKey:@"filterForwardToDestination"];
-	[dic maybeSetObject:self.filterItemID forKey:@"filterItemID"];
 	[dic maybeSetObject:self.filterMatch forKey:@"filterMatch"];
 	[dic maybeSetObject:self.filterNotes forKey:@"filterNotes"];
 	[dic maybeSetObject:self.filterSenderMatch forKey:@"filterSenderMatch"];
 	[dic maybeSetObject:self.filterTitle forKey:@"filterTitle"];
+	[dic maybeSetObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 
 	[dic setBool:self.filterIgnoreContent forKey:@"filterIgnoreContent"];
-	[dic setBool:self.filterIgnoresOperators forKey:@"filterIgnoresOperators"];
+	[dic setBool:self.filterIgnoreOperators forKey:@"filterIgnoresOperators"];
 	[dic setBool:self.filterLimitedToMyself forKey:@"filterLimitedToMyself"];
 	[dic setBool:self.filterLogMatch forKey:@"filterLogMatch"];
 
 	[dic setUnsignedInteger:self.filterEvents forKey:@"filterEvents"];
-
 	[dic setUnsignedInteger:self.filterLimitedToValue forKey:@"filterLimitedToValue"];
 
-	return [dic dictionaryByRemovingDefaults:[self defaults]];
+	return [dic dictionaryByRemovingDefaults:self->_defaults];
 }
 
 - (BOOL)isEventTypeEnabled:(TPI_ChatFilterEventType)eventType
 {
-	return ((_filterEvents & eventType) == eventType);
-}
-
-- (instancetype)copyWithZone:(NSZone *)zone
-{
-	return [[TPI_ChatFilter allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	return ((self->_filterEvents & eventType) == eventType);
 }
 
 - (NSString *)filterDescription
 {
-	return TPILocalizedString(@"TPI_ChatFilterExtension[0004]", [self filterTitle]);
+	return TPILocalizedString(@"TPI_ChatFilterExtension[0004]", self.filterTitle);
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	  TPI_ChatFilter *object =
+	[[TPI_ChatFilter allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+
+	return object;
+}
+
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
+{
+	  TPI_ChatFilterMutable *object =
+	[[TPI_ChatFilterMutable allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+
+	return object;
+}
+
+- (BOOL)isMutable
+{
+	return NO;
+}
+
+- (BOOL)writeToPath:(NSString *)path
+{
+	NSParameterAssert(path != nil);
+
+	NSURL *url = [NSURL fileURLWithPath:path];
+
+	return [self writeToURL:url];
+}
+
+- (BOOL)writeToURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	NSDictionary *dictionaryValue = self.dictionaryValue;
+
+	NSError *parseError = nil;
+
+	NSData *propertyList =
+	[NSPropertyListSerialization dataWithPropertyList:dictionaryValue format:NSPropertyListBinaryFormat_v1_0 options:0 error:&parseError];
+
+	if (propertyList == nil) {
+		if (parseError) {
+			LogToConsoleError("Error Creating Property List: %{public}@", parseError.localizedDescription)
+		}
+
+		return NO;
+	}
+
+	BOOL writeResult = [propertyList writeToURL:url atomically:YES];
+
+	if (writeResult == NO) {
+		LogToConsoleError("Write failed")
+
+		return NO;
+	}
+
+	return YES;
 }
 
 @end
+
+#pragma mark -
+
+@implementation TPI_ChatFilterMutable
+
+@dynamic filterIgnoreContent;
+@dynamic filterIgnoreOperators;
+@dynamic filterLogMatch;
+@dynamic filterLimitedToMyself;
+@dynamic filterEvents;
+@dynamic filterLimitedToValue;
+@dynamic filterLimitedToChannelsIDs;
+@dynamic filterLimitedToClientsIDs;
+@dynamic filterEventsNumerics;
+@dynamic filterAction;
+@dynamic filterForwardToDestination;
+@dynamic filterMatch;
+@dynamic filterNotes;
+@dynamic filterSenderMatch;
+@dynamic filterTitle;
+
+- (BOOL)isMutable
+{
+	return YES;
+}
+
+- (void)setFilterIgnoreContent:(BOOL)filterIgnoreContent
+{
+	if (self->_filterIgnoreContent != filterIgnoreContent) {
+		self->_filterIgnoreContent = filterIgnoreContent;
+	}
+}
+
+- (void)setFilterIgnoreOperators:(BOOL)filterIgnoreOperators
+{
+	if (self->_filterIgnoreOperators != filterIgnoreOperators) {
+		self->_filterIgnoreOperators = filterIgnoreOperators;
+	}
+}
+
+- (void)setFilterLogMatch:(BOOL)filterLogMatch
+{
+	if (self->_filterLogMatch != filterLogMatch) {
+		self->_filterLogMatch = filterLogMatch;
+	}
+}
+
+- (void)setFilterLimitedToMyself:(BOOL)filterLimitedToMyself
+{
+	if (self->_filterLimitedToMyself != filterLimitedToMyself) {
+		self->_filterLimitedToMyself = filterLimitedToMyself;
+	}
+}
+
+- (void)setFilterEvents:(TPI_ChatFilterEventType)filterEvents
+{
+	if (self->_filterEvents != filterEvents) {
+		self->_filterEvents = filterEvents;
+	}
+}
+
+- (void)setFilterLimitedToValue:(TPI_ChatFilterLimitToValue)filterLimitedToValue
+{
+	if (self->_filterLimitedToValue != filterLimitedToValue) {
+		self->_filterLimitedToValue = filterLimitedToValue;
+	}
+}
+
+- (void)setFilterLimitedToChannelsIDs:(NSArray<NSString *> *)filterLimitedToChannelsIDs
+{
+	NSParameterAssert(filterLimitedToChannelsIDs != nil);
+
+	if (self->_filterLimitedToChannelsIDs != filterLimitedToChannelsIDs) {
+		self->_filterLimitedToChannelsIDs = [filterLimitedToChannelsIDs copy];
+	}
+}
+
+- (void)setFilterLimitedToClientsIDs:(NSArray<NSString *> *)filterLimitedToClientsIDs
+{
+	NSParameterAssert(filterLimitedToClientsIDs != nil);
+
+	if (self->_filterLimitedToClientsIDs != filterLimitedToClientsIDs) {
+		self->_filterLimitedToClientsIDs = [filterLimitedToClientsIDs copy];
+	}
+}
+
+- (void)setFilterEventsNumerics:(NSArray<NSString *> *)filterEventsNumerics
+{
+	NSParameterAssert(filterEventsNumerics != nil);
+
+	if (self->_filterEventsNumerics != filterEventsNumerics) {
+		self->_filterEventsNumerics = [filterEventsNumerics copy];
+	}
+}
+
+- (void)setFilterAction:(NSString *)filterAction
+{
+	NSParameterAssert(filterAction != nil);
+
+	if (self->_filterAction != filterAction) {
+		self->_filterAction = [filterAction copy];
+	}
+}
+
+- (void)setFilterForwardToDestination:(NSString *)filterForwardToDestination
+{
+	NSParameterAssert(filterForwardToDestination != nil);
+
+	if (self->_filterForwardToDestination != filterForwardToDestination) {
+		self->_filterForwardToDestination = [filterForwardToDestination copy];
+	}
+}
+
+- (void)setFilterMatch:(NSString *)filterMatch
+{
+	NSParameterAssert(filterMatch != nil);
+
+	if (self->_filterMatch != filterMatch) {
+		self->_filterMatch = [filterMatch copy];
+	}
+}
+
+- (void)setFilterNotes:(NSString *)filterNotes
+{
+	NSParameterAssert(filterNotes != nil);
+
+	if (self->_filterNotes != filterNotes) {
+		self->_filterNotes = [filterNotes copy];
+	}
+}
+
+- (void)setFilterSenderMatch:(NSString *)filterSenderMatch
+{
+	NSParameterAssert(filterSenderMatch != nil);
+
+	if (self->_filterSenderMatch != filterSenderMatch) {
+		self->_filterSenderMatch = [filterSenderMatch copy];
+	}
+}
+
+- (void)setFilterTitle:(NSString *)filterTitle
+{
+	NSParameterAssert(filterTitle != nil);
+
+	if (self->_filterTitle != filterTitle) {
+		self->_filterTitle = [filterTitle copy];
+	}
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
