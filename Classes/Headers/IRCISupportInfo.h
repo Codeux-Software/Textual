@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define IRCISupportUserModeSymbolsCharactersKey			@"characters"
 
 @interface IRCISupportInfo : NSObject
+@property (readonly) BOOL configurationReceived;
 @property (readonly) NSUInteger maximumNicknameLength;
 @property (readonly) NSUInteger maximumModeCount;
 @property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;

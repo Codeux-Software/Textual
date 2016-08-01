@@ -502,6 +502,11 @@ ClassWithDesignatedInitializerInitMethod
 	return [[IRCModeInfo alloc] initWithModeSymbol:modeSymbol modeIsSet:modeIsSet modeParamater:modeParamater];
 }
 
+- (BOOL)configurationReceived
+{
+	return (self.cachedConfiguration.count > 0);
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
