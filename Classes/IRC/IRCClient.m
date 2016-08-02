@@ -758,7 +758,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(nickname != nil);
 
-	return NSObjectsAreEqual(nickname, self.userNickname);
+	return [self.userNickname isEqualIgnoringCase:nickname];
 }
 
 - (BOOL)stringIsNickname:(NSString *)string
