@@ -42,7 +42,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _maximumProcessCount			15
+#define _maximumProcessCount			8
 
 @implementation TVCLogViewInternalWK2
 
