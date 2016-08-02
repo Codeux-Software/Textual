@@ -5237,13 +5237,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *sender = m.senderNickname;
 
+	BOOL isPlainText = (lineType != TVCLogLineNoticeType);
+
+	IRCChannel *query = nil;
+
+	/* For notices, send to a query if a query for the server already exists.
+	 Otherwise, it is always sent to the console. Plain text messages always
+	 create a new query but does not post a notification. */
+	if (isPlainText == NO) {
+		query = [self findChannel:sender];
+	} else { // NOTICE message
+		query = [self findChannelOrCreate:sender isPrivateMessage:YES];
+	}
+
 	/* Print message */
 	BOOL printMessage = YES;
 
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
 		printMessage = [THOPluginDispatcher receivedText:text
 											  authoredBy:m.sender
-											 destinedFor:nil
+											 destinedFor:query
 											  asLineType:lineType
 												onClient:self
 											  receivedAt:m.receivedAt
@@ -5253,7 +5266,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (printMessage) {
 		[self print:text
 				 by:sender
-		  inChannel:nil
+		  inChannel:query
 			 asType:lineType
 			command:m.command
 		 receivedAt:m.receivedAt
