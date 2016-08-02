@@ -1170,13 +1170,6 @@ static NSArray<NSString *> *_matchKeywords = nil;
 {
 	[self _populateDefaultNickname];
 
-	if ([TPCPreferences webKit2Enabled]) {
-		NSUInteger scrollbackLineCount =
-		[[TPCPreferences defaultPreferences] unsignedIntegerForKey:@"ScrollbackMaximumLineCountForWebKit2"];
-
-		[RZUserDefaults() registerDefaults:@{@"ScrollbackMaximumLineCount" : @(scrollbackLineCount)}];
-	}
-
 	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:NSWindowAutosaveFrameMovesToActiveDisplay];
 }
 
