@@ -62,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _objectInitialized;
 	NSString *_uniqueIdentifier;
 	NSDictionary *_defaults;
+	NSCache *_cachedIsCommandEnabledResponses;
 }
 
 - (BOOL)isMutable;
