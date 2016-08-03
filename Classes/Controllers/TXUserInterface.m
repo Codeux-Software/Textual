@@ -57,13 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)onlyShowScrollbarWhileScrolling
 {
-	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleShowScrollBars"];
-
-	if ([objectValue isEqualIgnoringCase:@"WhenScrolling"]) {
-		return YES;
-	} else {
-		return NO;
-	}
+	return ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
 }
 
 @end
