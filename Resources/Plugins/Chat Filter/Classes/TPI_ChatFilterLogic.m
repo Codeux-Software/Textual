@@ -172,26 +172,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	for (TPI_ChatFilter *filter in filters) {
 		@autoreleasepool {
-#define _commandMatchesEvent(_command_, _event_)		([command isEqualToString:(_command_)] && [filter isEventTypeEnabled:(_event_)] == NO)
-
-			if ((_commandMatchesEvent(@"JOIN", TPI_ChatFilterUserJoinedChannelEventType) ||
-				 _commandMatchesEvent(@"PART", TPI_ChatFilterUserLeftChannelEventType) ||
-				 _commandMatchesEvent(@"KICK", TPI_ChatFilterUserKickedFromChannelEventType) ||
-				 _commandMatchesEvent(@"QUIT", TPI_ChatFilterUserDisconnectedEventType) ||
-				 _commandMatchesEvent(@"NICK", TPI_ChatFilterUserChangedNicknameEventType) ||
-				 _commandMatchesEvent(@"TOPIC", TPI_ChatFilterChannelTopicChangedEventType) ||
-				 _commandMatchesEvent(@"MODE", TPI_ChatFilterChannelModeChangedEventType) ||
-				 _commandMatchesEvent(@"332", TPI_ChatFilterChannelTopicReceivedEventType) ||
-				 _commandMatchesEvent(@"324", TPI_ChatFilterChannelModeReceivedEventType)) &&
-				[filter.filterEventsNumerics containsObject:command] == NO)
-			{
+			if ([filter isCommandEnabled:command] == NO) {
 				/* Continue to next filter. This filter is not interested
 				 in the line type of the input. */
 
 				continue;
 			}
-
-#undef _commandMatchesEvent
 
 			/* Perform common filter checks */
 			if ([self testFilterDestination:filter authoredBy:textAuthor destinedFor:textDestination onClient:client] == NO) {

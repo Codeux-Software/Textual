@@ -231,6 +231,46 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return ((self->_filterEvents & eventType) == eventType);
 }
 
+- (BOOL)isCommandEnabled:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+
+	if (self->_cachedIsCommandEnabledResponses == nil) {
+		self->_cachedIsCommandEnabledResponses = [NSCache new];
+	}
+
+	NSNumber *cachedResponse = [self->_cachedIsCommandEnabledResponses objectForKey:command];
+
+	if (cachedResponse == nil) {
+		TPI_ChatFilterEventType filterEvents = self.filterEvents;
+
+#define _commandMatchesEvent(_command_, _event_)	\
+	if ([command isEqualToString:(_command_)]) {	\
+		cachedResponse = @((filterEvents & _event_) == _event_);	\
+	}
+
+		_commandMatchesEvent(@"JOIN", TPI_ChatFilterUserJoinedChannelEventType)
+		else _commandMatchesEvent(@"PART", TPI_ChatFilterUserLeftChannelEventType)
+		else _commandMatchesEvent(@"KICK", TPI_ChatFilterUserKickedFromChannelEventType)
+		else _commandMatchesEvent(@"QUIT", TPI_ChatFilterUserDisconnectedEventType)
+		else _commandMatchesEvent(@"NICK", TPI_ChatFilterUserChangedNicknameEventType)
+		else _commandMatchesEvent(@"TOPIC", TPI_ChatFilterChannelTopicChangedEventType)
+		else _commandMatchesEvent(@"MODE", TPI_ChatFilterChannelModeChangedEventType)
+		else _commandMatchesEvent(@"332", TPI_ChatFilterChannelTopicReceivedEventType)
+		else _commandMatchesEvent(@"324", TPI_ChatFilterChannelModeReceivedEventType)
+		else
+		{
+			cachedResponse = @([self.filterEventsNumerics containsObject:command]);
+		}
+
+		[self->_cachedIsCommandEnabledResponses setObject:cachedResponse forKey:command];
+	}
+
+	return cachedResponse.boolValue;
+
+#undef _commandMatchesEvent
+}
+
 - (NSString *)filterDescription
 {
 	return TPILocalizedString(@"TPI_ChatFilterExtension[0004]", self.filterTitle);

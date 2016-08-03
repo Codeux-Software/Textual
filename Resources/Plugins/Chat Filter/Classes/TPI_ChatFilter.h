@@ -85,6 +85,7 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 - (NSDictionary<NSString *, id> *)dictionaryValue;
 
 - (BOOL)isEventTypeEnabled:(TPI_ChatFilterEventType)eventType;
+- (BOOL)isCommandEnabled:(NSString *)command;
 
 - (nullable instancetype)initWithContentsOfPath:(NSString *)path;
 - (nullable instancetype)initWithContentsOfURL:(NSURL *)url;
