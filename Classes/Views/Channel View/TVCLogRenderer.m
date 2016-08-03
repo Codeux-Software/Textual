@@ -325,7 +325,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 	self->_body =
 	[XRRegularExpression string:self->_body
-				replacedByRegex:@"\\p{InCombining_Diacritical_Marks}"
+				replacedByRegex:@"([\\p{InCombining_Diacritical_Marks}]{3,})"
 					 withString:CS_UnicodeReplacementCharacter];
 }
 
