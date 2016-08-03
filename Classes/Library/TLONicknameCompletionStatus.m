@@ -381,7 +381,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[RZSpellChecker() ignoreWord:self.completedValue inSpellDocumentWithTag:textView.spellCheckerDocumentTag];
 
-	[textView setHasModifiedSpellingDictionary:YES];
+	textView.hasModifiedSpellingDictionary = YES;
 }
 
 - (void)performCompletion_step3

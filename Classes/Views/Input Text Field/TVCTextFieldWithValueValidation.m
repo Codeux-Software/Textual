@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)awakeFromNib
 {
-	[self setCachedValidValue:NO];
+	self.cachedValidValue = NO;
 }
 
 - (BOOL)drawsBackground
