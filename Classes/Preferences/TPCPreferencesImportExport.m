@@ -62,11 +62,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSOpenPanel *d = [NSOpenPanel openPanel];
 
-	[d setCanChooseFiles:YES];
-	[d setResolvesAliases:YES];
-	[d setCanChooseDirectories:NO];
-	[d setCanCreateDirectories:NO];
-	[d setAllowsMultipleSelection:NO];
+	d.canChooseFiles = YES;
+	d.canChooseDirectories = NO;
+	d.canCreateDirectories = NO;
+	d.resolvesAliases = YES;
+	d.allowsMultipleSelection = NO;
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {
@@ -334,7 +334,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSSavePanel *d = [NSSavePanel savePanel];
 
-	[d setCanCreateDirectories:YES];
+	d.canCreateDirectories = YES;
 
 	d.nameFieldStringValue = @"TextualPreferences.plist";
 

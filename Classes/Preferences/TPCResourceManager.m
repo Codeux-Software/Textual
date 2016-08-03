@@ -204,7 +204,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	d.delegate = (id)self;
 
-	[d setCanCreateDirectories:YES];
+	d.canCreateDirectories = YES;
 
 	d.directoryURL = folderRep;
 
@@ -215,7 +215,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	d.nameFieldStringValue = url.lastPathComponent;
 
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		[d setShowsTagField:NO];
+		d.showsTagField = NO;
 	}
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {

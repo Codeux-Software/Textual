@@ -266,7 +266,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return nil;
 		}
 
-		NSString *filenameWithoutExtension = [urlPath stringByDeletingPathExtension];
+		NSString *filenameWithoutExtension = urlPath.stringByDeletingPathExtension;
 
 		return [NSString stringWithFormat:@"%@://%@%@s.jpg", urlScheme, urlHost, filenameWithoutExtension];
 	}
@@ -278,9 +278,9 @@ NS_ASSUME_NONNULL_BEGIN
 			return nil;
 		}
 
-		NSString *filename = [urlPath lastPathComponent];
+		NSString *filename = urlPath.lastPathComponent;
 
-		NSString *filenameWithoutExtension = [filename stringByDeletingPathExtension];
+		NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
 
 		return [NSString stringWithFormat:@"%@://%@/webm/thumb/%@.jpg", urlScheme, urlHost, filenameWithoutExtension];
 	}

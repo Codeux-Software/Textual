@@ -126,7 +126,7 @@ ClassWithDesignatedInitializerInitMethod
 	  @"http://v4.ipv6-test.com/api/myip.php",
 	];
 
-	NSUInteger randomIndex = (arc4random() % [services count]);
+	NSUInteger randomIndex = (arc4random() % services.count);
 
 	return services[randomIndex];
 }

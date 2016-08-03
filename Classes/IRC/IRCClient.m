@@ -3853,7 +3853,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSScanner *scanner = [NSScanner scannerWithString:format];
 
-	[scanner setCharactersToBeSkipped:nil];
+	scanner.charactersToBeSkipped = nil;
 
 	NSMutableString *buffer = [NSMutableString new];
 
@@ -6389,7 +6389,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* Create new batch message and queue it. */
 		IRCMessageBatchMessage *newBatchMessage = [IRCMessageBatchMessage new];
 
-		[newBatchMessage setBatchIsOpen:YES];
+		newBatchMessage.batchIsOpen = YES;
 
 		newBatchMessage.batchToken = batchToken;
 		newBatchMessage.batchType = batchType;
