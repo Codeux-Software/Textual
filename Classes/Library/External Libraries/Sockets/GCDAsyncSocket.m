@@ -869,7 +869,7 @@ enum GCDAsyncSocketConfig
 	uint32_t flags;
 	uint16_t config;
 	
-	__weak id delegate;
+	__weak id<GCDAsyncSocketDelegate> delegate;
 	dispatch_queue_t delegateQueue;
 	
 	int socket4FD;
@@ -1138,7 +1138,7 @@ enum GCDAsyncSocketConfig
 	[self setDelegateQueue:newDelegateQueue synchronously:YES];
 }
 
-- (void)getDelegate:(id *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr
+- (void)getDelegate:(id<GCDAsyncSocketDelegate> *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr
 {
 	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
@@ -2737,7 +2737,7 @@ enum GCDAsyncSocketConfig
 	int socketFD, alternateSocketFD;
 	NSData *address, *alternateAddress;
 	
-    if ((preferIPv6 && socket6FD) || socket4FD == SOCKET_NULL)
+    if ((preferIPv6 && socket6FD != SOCKET_NULL) || socket4FD == SOCKET_NULL)
     {
         socketFD = socket6FD;
         alternateSocketFD = socket4FD;
@@ -6483,8 +6483,10 @@ enum GCDAsyncSocketConfig
 		#if TARGET_OS_IPHONE
 		{
 			GCDAsyncSpecialPacket *tlsPacket = (GCDAsyncSpecialPacket *)currentRead;
-			NSDictionary *tlsSettings = tlsPacket->tlsSettings;
-			
+            NSDictionary *tlsSettings = @{};
+            if (tlsPacket) {
+                tlsSettings = tlsPacket->tlsSettings;
+            }
 			NSNumber *value = [tlsSettings objectForKey:GCDAsyncSocketUseCFStreamForTLS];
 			if (value && [value boolValue])
 				useSecureTransport = NO;
