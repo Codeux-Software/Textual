@@ -271,6 +271,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #undef _commandMatchesEvent
 }
 
+- (void)purgeIsCommandEnabledResponses
+{
+	if (self->_cachedIsCommandEnabledResponses == nil) {
+		return;
+	}
+
+	[self->_cachedIsCommandEnabledResponses removeAllObjects];
+}
+
 - (NSString *)filterDescription
 {
 	return TPILocalizedString(@"TPI_ChatFilterExtension[0004]", self.filterTitle);
@@ -395,6 +404,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	if (self->_filterEvents != filterEvents) {
 		self->_filterEvents = filterEvents;
+
+		[self purgeIsCommandEnabledResponses];
 	}
 }
 
@@ -429,6 +440,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (self->_filterEventsNumerics != filterEventsNumerics) {
 		self->_filterEventsNumerics = [filterEventsNumerics copy];
+
+		[self purgeIsCommandEnabledResponses];
 	}
 }
 
