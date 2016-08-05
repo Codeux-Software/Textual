@@ -157,7 +157,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, copy, nullable) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
 @property (nonatomic, strong) NSMutableArray<IRCTimerCommandContext *> *commandQueue;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *trackedNicknames;
+@property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
 @property (nonatomic, strong, nullable) NSMutableString *zncBouncerCertificateChainDataMutable;
 @property (nonatomic, copy) NSString *temporaryServerAddressOverride;
 @property (nonatomic, assign) uint16_t temporaryServerPortOverride;
@@ -217,7 +217,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.channelListPrivate = [NSMutableArray array];
 	self.commandQueue = [NSMutableArray array];
 
-	self.trackedNicknames = [NSMutableDictionary dictionary];
+	self.trackedUsers = [[IRCAddressBookUserTrackingContainer alloc] initWithClient:self];
 
 	self.lastMessageServerTime = self.config.lastMessageServerTime;
 
@@ -4197,6 +4197,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self.supportInfo reset];
 
+	[self.trackedUsers clearTrackedUsers];
+
 	if (isTerminating == NO) {
 		NSString *disconnectMessage = nil;
 
@@ -7745,46 +7747,40 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSArray *onlineNicknames = [onlineNicknamesString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			/* Start going over the list of tracked nicknames */
-			@synchronized(self.trackedNicknames) {
-				NSArray *trackedNicknames = self.trackedNicknames.allKeys;
+			NSDictionary *trackedUsers = self.trackedUsers.trackedUsers;
+
+			[trackedUsers enumerateKeysAndObjectsUsingBlock:^(NSString *trackedUser, NSNumber *trackingStatusInt, BOOL *stop) {
+				IRCAddressBookUserTrackingStatus trackingStatus =
+				IRCAddressBookUserTrackingUnknownStatus;
 				
-				for (NSString *trackedNickname in trackedNicknames) {
-					NSString *trackedNicknameLowercase = trackedNickname.lowercaseString;
-
-					IRCAddressBookUserTrackingStatus trackingStatus =
-					IRCAddressBookUserTrackingUnknownStatus;
-					
-					/* Was the user on during the last check? */
-					BOOL ison = [self.trackedNicknames[trackedNicknameLowercase] boolValue];
-					
-					if (ison) {
-						/* If the user was on before, but is not in the list of ISON
-						 users in this reply, then they are considered gone. Log that. */
-						if ([onlineNicknames containsObjectIgnoringCase:trackedNickname] == NO) {
-							if (self.invokingISONCommandForFirstTime == NO) {
-								trackingStatus = IRCAddressBookUserTrackingSignedOffStatus;
-							}
-
-							self.trackedNicknames[trackedNicknameLowercase] = @(NO);
-						}
-					} else {
-						/* If they were not on but now are, then log that too. */
-						if ([onlineNicknames containsObjectIgnoringCase:trackedNickname]) {
-							if (self.invokingISONCommandForFirstTime) {
-								trackingStatus = IRCAddressBookUserTrackingIsAvailalbeStatus;
-							} else {
-								trackingStatus = IRCAddressBookUserTrackingSignedOnStatus;
-							}
-
-							self.trackedNicknames[trackedNicknameLowercase] = @(YES);
+				/* Was the user on during the last check? */
+				BOOL ison = trackingStatusInt.boolValue;
+				
+				if (ison) {
+					/* If the user was on before, but is not in the list of ISON
+					 users in this reply, then they are considered gone. Log that. */
+					if ([onlineNicknames containsObjectIgnoringCase:trackedUser] == NO) {
+						if (self.invokingISONCommandForFirstTime == NO) {
+							trackingStatus = IRCAddressBookUserTrackingSignedOffStatus;
 						}
 					}
+				} else {
+					/* If they were not on but now are, then log that too. */
+					if ([onlineNicknames containsObjectIgnoringCase:trackedUser]) {
+						if (self.invokingISONCommandForFirstTime) {
+							trackingStatus = IRCAddressBookUserTrackingIsAvailalbeStatus;
+						} else {
+							trackingStatus = IRCAddressBookUserTrackingSignedOnStatus;
+						}
+					}
+				}
 
-					/* If something changed (non-nil localization string), then scan 
-					 the list of address book entries to report the result. */
-					[self notifyTrackingStatusOfNickname:trackedNickname changedTo:trackingStatus];
-				} // for
-			} // @synchronized
+				/* If something changed (non-nil localization string), then scan 
+				 the list of address book entries to report the result. */
+				if (trackingStatus != IRCAddressBookUserTrackingUnknownStatus) {
+					[self statusOfTrackedNickname:trackedUser changedTo:trackingStatus notify:YES];
+				}
+			}]; // for
 
 			if (self.invokingISONCommandForFirstTime) { // Reset internal property
 				self.invokingISONCommandForFirstTime = NO;
@@ -8339,22 +8335,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if (numeric == 600) // logged online
-			{
-				[self notifyTrackingStatusOfNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOnStatus];
-			}
-			else if (numeric == 601) // logged offline
-			{
-				[self notifyTrackingStatusOfNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOffStatus];
-			}
-			else if (numeric == 604 || // is online
-					 numeric == 605) // is offline
-			{
-				NSString *trackingNickname = addressBookEntry.trackingNickname;
-
-				@synchronized(self.trackedNicknames) {
-					self.trackedNicknames[trackingNickname] = @(numeric == 604);
-				}
+			if (numeric == 600) { // logged online
+				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
+			} else if (numeric == 601) { // logged offline
+				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
+			} else if (numeric == 604) { // is online
+				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsAvailalbeStatus notify:NO];
+			} else if (numeric == 605) { // is offline
+				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsNotAvailalbeStatus notify:NO];
 			}
 
 			break;
@@ -8399,16 +8387,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					continue;
 				}
 
-				NSString *trackingNickname = addressBookEntry.trackingNickname;
-
-				@synchronized(self.trackedNicknames) {
-					self.trackedNicknames[trackingNickname] = @(numeric == 730);
-				}
-
 				if (numeric == 730) { // logged online
-					[self notifyTrackingStatusOfNickname:nicknameInt changedTo:IRCAddressBookUserTrackingSignedOnStatus];
+					[self statusOfTrackedNickname:nicknameInt changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
 				} else {
-					[self notifyTrackingStatusOfNickname:nicknameInt changedTo:IRCAddressBookUserTrackingSignedOffStatus];
+					[self statusOfTrackedNickname:nicknameInt changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
 				}
 			}
 
@@ -10494,7 +10476,23 @@ present_error:
 #pragma mark -
 #pragma mark User Tracking
 
-- (void)notifyTrackingStatusOfNickname:(NSString *)nickname changedTo:(IRCAddressBookUserTrackingStatus)newStatus
+- (void)statusOfTrackedNickname:(NSString *)nickname changedTo:(IRCAddressBookUserTrackingStatus)newStatus
+{
+	[self statusOfTrackedNickname:nickname changedTo:newStatus notify:NO];
+}
+
+- (void)statusOfTrackedNickname:(NSString *)nickname changedTo:(IRCAddressBookUserTrackingStatus)newStatus notify:(BOOL)notify
+{
+	NSParameterAssert(nickname != nil);
+
+	[self.trackedUsers statusOfTrackedNickname:nickname changedTo:newStatus];
+
+	if (notify) {
+		[self notifyStatusOfTrackedNickname:nickname changedTo:newStatus];
+	}
+}
+
+- (void)notifyStatusOfTrackedNickname:(NSString *)nickname changedTo:(IRCAddressBookUserTrackingStatus)newStatus
 {
 	NSParameterAssert(nickname != nil);
 
@@ -10525,56 +10523,49 @@ present_error:
 	NSMutableArray<NSString *> *watchAdditions = [NSMutableArray array];
 	NSMutableArray<NSString *> *watchRemovals = [NSMutableArray array];
 
-	@synchronized (self.trackedNicknames) {
-		/* Compare configuration to the list of tracked nicknames.
-		 * Nicknames that are new are added to watchAdditions */
-		NSMutableDictionary<NSString *, NSNumber *> *trackedNicknamesNew = [NSMutableDictionary dictionary];
+	/* Compare configuration to the list of tracked nicknames.
+	 * Nicknames that are new are added to watchAdditions */
+	NSDictionary *trackedUsersOld = self.trackedUsers.trackedUsers;
 
-		for (IRCAddressBookEntry *g in self.config.ignoreList) {
-			if (g.entryType != IRCAddressBookUserTrackingEntryType) {
-				continue;
-			} else if (g.trackUserActivity == NO) {
-				continue;
-			}
+	NSMutableArray<NSString *> *trackedUsersNew = [NSMutableArray array];
 
-			NSString *trackingNickname = g.trackingNickname;
-
-			/* If this nickname is already tracked, then there is nothing
-			 further to do at this time. */
-			NSNumber *trackingStatus = self.trackedNicknames[trackingNickname];
-
-			if (trackingStatus) {
-				trackedNicknamesNew[trackingNickname] = trackingStatus;
-
-				continue;
-			}
-
-			/* Add new entry for nickname not already tracked */
-			trackedNicknamesNew[trackingNickname] = @(NO);
-					
-			[watchAdditions addObject:trackingNickname];
+	for (IRCAddressBookEntry *g in self.config.ignoreList) {
+		if (g.trackUserActivity == NO) {
+			continue;
 		}
 
-		/* Compare old list of tracked nicknames to new list to find
-		 those that no longer appear. Mark those for removal. */
-		for (NSString *trackedNickname in self.trackedNicknames) {
-			if ([trackedNicknamesNew containsKey:trackedNickname]) {
-				continue;
-			}
+		NSString *trackingNickname = g.trackingNickname;
 
-			[watchRemovals addObject:trackedNickname];
+		IRCAddressBookUserTrackingStatus trackingStatus = [self.trackedUsers statusOfUser:trackingNickname];
+
+		if (trackingStatus != IRCAddressBookUserTrackingUnknownStatus) {
+			[trackedUsersNew addObject:trackingNickname];
+
+			continue;
 		}
 
-		/* Set new entries */
-		[self.trackedNicknames removeAllObjects];
+		[watchAdditions addObject:trackingNickname];
 
-		[self.trackedNicknames addEntriesFromDictionary:trackedNicknamesNew];
+		[self.trackedUsers _addTrackedUser:trackingNickname];
 	}
 
+	/* Compare old list of tracked nicknames to new list to find
+	 those that no longer appear. Mark those for removal. */
+	for (NSString *trackedUser in trackedUsersOld) {
+		if ([trackedUsersNew containsObjectIgnoringCase:trackedUser]) {
+			continue;
+		}
+
+		[watchRemovals addObject:trackedUser];
+
+		[self.trackedUsers _removeTrackedUser:trackedUser];
+	}
+
+	/* Set new entries */
 	[self modifyWatchListBy:YES nicknames:watchAdditions];
 
 	[self modifyWatchListBy:NO nicknames:watchRemovals];
-
+	
 	[self startISONTimer];
 }
 
@@ -10598,10 +10589,6 @@ present_error:
 	[self.isonTimer stop];
 
 	[self stopWhoTimer];
-	
-	@synchronized(self.trackedNicknames) {
-		[self.trackedNicknames removeAllObjects];
-	}
 }
 
 - (void)onISONTimer:(id)sender
@@ -10629,10 +10616,8 @@ present_error:
 
 	[nicknames removeAllObjects];
 
-	@synchronized(self.trackedNicknames) {
-		for (NSString *trackedNickname in self.trackedNicknames) {
-			[nicknames addObject:trackedNickname];
-		}
+	for (NSString *trackedUser in self.trackedUsers.trackedUsers) {
+		[nicknames addObject:trackedUser];
 	}
 
 	[self sendIsonForNicknames:nicknames];
@@ -10780,49 +10765,41 @@ present_error:
 		return;
 	}
 
-	if (addressBookEntry.entryType != IRCAddressBookUserTrackingEntryType) {
+	IRCAddressBookUserTrackingStatus trackingStatus = [self.trackedUsers statusOfEntry:addressBookEntry];
+
+	if (trackingStatus == IRCAddressBookUserTrackingUnknownStatus) {
+		return;
+	}
+
+	BOOL ison = (trackingStatus == IRCAddressBookUserTrackingIsAvailalbeStatus);
+	
+	/* Notification Type: JOIN Command */
+	if ([message.command isEqualIgnoringCase:@"JOIN"]) {
+		if (ison == NO) {
+			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
+		}
+		
 		return;
 	}
 	
-    NSString *trackingNickname = addressBookEntry.trackingNickname;
-
-	@synchronized(self.trackedNicknames) {
-		BOOL ison = [self.trackedNicknames[trackingNickname] boolValue];
-		
-		/* Notification Type: JOIN Command */
-		if ([message.command isEqualIgnoringCase:@"JOIN"]) {
-			if (ison == NO) {
-				self.trackedNicknames[trackingNickname] = @(YES);
-
-				[self notifyTrackingStatusOfNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOnStatus];
-			}
-			
-			return;
+	/* Notification Type: QUIT Command */
+	if ([message.command isEqualIgnoringCase:@"QUIT"]) {
+		if (ison) {
+			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
 		}
 		
-		/* Notification Type: QUIT Command */
-		if ([message.command isEqualIgnoringCase:@"QUIT"]) {
-			if (ison) {
-				self.trackedNicknames[trackingNickname] = @(NO);
-
-				[self notifyTrackingStatusOfNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOffStatus];
-			}
-			
-			return;
+		return;
+	}
+	
+	/* Notification Type: NICK Command */
+	if ([message.command isEqualIgnoringCase:@"NICK"]) {
+		if (ison) {
+			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
+		} else {
+			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
 		}
-		
-		/* Notification Type: NICK Command */
-		if ([message.command isEqualIgnoringCase:@"NICK"]) {
-			if (ison) {
-				[self notifyTrackingStatusOfNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOffStatus];
-			} else {
-				[self notifyTrackingStatusOfNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOnStatus];
-			}
 
-			self.trackedNicknames[trackingNickname] = @(ison == NO);
-
-			return;
-		}
+		return;
 	}
 }
 
