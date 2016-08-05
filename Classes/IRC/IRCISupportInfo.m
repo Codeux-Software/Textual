@@ -183,6 +183,11 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if ([segmentKey isEqualIgnoringCase:@"MONITOR"]) {
+			// freenode advertises support for MONITOR but does not respond to command
+			if ([self.serverAddress hasSuffix:@".freenode.net"]) {
+				continue;
+			}
+
 			[client enableCapacity:ClientIRCv3SupportedCapacityMonitorCommand];
 		} else if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
 			[client enableCapacity:ClientIRCv3SupportedCapacityWatchCommand];
