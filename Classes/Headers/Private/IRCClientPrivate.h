@@ -102,6 +102,8 @@ enum {
 - (void)sendFileResumeAccept:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken;
 
 - (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize requestIdentifier:(NSString *)identifier;
+
+- (IRCAddressBookUserTrackingContainer *)trackedUsers;
 @end
 
 NS_ASSUME_NONNULL_END
