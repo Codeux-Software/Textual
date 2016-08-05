@@ -251,7 +251,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *hostmask = self.hostmask;
 
 	hostmask = hostmask.nicknameFromHostmask;
-	hostmask = hostmask.lowercaseString;
 
 	self->_trackingNickname = [hostmask copy];
 }

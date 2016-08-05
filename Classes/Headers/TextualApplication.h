@@ -55,6 +55,7 @@
 
 	/* Class Forwarders */
 	@class IRCAddressBookEntry;
+	@class IRCAddressBookUserTrackingContainer;
 	@class IRCChannel;
 	@class IRCChannelConfig;
 	@class IRCChannelMode;
@@ -209,6 +210,7 @@
 	/* IRC Controllers — Core */
 	#import "IRC.h"
 	#import "IRCAddressBook.h"
+	#import "IRCAddressBookUserTracking.h"
 	#import "IRCChannel.h"
 	#import "IRCChannelConfig.h"
 	#import "IRCChannelMode.h"
