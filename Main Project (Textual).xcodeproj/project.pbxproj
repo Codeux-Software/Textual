@@ -106,6 +106,12 @@
 		4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
 		4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
 		4C0445C316F1603C00EBB665 /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
+		4C052F751D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */; };
+		4C052F761D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */; };
+		4C052F771D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */; };
+		4C052F7E1D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C052F7D1D551CC70057522D /* IRCAddressBookUserTracking.m */; };
+		4C052F7F1D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C052F7D1D551CC70057522D /* IRCAddressBookUserTracking.m */; };
+		4C052F801D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C052F7D1D551CC70057522D /* IRCAddressBookUserTracking.m */; };
 		4C056F171D1D89A100D85CEA /* TVCMemberListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C056F111D1D89A100D85CEA /* TVCMemberListCellPrivate.h */; };
 		4C056F181D1D89A100D85CEA /* TVCMemberListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C056F111D1D89A100D85CEA /* TVCMemberListCellPrivate.h */; };
 		4C056F191D1D89A100D85CEA /* TVCMemberListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C056F111D1D89A100D85CEA /* TVCMemberListCellPrivate.h */; };
@@ -1093,6 +1099,9 @@
 		4C9AEFFA1D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9AEFF71D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h */; };
 		4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
 		4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
+		4C9EEC381D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */; };
+		4C9EEC391D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */; };
+		4C9EEC3A1D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */; };
 		4C9F51221CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */; };
 		4C9F51231CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */; };
 		4C9F51241CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */; };
@@ -1889,6 +1898,8 @@
 		4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXSharedApplication.h; path = Headers/TXSharedApplication.h; sourceTree = "<group>"; };
 		4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesReload.h; path = Headers/TPCPreferencesReload.h; sourceTree = "<group>"; };
 		4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowSidebarSmoothTextFieldPrivate.h; path = Headers/Private/TVCMainWindowSidebarSmoothTextFieldPrivate.h; sourceTree = "<group>"; };
+		4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCAddressBookUserTrackingPrivate.h; path = Headers/Private/IRCAddressBookUserTrackingPrivate.h; sourceTree = "<group>"; };
+		4C052F7D1D551CC70057522D /* IRCAddressBookUserTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCAddressBookUserTracking.m; sourceTree = "<group>"; };
 		4C056F111D1D89A100D85CEA /* TVCMemberListCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListCellPrivate.h; path = Headers/Private/TVCMemberListCellPrivate.h; sourceTree = "<group>"; };
 		4C056F121D1D89A100D85CEA /* TVCMemberListMavericksUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListMavericksUserInterfacePrivate.h; path = Headers/Private/TVCMemberListMavericksUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C056F131D1D89A100D85CEA /* TVCMemberListPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListPrivate.h; path = Headers/Private/TVCMemberListPrivate.h; sourceTree = "<group>"; };
@@ -2234,6 +2245,7 @@
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = ".tmp/SharedBuildProducts-Extensions/ZNCAdditions.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9AEFF71D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCSharedProtocolDefinitionsPrivate.h; path = Headers/Private/TDCSharedProtocolDefinitionsPrivate.h; sourceTree = "<group>"; };
 		4C9E85B41B561AAC00B2670D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerRecoverLostLicenseSheet.xib"; sourceTree = SOURCE_ROOT; };
+		4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCAddressBookUserTracking.h; path = Headers/IRCAddressBookUserTracking.h; sourceTree = "<group>"; };
 		4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebScriptObjectHelper.m; path = "Helpers/External Libraries/WebKit/WebScriptObjectHelper.m"; sourceTree = "<group>"; };
 		4CA110CA1955AA4A0062EC4E /* THOPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginItem.m; path = "Plugin Architecture/THOPluginItem.m"; sourceTree = "<group>"; };
 		4CA110CB1955AA4A0062EC4E /* THOPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginManager.m; path = "Plugin Architecture/THOPluginManager.m"; sourceTree = "<group>"; };
@@ -2610,6 +2622,7 @@
 			isa = PBXGroup;
 			children = (
 				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
+				4C052F7D1D551CC70057522D /* IRCAddressBookUserTracking.m */,
 				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
@@ -2626,6 +2639,7 @@
 				4C8AF5BE158E99520026668C /* IRCMessage.m */,
 				4CB9E3C41D2B17B900ED395A /* IRCMessageBatch.m */,
 				4C8AF5BF158E99520026668C /* IRCModeInfo.m */,
+				4C3A3DDF1D4187B100569BA8 /* IRCNetworkList.m */,
 				4C8AF5C0158E99520026668C /* IRCPrefix.m */,
 				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
 				4C635EE21D27F4DA00B64A0C /* IRCTimerCommand.m */,
@@ -2634,7 +2648,6 @@
 				4CF642F71D2DC46900CB9165 /* IRCUserNicknameColorStyleGenerator.m */,
 				4C8AF5C4158E99520026668C /* IRCWorld.m */,
 				4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */,
-				4C3A3DDF1D4187B100569BA8 /* IRCNetworkList.m */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
@@ -2972,6 +2985,7 @@
 			isa = PBXGroup;
 			children = (
 				4C4A1AF31D122707004FBF12 /* External Libraries */,
+				4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */,
 				4CF642E31D2DC33700CB9165 /* IRCChannelConfigPrivate.h */,
 				4CB9E3CC1D2B199900ED395A /* IRCChannelModePrivate.h */,
 				4CF642E41D2DC33700CB9165 /* IRCChannelPrivate.h */,
@@ -3002,8 +3016,8 @@
 				4CAAAE461D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h */,
 				4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */,
 				4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */,
-				4CFEE1481D3AEEF70052709F /* TDCChannelSpotlightControllerPrivate.h */,
 				4C620E831D3E614E0037F35E /* TDCChannelSpotlightControllerPanelPrivate.h */,
+				4CFEE1481D3AEEF70052709F /* TDCChannelSpotlightControllerPrivate.h */,
 				4C620E871D3E618B0037F35E /* TDCChannelSpotlightSearchResultPrivate.h */,
 				4C620E8B1D3E61C20037F35E /* TDCChannelSpotlightSearchResultsTablePrivate.h */,
 				4C0D978B1D363953001CD6D9 /* TDCFileTransferDialogPrivate.h */,
@@ -3352,6 +3366,7 @@
 				4C673F201D10FBD300979B60 /* Private */,
 				4C8AF533158E99520026668C /* IRC.h */,
 				4C8AF534158E99520026668C /* IRCAddressBook.h */,
+				4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */,
 				4C8AF535158E99520026668C /* IRCChannel.h */,
 				4C8AF536158E99520026668C /* IRCChannelConfig.h */,
 				4C8AF537158E99520026668C /* IRCChannelMode.h */,
@@ -4013,6 +4028,7 @@
 				4CB9E3C11D2B155500ED395A /* IRCCommandIndexPrivate.h in Headers */,
 				4CB9E3B11D2B144200ED395A /* IRCModeInfoInternal.h in Headers */,
 				4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
+				4C9EEC381D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
 				4CB17EBC1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C7B05071D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
 				4CBC54251D2B26FC0067242C /* IRCMessageInternal.h in Headers */,
@@ -4028,6 +4044,7 @@
 				4C7B490D1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B03A61D1210A100295E82 /* TXUserInterface.h in Headers */,
 				4C3D4A651D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
+				4C052F751D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h in Headers */,
 				4C6CCF051D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h in Headers */,
 				4C76CC901D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04FF1D1210EC00295E82 /* BuildConfig.h in Headers */,
@@ -4189,6 +4206,7 @@
 				4C7B03FB1D1210A800295E82 /* TVCAutoExpandingTokenField.h in Headers */,
 				4CF642E71D2DC33700CB9165 /* IRCChannelConfigPrivate.h in Headers */,
 				4C7B48F61D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
+				4C052F761D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h in Headers */,
 				4C3D4A661D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
 				4C7B03FC1D1210A800295E82 /* TVCBasicTableView.h in Headers */,
 				4C4A1AF81D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
@@ -4279,6 +4297,7 @@
 				4C76CC911D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04C31D1210DA00295E82 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
 				4C083FB21D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */,
+				4C9EEC391D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
 				4C7B04C41D1210DA00295E82 /* TPCResourceManagerPrivate.h in Headers */,
 				4C7B04C51D1210DA00295E82 /* TPCThemeControllerPrivate.h in Headers */,
 				4C10B3891D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -4422,6 +4441,7 @@
 				4C7B047C1D1210B000295E82 /* TVCAutoExpandingTokenField.h in Headers */,
 				4CF642E81D2DC33700CB9165 /* IRCChannelConfigPrivate.h in Headers */,
 				4C7B48F71D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
+				4C052F771D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h in Headers */,
 				4C3D4A671D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
 				4C7B047D1D1210B000295E82 /* TVCBasicTableView.h in Headers */,
 				4C4A1AF91D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
@@ -4512,6 +4532,7 @@
 				4C76CC921D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04DC1D1210E000295E82 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
 				4C083FB31D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */,
+				4C9EEC3A1D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
 				4C7B04DD1D1210E000295E82 /* TPCResourceManagerPrivate.h in Headers */,
 				4C7B04DE1D1210E000295E82 /* TPCThemeControllerPrivate.h in Headers */,
 				4C10B38A1D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -5322,6 +5343,7 @@
 				4C04450A16F1603B00EBB665 /* TDCWelcomeSheet.m in Sources */,
 				4C7B05151D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CF40E471AC1A4AC00A26BE0 /* TVCServerListMavericksDarkUserInterface.m in Sources */,
+				4C052F7F1D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
 				4CF40E2B1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */,
 				4CB9E3C61D2B17B900ED395A /* IRCMessageBatch.m in Sources */,
@@ -5446,6 +5468,7 @@
 				4C0BA6351990798800857343 /* TDCFileTransferDialogTableCell.m in Sources */,
 				4C0BA6381990798800857343 /* TXGlobalModels.m in Sources */,
 				4C10B36B1D23247600868A74 /* TDCProgressIndicatorSheet.m in Sources */,
+				4C052F7E1D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
 				4CF40E361AC1A4AC00A26BE0 /* TVCMainWindowTextView.m in Sources */,
 				4CF40E321AC1A4AC00A26BE0 /* TVCMainWindowSplitView.m in Sources */,
 				4C0BA63A1990798800857343 /* TXMasterController.m in Sources */,
@@ -5636,6 +5659,7 @@
 				4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */,
 				4C7B05161D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CF40E481AC1A4AC00A26BE0 /* TVCServerListMavericksDarkUserInterface.m in Sources */,
+				4C052F801D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
 				4CF40E2C1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C8AF68F158E99520026668C /* NSColorHelper.m in Sources */,
 				4CB9E3C71D2B17B900ED395A /* IRCMessageBatch.m in Sources */,

@@ -53,6 +53,7 @@
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
+#import "IRCAddressBookUserTrackingPrivate.h"
 #import "IRCChannelConfigPrivate.h"
 #import "IRCChannelModePrivate.h"
 #import "IRCChannelPrivate.h"
