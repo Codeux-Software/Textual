@@ -342,6 +342,9 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *
  * @discussion A plugin that injects JavaScript into Textual's WebView can use this method
  *  to send data back to the plugin.
+ * 
+ * A payload can be passed by invoking the JavaScript function 
+ *  `app.sendPluginPayload(payloadLabel, payloadContent)`
  *
  * @warning This method is invoked on an asynchronous background dispatch queue. Not the
  *  main thread. If you interact with WebKit when this method is invoked, then make sure
