@@ -328,6 +328,21 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = mainWindow().selectedChannel;
 
 	switch (tag) {
+		case 616: // "List of Bans"
+		case 617: // "List of Ban Exceptions"
+		case 618: // "List of Invite Exceptions"
+		case 620: // "List of Quiets"
+		{
+			BOOL condition = _clientIsConnected;
+
+			if (tag == 620) {
+				/* +q is used by some servers as the user mode for channel owner. 
+				 If this mode is a user mode, then hide the menu item. */
+				menuItem.hidden = [u.supportInfo modeSymbolIsUserPrefix:@"q"];
+			}
+
+			return condition;
+		}
 		case 718: // "Search channels…"
 		{
 			menuItem.hidden = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
@@ -2950,6 +2965,20 @@ NS_ASSUME_NONNULL_BEGIN
 	[u createChannelInviteExceptionListSheet];
 
 	[u sendModes:@"+I" withParamaters:nil inChannel:c];
+}
+
+- (void)showChannelQuietList:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
+		return;
+	}
+
+	[u createChannelQuietListSheet];
+
+	[u sendModes:@"+q" withParamaters:nil inChannel:c];
 }
 
 - (void)openHelpMenuItem:(id)sender

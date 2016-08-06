@@ -125,6 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 	616: "List of Bans"
 	617: "List of Ban Exceptions"
 	618: "List of Invite Exceptions"
+	620: "List of Quiets"
 	619: "Channel Properties"
 
 	700: "Servers"
@@ -391,6 +392,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)showChannelBanExceptionList:(id)sender;
 - (IBAction)showChannelBanList:(id)sender;
 - (IBAction)showChannelInviteExceptionList:(id)sender;
+- (IBAction)showChannelQuietList:(id)sender;
 - (IBAction)showChannelModifyModesSheet:(id)sender;
 - (IBAction)showChannelModifyTopicSheet:(id)sender;
 - (IBAction)showChannelPropertiesSheet:(id)sender;

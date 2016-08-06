@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1119 */
+/* Next unusued key: 1120 */
 
 /* Script errors */
 "IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
@@ -203,6 +203,10 @@
 /* Ban exception list */
 "IRC[1104][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
 "IRC[1104][2]" = "Ban exception in %1$@: %2$@";
+
+/* Quiet list */
+"IRC[1119][1]" = "Quiet in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1119][2]" = "Quiet in %1$@: %2$@";
 
 /* /setcolor/ command */
 "IRC[1108]" = "Error: This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
