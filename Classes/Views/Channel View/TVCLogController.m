@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, assign) NSUInteger maximumLineCount;
-@property (nonatomic, copy) NSString *lastVisitedHighlight;
+@property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
 @property (nonatomic, strong, readwrite) IRCClient *associatedClient;

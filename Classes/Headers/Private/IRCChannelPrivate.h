@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)writeToLogLineToLogFile:(TVCLogLine *)logLine;
 
 - (void)print:(TVCLogLine *)logLine;
-- (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock;
+- (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END

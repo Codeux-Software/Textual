@@ -509,10 +509,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)print:(TVCLogLine *)logLine
 {
-	[self print:logLine completionBlock:NULL];
+	[self print:logLine completionBlock:nil];
 }
 
-- (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock
+- (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock
 {
 	NSParameterAssert(logLine != nil);
 
@@ -979,7 +979,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return NO;
 }
 
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item;
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
 	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
 	

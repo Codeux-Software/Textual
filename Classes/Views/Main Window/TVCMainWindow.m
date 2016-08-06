@@ -2232,7 +2232,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 						  TVCMainWindowShiftSelectionPerformDeselectChildrenFlag)];
 }
 
-- (void)shiftSelection:(nullable IRCTreeItem *)oldItem toItem:(nullable IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions;
+- (void)shiftSelection:(nullable IRCTreeItem *)oldItem toItem:(nullable IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions
 {
 	if (oldItem == newItem) {
 		return;
@@ -2649,7 +2649,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	}
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
 {
 	/* TODO (March 27, 2016): Support dragging multiple items */
 	if (items.count == 1) {

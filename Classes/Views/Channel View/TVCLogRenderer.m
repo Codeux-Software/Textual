@@ -1001,7 +1001,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	return renderer.finalResult;
 }
 
-+ (NSAttributedString *)renderBodyAsAttributedString:(NSString *)body withAttributes:(NSDictionary<NSString *, id> *)inputDictionary;
++ (NSAttributedString *)renderBodyAsAttributedString:(NSString *)body withAttributes:(NSDictionary<NSString *, id> *)inputDictionary
 {
 	NSParameterAssert(body != nil);
 	NSParameterAssert(inputDictionary != nil);

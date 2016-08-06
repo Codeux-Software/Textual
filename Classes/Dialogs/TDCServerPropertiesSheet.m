@@ -73,9 +73,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *mutableAddressBookList;
 @property (nonatomic, strong) NSMutableArray *mutableChannelList;
 @property (nonatomic, strong) NSMutableArray *mutableHighlightList;
-@property (nonatomic, strong) TDCAddressBookSheet *addressBookSheet;
-@property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
-@property (nonatomic, strong) TDCChannelPropertiesSheet *channelSheet;
+@property (nonatomic, strong, nullable) TDCAddressBookSheet *addressBookSheet;
+@property (nonatomic, strong, nullable) TDCHighlightEntrySheet *highlightSheet;
+@property (nonatomic, strong, nullable) TDCChannelPropertiesSheet *channelSheet;
 @property (nonatomic, weak) IBOutlet NSButton *addAddressBookEntryButton;
 @property (nonatomic, weak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *addHighlightButton;
@@ -1610,7 +1610,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.addressBookSheet = sheet;
 }
 
-- (void)addressBookSheet:(TDCAddressBookSheet *)sender onOk:(IRCAddressBookEntry *)config;
+- (void)addressBookSheet:(TDCAddressBookSheet *)sender onOk:(IRCAddressBookEntry *)config
 {
 	NSUInteger entryIndex =
 	[self.mutableAddressBookList indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {

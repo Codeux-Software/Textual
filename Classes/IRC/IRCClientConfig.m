@@ -547,7 +547,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return object;
 }
 
-- (NSDictionary<NSString *, id> *)dictionaryValue;
+- (NSDictionary<NSString *, id> *)dictionaryValue
 {
 	return [self dictionaryValue:NO];
 }

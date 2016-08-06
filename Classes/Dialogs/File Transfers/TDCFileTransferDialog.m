@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL IPAddressRequestPending;
 @property (readonly) TDCFileTransferDialogNavigationSelectedTab navigationSelection;
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
-@property (nonatomic, copy) NSURL *downloadDestinationURLPrivate;
+@property (nonatomic, copy, nullable) NSURL *downloadDestinationURLPrivate;
 
 - (IBAction)hideWindow:(id)sender;
 
@@ -480,7 +480,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		(void)[RZWorkspace() selectFile:fileTransfer.filePath inFileViewerRootedAtPath:nil];
+		(void)[RZWorkspace() selectFile:fileTransfer.filePath inFileViewerRootedAtPath:NSStringEmptyPlaceholder];
 	}];
 }
 
@@ -780,7 +780,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.downloadDestinationURLPrivate;
 }
 
-- (void)startUsingDownloadDestinationURL;
+- (void)startUsingDownloadDestinationURL
 {
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"File Transfers -> File Transfer Download Folder Bookmark"];
 

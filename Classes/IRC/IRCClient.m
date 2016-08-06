@@ -2970,7 +2970,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
-			[self enableInUserInvokedCommandProperty:&_inUserInvokedJoinRequest];
+			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
 
 			[self send:IRCPrivateCommandIndex("join"), targetChannelName, stringIn.string, nil];
 
