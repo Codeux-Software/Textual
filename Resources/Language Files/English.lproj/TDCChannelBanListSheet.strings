@@ -35,8 +35,9 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1003 */
+/* Next unusued key: 1004 */
 
-"TDCChannelBanListSheet[1000]" = "Bans for %@";
-"TDCChannelBanListSheet[1001]" = "Ban Exceptions for %@";
-"TDCChannelBanListSheet[1002]" = "Invite Exceptions for %@";
+"TDCChannelBanListSheet[1000]" = "Bans in %@";
+"TDCChannelBanListSheet[1001]" = "Ban Exceptions in %@";
+"TDCChannelBanListSheet[1002]" = "Invite Exceptions in %@";
+"TDCChannelBanListSheet[1003]" = "Quiets in %@";

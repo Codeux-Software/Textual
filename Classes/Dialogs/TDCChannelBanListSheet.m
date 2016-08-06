@@ -100,6 +100,8 @@ ClassWithDesignatedInitializerInitMethod
 		headerTitle = TXTLS(@"TDCChannelBanListSheet[1001]", self.channel.name);
 	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
 		headerTitle = TXTLS(@"TDCChannelBanListSheet[1002]", self.channel.name);
+	} else if (self.entryType == TDCChannelBanListSheetQuietEntryType) {
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[1003]", self.channel.name);
 	}
 
 	self.headerTitleTextField.stringValue = headerTitle;
@@ -144,6 +146,8 @@ ClassWithDesignatedInitializerInitMethod
 		return @"e";
 	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
 		return @"I";
+	} else if (self.entryType == TDCChannelBanListSheetQuietEntryType) {
+		return @"q";
 	}
 
 	return nil;

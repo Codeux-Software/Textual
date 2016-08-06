@@ -40,7 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, TDCChannelBanListSheetEntryType) {
 	TDCChannelBanListSheetBanEntryType,
 	TDCChannelBanListSheetBanExceptionEntryType,
-	TDCChannelBanListSheetInviteExceptionEntryType
+	TDCChannelBanListSheetInviteExceptionEntryType,
+	TDCChannelBanListSheetQuietEntryType
 };
 
 @interface TDCChannelBanListSheet : TDCSheetBase <TDCChannelPrototype>

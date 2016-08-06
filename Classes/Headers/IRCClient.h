@@ -208,6 +208,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)createChannelInviteExceptionListSheet;
 - (void)createChannelBanExceptionListSheet;
 - (void)createChannelBanListSheet;
+- (void)createChannelQuietListSheet;
 
 - (void)presentCertificateTrustInformation;
 

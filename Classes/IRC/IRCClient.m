@@ -8134,23 +8134,30 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case 367: // RPL_BANLIST
 		case 346: // RPL_INVITELIST
 		case 348: // RPL_EXCEPTLIST
+		case 728: // RPL_QUIETLIST
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
+			NSUInteger paramsOffset = 0;
+
+			if (numeric == 728 && m.paramsCount == 6) { // server author was like "fuck you"
+				paramsOffset = 1;
+			}
+
 			NSString *channelName = [m paramAt:1];
 
-			NSString *entryMask = [m paramAt:2];
+			NSString *entryMask = [m paramAt:(2 + paramsOffset)];
 
 			NSString *entryAuthor = nil;
 
 			NSDate *entryCreationDate = nil;
 
-			BOOL extendedLine = (m.paramsCount > 4);
+			BOOL extendedLine = (m.paramsCount > (4 + paramsOffset));
 
 			if (extendedLine) {
-				entryAuthor = [m paramAt:3].nicknameFromHostmask;
+				entryAuthor = [m paramAt:(3 + paramsOffset)].nicknameFromHostmask;
 
-				entryCreationDate = [NSDate dateWithTimeIntervalSince1970:[m paramAt:4].doubleValue];
+				entryCreationDate = [NSDate dateWithTimeIntervalSince1970:[m paramAt:(4 + paramsOffset)].doubleValue];
 			}
 
 			TDCChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDCChannelBanListSheet"];
@@ -8179,6 +8186,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				localization = @"1103";
 			} else if (numeric == 348) { // RPL_EXCEPTLIST
 				localization = @"1104";
+			} else if (numeric == 728) { // RPL_QUIETLIST
+				localization = @"1119";
 			}
 
 			if (extendedLine) {
@@ -8207,6 +8216,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case 368: // RPL_ENDOFBANLIST
 		case 347: // RPL_ENDOFINVITELIST
 		case 349: // RPL_ENDOFEXCEPTLIST
+		case 729: // RPL_ENDOFQUIETLIST
 		{
 			TDCChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDCChannelBanListSheet"];
 
@@ -10819,6 +10829,11 @@ present_error:
 - (void)createChannelBanListSheet
 {
 	[self createChannelBanListSheet:TDCChannelBanListSheetBanEntryType];
+}
+
+- (void)createChannelQuietListSheet
+{
+	[self createChannelBanListSheet:TDCChannelBanListSheetQuietEntryType];
 }
 
 - (void)createChannelBanListSheet:(TDCChannelBanListSheetEntryType)entryType
