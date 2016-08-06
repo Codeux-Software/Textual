@@ -40,12 +40,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TLONicknameCompletionStatus ()
 @property (nonatomic, weak) TVCMainWindow *window;
-@property (nonatomic, copy) NSString *completedValue;
+@property (nonatomic, copy, nullable) NSString *completedValue;
 @property (nonatomic, copy, nullable) NSString *completedValueCompletionSuffix;
-@property (nonatomic, copy) NSString *currentTextViewStringValue;
-@property (nonatomic, copy) NSString *cachedSearchPattern;
-@property (nonatomic, copy) NSString *cachedSearchPatternPrefixCharacter;
-@property (nonatomic, copy) NSString *cachedCompletionSuffix;
+@property (nonatomic, copy, nullable) NSString *currentTextViewStringValue;
+@property (nonatomic, copy, nullable) NSString *cachedSearchPattern;
+@property (nonatomic, copy, nullable) NSString *cachedSearchPatternPrefixCharacter;
+@property (nonatomic, copy, nullable) NSString *cachedCompletionSuffix;
 @property (nonatomic, assign) NSRange selectionRangeAfterLastCompletion;
 @property (nonatomic, assign) NSRange rangeOfTextSelection;
 @property (nonatomic, assign) NSRange rangeOfSearchPattern;

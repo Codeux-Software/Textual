@@ -41,9 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
 - (instancetype)initWithWebView:(nullable TVCLogView *)hostView NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, copy) NSString *anchorURL;
-@property (nonatomic, copy) NSString *channelName;
-@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy, nullable) NSString *anchorURL;
+@property (nonatomic, copy, nullable) NSString *channelName;
+@property (nonatomic, copy, nullable) NSString *nickname;
 
 - (void)displayContextMenuInWebView:(TVCLogView *)webView;
 

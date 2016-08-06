@@ -118,19 +118,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self->_receivedAt = [NSDate dateWithTimeIntervalSince1970:receivedAt];
 	}
 
-	[dic assignArrayTo:&_excludeKeywords forKey:@"excludeKeywords"];
-	[dic assignArrayTo:&_highlightKeywords forKey:@"highlightKeywords"];
+	[dic assignArrayTo:&self->_excludeKeywords forKey:@"excludeKeywords"];
+	[dic assignArrayTo:&self->_highlightKeywords forKey:@"highlightKeywords"];
 
-	[dic assignBoolTo:&_isEncrypted forKey:@"isEncrypted"];
-	[dic assignBoolTo:&_isHistoric forKey:@"isHistoric"];
+	[dic assignBoolTo:&self->_isEncrypted forKey:@"isEncrypted"];
+	[dic assignBoolTo:&self->_isHistoric forKey:@"isHistoric"];
 
-	[dic assignStringTo:&_command forKey:@"command"];
-	[dic assignStringTo:&_command forKey:@"rawCommand"]; // Legacy key
-	[dic assignStringTo:&_messageBody forKey:@"messageBody"];
-	[dic assignStringTo:&_nickname forKey:@"nickname"];
+	[dic assignStringTo:&self->_command forKey:@"command"];
+	[dic assignStringTo:&self->_command forKey:@"rawCommand"]; // Legacy key
+	[dic assignStringTo:&self->_messageBody forKey:@"messageBody"];
+	[dic assignStringTo:&self->_nickname forKey:@"nickname"];
 
-	[dic assignUnsignedIntegerTo:&_lineType forKey:@"lineType"];
-	[dic assignUnsignedIntegerTo:&_memberType forKey:@"memberType"];
+	[dic assignUnsignedIntegerTo:&self->_lineType forKey:@"lineType"];
+	[dic assignUnsignedIntegerTo:&self->_memberType forKey:@"memberType"];
 
 	[self computeNicknameColorStyle];
 }

@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong) NSURLResponse *connectionResponse;
 @property (nonatomic, strong) NSMutableData *connectionResponseData;
-@property (nonatomic, copy) NSString *address;
+@property (nonatomic, copy, nullable) NSString *address;
 @end
 
 @implementation TLOInternetAddressLookup

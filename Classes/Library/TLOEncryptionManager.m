@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager ()
-@property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
+@property (nonatomic, strong, nullable) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
 @end
 
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject

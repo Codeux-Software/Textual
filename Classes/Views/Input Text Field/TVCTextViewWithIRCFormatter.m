@@ -354,7 +354,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return numberOfLines;
 }
 
-- (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding;
+- (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding
 {
 	NSLayoutManager *layoutManager = self.layoutManager;
 
