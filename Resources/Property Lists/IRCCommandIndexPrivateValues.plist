@@ -16,7 +16,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -49,7 +49,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>cap</key>
 	<dict>
@@ -60,7 +60,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>cap_authenticate</key>
 	<dict>
@@ -71,7 +71,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>certinfo</key>
 	<dict>
@@ -82,7 +82,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>chatops</key>
 	<dict>
@@ -104,7 +104,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_cap</key>
 	<dict>
@@ -115,7 +115,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_clientinfo</key>
 	<dict>
@@ -126,7 +126,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_ctcpreply</key>
 	<dict>
@@ -137,7 +137,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_finger</key>
 	<dict>
@@ -148,7 +148,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_lagcheck</key>
 	<dict>
@@ -159,7 +159,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_ping</key>
 	<dict>
@@ -170,7 +170,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_time</key>
 	<dict>
@@ -181,7 +181,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_userinfo</key>
 	<dict>
@@ -192,7 +192,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ctcp_version</key>
 	<dict>
@@ -203,7 +203,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>dcc</key>
 	<dict>
@@ -214,7 +214,7 @@
 		<key>isStandalone</key>
 		<false/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>error</key>
 	<dict>
@@ -269,7 +269,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>ison</key>
 	<dict>
@@ -280,7 +280,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>join</key>
 	<dict>
@@ -291,7 +291,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>kick</key>
 	<dict>
@@ -324,7 +324,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>locops</key>
 	<dict>
@@ -346,7 +346,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>monitor</key>
 	<dict>
@@ -357,7 +357,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>nachat</key>
 	<dict>
@@ -379,7 +379,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>nick</key>
 	<dict>
@@ -390,7 +390,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>notice</key>
 	<dict>
@@ -434,7 +434,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>pong</key>
 	<dict>
@@ -445,7 +445,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>privmsg</key>
 	<dict>
@@ -533,7 +533,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>who</key>
 	<dict>
@@ -544,7 +544,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>whois</key>
 	<dict>
@@ -555,7 +555,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>whowas</key>
 	<dict>
@@ -566,7 +566,7 @@
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
-		<integer>-1</integer>
+		<integer>999</integer>
 	</dict>
 	<key>zline</key>
 	<dict>
