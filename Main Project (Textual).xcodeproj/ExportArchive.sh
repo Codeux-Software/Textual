@@ -16,7 +16,7 @@ GIT_COMMIT_HASH=`git rev-parse --short HEAD`
 
 ZIP_FILE_NAME="Textual-${GIT_COMMIT_HASH}.zip"
 
-zip -r -X "./${ZIP_FILE_NAME}" "./${FULL_PRODUCT_NAME}/"
+zip -y -r -X "./${ZIP_FILE_NAME}" "./${FULL_PRODUCT_NAME}/"
 
 mv -f "./${ZIP_FILE_NAME}" ~/Desktop
 
