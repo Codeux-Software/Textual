@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5107</real>
+		<real>5109</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -619,6 +619,15 @@
 		<key>indexValue</key>
 		<integer>5057</integer>
 	</dict>
+	<key>quiet</key>
+	<dict>
+		<key>command</key>
+		<string>QUIET</string>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<integer>5107</integer>
+	</dict>
 	<key>quote</key>
 	<dict>
 		<key>command</key>
@@ -816,6 +825,15 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5090</integer>
+	</dict>
+	<key>unquiet</key>
+	<dict>
+		<key>command</key>
+		<string>UNQUIET</string>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<integer>5108</integer>
 	</dict>
 	<key>voice</key>
 	<dict>

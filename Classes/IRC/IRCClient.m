@@ -2981,6 +2981,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandKickIndex: // Command: KICK
 		case IRCPublicCommandKickbanIndex: // Command: KICKBAN
 		case IRCPublicCommandUnbanIndex: // Command: UNBAN
+		case IRCPublicCommandUnquietIndex: // Command: UNQUIET
+		case IRCPublicCommandQuietIndex: // Command: QUIET
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3005,7 +3007,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (commandNumeric == IRCPublicCommandKickbanIndex ||
 				commandNumeric == IRCPublicCommandKbIndex ||
 				commandNumeric == IRCPublicCommandBanIndex ||
-				commandNumeric == IRCPublicCommandUnbanIndex)
+				commandNumeric == IRCPublicCommandUnbanIndex ||
+				commandNumeric == IRCPublicCommandQuietIndex ||
+				commandNumeric == IRCPublicCommandUnquietIndex)
 			{
 				IRCUser *member = [targetChannel findMember:nickname];
 
@@ -3015,14 +3019,34 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					banMask = nickname;
 				}
 
-				if (commandNumeric == IRCPublicCommandUnbanIndex) { // UNBAN
-					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, @"-b", banMask, nil];
+				NSString *modeSymbol = nil;
+
+				if (commandNumeric == IRCPublicCommandQuietIndex ||
+					commandNumeric == IRCPublicCommandUnquietIndex)
+				{
+					modeSymbol = @"q";
 				} else {
-					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, @"+b", banMask, nil];
+					modeSymbol = @"b";
+				}
+
+				if ([self.supportInfo modeSymbolIsUserPrefix:modeSymbol]) {
+					[self printDebugInformation:TXTLS(@"IRC[1021]", modeSymbol)];
+
+					break;
+				}
+
+				if (commandNumeric == IRCPublicCommandUnbanIndex ||
+					commandNumeric == IRCPublicCommandUnquietIndex)
+				{
+					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, [@"-" stringByAppendingString:modeSymbol], banMask, nil];
+				} else {
+					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, [@"+" stringByAppendingString:modeSymbol], banMask, nil];
 				}
 			}
 
-			if (commandNumeric == IRCPublicCommandKickIndex || commandNumeric == IRCPublicCommandKickbanIndex) {
+			if (commandNumeric == IRCPublicCommandKickIndex ||
+				commandNumeric == IRCPublicCommandKickbanIndex)
+			{
 				NSString *reason = stringIn.string;
 
 				if (reason.length == 0) {
