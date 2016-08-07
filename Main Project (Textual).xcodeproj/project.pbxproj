@@ -381,9 +381,9 @@
 		4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
 		4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
-		4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; };
-		4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; };
-		4C2065361D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; };
+		4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C2065361D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C20653D1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
 		4C20653E1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
 		4C20653F1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
@@ -3938,6 +3938,7 @@
 				4C558DCF1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h in Headers */,
 				4C7B034B1D1210A100295E82 /* IRCSendingMessage.h in Headers */,
 				4C5DD50A1D1E098600F2E1AE /* TVCDockIconPrivate.h in Headers */,
+				4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B034C1D1210A100295E82 /* IRCTreeItem.h in Headers */,
 				4CF1F4D31D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */,
 				4CC215D71D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */,
@@ -3949,7 +3950,6 @@
 				4C7B034E1D1210A100295E82 /* IRCWorld.h in Headers */,
 				4C0DEB6C1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */,
 				4C5DD51C1D1E1CB700F2E1AE /* TVCMainWindowSplitViewPrivate.h in Headers */,
-				4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B490A1D131A2A008D7926 /* TVCLogScriptEventSinkPrivate.h in Headers */,
 				4C7B48F51D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
 				4CAAAE4A1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
@@ -4086,6 +4086,7 @@
 				4C3A3DD81D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B02FA1D12105D00295E82 /* NSColorHelper.h in Headers */,
+				4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B02FB1D12105D00295E82 /* NSStringHelper.h in Headers */,
 				4C7B02FC1D12105D00295E82 /* StaticDefinitions.h in Headers */,
 				4C056F181D1D89A100D85CEA /* TVCMemberListCellPrivate.h in Headers */,
@@ -4109,7 +4110,6 @@
 				4CE474451D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C7B03071D12105D00295E82 /* TPCThemeController.h in Headers */,
 				4CB17EC91D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
-				4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B03081D12105D00295E82 /* TPCThemeSettings.h in Headers */,
 				4CD9FF821D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */,
 				4C7B050E1D12168C00295E82 /* THOPluginManagerPrivate.h in Headers */,
@@ -4321,6 +4321,7 @@
 				4C3A3DD91D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B03091D12106300295E82 /* NSColorHelper.h in Headers */,
+				4C2065361D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C083FAA1D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */,
 				4C7B030A1D12106300295E82 /* NSStringHelper.h in Headers */,
 				4C7B030B1D12106300295E82 /* StaticDefinitions.h in Headers */,
@@ -4344,7 +4345,6 @@
 				4C7B03151D12106300295E82 /* TPCResourceManager.h in Headers */,
 				4CE474461D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C7B03161D12106300295E82 /* TPCThemeController.h in Headers */,
-				4C2065361D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4CB17ECA1D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
 				4C7B03171D12106300295E82 /* TPCThemeSettings.h in Headers */,
 				4CD9FF831D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */,
