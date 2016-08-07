@@ -2656,8 +2656,8 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 		NSString *itemToken = [worldController() pasteboardStringForItem:items[0]];
 		
 		[pasteboard declareTypes:_treeDragItemTypes owner:self];
-		
-		[pasteboard setPropertyList:itemToken forType:_treeDragItemType];
+
+		[pasteboard setString:itemToken forType:_treeDragItemType];
 	}
 
 	return YES;
@@ -2675,7 +2675,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 		return NSDragOperationNone;
 	}
 
-	NSString *draggedItemToken = [pasteboard propertyListForType:_treeDragItemType];
+	NSString *draggedItemToken = [pasteboard stringForType:_treeDragItemType];
 	
 	if (draggedItemToken == nil) {
 		return NSDragOperationNone;
@@ -2743,7 +2743,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 		return NSDragOperationNone;
 	}
 
-	NSString *draggedItemToken = [pasteboard propertyListForType:_treeDragItemType];
+	NSString *draggedItemToken = [pasteboard stringForType:_treeDragItemType];
 
 	if (draggedItemToken == nil) {
 		return NSDragOperationNone;
