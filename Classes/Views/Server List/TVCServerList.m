@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSString * const TVCServerListDragType = @"TVCServerListDragType";
+
 @interface TVCServerList ()
 @property (nonatomic, strong, readwrite) id userInterfaceObjects;
 @property (nonatomic, weak, readwrite, nullable) IBOutlet NSVisualEffectView *visualEffectView;

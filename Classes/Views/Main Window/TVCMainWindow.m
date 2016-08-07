@@ -67,7 +67,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 @property (nonatomic, assign, readwrite) BOOL channelSpotlightPanelAttached;
 @end
 
-#define _treeDragItemType		@"tree"
+#define _treeDragItemType		TVCServerListDragType
 
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
