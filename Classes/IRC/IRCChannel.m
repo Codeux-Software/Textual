@@ -858,6 +858,82 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
+
+- (NSData *)pasteboardDataForMembers:(NSArray<IRCUser *> *)members
+{
+	NSParameterAssert(members != nil);
+
+	NSString *channelId = self.uniqueIdentifier;
+
+	NSMutableArray<NSString *> *nicknames = [NSMutableArray arrayWithCapacity:members.count];
+
+	for (IRCUser *member in members) {
+		[nicknames addObject:member.nickname];
+	}
+
+	NSDictionary *pasteboardDictionary = @{
+	   @"channelId" : channelId,
+	   @"nicknames" : nicknames
+	};
+
+	NSData *pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:pasteboardDictionary];
+
+	return pasteboardData;
+}
+
++ (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock
+{
+	NSParameterAssert(pasteboardData != nil);
+	NSParameterAssert(callbackBlock != nil);
+
+	/* This is a private method which means that we are very lazy about
+	 validating the input, but this is a TODO to myself: add strict type
+	 checks if you end up making this method public. */
+	NSDictionary *pasteboardDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:pasteboardData];
+
+	if ([pasteboardDictionary isKindOfClass:[NSDictionary class]] == NO) {
+		return NO;
+	}
+
+	NSString *channelId = pasteboardDictionary[@"channelId"];
+
+	IRCChannel *channel = (IRCChannel *)[worldController() findItemWithId:channelId];
+
+	if (channel == nil) {
+		return NO;
+	}
+
+	NSArray *nicknames = pasteboardDictionary[@"nicknames"];
+
+	callbackBlock(channel, nicknames);
+
+	return YES;
+}
+
++ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCUser *> *members))callbackBlock
+{
+	NSParameterAssert(pasteboardData != nil);
+	NSParameterAssert(callbackBlock != nil);
+
+	return
+	[IRCChannel readNicknamesFromPasteboardData:pasteboardData withBlock:^(IRCChannel *channel, NSArray<NSString *> *nicknames) {
+		NSMutableArray *members = [NSMutableArray arrayWithCapacity:nicknames.count];
+
+		for (NSString *nickname in nicknames) {
+			IRCUser *member = [channel findMember:nickname];
+
+			if (member == nil) {
+				continue;
+			}
+
+			[members addObject:member];
+		}
+
+		callbackBlock(channel, [members copy]);
+	}];
+}
+
+#pragma mark -
 #pragma mark User Search
 
 - (BOOL)memberExists:(NSString *)nickname
@@ -1010,6 +1086,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
 	[mainWindowMemberList() updateDrawingForRow:row];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
+{
+	NSData *draggedData = [self pasteboardDataForMembers:items];
+
+	[pasteboard declareTypes:@[TVCMemberListDragType] owner:self];
+
+	[pasteboard setData:draggedData forType:TVCMemberListDragType];
+
+	return YES;
 }
 
 #pragma mark -

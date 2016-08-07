@@ -77,6 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
+
++ (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock;
++ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCUser *> *members))callbackBlock;
 @end
 
 NS_ASSUME_NONNULL_END
