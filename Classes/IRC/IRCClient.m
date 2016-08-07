@@ -10631,27 +10631,20 @@ present_error:
 		return;
 	}
 
-	// Request ISON status for private messages
 	NSMutableArray<NSString *> *nicknames = [NSMutableArray array];
 
+	// Request ISON status for tracked users
+	if (self.supportsAdvancedTracking == NO) {
+		for (NSString *trackedUser in self.trackedUsers.trackedUsers) {
+			[nicknames addObject:trackedUser];
+		}
+	}
+
+	// Request ISON status for private messages
 	for (IRCChannel *channel in self.channelList) {
 		if (channel.privateMessage) {
 			[nicknames addObject:channel.name];
 		}
-	}
-
-	[self sendIsonForNicknames:nicknames];
-
-	// Request ISON status for tracked users
-
-	if (self.supportsAdvancedTracking) {
-		return;
-	}
-
-	[nicknames removeAllObjects];
-
-	for (NSString *trackedUser in self.trackedUsers.trackedUsers) {
-		[nicknames addObject:trackedUser];
 	}
 
 	[self sendIsonForNicknames:nicknames];
