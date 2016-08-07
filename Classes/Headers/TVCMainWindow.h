@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 
 TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
 
+TEXTUAL_EXTERN NSString * const TVCServerListDragType;
+
 @interface TVCMainWindow : NSWindow
 @property (readonly, weak) TVCMainWindowLoadingScreenView *loadingScreen;
 @property (readonly, weak) TVCMainWindowSplitView *contentSplitView;

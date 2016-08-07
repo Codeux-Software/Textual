@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
+
 @interface TVCMemberList ()
 @property (nonatomic, strong) id userPopoverTrackingArea;
 @property (nonatomic, assign) BOOL userPopoverMouseIsInView;

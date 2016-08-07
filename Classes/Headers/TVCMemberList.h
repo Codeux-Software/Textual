@@ -39,6 +39,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+TEXTUAL_EXTERN NSString * const TVCMemberListDragType;
+
 @interface TVCMemberList : NSOutlineView
 @property (nonatomic, assign) BOOL isHiddenByUser;
 
