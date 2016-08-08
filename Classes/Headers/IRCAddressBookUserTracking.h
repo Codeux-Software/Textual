@@ -40,7 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingStatusChangedNotification;
 
 TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingAddedTrackedUserNotification;
+
 TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNotification;
+TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification;
 
 @interface IRCAddressBookUserTrackingContainer : NSObject
 @property (readonly) IRCClient *client;

@@ -40,8 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 NSString * const IRCAddressBookUserTrackingStatusChangedNotification = @"IRCAddressBookUserTrackingStatusChangedNotification";
 
 NSString * const IRCAddressBookUserTrackingAddedTrackedUserNotification = @"IRCAddressBookUserTrackingAddedTrackedUserNotification";
-NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNotification = @"IRCAddressBookUserTrackingRemovedTrackedUserNotification";
 
+NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNotification = @"IRCAddressBookUserTrackingRemovedTrackedUserNotification";
+NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = @"IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification";
 
 @interface IRCAddressBookUserTrackingContainer ()
 @property (nonatomic, strong) IRCClient *client;
@@ -130,6 +131,9 @@ NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNotification = @"IR
 {
 	@synchronized (self.trackedUsersInt) {
 		[self.trackedUsersInt removeAllObjects];
+
+		[RZNotificationCenter() postNotificationName:IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification
+											  object:self];
 	}
 }
 
