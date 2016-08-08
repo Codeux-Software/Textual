@@ -166,6 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
 	811: "View Logs"
 	812: "Highlight List"
 	813: "File Transfers"
+	815: "Buddy List"
 	819: "-"
 	814: "Bring All to Front"
 
@@ -389,6 +390,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)showAddressBook:(id)sender;
+- (IBAction)showBuddyListWindow:(id)sender;
 - (IBAction)showChannelBanExceptionList:(id)sender;
 - (IBAction)showChannelBanList:(id)sender;
 - (IBAction)showChannelInviteExceptionList:(id)sender;

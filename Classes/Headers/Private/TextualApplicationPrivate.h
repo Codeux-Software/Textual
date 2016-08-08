@@ -80,6 +80,8 @@
 #import "TDCSharedProtocolDefinitionsPrivate.h"
 #import "TDCAboutDialogPrivate.h"
 #import "TDCAddressBookSheetPrivate.h"
+#import "TDCBuddyListDialogPrivate.h"
+#import "TDCBuddyListDialogDropViewPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCFileTransferDialogTableCellPrivate.h"
 #import "TDCFileTransferDialogTransferControllerPrivate.h"

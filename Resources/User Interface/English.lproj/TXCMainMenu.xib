@@ -719,7 +719,13 @@ CQ
                             <menuItem title="File Transfers" tag="813" keyEquivalent="6" id="CDY-3R-NUL">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
-                                    <action selector="showFileTransfersWindow:" target="267" id="HaF-NR-RGL"/>
+                                    <action selector="showFileTransfersWindow:" target="267" id="klt-6R-Q9W"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Buddy List" tag="815" keyEquivalent="7" id="NxI-qC-er0">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="showBuddyListWindow:" target="267" id="6FM-AC-Lhe"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="92">

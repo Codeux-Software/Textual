@@ -328,6 +328,12 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = mainWindow().selectedChannel;
 
 	switch (tag) {
+		case 815: // "Buddy List"
+		{
+			menuItem.hidden = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+
+			return YES;
+		}
 		case 616: // "List of Bans"
 		case 617: // "List of Ban Exceptions"
 		case 618: // "List of Invite Exceptions"
@@ -2562,6 +2568,27 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)aboutDialogWillClose:(TDCAboutDialog *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
+#pragma mark Buddy List
+
+- (void)showBuddyListWindow:(id)sender
+{
+	_popWindowViewIfExists(@"TDCBuddyListDialog");
+
+	TDCBuddyListDialog *dialog = [TDCBuddyListDialog new];
+
+	dialog.delegate = (id)self;
+
+	[dialog show];
+
+	[windowController() addWindowToWindowList:dialog];
+}
+
+- (void)buddyListDialogWillClose:(TDCBuddyListDialog *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }
