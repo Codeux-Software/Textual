@@ -510,6 +510,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self closeLogFile];
 
+	[self clearTrackedUsers];
+
 	for (IRCChannel *c in self.channelList) {
 		[c prepareForApplicationTermination];
 	}
@@ -528,6 +530,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self closeDialogs];
 
 	[self closeLogFile];
+
+	[self clearTrackedUsers];
 	
 	[self.config destroyKeychainItems];
 
@@ -10509,6 +10513,11 @@ present_error:
 
 #pragma mark -
 #pragma mark User Tracking
+
+- (void)clearTrackedUsers
+{
+	[self.trackedUsers clearTrackedUsers];
+}
 
 - (void)statusOfTrackedNickname:(NSString *)nickname changedTo:(IRCAddressBookUserTrackingStatus)newStatus
 {
