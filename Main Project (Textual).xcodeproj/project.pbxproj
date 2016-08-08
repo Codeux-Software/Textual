@@ -2901,8 +2901,8 @@
 		4C46F3C11943A654004CA8BA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				4C052F651D5515B60057522D /* Buddy List */,
 				4C13832B1AA9F9D10099F887 /* Application */,
+				4C052F651D5515B60057522D /* Buddy List */,
 				4CC164431943AFCC00B0D4B6 /* Dock Icon Badges */,
 				4C46F3DB1943A654004CA8BA /* Encryption Badges */,
 				4C46F3E01943A654004CA8BA /* IRC Formatting Colors */,
