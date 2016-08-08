@@ -25,10 +25,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="276" height="317"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2K-PN-NU8">
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2K-PN-NU8">
                         <rect key="frame" x="-1" y="0.0" width="278" height="318"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="aiR-wE-Hks">
+                        <clipView key="contentView" drawsBackground="NO" id="aiR-wE-Hks">
                             <rect key="frame" x="0.0" y="0.0" width="278" height="318"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -156,9 +155,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="RZ1-AG-gKm" secondAttribute="trailing" id="2Sk-Ze-Lun"/>
+                    <constraint firstAttribute="bottom" secondItem="P2K-PN-NU8" secondAttribute="bottom" id="973-Lg-bwz"/>
                     <constraint firstItem="RZ1-AG-gKm" firstAttribute="leading" secondItem="Q5K-Kh-ubB" secondAttribute="leading" id="Ftn-Qf-59t"/>
+                    <constraint firstItem="P2K-PN-NU8" firstAttribute="top" secondItem="Q5K-Kh-ubB" secondAttribute="top" constant="-1" id="Nk1-CA-aiV"/>
                     <constraint firstItem="RZ1-AG-gKm" firstAttribute="top" secondItem="Q5K-Kh-ubB" secondAttribute="top" id="QB0-rB-9RZ"/>
+                    <constraint firstAttribute="trailing" secondItem="P2K-PN-NU8" secondAttribute="trailing" constant="-1" id="k3a-KQ-VXn"/>
                     <constraint firstAttribute="bottom" secondItem="RZ1-AG-gKm" secondAttribute="bottom" id="l54-rj-HDQ"/>
+                    <constraint firstItem="P2K-PN-NU8" firstAttribute="leading" secondItem="Q5K-Kh-ubB" secondAttribute="leading" constant="-1" id="rp3-79-c6d"/>
                 </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="42133F95-FA52-4EEC-A7BE-5073C3FCE4FB" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="raX-Rn-Lo8">
@@ -192,7 +195,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="si9-mo-Oxd"/>
             </connections>
-            <point key="canvasLocation" x="-178" y="102.5"/>
+            <point key="canvasLocation" x="-489" y="77"/>
         </window>
         <menu id="BAx-M0-JHb">
             <items>
