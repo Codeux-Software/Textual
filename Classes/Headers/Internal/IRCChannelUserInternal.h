@@ -37,23 +37,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCUserRelations;
-
-@interface IRCUser ()
+@interface IRCChannelUser ()
 {
 @protected
-	NSString *_nickname;
-	NSString *_username;
-	NSString *_address;
-	NSString *_realName;
-	BOOL _isAway;
-	BOOL _isIRCop;
-
-@private
-	BOOL _objectInitialized;
+	NSString *_modes;
+	double _incomingWeight;
+	double _outgoingWeight;
+	CFAbsoluteTime _lastWeightFade;
 }
 
-- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

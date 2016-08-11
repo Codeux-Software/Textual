@@ -38,15 +38,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCUser ()
-- (instancetype)initWithClient:(IRCClient *)client;
+- (IRCClient *)client;
 
-- (void)conversation;
-- (void)incomingConversation;
-- (void)outgoingConversation;
-
-- (NSComparisonResult)compare:(id)other;
-
-+ (NSComparator)nicknameLengthComparator;
+- (void)cancelRemoveUserTimer;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -104,6 +104,11 @@ enum {
 - (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize requestIdentifier:(NSString *)identifier;
 
 - (IRCAddressBookUserTrackingContainer *)trackedUsers;
+
+- (IRCUserMutable *)mutableCopyOfUserWithNickname:(NSString *)nickname;
+
+- (void)modifyUser:(IRCUser *)user withBlock:(void(^)(IRCUserMutable *userMutable))block;
+- (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void(^)(IRCUserMutable *userMutable))block;
 @end
 
 NS_ASSUME_NONNULL_END

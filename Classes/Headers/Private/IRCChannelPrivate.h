@@ -55,20 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)noteEncryptionStateDidChange;
 
-- (void)renameMember:(IRCUser *)member to:(NSString *)toNickname;
-- (void)renameMemberWithNickname:(NSString *)fromNickname to:(NSString *)toNickname;
-
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
+
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2;
+- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2; // resort in table view
 
 - (void)clearMembers; // This will not reload table view
 
-- (BOOL)memberRequiresRedraw:(IRCUser *)member1 comparedTo:(IRCUser *)member2;
-
-- (void)replaceMember:(IRCUser *)member1 withMember:(IRCUser *)member2;
-
-- (void)updateAllMembersOnTableView;
-
-- (void)updateMemberOnTableView:(IRCUser *)member;
+- (void)resortMember:(IRCChannelUser *)member;
 
 - (void)reloadDataForTableView;
 - (void)reloadDataForTableViewBySortingMembers;
@@ -79,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
 + (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock;
-+ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCUser *> *members))callbackBlock;
++ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock;
 @end
 
 NS_ASSUME_NONNULL_END

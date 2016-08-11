@@ -100,6 +100,8 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
 - (void)shiftSelection:(nullable IRCTreeItem *)oldItem toItem:(nullable IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions;
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
+
+- (void)updateDrawingForUserInUserList:(IRCUser *)user;
 @end
 
 NS_ASSUME_NONNULL_END

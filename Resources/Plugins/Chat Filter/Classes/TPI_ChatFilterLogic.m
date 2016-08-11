@@ -219,7 +219,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Finding the IRCUser instance for the sender has a lot of overhead involved
 	 which means it is easier to store it in a variable here and find only once. */
 	/* This only works because textDestination is same for each filter check. */
-	IRCUser *senderUser = nil;
+	IRCChannelUser *senderUser = nil;
 
 	NSArray *filters = self.parentObject.filterArrayController.content;
 

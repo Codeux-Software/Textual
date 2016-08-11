@@ -345,7 +345,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	}
 }
 
-- (void)updateDrawingForMember:(IRCUser *)cellItem
+- (void)updateDrawingForMember:(IRCChannelUser *)cellItem
 {
 	NSParameterAssert(cellItem != nil);
 

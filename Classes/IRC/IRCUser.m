@@ -6,7 +6,7 @@
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/* IRCUser has an internal timer that is started when relations reach zero.
+ This timer runs for five minutes, using a GCD timer. When the timer fires,
+ it removes the user from the client, thus remove any trace of it. */
+#define _removeUserTimerInterval					(60 * 5) // 5 minutes
+
 #define _presentAwayMessageFor301Threshold			300.0
 
 @interface IRCUser ()
-@property (nonatomic, strong) IRCClient *client;
-@property (nonatomic, assign) CFAbsoluteTime presentAwayMessageFor301LastEvent;
-@property (readonly) NSString *highestRankedUserMode;
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, strong) IRCUserPersistentStore *persistentStore;
+@property (readonly) IRCUserRelations *relations;
 @end
 
 @implementation IRCUser
@@ -53,50 +58,47 @@ NS_ASSUME_NONNULL_BEGIN
 ClassWithDesignatedInitializerInitMethod
 
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
-- (instancetype)initWithClient:(IRCClient *)client
-{
-	NSParameterAssert(client != nil);
-
-	if ((self = [super init])) {
-		self.client = client;
-
-		[self prepareInitialState];
-
-		[self populateDefaultsPostflight];
-
-		return self;
-	}
-
-	return nil;
-}
-DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
-
 - (instancetype)initWithNickname:(NSString *)nickname onClient:(IRCClient *)client
+{
+	return [self initWithNickname:nickname onClient:client withPersistentStore:nil];
+}
+
+- (instancetype)initWithNickname:(NSString *)nickname onClient:(IRCClient *)client withPersistentStore:(nullable IRCUserPersistentStore *)persistentStore
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(client != nil);
 
 	if ((self = [super init])) {
-		self.client = client;
-
 		self->_nickname = [nickname copy];
 
-		[self prepareInitialState];
+		self.client = client;
 
-		[self populateDefaultsPostflight];
+		if (persistentStore) {
+			self.persistentStore = persistentStore;
+		} else {
+			[self createNewPersistentStoreObject];
+		}
 	}
-	
+
 	return self;
 }
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
-- (void)prepareInitialState
+- (void)createNewPersistentStoreObject
 {
-	self->_lastWeightFade = CFAbsoluteTimeGetCurrent();
+	self.persistentStore = [IRCUserPersistentStore new];
+
+	self.persistentStore.relations = [IRCUserRelations new];
 }
 
-- (void)populateDefaultsPostflight
+- (void)dealloc
 {
-	SetVariableIfNilCopy(self->_modes, NSStringEmptyPlaceholder)
+	[self cancelRemoveUserTimer];
+}
+
+- (IRCUserRelations *)relations
+{
+	return self.persistentStore.relations;
 }
 
 - (void)markAsAway
@@ -121,7 +123,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)updatePresentAwayMessageFor301Status
 {
 	if (self.isAway == NO) {
-		self.presentAwayMessageFor301LastEvent = 0.0;
+		self.persistentStore.presentAwayMessageFor301LastEvent = 0.0;
 	}
 }
 
@@ -133,8 +135,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 
-	if ((self.presentAwayMessageFor301LastEvent + _presentAwayMessageFor301Threshold) < now) {
-		 self.presentAwayMessageFor301LastEvent = now;
+	if ((self.persistentStore.presentAwayMessageFor301LastEvent + _presentAwayMessageFor301Threshold) < now) {
+		 self.persistentStore.presentAwayMessageFor301LastEvent = now;
 
 		return YES;
 	}
@@ -187,304 +189,53 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return nil;
 }
 
-- (BOOL)userModesContainsMode:(NSString *)mode
-{
-	return [self.modes contains:mode];
-}
-
-- (NSString *)highestRankedUserMode
-{
-	NSString *modes = self.modes;
-
-	if (modes.length == 0) {
-		return modes;
-	}
-
-	return [modes stringCharacterAtIndex:0];
-}
-
-- (NSString *)mark
-{
-	IRCISupportInfo *supportInfo = self.client.supportInfo;
-
-	NSString *mode = self.highestRankedUserMode;
-
-	NSString *mark = [supportInfo userPrefixForModeSymbol:mode];
-
-	if (mark) {
-		return mark;
-	}
-
-	return NSStringEmptyPlaceholder;
-}
-
-- (NSUInteger)channelRank
-{
-	IRCISupportInfo *supportInfo = self.client.supportInfo;
-
-	NSString *mode = self.highestRankedUserMode;
-
-	return [supportInfo rankForUserPrefixWithMode:mode];
-}
-
-- (BOOL)isOp
-{
-	return [self.modes containsCharacters:@"qOao"];
-}
-
-- (BOOL)isHalfOp 
-{
-	return [self.modes containsCharacters:@"qOaoh"];
-}
-
-- (BOOL)q
-{
-	return ((self.ranks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
-}
-
-- (BOOL)a
-{
-	return ((self.ranks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
-}
-
-- (BOOL)o
-{
-	return ((self.ranks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
-}
-
-- (BOOL)h
-{
-	return ((self.ranks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
-}
-
-- (BOOL)v
-{
-	return ((self.ranks & IRCUserVoicedRank) == IRCUserVoicedRank);
-}
-
-- (IRCUserRank)rank
-{
-	NSString *mode = self.highestRankedUserMode;
-
-	return [self rankForModeSymbol:mode];
-}
-
-- (IRCUserRank)ranks
-{
-	IRCUserRank ranks = 0;
-
-	NSString *modes = self.modes;
-
-	for (NSUInteger i = 0; i < modes.length; i++) {
-		NSString *mode = [modes stringCharacterAtIndex:i];
-
-		IRCUserRank rank = [self rankForModeSymbol:mode];
-
-		if (rank != IRCUserNoRank) {
-			ranks |= rank;
-		}
-	}
-
-	if (ranks == 0) {
-		ranks |= IRCUserNoRank;
-	}
-
-	return ranks;
-}
-
-- (IRCUserRank)rankForModeSymbol:(nullable NSString *)modeSymbol
-{
-	if (modeSymbol == nil) {
-		return IRCUserNoRank;
-	}
-
-	if ([modeSymbol isEqualToString:@"y"] ||
-		[modeSymbol isEqualToString:@"Y"])
-	{
-		return IRCUserIRCopByModeRank;
-	}
-	else if ([modeSymbol isEqualToString:@"q"] ||
-			 [modeSymbol isEqualToString:@"O"])
-	{
-		return IRCUserChannelOwnerRank;
-	} else if ([modeSymbol isEqualToString:@"a"]) {
-		return IRCUserSuperOperatorRank;
-	} else if ([modeSymbol isEqualToString:@"o"]) {
-		return IRCUserNormalOperatorRank;
-	} else if ([modeSymbol isEqualToString:@"h"]) {
-		return IRCUserHalfOperatorRank;
-	} else if ([modeSymbol isEqualToString:@"v"]) {
-		return IRCUserVoicedRank;
-	}
-
-	return IRCUserNoRank;
-}
-
-- (BOOL)isEqual:(id)object
-{
-	if (object == nil) {
-		return NO;
-	}
-
-	if (object == self) {
-		return YES;
-	}
-
-	if ([object isKindOfClass:[IRCUser class]] == NO) {
-		return NO;
-	}
-
-	IRCUser *objectCast = (IRCUser *)object;
-
-	return NSObjectsAreEqual(self.lowercaseNickname, objectCast.lowercaseNickname);
-}
-
-- (NSUInteger)hash
-{
-	return self.nickname.lowercaseString.hash;
-}
-
 - (NSString *)lowercaseNickname
 {
 	return self.nickname.lowercaseString;
 }
 
-- (double)totalWeight
+- (NSString *)uppercaseNickname
 {
-	[self decayConversation];
-
-	return (self->_incomingWeight + self->_outgoingWeight);
-}
-
-- (void)outgoingConversation
-{
-	double change = ((lrint(self->_outgoingWeight) == 0) ? 20 : 5);
-
-	self->_outgoingWeight += change;
-}
-
-- (void)incomingConversation
-{
-	double change = ((lrint(self->_incomingWeight) == 0) ? 100 : 20);
-
-	self->_incomingWeight += change;
-}
-
-- (void)conversation
-{
-	double change = ((lrint(self->_incomingWeight) == 0) ? 4 : 1);
-
-	self->_incomingWeight += change;
-}
-
-- (void)decayConversation
-{
-	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-
-	double minutes = ((now - self->_lastWeightFade) / 60);
-
-	if (minutes > 1) {
-		self->_lastWeightFade = now;
-
-		if (self->_incomingWeight > 0) {
-			self->_incomingWeight /= pow(2, minutes);
-		}
-
-		if (self->_outgoingWeight > 0) {
-			self->_outgoingWeight /= pow(2, minutes);
-		}
-	}
-}
-
-- (NSComparisonResult)compareUsingWeights:(IRCUser *)other
-{
-	double localWeight = self.totalWeight;
-
-	double remoteWeight = other.totalWeight;
-
-	if (localWeight > remoteWeight) {
-		return NSOrderedAscending;
-	} else if (localWeight < remoteWeight) {
-		return NSOrderedDescending;
-	}
-
-	return [self compare:other];
-}
-
-- (NSComparisonResult)compare:(id)other
-{
-	if ([other isKindOfClass:[IRCUser class]] == NO) {
-		return NSOrderedSame;
-	}
-
-	NSNumber *localRank = @([self channelRank]);
-
-	NSNumber *remoteRank = @([other channelRank]);
-
-	NSComparisonResult normalRank = [localRank compare:remoteRank];
-
-	NSComparisonResult invertedRank = NSInvertedComparisonResult(normalRank);
-
-	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-
-	if (favorIRCop && self.isCop && [other isCop] == NO) {
-		return NSOrderedAscending;
-	} else if (favorIRCop && self.isCop == NO && [other isCop]) {
-		return NSOrderedDescending;
-	} else if (invertedRank == NSOrderedSame) {
-		return [self.nickname caseInsensitiveCompare:[other nickname]];
-	} else {
-		return invertedRank;
-	}
-}
-
-+ (NSComparator)nicknameLengthComparator
-{
-	return [^(IRCUser *object1, IRCUser *object2) {
-		return (object1.nickname.length <=
-				object2.nickname.length);
-	} copy];
+	return self.nickname.uppercaseString;
 }
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<IRCUser %@%@>", self.mark, self.nickname];
+	return [NSString stringWithFormat:@"<IRCUser %@>", self.nickname];
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
-	IRCUser *object = [[IRCUser alloc] initWithNickname:self.nickname onClient:self.client];
+	  IRCUser *object =
+	[[IRCUser alloc] initWithNickname:self.nickname
+							 onClient:self.client
+				  withPersistentStore:self.persistentStore];
 
 	object->_username = [self.username copyWithZone:zone];
 	object->_address = [self.address copyWithZone:zone];
+
 	object->_realName = [self.realName copyWithZone:zone];
-	object->_modes = [self.modes copyWithZone:zone];
 
 	object->_isAway = self.isAway;
-	object->_isCop = self.isCop ;
-
-	object->_incomingWeight = self->_incomingWeight;
-	object->_outgoingWeight = self->_outgoingWeight;
-	object->_lastWeightFade = self->_lastWeightFade;
+	object->_isIRCop = self.isIRCop;
 
 	return object;
 }
 
 - (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
-	IRCUserMutable *object = [[IRCUserMutable alloc] initWithNickname:self.nickname onClient:self.client];
+	  IRCUserMutable *object =
+	[[IRCUserMutable alloc] initWithNickname:self.nickname
+									onClient:self.client
+						 withPersistentStore:self.persistentStore];
 
 	object.username = self.username;
 	object.address = self.address;
+
 	object.realName = self.realName;
-	object.modes = self.modes;
 
 	object.isAway = self.isAway;
-	object.isCop = self.isCop;
-
-	((IRCUser *)object)->_incomingWeight = self->_incomingWeight;
-	((IRCUser *)object)->_outgoingWeight = self->_outgoingWeight;
-	((IRCUser *)object)->_lastWeightFade = self->_lastWeightFade;
+	object.isIRCop = self.isIRCop;
 
 	return object;
 }
@@ -492,6 +243,119 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (BOOL)isMutable
 {
 	return NO;
+}
+
+- (void)updateRemoveUserTimerBlockToFire
+{
+	/* If the timer is already active, we reset the block that is scheduled
+	 so that the user that is targetted is always the primary */
+	dispatch_source_t removeUserTimer = self.persistentStore.removeUserTimer;
+
+	if (removeUserTimer == nil) {
+		return;
+	}
+
+	dispatch_block_t blockToFire = [self removeUserTimerBlockToFire];
+
+	dispatch_source_set_event_handler(removeUserTimer, blockToFire);
+}
+
+- (void)toggleRemoveUserTimer
+{
+	if (self.relations.numberOfRelations > 0) {
+		[self cancelRemoveUserTimer];
+	} else {
+		[self startRemoveUserTimer];
+	}
+}
+
+- (void)startRemoveUserTimer
+{
+	dispatch_source_t removeUserTimer = self.persistentStore.removeUserTimer;
+
+	if (removeUserTimer != NULL) {
+		return;
+	}
+
+	dispatch_block_t blockToFire = [self removeUserTimerBlockToFire];
+
+	removeUserTimer = XRScheduleBlockOnGlobalQueue(blockToFire, _removeUserTimerInterval);
+
+	if (removeUserTimer == NULL) {
+		LogToConsoleError("Failed to create timer to remove user")
+
+		blockToFire(); // Remove user if timer isn't available
+
+		return;
+	}
+
+	self.persistentStore.removeUserTimer = removeUserTimer;
+}
+
+- (void)cancelRemoveUserTimer
+{
+	dispatch_source_t removeUserTimer = self.persistentStore.removeUserTimer;
+
+	if (removeUserTimer == nil) {
+		return;
+	}
+
+	XRCancelScheduledBlock(removeUserTimer);
+
+	self.persistentStore.removeUserTimer = nil;
+}
+
+- (dispatch_block_t)removeUserTimerBlockToFire
+{
+	/* Using weak references means that the object can be deallocated when 
+	 the timer is active. -dealloc will cancel the timer if it is actie. */
+
+	__weak IRCClient *client = self.client;
+
+	__weak IRCUser *user = self;
+
+	return [^{
+		[client removeUser:user];
+	} copy];
+}
+
+@end
+
+#pragma mark -
+
+@implementation IRCUser (IRCUserRelations)
+
+- (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel
+{
+	[self.relations associateUser:user withChannel:channel];
+
+	[self toggleRemoveUserTimer];
+}
+
+- (void)disassociateUserWithChannel:(IRCChannel *)channel
+{
+	[self.relations disassociateUserWithChannel:channel];
+
+	[self toggleRemoveUserTimer];
+}
+
+- (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel
+{
+	return [self.relations userAssociatedWithChannel:channel];
+}
+
+- (void)relinkRelations
+{
+	NSArray *relatedUsers = self.relations.relatedUsers;
+
+	[relatedUsers makeObjectsPerformSelector:@selector(changeUserToUser:) withObject:self];
+}
+
+- (void)becamePrimaryUser
+{
+	[self updateRemoveUserTimerBlockToFire];
+
+	[self relinkRelations];
 }
 
 @end
@@ -504,9 +368,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic username;
 @dynamic address;
 @dynamic realName;
-@dynamic modes;
 @dynamic isAway;
-@dynamic isCop;
+@dynamic isIRCop;
+
+- (instancetype)initWithClient:(IRCClient *)client
+{
+	return [self initWithNickname:NSStringEmptyPlaceholder onClient:client];
+}
 
 - (BOOL)isMutable
 {
@@ -543,15 +411,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)setModes:(NSString *)modes
-{
-	NSParameterAssert(modes != nil);
-
-	if (self->_modes != modes) {
-		self->_modes = modes;
-	}
-}
-
 - (void)setIsAway:(BOOL)isAway
 {
 	if (self->_isAway != isAway) {
@@ -559,10 +418,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)setIsCop:(BOOL)isCop
+- (void)setIsIRCop:(BOOL)isIRCop
 {
-	if (self->_isCop != isCop) {
-		self->_isCop = isCop;
+	if (self->_isIRCop != isIRCop) {
+		self->_isIRCop = isIRCop;
 	}
 }
 

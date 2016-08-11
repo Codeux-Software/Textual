@@ -60,6 +60,7 @@
 	@class IRCChannelConfig;
 	@class IRCChannelMode;
 	@class IRCChannelModeContainer;
+	@class IRCChannelUser;
 	@class IRCClient;
 	@class IRCClientConfig;
 	@class IRCCommandIndex;
@@ -214,6 +215,7 @@
 	#import "IRCChannel.h"
 	#import "IRCChannelConfig.h"
 	#import "IRCChannelMode.h"
+	#import "IRCChannelUser.h"
 	#import "IRCClient.h"
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"

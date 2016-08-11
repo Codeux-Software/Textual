@@ -37,23 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCUserRelations;
-
-@interface IRCUser ()
-{
-@protected
-	NSString *_nickname;
-	NSString *_username;
-	NSString *_address;
-	NSString *_realName;
-	BOOL _isAway;
-	BOOL _isIRCop;
-
-@private
-	BOOL _objectInitialized;
-}
-
-- (BOOL)isMutable;
+@implementation IRCUserPersistentStore
 @end
 
 NS_ASSUME_NONNULL_END

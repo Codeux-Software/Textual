@@ -216,6 +216,22 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 #pragma mark -
 
+- (BOOL)userExists:(NSString *)nickname;
+
+- (nullable IRCUser *)findUser:(NSString *)nickname;
+- (IRCUser *)findUserOrCreate:(NSString *)nickname;
+
+@property (readonly) NSUInteger numberOfUsers;
+
+@property (readonly, copy) NSArray<IRCUser *> *userList;
+
+- (void)addUser:(IRCUser *)user;
+
+- (void)removeUser:(IRCUser *)user;
+- (void)removeUserWithNickname:(NSString *)nickname;
+
+#pragma mark -
+
 - (nullable IRCChannel *)findChannel:(NSString *)withName;
 - (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName;
 - (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isPrivateMessage:(BOOL)isPrivateMessage;

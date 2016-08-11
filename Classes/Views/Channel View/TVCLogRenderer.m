@@ -594,15 +594,15 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 	IRCChannel *channel = self->_viewController.associatedChannel;
 
-	NSArray<IRCUser *> *users = channel.memberListSortedByNicknameLength;
+	NSArray<IRCChannelUser *> *users = channel.memberListSortedByNicknameLength;
 
 	__block NSUInteger totalNicknameCount = 0;
 	__block NSUInteger totalNicknameLength = 0;
 
-	NSMutableSet<IRCUser *> *userSet = [NSMutableSet set];
+	NSMutableSet<IRCChannelUser *> *userSet = [NSMutableSet set];
 
-	for (IRCUser *user in users) {
-		[body enumerateMatchesOfString:user.nickname withBlock:^(NSRange range, BOOL *stop) {
+	for (IRCChannelUser *user in users) {
+		[body enumerateMatchesOfString:user.user.nickname withBlock:^(NSRange range, BOOL *stop) {
 			if ([self sectionOfBodyIsSurroundedByNonAlphabeticals:range] == NO) {
 				return;
 			}
@@ -769,13 +769,15 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 		} else {
 			IRCChannel *channel = self->_viewController.associatedChannel;
 
-			IRCUser *user = [channel findMember:fragmentEscaped];
+			IRCChannelUser *member = [channel findMember:fragmentEscaped];
 
-			if (user.nickname.length > 1) {
+			NSString *nickname = member.user.nickname;
+
+			if (nickname.length > 1) {
 				NSString *modeSymbol = NSStringEmptyPlaceholder;
 
 				if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
-					NSString *modeSymbolTemp = user.mark;
+					NSString *modeSymbolTemp = member.mark;
 
 					if (rangeStart > 0) {
 						NSString *leftCharacter = [string stringCharacterAtIndex:(rangeStart - 1)];
@@ -788,7 +790,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 					}
 				}
 
-				NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:user.nickname];
+				NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:nickname];
 
 				templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 

@@ -927,7 +927,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSDictionary<NSString *, NSString *> *listOfInlineImages = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 
-		NSSet<IRCUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
+		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
 
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 		

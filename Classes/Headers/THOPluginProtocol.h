@@ -454,7 +454,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief List of users from the channel that appear in the message
  */
-@property (readonly, copy) NSSet<IRCUser *> *listOfUsers;
+@property (readonly, copy) NSSet<IRCChannelUser *> *listOfUsers;
 
 /**
  * @brief Whether or not a highlight word was matched

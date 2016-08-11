@@ -55,13 +55,13 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 /* memberListStandardSortedContainer is a copy of the member list sorted by the channel
  rank of each member.*/
-@property (nonatomic, strong) NSMutableArray<IRCUser *> *memberListStandardSortedContainer;
+@property (nonatomic, strong) NSMutableArray<IRCChannelUser *> *memberListStandardSortedContainer;
 
 /* memberListLengthSortedContainer is a copy of the member list sorted by the length of
  nicknames. TVCLogRenderer requires the member list to be in a specific order each time
  it renders a message and it is too costly to sort our container thousands of times 
  every minute.*/
-@property (nonatomic, strong) NSMutableArray<IRCUser *> *memberListLengthSortedContainer;
+@property (nonatomic, strong) NSMutableArray<IRCChannelUser *> *memberListLengthSortedContainer;
 @end
 
 @implementation IRCChannel
@@ -395,13 +395,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
     }
 
 	if (self.isPrivateMessage) {
-		IRCUser *member1 = [[IRCUser alloc] initWithNickname:self.name onClient:client];
+		IRCUser *user1 = [self.associatedClient findUserOrCreate:self.name];
 
-		[self addMember:member1];
+		[self addUser:user1];
 
-		IRCUser *member2 = [[IRCUser alloc] initWithNickname:client.userNickname onClient:client];
+		IRCUser *user2 = [self.associatedClient findUserOrCreate:client.userNickname];
 
-		[self addMember:member2];
+		[self addUser:user2];
 	}
 
 	self.channelJoinTime = [NSDate timeIntervalSince1970];
@@ -524,23 +524,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Member List
 
-- (NSUInteger)_sortedInsertMember:(IRCUser *)member
+- (NSUInteger)_sortedInsertMember:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
-	if ([member isKindOfClass:[IRCUserMutable class]]) {
-		member = [member copy];
-	}
-
 	NSUInteger insertedIndex =
-	[self.memberListStandardSortedContainer insertSortedObject:member usingComparator:NSDefaultComparator];
+	[self.memberListStandardSortedContainer insertSortedObject:member usingComparator:[IRCChannelUser channelRankComparator]];
 
-	(void)[self.memberListLengthSortedContainer insertSortedObject:member usingComparator:[IRCUser nicknameLengthComparator]];
+	(void)[self.memberListLengthSortedContainer insertSortedObject:member usingComparator:[IRCChannelUser nicknameLengthComparator]];
 	
 	return insertedIndex;
 }
 
-- (void)_removeMemberFromTableView:(IRCUser *)member
+- (void)_removeMemberFromTableView:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
@@ -553,7 +549,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (BOOL)_removeMember:(IRCUser *)member
+- (BOOL)_removeMember:(IRCChannelUser *)member
 {
 	BOOL removedMember = NO;
 
@@ -580,14 +576,29 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return removedMember;
 }
 
-- (void)addMember:(IRCUser *)member
+- (void)addUser:(IRCUser *)user
+{
+	NSParameterAssert(user != nil);
+
+	IRCChannelUser *member = [[IRCChannelUser alloc] initWithUser:user];
+
+	[self addMember:member];
+}
+
+- (void)addMember:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
+
+	if ([member isKindOfClass:[IRCChannelUserMutable class]]) {
+		member = [member copy];
+	}
 
 	__block NSInteger insertedIndex = (-1);
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		insertedIndex = [self _sortedInsertMember:member];
+
+		[member associateWithChannel:self];
 	});
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
@@ -603,14 +614,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(nickname != nil);
 
-	IRCUser *member = [self findMember:nickname options:NSCaseInsensitiveSearch];
+	IRCChannelUser *member = [self findMember:nickname];
 
 	if (member) {
 		[self removeMember:member];
 	}
 }
 
-- (void)removeMember:(IRCUser *)member
+- (void)removeMember:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
@@ -618,6 +629,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		memberRemoved = [self _removeMember:member];
+
+		if (memberRemoved) {
+			[member disassociateWithChannel:self];
+		}
 	});
 
 	if (memberRemoved == NO || self.isChannel == NO) {
@@ -629,59 +644,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 }
 
-- (void)renameMemberWithNickname:(NSString *)fromNickname to:(NSString *)toNickname
-{
-	NSParameterAssert(fromNickname != nil);
-
-	IRCUser *member = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
-
-	if (member) {
-		[self renameMember:member to:toNickname];
-	}
-}
-
-- (void)renameMember:(IRCUser *)member to:(NSString *)toNickname
-{
-	NSParameterAssert(member != nil);
-	NSParameterAssert(toNickname != nil);
-
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		IRCUserMutable *memberMutable = [member mutableCopy];
-
-		memberMutable.nickname = toNickname;
-
-		[self replaceMember:member byInsertingMember:memberMutable];
-	});
-}
-
 #pragma mark -
 
-- (BOOL)memberRequiresRedraw:(IRCUser *)member1 comparedTo:(IRCUser *)member2
+- (void)resortMember:(IRCChannelUser *)member
+{
+	[self replaceMember:member byInsertingMember:member];
+}
+
+- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
 {
 	NSParameterAssert(member1 != nil);
 	NSParameterAssert(member2 != nil);
 
-	/* If the user has been changed in a way which does not require them to be
-	 resorted, then we will replace them in the arrays instead of removing then
-	 inserting again, incurring the cost of performing sort on hundreds of users. */
-	return (NSObjectsAreEqual(member1.modes, member2.modes) == NO ||
-			member1.isAway != member2.isAway ||
-			member1.isCop != member2.isCop);
-}
-
-- (void)replaceMember:(IRCUser *)member1 withMember:(IRCUser *)member2
-{
-	if ([self memberRequiresRedraw:member1 comparedTo:member2]) {
-		[self replaceMember:member1 byInsertingMember:member2];
-	} else {
-		[self replaceMember:member1 byReplacingMember:member2];
+	if ([member2 isKindOfClass:[IRCChannelUserMutable class]]) {
+		member2 = [member2 copy];
 	}
-}
-
-- (void)replaceMember:(IRCUser *)member1 byInsertingMember:(IRCUser *)member2
-{
-	NSParameterAssert(member1 != nil);
-	NSParameterAssert(member2 != nil);
 
 	__block NSInteger insertedIndex = (-1);
 
@@ -689,6 +666,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self _removeMember:member1];
 
 		insertedIndex = [self _sortedInsertMember:member2];
+
+		[member2 associateWithChannel:self];
 	});
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
@@ -696,12 +675,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 }
 
-- (void)replaceMember:(IRCUser *)member1 byReplacingMember:(IRCUser *)member2
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
 {
 	NSParameterAssert(member1 != nil);
 	NSParameterAssert(member2 != nil);
 
-	if ([member2 isKindOfClass:[IRCUserMutable class]]) {
+	if ([member2 isKindOfClass:[IRCChannelUserMutable class]]) {
 		member2 = [member2 copy];
 	}
 
@@ -734,13 +713,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(mode.length == 1);
 
 	// Find member and create mutable copy for editing
-	IRCUser *member = [self findMember:nickname options:NSCaseInsensitiveSearch];
+	IRCChannelUser *member = [self findMember:nickname];
 
 	if (member == nil) {
 		return;
 	}
 
-	IRCUserMutable *memberMutable = [member mutableCopy];
+	IRCChannelUserMutable *memberMutable = [member mutableCopy];
 
 	NSString *oldMemberModes = memberMutable.modes;
 
@@ -801,16 +780,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		memberMutable.modes = newMemberModes;
 	}
 
-	if (value && [mode isEqualToString:@"Y"]) {
+	if (value && [mode isEqualToString:@"Y"] && member.user.isIRCop == NO) {
 		/* InspIRCd treats +Y as an IRCop. */
 		/* If the user wasn't already marked as an IRCop, then we
 		 mark them at this point. */
 
-		memberMutable.isCop = YES;
+		[self.associatedClient modifyUser:member.user withBlock:^(IRCUserMutable *userMutable) {
+			userMutable.isIRCop = YES;
+		}];
 	}
 
 	// Remove the user from the member list and insert sorted
-	[self replaceMember:member withMember:memberMutable];
+	[self replaceMember:member byInsertingMember:memberMutable];
 }
 
 #pragma mark -
@@ -818,6 +799,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)clearMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		[self.memberListStandardSortedContainer makeObjectsPerformSelector:@selector(disassociateWithChannel:) withObject:self];
+
 		[self.memberListStandardSortedContainer removeAllObjects];
 		
 		[self.memberListLengthSortedContainer removeAllObjects];
@@ -835,9 +818,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return memberCount;
 }
 
-- (NSArray<IRCUser *> *)memberList
+- (NSArray<IRCChannelUser *> *)memberList
 {
-	__block NSArray<IRCUser *> *memberList = nil;
+	__block NSArray<IRCChannelUser *> *memberList = nil;
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		memberList = [self.memberListStandardSortedContainer copy];
@@ -846,9 +829,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return memberList;
 }
 
-- (NSArray<IRCUser *> *)memberListSortedByNicknameLength
+- (NSArray<IRCChannelUser *> *)memberListSortedByNicknameLength
 {
-	__block NSArray<IRCUser *> *memberList = nil;
+	__block NSArray<IRCChannelUser *> *memberList = nil;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		memberList = [self.memberListLengthSortedContainer copy];
@@ -859,7 +842,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #pragma mark -
 
-- (NSData *)pasteboardDataForMembers:(NSArray<IRCUser *> *)members
+- (NSData *)pasteboardDataForMembers:(NSArray<IRCChannelUser *> *)members
 {
 	NSParameterAssert(members != nil);
 
@@ -867,8 +850,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSMutableArray<NSString *> *nicknames = [NSMutableArray arrayWithCapacity:members.count];
 
-	for (IRCUser *member in members) {
-		[nicknames addObject:member.nickname];
+	for (IRCChannelUser *member in members) {
+		[nicknames addObject:member.user.nickname];
 	}
 
 	NSDictionary *pasteboardDictionary = @{
@@ -910,7 +893,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return YES;
 }
 
-+ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCUser *> *members))callbackBlock
++ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock
 {
 	NSParameterAssert(pasteboardData != nil);
 	NSParameterAssert(callbackBlock != nil);
@@ -920,7 +903,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSMutableArray *members = [NSMutableArray arrayWithCapacity:nicknames.count];
 
 		for (NSString *nickname in nicknames) {
-			IRCUser *member = [channel findMember:nickname];
+			IRCChannelUser *member = [channel findMember:nickname];
 
 			if (member == nil) {
 				continue;
@@ -938,66 +921,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)memberExists:(NSString *)nickname
 {
-	__block BOOL memberExists = NO;
-	
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		NSUInteger memberIndex = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
-
-		memberExists = (memberIndex != NSNotFound);
-	});
-	
-	return memberExists;
+	return ([self findMember:nickname] != nil);
 }
 
-- (nullable IRCUser *)findMember:(NSString *)nickname
-{
-	return [self findMember:nickname options:NSCaseInsensitiveSearch];
-}
-
-- (nullable IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)options
+- (nullable IRCChannelUser *)findMember:(NSString *)nickname
 {
 	NSParameterAssert(nickname != nil);
 
-	__block IRCUser *member = nil;
-	
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		NSUInteger memberIndex = [self indexOfMember:nickname options:options inList:self.memberListStandardSortedContainer];
-		
-		if (memberIndex != NSNotFound) {
-			member = self.memberListStandardSortedContainer[memberIndex];
-		}
-	});
-	
+	IRCUser *user = [self.associatedClient findUser:nickname];
+
+	if (user == nil) {
+		return nil;
+	}
+
+	IRCChannelUser *member = [user userAssociatedWithChannel:self];
+
+	if (member == nil) {
+		return nil;
+	}
+
 	return member;
 }
 
-- (IRCUser *)memberAtIndex:(NSUInteger)index
+- (IRCChannelUser *)memberAtIndex:(NSUInteger)index
 {
-	__block IRCUser *member = nil;
+	__block IRCChannelUser *member = nil;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		member = self.memberListStandardSortedContainer[index];
 	});
 	
 	return member;
-}
-
-- (NSUInteger)indexOfMember:(NSString *)nickname options:(NSStringCompareOptions)options inList:(NSArray *)memberList
-{
-	NSParameterAssert(nickname != nil);
-
-	NSUInteger memberIndex =
-	[memberList indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
-		NSString *nickname2 = ((IRCUser *)object).nickname;
-
-		if ((options & NSCaseInsensitiveSearch) == NSCaseInsensitiveSearch) {
-			return [nickname isEqualIgnoringCase:nickname2];
-		} else {
-			return [nickname isEqualToString:nickname2];
-		}
-	}];
-
-	return memberIndex;
 }
 
 #pragma mark -
@@ -1013,7 +967,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)reloadDataForTableViewBySortingMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
+		[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
 		
 		[self reloadDataForTableView];
 	});
@@ -1026,20 +980,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self performBlockOnMainThread:^{
 		[mainWindowMemberList() reloadData];
 	}];
-}
-
-- (void)updateAllMembersOnTableView
-{
-	_cancelOnNotSelectedChannel;
-
-	[mainWindowMemberList() reloadAllDrawings];
-}
-
-- (void)updateMemberOnTableView:(IRCUser *)member
-{
-	_cancelOnNotSelectedChannel;
-
-	[mainWindowMemberList() updateDrawingForMember:member];
 }
 
 #pragma mark -
@@ -1134,7 +1074,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (IRCClient *)associatedClient
 {
-	return _associatedClient;
+	return self->_associatedClient;
 }
 
 - (nullable IRCChannel *)associatedChannel

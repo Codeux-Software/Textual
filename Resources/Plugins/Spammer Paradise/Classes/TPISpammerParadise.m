@@ -104,9 +104,9 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Sort user objects alphabetically by comparing nicknames */
 
 		memberList =
-		[memberList sortedArrayUsingComparator:^NSComparisonResult(IRCUser *member1, IRCUser *member2) {
-			NSString *nickname1 = member1.nickname;
-			NSString *nickname2 = member2.nickname;
+		[memberList sortedArrayUsingComparator:^NSComparisonResult(IRCChannelUser *member1, IRCChannelUser *member2) {
+			NSString *nickname1 = member1.user.nickname;
+			NSString *nickname2 = member2.user.nickname;
 
 			return [nickname1 caseInsensitiveCompare:nickname2];
 		}];
@@ -115,12 +115,12 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Join user objects into string */
 	NSMutableString *resultString = [NSMutableString string];
 
-	for (IRCUser *member in memberList) {
+	for (IRCChannelUser *member in memberList) {
 		if (displayRank) {
 			[resultString appendString:member.mark];
 		}
 
-		[resultString appendString:member.nickname];
+		[resultString appendString:member.user.nickname];
 
 		[resultString appendString:NSStringWhitespacePlaceholder];
 	}
@@ -148,10 +148,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	NSMutableArray<IRCUser *> *membersMatched = [NSMutableArray array];
+	NSMutableArray<IRCChannelUser *> *membersMatched = [NSMutableArray array];
 
-	for (IRCUser *member in memberList) {
-		NSString *hostmask = member.hostmask;
+	for (IRCChannelUser *member in memberList) {
+		NSString *hostmask = member.user.hostmask;
 
 		if (hostmask == nil) {
 			continue;
@@ -182,15 +182,15 @@ NS_ASSUME_NONNULL_BEGIN
 		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]", membersMatched.count, channel.name) inChannel:channel];
 	}
 
-	[membersMatched sortUsingComparator:^NSComparisonResult(IRCUser *member1, IRCUser *member2) {
-		NSString *nickname1 = member1.nickname;
-		NSString *nickname2 = member2.nickname;
+	[membersMatched sortUsingComparator:^NSComparisonResult(IRCChannelUser *member1, IRCChannelUser *member2) {
+		NSString *nickname1 = member1.user.nickname;
+		NSString *nickname2 = member2.user.nickname;
 
 		return [nickname1 caseInsensitiveCompare:nickname2];
 	}];
 
-	for (IRCUser *member in membersMatched) {
-        NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", member.nickname, member.hostmask];
+	for (IRCChannelUser *member in membersMatched) {
+        NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", member.user.nickname, member.user.hostmask];
 
         [client printDebugInformation:resultString inChannel:channel];
 	}
@@ -204,14 +204,14 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary<NSString *, NSArray *> *members = [NSMutableDictionary dictionary];
 
     /* Populate our list by matching an array of users to that of the address. */
-	for (IRCUser *member in channel.memberList) {
-		NSString *address = member.address;
+	for (IRCChannelUser *member in channel.memberList) {
+		NSString *address = member.user.address;
 
 		if (address == nil) {
 			continue;
 		}
 
-		NSString *nickname = member.nickname;
+		NSString *nickname = member.user.nickname;
 
 		NSArray *clones = members[address];
 
