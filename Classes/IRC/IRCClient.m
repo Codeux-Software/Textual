@@ -158,6 +158,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
 @property (nonatomic, strong) NSMutableArray<IRCTimerCommandContext *> *commandQueue;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, IRCUser *> *userListPrivate;
 @property (nonatomic, strong, nullable) NSMutableString *zncBouncerCertificateChainDataMutable;
 @property (nonatomic, copy) NSString *temporaryServerAddressOverride;
 @property (nonatomic, assign) uint16_t temporaryServerPortOverride;
@@ -216,6 +217,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.capacitiesPending = [NSMutableArray array];
 	self.channelListPrivate = [NSMutableArray array];
 	self.commandQueue = [NSMutableArray array];
+
+	self.userListPrivate = [NSMutableDictionary dictionary];
 
 	self.trackedUsers = [[IRCAddressBookUserTrackingContainer alloc] initWithClient:self];
 
@@ -573,27 +576,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	for (IRCChannel *c in self.channelList) {
 		[c preferencesChanged];
-
-		[self maybeResetUserAwayStatusForChannel:c];
-	}
-}
-
-- (void)maybeResetUserAwayStatusForChannel:(IRCChannel *)channel
-{
-	NSParameterAssert(channel != nil);
-
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]) {
-		return;
-	}
-
-	NSArray *memberList = channel.memberList;
-
-	if (memberList.count < [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-		return;
-	}
-
-	for (IRCUser *member in memberList) {
-		[member markAsReturned];
 	}
 }
 
@@ -1957,6 +1939,163 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
+#pragma mark User List 
+
+- (BOOL)userExists:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+	return ([self findUser:nickname] != nil);
+}
+
+- (nullable IRCUser *)findUser:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+	nickname = nickname.lowercaseString;
+
+	@synchronized (self.userListPrivate) {
+		return self.userListPrivate[nickname];
+	}
+}
+
+- (IRCUserMutable *)mutableCopyOfUserWithNickname:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+	IRCUser *user = [self findUser:nickname];
+
+	if (user == nil) {
+		return [[IRCUserMutable alloc] initWithNickname:nickname onClient:self];
+	} else {
+		return [user mutableCopy];
+	}
+}
+
+- (NSUInteger)numberOfUsers
+{
+	@synchronized (self.userListPrivate) {
+		return self.userListPrivate.count;
+	}
+}
+
+- (NSArray<IRCUser *> *)userList
+{
+	@synchronized (self.userListPrivate) {
+		return self.userListPrivate.allValues;
+	}
+}
+
+- (void)addUser:(IRCUser *)user
+{
+	(void)[self addUserAndReturn:user];
+}
+
+- (IRCUser *)addUserAndReturn:(IRCUser *)user
+{
+	NSParameterAssert(user != nil);
+
+	if ([user isKindOfClass:[IRCUserMutable class]]) {
+		user = [user copy];
+	}
+
+	NSString *nickname = user.lowercaseNickname;
+
+	@synchronized (self.userListPrivate) {
+		self.userListPrivate[nickname] = user;
+	}
+
+	[user becamePrimaryUser];
+
+	return user;
+}
+
+- (IRCUser *)findUserOrCreate:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+	IRCUser *user = [self findUser:nickname];
+
+	if (user == nil) {
+		user = [[IRCUser alloc] initWithNickname:nickname onClient:self];
+
+		[self addUser:user];
+	}
+
+	return user;
+}
+
+- (void)removeUser:(IRCUser *)user
+{
+	NSParameterAssert(user != nil);
+
+	[user cancelRemoveUserTimer];
+
+	[self removeUserWithNickname:user.nickname];
+}
+
+- (void)removeUserWithNickname:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+	nickname = nickname.lowercaseString;
+
+	@synchronized (self.userListPrivate) {
+		[self.userListPrivate removeObjectForKey:nickname];
+	}
+}
+
+- (void)renameUser:(IRCUser *)user to:(NSString *)toNickname
+{
+	NSParameterAssert(user != nil);
+	NSParameterAssert(toNickname != nil);
+
+	[self modifyUser:user withBlock:^(IRCUserMutable *userMutable) {
+		userMutable.nickname = toNickname;
+	}];
+}
+
+- (void)renameUserWithNickname:(NSString *)fromNickname to:(NSString *)toNickname
+{
+	NSParameterAssert(fromNickname != nil);
+	NSParameterAssert(toNickname != nil);
+
+	IRCUser *user = [self findUser:fromNickname];
+
+	if (user == nil) {
+		return;
+	}
+
+	[self renameUser:user to:toNickname];
+}
+
+- (void)modifyUser:(IRCUser *)user withBlock:(void(^)(IRCUserMutable *userMutable))block
+{
+	NSParameterAssert(user != nil);
+	NSParameterAssert(block != nil);
+
+	IRCUserMutable *userMutable = [user mutableCopy];
+
+	block(userMutable);
+
+	[self addUser:userMutable];
+}
+
+- (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void(^)(IRCUserMutable *userMutable))block
+{
+	NSParameterAssert(nickname != nil);
+	NSParameterAssert(block != nil);
+
+	IRCUser *user = [self findUser:nickname];
+
+	if (user == nil) {
+		return;
+	}
+
+	[self modifyUser:user withBlock:block];
+}
+
+#pragma mark -
 #pragma mark Send Raw Data
 
 - (void)sendLine:(NSString *)string
@@ -2842,7 +2981,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *nickname = stringIn.tokenAsString;
 
-			IRCUser *member = [targetChannel findMember:nickname];
+			IRCChannelUser *member = [targetChannel findMember:nickname];
 
 			if (member == nil) {
 				if (isIgnoreCommand) {
@@ -2855,7 +2994,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			/* Build list of ignores that already match the user's host */
-			NSString *hostmask = member.hostmask;
+			NSString *hostmask = member.user.hostmask;
 
 			if (hostmask == nil) {
 				hostmask = [NSString stringWithFormat:@"%@!*@*", nickname];
@@ -2876,13 +3015,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Cancel if there is nothing to change */
 			if (isIgnoreCommand) {
 				if (matchedIgnores.count > 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1118]", member.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[1118]", member.user.nickname)];
 
 					break;
 				}
 			} else {
 				if (matchedIgnores.count == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1117]", member.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[1117]", member.user.nickname)];
 
 					break;
 				}
@@ -2893,14 +3032,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (isIgnoreCommand) {
 				IRCAddressBookEntry *ignore =
-				[IRCAddressBookEntry newIgnoreEntryForHostmask:member.banMask];
+				[IRCAddressBookEntry newIgnoreEntryForHostmask:member.user.banMask];
 
-				[self printDebugInformation:TXTLS(@"IRC[1115]", member.nickname, ignore.hostmask)];
+				[self printDebugInformation:TXTLS(@"IRC[1115]", member.user.nickname, ignore.hostmask)];
 
 				[mutableIgnoreList addObject:ignore];
 			} else{
 				for (IRCAddressBookEntry *ignore in matchedIgnores) {
-					[self printDebugInformation:TXTLS(@"IRC[1116]", member.nickname, ignore.hostmask)];
+					[self printDebugInformation:TXTLS(@"IRC[1116]", member.user.nickname, ignore.hostmask)];
 
 					[mutableIgnoreList removeObjectIdenticalTo:ignore];
 				}
@@ -3015,9 +3154,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				commandNumeric == IRCPublicCommandQuietIndex ||
 				commandNumeric == IRCPublicCommandUnquietIndex)
 			{
-				IRCUser *member = [targetChannel findMember:nickname];
+				IRCChannelUser *member = [targetChannel findMember:nickname];
 
-				NSString *banMask = member.banMask;
+				NSString *banMask = member.user.banMask;
 
 				if (banMask == nil) {
 					banMask = nickname;
@@ -3868,7 +4007,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *modeSymbol = NSStringEmptyPlaceholder;
 
 	if (channel.isChannel) {
-		IRCUser *member = [channel findMember:nickname];
+		IRCChannelUser *member = [channel findMember:nickname];
 
 		if (member) {
 			modeSymbol = member.mark;
@@ -4198,6 +4337,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	@synchronized(self.commandQueue) {
 		[self.commandQueue removeAllObjects];
+	}
+
+	@synchronized (self.userListPrivate) {
+		[self.userListPrivate removeAllObjects];
 	}
 }
 
@@ -4945,7 +5088,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Update weights of user we're talking with */
-	IRCUser *senderMember = [channel findMember:sender];
+	IRCChannelUser *senderMember = [channel findMember:sender];
 
 	if (senderMember == nil) {
 		return;
@@ -5605,11 +5748,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (isPrintOnlyMessage == NO) {
-		IRCUserMutable *member = [[IRCUserMutable alloc] initWithNickname:sender onClient:self];
+		/* A user might already exist by having a private message open */
+		IRCUserMutable *userMutable = [self mutableCopyOfUserWithNickname:sender];
 		
-		member.username = m.senderUsername;
-		member.address = m.senderAddress;
-		
+		userMutable.username = m.senderUsername;
+		userMutable.address = m.senderAddress;
+
+		IRCUser *userAdded = [self addUserAndReturn:userMutable];
+
+		IRCChannelUser *member = [[IRCChannelUser alloc] initWithUser:userAdded];
+
 		[channel addMember:member];
 	}
 
@@ -5681,8 +5829,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self requestModesForChannel:channel];
 		}
-	} else {
-		[self maybeResetUserAwayStatusForChannel:channel];
 	}
 }
 
@@ -5864,6 +6010,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL myself = [self nicknameIsMyself:sender];
 
+	IRCUser *user = nil;
+
+	if (isPrintOnlyMessage == NO) {
+		user = [self findUser:sender];
+
+		if (user == nil) {
+			return;
+		}
+	}
+
 	IRCAddressBookEntry *ignoreInfo = nil;
 
 	if (myself == NO) {
@@ -5887,7 +6043,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	{
 		if (myself == NO && isPrintOnlyMessage == NO) {
 			if (channel.isChannel) {
-				IRCUser *member = [channel findMember:sender];
+				IRCChannelUser *member = [user userAssociatedWithChannel:channel];
 
 				if (member == nil) {
 					return;
@@ -6008,6 +6164,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL myself = [self nicknameIsMyself:oldNickname];
 
+	IRCUser *user = nil;
+
+	if (isPrintOnlyMessage == NO) {
+		user = [self findUser:oldNickname];
+
+		if (user == nil) {
+			return;
+		}
+	}
+
 	/* Find address book entry for old nickname and update tracking
 	 status. This entry will also be used later on,	 when printing, 
 	 to decide whether to print the message. */
@@ -6064,13 +6230,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (isPrintOnlyMessage == NO) {
 			if (channel.isChannel) {
 				/* Rename the user in the channel */
-				IRCUser *member = [channel findMember:oldNickname];
+				IRCChannelUser *member = [user userAssociatedWithChannel:channel];
 
 				if (member == nil) {
 					return;
 				}
 
-				[channel renameMember:member to:newNickname];
+				[channel resortMember:member];
 			} else {
 				/* Rename private message if one with old name is found */
 				if (NSObjectsAreEqual(channel.name, oldNickname) == NO) {
@@ -6136,6 +6302,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Continue with normal operations */
+	[self renameUser:user to:newNickname];
+
 	for (IRCChannel *c in self.channelList) {
 		printingBlock(c);
 	}
@@ -7069,21 +7237,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *nickname = m.senderNickname;
 
-	for (IRCChannel *channel in self.channelList) {
-		IRCUser *member = [channel findMember:nickname];
+	IRCUser *user = [self findUser:nickname];
 
-		if (member == nil) {
-			continue;
-		}
-
-		if (userIsAway) {
-			[member markAsAway];
-		} else {
-			[member markAsReturned];
-		}
-		
-		[channel updateMemberOnTableView:member]; // Redraw
+	if (user == nil) {
+		return;
 	}
+
+	if (userIsAway) {
+		[user markAsAway];
+	} else {
+		[user markAsReturned];
+	}
+
+	[mainWindow() updateDrawingForUserInUserList:user];
 }
 
 - (void)receiveInit:(IRCMessage *)m // Raw numeric = 001
@@ -7376,15 +7542,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
             if (channel == nil) {
 				channel = [mainWindow() selectedChannelOn:self];
-			} else {
-				IRCUser *member = [channel findMember:awayNickname];
+			}
 
-				if ( member) {
-					[member markAsAway];
+			IRCUser *user = [self findUser:awayNickname];
 
-					if (member.presentAwayMessageFor301 == NO) {
-						break;
-					}
+			if ( user) {
+				[user markAsAway];
+
+				if (user.presentAwayMessageFor301 == NO) {
+					break;
 				}
 			}
 
@@ -7416,21 +7582,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *localNickname = self.userNickname;
 
-			for (IRCChannel *channel in self.channelList) {
-				IRCUser *myself = [channel findMember:localNickname];
-				
-				if (myself == nil) {
-					continue;
-				}
+			IRCUser *myself = [self findUser:localNickname];
 
-				if (numeric == 306) {
-					[myself markAsAway];
-				} else {
-					[myself markAsReturned];
-				}
-				
-				[channel updateMemberOnTableView:myself];
+			if (myself == nil) {
+				break;
 			}
+
+			if (numeric == 306) {
+				[myself markAsAway];
+			} else {
+				[myself markAsReturned];
+			}
+
+			[mainWindow() updateDrawingForUserInUserList:myself];
 
 			break;
 		}
@@ -7870,7 +8034,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (channel == nil) {
 				break;
 			}
-					
+
 			/* Example incoming data:
 				<channel> <user> <host> <server> <nick> <H|G>[*][@|+] <hopcount> <real name>
 			 
@@ -7907,21 +8071,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
                 isIRCop = YES;
 			}
 
-			IRCUser *member = [channel findMember:nickname];
+			/* Find global user and create mutable copy */
+			IRCUser *user = [self findUser:nickname];
 
-			IRCUserMutable *memberMutable = nil;
+			IRCUserMutable *userMutable = nil;
 
-			if (member == nil) {
-				memberMutable = [[IRCUserMutable alloc] initWithNickname:nickname onClient:self];
+			if (user == nil) {
+				userMutable = [[IRCUserMutable alloc] initWithNickname:nickname onClient:self];
 			} else {
-				memberMutable = [member mutableCopy];
+				userMutable = [user mutableCopy];
 			}
-			
-			memberMutable.username = username;
-			memberMutable.address = address;
 
-			memberMutable.isAway = isAway;
-			memberMutable.isCop = isIRCop;
+			userMutable.username = username;
+			userMutable.address = address;
+
+			userMutable.isAway = isAway;
+			userMutable.isIRCop = isIRCop;
 
 			/* Paramater 7 includes the hop count and real name because it begins with a :
 			 Therefore, we cut after the first space to get the real, real name value. */
@@ -7931,7 +8096,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				realName = [realName substringAfterIndex:realNameFirstSpace];
 			}
 
-			memberMutable.realName = realName;
+			userMutable.realName = realName;
+
+			/* Insert the user into the client and return the final copy that was */
+			IRCUser *userAdded = [self addUserAndReturn:userMutable];
+
+			/* Find the user associated with this channel and create mutable copy */
+			IRCChannelUser *member = [user userAssociatedWithChannel:channel];
+
+			IRCChannelUserMutable *memberMutable = nil;
+
+			if (member == nil) {
+				memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
+			} else {
+				memberMutable = [member mutableCopy];
+			}
 
 			/* Update user modes */
 			NSMutableString *userModes = [NSMutableString string];
@@ -7956,7 +8135,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (member == nil) {
 				[channel addMember:memberMutable];
 			} else {
-				[channel replaceMember:member withMember:memberMutable];
+				/* Dtermine whether the users were modified in such a way that
+				 they require their cell in the user list be resorted. */
+				/* We do not want to resort unless absolutely necessary because
+				 sorting a user with a few hundred users has overhead. */
+
+				if (user.isIRCop != userMutable.isIRCop ||
+					NSObjectsAreEqual(member.modes, memberMutable.modes) == NO)
+				{
+					[channel replaceMember:member byInsertingMember:memberMutable];
+				} else {
+					[channel replaceMember:member withMember:memberMutable];
+				}
 			}
 
 			/* Update local cache of our hostmask */
@@ -8029,20 +8219,35 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					nicknameInt = newNickname;
 				}
 
-				IRCUserMutable *memberMutable = [[IRCUserMutable alloc] initWithClient:self];
+				/* If we are connected to a bouncer, then we may receive a NAMES reply
+				 multiple times, even after first joining channels. Because of this, 
+				 we create a mutable copy of the user if they already exist, similiar
+				 to how WHO replies are handled, so that we do not lose any state. */
+
+				/* Create global user */
+				IRCUserMutable *userMutable = [self mutableCopyOfUserWithNickname:nicknameInt];
+
+				userMutable.username = usernameInt;
+				userMutable.address = addressInt;
+
+				IRCUser *userAdded = [self addUserAndReturn:userMutable];
+
+				/* Create local user */
+				IRCChannelUser *member = [userMutable userAssociatedWithChannel:channel];
+
+				IRCChannelUserMutable *memberMutable = nil;
+
+				if (member == nil) {
+					memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
+				} else {
+					memberMutable = [member mutableCopy];
+				}
 
 				memberMutable.modes = memberModes;
 
-				memberMutable.nickname = nicknameInt;
-				memberMutable.username = usernameInt;
-				memberMutable.address = addressInt;
+				/* Add user to channel */
+				[channel removeMemberWithNickname:nicknameInt];
 
-				/* We already inserted ourselves when we joined. */
-				if ([self nicknameIsMyself:nicknameInt]) {
-					[channel removeMemberWithNickname:nicknameInt];
-				}
-				
-				/* Populate user list */
 				[channel addMember:memberMutable];
 			} // for
 

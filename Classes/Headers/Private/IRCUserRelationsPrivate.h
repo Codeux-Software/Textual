@@ -37,23 +37,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCUserRelations;
+/* IRCUserRelations is a class used by IRCUser to store which
+ IRCChannelUser object is associated with a particular channel. */
+@interface IRCUserRelations : NSObject
+@property (readonly, copy) NSArray<IRCChannelUser *> *relatedUsers;
 
-@interface IRCUser ()
-{
-@protected
-	NSString *_nickname;
-	NSString *_username;
-	NSString *_address;
-	NSString *_realName;
-	BOOL _isAway;
-	BOOL _isIRCop;
+@property (readonly) NSUInteger numberOfRelations;
 
-@private
-	BOOL _objectInitialized;
-}
+- (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel;
+- (void)disassociateUserWithChannel:(IRCChannel *)channel;
 
-- (BOOL)isMutable;
+- (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel;
+@end
+
+#pragma mark -
+
+/* Acts as easy access for internal relations object */
+@interface IRCUser (IRCUserRelations)
+- (void)becamePrimaryUser;
+
+- (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel;
+- (void)disassociateUserWithChannel:(IRCChannel *)channel;
+
+- (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel;
+@end
+
+@interface IRCChannelUser (IRCUserRelations)
+- (void)associateWithChannel:(IRCChannel *)channel;
+- (void)disassociateWithChannel:(IRCChannel *)channel;
 @end
 
 NS_ASSUME_NONNULL_END

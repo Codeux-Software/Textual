@@ -302,7 +302,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, weak, nullable) IRCClient *selectedClient;
 @property (readonly, weak, nullable) IRCChannel *selectedChannel;
 
-- (NSArray<IRCUser *> *)selectedMembers:(id)sender;
+- (NSArray<IRCChannelUser *> *)selectedMembers:(id)sender;
 - (NSArray<NSString *> *)selectedMembersNicknames:(id)sender;
 - (void)deselectMembers:(id)sender;
 

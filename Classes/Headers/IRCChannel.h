@@ -74,21 +74,19 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 - (void)activate;
 - (void)deactivate;
 
-- (void)addMember:(IRCUser *)member;
-- (void)removeMember:(IRCUser *)member;
-- (void)removeMemberWithNickname:(NSString *)nickname;
+- (void)addMember:(IRCChannelUser *)member;
 
-- (void)replaceMember:(IRCUser *)member1 withMember:(IRCUser *)member2;
+- (void)removeMember:(IRCChannelUser *)member;
+- (void)removeMemberWithNickname:(NSString *)nickname;
 
 - (BOOL)memberExists:(NSString *)nickname;
 
-- (nullable IRCUser *)findMember:(NSString *)nickname;
-- (nullable IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
+- (nullable IRCChannelUser *)findMember:(NSString *)nickname;
 
 @property (readonly) NSUInteger numberOfMembers;
 
-@property (readonly, copy) NSArray<IRCUser *> *memberList; // Automatically sorted by channel rank
-@property (readonly, copy) NSArray<IRCUser *> *memberListSortedByNicknameLength; // Automatically sorted by longest nickname to shortest nickname
+@property (readonly, copy) NSArray<IRCChannelUser *> *memberList; // Automatically sorted by channel rank
+@property (readonly, copy) NSArray<IRCChannelUser *> *memberListSortedByNicknameLength; // Automatically sorted by longest nickname to shortest nickname
 @end
 
 NS_ASSUME_NONNULL_END

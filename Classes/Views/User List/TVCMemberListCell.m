@@ -77,9 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateDrawing:(id)interfaceObjects
 {
-	IRCUser *cellItem = self.cellItem;
+	IRCChannelUser *cellItem = self.cellItem;
 
-	NSString *stringValueNew = cellItem.nickname;
+	NSString *stringValueNew = cellItem.user.nickname;
 
 	NSTextField *textField = self.cellTextField;
 
@@ -110,9 +110,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateAccessibilityDescriptions
 {
-	IRCUser *cellItem = self.cellItem;
+	IRCChannelUser *cellItem = self.cellItem;
 
-	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1000]", cellItem.nickname) forObject:self.cellTextField.cell];
+	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1000]", cellItem.user.nickname) forObject:self.cellTextField.cell];
 }
 
 #pragma mark -
@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 
-	IRCUser *cellItem = self.cellItem;
+	IRCChannelUser *cellItem = self.cellItem;
 
 	NSTextField *textField = self.cellTextField;
 	
@@ -168,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects normalCellFont] range:stringValueRange];
 		
-		if (cellItem.isAway) {
+		if (cellItem.user.isAway) {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects awayUserCellTextColor] range:stringValueRange];
 		} else {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects normalCellTextColor] range:stringValueRange];
@@ -187,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 
-	IRCUser *cellItem = self.cellItem;
+	IRCChannelUser *cellItem = self.cellItem;
 
 	NSTextField *textField = self.cellTextField;
 
@@ -200,7 +200,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[mutableStringValue beginEditing];
 	
 	if (isSelected == NO) {
-		if (cellItem.isAway == NO) {
+		if (cellItem.user.isAway == NO) {
 			if (isActiveWindow == NO) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects normalCellTextColorForInactiveWindow] range:stringValueRange];
 			} else {
@@ -270,14 +270,14 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	id interfaceObjects = self.memberList.userInterfaceObjects;
 
-	IRCUser *cellItem = self.cellItem;
+	IRCChannelUser *cellItem = self.cellItem;
 	
 	NSString *modeSymbol = cellItem.mark;
 
 	IRCUserRank userRankToDraw = IRCUserNoRank;
 
 	if ([TPCPreferences memberListSortFavorsServerStaff]) {
-		if (cellItem.isCop) {
+		if (cellItem.user.isIRCop) {
 			userRankToDraw = IRCUserIRCopByModeRank;
 		}
 	}
@@ -483,15 +483,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCMemberListUserInfoPopover *userInfoPopover = memberList.memberListUserInfoPopover;
 
-	IRCUser *cellItem = self.cellItem;
+	IRCChannelUser *cellItem = self.cellItem;
 
 	/* =============================================== */
 
-	userInfoPopover.nicknameField.stringValue = cellItem.nickname;
+	userInfoPopover.nicknameField.stringValue = cellItem.user.nickname;
 
 	/* =============================================== */
 	
-	NSString *hostmaskUsername = cellItem.username;
+	NSString *hostmaskUsername = cellItem.user.username;
 
 	if (hostmaskUsername.length == 0) {
 		hostmaskUsername = TXTLS(@"TVCMainWindow[1010]");
@@ -501,7 +501,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-	NSString *hostmaskAddress = cellItem.address;
+	NSString *hostmaskAddress = cellItem.user.address;
 
 	if (hostmaskAddress.length == 0) {
 		hostmaskAddress = TXTLS(@"TVCMainWindow[1010]");
@@ -516,7 +516,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-	NSString *realName = cellItem.realName;
+	NSString *realName = cellItem.user.realName;
 
 	if (realName.length == 0) {
 		realName = TXTLS(@"TVCMainWindow[1010]");
@@ -526,7 +526,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-	if (cellItem.isAway) {
+	if (cellItem.user.isAway) {
 		userInfoPopover.awayStatusField.stringValue = TXTLS(@"TVCMainWindow[1008]");
 	} else {
 		userInfoPopover.awayStatusField.stringValue = TXTLS(@"TVCMainWindow[1009]");
@@ -536,7 +536,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCUserRank userRank = cellItem.rank;
 
-	if (cellItem.isCop) {
+	if (cellItem.user.isIRCop) {
 		userRank = IRCUserIRCopByModeRank;
 	}
 

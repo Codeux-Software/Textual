@@ -37,23 +37,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCUserRelations;
+@interface IRCChannelUser ()
+- (instancetype)initWithUser:(IRCUser *)user;
 
-@interface IRCUser ()
-{
-@protected
-	NSString *_nickname;
-	NSString *_username;
-	NSString *_address;
-	NSString *_realName;
-	BOOL _isAway;
-	BOOL _isIRCop;
+- (void)changeUserToUser:(IRCUser *)user;
 
-@private
-	BOOL _objectInitialized;
-}
+- (void)conversation;
+- (void)incomingConversation;
+- (void)outgoingConversation;
 
-- (BOOL)isMutable;
++ (NSComparator)channelRankComparator;
++ (NSComparator)nicknameLengthComparator;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 				channelCount += 1;
 				
-				IRCUser *myself = [channel findMember:client.userNickname];
+				IRCChannelUser *myself = [channel findMember:client.userNickname];
 
 				IRCUserRank myRanks = myself.ranks;
 
@@ -104,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 				BOOL IHaveModeV = ((myRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
 
 				if (client.userIsIRCop == NO) {
-					if (myself.isCop) {
+					if (myself.user.isIRCop) {
 						operCount++;
 					}
 				}
@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 					channelVoiceCount++;
 				}
 				
-				for (IRCUser *member in channel.memberList) {
+				for (IRCChannelUser *member in channel.memberList) {
 					if ([member isEqual:myself]) {
 						continue;
 					}
@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 					BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
 					BOOL UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 
-					if (client.userIsIRCop && member.isCop == NO) {
+					if (client.userIsIRCop && member.user.isIRCop == NO) {
 						addUser = YES;
 					} else if (IHaveModeQ && UserHasModeQ == NO) {
 						addUser = YES;
@@ -144,8 +144,8 @@ NS_ASSUME_NONNULL_BEGIN
 					}
 					
 					if (addUser) {
-						if ([trackedUsers containsObject:member.nickname] == NO) {
-							[trackedUsers addObject:member.nickname];
+						if ([trackedUsers containsObject:member.user.nickname] == NO) {
+							[trackedUsers addObject:member.user.nickname];
 
 							powerOverCount++;
 						}

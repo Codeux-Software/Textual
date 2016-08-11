@@ -848,7 +848,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (nicknames.count == 1)
 			{
-				IRCUser *user = nicknames[0];
+				IRCChannelUser *user = nicknames[0];
 
 				IRCUserRank userRanks = user.ranks;
 
@@ -1140,7 +1140,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return ([self selectedMembers:sender].count > 0);
 }
 
-- (NSArray<IRCUser *> *)selectedMembers:(id)sender
+- (NSArray<IRCChannelUser *> *)selectedMembers:(id)sender
 {
 	return [self selectedMembers:sender returnStrings:NO];
 }
@@ -1173,7 +1173,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return @[pointedNickname];
 		}
 
-		IRCUser *user = [c findMember:pointedNickname];
+		IRCChannelUser *user = [c findMember:pointedNickname];
 
 		if (user) {
 			return @[user];
@@ -1189,10 +1189,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSIndexSet *selectedRows = mainWindowMemberList().selectedRowIndexes;
 
 	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-		IRCUser *user = [mainWindowMemberList() itemAtRow:index];
+		IRCChannelUser *user = [mainWindowMemberList() itemAtRow:index];
 
 		if (returnStrings) {
-			[userArray addObject:user.nickname];
+			[userArray addObject:user.user.nickname];
 		} else {
 			[userArray addObject:user];
 		}
@@ -2821,9 +2821,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	IRCUser *member = [mainWindowMemberList() itemAtRow:row];
+	IRCChannelUser *member = [mainWindowMemberList() itemAtRow:row];
 	
-	[self memberSendDroppedFiles:files to:member.nickname];
+	[self memberSendDroppedFiles:files to:member.user.nickname];
 }
 
 - (void)memberSendDroppedFiles:(NSArray<NSString *> *)files to:(NSString *)nickname

@@ -1934,6 +1934,22 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 }
 
 #pragma mark -
+#pragma mark User List
+
+- (void)updateDrawingForUserInUserList:(IRCUser *)user
+{
+	IRCChannel *selectedChannel = self.selectedChannel;
+
+	IRCChannelUser *channelUser = [user userAssociatedWithChannel:selectedChannel];
+
+	if (channelUser == nil) {
+		return;
+	}
+
+	[self.memberList updateDrawingForMember:channelUser];
+}
+
+#pragma mark -
 #pragma mark Server List
 
 - (void)setupTrees

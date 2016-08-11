@@ -208,7 +208,7 @@ ClassWithDesignatedInitializerInitMethod
 		 you are targetting all. When the search pattern is empty, the member list is sorted
 		 alphabeticaly and only the single most heighly weighted user is placed at the top
 		 of the list and that only occurs if there is a user with a different weight. */
-		__block IRCUser *userWithGreatestWeight = nil;
+		__block IRCChannelUser *userWithGreatestWeight = nil;
 
 		__block BOOL noUserHadGreaterWeightThanOriginal = YES;
 
@@ -219,7 +219,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			userWithGreatestWeight = memberList.firstObject;
 		} else {
-			memberList = [channel.memberList sortedArrayUsingComparator:^NSComparisonResult(IRCUser *user1, IRCUser *user2) {
+			memberList = [channel.memberList sortedArrayUsingComparator:^NSComparisonResult(IRCChannelUser *user1, IRCChannelUser *user2) {
 				if (userWithGreatestWeight == nil) {
 					userWithGreatestWeight = user1;
 				}
@@ -230,7 +230,7 @@ ClassWithDesignatedInitializerInitMethod
 					noUserHadGreaterWeightThanOriginal = NO;
 				}
 
-				return [user1.nickname caseInsensitiveCompare:user2.nickname];
+				return [user1.user.nickname caseInsensitiveCompare:user2.user.nickname];
 			}];
 		}
 
@@ -264,15 +264,15 @@ ClassWithDesignatedInitializerInitMethod
 		BOOL includeTrimmedNicknames = (searchPatternIsEmpty == NO);
 
 		if (noUserHadGreaterWeightThanOriginal == NO) {
-			addNickname(userWithGreatestWeight.nickname, includeTrimmedNicknames);
+			addNickname(userWithGreatestWeight.user.nickname, includeTrimmedNicknames);
 		}
 
-		for (IRCUser *m in memberList) {
+		for (IRCChannelUser *m in memberList) {
 			if (noUserHadGreaterWeightThanOriginal == NO && m == userWithGreatestWeight) {
 				continue;
 			}
 
-			addNickname(m.nickname, includeTrimmedNicknames);
+			addNickname(m.user.nickname, includeTrimmedNicknames);
 		}
 
 		/* Complete static names, including application name. */

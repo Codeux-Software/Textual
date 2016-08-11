@@ -58,7 +58,7 @@ TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationAttributedStringPrefe
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfLinksInBodyAttribute; // NSArray<AHHyperlinkScannerResult *>
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfLinksMappedInBodyAttribute; // NSDictionary<NSString *, NSString *>
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsKeywordMatchFoundAttribute; // BOOL
-TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfUsersFoundAttribute; // NSSet<IRCUser *>
+TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfUsersFoundAttribute; // NSSet<IRCChannelUser *>
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute; // NSString
 
 @interface TVCLogRenderer : NSObject
