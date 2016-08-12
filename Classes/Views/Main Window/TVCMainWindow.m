@@ -137,17 +137,11 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	[self loadWindowState];
 
 	[self addAccessoryViewsToTitlebar];
-	
+
 	[themeController() prepareInitialState];
 	
 	[menuController() prepareInitialState];
 
-	self.inputTextField.backgroundColor = [NSColor clearColor];
-	
-	[self.inputTextField reloadOriginPointsAndRecalculateSize];
-
-	[self.inputTextField updateTextDirection];
-	
 	[self registerKeyHandlers];
 
 	[worldController() setupConfiguration];
