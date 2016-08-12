@@ -78,9 +78,11 @@ NS_ASSUME_NONNULL_BEGIN
 		[RZUserDefaults() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 	}
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self resetTypeSetterAttributes];
-	});
+	self.backgroundColor = [NSColor clearColor];
+
+	[self reloadOriginPointsAndRecalculateSize];
+
+	[self updateTextDirection];
 }
 
 - (void)dealloc
@@ -112,6 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.preferredFontColor = self.backgroundView.systemSpecificFontColor;
 
 	[self updateTextBoxCachedPreferredFontSize];
+
+	[self resetTypeSetterAttributes];
 
 	[self updateAllFontColorsToMatchTheDefaultFont];
 }
