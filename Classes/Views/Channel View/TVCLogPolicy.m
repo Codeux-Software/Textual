@@ -38,53 +38,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* The actual tag value for the Inspect Element item is in a private
- enum in WebKit so we have to define it based on whatever version of
- WebKit is on the OS. */
-#define _WebMenuItemTagInspectElementLion			2024
-#define _WebMenuItemTagInspectElementMountainLion	2025
+/* Specific menu items are gathered and inserted at specific locations */
+#define _WebKit1MenuItemTagInspectElement			2024
+#define _WebKit1MenuItemTagLookupInDictionary		WebMenuItemTagLookUpInDictionary
+#define _WebKit1MenuItemTagSearchWithGoogle			WebMenuItemTagSearchWeb
 
-#define _WebMenuItemTagSearchInGoogle		1601 // Tag for Textual's menu, not WebKit
-#define _WebMenuItemTagLookUpDictionary		1608 // Tag for Textual's meny, not WebKit
+#define _WebKit2MenuItemTagInspectElement			57
+#define _WebKit2MenuItemTagLookupInDictionary		22
+#define _WebKit2MenuItemTagSearchWithGoogle			21
 
-@interface TVCLogPolicy ()
-@property (nonatomic, strong, nullable) TVCLogView *webView;
-@end
+#define _WebMenuItemTagCopy		1603 // Tag for Textual's menu, not WebKit
 
 @implementation TVCLogPolicy
 
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithWebView:(nullable TVCLogView *)webView
-{
-	if ((self = [super init])) {
-		self.webView = webView;
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (id)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(nullable NSArray<NSMenuItem *> *)defaultMenuItems
+- (NSArray<NSMenuItem *> *)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(nullable NSArray<NSMenuItem *> *)defaultMenuItems
 {
 	TVCLogController *viewController = webView.viewController;
 
 	BOOL isWebKit2 = webView.isUsingWebKit2;
 
-	id newMenu = nil;
-
-	if (isWebKit2) {
-		newMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
-	} else {
-		newMenu = [NSMutableArray array];
-	}
-
-#define _addItem(_itemValue_)		if (isWebKit2) {						\
-										[newMenu addItem:(_itemValue_)];	\
-									} else {								\
-										[newMenu addObject:(_itemValue_)];	\
-									}
+	NSMutableArray<NSMenuItem *> *menuItems = [NSMutableArray array];
 
 	if (viewController.associatedChannel == nil) {
 		self.nickname = nil;
@@ -99,7 +72,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[newItem setUserInfo:self.anchorURL recursively:YES];
 
-			_addItem(newItem)
+			[menuItems addObject:newItem];
 		}
 
 		self.anchorURL = nil;
@@ -113,7 +86,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[newItem setUserInfo:self.nickname recursively:YES];
 
-			_addItem(newItem)
+			[menuItems addObject:newItem];
 		}
 
 		self.nickname = nil;
@@ -127,7 +100,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[newItem setUserInfo:self.channelName recursively:YES];
 
-			_addItem(newItem)
+			[menuItems addObject:newItem];
 		}
 
 		self.channelName = nil;
@@ -138,110 +111,80 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSMenuItem *inspectElementItem = nil;
 		NSMenuItem *lookupInDictionaryItem = nil;
+		NSMenuItem *searchWithGoogleItem = nil;
 
-		if (isWebKit2 == NO) {
-			for (NSMenuItem *item in defaultMenuItems) {
-				if (item.tag == WebMenuItemTagLookUpInDictionary) {
-					lookupInDictionaryItem = item;
-				} else if (item.tag == _WebMenuItemTagInspectElementLion ||
-						   item.tag == _WebMenuItemTagInspectElementMountainLion)
-				{
-					inspectElementItem = item;
-				}
+		for (NSMenuItem *item in defaultMenuItems) {
+			if ((item.tag == _WebKit1MenuItemTagLookupInDictionary && isWebKit2 == NO) ||
+				(item.tag == _WebKit2MenuItemTagLookupInDictionary && isWebKit2))
+			{
+				lookupInDictionaryItem = [item copy];
+			} else if ((item.tag == _WebKit1MenuItemTagInspectElement && isWebKit2 == NO) ||
+					   (item.tag == _WebKit2MenuItemTagInspectElement && isWebKit2))
+			{
+				inspectElementItem = [item copy];
+			} else if ((item.tag == _WebKit1MenuItemTagSearchWithGoogle && isWebKit2 == NO) ||
+					   (item.tag == _WebKit2MenuItemTagSearchWithGoogle && isWebKit2))
+			{
+				searchWithGoogleItem = [item copy];
 			}
 		}
 
 		for (NSMenuItem *item in menu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
-			if (isWebKit2 == NO) {
-				if (newItem.tag == _WebMenuItemTagLookUpDictionary) {
-					continue;
+			if (newItem.tag == _WebMenuItemTagCopy) {
+				if (searchWithGoogleItem != nil) {
+					[menuItems addObject:searchWithGoogleItem];
+				}
+
+				if (lookupInDictionaryItem != nil) {
+					[menuItems addObject:lookupInDictionaryItem];
+				}
+
+				if (searchWithGoogleItem != nil || lookupInDictionaryItem != nil) {
+					[menuItems addObject:[NSMenuItem separatorItem]];
 				}
 			}
 
-			_addItem(newItem);
-
-			if (newItem.tag == _WebMenuItemTagSearchInGoogle) {
-				if (lookupInDictionaryItem) {
-					_addItem(lookupInDictionaryItem)
-				}
-			}
+			[menuItems addObject:newItem];
 		}
 
 		if ([TPCPreferences developerModeEnabled]) {
-			_addItem([NSMenuItem separatorItem])
+			[menuItems addObject:[NSMenuItem separatorItem]];
 
-			_addItem(
+			[menuItems addObject:
 			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1015]")
 									target:menuController()
-									action:@selector(copyLogAsHtml:)])
+									action:@selector(copyLogAsHtml:)]];
 
-			_addItem(
+			[menuItems addObject:
 			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1016]")
 									target:menuController()
-									action:@selector(forceReloadTheme:)])
+									action:@selector(forceReloadTheme:)]];
 
-			if (isWebKit2) {
-				_addItem(
-				 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1017]")
-										target:menuController()
-										action:@selector(openWebInspector:)])
-			} else {
-				if (inspectElementItem) {
-					_addItem(inspectElementItem)
-				}
+			if (inspectElementItem) {
+				[menuItems addObject:inspectElementItem];
 			}
 		}
 	}
 
-	return newMenu;
-}
-
-- (void)displayContextMenuInWebView:(TVCLogView *)webView
-{
-	if (webView.isUsingWebKit2 == NO) {
-		return;
-	}
-
-	NSMenu *newMenu = [self constructContextMenuInWebView:webView defaultMenuItems:nil];
-
-	NSView *webViewBacking = webView.webView;
-
-	NSWindow *webViewWindow = webViewBacking.window;
-
-	NSPoint mouseLocationGlobal = [NSEvent mouseLocation];
-
-	NSRect mouseLocationLocal =
-	[webViewWindow convertRectFromScreen:NSMakeRect(mouseLocationGlobal.x, mouseLocationGlobal.y, 0, 0)];
-
-	NSEvent *event = [NSEvent mouseEventWithType:NSRightMouseUp
-										location:mouseLocationLocal.origin
-								   modifierFlags:0
-									   timestamp:0
-									windowNumber:webViewWindow.windowNumber
-										 context:nil
-									 eventNumber:0
-									  clickCount:0
-										pressure:0];
-
-	[NSMenu popUpContextMenu:newMenu withEvent:event forView:webViewBacking];
+	return [menuItems copy];
 }
 
 #pragma mark -
 #pragma mark WebKit Delegate
 
-- (NSArray<NSMenuItem *> *)webView:(WebView *)webView contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray<NSMenuItem *> *)webView1:(WebView *)webView logView:(TVCLogView *)logView contextMenuWithDefaultMenuItems:(NSArray *)defaultMenuItems
 {
-	return [self constructContextMenuInWebView:self.webView defaultMenuItems:defaultMenuItems];
+	return [self constructContextMenuInWebView:logView defaultMenuItems:defaultMenuItems];
 }
 
-- (void)webView:(WebView *)webView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+- (void)webView1:(WebView *)webView logView:(TVCLogView *)logView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
 {
 	[challenge.sender cancelAuthenticationChallenge:challenge];
 }
 
-- (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
+- (NSUInteger)webView1:(WebView *)webView logView:(TVCLogView *)logView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
 {
 	NSPasteboard *pboard = [draggingInfo draggingPasteboard];
 
@@ -252,7 +195,7 @@ ClassWithDesignatedInitializerInitMethod
 	return WebDragDestinationActionNone;
 }
 
-- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
+- (void)webView1:(WebView *)webView logView:(TVCLogView *)logView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id<WebPolicyDecisionListener>)listener
 {
 	NSInteger action = [actionInformation integerForKey:WebActionNavigationTypeKey];
 
@@ -270,7 +213,7 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark WebKit2 Delegate
 
-- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+- (void)webView2:(WKWebView *)webView logView:(TVCLogView *)logView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nonnull))completionHandler
 {
 	NSString *authenticationMethod = challenge.protectionSpace.authenticationMethod;
 
@@ -281,7 +224,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+- (void)webView2:(WKWebView *)webView logView:(TVCLogView *)logView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
 	WKNavigationType action = navigationAction.navigationType;
 
@@ -294,6 +237,19 @@ ClassWithDesignatedInitializerInitMethod
 	} else {
 		decisionHandler(WKNavigationActionPolicyAllow);
 	}
+}
+
+- (NSMenu *)webView2:(WKWebView *)webView logView:(TVCLogView *)logView contextMenuWithDefaultMenu:(NSMenu *)defaultMenu
+{
+	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
+
+	NSArray *menuItems = [self constructContextMenuInWebView:logView defaultMenuItems:defaultMenu.itemArray];
+
+	for (NSMenuItem *menuItem in menuItems) {
+		[contextMenu addItem:menuItem];
+	}
+
+	return contextMenu;
 }
 
 #pragma mark -
