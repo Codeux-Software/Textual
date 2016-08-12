@@ -163,6 +163,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, copy) NSString *temporaryServerAddressOverride;
 @property (nonatomic, assign) uint16_t temporaryServerPortOverride;
 @property (readonly) BOOL isBrokenIRCd_aka_Twitch;
+@property (readonly) BOOL monitorAwayStatus;
 @property (readonly) BOOL supportsAdvancedTracking;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedNeedIdentificationTokens;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedSuccessfulIdentificationTokens;
@@ -577,6 +578,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	for (IRCChannel *c in self.channelList) {
 		[c preferencesChanged];
 	}
+
+	if (self.monitorAwayStatus == NO) {
+		[self resetAwayStatusForUsers];
+	}
 }
 
 - (void)willDestroyChannel:(IRCChannel *)channel
@@ -728,6 +733,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	return ([self isCapacityEnabled:ClientIRCv3SupportedCapacityMonitorCommand] ||
 			[self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand]);
+}
+
+- (BOOL)monitorAwayStatus
+{
+	return ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] ||
+			[TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0);
 }
 
 #pragma mark -
@@ -2093,6 +2104,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self modifyUser:user withBlock:block];
+}
+
+- (void)resetAwayStatusForUsers
+{
+	[self.userList makeObjectsPerformSelector:@selector(markAsReturned)];
 }
 
 #pragma mark -
@@ -7547,7 +7563,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			IRCUser *user = [self findUser:awayNickname];
 
 			if ( user) {
-				[user markAsAway];
+				if (self.monitorAwayStatus) {
+					[user markAsAway];
+				}
 
 				if (user.presentAwayMessageFor301 == NO) {
 					break;
@@ -8055,9 +8073,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			// Strip G or H (away status).
 			if (inUserInvokedWhoRequest == NO) {
 				if ([flags hasPrefix:@"G"]) {
-					if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] ||
-						[TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0)
-					{
+					if (self.monitorAwayStatus) {
 						isAway = YES;
 					}
 				}
