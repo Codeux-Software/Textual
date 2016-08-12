@@ -38,18 +38,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
-- (instancetype)initWithWebView:(nullable TVCLogView *)hostView NS_DESIGNATED_INITIALIZER;
-
+@interface TVCLogPolicy : NSObject
 @property (nonatomic, copy, nullable) NSString *anchorURL;
 @property (nonatomic, copy, nullable) NSString *channelName;
 @property (nonatomic, copy, nullable) NSString *nickname;
 
-- (void)displayContextMenuInWebView:(TVCLogView *)webView;
-
 - (void)channelNameDoubleClicked;
 - (void)nicknameDoubleClicked;
 - (void)topicBarDoubleClicked;
+
+- (NSArray<NSMenuItem *> *)webView1:(WebView *)webView logView:(TVCLogView *)logView contextMenuWithDefaultMenuItems:(NSArray *)defaultMenuItems;
+- (void)webView1:(WebView *)webView logView:(TVCLogView *)logView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource;
+- (NSUInteger)webView1:(WebView *)webView logView:(TVCLogView *)logView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo;
+- (void)webView1:(WebView *)webView logView:(TVCLogView *)logView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener;
+
+- (void)webView2:(WKWebView *)webView logView:(TVCLogView *)logView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler;
+- (void)webView2:(WKWebView *)webView logView:(TVCLogView *)logView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler;
+- (NSMenu *)webView2:(WKWebView *)webView logView:(TVCLogView *)logView contextMenuWithDefaultMenu:(NSMenu *)defaultMenu;
 @end
 
 NS_ASSUME_NONNULL_END
