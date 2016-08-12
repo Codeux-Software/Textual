@@ -510,9 +510,9 @@
 		4C52EF9C1D58BF930003AA1C /* IRCUserInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9B1D58BF930003AA1C /* IRCUserInternal.h */; };
 		4C52EF9D1D58BF930003AA1C /* IRCUserInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9B1D58BF930003AA1C /* IRCUserInternal.h */; };
 		4C52EF9E1D58BF930003AA1C /* IRCUserInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9B1D58BF930003AA1C /* IRCUserInternal.h */; };
-		4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9F1D58C24C0003AA1C /* IRCUser.h */; };
-		4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9F1D58C24C0003AA1C /* IRCUser.h */; };
-		4C52EFA21D58C24C0003AA1C /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9F1D58C24C0003AA1C /* IRCUser.h */; };
+		4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9F1D58C24C0003AA1C /* IRCUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9F1D58C24C0003AA1C /* IRCUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C52EFA21D58C24C0003AA1C /* IRCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C52EF9F1D58C24C0003AA1C /* IRCUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C558DCF1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */; };
 		4C558DD01D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */; };
 		4C558DD11D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */; };
@@ -3942,6 +3942,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C0FDE2F1D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
 				4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C9EEC381D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
@@ -3958,7 +3959,6 @@
 				4C7B03181D12107500295E82 /* NSColorHelper.h in Headers */,
 				4C7B03191D12107500295E82 /* NSStringHelper.h in Headers */,
 				4C116BDF1D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
-				4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C7B031A1D12107500295E82 /* StaticDefinitions.h in Headers */,
 				4C10B3741D23249100868A74 /* TDCProgressIndicatorSheetPrivate.h in Headers */,
 				4C7B031B1D12107500295E82 /* TextualApplication.h in Headers */,
@@ -4187,6 +4187,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD81D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
@@ -4402,7 +4403,6 @@
 				4C7B04C01D1210DA00295E82 /* TPCPreferencesImportExportPrivate.h in Headers */,
 				4C52EF9D1D58BF930003AA1C /* IRCUserInternal.h in Headers */,
 				4C7B04C11D1210DA00295E82 /* TPCPreferencesPrivate.h in Headers */,
-				4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C7B04C21D1210DA00295E82 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */,
 				4C5DD5081D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h in Headers */,
 				4CAAAE4B1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
@@ -4430,6 +4430,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C52EFA21D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD91D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
@@ -4645,7 +4646,6 @@
 				4C7B04D91D1210E000295E82 /* TPCPreferencesImportExportPrivate.h in Headers */,
 				4C52EF9E1D58BF930003AA1C /* IRCUserInternal.h in Headers */,
 				4C7B04DA1D1210E000295E82 /* TPCPreferencesPrivate.h in Headers */,
-				4C52EFA21D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C7B04DB1D1210E000295E82 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */,
 				4C5DD5091D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h in Headers */,
 				4CAAAE4C1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
