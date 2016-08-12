@@ -560,6 +560,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		removedMember = YES;
 
 		[self.memberListStandardSortedContainer removeObjectAtIndex:standardSortedMemberIndex];
+
+		[member disassociateWithChannel:self];
 	}
 
 	NSUInteger lengthSortedMemberIndex =
@@ -629,10 +631,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		memberRemoved = [self _removeMember:member];
-
-		if (memberRemoved) {
-			[member disassociateWithChannel:self];
-		}
 	});
 
 	if (memberRemoved == NO || self.isChannel == NO) {
@@ -663,7 +661,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	__block NSInteger insertedIndex = (-1);
 
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		[self _removeMember:member1];
+		(void)[self _removeMember:member1];
 
 		insertedIndex = [self _sortedInsertMember:member2];
 
@@ -690,6 +688,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member1];
 
 		if (standardSortedMemberIndex != NSNotFound) {
+			[member1 disassociateWithChannel:self];
+
 			self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
 		}
 
@@ -701,6 +701,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			self.memberListLengthSortedContainer[lengthSortedMemberIndex] = member2;
 		}
 	});
+
+	[member2 associateWithChannel:self];
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[mainWindowMemberList() reloadItem:member1];
