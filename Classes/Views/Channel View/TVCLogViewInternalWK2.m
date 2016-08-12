@@ -80,7 +80,6 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelMemberCount"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelName"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
-		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"displayContextMenu"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"inlineMediaEnabledForView"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"localUserHostmask"];
@@ -108,7 +107,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 
 		_sharedWebViewConfiguration.userContentController = _sharedUserContentController;
 
-		_sharedWebPolicy = [[TVCLogPolicy alloc] initWithWebView:nil];
+		_sharedWebPolicy = [TVCLogPolicy new];
 	});
 }
 
@@ -241,27 +240,6 @@ create_normal_pool:
 	}
 }
 
-- (void)openWebInspector
-{
-	WKPageRef pageRef = NULL;
-
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
-		pageRef = [self _pageForTesting];
-	} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		WKView *webViewParent = (id)self.subviews[0];
-
-		pageRef = [webViewParent pageRef];
-	}
-
-	if (pageRef == NULL) {
-		return;
-	}
-
-	WKInspectorRef inspectorRef = WKPageGetInspector(pageRef);
-
-	WKInspectorShow(inspectorRef);
-}
-
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
 {
 	NSParameterAssert(searchString != nil);
@@ -350,14 +328,14 @@ create_normal_pool:
 {
 	NSParameterAssert(webView == self);
 
-	[_sharedWebPolicy webView:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
+	[_sharedWebPolicy webView2:webView logView:self.t_parentView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
 }
 
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
 {
 	NSParameterAssert(webView == self);
 
-	[_sharedWebPolicy webView:webView didReceiveAuthenticationChallenge:challenge completionHandler:completionHandler];
+	[_sharedWebPolicy webView2:webView logView:self.t_parentView didReceiveAuthenticationChallenge:challenge completionHandler:completionHandler];
 }
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
@@ -374,6 +352,13 @@ create_normal_pool:
 	self.t_viewIsNavigating = NO;
 
 	[self maybeInformDelegateWebViewFinishedLoading];
+}
+
+- (NSMenu *)_webView:(WKWebView *)webView contextMenu:(NSMenu *)menu forElement:(id)element
+{
+	NSParameterAssert(webView == self);
+
+	return [_sharedWebPolicy webView2:webView logView:self.t_parentView contextMenuWithDefaultMenu:menu];
 }
 
 @end

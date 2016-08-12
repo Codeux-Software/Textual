@@ -90,64 +90,24 @@ Textual.copySelectionOnMouseUpEvent = function()
 };
 
 /* Contextual menu management */
-Textual.openGenericContextualMenu = function()
-{
-	/* Do not block if target element already has a callback. */
-	if (event.target.oncontextmenu !== null) {
-		return;
-	}
-
-	if (appInternal.isWebKit2()) {
-		event.preventDefault();
-		
-		Textual.recordSelection();
-
-		app.displayContextMenu();
-	}
-};
-
 Textual.openChannelNameContextualMenu = function()
 {
 	Textual.setPolicyChannelName();
-
-	if (appInternal.isWebKit2()) {
-		Textual.clearSelectionAndPreventDefault();
-
-		app.displayContextMenu();
-	}
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
 	Textual.setPolicyURLAddress();
-
-	if (appInternal.isWebKit2()) {
-		Textual.clearSelectionAndPreventDefault();
-
-		app.displayContextMenu();
-	}
 };
 
 Textual.openStandardNicknameContextualMenu = function()
 {
 	Textual.setPolicyStandardNickname();
-
-	if (appInternal.isWebKit2()) {
-		Textual.clearSelectionAndPreventDefault();
-
-		app.displayContextMenu();
-	}
 };
 
 Textual.openInlineNicknameContextualMenu = function()
 {
 	Textual.setPolicyInlineNickname();
-
-	if (appInternal.isWebKit2()) {
-		Textual.clearSelectionAndPreventDefault();
-
-		app.displayContextMenu();
-	}
 };
 
 Textual.setPolicyStandardNickname = function()
@@ -231,6 +191,4 @@ Textual.inlineNicknameDoubleClicked = function()
 };
 
 /* Bind to events */
-document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
-
 document.addEventListener("selectionchange", Textual.selectionChangedCallback, false);

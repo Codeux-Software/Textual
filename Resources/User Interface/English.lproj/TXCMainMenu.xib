@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11185.3" systemVersion="16A270f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A286a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11185.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -201,14 +201,6 @@
                                         </menuItem>
                                     </items>
                                 </menu>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="395">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Search With Google" tag="315" id="394">
-                                <connections>
-                                    <action selector="searchGoogle:" target="267" id="2592"/>
-                                </connections>
                             </menuItem>
                         </items>
                         <connections>
@@ -965,7 +957,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-824" y="-555"/>
+            <point key="canvasLocation" x="-955" y="-529"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
@@ -1251,20 +1243,6 @@ CQ
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showServerChangeNicknameSheet:" target="267" id="tlA-ze-pwa"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="378">
-                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                </menuItem>
-                <menuItem title="Search With Google" tag="1601" id="397">
-                    <connections>
-                        <action selector="searchGoogle:" target="267" id="2591"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Look Up in Dictionary" tag="1608" id="Yts-x2-7aO">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="lookUpInDictionary:" target="267" id="uss-lW-HRk"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="472">

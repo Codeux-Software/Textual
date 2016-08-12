@@ -40,11 +40,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogViewInternalWK1 ()
-@property (nonatomic, readwrite, strong) TVCLogPolicy *webViewPolicy;
 @property (nonatomic, readwrite, strong) TVCLogScriptEventSink *webViewScriptSink;
 @end
 
 static WebPreferences *_sharedWebViewPreferences = nil;
+static TVCLogPolicy *_sharedWebPolicy = nil;
 
 @implementation TVCLogViewInternalWK1
 
@@ -61,6 +61,8 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	if ([_sharedWebViewPreferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
 		(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
 	}
+
+	_sharedWebPolicy = [TVCLogPolicy new];
 }
 
 - (instancetype)initWithHostView:(TVCLogView *)hostView
@@ -83,10 +85,6 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	TVCLogScriptEventSink *webViewScriptSink =
 	[[TVCLogScriptEventSink alloc] initWithWebView:hostView];
 
-	TVCLogPolicy *webViewPolicy =
-	[[TVCLogPolicy alloc] initWithWebView:hostView];
-
-	self.webViewPolicy = webViewPolicy;
 	self.webViewScriptSink = webViewScriptSink;
 
 	self.preferences = _sharedWebViewPreferences;
@@ -113,6 +111,11 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	self.UIDelegate = nil;
 
 	[self emptyCaches:nil];
+}
+
+- (TVCLogPolicy *)webViewPolicy
+{
+	return _sharedWebPolicy;
 }
 
 #pragma mark -
@@ -218,28 +221,28 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 {
 	NSParameterAssert(webView == self);
 
-	return [self.webViewPolicy webView:webView contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
+	return [_sharedWebPolicy webView1:webView logView:self.t_parentView contextMenuWithDefaultMenuItems:defaultMenuItems];
 }
 
 - (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
 {
 	NSParameterAssert(webView == self);
 
-	return [self.webViewPolicy webView:webView dragDestinationActionMaskForDraggingInfo:draggingInfo];
+	return [_sharedWebPolicy webView1:webView logView:self.t_parentView dragDestinationActionMaskForDraggingInfo:draggingInfo];
 }
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
 {
 	NSParameterAssert(webView == self);
 
-	[self.webViewPolicy webView:webView decidePolicyForNavigationAction:actionInformation request:request frame:frame decisionListener:listener];
+	[_sharedWebPolicy webView1:webView logView:self.t_parentView decidePolicyForNavigationAction:actionInformation request:request frame:frame decisionListener:listener];
 }
 
 - (void)webView:(WebView *)webView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
 {
 	NSParameterAssert(webView == self);
 
-	[self.webViewPolicy webView:webView resource:identifier didReceiveAuthenticationChallenge:challenge fromDataSource:dataSource];
+	[_sharedWebPolicy webView1:webView logView:self.t_parentView resource:identifier didReceiveAuthenticationChallenge:challenge fromDataSource:dataSource];
 }
 
 - (void)webView:(WebView *)webView didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
