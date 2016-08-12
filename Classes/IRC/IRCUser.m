@@ -115,24 +115,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	if (self->_isAway != isAway) {
 		self->_isAway = isAway;
-
-		[self updatePresentAwayMessageFor301Status];
-	}
-}
-
-- (void)updatePresentAwayMessageFor301Status
-{
-	if (self.isAway == NO) {
-		self.persistentStore.presentAwayMessageFor301LastEvent = 0.0;
 	}
 }
 
 - (BOOL)presentAwayMessageFor301
 {
-	if (self.isAway == NO) {
-		return NO;
-	}
-
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 
 	if ((self.persistentStore.presentAwayMessageFor301LastEvent + _presentAwayMessageFor301Threshold) < now) {
