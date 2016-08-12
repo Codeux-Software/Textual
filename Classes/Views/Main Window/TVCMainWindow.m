@@ -1940,6 +1940,10 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 {
 	IRCChannel *selectedChannel = self.selectedChannel;
 
+	if (selectedChannel == nil) {
+		return;
+	}
+
 	IRCChannelUser *channelUser = [user userAssociatedWithChannel:selectedChannel];
 
 	if (channelUser == nil) {
