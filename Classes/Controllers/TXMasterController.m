@@ -265,6 +265,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	SUUpdater *updater = [SUUpdater sharedUpdater];
 
+	updater.delegate = self;
+
 	if (receiveBetaUpdates == NO) {
 		updater.updateCheckInterval = [sparkleData boolForKey:@"SUScheduledCheckInterval"];
 	} else {
@@ -626,6 +628,16 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self forceTerminate];
 }
+
+#pragma mark -
+#pragma mark Sparkle Delegate
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+- (void)updaterWillRelaunchApplication:(SUUpdater *)updater
+{
+	self.applicationIsTerminating = YES;
+}
+#endif
 
 @end
 
