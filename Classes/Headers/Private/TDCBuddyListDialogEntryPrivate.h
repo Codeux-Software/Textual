@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+  Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,56 +35,12 @@
 
  *********************************************************************** */
 
-#import "TDCBuddyListDialogInternal.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCBuddyListDialog ()
-@property (nonatomic, weak) IBOutlet TDCBuddyListDialogDropView *dropView;
-@property (nonatomic, weak) IBOutlet TVCBasicTableView *buddyListTable;
-@property (nonatomic, weak) IBOutlet NSArrayController *buddyListController;
-@property (nonatomic, weak) IBOutlet NSSegmentedControl *navigationController;
-@end
-
-@implementation TDCBuddyListDialog
-
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		[self prepareInitialState];
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (void)prepareInitialState
-{
-	(void)[RZMainBundle() loadNibNamed:@"TDCBuddyListDialog" owner:self topLevelObjects:nil];
-}
-
-- (void)droppedNicknames:(NSArray<NSString *> *)nicknames fromClient:(IRCClient *)client
-{
-
-}
-
-- (void)show
-{
-	[self.window restoreWindowStateForClass:self.class];
-
-	[super show];
-}
-
-- (void)windowWillClose:(NSNotification *)note
-{
-	[self.window saveWindowStateForClass:self.class];
-
-	if ([self.delegate respondsToSelector:@selector(buddyListDialogWillClose:)]) {
-		[self.delegate buddyListDialogWillClose:self];
-	}
-}
-
+@interface TDCBuddyListDialogEntry : NSObject
+@property (nonatomic, strong) IRCClient *client;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, assign) IRCAddressBookUserTrackingStatus availability;
 @end
 
 NS_ASSUME_NONNULL_END

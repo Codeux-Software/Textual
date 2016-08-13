@@ -216,6 +216,13 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 
 			self.trackedUsersInt[trackingNickname] = @(NO);
 		}
+		else if (newStatus == IRCAddressBookUserTrackingIsNotAwayStatus ||
+				 newStatus == IRCAddressBookUserTrackingIsAwayStatus)
+		{
+			if (trackingNickname == nil) {
+				return;
+			}
+		}
 
 		[RZNotificationCenter() postNotificationName:IRCAddressBookUserTrackingStatusChangedNotification
 											  object:self

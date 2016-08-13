@@ -50,6 +50,8 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
 	IRCAddressBookUserTrackingSignedOnStatus,
 	IRCAddressBookUserTrackingIsAvailalbeStatus,
 	IRCAddressBookUserTrackingIsNotAvailalbeStatus,
+	IRCAddressBookUserTrackingIsAwayStatus,
+	IRCAddressBookUserTrackingIsNotAwayStatus
 };
 
 /* Keys that can be accessed by -dictionaryValue. It is recommended to only access
