@@ -56,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXMasterController
 
+#pragma mark -
+#pragma mark Initialization
+
 - (instancetype)init
 {
 	if ((self = [super init])) {
@@ -165,40 +168,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self applicationDidFinishLaunching];
 }
 
-- (void)checkForOtherCopiesOfTextualRunning
-{
-	BOOL foundOneMatchForSelf = NO;
-
-	for (NSRunningApplication *application in RZWorkspace().runningApplications) {
-		if ([application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5.trial"])
-		{
-			if ([application.bundleIdentifier isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
-				if (foundOneMatchForSelf == NO) {
-					foundOneMatchForSelf = YES;
-
-					continue;
-				}
-			}
-
-			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1115][2]")
-																	 title:TXTLS(@"Prompts[1115][1]")
-															 defaultButton:TXTLS(@"Prompts[0001]")
-														   alternateButton:TXTLS(@"Prompts[0002]")];
-
-			if (continueLaunch == NO) {
-				[self forceTerminate];
-			}
-
-			break;
-		}
-	}
-}
-
 #pragma mark -
-#pragma mark NSApplication Delegate
+#pragma mark Services
 
 - (void)prepareThirdPartyServiceHockeyAppFramework
 {
@@ -335,6 +306,41 @@ NS_ASSUME_NONNULL_BEGIN
 }
 #endif
 
+- (void)checkForOtherCopiesOfTextualRunning
+{
+	BOOL foundOneMatchForSelf = NO;
+
+	for (NSRunningApplication *application in RZWorkspace().runningApplications) {
+		if ([application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5.trial"])
+		{
+			if ([application.bundleIdentifier isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
+				if (foundOneMatchForSelf == NO) {
+					foundOneMatchForSelf = YES;
+
+					continue;
+				}
+			}
+
+			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1115][2]")
+																	 title:TXTLS(@"Prompts[1115][1]")
+															 defaultButton:TXTLS(@"Prompts[0001]")
+														   alternateButton:TXTLS(@"Prompts[0002]")];
+
+			if (continueLaunch == NO) {
+				[self forceTerminate];
+			}
+
+			break;
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark NSApplication Terminate Procedure
+
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 - (void)presentBetaTesterDialog
 {
@@ -362,6 +368,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 #endif
+
+#pragma mark -
+#pragma mark NSApplication Delegate
 
 - (void)applicationDidFinishLaunching
 {
@@ -399,6 +408,31 @@ NS_ASSUME_NONNULL_BEGIN
 	self.applicationIsActive = YES;
 	self.applicationIsChangingActiveState = NO;
 }
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+	if (self.applicationIsTerminating) {
+		return NO;
+	}
+
+	[self.mainWindow makeKeyAndOrderFront:nil];
+
+	return YES;
+}
+
+- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
+{
+	if (self.applicationIsTerminating) {
+		return NO;
+	}
+
+	[self.mainWindow makeKeyAndOrderFront:nil];
+
+	return YES;
+}
+
+#pragma mark -
+#pragma mark NSApplication Terminate Procedure
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender
 {
@@ -548,28 +582,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.skipTerminateSave = YES;
 
 	[self forceTerminate];
-}
-
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
-{
-	if (self.applicationIsTerminating) {
-		return NO;
-	}
-
-	[self.mainWindow makeKeyAndOrderFront:nil];
-
-	return YES;
-}
-
-- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
-{
-	if (self.applicationIsTerminating) {
-		return NO;
-	}
-
-	[self.mainWindow makeKeyAndOrderFront:nil];
-
-	return YES;
 }
 
 #pragma mark -
