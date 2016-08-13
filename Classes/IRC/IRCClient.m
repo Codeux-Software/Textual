@@ -6180,16 +6180,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL myself = [self nicknameIsMyself:oldNickname];
 
-	IRCUser *user = nil;
-
-	if (isPrintOnlyMessage == NO) {
-		user = [self findUser:oldNickname];
-
-		if (user == nil) {
-			return;
-		}
-	}
-
 	/* Find address book entry for old nickname and update tracking
 	 status. This entry will also be used later on,	 when printing, 
 	 to decide whether to print the message. */
@@ -6229,6 +6219,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (newNicknameIgnoreInfo) {
 				[self updateUserTrackingStatusForEntry:newNicknameIgnoreInfo withMessage:m];
 			}
+		}
+	}
+
+	IRCUser *user = nil;
+
+	if (isPrintOnlyMessage == NO) {
+		user = [self findUser:oldNickname];
+
+		if (user == nil) {
+			return;
 		}
 	}
 
