@@ -47,11 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 #define _WebKit2MenuItemTagLookupInDictionary		22
 #define _WebKit2MenuItemTagSearchWithGoogle			21
 
-#define _WebMenuItemTagCopy		1603 // Tag for Textual's menu, not WebKit
+#define _TextualMenuItemTagSearchWithGoogle			1601
+#define _TextualMenuItemTagLookupInDictionary		1602
 
 @implementation TVCLogPolicy
 
-- (NSArray<NSMenuItem *> *)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(nullable NSArray<NSMenuItem *> *)defaultMenuItems
+- (NSArray<NSMenuItem *> *)constructContextMenuItemsForWebView:(TVCLogView *)webView defaultMenuItems:(NSArray<NSMenuItem *> *)defaultMenuItems
 {
 	TVCLogController *viewController = webView.viewController;
 
@@ -132,17 +133,17 @@ NS_ASSUME_NONNULL_BEGIN
 		for (NSMenuItem *item in menu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
-			if (newItem.tag == _WebMenuItemTagCopy) {
+			if (newItem.tag == _TextualMenuItemTagSearchWithGoogle) {
 				if (searchWithGoogleItem != nil) {
 					[menuItems addObject:searchWithGoogleItem];
-				}
 
+					continue;
+				}
+			} else if (newItem.tag == _TextualMenuItemTagLookupInDictionary) {
 				if (lookupInDictionaryItem != nil) {
 					[menuItems addObject:lookupInDictionaryItem];
-				}
 
-				if (searchWithGoogleItem != nil || lookupInDictionaryItem != nil) {
-					[menuItems addObject:[NSMenuItem separatorItem]];
+					continue;
 				}
 			}
 
@@ -162,7 +163,14 @@ NS_ASSUME_NONNULL_BEGIN
 									target:menuController()
 									action:@selector(forceReloadTheme:)]];
 
-			if (inspectElementItem) {
+			if (inspectElementItem == nil) {
+				if (isWebKit2) {
+					[menuItems addObject:
+					 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1017]")
+											target:menuController()
+											action:@selector(openWebInspector:)]];
+				}
+			} else {
 				[menuItems addObject:inspectElementItem];
 			}
 		}
@@ -171,12 +179,55 @@ NS_ASSUME_NONNULL_BEGIN
 	return [menuItems copy];
 }
 
+- (NSMenu *)constructContextMenuForWebView:(TVCLogView *)webView withDefaultMenuItems:(NSArray<NSMenuItem *> *)defaultMenuItems
+{
+	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
+
+	NSArray *menuItems = [self constructContextMenuItemsForWebView:webView defaultMenuItems:defaultMenuItems];
+
+	for (NSMenuItem *menuItem in menuItems) {
+		[contextMenu addItem:menuItem];
+	}
+
+	return contextMenu;
+}
+
+- (void)displayContextMenuInWebView:(TVCLogView *)webView
+{
+	if (webView.isUsingWebKit2 == NO) {
+		return;
+	}
+
+	NSMenu *contextMenu = [self constructContextMenuForWebView:webView withDefaultMenuItems:@[]];
+
+	NSView *webViewBacking = webView.webView;
+
+	NSWindow *webViewWindow = webViewBacking.window;
+
+	NSPoint mouseLocationGlobal = [NSEvent mouseLocation];
+
+	NSRect mouseLocationLocal =
+	[webViewWindow convertRectFromScreen:NSMakeRect(mouseLocationGlobal.x, mouseLocationGlobal.y, 0, 0)];
+
+	NSEvent *event = [NSEvent mouseEventWithType:NSRightMouseUp
+										location:mouseLocationLocal.origin
+								   modifierFlags:0
+									   timestamp:0
+									windowNumber:webViewWindow.windowNumber
+										 context:nil
+									 eventNumber:0
+									  clickCount:0
+										pressure:0];
+
+	[NSMenu popUpContextMenu:contextMenu withEvent:event forView:webViewBacking];
+}
+
 #pragma mark -
 #pragma mark WebKit Delegate
 
 - (NSArray<NSMenuItem *> *)webView1:(WebView *)webView logView:(TVCLogView *)logView contextMenuWithDefaultMenuItems:(NSArray *)defaultMenuItems
 {
-	return [self constructContextMenuInWebView:logView defaultMenuItems:defaultMenuItems];
+	return [self constructContextMenuItemsForWebView:logView defaultMenuItems:defaultMenuItems];
 }
 
 - (void)webView1:(WebView *)webView logView:(TVCLogView *)logView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
@@ -241,15 +292,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSMenu *)webView2:(WKWebView *)webView logView:(TVCLogView *)logView contextMenuWithDefaultMenu:(NSMenu *)defaultMenu
 {
-	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
-
-	NSArray *menuItems = [self constructContextMenuInWebView:logView defaultMenuItems:defaultMenu.itemArray];
-
-	for (NSMenuItem *menuItem in menuItems) {
-		[contextMenu addItem:menuItem];
-	}
-
-	return contextMenu;
+	return [self constructContextMenuForWebView:logView withDefaultMenuItems:defaultMenu.itemArray];
 }
 
 #pragma mark -

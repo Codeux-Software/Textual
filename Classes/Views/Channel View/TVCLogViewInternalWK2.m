@@ -240,6 +240,27 @@ create_normal_pool:
 	}
 }
 
+- (void)openWebInspector
+{
+	WKPageRef pageRef = NULL;
+
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		return;
+	} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		WKView *webViewParent = (id)self.subviews[0];
+
+		pageRef = [webViewParent pageRef];
+	}
+
+	if (pageRef == NULL) {
+		return;
+	}
+
+	WKInspectorRef inspectorRef = WKPageGetInspector(pageRef);
+
+	WKInspectorShow(inspectorRef);
+}
+
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
 {
 	NSParameterAssert(searchString != nil);

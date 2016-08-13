@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *channelName;
 @property (nonatomic, copy, nullable) NSString *nickname;
 
+- (void)displayContextMenuInWebView:(TVCLogView *)webView;
+
 - (void)channelNameDoubleClicked;
 - (void)nicknameDoubleClicked;
 - (void)topicBarDoubleClicked;

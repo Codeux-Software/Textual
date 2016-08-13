@@ -257,6 +257,8 @@ NS_ASSUME_NONNULL_BEGIN
  
 	The following tags apply to the "Channel View" menu:
 	1600: "Change Nickname…"
+	1601: "Search With Google"
+	1602: "Look Up In Dictionary"
 	1603: "Copy"
 	1604: "Paste"
 	1605: "-"
@@ -441,8 +443,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)copyUrl:(id)sender;
 
+- (IBAction)lookUpInDictionary:(id)sender;
+- (IBAction)searchGoogle:(id)sender;
 - (IBAction)copyLogAsHtml:(id)sender;
 - (IBAction)forceReloadTheme:(id)sender;
+- (IBAction)openWebInspector:(id)sender;
 
 - (IBAction)toggleBetaUpdates:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;

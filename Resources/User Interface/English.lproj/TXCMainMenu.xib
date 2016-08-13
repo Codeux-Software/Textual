@@ -1245,6 +1245,20 @@ CQ
                         <action selector="showServerChangeNicknameSheet:" target="267" id="tlA-ze-pwa"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="378">
+                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                </menuItem>
+                <menuItem title="Search With Google" tag="1601" id="397">
+                    <connections>
+                        <action selector="searchGoogle:" target="267" id="2591"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Look Up in Dictionary" tag="1608" id="Yts-x2-7aO">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="lookUpInDictionary:" target="267" id="uss-lW-HRk"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="472">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
