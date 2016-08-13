@@ -99,7 +99,7 @@ Textual.usesCustomMenuConstructor = function()
 	/* macOS Sierra has an Objective-C API to modify the menus in 
 	WebKit2 which isn't too difficult to use which means we only
 	need a custom menu constructor on WebKit2 + OS X El Capitan. */
-	if (document.documentElement.getAttribute("systemversion").indexOf("10.11.") === 0) {
+	if (typeof window.webkit.messageHandlers.displayContextMenu === "object") {
 		return true;
 	} else {
 		return false;
