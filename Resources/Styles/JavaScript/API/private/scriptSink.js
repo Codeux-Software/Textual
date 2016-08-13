@@ -401,6 +401,11 @@ app.copySelectionWhenPermitted = function(callbackFunction)
 	}
 };
 
+app.displayContextMenu = function()
+{
+	window.webkit.messageHandlers.displayContextMenu.postMessage(null);
+};
+
 app.sendPluginPayload = function(payloadLabel, payloadContent)
 {
 	var dataValue = {"values" : [payloadLabel, payloadContent]};

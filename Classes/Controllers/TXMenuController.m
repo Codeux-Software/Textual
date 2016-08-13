@@ -388,6 +388,47 @@ NS_ASSUME_NONNULL_BEGIN
 			return condition;
 
 		}
+		case 315: // "Search With Google"
+		case 1601: // "Search With Google"
+		{
+			TVCLogView *webView = self.selectedViewControllerBackingView;
+
+			if (webView == nil) {
+				return NO;
+			}
+
+			NSString *searchProviderName = [self searchProviderName];
+
+			menuItem.title = TXTLS(@"BasicLanguage[1020]", searchProviderName);
+
+			return webView.hasSelection;
+		}
+		case 1608: // "Look Up in Dictionary"
+		{
+			TVCLogView *webView = self.selectedViewControllerBackingView;
+
+			if (webView == nil) {
+				return NO;
+			}
+
+			NSString *selection = webView.selection;
+
+			if (selection.length == 0 || selection.length > 40) {
+				menuItem.title = TXTLS(@"BasicLanguage[1018]");
+
+				return NO;
+			}
+
+			if (selection.length > 25) {
+				selection = [selection substringToIndex:24];
+
+				selection = [NSString stringWithFormat:@"%@…", selection.trim];
+			}
+
+			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
+
+			return YES;
+		}
 		case 802: // "Toggle Visiblity of Member List"
 		{
 			return _isChannel;
@@ -1403,6 +1444,62 @@ NS_ASSUME_NONNULL_BEGIN
 	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Writing-Scripts.kb"];
 }
 
+- (NSString *)searchProviderName
+{
+	NSDictionary *preferredWebServices =
+	[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"NSPreferredWebServices"];
+
+	NSDictionary *defaultSearchProvider = [preferredWebServices dictionaryForKey:@"NSWebServicesProviderWebSearch"];
+
+	NSString *searchProviderName = [defaultSearchProvider stringForKey:@"NSDefaultDisplayName"];
+
+	if (searchProviderName == nil) {
+		return @"Google";
+	}
+
+	return searchProviderName;
+}
+
+- (void)searchGoogle:(id)sender
+{
+	TVCLogView *webView = self.selectedViewControllerBackingView;
+
+	if (webView == nil) {
+		return;
+	}
+
+	NSString *selection = webView.selection;
+
+	if (selection.length == 0) {
+		return;
+	}
+
+	NSPasteboard *searchPasteboard = [NSPasteboard pasteboardWithUniqueName];
+
+	searchPasteboard.stringContent = selection;
+
+	NSPerformService(@"Search With %WebSearchProvider@", searchPasteboard);
+}
+
+- (void)lookUpInDictionary:(id)sender
+{
+	TVCLogView *webView = self.selectedViewControllerBackingView;
+
+	if (webView == nil) {
+		return;
+	}
+
+	NSString *selection = webView.selection;
+
+	if (selection.length == 0) {
+		return;
+	}
+
+	NSString *urlString = [NSString stringWithFormat:@"dict://%@", selection.percentEncodedString];
+
+	[TLOpenLink openWithString:urlString];
+}
+
 - (void)copyLogAsHtml:(id)sender
 {
 	TVCLogView *webView = self.selectedViewControllerBackingView;
@@ -1412,6 +1509,20 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[webView copyContentString];
+}
+
+- (void)openWebInspector:(id)sender
+{
+	TVCLogView *webView = self.selectedViewControllerBackingView;
+
+	if (webView == nil) {
+		return;
+	}
+
+	NSAssert(webView.isUsingWebKit2,
+		@"Missing implementation");
+
+	[(TVCLogViewInternalWK2 *)webView.webView openWebInspector];
 }
 
 - (void)markScrollback:(id)sender

@@ -90,24 +90,80 @@ Textual.copySelectionOnMouseUpEvent = function()
 };
 
 /* Contextual menu management */
+Textual.usesCustomMenuConstructor = function()
+{
+	if (appInternal.isWebKit2() === false) {
+		return false;
+	}
+	
+	/* macOS Sierra has an Objective-C API to modify the menus in 
+	WebKit2 which isn't too difficult to use which means we only
+	need a custom menu constructor on WebKit2 + OS X El Capitan. */
+	if (document.documentElement.getAttribute("systemversion").indexOf("10.11.") === 0) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.openGenericContextualMenu = function()
+{
+	/* Do not block if target element already has a callback. */
+	if (event.target.oncontextmenu !== null) {
+		return;
+	}
+
+	if (Textual.usesCustomMenuConstructor()) {
+		event.preventDefault();
+		
+		Textual.recordSelection();
+
+		app.displayContextMenu();
+	}
+};
+
 Textual.openChannelNameContextualMenu = function()
 {
 	Textual.setPolicyChannelName();
+
+	if (Textual.usesCustomMenuConstructor()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
 	Textual.setPolicyURLAddress();
+
+	if (Textual.usesCustomMenuConstructor()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openStandardNicknameContextualMenu = function()
 {
 	Textual.setPolicyStandardNickname();
+
+	if (Textual.usesCustomMenuConstructor()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openInlineNicknameContextualMenu = function()
 {
 	Textual.setPolicyInlineNickname();
+
+	if (Textual.usesCustomMenuConstructor()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.setPolicyStandardNickname = function()
@@ -191,4 +247,6 @@ Textual.inlineNicknameDoubleClicked = function()
 };
 
 /* Bind to events */
+document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
+
 document.addEventListener("selectionchange", Textual.selectionChangedCallback, false);

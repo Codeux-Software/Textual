@@ -320,6 +320,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelNameDoubleClicked:)];
 }
 
+- (void)displayContextMenu:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_displayContextMenu:)];
+}
+
 - (void)copySelectionWhenPermitted:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_copySelectionWhenPermitted:)];
@@ -549,6 +554,11 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_channelNameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
 	[context.webViewPolicy channelNameDoubleClicked];
+}
+
+- (void)_displayContextMenu:(TVCLogScriptEventSinkContext *)context
+{
+	[context.webViewPolicy displayContextMenuInWebView:context.webView];
 }
 
 - (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
