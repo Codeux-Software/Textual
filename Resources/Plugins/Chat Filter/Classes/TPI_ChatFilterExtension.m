@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *filterAddButton;
 @property (nonatomic, weak) IBOutlet NSButton *filterRemoveButton;
 @property (nonatomic, weak) IBOutlet NSButton *filterEditButton;
-@property (nonatomic, weak) IBOutlet NSTableView *filterTable;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *filterTable;
 @property (nonatomic, strong, readwrite) IBOutlet NSArrayController *filterArrayController;
 @property (nonatomic, assign) BOOL atleastOneFilterExists;
 @property (nonatomic, assign) NSInteger activeChatFilterIndex;
