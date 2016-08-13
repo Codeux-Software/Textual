@@ -43,10 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCBasicTableView : NSTableView
 @property (nonatomic, weak, nullable) id textEditingDelegate;
 
-@property (readonly, copy) NSArray<NSNumber *> *selectedRows;
-
-- (void)selectRows:(NSArray<NSNumber *> *)indices;
-- (void)selectRows:(NSArray<NSNumber *> *)indices extendSelection:(BOOL)extendSelection;
+@property (readonly, assign) BOOL presentMenuForEmptySelection;
 @end
 
 NS_ASSUME_NONNULL_END

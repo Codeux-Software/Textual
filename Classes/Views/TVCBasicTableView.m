@@ -41,29 +41,15 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation TVCBasicTableView
 
 #pragma mark -
-#pragma mark Table View
+#pragma mark Table V@@iew
 
-- (NSArray<NSNumber *> *)selectedRows
+- (nullable NSMenu *)menuForEvent:(NSEvent *)event
 {
-	return self.selectedRowIndexes.arrayFromIndexSet;
-}
-
-- (void)selectRows:(NSArray<NSNumber *> *)indices
-{
-	[self selectRows:indices extendSelection:NO];
-}
-
-- (void)selectRows:(NSArray<NSNumber *> *)indices extendSelection:(BOOL)extendSelection
-{
-	NSParameterAssert(indices != nil);
-
-	NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-	
-	for (NSNumber *index in indices) {
-		[indexSet addIndex:index.unsignedIntegerValue];
+	if (self.selectedRow < 0 && self.presentMenuForEmptySelection == NO) {
+		return nil;
 	}
-	
-	[self selectRowIndexes:indexSet byExtendingSelection:extendSelection];
+
+	return self.menu;
 }
 
 - (void)rightMouseDown:(NSEvent *)e
