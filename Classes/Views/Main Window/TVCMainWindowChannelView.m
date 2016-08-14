@@ -595,11 +595,11 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 		backgroundColor = windowColor;
 	} else {
-		if ([TPCPreferences invertSidebarColors]) {
-			backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
-		} else {
-			backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.2];
-		}
+		backgroundColor = themeSettings().channelViewOverlayColor;
+	}
+
+	if (backgroundColor == nil) {
+		backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.3];
 	}
 
 	[backgroundColor set];
