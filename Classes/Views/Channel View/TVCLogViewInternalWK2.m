@@ -175,7 +175,7 @@ create_normal_pool:
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		self.allowsLinkPreview = YES;
+		self.allowsLinkPreview = [TPCPreferences webKit2PreviewLinks];
 
 		self.customUserAgent = TVCLogViewCommonUserAgentString;
 	}
