@@ -330,7 +330,11 @@ NS_ASSUME_NONNULL_BEGIN
 	switch (tag) {
 		case 815: // "Buddy List"
 		{
+#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
 			menuItem.hidden = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+#else 
+			menuItem.hidden = YES;
+#endif
 
 			return YES;
 		}
@@ -2577,6 +2581,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showBuddyListWindow:(id)sender
 {
+#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
 	_popWindowViewIfExists(@"TDCBuddyListDialog");
 
 	TDCBuddyListDialog *dialog = [TDCBuddyListDialog new];
@@ -2586,12 +2591,15 @@ NS_ASSUME_NONNULL_BEGIN
 	[dialog show];
 
 	[windowController() addWindowToWindowList:dialog];
+#endif
 }
 
+#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
 - (void)buddyListDialogWillClose:(TDCBuddyListDialog *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }
+#endif
 
 #pragma mark -
 #pragma mark Menu Item Actions
