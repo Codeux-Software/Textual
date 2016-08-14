@@ -114,9 +114,6 @@ body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
 	padding-left: 10px;
 }
 
-html[systemversion^="10.9"] .inlineImageCell .closeButton,
-html[systemversion^="10.8"] .inlineImageCell .closeButton {
-	line-height: 13px;
 }
 
 /* @end */
