@@ -686,6 +686,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	return [RZUserDefaults() boolForKey:@"WKProcessPoolSizeIsLimited"];
 }
 
++ (BOOL)webKit2PreviewLinks
+{
+	return [RZUserDefaults() boolForKey:@"WebViewPreviewLinks"];
+}
+
 + (BOOL)themeChannelViewUsesCustomScrollers
 {
 	return ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);

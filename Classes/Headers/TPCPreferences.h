@@ -233,6 +233,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (BOOL)webKit2Enabled;
 + (BOOL)webKit2ProcessPoolSizeLimited;
++ (BOOL)webKit2PreviewLinks;
 
 + (NSString *)themeName;
 + (NSString *)themeNameDefault;
