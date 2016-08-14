@@ -1362,7 +1362,7 @@ CQ
                         <action selector="searchGoogle:" target="267" id="2591"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Look Up in Dictionary" tag="1608" id="Yts-x2-7aO">
+                <menuItem title="Look Up in Dictionary" tag="1602" id="Yts-x2-7aO">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="lookUpInDictionary:" target="267" id="uss-lW-HRk"/>
