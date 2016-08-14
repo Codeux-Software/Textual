@@ -137,7 +137,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	/* Enumerate views that the user has selected */
 	IRCTreeItem *itemSelected = mainWindow.selectedItem;
 
-	__block NSUInteger itemSelectedIndex = 0;
+	__block NSUInteger itemSelectedIndex = NSNotFound;
 
 	[selectedItems enumerateObjectsUsingBlock:^(IRCTreeItem *item, NSUInteger index, BOOL *stop) {
 		NSString *uniqueIdentifier = item.uniqueIdentifier;
@@ -172,6 +172,13 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 			subview.isSelected = YES;
 		} else {
 			subview.isSelected = NO;
+
+			/* -isSelected is defaulted to NO which means for new views,
+			 -toggleOverlayView must be manually invoked because the
+			 setter wont change the value if they are same (NO == NO) */
+			if (subviewIsNew) {
+				[subview toggleOverlayView];
+			}
 		}
 
 		subview.uniqueIdentifier = uniqueIdentifier;
@@ -211,22 +218,25 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 	NSArray *selectedItems = mainWindow.selectedItems;
 
-	NSArray *subviews = [self.subviews copy];
+	NSArray *subviews = self.subviews;
 
 	NSUInteger itemIndexSelected = self.itemIndexSelected;
 
-	IRCTreeItem *newItem = selectedItems[itemIndex];
+	if (itemIndexSelected != NSNotFound) {
+		TVCMainWindowChannelViewSubview *oldItemView = subviews[itemIndexSelected];
+
+		oldItemView.isSelected = NO;
+		[oldItemView toggleOverlayView];
+	}
 
 	TVCMainWindowChannelViewSubview *newItemView = subviews[itemIndex];
-	TVCMainWindowChannelViewSubview *oldItemView = subviews[itemIndexSelected];
 
 	newItemView.isSelected = YES;
 	[newItemView toggleOverlayView];
 
-	oldItemView.isSelected = NO;
-	[oldItemView toggleOverlayView];
-
 	self.itemIndexSelected = itemIndex;
+
+	IRCTreeItem *newItem = selectedItems[itemIndex];
 
 	[mainWindow channelViewSelectionChangeTo:newItem];
 }
@@ -362,14 +372,18 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
-- (void)viewDidMoveToSuperview
-{
-	[self toggleOverlayView];
-}
-
 - (BOOL)backingViewIsLoading
 {
 	return self.backingView.isLayingOutView;
+}
+
+- (void)setIsSelected:(BOOL)isSelected
+{
+	if (self->_isSelected != isSelected) {
+		self->_isSelected = isSelected;
+
+		[self toggleOverlayView];
+	}
 }
 
 - (void)setBackingView:(nullable TVCLogView *)backingView
@@ -400,9 +414,11 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 		return;
 	}
 
-	self.isObservingBackingView = YES;
+	if (self.backingViewIsLoading) {
+		self.isObservingBackingView = YES;
 
-	[backingView addObserver:self forKeyPath:@"layingOutView" options:NSKeyValueObservingOptionNew context:NULL];
+		[backingView addObserver:self forKeyPath:@"layingOutView" options:NSKeyValueObservingOptionNew context:NULL];
+	}
 
 	NSView *webView = backingView.webView;
 
