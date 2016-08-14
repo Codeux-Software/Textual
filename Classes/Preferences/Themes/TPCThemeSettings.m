@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite, nullable) NSString *themeNicknameFormat;
 @property (nonatomic, copy, readwrite, nullable) NSString *themeTimestampFormat;
 @property (nonatomic, copy, readwrite, nullable) NSString *settingsKeyValueStoreName;
+@property (nonatomic, copy, readwrite, nullable) NSColor *channelViewOverlayColor;
 @property (nonatomic, copy, readwrite, nullable) NSColor *underlyingWindowColor;
 @property (nonatomic, assign, readwrite) double indentationOffset;
 @property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
@@ -82,11 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(dic != nil);
 
 	NSString *colorValue = [dic stringForKey:key];
-
-	/* Supported format: #FFF or #FFFFFF */
-	if (colorValue.length != 4 && colorValue.length != 7) {
-		return nil;
-	}
 
 	return [NSColor colorWithHexadecimalValue:colorValue];
 }
@@ -310,6 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.invertSidebarColors = [styleSettings boolForKey:@"Force Invert Sidebars"];
 
+		self.channelViewOverlayColor = [self _colorForKey:@"Channel View Overlay Color" fromDictionary:styleSettings];
 		self.underlyingWindowColor = [self _colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
 		self.settingsKeyValueStoreName = [self _stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
