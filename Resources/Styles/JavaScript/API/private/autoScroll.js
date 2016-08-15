@@ -46,6 +46,8 @@ var TextualScroller = {};
 /* State tracking */
 TextualScroller.scrollTopUserConstant = 25;
 
+TextualScroller.isScrolledByUser = false;
+
 TextualScroller.scrollHeightCurrentValue = 0;
 TextualScroller.scrollHeightPreviousValue = 0;
 
@@ -56,8 +58,6 @@ TextualScroller.scrollLastPosition2 = 0;
 TextualScroller.scrollLastPosition3 = 0;
 
 TextualScroller.currentScrollTopValue = 0;
-
-TextualScroller.isScrolledByUser = false;
 
 /* Core functions */
 TextualScroller.documentVisbilityChangedCallback = function()
@@ -152,21 +152,42 @@ TextualScroller.documentScrolledCallback = function()
 /* 	Perform automatic scrolling */
 TextualScroller.performAutoScroll = function()
 {
-	var performAutoScrollFunction = (function() {
-		TextualScroller.performAutoScrollInt(false);
-
-		if (TextualScroller.scrollHeightTimerActive) {
-			TextualScroller.performAutoScroll();
-		}
-	});
-	
-//	if (typeof window.requestAnimationFrame === "undefined") {
-		setTimeout(performAutoScrollFunction, 50);
-//	} else {
-//		requestAnimationFrame(performAutoScrollFunction);
-//	}
+	TextualScroller.performAutoScrollTimer(0);
 };
 
+/* TextualScroller.performAutoScrollTimer() is the function which is invokes 
+ TextualScroller.performAutoScrollInt() and sets the timer for the next iteration. 
+ The parameter recursionDepth is passed to control the speed that the *Int function
+ is invoked. We use requestAnimationFrame() to ensure that scrolling occurs when 
+ a repaint occurs, and not in-between. To improve performance, recursionDepth is 
+ used to only invoke the *Int function every 5th call. */ 
+TextualScroller.performAutoScrollTimer = function(recursionDepth) 
+{
+	if (TextualScroller.scrollHeightTimerActive === false) {
+		return;
+	}
+	
+	if (Textual.viewIsFrontmost) {
+		if (recursionDepth >= 8) {
+			recursionDepth = 0;
+		}
+	} else {
+		if (recursionDepth >= 16) {
+			recursionDepth = 0;
+		}
+	}
+
+	if (recursionDepth === 0) {
+		TextualScroller.performAutoScrollInt(false);
+	}
+
+	requestAnimationFrame(function() {
+		TextualScroller.performAutoScrollTimer(recursionDepth + 1);
+	});
+};
+
+/* TextualScroller.performAutoScrollInt() is the function responsible for performing
+ the automatic scroll to the bottom. */
 TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 {
 	/* Set default value of argument */
