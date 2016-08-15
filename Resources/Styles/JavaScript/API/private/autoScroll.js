@@ -152,38 +152,22 @@ TextualScroller.documentScrolledCallback = function()
 /* 	Perform automatic scrolling */
 TextualScroller.performAutoScroll = function()
 {
-	TextualScroller.performAutoScrollTimer(0);
+	TextualScroller.performAutoScrollTimer();
 };
 
-/* TextualScroller.performAutoScrollTimer() is the function which is invokes 
- TextualScroller.performAutoScrollInt() and sets the timer for the next iteration. 
- The parameter recursionDepth is passed to control the speed that the *Int function
- is invoked. We use requestAnimationFrame() to ensure that scrolling occurs when 
- a repaint occurs, and not in-between. To improve performance, recursionDepth is 
- used to only invoke the *Int function every 5th call. */ 
-TextualScroller.performAutoScrollTimer = function(recursionDepth) 
+TextualScroller.performAutoScrollTimer = function() 
 {
 	if (TextualScroller.scrollHeightTimerActive === false) {
 		return;
 	}
-	
-	if (Textual.viewIsFrontmost) {
-		if (recursionDepth >= 8) {
-			recursionDepth = 0;
-		}
-	} else {
-		if (recursionDepth >= 16) {
-			recursionDepth = 0;
-		}
-	}
 
-	if (recursionDepth === 0) {
-		TextualScroller.performAutoScrollInt(false);
-	}
-
-	requestAnimationFrame(function() {
-		TextualScroller.performAutoScrollTimer(recursionDepth + 1);
-	});
+	setTimeout(function() {
+		TextualScroller.performAutoScrollTimer();
+		
+		requestAnimationFrame(function() {
+			TextualScroller.performAutoScrollInt(false);
+		});	
+	}, 65);
 };
 
 /* TextualScroller.performAutoScrollInt() is the function responsible for performing
