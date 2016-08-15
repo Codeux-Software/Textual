@@ -43,6 +43,8 @@
 
 Textual.viewBodyDidLoadIntAnimationFrame = null;
 
+Textual.viewIsFrontmost = false;
+
 /* State management */
 Textual.notifyDidBecomeVisible = function()
 {
@@ -60,6 +62,8 @@ Textual.notifyDidBecomeHidden = function()
 
 Textual.notifySelectionChanged = function(isSelected)
 {
+	Textual.viewIsFrontmost = isSelected;
+
 	Textual.setTopicBarVisible(isSelected);
 		
 	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
