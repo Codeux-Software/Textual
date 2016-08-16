@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 			*isOverride = YES;
 		}
 
-		return [NSString stringWithFormat:@"#%@", styleOverride.hexadecimalValue];
+		return styleOverride.hexadecimalValue;
 	} else {
 		if (isOverride) {
 			*isOverride = NO;
