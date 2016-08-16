@@ -668,6 +668,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (BOOL)webKit2Enabled
 {
+	return NO;
 	BOOL canUseWebKit2 = [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];
 
 	if (canUseWebKit2 == NO) {

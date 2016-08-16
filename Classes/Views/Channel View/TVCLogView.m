@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id webViewBacking;
 @property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;
 @property (nonatomic, getter=isLayingOutView, readwrite) BOOL layingOutView;
+@property (nonatomic, assign) NSSize scrollAreaLastSize;
 @end
 
 @implementation TVCLogView
@@ -252,6 +253,23 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(searchString != nil);
 
 	[self.webViewBacking findString:searchString movingForward:movingForward];
+}
+
+- (void)webViewScrollAreaSizeChanged:(NSSize)newSize
+{
+	if (NSEqualSizes(self.scrollAreaLastSize, newSize) == NO) {
+		self.scrollAreaLastSize = newSize;
+	} else {
+		return;
+	}
+
+	if (self.viewController.visible == NO) {
+		return;
+	}
+
+	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.scrollHeightChanged(%f);", newSize.height];
+
+	[self evaluateJavaScript:compiledScript completionHandler:nil];
 }
 
 @end

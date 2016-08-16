@@ -60,26 +60,9 @@ TextualScroller.scrollLastPosition3 = 0;
 TextualScroller.currentScrollTopValue = 0;
 
 /* Core functions */
-TextualScroller.documentVisbilityChangedCallback = function()
-{
-	var documentHidden = false;
-
-	if (typeof document.hidden !== "undefined") {
-		documentHidden = document.hidden;
-	} else if (typeof document.webkitHidden !== "undefined") {
-		documentHidden = document.webkitHidden;
-	}
-
-	if (documentHidden) {
-		TextualScroller.disableScrollingTimerInt();
-	} else {
-		TextualScroller.enableScrollingTimerInt();
-	}
-};
-
 TextualScroller.documentResizedCallback = function()
 {
-	TextualScroller.performAutoScrollInt(true);
+	TextualScroller.performAutoScroll();
 };
 
 TextualScroller.documentScrolledCallback = function()
@@ -100,13 +83,6 @@ TextualScroller.documentScrolledCallback = function()
 	TextualScroller.scrollLastPosition2 = TextualScroller.scrollLastPosition1;
 
 	TextualScroller.scrollLastPosition1 = scrollPosition;
-	
-	/* Perform bug corrections */
-	if (TextualScroller.correctScrollBug1() === true ||
-		TextualScroller.correctScrollBug2() === true)
-	{
-		return;
-	}
 
 	/* 	If the current scroll top value exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
@@ -150,67 +126,46 @@ TextualScroller.documentScrolledCallback = function()
 };
 
 /* 	Perform automatic scrolling */
-TextualScroller.performAutoScroll = function()
+TextualScroller.scrollHeightChanged = function(scrollHeight)
 {
-	TextualScroller.performAutoScrollTimer();
+	TextualScroller.performAutoScrollInt(scrollHeight);
 };
 
-TextualScroller.performAutoScrollTimer = function() 
+TextualScroller.performAutoScroll = function() 
 {
-	if (TextualScroller.scrollHeightTimerActive === false) {
-		return;
-	}
-
-	setTimeout(function() {
-		TextualScroller.performAutoScrollTimer();
-		
-		requestAnimationFrame(function() {
-			TextualScroller.performAutoScrollInt(false);
-		});	
-	}, 65);
-};
-
-/* TextualScroller.performAutoScrollInt() is the function responsible for performing
- the automatic scroll to the bottom. */
-TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
-{
-	/* Set default value of argument */
-	if (typeof skipScrollHeightCheck === "undefined") {
-		skipScrollHeightCheck = false;
-	}	
-	
-	/* Do not perform scrolling if we are performing live resize */
-	/* 	Stop auto scroll before height is recorded so that once live resize is completed,
-		scrolling will notice the new height of the view and use that. */
-	if (Textual.hasLiveResize()) {
-		if (InlineImageLiveResize.dragElement) {
-			return;
-		}
-	}
-	
-	/* 	Retrieve the current scroll height and return if it is zero */
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	if (scrollHeight === 0) {
 		return;
 	}
-	
-	var scrollHeightPrevious = TextualScroller.scrollHeightCurrentValue;
-	
+
+	var requestAnimationFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame);
+
+	requestAnimationFrame(function() {
+		TextualScroller.performAutoScrollInt(scrollHeight);
+	 });
+};
+
+/* TextualScroller.performAutoScrollInt() is the function responsible for performing
+ the automatic scroll to the bottom. */
+TextualScroller.performAutoScrollInt = function(scrollHeight)
+{
+	/* Do not perform scrolling if we are performing live resize */
+	/* Stop auto scroll before height is recorded so that once live resize is completed,
+	   scrolling will notice the new height of the view and use that. */
+	if (Textual.hasLiveResize()) {
+		if (InlineImageLiveResize.dragElement) {
+			return;
+		}
+	}
+
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
 		return;
 	}
-
-	/* Perform comparison test for scroll height */
-	if (skipScrollHeightCheck === false) {
-		if (scrollHeight === scrollHeightPrevious) {
-			return;
-		}
-	}
 	
 	/* Make a copy of the previous scroll height and save the new */
-	TextualScroller.scrollHeightPreviousValue = scrollHeightPrevious;
+	TextualScroller.scrollHeightPreviousValue = TextualScroller.scrollHeightCurrentValue;
 	
 	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 
@@ -225,7 +180,7 @@ TextualScroller.scrollHeight = function()
 	if (document.body === null) {
 		return 0;
 	}
-		
+
 	var offsetHeight = document.body.offsetHeight;
 
 	/*	offsetHeight /should/ never be zero but it can be at times
@@ -240,116 +195,7 @@ TextualScroller.scrollHeight = function()
 	return (scrollHeight - offsetHeight);
 };
 
-/* Functions that can be used to toggle automatic scrolling */
-TextualScroller.enableScrollingTimerInt = function()
-{
-	TextualScroller.scrollHeightTimerActive = true;
-	
-	TextualScroller.performAutoScroll();
-};
-
-TextualScroller.disableScrollingTimerInt = function()
-{
-	TextualScroller.scrollHeightTimerActive = false;
-};
-
-/* Bug fixes */
-TextualScroller.correctScrollBug1 = function()
-{
-	/* 	
-		Fix events that look similiar to the following:
-		
-		TextualScroller.performAutoScrollInt() entered
-		Scrolling to 196 with previous height 46
-		TextualScroller.documentScrolledCallback() entered
-		Old position: 46, New Position: 196, Height: 196
-		TextualScroller.documentScrolledCallback() entered
-		Old position: 196, New Position: 46, Height: 196
-		Scrolled above user threshold with difference: 150
-		TextualScroller.performAutoScrollInt() entered
-	
-		The view is scrolled to 196 from previous position of 46. Without the automatic
-		scroller doing so and without the user doing so; WebKit reverses the last scroll
-		event jumping back to 46 from 196. 
-	*/
-
-	if (TextualScroller.scrollLastPosition2 === TextualScroller.currentScrollTopValue &&
-		TextualScroller.scrollLastPosition1 === TextualScroller.scrollLastPosition3 &&
-		TextualScroller.scrollLastPosition1 < TextualScroller.scrollLastPosition2) 
-	{
-		console.log("Possible bogus event detected (1)");
-
-		TextualScroller.performAutoScrollInt(true);
-		
-		return true;
-	}
-	
-	return false;
-};
-
-TextualScroller.correctScrollBug2 = function()
-{
-	/* 	
-		Fix events that look similiar to the following:
-		
-		TextualScroller.performAutoScrollInt() entered
-		Scrolling to 2051 with previous height 1511
-		TextualScroller.documentScrolledCallback() entered
-		Old position: 1731, New Position: 2051, Height: 2051
-		TextualScroller.performAutoScrollInt() entered
-		TextualScroller.documentScrolledCallback() entered
-		Old position: 2051, New Position: 1511, Height: 2051
-	
-		The view is scrolled to 2051 from previous position of 1511. Without the automatic
-		scroller doing so and without the user doing so; WebKit reverses the last scroll
-		event jumping back to 1511 from 2051.
-	*/
-	
-	if (TextualScroller.scrollHeightCurrentValue !== TextualScroller.scrollHeightPreviousValue &&
-		TextualScroller.scrollHeightCurrentValue === TextualScroller.scrollLastPosition2 &&
-		TextualScroller.scrollHeightPreviousValue === TextualScroller.scrollLastPosition1 &&
-		TextualScroller.scrollLastPosition1 < TextualScroller.scrollLastPosition2) 
-	{
-		console.log("Possible bogus event detected (2)");
-
-		TextualScroller.performAutoScrollInt(true);
-		
-		return true;
-	}
-	
-	return false;
-};
-
-/* 	TextualScroller.enableScrollingTimer and TextualScroller.disableScrollingTimer 
-	are called by corePrivate.js when a view is switched to and switched away. 
-	The timer is only managed here when document.hidden is not available. When 
-	document.hidden is available, it is better to rely on state changes to it, 
-	as it allows us to disable timer not only when the view is switched away,
-	but when its host window is occluded. */
-TextualScroller.enableScrollingTimer = function()
-{
-	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
-		TextualScroller.enableScrollingTimerInt();
-	}
-};
-
-TextualScroller.disableScrollingTimer = function()
-{
-	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
-		TextualScroller.disableScrollingTimerInt();
-	}
-};
-
 /* Bind to events */
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
 
 window.addEventListener("resize", TextualScroller.documentResizedCallback, false);
-
-if (typeof document.hidden !== "undefined") {
-	document.addEventListener("visibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
-} else if (typeof document.webkitHidden !== "undefined") {
-	document.addEventListener("webkitvisibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
-}
-
-/* Populate initial visiblity state and maybe create timer */
-TextualScroller.documentVisbilityChangedCallback();
