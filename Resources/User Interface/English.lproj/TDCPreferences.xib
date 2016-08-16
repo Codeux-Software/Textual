@@ -729,11 +729,6 @@
                                     <binding destination="4313" name="content" keyPath="arrangedObjects" id="53y-Fi-lzt"/>
                                     <binding destination="4313" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="53y-Fi-lzt" id="ggr-RN-PgA"/>
                                     <binding destination="4313" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="ggr-RN-PgA" id="eIN-nW-2Hs"/>
-                                    <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="MM5-lS-5vC">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
                                     <outlet property="delegate" destination="-2" id="M95-AZ-zx7"/>
                                 </connections>
                             </tableView>
