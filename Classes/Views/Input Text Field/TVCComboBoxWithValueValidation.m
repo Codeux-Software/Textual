@@ -158,8 +158,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[self recalculatePositionOfClipView];
 }
 
-- (void)textDidChange:(NSNotification *)notification
+- (void)controlTextDidChange:(NSNotification *)notification
 {
+	NSInteger objectIndex = [self indexOfItemWithObjectValue:self.stringValue];
+
+	if (objectIndex != NSNotFound) {
+		[self selectItemAtIndex:objectIndex];
+
+		return;
+	}
+
 	self.lastOperationWasPredefinedSelection = NO;
 
 	[self performValidation];
@@ -173,13 +181,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.stringValue = stringValue;
 
-	self.lastOperationWasPredefinedSelection = NO;
-
-	[self performValidation];
-	
-	[self informCallbackTextDidChange];
-	
-	[self recalculatePositionOfClipView];
+	[self controlTextDidChange:nil];
 }
 
 - (void)informCallbackTextDidChange

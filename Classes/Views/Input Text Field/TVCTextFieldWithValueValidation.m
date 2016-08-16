@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Interval Validation
 
-- (void)textDidChange:(NSNotification *)notification
+- (void)controlTextDidChange:(NSNotification *)notification
 {
 	[self performValidation];
 	
@@ -138,11 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.stringValue = stringValue;
 
-	[self performValidation];
-	
-	[self informCallbackTextDidChange];
-	
-	[self recalculatePositionOfClipView];
+	[self controlTextDidChange:nil];
 }
 
 - (void)informCallbackTextDidChange
