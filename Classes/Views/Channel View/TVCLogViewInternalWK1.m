@@ -101,10 +101,14 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	self.shouldUpdateWhileOffscreen = NO;
 
 	[self updateBackgroundColor];
+
+	[self startObservingScrollerNotifications];
 }
 
 - (void)dealloc
 {
+	[self stopObservingScrollerNotifications];
+
 	self.frameLoadDelegate = nil;
 	self.policyDelegate = nil;
 	self.resourceLoadDelegate = nil;
@@ -212,6 +216,30 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	if (completionHandler) {
 		completionHandler(scriptResult);
 	}
+}
+
+#pragma mark -
+#pragma mark Scroll View
+
+- (void)startObservingScrollerNotifications
+{
+	[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
+}
+
+- (void)stopObservingScrollerNotifications
+{
+	[RZNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
+}
+
+- (void)webViewDidChangeFrame:(NSNotification *)aNotification
+{
+	NSView *documentView = self.mainFrame.frameView.documentView;
+
+	if (aNotification.object != documentView) {
+		return;
+	}
+
+	[self.t_parentView webViewScrollAreaSizeChanged:documentView.frame.size];
 }
 
 #pragma mark -

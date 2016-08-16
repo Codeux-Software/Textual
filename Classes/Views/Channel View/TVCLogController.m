@@ -54,8 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogController ()
 @property (nonatomic, assign, readwrite, getter=viewIsLoaded) BOOL loaded;
-@property (readonly, getter=viewIsSelected) BOOL selected;
-@property (readonly, getter=viewIsVisible) BOOL visible;
 @property (nonatomic, assign) BOOL terminating;
 @property (nonatomic, assign) BOOL reloadingBacklog;
 @property (nonatomic, assign) BOOL reloadingHistory;

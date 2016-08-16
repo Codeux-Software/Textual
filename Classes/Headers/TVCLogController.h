@@ -46,6 +46,8 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 @property (readonly) TVCLogView *backingView;
 @property (readonly, getter=viewIsEncrypted) BOOL encrypted;
 @property (readonly, getter=viewIsLoaded) BOOL loaded;
+@property (readonly, getter=viewIsSelected) BOOL selected;
+@property (readonly, getter=viewIsVisible) BOOL visible;
 @property (readonly) NSUInteger numberOfLines;
 @property (readonly) IRCClient *associatedClient;
 @property (readonly, nullable) IRCChannel *associatedChannel;

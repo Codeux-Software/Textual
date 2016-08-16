@@ -43,29 +43,23 @@
 
 Textual.viewBodyDidLoadIntAnimationFrame = null;
 
-Textual.viewIsFrontmost = false;
-
 /* State management */
 Textual.notifyDidBecomeVisible = function()
 {
-	TextualScroller.enableScrollingTimer();
+	TextualScroller.performAutoScroll();
 
 	Textual.clearSelection();
 };
 
 Textual.notifyDidBecomeHidden = function()
 {
-	TextualScroller.disableScrollingTimer();
-
 	Textual.clearSelection();
 };
 
 Textual.notifySelectionChanged = function(isSelected)
 {
-	Textual.viewIsFrontmost = isSelected;
-
 	Textual.setTopicBarVisible(isSelected);
-		
+
 	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
 };
 
