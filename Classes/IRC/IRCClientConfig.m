@@ -203,6 +203,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	ObjectIsAlreadyInitializedAssert
 
+	if (self->_proxyPort == 0) {
+		self->_proxyPort = IRCConnectionDefaultProxyPort;
+	}
+
 	if ([self isMutable]) {
 		return;
 	}
@@ -210,7 +214,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(self->_connectionName.length > 0);
 	NSParameterAssert(self->_serverAddress.length > 0);
 	NSParameterAssert(self->_serverPort > 0 && self->_serverPort <= TXMaximumTCPPort);
-	NSParameterAssert(self->_proxyPort > 0 && self->_proxyPort <= TXMaximumTCPPort);
 }
 
 + (instancetype)newConfigByMerging:(IRCClientConfig *)config1 with:(IRCClientConfig *)config2
