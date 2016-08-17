@@ -8340,6 +8340,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *userCount = [m paramAt:2];
 			NSString *topic = [m sequence:3];
 
+			if ([channel isEqualToString:@"*"]) {
+				break;
+			}
+
             TDCServerChannelListDialog *channelListDialog = [self channelListDialog];
 
 			if (channelListDialog) {
