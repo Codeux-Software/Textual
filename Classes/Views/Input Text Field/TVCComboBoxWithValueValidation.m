@@ -158,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self recalculatePositionOfClipView];
 }
 
-- (void)controlTextDidChange:(NSNotification *)notification
+- (void)textDidChange:(NSNotification *)notification
 {
 	NSInteger objectIndex = [self indexOfItemWithObjectValue:self.stringValue];
 
@@ -181,7 +181,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.stringValue = stringValue;
 
-	[self controlTextDidChange:nil];
+	[self textDidChange:nil];
 }
 
 - (void)informCallbackTextDidChange
