@@ -194,17 +194,17 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	NSString *filePath = nil;
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([fileSource isEqualToString:TPCThemeControllerCloudThemeNameBasicPrefix])
 	{
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		fileLocation = TPCThemeControllerStorageCloudLocation;
 
 		filePath = [[TPCPathInfo cloudCustomThemeFolderPath] stringByAppendingPathComponent:fileName];
-	}
-	else
 #endif
-	
-	if ([fileSource isEqualToString:TPCThemeControllerCustomThemeNameBasicPrefix])
+
+	}
+	else if ([fileSource isEqualToString:TPCThemeControllerCustomThemeNameBasicPrefix])
 	{
 		fileLocation = TPCThemeControllerStorageCustomLocation;
 
@@ -400,7 +400,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	NSString *themeSource = [TPCThemeController extractThemeSource:validatedTheme];
 
 	LogToConsoleInfo("Performing validation on theme named '%{public}@' with source type of '%{public}@'", themeName, themeSource)
-	
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([themeSource isEqualToString:TPCThemeControllerBundledThemeNameBasicPrefix] || themeSource == nil)
 	{
 		/* If the theme is faulted and is a bundled theme, then we can do
@@ -413,10 +414,15 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 			}
 		}
 	}
-	else if ([themeSource isEqualToString:TPCThemeControllerCustomThemeNameBasicPrefix])
+	else
+#endif
+
+	if ([themeSource isEqualToString:TPCThemeControllerCustomThemeNameBasicPrefix])
 	{
 		/* Even if the current theme is custom and is valid, we still will validate whether
 		 a cloud variant of it exists and if it does, prefer that over the custom. */
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		NSString *cloudTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCloudLocation];
 		
 		if ([TPCThemeController themeExists:cloudTheme]) {
@@ -427,6 +433,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 				keyChanged = YES;
 			}
 		} else {
+#endif
+
 			/* If there is no cloud theme, then we continue validation. */
 			if ([TPCThemeController themeExists:validatedTheme] == NO) {
 				NSString *bundledTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageBundleLocation];
@@ -447,7 +455,11 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 					}
 				}
 			}
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		}
+#endif
+
 	}
 	else if ([themeSource isEqualToString:TPCThemeControllerCloudThemeNameBasicPrefix])
 	{
