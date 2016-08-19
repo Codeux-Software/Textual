@@ -112,6 +112,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 												 delegateQueue:self.dispatchQueue
 												   socketQueue:self.socketQueue];
 
+	self.socketConnection.autoDisconnectOnClosedReadStream = NO;
+
 	self.socketConnection.IPv4PreferredOverIPv6 = self.config.connectionPrefersIPv4;
 
 	/* Attempt to connect using a configured proxy */
@@ -356,6 +358,11 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	}
 
 	[self onSocketConnectedToHost];
+}
+
+- (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock
+{
+	[self tcpClientDidCloseReadStream];
 }
 
 - (void)_socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)error

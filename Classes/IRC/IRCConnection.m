@@ -268,6 +268,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self.client ircConnection:self didDisconnectWithError:disconnectError];
 }
 
+- (void)tcpClientDidCloseReadStream
+{
+	[self.client ircConnectionDidCloseReadStream:self];
+}
+
 - (void)tcpClientDidReceiveData:(NSString *)data
 {
 	[self.client ircConnection:self didReceiveData:data];
