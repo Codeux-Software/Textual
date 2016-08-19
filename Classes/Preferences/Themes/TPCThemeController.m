@@ -106,7 +106,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (NSString *)temporaryPathLeading
 {
-	return [TPCPathInfo applicationCachesFolderInsideGroupContainerPath];
+	NSString *pathExtension = [NSString stringWithFormat:@"/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
+
+	return [[TPCPathInfo applicationTemporaryFolderPath] stringByAppendingPathComponent:pathExtension];
 }
 
 - (NSString *)temporaryPath
