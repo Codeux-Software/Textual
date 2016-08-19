@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
 - (void)tcpClientDidError:(NSString *)error;
 - (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError;
+- (void)tcpClientDidCloseReadStream;
 - (void)tcpClientDidReceiveData:(NSString *)data;
 - (void)tcpClientDidSecureConnection;
 - (void)tcpClientDidReceivedAnInsecureCertificate;

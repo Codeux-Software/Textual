@@ -4558,6 +4558,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self printError:error asCommand:TVCLogLineDefaultCommandValue];
 }
 
+- (void)ircConnectionDidCloseReadStream:(IRCConnection *)sender
+{
+	NSParameterAssert(sender == self.socket);
+
+	if (self.isTerminating) {
+		return;
+	}
+
+	[self printDebugInformationToConsole:TXTLS(@"IRC[1120]")];
+
+	[self disconnect];
+}
+
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data
 {
 	NSParameterAssert(sender == self.socket);

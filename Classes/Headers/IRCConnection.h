@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)ircConnectionDidConnect:(IRCConnection *)sender;
 - (void)ircConnection:(IRCConnection *)sender willConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
 - (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError;
+- (void)ircConnectionDidCloseReadStream:(IRCConnection *)sender;
 - (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error;
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data;
 - (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data;
