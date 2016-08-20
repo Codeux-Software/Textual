@@ -265,7 +265,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	SUUpdater *updater = [SUUpdater sharedUpdater];
 
-	updater.delegate = self;
+	updater.delegate = (id)self;
 
 	if (receiveBetaUpdates == NO) {
 		updater.updateCheckInterval = [sparkleData boolForKey:@"SUScheduledCheckInterval"];
