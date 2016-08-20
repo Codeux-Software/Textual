@@ -5980,8 +5980,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				[self printDebugInformation:TXTLS(@"IRC[1043]") inChannel:channel];
 
 				[self cancelPerformRequestsWithSelector:@selector(joinKickedChannel:) object:channel];
-				
-				[self performSelector:@selector(joinKickedChannel:) withObject:channel afterDelay:3.0];
+
+				[self performSelectorInCommonModes:@selector(joinKickedChannel:) withObject:channel afterDelay:3.0];
 			}
 		}
 		else // myself
@@ -7378,12 +7378,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
          this is the best patch. At least for right now. */
 
 		if (self.isConnectedToZNC) {
-			[self performSelector:@selector(performAutoJoin) withObject:nil afterDelay:3.0];
+			[self performSelectorInCommonModes:@selector(performAutoJoin) withObject:nil afterDelay:3.0];
 		}
 	}
 	
 	/* We need time for the server to send its configuration */
-	[self performSelector:@selector(populateISONTrackedUsersList) withObject:nil afterDelay:10.0];
+	[self performSelectorInCommonModes:@selector(populateISONTrackedUsersList) withObject:nil afterDelay:10.0];
 }
 
 - (void)receiveNumericReply:(IRCMessage *)m
@@ -8999,7 +8999,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self cancelPerformRequestsWithSelector:@selector(autojoinInProgress) object:nil]; // User might invoke -performAutojoin while timer is active
 
-	[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
+	[self performSelectorInCommonModes:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
 }
 
 - (void)autoJoinChannels:(NSArray<IRCChannel *> *)channelList joinChannelsWithPassword:(BOOL)joinChannelsWithPassword
@@ -9251,9 +9251,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (*property == NO) {
 		*property = YES;
 
-		[self performSelector:@selector(timeoutInUserInvokedCommandProperty:)
-				   withObject:[NSValue valueWithPointer:property]
-				   afterDelay:_inUserInvokedCommandTimeoutInterval];
+		[self performSelectorInCommonModes:@selector(timeoutInUserInvokedCommandProperty:)
+								withObject:[NSValue valueWithPointer:property]
+								afterDelay:_inUserInvokedCommandTimeoutInterval];
 	}
 
 #undef _inUserInvokedCommandTimeoutInterval
@@ -9644,7 +9644,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self performSelector:@selector(autoConnectPerformConnect) withObject:nil afterDelay:connectDelay];
+	[self performSelectorInCommonModes:@selector(autoConnectPerformConnect) withObject:nil afterDelay:connectDelay];
 }
 
 - (void)autoConnectPerformConnect
@@ -9668,7 +9668,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", connectDelay)];
 
-	[self performSelector:@selector(autoConnectAfterWakeUpPerformConnect) withObject:nil afterDelay:connectDelay];
+	[self performSelectorInCommonModes:@selector(autoConnectAfterWakeUpPerformConnect) withObject:nil afterDelay:connectDelay];
 }
 
 - (void)autoConnectAfterWakeUpPerformConnect
@@ -9741,7 +9741,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* We give it two seconds before forcefully breaking so that the graceful
 	 quit with the quit message above can be performed. */
-	[self performSelector:@selector(disconnect) withObject:nil afterDelay:2.0];
+	[self performSelectorInCommonModes:@selector(disconnect) withObject:nil afterDelay:2.0];
 }
 
 - (void)cancelReconnect

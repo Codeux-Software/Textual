@@ -177,7 +177,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 		return;
 	}
 
-	[self performSelector:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
+	[self performSelectorInCommonModes:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
 }
 
 - (void)toggleFullscreenAfterLaunch

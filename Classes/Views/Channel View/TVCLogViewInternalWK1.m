@@ -163,7 +163,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
 	if (self.t_viewHasLoaded && self.t_viewHasScriptObject) {
-		[self.t_parentView performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
+		[self.t_parentView performSelectorInCommonModes:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
 	}
 }
 
