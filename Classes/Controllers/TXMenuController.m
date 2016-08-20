@@ -163,6 +163,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(menuItem != nil);
 
+	if (masterController().applicationIsTerminating) {
+		return NO;
+	}
+
 	BOOL isMainWindowMain = mainWindow().mainWindow;
 
 	BOOL mainWindowHasSheet = (mainWindow().attachedSheet != nil);
