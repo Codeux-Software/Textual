@@ -367,8 +367,6 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)_socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)error
 {
-	[self closeSocket];
-
 	[self destroySocket];
 
 	[self tcpClientDidDisconnect:error];
