@@ -104,22 +104,15 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return self.baseURL.path;
 }
 
-- (NSString *)temporaryPathLeading
-{
-	NSString *pathExtension = [NSString stringWithFormat:@"/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
-
-	return [[TPCPathInfo applicationTemporaryFolderPath] stringByAppendingPathComponent:pathExtension];
-}
-
 - (NSString *)temporaryPath
 {
 	int processIdentifier = [TPCApplicationInfo applicationProcessID];
 
-	NSString *sourcePath = [self temporaryPathLeading];
+	NSString *sourcePath = [TPCPathInfo applicationTemporaryFolderPath];
 
-	NSString *basePath = [NSString stringWithFormat:@"/Cached-Style-Resources-%i/", processIdentifier];
+	NSString *endPath = [NSString stringWithFormat:@"/Cached-Style-Resources-%i/", processIdentifier];
 
-	return [sourcePath stringByAppendingPathComponent:basePath];
+	return [sourcePath stringByAppendingPathComponent:endPath];
 }
 
 - (BOOL)usesTemporaryPath
