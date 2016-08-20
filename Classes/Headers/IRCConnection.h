@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isConnecting;
 @property (readonly) BOOL isSecured;
 @property (readonly) BOOL isSending;
+@property (readonly) BOOL EOFReceived;
 
 - (instancetype)initWithConfig:(IRCConnectionConfig *)config onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 

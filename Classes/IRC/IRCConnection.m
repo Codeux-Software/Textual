@@ -270,6 +270,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)tcpClientDidCloseReadStream
 {
+	self.EOFReceived = YES;
+
 	[self.client ircConnectionDidCloseReadStream:self];
 }
 
