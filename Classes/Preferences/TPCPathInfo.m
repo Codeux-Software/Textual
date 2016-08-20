@@ -153,7 +153,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)applicationTemporaryFolderPath
 {
-	return NSTemporaryDirectory();
+	NSString *sourcePath = NSTemporaryDirectory();
+
+	NSString *endPath = [NSString stringWithFormat:@"/%@/", TXBundleBuildProductIdentifier];
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:endPath];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
 }
 
 + (nullable NSString *)applicationSupportFolderPathInGroupContainer
