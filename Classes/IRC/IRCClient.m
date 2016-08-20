@@ -3225,7 +3225,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			NSString *nickname = stringIn.getTokenAsString;
-			NSString *reason = stringIn.getTokenAsString;
+			NSString *reason = stringIn.string;
 
 			if (reason.length == 0) {
 				reason = [TPCPreferences IRCopDefaultKillMessage];
@@ -3271,7 +3271,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				targetChannelName = stringIn.tokenAsString;
 			}
 
-			NSString *reason = stringIn.tokenAsString;
+			NSString *reason = stringIn.string;
 
 			if (reason.length == 0) {
 				reason = self.config.normalLeavingComment;
