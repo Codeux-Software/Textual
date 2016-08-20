@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL isSending;
 @property (nonatomic, assign, readwrite) BOOL isSecured;
 @property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
+@property (nonatomic, assign, readwrite) BOOL EOFReceived;
 @property (nonatomic, strong, nullable) dispatch_queue_t dispatchQueue;
 @property (nonatomic, strong, nullable) dispatch_queue_t socketQueue;
 @property (nonatomic, strong, nullable) GCDAsyncSocket *socketConnection;

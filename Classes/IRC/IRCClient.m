@@ -105,6 +105,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, assign, readwrite) BOOL isConnectedToZNC;
 @property (nonatomic, assign, readwrite) BOOL isLoggedIn;
 @property (nonatomic, assign, readwrite) BOOL isQuitting;
+@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
 @property (nonatomic, assign, readwrite) BOOL isReconnecting;
 @property (nonatomic, assign, readwrite) BOOL isSecured;
 @property (nonatomic, assign, readwrite) BOOL userIsAway;
@@ -4310,6 +4311,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.isConnecting = NO;
 	self.isLoggedIn = NO;
 	self.isQuitting = NO;
+	self.isDisconnecting = NO;
 
 	self.isWaitingForNickServ = NO;
 	self.serverHasNickServ = NO;
@@ -4566,9 +4568,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1120]")];
+	if (self.isDisconnecting) {
+		return;
+	}
 
-	[self disconnect];
+	if (self.isQuitting) {
+		[self disconnect];
+
+		return;
+	}
+
+	[self printDebugInformationToConsole:TXTLS(@"IRC[1120]")];
 }
 
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data
@@ -9129,15 +9139,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 The ability to disable this is important on PSYBNC connectiongs because
 	 PSYBNC doesn't respond to PING commands. There are other irc daemons that
 	 don't reply to PING either and they should all be shot. */
-	if (self.config.performPongTimer == NO) {
-		return;
-	}
-
-	NSInteger timeSpent = [NSDate timeIntervalSinceNow:self.lastMessageReceived];
+	NSTimeInterval timeSpent = [NSDate timeIntervalSinceNow:self.lastMessageReceived];
 
 	if (timeSpent >= _timeoutInterval)
 	{
-		if (self.config.performDisconnectOnPongTimer) {
+		/* If EOF Received when we were not expecting it, then timeout regardless
+		 of user preference once our timeout interval is reached. */
+		if (self.socket.EOFReceived || self.config.performDisconnectOnPongTimer) {
 			[self printDebugInformation:TXTLS(@"IRC[1053]", (timeSpent / 60.0)) inChannel:nil];
 
 			[self performBlockOnMainThread:^{
@@ -9155,6 +9163,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 	else if (timeSpent >= _pingInterval)
 	{
+		if (self.config.performPongTimer == NO) {
+			return;
+		}
+
 		[self sendPing:self.serverAddress];
 	}
 }
@@ -9522,7 +9534,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	/* Do not allow a connect to occur until the current 
 	 socket has completed disconnecting */
-	if (self.isConnecting || self.isConnected || self.isQuitting) {
+	if (self.isConnecting || self.isConnected || self.isQuitting || self.isDisconnecting) {
 		return;
 	}
 
@@ -9682,6 +9694,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	self.isDisconnecting = YES;
+
 	[self.socket close];
 }
 
@@ -9702,7 +9716,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(comment != nil);
 
-    if ((self.isConnecting == NO && self.isConnected == NO) || self.isQuitting) {
+    if ((self.isConnecting == NO && self.isConnected == NO) || self.isQuitting || self.isDisconnecting) {
         return;
 	}
 
