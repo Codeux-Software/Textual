@@ -166,7 +166,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	if (self.preferencesDidChangeTimerIsActive == NO) {
 		self.preferencesDidChangeTimerIsActive = YES;
 
-		[self performSelector:@selector(informaAllViewsUserDefaultsDidChange) withObject:nil afterDelay:1.0];
+		[self performSelectorInCommonModes:@selector(informaAllViewsUserDefaultsDidChange) withObject:nil afterDelay:1.0];
 	}
 }
 

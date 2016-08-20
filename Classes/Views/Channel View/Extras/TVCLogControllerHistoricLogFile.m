@@ -237,9 +237,9 @@ ClassWithDesignatedInitializerInitMethod
 		NSUInteger timeInterval = TXRandomNumber(1800); // ~30 minutes
 
 		[self performBlockOnMainThread:^{
-			[self performSelector:@selector(_truncateFile)
-					   withObject:nil
-					   afterDelay:timeInterval];
+			[self performSelectorInCommonModes:@selector(_truncateFile)
+									withObject:nil
+									afterDelay:timeInterval];
 		}];
 	}
 }

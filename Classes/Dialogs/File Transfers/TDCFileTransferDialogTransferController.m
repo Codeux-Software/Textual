@@ -657,7 +657,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	[self performSelector:@selector(transferResumeRequestTimeout) withObject:nil afterDelay:_resumeAcceptTimeout];
+	[self performSelectorInCommonModes:@selector(transferResumeRequestTimeout) withObject:nil afterDelay:_resumeAcceptTimeout];
 
 	self.transferStatus = TDCFileTransferDialogTransferWaitingForResumeAcceptStatus;
 

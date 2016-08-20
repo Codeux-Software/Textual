@@ -284,7 +284,7 @@ create_normal_pool:
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
 	if (self.t_viewIsLoading == NO && self.t_viewIsNavigating == NO) {
-		[self.t_parentView performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
+		[self.t_parentView performSelectorInCommonModes:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
 	}
 }
 

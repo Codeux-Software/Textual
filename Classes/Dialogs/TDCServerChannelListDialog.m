@@ -141,7 +141,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.isWaitingForWrites == NO) {
 		self.isWaitingForWrites = YES;
 
-		[self performSelector:@selector(queuedWritesTimer) withObject:nil afterDelay:1.0];
+		[self performSelectorInCommonModes:@selector(queuedWritesTimer) withObject:nil afterDelay:1.0];
 	}
 }
 
