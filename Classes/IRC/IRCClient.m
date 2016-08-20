@@ -9724,7 +9724,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	
 	[self cancelReconnect];
 
-    [self postEventToViewController:@"serverDisconnecting"];
+	if (self.isTerminating == NO) {
+		[self postEventToViewController:@"serverDisconnecting"];
+	}
 
 	[self.socket clearSendQueue];
 
