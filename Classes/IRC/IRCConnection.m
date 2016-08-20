@@ -211,6 +211,8 @@ ClassWithDesignatedInitializerInitMethod
 - (void)clearSendQueue
 {
 	[self.sendQueue removeAllObjects];
+
+	self.floodControlCurrentMessageCount = 0;
 }
 
 #pragma mark -
