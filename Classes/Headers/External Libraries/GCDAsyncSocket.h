@@ -141,6 +141,12 @@ typedef NS_ENUM(NSInteger, GCDAsyncSocketError) {
 **/
 @property (atomic, strong, readwrite, nullable) id userData;
 
+/**
+ * Whether the flag DISPATCH_TIMER_STRICT is set on internal timers,
+ * thus negating the benefits of the "App Nap" feature of macOS.
+ **/
+@property (atomic, assign, readwrite) BOOL useStrictTimers;
+
 #pragma mark Accepting
 
 /**

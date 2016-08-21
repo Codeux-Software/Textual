@@ -29,13 +29,12 @@
 #import <sys/un.h>
 #import <unistd.h>
 
-#define GCDAsyncSocketUsesStrictTimers		1
-
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 // For more information see: https://github.com/robbiehanson/CocoaAsyncSocket/wiki/ARC
 #endif
 
+#define GCDAsyncSocketReadEOFPollsSocketForWriteStatus	1
 
 #ifndef GCDAsyncSocketLoggingEnabled
 #define GCDAsyncSocketLoggingEnabled 0
@@ -163,6 +162,7 @@ enum GCDAsyncSocketConfig
 	kIPv6Disabled              = 1 << 1,  // If set, IPv6 is disabled
 	kPreferIPv6                = 1 << 2,  // If set, IPv6 is preferred over IPv4
 	kAllowHalfDuplexConnection = 1 << 3,  // If set, the socket will stay open even if the read stream closes
+	kUseStrictTimers		   = 1 << 4,
 };
 
 #if TARGET_OS_IPHONE
@@ -3014,11 +3014,9 @@ enum GCDAsyncSocketConfig
 	{
 		unsigned long connectTimerMask = 0;
 
-#if GCDAsyncSocketUsesStrictTimers == 1
-		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		if (config & kUseStrictTimers) {
 			connectTimerMask = DISPATCH_TIMER_STRICT;
 		}
-#endif
 
 		connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, connectTimerMask, socketQueue);
 		
@@ -5533,7 +5531,8 @@ enum GCDAsyncSocketConfig
 		// has explicitly stated that it will not be sending us any more data.
 		// 
 		// Query the socket to see if it is still writeable. (Perhaps the peer will continue reading data from us)
-		
+
+#if GCDAsyncSocketReadEOFPollsSocketForWriteStatus == 1
 		int socketFD = (socket4FD != SOCKET_NULL) ? socket4FD : (socket6FD != SOCKET_NULL) ? socket6FD : socketUN;
 		
 		struct pollfd pfd[1];
@@ -5546,7 +5545,8 @@ enum GCDAsyncSocketConfig
 		if (pfd[0].revents & POLLOUT)
 		{
 			// Socket appears to still be writeable
-			
+#endif
+
 			shouldDisconnect = NO;
 			flags |= kReadStreamClosed;
 			
@@ -5561,11 +5561,15 @@ enum GCDAsyncSocketConfig
 					[theDelegate socketDidCloseReadStream:self];
 				}});
 			}
+
+#if GCDAsyncSocketReadEOFPollsSocketForWriteStatus == 1
 		}
 		else
 		{
 			shouldDisconnect = YES;
 		}
+#endif
+
 	}
 	else
 	{
@@ -5676,11 +5680,9 @@ enum GCDAsyncSocketConfig
 	{
 		unsigned long readTimerMask = 0;
 
-#if GCDAsyncSocketUsesStrictTimers == 1
-		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		if (config & kUseStrictTimers) {
 			readTimerMask = DISPATCH_TIMER_STRICT;
 		}
-#endif
 
 		readTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, readTimerMask, socketQueue);
 
@@ -6327,11 +6329,9 @@ enum GCDAsyncSocketConfig
 	{
 		unsigned long writeTimerMask = 0;
 
-#if GCDAsyncSocketUsesStrictTimers == 1
-		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		if (config & kUseStrictTimers) {
 			writeTimerMask = DISPATCH_TIMER_STRICT;
 		}
-#endif
 
 		writeTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, writeTimerMask, socketQueue);
 
@@ -8386,6 +8386,42 @@ static void CFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType ty
 + (NSData *)ZeroData
 {
 	return [NSData dataWithBytes:"" length:1];
+}
+
+#pragma mark -
+#pragma mark Third Party Modifications
+
+- (BOOL)useStrictTimers
+{
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
+	{
+		return (config & kUseStrictTimers);
+	}
+	else
+	{
+		__block BOOL result;
+
+		dispatch_sync(socketQueue, ^{
+			result = (config & kUseStrictTimers);
+		});
+
+		return result;
+	}
+}
+
+- (void)setUseStrictTimers:(BOOL)flag
+{
+	dispatch_block_t block = ^{
+		if (flag)
+			config |= kUseStrictTimers;
+		else
+			config &= ~kUseStrictTimers;
+	};
+
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
+		block();
+	else
+		dispatch_async(socketQueue, block);
 }
 
 @end	

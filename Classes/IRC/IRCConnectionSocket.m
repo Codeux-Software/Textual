@@ -88,15 +88,24 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)createDispatchQueue
 {
+	dispatch_queue_attr_t queueAttributes = 0;
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		queueAttributes =
+		dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, 0);
+	} else {
+		queueAttributes = DISPATCH_QUEUE_SERIAL;
+	}
+
 	NSString *dispatchId = [NSString stringWithUUID];
 
 	NSString *dispatchQueueName = [@"socketDispatchQueue." stringByAppendingString:dispatchId];
 
-	self.dispatchQueue = dispatch_queue_create(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
+	self.dispatchQueue = dispatch_queue_create(dispatchQueueName.UTF8String, queueAttributes);
 
 	NSString *socketQueueName = [@"socketReadWriteQueue." stringByAppendingString:dispatchId];
 
-	self.socketQueue = dispatch_queue_create(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
+	self.socketQueue = dispatch_queue_create(socketQueueName.UTF8String, queueAttributes);
 }
 
 #pragma mark -
@@ -113,6 +122,10 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 												   socketQueue:self.socketQueue];
 
 	self.socketConnection.autoDisconnectOnClosedReadStream = NO;
+
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		self.socketConnection.useStrictTimers = YES;
+	}
 
 	self.socketConnection.IPv4PreferredOverIPv6 = self.config.connectionPrefersIPv4;
 
