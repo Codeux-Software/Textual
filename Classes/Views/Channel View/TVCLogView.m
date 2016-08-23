@@ -165,6 +165,11 @@ ClassWithDesignatedInitializerInitMethod
 	return [self.webViewBacking webViewPolicy];
 }
 
+- (NSView *)webView
+{
+	return self.webViewBacking;
+}
+
 @end
 
 #pragma mark -
@@ -182,11 +187,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[themeController() recreateTemporaryCopyOfThemeIfNecessary];
-}
-
-- (NSView *)webView
-{
-	return self.webViewBacking;
 }
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
