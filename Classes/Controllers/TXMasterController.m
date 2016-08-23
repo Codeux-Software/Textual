@@ -186,10 +186,6 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 }
 
-#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
-#warning TODO: Disable metrics when Textual 6 is final
-#endif
-
 - (void)hockeyAppToggleCollectAnonymousStatistics
 {
 	[self hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:YES];
