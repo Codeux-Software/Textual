@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.maxConcurrentOperationCount = 2;
+		self.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
 		
 		self.name = @"TVCLogControllerOperationQueue";
 
