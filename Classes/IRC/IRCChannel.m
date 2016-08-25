@@ -724,9 +724,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			self.memberListLengthSortedContainer[lengthSortedMemberIndex] = member2;
 		}
 
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
-			[mainWindowMemberList() reloadItem:member1];
-		});
+		[self reloadMemberOnTableView:member1];
 	});
 }
 
@@ -1007,6 +1005,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
 
 		[self reloadDataForTableView];
+	});
+}
+
+- (void)reloadMemberOnTableView:(IRCChannelUser *)member
+{
+	NSParameterAssert(member != nil);
+
+	if (self.isSelectedChannel == NO || self.isChannel == NO) {
+		return;
+	}
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[mainWindowMemberList() reloadItem:member];
 	});
 }
 
