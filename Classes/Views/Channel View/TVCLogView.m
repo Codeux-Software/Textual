@@ -287,7 +287,9 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(code != nil);
 
-	[self.webViewBacking _t_evaluateJavaScript:code completionHandler:completionHandler];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.webViewBacking _t_evaluateJavaScript:code completionHandler:completionHandler];
+	});
 }
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
