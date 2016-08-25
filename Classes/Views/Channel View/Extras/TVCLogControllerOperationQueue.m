@@ -157,11 +157,13 @@ NS_ASSUME_NONNULL_BEGIN
 			[self.pendingOperations setObject:pendingOperations forKey:pendingOperationsKey];
 		} else {
 			for (TVCLogControllerPrintingOperation *pendingOperation in pendingOperations.reverseObjectEnumerator) {
-				if (pendingOperation.isPending == NO || pendingOperation.isStandalone) {
+				if (pendingOperation.isCancelled || pendingOperation.isStandalone) {
 					continue;
 				}
 
 				operationDependency = pendingOperation;
+
+				break;
 			}
 		}
 
