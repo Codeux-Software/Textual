@@ -566,13 +566,9 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-#define _numberOfDesiredLines			100
-
 	BOOL firstTimeLoadingHistory = (self.historyLoadedForFirstTime == NO);
 
-	if (firstTimeLoadingHistory) {
-		self.historyLoadedForFirstTime = YES;
-	}
+#define _numberOfDesiredLines			100
 
 	if (
 		/* 1 */ self.encrypted ||
@@ -582,11 +578,17 @@ ClassWithDesignatedInitializerInitMethod
 		/* 5 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
+		self.historyLoadedForFirstTime = YES;
+
 		self.historyLoaded = YES;
 
 		[self notifyViewFinishedLoadingHistory];
 
 		return;
+	} else {
+		if (self.visible == NO) {
+			return;
+		}
 	}
 
 	self.reloadingHistory = YES;
@@ -597,17 +599,18 @@ ClassWithDesignatedInitializerInitMethod
 		/* Because the history is loaded lazily, messages from the current session
 		 may fill up the log. If the active line count exceeds the amount of lines
 		 we want, then we can only use some of what is returned. */
-		if (self.activeLineCount > objects.count) {
-			return;
-		} else if (self.activeLineCount > 0) {
-			objects = [objects subarrayWithRange:NSMakeRange(0, (objects.count - self.activeLineCount))];
-		}
+		if (self.activeLineCount < objects.count) {
+			if (self.activeLineCount > 0) {
+				objects = [objects subarrayWithRange:NSMakeRange(0, (objects.count - self.activeLineCount))];
+			}
 
-		[self reloadOldLines:objects markHistoric:firstTimeLoadingHistory];
+			[self reloadOldLines:objects markHistoric:firstTimeLoadingHistory];
+		}
 
 		self.reloadingHistory = NO;
 
 		self.historyLoaded = YES;
+		self.historyLoadedForFirstTime = YES;
 
 		[self notifyViewFinishedLoadingHistory];
 	};
@@ -1380,21 +1383,17 @@ ClassWithDesignatedInitializerInitMethod
 		 NSDictionaryNilValue(self.associatedChannel.name)
 	]];
 
-	BOOL visible = self.visible;
-
 	double textSizeMultiplier = self.attachedWindow.textSizeMultiplier;
 
 	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
 			  withArguments:@[@(self.selected),
-							  @(visible),
+							  @(self.visible),
 							  @(self.reloadingTheme),
 							  @(textSizeMultiplier)]];
 
 	[self setInitialTopic];
 
-	if (visible) {
-		[self reloadHistory];
-	}
+	[self reloadHistory];
 
 	[RZNotificationCenter() postNotificationName:TVCLogControllerViewFinishedLoadingNotification object:self];
 
