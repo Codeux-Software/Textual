@@ -72,6 +72,19 @@ _defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer, new)
 _defineSharedInstance(sharedThemeController, TPCThemeController, new)
 _defineSharedInstance(sharedWindowController, TXWindowController, new)
 
++ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue
+{
+	static dispatch_queue_t workerQueue = NULL;
+
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		workerQueue = dispatch_queue_create("sharedMutableSynchronizationSerialQueue", DISPATCH_QUEUE_SERIAL);
+	});
+
+	return workerQueue;
+}
+
 @end
 
 #pragma mark -
