@@ -1,6 +1,6 @@
 /* Defined in: "Textual.app -> Contents -> Resources -> JavaScript -> API -> core.js" */
 
-Textual.viewBodyDidLoad = function()
+Textual.viewShouldFadeOutLoadingScreen = function()
 {
 	Textual.fadeOutLoadingScreen(1.00, 0.95);
 }
