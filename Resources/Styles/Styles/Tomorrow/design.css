@@ -101,7 +101,7 @@ body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
 	padding: 5px;
 	padding-left: 10px;
 	opacity: 1; /* Set by JavaScript */
-	-webkit-transition: opacity 0.8s linear;
+	-webkit-transition: opacity 1.2s linear;
 	text-align: center;
 }
 
@@ -112,8 +112,6 @@ body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
 	height: 11px;
 	margin-top: 2px;
 	padding-left: 10px;
-}
-
 }
 
 /* @end */
