@@ -48,6 +48,10 @@ NSString * const TVCLogLineSpecialNoticeMessageFormat = @"[%@]: %@";
 
 NSString * const TVCLogLineDefaultCommandValue = @"-100";
 
+@interface TVCLogLine ()
+@property (readonly, copy) NSDictionary<NSString *, id> *dictionaryValue;
+@end
+
 @implementation TVCLogLine
 
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
@@ -155,7 +159,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (NSData *)jsonRepresentation
+- (NSDictionary<NSString *, id> *)dictionaryValue
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
@@ -172,6 +176,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[dic setUnsignedInteger:self.lineType forKey:@"lineType"];
 	[dic setUnsignedInteger:self.memberType forKey:@"memberType"];
+
+	return [dic copy];
+}
+
+
+- (NSData *)jsonRepresentation
+{
+	NSDictionary *dic = self.dictionaryValue;
 
 	NSError *serializeError = nil;
 
@@ -348,7 +360,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	  TVCLogLine *object =
-	[[TVCLogLine alloc] initWithJSONData:self.jsonRepresentation];
+	[[TVCLogLine alloc] initWithDictionary:self.dictionaryValue];
 
 	return object;
 }
@@ -356,7 +368,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
 	  TVCLogLineMutable *object =
-	[[TVCLogLineMutable alloc] initWithJSONData:self.jsonRepresentation];
+	[[TVCLogLineMutable alloc] initWithDictionary:self.dictionaryValue];
 
 	return object;
 }
