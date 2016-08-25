@@ -566,6 +566,8 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+#define _numberOfDesiredLines			100
+
 	BOOL firstTimeLoadingHistory = (self.historyLoadedForFirstTime == NO);
 
 	if (firstTimeLoadingHistory) {
@@ -574,9 +576,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (
 		/* 1 */ self.encrypted ||
-		/* 2 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
-		/* 3 */  self.associatedChannel == nil ||
-		/* 4 */ (self.associatedChannel.isPrivateMessage &&
+		/* 2 */ self.activeLineCount >= _numberOfDesiredLines ||
+		/* 3 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
+		/* 4 */  self.associatedChannel == nil ||
+		/* 5 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
 		self.historyLoaded = YES;
@@ -589,7 +592,16 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingHistory = YES;
 
 	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
-		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
+		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:_numberOfDesiredLines];
+
+		/* Because the history is loaded lazily, messages from the current session
+		 may fill up the log. If the active line count exceeds the amount of lines
+		 we want, then we can only use some of what is returned. */
+		if (self.activeLineCount > objects.count) {
+			return;
+		} else if (self.activeLineCount > 0) {
+			objects = [objects subarrayWithRange:NSMakeRange(0, (objects.count - self.activeLineCount))];
+		}
 
 		[self reloadOldLines:objects markHistoric:firstTimeLoadingHistory];
 
@@ -601,6 +613,8 @@ ClassWithDesignatedInitializerInitMethod
 	};
 
 	_enqueueBlockStandalone(operationBlock)
+
+#undef _numberOfDesiredLines
 }
 
 - (void)reloadTheme
