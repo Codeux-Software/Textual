@@ -66,15 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 + (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
 + (TXWindowController *)sharedWindowController;
-
-/* Mutable sets in Textual (e.g. channel user lists) are accessed on this queue
- and this queue alone to prevent accessing on different threads at same time
- which could result in corrupted data access. It is not recommended to call
- this serial queue for any reason from a plugin. It is a work horse for Textual
- and should be respected as such. */
-+ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue;
-
-+ (void)releaseSharedMutableSynchronizationSerialQueue;
 @end
 
 @interface NSObject (TXSharedApplicationObjectExtensionPrivate)

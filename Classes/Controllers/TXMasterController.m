@@ -559,8 +559,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[themeController() prepareForApplicationTermination];
 
-	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
-	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
 	[sharedApplicationCache() removeAllObjects];

@@ -72,35 +72,6 @@ _defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer, new)
 _defineSharedInstance(sharedThemeController, TPCThemeController, new)
 _defineSharedInstance(sharedWindowController, TXWindowController, new)
 
-+ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue:(BOOL)performRelease
-{
-	static dispatch_queue_t workQueue = NULL;
-	
-	if (performRelease) {
-		if (workQueue) {
-			workQueue = NULL;
-		}
-	} else {
-		static dispatch_once_t onceToken;
-		
-		dispatch_once(&onceToken, ^{
-			workQueue = dispatch_queue_create("sharedMutableSynchronizationSerialQueue", DISPATCH_QUEUE_SERIAL);
-		});
-	}
-	
-	return workQueue;
-}
-
-+ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue
-{
-	return [TXSharedApplication sharedMutableSynchronizationSerialQueue:NO];
-}
-
-+ (void)releaseSharedMutableSynchronizationSerialQueue
-{
-	(void)[TXSharedApplication sharedMutableSynchronizationSerialQueue:YES];
-}
-
 @end
 
 #pragma mark -
