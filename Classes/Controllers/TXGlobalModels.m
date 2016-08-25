@@ -278,6 +278,46 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 }
 
 #pragma mark -
+#pragma mark Grand Central Dispatch
+
+void XRPerformBlockOnSharedMutableDispatchQueue(dispatch_block_t block, BOOL synchronously)
+{
+	NSCParameterAssert(block != NULL);
+
+	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
+
+	static void *IsOnWorkerQueueKey = NULL;
+
+	if (IsOnWorkerQueueKey == NULL) {
+		IsOnWorkerQueueKey = &IsOnWorkerQueueKey;
+
+		dispatch_queue_set_specific(workerQueue, IsOnWorkerQueueKey, (void *)1, NULL);
+	}
+
+	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
+		block();
+
+		return;
+	}
+
+	if (synchronously) {
+		dispatch_sync(workerQueue, block);
+	} else {
+		dispatch_async(workerQueue, block);
+	}
+}
+
+void XRPerformBlockSynchronouslyOnSharedMutableDispatchQueue(dispatch_block_t block)
+{
+	XRPerformBlockOnSharedMutableDispatchQueue(block, YES);
+}
+
+void XRPerformBlockAsynchronouslyOnSharedMutableDispatchQueue(dispatch_block_t block)
+{
+	XRPerformBlockOnSharedMutableDispatchQueue(block, NO);
+}
+
+#pragma mark -
 #pragma mark Misc
 
 NSUInteger TXRandomNumber(u_int32_t maximum)

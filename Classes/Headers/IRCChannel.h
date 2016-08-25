@@ -74,6 +74,10 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 - (void)activate;
 - (void)deactivate;
 
+/* Members are inserted into the member list in the background because 
+ sorted inserts are costly. This is important to keep in mind if your 
+ plugin depends on the result of -memberList including the user the 
+ next tick, after the member is added. */
 - (void)addMember:(IRCChannelUser *)member;
 
 - (void)removeMember:(IRCChannelUser *)member;
