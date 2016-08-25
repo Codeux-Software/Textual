@@ -407,7 +407,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performBlock:(void (^)(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel))block inRelationToAccountName:(NSString *)accountName createWindowIfMissing:(BOOL)createWindowIfMissing
 {
-	[self performBlockOnMainThread:^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		NSString *nickname = [self nicknameFromAccountName:accountName];
 
 		IRCClient *client = [self connectionFromAccountName:accountName];
@@ -424,7 +424,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		block(nickname, client, channel);
-	}];
+	});
 }
 
 - (nullable NSString *)localizedStringForEvent:(OTRKitMessageEvent)event

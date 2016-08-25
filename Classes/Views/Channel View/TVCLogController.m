@@ -857,13 +857,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.needsLimitNumberOfLines = NO;
 
-	[self performBlockOnMainThread:^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
 			[self rebuildBackingView];
 		}
 
 		[self loadInitialDocument];
-	}];
+	});
 }
 
 - (void)clear
@@ -927,7 +927,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 		
-		[self performBlockOnMainThread:^{
+		XRPerformBlockSynchronouslyOnMainQueue(^{
 			if (highlighted) {
 				@synchronized(self.highlightedLineNumbers) {
 					[self.highlightedLineNumbers addObject:lineNumber];
@@ -994,7 +994,7 @@ ClassWithDesignatedInitializerInitMethod
 			contextObject.lineNumber = lineNumber;
 
 			completionBlock(contextObject);
-		}];
+		});
 	};
 
 	_enqueueBlock(printBlock)

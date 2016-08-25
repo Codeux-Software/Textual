@@ -9334,9 +9334,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	resultString = resultString.trim;
 
-	[self performBlockOnMainThread:^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self inputText:resultString destination:destination];
-	}];
+	});
 }
 
 - (void)executeTextualCmdScriptInContext:(NSDictionary<NSString *, NSString *> *)context
