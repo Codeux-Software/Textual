@@ -42,11 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelConfigurationWasUpdatedNotification";
 
-#define _cancelOnNotSelectedChannel			if (self.isChannel == NO || self.isSelectedChannel == NO) {			\
-												return;															\
-											}
-
 @interface IRCChannel ()
+@property (readonly) BOOL isSelectedChannel;
 @property (nonatomic, assign) BOOL statusChangedByAction;
 @property (nonatomic, copy, readwrite) IRCChannelConfig *config;
 @property (nonatomic, assign, readwrite) NSTimeInterval channelJoinTime;
@@ -539,7 +536,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(member != nil);
 
-	_cancelOnNotSelectedChannel
+	if (self.isSelectedChannel == NO || self.isChannel == NO) {
+		return;
+	}
 
 	NSInteger rowIndex = [mainWindowMemberList() rowForItem:member];
 	
@@ -550,6 +549,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)_removeMember:(IRCChannelUser *)member
 {
+	NSParameterAssert(member != nil);
+
 	BOOL removedMember = NO;
 
 	NSUInteger standardSortedMemberIndex =
@@ -586,7 +587,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self addMember:member];
 }
 
-- (void)addMember:(IRCChannelUser *)member
+- (void)_addMember:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
@@ -595,7 +596,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	__block NSInteger insertedIndex = (-1);
-	
+
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		insertedIndex = [self _sortedInsertMember:member];
 
@@ -603,12 +604,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+		 if (self.isChannel) {
+			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
 
-		if (self.isChannel) {
 			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
 		}
 	});
+}
+
+- (void)addMember:(IRCChannelUser *)member
+{
+	NSParameterAssert(member != nil);
+
+	if (self.isSelectedChannel) {
+		[self _addMember:member];
+	} else {
+		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
+			[self _addMember:member];
+		});
+	}
 }
 
 - (void)removeMemberWithNickname:(NSString *)nickname
@@ -648,7 +662,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self replaceMember:member byInsertingMember:member];
 }
 
-- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
+- (void)_replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
 {
 	NSParameterAssert(member1 != nil);
 	NSParameterAssert(member2 != nil);
@@ -668,8 +682,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+		if (self.isChannel) {
+			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+		}
 	});
+}
+
+- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
+{
+	NSParameterAssert(member1 != nil);
+	NSParameterAssert(member2 != nil);
+
+	if (self.isSelectedChannel) {
+		[self _replaceMember:member1 byInsertingMember:member2];
+	} else {
+		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
+			[self _replaceMember:member1 byInsertingMember:member2];
+		});
+	}
 }
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
@@ -958,25 +988,44 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Table View Internal Management
 
-- (void)informMemberListViewOfAdditionalMemberAtIndex:(NSUInteger)insertedIndex
+- (void)_informMemberListViewOfAdditionalMemberAtIndex:(NSUInteger)insertedIndex
 {
-	_cancelOnNotSelectedChannel;
+	if (self.isSelectedChannel == NO) {
+		return;
+	}
 
 	[mainWindowMemberList() addItemToList:insertedIndex];
 }
 
-- (void)reloadDataForTableViewBySortingMembers
+- (void)_reloadDataForTableViewBySortingMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
-		
-		[self reloadDataForTableView];
 	});
+
+	[self reloadDataForTableView];
+}
+
+- (void)reloadDataForTableViewBySortingMembers
+{
+	if (self.isChannel == NO) {
+		return;
+	}
+
+	if (self.isSelectedChannel) {
+		[self _reloadDataForTableViewBySortingMembers];
+	} else {
+		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
+			[self _reloadDataForTableViewBySortingMembers];
+		});
+	}
 }
 
 - (void)reloadDataForTableView
 {
-	_cancelOnNotSelectedChannel;
+	if (self.isSelectedChannel == NO || self.isChannel == NO) {
+		return;
+	}
 
 	[self performBlockOnMainThread:^{
 		[mainWindowMemberList() reloadData];
