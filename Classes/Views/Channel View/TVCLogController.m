@@ -444,7 +444,7 @@ ClassWithDesignatedInitializerInitMethod
 		[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 	};
 
-	_enqueueBlockStandalone(operationBlock);
+	_enqueueBlock(operationBlock);
 }
 
 - (void)unmark
