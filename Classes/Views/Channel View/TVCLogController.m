@@ -58,8 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL historyLoadedForFirstTime;
 @property (nonatomic, assign) BOOL reloadingHistory;
 @property (nonatomic, assign) BOOL reloadingTheme;
+@property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) BOOL viewViewedBefore; // has the user viewed this view
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, assign) NSUInteger maximumLineCount;
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
@@ -547,6 +547,19 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
+- (void)maybeReloadHistory
+{
+	if (self.loaded == NO) {
+		return;
+	}
+
+	if (self.historyLoaded) {
+		return;
+	}
+
+	[self reloadHistory];
+}
+
 - (void)reloadHistory
 {
 	if (self.terminating) {
@@ -566,6 +579,8 @@ ClassWithDesignatedInitializerInitMethod
 		/* 4 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
+		self.historyLoaded = YES;
+
 		[self notifyViewFinishedLoadingHistory];
 
 		return;
@@ -579,6 +594,8 @@ ClassWithDesignatedInitializerInitMethod
 		[self reloadOldLines:objects markHistoric:firstTimeLoadingHistory];
 
 		self.reloadingHistory = NO;
+
+		self.historyLoaded = YES;
 
 		[self notifyViewFinishedLoadingHistory];
 	};
@@ -633,18 +650,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	[self _evaluateFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
 
-	[self viewDdidBecomeVisibleForFirstTime];
-}
-
-- (void)viewDdidBecomeVisibleForFirstTime
-{
-	if (self.viewViewedBefore == NO) {
-		self.viewViewedBefore = YES;
-	} else {
-		return;
-	}
-
-	[self reloadHistory];
+	[self maybeReloadHistory];
 }
 
 - (void)notifySelectionChanged
@@ -858,7 +864,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.reloadingHistory = NO;
 
-	self.viewViewedBefore = NO;
+	self.historyLoaded = NO;
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
@@ -1364,15 +1370,21 @@ ClassWithDesignatedInitializerInitMethod
 		 NSDictionaryNilValue(self.associatedChannel.name)
 	]];
 
+	BOOL visible = self.visible;
+
 	double textSizeMultiplier = self.attachedWindow.textSizeMultiplier;
 
 	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
 			  withArguments:@[@(self.selected),
-							  @(self.visible),
+							  @(visible),
 							  @(self.reloadingTheme),
 							  @(textSizeMultiplier)]];
 
 	[self setInitialTopic];
+
+	if (visible) {
+		[self reloadHistory];
+	}
 
 	[RZNotificationCenter() postNotificationName:TVCLogControllerViewFinishedLoadingNotification object:self];
 
