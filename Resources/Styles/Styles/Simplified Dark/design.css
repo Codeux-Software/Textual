@@ -87,7 +87,7 @@ body div#loading_screen {
 	padding: 5px;
 	padding-left: 10px;
 	opacity: 1; /* Set by JavaScript */
-	-webkit-transition: opacity 1.2s linear;
+	-webkit-transition: opacity 0.8s linear;
 }
 
 /* Time */
