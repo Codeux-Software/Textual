@@ -445,8 +445,6 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	IRCClient *client = [[IRCClient alloc] initWithConfig:config];
 
-	client.printingQueue = [TVCLogControllerOperationQueue new];
-
 	client.viewController = [self createViewControllerWithClient:client channel:nil];
 
 	NSMutableArray<IRCChannel *> *channelList = [NSMutableArray array];
@@ -591,8 +589,6 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	[self selectOtherBeforeDestroy:client];
 
 	[client prepareForPermanentDestruction];
-
-	client.printingQueue = nil;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (skipCloud == NO) {

@@ -43,7 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) NSUInteger treeUnreadCount;
 @property (nonatomic, strong, readwrite) IRCClient *associatedClient;
 @property (nonatomic, strong, readwrite) TVCLogController *viewController;
-@property (nonatomic, strong, readwrite) TVCLogControllerOperationQueue *printingQueue;
 
 - (void)resetState;
 

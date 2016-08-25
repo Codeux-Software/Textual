@@ -37,32 +37,39 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _compileDebugCode			0
-
 #pragma mark -
 #pragma mark Define Private Header
 
-@interface TVCLogControllerOperationItem : NSOperation
-@property (nonatomic, copy, nullable) TVCLogControllerOperationBlock executionBlock;
+@interface TVCLogControllerPrintingOperation : NSOperation
+@property (nonatomic, strong) TVCLogControllerPrintingOperationQueue *parentQueue;
+@property (nonatomic, copy, nullable) TVCLogControllerPrintingBlock executionBlock;
 @property (nonatomic, weak, nullable) TVCLogController *viewController;
-@property (nonatomic, assign) BOOL isStandalone;
+@property (nonatomic, assign, getter=isPending) BOOL pending;
+@property (nonatomic, assign, getter=isStandalone) BOOL standalone;
+@end
 
-#if _compileDebugCode == 1
-@property (nonatomic, copy, nullable) NSString *operationDescription;
-#endif
+@interface TVCLogControllerPrintingOperationQueue ()
+/* This queue is application wide and stores all printing operations. 
+ Having a single queue gives us greater control over what happens,
+ instead of trying to optimize one queue per-server. */
+/* One problem of having a single queue through, is indexing which
+ operations are associated with which view controller. To make this
+ task easier, we maintain our own internal cache of pending operations
+ which we can query at any time to know whats happening. The queue
+ then observes the isFinished property to know when to remove the
+ operations from our internal cache. */
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *pendingOperations;
 @end
 
 #pragma mark -
 #pragma mark Operation Queue
 
-@implementation TVCLogControllerOperationQueue
+@implementation TVCLogControllerPrintingOperationQueue
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
-		
-		self.name = @"TVCLogControllerOperationQueue";
+		[self prepareInitialState];
 
 		return self;
 	}
@@ -70,76 +77,164 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (void)prepareInitialState
+{
+	self.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+
+	self.name = @"TVCLogControllerPrintingOperationQueue";
+
+	self.pendingOperations = [NSMutableDictionary dictionary];
+}
+
 #pragma mark -
 #pragma mark Queue Additions
 
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController
+- (void)enqueueMessageBlock:(TVCLogControllerPrintingBlock)callbackBlock for:(TVCLogController *)viewController
 {
-	[self enqueueMessageBlock:callbackBlock for:viewController description:nil isStandalone:NO];
+	[self enqueueMessageBlock:callbackBlock for:viewController isStandalone:NO];
 }
 
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController description:(nullable NSString *)description
-{
-	[self enqueueMessageBlock:callbackBlock for:viewController description:description isStandalone:NO];
-}
-
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController description:(nullable NSString *)description isStandalone:(BOOL)isStandalone
+- (void)enqueueMessageBlock:(TVCLogControllerPrintingBlock)callbackBlock for:(TVCLogController *)viewController isStandalone:(BOOL)isStandalone
 {
 	NSParameterAssert(callbackBlock != nil);
 	NSParameterAssert(viewController != nil);
 
-	[self performBlockOnMainThread:^{
-		TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem new];
+	if (masterController().applicationIsTerminating) {
+		return;
+	}
 
-		TVCLogControllerOperationItem *operationParent = (id)[self dependencyOfLastOperation:viewController];
+	TVCLogControllerPrintingOperation *operation = [TVCLogControllerPrintingOperation new];
 
-		if (operationParent) {
-			[operation addDependency:operationParent];
-		}
+	operation.executionBlock = callbackBlock;
 
-#if _compileDebugCode == 1
-		if (description) {
-			operation.operationDescription = description;
+	operation.standalone = isStandalone;
+
+	operation.parentQueue = self;
+
+	operation.viewController = viewController;
+
+	[self addPendingOperation:operation];
+}
+
+#pragma mark -
+#pragma mark Internal Operation Management
+
+- (NSArray<TVCLogControllerPrintingOperation *> *)pendingOperationsForViewController:(TVCLogController *)viewController
+{
+	NSParameterAssert(viewController != nil);
+
+	NSString *pendingOperationsKey = viewController.description;
+
+	NSArray<TVCLogControllerPrintingOperation *> *pendingOperations = nil;
+
+	@synchronized (self.pendingOperations) {
+		pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
+	}
+
+	if (pendingOperations == nil) {
+		return @[];
+	}
+
+	return [pendingOperations copy];
+}
+
+- (void)addPendingOperation:(TVCLogControllerPrintingOperation *)operation
+{
+	NSParameterAssert(operation != nil);
+
+	TVCLogControllerPrintingOperation *operationDependency = nil;
+
+	/* Add operation to list of pending operations and while we have those,
+	 also pick out what will be its dependency. */
+	NSString *pendingOperationsKey = operation.viewController.description;
+
+	@synchronized (self.pendingOperations) {
+		NSMutableArray *pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
+
+		if (pendingOperations == nil) {
+			pendingOperations = [NSMutableArray array];
+
+			[self.pendingOperations setObject:pendingOperations forKey:pendingOperationsKey];
 		} else {
-			operation.operationDescription = @"No Description";
+			for (TVCLogControllerPrintingOperation *pendingOperation in pendingOperations.reverseObjectEnumerator) {
+				if (pendingOperation.isPending == NO || pendingOperation.isStandalone) {
+					continue;
+				}
+
+				operationDependency = pendingOperation;
+			}
 		}
+
+		[pendingOperations addObject:operation];
+	}
+
+	/* Add dependency to operation */
+	if (operationDependency) {
+		[operation addDependency:operationDependency];
+	}
+
+	/* Begin observing when the status of the operation changes */
+	[operation addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:nil];
+
+	/* Add operation to the queue */
+	[super addOperation:operation];
+}
+
+- (void)removePendingOperation:(TVCLogControllerPrintingOperation *)operation
+{
+	NSParameterAssert(operation != nil);
+
+	/* Remove operation from list of pending operations */
+	NSString *pendingOperationsKey = operation.viewController.description;
+
+	@synchronized (self.pendingOperations) {
+		NSMutableArray *pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
+
+		if (pendingOperations == nil) {
+			LogToConsoleError("'pendingOperations' is nil when it's not supposed to be. wat?")
+
+			return;
+		}
+
+		[pendingOperations removeObjectIdenticalTo:operation];
+	}
+
+	/* Remove dependency to operation */
+#if 0
+	NSOperation *operationDependency = operation.dependencies.firstObject;
+
+	if (operationDependency) {
+		[operation removeDependency:operationDependency];
+	}
 #endif
 
-		operation.executionBlock = callbackBlock;
-
-		operation.isStandalone = isStandalone;
-
-		operation.viewController = viewController;
-
-		/* Add the operations */
-		[self addOperation:operation];
-	}];
+	/* End observing when the status of the operation changes */
+	[operation removeObserver:self forKeyPath:@"isFinished"];
 }
 
 #pragma mark -
 #pragma mark cancelAllOperations Substitue
 
-/* cancelOperationsForViewController should be called from the main queue. */
 - (void)cancelOperationsForViewController:(TVCLogController *)viewController
 {
 	NSParameterAssert(viewController != nil);
 
-	for (TVCLogControllerOperationItem *operation in self.operations) {
-		if (operation.viewController != viewController) {
-			continue;
-		}
+	NSArray *operations = [self pendingOperationsForViewController:viewController];
 
-		[operation cancel];
-	}
+	[operations makeObjectsPerformSelector:@selector(cancel)];
 }
 
 - (void)cancelOperationsForClient:(IRCClient *)client
 {
+	NSParameterAssert(client != nil);
+
 	[self cancelOperationsForViewController:client.viewController];
 }
 
 - (void)cancelOperationsForChannel:(IRCChannel *)channel
 {
+	NSParameterAssert(channel != nil);
+
 	[self cancelOperationsForViewController:channel.viewController];
 }
 
@@ -150,44 +245,23 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(viewController != nil);
 
-	[self performBlockOnMainThread:^{
-		for (TVCLogControllerOperationItem *operation in self.operations) {
-			if (operation.viewController != viewController) {
-				continue;
-			}
+	NSArray *operations = [self pendingOperationsForViewController:viewController];
 
-			if (operation.isCancelled || operation.dependencies.count > 0) {
-				continue;
-			}
-
-			[operation willChangeValueForKey:@"isReady"];
-			[operation didChangeValueForKey:@"isReady"];
+	for (TVCLogControllerPrintingOperation *operation in operations) {
+		if (operation.isPending == NO || operation.dependencies.count > 0) {
+			continue;
 		}
-	}];
+
+		[operation willChangeValueForKey:@"isReady"];
+		[operation didChangeValueForKey:@"isReady"];
+	}
 }
 
-#pragma mark -
-#pragma mark Dependency
-
-- (nullable NSOperation *)dependencyOfLastOperation:(TVCLogController *)viewController
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
 {
-	/* This is called internally already from a method that is 
-	 running on the main queue so we will not wrap this in it. */
-	NSEnumerator *operationEnumerator = self.operations.reverseObjectEnumerator;
-
-	for (TVCLogControllerOperationItem *operation in operationEnumerator) {
-		if (operation.viewController != viewController) {
-			continue;
-		}
-
-		if (operation.isCancelled || operation.isStandalone) {
-			continue;
-		}
-
-		return operation;
+	if ([keyPath isEqualToString:@"isFinished"]) {
+		[self removePendingOperation:object];
 	}
-
-	return nil;
 }
 
 @end
@@ -195,72 +269,25 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Operation Queue Items
 
-@implementation TVCLogControllerOperationItem
+@implementation TVCLogControllerPrintingOperation
 
-- (void)cancel
+- (BOOL)isPending
 {
-	[super cancel];
-
-	[self teardownOperation];
+	return (self.isCancelled == NO && self.isExecuting == NO && self.isFinished == NO);
 }
 
 - (void)main
 {
 	[self executeBlock];
-
-	[self teardownOperation];
 }
 
 - (void)executeBlock
 {
-	if (masterController().applicationIsTerminating) {
-		return;
-	}
-
 	if (self.isCancelled) {
 		return;
 	}
 
-	TVCLogControllerOperationBlock executionBlock = self.executionBlock;
-
-#if _compileDebugCode == 1
-	if (executionBlock == nil) {
-		NSMutableString *exceptionMessage = [NSMutableString string];
-
-		[exceptionMessage appendString:@"\n\nExecution block is nil when it probably shouldn't be.\n"];
-
-		[exceptionMessage appendFormat:@"\tOperation: %@\n", self.description];
-		[exceptionMessage appendFormat:@"\tisCancelled: %d\n", self.isCancelled];
-		[exceptionMessage appendFormat:@"\tisExecuting: %d\n", self.isExecuting];
-		[exceptionMessage appendFormat:@"\tisFinished: %d\n", self.isFinished];
-		[exceptionMessage appendFormat:@"\tisReady: %d\n", super.isReady];
-		[exceptionMessage appendFormat:@"\tDescription: '%@'\n\n", self.operationDescription];
-
-		NSAssert(NO, exceptionMessage);
-	}
-#endif
-
-	executionBlock(self);
-}
-
-- (void)teardownOperation
-{
-	/* Dereference everything associated with this operation */
-	self.executionBlock = nil;
-
-	self.viewController = nil;
-
-	/* Kill existing dependency */
-	/* Discussion: Normally NSOperationQueue removes all strong references to
-	 dependencies once all operations have completed. As this operation queue
-	 can have thousands of operations chained together, this is not a desired
-	 behavior as a pseudo infinite loop can be created. Therefore, once we
-	 have executed the block we wanted, we release any dependency assigned. */
-	NSOperation *firstDependency = self.dependencies.firstObject;
-
-	if (firstDependency) {
-		[self removeDependency:firstDependency];
-	}
+	self.executionBlock(self);
 }
 
 - (BOOL)isReady
@@ -270,15 +297,6 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		return  super.isReady;
 	}
-}
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
-{
-	if ([key isEqualToString:@"isReady"]) {
-		return YES;
-	}
-
-	return [super automaticallyNotifiesObserversForKey:key];
 }
 
 @end

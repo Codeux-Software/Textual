@@ -37,12 +37,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender);
+typedef void (^TVCLogControllerPrintingBlock)(NSOperation *sender);
 
-@interface TVCLogControllerOperationQueue : NSOperationQueue
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController description:(nullable NSString *)description;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController description:(nullable NSString *)description isStandalone:(BOOL)isStandalone;
+@interface TVCLogControllerPrintingOperationQueue : NSOperationQueue
+- (void)enqueueMessageBlock:(TVCLogControllerPrintingBlock)callbackBlock for:(TVCLogController *)viewController;
+- (void)enqueueMessageBlock:(TVCLogControllerPrintingBlock)callbackBlock for:(TVCLogController *)viewController isStandalone:(BOOL)isStandalone;
 
 - (void)cancelOperationsForClient:(IRCClient *)client;
 - (void)cancelOperationsForChannel:(IRCChannel *)channel;

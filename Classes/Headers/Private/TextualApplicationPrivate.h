@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-@class TVCLogControllerOperationQueue;
+@class TVCLogControllerPrintingOperationQueue;
 @class TVCMemberListMavericksDarkUserInterface;
 @class TVCMemberListMavericksLightUserInterface;
 @class TVCMemberListUserInfoPopover;
