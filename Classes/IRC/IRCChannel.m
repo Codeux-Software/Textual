@@ -67,7 +67,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 @implementation IRCChannel
 
 @synthesize associatedClient = _associatedClient;
-@synthesize printingQueue = _printingQueue;
 
 ClassWithDesignatedInitializerInitMethod
 
@@ -1082,11 +1081,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (nullable IRCChannel *)associatedChannel
 {
 	return self;
-}
-
-- (TVCLogControllerOperationQueue *)printingQueue
-{
-	return self.associatedClient.printingQueue;
 }
 
 @end

@@ -4378,8 +4378,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self cancelPerformRequests];
 
-	[self.printingQueue cancelAllOperations];
-
 	if (isTerminating == NO && self.reconnectEnabled) {
 		[self startReconnectTimer];
 	}
@@ -4389,6 +4387,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.trackedUsers clearTrackedUsers];
 
 	if (isTerminating == NO) {
+		/* -prepareForApplicationTermination in TVCLogController will cancel
+		 all operations for this client for us during termination. */
+		[[TXSharedApplication sharedPrintingQueue] cancelOperationsForClient:self];
+
 		NSString *disconnectMessage = nil;
 
 		if (self.disconnectType == IRCClientDisconnectNormalMode) {

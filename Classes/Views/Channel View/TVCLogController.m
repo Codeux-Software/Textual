@@ -39,10 +39,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define _enqueueBlock(operationBlock)			\
-	[self.printingQueue enqueueMessageBlock:(operationBlock) for:self description:NSStringFromSelector(_cmd) isStandalone:NO];
+	[self.printingQueue enqueueMessageBlock:(operationBlock) for:self isStandalone:NO];
 
 #define _enqueueBlockStandalone(operationBlock)			\
-	[self.printingQueue enqueueMessageBlock:(operationBlock) for:self description:NSStringFromSelector(_cmd) isStandalone:YES];
+	[self.printingQueue enqueueMessageBlock:(operationBlock) for:self isStandalone:YES];
 
 @interface TVCLogControllerPrintOperationContext ()
 @property (nonatomic, weak, readwrite) IRCClient *client;
@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite, nullable) IRCChannel *associatedChannel;
 @property (nonatomic, strong, readwrite) TVCMainWindow *attachedWindow;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
-@property (readonly) TVCLogControllerOperationQueue *printingQueue;
+@property (readonly) TVCLogControllerPrintingOperationQueue *printingQueue;
 @property (readonly, copy) NSURL *baseURL;
 @end
 
@@ -304,9 +304,9 @@ ClassWithDesignatedInitializerInitMethod
 	return themeController().baseURL;
 }
 
-- (TVCLogControllerOperationQueue *)printingQueue
+- (TVCLogControllerPrintingOperationQueue *)printingQueue
 {
-    return self.associatedClient.printingQueue;
+    return [TXSharedApplication sharedPrintingQueue];
 }
 
 - (BOOL)inlineMediaEnabledForView
@@ -353,7 +353,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	if (onQueue) {
-		TVCLogControllerOperationBlock scriptBlock = ^(id operation) {
+		TVCLogControllerPrintingBlock scriptBlock = ^(id operation) {
 			[self performBlockOnMainThread:^{
 				[self _evaluateFunction:function withArguments:arguments];
 			}];
@@ -399,7 +399,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	TVCLogControllerOperationBlock operationBlock = ^(id operation) {
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
 		NSString *topicString = nil;
 
 		if (topic == nil || topic.length == 0) {
@@ -573,7 +573,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.reloadingHistory = YES;
 
-	TVCLogControllerOperationBlock operationBlock = ^(id operation) {
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
 		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
 
 		[self reloadHistoryCompletionBlock:objects];
@@ -613,7 +613,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	TVCLogControllerOperationBlock operationBlock = ^(id operation) {
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
 		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
 		
 		[self.historicLogFile reset];
@@ -908,7 +908,7 @@ ClassWithDesignatedInitializerInitMethod
 		logLine = [logLine copy];
 	}
 
-	TVCLogControllerOperationBlock printBlock = ^(id operation) {
+	TVCLogControllerPrintingBlock printBlock = ^(id operation) {
 		NSDictionary<NSString *, id> *resultInfo = nil;
 		
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
