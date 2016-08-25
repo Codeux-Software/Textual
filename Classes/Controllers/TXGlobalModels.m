@@ -297,7 +297,7 @@ void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t 
 	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
 		block();
 	} else {
-		XRPerformBlockOnDispatchQueue(workerQueue, block, XRPerformBlockOnDispatchQueueSyncOperationType);
+		dispatch_sync(workerQueue, block);
 	}
 }
 
