@@ -55,10 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCLogController ()
 @property (nonatomic, assign, readwrite, getter=viewIsLoaded) BOOL loaded;
 @property (nonatomic, assign) BOOL terminating;
-@property (nonatomic, assign) BOOL reloadingBacklog;
+@property (nonatomic, assign) BOOL historyLoadedForFirstTime;
 @property (nonatomic, assign) BOOL reloadingHistory;
-@property (nonatomic, assign) BOOL historyLoaded;
+@property (nonatomic, assign) BOOL reloadingTheme;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
+@property (nonatomic, assign) BOOL viewViewedBefore; // has the user viewed this view
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, assign) NSUInteger maximumLineCount;
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
@@ -218,17 +219,6 @@ ClassWithDesignatedInitializerInitMethod
 - (void)openHistoricLog
 {
 	self.historicLogFile = [[TVCLogControllerHistoricLogFile alloc] initWithViewController:self];
-
-	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-		self.historyLoaded = YES;
-	} else {
-		if (self.historyLoaded == NO && (self.associatedChannel &&
-										(self.associatedChannel.isPrivateMessage == NO ||
-										 [TPCPreferences rememberServerListQueryStates])))
-		{
-			[self reloadHistory];
-		}
-	}
 }
 
 - (void)closeHistoricLog
@@ -563,8 +553,20 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	if (self.encrypted) {
-		self.historyLoaded = YES;
+	BOOL firstTimeLoadingHistory = (self.historyLoadedForFirstTime == NO);
+
+	if (firstTimeLoadingHistory) {
+		self.historyLoadedForFirstTime = YES;
+	}
+
+	if (
+		/* 1 */ self.encrypted ||
+		/* 2 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
+		/* 3 */  self.associatedChannel == nil ||
+		/* 4 */ (self.associatedChannel.isPrivateMessage &&
+				 [TPCPreferences rememberServerListQueryStates] == NO))
+	{
+		[self notifyViewFinishedLoadingHistory];
 
 		return;
 	}
@@ -574,21 +576,14 @@ ClassWithDesignatedInitializerInitMethod
 	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
 		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
 
-		[self reloadHistoryCompletionBlock:objects];
+		[self reloadOldLines:objects markHistoric:firstTimeLoadingHistory];
+
+		self.reloadingHistory = NO;
+
+		[self notifyViewFinishedLoadingHistory];
 	};
 
 	_enqueueBlockStandalone(operationBlock)
-}
-
-- (void)reloadHistoryCompletionBlock:(NSArray<NSData *> *)objects
-{
-	NSParameterAssert(objects != nil);
-
-	[self reloadOldLines:objects markHistoric:YES];
-
-	self.reloadingHistory = NO;
-
-	self.historyLoaded = YES;
 }
 
 - (void)reloadTheme
@@ -597,38 +592,24 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	if (self.reloadingHistory) {
+	if (self.reloadingTheme) {
 		return;
 	}
 
-	self.reloadingBacklog = YES;
+	/* Even if the user has never loaded their history, we force this
+	 flag to YES when reloading theme. We do not want history to be
+	 displayed as historic when playing it back after a reload. */
+	self.historyLoadedForFirstTime = YES;
+
+	self.reloadingTheme = YES;
 
 	[self clearWithReset:NO];
 
 	if (self.encrypted) {
-		self.reloadingBacklog = NO;
+		self.reloadingTheme = NO;
 
 		return;
 	}
-
-	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
-		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
-		
-		[self.historicLogFile reset];
-		
-		[self reloadThemeCompletionBlock:objects];
-	};
-
-	_enqueueBlockStandalone(operationBlock)
-}
-
-- (void)reloadThemeCompletionBlock:(NSArray<NSData *> *)objects
-{
-	NSParameterAssert(objects != nil);
-
-	[self reloadOldLines:objects markHistoric:NO];
-
-	self.reloadingBacklog = NO;
 }
 
 #pragma mark -
@@ -651,6 +632,19 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyDidBecomeVisible /* When the view is switched to */
 {
 	[self _evaluateFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
+
+	[self viewDdidBecomeVisibleForFirstTime];
+}
+
+- (void)viewDdidBecomeVisibleForFirstTime
+{
+	if (self.viewViewedBefore == NO) {
+		self.viewViewedBefore = YES;
+	} else {
+		return;
+	}
+
+	[self reloadHistory];
 }
 
 - (void)notifySelectionChanged
@@ -661,6 +655,11 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyDidBecomeHidden
 {
 	[self _evaluateFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
+}
+
+- (void)notifyViewFinishedLoadingHistory
+{
+	[self _evaluateFunction:@"Textual.viewFinishedLoadingHistory" withArguments:nil];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -837,11 +836,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self limitNumberOfLines];
 }
 
-- (void)clearWithReset:(BOOL)resetQueue
+- (void)clearWithReset:(BOOL)clearWithReset
 {
 	[self.printingQueue cancelOperationsForViewController:self];
 
-	if (resetQueue) {
+	if (clearWithReset) {
 		[self.historicLogFile reset];
 	}
 	
@@ -856,6 +855,10 @@ ClassWithDesignatedInitializerInitMethod
 	self.loaded = NO;
 
 	self.needsLimitNumberOfLines = NO;
+
+	self.reloadingHistory = NO;
+
+	self.viewViewedBefore = NO;
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
@@ -1364,10 +1367,10 @@ ClassWithDesignatedInitializerInitMethod
 	double textSizeMultiplier = self.attachedWindow.textSizeMultiplier;
 
 	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
-					  withArguments:@[@(self.selected),
-									  @(self.visible),
-									  @(self.reloadingBacklog),
-									  @(textSizeMultiplier)]];
+			  withArguments:@[@(self.selected),
+							  @(self.visible),
+							  @(self.reloadingTheme),
+							  @(textSizeMultiplier)]];
 
 	[self setInitialTopic];
 
