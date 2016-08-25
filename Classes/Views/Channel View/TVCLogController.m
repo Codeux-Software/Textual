@@ -636,11 +636,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self clearWithReset:NO];
 
-	if (self.encrypted) {
-		self.reloadingTheme = NO;
-
-		return;
-	}
+	self.reloadingTheme = NO;
 }
 
 #pragma mark -
