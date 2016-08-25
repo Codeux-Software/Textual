@@ -680,6 +680,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[member2 associateWithChannel:self];
 
 	XRPerformBlockAsynchronouslyOnSharedMutableDispatchQueue(^{
+		[self _removeMember:member1];
+
 		NSUInteger insertedIndex = [self _sortedInsertMember:member2];
 
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
