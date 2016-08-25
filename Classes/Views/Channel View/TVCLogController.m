@@ -354,9 +354,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (onQueue) {
 		TVCLogControllerPrintingBlock scriptBlock = ^(id operation) {
-			[self performBlockOnMainThread:^{
-				[self _evaluateFunction:function withArguments:arguments];
-			}];
+			[self _evaluateFunction:function withArguments:arguments];
 		};
 
 		_enqueueBlock(scriptBlock)
@@ -416,12 +414,10 @@ ClassWithDesignatedInitializerInitMethod
 															}
 												  resultInfo:NULL];
 
-		[self performBlockOnMainThread:^{
-			[self _evaluateFunction:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
-		}];
+		[self _evaluateFunction:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
 	};
 
-	_enqueueBlock(operationBlock)
+	_enqueueBlockStandalone(operationBlock)
 }
 
 #pragma mark -
@@ -442,9 +438,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)mark
 {
-	NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
+		NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-	[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
+		[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
+	};
+
+	_enqueueBlockStandalone(operationBlock);
 }
 
 - (void)unmark
@@ -541,15 +541,13 @@ ClassWithDesignatedInitializerInitMethod
 	[self.historicLogFile writeNewEntryWithData:newHistoricArchive];
 
 	/* Render the result in WebKit */
-	[self performBlockOnMainThread:^{
-		self.activeLineCount += lineNumbers.count;
+	self.activeLineCount += lineNumbers.count;
 
-		[self appendHistoricMessageFragment:patchedAppend isReload:(markHistoric == NO)];
+	[self appendHistoricMessageFragment:patchedAppend isReload:(markHistoric == NO)];
 
-		[self mark];
+	[self mark];
 
-		[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
-	}];
+	[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
 
 	/* Inform plugins of new content */
 	for (THOPluginDidPostNewMessageConcreteObject *pluginObject in pluginObjects) {
@@ -841,25 +839,25 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)clearWithReset:(BOOL)resetQueue
 {
+	[self.printingQueue cancelOperationsForViewController:self];
+
+	if (resetQueue) {
+		[self.historicLogFile reset];
+	}
+	
+	@synchronized(self.highlightedLineNumbers) {
+		[self.highlightedLineNumbers removeAllObjects];
+	}
+	
+	self.activeLineCount = 0;
+
+	self.lastVisitedHighlight = nil;
+
+	self.loaded = NO;
+
+	self.needsLimitNumberOfLines = NO;
+
 	[self performBlockOnMainThread:^{
-		[self.printingQueue cancelOperationsForViewController:self];
-
-		if (resetQueue) {
-			[self.historicLogFile reset];
-		}
-		
-		@synchronized(self.highlightedLineNumbers) {
-			[self.highlightedLineNumbers removeAllObjects];
-		}
-		
-		self.activeLineCount = 0;
-
-		self.lastVisitedHighlight = nil;
-
-		self.loaded = NO;
-
-		self.needsLimitNumberOfLines = NO;
-
 		if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
 			[self rebuildBackingView];
 		}
