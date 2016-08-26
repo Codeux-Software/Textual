@@ -74,6 +74,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock;
 + (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock;
+
++ (void)resumeMemberListSerialQueues;
++ (void)suspendMemberListSerialQueues;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -255,11 +255,11 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSString *uniqueId = [NSString stringWithUUID];
 
-	NSString *dispatchQueueName = [NSString stringWithFormat:@"DCC-SocketDispatchQueue-%@", uniqueId];
+	NSString *dispatchQueueName = [NSString stringWithFormat:@"Textual.TDCFileTransferDialogTransferController.DCC-SocketDispatchQueue-%@", uniqueId];
 
 	self.serverDispatchQueue = dispatch_queue_create(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
 
-	NSString *socketQueueName = [NSString stringWithFormat:@"DCC-SocketReadWriteQueue-%@", uniqueId];
+	NSString *socketQueueName = [NSString stringWithFormat:@"Textual.TDCFileTransferDialogTransferController.DCC-SocketReadWriteQueue-%@", uniqueId];
 
 	self.serverSocketQueue = dispatch_queue_create(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
 }

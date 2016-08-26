@@ -708,7 +708,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	LogToConsoleDebug("iCloud: Beginning session")
 
-	self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", DISPATCH_QUEUE_SERIAL);
+	self.workerQueue = dispatch_queue_create("Textual.TPCPreferencesCloudSync.iCloudSyncDispatchQueue", DISPATCH_QUEUE_SERIAL);
 
 	self.ubiquityIdentityToken = RZFileManager().cloudUbiquityIdentityToken;
 

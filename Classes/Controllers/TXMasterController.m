@@ -558,8 +558,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() prepareForApplicationTermination];
 
 	[themeController() prepareForApplicationTermination];
-
-	dispatch_suspend([TXSharedApplication sharedMutableSynchronizationSerialQueue]);
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
