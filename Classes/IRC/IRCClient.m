@@ -8287,9 +8287,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				memberMutable.modes = memberModes;
 
 				/* Add user to channel */
-				[channel removeMemberWithNickname:nicknameInt];
-
-				[channel addMember:memberMutable];
+				[channel addMember:memberMutable checkForDuplicates:YES];
 			} // for
 
 			break;

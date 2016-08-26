@@ -74,10 +74,11 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 - (void)activate;
 - (void)deactivate;
 
-/* Members are inserted into the member list in the background because 
- sorted inserts are costly. This is important to keep in mind if your 
- plugin depends on the result of -memberList including the user the 
- next tick, after the member is added. */
+/* Member changes (adding, removing, modifying) are done so asynchronously.
+ This means that changes wont be immediately reflected by -memberList. */
+/* It is safe to call -memberExists: and -findMember: immediately after 
+ changing a member because those methods do not require the member to 
+ be present in the member list to produce a result. */
 - (void)addMember:(IRCChannelUser *)member;
 
 - (void)removeMember:(IRCChannelUser *)member;
@@ -87,10 +88,11 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
 - (nullable IRCChannelUser *)findMember:(NSString *)nickname;
 
+/* -memberList and -numberOfMembers are KVO complient
+ which means you can observe their values to know when modified. */
 @property (readonly) NSUInteger numberOfMembers;
 
 @property (readonly, copy) NSArray<IRCChannelUser *> *memberList; // Automatically sorted by channel rank
-@property (readonly, copy) NSArray<IRCChannelUser *> *memberListSortedByNicknameLength; // Automatically sorted by longest nickname to shortest nickname
 @end
 
 NS_ASSUME_NONNULL_END
