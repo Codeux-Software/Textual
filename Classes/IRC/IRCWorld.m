@@ -155,8 +155,6 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	for (IRCClient *u in self.clientList) {
 		[u prepareForApplicationTermination];
 	}
-
-	[IRCChannel suspendMemberListSerialQueues];
 }
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
