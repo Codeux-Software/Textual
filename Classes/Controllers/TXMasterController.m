@@ -553,6 +553,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[self.world save];
 	}
 
+	[IRCChannel suspendMemberListSerialQueues];
+
 	[sharedPluginManager() unloadPlugins];
 
 	[windowController() prepareForApplicationTermination];
