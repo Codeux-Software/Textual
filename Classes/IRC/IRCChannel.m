@@ -53,12 +53,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 /* memberListStandardSortedContainer is a copy of the member list sorted by the channel
  rank of each member.*/
 @property (nonatomic, strong) NSMutableArray<IRCChannelUser *> *memberListStandardSortedContainer;
-
-/* memberListLengthSortedContainer is a copy of the member list sorted by the length of
- nicknames. TVCLogRenderer requires the member list to be in a specific order each time
- it renders a message and it is too costly to sort our container thousands of times 
- every minute.*/
-@property (nonatomic, strong) NSMutableArray<IRCChannelUser *> *memberListLengthSortedContainer;
 @end
 
 @implementation IRCChannel
@@ -94,7 +88,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)prepareInitialState
 {
 	self.memberListStandardSortedContainer = [NSMutableArray array];
-	self.memberListLengthSortedContainer = [NSMutableArray array];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)config
@@ -567,6 +560,52 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	dispatch_suspend([IRCChannel modifyMembmerListSerialQueueWrapper]);
 }
 
++ (void)accessMemberListUsingBlock:(dispatch_block_t)block
+{
+	NSCParameterAssert(block != NULL);
+
+	dispatch_queue_t workerQueue = [IRCChannel modifyMembmerListSerialQueue];
+
+	static void *IsOnWorkerQueueKey = NULL;
+
+	if (IsOnWorkerQueueKey == NULL) {
+		IsOnWorkerQueueKey = &IsOnWorkerQueueKey;
+
+		dispatch_queue_set_specific(workerQueue, IsOnWorkerQueueKey, (void *)1, NULL);
+	}
+
+	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
+		block();
+
+		return;
+	}
+
+	dispatch_sync(workerQueue, block);
+}
+
++ (void)queueAccessToMemberList:(dispatch_block_t)block
+{
+	NSCParameterAssert(block != NULL);
+
+	dispatch_queue_t workerQueue = [IRCChannel modifyMembmerListSerialQueueWrapper];
+
+	static void *IsOnWorkerQueueKey = NULL;
+
+	if (IsOnWorkerQueueKey == NULL) {
+		IsOnWorkerQueueKey = &IsOnWorkerQueueKey;
+
+		dispatch_queue_set_specific(workerQueue, IsOnWorkerQueueKey, (void *)1, NULL);
+	}
+
+	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
+		block();
+
+		return;
+	}
+
+	dispatch_async(workerQueue, block);
+}
+
 #pragma mark -
 #pragma mark Member List
 
@@ -575,8 +614,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(member != nil);
 
 	NSUInteger insertedIndex = [self.memberListStandardSortedContainer insertSortedObject:member usingComparator:[IRCChannelUser channelRankComparator]];
-
-	(void)[self.memberListLengthSortedContainer insertSortedObject:member usingComparator:[IRCChannelUser nicknameLengthComparator]];
 	
 	return insertedIndex;
 }
@@ -596,7 +633,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (BOOL)_removeMember:(IRCChannelUser *)member
+- (BOOL)_removeMemberFromMemberList:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
@@ -609,13 +646,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		removedMember = YES;
 
 		[self.memberListStandardSortedContainer removeObjectAtIndex:standardSortedMemberIndex];
-	}
-
-	NSUInteger lengthSortedMemberIndex =
-	[self.memberListLengthSortedContainer indexOfObjectIdenticalTo:member];
-
-	if (lengthSortedMemberIndex != NSNotFound) {
-		[self.memberListLengthSortedContainer removeObjectAtIndex:lengthSortedMemberIndex];
 	}
 
 	return removedMember;
@@ -632,7 +662,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)addMember:(IRCChannelUser *)member
 {
+	/* checkForDuplicates defaults to NO because to avoid extra work */
+
+	[self addMember:member checkForDuplicates:NO];
+}
+
+- (void)addMember:(IRCChannelUser *)member checkForDuplicates:(BOOL)checkForDuplicates
+{
 	NSParameterAssert(member != nil);
+
+	if (checkForDuplicates) {
+		IRCChannelUser *oldMember = [member.user userAssociatedWithChannel:self];
+
+		if (oldMember != nil) {
+			[self replaceMember:oldMember byInsertingMember:member];
+
+			return;
+		}
+	}
 
 	if ([member isKindOfClass:[IRCChannelUserMutable class]]) {
 		member = [member copy];
@@ -640,20 +687,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[member associateWithChannel:self];
 
-	dispatch_async([IRCChannel modifyMembmerListSerialQueueWrapper], ^{
+	[IRCChannel queueAccessToMemberList:^{
 		__block NSInteger insertedIndex = (-1);
 
 		[self willChangeValueForKey:@"numberOfMembers"];
 		[self willChangeValueForKey:@"memberList"];
-		[self willChangeValueForKey:@"memberListSortedByNicknameLength"];
 
-		dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
+		[IRCChannel accessMemberListUsingBlock:^{
 			insertedIndex = [self _sortedInsertMember:member];
-		});
+		}];
 
 		[self didChangeValueForKey:@"numberOfMembers"];
 		[self didChangeValueForKey:@"memberList"];
-		[self didChangeValueForKey:@"memberListSortedByNicknameLength"];
 
 		XRPerformBlockSynchronouslyOnMainQueue(^{
 			if (self.isChannel == NO) {
@@ -664,7 +709,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
 		});
-	});
+	}];
 }
 
 - (void)removeMemberWithNickname:(NSString *)nickname
@@ -682,21 +727,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(member != nil);
 
-	__block BOOL memberRemoved = NO;
+	[member disassociateWithChannel:self];
 
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
-		memberRemoved = [self _removeMember:member];
-	});
+	[IRCChannel queueAccessToMemberList:^{
+		__block BOOL memberRemoved = NO;
 
-	if (memberRemoved == NO || self.isChannel == NO) {
-		return;
-	}
+		[IRCChannel accessMemberListUsingBlock:^{
+			memberRemoved = [self _removeMemberFromMemberList:member];
+		}];
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self _removeMemberFromTableView:member];
+		if (memberRemoved == NO || self.isChannel == NO) {
+			return;
+		}
 
-		[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
-	});
+		XRPerformBlockSynchronouslyOnMainQueue(^{
+			[self _removeMemberFromTableView:member];
+
+			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
+		});
+	}];
 }
 
 #pragma mark -
@@ -719,19 +768,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[member2 associateWithChannel:self];
 
-	__block NSInteger insertedIndex = (-1);
+	[IRCChannel queueAccessToMemberList:^{
+		__block NSInteger insertedIndex = (-1);
 
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
-		(void)[self _removeMember:member1];
+		[IRCChannel accessMemberListUsingBlock:^{
+			(void)[self _removeMemberFromMemberList:member1];
 
-		insertedIndex = [self _sortedInsertMember:member2];
-	});
+			insertedIndex = [self _sortedInsertMember:member2];
+		}];
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self _removeMemberFromTableView:member1];
+		XRPerformBlockSynchronouslyOnMainQueue(^{
+			[self _removeMemberFromTableView:member1];
 
-		[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
-	});
+			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+		});
+	}];
 }
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
@@ -743,31 +794,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		member2 = [member2 copy];
 	}
 
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
-		// Replace member in standard sorted container
-		NSUInteger standardSortedMemberIndex =
-		[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member1];
-
-		if (standardSortedMemberIndex != NSNotFound) {
-			self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
-		}
-
-		// Replace member in length sorted container
-		NSUInteger lengthSortedMemberIndex =
-		[self.memberListLengthSortedContainer indexOfObjectIdenticalTo:member1];
-
-		if (lengthSortedMemberIndex != NSNotFound) {
-			self.memberListLengthSortedContainer[lengthSortedMemberIndex] = member2;
-		}
-	});
-
 	[member1 disassociateWithChannel:self];
 
 	[member2 associateWithChannel:self];
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[mainWindowMemberList() reloadItem:member1];
-	});
+	[IRCChannel queueAccessToMemberList:^{
+		[IRCChannel accessMemberListUsingBlock:^{
+			// Replace member in standard sorted container
+			NSUInteger standardSortedMemberIndex =
+			[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member1];
+
+			if (standardSortedMemberIndex != NSNotFound) {
+				self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
+			}
+		}];
+
+		XRPerformBlockSynchronouslyOnMainQueue(^{
+			[mainWindowMemberList() reloadItem:member1];
+		});
+	}];
 }
 
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value
@@ -861,30 +906,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)clearMembers
 {
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
+	[IRCChannel accessMemberListUsingBlock:^{
 		[self willChangeValueForKey:@"numberOfMembers"];
 		[self willChangeValueForKey:@"memberList"];
-		[self willChangeValueForKey:@"memberListSortedByNicknameLength"];
 
 		[self.memberListStandardSortedContainer makeObjectsPerformSelector:@selector(disassociateWithChannel:) withObject:self];
 
 		[self.memberListStandardSortedContainer removeAllObjects];
-		
-		[self.memberListLengthSortedContainer removeAllObjects];
 
 		[self didChangeValueForKey:@"numberOfMembers"];
 		[self didChangeValueForKey:@"memberList"];
-		[self didChangeValueForKey:@"memberListSortedByNicknameLength"];
-	});
+	}];
 }
 
 - (NSUInteger)numberOfMembers
 {
 	__block NSUInteger memberCount = 0;
 
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
+	[IRCChannel accessMemberListUsingBlock:^{
 		memberCount = self.memberListStandardSortedContainer.count;
-	});
+	}];
 	
 	return memberCount;
 }
@@ -893,21 +934,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	__block NSArray<IRCChannelUser *> *memberList = nil;
 
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
+	[IRCChannel accessMemberListUsingBlock:^{
 		memberList = [self.memberListStandardSortedContainer copy];
-	});
+	}];
 
-	return memberList;
-}
-
-- (NSArray<IRCChannelUser *> *)memberListSortedByNicknameLength
-{
-	__block NSArray<IRCChannelUser *> *memberList = nil;
-
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
-		memberList = [self.memberListLengthSortedContainer copy];
-	});
-	
 	return memberList;
 }
 
@@ -1018,9 +1048,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	__block IRCChannelUser *member = nil;
 
-	dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
+	[IRCChannel accessMemberListUsingBlock:^{
 		member = self.memberListStandardSortedContainer[index];
-	});
+	}];
 	
 	return member;
 }
@@ -1043,13 +1073,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	dispatch_async([IRCChannel modifyMembmerListSerialQueueWrapper], ^{
-		dispatch_sync([IRCChannel modifyMembmerListSerialQueue], ^{
+	[IRCChannel queueAccessToMemberList:^{
+		[IRCChannel accessMemberListUsingBlock:^{
 			[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
-		});
+		}];
 
 		[self reloadDataForTableView];
-	});
+	}];
 }
 
 - (void)reloadDataForTableView

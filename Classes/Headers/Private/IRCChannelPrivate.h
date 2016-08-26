@@ -55,6 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)noteEncryptionStateDidChange;
 
+- (void)addMember:(IRCChannelUser *)member checkForDuplicates:(BOOL)checkForDuplicates;
+
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2;

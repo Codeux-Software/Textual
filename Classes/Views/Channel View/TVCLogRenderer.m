@@ -594,7 +594,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 	IRCChannel *channel = self->_viewController.associatedChannel;
 
-	NSArray<IRCChannelUser *> *users = channel.memberListSortedByNicknameLength;
+	NSArray<IRCChannelUser *> *users = channel.memberList;
 
 	__block NSUInteger totalNicknameCount = 0;
 	__block NSUInteger totalNicknameLength = 0;
