@@ -1012,22 +1012,30 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(member != nil);
 
-	if (self.isSelectedChannel == NO || self.isChannel == NO) {
+	if (self.isChannel == NO) {
 		return;
 	}
 
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		if (self.isSelectedChannel == NO) {
+			return;
+		}
+
 		[mainWindowMemberList() reloadItem:member];
 	});
 }
 
 - (void)reloadDataForTableView
 {
-	if (self.isSelectedChannel == NO || self.isChannel == NO) {
+	if (self.isChannel == NO) {
 		return;
 	}
 
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		if (self.isSelectedChannel == NO) {
+			return;
+		}
+
 		[mainWindowMemberList() reloadData];
 	});
 }
