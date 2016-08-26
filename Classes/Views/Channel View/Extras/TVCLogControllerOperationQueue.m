@@ -202,13 +202,24 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Remove dependency to operation */
-#if 0
+	/* Having a ton of chained dependencies can cause a stack overflow
+	 when they deallocate. Manually removing dependencies fixes this pattern:
+
+	 0   CoreFoundation                       0x00007fffa2694d1e -[__NSArrayM dealloc] + 14
+	 1   Foundation                           0x00007fffa410d79b -[__NSOperationInternal dealloc] + 177
+	 2   Foundation                           0x00007fffa410d664 -[NSOperation dealloc] + 58
+	 3   CoreFoundation                       0x00007fffa27e237e common_removeAllObjects + 254
+	 4   CoreFoundation                       0x00007fffa2694d23 -[__NSArrayM dealloc] + 19
+	 5   Foundation                           0x00007fffa410d79b -[__NSOperationInternal dealloc] + 177
+	 6   Foundation                           0x00007fffa410d664 -[NSOperation dealloc] + 58
+	 7   CoreFoundation                       0x00007fffa27e237e common_removeAllObjects + 254
+	 
+	 ... repeated for a total of 512 hops before crashing. */
 	NSOperation *operationDependency = operation.dependencies.firstObject;
 
 	if (operationDependency) {
 		[operation removeDependency:operationDependency];
 	}
-#endif
 
 	/* End observing when the status of the operation changes */
 	[operation removeObserver:self forKeyPath:@"isFinished"];
