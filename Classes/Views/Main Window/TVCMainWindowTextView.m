@@ -132,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self reloadOriginPoints];
 
-	/* Reload size on next go aroudn to allow constraint layout to occur before so */
+	/* Reload size on next go around to allow constraint layout to occur before so */
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self recalculateTextViewSizeForced];
 	});
