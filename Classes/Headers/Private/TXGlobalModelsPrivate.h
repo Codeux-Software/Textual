@@ -39,8 +39,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 
-/* Grand Central Dispatch */
-TEXTUAL_EXTERN void XRPerformBlockAsynchronouslyOnSharedMutableDispatchQueue(dispatch_block_t block);
-TEXTUAL_EXTERN void XRPerformBlockSynchronouslyOnSharedMutableDispatchQueue(dispatch_block_t block);
-
 NS_ASSUME_NONNULL_END
