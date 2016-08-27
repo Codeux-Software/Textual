@@ -84,7 +84,11 @@ NS_ASSUME_NONNULL_BEGIN
 	self.name = @"TVCLogControllerPrintingOperationQueue";
 
 	self.pendingOperations = [NSMutableDictionary dictionary];
-}
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		self.qualityOfService = NSOperationQueuePriorityNormal;
+	}
+ }
 
 #pragma mark -
 #pragma mark Queue Additions

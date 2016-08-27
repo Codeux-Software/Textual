@@ -155,9 +155,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[sharedPluginManager() loadPlugins];
 
-	[self performBlockOnGlobalQueue:^{
+	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		[TPCResourceManager copyResourcesToApplicationSupportFolder];
-	}];
+	}, DISPATCH_QUEUE_PRIORITY_BACKGROUND);
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	[self prepareLicenseManager];
@@ -534,13 +534,13 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[self performBlockOnGlobalQueue:^{
+	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		while (self.isSafeToPerformApplicationTermination == NO) {
 			[NSThread sleepForTimeInterval:0.5];
 		}
 
 		[self performApplicationTerminationStepThree];
-	}];
+	}, DISPATCH_QUEUE_PRIORITY_HIGH);
 }
 
 - (void)performApplicationTerminationStepThree

@@ -76,7 +76,8 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		dispatchQueue = dispatch_queue_create("Textual.THOPluginDispatcher.PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL);
+		dispatchQueue =
+		XRCreateDispatchQueueWithPriority("Textual.THOPluginDispatcher.PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 	});
 
 	return dispatchQueue;

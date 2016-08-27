@@ -257,11 +257,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *dispatchQueueName = [NSString stringWithFormat:@"Textual.TDCFileTransferDialogTransferController.DCC-SocketDispatchQueue-%@", uniqueId];
 
-	self.serverDispatchQueue = dispatch_queue_create(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
+	self.serverDispatchQueue =
+	XRCreateDispatchQueueWithPriority(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 
 	NSString *socketQueueName = [NSString stringWithFormat:@"Textual.TDCFileTransferDialogTransferController.DCC-SocketReadWriteQueue-%@", uniqueId];
 
-	self.serverSocketQueue = dispatch_queue_create(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
+	self.serverSocketQueue =
+	XRCreateDispatchQueueWithPriority(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 }
 
 - (void)destroyDispatchQueues
