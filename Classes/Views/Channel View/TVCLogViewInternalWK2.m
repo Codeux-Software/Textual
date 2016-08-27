@@ -304,13 +304,31 @@ create_normal_pool:
 #pragma mark -
 #pragma mark JavaScript
 
+- (void)logEvaluateJavaScriptError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	NSNumber *lineNumber = error.userInfo[@"WKJavaScriptExceptionLineNumber"];
+	NSString *errorMessage = error.userInfo[@"WKJavaScriptExceptionMessage"];
+	NSURL *sourceURL = error.userInfo[@"WKJavaScriptExceptionSourceURL"];
+
+	if (lineNumber == nil || errorMessage == nil || sourceURL == nil) {
+		LogToConsoleError("JavaScript Error: %{public}@", error.localizedDescription)
+
+		return;
+	}
+
+	LogToConsoleError("A JavaScript error occurred on line %{public}ld of %{public}@: %{public}@",
+		lineNumber.unsignedIntegerValue, sourceURL.path, errorMessage)
+}
+
 - (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable))completionHandler
 {
 	NSParameterAssert(code != nil);
 
 	[self evaluateJavaScript:code completionHandler:^(id result, NSError *error) {
 		if (error) {
-			LogToConsoleError("Error: %{public}@", error.localizedDescription)
+			[self logEvaluateJavaScriptError:error];
 		}
 
 		if (result) {
