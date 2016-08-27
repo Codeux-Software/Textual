@@ -582,7 +582,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	dispatch_sync(workerQueue, block);
+	dispatch_sync(workerQueue, ^{
+		@autoreleasepool {
+			block();
+		}
+	});
 }
 
 + (void)queueAccessToMemberList:(dispatch_block_t)block
@@ -605,7 +609,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	dispatch_async(workerQueue, block);
+	dispatch_async(workerQueue, ^{
+		@autoreleasepool {
+			block();
+		}
+	});
 }
 
 #pragma mark -
