@@ -5866,8 +5866,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (myself) {
 		if (self.config.sendWhoCommandRequestsToChannels && self.isBrokenIRCd_aka_Twitch == NO) {
-			channel.inUserInvokedModeRequest = YES;
-
 			[self requestModesForChannel:channel];
 		}
 	}
@@ -7851,8 +7849,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			 input regardless of whether the value was manually invoked. */
 			printMessage = [self postReceivedMessage:m withText:modeString destinedFor:channel];
 
-			if (self.inUserInvokedModeRequest == NO && channel.inUserInvokedModeRequest == NO) {
-				break;
+			if (channel.channelModesReceived == NO) {
+				channel.channelModesReceived = YES;
+			} else {
+				if (self.inUserInvokedModeRequest) {
+					[self disableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
+				} else {
+					break;
+				}
 			}
 
 			if (printMessage) {
@@ -7866,14 +7870,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 receivedAt:m.receivedAt];
 			}
 
-			if (channel.inUserInvokedModeRequest) {
-				channel.inUserInvokedModeRequest = NO;
-
-				break;
-			}
-
-			[self disableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
-			
 			break;
 		}
 		case 332: // RPL_TOPIC
