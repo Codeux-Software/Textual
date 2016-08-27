@@ -92,11 +92,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	NSString *dispatchQueueName = [@"Textual.IRCConnection.socketDispatchQueue." stringByAppendingString:dispatchId];
 
-	self.dispatchQueue = dispatch_queue_create(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
+	self.dispatchQueue =
+	XRCreateDispatchQueueWithPriority(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 
 	NSString *socketQueueName = [@"Textual.IRCConnection.socketReadWriteQueue." stringByAppendingString:dispatchId];
 
-	self.socketQueue = dispatch_queue_create(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL);
+	self.socketQueue =
+	XRCreateDispatchQueueWithPriority(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 }
 
 #pragma mark -

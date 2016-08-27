@@ -121,9 +121,9 @@ NS_ASSUME_NONNULL_BEGIN
 			if (self.isWaitingForSystemToStopSpeaking == NO) {
 				self.isWaitingForSystemToStopSpeaking = YES;
 
-				[self performBlockOnGlobalQueue:^{
+				XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 					[self speakNextItemWhenSystemFinishes];
-				}];
+				}, DISPATCH_QUEUE_PRIORITY_LOW);
 			}
 
 			return;

@@ -55,7 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		dispatchQueue = dispatch_queue_create("Textual.TVCLogControllerHistoricLogFile.HistoricLogFileDispatchQueue", DISPATCH_QUEUE_SERIAL);
+		dispatchQueue =
+		XRCreateDispatchQueueWithPriority("Textual.TVCLogControllerHistoricLogFile.HistoricLogFileDispatchQueue", DISPATCH_QUEUE_SERIAL, QOS_CLASS_BACKGROUND);
 	});
 
 	return dispatchQueue;

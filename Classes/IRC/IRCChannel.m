@@ -523,7 +523,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		workerQueue = dispatch_queue_create("IRCChannel.modifyMembmerListSerialQueue", DISPATCH_QUEUE_SERIAL);
+		workerQueue =
+		XRCreateDispatchQueueWithPriority("IRCChannel.modifyMembmerListSerialQueue", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 	});
 
 	return workerQueue;
@@ -540,7 +541,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		workerQueue = dispatch_queue_create("IRCChannel.modifyMembmerListSerialQueueWrapper", DISPATCH_QUEUE_SERIAL);
+		workerQueue =
+		XRCreateDispatchQueueWithPriority("RCChannel.modifyMembmerListSerialQueueWrapper", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 	});
 
 	return workerQueue;
