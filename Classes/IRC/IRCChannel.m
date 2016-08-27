@@ -352,8 +352,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	self.channelModesReceived = NO;
 	self.errorOnLastJoinAttempt = NO;
-	self.inUserInvokedModeRequest = NO;
 	self.sentInitialWhoRequest = NO;
 
 	self.channelJoinTime = 0;
