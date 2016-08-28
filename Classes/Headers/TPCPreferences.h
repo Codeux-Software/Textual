@@ -221,6 +221,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)leaveOnDoubleclick;
 
 + (NSUInteger)autojoinMaximumChannelJoins;
++ (NSTimeInterval)autojoinDelayBetweenChannelJoins;
 
 + (TXUserDoubleClickAction)userDoubleClickOption;
 

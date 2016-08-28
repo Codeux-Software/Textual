@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A304a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -638,10 +638,10 @@
                     <rect key="frame" x="38" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
-                                <rect key="frame" x="0.0" y="0.0" width="248" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -696,10 +696,10 @@
                     <rect key="frame" x="301" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
-                                <rect key="frame" x="0.0" y="0.0" width="248" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1066,9 +1066,9 @@
                     <rect key="frame" x="132" y="247" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aR8-Ov-hTp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="v9S-yX-kbj">
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="v9S-yX-kbj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1096,8 +1096,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="320" height="17"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1276,11 +1274,11 @@
                 <scrollView focusRingType="none" appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
                     <rect key="frame" x="59" y="126" width="471" height="210"/>
                     <clipView key="contentView" id="AXK-zU-57a">
-                        <rect key="frame" x="1" y="1" width="468" height="208"/>
+                        <rect key="frame" x="1" y="1" width="469" height="208"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="rGf-Ih-C97">
-                                <rect key="frame" x="0.0" y="0.0" width="469" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="469" height="208"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1540,14 +1538,69 @@
             <point key="canvasLocation" x="348.5" y="-607.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="182"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="271"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vyq-Uz-h3Q">
+                    <rect key="frame" x="34" y="225" width="175" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Delay Between Channel Joins:" id="LlJ-il-Put">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O9S-wJ-0VX">
+                    <rect key="frame" x="34" y="189" width="197" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="gv2-NF-Rne"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Delay in seconds between each join when automatically joining channels." id="SKh-K9-i5D">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6vz-or-deD">
+                    <rect key="frame" x="260" y="197" width="288" height="18"/>
+                    <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="1" maxValue="10" doubleValue="3" tickMarkPosition="below" numberOfTickMarks="10" sliderType="linear" id="dfY-Hj-2Rl"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="wcy-2K-Z0C" id="Uzf-OY-O1N"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinDelayBetweenChannelJoins" id="CBY-ud-ws6"/>
+                    </connections>
+                </slider>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="boi-EW-JP6">
+                    <rect key="frame" x="247" y="201" width="10" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="1" id="0lT-WD-kfS">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ceo-Jx-hPr">
+                    <rect key="frame" x="554" y="201" width="17" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="10" id="ItF-pC-wlw">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yHF-Mm-7mA">
+                    <rect key="frame" x="353" y="217" width="102" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Current Value: 100" id="Upf-sb-9aG">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinDelayBetweenChannelJoins" id="Ybc-jg-mKH"/>
+                        <outlet property="formatter" destination="vJZ-WC-Cao" id="0Mf-CK-arT"/>
+                    </connections>
+                </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-2K-Z0C">
-                    <rect key="frame" x="41" y="136" width="240" height="16"/>
+                    <rect key="frame" x="34" y="136" width="240" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="236" id="j6M-xw-uxq"/>
                     </constraints>
@@ -1558,7 +1611,10 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVq-cn-ftD">
-                    <rect key="frame" x="44" y="70" width="503" height="56"/>
+                    <rect key="frame" x="34" y="72" width="521" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="517" id="0mD-en-Ad2"/>
+                    </constraints>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Textual sends a WHO command to four (4) channels per-server every two minutes to monitor the away status of users. This preference will define the maximum number of users a channel can have before Textual does not check the channel. Zero (0) disables this behavior with three-hundred (300) as a recommended value.</string>
@@ -1566,8 +1622,17 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="GdS-Lf-0FM">
+                    <rect key="frame" x="62" y="168" width="465" height="5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="465" id="vep-Zz-I2n"/>
+                    </constraints>
+                </box>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfY-TP-YZN">
                     <rect key="frame" x="65" y="30" width="458" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="458" id="vlD-MU-dbt"/>
+                    </constraints>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" doubleValue="120" tickMarkPosition="below" numberOfTickMarks="51" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
                     <connections>
                         <accessibilityConnection property="title" destination="wcy-2K-Z0C" id="cW8-Bg-bLX"/>
@@ -1575,7 +1640,7 @@
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V7m-3A-nss">
-                    <rect key="frame" x="243" y="48" width="102" height="14"/>
+                    <rect key="frame" x="243" y="50" width="102" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Current Value: 100" id="J0v-lX-lSI">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1598,7 +1663,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xYi-8b-aQD">
-                    <rect key="frame" x="529" y="34" width="35" height="14"/>
+                    <rect key="frame" x="529.5" y="34" width="35" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="2,000" id="lYL-2U-2IR">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1607,23 +1672,36 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="tfY-TP-YZN" firstAttribute="leading" secondItem="Ovt-cD-DOK" secondAttribute="trailing" constant="8" symbolic="YES" id="341-il-ibU"/>
-                <constraint firstItem="V7m-3A-nss" firstAttribute="centerX" secondItem="n4A-Pk-quE" secondAttribute="centerX" id="42j-gC-bT3"/>
-                <constraint firstItem="Ovt-cD-DOK" firstAttribute="baseline" secondItem="xYi-8b-aQD" secondAttribute="baseline" id="8V2-Z0-w9a"/>
-                <constraint firstItem="wcy-2K-Z0C" firstAttribute="top" secondItem="n4A-Pk-quE" secondAttribute="top" constant="30" id="Aly-IW-V9Y"/>
-                <constraint firstItem="xYi-8b-aQD" firstAttribute="leading" secondItem="tfY-TP-YZN" secondAttribute="trailing" constant="8" symbolic="YES" id="BiN-5g-dfm"/>
-                <constraint firstItem="Ovt-cD-DOK" firstAttribute="leading" secondItem="n4A-Pk-quE" secondAttribute="leading" constant="50" id="FQH-3h-Hdr"/>
-                <constraint firstAttribute="bottom" secondItem="tfY-TP-YZN" secondAttribute="bottom" constant="30" id="RGl-bE-tgk"/>
-                <constraint firstItem="V7m-3A-nss" firstAttribute="top" secondItem="OVq-cn-ftD" secondAttribute="bottom" constant="8" symbolic="YES" id="SzP-pj-x9s"/>
-                <constraint firstItem="OVq-cn-ftD" firstAttribute="leading" secondItem="n4A-Pk-quE" secondAttribute="leading" constant="46" id="Usx-Y9-3fv"/>
-                <constraint firstItem="OVq-cn-ftD" firstAttribute="top" secondItem="wcy-2K-Z0C" secondAttribute="bottom" constant="10" id="W8h-Hy-BcA"/>
-                <constraint firstItem="Ovt-cD-DOK" firstAttribute="top" secondItem="OVq-cn-ftD" secondAttribute="bottom" constant="22" id="atR-gb-Jy0"/>
-                <constraint firstItem="V7m-3A-nss" firstAttribute="centerX" secondItem="tfY-TP-YZN" secondAttribute="centerX" id="h0a-CQ-NZ9"/>
-                <constraint firstAttribute="trailing" secondItem="OVq-cn-ftD" secondAttribute="trailing" constant="44" id="iZF-uu-cre"/>
-                <constraint firstItem="Ovt-cD-DOK" firstAttribute="top" secondItem="tfY-TP-YZN" secondAttribute="top" id="kcv-xy-4WO"/>
-                <constraint firstItem="wcy-2K-Z0C" firstAttribute="leading" secondItem="n4A-Pk-quE" secondAttribute="leading" constant="43" id="oka-Jc-t4J"/>
+                <constraint firstItem="ceo-Jx-hPr" firstAttribute="baseline" secondItem="6vz-or-deD" secondAttribute="baseline" constant="3" id="2Cd-hZ-TCb"/>
+                <constraint firstItem="xYi-8b-aQD" firstAttribute="baseline" secondItem="tfY-TP-YZN" secondAttribute="baseline" constant="3" id="6Dw-d2-ZDd"/>
+                <constraint firstItem="O9S-wJ-0VX" firstAttribute="leading" secondItem="Vyq-Uz-h3Q" secondAttribute="leading" id="7kQ-hc-yek"/>
+                <constraint firstItem="tfY-TP-YZN" firstAttribute="top" secondItem="V7m-3A-nss" secondAttribute="bottom" constant="2" id="DqY-to-FTW"/>
+                <constraint firstItem="tfY-TP-YZN" firstAttribute="centerX" secondItem="V7m-3A-nss" secondAttribute="centerX" id="E1h-kN-TOk"/>
+                <constraint firstAttribute="bottom" secondItem="tfY-TP-YZN" secondAttribute="bottom" constant="30" id="Ehz-NW-BjM"/>
+                <constraint firstItem="V7m-3A-nss" firstAttribute="top" secondItem="OVq-cn-ftD" secondAttribute="bottom" constant="8" id="IEa-4R-yG6"/>
+                <constraint firstItem="GdS-Lf-0FM" firstAttribute="centerX" secondItem="n4A-Pk-quE" secondAttribute="centerX" id="Iup-rC-u7e"/>
+                <constraint firstItem="tfY-TP-YZN" firstAttribute="leading" secondItem="Ovt-cD-DOK" secondAttribute="trailing" constant="8" id="KW5-Sr-O7M"/>
+                <constraint firstItem="ceo-Jx-hPr" firstAttribute="leading" secondItem="6vz-or-deD" secondAttribute="trailing" constant="8" id="M4z-8x-vKK"/>
+                <constraint firstItem="yHF-Mm-7mA" firstAttribute="centerX" secondItem="6vz-or-deD" secondAttribute="centerX" id="Mvq-J9-6cc"/>
+                <constraint firstItem="boi-EW-JP6" firstAttribute="leading" secondItem="O9S-wJ-0VX" secondAttribute="trailing" constant="20" id="OKI-UZ-pf3"/>
+                <constraint firstItem="OVq-cn-ftD" firstAttribute="top" secondItem="wcy-2K-Z0C" secondAttribute="bottom" constant="8" id="W8h-Hy-BcA"/>
+                <constraint firstItem="Vyq-Uz-h3Q" firstAttribute="top" secondItem="n4A-Pk-quE" secondAttribute="top" constant="30" id="Zer-IE-B4G"/>
+                <constraint firstItem="O9S-wJ-0VX" firstAttribute="top" secondItem="Vyq-Uz-h3Q" secondAttribute="bottom" constant="8" id="aNJ-fP-J1R"/>
+                <constraint firstItem="6vz-or-deD" firstAttribute="leading" secondItem="boi-EW-JP6" secondAttribute="trailing" constant="5" id="bf2-Fr-xqV"/>
+                <constraint firstItem="wcy-2K-Z0C" firstAttribute="top" secondItem="GdS-Lf-0FM" secondAttribute="bottom" constant="18" id="dcP-hE-m3A"/>
+                <constraint firstItem="Vyq-Uz-h3Q" firstAttribute="leading" secondItem="n4A-Pk-quE" secondAttribute="leading" constant="36" id="f0u-BH-6V7"/>
+                <constraint firstItem="xYi-8b-aQD" firstAttribute="leading" secondItem="tfY-TP-YZN" secondAttribute="trailing" constant="8" id="jNm-wh-Wd9"/>
+                <constraint firstItem="GdS-Lf-0FM" firstAttribute="top" secondItem="O9S-wJ-0VX" secondAttribute="bottom" constant="18" id="k8C-dw-TKh"/>
+                <constraint firstItem="boi-EW-JP6" firstAttribute="baseline" secondItem="6vz-or-deD" secondAttribute="baseline" constant="3" id="mmC-Nb-kUd"/>
+                <constraint firstAttribute="trailing" secondItem="ceo-Jx-hPr" secondAttribute="trailing" constant="20" id="mxY-xD-siP"/>
+                <constraint firstItem="wcy-2K-Z0C" firstAttribute="leading" secondItem="n4A-Pk-quE" secondAttribute="leading" constant="36" id="oka-Jc-t4J"/>
+                <constraint firstItem="OVq-cn-ftD" firstAttribute="leading" secondItem="wcy-2K-Z0C" secondAttribute="leading" id="qg9-cg-mN5"/>
+                <constraint firstItem="Ovt-cD-DOK" firstAttribute="baseline" secondItem="tfY-TP-YZN" secondAttribute="baseline" constant="3" id="t3A-n3-jUQ"/>
+                <constraint firstItem="V7m-3A-nss" firstAttribute="centerX" secondItem="n4A-Pk-quE" secondAttribute="centerX" id="vAl-qy-g3O"/>
+                <constraint firstItem="yHF-Mm-7mA" firstAttribute="top" secondItem="n4A-Pk-quE" secondAttribute="top" constant="40" id="wld-Fq-OmV"/>
+                <constraint firstItem="6vz-or-deD" firstAttribute="top" secondItem="yHF-Mm-7mA" secondAttribute="bottom" constant="2" id="yo7-nL-mji"/>
             </constraints>
-            <point key="canvasLocation" x="396.5" y="-718.5"/>
+            <point key="canvasLocation" x="401.5" y="-851.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="kTM-XW-Yb5" userLabel="Channel Management">
             <rect key="frame" x="0.0" y="0.0" width="589" height="200"/>
@@ -1740,7 +1818,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="Ncp-xZ-uCx">
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" spellingCorrection="YES" id="Ncp-xZ-uCx">
                                 <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1785,8 +1863,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="371" height="31"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1891,11 +1967,11 @@
                     <tabViewItems>
                         <tabViewItem label="Keyboard &amp; Mouse" identifier="1" id="SL3-8G-t51">
                             <view key="view" id="4ZT-mV-qxZ">
-                                <rect key="frame" x="10" y="25" width="543" height="414"/>
+                                <rect key="frame" x="10" y="29" width="543" height="410"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="nsU-oF-11h">
-                                        <rect key="frame" x="30" y="221" width="213" height="18"/>
+                                        <rect key="frame" x="30" y="217" width="213" height="18"/>
                                         <buttonCell key="cell" type="check" title="Connect to server on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="HyM-B2-IjQ">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1909,7 +1985,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Qqp-Rw-jY7">
-                                        <rect key="frame" x="30" y="193" width="244" height="18"/>
+                                        <rect key="frame" x="30" y="189" width="244" height="18"/>
                                         <buttonCell key="cell" type="check" title="Disconnect from server on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Lsg-37-h0b">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1919,7 +1995,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="YRR-9J-n7G">
-                                        <rect key="frame" x="31" y="86" width="308" height="18"/>
+                                        <rect key="frame" x="31" y="82" width="308" height="18"/>
                                         <buttonCell key="cell" type="check" title="Copy selected text when mouse button is released" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uSz-ME-EyF">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1929,7 +2005,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="TIz-dH-HBF">
-                                        <rect key="frame" x="31" y="356" width="311" height="18"/>
+                                        <rect key="frame" x="31" y="352" width="311" height="18"/>
                                         <buttonCell key="cell" type="check" title="Channel navigation is limited to the selected server" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="beH-aC-ScW">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1939,7 +2015,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="sGF-Q4-JiC">
-                                        <rect key="frame" x="30" y="165" width="183" height="18"/>
+                                        <rect key="frame" x="30" y="161" width="183" height="18"/>
                                         <buttonCell key="cell" type="check" title="Join channel on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0Jk-qA-tn1">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1949,13 +2025,13 @@
                                         </connections>
                                     </button>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="JFd-1Y-9jH">
-                                        <rect key="frame" x="32" y="118" width="478" height="5"/>
+                                        <rect key="frame" x="32" y="114" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="Ak0-K8-USi"/>
                                         </constraints>
                                     </box>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ykv-44-sRE">
-                                        <rect key="frame" x="64" y="276" width="153" height="16"/>
+                                        <rect key="frame" x="64" y="272" width="153" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Command + W key action:" id="4oC-Tr-qfm">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1963,19 +2039,19 @@
                                         </textFieldCell>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dJl-5C-foA">
-                                        <rect key="frame" x="32" y="253" width="478" height="5"/>
+                                        <rect key="frame" x="32" y="249" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="Hu1-D9-U6b"/>
                                         </constraints>
                                     </box>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZHD-P3-6vN">
-                                        <rect key="frame" x="32" y="337" width="478" height="5"/>
+                                        <rect key="frame" x="32" y="333" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="Z0N-Sg-SRX"/>
                                         </constraints>
                                     </box>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="INb-El-pAB">
-                                        <rect key="frame" x="49" y="67" width="348" height="13"/>
+                                        <rect key="frame" x="49" y="63" width="348" height="13"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the option key (⌥) during selection disables option temporarily" id="8Nk-L2-mjZ">
                                             <font key="font" metaFont="system" size="10"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -1986,7 +2062,7 @@
                                         </connections>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfq-lx-1BD">
-                                        <rect key="frame" x="220" y="300" width="282" height="22"/>
+                                        <rect key="frame" x="220" y="296" width="282" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="276" id="5Lf-gk-0Qj"/>
                                         </constraints>
@@ -2009,7 +2085,7 @@
                                         </connections>
                                     </popUpButton>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-afW">
-                                        <rect key="frame" x="220" y="271" width="282" height="22"/>
+                                        <rect key="frame" x="220" y="267" width="282" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="276" id="Kho-49-pTv"/>
                                         </constraints>
@@ -2035,7 +2111,7 @@
                                         </connections>
                                     </popUpButton>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="tem-fj-U6Q">
-                                        <rect key="frame" x="30" y="137" width="192" height="18"/>
+                                        <rect key="frame" x="30" y="133" width="192" height="18"/>
                                         <buttonCell key="cell" type="check" title="Leave channel on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="qbS-rY-mJ8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2045,7 +2121,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rd9-Tz-a8b">
-                                        <rect key="frame" x="84" y="305" width="133" height="16"/>
+                                        <rect key="frame" x="84" y="301" width="133" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Double clicking a user:" id="NhJ-3F-Unb">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2400,11 +2476,11 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="cUA-Ui-lzO">
                             <view key="view" id="Ht3-ub-Duo">
-                                <rect key="frame" x="10" y="25" width="543" height="360"/>
+                                <rect key="frame" x="10" y="29" width="543" height="356"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
-                                        <rect key="frame" x="58" y="202" width="319" height="18"/>
+                                        <rect key="frame" x="58" y="198" width="319" height="18"/>
                                         <buttonCell key="cell" type="check" title="Use “x” to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8DQ-Jg-CgL">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2415,13 +2491,13 @@
                                         </connections>
                                     </button>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="pbE-2M-fRW">
-                                        <rect key="frame" x="50" y="262" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="258" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="j6u-I9-5T5"/>
                                         </constraints>
                                     </box>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-sn-QgS">
-                                        <rect key="frame" x="58" y="174" width="317" height="18"/>
+                                        <rect key="frame" x="58" y="170" width="317" height="18"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="egC-El-gcj">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2432,7 +2508,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
-                                        <rect key="frame" x="196" y="97" width="23" height="11"/>
+                                        <rect key="frame" x="196" y="93" width="23" height="11"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="etq-xm-HYN">
                                             <font key="font" metaFont="miniSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2440,10 +2516,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-aO-cik">
-                                        <rect key="frame" x="50" y="127" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="123" width="443" height="5"/>
                                     </box>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="tNs-id-cdg">
-                                        <rect key="frame" x="58" y="146" width="276" height="18"/>
+                                        <rect key="frame" x="58" y="142" width="276" height="18"/>
                                         <buttonCell key="cell" type="check" title="User list info popover updates while scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0ZL-Zz-8el">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2453,7 +2529,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Pbc-E1-SsU">
-                                        <rect key="frame" x="58" y="281" width="236" height="18"/>
+                                        <rect key="frame" x="58" y="277" width="236" height="18"/>
                                         <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="acY-VO-4TI">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2463,7 +2539,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lQi-te-LwT">
-                                        <rect key="frame" x="450" y="97" width="23" height="11"/>
+                                        <rect key="frame" x="450" y="93" width="23" height="11"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="19" id="dhi-Py-uLh"/>
                                         </constraints>
@@ -2474,7 +2550,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="hDx-CA-NhV">
-                                        <rect key="frame" x="58" y="230" width="177" height="18"/>
+                                        <rect key="frame" x="58" y="226" width="177" height="18"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RdW-uj-Mh1">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2496,7 +2572,7 @@
                                         </connections>
                                     </slider>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wa5-Rg-5aD">
-                                        <rect key="frame" x="58" y="96" width="133" height="16"/>
+                                        <rect key="frame" x="58" y="92" width="133" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="Pab-0Z-VAE">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2897,7 +2973,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="1u5-gL-g0d">
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="1u5-gL-g0d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2919,8 +2995,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="320" height="17"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2944,7 +3018,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="72N-cr-Sqw">
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="72N-cr-Sqw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2966,8 +3040,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="320" height="17"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2991,7 +3063,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="DYY-sZ-cVa">
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="DYY-sZ-cVa">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3019,8 +3091,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="320" height="17"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3054,7 +3124,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="wpc-xg-MzG">
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="wpc-xg-MzG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3094,8 +3164,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="320" height="17"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3119,7 +3187,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="SUi-M8-HBn">
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="SUi-M8-HBn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3141,8 +3209,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="320" height="17"/>
-                                <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3802,11 +3868,11 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="yKL-ON-PSA">
                             <view key="view" id="bCO-56-p1h">
-                                <rect key="frame" x="10" y="25" width="529" height="322"/>
+                                <rect key="frame" x="10" y="29" width="529" height="318"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-wc-PBy">
-                                        <rect key="frame" x="103" y="278" width="208" height="22"/>
+                                        <rect key="frame" x="103" y="274" width="208" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="202" id="WXe-tT-Htj"/>
                                         </constraints>
@@ -3821,7 +3887,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="inL-ss-ERr">
-                                        <rect key="frame" x="63" y="283" width="37" height="16"/>
+                                        <rect key="frame" x="63" y="279" width="37" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="33" id="VBj-ex-Msv"/>
                                         </constraints>
@@ -3832,7 +3898,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
-                                        <rect key="frame" x="93" y="165" width="234" height="18"/>
+                                        <rect key="frame" x="93" y="161" width="234" height="18"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="imb-ex-Fq2">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3842,16 +3908,16 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
-                                        <rect key="frame" x="43" y="258" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="254" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="BpY-Xc-j0l"/>
                                         </constraints>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
-                                        <rect key="frame" x="43" y="202" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="198" width="443" height="5"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
-                                        <rect key="frame" x="92" y="225" width="80" height="16"/>
+                                        <rect key="frame" x="92" y="221" width="80" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Channel font:" id="Rms-5m-RLS">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -3859,7 +3925,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
-                                        <rect key="frame" x="93" y="109" width="194" height="18"/>
+                                        <rect key="frame" x="93" y="105" width="194" height="18"/>
                                         <buttonCell key="cell" type="check" title="Show general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="toP-T2-dv6">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3869,7 +3935,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-qs-5mz">
-                                        <rect key="frame" x="93" y="137" width="286" height="18"/>
+                                        <rect key="frame" x="93" y="133" width="286" height="18"/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="miK-Q1-Ozt">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3879,7 +3945,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
-                                        <rect key="frame" x="111" y="89" width="239" height="14"/>
+                                        <rect key="frame" x="111" y="85" width="239" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -3890,7 +3956,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
-                                        <rect key="frame" x="178" y="223" width="179" height="19"/>
+                                        <rect key="frame" x="178" y="219" width="179" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="6w3-db-GjZ"/>
                                             <constraint firstAttribute="width" constant="179" id="pRZ-tB-hbC"/>
@@ -3917,7 +3983,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="EES-Ba-O9N">
-                                        <rect key="frame" x="93" y="62" width="274" height="18"/>
+                                        <rect key="frame" x="93" y="58" width="274" height="18"/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sG9-0L-YQ8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3927,7 +3993,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="316" y="280" width="148" height="19"/>
+                                        <rect key="frame" x="316" y="276" width="148" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gtM-zH-PMU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -3938,12 +4004,12 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psh-bY-eeR">
-                                        <rect key="frame" x="108" y="39" width="320" height="17"/>
+                                        <rect key="frame" x="108" y="35" width="320" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zWf-tX-IOX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ubi-Bg-XAW">
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ubi-Bg-XAW">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
@@ -4039,8 +4105,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="320" height="17"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4059,7 +4123,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </scroller>
                                     </scrollView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                        <rect key="frame" x="365" y="222" width="63" height="19"/>
+                                        <rect key="frame" x="365" y="218" width="63" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="63" id="vON-Ib-WtQ"/>
                                         </constraints>
@@ -4184,7 +4248,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <rect key="frame" x="0.0" y="0.0" width="394" height="27"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="UqK-4p-c7Q">
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="UqK-4p-c7Q">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -4215,8 +4279,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="394" height="27"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4312,7 +4374,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <rect key="frame" x="0.0" y="0.0" width="407" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="MHv-vv-IRm">
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="MHv-vv-IRm">
                                                     <rect key="frame" x="0.0" y="42" width="407" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -4357,8 +4419,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="407" height="43"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4461,7 +4521,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <rect key="frame" x="0.0" y="0.0" width="356" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="Fjg-k0-aT5">
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="Fjg-k0-aT5">
                                                     <rect key="frame" x="0.0" y="107" width="356" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
@@ -4493,8 +4553,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="356" height="17"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4554,7 +4612,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <rect key="frame" x="0.0" y="0.0" width="296" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="HFC-Nn-zVf">
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -4578,8 +4636,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="296" height="17"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4611,7 +4667,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="bjI-Oj-ZU6">
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -4636,8 +4692,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="340" height="17"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4772,6 +4826,9 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
             </constraints>
             <point key="canvasLocation" x="172" y="-947"/>
         </customView>
+        <numberFormatter formatterBehavior="custom10_4" positiveFormat="Current Value: ## seconds" numberStyle="decimal" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="2000000000" maximumFractionDigits="1" id="vJZ-WC-Cao" userLabel="Seconds Number Formatter">
+            <real key="maximum" value="1"/>
+        </numberFormatter>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
