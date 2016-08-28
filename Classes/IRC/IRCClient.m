@@ -3145,6 +3145,32 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandJoinRandomIndex: // Command: JOIN_RANDOM
+		{
+			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			NSInteger numberOfChannelsToJoin = 0;
+
+			if (stringInStringLength > 0) {
+				NSString *numberToken = stringIn.tokenAsString;
+
+				if (numberToken.isNumericOnly) {
+					numberOfChannelsToJoin = numberToken.integerValue;
+				}
+			}
+
+			if (numberOfChannelsToJoin <= 0) {
+				numberOfChannelsToJoin = 1;
+			}
+
+			for (NSUInteger i = 0; i < numberOfChannelsToJoin; i++) {
+				NSString *channelName = [NSString stringWithFormat:@"#debug-channel-%ld", TXRandomNumber(9999999)];
+
+				[self send:IRCPrivateCommandIndex("join"), channelName, nil];
+			}
+
+			break;
+		}
 		case IRCPublicCommandBanIndex: // Command: BAN
 		case IRCPublicCommandKbIndex: // Command: KB
 		case IRCPublicCommandKickIndex: // Command: KICK
