@@ -144,6 +144,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(nullable NSString *)password;
+- (void)joinChannels:(NSArray<IRCChannel *> *)channels;
 - (void)joinUnlistedChannel:(NSString *)channel;
 - (void)joinUnlistedChannel:(NSString *)channel password:(nullable NSString *)password;
 - (void)forceJoinChannel:(NSString *)channel password:(nullable NSString *)password;
