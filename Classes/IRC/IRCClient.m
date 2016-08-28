@@ -9839,6 +9839,66 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self send:IRCPrivateCommandIndex("join"), channel, password, nil];
 }
 
+- (void)joinChannels:(NSArray<IRCChannel *> *)channels
+{
+	NSParameterAssert(channels != nil);
+
+	if (self.isLoggedIn == NO) {
+		return;
+	}
+
+	if (channels.count == 0) {
+		return;
+	}
+
+	NSMutableString *joinStringWithoutKey = nil;
+	NSMutableString *joinStringWithKey = nil;
+
+	NSMutableString *keyString = nil;
+
+	for (IRCChannel *channel in channels) {
+		if (channel.isChannel == NO || channel.isActive) {
+			return;
+		}
+
+		channel.status = IRCChannelStatusJoining;
+
+		NSString *password = nil;
+
+		if (password == nil) {
+			password = channel.secretKey;
+		}
+
+		if (password.length == 0) {
+			if (joinStringWithoutKey == nil) {
+				joinStringWithoutKey = [NSMutableString stringWithString:channel.name];
+			} else {
+				[joinStringWithoutKey appendFormat:@",%@", channel.name];
+			}
+		} else {
+			if (joinStringWithKey == nil) {
+				joinStringWithKey = [NSMutableString stringWithString:channel.name];
+			} else {
+				[joinStringWithKey appendFormat:@",%@", channel.name];
+			}
+
+			if (keyString == nil) {
+				keyString = [NSMutableString stringWithString:password];
+			} else {
+				[keyString appendFormat:@",%@", password];
+			}
+		}
+	}
+
+	if (joinStringWithoutKey) {
+		[self send:IRCPrivateCommandIndex("join"), joinStringWithoutKey, nil];
+	}
+
+	if (joinStringWithKey && keyString) {
+		[self send:IRCPrivateCommandIndex("join"), joinStringWithKey, keyString, nil];
+	}
+}
+
 - (void)partUnlistedChannel:(NSString *)channel
 {
 	[self partUnlistedChannel:channel withComment:nil];
