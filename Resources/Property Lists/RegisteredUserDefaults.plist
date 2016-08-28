@@ -27,6 +27,8 @@
 	<false/>
 	<key>AutojoinChannelOnInvite</key>
 	<false/>
+	<key>AutojoinDelayBetweenChannelJoins</key>
+	<real>3.5</real>
 	<key>AutojoinMaximumChannelJoinCount</key>
 	<integer>2</integer>
 	<key>AutojoinWaitsForNickservIdentification</key>

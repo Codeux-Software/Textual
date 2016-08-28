@@ -133,6 +133,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, strong, nullable) IRCConnection *socket;
 @property (nonatomic, strong) IRCMessageBatchMessageContainer *batchMessages;
 @property (nonatomic, strong, nullable) TLOFileLogger *logFile;
+@property (nonatomic, strong) TLOTimer *autojoinTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
@@ -157,6 +158,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, assign) NSUInteger tryingNicknameNumber;
 @property (nonatomic, copy, nullable) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
+@property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelsToAutojoin;
 @property (nonatomic, strong) NSMutableArray<IRCTimerCommandContext *> *commandQueue;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCUser *> *userListPrivate;
@@ -226,6 +228,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.lastMessageServerTime = self.config.lastMessageServerTime;
 
+	self.autojoinTimer = [TLOTimer new];
+	self.autojoinTimer.repeatTimer = YES;
+	self.autojoinTimer.target = self;
+	self.autojoinTimer.action = @selector(onAutojoinTimer:);
+
 	self.commandQueueTimer = [TLOTimer new];
 	self.commandQueueTimer.repeatTimer = NO;
 	self.commandQueueTimer.target = self;
@@ -261,6 +268,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self.batchMessages clearQueue];
 
+	[self.autojoinTimer stop];
 	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
@@ -268,6 +276,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.retryTimer stop];
 	[self.whoTimer stop];
 
+	self.autojoinTimer = nil;
 	self.commandQueueTimer = nil;
 	self.isonTimer = nil;
 	self.pongTimer = nil;
@@ -4372,6 +4381,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.socket = nil;
 
+	[self stopAutojoinTimer];
 	[self stopISONTimer];
 	[self stopPongTimer];
 	[self stopRetryTimer];
@@ -8933,11 +8943,75 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Autojoin
 
-- (void)updateAutoJoinStatus
+- (void)startAutojoinTimer
 {
-	self.isAutojoined = YES;
+	if (self.autojoinTimer.timerIsActive) {
+		return;
+	}
 
-	self.isAutojoining = NO;
+	NSTimeInterval interval = [TPCPreferences autojoinDelayBetweenChannelJoins];
+
+	[self.autojoinTimer start:interval];
+}
+
+- (void)stopAutojoinTimer
+{
+	if (self.autojoinTimer.timerIsActive == NO) {
+		return;
+	}
+
+	[self.autojoinTimer stop];
+}
+
+- (void)onAutojoinTimer:(id)sender
+{
+	[self autojoinNextChannel];
+}
+
+- (void)autojoinNextChannel
+{
+	if (self.isAutojoining == NO) {
+		return;
+	}
+
+	@synchronized (self.channelsToAutojoin) {
+		NSUInteger numberOfChannelsRemaining = self.channelsToAutojoin.count;
+
+		NSUInteger maximumNumberOfJoins = [TPCPreferences autojoinMaximumChannelJoins];
+
+		NSRange arrayRange;
+
+		BOOL endOfArray = (numberOfChannelsRemaining <= maximumNumberOfJoins);
+
+		if (endOfArray == NO) {
+			arrayRange = NSMakeRange(0, maximumNumberOfJoins);
+		} else {
+			arrayRange = NSMakeRange(0, numberOfChannelsRemaining);
+		}
+
+		NSArray *channelsToJoin = [self.channelsToAutojoin subarrayWithRange:arrayRange];
+
+		[self autojoinChannels:channelsToJoin];
+
+		if (endOfArray == NO) {
+			[self.channelsToAutojoin removeObjectsInRange:arrayRange];
+		} else {
+			self.channelsToAutojoin = nil;
+
+			self.isAutojoining = NO;
+
+			self.isAutojoined = YES;
+
+			[self stopAutojoinTimer];
+		}
+	}
+}
+
+- (void)autojoinChannels:(NSArray<IRCChannel *> *)channels
+{
+	NSParameterAssert(channels != nil);
+
+	[self joinChannels:channels];
 }
 
 - (void)performAutoJoin
@@ -8947,9 +9021,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)performAutoJoinInitiatedByUser:(BOOL)initiatedByUser
 {
+	if (self.isAutojoining) {
+		return;
+	}
+
 	if (initiatedByUser == NO) {
 		/* Ignore previous invocations of this method */
-		if (self.isAutojoining || self.isAutojoined) {
+		if (self.isAutojoined) {
 			return;
 		}
 
@@ -8970,98 +9048,31 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	NSArray *channelList = self.channelList;
+	NSMutableArray<IRCChannel *> *channelsToAutojoin = [NSMutableArray array];
+	
+	for (IRCChannel *c in self.channelList) {
+		if (c.isChannel && c.isActive == NO) {
+			if (c.config.autoJoin) {
+				[channelsToAutojoin addObject:c];
+			}
+		}
+	}
 
-	if (channelList.count == 0) {
-		self.isAutojoined = YES;
-		
+	if (channelsToAutojoin.count == 0) {
+		self.isAutojoining = YES;
+
 		return;
 	}
 
 	self.isAutojoining = YES;
 
-	NSMutableArray<IRCChannel *> *channelsToJoin = [NSMutableArray array];
-	
-	for (IRCChannel *c in channelList) {
-		if (c.isChannel && c.isActive == NO) {
-			if (c.config.autoJoin) {
-				[channelsToJoin addObject:c];
-			}
-		}
+	@synchronized (self.channelsToAutojoin) {
+		self.channelsToAutojoin = channelsToAutojoin;
 	}
 
-	[self autoJoinChannels:channelsToJoin joinChannelsWithPassword:NO];
-	[self autoJoinChannels:channelsToJoin joinChannelsWithPassword:YES];
+	[self startAutojoinTimer];
 
-	[self cancelPerformRequestsWithSelector:@selector(autojoinInProgress) object:nil]; // User might invoke -performAutojoin while timer is active
-
-	[self performSelectorInCommonModes:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
-}
-
-- (void)autoJoinChannels:(NSArray<IRCChannel *> *)channelList joinChannelsWithPassword:(BOOL)joinChannelsWithPassword
-{
-	NSParameterAssert(channelList != nil);
-
-	NSMutableString *channelString = [NSMutableString string];
-	NSMutableString *passwordString = [NSMutableString string];
-
-	NSUInteger channelCount = 0;
-
-	for (IRCChannel *channel in channelList) {
-		/* Ignore channels that aren't parted */
-		if (channel.status != IRCChannelStatusParted) {
-			LogToConsoleDebug("Refusing to join %@ because of status: %{public}ld",
-					channel.name, channel.status)
-
-			continue;
-		}
-
-		/* If we have reached the maximum count, then join channels and reset */
-		if (channelCount > [TPCPreferences autojoinMaximumChannelJoins]) {
-			[self forceJoinChannel:channelString password:passwordString];
-
-			[channelString setString:NSStringEmptyPlaceholder];
-			[passwordString setString:NSStringEmptyPlaceholder];
-
-			channelCount = 0;
-		}
-
-		/* Add next channel and increase count */
-		NSString *secretKey = channel.secretKey;
-
-		if (joinChannelsWithPassword) {
-			if (secretKey.length == 0) {
-				continue;
-			}
-
-			if (passwordString.length > 0) {
-				[passwordString appendString:@","];
-			}
-
-			[passwordString appendString:secretKey];
-		} else {
-			if (secretKey.length > 0) {
-				continue;
-			}
-		}
-
-		if (channelString.length > 0) {
-			[channelString appendString:@","];
-		}
-
-		[channelString appendString:channel.name];
-
-		channel.status = IRCChannelStatusJoining;
-
-		channelCount += 1;
-	}
-
-	/* Join channels that remain */
-	if (channelString.length == 0) {
-		return;
-	}
-
-	[self forceJoinChannel:channelString password:passwordString];
+	[self onAutojoinTimer:nil];
 }
 
 #pragma mark -
