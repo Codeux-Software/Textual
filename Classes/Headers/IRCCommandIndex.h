@@ -81,6 +81,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandIsonIndex = 5100,
 	IRCPublicCommandJIndex = 5031,
 	IRCPublicCommandJoinIndex = 5032,
+	IRCPublicCommandJoinRandomIndex = 5109,
 	IRCPublicCommandKbIndex = 5083,
 	IRCPublicCommandKickIndex = 5033,
 	IRCPublicCommandKickbanIndex = 5034,
