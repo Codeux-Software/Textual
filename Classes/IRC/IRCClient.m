@@ -9897,7 +9897,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	for (IRCChannel *channel in channels) {
 		if (channel.isChannel == NO || channel.isActive) {
-			return;
+			continue;
 		}
 
 		channel.status = IRCChannelStatusJoining;
