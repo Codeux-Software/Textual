@@ -9093,6 +9093,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.isAutojoining = YES;
 
 	@synchronized (self.channelsToAutojoin) {
+		[channelsToAutojoin shuffle];
+
 		self.channelsToAutojoin = channelsToAutojoin;
 	}
 
