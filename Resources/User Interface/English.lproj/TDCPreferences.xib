@@ -638,7 +638,7 @@
                     <rect key="frame" x="38" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -696,7 +696,7 @@
                     <rect key="frame" x="301" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -1564,39 +1564,42 @@
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6vz-or-deD">
-                    <rect key="frame" x="260" y="197" width="288" height="18"/>
-                    <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="1" maxValue="10" doubleValue="3" tickMarkPosition="below" numberOfTickMarks="10" sliderType="linear" id="dfY-Hj-2Rl"/>
+                    <rect key="frame" x="271" y="197" width="252" height="18"/>
+                    <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="0.5" maxValue="10" doubleValue="5" tickMarkPosition="below" numberOfTickMarks="20" allowsTickMarkValuesOnly="YES" sliderType="linear" id="dfY-Hj-2Rl"/>
                     <connections>
                         <accessibilityConnection property="title" destination="wcy-2K-Z0C" id="Uzf-OY-O1N"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinDelayBetweenChannelJoins" id="CBY-ud-ws6"/>
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="boi-EW-JP6">
-                    <rect key="frame" x="247" y="201" width="10" height="14"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="1" id="0lT-WD-kfS">
+                    <rect key="frame" x="247" y="201" width="21" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="0.5" id="0lT-WD-kfS">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ceo-Jx-hPr">
-                    <rect key="frame" x="554" y="201" width="17" height="14"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="10" id="ItF-pC-wlw">
+                    <rect key="frame" x="529" y="201" width="26" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="10.0" id="ItF-pC-wlw">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yHF-Mm-7mA">
-                    <rect key="frame" x="353" y="217" width="102" height="14"/>
+                    <rect key="frame" x="346" y="217" width="102" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Current Value: 100" id="Upf-sb-9aG">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinDelayBetweenChannelJoins" id="Ybc-jg-mKH"/>
-                        <outlet property="formatter" destination="vJZ-WC-Cao" id="0Mf-CK-arT"/>
+                        <binding destination="G2Q-fc-ddg" name="displayPatternValue1" keyPath="values.AutojoinDelayBetweenChannelJoins" id="NeW-8O-Z2D">
+                            <dictionary key="options">
+                                <string key="NSDisplayPattern">Current Value: %{value1}@ seconds</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-2K-Z0C">
@@ -1663,7 +1666,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xYi-8b-aQD">
-                    <rect key="frame" x="529.5" y="34" width="35" height="14"/>
+                    <rect key="frame" x="529" y="34" width="35" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="2,000" id="lYL-2U-2IR">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1693,7 +1696,7 @@
                 <constraint firstItem="xYi-8b-aQD" firstAttribute="leading" secondItem="tfY-TP-YZN" secondAttribute="trailing" constant="8" id="jNm-wh-Wd9"/>
                 <constraint firstItem="GdS-Lf-0FM" firstAttribute="top" secondItem="O9S-wJ-0VX" secondAttribute="bottom" constant="18" id="k8C-dw-TKh"/>
                 <constraint firstItem="boi-EW-JP6" firstAttribute="baseline" secondItem="6vz-or-deD" secondAttribute="baseline" constant="3" id="mmC-Nb-kUd"/>
-                <constraint firstAttribute="trailing" secondItem="ceo-Jx-hPr" secondAttribute="trailing" constant="20" id="mxY-xD-siP"/>
+                <constraint firstAttribute="trailing" secondItem="ceo-Jx-hPr" secondAttribute="trailing" constant="36" id="mxY-xD-siP"/>
                 <constraint firstItem="wcy-2K-Z0C" firstAttribute="leading" secondItem="n4A-Pk-quE" secondAttribute="leading" constant="36" id="oka-Jc-t4J"/>
                 <constraint firstItem="OVq-cn-ftD" firstAttribute="leading" secondItem="wcy-2K-Z0C" secondAttribute="leading" id="qg9-cg-mN5"/>
                 <constraint firstItem="Ovt-cD-DOK" firstAttribute="baseline" secondItem="tfY-TP-YZN" secondAttribute="baseline" constant="3" id="t3A-n3-jUQ"/>
@@ -4826,9 +4829,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
             </constraints>
             <point key="canvasLocation" x="172" y="-947"/>
         </customView>
-        <numberFormatter formatterBehavior="custom10_4" positiveFormat="Current Value: ## seconds" numberStyle="decimal" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="2000000000" maximumFractionDigits="1" id="vJZ-WC-Cao" userLabel="Seconds Number Formatter">
-            <real key="maximum" value="1"/>
-        </numberFormatter>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
