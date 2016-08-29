@@ -70,6 +70,7 @@ echo "" >> BuildConfig.h
 
 echo "#define TXBundleBuildProductName						@\"${PRODUCT_NAME}\"" >> BuildConfig.h
 echo "#define TXBundleBuildProductIdentifier				@\"${PRODUCT_BUNDLE_IDENTIFIER}\"" >> BuildConfig.h
+echo "#define TXBundleBuildProductIdentifierCString			\"${PRODUCT_BUNDLE_IDENTIFIER}\"" >> BuildConfig.h
 
 echo "#define TXBundleBuildGroupContainerIdentifier			@\"${TEXTUAL_GROUP_CONTAINER_IDENTIFIER}\"" >> BuildConfig.h
 

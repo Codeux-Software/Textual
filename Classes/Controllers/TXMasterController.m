@@ -74,6 +74,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+#ifdef TXSystemIsOSXSierraOrLater && defined(DEBUG)
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		LogToConsoleDefaultSubsystem = os_log_create(TXBundleBuildProductIdentifierCString, "General");
+	}
+#endif
+
 	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
 	if ((keyboardKeys & NSControlKeyMask) == NSControlKeyMask) {
