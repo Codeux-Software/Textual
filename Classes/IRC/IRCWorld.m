@@ -54,6 +54,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 @property (nonatomic, strong) NSMutableArray<IRCClient *> *clients;
 @property (nonatomic, assign) BOOL preferencesDidChangeTimerIsActive;
 @property (nonatomic, assign) CFAbsoluteTime savePeriodicallyLastSave;
+@property (nonatomic, copy) NSDate *lastDateHasChangedDate;
 @end
 
 @implementation IRCWorld
@@ -339,6 +340,19 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 	/* Schedule the timer on the run loop which will retain reference. */
 	[RZCurrentRunLoop() addTimer:midnightTimer forMode:NSDefaultRunLoopMode];
+
+	/* Do not fire notification if day hasn't changed. 
+	 This check is down here, instead of at top, because we still want to
+	 reschedule timer when the system date changes. */
+	if (self.lastDateHasChangedDate != nil) {
+		if ([self.lastDateHasChangedDate isInSameDayAsDate:lastMidnight]) {
+			LogToConsoleInfo("Date changed event received but the day hasn't changed")
+
+			return;
+		}
+	}
+
+	self.lastDateHasChangedDate = lastMidnight;
 
 	/* Post notification if needed. */
 	if (fireNotification) {
