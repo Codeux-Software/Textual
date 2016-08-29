@@ -79,7 +79,9 @@
 
 - (void)pluginLoadedIntoMemory
 {
-	[TPIBundleFromClass() loadNibNamed:@"TPIBlowfishEncryption" owner:self topLevelObjects:nil];
+	[self performBlockOnMainThread:^{
+		[TPIBundleFromClass() loadNibNamed:@"TPIBlowfishEncryption" owner:self topLevelObjects:nil];
+	}];
 
 	if ([self isPluginEnabled]) {
 		self.keyExchangeRequests = [NSMutableDictionary dictionary];
