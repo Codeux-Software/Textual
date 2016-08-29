@@ -566,16 +566,19 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+	BOOL lazyLoadHistory = [RZUserDefaults() boolForKey:@"Optimizations -> Load History Lazily"];
+
 	BOOL firstTimeLoadingHistory = (self.historyLoadedForFirstTime == NO);
 
 #define _numberOfDesiredLines			100
 
 	if (
-		/* 1 */ self.encrypted ||
-		/* 2 */ self.activeLineCount >= _numberOfDesiredLines ||
-		/* 3 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
-		/* 4 */  self.associatedChannel == nil ||
-		/* 5 */ (self.associatedChannel.isPrivateMessage &&
+		/* 1 */ lazyLoadHistory == NO ||
+		/* 2 */ self.encrypted ||
+		/* 3 */ self.activeLineCount >= _numberOfDesiredLines ||
+		/* 4 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
+		/* 5 */  self.associatedChannel == nil ||
+		/* 6 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
 		self.historyLoadedForFirstTime = YES;

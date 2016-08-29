@@ -195,6 +195,8 @@
 	<true/>
 	<key>OpenClickedLinksInBackgroundBrowser</key>
 	<false/>
+	<key>Optimizations -&gt; Load History Lazily</key>
+	<true/>
 	<key>PostNotificationsWhileInFocus</key>
 	<true/>
 	<key>ReceiveBetaUpdates</key>
