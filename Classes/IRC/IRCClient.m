@@ -2800,7 +2800,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				[self printDebugInformation:TXTLS(@"IRC[1092]")];
 
-				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1094]"))
+				[self rawDataLogToConsole:TXTLS(@"IRC[1094]")];
 			}
 			else if ([stringInString isEqualIgnoringCase:@"raw off"])
 			{
@@ -2808,7 +2808,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				[self printDebugInformation:TXTLS(@"IRC[1091]")];
 
-				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1093]"))
+				[self rawDataLogToConsole:TXTLS(@"IRC[1093]")];
 			}
 			else
 			{
@@ -4637,7 +4637,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	worldController().messagesReceived += 1;
 
-	[self logToConsoleIncomingTraffic:data];
+	[self rawDataLogToConsoleIncomingTraffic:data];
 
 	if ([TPCPreferences removeAllFormatting]) {
 		data = data.stripIRCEffects;
@@ -4824,10 +4824,44 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 	
-	[self logToConsoleOutgoingTraffic:data];
+	[self rawDataLogToConsoleOutgoingTraffic:data];
 }
 
-- (void)logToConsoleOutgoingTraffic:(NSString *)data
+#pragma mark -
+#pragma mark Raw Data Logging
+
+- (void)rawDataLogToConsole:(NSString *)data
+{
+	NSParameterAssert(data != NULL);
+
+	[self rawDataLogToConsoleCString:data.UTF8String];
+}
+
+- (void)rawDataLogToConsoleCString:(const char *)data
+{
+	NSParameterAssert(data != NULL);
+
+#ifdef TXSystemIsOSXSierraOrLater
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		static os_log_t _logSubsystem = NULL;
+
+		if (_logSubsystem == NULL) {
+			_logSubsystem = os_log_create(TXBundleBuildProductIdentifierCString, "IRC Raw Data");
+		}
+
+		LogToConsoleInfoWithSubsystem(_logSubsystem, data);
+	} else {
+#endif
+
+	LogToConsoleInfo(data)
+
+#ifdef TXSystemIsOSXSierraOrLater
+	}
+#endif
+
+}
+
+- (void)rawDataLogToConsoleOutgoingTraffic:(NSString *)data
 {
 	NSParameterAssert(data != nil);
 
@@ -4835,10 +4869,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	LogToConsoleInfo("OUTGOING [\"%{public}@\"]: << %{public}@", self.networkNameAlt, data)
+	NSString *dataToLog = [NSString stringWithFormat:@"OUTGOING [\"%@\"]: << %@", self.networkNameAlt, data];
+
+	[self rawDataLogToConsoleCString:dataToLog.UTF8String];
 }
 
-- (void)logToConsoleIncomingTraffic:(NSString *)data
+- (void)rawDataLogToConsoleIncomingTraffic:(NSString *)data
 {
 	NSParameterAssert(data != nil);
 
@@ -4846,7 +4882,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	LogToConsoleInfo("INCOMING [\"%{public}@\"]: >> %{public}@", self.networkNameAlt, data)
+	NSString *dataToLog = [NSString stringWithFormat:@"INCOMING [\"%@\"]: >> %@", self.networkNameAlt, data];
+
+	[self rawDataLogToConsoleCString:dataToLog.UTF8String];
 }
 
 #pragma mark -
