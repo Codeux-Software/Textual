@@ -203,7 +203,7 @@
 	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
 	<dict>
 		<key>com.codeux.app-extensions.textual-BlowfishEncryption</key>
-		<string>1.0.6</string>
+		<string>1.0.8</string>
 		<key>com.codeux.app-extensions.textual-Caffeine</key>
 		<string>1.0.4</string>
 		<key>com.codeux.app-extensions.textual-WikiStyleLinkParser</key>
