@@ -9585,7 +9585,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 									 authoredBy:referenceMessage.sender
 									destinedFor:textDestination
 									   onClient:self
-									 receivedAt:referenceMessage.receivedAt];
+									 receivedAt:referenceMessage.receivedAt
+							   referenceMessage:referenceMessage];
 }
 
 #pragma mark -

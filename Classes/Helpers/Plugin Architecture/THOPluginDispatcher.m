@@ -83,7 +83,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	return dispatchQueue;
 }
 
-+ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
++ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt referenceMessage:(nullable IRCMessage *)referenceMessage
 {
 	NSParameterAssert(command != nil);
 	NSParameterAssert(client != nil);
@@ -95,7 +95,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 			continue;
 		}
 
-		BOOL returnedValue = [plugin.primaryClass receivedCommand:command withText:text authoredBy:textAuthor destinedFor:textDestination onClient:client receivedAt:receivedAt];
+		BOOL returnedValue = [plugin.primaryClass receivedCommand:command withText:text authoredBy:textAuthor destinedFor:textDestination onClient:client receivedAt:receivedAt referenceMessage:referenceMessage];
 
 		if (returnedValue == NO) {
 			return NO;

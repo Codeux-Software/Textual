@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C51BE9412D0471600E79CEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C51BE9312D0471600E79CEB /* Cocoa.framework */; };
+		4C8355B91D751F03001FD782 /* TPI_ChatFilterLogic.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8355B71D751F03001FD782 /* TPI_ChatFilterLogic.strings */; };
 		4C9AD1CE1B8A1634000B63EF /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9AD1CD1B8A1634000B63EF /* CocoaExtensions.framework */; };
 		4C9F47601D4EB3D200392083 /* TPI_ChatFilterLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F475F1D4EB3D200392083 /* TPI_ChatFilterLogic.m */; };
 		4CEEB1FE1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CEEB1FA1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		4C51BE9312D0471600E79CEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4C8355B81D751F03001FD782 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TPI_ChatFilterLogic.strings"; sourceTree = "<group>"; };
 		4C9AD1CD1B8A1634000B63EF /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = /Applications/Textual.app/Contents/Frameworks/CocoaExtensions.framework; sourceTree = "<absolute>"; };
 		4C9F475D1D4EB3D200392083 /* TPI_ChatFilterInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilterInternal.h; path = Classes/TPI_ChatFilterInternal.h; sourceTree = "<group>"; };
 		4C9F475E1D4EB3D200392083 /* TPI_ChatFilterLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilterLogic.h; path = Classes/TPI_ChatFilterLogic.h; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				4CEEB1FA1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings */,
 				4CEEB1FC1CC72F8E00FFA43D /* TPI_ChatFilterExtension.strings */,
+				4C8355B71D751F03001FD782 /* TPI_ChatFilterLogic.strings */,
 			);
 			name = "Language Files";
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				4CF488151BA7B44C00A87EED /* TPI_ChatFilterEditFilterSheet.xib in Resources */,
 				4CEEB1FE1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings in Resources */,
 				4CEEB1FF1CC72F8E00FFA43D /* TPI_ChatFilterExtension.strings in Resources */,
+				4C8355B91D751F03001FD782 /* TPI_ChatFilterLogic.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +236,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		4C8355B71D751F03001FD782 /* TPI_ChatFilterLogic.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C8355B81D751F03001FD782 /* English */,
+			);
+			name = TPI_ChatFilterLogic.strings;
+			sourceTree = "<group>";
+		};
 		4CEEB1FA1CC72F8E00FFA43D /* TPI_ChatFilterEditFilterSheet.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

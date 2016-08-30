@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 		supportedFeatures |= THOPluginItemSupportsDidReceivePlainTextMessageEvent;
 	}
 
-	if ([primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:)] ) {
+	if ([primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:referenceMessage:)]) {
 		supportedFeatures |= THOPluginItemSupportsDidReceiveCommandEvent;
 	}
 

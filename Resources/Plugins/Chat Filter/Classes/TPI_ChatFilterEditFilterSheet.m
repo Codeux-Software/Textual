@@ -295,6 +295,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableArray *filterEventsNumerics = nil; // Create later so we don't waste memory if error.
 
 	for (__strong NSString *numeric in numerics) {
+		numeric = numeric.trim;
+
 		if (numeric.length == 0) {
 			continue; // Empty segment. We can ignore.
 		}
@@ -710,8 +712,6 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL enabled = (self.filterEventPlainTextMessageCheck.state == NSOnState ||
 					self.filterEventActionMessageCheck.state == NSOnState ||
 					self.filterEventNoticeMessageCheck.state == NSOnState);
-
-	self.filterForwardToDestinationTextField.enabled = enabled;
 
 	self.filterIgnoreOperatorsCheck.enabled = enabled;
 }
