@@ -165,7 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
+- (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt referenceMessage:(nullable IRCMessage *)referenceMessage
 {
 	/* Begin processing filters */
 	NSArray *filters = self.parentObject.filterArrayController.content;
@@ -200,6 +200,27 @@ NS_ASSUME_NONNULL_BEGIN
 								 destinedFor:textDestination
 									onClient:client];
 			});
+
+			/* Forward a copy of the message to a query? */
+			NSString *filterForwardToDestination = filter.filterForwardToDestination;
+
+			if (filterForwardToDestination.length > 0 && text.length > 0) {
+				IRCChannel *destinationChannel = [client findChannelOrCreate:filterForwardToDestination isPrivateMessage:YES];
+
+				NSString *message = TPILocalizedString(@"TPI_ChatFilterLogic[0001]", command, text);
+
+				[client print:message
+						   by:nil
+					inChannel:destinationChannel
+					   asType:TVCLogLineDebugType
+					  command:TVCLogLineDefaultCommandValue
+				   receivedAt:receivedAt
+				  isEncrypted:NO
+			 referenceMessage:nil
+				 completionBlock:^(TVCLogControllerPrintOperationContext *context) {
+					 [client setUnreadStateForChannel:destinationChannel];
+				 }];
+			}
 
 			if (filter.filterIgnoreContent) {
 				return NO; // Ignore original content
@@ -285,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 			/* Forward a copy of the message to a query? */
 			NSString *filterForwardToDestination = filter.filterForwardToDestination;
 
-			if (filterForwardToDestination.length > 0) {
+			if (filterForwardToDestination.length > 0 && text.length > 0) {
 				IRCChannel *destinationChannel = [client findChannelOrCreate:filterForwardToDestination isPrivateMessage:YES];
 
 				NSString *fakeMessageCommand = nil;
@@ -309,7 +330,7 @@ NS_ASSUME_NONNULL_BEGIN
 				  isEncrypted:wasEncrypted
 			 referenceMessage:nil
 				 completionBlock:^(TVCLogControllerPrintOperationContext *context) {
-					 if (lineType != TVCLogLineNoticeType) {
+					 if (lineType == TVCLogLineNoticeType) {
 						 [client setUnreadStateForChannel:destinationChannel];
 					 } else {
 						 BOOL isHighlight = context.highlight;
