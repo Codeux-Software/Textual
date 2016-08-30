@@ -762,7 +762,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)resortMember:(IRCChannelUser *)member
 {
-	[self replaceMember:member byInsertingMember:member];
+	NSParameterAssert(member != nil);
+
+	if ([member isKindOfClass:[IRCChannelUserMutable class]]) {
+		member = [member copy];
+	}
+
+	[IRCChannel queueAccessToMemberList:^{
+		__block NSInteger insertedIndex = (-1);
+
+		[IRCChannel accessMemberListUsingBlock:^{
+			(void)[self _removeMemberFromMemberList:member];
+
+			insertedIndex = [self _sortedInsertMember:member];
+		}];
+
+		XRPerformBlockSynchronouslyOnMainQueue(^{
+			[self _removeMemberFromTableView:member];
+
+			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+		});
+	}];
 }
 
 - (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
