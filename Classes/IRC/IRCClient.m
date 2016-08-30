@@ -9315,6 +9315,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark User Invoked Command Controls
 
+/* Textual sends IRC many commands such as WHO, which the user may not care about when
+ the response is received. So that we only show responses to the user when they care,
+ IRCClient has many -inUserInvoked*Command properties. Because IRC is stupid and many
+ IRCd do not follow the RFC, unsetting these properties when an error is received or
+ a valid response is received is not foolproof because IRCd tend to invent their own
+ responses sometimes, which Textual has no knowledge of. */
+/* So that we can guarantee out properties are reset, we place a timer on the property
+ by invoking -enableInUserInvokedCommandProperty:, then if
+ -disableInUserInvokedCommandProperty: is not invoked, we time the property out
+ and reset it in -timeoutInUserInvokedCommandProperty: */
+/* That's why this ridiculous logic exists here. */
 - (void)enableInUserInvokedCommandProperty:(BOOL *)property
 {
 	NSParameterAssert(property != NULL);
