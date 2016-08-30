@@ -44,3 +44,13 @@
 "TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
 "TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
 "TPI_ChatFilterEditFilterSheet[0009]" = "Server Address";
+
+"TPI_ChatFilterEditFilterSheet[0010][01]" = "Paramater #1";
+"TPI_ChatFilterEditFilterSheet[0010][02]" = "Paramater #2";
+"TPI_ChatFilterEditFilterSheet[0010][03]" = "Paramater #3";
+"TPI_ChatFilterEditFilterSheet[0010][04]" = "Paramater #4";
+"TPI_ChatFilterEditFilterSheet[0010][05]" = "Paramater #5";
+"TPI_ChatFilterEditFilterSheet[0010][06]" = "Paramater #6";
+"TPI_ChatFilterEditFilterSheet[0010][07]" = "Paramater #7";
+"TPI_ChatFilterEditFilterSheet[0010][08]" = "Paramater #8";
+"TPI_ChatFilterEditFilterSheet[0010][09]" = "Paramater #9";

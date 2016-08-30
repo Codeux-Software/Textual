@@ -198,7 +198,8 @@ NS_ASSUME_NONNULL_BEGIN
 						 withOriginalMessage:text
 								  authoredBy:textAuthor
 								 destinedFor:textDestination
-									onClient:client];
+									onClient:client
+							referenceMessage:referenceMessage];
 			});
 
 			/* Forward a copy of the message to a query? */
@@ -300,7 +301,8 @@ NS_ASSUME_NONNULL_BEGIN
 						 withOriginalMessage:text
 								  authoredBy:textAuthor
 								 destinedFor:textDestination
-									onClient:client];
+									onClient:client
+							referenceMessage:nil];
 			});
 
 			/* Forward a copy of the message to a query? */
@@ -356,7 +358,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client
+- (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client referenceMessage:(nullable IRCMessage *)referenceMessage
 {
 	if (text == nil) {
 		text = NSStringEmptyPlaceholder;
@@ -369,12 +371,19 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-#define _maybeReplaceValue(key, value)	\
-	if (value == nil) {		\
-		filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:NSStringEmptyPlaceholder];	\
-	} else {	\
-		filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:(value)];	\
-	}
+	#define _maybeReplaceValue(key, value)	\
+		if (value == nil) {		\
+			filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:NSStringEmptyPlaceholder];	\
+		} else {	\
+			filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:(value)];	\
+		}
+
+	#define _maybeReplaceParam(paramIndex, paramIndexString)		\
+		if (paramIndex >= paramsCount) {	\
+			filterAction = [filterAction stringByReplacingOccurrencesOfString:@paramIndexString withString:NSStringEmptyPlaceholder];		\
+		} else {	\
+			filterAction = [filterAction stringByReplacingOccurrencesOfString:@paramIndexString withString:params[paramIndex]];		\
+		}
 
 	_maybeReplaceValue(@"%_channelName_%", textDestination.name)
 	_maybeReplaceValue(@"%_localNickname_%", client.userNickname)
@@ -385,6 +394,23 @@ NS_ASSUME_NONNULL_BEGIN
 	_maybeReplaceValue(@"%_senderAddress_%", textAuthor.address)
 	_maybeReplaceValue(@"%_senderHostmask_%", textAuthor.hostmask)
 	_maybeReplaceValue(@"%_serverAddress_%", client.serverAddress)
+
+	NSArray *params = referenceMessage.params;
+
+	NSUInteger paramsCount = params.count;
+
+	_maybeReplaceParam(0, "%_Paramater_0_%")
+	_maybeReplaceParam(1, "%_Paramater_1_%")
+	_maybeReplaceParam(2, "%_Paramater_2_%")
+	_maybeReplaceParam(3, "%_Paramater_3_%")
+	_maybeReplaceParam(4, "%_Paramater_4_%")
+	_maybeReplaceParam(5, "%_Paramater_5_%")
+	_maybeReplaceParam(6, "%_Paramater_6_%")
+	_maybeReplaceParam(7, "%_Paramater_7_%")
+	_maybeReplaceParam(8, "%_Paramater_8_%")
+	_maybeReplaceParam(9, "%_Paramater_9_%")
+
+#undef _maybeReplaceParam
 
 #undef _maybeReplaceValue
 

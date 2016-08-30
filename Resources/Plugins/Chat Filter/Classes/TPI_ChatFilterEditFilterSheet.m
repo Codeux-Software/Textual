@@ -526,7 +526,7 @@ NS_ASSUME_NONNULL_BEGIN
 	while (currentPosition < tokenStringLength) {
 		NSRange searchRange = NSMakeRange(currentPosition, (tokenStringLength - currentPosition));
 
-		NSRange range = [tokenString rangeOfString:@"%_([a-zA-Z]+)_%"
+		NSRange range = [tokenString rangeOfString:@"%_([a-zA-Z0-9_]+)_%"
 										   options:NSRegularExpressionSearch
 											 range:searchRange];
 
@@ -1065,7 +1065,16 @@ NS_ASSUME_NONNULL_BEGIN
 		   @"%_senderUsername_%",
 		   @"%_senderAddress_%",
 		   @"%_senderHostmask_%",
-		   @"%_serverAddress_%"
+		   @"%_serverAddress_%",
+		   @"%_Paramater_0_%",
+		   @"%_Paramater_1_%",
+		   @"%_Paramater_2_%",
+		   @"%_Paramater_3_%",
+		   @"%_Paramater_4_%",
+		   @"%_Paramater_5_%",
+		   @"%_Paramater_6_%",
+		   @"%_Paramater_7_%",
+		   @"%_Paramater_8_%"
 		];
 	}
 	
@@ -1087,7 +1096,16 @@ NS_ASSUME_NONNULL_BEGIN
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0008]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0005]"),
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0006]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0009]")
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0009]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][01]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][02]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][03]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][04]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][05]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][06]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][07]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][08]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][09]")
 		];
 	}
 	
