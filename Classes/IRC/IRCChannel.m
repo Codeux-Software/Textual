@@ -995,7 +995,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return pasteboardData;
 }
 
-+ (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock
++ (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock
 {
 	NSParameterAssert(pasteboardData != nil);
 	NSParameterAssert(callbackBlock != nil);
@@ -1024,7 +1024,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return YES;
 }
 
-+ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock
++ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock
 {
 	NSParameterAssert(pasteboardData != nil);
 	NSParameterAssert(callbackBlock != nil);

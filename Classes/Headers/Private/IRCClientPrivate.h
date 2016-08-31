@@ -107,8 +107,8 @@ enum {
 
 - (IRCUserMutable *)mutableCopyOfUserWithNickname:(NSString *)nickname;
 
-- (void)modifyUser:(IRCUser *)user withBlock:(void(^)(IRCUserMutable *userMutable))block;
-- (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void(^)(IRCUserMutable *userMutable))block;
+- (void)modifyUser:(IRCUser *)user withBlock:(void (NS_NOESCAPE ^)(IRCUserMutable *userMutable))block;
+- (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void (NS_NOESCAPE ^)(IRCUserMutable *userMutable))block;
 @end
 
 NS_ASSUME_NONNULL_END
