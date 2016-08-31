@@ -682,7 +682,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [activeFileTransfers copy];
 }
 
-- (nullable TDCFileTransferDialogTransferController *)fileTransferMatchingCondition:(BOOL (^)(TDCFileTransferDialogTransferController *controller))matchCondition
+- (nullable TDCFileTransferDialogTransferController *)fileTransferMatchingCondition:(BOOL (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *controller))matchCondition
 {
 	__block TDCFileTransferDialogTransferController *fileTransferMatched = nil;
 
@@ -710,7 +710,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [selectedFileTransfers copy];
 }
 
-- (void)enumerateSelectedFileTransfers:(void (^)(TDCFileTransferDialogTransferController *fileTransfer, NSUInteger index, BOOL *stop))enumerationBlock
+- (void)enumerateSelectedFileTransfers:(void (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer, NSUInteger index, BOOL *stop))enumerationBlock
 {
 	NSIndexSet *selectedRows = self.fileTransferTable.selectedRowIndexes;
 
@@ -721,22 +721,22 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)enumerateFileTransfers:(void (^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock
+- (void)enumerateFileTransfers:(void (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock
 {
 	[self _enumerateFileTransfers:enumerationBlock limitScope:NO limitScopeToSenders:NO];
 }
 
-- (void)enumerateFileTransferReceivers:(void (^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock
+- (void)enumerateFileTransferReceivers:(void (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock
 {
 	[self _enumerateFileTransfers:enumerationBlock limitScope:YES limitScopeToSenders:NO];
 }
 
-- (void)enumerateFileTransferSenders:(void (^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock
+- (void)enumerateFileTransferSenders:(void (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock
 {
 	[self _enumerateFileTransfers:enumerationBlock limitScope:YES limitScopeToSenders:YES];
 }
 
-- (void)_enumerateFileTransfers:(void (^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock limitScope:(BOOL)limitScope limitScopeToSenders:(BOOL)limitScopeToSenders
+- (void)_enumerateFileTransfers:(void (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop))enumerationBlock limitScope:(BOOL)limitScope limitScopeToSenders:(BOOL)limitScopeToSenders
 {
 	NSParameterAssert(enumerationBlock != nil);
 

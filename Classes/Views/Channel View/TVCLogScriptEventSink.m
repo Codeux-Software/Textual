@@ -171,7 +171,7 @@ ClassWithDesignatedInitializerInitMethod
 			   inWebView:(id)webView
 			 forSelector:(SEL)selector
    minimumArgumentCount:(NSUInteger)minimumArgumentCount
-		  withValidation:(BOOL (^ _Nullable)(NSUInteger argumentIndex, id argument))validateArgumentBlock
+		  withValidation:(BOOL (NS_NOESCAPE ^ _Nullable)(NSUInteger argumentIndex, id argument))validateArgumentBlock
 {
 	TVCLogView *intWebView = nil;
 
