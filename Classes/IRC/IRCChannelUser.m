@@ -41,7 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCChannelUser ()
-@property (nonatomic, strong, readwrite) IRCUser *user;
+@property (atomic, strong, readwrite) IRCUser *user;
 @property (readonly) IRCClient *client;
 @property (readonly) NSString *highestRankedUserMode;
 @end
