@@ -183,11 +183,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self.modes changeMode:@"k"
 				 modeIsSet:(self.kCheck.state == NSOnState)
-			modeParameters:self.kText.stringValue];
+			 modeParameter:self.kText.stringValue];
 
 	[self.modes changeMode:@"l"
 				 modeIsSet:(self.lCheck.state == NSOnState)
-			modeParameters:self.lText.stringValue];
+			 modeParameter:self.lText.stringValue];
 	
 	if ([self.delegate respondsToSelector:@selector(channelModifyModesSheet:onOk:)]) {
 		[self.delegate channelModifyModesSheet:self onOk:self.modes];
