@@ -73,14 +73,6 @@ Textual.viewPositionMovedToHistoryIndicator 	= function() {};
 Textual.viewPositionMovedToLine 				= function(lineNumber) {};
 Textual.viewPositionMovedToTop 					= function() {};
 
-/* Function invoked when Textual believe its the best time to fade out
- the loading screen. Textual will wait until a user selects a view for
- the first time before it loads history. A user may not select a view
- for days, or even ever. When the user does select the view, they should
- have some indication of activity (the loading screen) instead of the
- history just flopping onto their lap. */
-Textual.viewShouldFadeOutLoadingScreen			= function() {};
-
 /*	This function is called when two conditions are met:
 	1. The day has changed by reaching midnight
 	2. The system clock has changed
@@ -94,7 +86,10 @@ Textual.viewShouldFadeOutLoadingScreen			= function() {};
 Textual.dateChanged								= function(dayYear, dayMonth, dayDay) {};
 
 /*	This function is not called by Textual itself, but by WebKit. It is appended
-	to <body> as the function to call during onload phase. */
+	to <body> as the function to call during onload phase. It is used by the newer
+	templates to replace viewDidFinishLoading as the function responsible for
+	fading out the loading screen. It is defined here so style's that do not
+	implement it do not error out. */
 Textual.viewBodyDidLoad						= function() {};
 
 /* *********************************************************************** */
