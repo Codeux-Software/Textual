@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Define Private Header
 
 @interface TVCLogControllerPrintingOperation : NSOperation
-@property (nonatomic, strong) TVCLogControllerPrintingOperationQueue *parentQueue;
 @property (nonatomic, copy, nullable) TVCLogControllerPrintingBlock executionBlock;
 @property (nonatomic, weak, nullable) TVCLogController *viewController;
 @property (nonatomic, assign, getter=isPending) BOOL pending;
@@ -112,8 +111,6 @@ NS_ASSUME_NONNULL_BEGIN
 	operation.executionBlock = callbackBlock;
 
 	operation.standalone = isStandalone;
-
-	operation.parentQueue = self;
 
 	operation.viewController = viewController;
 
