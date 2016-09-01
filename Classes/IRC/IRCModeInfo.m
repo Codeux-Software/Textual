@@ -56,18 +56,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (instancetype)initWithModeSymbol:(NSString *)modeSymbol
 {
-	return [self initWithModeSymbol:modeSymbol modeIsSet:NO modeParamater:nil];
+	return [self initWithModeSymbol:modeSymbol modeIsSet:NO modeParameter:nil];
 }
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
-- (instancetype)initWithModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater
+- (instancetype)initWithModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter
 {
 	NSParameterAssert(modeSymbol.length == 1);
 
 	if ((self = [super init])) {
 		self->_modeSymbol = [modeSymbol copy];
 		self->_modeIsSet = modeIsSet;
-		self->_modeParamater = [modeParamater copy];
+		self->_modeParameter = [modeParameter copy];
 
 		[self populateDefaultsPostflight];
 
@@ -88,7 +88,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	object->_modeIsSet = self.modeIsSet;
 	object->_modeSymbol = [self.modeSymbol copyWithZone:zone];
-	object->_modeParamater = [self.modeParamater copyWithZone:zone];
+	object->_modeParameter = [self.modeParameter copyWithZone:zone];
 
 	return object;
 }
@@ -99,7 +99,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	object.modeIsSet = self.modeIsSet;
 	object.modeSymbol = self.modeSymbol;
-	object.modeParamater = self.modeParamater;
+	object.modeParameter = self.modeParameter;
 
 	return object;
 }
@@ -122,7 +122,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	return (self.modeIsSet == objectCast.modeIsSet &&
 			NSObjectsAreEqual(self.modeSymbol, objectCast.modeSymbol) &&
-			NSObjectsAreEqual(self.modeParamater, objectCast.modeParamater));
+			NSObjectsAreEqual(self.modeParameter, objectCast.modeParameter));
 }
 
 - (BOOL)isMutable
@@ -134,7 +134,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(client != nil);
 
-	if (self.modeParamater.length == 0) {
+	if (self.modeParameter.length == 0) {
 		return NO;
 	}
 
@@ -149,7 +149,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 @dynamic modeIsSet;
 @dynamic modeSymbol;
-@dynamic modeParamater;
+@dynamic modeParameter;
 
 - (BOOL)isMutable
 {
@@ -172,10 +172,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)setModeParamater:(nullable NSString *)modeParamater
+- (void)setModeParameter:(nullable NSString *)modeParameter
 {
-	if (self->_modeParamater != modeParamater) {
-		self->_modeParamater = [modeParamater copy];
+	if (self->_modeParameter != modeParameter) {
+		self->_modeParameter = [modeParameter copy];
 	}
 }
 

@@ -399,16 +399,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSUInteger paramsCount = params.count;
 
-	_maybeReplaceParam(0, "%_Paramater_0_%")
-	_maybeReplaceParam(1, "%_Paramater_1_%")
-	_maybeReplaceParam(2, "%_Paramater_2_%")
-	_maybeReplaceParam(3, "%_Paramater_3_%")
-	_maybeReplaceParam(4, "%_Paramater_4_%")
-	_maybeReplaceParam(5, "%_Paramater_5_%")
-	_maybeReplaceParam(6, "%_Paramater_6_%")
-	_maybeReplaceParam(7, "%_Paramater_7_%")
-	_maybeReplaceParam(8, "%_Paramater_8_%")
-	_maybeReplaceParam(9, "%_Paramater_9_%")
+	_maybeReplaceParam(0, "%_Parameter_0_%")
+	_maybeReplaceParam(1, "%_Parameter_1_%")
+	_maybeReplaceParam(2, "%_Parameter_2_%")
+	_maybeReplaceParam(3, "%_Parameter_3_%")
+	_maybeReplaceParam(4, "%_Parameter_4_%")
+	_maybeReplaceParam(5, "%_Parameter_5_%")
+	_maybeReplaceParam(6, "%_Parameter_6_%")
+	_maybeReplaceParam(7, "%_Parameter_7_%")
+	_maybeReplaceParam(8, "%_Parameter_8_%")
+	_maybeReplaceParam(9, "%_Parameter_9_%")
 
 #undef _maybeReplaceParam
 

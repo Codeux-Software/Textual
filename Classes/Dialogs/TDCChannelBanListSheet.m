@@ -185,7 +185,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.listOfChanges =
 	[self.client compileListOfModeChangesForModeSymbol:self.modeSymbol
 											 modeIsSet:NO
-										modeParamaters:selectedEntries];
+										modeParameters:selectedEntries];
 
 	[super cancel:nil];
 }

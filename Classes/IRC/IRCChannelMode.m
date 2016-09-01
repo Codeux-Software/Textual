@@ -139,13 +139,13 @@ ClassWithDesignatedInitializerInitMethod
 			}
 		}
 
-		NSString *modeParamater = mode.modeParamater;
+		NSString *modeParameter = mode.modeParameter;
 
-		if (modeParamater.length == 0) {
+		if (modeParameter.length == 0) {
 			return;
 		}
 
-		[modeParamString appendFormat:@" %@", modeParamater];
+		[modeParamString appendFormat:@" %@", modeParameter];
 	}];
 
 	return [NSString stringWithFormat:@"%@%@%@", modeRemoveString, modeAddString, modeParamString];
@@ -188,16 +188,16 @@ ClassWithDesignatedInitializerInitMethod
 			[modeSetString appendString:modeSymbol];
 		}
 
-		NSString *modeParamater = mode.modeParamater;
+		NSString *modeParameter = mode.modeParameter;
 
-		if (modeParamater.length == 0) {
+		if (modeParameter.length == 0) {
 			continue;
 		}
 
 		if ([modeSymbol isEqualToString:@"k"] && maskPassword) {
 			[modeParamString appendFormat:@" ******"];
 		} else {
-			[modeParamString appendFormat:@" %@", modeParamater];
+			[modeParamString appendFormat:@" %@", modeParameter];
 		}
 	}
 
@@ -311,16 +311,16 @@ ClassWithDesignatedInitializerInitMethod
 	for (IRCModeInfo *mode in modes) {
 		[self changeMode:mode.modeSymbol
 			   modeIsSet:mode.modeIsSet
-		   modeParamater:mode.modeParamater];
+		   modeParameter:mode.modeParameter];
 	}
 }
 
 - (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet
 {
-	[self changeMode:modeSymbol modeIsSet:modeIsSet modeParamater:nil];
+	[self changeMode:modeSymbol modeIsSet:modeIsSet modeParameter:nil];
 }
 
-- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater
+- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter
 {
 	NSParameterAssert(modeSymbol != nil);
 
@@ -334,7 +334,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	modeMutable.modeSymbol = modeSymbol;
 	modeMutable.modeIsSet = modeIsSet;
-	modeMutable.modeParamater = modeParamater;
+	modeMutable.modeParameter = modeParameter;
 
 	@synchronized (self.modeObjects) {
 		self.modeObjects[modeSymbol] = [modeMutable copy];

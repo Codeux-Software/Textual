@@ -87,7 +87,7 @@
 /* typedef for filesize information */
 typedef unsigned long long						TXUnsignedLongLong;
 
-/* Empty block for cleaner paramaters. */
+/* Empty block for cleaner parameters. */
 typedef void (^TXEmtpyBlockDataType)(void);
 
 /* Include a forced lifespan for beta builds. */
@@ -96,7 +96,7 @@ typedef void (^TXEmtpyBlockDataType)(void);
 /* Include Off-the-Record Messaging (OTR) support */
 #define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 1
 
-/* Include incomplete "Buddy List window */
+/* Include incomplete "Buddy List" window */
 // #define TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW 1
 
 /* Deprecation and symbol visibility. */

@@ -278,14 +278,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Parse remaining data */
-	NSMutableArray<NSString *> *paramaters = [NSMutableArray new];
+	NSMutableArray<NSString *> *parameters = [NSMutableArray new];
 
 	while (lineMutable.length > 0) {
 		if ([lineMutable hasPrefix:@":"])
 		{
 			NSString *sequence = [lineMutable substringFromIndex:1];
 
-			[paramaters addObject:sequence];
+			[parameters addObject:sequence];
 
 			break;
 		}
@@ -293,11 +293,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSString *sequence = lineMutable.token;
 
-			[paramaters addObject:sequence];
+			[parameters addObject:sequence];
 		}
 	}
 
-	self->_params = [paramaters copy];
+	self->_params = [parameters copy];
 
 	/* Return success */
 	return YES;

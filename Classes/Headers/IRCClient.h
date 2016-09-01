@@ -173,11 +173,11 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)requestModesForChannel:(IRCChannel *)channel;
 - (void)requestModesForChannelNamed:(NSString *)channel;
 
-- (void)sendModes:(nullable NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannel:(IRCChannel *)channel;
-- (void)sendModes:(nullable NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannel:(IRCChannel *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParameters:(nullable NSArray<NSString *> *)parameters inChannel:(IRCChannel *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParametersString:(nullable NSString *)parametersString inChannel:(IRCChannel *)channel;
 
-- (void)sendModes:(nullable NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannelNamed:(NSString *)channel;
-- (void)sendModes:(nullable NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannelNamed:(NSString *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParameters:(nullable NSArray<NSString *> *)parameters inChannelNamed:(NSString *)channel;
+- (void)sendModes:(nullable NSString *)modeSymbols withParametersString:(nullable NSString *)parametersString inChannelNamed:(NSString *)channel;
 
 - (void)sendPing:(NSString *)tokenString;
 - (void)sendPong:(NSString *)tokenString;
@@ -200,10 +200,10 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)requestChannelList;
 
-- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString;
-- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString characterSet:(NSCharacterSet *)characterList;
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet parameterString:(NSString *)parameterString;
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet parameterString:(NSString *)parameterString characterSet:(NSCharacterSet *)characterList;
 
-- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamaters:(NSArray<NSString *> *)modeParamaters;
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameters:(NSArray<NSString *> *)modeParameters;
 
 - (void)createChannelListDialog;
 - (void)createChannelInviteExceptionListSheet;

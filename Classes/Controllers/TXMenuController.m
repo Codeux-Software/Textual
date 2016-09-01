@@ -2038,7 +2038,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u sendModes:changeString withParamaters:nil inChannel:c];
+	[u sendModes:changeString withParameters:nil inChannel:c];
 }
 
 - (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender
@@ -2975,7 +2975,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	[u createChannelBanListSheet];
 
-	[u sendModes:@"+b" withParamaters:nil inChannel:c];
+	[u sendModes:@"+b" withParameters:nil inChannel:c];
 }
 
 - (void)showChannelBanExceptionList:(id)sender
@@ -2989,7 +2989,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	[u createChannelBanExceptionListSheet];
 
-	[u sendModes:@"+e" withParamaters:nil inChannel:c];
+	[u sendModes:@"+e" withParameters:nil inChannel:c];
 }
 
 - (void)showChannelInviteExceptionList:(id)sender
@@ -3003,7 +3003,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	[u createChannelInviteExceptionListSheet];
 
-	[u sendModes:@"+I" withParamaters:nil inChannel:c];
+	[u sendModes:@"+I" withParameters:nil inChannel:c];
 }
 
 - (void)showChannelQuietList:(id)sender
@@ -3017,7 +3017,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[u createChannelQuietListSheet];
 
-	[u sendModes:@"+q" withParamaters:nil inChannel:c];
+	[u sendModes:@"+q" withParameters:nil inChannel:c];
 }
 
 - (void)openHelpMenuItem:(id)sender
@@ -3148,7 +3148,7 @@ NS_ASSUME_NONNULL_BEGIN
 		modeSymbol = @"+m";
 	}
 
-	[u sendModes:modeSymbol withParamaters:nil inChannel:c];
+	[u sendModes:modeSymbol withParameters:nil inChannel:c];
 
 #undef _toggleChannelModerationModeOffTag
 }
@@ -3172,7 +3172,7 @@ NS_ASSUME_NONNULL_BEGIN
 		modeSymbol = @"+i";
 	}
 
-	[u sendModes:modeSymbol withParamaters:nil inChannel:c];
+	[u sendModes:modeSymbol withParameters:nil inChannel:c];
 
 #undef _toggleChannelInviteStatusModeOffTag
 }

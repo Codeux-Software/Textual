@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
 	BOOL _modeIsSet;
 	NSString *_modeSymbol;
-	NSString *_modeParamater;
+	NSString *_modeParameter;
 
 @private
 	BOOL _objectInitialized;
