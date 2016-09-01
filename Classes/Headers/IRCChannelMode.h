@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable IRCModeInfo *)modeInfoFor:(NSString *)modeSymbol;
 
 - (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet;
-- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater;
+- (void)changeMode:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter;
 @end
 
 NS_ASSUME_NONNULL_END

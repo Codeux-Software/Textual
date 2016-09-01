@@ -594,7 +594,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		/* Search keychain for a password related to this SOCKS proxy */
 		if (socksProxyUsername) {
-			NSDictionary *queryParamaters = @{
+			NSDictionary *queryParameters = @{
 				(id)kSecClass : (id)kSecClassInternetPassword,
 				(id)kSecAttrServer : socksProxyHost,
 				(id)kSecAttrProtocol : (id)kSecAttrProtocolSOCKS,
@@ -604,7 +604,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 			CFDataRef queryResultRef = nil;
 
-			OSStatus queryStatus = SecItemCopyMatching((__bridge CFDictionaryRef)queryParamaters, (CFTypeRef *)&queryResultRef);
+			OSStatus queryStatus = SecItemCopyMatching((__bridge CFDictionaryRef)queryParameters, (CFTypeRef *)&queryResultRef);
 
 			if (queryStatus != noErr) {
 				*errorString = @"SOCKS Error: Textual encountered a problem trying to retrieve the SOCKS proxy password from System Preferences";

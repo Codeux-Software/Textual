@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel;
 
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol;
-- (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater;
+- (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter;
 @end
 
 NS_ASSUME_NONNULL_END

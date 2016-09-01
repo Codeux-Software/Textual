@@ -482,7 +482,7 @@ present_fatal_error:
 {
 	NSParameterAssert(connectionRequest != nil);
 
-	/* Post paramater(s) defined by this method are subjec to change at
+	/* Post parameter(s) defined by this method are subjec to change at
 	 any time because obviously, the license API is not public interface */
 
 	/* Post data is sent as form values with key/value pairs. */

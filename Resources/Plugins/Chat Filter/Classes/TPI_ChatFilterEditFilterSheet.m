@@ -1066,15 +1066,15 @@ NS_ASSUME_NONNULL_BEGIN
 		   @"%_senderAddress_%",
 		   @"%_senderHostmask_%",
 		   @"%_serverAddress_%",
-		   @"%_Paramater_0_%",
-		   @"%_Paramater_1_%",
-		   @"%_Paramater_2_%",
-		   @"%_Paramater_3_%",
-		   @"%_Paramater_4_%",
-		   @"%_Paramater_5_%",
-		   @"%_Paramater_6_%",
-		   @"%_Paramater_7_%",
-		   @"%_Paramater_8_%"
+		   @"%_Parameter_0_%",
+		   @"%_Parameter_1_%",
+		   @"%_Parameter_2_%",
+		   @"%_Parameter_3_%",
+		   @"%_Parameter_4_%",
+		   @"%_Parameter_5_%",
+		   @"%_Parameter_6_%",
+		   @"%_Parameter_7_%",
+		   @"%_Parameter_8_%"
 		];
 	}
 	

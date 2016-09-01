@@ -295,7 +295,7 @@ ClassWithDesignatedInitializerInitMethod
 				mode.modeIsSet = modeIsSet;
 
 				if ([self modeHasParameter:modeSymbol whenModeIsSet:modeIsSet]) {
-					mode.modeParamater = modeStringMutable.token;
+					mode.modeParameter = modeStringMutable.token;
 				}
 
 				[modes addObject:[mode copy]];
@@ -359,10 +359,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	// Input: CHANMODES=A,B,C,D
 	//
-	// A = Always has a paramater.			Index: 1
-	// B = Always has a paramater.			Index: 2
-	// C = Only has a paramater when set.	Index: 3
-	// D = Never has a paramater.			Index: 4
+	// A = Always has a parameter.			Index: 1
+	// B = Always has a parameter.			Index: 2
+	// C = Only has a parameter when set.	Index: 3
+	// D = Never has a parameter.			Index: 4
 
 	NSUInteger modeIndex = [self.channelModes unsignedIntegerForKey:modeSymbol];
 
@@ -381,10 +381,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	// Input: CHANMODES=A,B,C,D
 	//
-	// A = Always has a paramater.			Index: 1
-	// B = Always has a paramater.			Index: 2
-	// C = Only has a paramater when set.	Index: 3
-	// D = Never has a paramater.			Index: 4
+	// A = Always has a parameter.			Index: 1
+	// B = Always has a parameter.			Index: 2
+	// C = Only has a parameter when set.	Index: 3
+	// D = Never has a parameter.			Index: 4
 
 	NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
 
@@ -500,11 +500,11 @@ ClassWithDesignatedInitializerInitMethod
 	return [[IRCModeInfo alloc] initWithModeSymbol:modeSymbol];
 }
 
-- (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater
+- (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter
 {
 	NSParameterAssert(modeSymbol != nil);
 
-	return [[IRCModeInfo alloc] initWithModeSymbol:modeSymbol modeIsSet:modeIsSet modeParamater:modeParamater];
+	return [[IRCModeInfo alloc] initWithModeSymbol:modeSymbol modeIsSet:modeIsSet modeParameter:modeParameter];
 }
 
 - (BOOL)configurationReceived

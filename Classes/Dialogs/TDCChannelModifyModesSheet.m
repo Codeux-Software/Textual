@@ -105,7 +105,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.kCheck.state = kModeInfo.modeIsSet;
 
 	if (kModeInfo.modeIsSet) {
-		self.kText.stringValue = kModeInfo.modeParamater;
+		self.kText.stringValue = kModeInfo.modeParameter;
 	}
 
 	IRCModeInfo *lModeInfo = [self.modes modeInfoFor:@"l"];
@@ -113,7 +113,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.lCheck.state = lModeInfo.modeIsSet;
 
 	if (lModeInfo.modeIsSet) {
-		self.channelUserLimitMode = lModeInfo.modeParamater; // Set to local property for validation
+		self.channelUserLimitMode = lModeInfo.modeParameter; // Set to local property for validation
 	}
 
 	[self updateTextFields];
@@ -183,11 +183,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self.modes changeMode:@"k"
 				 modeIsSet:(self.kCheck.state == NSOnState)
-			 modeParamater:self.kText.stringValue];
+			modeParameters:self.kText.stringValue];
 
 	[self.modes changeMode:@"l"
 				 modeIsSet:(self.lCheck.state == NSOnState)
-			 modeParamater:self.lText.stringValue];
+			modeParameters:self.lText.stringValue];
 	
 	if ([self.delegate respondsToSelector:@selector(channelModifyModesSheet:onOk:)]) {
 		[self.delegate channelModifyModesSheet:self onOk:self.modes];

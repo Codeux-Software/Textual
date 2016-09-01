@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 			// Guess where the colon (:) should go.
 			//
 			// A colon is supposed to represent a section of an outgoing command
-			// that has a paramater which contains spaces. For example, PRIVMSG
+			// that has a parameter which contains spaces. For example, PRIVMSG
 			// is in the formoat "PRIVMSG #channel :long message" — The message
 			// will have spaces part of it, so we inform the server.
 			

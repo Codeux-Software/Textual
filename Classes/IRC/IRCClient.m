@@ -789,27 +789,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return ([self stringIsChannelName:string] || [string isEqualToString:@"0"]);
 }
 
-- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet parameterString:(NSString *)parameterString
 {
-	return [self compileListOfModeChangesForModeSymbol:modeSymbol modeIsSet:modeIsSet paramaterString:paramaterString characterSet:[NSCharacterSet whitespaceCharacterSet]];
+	return [self compileListOfModeChangesForModeSymbol:modeSymbol modeIsSet:modeIsSet parameterString:parameterString characterSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
-- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet paramaterString:(NSString *)paramaterString characterSet:(NSCharacterSet *)characterList
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet parameterString:(NSString *)parameterString characterSet:(NSCharacterSet *)characterList
 {
-	NSParameterAssert(paramaterString != nil);
+	NSParameterAssert(parameterString != nil);
 	NSParameterAssert(characterList != nil);
 
-	NSArray *modeParamaters = [paramaterString componentsSeparatedByCharactersInSet:characterList];
+	NSArray *modeParameters = [parameterString componentsSeparatedByCharactersInSet:characterList];
 
-	return [self compileListOfModeChangesForModeSymbol:modeSymbol modeIsSet:modeIsSet modeParamaters:modeParamaters];
+	return [self compileListOfModeChangesForModeSymbol:modeSymbol modeIsSet:modeIsSet modeParameters:modeParameters];
 }
 
-- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamaters:(NSArray<NSString *> *)modeParamaters
+- (NSArray<NSString *> *)compileListOfModeChangesForModeSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameters:(NSArray<NSString *> *)modeParameters
 {
 	NSParameterAssert(modeSymbol.length == 1);
-	NSParameterAssert(modeParamaters != nil);
+	NSParameterAssert(modeParameters != nil);
 
-	if (modeParamaters.count == 0) {
+	if (modeParameters.count == 0) {
 		return @[];
 	}
 
@@ -820,8 +820,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSUInteger numberOfEntries = 0;
 
-	for (NSString *modeParamater in modeParamaters) {
-		if (modeParamater.length == 0) {
+	for (NSString *modeParameter in modeParameters) {
+		if (modeParameter.length == 0) {
 			continue;
 		}
 
@@ -835,7 +835,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[modeSetString appendString:modeSymbol];
 		}
 
-		[modeParamString appendFormat:@" %@", modeParamater];
+		[modeParamString appendFormat:@" %@", modeParameter];
 
 		numberOfEntries += 1;
 
@@ -2779,7 +2779,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSArray *modeChanges =
 			[self compileListOfModeChangesForModeSymbol:modeSymbol
 											  modeIsSet:modeIsSet
-										paramaterString:nicknamesString];
+										parameterString:nicknamesString];
 
 			for (NSString *modeChange in modeChanges) {
 				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, modeChange, nil];
@@ -6474,7 +6474,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				continue;
 			}
 
-			[channel changeMember:mode.modeParamater mode:mode.modeSymbol value:mode.modeIsSet];
+			[channel changeMember:mode.modeParameter mode:mode.modeSymbol value:mode.modeIsSet];
 		}
 	}
 
@@ -8199,7 +8199,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			userMutable.isAway = isAway;
 			userMutable.isIRCop = isIRCop;
 
-			/* Paramater 7 includes the hop count and real name because it begins with a :
+			/* Parameter 7 includes the hop count and real name because it begins with a :
 			 Therefore, we cut after the first space to get the real, real name value. */
 			NSInteger realNameFirstSpace = [realName stringPosition:NSStringWhitespacePlaceholder];
 
@@ -8379,7 +8379,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					NSString *defaultModes = channel.config.defaultModes;
 
 					if (defaultModes.length > 0) {
-						[self sendModes:defaultModes withParamatersString:nil inChannel:channel];
+						[self sendModes:defaultModes withParametersString:nil inChannel:channel];
 					}
 
 					NSString *defaultTopic = channel.config.defaultTopic;
@@ -10166,36 +10166,36 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)requestModesForChannel:(IRCChannel *)channel
 {
-	[self sendModes:nil withParamaters:nil inChannel:channel];
+	[self sendModes:nil withParameters:nil inChannel:channel];
 }
 
 - (void)requestModesForChannelNamed:(NSString *)channel
 {
-	[self sendModes:nil withParamaters:nil inChannelNamed:channel];
+	[self sendModes:nil withParameters:nil inChannelNamed:channel];
 }
 
-- (void)sendModes:(nullable NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannel:(IRCChannel *)channel
+- (void)sendModes:(nullable NSString *)modeSymbols withParameters:(nullable NSArray<NSString *> *)parameters inChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
 
-	[self sendModes:modeSymbols withParamaters:paramaters inChannelNamed:channel.name];
+	[self sendModes:modeSymbols withParameters:parameters inChannelNamed:channel.name];
 }
 
-- (void)sendModes:(nullable NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannel:(IRCChannel *)channel
+- (void)sendModes:(nullable NSString *)modeSymbols withParametersString:(nullable NSString *)parametersString inChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
 
-	[self sendModes:modeSymbols withParamatersString:paramatersString inChannelNamed:channel.name];
+	[self sendModes:modeSymbols withParametersString:parametersString inChannelNamed:channel.name];
 }
 
-- (void)sendModes:(nullable NSString *)modeSymbols withParamaters:(nullable NSArray<NSString *> *)paramaters inChannelNamed:(NSString *)channel
+- (void)sendModes:(nullable NSString *)modeSymbols withParameters:(nullable NSArray<NSString *> *)parameters inChannelNamed:(NSString *)channel
 {
-	NSString *paramatersString = [paramaters componentsJoinedByString:NSStringWhitespacePlaceholder];
+	NSString *parametersString = [parameters componentsJoinedByString:NSStringWhitespacePlaceholder];
 
-	[self sendModes:modeSymbols withParamatersString:paramatersString inChannelNamed:channel];
+	[self sendModes:modeSymbols withParametersString:parametersString inChannelNamed:channel];
 }
 
-- (void)sendModes:(nullable NSString *)modeSymbols withParamatersString:(nullable NSString *)paramatersString inChannelNamed:(NSString *)channel
+- (void)sendModes:(nullable NSString *)modeSymbols withParametersString:(nullable NSString *)parametersString inChannelNamed:(NSString *)channel
 {
 	NSParameterAssert(channel != nil);
 
@@ -10207,7 +10207,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("mode"), channel, modeSymbols, paramatersString, nil];
+	[self send:IRCPrivateCommandIndex("mode"), channel, modeSymbols, parametersString, nil];
 }
 
 - (void)sendPing:(NSString *)tokenString
@@ -11292,7 +11292,7 @@ present_error:
 
 	NSString *modeSend = [NSString stringWithFormat:@"+%@", sender.modeSymbol];
 
-	[self sendModes:modeSend withParamatersString:nil inChannel:channel];
+	[self sendModes:modeSend withParametersString:nil inChannel:channel];
 }
 
 - (void)channelBanListSheetWillClose:(TDCChannelBanListSheet *)sender
@@ -11306,7 +11306,7 @@ present_error:
 	NSArray *listOfChanges = sender.listOfChanges;
 	
 	for (NSString *change in listOfChanges) {
-		[self sendModes:change withParamatersString:nil inChannel:channel];
+		[self sendModes:change withParametersString:nil inChannel:channel];
 	}
 
 	[windowController() removeWindowFromWindowList:sender];
