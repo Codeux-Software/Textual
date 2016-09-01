@@ -87,3 +87,4 @@
 "9847" = "Record Overflow"; // errSSLRecordOverflow
 "9848" = "Configuration Error"; // errSSLBadConfiguration
 "9849" = "Unexpected (skipped) Record in DTLS"; // errSSLUnexpectedRecord
+"9850" = "Server has a weak ephemeral Diffie-Hellman public key"; // errSSLWeakPeerEphemeralDHKey

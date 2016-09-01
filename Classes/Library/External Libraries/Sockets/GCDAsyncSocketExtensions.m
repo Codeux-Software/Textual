@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSInteger positiveErrorCode = (errorCode * (-1));
 
-	if ((positiveErrorCode >= 9800) && (positiveErrorCode <= 9849)) {
+	if ((positiveErrorCode >= 9800) && (positiveErrorCode <= 9850)) {
 		/* Request the heading for the formatted error message. */
 		NSString *headingFormat = [RZMainBundle() localizedStringForKey:@"heading"
 																  value:NSStringEmptyPlaceholder
