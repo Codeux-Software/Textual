@@ -200,7 +200,7 @@ Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 {
 	var removedChildren = []
 
-	var historicMessages = document.getElementById("historic_messages")
+	var historicMessages = Textual.historicMessagesElement();
 
 	var nextElement = historicMessages.childNodes[0];
 
@@ -256,6 +256,25 @@ Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents)
 			documentBody.style.pointerEvents = "";
 		} else {
 			documentBody.style.pointerEvents = "none";
+		}
+	}
+};
+
+/* History */
+Textual.historicMessagesElement = function()
+{
+	return document.getElementById("historic_messages");
+}
+
+Textual.setHistoricMessagesLoaded = function(isLoaded)
+{
+	var historicMessages = Textual.historicMessagesElement();
+
+	if (historicMessages) {
+		if (isLoaded) {
+			historicMessages.classList.add("loaded");
+		} else {
+			historicMessages.classList.remove("loaded");
 		}
 	}
 };

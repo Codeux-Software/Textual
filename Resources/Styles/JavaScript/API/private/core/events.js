@@ -123,7 +123,7 @@ Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingThem
 
 Textual.viewFinishedLoadingHistory = function()
 {
-	Textual.viewShouldFadeOutLoadingScreen();
+	Textual.setHistoricMessagesLoaded(true);
 };
 
 Textual.newMessagePostedToViewInt = function(lineNumber)
