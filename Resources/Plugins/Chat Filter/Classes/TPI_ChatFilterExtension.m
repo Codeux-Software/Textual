@@ -249,7 +249,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)filterExport:(id)sender
 {
-	NSInteger selectedRow = self.filterTable.clickedRow;
+	NSInteger selectedRow = self.filterTable.selectedRow;
 
 	TPI_ChatFilter *filter = self.filterArrayController.arrangedObjects[selectedRow];
 
