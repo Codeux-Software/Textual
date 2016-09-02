@@ -261,9 +261,16 @@ body div.line.selectedUser[highlight=false] {
 /* Historic Line */
 
 #historic_messages {
+	transition: opacity 0.8s ease-in;
+	opacity: 0;
+	height: 0;
 	margin: 0;
 	padding: 0;
+}
+
+#historic_messages.loaded {
 	opacity: 0.6;
+	height: auto;
 }
 
 /* NOTICE/CTCP/WALLOPS */
