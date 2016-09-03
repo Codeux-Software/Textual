@@ -369,6 +369,8 @@ ClassWithDesignatedInitializerInitMethod
 
 			bytesRemaining -= (nextOffsetLength + lastRangeProcessed.location);
 		} // while()
+
+		(void)[self.fileHandle seekToEndOfFile];
 	});
 
 	/* Reading from the bottom up which means the array needs to be reversed */
