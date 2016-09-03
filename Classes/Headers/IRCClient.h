@@ -86,6 +86,15 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
+TEXTUAL_EXTERN NSString * const IRCClientWillConnectNotification;
+TEXTUAL_EXTERN NSString * const IRCClientDidConnectNotification;
+
+TEXTUAL_EXTERN NSString * const IRCClientWillSendQuitNotification;
+TEXTUAL_EXTERN NSString * const IRCClientWillDisconnectNotification;
+TEXTUAL_EXTERN NSString * const IRCClientDidDisconnectNotification;
+
+TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
+
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate>
 @property (readonly, copy) IRCClientConfig *config;
 @property (readonly) IRCISupportInfo *supportInfo;

@@ -94,6 +94,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChannelListWasModifiedNotification";
 
+NSString * const IRCClientWillConnectNotification = @"IRCClientWillConnectNotification";
+NSString * const IRCClientDidConnectNotification = @"IRCClientDidConnectNotification";
+
+NSString * const IRCClientWillSendQuitNotification = @"IRCClientWillSendQuitNotification";
+NSString * const IRCClientWillDisconnectNotification = @"IRCClientWillDisconnectNotification";
+NSString * const IRCClientDidDisconnectNotification = @"IRCClientDidDisconnectNotification";
+
+NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNicknameChangedNotification";
+
 @interface IRCClient ()
 // Properies that are public in IRCClient.h
 @property (nonatomic, copy, readwrite) IRCClientConfig *config;
@@ -4544,9 +4553,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	
 	self.tryingNicknameSentNickname = self.config.nickname;
 
-	[self.supportInfo reset];
-
 	[mainWindow() updateTitleFor:self];
+
+	[RZNotificationCenter() postNotificationName:IRCClientDidConnectNotification object:self];
 
 	NSString *username = self.config.username;
 	NSString *realName = self.config.realName;
@@ -4593,6 +4602,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			self.disconnectCallback();
 			self.disconnectCallback = nil;
 		}
+
+		[RZNotificationCenter() postNotificationName:IRCClientDidDisconnectNotification object:self];
 	});
 }
 
@@ -6435,8 +6446,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[mainWindow() updateTitleFor:self];
 	}
 
-	/* Inform file transfer controller of name change */
-	[[self fileTransferController] noteNicknameChanged:oldNickname toNickname:newNickname onClient:self];
+	/* Inform observers */
+	[RZNotificationCenter() postNotificationName:IRCClientUserNicknameChangedNotification
+										  object:self
+										userInfo:@{
+											@"oldNickname" : oldNickname,
+											@"newNickname" : newNickname
+										}];
 }
 
 - (void)receiveMode:(IRCMessage *)m
@@ -9679,6 +9695,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self printDebugInformationToConsole:TXTLS(@"IRC[1056]", serverAddress, serverPort)];
 
+	[RZNotificationCenter() postNotificationName:IRCClientWillConnectNotification object:self];
+
 	/* Create socket */
 	IRCConnectionConfigMutable *socketConfig = [IRCConnectionConfigMutable new];
 
@@ -9790,6 +9808,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.isDisconnecting = YES;
 
+	[RZNotificationCenter() postNotificationName:IRCClientWillDisconnectNotification object:self];
+
 	[self.socket close];
 }
 
@@ -9821,6 +9841,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (self.isTerminating == NO) {
 		[self postEventToViewController:@"serverDisconnecting"];
 	}
+
+	[RZNotificationCenter() postNotificationName:IRCClientWillSendQuitNotification object:self];
 
 	[self.socket clearSendQueue];
 
