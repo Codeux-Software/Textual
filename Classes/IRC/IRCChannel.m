@@ -1152,11 +1152,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [self memberAtIndex:index];
 }
 
+- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
+{
+	return item;
+}
+
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
 	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
-
-	((TVCMemberListCell *)newView).cellItem = item;
 
 	return newView;
 }

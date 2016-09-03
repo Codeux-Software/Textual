@@ -114,8 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TPI_ChatFilterLimitToTableCellView : NSTableCellView
 @property (nonatomic, weak) TPI_ChatFilterEditFilterSheet *parentDialog;
-@property (nonatomic, weak) IRCTreeItem *cellItem;
 @property (nonatomic, weak) IBOutlet NSButton *checkbox;
+@property (readonly) IRCTreeItem *cellItem;
 @property (readonly) TPI_ChatFilterLimitToTableCellView *parentCellViewOrSelf;
 @property (readonly) NSOutlineView *parentOutlineView;
 
@@ -829,11 +829,14 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.cachedClientList[index];
 }
 
+- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
+{
+	return item;
+}
+
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
 	TPI_ChatFilterLimitToTableCellView *newView = (id)[outlineView makeViewWithIdentifier:@"tableEntry" owner:self];
-
-	newView.cellItem = item;
 
 	newView.parentDialog = self;
 
@@ -1008,6 +1011,11 @@ NS_ASSUME_NONNULL_BEGIN
 	NSInteger parentCellItemRow = [outlineView rowForItem:parentCellItem];
 
 	return [outlineView viewAtColumn:0 row:parentCellItemRow makeIfNecessary:NO];
+}
+
+- (IRCTreeItem *)cellItem
+{
+	return self.objectValue;
 }
 
 @end

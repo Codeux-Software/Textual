@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
 @property (readonly) TVCServerList *serverList;
 @property (readonly) __kindof TVCServerListRowCell *rowCell;
+@property (readonly) IRCTreeItem *cellItem;
 @property (readonly, copy) NSDictionary<NSString *, id> *drawingContext;
 @end
 
@@ -785,6 +786,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Cell Information
+
+- (IRCTreeItem *)cellItem
+{
+	return self.objectValue;
+}
 
 - (__kindof TVCServerListRowCell *)rowCell
 {
