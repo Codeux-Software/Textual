@@ -45,7 +45,7 @@ NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNotification = @"IR
 NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = @"IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification";
 
 @interface IRCAddressBookUserTrackingContainer ()
-@property (nonatomic, strong) IRCClient *client;
+@property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *trackedUsersInt;
 @end
 

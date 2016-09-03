@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _presentAwayMessageFor301Threshold			300.0
 
 @interface IRCUser ()
-@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, weak, readwrite) IRCClient *client;
 @property (nonatomic, strong) IRCUserPersistentStore *persistentStore;
 @property (readonly) IRCUserRelations *relations;
 @end

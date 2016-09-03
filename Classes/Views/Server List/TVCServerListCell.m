@@ -47,10 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListCell ()
 @property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
-@property (nonatomic, weak, nullable) IBOutlet NSImageView *messageCountBadgeImageView;
-@property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
-@property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
-@property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
+@property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
 @property (readonly) TVCServerList *serverList;
 @property (readonly) __kindof TVCServerListRowCell *rowCell;
 @property (readonly, copy) NSDictionary<NSString *, id> *drawingContext;

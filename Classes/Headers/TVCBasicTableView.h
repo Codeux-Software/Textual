@@ -41,7 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCBasicTableView : NSTableView
-@property (nonatomic, weak, nullable) id textEditingDelegate;
+@property (nonatomic, weak) id textEditingDelegate;
 
 @property (readonly, assign) BOOL presentMenuForEmptySelection;
 @end

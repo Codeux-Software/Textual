@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerList ()
-@property (nonatomic, weak, nullable) id keyDelegate;
+@property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, copy, nullable) NSImage *outlineViewDefaultDisclosureTriangle;
 @property (nonatomic, copy, nullable) NSImage *outlineViewAlternateDisclosureTriangle;
 

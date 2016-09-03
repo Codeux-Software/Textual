@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListSharedUserInterface : NSObject
-@property (readonly) TVCServerList *serverList;
+@property (readonly, weak) TVCServerList *serverList;
 
 - (instancetype)initWithServerList:(TVCServerList *)serverList NS_DESIGNATED_INITIALIZER;
 

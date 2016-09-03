@@ -50,7 +50,7 @@ NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"
 
 @interface TLOFileLogger ()
 @property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, weak, nullable) IRCChannel *channel;
+@property (nonatomic, weak) IRCChannel *channel;
 @property (nonatomic, strong, nullable) NSFileHandle *fileHandle;
 @property (nonatomic, copy, readwrite, nullable) NSString *writePath;
 @property (nonatomic, copy, nullable) NSString *filenameCached;

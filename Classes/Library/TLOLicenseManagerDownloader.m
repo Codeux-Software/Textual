@@ -58,7 +58,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 100
 
 /* Private header */
 @interface TLOLicenseManagerDownloaderConnection : NSObject <NSURLConnectionDelegate>
-@property (nonatomic, strong) TLOLicenseManagerDownloader *delegate; // To be set by caller
+@property (nonatomic, weak) TLOLicenseManagerDownloader *delegate; // To be set by caller
 @property (nonatomic, assign) TLOLicenseManagerDownloaderRequestType requestType; // To be set by caller
 @property (nonatomic, copy) NSDictionary<NSString *, id> *requestContextInfo; // Information set by caller such as license key or e-mail address
 @property (nonatomic, strong) NSURLConnection *requestConnection; // Will be set by the object, readonly

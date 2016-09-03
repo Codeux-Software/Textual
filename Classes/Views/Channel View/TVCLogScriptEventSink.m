@@ -41,8 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogScriptEventSink ()
-@property (nonatomic, strong, nullable) TVCLogView *webView;
-@property (nonatomic, strong, nullable) WKUserContentController *userContentController;
+@property (nonatomic, weak) TVCLogView *webView;
 @end
 
 @interface TVCLogScriptEventSinkContext : NSObject

@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, strong) TVCLogController *viewController;
+@property (nonatomic, weak) TVCLogController *viewController;
 @property (nonatomic, strong, nullable) NSFileHandle *fileHandle;
 @property (nonatomic, assign) BOOL truncationEventScheduled;
 @end

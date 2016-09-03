@@ -49,9 +49,9 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 @property (readonly, getter=viewIsSelected) BOOL selected;
 @property (readonly, getter=viewIsVisible) BOOL visible;
 @property (readonly) NSUInteger numberOfLines;
-@property (readonly) IRCClient *associatedClient;
-@property (readonly, nullable) IRCChannel *associatedChannel;
-@property (readonly) TVCMainWindow *attachedWindow;
+@property (readonly, weak) IRCClient *associatedClient;
+@property (readonly, weak) IRCChannel *associatedChannel;
+@property (readonly, weak) TVCMainWindow *attachedWindow;
 
 - (void)nextHighlight;
 - (void)previousHighlight;
@@ -87,7 +87,7 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 
 @interface TVCLogControllerPrintOperationContext : NSObject
 @property (readonly, weak) IRCClient *client;
-@property (readonly, weak, nullable) IRCChannel *channel;
+@property (readonly, weak) IRCChannel *channel;
 @property (readonly, getter=isHighlight) BOOL highlight;
 @property (readonly, copy) TVCLogLine *logLine;
 @property (readonly, copy) NSString *lineNumber;

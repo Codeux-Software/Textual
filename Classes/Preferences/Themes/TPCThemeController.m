@@ -52,7 +52,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 /* Copy operation class is responsible for copying the active theme to a 
  different location when a user requests a local copy of the theme. */
 @interface TPCThemeControllerCopyOperation : NSObject
-@property (nonatomic, strong) TPCThemeController *themeController;
+@property (nonatomic, weak) TPCThemeController *themeController;
 @property (nonatomic, copy) NSString *themeName; // Name without source prefix
 @property (nonatomic, copy) NSString *pathBeingCopiedTo;
 @property (nonatomic, copy) NSString *pathBeingCopiedFrom;

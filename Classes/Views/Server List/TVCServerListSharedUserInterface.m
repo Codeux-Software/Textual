@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListSharedUserInterface ()
-@property (nonatomic, strong, readwrite) TVCServerList *serverList;
+@property (nonatomic, weak, readwrite) TVCServerList *serverList;
 @end
 
 @interface TVCServerListMavericksUserInterfaceBackground ()

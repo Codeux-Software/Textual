@@ -39,13 +39,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCChannelMode ()
-@property (nonatomic, strong) IRCClient *client;
-@property (nonatomic, strong) IRCChannel *channel;
+@property (nonatomic, weak) IRCClient *client;
+@property (nonatomic, weak) IRCChannel *channel;
 @property (nonatomic, copy, readwrite) IRCChannelModeContainer *modes;
 @end
 
 @interface IRCChannelModeContainer ()
-@property (nonatomic, strong) IRCISupportInfo *supportInfo;
+@property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCModeInfo *> *modeObjects;
 @property (readonly, copy) NSArray<NSString *> *unwantedModes;
 

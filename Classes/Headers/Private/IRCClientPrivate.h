@@ -52,7 +52,7 @@ enum {
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL sidebarItemIsExpanded;
 @property (nonatomic, copy, readwrite) NSArray<IRCChannel *> *channelList;
-@property (nonatomic, weak, readwrite, nullable) IRCChannel *lastSelectedChannel;
+@property (nonatomic, weak, readwrite) IRCChannel *lastSelectedChannel;
 
 - (instancetype)initWithConfig:(IRCClientConfig *)config NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithConfigDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;

@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListSharedUserInterface : NSObject
-@property (readonly) TVCMemberList *memberList;
+@property (readonly, weak) TVCMemberList *memberList;
 
 - (instancetype)initWithMemberList:(TVCMemberList *)memberList NS_DESIGNATED_INITIALIZER;
 

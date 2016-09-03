@@ -140,7 +140,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *whoTimer;
-@property (nonatomic, weak, nullable) IRCChannel *lagCheckDestinationChannel;
+@property (nonatomic, weak) IRCChannel *lagCheckDestinationChannel;
 @property (nonatomic, assign) BOOL capacityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
@@ -266,8 +266,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)dealloc
 {
-	[self.batchMessages clearQueue];
-
 	[self.autojoinTimer stop];
 	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
@@ -283,6 +281,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.reconnectTimer = nil;
 	self.retryTimer = nil;
 	self.whoTimer = nil;
+
+	self.batchMessages = nil;
+	self.cachedHighlights = nil;
+	self.channelListPrivate = nil;
+	self.channelsToAutojoin = nil;
+	self.commandQueue = nil;
+	self.logFile = nil;
+	self.socket = nil;
+	self.supportInfo = nil;
+	self.trackedUsers = nil;
+	self.userListPrivate = nil;
 
 	[self cancelPerformRequests];
 }
@@ -1074,7 +1083,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.isLoggedIn;
 }
 
-- (IRCClient *)associatedClient
+- (nullable IRCClient *)associatedClient
 {
 	return self;
 }
@@ -9025,6 +9034,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self.autojoinTimer stop];
+
+	self.channelsToAutojoin = nil;
 }
 
 - (void)onAutojoinTimer:(id)sender
@@ -9060,8 +9071,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (endOfArray == NO) {
 			[self.channelsToAutojoin removeObjectsInRange:arrayRange];
 		} else {
-			self.channelsToAutojoin = nil;
-
 			self.isAutojoining = NO;
 
 			self.isAutojoined = YES;

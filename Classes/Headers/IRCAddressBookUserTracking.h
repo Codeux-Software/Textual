@@ -45,7 +45,7 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNoti
 TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification;
 
 @interface IRCAddressBookUserTrackingContainer : NSObject
-@property (readonly) IRCClient *client;
+@property (readonly, weak) IRCClient *client;
 
 // value is boolean, whether tracked user is online
 @property (readonly, copy) NSDictionary<NSString *, NSNumber *> *trackedUsers;

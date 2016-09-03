@@ -1217,7 +1217,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.name;
 }
 
-- (IRCClient *)associatedClient
+- (nullable IRCClient *)associatedClient
 {
 	return self->_associatedClient;
 }

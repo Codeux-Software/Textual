@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerPrintingOperation : NSOperation
 @property (nonatomic, copy, nullable) TVCLogControllerPrintingBlock executionBlock;
-@property (nonatomic, weak, nullable) TVCLogController *viewController;
+@property (nonatomic, weak) TVCLogController *viewController;
 @property (nonatomic, assign, getter=isPending) BOOL pending;
 @property (nonatomic, assign, getter=isStandalone) BOOL standalone;
 @end

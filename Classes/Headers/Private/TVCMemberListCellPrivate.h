@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListCell : NSTableCellView
-@property (nonatomic, strong) IRCChannelUser *cellItem;
+@property (nonatomic, weak) IRCChannelUser *cellItem;
 
 - (void)drawWithExpansionFrame;
 @end

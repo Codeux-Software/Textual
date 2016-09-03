@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListSharedUserInterface ()
-@property (nonatomic, strong, readwrite) TVCMemberList *memberList;
+@property (nonatomic, weak, readwrite) TVCMemberList *memberList;
 @property (nonatomic, strong) NSCache *cachedUserMarkBadges;
 @end
 

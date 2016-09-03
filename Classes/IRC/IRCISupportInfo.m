@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 @interface IRCISupportInfo ()
-@property (nonatomic, strong) IRCClient *client;
+@property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, copy) NSArray<NSDictionary *> *cachedConfiguration;
 @property (nonatomic, assign, readwrite) NSUInteger maximumNicknameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumModeCount;
