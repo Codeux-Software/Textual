@@ -405,6 +405,14 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	[TPCPathInfo startUsingTranscriptFolderURL];
 }
 
++ (void)warnUserAboutStaleTranscriptFolderURL
+{
+	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1134][2]")
+											 title:TXTLS(@"Prompts[1134][1]")
+									 defaultButton:TXTLS(@"Prompts[0005]")
+								   alternateButton:nil];
+}
+
 + (void)startUsingTranscriptFolderURL
 {
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark_5"];
@@ -425,15 +433,29 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 								error:&resolvedBookmarkError];
 
 	if (resolvedBookmarkIsStale) {
-		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1134][2]")
-												 title:TXTLS(@"Prompts[1134][1]")
-										 defaultButton:TXTLS(@"Prompts[0005]")
-									   alternateButton:nil];
+		/* "On return, if YES, the bookmark data is stale. 
+		 Your app should create a new bookmark using the 
+		 returned URL and use it in place of any stored 
+		 copies of the existing bookmark." */
+		NSData *newBookmark = [resolvedBookmark bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+										 includingResourceValuesForKeys:nil
+														  relativeToURL:nil
+																  error:NULL];
+
+		if (newBookmark) {
+			[TPCPathInfo setTranscriptFolderURL:newBookmark];
+		} else {
+			[TPCPathInfo warnUserAboutStaleTranscriptFolderURL];
+		}
+
+		return;
 	}
 
 	if (resolvedBookmark == nil) {
 		LogToConsoleError("Error creating bookmark for URL: %{public}@",
 			[resolvedBookmarkError localizedDescription])
+
+		[TPCPathInfo warnUserAboutStaleTranscriptFolderURL];
 
 		return;
 	}
