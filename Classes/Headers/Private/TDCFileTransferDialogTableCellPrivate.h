@@ -41,8 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class TDCFileTransferDialogTransferController;
 
 @interface TDCFileTransferDialogTableCell : NSTableCellView
-@property (nonatomic, weak) TDCFileTransferDialogTransferController *cellItem;
-
 - (void)onMaintenanceTimer;
 
 - (void)reloadStatusInformation;

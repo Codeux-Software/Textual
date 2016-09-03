@@ -2467,7 +2467,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 
 - (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
 {
-	return [item label];
+	return item;
 }
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
@@ -2501,8 +2501,6 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	}
 
 	NSView *newView = [outlineView makeViewWithIdentifier:viewIdentifier owner:self];
-
-	((TVCServerListCell *)newView).cellItem = item;
 
 	return newView;
 }

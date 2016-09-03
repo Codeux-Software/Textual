@@ -140,9 +140,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
 	NSTableCellView *newView = [outlineView makeViewWithIdentifier:@"navEntry" owner:self];
-	
-	newView.textField.stringValue = item[@"name"];
-	
+
 	return newView;
 }
 

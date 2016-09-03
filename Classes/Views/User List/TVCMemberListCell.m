@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSDictionary<NSString *, id> *drawingContext;
 @property (readonly) TVCMemberList *memberList;
 @property (readonly) TVCMemberListRowCell *rowCell;
+@property (readonly) IRCChannelUser *cellItem;
 @end
 
 @implementation TVCMemberListCell
@@ -573,6 +574,11 @@ NS_ASSUME_NONNULL_BEGIN
                           preferredEdge:NSMaxXEdge];
 
 	[mainWindow makeFirstResponder:activeFirstResponder];
+}
+
+- (IRCChannelUser *)cellItem
+{
+	return self.objectValue;
 }
 
 - (TVCMemberList *)memberList

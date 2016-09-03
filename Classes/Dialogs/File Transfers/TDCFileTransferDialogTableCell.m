@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _transferInfoFieldWithoutProgressBarYCord		16
 
 @interface TDCFileTransferDialogTableCell ()
+@property (readonly) TDCFileTransferDialogTransferController *cellItem;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (nonatomic, weak) IBOutlet NSImageView *fileIconView;
 @property (nonatomic, weak) IBOutlet NSTextField *filenameTextField;
@@ -307,6 +308,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Properties
+
+- (TDCFileTransferDialogTransferController *)cellItem
+{
+	return self.objectValue;
+}
 
 - (TDCFileTransferDialogTransferStatus)transferStatus
 {
