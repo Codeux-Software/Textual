@@ -273,8 +273,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			self.dockUnreadCount = 0;
 		}
 	}
-
-	[self reopenLogFileIfNeeded];
 }
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -462,7 +460,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
 		if ( self.logFile) {
-			[self.logFile reopenIfNeeded];
+			[self.logFile reopen];
 		}
 	} else {
 		[self closeLogFile];

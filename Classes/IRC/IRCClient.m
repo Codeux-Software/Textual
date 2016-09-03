@@ -599,8 +599,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)preferencesChanged
 {
-	[self reopenLogFileIfNeeded];
-
 	[self.viewController preferencesChanged];
 
 	for (IRCChannel *c in self.channelList) {
@@ -3966,7 +3964,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
 		if ( self.logFile) {
-			[self.logFile reopenIfNeeded];
+			[self.logFile reopen];
 		}
 	} else {
 		[self closeLogFile];

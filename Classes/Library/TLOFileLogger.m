@@ -166,12 +166,23 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+	[self reopen];
+}
+
+- (void)reopen
+{
+	[self close];
+
 	[self open];
 }
 
 - (void)open
 {
-	[self close];
+	if (self.fileHandle != nil) {
+		LogToConsoleError("Tried to open log file when a file handle already exists")
+
+		return;
+	}
 
 	if ([self buildWritePath] == NO) {
 		return;

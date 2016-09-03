@@ -79,6 +79,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)resumeMemberListSerialQueues;
 + (void)suspendMemberListSerialQueues;
+
+- (void)reopenLogFileIfNeeded;
+- (void)closeLogFile;
 @end
 
 NS_ASSUME_NONNULL_END
