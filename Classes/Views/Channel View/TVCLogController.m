@@ -680,7 +680,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)notifyViewFinishedLoadingHistory
 {
-	[self _evaluateFunction:@"Textual.viewFinishedLoadingHistory" withArguments:nil];
+	[self _evaluateFunction:@"Textual.viewFinishedLoadingHistoryInt" withArguments:nil];
 }
 
 - (void)changeTextSize:(BOOL)bigger

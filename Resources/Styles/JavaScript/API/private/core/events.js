@@ -121,9 +121,11 @@ Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingThem
 	Textual.changeTextSizeMultiplier(textSizeMultiplier);
 };
 
-Textual.viewFinishedLoadingHistory = function()
+Textual.viewFinishedLoadingHistoryInt = function()
 {
 	Textual.setHistoricMessagesLoaded(true);
+
+	Textual.viewFinishedLoadingHistory();
 };
 
 Textual.newMessagePostedToViewInt = function(lineNumber)
