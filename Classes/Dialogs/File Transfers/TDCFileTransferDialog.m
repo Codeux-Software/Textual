@@ -191,23 +191,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)noteNicknameChanged:(NSString *)fromNickname toNickname:(NSString *)toNickname onClient:(IRCClient *)client
-{
-	NSParameterAssert(fromNickname != nil);
-	NSParameterAssert(toNickname != nil);
-	NSParameterAssert(client != nil);
-
-	[self enumerateFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
-		if (fileTransfer.client != client) {
-			return;
-		}
-
-		if (NSObjectsAreEqual(fileTransfer.peerNickname, fromNickname)) {
-			[fileTransfer notePeerNicknameChangedTo:toNickname];
-		}
-	}];
-}
-
 - (nullable NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(uint16_t)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(client != nil);
