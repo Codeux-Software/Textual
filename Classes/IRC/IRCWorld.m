@@ -50,6 +50,9 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNotification";
 
+NSString * const IRCWorldWillDestroyClientNotification = @"IRCWorldWillDestroyClientNotification";
+NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyChannelNotification";
+
 @interface IRCWorld ()
 @property (nonatomic, strong) NSMutableArray<IRCClient *> *clients;
 @property (nonatomic, assign) BOOL preferencesDidChangeTimerIsActive;
@@ -600,6 +603,8 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		return;
 	}
 
+	[RZNotificationCenter() postNotificationName:IRCWorldWillDestroyClientNotification object:client];
+
 	[self selectOtherBeforeDestroy:client];
 
 	[client prepareForPermanentDestruction];
@@ -636,6 +641,8 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 - (void)destroyChannel:(IRCChannel *)channel reload:(BOOL)reload part:(BOOL)partChannel
 {
 	NSParameterAssert(channel != nil);
+
+	[RZNotificationCenter() postNotificationName:IRCWorldWillDestroyChannelNotification object:channel];
 
 	IRCClient *client = channel.associatedClient;
 

@@ -46,6 +46,9 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 
 TEXTUAL_EXTERN NSString * const IRCWorldDateHasChangedNotification;
 
+TEXTUAL_EXTERN NSString * const IRCWorldWillDestroyClientNotification;
+TEXTUAL_EXTERN NSString * const IRCWorldWillDestroyChannelNotification;
+
 @interface IRCWorld : NSObject
 @property (readonly) NSUInteger messagesSent;
 @property (readonly) NSUInteger messagesReceived;
