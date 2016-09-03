@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1025 */
+/* Next unusued key: 1026 */
 
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
@@ -67,6 +67,7 @@
 "TDCFileTransferDialog[1020]" = "Transfer with %@ failed. Unknown source IP address";
 "TDCFileTransferDialog[1021]" = "Transfer with %@ failed. Connection was disconnected";
 "TDCFileTransferDialog[1022]" = "Transfer with %@ failed. Proposed resume position is bad";
+"TDCFileTransferDialog[1025]" = "Transfer with %@ failed. You are not connected to IRC";
 "TDCFileTransferDialog[1024]" = "Transfer with %@ failed: %@";
 
 "TDCFileTransferDialog[1023]" = "Select the folder in which this file will be saved";

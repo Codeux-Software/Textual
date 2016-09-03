@@ -202,6 +202,9 @@ ClassWithDesignatedInitializerInitMethod
 	self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
 
 	self.uniqueIdentifier = [NSString stringWithUUID];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(clientDisconnected:) name:IRCClientDidDisconnectNotification object:self.client];
+	[RZNotificationCenter() addObserver:self selector:@selector(peerNicknameChanged:) name:IRCClientUserNicknameChangedNotification object:self.client];
 }
 
 - (void)prepareForPermanentDestruction
@@ -209,6 +212,8 @@ ClassWithDesignatedInitializerInitMethod
 	self.transferTableCell = nil;
 
 	[self closeAndPostNotification:NO];
+
+	[RZNotificationCenter() removeObserver:self];
 }
 
 #pragma mark -
@@ -324,6 +329,12 @@ ClassWithDesignatedInitializerInitMethod
 {
 	if (self.path == nil) {
 		self.path = path;
+	}
+
+	if (self.client.isLoggedIn == NO) {
+		[self _closeWithClientDisconnectedError];
+
+		return;
 	}
 
 	if (self.isSender) {
@@ -684,11 +695,47 @@ ClassWithDesignatedInitializerInitMethod
 	[self openTransfer];
 }
 
-- (void)notePeerNicknameChangedTo:(NSString *)toNickname
+- (void)peerNicknameChanged:(NSNotification *)notification
 {
-	NSParameterAssert(toNickname != nil);
+	NSString *oldNickname = notification.userInfo[@"oldNickname"];
 
-	self.peerNickname = toNickname;
+	if (NSObjectsAreEqual(oldNickname, self.peerNickname) == NO) {
+		return;
+	}
+
+	self.peerNickname = notification.userInfo[@"newNickname"];
+}
+
+- (void)clientDisconnected:(NSNotification *)notification
+{
+	[self closeWithClientDisconnectedError];
+}
+
+- (void)closeWithClientDisconnectedError
+{
+	/* If the controller is already sending or receiving data, then a connection
+	 is already established to the peer which can function without a connection
+	 to IRC. If data is not being transferred then fail immediately. */
+	TDCFileTransferDialogTransferStatus transferStatus = self.transferStatus;
+
+	if (transferStatus != TDCFileTransferDialogTransferConnectingStatus &&
+		transferStatus != TDCFileTransferDialogTransferInitializingStatus &&
+		transferStatus != TDCFileTransferDialogTransferIsListeningAsReceiverStatus &&
+		transferStatus != TDCFileTransferDialogTransferIsListeningAsSenderStatus &&
+		transferStatus != TDCFileTransferDialogTransferMappingListeningPortStatus &&
+		transferStatus != TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus &&
+		transferStatus != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus &&
+		transferStatus != TDCFileTransferDialogTransferWaitingForResumeAcceptStatus)
+	{
+		return;
+	}
+
+	[self _closeWithClientDisconnectedError];
+}
+
+- (void)_closeWithClientDisconnectedError
+{
+	[self closeWithLocalizedError:@"TDCFileTransferDialog[1025]" isFatalError:NO];
 }
 
 - (void)close
