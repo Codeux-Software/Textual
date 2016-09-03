@@ -109,6 +109,9 @@ enum {
 
 - (void)modifyUser:(IRCUser *)user withBlock:(void (NS_NOESCAPE ^)(IRCUserMutable *userMutable))block;
 - (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void (NS_NOESCAPE ^)(IRCUserMutable *userMutable))block;
+
+- (void)reopenLogFileIfNeeded;
+- (void)closeLogFile;
 @end
 
 NS_ASSUME_NONNULL_END

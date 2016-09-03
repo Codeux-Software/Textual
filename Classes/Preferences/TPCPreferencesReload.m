@@ -311,10 +311,22 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 #if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	/* Anonymous statistics */
 	if ((reloadAction & TPCPreferencesReloadCollectAnonymousStatisticsAction) == TPCPreferencesReloadCollectAnonymousStatisticsAction) {
 		[masterController() hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:NO];
 	}
 #endif
+
+	/* Transcript folder URL */
+	if ((reloadAction & TPCPreferencesReloadLogTranscriptsAction) == TPCPreferencesReloadLogTranscriptsAction) {
+		for (IRCClient *u in worldController().clientList) {
+			[u reopenLogFileIfNeeded];
+
+			for (IRCChannel *c in u.channelList) {
+				[c reopenLogFileIfNeeded];
+			}
+		}
+	}
 
 	/* World controller preferences changed call */
 	if ((reloadAction & TPCPreferencesReloadPreferencesChangedAction) == TPCPreferencesReloadPreferencesChangedAction) {

@@ -53,6 +53,7 @@ TEXTUAL_EXTERN NSString * const TLOFileLoggerISOStandardClockFormat;
 - (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
 - (void)open;
+- (void)reopen;
 - (void)reopenIfNeeded;
 - (void)close;
 

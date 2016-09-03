@@ -68,6 +68,8 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
 #if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
 	TPCPreferencesReloadCollectAnonymousStatisticsAction			= 1 << 20,
 #endif
+
+	TPCPreferencesReloadLogTranscriptsAction						= 1 << 21
 };
 
 @interface TPCPreferences (TPCPreferencesReload)

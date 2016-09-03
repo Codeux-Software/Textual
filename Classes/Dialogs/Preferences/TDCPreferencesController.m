@@ -918,19 +918,24 @@ NS_ASSUME_NONNULL_BEGIN
 				return;
 			}
 
-			[TPCPathInfo setTranscriptFolderURL:bookmark];
-
-			[self updateTranscriptFolder];
+			[self setTranscriptFolderURL:bookmark];
 		}];
 	}
 	else if (self.transcriptFolderButton.selectedTag == 3)
 	{
 		[self.transcriptFolderButton selectItemAtIndex:0];
 
-		[TPCPathInfo setTranscriptFolderURL:nil];
-		
-		[self updateTranscriptFolder];
+		[self setTranscriptFolderURL:nil];
 	}
+}
+
+- (void)setTranscriptFolderURL:(nullable NSData *)transcriptFolderURL
+{
+	[TPCPathInfo setTranscriptFolderURL:transcriptFolderURL];
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+
+	[self updateTranscriptFolder];
 }
 
 #pragma mark -
