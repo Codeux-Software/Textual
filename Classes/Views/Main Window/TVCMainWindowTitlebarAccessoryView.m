@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL drawsCustomBackgroundColor;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonLeftMarginConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonRightMarginConstraint;
-@property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *lockButtonSuperviewWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonSuperviewWidthConstraint;
 @end
 
 @implementation TVCMainWindowTitlebarAccessoryViewLockButton

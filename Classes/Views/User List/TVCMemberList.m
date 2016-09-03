@@ -46,8 +46,8 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 @property (nonatomic, assign) NSPoint userPopoverLastKnonwnLocalPoint;
 @property (nonatomic, assign) NSInteger lastRowShownUserInfoPopover;
 @property (nonatomic, strong, readwrite) id userInterfaceObjects;
-@property (nonatomic, weak, readwrite, nullable) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak, readwrite, nullable) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
+@property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @end
 

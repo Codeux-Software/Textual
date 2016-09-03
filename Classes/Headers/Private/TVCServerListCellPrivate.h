@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListCell : NSTableCellView
-@property (nonatomic, strong) IRCTreeItem *cellItem;
+@property (nonatomic, weak) IRCTreeItem *cellItem;
 
 - (void)populateMessageCountBadge;
 

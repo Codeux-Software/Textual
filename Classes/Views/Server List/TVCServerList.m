@@ -41,8 +41,8 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 @interface TVCServerList ()
 @property (nonatomic, strong, readwrite) id userInterfaceObjects;
-@property (nonatomic, weak, readwrite, nullable) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak, readwrite, nullable) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
+@property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, weak, readwrite) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
 @property (nonatomic, assign, readwrite) BOOL leftMouseIsDownInView;
 @end
 

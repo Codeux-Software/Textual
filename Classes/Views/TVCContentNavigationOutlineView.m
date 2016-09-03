@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
-@property (nonatomic, weak, nullable) id lastSelectionWeakRef;
+@property (nonatomic, weak) id lastSelectionWeakRef;
 @property (readonly, nullable) id parentOfSelectedItem;
 @end
 

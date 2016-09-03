@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSAttributedString *placeholderString;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
-@property (nonatomic, weak, nullable) IBOutlet TVCMainWindowTextViewContentView *contentView;
+@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 @property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
 @property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
 @end

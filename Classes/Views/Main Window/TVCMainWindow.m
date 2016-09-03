@@ -43,7 +43,7 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
-@property (nonatomic, weak, readwrite, nullable) IBOutlet TVCMainWindowTitlebarAccessoryViewController *titlebarAccessoryViewController;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryViewController *titlebarAccessoryViewController;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryViewLockButton *titlebarAccessoryViewLockButton;
 @property (nonatomic, strong, readwrite) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
 @property (nonatomic, strong, readwrite) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;

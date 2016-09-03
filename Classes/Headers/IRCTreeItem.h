@@ -46,8 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isClient;
 @property (readonly) BOOL isChannel;
 @property (readonly) BOOL isPrivateMessage;
-@property (readonly) IRCClient *associatedClient;
-@property (readonly, nullable) IRCChannel *associatedChannel;
+@property (readonly, weak) IRCClient *associatedClient;
+@property (readonly, weak) IRCChannel *associatedChannel;
 @property (readonly) NSString *label;
 @property (readonly) NSString *name;
 @property (readonly) NSString *uniqueIdentifier;

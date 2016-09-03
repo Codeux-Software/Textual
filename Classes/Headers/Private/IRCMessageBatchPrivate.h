@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *batchToken;
 @property (nonatomic, copy, nullable) NSString *batchType;
 @property (readonly, copy) NSArray *queuedEntries;
-@property (nonatomic, weak, nullable) IRCMessageBatchMessage *parentBatchMessage;
+@property (nonatomic, weak) IRCMessageBatchMessage *parentBatchMessage;
 
 - (void)queueEntry:(id)entry;
 @end

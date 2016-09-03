@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol TVCImageURLoaderDelegate;
 
 @interface TVCImageURLoader : NSObject
-@property (nonatomic, weak, nullable) id <TVCImageURLoaderDelegate> delegate;
+@property (nonatomic, weak) id <TVCImageURLoaderDelegate> delegate;
 
 + (void)invalidateInternalCache;
 

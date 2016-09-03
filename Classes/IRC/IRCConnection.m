@@ -41,7 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection ()
-@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, weak, readwrite) IRCClient *client;
 @property (nonatomic, strong) NSMutableArray<NSString *> *sendQueue;
 @property (nonatomic, strong) TLOTimer *floodControlTimer;
 @property (nonatomic, assign) NSUInteger floodControlCurrentMessageCount;

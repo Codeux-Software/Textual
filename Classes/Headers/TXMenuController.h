@@ -297,8 +297,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, weak) NSMenuItem *muteNotificationsSoundsDockMenuItem;
 @property (readonly, weak) NSMenuItem *muteNotificationsSoundsFileMenuItem;
 
-@property (readonly, weak, nullable) IRCClient *selectedClient;
-@property (readonly, weak, nullable) IRCChannel *selectedChannel;
+@property (readonly, weak) IRCClient *selectedClient;
+@property (readonly, weak) IRCChannel *selectedChannel;
 
 - (NSArray<IRCChannelUser *> *)selectedMembers:(id)sender;
 - (NSArray<NSString *> *)selectedMembersNicknames:(id)sender;

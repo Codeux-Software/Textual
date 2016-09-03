@@ -41,7 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection : NSObject
-@property (readonly, strong) IRCClient *cilent;
+@property (readonly, weak) IRCClient *cilent;
 @property (readonly, copy) IRCConnectionConfig *config;
 @property (readonly) BOOL isConnected;
 @property (readonly) BOOL isConnectedWithClientSideCertificate;

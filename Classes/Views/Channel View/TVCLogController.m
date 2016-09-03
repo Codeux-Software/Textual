@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerPrintOperationContext ()
 @property (nonatomic, weak, readwrite) IRCClient *client;
-@property (nonatomic, weak, readwrite, nullable) IRCChannel *channel;
+@property (nonatomic, weak, readwrite) IRCChannel *channel;
 @property (nonatomic, assign, readwrite, getter=isHighlight) BOOL highlight;
 @property (nonatomic, copy, readwrite) TVCLogLine *logLine;
 @property (nonatomic, copy, readwrite) NSString *lineNumber;
@@ -65,9 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
-@property (nonatomic, strong, readwrite) IRCClient *associatedClient;
-@property (nonatomic, strong, readwrite, nullable) IRCChannel *associatedChannel;
-@property (nonatomic, strong, readwrite) TVCMainWindow *attachedWindow;
+@property (nonatomic, weak, readwrite) IRCClient *associatedClient;
+@property (nonatomic, weak, readwrite) IRCChannel *associatedChannel;
+@property (nonatomic, weak, readwrite) TVCMainWindow *attachedWindow;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (readonly) TVCLogControllerPrintingOperationQueue *printingQueue;
 @property (readonly, copy) NSURL *baseURL;

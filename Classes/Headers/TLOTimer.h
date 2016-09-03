@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* The value of -action is validated to ensure that it returns 
  no value (void) and that it takes only one argument, an object */
 @interface TLOTimer : NSObject
-@property (nonatomic, weak, nullable) id target;
+@property (nonatomic, weak) id target;
 @property (nonatomic, assign, nullable) SEL action;
 @property (nonatomic, assign) BOOL repeatTimer; // defaults to YES
 

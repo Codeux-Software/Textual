@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCQueuedCertificateTrustPanel ()
 @property (nonatomic, strong) NSMutableArray<TVCQueuedCertificateTrustPanelContext *> *queuedEntries;
 @property (nonatomic, strong, nullable) SFCertificateTrustPanel *currentPanel;
-@property (nonatomic, weak, nullable) GCDAsyncSocket *currentSocket; // The current, open sheet
+@property (nonatomic, weak) GCDAsyncSocket *currentSocket; // The current, open sheet
 @property (nonatomic, assign) BOOL doNotInvokeCompletionBlockNextPass;
 @end
 

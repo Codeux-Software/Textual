@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) NSUInteger dockUnreadCount;
 @property (nonatomic, assign, readwrite) NSUInteger nicknameHighlightCount;
 @property (nonatomic, assign, readwrite) NSUInteger treeUnreadCount;
-@property (nonatomic, strong, readwrite) IRCClient *associatedClient;
+@property (nonatomic, weak, readwrite) IRCClient *associatedClient;
 @property (nonatomic, strong, readwrite) TVCLogController *viewController;
 
 - (void)resetState;

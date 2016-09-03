@@ -115,7 +115,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 @property (readonly) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received
 @property (readonly) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP
 @property (readonly) NSUInteger channelCount;
-@property (readonly, weak, nullable) IRCChannel *lastSelectedChannel; // If this is the selected client, then the value of this property is the current selection. If the current client is not selected, then this value is either its previous selection or nil.
+@property (readonly, weak) IRCChannel *lastSelectedChannel; // If this is the selected client, then the value of this property is the current selection. If the current client is not selected, then this value is either its previous selection or nil.
 @property (readonly, copy) NSArray<IRCChannel *> *channelList;
 @property (readonly, copy) NSArray<IRCHighlightLogEntry *> *cachedHighlights;
 @property (readonly, copy, nullable) NSString *userHostmask; // The hostmask of the local user
