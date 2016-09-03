@@ -101,10 +101,6 @@ typedef NS_ENUM(NSUInteger, TDCFileTransferDialogNavigationSelectedTab) {
 - (nullable TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken;
 
 - (nullable TDCFileTransferDialogTransferController *)fileTransferWithUniqueIdentifier:(NSString *)identifier;
-
-- (void)noteNicknameChanged:(NSString *)fromNickname
-				 toNickname:(NSString *)toNickname
-				   onClient:(IRCClient *)client;
 @end
 
 #pragma mark -

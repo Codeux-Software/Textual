@@ -85,13 +85,16 @@ NS_ASSUME_NONNULL_BEGIN
 	self.maintenanceTimer.repeatTimer = YES;
 	self.maintenanceTimer.target = self;
 	self.maintenanceTimer.action = @selector(onMaintenanceTimer:);
+
+	[RZNotificationCenter() addObserver:self selector:@selector(clientWillBeDestroyed:) name:IRCWorldWillDestroyClientNotification object:nil];
 }
 
 - (void)dealloc
 {
-	[self.maintenanceTimer stop];
+	[RZNotificationCenter() removeObserver:self];
 
-	self.maintenanceTimer = nil;
+	[self.maintenanceTimer stop];
+	 self.maintenanceTimer = nil;
 }
 
 - (void)show
@@ -284,6 +287,29 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.fileTransfersController insertObject:controller atArrangedObjectIndex:0];
 
 	self.fileTransfersController.filterPredicate = filterPredicate;
+}
+
+- (void)removeFileTransfersMatchingClient:(IRCClient *)client
+{
+	NSParameterAssert(client != nil);
+
+	NSArray *fileTransfers = [self fileTransfersMatchingClient:client];
+
+	if (fileTransfers.count == 0) {
+		return;
+	}
+
+	[fileTransfers makeObjectsPerformSelector:@selector(prepareForPermanentDestruction)];
+
+	[self.fileTransfersController removeObjects:fileTransfers];
+}
+
+#pragma mark -
+#pragma mark Notifications
+
+- (void)clientWillBeDestroyed:(NSNotification *)notification
+{
+	[self removeFileTransfersMatchingClient:notification.object];
 }
 
 #pragma mark -
@@ -526,15 +552,18 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCFileTransferDialogTransferController *fileTransfer = self.fileTransfersController.arrangedObjects[row];
 
 	TDCFileTransferDialogTableCell *newView =
-	(TDCFileTransferDialogTableCell *)[self.fileTransferTable makeViewWithIdentifier:@"GroupView" owner:self];
+	(TDCFileTransferDialogTableCell *)[tableView makeViewWithIdentifier:@"GroupView" owner:self];
 
 	fileTransfer.transferTableCell = newView;
 
-	newView.cellItem = fileTransfer;
-
-	[newView prepareInitialState];
-
 	return newView;
+}
+
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+	TDCFileTransferDialogTableCell *tableCell = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
+
+	[tableCell prepareInitialState];
 }
 
 #pragma mark -
@@ -644,9 +673,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<TDCFileTransferDialogTransferController *> *)stoppedFileTransfers
 {
-	NSMutableArray<TDCFileTransferDialogTransferController *> *stoppedFileTransfers = [NSMutableArray array];
-
-	[self enumerateFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
+	return [self fileTransfersMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *fileTransfer) {
 		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
 		if (transferStatus != TDCFileTransferDialogTransferCompleteStatus &&
@@ -654,35 +681,44 @@ NS_ASSUME_NONNULL_BEGIN
 			transferStatus != TDCFileTransferDialogTransferFatalErrorStatus &&
 			transferStatus != TDCFileTransferDialogTransferRecoverableErrorStatus)
 		{
-			return;
+			return NO;
 		}
 
-		[stoppedFileTransfers addObject:fileTransfer];
+		return YES;
 	}];
-
-	return [stoppedFileTransfers copy];
 }
 
 - (NSArray<TDCFileTransferDialogTransferController *> *)activeFileTransfers
 {
-	NSMutableArray<TDCFileTransferDialogTransferController *> *activeFileTransfers = [NSMutableArray array];
-
-	[self enumerateFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
+	return [self fileTransfersMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *fileTransfer) {
 		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
 		if (transferStatus != TDCFileTransferDialogTransferReceivingStatus &&
 			transferStatus != TDCFileTransferDialogTransferSendingStatus)
 		{
+			return NO;
+		}
+
+		return YES;
+	}];
+}
+
+- (NSArray<TDCFileTransferDialogTransferController *> *)fileTransfersMatchingCondition:(BOOL (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer))matchCondition
+{
+	NSMutableArray<TDCFileTransferDialogTransferController *> *fileTransfers = [NSMutableArray array];
+
+	[self enumerateFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
+		if (matchCondition(fileTransfer) == NO) {
 			return;
 		}
 
-		[activeFileTransfers addObject:fileTransfer];
+		[fileTransfers addObject:fileTransfer];
 	}];
 
-	return [activeFileTransfers copy];
+	return [fileTransfers copy];
 }
 
-- (nullable TDCFileTransferDialogTransferController *)fileTransferMatchingCondition:(BOOL (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *controller))matchCondition
+- (nullable TDCFileTransferDialogTransferController *)fileTransferMatchingCondition:(BOOL (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer))matchCondition
 {
 	__block TDCFileTransferDialogTransferController *fileTransferMatched = nil;
 
@@ -708,6 +744,15 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 
 	return [selectedFileTransfers copy];
+}
+
+- (NSArray<TDCFileTransferDialogTransferController *> *)fileTransfersMatchingClient:(IRCClient *)client
+{
+	NSParameterAssert(client != nil);
+
+	return [self fileTransfersMatchingCondition:^BOOL(TDCFileTransferDialogTransferController * _Nonnull fileTransfer) {
+		return (fileTransfer.client == client);
+	}];
 }
 
 - (void)enumerateSelectedFileTransfers:(void (NS_NOESCAPE ^)(TDCFileTransferDialogTransferController *fileTransfer, NSUInteger index, BOOL *stop))enumerationBlock
