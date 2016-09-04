@@ -59,6 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger activeChatFilterIndex;
 @property (nonatomic, strong) TPI_ChatFilterEditFilterSheet *activeChatFilterEditSheet;
 @property (nonatomic, strong) TPI_ChatFilterLogic *filterLogicController;
+@property (nonatomic, assign) BOOL savingFilters;
 
 - (IBAction)filterTableDoubleClicked:(id)sender;
 
@@ -89,6 +90,13 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Internal Filter List Storage
 
+- (void)reloadFilters
+{
+	[self.filterArrayController removeAllArrangedObjects];
+
+	[self loadFilters];
+}
+
 - (void)loadFilters
 {
 	NSArray *filterConfigurations = [RZUserDefaults() arrayForKey:_filterListUserDefaultsKey];
@@ -108,6 +116,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveFilters
 {
+	self.savingFilters = YES;
+
 	NSArray *filters = self.filterArrayController.arrangedObjects;
 
 	NSMutableArray *filterConfigurations = [NSMutableArray arrayWithCapacity:filters.count];
@@ -128,6 +138,19 @@ NS_ASSUME_NONNULL_BEGIN
 	self.atleastOneFilterExists = (arrangedObjects.count > 0);
 }
 
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+{
+	if ([keyPath isEqualToString:_filterListUserDefaultsKey]) {
+		if (self.savingFilters) {
+			self.savingFilters = NO;
+
+			return;
+		}
+
+		[self reloadFilters];
+	}
+}
+
 #pragma mark -
 #pragma mark Preference Pane
 
@@ -145,11 +168,15 @@ NS_ASSUME_NONNULL_BEGIN
 	self.filterLogicController = [[TPI_ChatFilterLogic alloc] initWithParentObject:self];
 
 	[self loadFilters];
+
+	[RZUserDefaults() addObserver:self forKeyPath:_filterListUserDefaultsKey options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)pluginWillBeUnloadedFromMemory
 {
 	self.filterLogicController = nil;
+
+	[RZUserDefaults() removeObserver:self forKeyPath:_filterListUserDefaultsKey];
 }
 
 - (NSView *)pluginPreferencesPaneView
