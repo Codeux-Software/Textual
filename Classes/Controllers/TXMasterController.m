@@ -579,11 +579,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() prepareForApplicationTermination];
 
 	[themeController() prepareForApplicationTermination];
-	
+
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
-	[sharedApplicationCache() removeAllObjects];
-	
 	[NSApp replyToApplicationShouldTerminate:YES];
 }
 
