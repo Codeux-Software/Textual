@@ -42,6 +42,12 @@ NS_ASSUME_NONNULL_BEGIN
 #define _betaTesterMaxApplicationLifespan			5184000 // 60 days
 #endif
 
+/* During termination Textual will try to allow clients to shut down gracefully
+ by sending the QUIT command and waiting for a response. If clients do not
+ shut down gracefully within the time allotted below, then we continue with
+ termination regardless of their status. */
+#define _gracefulTerminateTimeout		4
+
 @interface TXMasterController ()
 @property (nonatomic, strong, readwrite) IRCWorld *world;
 @property (nonatomic, assign, readwrite) BOOL debugModeIsOn;
@@ -49,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL applicationIsActive;
 @property (nonatomic, assign, readwrite) BOOL applicationIsTerminating;
 @property (nonatomic, assign, readwrite) BOOL applicationIsChangingActiveState;
+@property (nonatomic, assign) CFAbsoluteTime applicationTerminationTimestamp;
 @property (readonly) BOOL isSafeToPerformApplicationTermination;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
@@ -495,6 +502,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.applicationIsTerminating = YES;
 
+	self.applicationTerminationTimestamp = CFAbsoluteTimeGetCurrent();
+
 	[self.mainWindow prepareForApplicationTermination];
 	
 	[[NSApplication sharedApplication] setDelegate:nil];
@@ -542,6 +551,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		while (self.isSafeToPerformApplicationTermination == NO) {
+			if ((CFAbsoluteTimeGetCurrent() - self.applicationTerminationTimestamp) > _gracefulTerminateTimeout) {
+				break;
+			}
+
 			[NSThread sleepForTimeInterval:0.5];
 		}
 
