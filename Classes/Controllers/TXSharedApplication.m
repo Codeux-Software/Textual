@@ -53,8 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXSharedApplication
 
-_defineSharedInstance(sharedApplicationCache, NSCache, new)
-
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 _defineSharedInstance(sharedCloudSyncManager, TPCPreferencesCloudSync, new)
 #endif
