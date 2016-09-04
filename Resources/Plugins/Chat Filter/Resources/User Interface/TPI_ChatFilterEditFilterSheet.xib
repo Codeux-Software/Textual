@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A313a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -769,6 +769,10 @@ Gw
                                                     <action selector="filterIgnoreContentCheckChanged:" target="-2" id="gW3-0c-wwF"/>
                                                 </connections>
                                             </buttonCell>
+                                            <connections>
+                                                <binding destination="-2" name="enabled" keyPath="self.filterIgnoreOperatorsCheckEnabled" id="WKq-zT-NrI"/>
+                                                <binding destination="-2" name="value" keyPath="self.filterIgnoreOperatorsCheckValue" id="3xc-oz-LtS"/>
+                                            </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k4d-KT-PP4">
                                             <rect key="frame" x="56" y="340" width="93" height="16"/>
@@ -1001,7 +1005,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="rly-7V-5kS"/>
             </connections>
-            <point key="canvasLocation" x="428" y="326"/>
+            <point key="canvasLocation" x="209" y="268"/>
         </window>
     </objects>
 </document>

@@ -76,6 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitedToMyselfCheck;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
+@property (nonatomic, assign) BOOL filterIgnoreOperatorsCheckEnabled;
 @property (nonatomic, copy) NSArray<NSString *> *filterActionAutoCompletedTokens;
 @property (nonatomic, strong) NSMutableArray<NSString *> *filterLimitedToClientsIDs;
 @property (nonatomic, strong) NSMutableArray<NSString *> *filterLimitedToChannelsIDs;
@@ -191,8 +192,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.filterForwardToDestinationTextField.stringValue = self.filter.filterForwardToDestination;
 
-	self.filterIgnoreOperatorsCheck.state = self.filter.filterIgnoreOperators;
-
 	self.filterIgnoreContentCheck.state = self.filter.filterIgnoreContent;
 
 	self.filterLogMatchCheck.state = self.filter.filterLogMatch;
@@ -273,6 +272,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.filter.filterLimitedToClientsIDs = self.filterLimitedToClientsIDs;
 	self.filter.filterLimitedToChannelsIDs = self.filterLimitedToChannelsIDs;
+}
+
+- (BOOL)filterIgnoreOperatorsCheckValue
+{
+	if (self.filterIgnoreOperatorsCheckEnabled == NO) {
+		return NO;
+	}
+
+	return self.filter.filterIgnoreOperators;
+}
+
+- (void)setFilterIgnoreOperatorsCheckValue:(BOOL)filterIgnoreOperatorsCheckValue
+{
+	self.filter.filterIgnoreOperators = filterIgnoreOperatorsCheckValue;
 }
 
 - (NSArray<NSString *> *)compileFilterEventsNumericsOrReturnEmptyArray
@@ -713,7 +726,10 @@ NS_ASSUME_NONNULL_BEGIN
 					self.filterEventActionMessageCheck.state == NSOnState ||
 					self.filterEventNoticeMessageCheck.state == NSOnState);
 
-	self.filterIgnoreOperatorsCheck.enabled = enabled;
+	self.filterIgnoreOperatorsCheckEnabled = enabled;
+
+	[self willChangeValueForKey:@"filterIgnoreOperatorsCheckValue"];
+	[self didChangeValueForKey:@"filterIgnoreOperatorsCheckValue"];
 }
 
 - (void)updateEnabledStateOfSenderMatch
