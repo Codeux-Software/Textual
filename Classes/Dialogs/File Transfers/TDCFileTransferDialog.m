@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSSegmentedCell *navigationControllerCell;
 @property (nonatomic, weak, readwrite) IBOutlet TVCBasicTableView *fileTransferTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *fileTransfersController;
-@property (nonatomic, assign, readwrite) BOOL IPAddressRequestPending;
+@property (nonatomic, strong, nullable) TLOInternetAddressLookup *IPAddressRequest;
 @property (readonly) TDCFileTransferDialogNavigationSelectedTab navigationSelection;
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 @property (nonatomic, copy, nullable) NSURL *downloadDestinationURLPrivate;
@@ -571,29 +571,26 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.IPAddress = nil;
 
-	self.IPAddressRequestPending = NO;
+	[self.IPAddressRequest cancelLookup];
+	self.IPAddressRequest = nil;
 }
 
 - (void)requestIPAddress
 {
-	if (self.IPAddressRequestPending == NO) {
-		self.IPAddressRequestPending = YES;
-	} else {
+	if (self.IPAddressRequest != nil) {
 		return;
 	}
 
 	TLOInternetAddressLookup *lookupRequest = [[TLOInternetAddressLookup alloc] initWithDelegate:(id)self];
 
 	[lookupRequest performLookup];
+
+	self.IPAddressRequest = lookupRequest;
 }
 
 - (void)internetAddressLookupReturnedAddress:(NSString *)address
 {
-	if (self.IPAddressRequestPending) {
-		self.IPAddressRequestPending = NO;
-
-		self.IPAddress = address;
-	}
+	self.IPAddress = address;
 
 	[self enumerateFileTransferSenders:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
 		if (fileTransfer.transferStatus != TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
@@ -602,12 +599,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[fileTransfer noteIPAddressLookupSucceeded];
 	}];
+
+	self.IPAddressRequest = nil;
 }
 
 - (void)internetAddressLookupFailed
 {
-	self.IPAddressRequestPending = NO;
-
 	[self enumerateFileTransferSenders:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
 		if (fileTransfer.transferStatus != TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
 			return;
@@ -615,6 +612,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[fileTransfer noteIPAddressLookupFailed];
 	}];
+
+	self.IPAddressRequest = nil;
 }
 
 #pragma mark -
