@@ -176,6 +176,23 @@ ClassWithDesignatedInitializerInitMethod
 
 @implementation TVCLogView (TVCLogViewBackingProxy)
 
++ (void)emptyCaches
+{
+	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[TVCLogViewInternalWK1 emptyCaches:^{
+		dispatch_semaphore_signal(semaphore);
+	}];
+
+	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+	[TVCLogViewInternalWK2 emptyCaches:^{
+		dispatch_semaphore_signal(semaphore);
+	}];
+
+	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+}
+
 - (void)recreateTemporaryCopyOfThemeIfNecessary
 {
 	if (mainWindow().reloadingTheme) {
@@ -191,11 +208,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
+	NSParameterAssert(string != nil);
+	NSParameterAssert(baseURL != nil);
+
 	self.layingOutView = YES;
 
-	[self.webViewBacking emptyCaches:^{
-		[self _loadHTMLString:string baseURL:baseURL];
-	}];
+	[self _loadHTMLString:string baseURL:baseURL];
 }
 
 - (void)_loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL

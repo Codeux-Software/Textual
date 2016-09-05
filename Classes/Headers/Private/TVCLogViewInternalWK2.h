@@ -50,7 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 
-- (void)emptyCaches:(void (^ _Nullable)(void))completionHandler;
++ (void)emptyCaches;
++ (void)emptyCaches:(void (^ _Nullable)(void))completionHandler;
 
 - (void)openWebInspector;
 @end

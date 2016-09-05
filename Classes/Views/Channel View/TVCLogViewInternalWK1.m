@@ -113,8 +113,6 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	self.policyDelegate = nil;
 	self.resourceLoadDelegate = nil;
 	self.UIDelegate = nil;
-
-	[self emptyCaches:nil];
 }
 
 - (TVCLogPolicy *)webViewPolicy
@@ -142,7 +140,12 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 #pragma mark -
 #pragma mark Utilities
 
-- (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
++ (void)emptyCaches
+{
+	[[self class] emptyCaches:nil];
+}
+
++ (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
 {
 	if (completionHandler) {
 		completionHandler();
