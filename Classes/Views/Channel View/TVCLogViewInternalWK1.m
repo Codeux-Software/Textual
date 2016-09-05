@@ -51,22 +51,28 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 #pragma mark -
 #pragma mark Factory
 
-+ (void)initialize
++ (void)_t_initialize
 {
-	_sharedWebViewPreferences = [[WebPreferences alloc] initWithIdentifier:@"TVCLogViewInternalWK1SharedWebPreferencesObject"];
+	static dispatch_once_t onceToken;
 
-	_sharedWebViewPreferences.cacheModel = WebCacheModelDocumentViewer;
-	_sharedWebViewPreferences.usesPageCache = NO;
+	dispatch_once(&onceToken, ^{
+		_sharedWebViewPreferences = [[WebPreferences alloc] initWithIdentifier:@"TVCLogViewInternalWK1SharedWebPreferencesObject"];
 
-	if ([_sharedWebViewPreferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
-		(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
-	}
+		_sharedWebViewPreferences.cacheModel = WebCacheModelDocumentViewer;
+		_sharedWebViewPreferences.usesPageCache = NO;
 
-	_sharedWebPolicy = [TVCLogPolicy new];
+		if ([_sharedWebViewPreferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
+			(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
+		}
+
+		_sharedWebPolicy = [TVCLogPolicy new];
+	});
 }
 
 - (instancetype)initWithHostView:(TVCLogView *)hostView
 {
+	[[self class] _t_initialize];
+
 	if ((self = [self initWithFrame:NSZeroRect])) {
 		[self constructWebViewWithHostView:hostView];
 

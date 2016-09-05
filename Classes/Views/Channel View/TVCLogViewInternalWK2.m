@@ -55,12 +55,8 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 #pragma mark -
 #pragma mark Factory
 
-+ (void)initialize
++ (void)_t_initialize
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
-		return;
-	}
-
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
@@ -154,6 +150,8 @@ create_normal_pool:
 
 - (instancetype)initWithHostView:(TVCLogView *)hostView
 {
+	[[self class] _t_initialize];
+
 	if ((self = [self initWithFrame:NSZeroRect configuration:_sharedWebViewConfiguration])) {
 		[self constructWebViewWithHostView:hostView];
 
