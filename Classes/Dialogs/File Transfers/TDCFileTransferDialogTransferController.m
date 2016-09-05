@@ -506,9 +506,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)updateIPAddress
 {
-	if (LogToConsoleDebugLoggingEnabled) {
-		LogToConsoleCurrentStackTrace
-	}
+	LogCurrentStackTraceWithType(LogToConsoleTypeDebug)
 
 	NSString *address = self.transferDialog.IPAddress;
 
@@ -565,9 +563,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)noteIPAddressLookupSucceeded
 {
-	if (LogToConsoleDebugLoggingEnabled) {
-		LogToConsoleCurrentStackTrace
-	}
+	LogCurrentStackTraceWithType(LogToConsoleTypeDebug)
 
 	if (self.isSender) {
 		if (self.isReversed) {
