@@ -688,7 +688,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (BOOL)webKit2ProcessPoolSizeLimited
 {
-	return [RZUserDefaults() boolForKey:@"WKProcessPoolSizeIsLimited"];
+	return [RZUserDefaults() boolForKey:@"WebViewProcessPoolSizeIsLimited"];
 }
 
 + (BOOL)webKit2PreviewLinks
@@ -1179,8 +1179,21 @@ static NSArray<NSString *> *_matchKeywords = nil;
 + (void)registerDynamicDefaults
 {
 	[self _populateDefaultNickname];
+}
 
-	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:NSWindowAutosaveFrameMovesToActiveDisplay];
++ (void)registerDefaults
+{
+	NSDictionary *localDefaults =
+	[TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaults"];
+
+	[[NSUserDefaults standardUserDefaults] registerDefaults:localDefaults];
+
+	NSDictionary *containerDefaults =
+	[TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaultsInContainer"];
+
+	[RZUserDefaults() registerDefaults:containerDefaults];
+
+	[TPCPreferences registerDynamicDefaults];
 }
 
 + (void)initPreferences
@@ -1193,14 +1206,9 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
 #endif
 
-	NSDictionary *defaults =
-	[TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaults"];
-
-	[RZUserDefaults() registerDefaults:defaults];
+	[TPCPreferences registerDefaults];
 
 	[TPCPreferences _migrateWorldControllerToVersion600];
-
-	[TPCPreferences registerDynamicDefaults];
 
 	[TPCPathInfo startUsingTranscriptFolderURL];
 
