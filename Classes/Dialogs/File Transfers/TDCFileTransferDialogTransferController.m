@@ -506,12 +506,20 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)updateIPAddress
 {
+	if (LogToConsoleDebugLoggingEnabled) {
+		LogToConsoleCurrentStackTrace
+	}
+
 	NSString *address = self.transferDialog.IPAddress;
+
+	LogToConsoleDebug("TDCFileTransferDialog cached IP address: %{public}@", address)
 
 	BOOL manuallyDetect = ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod);
 
 	if (address == nil && manuallyDetect == NO) {
 		NSString *publicAddress = self.portMapping.publicAddress;
+
+		LogToConsoleDebug("Port mapper public IP address: %{public}@", publicAddress)
 
 		if (publicAddress.isIPAddress) {
 			self.transferDialog.IPAddress = publicAddress;
@@ -523,8 +531,12 @@ ClassWithDesignatedInitializerInitMethod
 	/* Request address? */
 	if (address == nil) {
 		if (manuallyDetect) {
+			LogToConsoleError("User has set IP address detection to be manual but have no address set")
+
 			[self noteIPAddressLookupFailed];
 		} else {
+			LogToConsoleDebug("Performing IP address lookup using the Internet")
+
 			[self.transferDialog requestIPAddress];
 
 			self.transferStatus = TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus;
@@ -553,6 +565,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)noteIPAddressLookupSucceeded
 {
+	if (LogToConsoleDebugLoggingEnabled) {
+		LogToConsoleCurrentStackTrace
+	}
+
 	if (self.isSender) {
 		if (self.isReversed) {
 			self.transferStatus = TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus;
