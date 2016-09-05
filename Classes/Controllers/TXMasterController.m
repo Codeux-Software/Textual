@@ -92,9 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((keyboardKeys & NSControlKeyMask) == NSControlKeyMask) {
 		self.debugModeIsOn = YES;
 
-		LogToConsoleDebugLoggingEnabled = YES;
+		LogToConsoleSetDebugLoggingEnabled(YES);
 
-		LogToConsoleInfo("Launching in debug mode")
+		LogToConsoleDebug("Launching in debug mode")
 	}
 
 #if defined(DEBUG)
