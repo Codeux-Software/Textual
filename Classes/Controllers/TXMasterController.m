@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 #ifdef TXSystemIsOSXSierraOrLater
 	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
-		LogToConsoleDefaultSubsystem = os_log_create(TXBundleBuildProductIdentifierCString, "General");
+		LogToConsoleSetDefaultSubsystem(os_log_create(TXBundleBuildProductIdentifierCString, "General"));
 	}
 #endif
 
