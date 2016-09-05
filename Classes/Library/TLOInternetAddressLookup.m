@@ -84,6 +84,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self setupConnectionRequest];
 }
 
+- (void)cancelLookup
+{
+	[self _teardownConnectionRequest];
+}
+
 - (void)setupConnectionRequest
 {
 	NSAssert((self.connection == nil),
@@ -102,7 +107,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
-- (void)teardownConnectionRequest
+- (void)_teardownConnectionRequest
 {
 	if (self.connection) {
 		[self.connection cancel];
@@ -111,6 +116,11 @@ ClassWithDesignatedInitializerInitMethod
 	self.connection = nil;
 	self.connectionResponse = nil;
 	self.connectionResponseData = nil;
+}
+
+- (void)teardownConnectionRequest
+{
+	[self _teardownConnectionRequest];
 
 	[self informDelegate];
 
