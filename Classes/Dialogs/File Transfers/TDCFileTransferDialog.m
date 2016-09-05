@@ -390,6 +390,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSArray *stoppedFileTransfers = [self stoppedFileTransfers];
 
+	[stoppedFileTransfers makeObjectsPerformSelector:@selector(prepareForPermanentDestruction)];
+
 	[self.fileTransfersController removeObjects:stoppedFileTransfers];
 	
 	[self updateClearButton];
