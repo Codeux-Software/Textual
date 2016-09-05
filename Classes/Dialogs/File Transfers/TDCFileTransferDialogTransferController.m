@@ -472,9 +472,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (nullable NSString *)networkInterfaceMatchingAddress
 {
-	/* GCDAsyncSocket is able to infer interface name from IP address */
-
-	return self.transferDialog.IPAddress;
+	return [TPCPreferences fileTransferIPAddressInterfaceName];
 }
 
 - (void)portMapperDidFinishWork:(NSNotification *)aNotification

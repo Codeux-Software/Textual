@@ -821,6 +821,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	return [RZUserDefaults() objectForKey:@"File Transfers -> File Transfer Manually Entered IP Address"];
 }
 
++ (nullable NSString *)fileTransferIPAddressInterfaceName
+{
+	return [RZUserDefaults() objectForKey:@"File Transfers -> File Transfer IP Address Interface Name"];
+}
+
 #pragma mark -
 #pragma mark Max Log Lines
 
