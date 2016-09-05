@@ -838,8 +838,32 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 
 - (void)reloadThemeAndUserInterface:(BOOL)reloadUserInterface
 {
-	self.reloadingTheme = YES;
+	[self _reloadThemeAndUserInterface_preflight:reloadUserInterface];
+}
 
+- (void)_reloadThemeAndUserInterface_preflight:(BOOL)reloadUserInterface
+{
+	if (self.reloadingTheme == NO) {
+		self.reloadingTheme = YES;
+	} else {
+		return;
+	}
+
+	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
+		/* -emptyCaches uses a semaphore to know when the web processes have cleared
+		 their cache. The web processes signal the semaphore on the main thread which
+		 means we empty the caches in the background so that the main thread is left
+		 open for the semaphore to be signaled. */
+		[TVCLogView emptyCaches];
+
+		XRPerformBlockSynchronouslyOnMainQueue(^{
+			[self _reloadThemeAndUserInterface_performReload:reloadUserInterface];
+		});
+	}, DISPATCH_QUEUE_PRIORITY_HIGH);
+}
+
+- (void)_reloadThemeAndUserInterface_performReload:(BOOL)reloadUserInterface
+{
 	[themeController() reload];
 
 	for (IRCClient *u in worldController().clientList) {

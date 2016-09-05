@@ -61,6 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCLogView (TVCLogViewBackingViewProxy)
++ (void)emptyCaches;
+
 - (void)stopLoading;
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;

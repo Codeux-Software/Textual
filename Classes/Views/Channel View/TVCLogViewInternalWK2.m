@@ -221,7 +221,12 @@ create_normal_pool:
 #pragma mark -
 #pragma mark Utilities
 
-- (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
++ (void)emptyCaches
+{
+	[[self class] emptyCaches:nil];
+}
+
++ (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
 {
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
 		WKWebsiteDataStore *wk2WebsiteDataStore = _sharedWebViewConfiguration.websiteDataStore;
