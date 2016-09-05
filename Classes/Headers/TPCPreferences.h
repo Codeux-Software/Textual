@@ -284,6 +284,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (uint16_t)fileTransferPortRangeEnd;
 
 + (nullable NSString *)fileTransferManuallyEnteredIPAddress;
++ (nullable NSString *)fileTransferIPAddressInterfaceName;
 
 + (nullable NSString *)tabCompletionSuffix;
 
