@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5109</real>
+		<real>5111</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -249,6 +249,15 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5022</integer>
+	</dict>
+	<key>empty_caches</key>
+	<dict>
+		<key>command</key>
+		<string>EMPTY_CACHES</string>
+		<key>developerModeOnly</key>
+		<true/>
+		<key>indexValue</key>
+		<integer>5110</integer>
 	</dict>
 	<key>fakerawdata</key>
 	<dict>

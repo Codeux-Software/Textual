@@ -67,6 +67,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandDeopIndex = 5020,
 	IRCPublicCommandDevoiceIndex = 5021,
 	IRCPublicCommandEchoIndex = 5022,
+	IRCPublicCommandEmptycachesIndex = 5110,
 	IRCPublicCommandFakerawdataIndex = 5087,
 	IRCPublicCommandGetscriptsIndex = 5098,
 	IRCPublicCommandGlineIndex = 5023,
