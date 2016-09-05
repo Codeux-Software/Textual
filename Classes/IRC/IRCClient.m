@@ -2936,6 +2936,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case IRCPublicCommandEmptycachesIndex: // Command: EMPTY_CACHES
+		{
+			XRPerformBlockAsynchronouslyOnGlobalQueue(^{
+				[TVCLogView emptyCaches];
+			});
+
+			break;
+		}
 		case IRCPublicCommandFakerawdataIndex: // Command: FAKERAWDATA
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
