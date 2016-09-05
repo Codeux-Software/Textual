@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDelegate:(id <TLOInternetAddressLookupDelegate>)delegate NS_DESIGNATED_INITIALIZER;
 
 - (void)performLookup;
+- (void)cancelLookup;
 @end
 
 @protocol TLOInternetAddressLookupDelegate <NSObject>
