@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A304a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A313a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
@@ -638,7 +638,7 @@
                     <rect key="frame" x="38" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -696,7 +696,7 @@
                     <rect key="frame" x="301" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -3871,11 +3871,11 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="yKL-ON-PSA">
                             <view key="view" id="bCO-56-p1h">
-                                <rect key="frame" x="10" y="29" width="529" height="318"/>
+                                <rect key="frame" x="10" y="25" width="529" height="322"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-wc-PBy">
-                                        <rect key="frame" x="103" y="274" width="208" height="22"/>
+                                        <rect key="frame" x="103" y="278" width="208" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="202" id="WXe-tT-Htj"/>
                                         </constraints>
@@ -3887,10 +3887,15 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <accessibility description="Current Style"/>
                                         <connections>
                                             <action selector="onChangedThemeSelection:" target="-2" id="Fsz-Xr-4Ro"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="p3e-3O-pA8">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="inL-ss-ERr">
-                                        <rect key="frame" x="63" y="279" width="37" height="16"/>
+                                        <rect key="frame" x="63" y="283" width="37" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="33" id="VBj-ex-Msv"/>
                                         </constraints>
@@ -3901,7 +3906,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
-                                        <rect key="frame" x="93" y="161" width="234" height="18"/>
+                                        <rect key="frame" x="93" y="165" width="234" height="18"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="imb-ex-Fq2">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3911,16 +3916,16 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
-                                        <rect key="frame" x="43" y="254" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="258" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="BpY-Xc-j0l"/>
                                         </constraints>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
-                                        <rect key="frame" x="43" y="198" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="202" width="443" height="5"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
-                                        <rect key="frame" x="92" y="221" width="80" height="16"/>
+                                        <rect key="frame" x="92" y="225" width="80" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Channel font:" id="Rms-5m-RLS">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -3928,7 +3933,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
-                                        <rect key="frame" x="93" y="105" width="194" height="18"/>
+                                        <rect key="frame" x="93" y="109" width="194" height="18"/>
                                         <buttonCell key="cell" type="check" title="Show general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="toP-T2-dv6">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3938,7 +3943,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-qs-5mz">
-                                        <rect key="frame" x="93" y="133" width="286" height="18"/>
+                                        <rect key="frame" x="93" y="137" width="286" height="18"/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="miK-Q1-Ozt">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3948,7 +3953,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
-                                        <rect key="frame" x="111" y="85" width="239" height="14"/>
+                                        <rect key="frame" x="111" y="89" width="239" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -3959,7 +3964,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
-                                        <rect key="frame" x="178" y="219" width="179" height="19"/>
+                                        <rect key="frame" x="178" y="223" width="179" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="6w3-db-GjZ"/>
                                             <constraint firstAttribute="width" constant="179" id="pRZ-tB-hbC"/>
@@ -3986,7 +3991,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="EES-Ba-O9N">
-                                        <rect key="frame" x="93" y="58" width="274" height="18"/>
+                                        <rect key="frame" x="93" y="62" width="274" height="18"/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sG9-0L-YQ8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3996,7 +4001,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="316" y="276" width="148" height="19"/>
+                                        <rect key="frame" x="316" y="280" width="148" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gtM-zH-PMU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -4004,13 +4009,18 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <accessibility description="View files associated with the current style"/>
                                         <connections>
                                             <action selector="onOpenPathToTheme:" target="-2" id="Fa3-dM-vjS"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="xIj-Ez-hta">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </button>
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psh-bY-eeR">
-                                        <rect key="frame" x="108" y="35" width="320" height="17"/>
+                                        <rect key="frame" x="108" y="39" width="320" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zWf-tX-IOX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ubi-Bg-XAW">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -4126,7 +4136,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </scroller>
                                     </scrollView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                        <rect key="frame" x="365" y="218" width="63" height="19"/>
+                                        <rect key="frame" x="365" y="222" width="63" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="63" id="vON-Ib-WtQ"/>
                                         </constraints>
@@ -4138,6 +4148,15 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <connections>
                                             <accessibilityConnection property="title" destination="19a-B6-iEv" id="Ikc-qO-S3F"/>
                                             <action selector="onSelectNewFont:" target="-2" id="Q0K-AD-1dQ"/>
+                                            <binding destination="-2" name="enabled2" keyPath="self.reloadingTheme" previousBinding="BXQ-7H-Qn2" id="cvN-1i-doc">
+                                                <dictionary key="options">
+                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Channel Font Preference Enabled" id="BXQ-7H-Qn2"/>
                                         </connections>
                                     </button>
@@ -4189,6 +4208,11 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedInlineMediaOption:" target="-2" id="By8-9n-sbM"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="4Hw-UB-lD3">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="9Mc-kW-Pp0"/>
                                         </connections>
                                     </button>
@@ -4249,7 +4273,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="54" y="242" width="394" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="lQy-z8-Ufr">
                                             <rect key="frame" x="0.0" y="0.0" width="394" height="27"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="UqK-4p-c7Q">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="27"/>
@@ -4375,7 +4399,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="61" y="56" width="407" height="43"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="tYM-TV-SCh">
                                             <rect key="frame" x="0.0" y="0.0" width="407" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="MHv-vv-IRm">
                                                     <rect key="frame" x="0.0" y="42" width="407" height="43"/>
@@ -4485,6 +4509,11 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedTheme:" target="-2" id="mIO-4b-U2w"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="y6K-h2-3mX">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RightToLeftTextFormatting" id="NNU-ze-rrL"/>
                                         </connections>
                                     </button>
@@ -4496,6 +4525,11 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedTheme:" target="-2" id="D8n-gD-L43"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="oXU-57-P0y">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableRemoteNicknameColorHashing" id="pZd-hj-Y5l"/>
                                         </connections>
                                     </button>
@@ -4515,6 +4549,11 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="ZXK-5a-JbM">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConversationTrackingIncludesUserModeSymbol" id="0aI-pn-dxf"/>
                                         </connections>
                                     </button>
@@ -4522,7 +4561,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="87" y="28" width="356" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="crJ-r5-VO3">
                                             <rect key="frame" x="0.0" y="0.0" width="356" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="Fjg-k0-aT5">
                                                     <rect key="frame" x="0.0" y="107" width="356" height="17"/>
@@ -4593,6 +4632,15 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <connections>
                                             <accessibilityConnection property="title" destination="ram-Ya-z5o" id="pjv-FT-Twg"/>
                                             <action selector="onChangedTheme:" target="-2" id="oYR-CR-4rF"/>
+                                            <binding destination="-2" name="enabled2" keyPath="self.reloadingTheme" previousBinding="iNL-m0-JXI" id="9H5-ba-0L6">
+                                                <dictionary key="options">
+                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Theme -&gt; Timestamp Format" id="rdn-oH-aHO"/>
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Timestamp Format Preference Enabled" id="iNL-m0-JXI">
                                                 <dictionary key="options">
@@ -4613,7 +4661,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="156" y="264" width="296" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mPp-b5-RuW">
                                             <rect key="frame" x="0.0" y="0.0" width="296" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
@@ -4668,7 +4716,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="107" y="212" width="340" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYd-WC-meI">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
@@ -4734,6 +4782,15 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <connections>
                                             <accessibilityConnection property="title" destination="VxK-V6-0nX" id="p50-3O-uug"/>
                                             <action selector="onChangedTheme:" target="-2" id="Ajj-YO-qAZ"/>
+                                            <binding destination="-2" name="enabled2" keyPath="self.reloadingTheme" previousBinding="I79-xs-TVI" id="v6w-y1-eNE">
+                                                <dictionary key="options">
+                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Theme -&gt; Nickname Format" id="quV-wg-zM4"/>
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Nickname Format Preference Enabled" id="I79-xs-TVI">
                                                 <dictionary key="options">

@@ -54,6 +54,9 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 
 TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
 
+TEXTUAL_EXTERN NSString * const TVCMainWindowWillReloadThemeNotification;
+TEXTUAL_EXTERN NSString * const TVCMainWindowDidReloadThemeNotification;
+
 TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 
 @interface TVCMainWindow : NSWindow
@@ -112,8 +115,8 @@ TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 - (void)markAllAsRead;
 - (void)markAllAsReadInGroup:(nullable IRCTreeItem *)item;
 
-- (void)reloadTheme;
-- (void)reloadThemeAndUserInterface;
+- (void)reloadTheme; // reloaded asynchronously
+- (void)reloadThemeAndUserInterface; // ^
 
 - (void)clearContentsOfClient:(IRCClient *)client;
 - (void)clearContentsOfChannel:(IRCChannel *)channel;
