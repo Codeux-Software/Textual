@@ -31,4 +31,15 @@ echo "	\$current_release_version_signature = \"${GIT_COMMIT_HASH}\";" >> ./build
 
 mv -f "./buildInfo.txt" ~/Desktop
 
+touch buildLog.txt
+
+echo "<h2>Changes in ${BUNDLE_VERSION_LONG}</h2>" >> buildLog.txt
+echo "<li>" >> buildLog.txt
+
+git log --since='24 hours ago' --pretty=format:'<li>%s</li>' >> buildLog.txt
+
+echo "</li>" >> buildLog.txt
+
+mv -f "./buildLog.txt" ~/Desktop
+
 rm -rf "${EXPORT_PATH}"
