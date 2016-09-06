@@ -183,11 +183,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	ObjectIsAlreadyInitializedAssert
 	
 	if ((self = [super init])) {
-		[self populateDefaultsPreflight];
+		if (self->_objectInitializedAsCopy == NO) {
+			[self populateDefaultsPreflight];
+		}
 
 		[self populateDictionaryValue:dic ignorePrivateMessages:ignorePrivateMessages applyDefaults:YES];
 
-		[self populateDefaultsPostflight];
+		if (self->_objectInitializedAsCopy == NO) {
+			[self populateDefaultsPostflight];
+		}
 
 		[self initializedClassHealthCheck];
 
@@ -318,6 +322,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable assignUnsignedShortTo:&self->_proxyPort forKey:@"proxyPort"];
 	[defaultsMutable assignUnsignedShortTo:&self->_serverPort forKey:@"serverPort"];
+
+	/* If this is a copy operation, then we can just stop here. The rest of the data processed below,
+	 such as other configurations and backwards keys are already taken care of. */
+	if (self->_objectInitializedAsCopy) {
+		return;
+	}
 
 	/* Channel list */
 	NSMutableArray<IRCChannelConfig *> *channelListOut = [NSMutableArray array];
@@ -481,8 +491,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
-	  IRCClientConfig *config =
-	[[IRCClientConfig allocWithZone:zone] initWithDictionary:self.dictionaryValue ignorePrivateMessages:NO];
+	IRCClientConfig *config = [IRCClientConfig allocWithZone:zone];
+
+	config->_objectInitializedAsCopy = YES;
 
 	// Instance variable is copied because self.nicknamePassward can return
 	// the value of the instance variable if present, else it uses keychain.
@@ -490,19 +501,32 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	config->_proxyPassword = [self->_proxyPassword copyWithZone:zone];
 	config->_serverPassword = [self->_serverPassword copyWithZone:zone];
 
-	return config;
+	config->_channelList = [self->_channelList copyWithZone:zone];
+	config->_highlightList = [self->_highlightList copyWithZone:zone];
+	config->_ignoreList = [self->_ignoreList copyWithZone:zone];
+
+	config->_defaults = [self->_defaults copyWithZone:zone];
+
+	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
 
 - (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
-	  IRCClientConfigMutable *config =
-	[[IRCClientConfigMutable allocWithZone:zone] initWithDictionary:self.dictionaryValue ignorePrivateMessages:NO];
+	IRCClientConfigMutable *config = [IRCClientConfigMutable allocWithZone:zone];
+
+	((IRCClientConfig *)config)->_objectInitializedAsCopy = YES;
 
 	config.nicknamePassword = self->_nicknamePassword;
 	config.proxyPassword = self->_proxyPassword;
 	config.serverPassword = self->_serverPassword;
 
-	return config;
+	config.channelList = self->_channelList;
+	config.highlightList = self->_highlightList;
+	config.ignoreList = self->_ignoreList;
+
+	((IRCClientConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
+
+	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
 
 - (id)uniqueCopy
@@ -525,13 +549,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self mutableCopy];
 	}
 
-	NSString *nicknamePassword = self.nicknamePassword;
-	NSString *proxyPassword = self.proxyPassword;
-	NSString *serverPassword = self.serverPassword;
-
-	object->_nicknamePassword = [nicknamePassword copy];
-	object->_proxyPassword = [proxyPassword copy];
-	object->_serverPassword = [serverPassword copy];
+	object->_nicknamePassword = [self.nicknamePassword copy];
+	object->_proxyPassword = [self.proxyPassword copy];
+	object->_serverPassword = [self.serverPassword copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 
@@ -552,10 +572,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
 {
-	return [self dictionaryValue:NO];
+	return [self _dictionaryValueForCopyOperation:NO isCloudDictionary:NO];
 }
 
-- (NSDictionary<NSString *, id> *)dictionaryValue:(BOOL)isCloudDictionary
+- (NSDictionary<NSString *, id> *)dictionaryValueForCloud
+{
+	return [self _dictionaryValueForCopyOperation:NO isCloudDictionary:YES];
+}
+
+- (NSDictionary<NSString *, id> *)dictionaryValueForCopyOperation
+{
+	return [self _dictionaryValueForCopyOperation:YES isCloudDictionary:NO];
+}
+
+- (NSDictionary<NSString *, id> *)_dictionaryValueForCopyOperation:(BOOL)isCopyOperation isCloudDictionary:(BOOL)isCloudDictionary
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
@@ -618,42 +648,47 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Channel List */
-	NSMutableArray<NSDictionary *> *channelListOut = [NSMutableArray array];
-	
-	for (IRCChannelConfig *e in self.channelList) {
-		NSDictionary *d = e.dictionaryValue;
+	/* During a copy operation, it is faster to copy these arrays as a whole.
+	 It also preserves -secretKey value in IRCChannelConfig since that will
+	 be lost when reconstructing from dictionary value. */
+	if (isCopyOperation == NO) {
+		NSMutableArray<NSDictionary *> *channelListOut = [NSMutableArray array];
+		
+		for (IRCChannelConfig *e in self.channelList) {
+			NSDictionary *d = e.dictionaryValue;
 
-		[channelListOut addObject:d];
-	}
+			[channelListOut addObject:d];
+		}
 
-	if (channelListOut.count > 0) {
-		dic[@"channelList"] = [channelListOut copy];
-	}
+		if (channelListOut.count > 0) {
+			dic[@"channelList"] = [channelListOut copy];
+		}
 
-	/* Highlight list */
-	NSMutableArray<NSDictionary *> *highlightListOut = [NSMutableArray array];
+		/* Highlight list */
+		NSMutableArray<NSDictionary *> *highlightListOut = [NSMutableArray array];
 
-	for (IRCHighlightMatchCondition *e in self.highlightList) {
-		NSDictionary *d = e.dictionaryValue;
+		for (IRCHighlightMatchCondition *e in self.highlightList) {
+			NSDictionary *d = e.dictionaryValue;
 
-		[highlightListOut addObject:d];
-	}
+			[highlightListOut addObject:d];
+		}
 
-	if (highlightListOut.count > 0) {
-		dic[@"highlightList"] = [highlightListOut copy];
-	}
+		if (highlightListOut.count > 0) {
+			dic[@"highlightList"] = [highlightListOut copy];
+		}
 
-	/* Ignore list */
-	NSMutableArray<NSDictionary *> *ignoreListOut = [NSMutableArray array];
+		/* Ignore list */
+		NSMutableArray<NSDictionary *> *ignoreListOut = [NSMutableArray array];
 
-	for (IRCAddressBookEntry *e in self.ignoreList) {
-		NSDictionary *d = e.dictionaryValue;
+		for (IRCAddressBookEntry *e in self.ignoreList) {
+			NSDictionary *d = e.dictionaryValue;
 
-		[ignoreListOut addObject:d];
-	}
+			[ignoreListOut addObject:d];
+		}
 
-	if (ignoreListOut.count > 0) {
-		dic[@"ignoreList"] = [ignoreListOut copy];
+		if (ignoreListOut.count > 0) {
+			dic[@"ignoreList"] = [ignoreListOut copy];
+		}
 	}
 
 	return [dic dictionaryByRemovingDefaults:self->_defaults allowEmptyValues:YES];

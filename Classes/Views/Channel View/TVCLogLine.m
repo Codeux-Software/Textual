@@ -64,7 +64,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 			DESIGNATED_INITIALIZER_EXCEPTION
 		}
 
-		[self populateDefaultsPostflight];
+		if (self->_objectInitializedAsCopy == NO) {
+			[self populateDefaultsPostflight];
+		}
 
 		self->_objectInitialized = YES;
 
@@ -136,7 +138,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic assignUnsignedIntegerTo:&self->_lineType forKey:@"lineType"];
 	[dic assignUnsignedIntegerTo:&self->_memberType forKey:@"memberType"];
 
-	[self computeNicknameColorStyle];
+	if (self->_objectInitializedAsCopy == NO) {
+		[self computeNicknameColorStyle];
+	}
 }
 
 - (void)populateDefaultsPostflight
@@ -179,7 +183,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	return [dic copy];
 }
-
 
 - (NSData *)jsonRepresentation
 {
@@ -359,18 +362,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
-	  TVCLogLine *object =
-	[[TVCLogLine alloc] initWithDictionary:self.dictionaryValue];
+	TVCLogLine *object = [TVCLogLine allocWithZone:zone];
 
-	return object;
+	object->_objectInitializedAsCopy = YES;
+
+	object->_nicknameColorStyle = [self->_nicknameColorStyle copyWithZone:zone];
+	object->_nicknameColorStyleOverride = self->_nicknameColorStyleOverride;
+
+	return [object initWithDictionary:self.dictionaryValue];
 }
 
 - (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
-	  TVCLogLineMutable *object =
-	[[TVCLogLineMutable alloc] initWithDictionary:self.dictionaryValue];
+	TVCLogLineMutable *object = [TVCLogLineMutable allocWithZone:zone];
 
-	return object;
+	((TVCLogLine *)object)->_objectInitializedAsCopy = YES;
+
+	/* These values are computed, not set, which means when we copy into
+	 a mutable version, we set the values to the Ivar */
+	((TVCLogLine *)object)->_nicknameColorStyle = [self->_nicknameColorStyle copyWithZone:zone];
+	((TVCLogLine *)object)->_nicknameColorStyleOverride = self->_nicknameColorStyleOverride;
+
+	return [object initWithDictionary:self.dictionaryValue];
 }
 
 - (BOOL)isMutable

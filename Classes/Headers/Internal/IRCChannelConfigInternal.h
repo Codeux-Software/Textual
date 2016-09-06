@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @private
 	BOOL _objectInitialized;
+	BOOL _objectInitializedAsCopy;
 	NSString *_uniqueIdentifier;
 	NSDictionary *_defaults;
 }

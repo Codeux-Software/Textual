@@ -514,7 +514,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self updateStoredConfiguration];
 
-	return [self.config dictionaryValue:YES];
+	return [self.config dictionaryValueForCloud];
 }
 
 - (void)prepareForApplicationTermination
