@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCChannelConfig ()
-- (NSDictionary<NSString *, id> *)dictionaryValue:(BOOL)isCloudDictionary;
+- (NSDictionary<NSString *, id> *)dictionaryValueForCloud;
 
 - (void)destroyKeychainItems;
 
