@@ -106,17 +106,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return NO;
 }
 
-+ (nullable NSString *)posixErrorStringFromError:(NSUInteger)errorCode
-{
-	const char *error = strerror((int)errorCode);
-
-	if (error) {
-		return @(error);
-	}
-
-	return nil;
-}
-
 - (SecTrustRef)sslCertificateTrustInformation
 {
 	__block SecTrustRef trust;

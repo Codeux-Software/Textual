@@ -392,9 +392,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	NSString *errorMessage = nil;
 
-	if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
-		errorMessage = [GCDAsyncSocket posixErrorStringFromError:error.code];
-	} else if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
+	if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
 		errorMessage = [GCDAsyncSocket sslHandshakeErrorStringFromError:error.code];
 
 		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
@@ -405,6 +403,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	if (errorMessage == nil) {
 		errorMessage = error.localizedDescription;
 	}
+
+	LogToConsoleInfo("Disconnect failure reason: %{public}", error.localizedFailureReason)
 
 	[self tcpClientDidError:errorMessage];
 

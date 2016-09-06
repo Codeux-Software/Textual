@@ -42,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error;
 + (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode;
-+ (nullable NSString *)posixErrorStringFromError:(NSUInteger)errorCode;
 
 @property (readonly) SecTrustRef sslCertificateTrustInformation;
 @property (readonly, copy, nullable) NSString *sslCertificateTrustPolicyName;
