@@ -104,11 +104,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
-		[self populateDefaultsPreflight];
+		if (self->_objectInitializedAsCopy == NO) {
+			[self populateDefaultsPreflight];
+		}
 
 		[self populateDictionaryValues:dic];
 
-		[self populateDefaultsPostflight];
+		if (self->_objectInitializedAsCopy == NO) {
+			[self populateDefaultsPostflight];
+		}
 
 		[self initializedClassHealthCheck];
 
@@ -162,20 +166,32 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
 
 		/* Load legacy keys (if they exist) */
-		[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"joinOnConnect"];
-		[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreJPQActivity"];
-		[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"disableInlineMedia"];
-		[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
-		[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
+		if (self->_objectInitializedAsCopy == NO) {
+			[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"joinOnConnect"];
+			[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreJPQActivity"];
+			[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"disableInlineMedia"];
+			[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
+			[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
+		}
 	}
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
 {
-	return [self dictionaryValue:NO];
+	return [self _dictionaryValueForCopyOperation:NO isCloudDictionary:NO];
 }
 
-- (NSDictionary<NSString *, id> *)dictionaryValue:(BOOL)isCloudDictionary
+- (NSDictionary<NSString *, id> *)dictionaryValueForCloud
+{
+	return [self _dictionaryValueForCopyOperation:NO isCloudDictionary:YES];
+}
+
+- (NSDictionary<NSString *, id> *)dictionaryValueForCopyOperation
+{
+	return [self _dictionaryValueForCopyOperation:YES isCloudDictionary:NO];
+}
+
+- (NSDictionary<NSString *, id> *)_dictionaryValueForCopyOperation:(BOOL)isCopyOperation isCloudDictionary:(BOOL)isCloudDictionary
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
@@ -229,22 +245,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
-	  IRCChannelConfig *config =
-	[[IRCChannelConfig allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+	IRCChannelConfig *config = [IRCChannelConfig allocWithZone:zone];
+
+	config->_defaults = [self->_defaults copyWithZone:zone];
 
 	config->_secretKey = [self->_secretKey copyWithZone:zone];
 
-	return config;
+	return [config initWithDictionary:self.dictionaryValueForCopyOperation];
 }
 
 - (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
-	  IRCChannelConfigMutable *config =
-	[[IRCChannelConfigMutable allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+	IRCChannelConfigMutable *config = [IRCChannelConfigMutable allocWithZone:zone];
+
+	((IRCChannelConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
 
 	config.secretKey = self->_secretKey;
 
-	return config;
+	return [config initWithDictionary:self.dictionaryValueForCopyOperation];
 }
 
 - (id)uniqueCopy
@@ -269,9 +287,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self mutableCopy];
 	}
 
-	NSString *secretKey = self.secretKey;
-
-	object->_secretKey = [secretKey copy];
+	object->_secretKey = [self.secretKey copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 

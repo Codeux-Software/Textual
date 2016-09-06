@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @private
 	NSString *_uniqueIdentifier;
 	BOOL _objectInitialized;
+	BOOL _objectInitializedAsCopy;
 }
 
 - (BOOL)isMutable;
