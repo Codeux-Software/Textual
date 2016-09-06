@@ -141,7 +141,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSDictionary<NSString *, id> *)configurationDictionaryForCloud
 {
-	return [self.config dictionaryValue:YES];
+	return [self.config dictionaryValueForCloud];
 }
 
 - (NSString *)description
