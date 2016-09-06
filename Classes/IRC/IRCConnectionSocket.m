@@ -336,6 +336,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	if (clientSideCertificate.count > 0) {
 		settings[(id)kCFStreamSSLCertificates] = (id)clientSideCertificate;
+
+		self.isConnectedWithClientSideCertificate = YES;
 	}
 
 	[self.socketConnection startTLS:settings];
