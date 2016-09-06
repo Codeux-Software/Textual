@@ -259,6 +259,11 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onThemeWillReload:)
+								   name:TVCMainWindowWillReloadThemeNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onThemeReloadComplete:)
 								   name:TVCMainWindowDidReloadThemeNotification
 								 object:nil];
@@ -1253,18 +1258,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedTheme:(id)sender
 {
-	self.reloadingTheme = YES;
-
 	[TPCPreferences performReloadAction:(TPCPreferencesReloadStyleWithTableViewsAction | TPCPreferencesReloadTextDirectionAction)];
+}
+
+- (void)onThemeWillReload:(NSNotification *)notification
+{
+	self.reloadingTheme = YES;
 }
 
 - (void)onThemeReloadComplete:(NSNotification *)notification
 {
-	if (self.reloadingTheme) {
-		self.reloadingTheme = NO;
-	} else {
-		return;
-	}
+	self.reloadingTheme = NO;
 
 	if (self.reloadingThemeBySelection) {
 		self.reloadingThemeBySelection = NO;
