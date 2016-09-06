@@ -154,7 +154,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 + (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
 {
 	if (completionHandler) {
-		completionHandler();
+		XRPerformBlockAsynchronouslyOnMainQueue(completionHandler);
 	}
 }
 

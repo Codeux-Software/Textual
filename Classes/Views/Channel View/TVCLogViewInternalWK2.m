@@ -244,7 +244,7 @@ create_normal_pool:
 	}
 
 	if (completionHandler) {
-		completionHandler();
+		XRPerformBlockAsynchronouslyOnMainQueue(completionHandler);
 	}
 }
 
