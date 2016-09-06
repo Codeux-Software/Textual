@@ -1291,6 +1291,8 @@ ClassWithDesignatedInitializerInitMethod
 	
 	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResourcesFolderPath];
 
+	templateTokens[@"cacheToken"] = themeController().cacheToken;
+
     templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
 
 	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
