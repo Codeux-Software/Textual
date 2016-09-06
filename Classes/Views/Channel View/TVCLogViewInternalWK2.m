@@ -240,6 +240,10 @@ create_normal_pool:
 
 		return;
 	}
+
+	if (completionHandler) {
+		XRPerformBlockAsynchronouslyOnMainQueue(completionHandler);
+	}
 }
 
 - (void)openWebInspector
