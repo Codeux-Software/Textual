@@ -77,7 +77,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.tnewNicknameTextField.textDidChangeCallback = self;
 
 	self.tnewNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isHostmaskNickname;
+		return [currentValue isHostmaskNicknameOn:self.client];
 	};
 
 	NSString *nickname = self.client.userNickname;
