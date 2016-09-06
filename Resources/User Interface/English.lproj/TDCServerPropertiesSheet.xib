@@ -2031,7 +2031,7 @@ Gw
                         <action selector="onClientCertificateResetRequested:" target="-2" id="hl9-sg-Zmd"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
                     <rect key="frame" x="39" y="260" width="339" height="17"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select a certificate to send when you connect securely." id="rIl-yx-VEH">
                         <font key="font" metaFont="system"/>
