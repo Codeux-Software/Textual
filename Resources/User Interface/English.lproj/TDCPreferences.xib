@@ -1933,6 +1933,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedTheme:" target="-2" id="1W2-8L-tKi"/>
+                        <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="hbd-3l-Sbk">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.NicknameColorHashingComputesRGBValue" id="fnP-ep-WBT"/>
                     </connections>
                 </button>
