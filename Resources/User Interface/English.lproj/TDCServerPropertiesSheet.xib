@@ -2031,8 +2031,8 @@ Gw
                         <action selector="onClientCertificateResetRequested:" target="-2" id="hl9-sg-Zmd"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
-                    <rect key="frame" x="39" y="260" width="339" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
+                    <rect key="frame" x="39" y="260" width="468" height="17"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select a certificate to send when you connect securely." id="rIl-yx-VEH">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2172,6 +2172,7 @@ Gw
                 <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="leading" id="QJT-2X-nOI"/>
                 <constraint firstItem="f9F-WF-ubf" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="trailing" constant="9" id="Rp5-aL-h9I"/>
                 <constraint firstItem="fdC-a6-iNA" firstAttribute="baseline" secondItem="2ie-9H-xb2" secondAttribute="baseline" id="SOq-Cx-7EN"/>
+                <constraint firstAttribute="trailing" secondItem="zU1-IR-zpt" secondAttribute="trailing" constant="25" id="U3e-V8-1tN"/>
                 <constraint firstItem="Grr-p8-MOF" firstAttribute="trailing" secondItem="nFm-83-7HQ" secondAttribute="trailing" id="WST-sP-H5d"/>
                 <constraint firstItem="h8M-bR-Uth" firstAttribute="baseline" secondItem="nFm-83-7HQ" secondAttribute="baseline" id="WeZ-hn-clQ"/>
                 <constraint firstItem="Grr-p8-MOF" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="leading" id="WhV-pQ-2JL"/>
