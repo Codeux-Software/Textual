@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowAppearanceChangedNotification";
 
+NSString * const TVCMainWindowWillReloadThemeNotification = @"TVCMainWindowWillReloadThemeNotification";
+NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidReloadThemeNotification";
+
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
@@ -849,6 +852,8 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 		return;
 	}
 
+	[RZNotificationCenter() postNotificationName:TVCMainWindowWillReloadThemeNotification object:self];
+
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		/* -emptyCaches uses a semaphore to know when the web processes have cleared
 		 their cache. The web processes signal the semaphore on the main thread which
@@ -879,6 +884,8 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 	}
 
 	self.reloadingTheme = NO;
+
+	[RZNotificationCenter() postNotificationName:TVCMainWindowDidReloadThemeNotification object:self];
 }
 
 - (void)clearContentsOfClient:(IRCClient *)client

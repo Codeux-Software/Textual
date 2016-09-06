@@ -129,6 +129,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
 @property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
 @property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
+@property (nonatomic, assign) BOOL reloadingTheme;
+@property (nonatomic, assign) BOOL reloadingThemeBySelection;
 
 - (IBAction)onAddExcludeKeyword:(id)sender;
 - (IBAction)onAddHighlightKeyword:(id)sender; // changed
@@ -255,6 +257,11 @@ NS_ASSUME_NONNULL_BEGIN
 								   name:TPCPreferencesCloudSyncDidChangeThemeNameNotification
 								 object:nil];
 #endif
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onThemeReloadComplete:)
+								   name:TVCMainWindowDidReloadThemeNotification
+								 object:nil];
 
 	self.mountainLionDeprecationWarningIsVisible = NO;
 
@@ -981,10 +988,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[TPCPreferences setThemeName:newTheme];
 
+	self.reloadingThemeBySelection = YES;
+
 	[self onChangedTheme:nil];
+}
 
-	// ---- //
-
+- (void)onChangedThemeSelectionReloadComplete:(NSNotification *)notification
+{
 	NSMutableString *forcedValuesMutable = [NSMutableString string];
 
 	if ([TPCPreferences themeNicknameFormatPreferenceUserConfigurable] == NO) {
@@ -1017,8 +1027,12 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	NSString *currentTheme = [TPCPreferences themeName];
+
+	NSString *themeName = [TPCThemeController extractThemeName:currentTheme];
+
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-									  body:TXTLS(@"TDCPreferencesController[1008][2]", newThemeName, forcedValues)
+									  body:TXTLS(@"TDCPreferencesController[1008][2]", themeName, forcedValues)
 									 title:TXTLS(@"TDCPreferencesController[1008][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
@@ -1239,7 +1253,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedTheme:(id)sender
 {
+	self.reloadingTheme = YES;
+
 	[TPCPreferences performReloadAction:(TPCPreferencesReloadStyleWithTableViewsAction | TPCPreferencesReloadTextDirectionAction)];
+}
+
+- (void)onThemeReloadComplete:(NSNotification *)notification
+{
+	if (self.reloadingTheme) {
+		self.reloadingTheme = NO;
+	} else {
+		return;
+	}
+
+	if (self.reloadingThemeBySelection) {
+		self.reloadingThemeBySelection = NO;
+
+		[self onChangedThemeSelectionReloadComplete:notification];
+	}
 }
 
 - (void)onChangedMainWindowSegmentedController:(id)sender
