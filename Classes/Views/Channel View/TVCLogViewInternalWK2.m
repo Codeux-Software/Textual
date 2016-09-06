@@ -226,25 +226,19 @@ create_normal_pool:
 
 + (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
 {
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		WKWebsiteDataStore *wk2WebsiteDataStore = _sharedWebViewConfiguration.websiteDataStore;
+	WKWebsiteDataStore *wk2WebsiteDataStore = _sharedWebViewConfiguration.websiteDataStore;
 
-		if ( wk2WebsiteDataStore) {
-			NSSet *itemsToRemove = [NSSet setWithArray:@[
-				WKWebsiteDataTypeDiskCache,
-				WKWebsiteDataTypeMemoryCache
-			]];
+	if ( wk2WebsiteDataStore) {
+		NSSet *itemsToRemove = [NSSet setWithArray:@[
+			WKWebsiteDataTypeDiskCache,
+			WKWebsiteDataTypeMemoryCache
+		]];
 
-			[wk2WebsiteDataStore removeDataOfTypes:itemsToRemove
-									 modifiedSince:[NSDate distantPast]
-								 completionHandler:completionHandler];
+		[wk2WebsiteDataStore removeDataOfTypes:itemsToRemove
+								 modifiedSince:[NSDate distantPast]
+							 completionHandler:completionHandler];
 
-			return;
-		}
-	}
-
-	if (completionHandler) {
-		XRPerformBlockAsynchronouslyOnMainQueue(completionHandler);
+		return;
 	}
 }
 
