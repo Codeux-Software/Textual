@@ -84,9 +84,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *autoReconnectCheck;
 @property (nonatomic, weak) IBOutlet NSButton *autojoinWaitsForNickServCheck;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateChangeCertificateButton;
-@property (nonatomic, weak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateResetCertificateButton;
+@property (nonatomic, weak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA1FingerprintCopyButton;
+@property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA2FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *connectionPrefersIPv4Check;
 @property (nonatomic, weak) IBOutlet NSButton *connectionPrefersModernCiphersCheck;
 @property (nonatomic, weak) IBOutlet NSButton *deleteAddressBookEntryButton;
@@ -114,6 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateCommonNameField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateMD5FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA1FingerprintField;
+@property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA2FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *erroneousInputErrorTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *nicknamePasswordTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *proxyPasswordTextField;
@@ -167,6 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)onClientCertificateResetRequested:(id)sender;
 - (IBAction)onClientCertificateChangeRequested:(id)sender;
+- (IBAction)onClientCertificateFingerprintSHA2CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintSHA1CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintMD5CopyRequested:(id)sender;
 @end
@@ -1161,6 +1164,15 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark SSL Certificate
 
+- (void)onClientCertificateFingerprintSHA2CopyRequested:(id)sender
+{
+	NSString *fingerprint = self.clientCertificateSHA2FingerprintField.stringValue;
+
+	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", fingerprint];
+
+	RZPasteboard().stringContent = command;
+}
+
 - (void)onClientCertificateFingerprintSHA1CopyRequested:(id)sender
 {
 	NSString *fingerprint = self.clientCertificateSHA1FingerprintField.stringValue;
@@ -1179,7 +1191,10 @@ NS_ASSUME_NONNULL_BEGIN
 	RZPasteboard().stringContent = command;
 }
 
-- (void)readClientCertificateCommonName:(NSString **)commonNameOut sha1Fingerprint:(NSString **)sha1FingerprintOut md5Fingerprint:(NSString **)md5FingerprintOut
+- (void)readClientCertificateCommonName:(NSString **)commonNameOut
+						sha2Fingerprint:(NSString **)sha2FingerprintOut
+						sha1Fingerprint:(NSString **)sha1FingerprintOut
+						 md5Fingerprint:(NSString **)md5FingerprintOut
 {
 	NSData *certificateDataIn = self.config.identityClientSideCertificate;
 
@@ -1222,6 +1237,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (certificateDataRef) {
 		NSData *certificateData = (__bridge NSData *)certificateDataRef;
 
+		*sha2FingerprintOut = certificateData.sha256;
 		*sha1FingerprintOut = certificateData.sha1;
 		*md5FingerprintOut = certificateData.md5;
 
@@ -1284,28 +1300,35 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateClientCertificatePage
 {
 	NSString *commonName = nil;
-	
+
+	NSString *sha2Fingerprint = nil;
 	NSString *sha1Fingerprint = nil;
 	NSString *md5Fingerprint = nil;
 
-	[self readClientCertificateCommonName:&commonName sha1Fingerprint:&sha1Fingerprint md5Fingerprint:&md5Fingerprint];
+	[self readClientCertificateCommonName:&commonName
+						  sha2Fingerprint:&sha2Fingerprint
+						  sha1Fingerprint:&sha1Fingerprint
+						   md5Fingerprint:&md5Fingerprint];
 
 	BOOL hasNoCertificate = NSObjectIsEmpty(commonName);
 	
 	if (hasNoCertificate) {
 		self.clientCertificateCommonNameField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
-		
+
+		self.clientCertificateSHA2FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
 		self.clientCertificateSHA1FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
 		self.clientCertificateMD5FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
 	} else {
 		self.clientCertificateCommonNameField.stringValue = commonName;
-		
+
+		self.clientCertificateSHA2FingerprintField.stringValue = sha2Fingerprint.uppercaseString;
 		self.clientCertificateSHA1FingerprintField.stringValue = sha1Fingerprint.uppercaseString;
 		self.clientCertificateMD5FingerprintField.stringValue = md5Fingerprint.uppercaseString;
 	}
 	
 	self.clientCertificateResetCertificateButton.enabled = (hasNoCertificate == NO);
 
+	self.clientCertificateSHA2FingerprintCopyButton.enabled = (hasNoCertificate == NO);
 	self.clientCertificateSHA1FingerprintCopyButton.enabled = (hasNoCertificate == NO);
 	self.clientCertificateMD5FingerprintCopyButton.enabled = (hasNoCertificate == NO);
 }
