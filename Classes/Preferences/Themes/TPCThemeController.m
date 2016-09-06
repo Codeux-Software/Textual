@@ -66,6 +66,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 @interface TPCThemeController ()
 @property (nonatomic, copy) NSString *cachedThemeName;
+@property (nonatomic, copy, readwrite) NSString *cacheToken;
 @property (nonatomic, copy, readwrite) NSURL *baseURL;
 @property (nonatomic, strong, readwrite) TPCThemeSettings *customSettings;
 @property (nonatomic, assign, readwrite) TPCThemeControllerStorageLocation storageLocation;
@@ -242,6 +243,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	self.baseURL = [NSURL fileURLWithPath:themePath isDirectory:YES];
 
 	self.cachedThemeName = themeName;
+
+	self.cacheToken = [NSString stringWithUnsignedInteger:TXRandomNumber(1000000)];
 
 	self.storageLocation = storageLocation;
 

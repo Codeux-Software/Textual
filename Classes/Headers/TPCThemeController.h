@@ -71,6 +71,8 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 
 @property (readonly, copy) NSString *path;
 
+@property (readonly, copy) NSString *cacheToken;
+
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;
 
 /* Returns YES if a theme reload was necessary */
