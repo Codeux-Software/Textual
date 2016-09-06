@@ -2065,8 +2065,8 @@ Gw
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vOo-Hg-7M0">
-                    <rect key="frame" x="48" y="197" width="119" height="17"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Certificate Name:" id="pxF-PC-Aax">
+                    <rect key="frame" x="18" y="197" width="149" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Certificate Name:" usesSingleLineMode="YES" id="pxF-PC-Aax">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2088,7 +2088,7 @@ Gw
                     <constraints>
                         <constraint firstAttribute="width" constant="145" id="b3H-xt-5ZQ"/>
                     </constraints>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="SHA-256 Fingerprint:" id="jhF-Ix-th5">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="SHA-256 Fingerprint:" usesSingleLineMode="YES" id="jhF-Ix-th5">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2106,8 +2106,8 @@ Gw
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h8M-bR-Uth">
-                    <rect key="frame" x="42" y="133" width="125" height="17"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="SHA-1 Fingerprint:" id="O13-rx-ewF">
+                    <rect key="frame" x="18" y="133" width="149" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="SHA-1 Fingerprint:" usesSingleLineMode="YES" id="O13-rx-ewF">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2136,8 +2136,8 @@ Gw
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fm4-76-q5h">
-                    <rect key="frame" x="53" y="106" width="114" height="17"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="MD5 Fingerprint:" id="Mmj-Ja-V8x">
+                    <rect key="frame" x="18" y="106" width="149" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="MD5 Fingerprint:" usesSingleLineMode="YES" id="Mmj-Ja-V8x">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2163,11 +2163,13 @@ Gw
                 <constraint firstItem="Grr-p8-MOF" firstAttribute="top" secondItem="nFm-83-7HQ" secondAttribute="bottom" constant="10" id="5bb-Tn-DQs"/>
                 <constraint firstItem="2ie-9H-xb2" firstAttribute="top" secondItem="nly-3d-FIq" secondAttribute="bottom" constant="20" id="5nx-bU-cBC"/>
                 <constraint firstItem="h8M-bR-Uth" firstAttribute="trailing" secondItem="fdC-a6-iNA" secondAttribute="trailing" id="6lX-yL-y0a"/>
+                <constraint firstItem="Fm4-76-q5h" firstAttribute="leading" secondItem="h8M-bR-Uth" secondAttribute="leading" id="8EX-pz-sZ9"/>
                 <constraint firstItem="nly-3d-FIq" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="leading" id="8nM-r6-fSp"/>
                 <constraint firstItem="zU1-IR-zpt" firstAttribute="top" secondItem="Ti4-Q4-cYX" secondAttribute="top" constant="30" id="C1v-NB-gRo"/>
                 <constraint firstItem="Fm4-76-q5h" firstAttribute="baseline" secondItem="Grr-p8-MOF" secondAttribute="baseline" id="IBw-de-7kQ"/>
                 <constraint firstItem="KJ9-QR-tAv" firstAttribute="baseline" secondItem="Grr-p8-MOF" secondAttribute="baseline" constant="-1" id="KNM-Nj-0Nu"/>
                 <constraint firstItem="nFm-83-7HQ" firstAttribute="top" secondItem="2ie-9H-xb2" secondAttribute="bottom" constant="10" id="NWg-29-476"/>
+                <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="leading" id="QJT-2X-nOI"/>
                 <constraint firstItem="f9F-WF-ubf" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="trailing" constant="9" id="Rp5-aL-h9I"/>
                 <constraint firstItem="fdC-a6-iNA" firstAttribute="baseline" secondItem="2ie-9H-xb2" secondAttribute="baseline" id="SOq-Cx-7EN"/>
                 <constraint firstItem="Grr-p8-MOF" firstAttribute="trailing" secondItem="nFm-83-7HQ" secondAttribute="trailing" id="WST-sP-H5d"/>
@@ -2187,6 +2189,7 @@ Gw
                 <constraint firstItem="l36-PJ-JBU" firstAttribute="leading" secondItem="sab-tw-7nn" secondAttribute="trailing" constant="12" symbolic="YES" id="pob-f5-QYo"/>
                 <constraint firstItem="2ie-9H-xb2" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="trailing" constant="8" id="r3M-Lp-94Z"/>
                 <constraint firstItem="Fm4-76-q5h" firstAttribute="trailing" secondItem="fdC-a6-iNA" secondAttribute="trailing" id="r6F-Ut-zcr"/>
+                <constraint firstItem="h8M-bR-Uth" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="leading" id="wLo-XJ-66f"/>
                 <constraint firstAttribute="bottom" secondItem="sab-tw-7nn" secondAttribute="bottom" constant="30" id="xBc-op-q0b"/>
                 <constraint firstItem="vOo-Hg-7M0" firstAttribute="baseline" secondItem="nly-3d-FIq" secondAttribute="baseline" id="z7X-kl-gWV"/>
             </constraints>
