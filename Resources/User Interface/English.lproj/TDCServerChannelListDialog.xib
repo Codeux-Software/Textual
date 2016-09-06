@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A313a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerChannelListDialog">
@@ -174,6 +174,8 @@
                                         <binding destination="gJL-Lo-AKT" name="content" keyPath="arrangedObjects" id="Aan-3r-Y2r"/>
                                         <binding destination="gJL-Lo-AKT" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="Aan-3r-Y2r" id="xWt-Eu-bKV"/>
                                         <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="xWt-Eu-bKV" id="I1D-lf-EMM"/>
+                                        <outlet property="dataSource" destination="-2" id="QdA-vM-Mmq"/>
+                                        <outlet property="delegate" destination="-2" id="SZe-ZV-KXj"/>
                                     </connections>
                                 </tableView>
                             </subviews>

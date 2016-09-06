@@ -243,6 +243,18 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark NSTableViewDelegate
+
+- (NSIndexSet *)tableView:(NSTableView *)tableView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
+{
+#define _maximumSelectedRows	8
+
+	return [tableView selectionIndexesForProposedSelection:proposedSelectionIndexes maximumNumberOfSelections:_maximumSelectedRows];
+
+#undef _maximumSelectedRows
+}
+
+#pragma mark -
 #pragma mark NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification *)note
