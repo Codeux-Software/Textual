@@ -186,11 +186,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
-	[TVCLogViewInternalWK2 emptyCaches:^{
-		dispatch_semaphore_signal(semaphore);
-	}];
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		[TVCLogViewInternalWK2 emptyCaches:^{
+			dispatch_semaphore_signal(semaphore);
+		}];
 
-	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+		dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+	}
 }
 
 - (void)recreateTemporaryCopyOfThemeIfNecessary
