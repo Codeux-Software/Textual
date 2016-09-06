@@ -626,7 +626,7 @@ NS_ASSUME_NONNULL_BEGIN
 			
 			return (channelCount > 0);
 		}
-		case 9631: // "Close Window"
+		case 203: // "Close Window"
 		{
 			TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
