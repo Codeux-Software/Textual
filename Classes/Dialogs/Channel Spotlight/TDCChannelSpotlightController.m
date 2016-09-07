@@ -302,9 +302,9 @@ ClassWithDesignatedInitializerInitMethod
 		{
 			NSUInteger keyboardKeys = (event.modifierFlags & NSDeviceIndependentModifierFlagsMask);
 
-			if (keyboardKeys == NSCommandKeyMask ||
-				(keyboardKeys & ~NSCommandKeyMask & ~NSNumericPadKeyMask) == 0)
-			{
+			keyboardKeys &= ~NSNumericPadKeyMask;
+
+			if (keyboardKeys == NSCommandKeyMask) {
 				return [self handleCommandNumberEvent:event];
 			}
 
