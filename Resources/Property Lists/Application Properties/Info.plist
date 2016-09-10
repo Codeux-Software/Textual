@@ -95,8 +95,6 @@
 	<false/>
 	<key>SUBundleName</key>
 	<string>Textual</string>
-	<key>SUEnableAutomaticChecks</key>
-	<true/>
 	<key>SUEnableSystemProfiling</key>
 	<false/>
 </dict>
