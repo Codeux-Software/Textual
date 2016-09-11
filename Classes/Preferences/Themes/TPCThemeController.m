@@ -237,8 +237,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	
 	NSString *themePath = [TPCThemeController pathOfThemeWithName:themeName storageLocation:&storageLocation];
 
-	NSAssert((storageLocation != TPCThemeControllerStorageUnknownLocation),
-		@"Missing style resource files");
+	NSAssert1((storageLocation != TPCThemeControllerStorageUnknownLocation),
+		@"Missing style resource files: %@", themeName);
 
 	self.baseURL = [NSURL fileURLWithPath:themePath isDirectory:YES];
 
