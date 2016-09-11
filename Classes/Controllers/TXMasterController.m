@@ -193,9 +193,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:(id)self];
 
-	[[BITHockeyManager sharedHockeyManager] startManager];
-
 	[self hockeyAppToggleCollectAnonymousStatistics];
+
+	[[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 }
 
