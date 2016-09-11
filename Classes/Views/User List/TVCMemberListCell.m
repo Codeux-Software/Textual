@@ -732,11 +732,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (TVCMemberListCell * _Nullable)childCell
 {
 	if (self->_childCell == nil) {
-		for (NSView *subview in self.subviews) {
-			if ([subview isKindOfClass:[TVCMemberListCell class]]) {
-				self->_childCell = (id)subview;
-			}
+		if (self.numberOfColumns == 0) {
+			return nil;
 		}
+
+		self->_childCell = [self viewAtColumn:0];
 	}
 
 	return self->_childCell;
