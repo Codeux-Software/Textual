@@ -856,8 +856,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	newView.parentDialog = self;
 
-	[newView populateDefaults];
-
 	return newView;
 }
 
@@ -866,7 +864,9 @@ NS_ASSUME_NONNULL_BEGIN
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		NSView *cellView = [rowView viewAtColumn:0];
 
-		[(id)cellView reloadCheckboxForChildren];
+		[(TPI_ChatFilterLimitToTableCellView *)cellView populateDefaults];
+
+		[(TPI_ChatFilterLimitToTableCellView *)cellView reloadCheckboxForChildren];
 	});
 
 	if ((row + 1) == outlineView.numberOfRows) {
