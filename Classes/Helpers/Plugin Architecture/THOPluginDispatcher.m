@@ -203,7 +203,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 			continue;
 		}
 
-		NSString *returnedValue = [plugin.primaryClass willRenderMessage:newMessage forViewController:viewController lineType:lineType memberType:memberType];
+		NSString *returnedValue = [plugin.primaryClass willRenderMessage:returnValue forViewController:viewController lineType:lineType memberType:memberType];
 
 		if (NSObjectIsEmpty(returnedValue)) {
 			continue;
