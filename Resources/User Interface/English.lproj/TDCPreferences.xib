@@ -1916,8 +1916,8 @@
                     </constraints>
                 </box>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Ink-td-oFr">
-                    <rect key="frame" x="79" y="234" width="199" height="18"/>
-                    <buttonCell key="cell" type="check" title="Enable echo-message capacity" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="k2j-qv-6ty">
+                    <rect key="frame" x="79" y="234" width="206" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable echo-message capability" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="k2j-qv-6ty">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
