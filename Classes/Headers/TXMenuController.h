@@ -58,7 +58,9 @@ NS_ASSUME_NONNULL_BEGIN
 	100: "About Textual"
 	101: "Preferences…"
 	102: "Manage license…"
-	103: "Check for updates…"
+	103: "Updates"
+	109: "Check for updates…"
+	110: "Automatically Check for Updates"
 	104: "Services"
 	105: "Hide Textual"
 	106: "Hide Others"
@@ -449,6 +451,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)forceReloadTheme:(id)sender;
 - (IBAction)openWebInspector:(id)sender;
 
+- (IBAction)toggleAutomaticallyCheckForUpdates:(id)sender;
 - (IBAction)toggleBetaUpdates:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
 

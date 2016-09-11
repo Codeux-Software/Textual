@@ -76,6 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuCloseWindowMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuChannelMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuServerMenuItem;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuUpdatesMenuItem;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuWindowMenuItem;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *mainWindowSegmentedControllerCell0Menu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *serverListNoSelectionMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *userControlMenu;
@@ -95,6 +97,10 @@ NS_ASSUME_NONNULL_BEGIN
 		self.muteNotificationsSoundsDockMenuItem.state = NSOnState;
 		self.muteNotificationsSoundsFileMenuItem.state = NSOnState;
 	}
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+	self.mainMenuUpdatesMenuItem.hidden = YES;
+#endif
 
 	[self setupOtherServices];
 
@@ -125,7 +131,11 @@ NS_ASSUME_NONNULL_BEGIN
 		[self resetSelectedItems];
 	}
 
-	[self forceAllChildrenElementsOfMenuToValidate:[NSApp mainMenu] recursively:YES];
+	/* When the selection changes, menus that may be dynamic are force
+	 revalidated so that Command I (or other shortcuts) work with channel
+	 selected, but not for the server console. */
+	[self forceAllChildrenElementsOfMenuToValidate:self.mainMenuChannelMenuItem.menu recursively:YES];
+	[self forceAllChildrenElementsOfMenuToValidate:self.mainMenuServerMenuItem.menu recursively:YES];
 }
 
 - (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
@@ -278,7 +288,7 @@ NS_ASSUME_NONNULL_BEGIN
 					case 100: // "About Textual"
 					case 101: // "Preferences…"
 					case 102: // "Manage license…"
-					case 103: // "Check for updates…"
+					case 107: // "Check for updates…"
 					{
 						returnValue = YES;
 					}
@@ -371,10 +381,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 103: // "Check for updates…"
+		case 110: // "Automatically Check for Updates"
 		{
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-			menuItem.hidden = YES;
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+			SUUpdater *updater = [SUUpdater sharedUpdater];
+
+			if (updater.automaticallyChecksForUpdates) {
+				menuItem.state = NSOnState;
+			} else {
+				menuItem.state = NSOffState;
+			}
 #endif
 
 			return YES;
@@ -3456,6 +3473,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Sparkle Framework
+
+- (void)toggleAutomaticallyCheckForUpdates:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	SUUpdater *updater = [SUUpdater sharedUpdater];
+
+	updater.automaticallyChecksForUpdates = (updater.automaticallyChecksForUpdates == NO);
+#endif
+}
 
 - (void)toggleBetaUpdates:(id)sender
 {

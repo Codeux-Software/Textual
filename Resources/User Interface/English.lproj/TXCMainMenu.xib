@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A286a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -36,11 +36,25 @@
                                     <action selector="manageLicense:" target="267" id="9xt-Qu-8UP"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for updates…" tag="103" id="SKm-yR-9hI">
+                            <menuItem title="Updates" tag="103" id="San-DK-zUZ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="checkForUpdates:" target="267" id="Khl-F9-d2t"/>
-                                </connections>
+                                <menu key="submenu" title="Updates" id="0FM-8Y-44m">
+                                    <items>
+                                        <menuItem title="Check for updates…" tag="109" id="SKm-yR-9hI">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="checkForUpdates:" target="267" id="Khl-F9-d2t"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="6AQ-kD-brM"/>
+                                        <menuItem title="Automatically Check for Updates" state="on" tag="110" id="NoV-uq-0cX">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleAutomaticallyCheckForUpdates:" target="267" id="5jx-rT-PEb"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -1084,6 +1098,8 @@ CQ
                 <outlet property="mainMenuCloseWindowMenuItem" destination="1770" id="v1F-W5-HfU"/>
                 <outlet property="mainMenuNavigationChannelListMenu" destination="89a-J1-2zg" id="8Ju-VI-XQI"/>
                 <outlet property="mainMenuServerMenuItem" destination="286" id="OSj-f8-vqi"/>
+                <outlet property="mainMenuUpdatesMenuItem" destination="San-DK-zUZ" id="CwH-0j-nYs"/>
+                <outlet property="mainMenuWindowMenuItem" destination="19" id="w4D-Ns-fa4"/>
                 <outlet property="mainWindowSegmentedControllerCell0Menu" destination="2953" id="oCb-R7-qbx"/>
                 <outlet property="muteNotificationsDockMenuItem" destination="dnc-ku-aQ3" id="Af9-tD-wlC"/>
                 <outlet property="muteNotificationsFileMenuItem" destination="QNy-Fk-SRO" id="nHn-Ki-RJX"/>
@@ -1562,5 +1578,8 @@ CA
                 <outlet property="delegate" destination="267" id="2RV-vm-dLp"/>
             </connections>
         </menu>
+        <menuItem title="Item" id="Hay-Ss-EHs">
+            <modifierMask key="keyEquivalentModifierMask"/>
+        </menuItem>
     </objects>
 </document>
