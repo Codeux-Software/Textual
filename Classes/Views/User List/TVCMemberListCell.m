@@ -502,18 +502,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
+	BOOL stripIRCFormatting = [TPCPreferences removeAllFormatting];
+
 	NSString *hostmaskAddress = cellItem.user.address;
 
 	if (hostmaskAddress.length == 0) {
 		hostmaskAddress = TXTLS(@"TVCMainWindow[1010]");
 	}
 
-	NSAttributedString *hostmaskAddressFormatted =
-	[hostmaskAddress attributedStringWithIRCFormatting:[NSFont systemFontOfSize:12.0]
-									preferredFontColor:nil
-							 honorFormattingPreference:NO];
+	if (stripIRCFormatting) {
+		userInfoPopover.addressField.stringValue = hostmaskAddress;
+	} else {
+		NSAttributedString *hostmaskAddressFormatted =
+		[hostmaskAddress attributedStringWithIRCFormatting:[NSFont systemFontOfSize:12.0]
+										preferredFontColor:nil
+								 honorFormattingPreference:NO];
 
-	userInfoPopover.addressField.attributedStringValue = hostmaskAddressFormatted;
+		userInfoPopover.addressField.attributedStringValue = hostmaskAddressFormatted;
+	}
 
 	/* =============================================== */
 
@@ -523,7 +529,16 @@ NS_ASSUME_NONNULL_BEGIN
 		realName = TXTLS(@"TVCMainWindow[1010]");
 	}
 
-	userInfoPopover.realNameField.stringValue = realName;
+	if (stripIRCFormatting) {
+		userInfoPopover.realNameField.stringValue = realName;
+	} else {
+		NSAttributedString *realNameFormatted =
+		[realName attributedStringWithIRCFormatting:[NSFont systemFontOfSize:12.0]
+								 preferredFontColor:nil
+						  honorFormattingPreference:NO];
+
+		userInfoPopover.realNameField.attributedStringValue = realNameFormatted;
+	}
 
 	/* =============================================== */
 
