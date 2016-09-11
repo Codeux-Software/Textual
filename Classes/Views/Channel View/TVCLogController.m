@@ -535,8 +535,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self appendHistoricMessageFragment:patchedAppend isReload:(markHistoric == NO)];
 
-	[self mark];
-
 	[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
 
 	/* Inform plugins of new content */
