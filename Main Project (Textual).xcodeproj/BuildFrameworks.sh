@@ -15,7 +15,7 @@ xcodebuild -target "AutoHyperlinks.framework" \
  -configuration "Release" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
- PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE_SPECIFIER}"
+ PROVISIONING_PROFILE_SPECIFIER=""
 
 mv "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/Release/AutoHyperlinks.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/"
@@ -28,7 +28,7 @@ xcodebuild -target "EncryptionKit" \
  -configuration "Release" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
- PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE_SPECIFIER}"
+ PROVISIONING_PROFILE_SPECIFIER=""
 
 mv "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/Release/EncryptionKit.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/"
@@ -41,7 +41,7 @@ xcodebuild -target "CocoaExtensions (OS X)" \
  -configuration "Release" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
- PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE_SPECIFIER}"
+ PROVISIONING_PROFILE_SPECIFIER=""
 
 mv "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/Release/CocoaExtensions.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/"
