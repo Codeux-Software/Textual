@@ -999,11 +999,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof TVCServerListCell * _Nullable)childCell
 {
 	if (self->_childCell == nil) {
-		for (NSView *subview in self.subviews) {
-			if ([subview isKindOfClass:[TVCServerListCell class]]) {
-				self->_childCell = (id)subview;
-			}
+		if (self.numberOfColumns == 0) {
+			return nil;
 		}
+
+		self->_childCell = [self viewAtColumn:0];
 	}
 
 	return self->_childCell;
