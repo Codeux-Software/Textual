@@ -38,12 +38,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCUserRelations ()
-@property (nonatomic, strong, nullable) NSMutableDictionary<NSString *, IRCChannelUser *> *relationsPrivate;
+@property (nonatomic, strong, nullable) NSMutableDictionary<IRCChannel *, IRCChannelUser *> *relationsPrivate;
 @end
 
 @implementation IRCUserRelations
 
-- (NSDictionary<NSString *, IRCChannelUser *> *)relations
+- (NSDictionary<IRCChannel *, IRCChannelUser *> *)relations
 {
 	@synchronized (self.relationsPrivate) {
 		if (self.relationsPrivate == nil) {
@@ -51,6 +51,17 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		return [self.relationsPrivate copy];
+	}
+}
+
+- (NSArray<IRCChannel *> *)relatedChannels
+{
+	@synchronized (self.relationsPrivate) {
+		if (self.relationsPrivate == nil) {
+			return @[];
+		}
+
+		return self.relationsPrivate.allKeys;
 	}
 }
 
@@ -62,6 +73,17 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		return self.relationsPrivate.allValues;
+	}
+}
+
+- (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block
+{
+	@synchronized (self.relationsPrivate) {
+		if (self.relationsPrivate == nil) {
+			return;
+		}
+
+		[self.relationsPrivate enumerateKeysAndObjectsUsingBlock:block];
 	}
 }
 
@@ -85,20 +107,15 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[self associateUser:user withChannelNamed:channel.name];
-}
-
-- (void)associateUser:(IRCChannelUser *)user withChannelNamed:(NSString *)channel
-{
-	NSParameterAssert(user != nil);
-	NSParameterAssert(channel != nil);
-
 	@synchronized (self.relationsPrivate) {
 		if (self.relationsPrivate == nil) {
 			self.relationsPrivate = [NSMutableDictionary dictionary];
 		}
 
-		self.relationsPrivate[channel] = user;
+		/* IRCChannel does not really support copying. It returns self.
+		 The protocol is declared here in a cast, instead of in the
+		 header for IRCChannel, so plugin author's don't make a mistake. */
+		self.relationsPrivate[(IRCChannel <NSCopying> *)channel] = user;
 	}
 }
 
@@ -109,13 +126,6 @@ NS_ASSUME_NONNULL_BEGIN
 	if (channel.isChannel == NO) {
 		return;
 	}
-
-	[self disassociateUserWithChannelNamed:channel.name];
-}
-
-- (void)disassociateUserWithChannelNamed:(NSString *)channel
-{
-	NSParameterAssert(channel != nil);
 
 	@synchronized (self.relationsPrivate) {
 		if (self.relationsPrivate == nil) {
@@ -137,13 +147,6 @@ NS_ASSUME_NONNULL_BEGIN
 	if (channel.isChannel == NO) {
 		return nil;
 	}
-
-	return [self userAssociatedWithChannelNamed:channel.name];
-}
-
-- (nullable IRCChannelUser *)userAssociatedWithChannelNamed:(NSString *)channel
-{
-	NSParameterAssert(channel != nil);
 
 	@synchronized (self.relationsPrivate) {
 		if (self.relationsPrivate == nil) {

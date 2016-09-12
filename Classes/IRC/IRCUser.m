@@ -345,6 +345,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self relinkRelations];
 }
 
+- (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block
+{
+	[self.relations enumerateRelations:block];
+}
+
 @end
 
 #pragma mark -
