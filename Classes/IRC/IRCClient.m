@@ -7532,6 +7532,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 5: // RPL_ISUPPORT
 		{
+			NSAssertReturn([m paramsCount] >= 2);
+
 			[self.supportInfo processConfigurationData:[m sequence:1]];
 
 			if (printMessage) {
