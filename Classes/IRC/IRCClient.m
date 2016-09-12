@@ -6512,7 +6512,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	BOOL printMessage = [self postReceivedMessage:m withText:modeString destinedFor:channel];
 
 	if (printMessage) {
-		printMessage = ([TPCPreferences showJoinLeave] || channel.config.ignoreGeneralEventMessages == NO);
+		printMessage = ([TPCPreferences showJoinLeave] && channel.config.ignoreGeneralEventMessages == NO);
 	}
 
 	if (printMessage) {
