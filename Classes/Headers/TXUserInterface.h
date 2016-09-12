@@ -43,8 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)runningInHighResolutionMode;
 
 + (BOOL)systemWideDarkModeEnabledOnYosemite;
-
-+ (BOOL)onlyShowScrollbarWhileScrolling;
 @end
 
 NS_ASSUME_NONNULL_END
