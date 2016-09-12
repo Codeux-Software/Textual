@@ -9548,7 +9548,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (targetChannel) {
 		[taskArguments addObject:targetChannel];
 	} else {
-		[taskArguments addObject:[NSNull null]];
+		[taskArguments addObject:NSStringEmptyPlaceholder];
 	}
 
 	NSArray *inputStringComponents = [inputString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
