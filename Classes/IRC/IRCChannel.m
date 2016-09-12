@@ -144,6 +144,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [self.config dictionaryValueForCloud];
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	/* Implement this method to allow channel to be 
+	 used as a dictionary key. */
+
+	return self;
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", self.associatedClient.description, self.name];

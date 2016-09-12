@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* IRCUserRelations is a class used by IRCUser to store which
  IRCChannelUser object is associated with a particular channel. */
 @interface IRCUserRelations : NSObject
+@property (readonly, copy) NSArray<IRCChannel *> *relatedChannels;
 @property (readonly, copy) NSArray<IRCChannelUser *> *relatedUsers;
 
 @property (readonly) NSUInteger numberOfRelations;
@@ -48,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)disassociateUserWithChannel:(IRCChannel *)channel;
 
 - (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel;
+
+- (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block;
 @end
 
 #pragma mark -
@@ -60,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)disassociateUserWithChannel:(IRCChannel *)channel;
 
 - (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel;
+
+- (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block;
 @end
 
 @interface IRCChannelUser (IRCUserRelations)
