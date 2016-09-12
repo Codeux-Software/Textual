@@ -1272,6 +1272,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)usesCustomScrollers
 {
+	return YES;
 	NSScrollerStyle preferredScrollerStyle = [NSScroller preferredScrollerStyle];
 
 	BOOL onlyShowDuringScrolling = (preferredScrollerStyle == NSScrollerStyleOverlay);
