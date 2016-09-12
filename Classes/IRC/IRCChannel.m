@@ -775,23 +775,44 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[IRCChannel queueAccessToMemberList:^{
-		__block NSInteger insertedIndex = (-1);
-
-		[IRCChannel accessMemberListUsingBlock:^{
-			(void)[self _removeMemberFromMemberList:member];
-
-			insertedIndex = [self _sortedInsertMember:member];
-		}];
-
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			[self _removeMemberFromTableView:member];
-
-			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
-		});
+		[self _resortMember:member byReplacingMember:nil];
 	}];
 }
 
+- (void)_resortMember:(IRCChannelUser *)member1 byReplacingMember:(nullable IRCChannelUser *)member2
+{
+	NSParameterAssert(member1 != nil);
+
+	if (member2 == nil) {
+		member2 = member1;
+	}
+
+	__block NSInteger insertedIndex = (-1);
+
+	[IRCChannel accessMemberListUsingBlock:^{
+		[self _removeMemberFromMemberList:member2];
+
+		insertedIndex = [self _sortedInsertMember:member1];
+	}];
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self _removeMemberFromTableView:member2];
+
+		[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
+	});
+}
+
 - (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
+{
+	[self replaceMember:member1 byInsertingMember:member2 replaceInAllChannels:NO];
+}
+
+/* The replaceInAllChannels: flag should only be used in extreme cases because there is A LOT 
+ of overhead to setting it. Textual only does it when the user list is configured to sort IRCop 
+ at top and IRCop status changes. That change requires the user to be resorted in every channel 
+ they are in. Knowing which channels they are in is easy because of IRCUserRelations, but the 
+ actual process of finding where to sort them at is very costly. */
+- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2 replaceInAllChannels:(BOOL)replaceInAllChannels
 {
 	NSParameterAssert(member1 != nil);
 	NSParameterAssert(member2 != nil);
@@ -805,19 +826,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[member2 associateWithChannel:self];
 
 	[IRCChannel queueAccessToMemberList:^{
-		__block NSInteger insertedIndex = (-1);
+		[self _resortMember:member2 byReplacingMember:member1];
 
-		[IRCChannel accessMemberListUsingBlock:^{
-			(void)[self _removeMemberFromMemberList:member1];
+		if (replaceInAllChannels) {
+			[member2.user enumerateRelations:^(IRCChannel *channel, IRCChannelUser *member, BOOL *stop) {
+				if (channel == self) {
+					return;
+				}
 
-			insertedIndex = [self _sortedInsertMember:member2];
-		}];
-
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			[self _removeMemberFromTableView:member1];
-
-			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
-		});
+				[channel _resortMember:member byReplacingMember:nil];
+			}];
+		}
 	}];
 }
 
@@ -844,6 +863,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
 			}
 		}];
+
+		if (self.isChannel == NO || self.isSelectedChannel == NO) {
+			return;
+		}
 
 		XRPerformBlockSynchronouslyOnMainQueue(^{
 			[mainWindowMemberList() reloadItem:member1];
@@ -924,6 +947,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		memberMutable.modes = newMemberModes;
 	}
 
+	BOOL replaceInAllChannels = NO;
+
 	if (value && [mode isEqualToString:@"Y"] && member.user.isIRCop == NO) {
 		/* InspIRCd treats +Y as an IRCop. */
 		/* If the user wasn't already marked as an IRCop, then we
@@ -932,10 +957,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self.associatedClient modifyUser:member.user withBlock:^(IRCUserMutable *userMutable) {
 			userMutable.isIRCop = YES;
 		}];
+
+		if ([TPCPreferences memberListSortFavorsServerStaff]) {
+			replaceInAllChannels = YES;
+		}
 	}
 
 	// Remove the user from the member list and insert sorted
-	[self replaceMember:member byInsertingMember:memberMutable];
+	[self replaceMember:member
+	  byInsertingMember:memberMutable
+   replaceInAllChannels:replaceInAllChannels];
 }
 
 #pragma mark -

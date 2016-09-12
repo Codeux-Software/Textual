@@ -61,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2;
 - (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2; // resort in table view
+- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2 replaceInAllChannels:(BOOL)replaceInAllChannels;
 
 - (void)clearMembers; // This will not reload table view
 
