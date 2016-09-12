@@ -8281,11 +8281,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 they require their cell in the user list be resorted. */
 				/* We do not want to resort unless absolutely necessary because
 				 sorting a user with a few hundred users has overhead. */
+				BOOL IRCopStatusChanged = (user.isIRCop != userMutable.isIRCop);
 
-				if (user.isIRCop != userMutable.isIRCop ||
+				if (IRCopStatusChanged ||
 					NSObjectsAreEqual(member.modes, memberMutable.modes) == NO)
 				{
-					[channel replaceMember:member byInsertingMember:memberMutable];
+					BOOL replaceInAllChannels =
+					(IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);
+
+					[channel replaceMember:member
+						 byInsertingMember:memberMutable
+					  replaceInAllChannels:replaceInAllChannels];
 				} else {
 					[channel replaceMember:member withMember:memberMutable];
 				}
