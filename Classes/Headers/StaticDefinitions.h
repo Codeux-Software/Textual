@@ -124,6 +124,8 @@ typedef void (^TXEmtpyBlockDataType)(void);
 #endif
 
 /* Helper function */
+#define StringFromBOOL(value) ((value) ? @"YES" : @"NO")
+
 #define SetVariableIfNil(variable, value)					\
 	if ((variable) == nil) {								\
 		(variable) = (value);								\

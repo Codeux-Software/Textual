@@ -55,11 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-+ (BOOL)onlyShowScrollbarWhileScrolling
-{
-	return ([NSScroller preferredScrollerStyle] == NSScrollerStyleOverlay);
-}
-
 @end
 
 NS_ASSUME_NONNULL_END
