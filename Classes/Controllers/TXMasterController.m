@@ -277,9 +277,9 @@ NS_ASSUME_NONNULL_BEGIN
 	updater.delegate = (id)self;
 
 	if (receiveBetaUpdates == NO) {
-		updater.updateCheckInterval = [sparkleData boolForKey:@"SUScheduledCheckInterval"];
+		updater.updateCheckInterval = [sparkleData integerForKey:@"SUScheduledCheckInterval"];
 	} else {
-		updater.updateCheckInterval = [sparkleData boolForKey:@"SUScheduledCheckInterval-beta"];
+		updater.updateCheckInterval = [sparkleData integerForKey:@"SUScheduledCheckInterval-beta"];
 	}
 
 	[updater checkForUpdatesInBackground];
