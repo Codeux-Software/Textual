@@ -202,46 +202,61 @@ Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 
 	var historicMessages = Textual.historicMessagesElement();
 
+	/* Elements are stored in two variables (nextElement and currentElement)
+	 so that nextElement can be modified before currentElement is removed. 
+	 If we try to access currentElement's next sibling after it is removed,
+	 it will return null, which means we find the next sibling before the
+	 element is removed and to do that, we use two storage variables. */
 	var nextElement = historicMessages.childNodes[0];
 
+	var currentElement = null;
+
 	while (countOfLinesToRemove > 0) {
-		if (nextElement === undefined) {
+		if (nextElement === null || nextElement === undefined) {
 			break;
 		}
-		
-		var nextElementId = nextElement.id;
 
-		if (nextElementId && nextElementId.indexOf("line-") === 0) {
-			removedChildren.push(nextElementId);
+		if (typeof nextElement.id === "string" && nextElement.id.indexOf("line-") === 0) {
+			currentElement = nextElement;
+		}
+
+		if (currentElement === null) {
+			nextElement = nextElement.nextSibling;
+		} else {
+			nextElement = currentElement.nextSibling;
+		
+			removedChildren.push(currentElement.id);
 			
-			historicMessages.removeChild(nextElement);
+			historicMessages.removeChild(currentElement);
 			
 			countOfLinesToRemove -= 1;
 		}
-
-		nextElement = nextElement.nextSibling;
 	}
 	
 	var documentBody = Textual.documentBodyElement();
 
-	nextElement = documentBody.childNodes[0];
-	
+	nextElement = documentBody.childNodes[0];	
+
 	while (countOfLinesToRemove > 0) {
-		if (nextElement === undefined) {
+		if (nextElement === null || nextElement === undefined) {
 			break;
 		}
-		
-		var nextElementId = nextElement.id;
 
-		if (nextElementId && nextElementId.indexOf("line-") === 0) {
-			removedChildren.push(nextElementId);
+		if (typeof nextElement.id === "string" && nextElement.id.indexOf("line-") === 0) {
+			currentElement = nextElement;
+		}
+
+		if (currentElement === null) {
+			nextElement = nextElement.nextSibling;
+		} else {
+			nextElement = currentElement.nextSibling;
+		
+			removedChildren.push(currentElement.id);
 			
-			documentBody.removeChild(nextElement);
+			documentBody.removeChild(currentElement);
 			
 			countOfLinesToRemove -= 1;
 		}
-
-		nextElement = nextElement.nextSibling;
 	}
 
 	return removedChildren;
