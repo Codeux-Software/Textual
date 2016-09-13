@@ -42,11 +42,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)migrateKeyValuesAwayFromGroupContainer
 {
-#define _defaultsKey	@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380"
+#define _defaultsKey	@"TPCPreferences -> Migration -> Preference Files"
 
-	id migratedOldKeys = [RZUserDefaults() objectForKey:_defaultsKey];
+	if ([RZUserDefaults() boolForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380"]) {
+		[RZUserDefaults() removeObjectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380"];
 
-	if (migratedOldKeys) {
+		[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+	}
+
+	if ([RZUserDefaults() boolForKey:_defaultsKey]) {
 		return;
 	}
 

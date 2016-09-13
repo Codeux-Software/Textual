@@ -1054,35 +1054,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	[RZUserDefaults() setObject:clientList forKey:IRCWorldClientListDefaultsKey];
 }
 
-+ (void)_migrateWorldControllerToVersion600
-{
-#define _defaultsKey @"World Controller Migrated (600)"
-
-	BOOL clientListMigrated = [RZUserDefaults() boolForKey:_defaultsKey];
-
-	if (clientListMigrated) {
-		return;
-	}
-
-	NSDictionary *worldController = [RZUserDefaults() dictionaryForKey:@"World Controller"];
-
-	NSArray<NSDictionary *> *clientList = [worldController arrayForKey:@"clients"];
-
-	if (clientList.count > 0) {
-		[TPCPreferences setClientList:clientList];
-	}
-
-	BOOL soundIsMuted = [worldController boolForKey:@"soundIsMuted"];
-
-	if (soundIsMuted) {
-		[TPCPreferences setSoundIsMuted:soundIsMuted];
-	}
-
-	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
-
-#undef _defaultsKey
-}
-
 #pragma mark -
 #pragma mark Keywords
 
@@ -1174,6 +1145,69 @@ static NSArray<NSString *> *_matchKeywords = nil;
 }
 
 #pragma mark -
+#pragma mark Migration
+
++ (void)_migrateWorldControllerToVersion600
+{
+#define _defaultsKey @"TPCPreferences -> Migration -> World Controller Migrated (600)"
+
+	if ([RZUserDefaults() boolForKey:@"World Controller Migrated (600)"]) {
+		[RZUserDefaults() removeObjectForKey:@"World Controller Migrated (600)"];
+
+		[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+	}
+
+	if ([RZUserDefaults() boolForKey:_defaultsKey]) {
+		return;
+	}
+
+	BOOL clientListMigrated = [RZUserDefaults() boolForKey:_defaultsKey];
+
+	if (clientListMigrated) {
+		return;
+	}
+
+	NSDictionary *worldController = [RZUserDefaults() dictionaryForKey:@"World Controller"];
+
+	NSArray<NSDictionary *> *clientList = [worldController arrayForKey:@"clients"];
+
+	if (clientList.count > 0) {
+		[TPCPreferences setClientList:clientList];
+	}
+
+	BOOL soundIsMuted = [worldController boolForKey:@"soundIsMuted"];
+
+	if (soundIsMuted) {
+		[TPCPreferences setSoundIsMuted:soundIsMuted];
+	}
+
+	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+
+#undef _defaultsKey
+}
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
++ (void)_migrateSparkleConfigurationToVersion601
+{
+
+#define _defaultsKey @"TPCPreferences -> Migration -> Sparkle (601)"
+
+	BOOL sparkleMigrated = [RZUserDefaults() boolForKey:_defaultsKey];
+
+	if (sparkleMigrated) {
+		return;
+	}
+
+	[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SUEnableAutomaticChecks"];
+
+	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+
+#undef _defaultsKey
+
+}
+#endif
+
+#pragma mark -
 #pragma mark Initialization
 
 + (NSDictionary<NSString *, id> *)defaultPreferences
@@ -1214,6 +1248,10 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[TPCPreferences registerDefaults];
 
 	[TPCPreferences _migrateWorldControllerToVersion600];
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	[TPCPreferences _migrateSparkleConfigurationToVersion601];
+#endif
 
 	[TPCPathInfo startUsingTranscriptFolderURL];
 

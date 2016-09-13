@@ -87,6 +87,8 @@
 		<string>PREFIX</string>
 		<key>Internal Theme Settings Key-value Store -&gt;</key>
 		<string>PREFIX</string>
+		<key>TPCPreferences -&gt; Migration -&gt;</key>
+		<string>PREFIX</string>
 		<key>TPCPreferencesUserDefaults</key>
 		<string>PREFIX</string>
 		<key>TDCPreferencesControllerDidShowMountainLionDeprecationWarning</key>
