@@ -178,6 +178,14 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		} else {
 			maximumLength = 0;
 		}
+
+		/* If we are connected to ZNC, then do not enforce maximum 
+		 nickname length. It is easier to disable this check than
+		 to check whether a nickname (e.g. *buffextras) should be
+		 handled differently. */
+		if (client.isConnectedToZNC) {
+			maximumLength = 0;
+		}
 	}
 
 	if (maximumLength == 0) {
