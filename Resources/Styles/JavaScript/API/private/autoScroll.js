@@ -128,11 +128,7 @@ TextualScroller.documentScrolledCallback = function()
 /* 	Perform automatic scrolling */
 TextualScroller.scrollHeightChanged = function(scrollHeight)
 {
-	var requestAnimationFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame);
-
-	requestAnimationFrame(function() {
-		TextualScroller.performAutoScrollInt(scrollHeight);
-	 });
+	TextualScroller.performAutoScroll();
 };
 
 TextualScroller.performAutoScroll = function() 
@@ -143,7 +139,11 @@ TextualScroller.performAutoScroll = function()
 		return;
 	}
 	
-	TextualScroller.scrollHeightChanged(scrollHeight);
+	var requestAnimationFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame);
+
+	requestAnimationFrame(function() {
+		TextualScroller.performAutoScrollInt(scrollHeight);
+	 });
 };
 
 /* TextualScroller.performAutoScrollInt() is the function responsible for performing
