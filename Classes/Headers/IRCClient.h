@@ -240,6 +240,8 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (void)removeUser:(IRCUser *)user;
 - (void)removeUserWithNickname:(NSString *)nickname;
 
+@property (readonly, nullable) IRCUser *myself;
+
 #pragma mark -
 
 - (nullable IRCChannel *)findChannel:(NSString *)withName;

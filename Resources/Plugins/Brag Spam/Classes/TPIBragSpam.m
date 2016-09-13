@@ -79,8 +79,10 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 			
 			networkCount++;
+
+			IRCUser *localUser = client.myself;
 			
-			if (client.userIsIRCop) {
+			if (client.userIsIRCop || localUser.isIRCop) {
 				operCount++;
 			}
 			
@@ -102,12 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 				BOOL IHaveModeO = ((myRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
 				BOOL IHaveModeH = ((myRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 				BOOL IHaveModeV = ((myRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
-
-				if (client.userIsIRCop == NO) {
-					if (myself.user.isIRCop) {
-						operCount++;
-					}
-				}
 
 				if (IHaveModeQ || IHaveModeA || IHaveModeO) {
 					channelOpCount++;

@@ -1978,6 +1978,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark User List 
 
+- (nullable IRCUser *)myself
+{
+	return [self findUser:self.userNickname];
+}
+
 - (BOOL)userExists:(NSString *)nickname
 {
 	NSParameterAssert(nickname != nil);
