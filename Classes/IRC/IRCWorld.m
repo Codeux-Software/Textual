@@ -654,8 +654,6 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 		[self selectOtherBeforeDestroy:channel];
 	}
 
-	[client willDestroyChannel:channel];
-
 	[channel prepareForPermanentDestruction];
 
 	if (client.lastSelectedChannel == channel) {

@@ -80,8 +80,6 @@ enum {
 
 - (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
-- (void)willDestroyChannel:(IRCChannel *)channel; // Callback for IRCWorld
-
 - (void)inputText:(id)string destination:(IRCTreeItem *)destination;
 
 - (void)inputText:(id)string asCommand:(IRCPrivateCommand)command;
