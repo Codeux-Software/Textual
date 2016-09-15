@@ -5904,7 +5904,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		IRCChannelUser *member = [[IRCChannelUser alloc] initWithUser:userAdded];
 
-		[channel addMember:member];
+		[channel addMember:member checkForDuplicates:YES];
 	}
 
 	if (isPrintOnlyMessage && myself == NO) {
