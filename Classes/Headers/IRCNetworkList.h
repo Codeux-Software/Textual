@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCNetwork;
 
 @interface IRCNetworkList : NSObject
-@property (readonly) NSArray<IRCNetwork *> *listOfNetworks;
+@property (readonly, copy) NSArray<IRCNetwork *> *listOfNetworks;
 
 - (nullable IRCNetwork *)networkNamed:(NSString *)networkName;
 
