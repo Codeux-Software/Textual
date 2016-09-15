@@ -548,7 +548,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	dispatch_once(&onceToken, ^{
 		workerQueue =
-		XRCreateDispatchQueueWithPriority("RCChannel.modifyMembmerListSerialQueueWrapper", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
+		XRCreateDispatchQueueWithPriority("IRCChannel.modifyMembmerListSerialQueueWrapper", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 	});
 
 	return workerQueue;
