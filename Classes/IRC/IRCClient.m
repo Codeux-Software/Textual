@@ -489,6 +489,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSMutableArray<IRCChannelConfig *> *channelList = [NSMutableArray array];
 
 	for (IRCChannel *channel in self.channelList) {
+		if (channel.isVolatile) {
+			continue;
+		}
+
 		if (channel.isChannel == NO && [TPCPreferences rememberServerListQueryStates] == NO) {
 			continue;
 		}
