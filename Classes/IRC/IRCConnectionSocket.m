@@ -345,14 +345,14 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)onSocketConnectedToHost
 {
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self maybeBeginTLSNegotation];
+	[self maybeBeginTLSNegotation];
 
-		self.isConnecting = NO;
-		self.isConnected = YES;
+	self.isConnecting = NO;
+	self.isConnected = YES;
 
-		[self waitForData];
+	[self waitForData];
 
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self tcpClientDidConnect];
 	});
 }
@@ -441,7 +441,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		return;
 	}
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self tcpClientDidReceiveData:dataAsString];
 	});
 }
@@ -466,7 +466,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-	XRPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self tcpClientDidSendData];
 	});
 }
@@ -475,7 +475,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 {
 	self.isSecured = YES;
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self tcpClientDidSecureConnection];
 	});
 }
