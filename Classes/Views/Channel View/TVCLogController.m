@@ -236,18 +236,18 @@ ClassWithDesignatedInitializerInitMethod
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
-	if (self.encrypted || forceReset) {
-		[self.historicLogFile reset]; // -reset calls -close on your behalf
+	if (
+		/* 1 */ forceReset ||
+		/* 2 */ [TPCPreferences reloadScrollbackOnLaunch] == NO ||
+		/* 3 */  self.associatedChannel == nil ||
+		/* 4 */ (self.associatedChannel.isPrivateMessage &&
+				 [TPCPreferences rememberServerListQueryStates] == NO) ||
+		/* 5 */ self.encrypted ||
+		/* 6 */ self.associatedChannel.isVolatile)
+	{
+		[self.historicLogFile reset];
 	} else {
-		if ([TPCPreferences reloadScrollbackOnLaunch] == NO ||
-			  self.associatedChannel == nil ||
-			(self.associatedChannel.isChannel == NO &&
-			 [TPCPreferences rememberServerListQueryStates] == NO))
-		{
-			[self.historicLogFile reset];
-		} else {
-			[self.historicLogFile close];
-		}
+		[self.historicLogFile close];
 	}
 }
 
