@@ -716,7 +716,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self didChangeValueForKey:@"numberOfMembers"];
 		[self didChangeValueForKey:@"memberList"];
 
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
+		XRPerformBlockSynchronouslyOnMainQueue(^{
 			if (self.isChannel == NO) {
 				return;
 			}
@@ -756,7 +756,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return;
 		}
 
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
+		XRPerformBlockSynchronouslyOnMainQueue(^{
 			[self _removeMemberFromTableView:member];
 
 			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
@@ -795,7 +795,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		insertedIndex = [self _sortedInsertMember:member1];
 	}];
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self _removeMemberFromTableView:member2];
 
 		[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
@@ -864,15 +864,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 		}];
 
-		if (self.isChannel == NO) {
+		if (self.isChannel == NO || self.isSelectedChannel == NO) {
 			return;
 		}
 
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
-			if (self.isSelectedChannel == NO) {
-				return;
-			}
-
+		XRPerformBlockSynchronouslyOnMainQueue(^{
 			[mainWindowMemberList() reloadItem:member1];
 		});
 	}];
