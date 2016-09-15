@@ -879,7 +879,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.historyLoaded = NO;
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		if (self.terminating) {
+			return;
+		}
+
 		if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
 			[self rebuildBackingView];
 		}
@@ -949,7 +953,11 @@ ClassWithDesignatedInitializerInitMethod
 
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 		
-		XRPerformBlockSynchronouslyOnMainQueue(^{
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
+			if (self.terminating) {
+				return;
+			}
+
 			if (highlighted) {
 				@synchronized(self.highlightedLineNumbers) {
 					[self.highlightedLineNumbers addObject:lineNumber];

@@ -861,7 +861,11 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		 open for the semaphore to be signaled. */
 		[TVCLogView emptyCaches];
 
-		XRPerformBlockSynchronouslyOnMainQueue(^{
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
+			if (masterController().applicationIsTerminating) {
+				return;
+			}
+
 			[self _reloadThemeAndUserInterface_performReload:reloadUserInterface];
 		});
 	}, DISPATCH_QUEUE_PRIORITY_HIGH);

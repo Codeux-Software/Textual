@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentNextQueuedEntry
 {
-	XRPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self _presentNextQueuedEntry];
 	});
 }

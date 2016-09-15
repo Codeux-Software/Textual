@@ -459,7 +459,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		/* Perform reload */
-		[self performBlockOnMainThread:^{
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			if (listOfDeletedClients.count > 0) {
 				[worldController() cloud_processDeletedClientsList:listOfDeletedClients];
 			}
@@ -475,7 +475,7 @@ NS_ASSUME_NONNULL_BEGIN
 			for (NSDictionary *client in clientsImported) {
 				[TPCPreferencesImportExport importClientConfiguration:client isImportedFromCloud:YES];
 			}
-		}];
+		});
 
 		self.hasUncommittedDataStoredInCloud = NO;
 		

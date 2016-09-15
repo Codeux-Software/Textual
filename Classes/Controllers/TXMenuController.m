@@ -1260,11 +1260,11 @@ NS_ASSUME_NONNULL_BEGIN
 			if ([self.currentSearchPhrase isEqualToString:resultString] == NO) {
 				self.currentSearchPhrase = resultString;
 
-				[self performBlockOnMainThread:^{
+				XRPerformBlockAsynchronouslyOnMainQueue(^{
 					TVCLogView *webView = self.selectedViewControllerBackingView;
 
 					[webView findString:self.currentSearchPhrase movingForward:YES];
-				}];
+				});
 			}
 		}
 

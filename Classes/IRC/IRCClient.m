@@ -9460,7 +9460,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	resultString = resultString.trim;
 
-	XRPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self inputText:resultString destination:destination];
 	});
 }
