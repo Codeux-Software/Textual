@@ -271,10 +271,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.whoTimer.repeatTimer = YES;
 	self.whoTimer.target = self;
 	self.whoTimer.action = @selector(onWhoTimer:);
+
+	[RZNotificationCenter() addObserver:self selector:@selector(willDestroyChannel:) name:IRCWorldWillDestroyChannelNotification object:nil];
 }
 
 - (void)dealloc
 {
+	[RZNotificationCenter() removeObserver:self];
+
 	[self.autojoinTimer stop];
 	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
@@ -610,9 +614,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)willDestroyChannel:(IRCChannel *)channel
+- (void)willDestroyChannel:(NSNotification *)notification
 {
-	NSParameterAssert(channel != nil);
+	IRCChannel *channel = notification.object;
+
+	if (channel.associatedClient != self) {
+		return;
+	}
 
 	[self zncPlaybackClearChannel:channel];
 }
