@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCNetworkList ()
-@property (nonatomic, copy, readwrite) NSArray<IRCNetwork *> *listOfNetworks;
+@property (nonatomic, strong, readwrite) NSArray<IRCNetwork *> *listOfNetworks;
 @end
 
 @interface IRCNetwork ()
