@@ -269,6 +269,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
+- (void)setDisableTranscriptLog:(BOOL)disableTranscriptLog
+{
+	if (self->_disableTranscriptLog != disableTranscriptLog) {
+		self->_disableTranscriptLog = disableTranscriptLog;
+
+		[self reopenLogFileIfNeeded];
+	}
+}
+
 #pragma mark -
 #pragma mark Utilities
 
@@ -466,7 +475,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)reopenLogFileIfNeeded
 {
-	if ([TPCPreferences logToDiskIsEnabled]) {
+	if ([TPCPreferences logToDiskIsEnabled] && self.disableTranscriptLog == NO) {
 		if ( self.logFile) {
 			[self.logFile reopen];
 		}
@@ -491,7 +500,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(logLine != nil);
 
-	if ([TPCPreferences logToDiskIsEnabled] == NO) {
+	if ([TPCPreferences logToDiskIsEnabled] == NO || self.disableTranscriptLog) {
 		return;
 	}
 
