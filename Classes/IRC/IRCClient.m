@@ -153,7 +153,6 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) BOOL capacityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
-@property (nonatomic, assign) BOOL rawModeEnabled;
 @property (nonatomic, assign) BOOL reconnectEnabled;
 @property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
@@ -179,6 +178,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (readonly) BOOL supportsAdvancedTracking;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedNeedIdentificationTokens;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedSuccessfulIdentificationTokens;
+@property (nonatomic, strong, nullable) IRCChannel *rawDataLogQuery;
 @end
 
 @implementation IRCClient
@@ -627,6 +627,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self zncPlaybackClearChannel:channel];
+
+	if (self.rawDataLogQuery == channel) {
+		self.rawDataLogQuery = nil;
+	}
 }
 
 #pragma mark -
@@ -2827,21 +2831,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if ([stringInString isEqualIgnoringCase:@"raw on"])
 			{
-				self.rawModeEnabled = YES;
-
-				(void)[RZWorkspace() launchApplication:@"Console"];
-
-				[self printDebugInformation:TXTLS(@"IRC[1092]")];
-
-				[self rawDataLogToConsole:TXTLS(@"IRC[1094]")];
+				[self createRawDataLogQuery];
 			}
 			else if ([stringInString isEqualIgnoringCase:@"raw off"])
 			{
-				self.rawModeEnabled = NO;
-
-				[self printDebugInformation:TXTLS(@"IRC[1091]")];
-
-				[self rawDataLogToConsole:TXTLS(@"IRC[1093]")];
+				[self destroyRawDataLogQuery];
 			}
 			else
 			{
@@ -4401,8 +4395,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.zncBouncerCertificateChainDataMutable = nil;
 	self.zncBouncerIsPlayingBackHistory = NO;
 
-	self.rawModeEnabled = NO;
-
 	self.reconnectEnabled = NO;
 
 	self.timeoutWarningShownToUser = NO;
@@ -4680,7 +4672,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	worldController().messagesReceived += 1;
 
-	[self rawDataLogToConsoleIncomingTraffic:data];
+	[self rawDataLogIncomingTraffic:data];
 
 	if ([TPCPreferences removeAllFormatting]) {
 		data = data.stripIRCEffects;
@@ -4866,68 +4858,82 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (self.isTerminating) {
 		return;
 	}
-	
-	[self rawDataLogToConsoleOutgoingTraffic:data];
+
+	[self rawDataLogOutgoingTraffic:data];
 }
 
 #pragma mark -
 #pragma mark Raw Data Logging
 
-- (void)rawDataLogToConsole:(NSString *)data
+- (void)createRawDataLogQuery
 {
-	NSParameterAssert(data != NULL);
-
-	[self rawDataLogToConsoleCString:data.UTF8String];
-}
-
-- (void)rawDataLogToConsoleCString:(const char *)data
-{
-	NSParameterAssert(data != NULL);
-
-#ifdef TXSystemIsOSXSierraOrLater
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
-		static os_log_t _logSubsystem = NULL;
-
-		if (_logSubsystem == NULL) {
-			_logSubsystem = os_log_create(TXBundleBuildProductIdentifierCString, "IRC Raw Data");
-		}
-
-		LogToConsoleInfoWithSubsystem(_logSubsystem, data);
-	} else {
-#endif
-
-	LogToConsoleInfo(data)
-
-#ifdef TXSystemIsOSXSierraOrLater
-	}
-#endif
-
-}
-
-- (void)rawDataLogToConsoleOutgoingTraffic:(NSString *)data
-{
-	NSParameterAssert(data != nil);
-
-	if (self.rawModeEnabled == NO) {
+	if (self.isTerminating) {
 		return;
 	}
 
-	NSString *dataToLog = [NSString stringWithFormat:@"OUTGOING [\"%@\"]: << %@", self.networkNameAlt, data];
-
-	[self rawDataLogToConsoleCString:dataToLog.UTF8String];
-}
-
-- (void)rawDataLogToConsoleIncomingTraffic:(NSString *)data
-{
-	NSParameterAssert(data != nil);
-
-	if (self.rawModeEnabled == NO) {
+	if (self.rawDataLogQuery != nil) {
 		return;
 	}
 
-	NSString *dataToLog = [NSString stringWithFormat:@"INCOMING [\"%@\"]: >> %@", self.networkNameAlt, data];
+	IRCChannel *query = [self findChannelOrCreate:@"Server Traffic" isPrivateMessage:YES];
 
-	[self rawDataLogToConsoleCString:dataToLog.UTF8String];
+	query.disableTranscriptLog = YES;
+
+	query.isVolatile = YES;
+
+	self.rawDataLogQuery = query;
+
+	[self rawDataLog:TXTLS(@"IRC[1092]")];
+}
+
+- (void)destroyRawDataLogQuery
+{
+	if (self.isTerminating) {
+		return;
+	}
+
+	if (self.rawDataLogQuery == nil) {
+		return;
+	}
+
+	[worldController() destroyChannel:self.rawDataLogQuery];
+}
+
+- (void)rawDataLog:(NSString *)data
+{
+	NSParameterAssert(data != nil);
+
+	if (self.isTerminating) {
+		return;
+	}
+
+	[self printDebugInformation:data inChannel:self.rawDataLogQuery];
+}
+
+- (void)rawDataLogOutgoingTraffic:(NSString *)data
+{
+	NSParameterAssert(data != nil);
+
+	if (self.rawDataLogQuery == nil) {
+		return;
+	}
+
+	NSString *dataToLog = [NSString stringWithFormat:@"<< %@", data];
+
+	[self rawDataLog:dataToLog];
+}
+
+- (void)rawDataLogIncomingTraffic:(NSString *)data
+{
+	NSParameterAssert(data != nil);
+
+	if (self.rawDataLogQuery == nil) {
+		return;
+	}
+
+	NSString *dataToLog = [NSString stringWithFormat:@">> %@", data];
+
+	[self rawDataLog:dataToLog];
 }
 
 #pragma mark -
