@@ -785,6 +785,10 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
+	NSInteger numberOfChildren = [self.serverList numberOfItemsInGroup:self.cellItem];
+
+	theButtonParent.hidden = (numberOfChildren == 0);
+
 	if (setNeedsDisplay) {
 		self.needsDisplay = YES;
 	}
