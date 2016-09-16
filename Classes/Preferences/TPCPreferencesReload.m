@@ -235,10 +235,6 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((reloadAction & TPCPreferencesReloadMemberListSortOrderAction) == TPCPreferencesReloadMemberListSortOrderAction) {
 		for (IRCClient *u in worldController().clientList) {
 			for (IRCChannel *c in u.channelList) {
-				if (c.isChannel == NO) {
-					continue;
-				}
-	
 				[c reloadDataForTableViewBySortingMembers];
 			}
 		}

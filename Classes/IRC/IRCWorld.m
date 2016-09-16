@@ -553,7 +553,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 	IRCChannel *channel = [self createChannelWithConfig:config onClient:client add:YES adjust:YES reload:YES];
 
-	if (client.isLoggedIn) {
+	if (client.isLoggedIn && channel.isPrivateMessage) {
 		[channel activate];
 	}
 
