@@ -2432,6 +2432,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		return;
 	}
 
+	[self.serverList scrollRowToVisible:selectedRows.firstIndex];
+
 	[self.serverList selectRowIndexes:selectedRowsNew byExtendingSelection:NO];
 }
 
