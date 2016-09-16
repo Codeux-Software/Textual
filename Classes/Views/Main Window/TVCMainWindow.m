@@ -1928,36 +1928,44 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	{
 		[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
 
-		if (c.isChannel)
-		{
-			[title appendString:c.name];
-
-			NSString *userCount = TXFormattedNumber(c.numberOfMembers);
-
-			[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
-
-			NSString *modeSymbols = c.modeInfo.stringWithMaskedPassword;
-
-			if (modeSymbols.length > 1) {
-				[title appendString:TXTLS(@"TVCMainWindow[1013]", modeSymbols)];
-			}
-		}
-		else if (c.isPrivateMessage)
-		{
-			/* Textual defines the topic of a private message as the user host. */
-			/* If it is not defined yet, then we just use the channel name 
-			 which is equal to the nickname of the private message owner. */
-			NSString *hostmask = c.topic;
-			
-			if (hostmask.isHostmask) {
-				[title appendString:hostmask];
-			} else {
+		switch (c.type) {
+			case IRCChannelChannelType:
+			{
 				[title appendString:c.name];
+
+				NSString *userCount = TXFormattedNumber(c.numberOfMembers);
+
+				[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
+
+				NSString *modeSymbols = c.modeInfo.stringWithMaskedPassword;
+
+				if (modeSymbols.length > 1) {
+					[title appendString:TXTLS(@"TVCMainWindow[1013]", modeSymbols)];
+				}
+
+				break;
 			}
-		}
-		else if (c.isUtility)
-		{
-			[title appendString:c.name];
+			case IRCChannelPrivateMessageType:
+			{
+				/* Textual defines the topic of a private message as the user host. */
+				/* If it is not defined yet, then we just use the channel name
+				 which is equal to the nickname of the private message owner. */
+				NSString *hostmask = c.topic;
+
+				if (hostmask.isHostmask) {
+					[title appendString:hostmask];
+				} else {
+					[title appendString:c.name];
+				}
+
+				break;
+			}
+			case IRCChannelUtilityType:
+			{
+				[title appendString:c.name];
+
+				break;
+			}
 		}
 	}
 

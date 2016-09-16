@@ -206,6 +206,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [client nicknameIsZNCUser:self.name];
 }
 
+- (IRCChannelType)type
+{
+	return self.config.type;
+}
+
 - (NSString *)channelTypeString
 {
 	switch (self.config.type) {
@@ -240,7 +245,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)setAutoJoin:(BOOL)autoJoin
 {
-	if (self.isPrivateMessage) {
+	if (self.isChannel == NO) {
 		return;
 	}
 

@@ -1009,6 +1009,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return;
 		}
 
+		/* Add channels atop of the first non-channel (private message).
+		 Private messages can be add to the bottom of the array. */
 		if (channel.isChannel == NO)
 		{
 			[self.channelListPrivate addObject:channel];
@@ -5911,7 +5913,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	{
 		channel = [self findChannelOrCreate:channelName];
 
-		if (channel.isActive == NO) {
+		if (channel.isActive == NO && channel.isChannel) {
 			[channel activate];
 		} else {
 			return;
@@ -5933,7 +5935,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	{
 		channel = [self findChannel:channelName];
 		
-		if (channel == nil) {
+		if (channel == nil || channel.isChannel == NO) {
 			return;
 		}
 	}
@@ -6033,7 +6035,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCChannel *channel = [self findChannel:channelName];
 
-	if (channel == nil) {
+	if (channel == nil || channel.isChannel == NO) {
 		return;
 	}
 
@@ -6104,7 +6106,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCChannel *channel = [self findChannel:channelName];
 
-	if (channel == nil) {
+	if (channel == nil || channel.isChannel == NO) {
 		return;
 	}
 
@@ -6231,26 +6233,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	void (^printingBlock)(IRCChannel *) = ^(IRCChannel *channel)
 	{
 		if (myself == NO && isPrintOnlyMessage == NO) {
-			if (channel.isChannel) {
-				IRCChannelUser *member = [user userAssociatedWithChannel:channel];
+			switch (channel.type) {
+				case IRCChannelChannelType:
+				{
+					IRCChannelUser *member = [user userAssociatedWithChannel:channel];
 
-				if (member == nil) {
+					if (member == nil) {
+						return;
+					}
+
+					[channel removeMember:member];
+
+					break;
+				}
+				case IRCChannelPrivateMessageType:
+				{
+					if (NSObjectsAreEqual(channel.name, sender) == NO) {
+						return;
+					}
+
+					if (channel.isActive) {
+						[channel deactivate];
+
+						[mainWindow() reloadTreeItem:channel];
+					}
+
+					break;
+				}
+				default:
+				{
 					return;
 				}
-
-				[channel removeMember:member];
-			} else if (channel.isPrivateMessage) {
-				if (NSObjectsAreEqual(channel.name, sender) == NO) {
-					return;
-				}
-
-				if (channel.isActive) {
-					[channel deactivate];
-
-					[mainWindow() reloadTreeItem:channel];
-				}
-			} else {
-				return;
 			}
 		}
 
@@ -6419,34 +6432,45 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	void (^printingBlock)(IRCChannel *) = ^(IRCChannel *channel)
 	{
 		if (isPrintOnlyMessage == NO) {
-			if (channel.isChannel) {
-				/* Rename the user in the channel */
-				IRCChannelUser *member = [user userAssociatedWithChannel:channel];
+			switch (channel.type) {
+				case IRCChannelChannelType:
+				{
+					/* Rename the user in the channel */
+					IRCChannelUser *member = [user userAssociatedWithChannel:channel];
 
-				if (member == nil) {
+					if (member == nil) {
+						return;
+					}
+
+					[channel resortMember:member];
+
+					break;
+				}
+				case IRCChannelPrivateMessageType:
+				{
+					/* Rename private message if one with old name is found */
+					if (NSObjectsAreEqual(channel.name, oldNickname) == NO) {
+						return;
+					}
+
+					IRCChannel *newNicknameQuery = [self findChannel:newNickname];
+
+					if (newNicknameQuery) {
+						/* If a query of this name already exists, then we
+						 destroy it before changing name of old. */
+						[worldController() destroyChannel:newNicknameQuery];
+					}
+
+					channel.name = newNickname;
+
+					[mainWindow() reloadTreeItem:channel];
+
+					break;
+				}
+				default:
+				{
 					return;
 				}
-
-				[channel resortMember:member];
-			} else if (channel.isPrivateMessage) {
-				/* Rename private message if one with old name is found */
-				if (NSObjectsAreEqual(channel.name, oldNickname) == NO) {
-					return;
-				}
-
-				IRCChannel *newNicknameQuery = [self findChannel:newNickname];
-
-				if (newNicknameQuery) {
-					/* If a query of this name already exists, then we
-					 destroy it before changing name of old. */
-					[worldController() destroyChannel:newNicknameQuery];
-				}
-
-				channel.name = newNickname;
-
-				[mainWindow() reloadTreeItem:channel];
-			} else {
-				return;
 			}
 		}
 
@@ -6547,7 +6571,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Present channel modes */
 	IRCChannel *channel = [self findChannel:channelName];
 
-	if (channel == nil) {
+	if (channel == nil || channel.isChannel == NO) {
 		return;
 	}
 	
@@ -6598,7 +6622,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCChannel *channel = [self findChannel:channelName];
 
-	if (channel == nil) {
+	if (channel == nil || channel.isChannel == NO) {
 		return;
 	}
 

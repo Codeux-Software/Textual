@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCChannelConfig.h"
+
 #import "IRCTreeItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -56,6 +58,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (nonatomic, copy) NSString *name; // -setName: will do nothing if type != IRCChannelPrivateMessageType
 @property (nonatomic, copy, nullable) NSString *topic;
 @property (nonatomic, assign) BOOL autoJoin;
+@property (readonly) IRCChannelType type;
 @property (getter=isChannel, readonly) BOOL channel;
 @property (getter=isPrivateMessage, readonly) BOOL privateMessage;
 @property (getter=isPrivateMessageForZNCUser, readonly) BOOL privateMessageForZNCUser; // For example: *status, *nickserv, etc.
