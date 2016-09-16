@@ -415,7 +415,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		 because we do not care about private messages being updated
 		 above so they must be reinserted here. */
 		for (IRCChannel *channel in channelListOld) {
-			if (channel.isPrivateMessage) {
+			if (channel.isChannel == NO) {
 				[channelListNew addObject:channel];
 			} else {
 				[worldController() destroyChannel:channel reload:NO];
@@ -489,7 +489,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSMutableArray<IRCChannelConfig *> *channelList = [NSMutableArray array];
 
 	for (IRCChannel *channel in self.channelList) {
-		if (channel.isVolatile) {
+		if (channel.isUtility) {
 			continue;
 		}
 
@@ -1017,7 +1017,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSUInteger privateMessageIndex =
 			[self.channelListPrivate indexOfObjectPassingTest:^BOOL(IRCChannel *object, NSUInteger index, BOOL *stop) {
-				return object.isPrivateMessage;
+				return (object.isChannel == NO);
 			}];
 
 			if (privateMessageIndex == NSNotFound) {
@@ -1923,7 +1923,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	if (channel.isPrivateMessage || [TPCPreferences displayPublicMessageCountOnDockBadge]) {
+	if (channel.isChannel == NO || [TPCPreferences displayPublicMessageCountOnDockBadge]) {
 		channel.dockUnreadCount += 1;
 			
 		[TVCDockIcon updateDockIcon];
@@ -1976,18 +1976,40 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(withName != nil);
 
+	if (isPrivateMessage == NO) {
+		return [self findChannelOrCreate:withName asType:IRCChannelChannelType];
+	} else {
+		return [self findChannelOrCreate:withName asType:IRCChannelPrivateMessageType];
+	}
+}
+
+- (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isUtility:(BOOL)isUtility
+{
+	NSParameterAssert(withName != nil);
+
+	if (isUtility == NO) {
+		return [self findChannelOrCreate:withName asType:IRCChannelChannelType];
+	} else {
+		return [self findChannelOrCreate:withName asType:IRCChannelUtilityType];
+	}
+}
+
+- (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName asType:(IRCChannelType)type
+{
+	NSParameterAssert(withName != nil);
+
 	IRCChannel *channel = [self findChannel:withName];
 
 	if (channel) {
 		return channel;
 	}
 
-	if (isPrivateMessage == NO) {
+	if (type == IRCChannelChannelType) {
 		IRCChannelConfig *config = [IRCChannelConfig seedWithName:withName];
 
 		return [worldController() createChannelWithConfig:config onClient:self add:YES adjust:YES reload:YES];
 	} else {
-		return [worldController() createPrivateMessage:withName onClient:self];
+		return [worldController() createPrivateMessage:withName onClient:self asType:type];
 	}
 }
 
@@ -3330,7 +3352,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if ([self stringIsChannelName:stringInString] == NO) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
-				} else if (targetChannel && targetChannel.isPrivateMessage) {
+				} else if (targetChannel) {
 					[worldController() destroyChannel:targetChannel];
 
 					break;
@@ -4051,6 +4073,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* ============================ */
 
 	for (IRCChannel *channel in self.channelList) {
+		if (channel.isUtility) {
+			continue;
+		}
+
 		[channel writeToLogLineToLogFile:topLine];
 		[channel writeToLogLineToLogFile:middleLine];
 		[channel writeToLogLineToLogFile:bottomLine];
@@ -4475,10 +4501,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		for (IRCChannel *channel in self.channelList) {
+
 			if (channel.isActive == NO) {
 				channel.errorOnLastJoinAttempt = NO;
 			} else {
 				[channel deactivate];
+
+				if (channel.isUtility) {
+					continue;
+				}
 
 				[self printDebugInformation:disconnectMessage inChannel:channel];
 			}
@@ -4875,11 +4906,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	IRCChannel *query = [self findChannelOrCreate:@"Server Traffic" isPrivateMessage:YES];
-
-	query.disableTranscriptLog = YES;
-
-	query.isVolatile = YES;
+	IRCChannel *query = [self findChannelOrCreate:@"Server Traffic" isUtility:YES];
 
 	self.rawDataLogQuery = query;
 
@@ -6212,7 +6239,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 
 				[channel removeMember:member];
-			} else {
+			} else if (channel.isPrivateMessage) {
 				if (NSObjectsAreEqual(channel.name, sender) == NO) {
 					return;
 				}
@@ -6222,6 +6249,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 					[mainWindow() reloadTreeItem:channel];
 				}
+			} else {
+				return;
 			}
 		}
 
@@ -6399,7 +6428,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 
 				[channel resortMember:member];
-			} else {
+			} else if (channel.isPrivateMessage) {
 				/* Rename private message if one with old name is found */
 				if (NSObjectsAreEqual(channel.name, oldNickname) == NO) {
 					return;
@@ -6416,6 +6445,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				channel.name = newNickname;
 
 				[mainWindow() reloadTreeItem:channel];
+			} else {
+				return;
 			}
 		}
 

@@ -42,8 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL sentInitialWhoRequest;
 @property (nonatomic, assign) BOOL channelModesReceived;
 @property (nonatomic, assign, readwrite) BOOL errorOnLastJoinAttempt;
-@property (nonatomic, assign) BOOL disableTranscriptLog;
-@property (nonatomic, assign) BOOL isVolatile; // whether to force never to be saved
 
 - (instancetype)initWithConfig:(IRCChannelConfig *)config NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithConfigDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;

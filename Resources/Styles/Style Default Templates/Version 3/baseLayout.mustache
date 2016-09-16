@@ -8,6 +8,10 @@
 			channelname="{{channelName}}"
 		{{/isPrivateMessageView}}
 
+		{{#isUtilityView}}
+			channelname="{{channelName}}"
+		{{/isUtilityView}}
+
 		{{! The operating system version declaration allows CSS selectors to target specific versions. }}
 		systemversion="{{operatingSystemVersion}}"
 
@@ -115,6 +119,10 @@
 		{{#isPrivateMessageView}}
 			channelname="{{channelName}}"
 		{{/isPrivateMessageView}}
+
+		{{#isUtilityView}}
+			channelname="{{channelName}}"
+		{{/isUtilityView}}
 
 		dir="{{textDirectionToken}}">
 			{{! The elements "body_home," "historic_messages," "loading_screen," 

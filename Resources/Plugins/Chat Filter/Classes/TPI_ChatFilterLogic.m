@@ -37,6 +37,8 @@
 
 #import "TPI_ChatFilterLogic.h"
 
+#import "IRCClientPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPI_ChatFilterLogic ()
@@ -429,7 +431,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Log action to a private message */
 	if (filter.filterLogMatch) {
-		IRCChannel *filterActionReportQuery = [client findChannelOrCreate:@"Filter Actions" isPrivateMessage:YES];
+		IRCChannel *filterActionReportQuery = [client findChannelOrCreate:@"Filter Actions" isUtility:YES];
 
 		NSString *formattedMessage = nil;
 
