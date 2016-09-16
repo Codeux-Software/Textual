@@ -110,6 +110,8 @@ enum {
 
 - (void)reopenLogFileIfNeeded;
 - (void)closeLogFile;
+
+- (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isUtility:(BOOL)isUtility;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1955,6 +1955,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				[title appendString:c.name];
 			}
 		}
+		else if (c.isUtility)
+		{
+			[title appendString:c.name];
+		}
 	}
 
 	self.title = title;

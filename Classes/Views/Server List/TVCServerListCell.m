@@ -128,13 +128,15 @@ NS_ASSUME_NONNULL_BEGIN
 			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", cellItem.label) forObject:self.cellTextField.cell];
 		}
 	} else {
-		if (cellItem.isPrivateMessage) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", cellItem.label) forObject:self.cellTextField.cell];
+		IRCChannel *channel = (IRCChannel *)cellItem;
+
+		if (channel.isChannel == NO) {
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", channel.label) forObject:self.cellTextField.cell];
 		} else {
 			if (isActive) {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", cellItem.label) forObject:self.cellTextField.cell];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", channel.label) forObject:self.cellTextField.cell];
 			} else {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", cellItem.label) forObject:self.cellTextField.cell];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", channel.label) forObject:self.cellTextField.cell];
 			}
 		}
 
@@ -169,13 +171,15 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isGroupItem == NO) {
 		IRCTreeItem *cellItem = self.cellItem;
 
+		IRCChannel *channel = (IRCChannel *)cellItem;
+
 		BOOL isInverted = [TPCPreferences invertSidebarColors];
 
 		NSImage *icon = nil;
 
 		BOOL iconIsTemplate = (isInverted == NO);
 		
-		if (cellItem.isPrivateMessage) {
+		if (channel.isChannel == NO) {
 			NSString *queryIcon = [interfaceObjects privateMessageStatusIconFilename:isActive];
 			
 			icon = [NSImage imageNamed:queryIcon];
@@ -240,11 +244,13 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isGroupItem == NO) {
 		IRCTreeItem *cellItem = self.cellItem;
 
+		IRCChannel *channel = (IRCChannel *)cellItem;
+
 		BOOL isInverted = [TPCPreferences invertSidebarColors];
 
 		NSImage *icon = nil;
-		
-		if (cellItem.isPrivateMessage) {
+
+		if (channel.isChannel == NO) {
 			NSString *queryIcon = [interfaceObjects privateMessageStatusIconFilename:isActive selected:isSelected];
 			
 			icon = [NSImage imageNamed:queryIcon];

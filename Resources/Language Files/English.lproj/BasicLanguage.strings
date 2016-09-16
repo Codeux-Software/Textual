@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1025 */
+/* Next unusued key: 1027 */
 
 "BasicLanguage[1001]" = "None";
 "BasicLanguage[1002]" = "Unknown";
@@ -83,3 +83,5 @@
 "BasicLanguage[1024][year]" = "year";
 
 "BasicLanguage[1025]" = "%@ ago";
+
+"BasicLanguage[1026]" = "No Actions Available";

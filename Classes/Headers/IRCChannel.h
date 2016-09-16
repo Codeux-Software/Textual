@@ -59,6 +59,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (getter=isChannel, readonly) BOOL channel;
 @property (getter=isPrivateMessage, readonly) BOOL privateMessage;
 @property (getter=isPrivateMessageForZNCUser, readonly) BOOL privateMessageForZNCUser; // For example: *status, *nickserv, etc.
+@property (getter=isUtility, readonly) BOOL utility; // See IRCChannelUtilityType in IRCChannelConfig.h
 @property (readonly) IRCChannelStatus status;
 @property (readonly) BOOL errorOnLastJoinAttempt;
 @property (readonly) NSTimeInterval channelJoinTime;

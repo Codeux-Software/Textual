@@ -60,10 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableArray<NSMenuItem *> *menuItems = [NSMutableArray array];
 
-	if (viewController.associatedChannel == nil) {
-		self.nickname = nil;
-	}
-
 	if (self.anchorURL)
 	{
 		NSMenu *urlMenu = menuController().channelViewURLMenu;
@@ -80,14 +76,25 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if (self.nickname)
 	{
-		NSMenu *memberMenu = menuController().userControlMenu;
+		if (viewController.associatedChannel == nil ||
+			viewController.associatedChannel.isUtility)
+		{
+			NSMenuItem *noActionMenuItem =
+			[[NSMenuItem alloc] initWithTitle:TXTLS(@"BasicLanguage[1026]")
+									   action:nil
+								keyEquivalent:NSStringEmptyPlaceholder];
 
-		for (NSMenuItem *item in memberMenu.itemArray) {
-			NSMenuItem *newItem = [item copy];
+			[menuItems addObject:noActionMenuItem];
+		} else {
+			NSMenu *memberMenu = menuController().userControlMenu;
 
-			[newItem setUserInfo:self.nickname recursively:YES];
+			for (NSMenuItem *item in memberMenu.itemArray) {
+				NSMenuItem *newItem = [item copy];
 
-			[menuItems addObject:newItem];
+				[newItem setUserInfo:self.nickname recursively:YES];
+
+				[menuItems addObject:newItem];
+			}
 		}
 
 		self.nickname = nil;

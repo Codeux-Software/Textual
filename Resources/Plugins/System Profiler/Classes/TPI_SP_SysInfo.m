@@ -835,7 +835,7 @@ NS_ASSUME_NONNULL_BEGIN
 			webViewProcesses[processIdentifierObj] = viewArray;
 		}
 
-		if (treeItem.isChannel == NO && treeItem.isPrivateMessage == NO) {
+		if (treeItem.isClient) {
 			return;
 		}
 

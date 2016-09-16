@@ -535,14 +535,21 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 - (IRCChannel *)createPrivateMessage:(NSString *)nickname onClient:(IRCClient *)client
 {
+	return [self createPrivateMessage:nickname onClient:client asType:IRCChannelPrivateMessageType];
+}
+
+- (IRCChannel *)createPrivateMessage:(NSString *)nickname onClient:(IRCClient *)client asType:(IRCChannelType)type
+{
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(client != nil);
+	NSParameterAssert(type == IRCChannelPrivateMessageType ||
+					  type == IRCChannelUtilityType);
 
 	IRCChannelConfigMutable *config = [IRCChannelConfigMutable new];
 
 	config.channelName = nickname;
 
-	config.type = IRCChannelPrivateMessageType;
+	config.type = type;
 
 	IRCChannel *channel = [self createChannelWithConfig:config onClient:client add:YES adjust:YES reload:YES];
 

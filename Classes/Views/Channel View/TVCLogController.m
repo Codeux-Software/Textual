@@ -243,7 +243,7 @@ ClassWithDesignatedInitializerInitMethod
 		/* 4 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO) ||
 		/* 5 */ self.encrypted ||
-		/* 6 */ self.associatedChannel.isVolatile)
+		/* 6 */ self.associatedChannel.isUtility)
 	{
 		[self.historicLogFile reset];
 	} else {
@@ -574,7 +574,8 @@ ClassWithDesignatedInitializerInitMethod
 		/* 3 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
 		/* 4 */  self.associatedChannel == nil ||
 		/* 5 */ (self.associatedChannel.isPrivateMessage &&
-				 [TPCPreferences rememberServerListQueryStates] == NO))
+				 [TPCPreferences rememberServerListQueryStates] == NO) ||
+		/* 6 */ self.associatedChannel.isUtility)
 	{
 		self.historyLoadedForFirstTime = YES;
 
@@ -1317,6 +1318,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.associatedChannel) {
 		templateTokens[@"isChannelView"] = @(self.associatedChannel.isChannel);
         templateTokens[@"isPrivateMessageView"] = @(self.associatedChannel.isPrivateMessage);
+		templateTokens[@"isUtilityView"] = @(self.associatedChannel.isUtility);
 
 		templateTokens[@"channelName"] = self.associatedChannel.name;
 		

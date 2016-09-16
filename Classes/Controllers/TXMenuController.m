@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _isClient					(u && c == nil)
 #define _isChannel					(c && [c isChannel])
 #define _isQuery					(c && [c isPrivateMessage])
+#define _isUtility					(c && [c isUtility])
 #define _noChannel					(c == nil)
 #define _noClient					(u == nil)
 #define _noClientOrChannel			(u == nil || c == nil)
@@ -341,6 +342,11 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = mainWindow().selectedClient;
 	IRCChannel *c = mainWindow().selectedChannel;
 
+	/* Disable the entire user action menu for utility windows */
+	if (tag >= 1500 && tag <= 1599) {
+		return NO;
+	}
+
 	switch (tag) {
 		case 815: // "Buddy List"
 		{
@@ -605,7 +611,7 @@ NS_ASSUME_NONNULL_BEGIN
 		case 508: // "Add Channel…"
 		case 603: // "Add Channel…"
 		{
-			menuItem.hidden = _isQuery;
+			menuItem.hidden = (_isQuery || _isUtility);
 
 			return (_noClient == NO);
 		}
@@ -613,15 +619,23 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			menuItem.hidden = _noChannel;
 
-			if (_isQuery) {
-				menuItem.title = TXTLS(@"BasicLanguage[1013]");
+			if (_isChannel) {
+				menuItem.title = TXTLS(@"BasicLanguage[1012]");
 				
+				return YES;
+			} else if (_isQuery) {
+				menuItem.title = TXTLS(@"BasicLanguage[1013]");
+
+				return YES;
+			} else if (_isUtility) {
+				/* Declared as different if statement in case
+				 I decide to set a different label later. */
+				menuItem.title = TXTLS(@"BasicLanguage[1013]");
+
 				return YES;
 			}
 
-			menuItem.title = TXTLS(@"BasicLanguage[1012]");
-				
-			return _isChannel;
+			return NO;
 		}
 		case 1201: // "Add Channel…" - Server Menu
 		{
@@ -648,7 +662,7 @@ NS_ASSUME_NONNULL_BEGIN
 			TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
 			if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
-				menuItem.title = TXTLS(@"BasicLanguage[1007]");
+				menuItem.title = TXTLS(@"BasicLanguage[1008]");
 
 				return YES;
 			}
@@ -672,7 +686,9 @@ NS_ASSUME_NONNULL_BEGIN
 						if (_channelIsntActive) {
 							return NO;
 						}
-					} else {
+					} else if (_isQuery) {
+						menuItem.title = TXTLS(@"BasicLanguage[1007]");
+					} else if (_isUtility) {
 						menuItem.title = TXTLS(@"BasicLanguage[1007]");
 					}
 					
@@ -3108,7 +3124,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSMutableArray *channelList = [u.channelList mutableCopy];
 		
 		[channelList sortUsingComparator:^NSComparisonResult(IRCChannel *channel1, IRCChannel *channel2) {
-			if (channel1.isChannel && channel2.isPrivateMessage) {
+			if (channel1.isChannel && channel2.isChannel == NO) {
 				return NSOrderedAscending;
 			}
 

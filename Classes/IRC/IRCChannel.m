@@ -190,6 +190,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return (self.config.type == IRCChannelPrivateMessageType);
 }
 
+- (BOOL)isUtility
+{
+	return (self.config.type == IRCChannelUtilityType);
+}
+
 - (BOOL)isPrivateMessageForZNCUser
 {
 	if (self.isPrivateMessage == NO) {
@@ -203,10 +208,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSString *)channelTypeString
 {
-	if (self.isPrivateMessage) {
-		return @"query";
-	} else {
-		return @"channel";
+	switch (self.config.type) {
+		case IRCChannelChannelType:
+		{
+			return @"channel";
+		}
+		case IRCChannelPrivateMessageType:
+		{
+			return @"query";
+		}
+		case IRCChannelUtilityType:
+		{
+			return @"utility";
+		}
 	}
 }
 
@@ -245,7 +259,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(name != nil);
 
-	if (self.isPrivateMessage == NO) {
+	if (self.isChannel) {
 		return;
 	}
 
@@ -266,15 +280,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self->_topic = [topic copy];
 
 		[self.viewController setTopic:self->_topic];
-	}
-}
-
-- (void)setDisableTranscriptLog:(BOOL)disableTranscriptLog
-{
-	if (self->_disableTranscriptLog != disableTranscriptLog) {
-		self->_disableTranscriptLog = disableTranscriptLog;
-
-		[self reopenLogFileIfNeeded];
 	}
 }
 
@@ -475,7 +480,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)reopenLogFileIfNeeded
 {
-	if ([TPCPreferences logToDiskIsEnabled] && self.disableTranscriptLog == NO) {
+	if ([TPCPreferences logToDiskIsEnabled] && self.isUtility == NO) {
 		if ( self.logFile) {
 			[self.logFile reopen];
 		}
@@ -500,7 +505,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(logLine != nil);
 
-	if ([TPCPreferences logToDiskIsEnabled] == NO || self.disableTranscriptLog) {
+	if ([TPCPreferences logToDiskIsEnabled] == NO || self.isUtility) {
 		return;
 	}
 
