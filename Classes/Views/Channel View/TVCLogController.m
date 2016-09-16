@@ -1307,6 +1307,8 @@ ClassWithDesignatedInitializerInitMethod
 
     templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
 
+	templateTokens[@"isReloadingStyle"] = @(self.reloadingTheme);
+
 	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
 
 	templateTokens[@"sidebarInversionIsEnabled"] = @([TPCPreferences invertSidebarColors]);

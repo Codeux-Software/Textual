@@ -269,8 +269,15 @@ body div.line.selectedUser[highlight=false] {
 }
 
 #historic_messages.loaded {
-	opacity: 0.6;
 	height: auto;
+}
+
+#historic_messages[isreload="false"].loaded {
+	opacity: 0.6;
+}
+
+#historic_messages[isreload="true"].loaded {
+	opacity: 1.0;
 }
 
 /* NOTICE/CTCP/WALLOPS */
