@@ -343,7 +343,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = mainWindow().selectedChannel;
 
 	/* Disable the entire user action menu for utility windows */
-	if (tag >= 1500 && tag <= 1599) {
+	if (tag >= 1500 && tag <= 1599 && _isUtility) {
 		return NO;
 	}
 
