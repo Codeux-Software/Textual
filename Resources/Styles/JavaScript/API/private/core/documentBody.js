@@ -176,12 +176,10 @@ Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
 
 	var elementToAppendTo = null;
 
-	if (isReload == false) {
-		var historicMessagesDiv = document.getElementById("historic_messages");
+	var historicMessagesDiv = document.getElementById("historic_messages");
 
-		if (historicMessagesDiv) {
-			elementToAppendTo = historicMessagesDiv;
-		}
+	if (historicMessagesDiv) {
+		elementToAppendTo = historicMessagesDiv;
 	}
 
 	if (elementToAppendTo === null) {

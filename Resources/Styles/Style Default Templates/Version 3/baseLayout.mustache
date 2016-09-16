@@ -136,7 +136,13 @@
 			{{/isChannelView}}
 
 			<div id="body_home">
-				<div id="historic_messages"></div>
+				<div id="historic_messages"
+
+				{{#isReloadingStyle}}
+				isreload="true"
+				{{^isReloadingStyle}}
+				isreload="false"
+				{{/isReloadingStyle}} ></div>
 			</div>
 	</body>
 </html>
