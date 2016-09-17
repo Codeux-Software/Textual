@@ -848,7 +848,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self _resortMember:member2 byReplacingMember:member1];
 
 		if (replaceInAllChannels) {
-			[member2.user enumerateRelations:^(IRCChannel *channel, IRCChannelUser *member, BOOL *stop) {
+			NSDictionary *relations = member2.user.relations;
+
+			[relations enumerateKeysAndObjectsUsingBlock:^(IRCChannel *channel, IRCChannelUser *member, BOOL *stop) {
 				if (channel == self) {
 					return;
 				}

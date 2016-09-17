@@ -350,6 +350,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.relations enumerateRelations:block];
 }
 
+- (NSDictionary<IRCChannel *, IRCChannelUser *> *)relations
+{
+	return self.relations.relations;
+}
+
 @end
 
 #pragma mark -
