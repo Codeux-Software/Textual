@@ -251,7 +251,7 @@ create_normal_pool:
 	WKPageRef pageRef = NULL;
 
 	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
-		return;
+		pageRef = [self _pageForTesting];
 	} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
 		WKView *webViewParent = (id)self.subviews[0];
 

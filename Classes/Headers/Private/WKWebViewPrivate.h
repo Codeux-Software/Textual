@@ -19,6 +19,10 @@ WKInspectorRef WKPageGetInspector(WKPageRef page);
 
 void WKInspectorShow(WKInspectorRef inspectorRef);
 
+@interface WKWebView ()
+- (WKPageRef)_pageForTesting;
+@end
+
 @interface WKView : NSView
 - (WKPageRef)pageRef;
 @end

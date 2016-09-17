@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -1040,6 +1040,12 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showWelcomeSheet:" target="267" id="8jJ-Pr-Y90"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Open Web Inspector" tag="930" id="uSd-ZA-jhP">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openWebInspector:" target="267" id="JJH-eD-wK5"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="2725">

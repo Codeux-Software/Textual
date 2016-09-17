@@ -201,6 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
 	927: "End User License Agreement"
 	928: "Enable App Nap"
 	929: "Collect Anonymous Statistics"
+	930: "Open Web Inspector"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
