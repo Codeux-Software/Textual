@@ -232,6 +232,7 @@
 	#import "IRCSendingMessage.h"
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
+	#import "IRCUserRelations.h"
 	#import "IRCWorld.h"
 
 	/* Framework Extensions (Helpers) */

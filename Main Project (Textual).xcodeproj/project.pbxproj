@@ -427,6 +427,9 @@
 		4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */; };
 		4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
+		4C35F7A61D8D6F54004B7E15 /* IRCUserRelations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C35F7A71D8D6F54004B7E15 /* IRCUserRelations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C35F7A81D8D6F54004B7E15 /* IRCUserRelations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C361B151B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
 		4C361B161B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
 		4C3A3DD71D41750200569BA8 /* IRCNetworkList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3A3DD61D41750200569BA8 /* IRCNetworkList.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2022,6 +2025,7 @@
 		4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListYosemiteUserInterfacePrivate.h; path = Headers/Private/TVCServerListYosemiteUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
+		4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserRelations.h; path = Headers/IRCUserRelations.h; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCTextFieldWithValueValidation.h; path = Headers/TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
 		4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerMigrateAppStoreSheet.m; path = Dialogs/TDCLicenseManagerMigrateAppStoreSheet.m; sourceTree = "<group>"; };
 		4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldPrivateCloudExtension.h; path = Headers/Private/IRCWorldPrivateCloudExtension.h; sourceTree = "<group>"; };
@@ -3490,6 +3494,7 @@
 				4C8AF541158E99520026668C /* IRCSendingMessage.h */,
 				4C8AF542158E99520026668C /* IRCTreeItem.h */,
 				4C52EF9F1D58C24C0003AA1C /* IRCUser.h */,
+				4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */,
 				4C8AF544158E99520026668C /* IRCWorld.h */,
 				4C8AF548158E99520026668C /* NSColorHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
@@ -3965,6 +3970,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */,
+				4C35F7A61D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4C0FDE2F1D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
 				4C0D97881D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C9EEC381D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
@@ -4211,6 +4217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */,
+				4C35F7A71D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD81D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
@@ -4455,6 +4462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C52EFA21D58C24C0003AA1C /* IRCUser.h in Headers */,
+				4C35F7A81D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD91D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
