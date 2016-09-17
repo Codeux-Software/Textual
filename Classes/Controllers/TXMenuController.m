@@ -265,7 +265,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				/* Disable everything by default except tag 900 through 916. These are various
 				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || (tag > 916 && tag < 929)) {
+				if (tag < 900 || (tag > 916 && tag < 930)) {
 					returnValue = NO;
 				}
 
@@ -402,6 +402,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
+		case 930: // Open Web Inspector
 		case 921: // "Open 'Welcome to Textual' Dialog"
 		case 922: // "Reset 'Don't Ask Me' Warnings"
 		case 923: // "Simulate a Crash"
