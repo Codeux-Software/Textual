@@ -370,7 +370,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #pragma mark -
 
-@implementation IRCChannelUser (IRCUserRelations)
+@implementation IRCChannelUser (IRCUserRelationsPrivate)
 
 - (void)disassociateWithChannel:(IRCChannel *)channel
 {

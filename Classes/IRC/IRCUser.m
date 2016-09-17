@@ -310,7 +310,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #pragma mark -
 
-@implementation IRCUser (IRCUserRelations)
+@implementation IRCUser (IRCUserRelationsPrivate)
 
 - (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel
 {
@@ -349,6 +349,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self.relations enumerateRelations:block];
 }
+
+@end
+
+#pragma mark -
+
+@implementation IRCUser (IRCUserRelations)
 
 - (NSDictionary<IRCChannel *, IRCChannelUser *> *)relations
 {

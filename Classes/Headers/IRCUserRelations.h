@@ -37,40 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* IRCUserRelations is a class used by IRCUser to store which
- IRCChannelUser object is associated with a particular channel. */
-@interface IRCUserRelations : NSObject
-@property (readonly, copy) NSArray<IRCChannel *> *relatedChannels;
-@property (readonly, copy) NSArray<IRCChannelUser *> *relatedUsers;
+@interface IRCUser (IRCUserRelations)
 @property (readonly, copy) NSDictionary<IRCChannel *, IRCChannelUser *> *relations;
-
-@property (readonly) NSUInteger numberOfRelations;
-
-- (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel;
-- (void)disassociateUserWithChannel:(IRCChannel *)channel;
-
-- (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel;
-
-- (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block;
-@end
-
-#pragma mark -
-
-/* Acts as easy access for internal relations object */
-@interface IRCUser (IRCUserRelationsPrivate)
-- (void)becamePrimaryUser;
-
-- (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel;
-- (void)disassociateUserWithChannel:(IRCChannel *)channel;
-
-- (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel;
-
-- (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block;
-@end
-
-@interface IRCChannelUser (IRCUserRelationsPrivate)
-- (void)associateWithChannel:(IRCChannel *)channel;
-- (void)disassociateWithChannel:(IRCChannel *)channel;
 @end
 
 NS_ASSUME_NONNULL_END
