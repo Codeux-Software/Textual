@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IRCUserRelations : NSObject
 @property (readonly, copy) NSArray<IRCChannel *> *relatedChannels;
 @property (readonly, copy) NSArray<IRCChannelUser *> *relatedUsers;
+@property (readonly, copy) NSDictionary<IRCChannel *, IRCChannelUser *> *relations;
 
 @property (readonly) NSUInteger numberOfRelations;
 
@@ -58,6 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 /* Acts as easy access for internal relations object */
 @interface IRCUser (IRCUserRelations)
 - (void)becamePrimaryUser;
+
+@property (readonly, copy) NSDictionary<IRCChannel *, IRCChannelUser *> *relations;
 
 - (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel;
 - (void)disassociateUserWithChannel:(IRCChannel *)channel;
