@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IRCUser ()
 @property (nonatomic, weak, readwrite) IRCClient *client;
 @property (nonatomic, strong) IRCUserPersistentStore *persistentStore;
-@property (readonly) IRCUserRelations *relations;
+@property (readonly) IRCUserRelations *relationsInt;
 @end
 
 @implementation IRCUser
@@ -96,7 +96,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self cancelRemoveUserTimer];
 }
 
-- (IRCUserRelations *)relations
+- (IRCUserRelations *)relationsInt
 {
 	return self.persistentStore.relations;
 }
@@ -249,7 +249,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)toggleRemoveUserTimer
 {
-	if (self.relations.numberOfRelations > 0) {
+	if (self.relationsInt.numberOfRelations > 0) {
 		[self cancelRemoveUserTimer];
 	} else {
 		[self startRemoveUserTimer];
@@ -314,26 +314,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)associateUser:(IRCChannelUser *)user withChannel:(IRCChannel *)channel
 {
-	[self.relations associateUser:user withChannel:channel];
+	[self.relationsInt associateUser:user withChannel:channel];
 
 	[self toggleRemoveUserTimer];
 }
 
 - (void)disassociateUserWithChannel:(IRCChannel *)channel
 {
-	[self.relations disassociateUserWithChannel:channel];
+	[self.relationsInt disassociateUserWithChannel:channel];
 
 	[self toggleRemoveUserTimer];
 }
 
 - (nullable IRCChannelUser *)userAssociatedWithChannel:(IRCChannel *)channel
 {
-	return [self.relations userAssociatedWithChannel:channel];
+	return [self.relationsInt userAssociatedWithChannel:channel];
 }
 
 - (void)relinkRelations
 {
-	NSArray *relatedUsers = self.relations.relatedUsers;
+	NSArray *relatedUsers = self.relationsInt.relatedUsers;
 
 	[relatedUsers makeObjectsPerformSelector:@selector(changeUserToUser:) withObject:self];
 }
@@ -347,7 +347,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)enumerateRelations:(void (NS_NOESCAPE ^)(IRCChannel *channel, IRCChannelUser *member, BOOL *stop))block
 {
-	[self.relations enumerateRelations:block];
+	[self.relationsInt enumerateRelations:block];
 }
 
 @end
@@ -358,7 +358,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSDictionary<IRCChannel *, IRCChannelUser *> *)relations
 {
-	return self.relations.relations;
+	return self.relationsInt.relations;
 }
 
 @end
