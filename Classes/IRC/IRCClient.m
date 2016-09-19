@@ -9561,6 +9561,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Is it AppleScript? */
 	if ([path hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
+		BOOL isBuiltinScript = [path hasPrefix:[TPCPathInfo applicationResourcesFolderPath]];
+
 		/* /////////////////////////////////////////////////////// */
 		/* Event Descriptor */
 		/* /////////////////////////////////////////////////////// */
@@ -9594,26 +9596,50 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* /////////////////////////////////////////////////////// */
 		/* Execute Event */
 		/* /////////////////////////////////////////////////////// */
+		/* NSUserAppleScriptTask expects the script to be in the Application Scripts folder 
+		 which means if we want to execute scripts in the app's Resources folder, we use a
+		 regular call to NSAppleScript. It's pretty safe to say that scripts we make ourselves
+		 wont produce errors which means the logic for handling errors is ignored for scripts
+		 that are performed in the Resources folder. */
 
-		NSError *appleScriptError = nil;
+		if (isBuiltinScript)
+		{
+			NSAppleScript *appleScript = [[NSAppleScript alloc] initWithContentsOfURL:pathURL error:NULL];
 
-		NSUserAppleScriptTask *appleScript = [[NSUserAppleScriptTask alloc] initWithURL:pathURL error:&appleScriptError];
+			if (appleScript == nil) {
+				return;
+			}
 
-		if (appleScript == nil) {
-			[self outputDescriptionForError:appleScriptError forTextualCmdScriptAtPath:path inputString:inputString];
+			NSAppleEventDescriptor *result = [appleScript executeAppleEvent:event error:NULL];
 
-			return;
+			if (result == nil) {
+				return;
+			}
+
+			[self sendTextualCmdScriptResult:result.stringValue toChannel:targetChannel];
 		}
+		else // isBuiltinScript
+		{
+			NSError *appleScriptError = nil;
 
-		[appleScript executeWithAppleEvent:event
-						 completionHandler:^(NSAppleEventDescriptor *result, NSError *error)
-		 {
-			 if (result == nil) {
-				 [self outputDescriptionForError:error forTextualCmdScriptAtPath:path inputString:inputString];
-			 } else {
-				 [self sendTextualCmdScriptResult:result.stringValue toChannel:targetChannel];
-			 }
-		 }];
+			NSUserAppleScriptTask *appleScript = [[NSUserAppleScriptTask alloc] initWithURL:pathURL error:&appleScriptError];
+
+			if (appleScript == nil) {
+				[self outputDescriptionForError:appleScriptError forTextualCmdScriptAtPath:path inputString:inputString];
+
+				return;
+			}
+
+			[appleScript executeWithAppleEvent:event
+							 completionHandler:^(NSAppleEventDescriptor *result, NSError *error)
+			 {
+				 if (result == nil) {
+					 [self outputDescriptionForError:error forTextualCmdScriptAtPath:path inputString:inputString];
+				 } else {
+					 [self sendTextualCmdScriptResult:result.stringValue toChannel:targetChannel];
+				 }
+			 }];
+		}
 
 		return;
 	}
