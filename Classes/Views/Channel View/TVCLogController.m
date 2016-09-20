@@ -665,6 +665,8 @@ ClassWithDesignatedInitializerInitMethod
 	[self _evaluateFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
 
 	[self maybeReloadHistory];
+
+	[self.backingView scrollWebViewToLastSize];
 }
 
 - (void)notifySelectionChanged

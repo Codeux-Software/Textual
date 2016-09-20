@@ -46,8 +46,6 @@ Textual.viewBodyDidLoadIntAnimationFrame = null;
 /* State management */
 Textual.notifyDidBecomeVisible = function()
 {
-	TextualScroller.performAutoScroll();
-
 	Textual.clearSelection();
 };
 

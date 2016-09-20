@@ -70,6 +70,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 
 - (void)webViewScrollAreaSizeChanged:(NSSize)newSize;
+- (void)scrollWebViewToLastSize;
+
+- (void)redrawWebView;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
