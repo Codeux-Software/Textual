@@ -275,6 +275,17 @@ ClassWithDesignatedInitializerInitMethod
 	[self.webViewBacking findString:searchString movingForward:movingForward];
 }
 
+- (void)scrollWebViewToLastSize
+{
+	NSSize lastSize = self.scrollAreaLastSize;
+
+	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.scrollHeightChanged(%f);", lastSize.height];
+
+	[self evaluateJavaScript:compiledScript completionHandler:^(id result) {
+		[self redrawWebView];
+	}];
+}
+
 - (void)webViewScrollAreaSizeChanged:(NSSize)newSize
 {
 	if (NSEqualSizes(self.scrollAreaLastSize, newSize) == NO) {
@@ -287,9 +298,16 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.scrollHeightChanged(%f);", newSize.height];
+	[self scrollWebViewToLastSize];
+}
 
-	[self evaluateJavaScript:compiledScript completionHandler:nil];
+- (void)redrawWebView
+{
+	self.webView.needsDisplay = YES;
+
+	if (self.isUsingWebKit2) {
+		self.webView.needsLayout = YES;
+	}
 }
 
 @end
