@@ -275,6 +275,17 @@ ClassWithDesignatedInitializerInitMethod
 	[self.webViewBacking findString:searchString movingForward:movingForward];
 }
 
+- (void)scrollWebViewToEndOfDocument
+{
+	/* In WKWebView, pre-Sierra, -scrollToEndOfDocument: is implemented by the 
+	 WebView's first subview, which is always WKView, else we're fucked. */
+	if (self.isUsingWebKit2 && [XRSystemInformation isUsingOSXSierraOrLater] == NO) {
+		[self.webView.subviews.firstObject scrollToEndOfDocument:nil];
+	} else {
+		[self.webView scrollToEndOfDocument:nil];
+	}
+}
+
 - (void)scrollWebViewToLastSize
 {
 	NSSize lastSize = self.scrollAreaLastSize;
@@ -286,7 +297,7 @@ ClassWithDesignatedInitializerInitMethod
 			return;
 		}
 
-		[self.webView scrollToEndOfDocument:nil];
+		[self scrollWebViewToEndOfDocument];
 	}];
 }
 
