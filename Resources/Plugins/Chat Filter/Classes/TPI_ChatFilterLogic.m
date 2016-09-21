@@ -156,6 +156,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *filterMatch = filter.filterMatch;
 
 	if (filterMatch.length > 0) {
+		if ([TPCPreferences removeAllFormatting] == NO) {
+			text = text.stripIRCEffects;
+		}
+
 		if ([XRRegularExpression string:text isMatchedByRegex:filterMatch withoutCase:YES] == NO) {
 			/* The input text is not matched by the filter match.
 			 Continue to the next filter to try again. */
