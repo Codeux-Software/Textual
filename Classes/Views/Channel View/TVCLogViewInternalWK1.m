@@ -203,6 +203,8 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
 		if (completionHandler) {
 			completionHandler(nil);
+
+			return;
 		}
 	}
 
@@ -214,6 +216,8 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		{
 			if (completionHandler) {
 				completionHandler(nil);
+
+				return;
 			}
 		}
 		else if ([scriptResult isKindOfClass:[WebScriptObject class]])
