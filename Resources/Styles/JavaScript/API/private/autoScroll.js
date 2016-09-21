@@ -75,7 +75,7 @@ TextualScroller.documentScrolledCallback = function()
 	if (scrollPosition > scrollHeight) {
 		return;
 	}
-	
+
 	/* 	Record the last three known scrollY values. These properties are compared
 		to determine if the user is scrolling upwards or downwards. */
 	TextualScroller.scrollLastPosition3 = TextualScroller.scrollLastPosition2;
@@ -126,11 +126,6 @@ TextualScroller.documentScrolledCallback = function()
 };
 
 /* 	Perform automatic scrolling */
-TextualScroller.scrollHeightChanged = function(scrollHeight)
-{
-	TextualScroller.performAutoScroll();
-};
-
 TextualScroller.performAutoScroll = function() 
 {
 	var scrollHeight = TextualScroller.scrollHeight();
@@ -142,12 +137,17 @@ TextualScroller.performAutoScroll = function()
 	var requestAnimationFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame);
 
 	requestAnimationFrame(function() {
-		TextualScroller.performAutoScrollInt(scrollHeight);
+		if (TextualScroller.performAutoScrollInt(scrollHeight) === false) {
+			return;
+		}
+		
+		document.body.scrollTop = TextualScroller.scrollHeightCurrentValue;
 	 });
 };
 
-/* TextualScroller.performAutoScrollInt() is the function responsible for performing
- the automatic scroll to the bottom. */
+/* TextualScroller.performAutoScrollInt() determines whether scrolling should occur 
+ given a height that will be scrolled to. If it returns true, then the height has 
+ been recorded and will be scrolled to using other logic (Objective-C). */
 TextualScroller.performAutoScrollInt = function(scrollHeight)
 {
 	/* Do not perform scrolling if we are performing live resize */
@@ -155,13 +155,13 @@ TextualScroller.performAutoScrollInt = function(scrollHeight)
 	   scrolling will notice the new height of the view and use that. */
 	if (Textual.hasLiveResize()) {
 		if (InlineImageLiveResize.dragElement) {
-			return;
+			return false;
 		}
 	}
 
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
-		return;
+		return false;
 	}
 	
 	/* Make a copy of the previous scroll height and save the new */
@@ -169,8 +169,7 @@ TextualScroller.performAutoScrollInt = function(scrollHeight)
 	
 	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 
-	/* Scroll to new value */
-	window.scrollTo(0, scrollHeight);
+	return true;
 };
 
 /* Function returns the scroll height accounting for offset height */

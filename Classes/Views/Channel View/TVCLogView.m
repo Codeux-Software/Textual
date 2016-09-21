@@ -279,10 +279,14 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSSize lastSize = self.scrollAreaLastSize;
 
-	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.scrollHeightChanged(%f);", lastSize.height];
+	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.performAutoScrollInt(%f);", lastSize.height];
 
 	[self evaluateJavaScript:compiledScript completionHandler:^(id result) {
-		[self redrawWebView];
+		if (((NSNumber *)result).boolValue == NO) {
+			return;
+		}
+
+		[self.webView scrollToEndOfDocument:nil];
 	}];
 }
 
@@ -299,15 +303,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[self scrollWebViewToLastSize];
-}
-
-- (void)redrawWebView
-{
-	self.webView.needsDisplay = YES;
-
-	if (self.isUsingWebKit2) {
-		self.webView.needsLayout = YES;
-	}
 }
 
 @end

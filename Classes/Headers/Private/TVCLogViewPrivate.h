@@ -71,8 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)webViewScrollAreaSizeChanged:(NSSize)newSize;
 - (void)scrollWebViewToLastSize;
-
-- (void)redrawWebView;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
