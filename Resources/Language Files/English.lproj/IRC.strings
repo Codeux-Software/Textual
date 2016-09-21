@@ -175,10 +175,7 @@
 "IRC[1090]" = "Timer command requires a whole number for interval. Syntax: “/timer <seconds> <command>”";
 
 /* Raw mode messages */
-"IRC[1091]" = "Raw data will no longer be output.";
-"IRC[1092]" = "Raw data will now be output to the ”Console” application until you disable it by performing “/debug raw off” or by disconnecting.";
-"IRC[1093]" = "------------- End Raw Mode Session -------------";
-"IRC[1094]" = "------------- Begin Raw Mode Session -------------";
+"IRC[1092]" = "⍅ Server traffic will be output to this window until its closed by control clicking (right clicking) it. ⍆";
 
 /* Log file session headers */
 "IRC[1095]" = "------------- Begin Session -------------";

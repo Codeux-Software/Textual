@@ -166,7 +166,7 @@
 "Prompts[1133][3]" = "Transfer File";
 
 "Prompts[1134][1]" = "Textual is unable to access the folder that's configured for your log location because the resource is 'stale'";
-"Prompts[1134][2]" = "Browse to Preferences \U279C Advanced \U279C Log Location to repair this preference";
+"Prompts[1134][2]" = "Navigate to Preferences \U279C Advanced \U279C Log Location to repair this preference";
 
 "Prompts[1135][1]" = "Are you willing to share anonymous usage statistics with Codeux Software to help make Textual better?";
 "Prompts[1135][2]" = "The information we collect, which does not contain personal information, is used to better understand how Textual is used on a day-to-day basis.\n\nClick “Learn More” to temporarily opt-out while you learn more.";
