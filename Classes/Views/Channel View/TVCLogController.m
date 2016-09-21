@@ -623,6 +623,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)reloadTheme
 {
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self _reloadTheme];
+	});
+}
+
+- (void)_reloadTheme
+{
 	if (self.terminating) {
 		return;
 	}
@@ -860,6 +867,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)clearWithReset:(BOOL)clearWithReset
 {
+	if (self.terminating) {
+		return;
+	}
+
 	[self.printingQueue cancelOperationsForViewController:self];
 
 	if (clearWithReset) {
@@ -882,17 +893,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.historyLoaded = NO;
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		if (self.terminating) {
-			return;
-		}
+	if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
+		[self rebuildBackingView];
+	}
 
-		if (self.backingView.isUsingWebKit2 != [TPCPreferences webKit2Enabled]) {
-			[self rebuildBackingView];
-		}
-
-		[self loadInitialDocument];
-	});
+	[self loadInitialDocument];
 }
 
 - (void)clear
