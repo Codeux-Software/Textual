@@ -175,7 +175,7 @@
 "IRC[1090]" = "Timer command requires a whole number for interval. Syntax: “/timer <seconds> <command>”";
 
 /* Raw mode messages */
-"IRC[1092]" = "⍅ Server traffic will be output to this window until its closed by control clicking (right clicking) it. ⍆";
+"IRC[1092]" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
 
 /* Log file session headers */
 "IRC[1095]" = "------------- Begin Session -------------";
