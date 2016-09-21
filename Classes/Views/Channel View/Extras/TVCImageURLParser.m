@@ -394,6 +394,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"http://tn-skr%lli.smilevideo.jp/smile?i=%lli", ((videoNumber % 4) + 1), videoNumber];
 	}
+	else if ([urlHost isEqualToString:@"i.reddituploads.com"])
+	{
+		NSObjectIsEmptyAssertReturn(urlPath, nil);
+
+		NSString *s = [urlPath substringFromIndex:1];
+
+		if (s.alphabeticNumericOnly) {
+			return urlUrl.absoluteString;
+		}
+	}
 	else if ([urlPath hasPrefix:@"/image/"])
 	{
 		/* Try our best to regonize cl.ly custom domains. */
