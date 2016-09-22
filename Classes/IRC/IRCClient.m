@@ -3298,7 +3298,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
-			if (commandNumeric == IRCPublicCommandKickIndex ||
+			if (commandNumeric == IRCPublicCommandKbIndex ||
+				commandNumeric == IRCPublicCommandKickIndex ||
 				commandNumeric == IRCPublicCommandKickbanIndex)
 			{
 				NSString *reason = stringIn.string;
