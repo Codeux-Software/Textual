@@ -4302,7 +4302,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Add scrollback marker to channel if conditions are met */
 	if ([TPCPreferences autoAddScrollbackMark]) {
-		if (channel != mainWindow().selectedChannel || mainWindow().mainWindow == NO) {
+		if ([mainWindow() isItemVisible:channel] == NO || mainWindow().mainWindow == NO) {
 			if (channel.isUnread == NO &&
 				(lineType == TVCLogLinePrivateMessageType ||
 				 lineType == TVCLogLineActionType ||
