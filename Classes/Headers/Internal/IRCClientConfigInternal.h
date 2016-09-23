@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _performDisconnectOnReachabilityChange;
 	BOOL _performPongTimer;
 	BOOL _prefersSecuredConnection;
-	BOOL _saslAuthenticationUsesExternalMechanism;
+	BOOL _saslAuthenticationDisableExternalMechanism;
 	BOOL _sendAuthenticationRequestsToUserServ;
 	BOOL _sendWhoCommandRequestsToChannels;
 	BOOL _setInvisibleModeOnConnect;

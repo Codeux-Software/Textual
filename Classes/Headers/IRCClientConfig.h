@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL performDisconnectOnReachabilityChange;
 @property (readonly) BOOL performPongTimer;
 @property (readonly) BOOL prefersSecuredConnection;
-@property (readonly) BOOL saslAuthenticationUsesExternalMechanism;
+@property (readonly) BOOL saslAuthenticationDisableExternalMechanism;
 @property (readonly) BOOL sendAuthenticationRequestsToUserServ;
 @property (readonly) BOOL sendWhoCommandRequestsToChannels;
 @property (readonly) BOOL setInvisibleModeOnConnect;
@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL performDisconnectOnReachabilityChange;
 @property (nonatomic, assign, readwrite) BOOL performPongTimer;
 @property (nonatomic, assign, readwrite) BOOL prefersSecuredConnection;
-@property (nonatomic, assign, readwrite) BOOL saslAuthenticationUsesExternalMechanism;
+@property (nonatomic, assign, readwrite) BOOL saslAuthenticationDisableExternalMechanism;
 @property (nonatomic, assign, readwrite) BOOL sendAuthenticationRequestsToUserServ;
 @property (nonatomic, assign, readwrite) BOOL sendWhoCommandRequestsToChannels;
 @property (nonatomic, assign, readwrite) BOOL setInvisibleModeOnConnect;

@@ -81,7 +81,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"primaryEncoding"] = @(TXDefaultPrimaryStringEncoding);
 	defaults[@"proxyPort"] = @(IRCConnectionDefaultProxyPort);
 	defaults[@"proxyType"] = @(IRCConnectionSocketSystemSocksProxyType);
-	defaults[@"saslAuthenticationUsesExternalMechanism"] = @(NO);
+	defaults[@"saslAuthenticationDisableExternalMechanism"] = @(NO);
 	defaults[@"sendAuthenticationRequestsToUserServ"] = @(NO);
 	defaults[@"sendWhoCommandRequestsToChannels"] = @(YES);
 	defaults[@"serverPort"] = @(IRCConnectionDefaultServerPort);
@@ -290,7 +290,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
 	[defaultsMutable assignBoolTo:&self->_performPongTimer forKey:@"performPongTimer"];
 	[defaultsMutable assignBoolTo:&self->_prefersSecuredConnection forKey:@"prefersSecuredConnection"];
-	[defaultsMutable assignBoolTo:&self->_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
+	[defaultsMutable assignBoolTo:&self->_saslAuthenticationDisableExternalMechanism forKey:@"saslAuthenticationDisableExternalMechanism"];
 	[defaultsMutable assignBoolTo:&self->_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
 	[defaultsMutable assignBoolTo:&self->_sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
 	[defaultsMutable assignBoolTo:&self->_setInvisibleModeOnConnect forKey:@"setInvisibleModeOnConnect"];
@@ -619,7 +619,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
 	[dic setBool:self.performPongTimer forKey:@"performPongTimer"];
 	[dic setBool:self.prefersSecuredConnection forKey:@"prefersSecuredConnection"];
-	[dic setBool:self.saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
+	[dic setBool:self.saslAuthenticationDisableExternalMechanism forKey:@"saslAuthenticationDisableExternalMechanism"];
 	[dic setBool:self.sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
 	[dic setBool:self.sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
 	[dic setBool:self.setInvisibleModeOnConnect forKey:@"setInvisibleModeOnConnect"];
@@ -895,7 +895,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic proxyType;
 @dynamic proxyUsername;
 @dynamic realName;
-@dynamic saslAuthenticationUsesExternalMechanism;
+@dynamic saslAuthenticationDisableExternalMechanism;
 @dynamic sendAuthenticationRequestsToUserServ;
 @dynamic sendWhoCommandRequestsToChannels;
 @dynamic serverAddress;
@@ -1006,10 +1006,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)setSaslAuthenticationUsesExternalMechanism:(BOOL)saslAuthenticationUsesExternalMechanism
+- (void)setSaslAuthenticationDisableExternalMechanism:(BOOL)saslAuthenticationDisableExternalMechanism
 {
-	if (self->_saslAuthenticationUsesExternalMechanism != saslAuthenticationUsesExternalMechanism) {
-		self->_saslAuthenticationUsesExternalMechanism = saslAuthenticationUsesExternalMechanism;
+	if (self->_saslAuthenticationDisableExternalMechanism != saslAuthenticationDisableExternalMechanism) {
+		self->_saslAuthenticationDisableExternalMechanism = saslAuthenticationDisableExternalMechanism;
 	}
 }
 
