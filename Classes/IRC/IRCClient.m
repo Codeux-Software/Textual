@@ -2913,7 +2913,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSDictionary *features = @{
 				@"Ignore Notifications by Private ZNC Users"		: @"setZncIgnoreUserNotifications:",
 				@"Send Authentication Requests to UserServ"			: @"setSendAuthenticationRequestsToUserServ:",
-				@"SASL Authentication Uses External Mechanism"		: @"setSaslAuthenticationUsesExternalMechanism:",
+				@"Disable Automatic SASL EXTERNAL Response"			: @"setSaslAuthenticationDisableExternalMechanism:",
 				@"Send WHO Command Requests to Channels"			: @"setSendWhoCommandRequestsToChannels:",
 			};
 
@@ -7343,34 +7343,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	ClientIRCv3SupportedCapacities identificationMechanism = 0;
 
-	if (capacityOptions.count == 0) {
-		if (self.config.saslAuthenticationUsesExternalMechanism) {
+	if (self.socket.isConnectedWithClientSideCertificate &&
+		self.config.saslAuthenticationDisableExternalMechanism == NO)
+	{
+		if (capacityOptions.count == 0 ||
+			[capacityOptions containsObjectIgnoringCase:@"EXTERNAL"])
+		{
 			identificationMechanism = ClientIRCv3SupportedCapacitySASLExternal;
-		} else {
-			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
-		}
-	} else if ([capacityOptions containsObjectIgnoringCase:@"EXTERNAL"]) {
-		identificationMechanism = ClientIRCv3SupportedCapacitySASLExternal;
-	} else if ([capacityOptions containsObjectIgnoringCase:@"PLAIN"]) {
-		identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
-	}
 
-	/* Test whether external authentication is even possible (did we connect
-	 using a client side certificate?) — If it's not possible, then fall back
-	 to using plain text authentication. */
-	if (identificationMechanism == ClientIRCv3SupportedCapacitySASLExternal) {
-		if (self.socket.isConnectedWithClientSideCertificate == NO) {
-			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
-		} else {
 			[self enablePendingCapacity:ClientIRCv3SupportedCapacitySASLExternal];
 		}
 	}
 
-	/* If a password is not configured, then disable any type of authentication */
-	if (identificationMechanism == ClientIRCv3SupportedCapacitySASLPlainText) {
-		if (self.config.nicknamePassword.length == 0) {
-			identificationMechanism = 0;
-		} else {
+	if (identificationMechanism == 0 &&
+		self.config.nicknamePassword.length > 0)
+	{
+		if (capacityOptions.count == 0 ||
+			[capacityOptions containsObjectIgnoringCase:@"PLAIN"])
+		{
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
+
 			[self enablePendingCapacity:ClientIRCv3SupportedCapacitySASLPlainText];
 		}
 	}
