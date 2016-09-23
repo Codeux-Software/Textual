@@ -1,6 +1,6 @@
 #include "Base Configuration.xcconfig"
 
-OTHER_CODE_SIGN_FLAGS = --deep
+OTHER_CODE_SIGN_FLAGS = 
 CODE_SIGN_IDENTITY = Mac Developer
 
 PROVISIONING_PROFILE_SPECIFIER = Mac App: com.codeux.irc.textual5
