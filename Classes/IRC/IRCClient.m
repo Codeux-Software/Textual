@@ -2009,10 +2009,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (type == IRCChannelChannelType) {
 		IRCChannelConfig *config = [IRCChannelConfig seedWithName:withName];
 
-		return [worldController() createChannelWithConfig:config onClient:self add:YES adjust:YES reload:YES];
+		channel = [worldController() createChannelWithConfig:config onClient:self add:YES adjust:YES reload:YES];
+
+		[worldController() savePeriodically];
 	} else {
-		return [worldController() createPrivateMessage:withName onClient:self asType:type];
+		channel = [worldController() createPrivateMessage:withName onClient:self asType:type];
 	}
+
+	return channel;
 }
 
 #pragma mark -
