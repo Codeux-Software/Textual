@@ -255,7 +255,7 @@ ClassWithDesignatedInitializerInitMethod
 			return;
 		}
 
-		const unsigned long long filesizeMax = (1000 * 1000 * 8); // 1 megabyte;
+		const unsigned long long filesizeMax = (1000 * 50 * 8); // 50 kilobytes
 
 		unsigned long long filesize = [self.fileHandle seekToEndOfFile];
 
@@ -285,7 +285,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSMutableArray<NSData *> *items = [NSMutableArray arrayWithCapacity:fetchLimit];
 
-	const unsigned long long offsetChunkSize = (1000 * 50 * 8); // 50 kilobytes
+	const unsigned long long offsetChunkSize = (1000 * 10 * 8); // 10 kilobytes
 
 	NSData *lineFeed = [NSData lineFeed];
 
