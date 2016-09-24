@@ -48,16 +48,15 @@ TextualScroller.scrollTopUserConstant = 25;
 
 TextualScroller.isScrolledByUser = false;
 
-TextualScroller.scrollHeightCurrentValue = 0;
-TextualScroller.scrollHeightPreviousValue = 0;
-
-TextualScroller.scrollHeightTimerActive = false;
-
 TextualScroller.scrollLastPosition1 = 0;
 TextualScroller.scrollLastPosition2 = 0;
-TextualScroller.scrollLastPosition3 = 0;
 
 TextualScroller.currentScrollTopValue = 0;
+
+TextualScroller.currentViewHeightValue = 0;
+TextualScroller.previousViewHeightValue = 0;
+
+TextualScroller.adjustScrollerPosition = false;
 
 /* Core functions */
 TextualScroller.documentResizedCallback = function()
@@ -76,10 +75,8 @@ TextualScroller.documentScrolledCallback = function()
 		return;
 	}
 
-	/* 	Record the last three known scrollY values. These properties are compared
+	/* 	Record the last two known scrollY values. These properties are compared
 		to determine if the user is scrolling upwards or downwards. */
-	TextualScroller.scrollLastPosition3 = TextualScroller.scrollLastPosition2;
-
 	TextualScroller.scrollLastPosition2 = TextualScroller.scrollLastPosition1;
 
 	TextualScroller.scrollLastPosition1 = scrollPosition;
@@ -125,7 +122,14 @@ TextualScroller.documentScrolledCallback = function()
 	}
 };
 
-/* 	Perform automatic scrolling */
+/* Perform automatic scrolling */
+/* This function might be a bit misleading. Textual itself, at least higher up,
+   never invokes this function. This function exists for two purposes:
+   1) To correct scrolling when resizing the window 
+   2) Allow style authors to easily scroll to the bottom */
+/* When Textual performs auto scroll, it is done using Objective-C. 
+   See -moveToEndOfDocument: - 
+   https://developer.apple.com/reference/appkit/nsresponder/1533165-movetoendofdocument */
 TextualScroller.performAutoScroll = function() 
 {
 	var scrollHeight = TextualScroller.scrollHeight();
@@ -137,19 +141,25 @@ TextualScroller.performAutoScroll = function()
 	var requestAnimationFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame);
 
 	requestAnimationFrame(function() {
-		if (TextualScroller.performAutoScrollInt(scrollHeight) === false) {
+		if (TextualScroller.viewHeightChanged(scrollHeight) === false) {
 			return;
 		}
-		
-		document.body.scrollTop = TextualScroller.scrollHeightCurrentValue;
+
+		document.body.scrollTop = scrollHeight;
 	 });
 };
 
-/* TextualScroller.performAutoScrollInt() determines whether scrolling should occur 
- given a height that will be scrolled to. If it returns true, then the height has 
- been recorded and will be scrolled to using other logic (Objective-C). */
-TextualScroller.performAutoScrollInt = function(scrollHeight)
+/* TextualScroller.viewHeightChanged() is invoked by Textual, higher up, when the height of the
+   view (the scrollable area) changes. The logic of this function can then perform many actions,
+   but when completed, must either return true or false. If it returns true, then Textual will 
+   scroll the WebView to the bottom, without relying on JavaScript to do it. */
+TextualScroller.viewHeightChanged = function(viewHeight)
 {
+	/* Make a copy of the new view height */
+	TextualScroller.previousViewHeightValue = TextualScroller.currentViewHeightValue;
+	
+	TextualScroller.currentViewHeightValue = viewHeight;
+	
 	/* Do not perform scrolling if we are performing live resize */
 	/* Stop auto scroll before height is recorded so that once live resize is completed,
 	   scrolling will notice the new height of the view and use that. */
@@ -161,15 +171,61 @@ TextualScroller.performAutoScrollInt = function(scrollHeight)
 
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
+		/* If the height of the view changed while the user is scrolled up,
+		   such as when inserting elements above the current position,
+		   then we should adjust the position so the scroller follows 
+		   the changes that has been made. */
+		if (TextualScroller.adjustScrollerPosition) {
+			TextualScroller.adjustScrollerPosition = false;
+
+			TextualScroller.adjustScrollerPositionInt();
+		}
+
 		return false;
+	} else {
+		/* Unset property incase it's set but we aren't scrolled by user. */
+		TextualScroller.adjustScrollerPosition = false;
+	}
+
+	/* Tell Textual to scroll to bottom */
+	return true;
+};
+
+/* Move scroll position based on height difference of view. 
+   If the user is scrolled up and content is added at the top of the view, 
+   or removed from there, then the content will move but the scroll position
+   will remove stationary. This function moves the scroll positions so that
+   the user isn't even aware that something was changed. */
+TextualScroller.adjustScrollerPositionInt = function()
+{
+	var heightDifference = (TextualScroller.currentViewHeightValue - TextualScroller.previousViewHeightValue);
+	
+	if (heightDifference === 0) {
+		return;
 	}
 	
-	/* Make a copy of the previous scroll height and save the new */
-	TextualScroller.scrollHeightPreviousValue = TextualScroller.scrollHeightCurrentValue;
+	var newScrollTop = (document.body.scrollTop + heightDifference);
 	
-	TextualScroller.scrollHeightCurrentValue = scrollHeight;
+	if (newScrollTop < 0) {
+		newScrollTop = 0;
+	}
+	
+	console.log("Height difference: " + heightDifference);
+	
+	var completionFunction = (function() {
+		document.body.scrollTop = newScrollTop;
+	});
 
-	return true;
+	/* Depending on how much the frame has changed, it may be better to
+	   scroll right away or use an animation frame. This magic number 
+	   was determined by trial and error. This can probably use rewrite. */
+	if (heightDifference <= (-25)) {
+		completionFunction();
+	} else {
+		var requestAnimationFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame);
+
+		requestAnimationFrame(completionFunction);
+	}
 };
 
 /* Function returns the scroll height accounting for offset height */
