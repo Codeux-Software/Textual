@@ -290,7 +290,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSSize lastSize = self.scrollAreaLastSize;
 
-	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.performAutoScrollInt(%f);", lastSize.height];
+	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.viewHeightChanged(%f);", lastSize.height];
 
 	[self evaluateJavaScript:compiledScript completionHandler:^(id result) {
 		if (((NSNumber *)result).boolValue == NO) {

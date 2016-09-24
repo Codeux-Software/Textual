@@ -187,6 +187,8 @@ Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
 	}
 
 	elementToAppendTo.insertAdjacentHTML("afterbegin", templateHTML);
+
+	TextualScroller.adjustScrollerPosition = true;
 };
 
 Textual.documentHTML = function()
