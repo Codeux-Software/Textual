@@ -103,6 +103,14 @@
 		<string>=</string>
 		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
 		<string>=</string>
+		<key>Theme -&gt; Invert Sidebar Colors Preference Enabled</key>
+		<string>=</string>
+		<key>Theme -&gt; Channel Font Preference Enabled</key>
+		<string>=</string>
+		<key>Theme -&gt; Nickname Format Preference Enabled</key>
+		<string>=</string>
+		<key>Theme -&gt; Timestamp Format Preference Enabled</key>
+		<string>=</string>
 	</dict>
 	<key>IRCClient List of NickServ Successfully Identified Tokens</key>
 	<array>

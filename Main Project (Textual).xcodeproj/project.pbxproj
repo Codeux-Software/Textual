@@ -1468,7 +1468,6 @@
 		4CD1C4CB1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD1C4C51D1F18A50034F6A1 /* TXWindowControllerPrivate.h */; };
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
 		4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
-		4CD6F7BC1CA7747600842597 /* ExportArchive.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6F7BB1CA7747600842597 /* ExportArchive.sh */; };
 		4CD9FF811D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD9FF801D2C435C002E8A2E /* IRCMessagePrivate.h */; };
 		4CD9FF821D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD9FF801D2C435C002E8A2E /* IRCMessagePrivate.h */; };
 		4CD9FF831D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD9FF801D2C435C002E8A2E /* IRCMessagePrivate.h */; };
@@ -5033,7 +5032,6 @@
 				4C0BA5551990798800857343 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4CF40EE21AC1A57800A26BE0 /* StaticStore.plist in Resources */,
 				4C7913231D3ADB8800E76B30 /* MainWindowSpotlightIconTemplate.pdf in Resources */,
-				4CD6F7BC1CA7747600842597 /* ExportArchive.sh in Resources */,
 				4C0BA5571990798800857343 /* DIGreenBadgeRightMavericks.png in Resources */,
 				4C0BA5591990798800857343 /* DIRedBadgeCenterMavericks.png in Resources */,
 				4C0BA55B1990798800857343 /* channelRoomStatusIconYosemiteDarkInactive.tif in Resources */,
