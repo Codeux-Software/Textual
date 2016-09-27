@@ -1652,9 +1652,6 @@
 		4CF40EDA1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */; };
 		4CF40EDB1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */; };
 		4CF40EDC1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */; };
-		4CF40EDE1AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC81AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist */; };
-		4CF40EDF1AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC81AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist */; };
-		4CF40EE01AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC81AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist */; };
 		4CF40EE21AC1A57800A26BE0 /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */; };
 		4CF40EE31AC1A57800A26BE0 /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */; };
 		4CF40EE41AC1A57800A26BE0 /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */; };
@@ -2521,7 +2518,6 @@
 		4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPublicValues.plist; path = "Resources/Property Lists/IRCCommandIndexPublicValues.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = "Resources/Property Lists/IRCNetworks.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaults.plist; path = "Resources/Property Lists/RegisteredUserDefaults.plist"; sourceTree = SOURCE_ROOT; };
-		4CF40EC81AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsRemappedKeys.plist; path = "Resources/Property Lists/RegisteredUserDefaultsRemappedKeys.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = StaticStore.plist; path = "Resources/Property Lists/StaticStore.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EE71AC1A59500A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCAboutDialog.xib"; sourceTree = SOURCE_ROOT; };
 		4CF40EE91AC1A59500A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCAddressBookSheet.xib"; sourceTree = SOURCE_ROOT; };
@@ -2879,7 +2875,6 @@
 				4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */,
 				4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */,
 				4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */,
-				4CF40EC81AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist */,
 				4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */,
 			);
 			name = "Property Lists";
@@ -5018,7 +5013,6 @@
 				4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */,
 				4C0BA54D1990798800857343 /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67A1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
-				4CF40EDE1AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4CF40F121AC1A59500A26BE0 /* TDCAboutDialog.xib in Resources */,
 				4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
 				4CBC76B61CC72B5100484A13 /* Notifications.strings in Resources */,
@@ -5175,7 +5169,6 @@
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4511943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67C1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
-				4CF40EE01AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4CF40F141AC1A59500A26BE0 /* TDCAboutDialog.xib in Resources */,
 				4CB229321978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
 				4CF40F641AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
@@ -5340,7 +5333,6 @@
 				4C46F4521943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67B1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
 				4CBC76B41CC72B5100484A13 /* IRC.strings in Resources */,
-				4CF40EDF1AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4CF40F131AC1A59500A26BE0 /* TDCAboutDialog.xib in Resources */,
 				4CB229331978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
 				4CF40F631AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,

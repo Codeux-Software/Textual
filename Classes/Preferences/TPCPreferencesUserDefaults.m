@@ -197,9 +197,40 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	[self setObject:nil forKey:defaultName];
 }
 
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
+- (void)registerDefault:(id <NSCopying>)value forKey:(NSString *)defaultName
 {
-	NSParameterAssert(key != nil);
+	NSParameterAssert(value != nil);
+	NSParameterAssert(defaultName != nil);
+
+	[self registerDefaults:@{defaultName : value}];
+}
+
++ (BOOL)key:(NSString *)defaultName1 matchesKey:(NSString *)defaultName2 usingMatchingPattern:(NSString *)matchingPattern
+{
+	NSParameterAssert(defaultName1 != nil);
+	NSParameterAssert(defaultName2 != nil);
+	NSParameterAssert(matchingPattern != nil);
+
+	if ([matchingPattern isEqualToString:@"="]) {
+		if ([defaultName1 isEqualToString:defaultName2] == NO) {
+			return NO;
+		}
+	} else if ([matchingPattern isEqualToString:@"PREFIX"]) {
+		if ([defaultName1 hasPrefix:defaultName2] == NO) {
+			return NO;
+		}
+	} else if ([matchingPattern isEqualToString:@"SUFFIX"]) {
+		if ([defaultName1 hasSuffix:defaultName2] == NO) {
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
++ (BOOL)keyIsExcludedFromBeingExported:(NSString *)defaultName
+{
+	NSParameterAssert(defaultName != nil);
 
 	static NSDictionary<NSString *, NSString *> *cachedValues = nil;
 
@@ -216,23 +247,40 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	__block BOOL returnValue = NO;
 
 	[cachedValues enumerateKeysAndObjectsUsingBlock:^(NSString *cachedKey, NSString *cachedObject, BOOL *stop) {
-		if ([cachedObject isEqualToString:@"="]) {
-			if ([key isEqualToString:cachedKey] == NO) {
-				return;
-			}
-		} else if ([cachedObject isEqualToString:@"PREFIX"]) {
-			if ([key hasPrefix:cachedKey] == NO) {
-				return;
-			}
-		} else if ([cachedObject isEqualToString:@"SUFFIX"]) {
-			if ([key hasSuffix:cachedKey] == NO) {
-				return;
-			}
-		}
+		if ([self key:defaultName matchesKey:cachedKey usingMatchingPattern:cachedObject] == NO) {
+			*stop = YES;
 
-		*stop = YES;
-			
-		returnValue = YES;
+			returnValue = YES;
+		}
+	}];
+
+	return returnValue;
+}
+
++ (BOOL)keyIsObsolete:(NSString *)defaultName
+{
+	NSParameterAssert(defaultName != nil);
+
+	static NSDictionary<NSString *, NSString *> *cachedValues = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		NSDictionary *staticValues =
+		[TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
+
+		cachedValues =
+		[staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Obsolete Keys"];
+	});
+
+	__block BOOL returnValue = NO;
+
+	[cachedValues enumerateKeysAndObjectsUsingBlock:^(NSString *cachedKey, NSString *cachedObject, BOOL *stop) {
+		if ([self key:defaultName matchesKey:cachedKey usingMatchingPattern:cachedObject]) {
+			*stop = YES;
+
+			returnValue = YES;
+		}
 	}];
 
 	return returnValue;

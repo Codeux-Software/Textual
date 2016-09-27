@@ -120,8 +120,6 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Retrieve values from property list */
 	NSDictionary<NSString *, id> *preferencesToMigrate = nil;
 
-	NSDictionary<NSString *, NSString *> *preferencesKeysRemapped = nil;
-
 	if (sourcePathExists) {
 		/* Create a backup of the source */
 		if ([TPCPreferencesUserDefaults createBackupOfPath:sourcePath] == NO) {
@@ -132,14 +130,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		/* Retrieve values from property list. */
 		preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourcePath];
-
-		preferencesKeysRemapped = [TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaultsRemappedKeys"];
-
-		if (preferencesToMigrate == nil || preferencesKeysRemapped == nil) {
-			LogToConsoleError("'preferencesToMigrate' or 'preferencesKeysRemapped' is nil")
-
-			return;
-		}
 
 		/* We delete the existing group container preferences file and
 		 replace it with a symbolic link. Doing this way ensures that the
@@ -208,12 +198,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(NSString *key, id object, BOOL *stop) {
-		NSString *keyRemapped = preferencesKeysRemapped[key];
-
-		if (keyRemapped) {
-			key = keyRemapped;
-		}
-
 		[RZUserDefaults() setObject:object forKey:key postNotification:NO];
 	}];
 }
