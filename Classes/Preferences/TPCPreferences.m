@@ -47,7 +47,7 @@ NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey = @"Theme -> N
 
 NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey = @"Theme -> Font Name -> Did Not Exist During Last Sync";
 
-NSUInteger const TPCPreferencesDictionaryVersion = 600;
+NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 @implementation TPCPreferences
 
@@ -518,7 +518,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable
 {
-	[RZUserDefaults() setBool:invertSidebarColorsPreferenceUserConfigurable forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+	[RZUserDefaults() registerDefault:@(invertSidebarColorsPreferenceUserConfigurable) forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
 }
 
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors
@@ -618,7 +618,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (void)setThemeChannelViewFontPreferenceUserConfigurable:(BOOL)themeChannelViewFontPreferenceUserConfigurable
 {
-	[RZUserDefaults() setBool:themeChannelViewFontPreferenceUserConfigurable forKey:@"Theme -> Channel Font Preference Enabled"];
+	[RZUserDefaults() registerDefault:@(themeChannelViewFontPreferenceUserConfigurable) forKey:@"Theme -> Channel Font Preference Enabled"];
 }
 
 + (NSString *)themeNicknameFormatDefault
@@ -638,7 +638,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (void)setThemeNicknameFormatPreferenceUserConfigurable:(BOOL)themeNicknameFormatPreferenceUserConfigurable
 {
-	[RZUserDefaults() setBool:themeNicknameFormatPreferenceUserConfigurable forKey:@"Theme -> Nickname Format Preference Enabled"];
+	[RZUserDefaults() registerDefault:@(themeNicknameFormatPreferenceUserConfigurable) forKey:@"Theme -> Nickname Format Preference Enabled"];
 }
 
 + (NSString *)themeTimestampFormatDefault
@@ -658,7 +658,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable
 {
-	[RZUserDefaults() setBool:themeTimestampFormatPreferenceUserConfigurable forKey:@"Theme -> Timestamp Format Preference Enabled"];
+	[RZUserDefaults() registerDefault:@(themeTimestampFormatPreferenceUserConfigurable) forKey:@"Theme -> Timestamp Format Preference Enabled"];
 }
 
 + (CGFloat)mainWindowTransparency
@@ -1207,6 +1207,56 @@ static NSArray<NSString *> *_matchKeywords = nil;
 }
 #endif
 
++ (void)_migratePreferencesToVersion602
+{
+	/* This method removes keys that are obsolete. Obsolete keys include those
+	 that are no longer used by any feature, or keys that should only be stored
+	 temporarily. This method must be called before -registeredDefaults are 
+	 invoked, or we would could potentially fuck shit up really bad. */
+	NSNumber *dictionaryVersion = [RZUserDefaults() objectForKey:@"TPCPreferencesDictionaryVersion"];
+
+	if (dictionaryVersion.integerValue != 600) {
+		return;
+	}
+
+	NSDictionary *dictionaryContents = RZUserDefaults().dictionaryRepresentation;
+
+	[dictionaryContents enumerateKeysAndObjectsUsingBlock:^(NSString *key, id object, BOOL *stop) {
+		if ([TPCPreferencesUserDefaults keyIsObsolete:key]) {
+			[RZUserDefaults() removeObjectForKey:key];
+		}
+	}];
+}
+
+#pragma mark -
+#pragma mark Dynamic Defaults 
+
++ (void)registerWebKit2DynamicDefaults
+{
+	/* The WebKit2 Web Inspector cannot work attached to Textual's main window.
+	 Whoes fault this is isn't clear, but I do not have time to take a deep 
+	 look at it at this time. To fix it temporarily, we always force it as 
+	 window. To prevent the user breaking Textual by attaching it, we force
+	 reset the default here, every run. */
+
+	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"__WebInspectorPageGroupLevel1__.WebKit2InspectorStartsAttached"];
+}
+
++ (void)registerPreferencesDictionaryVersion
+{
+	/* We do not allow Textual to register a version lower than what is 
+	 already set so that if the user opens an older version, we do not
+	 perform migrations more than once. Probably would have been smart
+	 to do this from the beginning. */
+	NSNumber *dictionaryVersion = [RZUserDefaults() objectForKey:@"TPCPreferencesDictionaryVersion"];
+
+	if (dictionaryVersion.integerValue >= TPCPreferencesDictionaryVersion) {
+		return;
+	}
+
+	[RZUserDefaults() setUnsignedInteger:TPCPreferencesDictionaryVersion forKey:@"TPCPreferencesDictionaryVersion"];
+}
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -1218,6 +1268,58 @@ static NSArray<NSString *> *_matchKeywords = nil;
 + (void)registerDynamicDefaults
 {
 	[self _populateDefaultNickname];
+
+	[self registerWebKit2DynamicDefaults];
+
+	NSMutableDictionary *dynamicDefaults = [NSMutableDictionary dictionary];
+
+	[dynamicDefaults setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
+
+	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
+	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXMavericksOrLater]			forKey:@"System -> Running Mac OS Mavericks Or Newer"];
+	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXYosemiteOrLater]			forKey:@"System -> Running Mac OS Yosemite Or Newer"];
+	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXElCapitanOrLater]			forKey:@"System -> Running Mac OS El Capitan Or Newer"];
+	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXSierraOrLater]				forKey:@"System -> Running Mac OS Sierra Or Newer"];
+
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
+#else
+	[dynamicDefaults setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
+#endif
+
+#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework Metrics"];
+#else
+	[dynamicDefaults setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework Metrics"];
+#endif
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
+#else
+	[dynamicDefaults setBool:NO forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
+#endif
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> Built with iCloud Support"];
+#else
+	[dynamicDefaults setBool:NO forKey:@"System -> Built with iCloud Support"];
+#endif
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> Built with License Manager Backend"];
+#else
+	[dynamicDefaults setBool:NO forKey:@"System -> Built with License Manager Backend"];
+#endif
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> Built with Off-the-Record Messaging Support"];
+#else
+	[dynamicDefaults setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];
+#endif
+
+	[RZUserDefaults() registerDefaults:dynamicDefaults];
+
+	[TPCPreferences registerPreferencesDictionaryVersion];
 }
 
 + (void)registerDefaults
@@ -1245,6 +1347,8 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
 #endif
 
+	[TPCPreferences _migratePreferencesToVersion602];
+
 	[TPCPreferences registerDefaults];
 
 	[TPCPreferences _migrateWorldControllerToVersion600];
@@ -1260,53 +1364,6 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[TPCPreferences _loadExcludeKeywords];
 	[TPCPreferences _loadMatchKeywords];
-
-	/* Sandbox Check */
-	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
-
-	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
-	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMavericksOrLater]			forKey:@"System -> Running Mac OS Mavericks Or Newer"];
-	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXYosemiteOrLater]			forKey:@"System -> Running Mac OS Yosemite Or Newer"];
-	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXElCapitanOrLater]			forKey:@"System -> Running Mac OS El Capitan Or Newer"];
-	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXSierraOrLater]				forKey:@"System -> Running Mac OS Sierra Or Newer"];
-
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	[RZUserDefaults() setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
-#else
-	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
-#endif
-
-#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
-	[RZUserDefaults() setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework Metrics"];
-#else
-	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework Metrics"];
-#endif
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	[RZUserDefaults() setBool:YES forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
-#else 
-	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
-#endif
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[RZUserDefaults() setBool:YES forKey:@"System -> Built with iCloud Support"];
-#else
-	[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
-#endif
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-	[RZUserDefaults() setBool:YES forKey:@"System -> Built with License Manager Backend"];
-#else
-	[RZUserDefaults() setBool:NO forKey:@"System -> Built with License Manager Backend"];
-#endif
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	[RZUserDefaults() setBool:YES forKey:@"System -> Built with Off-the-Record Messaging Support"];
-#else
-	[RZUserDefaults() setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];
-#endif
-
-	[RZUserDefaults() setUnsignedInteger:TPCPreferencesDictionaryVersion forKey:@"TPCPreferencesDictionaryVersion"];
 }
 
 #pragma mark -

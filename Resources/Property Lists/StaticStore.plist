@@ -73,12 +73,6 @@
 		<string>PREFIX</string>
 		<key>THOPluginManager -&gt;</key>
 		<string>PREFIX</string>
-		<key>Saved Window State —&gt; Internal —&gt;</key>
-		<string>PREFIX</string>
-		<key>Saved Window State —&gt; Internal (v2) —&gt;</key>
-		<string>PREFIX</string>
-		<key>Saved Window State —&gt; Internal (v3) -&gt;</key>
-		<string>PREFIX</string>
 		<key>Saved Window State -&gt; Internal (v3) -&gt;</key>
 		<string>PREFIX</string>
 		<key>Text Input Prompt Suppression -&gt;</key>
@@ -99,6 +93,23 @@
 		<string>=</string>
 		<key>LogTranscriptDestinationSecurityBookmark_5</key>
 		<string>=</string>
+		<key>Theme -&gt; Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+	</dict>
+	<key>TPCPreferencesUserDefaults Obsolete Keys</key>
+	<dict>
+		<key>System -&gt;</key>
+		<string>PREFIX</string>
+		<key>Security -&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v2) —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v3) -&gt;</key>
+		<string>PREFIX</string>
 		<key>Theme -&gt; Name -&gt; Did Not Exist During Last Sync</key>
 		<string>=</string>
 		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>

@@ -52,7 +52,10 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 @interface TPCPreferencesUserDefaults : NSUserDefaults
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
 
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
++ (BOOL)keyIsExcludedFromBeingExported:(NSString *)defaultName;
++ (BOOL)keyIsObsolete:(NSString *)defaultName;
+
+- (void)registerDefault:(id <NSCopying>)value forKey:(NSString *)defaultName;
 @end
 
 /* Trying to create a new instance of TPCPreferencesUserDefaultsController will
