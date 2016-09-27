@@ -1211,9 +1211,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		if (self.reloadingMemberList) {
-
-
-
+			return;
 		}
 
 		[self _reloadDataForTableViewBegin];
