@@ -40,7 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _extrasInstallerExtensionUpdateCheckInterval			345600
 
+NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPluginManagerFinishedLoadingPluginsNotification";
+
 @interface THOPluginManager ()
+@property (nonatomic, assign, readwrite) BOOL pluginsLoaded;
 @property (nonatomic, copy, readwrite) NSArray<THOPluginItem *> *loadedPlugins;
 @property (nonatomic, assign) THOPluginItemSupportedFeatures supportedFeatures;
 @end
@@ -172,7 +175,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.loadedPlugins = loadedPlugins;
 
-	[self extrasInstallerCheckForUpdates];
+	self.pluginsLoaded = YES;
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self extrasInstallerCheckForUpdates];
+
+		[RZNotificationCenter() postNotificationName:THOPluginManagerFinishedLoadingPluginsNotification object:self];
+	});
 }
 
 - (void)_unloadPlugins

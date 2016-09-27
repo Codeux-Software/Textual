@@ -161,12 +161,12 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(pluginsFinishedLoading:) name:THOPluginManagerFinishedLoadingPluginsNotification object:nil];
 	
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 
 	[NSColorPanel setPickerMask:(NSColorPanelRGBModeMask | NSColorPanelGrayModeMask | NSColorPanelColorListModeMask | NSColorPanelWheelModeMask | NSColorPanelCrayonModeMask)];
-
-	[sharedPluginManager() loadPlugins];
 
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		[TPCResourceManager copyResourcesToApplicationSupportFolder];
@@ -178,6 +178,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self prepareThirdPartyServices];
 
+	/* Load plugins last so that -applicationDidFinishLaunching is posted
+	 only once they have loaded and everything else has been setup. */
+	[sharedPluginManager() loadPlugins];
+}
+
+- (void)pluginsFinishedLoading:(NSNotification *)notification
+{
 	[self applicationDidFinishLaunching];
 }
 
