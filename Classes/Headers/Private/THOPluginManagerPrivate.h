@@ -37,9 +37,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+TEXTUAL_EXTERN NSString * const THOPluginManagerFinishedLoadingPluginsNotification;
+
 @interface THOPluginManager : NSObject
 - (void)loadPlugins;
 - (void)unloadPlugins;
+
+@property (readonly) BOOL pluginsLoaded;
 
 @property (readonly, copy) NSArray<THOPluginItem *> *loadedPlugins;
 
