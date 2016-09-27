@@ -119,6 +119,15 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 				 withAnimation:NSTableViewAnimationEffectNone];
 }
 
+- (void)moveItemAtIndex:(NSInteger)fromIndex inParent:(nullable id)oldParent toIndex:(NSInteger)toIndex inParent:(nullable id)newParent
+{
+	if (fromIndex < toIndex) {
+		[super moveItemAtIndex:fromIndex inParent:oldParent toIndex:(toIndex - 1) inParent:newParent];
+	} else {
+		[super moveItemAtIndex:fromIndex inParent:oldParent toIndex:toIndex inParent:newParent];
+	}
+}
+
 #pragma mark -
 #pragma mark Mouse Tracking
 
