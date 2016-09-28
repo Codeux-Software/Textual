@@ -837,18 +837,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[IRCChannel accessMemberListUsingBlock:^{
 		oldInsertedIndex = [self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member2];
 
+		if (oldInsertedIndex == NSNotFound) {
+			nothingChanged = YES;
+
+			return;
+		}
+
 		newInsertedIndex = [self _insertIndexForMember:member1];
 
-		nothingChanged = (oldInsertedIndex == newInsertedIndex);
+		[self.memberListStandardSortedContainer replaceObjectAtIndex:oldInsertedIndex withObject:member1];
 
-		if (oldInsertedIndex == NSNotFound) {
-			[self.memberListStandardSortedContainer insertObject:member1 atIndex:newInsertedIndex];
-		} else {
-			[self.memberListStandardSortedContainer replaceObjectAtIndex:oldInsertedIndex withObject:member1];
-
-			if (nothingChanged == NO) {
-				[self.memberListStandardSortedContainer moveObjectAtIndex:oldInsertedIndex toIndex:newInsertedIndex];
-			}
+		if (oldInsertedIndex != newInsertedIndex) {
+			[self.memberListStandardSortedContainer moveObjectAtIndex:oldInsertedIndex toIndex:newInsertedIndex];
 		}
 	}];
 
@@ -857,12 +857,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return;
 		}
 
-		if (nothingChanged == NO) {
-			if (oldInsertedIndex == NSNotFound) {
-				[mainWindowMemberList() addItemToList:newInsertedIndex];
-			} else {
-				[mainWindowMemberList() moveItemAtIndex:oldInsertedIndex inParent:nil toIndex:newInsertedIndex inParent:nil];
-			}
+		if (oldInsertedIndex != newInsertedIndex) {
+			[mainWindowMemberList() moveItemAtIndex:oldInsertedIndex inParent:nil toIndex:newInsertedIndex inParent:nil];
 		}
 
 		[mainWindowMemberList() reloadItem:member2];
