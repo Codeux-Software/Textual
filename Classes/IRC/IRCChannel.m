@@ -46,8 +46,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 @property (readonly) BOOL isSelectedChannel;
 @property (nonatomic, assign) BOOL statusChangedByAction;
 @property (nonatomic, assign) BOOL reloadingMemberList;
-@property (nonatomic, assign) NSUInteger numberOfMemberListRowsToReload;
-@property (nonatomic, assign) NSUInteger numberOfMemberListRowsReloaded;
 @property (nonatomic, copy, readwrite) IRCChannelConfig *config;
 @property (nonatomic, assign, readwrite) NSTimeInterval channelJoinTime;
 @property (nonatomic, strong, readwrite, nullable) IRCChannelMode *modeInfo;
@@ -1225,9 +1223,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (numberOfMembers > 0) {
 		self.reloadingMemberList = YES;
 
-		self.numberOfMemberListRowsToReload = numberOfMembers;
-		self.numberOfMemberListRowsReloaded = 0;
-
 		/* While the member list is reloading we suspend the dispatch queue that is
 		 used to queue modifications. The dispatch queue that is used for accessing
 		 the array itself is not suspended so the table list can still access values
@@ -1240,10 +1235,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)_reloadDataForTableViewEnd
 {
-	self.reloadingMemberList = NO;
+	[self cancelPerformRequestsWithSelector:@selector(_reloadDataForTableViewEnd)];
 
-	self.numberOfMemberListRowsToReload = 0;
-	self.numberOfMemberListRowsReloaded = 0;
+	self.reloadingMemberList = NO;
 
 	dispatch_resume([IRCChannel modifyMembmerListSerialQueueWrapper]);
 }
@@ -1309,11 +1303,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	self.numberOfMemberListRowsReloaded = (self.numberOfMemberListRowsReloaded + 1);
+	[self cancelPerformRequestsWithSelector:@selector(_reloadDataForTableViewEnd)];
 
-	if (self.numberOfMemberListRowsReloaded == self.numberOfMemberListRowsToReload) {
-		[self _reloadDataForTableViewEnd];
-	}
+	[self performSelectorInCommonModes:@selector(_reloadDataForTableViewEnd) afterDelay:0.5];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
