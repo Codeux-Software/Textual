@@ -60,8 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2;
-- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2; // resort in table view
-- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2 replaceInAllChannels:(BOOL)replaceInAllChannels;
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort;
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort replaceInAllChannels:(BOOL)replaceInAllChannels;
 
 - (void)clearMembers; // This will not reload table view
 

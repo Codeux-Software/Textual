@@ -89,8 +89,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)prepareInitialState
 {
 	self.memberListStandardSortedContainer = [NSMutableArray array];
-
-	[mainWindow() addObserver:self forKeyPath:@"selectedItem" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)config
@@ -466,8 +464,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[[mainWindow() inputHistoryManager] destroy:self];
 	
 	[self.viewController prepareForPermanentDestruction];
-
-	[mainWindow() removeObserver:self forKeyPath:@"selectedItem"];
 }
 
 - (void)prepareForApplicationTermination
@@ -483,17 +479,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self.viewController prepareForApplicationTermination];
-
-	[mainWindow() removeObserver:self forKeyPath:@"selectedItem"];
-}
-
-- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context
-{
-	if ([keyPath isEqualToString:@"selectedItem"]) {
-		if (self.isSelectedChannel == NO) {
-			[self _reloadDataForTableViewEndIfNeeded];
-		}
-	}
 }
 
 #pragma mark -
@@ -571,36 +556,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return workerQueue;
 }
 
-/* When an operation requires that changes the member list occur 
- asynchronously, this queue is used. Two queues are used so that
- other resources can still access the internal store using the 
- -modifyMembmerListSerialQueue while background tasks wait. */
-+ (dispatch_queue_t)modifyMembmerListSerialQueueWrapper
-{
-	static dispatch_queue_t workerQueue = NULL;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		workerQueue =
-		XRCreateDispatchQueueWithPriority("IRCChannel.modifyMembmerListSerialQueueWrapper", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
-	});
-
-	return workerQueue;
-}
-
 + (void)resumeMemberListSerialQueues
 {
 	dispatch_resume([IRCChannel modifyMembmerListSerialQueue]);
-
-	dispatch_resume([IRCChannel modifyMembmerListSerialQueueWrapper]);
 }
 
 + (void)suspendMemberListSerialQueues
 {
 	dispatch_suspend([IRCChannel modifyMembmerListSerialQueue]);
-
-	dispatch_suspend([IRCChannel modifyMembmerListSerialQueueWrapper]);
 }
 
 + (void)accessMemberListUsingBlock:(dispatch_block_t)block
@@ -630,37 +593,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	});
 }
 
-+ (void)queueAccessToMemberList:(dispatch_block_t)block
-{
-	NSCParameterAssert(block != NULL);
-
-	dispatch_queue_t workerQueue = [IRCChannel modifyMembmerListSerialQueueWrapper];
-
-	static void *IsOnWorkerQueueKey = NULL;
-
-	if (IsOnWorkerQueueKey == NULL) {
-		IsOnWorkerQueueKey = &IsOnWorkerQueueKey;
-
-		dispatch_queue_set_specific(workerQueue, IsOnWorkerQueueKey, (void *)1, NULL);
-	}
-
-	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
-		block();
-
-		return;
-	}
-
-	dispatch_async(workerQueue, ^{
-		@autoreleasepool {
-			block();
-		}
-	});
-}
-
 #pragma mark -
 #pragma mark Member List
 
-- (NSUInteger)_insertIndexForMember:(IRCChannelUser *)member
+- (NSUInteger)_sortedIndexForMember:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
@@ -673,13 +609,39 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return index;
 }
 
-- (void)_removeMemberFromTableView:(IRCChannelUser *)member
+- (NSInteger)_sortedInsert:(IRCChannelUser *)member
 {
 	NSParameterAssert(member != nil);
 
-	if (self.isSelectedChannel == NO || self.isChannel == NO) {
-		return;
+	NSInteger insertedIndex = [self _sortedIndexForMember:member];
+
+	[self.memberListStandardSortedContainer insertObject:member atIndex:insertedIndex];
+
+	return insertedIndex;
+}
+
+- (NSInteger)_replaceMemberInMemberList:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
+{
+	NSParameterAssert(member1 != nil);
+	NSParameterAssert(member2 != nil);
+
+	NSInteger replacedIndex = (-1);
+
+	NSUInteger standardSortedMemberIndex =
+	[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member1];
+
+	if (standardSortedMemberIndex != NSNotFound) {
+		replacedIndex = standardSortedMemberIndex;
+
+		[self.memberListStandardSortedContainer replaceObjectAtIndex:standardSortedMemberIndex withObject:member2];
 	}
+
+	return replacedIndex;
+}
+
+- (void)_removeMemberFromTableView:(IRCChannelUser *)member
+{
+	NSParameterAssert(member != nil);
 
 	NSInteger rowIndex = [mainWindowMemberList() rowForItem:member];
 	
@@ -730,7 +692,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		IRCChannelUser *oldMember = [member.user userAssociatedWithChannel:self];
 
 		if (oldMember != nil) {
-			[self replaceMember:oldMember byInsertingMember:member];
+			[self replaceMember:oldMember withMember:member];
 
 			return;
 		}
@@ -742,31 +704,29 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[member associateWithChannel:self];
 
-	[IRCChannel queueAccessToMemberList:^{
-		__block NSInteger insertedIndex = (-1);
+	[self willChangeValueForKey:@"numberOfMembers"];
+	[self willChangeValueForKey:@"memberList"];
 
-		[self willChangeValueForKey:@"numberOfMembers"];
-		[self willChangeValueForKey:@"memberList"];
+	__block NSInteger sortedIndex = (-1);
 
-		[IRCChannel accessMemberListUsingBlock:^{
-			insertedIndex = [self _insertIndexForMember:member];
-
-			[self.memberListStandardSortedContainer insertObject:member atIndex:insertedIndex];
-		}];
-
-		[self didChangeValueForKey:@"numberOfMembers"];
-		[self didChangeValueForKey:@"memberList"];
-
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			if (self.isChannel == NO) {
-				return;
-			}
-
-			[self _informMemberListViewOfAdditionalMemberAtIndex:insertedIndex];
-
-			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
-		});
+	[IRCChannel accessMemberListUsingBlock:^{
+		sortedIndex = [self _sortedInsert:member];
 	}];
+
+	[self didChangeValueForKey:@"numberOfMembers"];
+	[self didChangeValueForKey:@"memberList"];
+
+	if (self.isChannel == NO) {
+		return;
+	}
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		if (self.isSelectedChannel) {
+			[self _informMemberListViewOfAdditionalMemberAtIndex:sortedIndex];
+		}
+
+		[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
+	});
 }
 
 - (void)removeMemberWithNickname:(NSString *)nickname
@@ -786,23 +746,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[member disassociateWithChannel:self];
 
-	[IRCChannel queueAccessToMemberList:^{
-		__block BOOL memberRemoved = NO;
+	__block BOOL memberRemoved = NO;
 
-		[IRCChannel accessMemberListUsingBlock:^{
-			memberRemoved = [self _removeMemberFromMemberList:member];
-		}];
+	[IRCChannel accessMemberListUsingBlock:^{
+		memberRemoved = [self _removeMemberFromMemberList:member];
+	}];
 
-		if (memberRemoved == NO || self.isChannel == NO) {
-			return;
+	if (memberRemoved == NO || self.isChannel == NO) {
+		return;
+	}
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		if (self.isSelectedChannel) {
+			[self _removeMemberFromTableView:member];
 		}
 
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			[self _removeMemberFromTableView:member];
-
-			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
-		});
-	}];
+		[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
+	});
 }
 
 #pragma mark -
@@ -815,59 +775,64 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		member = [member copy];
 	}
 
-	[IRCChannel queueAccessToMemberList:^{
-		[self _resortMember:member byReplacingMember:nil];
-	}];
+	[self _replaceMember:member withMember:member resort:YES];
 }
 
-- (void)_resortMember:(IRCChannelUser *)member1 byReplacingMember:(nullable IRCChannelUser *)member2
+- (void)_replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort
 {
 	NSParameterAssert(member1 != nil);
+	NSParameterAssert(member2 != nil);
 
-	if (member2 == nil) {
-		member2 = member1;
-	}
+	[member1 disassociateWithChannel:self];
 
-	__block NSInteger oldInsertedIndex = (-1);
+	[member2 associateWithChannel:self];
 
-	__block NSInteger newInsertedIndex = (-1);
-
-	__block BOOL nothingChanged = NO;
+	__block NSInteger sortedIndex = (-1);
 
 	[IRCChannel accessMemberListUsingBlock:^{
-		oldInsertedIndex = [self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member2];
+		if (resort) {
+			[self _removeMemberFromMemberList:member1];
 
-		if (oldInsertedIndex == NSNotFound) {
-			nothingChanged = YES;
-
-			return;
-		}
-
-		newInsertedIndex = [self _insertIndexForMember:member1];
-
-		[self.memberListStandardSortedContainer replaceObjectAtIndex:oldInsertedIndex withObject:member1];
-
-		if (oldInsertedIndex != newInsertedIndex) {
-			[self.memberListStandardSortedContainer moveObjectAtIndex:oldInsertedIndex toIndex:newInsertedIndex];
+			sortedIndex = [self _sortedInsert:member2];
+		} else {
+			sortedIndex = [self _replaceMemberInMemberList:member1 withMember:member2];
 		}
 	}];
 
+	if (sortedIndex < 0 || self.isChannel == NO) {
+		return;
+	}
+
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		if (self.isChannel == NO || self.isSelectedChannel == NO) {
+		if (self.isSelectedChannel == NO) {
 			return;
 		}
 
-		if (oldInsertedIndex != newInsertedIndex) {
-			[mainWindowMemberList() moveItemAtIndex:oldInsertedIndex inParent:nil toIndex:newInsertedIndex inParent:nil];
+		[mainWindowMemberList() beginUpdates];
+
+		if (resort) {
+			[self _removeMemberFromTableView:member1];
+
+			[self _informMemberListViewOfAdditionalMemberAtIndex:sortedIndex];
+		} else {
+			/* We reload the old member because the new member has not been
+			 added to the table yet. By reloading it, we request the index 
+			 that the old member is at, replacing it with the new member. */
+			[self _reloadMemberInMemberList:member1];
 		}
 
-		[mainWindowMemberList() reloadItem:member2];
+		[mainWindowMemberList() endUpdates];
 	});
 }
 
-- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
 {
-	[self replaceMember:member1 byInsertingMember:member2 replaceInAllChannels:NO];
+	[self replaceMember:member1 withMember:member2 resort:YES replaceInAllChannels:NO];
+}
+
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort
+{
+	[self replaceMember:member1 withMember:member2 resort:YES replaceInAllChannels:NO];
 }
 
 /* The replaceInAllChannels: flag should only be used in extreme cases because there is A LOT 
@@ -875,7 +840,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
  at top and IRCop status changes. That change requires the user to be resorted in every channel 
  they are in. Knowing which channels they are in is easy because of IRCUserRelations, but the 
  actual process of finding where to sort them at is very costly. */
-- (void)replaceMember:(IRCChannelUser *)member1 byInsertingMember:(IRCChannelUser *)member2 replaceInAllChannels:(BOOL)replaceInAllChannels
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort replaceInAllChannels:(BOOL)replaceInAllChannels
 {
 	NSParameterAssert(member1 != nil);
 	NSParameterAssert(member2 != nil);
@@ -884,38 +849,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		member2 = [member2 copy];
 	}
 
-	[member1 disassociateWithChannel:self];
+	[self _replaceMember:member1 withMember:member2 resort:resort];
 
-	[member2 associateWithChannel:self];
+	if (replaceInAllChannels) {
+		NSDictionary *relations = member2.user.relations;
 
-	[IRCChannel queueAccessToMemberList:^{
-		[self _resortMember:member2 byReplacingMember:member1];
+		[relations enumerateKeysAndObjectsUsingBlock:^(IRCChannel *channel, IRCChannelUser *member, BOOL *stop) {
+			if (channel == self) {
+				return;
+			}
 
-		if (replaceInAllChannels) {
-			NSDictionary *relations = member2.user.relations;
-
-			[relations enumerateKeysAndObjectsUsingBlock:^(IRCChannel *channel, IRCChannelUser *member, BOOL *stop) {
-				if (channel == self) {
-					return;
-				}
-
-				[channel _resortMember:member byReplacingMember:nil];
-			}];
-		}
-	}];
-}
-
-- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
-{
-	NSParameterAssert(member1 != nil);
-	NSParameterAssert(member2 != nil);
-
-	/* TODO: Fix how users are saved so that this method can be optimized. */
-	/* Because the .user property of IRCChannelUser might be modified before
-	 the member list queue can be accessed. This screws sorting up.
-	 This is only really an issue when sorting by IRCop and the status
-	 of the underlying user changes. */
-	[self replaceMember:member1 byInsertingMember:member2];
+			[channel _replaceMember:member withMember:member resort:resort];
+		}];
+	}
 }
 
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value
@@ -1009,7 +955,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	// Remove the user from the member list and insert sorted
 	[self replaceMember:member
-	  byInsertingMember:memberMutable
+			 withMember:memberMutable
+				 resort:YES
    replaceInAllChannels:replaceInAllChannels];
 }
 
@@ -1169,12 +1116,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Table View Internal Management
 
+- (void)_reloadMemberInMemberList:(IRCChannelUser *)member
+{
+	[mainWindowMemberList() reloadItem:member];
+}
+
 - (void)_informMemberListViewOfAdditionalMemberAtIndex:(NSUInteger)insertedIndex
 {
-	if (self.isSelectedChannel == NO) {
-		return;
-	}
-
 	[mainWindowMemberList() addItemToList:insertedIndex];
 }
 
@@ -1184,13 +1132,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[IRCChannel queueAccessToMemberList:^{
-		[IRCChannel accessMemberListUsingBlock:^{
-			[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
-		}];
-
-		[self reloadDataForTableView];
+	[IRCChannel accessMemberListUsingBlock:^{
+		[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
 	}];
+
+	[self reloadDataForTableView];
 }
 
 - (void)reloadDataForTableView
@@ -1204,47 +1150,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return;
 		}
 
-		if (self.reloadingMemberList) {
-			return;
-		}
-
-		[self _reloadDataForTableViewBegin];
+		[mainWindowMemberList() reloadData];
 	});
-}
-
-- (void)_reloadDataForTableViewBegin
-{
-	NSUInteger numberOfMembers = self.numberOfMembers;
-
-	if (numberOfMembers > 0) {
-		self.reloadingMemberList = YES;
-
-		/* While the member list is reloading we suspend the dispatch queue that is
-		 used to queue modifications. The dispatch queue that is used for accessing
-		 the array itself is not suspended so the table list can still access values
-		 inside of it when reloading data. */
-		dispatch_suspend([IRCChannel modifyMembmerListSerialQueueWrapper]);
-	}
-
-	[mainWindowMemberList() reloadData];
-}
-
-- (void)_reloadDataForTableViewEnd
-{
-	[self cancelPerformRequestsWithSelector:@selector(_reloadDataForTableViewEnd)];
-
-	self.reloadingMemberList = NO;
-
-	dispatch_resume([IRCChannel modifyMembmerListSerialQueueWrapper]);
-}
-
-- (void)_reloadDataForTableViewEndIfNeeded
-{
-	if (self.reloadingMemberList == NO) {
-		return;
-	}
-
-	[self _reloadDataForTableViewEnd];
 }
 
 #pragma mark -
@@ -1294,14 +1201,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
 	[mainWindowMemberList() updateDrawingForRow:row];
-
-	if (self.reloadingMemberList == NO) {
-		return;
-	}
-
-	[self cancelPerformRequestsWithSelector:@selector(_reloadDataForTableViewEnd)];
-
-	[self performSelectorInCommonModes:@selector(_reloadDataForTableViewEnd) afterDelay:0.5];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
