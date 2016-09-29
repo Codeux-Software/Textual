@@ -8362,18 +8362,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 sorting a user with a few hundred users has overhead. */
 				BOOL IRCopStatusChanged = (user.isIRCop != userMutable.isIRCop);
 
-				if (IRCopStatusChanged ||
-					NSObjectsAreEqual(member.modes, memberMutable.modes) == NO)
-				{
-					BOOL replaceInAllChannels =
-					(IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);
+				BOOL resortMember =
+				(IRCopStatusChanged || NSObjectsAreEqual(member.modes, memberMutable.modes) == NO);
 
-					[channel replaceMember:member
-						 byInsertingMember:memberMutable
-					  replaceInAllChannels:replaceInAllChannels];
-				} else {
-					[channel replaceMember:member withMember:memberMutable];
-				}
+				BOOL replaceInAllChannels =
+				(IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);
+
+				[channel replaceMember:member
+							withMember:memberMutable
+								resort:resortMember
+				  replaceInAllChannels:replaceInAllChannels];
 			}
 
 			/* Update local cache of our hostmask */
