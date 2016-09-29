@@ -136,13 +136,9 @@ NS_ASSUME_NONNULL_BEGIN
 		[self performBlockOnMainThread:^{
 			NSIndexSet *rowIndexSet = [NSIndexSet indexSetWithIndex:row];
 
-			[NSAnimationContext beginGrouping];
-
-			RZAnimationCurrentContext().duration = 0.0;
-
-			[tableView noteHeightOfRowsWithIndexesChanged:rowIndexSet];
-
-			[NSAnimationContext endGrouping];
+			[NSAnimationContext performBlockWithoutAnimation:^{
+				[tableView noteHeightOfRowsWithIndexesChanged:rowIndexSet];
+			}];
 		}];
 	}];
 }
