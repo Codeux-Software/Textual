@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A313a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -655,6 +655,9 @@ Gw
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="autojoinWaitsForNickServChanged:" target="-2" id="wKA-i6-6CL"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1600">
                     <rect key="frame" x="154" y="135" width="71" height="17"/>
@@ -2214,7 +2217,6 @@ Gw
             <point key="canvasLocation" x="328.5" y="557.5"/>
         </menu>
         <userDefaultsController id="iuc-Sg-eeB" customClass="TPCPreferencesUserDefaultsController"/>
-        <userDefaultsController representsSharedInstance="YES" id="wVF-lJ-wzZ"/>
     </objects>
     <resources>
         <image name="ErroneousTextFieldValueIndicator" width="80" height="80"/>
