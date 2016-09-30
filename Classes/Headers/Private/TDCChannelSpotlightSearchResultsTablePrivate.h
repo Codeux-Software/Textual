@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 
 @interface TDCChannelSpotlightSearchResultCellView : NSTableCellView
-@property (readonly, copy) NSString *channelName;
+@property (readonly, copy) NSAttributedString *channelName;
 @property (readonly, copy) NSString *keyboardShortcut;
 @property (readonly, copy) NSString *unreadCountDescription;
 @property (nonatomic, weak) IBOutlet NSTextField *channelNameField;
