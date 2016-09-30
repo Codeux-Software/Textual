@@ -782,6 +782,7 @@ BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey)
 	if (blacklistedLicenseKeys == nil) {
 		blacklistedLicenseKeys = @[
 			@"mushy-argyle-oryx-428112186934176870777339608",
+			@"wicked-plaid-weasel-0681043544455415517323623",
 		];
 	}
 
