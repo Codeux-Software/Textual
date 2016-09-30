@@ -167,6 +167,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)useSSLCheckChanged:(id)sender;
 
+- (IBAction)autojoinWaitsForNickServChanged:(id)sender;
+
 - (IBAction)onClientCertificateResetRequested:(id)sender;
 - (IBAction)onClientCertificateChangeRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintSHA2CopyRequested:(id)sender;
@@ -1060,6 +1062,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)autojoinWaitsForNickServChanged:(id)sender
+{
+	if (self.autojoinWaitsForNickServCheck.state != NSOnState) {
+		return;
+	}
+
+	if (self.nicknamePasswordTextField.stringValue.length > 0 ||
+		self.clientCertificateResetCertificateButton.enabled)
+	{
+		return;
+	}
+
+	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1136][2]")
+											 title:TXTLS(@"Prompts[1136][1]")
+									 defaultButton:TXTLS(@"Prompts[0005]")
+								   alternateButton:nil];
+}
 
 - (void)serverAddressChanged:(id)sender
 {
