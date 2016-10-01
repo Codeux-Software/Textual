@@ -548,6 +548,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updatePolicy
 {
+	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+		[OTRKit sharedInstance].otrPolicy = OTRKitPolicyNever;
+
+		return;
+	}
+
 	if ([TPCPreferences textEncryptionIsRequired]) {
 		[OTRKit sharedInstance].otrPolicy = OTRKitPolicyAlways;
 	} else if ([TPCPreferences textEncryptionIsOpportunistic]) {
