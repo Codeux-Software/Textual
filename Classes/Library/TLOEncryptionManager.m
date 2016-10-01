@@ -51,6 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *messageBody; // unencrypted value
 @end
 
+@interface OTRKit ()
+- (void)_performAsyncOperationOnInternalQueue:(dispatch_block_t)block;
+@end
+
 @implementation TLOEncryptionManager
 
 #pragma mark -
@@ -398,6 +402,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[button setIconAsUnlocked];
 	}
+}
+
+- (void)performBlockAsynchronouslyOnInternalQueue:(dispatch_block_t)block
+{
+	[[OTRKit sharedInstance] _performAsyncOperationOnInternalQueue:block];
 }
 
 - (void)performBlock:(void (^)(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel))block inRelationToAccountName:(NSString *)accountName

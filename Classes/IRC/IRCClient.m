@@ -1371,7 +1371,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if (messageBody.length == 0 || [self encryptionAllowedForNickname:messageTo lenient:YES] == NO) {
+	if (messageBody.length == 0) {
 #endif
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
@@ -4692,6 +4692,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self printDebugInformationToConsole:TXTLS(@"IRC[1120]")];
 }
 
+/* This delegate call is not invoked on the main thread
+ which means if it is modified to interact with UI,
+ then it must invoke on the main thread eventually. */
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data
 {
 	NSParameterAssert(sender == self.socket);
@@ -4769,124 +4772,163 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self processIncomingMessageAttributes:message];
 
+	/* TODO: Fix this mess (October 1, 2016) */
+	/* -receivePrivmsgAndNotice: decrypts messages on a 
+	 queue which means if we do not process other events 
+	 on the same queue, prints will be out of order. 
+	 Temporary workaround is to pass everything to that 
+	 queue, but long term, a better system should be used
+	 so that we do not have to chain queue callouts. */
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+#define _performBlock(block)	\
+	[sharedEncryptionManager() performBlockAsynchronouslyOnInternalQueue:^{		\
+		dispatch_async(dispatch_get_main_queue(), block);	\
+	}];
+#else
+	#define _performBlock(block)	\
+		dispatch_async(dispatch_get_main_queue(), block);
+#endif
+
 	if (message.commandNumeric > 0) {
-		[self receiveNumericReply:message];
+		_performBlock(^{
+			[self receiveNumericReply:message];
+		});
 
 		return;
 	}
 
 	NSUInteger commandNumeric = [IRCCommandIndex indexOfIRCommand:message.command publicSearch:NO];
 
-	switch (commandNumeric) {
-		case IRCPrivateCommandErrorIndex: // Command: ERROR
-		{
-			[self receiveError:message];
-			
-			break;
-		}
-		case IRCPrivateCommandInviteIndex: // Command: INVITE
-		{
-			[self receiveInvite:message];
-			
-			break;
-		}
-		case IRCPrivateCommandJoinIndex: // Command: JOIN
-		{
-			[self receiveJoin:message];
-			
-			break;
-		}
-		case IRCPrivateCommandKickIndex: // Command: KICK
-		{
-			[self receiveKick:message];
-			
-			break;
-		}
-		case IRCPrivateCommandKillIndex: // Command: KILL
-		{
-			[self receiveKill:message];
-			
-			break;
-		}
-		case IRCPrivateCommandModeIndex: // Command: MODE
-		{
-			[self receiveMode:message];
-			
-			break;
-		}
-		case IRCPrivateCommandNickIndex: // Command: NICK
-		{
-			[self receiveNick:message];
-			
-			break;
-		}
-		case IRCPrivateCommandNoticeIndex: // Command: NOTICE
-		case IRCPrivateCommandPrivmsgIndex: // Command: PRIVMSG
-		{
+	if (commandNumeric == IRCPrivateCommandNoticeIndex ||
+		commandNumeric == IRCPrivateCommandPrivmsgIndex)
+	{
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+		[self receivePrivmsgAndNotice:message];
+
+		_performBlock(^{
+			[self processBundlesServerMessage:message];
+		});
+#else
+		/* -receivePrivmsgAndNotice: does not use background
+		 queue when built with encryption which means we have
+		 to invoke it in _performBlock so it's on main queue. */
+		_performBlock(^{
 			[self receivePrivmsgAndNotice:message];
-			
-			break;
-		}
-		case IRCPrivateCommandPartIndex: // Command: PART
-		{
-			[self receivePart:message];
-			
-			break;
-		}
-		case IRCPrivateCommandPingIndex: // Command: PING
-		{
-			[self receivePing:message];
-			
-			break;
-		}
-		case IRCPrivateCommandQuitIndex: // Command: QUIT
-		{
-			[self receiveQuit:message];
-			
-			break;
-		}
-		case IRCPrivateCommandTopicIndex: // Command: TOPIC
-		{
-			[self receiveTopic:message];
-			
-			break;
-		}
-		case IRCPrivateCommandWallopsIndex: // Command: WALLOPS
-		{
-			[self receiveWallops:message];
 
-			break;
-		}
-		case IRCPrivateCommandAuthenticateIndex: // Command: AUTHENTICATE
-		case IRCPrivateCommandCapIndex: // Command: CAP
-		{
-			[self updateConnectedToZNCPropertyWithMessage:message];
-
-			[self receiveCapacityOrAuthenticationRequest:message];
-			
-			break;
-		}
-		case IRCPrivateCommandAwayIndex: // Command: AWAY (away-notify CAP)
-		{
-			[self receiveAwayNotifyCapacity:message];
-
-			break;
-		}
-		case IRCPrivateCommandBatchIndex: // BATCH
-		{
-			[self receiveBatch:message];
-
-			break;
-		}
-		case IRCPrivateCommandCertinfoIndex: // CERTINFO
-		{
-			[self receiveCertInfo:message];
-
-			break;
-		}
+			[self processBundlesServerMessage:message];
+		});
+#endif
 	}
+	else
+	{
+		_performBlock(^{
+			switch (commandNumeric) {
+				case IRCPrivateCommandErrorIndex: // Command: ERROR
+				{
+					[self receiveError:message];
 
-	[self processBundlesServerMessage:message];
+					break;
+				}
+				case IRCPrivateCommandInviteIndex: // Command: INVITE
+				{
+					[self receiveInvite:message];
+
+					break;
+				}
+				case IRCPrivateCommandJoinIndex: // Command: JOIN
+				{
+					[self receiveJoin:message];
+
+					break;
+				}
+				case IRCPrivateCommandKickIndex: // Command: KICK
+				{
+					[self receiveKick:message];
+
+					break;
+				}
+				case IRCPrivateCommandKillIndex: // Command: KILL
+				{
+					[self receiveKill:message];
+
+					break;
+				}
+				case IRCPrivateCommandModeIndex: // Command: MODE
+				{
+					[self receiveMode:message];
+
+					break;
+				}
+				case IRCPrivateCommandNickIndex: // Command: NICK
+				{
+					[self receiveNick:message];
+
+					break;
+				}
+				case IRCPrivateCommandPartIndex: // Command: PART
+				{
+					[self receivePart:message];
+
+					break;
+				}
+				case IRCPrivateCommandPingIndex: // Command: PING
+				{
+					[self receivePing:message];
+
+					break;
+				}
+				case IRCPrivateCommandQuitIndex: // Command: QUIT
+				{
+					[self receiveQuit:message];
+
+					break;
+				}
+				case IRCPrivateCommandTopicIndex: // Command: TOPIC
+				{
+					[self receiveTopic:message];
+
+					break;
+				}
+				case IRCPrivateCommandWallopsIndex: // Command: WALLOPS
+				{
+					[self receiveWallops:message];
+
+					break;
+				}
+				case IRCPrivateCommandAuthenticateIndex: // Command: AUTHENTICATE
+				case IRCPrivateCommandCapIndex: // Command: CAP
+				{
+					[self updateConnectedToZNCPropertyWithMessage:message];
+
+					[self receiveCapacityOrAuthenticationRequest:message];
+
+					break;
+				}
+				case IRCPrivateCommandAwayIndex: // Command: AWAY (away-notify CAP)
+				{
+					[self receiveAwayNotifyCapacity:message];
+
+					break;
+				}
+				case IRCPrivateCommandBatchIndex: // BATCH
+				{
+					[self receiveBatch:message];
+					
+					break;
+				}
+				case IRCPrivateCommandCertinfoIndex: // CERTINFO
+				{
+					[self receiveCertInfo:message];
+					
+					break;
+				}
+			} // switch
+
+			[self processBundlesServerMessage:message];
+		}); // _performBlock
+	} // if PRIVMSG
+
+#undef _performBlock
 }
 
 - (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data
@@ -5091,7 +5133,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	};
 
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	[self decryptMessage:text referenceMessage:m decodingCallback:decryptionBlock];
+#else
+	decryptionBlock(text, NO);
+#endif
 }
 
 - (void)receiveText:(IRCMessage *)m lineType:(TVCLogLineType)lineType text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted

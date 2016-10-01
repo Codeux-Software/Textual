@@ -53,7 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary<NSString *, id> *)configurationDictionary;
 - (NSDictionary<NSString *, id> *)configurationDictionaryForCloud;
 
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)noteEncryptionStateDidChange;
+#endif
 
 - (void)addMember:(IRCChannelUser *)member checkForDuplicates:(BOOL)checkForDuplicates;
 
