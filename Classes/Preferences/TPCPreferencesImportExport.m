@@ -254,7 +254,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)isKeyNameSupposedToBeIgnored:(NSString *)key
 {
-	return [TPCPreferencesUserDefaults keyIsExcludedFromBeingExported:key];
+	return ([TPCPreferencesUserDefaults keyIsExcludedFromBeingExported:key] ||
+			[TPCPreferencesUserDefaults keyIsObsolete:key]);
 }
 
 + (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryForCloud
