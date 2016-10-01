@@ -217,6 +217,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSInteger selectedRow = self.filterTable.selectedRow;
 
+	if (selectedRow < 0) {
+		return;
+	}
+
 	[self.filterArrayController removeObjectAtArrangedObjectIndex:selectedRow];
 
 	[self saveFilters];
@@ -225,6 +229,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)filterEdit:(id)sender
 {
 	NSInteger selectedRow = self.filterTable.selectedRow;
+
+	if (selectedRow < 0) {
+		return;
+	}
 
 	TPI_ChatFilter *filter = self.filterArrayController.arrangedObjects[selectedRow];
 
