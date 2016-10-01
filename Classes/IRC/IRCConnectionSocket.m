@@ -441,9 +441,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		return;
 	}
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self tcpClientDidReceiveData:dataAsString];
-	});
+	[self tcpClientDidReceiveData:dataAsString];
 }
 
 - (void)didReadNormalData:(NSData *)data
