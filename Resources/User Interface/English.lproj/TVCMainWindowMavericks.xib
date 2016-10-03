@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -1158,18 +1158,16 @@
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-4m-qZc">
                                         <rect key="frame" x="0.0" y="3" width="608" height="19"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0kO-pf-9ZA">
-                                            <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="608" height="19"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="AbN-7J-waj" customClass="TVCMainWindowTextView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
+                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="AbN-7J-waj" customClass="TVCMainWindowTextView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="608" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="608" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="608" height="19"/>
-                                                    <size key="maxSize" width="629" height="10000000"/>
                                                     <accessibility description="Main Text Field"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="Jl3-QW-y8e" id="qHs-h8-s9V"/>
@@ -1253,11 +1251,11 @@
                                                 <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRq-5j-Tbj">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ugn-kA-dZH">
-                                                        <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <outlineView horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="uPw-dS-cnM" id="bhZ-Cj-KBM" customClass="TVCServerList">
-                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="0.0"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
@@ -1415,11 +1413,11 @@
                                                 <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zg5-cz-li9">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                     <clipView key="contentView" drawsBackground="NO" id="iqZ-oE-HbV">
-                                                        <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" outlineTableColumn="bdD-7t-ks4" id="uZZ-ie-yHv" customClass="TVCMemberList">
-                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="0.0"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
@@ -1439,7 +1437,7 @@
                                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         <prototypeCellViews>
                                                                             <tableCellView id="ydc-Er-I2k" customClass="TVCMemberListCell">
-                                                                                <rect key="frame" x="1" y="1" width="147" height="16"/>
+                                                                                <rect key="frame" x="1" y="0.0" width="147" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
                                                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Reg-g1-lse">
@@ -1533,17 +1531,17 @@
                             <outlet property="serverListWidthConstraint" destination="Shw-gN-4CR" id="5TQ-3F-4Lt"/>
                         </connections>
                     </splitView>
-                    <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fcA-DA-hcd" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
+                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fcA-DA-hcd" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <view key="contentView" id="oLn-Od-ikw">
                             <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qAL-J6-fow" userLabel="Trial Expired">
-                                    <rect key="frame" x="160" y="-3" width="480" height="444"/>
+                                    <rect key="frame" x="160" y="23" width="480" height="393"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="z5g-nn-uR2">
-                                            <rect key="frame" x="27" y="246" width="426" height="36"/>
+                                            <rect key="frame" x="27" y="195" width="426" height="36"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Your trial of Textual has expired!" id="gyi-Rc-8RN">
                                                 <font key="font" metaFont="system" size="30"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1551,14 +1549,12 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5b-Hf-lZT">
-                                            <rect key="frame" x="50" y="136" width="365" height="102"/>
+                                            <rect key="frame" x="50" y="136" width="365" height="51"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="vbc-qs-WGF">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Thank you for trying Textual for the past 30 days. 
 
-To continue using Textual, you will need to purchase it. 
-
-Textual can be purchased for the low price of 4.99 USD by clicking the button presented below.</string>
+To continue using Textual, you will need to purchase it.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -1575,21 +1571,18 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                             </connections>
                                         </button>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="be0-qc-Z4Y">
-                                            <rect key="frame" x="164" y="290" width="152" height="152"/>
+                                            <rect key="frame" x="164" y="239" width="152" height="152"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="152" id="JdC-qg-F0G"/>
                                                 <constraint firstAttribute="width" constant="152" id="lkK-Oy-Je3"/>
                                             </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="ETr-vK-rWC"/>
                                         </imageView>
-                                        <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1yY-o9-6LP">
+                                        <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="1yY-o9-6LP">
                                             <rect key="frame" x="33" y="83" width="414" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" id="g48-If-8fi"/>
                                             </constraints>
-                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <font key="titleFont" metaFont="system"/>
                                         </box>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2b8-pr-Jam">
                                             <rect key="frame" x="144" y="53" width="192" height="17"/>
@@ -1614,7 +1607,6 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                         <constraint firstItem="pfS-mQ-kGx" firstAttribute="leading" secondItem="qAL-J6-fow" secondAttribute="leading" constant="183" id="3ZP-9G-Tgc"/>
                                         <constraint firstAttribute="width" constant="480" id="3h3-ho-3a5"/>
                                         <constraint firstAttribute="bottom" secondItem="Nls-AL-Ptc" secondAttribute="bottom" constant="20" symbolic="YES" id="9oD-Ki-b4L"/>
-                                        <constraint firstAttribute="height" constant="444" id="CCQ-rt-bQH"/>
                                         <constraint firstItem="1yY-o9-6LP" firstAttribute="centerX" secondItem="pfS-mQ-kGx" secondAttribute="centerX" id="D6T-Ou-zGk"/>
                                         <constraint firstItem="Nls-AL-Ptc" firstAttribute="top" secondItem="2b8-pr-Jam" secondAttribute="bottom" constant="12" id="GAz-4t-Vsi"/>
                                         <constraint firstAttribute="trailing" secondItem="X5b-Hf-lZT" secondAttribute="trailing" constant="67" id="IWB-Ku-Qby"/>
@@ -1626,6 +1618,8 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                         <constraint firstAttribute="trailing" secondItem="pfS-mQ-kGx" secondAttribute="trailing" constant="182" id="SYZ-8m-LkK"/>
                                         <constraint firstAttribute="trailing" secondItem="be0-qc-Z4Y" secondAttribute="trailing" constant="164" id="YgF-Ni-xVa"/>
                                         <constraint firstItem="X5b-Hf-lZT" firstAttribute="top" secondItem="z5g-nn-uR2" secondAttribute="bottom" constant="8" id="htt-Uo-mIO"/>
+                                        <constraint firstItem="1yY-o9-6LP" firstAttribute="top" secondItem="pfS-mQ-kGx" secondAttribute="bottom" constant="18" id="iaZ-Cn-10M"/>
+                                        <constraint firstAttribute="height" constant="393" id="itc-VX-fi9"/>
                                         <constraint firstItem="X5b-Hf-lZT" firstAttribute="leading" secondItem="qAL-J6-fow" secondAttribute="leading" constant="52" id="jQy-97-UlD"/>
                                         <constraint firstItem="2b8-pr-Jam" firstAttribute="top" secondItem="1yY-o9-6LP" secondAttribute="bottom" constant="15" id="kro-I4-jeP"/>
                                         <constraint firstAttribute="centerX" secondItem="z5g-nn-uR2" secondAttribute="centerX" id="sgf-wT-nTZ"/>
@@ -1738,15 +1732,17 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                     </constraints>
                                 </customView>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="qAL-J6-fow" firstAttribute="centerX" secondItem="oLn-Od-ikw" secondAttribute="centerX" id="bph-JR-1fB"/>
+                                <constraint firstItem="qAL-J6-fow" firstAttribute="centerY" secondItem="oLn-Od-ikw" secondAttribute="centerY" id="g4W-xL-y2K"/>
+                            </constraints>
                         </view>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="x8f-Op-1pT" secondAttribute="centerY" constant="-0.5" id="0lT-8p-48v"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="3Bn-VB-mZR"/>
                             <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="3sr-jV-Vjf"/>
-                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="Arm-Wt-ZN7"/>
                             <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="TuW-Vn-6qA"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="WCF-du-2lE"/>
-                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="j1Z-HU-wsO"/>
                             <constraint firstAttribute="centerX" secondItem="x8f-Op-1pT" secondAttribute="centerX" id="xUS-9o-zS5"/>
                         </constraints>
                         <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2007,7 +2003,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
         <image name="FormattingColor_7" width="16" height="16"/>
         <image name="FormattingColor_8" width="16" height="16"/>
         <image name="FormattingColor_9" width="16" height="16"/>
-        <image name="FormattingColor_Rainbow" width="8" height="8"/>
+        <image name="FormattingColor_Rainbow" width="16" height="16"/>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
