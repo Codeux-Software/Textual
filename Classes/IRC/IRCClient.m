@@ -5996,7 +5996,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (isPrintOnlyMessage == NO) {
 		/* A user might already exist by having a private message open */
 		IRCUserMutable *userMutable = [self mutableCopyOfUserWithNickname:sender];
-		
+
+		userMutable.nickname = m.senderNickname;
 		userMutable.username = m.senderUsername;
 		userMutable.address = m.senderAddress;
 
@@ -8349,6 +8350,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				userMutable = [user mutableCopy];
 			}
 
+			userMutable.nickname = nickname;
 			userMutable.username = username;
 			userMutable.address = address;
 
@@ -8498,6 +8500,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				/* Create global user */
 				IRCUserMutable *userMutable = [self mutableCopyOfUserWithNickname:nicknameInt];
 
+				userMutable.nickname = nicknameInt;
 				userMutable.username = usernameInt;
 				userMutable.address = addressInt;
 
