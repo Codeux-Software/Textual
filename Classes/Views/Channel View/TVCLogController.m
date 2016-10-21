@@ -140,6 +140,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.loaded = NO;
 
+	[self.backingView stopLoading]; // allow view to teardown
 	self.backingView = nil;
 
 	[self.printingQueue cancelOperationsForViewController:self];
