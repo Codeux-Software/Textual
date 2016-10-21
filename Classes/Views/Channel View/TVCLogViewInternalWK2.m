@@ -44,6 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _maximumProcessCount			8
 
+@interface TVCLogViewInternalWK2 ()
+@property (nonatomic, assign) BOOL t_observingLoadingProperty;
+@end
+
 @implementation TVCLogViewInternalWK2
 
 static WKProcessPool *_sharedProcessPool = nil;
@@ -181,14 +185,10 @@ create_normal_pool:
 	self.navigationDelegate = (id)self;
 
 	self.UIDelegate = (id)self;
-
-	[self addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)dealloc
 {
-	[self removeObserver:self forKeyPath:@"loading"];
-
 	self.navigationDelegate = nil;
 
 	self.UIDelegate = nil;
@@ -197,6 +197,30 @@ create_normal_pool:
 - (TVCLogPolicy *)webViewPolicy
 {
 	return _sharedWebPolicy;
+}
+
+#pragma mark -
+#pragma mark Load Overrides
+
+- (nullable WKNavigation *)loadFileURL:(NSURL *)URL allowingReadAccessToURL:(NSURL *)readAccessURL
+{
+	[self startObservingLoadingProperty];
+
+	return [super loadFileURL:URL allowingReadAccessToURL:readAccessURL];
+}
+
+- (nullable WKNavigation *)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL
+{
+	[self startObservingLoadingProperty];
+
+	return [super loadHTMLString:string baseURL:baseURL];
+}
+
+- (void)stopLoading
+{
+	[self stopObservingLoadingProperty];
+
+	[super stopLoading];
 }
 
 #pragma mark -
@@ -282,9 +306,33 @@ create_normal_pool:
 	}
 }
 
+- (void)startObservingLoadingProperty
+{
+	if (self.t_observingLoadingProperty) {
+		return;
+	}
+
+	[self addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:NULL];
+
+	self.t_observingLoadingProperty = YES;
+}
+
+- (void)stopObservingLoadingProperty
+{
+	if (self.t_observingLoadingProperty == NO) {
+		return;
+	}
+
+	[self removeObserver:self forKeyPath:@"loading"];
+
+	self.t_observingLoadingProperty = NO;
+}
+
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
 	if (self.t_viewIsLoading == NO && self.t_viewIsNavigating == NO) {
+		[self stopObservingLoadingProperty];
+
 		[self.t_parentView performSelectorInCommonModes:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
 	}
 }
