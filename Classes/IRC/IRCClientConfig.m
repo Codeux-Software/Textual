@@ -1050,8 +1050,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)setZncIgnoreConfiguredAutojoin:(BOOL)zncIgnoreConfiguredAutojoin
 {
-	if (self->_zncIgnoreUserNotifications != zncIgnoreConfiguredAutojoin) {
-		self->_zncIgnoreUserNotifications = zncIgnoreConfiguredAutojoin;
+	if (self->_zncIgnoreConfiguredAutojoin != zncIgnoreConfiguredAutojoin) {
+		self->_zncIgnoreConfiguredAutojoin = zncIgnoreConfiguredAutojoin;
 	}
 }
 
