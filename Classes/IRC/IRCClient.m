@@ -3082,7 +3082,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *nickname = stringIn.tokenAsString;
 
-			IRCChannelUser *member = [targetChannel findMember:nickname];
+			IRCUser *member = [self findUser:nickname];
 
 			if (member == nil) {
 				if (isIgnoreCommand) {
@@ -3095,7 +3095,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			/* Build list of ignores that already match the user's host */
-			NSString *hostmask = member.user.hostmask;
+			NSString *hostmask = member.hostmask;
 
 			if (hostmask == nil) {
 				hostmask = [NSString stringWithFormat:@"%@!*@*", nickname];
@@ -3116,13 +3116,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Cancel if there is nothing to change */
 			if (isIgnoreCommand) {
 				if (matchedIgnores.count > 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1118]", member.user.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[1118]", member.nickname)];
 
 					break;
 				}
 			} else {
 				if (matchedIgnores.count == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1117]", member.user.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[1117]", member.nickname)];
 
 					break;
 				}
@@ -3133,14 +3133,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (isIgnoreCommand) {
 				IRCAddressBookEntry *ignore =
-				[IRCAddressBookEntry newIgnoreEntryForHostmask:member.user.banMask];
+				[IRCAddressBookEntry newIgnoreEntryForHostmask:member.banMask];
 
-				[self printDebugInformation:TXTLS(@"IRC[1115]", member.user.nickname, ignore.hostmask)];
+				[self printDebugInformation:TXTLS(@"IRC[1115]", member.nickname, ignore.hostmask)];
 
 				[mutableIgnoreList addObject:ignore];
 			} else{
 				for (IRCAddressBookEntry *ignore in matchedIgnores) {
-					[self printDebugInformation:TXTLS(@"IRC[1116]", member.user.nickname, ignore.hostmask)];
+					[self printDebugInformation:TXTLS(@"IRC[1116]", member.nickname, ignore.hostmask)];
 
 					[mutableIgnoreList removeObjectIdenticalTo:ignore];
 				}
