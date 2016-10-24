@@ -893,6 +893,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return NO;
 }
 
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldShowOutlineCellForItem:(id)item
+{
+	return NO;
+}
+
 @end
 
 #pragma mark -
