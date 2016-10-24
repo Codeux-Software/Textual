@@ -7589,7 +7589,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		NSString *command = nil;
 
-		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDiskIsEnabled])) && self.lastMessageServerTime > 0) {
+		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDisk])) && self.lastMessageServerTime > 0) {
 			command = [NSString stringWithFormat:@"play * %.0f", self.lastMessageServerTime];
 		} else {
 			command = @"play * 0";
