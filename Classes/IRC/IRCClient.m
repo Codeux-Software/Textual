@@ -2349,6 +2349,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	if (channel.isUtility) {
+		[self printCannotSendMessageToWindowErrorInChannel:channel];
+
+		return;
+	}
+
 	NSString *commandToSend = nil;
 
 	TVCLogLineType lineType = TVCLogLineUndefinedType;
@@ -2557,6 +2563,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		targetChannel = [self findChannel:targetChannelName];
 	} else if (completeTarget && selectedClient == self && selectedChannel) {
 		targetChannel = selectedChannel;
+	}
+
+	if (targetChannel.isUtility) {
+		[self printCannotSendMessageToWindowErrorInChannel:targetChannel];
+
+		return;
 	}
 
 	switch (commandNumeric) {
@@ -4384,6 +4396,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel asCommand:(NSString *)command
 {
 	[self print:message by:nil inChannel:channel asType:TVCLogLineDebugType command:command];
+}
+
+- (void)printCannotSendMessageToWindowErrorInChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	[self printDebugInformation:TXTLS(@"IRC[1121]") inChannel:channel];
 }
 
 #pragma mark -
