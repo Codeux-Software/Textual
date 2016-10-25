@@ -720,9 +720,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMakePoint((NSMidX(badgeFrame) - (stringToDraw.size.width  / 2.0)),
 				(NSMidY(badgeFrame) - (stringToDraw.size.height / 2.0)));
 
-	if (mainWindow.runningInHighResolutionMode) {
-		badgeTextPoint.y -= 0.5;
-	}
+//	if (mainWindow.runningInHighResolutionMode) {
+//		badgeTextPoint.y -= 0.0;
+//	}
 
 	/* Perform draw and set image */
 	[stringToDraw drawAtPoint:badgeTextPoint];

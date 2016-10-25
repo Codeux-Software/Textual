@@ -150,9 +150,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSFont *)messageCountBadgeFont
 {
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		return [NSFont monospacedDigitSystemFontOfSize:10.5 weight:NSFontWeightRegular];
+		return [NSFont monospacedDigitSystemFontOfSize:11.0 weight:NSFontWeightRegular];
 	} else {
-		return [NSFont systemFontOfSize:10.5];
+		return [NSFont systemFontOfSize:11.0];
 	}
 }
 
