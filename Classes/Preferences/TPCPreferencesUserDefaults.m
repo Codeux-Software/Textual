@@ -212,20 +212,20 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	NSParameterAssert(matchingPattern != nil);
 
 	if ([matchingPattern isEqualToString:@"="]) {
-		if ([defaultName1 isEqualToString:defaultName2] == NO) {
-			return NO;
+		if ([defaultName1 isEqualToString:defaultName2]) {
+			return YES;
 		}
 	} else if ([matchingPattern isEqualToString:@"PREFIX"]) {
-		if ([defaultName1 hasPrefix:defaultName2] == NO) {
-			return NO;
+		if ([defaultName1 hasPrefix:defaultName2]) {
+			return YES;
 		}
 	} else if ([matchingPattern isEqualToString:@"SUFFIX"]) {
-		if ([defaultName1 hasSuffix:defaultName2] == NO) {
-			return NO;
+		if ([defaultName1 hasSuffix:defaultName2]) {
+			return YES;
 		}
 	}
 
-	return YES;
+	return NO;
 }
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)defaultName
