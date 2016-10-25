@@ -247,7 +247,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	__block BOOL returnValue = NO;
 
 	[cachedValues enumerateKeysAndObjectsUsingBlock:^(NSString *cachedKey, NSString *cachedObject, BOOL *stop) {
-		if ([self key:defaultName matchesKey:cachedKey usingMatchingPattern:cachedObject] == NO) {
+		if ([self key:defaultName matchesKey:cachedKey usingMatchingPattern:cachedObject]) {
 			*stop = YES;
 
 			returnValue = YES;
