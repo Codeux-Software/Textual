@@ -626,9 +626,9 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	 This is used when trying to stop highlight spam.
 	 Textual counts anything above 75% spam. */
 	if ([TPCPreferences automaticallyDetectHighlightSpam]) {
-		NSUInteger nicknamePercent = ((totalNicknameLength / bodyLength) * 100);
+		double nicknamePercent = (((double)totalNicknameLength / bodyLength) * 100.0);
 
-		if (nicknamePercent > 75 && totalNicknameCount > 10) {
+		if (nicknamePercent > 75.0 && totalNicknameCount > 10) {
 			self->_outputDictionary[TVCLogRendererResultsKeywordMatchFoundAttribute] = @(NO);
 		}
 	}
