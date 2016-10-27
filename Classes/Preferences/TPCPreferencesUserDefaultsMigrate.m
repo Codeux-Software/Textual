@@ -64,6 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSString *pathToMigrateTo = [pathToMigrate[@"destinationPath"] stringByExpandingTildeInPath];
 
+			BOOL repalceSource = [pathToMigrate boolForKey:@"replaceSource"];
+
 			BOOL lockSource = [pathToMigrate boolForKey:@"lockSource"];
 
 			BOOL hideSource = [pathToMigrate boolForKey:@"hideSource"];
@@ -74,7 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 													 toPath:pathToMigrateTo
 									  createSourceIfMissing:createSourceIfMissing
 												 hideSource:hideSource
-												 lockSource:lockSource];
+												 lockSource:lockSource
+											  replaceSource:repalceSource];
 		}
 	}
 
@@ -106,6 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 	  createSourceIfMissing:(BOOL)createSourceIfMissing
 				 hideSource:(BOOL)hideSource
 				 lockSource:(BOOL)lockSource
+			  replaceSource:(BOOL)replaceSource
 {
 	NSParameterAssert(sourcePath != nil);
 	NSParameterAssert(destinationPath != nil);
@@ -122,10 +126,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (sourcePathExists) {
 		/* Create a backup of the source */
-		if ([TPCPreferencesUserDefaults createBackupOfPath:sourcePath] == NO) {
-			LogToConsoleError("Failed to create backup of source path: '%{public}@'", sourcePath)
+		if (replaceSource) {
+			if ([TPCPreferencesUserDefaults createBackupOfPath:sourcePath] == NO) {
+				LogToConsoleError("Failed to create backup of source path: '%{public}@'", sourcePath)
 
-			return;
+				return;
+			}
 		}
 
 		/* Retrieve values from property list. */
@@ -135,13 +141,15 @@ NS_ASSUME_NONNULL_BEGIN
 		 replace it with a symbolic link. Doing this way ensures that the
 		 new path (non-sandboxed path) can be accessed by the Mac App Store
 		 version so that they are wrote to at the same path. */
-		NSError *removeSourcePathError = nil;
+		if (replaceSource) {
+			NSError *removeSourcePathError = nil;
 
-		if ([RZFileManager() removeItemAtPath:sourcePath error:&removeSourcePathError] == NO) {
-			LogToConsoleError("Failed to erase source path: '%{public}@' - '%{public}@'",
-				sourcePath, [removeSourcePathError localizedDescription])
+			if ([RZFileManager() removeItemAtPath:sourcePath error:&removeSourcePathError] == NO) {
+				LogToConsoleError("Failed to erase source path: '%{public}@' - '%{public}@'",
+					sourcePath, [removeSourcePathError localizedDescription])
 
-			return;
+				return;
+			}
 		}
 	}
 
@@ -149,46 +157,48 @@ NS_ASSUME_NONNULL_BEGIN
 	 If it fails, we still write the keys in memory so that we can at
 	 least have the user preferences on disk somewhere, they just wont
 	 be read by the Mac App Store without symbolic link. */
-	if (sourcePathExists == NO && createSourceIfMissing) {
-		NSString *sourcePathLeading = sourcePath.stringByDeletingLastPathComponent;
+	if (replaceSource || sourcePathExists == NO) {
+		if (sourcePathExists == NO && createSourceIfMissing) {
+			NSString *sourcePathLeading = sourcePath.stringByDeletingLastPathComponent;
 
-		NSError *createSourcePathLeadingError = nil;
+			NSError *createSourcePathLeadingError = nil;
 
-		if ([RZFileManager() fileExistsAtPath:sourcePathLeading] == NO) {
-			if ([RZFileManager() createDirectoryAtPath:sourcePathLeading withIntermediateDirectories:YES attributes:nil error:&createSourcePathLeadingError] == NO) {
-				LogToConsoleError("Failed to create source path: '%{public}@' - '%{public}@'",
-					sourcePathLeading, [createSourcePathLeadingError localizedDescription])
+			if ([RZFileManager() fileExistsAtPath:sourcePathLeading] == NO) {
+				if ([RZFileManager() createDirectoryAtPath:sourcePathLeading withIntermediateDirectories:YES attributes:nil error:&createSourcePathLeadingError] == NO) {
+					LogToConsoleError("Failed to create source path: '%{public}@' - '%{public}@'",
+									  sourcePathLeading, [createSourcePathLeadingError localizedDescription])
 
-				return;
+					return;
+				}
 			}
 		}
-	}
 
-	NSError *createSymbolicLinkError = nil;
+		NSError *createSymbolicLinkError = nil;
 
-	if ([RZFileManager() createSymbolicLinkAtPath:sourcePath withDestinationPath:destinationPath error:&createSymbolicLinkError] == NO) {
-		LogToConsoleError("Failed to create symbolic link to destination path: '%{public}@' -> '%{public}@' - %{public}@",
-			sourcePath, destinationPath, [createSymbolicLinkError localizedDescription])
-	}
-
-	/* Modify source attributes */
-	NSURL *sourcePathURL = [NSURL fileURLWithPath:sourcePath isDirectory:NO];
-
-	if (hideSource) {
-		NSError *modifySourcePathAttributesError = nil;
-
-		if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
-			LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
-				[sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
+		if ([RZFileManager() createSymbolicLinkAtPath:sourcePath withDestinationPath:destinationPath error:&createSymbolicLinkError] == NO) {
+			LogToConsoleError("Failed to create symbolic link to destination path: '%{public}@' -> '%{public}@' - %{public}@",
+							  sourcePath, destinationPath, [createSymbolicLinkError localizedDescription])
 		}
-	}
 
-	if (lockSource) {
-		NSError *modifySourcePathAttributesError = nil;
+		/* Modify source attributes */
+		NSURL *sourcePathURL = [NSURL fileURLWithPath:sourcePath isDirectory:NO];
 
-		if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
-			LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
-				[sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
+		if (hideSource) {
+			NSError *modifySourcePathAttributesError = nil;
+
+			if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+				LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
+								  [sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
+			}
+		}
+
+		if (lockSource) {
+			NSError *modifySourcePathAttributesError = nil;
+
+			if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
+				LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
+								  [sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
+			}
 		}
 	}
 
