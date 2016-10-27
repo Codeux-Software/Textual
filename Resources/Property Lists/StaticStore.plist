@@ -6,11 +6,13 @@
 	<array>
 		<dict>
 			<key>createSourceIfMissing</key>
-			<true/>
+			<false/>
 			<key>hideOriginalOnMigration</key>
 			<false/>
 			<key>lockSource</key>
-			<true/>
+			<false/>
+			<key>replaceSource</key>
+			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
 			<key>sourcePath</key>
@@ -22,8 +24,10 @@
 			<key>createSourceIfMissing</key>
 			<false/>
 			<key>hideOriginalOnMigration</key>
-			<true/>
+			<false/>
 			<key>lockSource</key>
+			<false/>
+			<key>replaceSource</key>
 			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
