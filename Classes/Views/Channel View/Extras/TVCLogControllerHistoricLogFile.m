@@ -39,8 +39,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _maximumRowCountPerClient			1000
-
 @interface TVCLogControllerHistoricLogFile ()
 @property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, assign) BOOL isPerformingSave;
@@ -407,6 +405,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	context.propagatesDeletesAtEndOfEvent = NO;
 
+	NSUInteger channelsCountMaximum = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
+
 	NSMutableDictionary<NSString *, NSNumber *> *channelCounts = [NSMutableDictionary dictionary];
 
 	for (NSManagedObject *object in fetchedObjects) {
@@ -424,7 +424,7 @@ NS_ASSUME_NONNULL_BEGIN
 			channelCounts[channelId] = @(channelCount.unsignedIntegerValue + 1);
 		}
 
-		if (channelCount.unsignedIntegerValue > _maximumRowCountPerClient) {
+		if (channelCount.unsignedIntegerValue > channelsCountMaximum) {
 			[context deleteObject:object];
 		}
 	}
