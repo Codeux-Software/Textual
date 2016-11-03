@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 @protected
 	BOOL _isEncrypted;
-	BOOL _isHistoric;
 	BOOL _nicknameColorStyleOverride;
 	NSArray<NSString *> *_excludeKeywords;
 	NSArray<NSString *> *_highlightKeywords;

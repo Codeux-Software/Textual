@@ -112,7 +112,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	self->_highlightKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"highlightKeywords"] copy];
 
 	self->_isEncrypted = [aDecoder decodeBoolForKey:@"isEncrypted"];
-	self->_isHistoric = [aDecoder decodeBoolForKey:@"isHistoric"];
 
 	self->_command = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"command"] copy];
 	self->_messageBody = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"messageBody"] copy];
@@ -156,7 +155,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	[aCoder maybeEncodeObject:self.nickname forKey:@"nickname"];
 
 	[aCoder encodeBool:self.isEncrypted forKey:@"isEncrypted"];
-	[aCoder encodeBool:self.isHistoric forKey:@"isHistoric"];
 
 	[aCoder encodeObject:self.receivedAt forKey:@"receivedAt"];
 
@@ -350,7 +348,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	object->_uniqueIdentifier = self->_uniqueIdentifier;
 
 	object->_isEncrypted = self->_isEncrypted;
-	object->_isHistoric = self->_isHistoric;
 
 	object->_excludeKeywords = self->_excludeKeywords;
 	object->_highlightKeywords = self->_highlightKeywords;
@@ -395,7 +392,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 @dynamic excludeKeywords;
 @dynamic highlightKeywords;
 @dynamic isEncrypted;
-@dynamic isHistoric;
 @dynamic lineType;
 @dynamic memberType;
 @dynamic messageBody;
@@ -411,13 +407,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 {
 	if (self->_isEncrypted != isEncrypted) {
 		self->_isEncrypted = isEncrypted;
-	}
-}
-
-- (void)setIsHistoric:(BOOL)isHistoric
-{
-	if (self->_isHistoric != isHistoric) {
-		self->_isHistoric = isHistoric;
 	}
 }
 
