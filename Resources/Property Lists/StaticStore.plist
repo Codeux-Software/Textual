@@ -101,6 +101,8 @@
 		<string>=</string>
 		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
 		<string>=</string>
+		<key>TVCLogControllerHistoricLogFileSavePath_v2</key>
+		<string>=</string>
 	</dict>
 	<key>TPCPreferencesUserDefaults Obsolete Keys</key>
 	<dict>

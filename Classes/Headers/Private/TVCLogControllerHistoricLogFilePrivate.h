@@ -37,18 +37,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
+
 @interface TVCLogControllerHistoricLogFile : NSObject
-- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
++ (TVCLogControllerHistoricLogFile *)sharedInstance;
 
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine;
-- (void)writeNewEntryWithData:(NSData *)data; // Does not automatically append new line
+- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel;
 
-- (void)open;
-- (void)close;
+- (void)saveData; // asynchronous operation
 
-- (void)reset;
+@property (readonly) BOOL isSaving;
 
-- (NSArray<NSData *> *)listEntriesWithFetchLimit:(NSUInteger)fetchLimit;
+- (void)resetData; // synchronous operation
+- (void)resetDataForChannel:(IRCChannel *)channel; // synchronous operation
+
+- (void)fetchEntriesForChannel:(IRCChannel *)channell
+					fetchLimit:(NSUInteger)fetchLimit
+				   limitToDate:(nullable NSDate *)limitToDate
+		   withCompletionBlock:(void (^)(NSArray<TVCLogLineManaged *> *entries))completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END

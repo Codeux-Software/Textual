@@ -35,12 +35,18 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
+#define _maximumRowCountPerClient			1000
+
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, weak) TVCLogController *viewController;
-@property (nonatomic, strong, nullable) NSFileHandle *fileHandle;
-@property (nonatomic, assign) BOOL truncationEventScheduled;
+@property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
+@property (nonatomic, assign) BOOL isPerformingSave;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
@@ -48,354 +54,339 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Public API
 
-+ (dispatch_queue_t)dispatchQueue
++ (TVCLogControllerHistoricLogFile *)sharedInstance
 {
-	static dispatch_queue_t dispatchQueue = NULL;
+	static id sharedSelf = nil;
 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		dispatchQueue =
-		XRCreateDispatchQueueWithPriority("Textual.TVCLogControllerHistoricLogFile.HistoricLogFileDispatchQueue", DISPATCH_QUEUE_SERIAL, QOS_CLASS_BACKGROUND);
+		sharedSelf = [[self alloc] init];
+
+		[sharedSelf createBaseModel];
 	});
 
-	return dispatchQueue;
+	return sharedSelf;
 }
 
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithViewController:(TVCLogController *)viewController
+- (NSFetchRequest *)fetchRequestForChannel:(IRCChannel *)channel
+								fetchLimit:(NSUInteger)fetchLimit
+							   limitToDate:(nullable NSDate *)limitToDate
+								resultType:(NSFetchRequestResultType)resultType
 {
-	NSParameterAssert(viewController != nil);
+	NSParameterAssert(channel != nil);
 
-	if ((self = [super init])) {
-		self.viewController = viewController;
-
-		return self;
+	if (limitToDate == nil) {
+		limitToDate = [NSDate distantFuture];
 	}
 
-	return nil;
-}
+	NSDictionary *substitutionVariables = @{
+		@"channel_id" : channel.uniqueIdentifier,
+		@"creation_date" : @([limitToDate timeIntervalSince1970])
+	};
 
-+ (void)prepareForPermanentDestruction
-{
-	dispatch_suspend([TVCLogControllerHistoricLogFile dispatchQueue]);
-}
+	NSFetchRequest *fetchRequest =
+	[self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
+										substitutionVariables:substitutionVariables];
 
-- (void)writeNewEntryWithData:(NSData *)data
-{
-	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		[self _writeNewEntryWithData:data];
-	});
-}
-
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine
-{
-	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		[self _writeNewEntryWithLogLine:logLine];
-	});
-}
-
-- (void)open
-{
-	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		(void)[self _reopenFileHandleIfNeeded];
-	});
-}
-
-- (void)close
-{
-	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		[self _close];
-	});
-}
-
-- (void)reset
-{
-	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		[self _reset];
-	});
-}
-
-- (void)_writeNewEntryWithData:(NSData *)data
-{
-	NSParameterAssert(data != nil);
-
-	if ([self _reopenFileHandleIfNeeded] == NO) {
-		return;
+	if (fetchLimit > 0) {
+		fetchRequest.fetchLimit = fetchLimit;
 	}
 
-	@try {
-		[self.fileHandle writeData:data];
+	fetchRequest.resultType = resultType;
 
-		[self _scheduleTruncationEvent];
-	}
-	@catch (NSException *exception) {
-		self.fileHandle = nil;
+	fetchRequest.sortDescriptors = @[[self sortDescriptor]];
 
-		LogToConsoleError("Caught exception: %{public}@", exception.reason)
-		LogToConsoleCurrentStackTrace
+	return fetchRequest;
+}
+
+- (void)resetData
+{
+	NSString *oldPath = [self databaseSavePath];
+
+	[RZFileManager() removeItemAtPath:oldPath error:NULL];
+
+	[RZFileManager() removeItemAtPath:[oldPath stringByAppendingString:@"-wal"] error:NULL];
+	[RZFileManager() removeItemAtPath:[oldPath stringByAppendingString:@"-shm"] error:NULL];
+}
+
+- (void)_resetDataForChannelUsingBatch:(IRCChannel *)channel
+{
+	NSParameterAssert(channel  != nil);
+
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	[context performBlockAndWait:^{
+		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
+														 fetchLimit:0
+														limitToDate:nil
+														 resultType:NSManagedObjectIDResultType];
+
+		NSBatchDeleteRequest *batchDeleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
+
+		batchDeleteRequest.resultType = NSBatchDeleteResultTypeObjectIDs;
+
+		NSError *batchDeleteError = nil;
+
+		NSBatchDeleteResult *batchDeleteResult =
+		[self.persistentStoreCoordinator executeRequest:batchDeleteRequest
+											withContext:context
+												  error:&batchDeleteError];
+
+		if (batchDeleteResult == nil) {
+			LogToConsoleError("Failed to perform batch delete: %@",
+							  batchDeleteError.localizedDescription)
+		}
+
+		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
+													 intoContexts:@[context]];
+		//	[context refreshAllObjects];
+	}];
+}
+
+- (void)_resetDataForChannelUsingEnumeration:(IRCChannel *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	[context performBlockAndWait:^{
+		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
+														 fetchLimit:0
+														limitToDate:nil
+														 resultType:NSManagedObjectResultType];
+
+		NSError *fetchRequestError = nil;
+
+		NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&fetchRequestError];
+
+		if (fetchedObjects == nil) {
+			LogToConsoleError("Error occurred fetching objects: %@",
+							  fetchRequestError.localizedDescription)
+
+			return;
+		}
+
+		for (NSManagedObject *object in fetchedObjects) {
+			[context deleteObject:object];
+		}
+	}];
+}
+
+- (void)resetDataForChannel:(IRCChannel *)channel
+{
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		[self _resetDataForChannelUsingBatch:channel];
+	} else {
+		[self _resetDataForChannelUsingEnumeration:channel];
 	}
 }
 
-- (void)_writeNewEntryWithLogLine:(TVCLogLine *)logLine
+- (void)fetchEntriesForChannel:(IRCChannel *)channel
+					fetchLimit:(NSUInteger)fetchLimit
+				   limitToDate:(nullable NSDate *)limitToDate
+		   withCompletionBlock:(void (^)(NSArray<TVCLogLineManaged *> *entries))completionBlock
+{
+	NSParameterAssert(channel != nil);
+	NSParameterAssert(completionBlock != nil);
+
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	[context performBlockAndWait:^{
+		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
+														 fetchLimit:0
+														limitToDate:limitToDate
+														 resultType:NSManagedObjectResultType];
+
+		NSError *fetchRequestError = nil;
+
+		NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&fetchRequestError];
+
+		if (fetchedObjects == nil) {
+			LogToConsoleError("Error occurred fetching objects: %@",
+							  fetchRequestError.localizedDescription)
+
+			return;
+		}
+
+		/* Our sort descriptor places newest lines at the top and oldest
+		 at the bottom. This is done so that when a fetch limit is supplied,
+		 the fetch limit only applies to the newest lines without us having
+		 to supply an offset. Obivously, we do not want newest lines first
+		 though, so before passing to the callback, we reverse. */
+		completionBlock(fetchedObjects.reverseObjectEnumerator.allObjects);
+	}];
+}
+
+- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(logLine != nil);
+	NSParameterAssert(channel != nil);
 
-	NSData *jsonRepresentation = logLine.jsonRepresentation;
+	NSManagedObjectContext *context = self.managedObjectContext;
 
-	[self writeNewEntryWithData:jsonRepresentation];
+	TVCLogLineManaged *newEntry =
+	[[TVCLogLineManaged alloc] initWithLogLine:logLine
+									 inChannel:channel
+									   context:context];
 
-	[self writeNewEntryWithData:[NSData lineFeed]];
-}
-
-- (BOOL)_reopenFileHandleIfNeeded
-{
-	if (self.fileHandle == nil) {
-		return [self _openFileHandle];
-	}
-
-	return YES;
-}
-
-- (BOOL)_openFileHandle
-{
-	NSString *path = self.writePath;
-
-	NSString *pathLeading = path.stringByDeletingLastPathComponent;
-
-	if ([RZFileManager() fileExistsAtPath:pathLeading] == NO) {
-		NSError *createDirectoryError = nil;
-
-		if ([RZFileManager() createDirectoryAtPath:pathLeading withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
-			LogToConsoleError("Error Creating Folder: %{public}@",
-				createDirectoryError.localizedDescription)
-
-			return NO;
-		}
-	}
-
-	if ([RZFileManager() fileExistsAtPath:path] == NO) {
-		NSError *writeFileError = nil;
-
-		if ([NSStringEmptyPlaceholder writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
-			LogToConsoleError("Error Creating File: %{public}@",
-				writeFileError.localizedDescription)
-
-			return NO;
-		}
-	}
-
-	self.fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
-
-	if ( self.fileHandle) {
-		[self.fileHandle seekToEndOfFile];
-
-		return YES;
-	}
-
-	LogToConsoleError("Failed to open file handle at path '%{public}@'", path)
-
-	return NO;
-}
-
-- (void)_close
-{
-	if ( self.fileHandle) {
-		[self.fileHandle synchronizeFile];
-		[self.fileHandle closeFile];
-		 self.fileHandle = nil;
-	}
-
-	[self _cancelTruncationEvent];
-}
-
-- (void)_reset
-{
-	[self _close];
-
-	/* error: is ignored because file may not exist at all so 
-	 no reason to report that when we already know it. */
-	(void)[RZFileManager() removeItemAtPath:self.writePath error:NULL];
-}
-
-- (void)_cancelTruncationEvent
-{
-	if (self.truncationEventScheduled) {
-		self.truncationEventScheduled = NO;
-
-		[self cancelPerformRequests];
-	}
-}
-
-- (void)_scheduleTruncationEvent
-{
-	/* File truncation events are scheduled to happen at random
-	 intervals so they are all not running at one time. */
-	if (self.truncationEventScheduled == NO) {
-		self.truncationEventScheduled = YES;
-
-		NSUInteger timeInterval = TXRandomNumber(1800); // ~30 minutes
-
-		[self performBlockOnMainThread:^{
-			[self performSelectorInCommonModes:@selector(_truncateFile)
-									withObject:nil
-									afterDelay:timeInterval];
-		}];
-	}
-}
-
-- (void)_truncateFile
-{
-	/* It is acceptable for -listEntriesWithFetchLimit: to return incomplete JSON data (corrupt)
-	 which means the truncate process is very easy. Get last X bytes from file, clear the file, 
-	 then place those bytes back in the file, save the file. */
-	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		if ([self _reopenFileHandleIfNeeded] == NO) {
-			return;
-		}
-
-		const unsigned long long filesizeMax = (1000 * 50 * 8); // 50 kilobytes
-
-		unsigned long long filesize = [self.fileHandle seekToEndOfFile];
-
-		if (filesize < filesizeMax) {
-			return;
-		}
-
-		[self.fileHandle seekToFileOffset:(filesize - filesizeMax)];
-
-		NSData *dataToRetain = [self.fileHandle readDataOfLength:filesizeMax];
-
-		[self.fileHandle truncateFileAtOffset:0];
-
-		[self.fileHandle writeData:dataToRetain];
-
-		[self.fileHandle synchronizeFile];
-
-		dataToRetain = nil;
-	});
-
-	self.truncationEventScheduled = NO;
-}
-
-- (NSArray<NSData *> *)listEntriesWithFetchLimit:(NSUInteger)fetchLimit
-{
-	NSParameterAssert(fetchLimit > 0);
-
-	NSMutableArray<NSData *> *items = [NSMutableArray arrayWithCapacity:fetchLimit];
-
-	const unsigned long long offsetChunkSize = (1000 * 10 * 8); // 10 kilobytes
-
-	NSData *lineFeed = [NSData lineFeed];
-
-	XRPerformBlockSynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
-		if ([self _reopenFileHandleIfNeeded] == NO) {
-			return;
-		}
-
-		/* This procedure works backwards, from the bottom of the file, upwards.
-		 The file is read in chunks, as defined by /offsetChunkSize/ */
-		unsigned long long filesize = [self.fileHandle seekToEndOfFile];
-
-		unsigned long long bytesRemaining = filesize;
-
-		while (bytesRemaining > 0) {
-			/* Calculate the index of the next chunk and its length */
-			long long nextOffset = (bytesRemaining - offsetChunkSize);
-			long long nextOffsetLength = offsetChunkSize;
-
-			if (nextOffset < 0) {
-				nextOffset = 0;
-				nextOffsetLength = bytesRemaining;
-			}
-
-			/* Seek to next chunk then extract the chunk itself */
-			[self.fileHandle seekToFileOffset:nextOffset];
-
-			NSData *chunkedData = [self.fileHandle readDataOfLength:nextOffsetLength];
-
-			/* Enumerate over lines and subdata the objects they separate */
-			__block BOOL fetchLimitExceeded = NO;
-
-			__block NSRange lastRangeProcessed = NSMakeRange(NSNotFound, 0);
-
-			[chunkedData enumerateMatchesOfData:lineFeed
-									  withBlock:^(NSRange range, BOOL *stop) {
-				  if (lastRangeProcessed.location == NSNotFound) {
-					  lastRangeProcessed = NSMakeRange(range.location, (chunkedData.length - range.location));
-				  } else {
-					  lastRangeProcessed = NSMakeRange(range.location, (lastRangeProcessed.location - range.location));
-				  }
-
-				  NSData *subdata = [chunkedData subdataWithRange:lastRangeProcessed];
-
-				  if ([subdata isEqual:lineFeed]) { // Empty data
-					  return;
-				  }
-
-				  [items addObject:subdata];
-
-				  if (items.count == fetchLimit) {
-					  fetchLimitExceeded = YES;
-				  }
-			  } options:NSDataSearchBackwards];
-
-			if (fetchLimitExceeded) {
-				break;
-			}
-
-			/* If there was no data to be divided because a line break could not be found,
-			 then just add the entire chunk to the outgoing array */
-			if (lastRangeProcessed.location == NSNotFound)
-			{
-				[items addObject:chunkedData];
-			}
-
-			/* Capture any data that remains when at the top of the file. */
-			else if (lastRangeProcessed.location > 0 && nextOffset == 0)
-			{
-				lastRangeProcessed = NSMakeRange(0, lastRangeProcessed.location);
-
-				NSData *subdata = [chunkedData subdataWithRange:lastRangeProcessed];
-
-				[items addObject:subdata];
-			}
-
-			/* Update math to move to next chunk */
-			if (nextOffset == 0) {
-				break;
-			}
-
-			bytesRemaining -= (nextOffsetLength + lastRangeProcessed.location);
-		} // while()
-
-		(void)[self.fileHandle seekToEndOfFile];
-	});
-
-	/* Reading from the bottom up which means the array needs to be reversed */
-	return items.reverseObjectEnumerator.allObjects;
+	[context performBlockAndWait:^{
+		[context insertObject:newEntry];
+	}];
 }
 
 #pragma mark -
-#pragma mark Private API
+#pragma mark Core Data Model
 
-- (NSString *)writePath
+- (void)createBaseModel
 {
-	IRCClient *client = self.viewController.associatedClient;
-	IRCChannel *channel = self.viewController.associatedChannel;
+	[self createBaseModelWithRecursion:0];
+}
 
-	NSString *combinedName = nil;
+- (void)createBaseModelWithRecursion:(NSUInteger)recursionDepth
+{
+	NSURL *modelPath = [RZMainBundle() URLForResource:@"LogControllerStorageModel" withExtension:@"momd"];
 
-	if (channel) {
-		combinedName = [NSString stringWithFormat:@"/MessageArchive/%@/historicLogFile-%@.json", client.uniqueIdentifier, channel.uniqueIdentifier];
-	} else {
-		combinedName = [NSString stringWithFormat:@"/MessageArchive/%@/historicLogFile-console.json", client.uniqueIdentifier];
+	NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelPath];
+
+	NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+
+	NSDictionary *pragmaOptions = @{
+		@"synchronous" : @"OFF",
+		@"journal_mode" : @"WAL"
+	};
+
+	NSDictionary *persistentStoreOptions = @{NSSQLitePragmasOption : pragmaOptions};
+
+	NSURL *persistentStorePath = [NSURL fileURLWithPath:[self databaseSavePath]];
+
+	NSError *addPersistentStoreError = nil;
+
+	NSPersistentStore *persistentStore =
+	[persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+											 configuration:nil
+													   URL:persistentStorePath
+												   options:persistentStoreOptions
+													 error:&addPersistentStoreError];
+
+	if (persistentStore == nil)
+	{
+		LogToConsoleError("Error Creating Persistent Store: %@",
+			addPersistentStoreError.localizedDescription)
+
+		if (recursionDepth == 0) {
+			LogToConsoleInfo("Attempting to create a new persistent store")
+
+			/* If we failed to load our store, we create a brand new one at a new path
+			 incase the old one is corrupted. We also erase the old database to not allow
+			 the file to just hang on the OS. */
+			[self resetData]; // Destroy any data that may exist
+
+			[self createBaseModelWithRecursion:1];
+		}
+
+		return;
+	}
+	else
+	{
+		NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+
+		managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+
+		managedObjectContext.retainsRegisteredObjects = NO;
+
+		managedObjectContext.undoManager = nil;
+
+		self.managedObjectContext = managedObjectContext;
+		self.managedObjectModel = managedObjectModel;
+
+		self.persistentStoreCoordinator = persistentStoreCoordinator;
 	}
 
-	NSString *cachesFolder = [TPCPathInfo applicationCachesFolderPath];
+	[self resetMaintenanceTimer];
+}
 
-	return [cachesFolder stringByAppendingPathComponent:combinedName];
+- (NSString *)databaseSavePath
+{
+	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+
+	if (filename == nil) {
+		filename = [NSString stringWithFormat:@"logControllerHistoricLog_%@.sqlite", [NSString stringWithUUID]];
+
+		[RZUserDefaults() setObject:filename forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+	}
+
+	NSString *sourcePath = [TPCPathInfo applicationCachesFolderPath];
+
+	return [sourcePath stringByAppendingPathComponent:filename];
+}
+
+- (BOOL)isSaving
+{
+	return self.isPerformingSave;
+}
+
+- (void)prepareForApplicationTermination
+{
+	[self saveDataDuringTermination:YES];
+}
+
+- (void)saveData
+{
+	[self saveDataDuringTermination:NO];
+}
+
+- (void)saveDataDuringTermination:(BOOL)duringTermination
+{
+	[self resetMaintenanceTimer];
+
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	[context performBlock:^{
+		if (self.isPerformingSave == NO) {
+			self.isPerformingSave = YES;
+		} else {
+			return;
+		}
+
+		if ([context commitEditing] == NO)
+		{
+			LogToConsoleError("Failed to commit editing")
+		}
+		else if ([context hasChanges])
+		{
+			/* Truncate database before saving it */
+			[self performMaintenance];
+
+			NSError *saveError = nil;
+
+			if ([context save:&saveError] == NO) {
+				LogToConsoleError("Failed to perform save: %@",
+					saveError.localizedDescription)
+			}
+		}
+
+		self.isPerformingSave = NO;
+	}];
+}
+
+- (void)resetMaintenanceTimer
+{
+	[self cancelPerformRequestsWithSelector:@selector(saveData)]; // cancel previous timers
+
+	self.hasPendingAutosaveTimer = YES;
+
+	[self performSelector:@selector(saveData) withObject:nil afterDelay:(60 * 10)]; // 10 minutes
+}
+
+- (void)performMaintenance
+{
+#warning TODO: Implement
+}
+
+- (NSSortDescriptor *)sortDescriptor
+{
+	return [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
 }
 
 @end
