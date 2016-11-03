@@ -490,19 +490,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isSafeToPerformApplicationTermination
 {
+	return (
+		/* Clients are still disconnecting */
+		self.terminatingClientCount == 0 ||
+
+		/* Core Data is saving */
+		TVCLogControllerHistoricLogSharedInstance().isSaving
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	if (sharedCloudManager()) {
-		return (
-			/* Clients are still disconnecting */
-			self.terminatingClientCount == 0 ||
+		||
 
-			/* iCloud is syncing */
-			[sharedCloudManager() isTerminated]
-		);
-	}
+		/* iCloud is syncing */
+		[sharedCloudManager() isTerminated]
 #endif
-
-	return (self.terminatingClientCount == 0);
+	);
 }
 
 - (void)performApplicationTerminationStepOne
@@ -535,7 +536,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self.menuController prepareForApplicationTermination];
 
-	[TVCLogControllerHistoricLogFile prepareForPermanentDestruction];
+	[TVCLogControllerHistoricLogSharedInstance() prepareForApplicationTermination];
 
 	[self performApplicationTerminationStepTwo];
 }
