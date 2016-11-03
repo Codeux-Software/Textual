@@ -508,6 +508,9 @@
 		4C4A1AFD1D122707004FBF12 /* WebScriptObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */; };
 		4C4A1AFE1D122707004FBF12 /* WebScriptObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */; };
 		4C4A1AFF1D122707004FBF12 /* WebScriptObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */; };
+		4C51AA071DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */; };
+		4C51AA081DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */; };
+		4C51AA091DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
 		4C52EF8B1D58BF2E0003AA1C /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C52EF8A1D58BF2E0003AA1C /* IRCUser.m */; };
@@ -1340,6 +1343,15 @@
 		4CBD03C91D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
 		4CBD03CA1D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
 		4CBD03CB1D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
+		4CBD545E1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */; };
+		4CBD545F1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */; };
+		4CBD54601DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */; };
+		4CBD54671DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD54661DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h */; };
+		4CBD54681DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD54661DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h */; };
+		4CBD54691DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD54661DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h */; };
+		4CBD546B1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */; };
+		4CBD546C1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */; };
+		4CBD546D1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */; };
 		4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4CBE64C71743720600831D69 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
 		4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
@@ -2067,6 +2079,7 @@
 		4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebScriptObjectHelperPrivate.h; sourceTree = "<group>"; };
 		4C4C96C31C88BDC000E8F8F3 /* TextualWithoutSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C4C96C41C88BDC000E8F8F3 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
+		4C51AA061DC79677004B31D6 /* LogControllerStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogControllerStorageModel.xcdatamodel; sourceTree = "<group>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
 		4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
@@ -2401,6 +2414,9 @@
 		4CBC76AC1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TVCMainWindow.strings"; sourceTree = SOURCE_ROOT; };
 		4CBD03C41D5537CE0057D5B5 /* BuddyListDropArea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuddyListDropArea.png; sourceTree = "<group>"; };
 		4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BuddyListDropArea@2x.png"; sourceTree = "<group>"; };
+		4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogLineManaged.m; sourceTree = "<group>"; };
+		4CBD54661DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogLineManagedPrivate.h; path = Headers/TVCLogLineManagedPrivate.h; sourceTree = "<group>"; };
+		4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogLineManagedPrivate.h; path = Headers/Private/TVCLogLineManagedPrivate.h; sourceTree = "<group>"; };
 		4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TDCHighlightEntrySheet.m; path = Dialogs/TDCHighlightEntrySheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CBEACDE1BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowSidebarSmoothTextField.m; path = "Views/Main Window/TVCMainWindowSidebarSmoothTextField.m"; sourceTree = "<group>"; };
 		4CC1649E1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeCenterMavericks.png; sourceTree = "<group>"; };
@@ -2783,6 +2799,7 @@
 			isa = PBXGroup;
 			children = (
 				4CCC6B46158E8C1B003A102B /* Build Settings */,
+				4C51AA041DC79677004B31D6 /* Data Models */,
 				4C46CCA21580437400846B64 /* Documentation */,
 				4C46CCA6158043BB00846B64 /* Extensions */,
 				4C46F3C11943A654004CA8BA /* Images */,
@@ -3018,6 +3035,15 @@
 			path = "Headers/Private/External Libraries";
 			sourceTree = "<group>";
 		};
+		4C51AA041DC79677004B31D6 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */,
+			);
+			name = "Data Models";
+			path = "Resources/Data Models";
+			sourceTree = SOURCE_ROOT;
+		};
 		4C51B8B7196ACDBB00003A87 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3183,6 +3209,7 @@
 				4C7B48EB1D131A2A008D7926 /* TVCLogControllerHistoricLogFilePrivate.h */,
 				4C7B48EC1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h */,
 				4C7B48ED1D131A2A008D7926 /* TVCLogControllerPrivate.h */,
+				4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */,
 				4C7B48EE1D131A2A008D7926 /* TVCLogLinePrivate.h */,
 				4C7B48F01D131A2A008D7926 /* TVCLogPolicyPrivate.h */,
 				4C7B48F11D131A2A008D7926 /* TVCLogScriptEventSinkPrivate.h */,
@@ -3529,6 +3556,7 @@
 				4C8AF582158E99520026668C /* TVCInputPromptDialog.h */,
 				4C8AF586158E99520026668C /* TVCLogController.h */,
 				4C8AF587158E99520026668C /* TVCLogLine.h */,
+				4CBD54661DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h */,
 				4C8AF589158E99520026668C /* TVCLogRenderer.h */,
 				4C8AF58B158E99520026668C /* TVCLogView.h */,
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
@@ -3883,6 +3911,7 @@
 				4CF40DB21AC1A4AC00A26BE0 /* Extras */,
 				4CF40DB71AC1A4AC00A26BE0 /* TVCLogController.m */,
 				4CF40DB81AC1A4AC00A26BE0 /* TVCLogLine.m */,
+				4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */,
 				4CF40DB91AC1A4AC00A26BE0 /* TVCLogPolicy.m */,
 				4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */,
 				4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */,
@@ -4074,6 +4103,7 @@
 				4C7B034D1D1210A100295E82 /* IRCChannelUser.h in Headers */,
 				4C7B034E1D1210A100295E82 /* IRCWorld.h in Headers */,
 				4C0DEB6C1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */,
+				4CBD546B1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C5DD51C1D1E1CB700F2E1AE /* TVCMainWindowSplitViewPrivate.h in Headers */,
 				4C7B490A1D131A2A008D7926 /* TVCLogScriptEventSinkPrivate.h in Headers */,
 				4C7B48F51D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
@@ -4081,6 +4111,7 @@
 				4CD1C4C91D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
 				4CEA29B31D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */,
 				4C620E8C1D3E61C20037F35E /* TDCChannelSpotlightSearchResultsTablePrivate.h in Headers */,
+				4CBD54671DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C6B219A1D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h in Headers */,
 				4CB9E3CD1D2B199900ED395A /* IRCChannelModePrivate.h in Headers */,
 				4C10B37A1D23283000868A74 /* TDCLicenseManagerDialogPrivate.h in Headers */,
@@ -4353,6 +4384,7 @@
 				4C056F1B1D1D89A100D85CEA /* TVCMemberListMavericksUserInterfacePrivate.h in Headers */,
 				4C056F271D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B04001D1210A800295E82 /* TVCInputPromptDialog.h in Headers */,
+				4CBD546C1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C7B04011D1210A800295E82 /* TVCLogController.h in Headers */,
 				4C7B490E1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B04041D1210A800295E82 /* TVCLogLine.h in Headers */,
@@ -4430,6 +4462,7 @@
 				4C7B04C11D1210DA00295E82 /* TPCPreferencesPrivate.h in Headers */,
 				4C7B04C21D1210DA00295E82 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */,
 				4C5DD5081D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h in Headers */,
+				4CBD54681DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4CAAAE4B1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
 				4CF642EA1D2DC33700CB9165 /* IRCChannelPrivate.h in Headers */,
 				4C76CC911D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
@@ -4598,6 +4631,7 @@
 				4C056F1C1D1D89A100D85CEA /* TVCMemberListMavericksUserInterfacePrivate.h in Headers */,
 				4C056F281D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B04811D1210B000295E82 /* TVCInputPromptDialog.h in Headers */,
+				4CBD546D1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C7B04821D1210B000295E82 /* TVCLogController.h in Headers */,
 				4C7B490F1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B04851D1210B000295E82 /* TVCLogLine.h in Headers */,
@@ -4675,6 +4709,7 @@
 				4C7B04DA1D1210E000295E82 /* TPCPreferencesPrivate.h in Headers */,
 				4C7B04DB1D1210E000295E82 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */,
 				4C5DD5091D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h in Headers */,
+				4CBD54691DC8D64F00EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4CAAAE4C1D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h in Headers */,
 				4CF642EB1D2DC33700CB9165 /* IRCChannelPrivate.h in Headers */,
 				4C76CC921D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
@@ -5502,6 +5537,7 @@
 				4C7B05151D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CF40E471AC1A4AC00A26BE0 /* TVCServerListMavericksDarkUserInterface.m in Sources */,
 				4C052F7F1D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
+				4C51AA081DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */,
 				4CF40E2B1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */,
 				4CB9E3C61D2B17B900ED395A /* IRCMessageBatch.m in Sources */,
@@ -5578,6 +5614,7 @@
 				4C10B36C1D23247600868A74 /* TDCProgressIndicatorSheet.m in Sources */,
 				4CF40E5B1AC1A4AC00A26BE0 /* TVCContentNavigationOutlineView.m in Sources */,
 				4C0445B316F1603C00EBB665 /* TLOGrowlController.m in Sources */,
+				4CBD545F1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */,
 				4CF40E7F1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C0445B416F1603C00EBB665 /* TLOInputHistory.m in Sources */,
 				4C0445B516F1603C00EBB665 /* TLOKeyEventHandler.m in Sources */,
@@ -5675,6 +5712,7 @@
 				4CF40E221AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C790FCD1B82725C00EB318C /* TXWindowController.m in Sources */,
 				4C0BA6671990798800857343 /* IRCChannel.m in Sources */,
+				4CBD545E1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */,
 				4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */,
 				4CF40E3A1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4CF40DEA1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
@@ -5742,6 +5780,7 @@
 				4C0BA68D1990798800857343 /* TLOInputHistory.m in Sources */,
 				4C0BA68E1990798800857343 /* THOPluginManager.m in Sources */,
 				4CF40E5A1AC1A4AC00A26BE0 /* TVCContentNavigationOutlineView.m in Sources */,
+				4C51AA071DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */,
 				4C0BA6901990798800857343 /* TLOKeyEventHandler.m in Sources */,
 				4CF40E7E1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C0BA6911990798800857343 /* TLOLanguagePreferences.m in Sources */,
@@ -5832,6 +5871,7 @@
 				4C7B05161D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CF40E481AC1A4AC00A26BE0 /* TVCServerListMavericksDarkUserInterface.m in Sources */,
 				4C052F801D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
+				4C51AA091DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */,
 				4CF40E2C1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C8AF68F158E99520026668C /* NSColorHelper.m in Sources */,
 				4CB9E3C71D2B17B900ED395A /* IRCMessageBatch.m in Sources */,
@@ -5908,6 +5948,7 @@
 				4C10B36D1D23247600868A74 /* TDCProgressIndicatorSheet.m in Sources */,
 				4CF40E5C1AC1A4AC00A26BE0 /* TVCContentNavigationOutlineView.m in Sources */,
 				4C8AF6C3158E99520026668C /* TLOKeyEventHandler.m in Sources */,
+				4CBD54601DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */,
 				4CF40E801AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C8AF6C4158E99520026668C /* TLOLanguagePreferences.m in Sources */,
 				4C8AF6C5158E99520026668C /* TLOLinkParser.m in Sources */,
@@ -6555,6 +6596,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4C51AA061DC79677004B31D6 /* LogControllerStorageModel.xcdatamodel */,
+			);
+			currentVersion = 4C51AA061DC79677004B31D6 /* LogControllerStorageModel.xcdatamodel */;
+			path = LogControllerStorageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4C1DC5491580420500A47BC9 /* Project object */;
 }

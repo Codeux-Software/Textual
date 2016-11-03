@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IRCClient *associatedClient;
 @property (nonatomic, weak, readwrite) IRCChannel *associatedChannel;
 @property (nonatomic, weak, readwrite) TVCMainWindow *attachedWindow;
-@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
+@property (nonatomic, assign) NSTimeInterval viewLoadedTimestamp;
 @property (readonly) TVCLogControllerPrintingOperationQueue *printingQueue;
 @property (readonly, copy) NSURL *baseURL;
 @end
@@ -146,8 +146,6 @@ ClassWithDesignatedInitializerInitMethod
 	[self.printingQueue cancelOperationsForViewController:self];
 
 	[self closeHistoricLog:(isTerminatingApplication == NO)];
-
-	self.historicLogFile = nil;
 }
 
 - (void)prepareForApplicationTermination
@@ -182,8 +180,6 @@ ClassWithDesignatedInitializerInitMethod
 	[self buildBackingView];
 
 	[self loadInitialDocument];
-
-	[self openHistoricLog];
 }
 
 - (void)buildBackingView
@@ -217,9 +213,15 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Manage Historic Log
 
-- (void)openHistoricLog
+- (void)resetHistoricLog
 {
-	self.historicLogFile = [[TVCLogControllerHistoricLogFile alloc] initWithViewController:self];
+	IRCChannel *channel = self.associatedChannel;
+
+	if (channel == nil) {
+		return;
+	}
+
+	[TVCLogControllerHistoricLogSharedInstance() resetDataForChannel:self.associatedChannel];
 }
 
 - (void)closeHistoricLog
@@ -240,15 +242,12 @@ ClassWithDesignatedInitializerInitMethod
 	if (
 		/* 1 */ forceReset ||
 		/* 2 */ [TPCPreferences reloadScrollbackOnLaunch] == NO ||
-		/* 3 */  self.associatedChannel == nil ||
+		/* 3 */  self.associatedChannel.isUtility ||
 		/* 4 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO) ||
-		/* 5 */ self.encrypted ||
-		/* 6 */ self.associatedChannel.isUtility)
+		/* 5 */ self.encrypted)
 	{
-		[self.historicLogFile reset];
-	} else {
-		[self.historicLogFile close];
+		[self resetHistoricLog];
 	}
 }
 
@@ -261,17 +260,6 @@ ClassWithDesignatedInitializerInitMethod
 		self->_maximumLineCount = maximumLineCount;
 
 		[self limitNumberOfLinesIfNeeded];
-	}
-}
-
-- (void)setEncrypted:(BOOL)encrypted
-{
-	if (self->_encrypted != encrypted) {
-		self->_encrypted = encrypted;
-
-		if (self->_encrypted) {
-			[self closeHistoricLog];
-		}
 	}
 }
 
@@ -459,7 +447,7 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
-- (void)reloadOldLines:(NSArray<NSData *> *)oldLines markHistoric:(BOOL)markHistoric
+- (void)reloadOldLines:(NSArray<TVCLogLineManaged *> *)oldLines isReload:(BOOL)isReload
 {
 	NSParameterAssert(oldLines != nil);
 
@@ -467,19 +455,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSMutableString *patchedAppend = [NSMutableString string];
 
-	NSMutableData *newHistoricArchive = [NSMutableData data];
-
 	NSMutableArray<THOPluginDidPostNewMessageConcreteObject *> *pluginObjects = nil;
 
-	for (NSData *chunkedData in oldLines) {
-		TVCLogLineMutable *logLine = [[TVCLogLineMutable alloc] initWithJSONData:chunkedData];
+	for (TVCLogLineManaged *oldLine in oldLines) {
+		TVCLogLine *logLine = oldLine.logLine;
 
 		if (logLine == nil) {
 			continue;
-		}
-
-		if (markHistoric) {
-			logLine.isHistoric = YES;
 		}
 
 		/* Render result info HTML */
@@ -511,11 +493,6 @@ ClassWithDesignatedInitializerInitMethod
 			[pluginObjects addObject:pluginObject];
 		}
 
-		/* Create a new entry for result */
-		[newHistoricArchive appendData:logLine.jsonRepresentation];
-
-		[newHistoricArchive appendData:[NSData lineFeed]];
-
 		/* Record highlights */
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
@@ -526,15 +503,10 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	}
 
-	/* Record new entries */
-	[self.historicLogFile reset];
-
-	[self.historicLogFile writeNewEntryWithData:newHistoricArchive];
-
 	/* Render the result in WebKit */
 	self.activeLineCount += lineNumbers.count;
 
-	[self appendHistoricMessageFragment:patchedAppend isReload:(markHistoric == NO)];
+	[self appendHistoricMessageFragment:patchedAppend isReload:isReload];
 
 	[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
 
@@ -574,9 +546,9 @@ ClassWithDesignatedInitializerInitMethod
 		/* 2 */ self.activeLineCount >= _numberOfDesiredLines ||
 		/* 3 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
 		/* 4 */  self.associatedChannel == nil ||
-		/* 5 */ (self.associatedChannel.isPrivateMessage &&
-				 [TPCPreferences rememberServerListQueryStates] == NO) ||
-		/* 6 */ self.associatedChannel.isUtility)
+		/* 5 */  self.associatedChannel.isUtility ||
+		/* 6 */ (self.associatedChannel.isPrivateMessage &&
+				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
 		self.historyLoadedForFirstTime = YES;
 
@@ -595,19 +567,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.reloadingHistory = YES;
 
-	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
-		NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:_numberOfDesiredLines];
-
-		/* Because the history is loaded lazily, messages from the current session
-		 may fill up the log. If the active line count exceeds the amount of lines
-		 we want, then we can only use some of what is returned. */
-		if (self.activeLineCount < objects.count) {
-			if (self.activeLineCount > 0) {
-				objects = [objects subarrayWithRange:NSMakeRange(0, (objects.count - self.activeLineCount))];
-			}
-
-			[self reloadOldLines:objects markHistoric:firstTimeLoadingHistory];
-		}
+	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLineManaged *> *objects) {
+		[self reloadOldLines:objects isReload:(firstTimeLoadingHistory == NO)];
 
 		self.reloadingHistory = NO;
 
@@ -615,6 +576,22 @@ ClassWithDesignatedInitializerInitMethod
 		self.historyLoadedForFirstTime = YES;
 
 		[self notifyViewFinishedLoadingHistory];
+	};
+
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
+		NSDate *limitToDate = [NSDate dateWithTimeIntervalSince1970:self.viewLoadedTimestamp];
+
+		[TVCLogControllerHistoricLogSharedInstance()
+		 fetchEntriesForChannel:self.associatedChannel
+					 fetchLimit:0
+					limitToDate:limitToDate
+			withCompletionBlock:^(NSArray<TVCLogLineManaged *> *objects) {
+				if ([operation isCancelled]) {
+					return;
+				}
+
+				reloadBlock(objects);
+		 }];
 	};
 
 	_enqueueBlockStandalone(operationBlock)
@@ -875,7 +852,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self.printingQueue cancelOperationsForViewController:self];
 
 	if (clearWithReset) {
-		[self.historicLogFile reset];
+		[self resetHistoricLog];
 	}
 	
 	@synchronized(self.highlightedLineNumbers) {
@@ -967,12 +944,15 @@ ClassWithDesignatedInitializerInitMethod
 				return;
 			}
 
+			IRCClient *client = self.associatedClient;
+			IRCChannel *channel = self.associatedChannel;
+
 			if (highlighted) {
 				@synchronized(self.highlightedLineNumbers) {
 					[self.highlightedLineNumbers addObject:lineNumber];
 				}
 
-				[self.associatedClient cacheHighlightInChannel:self.associatedChannel withLogLine:logLine];
+				[client cacheHighlightInChannel:channel withLogLine:logLine];
 			}
 
 			[self appendToDocumentBody:html];
@@ -1007,8 +987,8 @@ ClassWithDesignatedInitializerInitMethod
 			/* Doing it this way does break the ability to reload chatter
 			 in the view as well as playback on restart, but the added
 			 security can be seen as a bonus. */
-			if (self.encrypted == NO) {
-				[self.historicLogFile writeNewEntryWithLogLine:logLine];
+			if (channel != nil && self.encrypted == NO) {
+				[TVCLogControllerHistoricLogSharedInstance() writeNewEntryWithLogLine:logLine inChannel:channel];
 			}
 
 			/* Using informationi provided by conversation tracking we can update 
@@ -1026,8 +1006,8 @@ ClassWithDesignatedInitializerInitMethod
 			 TVCLogControllerPrintOperationContext *contextObject =
 			[TVCLogControllerPrintOperationContext new];
 
-			contextObject.client = self.associatedClient;
-			contextObject.channel = self.associatedChannel;
+			contextObject.client = client;
+			contextObject.channel = channel;
 			contextObject.highlight = highlighted;
 			contextObject.logLine = logLine;
 			contextObject.lineNumber = lineNumber;
@@ -1184,10 +1164,6 @@ ClassWithDesignatedInitializerInitMethod
 		classAttribute = @"text";
 	} else {
 		classAttribute = @"event";
-	}
-
-	if (logLine.isHistoric) {
-		classAttribute = [classAttribute stringByAppendingString:@" historic"];
 	}
 
 	templateAttributes[@"lineClassAttributeRepresentation"] = classAttribute;
@@ -1402,6 +1378,8 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	self.loaded = YES;
+
+	self.viewLoadedTimestamp = [NSDate timeIntervalSince1970];
 
 	[self _evaluateFunction:@"Textual.viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
