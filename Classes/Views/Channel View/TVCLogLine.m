@@ -60,7 +60,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
-		if ([self isMutable] == NO) {
+		if (self->_objectInitializedAsCopy == NO && [self isMutable] == NO) {
 			DESIGNATED_INITIALIZER_EXCEPTION
 		}
 
@@ -76,31 +76,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	return nil;
 }
 
-- (nullable TVCLogLine *)initWithJSONData:(NSData *)data
+- (nullable instancetype)initWithData:(NSData *)data
 {
-	ObjectIsAlreadyInitializedAssert
+	NSParameterAssert(data != nil);
 
-	NSError *serializeError = nil;
-
-	NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializeError];
-
-	if (jsonDictionary == nil) {
-		LogToConsoleError("An error occured converting data into a JSON object: %{public}@",
-				serializeError.localizedDescription)
-
-		return nil; // Failed to init
-	}
-
-	return [self initWithDictionary:jsonDictionary];
+	return [NSUnarchiver unarchiveObjectWithData:data];
 }
-DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
-- (TVCLogLine *)initWithDictionary:(NSDictionary<NSString *, id> *)dic
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
-		[self populateDictionaryValues:dic];
+		[self populateObjectWithCoder:aDecoder];
 
 		[self populateDefaultsPostflight];
 
@@ -112,31 +100,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return nil;
 }
 
-- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
+- (void)populateObjectWithCoder:(NSCoder *)aDecoder
 {
-	NSParameterAssert(dic != nil);
+	NSParameterAssert(aDecoder != nil);
 
 	ObjectIsAlreadyInitializedAssert
 
-	double receivedAt = [dic doubleForKey:@"receivedAt"];
+	self->_receivedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"receivedAt"];
 
-	if (receivedAt > 0) {
-		self->_receivedAt = [NSDate dateWithTimeIntervalSince1970:receivedAt];
-	}
+	self->_excludeKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"excludeKeywords"] copy];
+	self->_highlightKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"highlightKeywords"] copy];
 
-	[dic assignArrayTo:&self->_excludeKeywords forKey:@"excludeKeywords"];
-	[dic assignArrayTo:&self->_highlightKeywords forKey:@"highlightKeywords"];
+	self->_isEncrypted = [aDecoder decodeBoolForKey:@"isEncrypted"];
+	self->_isHistoric = [aDecoder decodeBoolForKey:@"isHistoric"];
 
-	[dic assignBoolTo:&self->_isEncrypted forKey:@"isEncrypted"];
-	[dic assignBoolTo:&self->_isHistoric forKey:@"isHistoric"];
+	self->_command = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"command"] copy];
+	self->_messageBody = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"messageBody"] copy];
+	self->_nickname = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"nickname"] copy];
 
-	[dic assignStringTo:&self->_command forKey:@"command"];
-	[dic assignStringTo:&self->_command forKey:@"rawCommand"]; // Legacy key
-	[dic assignStringTo:&self->_messageBody forKey:@"messageBody"];
-	[dic assignStringTo:&self->_nickname forKey:@"nickname"];
-
-	[dic assignUnsignedIntegerTo:&self->_lineType forKey:@"lineType"];
-	[dic assignUnsignedIntegerTo:&self->_memberType forKey:@"memberType"];
+	self->_lineType = [aDecoder decodeIntegerForKey:@"lineType"];
+	self->_memberType = [aDecoder decodeIntegerForKey:@"memberType"];
 
 	if (self->_objectInitializedAsCopy == NO) {
 		[self computeNicknameColorStyle];
@@ -163,39 +146,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (NSDictionary<NSString *, id> *)dictionaryValue
+- (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
+	[aCoder encodeObject:self.command forKey:@"command"];
+	[aCoder encodeObject:self.messageBody forKey:@"messageBody"];
 
-	[dic maybeSetObject:self.command forKey:@"command"];
-	[dic maybeSetObject:self.excludeKeywords forKey:@"excludeKeywords"];
-	[dic maybeSetObject:self.highlightKeywords	forKey:@"highlightKeywords"];
-	[dic maybeSetObject:self.messageBody forKey:@"messageBody"];
-	[dic maybeSetObject:self.nickname forKey:@"nickname"];
+	[aCoder maybeEncodeObject:self.excludeKeywords forKey:@"excludeKeywords"];
+	[aCoder maybeEncodeObject:self.highlightKeywords forKey:@"highlightKeywords"];
+	[aCoder maybeEncodeObject:self.nickname forKey:@"nickname"];
 
-	[dic setBool:self.isEncrypted forKey:@"isEncrypted"];
-	[dic setBool:self.isHistoric forKey:@"isHistoric"];
+	[aCoder encodeBool:self.isEncrypted forKey:@"isEncrypted"];
+	[aCoder encodeBool:self.isHistoric forKey:@"isHistoric"];
 
-	[dic setDouble:self.receivedAt.timeIntervalSince1970 forKey:@"receivedAt"];
+	[aCoder encodeObject:self.receivedAt forKey:@"receivedAt"];
 
-	[dic setUnsignedInteger:self.lineType forKey:@"lineType"];
-	[dic setUnsignedInteger:self.memberType forKey:@"memberType"];
-
-	return [dic copy];
+	[aCoder encodeInteger:self.lineType forKey:@"lineType"];
+	[aCoder encodeInteger:self.memberType forKey:@"memberType"];
 }
 
-- (NSData *)jsonRepresentation
++ (BOOL)supportsSecureCoding
 {
-	NSDictionary *dic = self.dictionaryValue;
-
-	NSError *serializeError = nil;
-
-	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&serializeError];
-
-	NSAssert((jsonData != nil),
-		serializeError.localizedDescription);
-
-	return jsonData;
+	return YES;
 }
 
 + (NSString *)newUniqueIdentifier
@@ -360,30 +331,53 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (id)copyWithZone:(nullable NSZone *)zone
+- (id)copyWithZone:(nullable NSZone *)zone asMutable:(BOOL)copyAsMutable
 {
-	TVCLogLine *object = [TVCLogLine allocWithZone:zone];
+	TVCLogLine *object = nil;
 
+	if (copyAsMutable) {
+		object = [TVCLogLineMutable allocWithZone:zone];
+	} else {
+		object = [TVCLogLine allocWithZone:zone];
+	}
+
+	/* All values should be immutable so we are going to reassign 
+	 them instead of copying. I should apply logic to other 
+	 implementations of -copy in Textual, but that's for another
+	 day. TODO: Do that — November 2, 2016 */
 	object->_objectInitializedAsCopy = YES;
 
-	object->_nicknameColorStyle = [self->_nicknameColorStyle copyWithZone:zone];
+	object->_uniqueIdentifier = self->_uniqueIdentifier;
+
+	object->_isEncrypted = self->_isEncrypted;
+	object->_isHistoric = self->_isHistoric;
+
+	object->_excludeKeywords = self->_excludeKeywords;
+	object->_highlightKeywords = self->_highlightKeywords;
+
+	object->_receivedAt = self->_receivedAt;
+
+	object->_command = self->_command;
+	object->_messageBody = self->_messageBody;
+	object->_nickname = self->_nickname;
+	object->_nicknameColorStyle = self->_nicknameColorStyle;
+
 	object->_nicknameColorStyleOverride = self->_nicknameColorStyleOverride;
 
-	return [object initWithDictionary:self.dictionaryValue];
+	object->_lineType = self->_lineType;
+	object->_memberType = self->_memberType;
+
+	return [object init];
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	return [self copyWithZone:zone asMutable:NO];
 }
 
 - (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
-	TVCLogLineMutable *object = [TVCLogLineMutable allocWithZone:zone];
-
-	((TVCLogLine *)object)->_objectInitializedAsCopy = YES;
-
-	/* These values are computed, not set, which means when we copy into
-	 a mutable version, we set the values to the Ivar */
-	((TVCLogLine *)object)->_nicknameColorStyle = [self->_nicknameColorStyle copyWithZone:zone];
-	((TVCLogLine *)object)->_nicknameColorStyleOverride = self->_nicknameColorStyleOverride;
-
-	return [object initWithDictionary:self.dictionaryValue];
+	return [self copyWithZone:zone asMutable:YES];
 }
 
 - (BOOL)isMutable
