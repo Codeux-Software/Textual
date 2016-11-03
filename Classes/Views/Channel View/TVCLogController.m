@@ -1369,6 +1369,14 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)logViewWebViewFinishedLoading
 {
+	if (self.loaded == NO) {
+		self.loaded = YES;
+	} else {
+		return;
+	}
+
+	self.viewLoadedTimestamp = [NSDate timeIntervalSince1970];
+
 	NSString *viewType = nil;
 
 	if (self.associatedChannel) {
@@ -1376,10 +1384,6 @@ ClassWithDesignatedInitializerInitMethod
 	} else {
 		viewType = @"server";
 	}
-
-	self.loaded = YES;
-
-	self.viewLoadedTimestamp = [NSDate timeIntervalSince1970];
 
 	[self _evaluateFunction:@"Textual.viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
