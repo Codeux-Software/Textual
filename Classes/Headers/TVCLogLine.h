@@ -85,7 +85,6 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 
 @interface TVCLogLine : NSObject <NSCopying, NSMutableCopying, NSCoding, NSSecureCoding>
 @property (readonly) BOOL isEncrypted;
-@property (readonly) BOOL isHistoric; /* Identifies a line restored from previous session */
 @property (readonly, copy) NSDate *receivedAt;
 @property (readonly, copy) NSString *nicknameColorStyle;
 @property (readonly) BOOL nicknameColorStyleOverride; // YES if the nicknameColorStyle was set by the user
@@ -117,7 +116,6 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 
 @interface TVCLogLineMutable : TVCLogLine
 @property (nonatomic, assign, readwrite) BOOL isEncrypted;
-@property (nonatomic, assign, readwrite) BOOL isHistoric;
 @property (nonatomic, copy, readwrite) NSDate *receivedAt;
 @property (nonatomic, copy, readwrite, nullable) NSString *nickname;
 @property (nonatomic, copy, readwrite) NSString *messageBody;
