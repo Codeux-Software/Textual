@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 @class TVCLogControllerPrintingOperationQueue;
+@class TVCLogLineManaged;
 @class TVCMemberListMavericksDarkUserInterface;
 @class TVCMemberListMavericksLightUserInterface;
 @class TVCMemberListUserInfoPopover;
@@ -146,6 +147,7 @@
 #import "TVCLogViewInternalWK1.h"
 #import "TVCLogViewInternalWK2.h"
 #import "TVCLogViewPrivate.h"
+#import "TVCLogLineManagedPrivate.h"
 #import "TVCMainWindowChannelViewPrivate.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSegmentedControlPrivate.h"
