@@ -20,6 +20,7 @@ var rs                  = { // room state
     month: 0,
     day: 0
   },
+  enableHistoryView: false,  // this doesn't get enabled until the history has finished loading
   mode: {
     mode: undefined
   },
@@ -129,7 +130,30 @@ function isMessageInViewport(elem) {
   }
 
   // Have to use Math.floor() because sometimes the getBoundingClientRect().bottom is a fraction of a pixel (!!!)
-  return (Math.floor(elem.getBoundingClientRect().bottom) <= Math.floor(document.documentElement.clientHeight));
+  return (Math.floor(elem.getBoundingClientRect().bottom) - 1) <= Math.floor(document.documentElement.clientHeight);
+}
+
+function toggleHistoryIfScrolled() {
+  'use strict';
+
+  var line, lines;
+  var topic = document.getElementById('topic_bar');
+
+  lines = document.getElementById('body_home').getElementsByClassName('line');
+  if (lines.length < 2) {
+    return;
+  }
+  line = lines[lines.length - 1];
+
+  if (isMessageInViewport(line) === false) {
+    // scrollback
+    rs.history.style.display = 'inline';
+    if (topic) { topic.style.visibility = 'hidden'; }
+  } else {
+    // at the bottom
+    rs.history.style.display = 'none';
+    if (topic) { topic.style.visibility = 'visible'; }
+  }
 }
 
 /* Insert a date, if the date has changed from the previous message */
@@ -372,6 +396,7 @@ Textual.newMessagePostedToView = function (line) {
   ConversationTracking.updateNicknameWithNewMessage(message);
 };
 
+/* This is called when a .sender is clicked */
 Textual.nicknameSingleClicked = function (e) {
   ConversationTracking.nicknameSingleClickEventCallback(e);
 };
@@ -387,6 +412,15 @@ Textual.viewBodyDidLoad = function () {
   }
 };
 
+Textual.viewFinishedLoadingHistory = function () {
+  'use strict';
+
+  // enable the history view, but only a bit after this gets called
+  setTimeout(function() {
+    rs.enableHistoryView = true;
+  }, 850);
+}
+
 Textual.viewInitiated = function () {
   'use strict';
 
@@ -397,25 +431,14 @@ Textual.viewInitiated = function () {
   rs.history = div;
 
   /* setup the scrolling event to display the hidden history if the bottom element isn't in the viewport
-     also hide the topic bar when scrolling */
-  window.onscroll = function () {
-    var line, lines;
-    var topic = document.getElementById('topic_bar');
-
-    lines = body.getElementsByClassName('line');
-    if (lines.length < 2) {
+     also hide the topic bar when scrolling.  Note that we have to set a timer here so that the history
+     div doesn't appear in the viewport on normal inserts, which cause scroll effects */
+  window.addEventListener('scroll', function () {
+    // check to see if a bit of time has passed since we loaded the history
+    if (!rs.enableHistoryView) {
       return;
     }
-    line = lines[lines.length - 1];
 
-    if (isMessageInViewport(line) === false) {
-      // scrollback
-      rs.history.style.display = 'inline';
-      if (topic) { topic.style.visibility = 'hidden'; }
-    } else {
-      // at the bottom
-      rs.history.style.display = 'none';
-      if (topic) { topic.style.visibility = 'visible'; }
-    }
-  };
+    rs.scrollTimer = setTimeout(toggleHistoryIfScrolled, 100);
+  });
 };
