@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	fetchRequest.resultType = resultType;
 
-	fetchRequest.sortDescriptors = @[[self sortDescriptor]];
+	fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
 
 	return fetchRequest;
 }
@@ -138,9 +138,10 @@ NS_ASSUME_NONNULL_BEGIN
 							  batchDeleteError.localizedDescription)
 		}
 
-		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
-													 intoContexts:@[context]];
-		//	[context refreshAllObjects];
+//		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
+//													 intoContexts:@[context]];
+
+		[context refreshAllObjects];
 	}];
 }
 
@@ -167,9 +168,13 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
+		context.propagatesDeletesAtEndOfEvent = NO;
+
 		for (NSManagedObject *object in fetchedObjects) {
 			[context deleteObject:object];
 		}
+
+		context.propagatesDeletesAtEndOfEvent = YES;
 	}];
 }
 
@@ -209,12 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		/* Our sort descriptor places newest lines at the top and oldest
-		 at the bottom. This is done so that when a fetch limit is supplied,
-		 the fetch limit only applies to the newest lines without us having
-		 to supply an offset. Obivously, we do not want newest lines first
-		 though, so before passing to the callback, we reverse. */
-		completionBlock(fetchedObjects.reverseObjectEnumerator.allObjects);
+		completionBlock(fetchedObjects);
 	}];
 }
 
@@ -356,7 +356,7 @@ NS_ASSUME_NONNULL_BEGIN
 		else if ([context hasChanges])
 		{
 			/* Truncate database before saving it */
-			[self performMaintenance];
+			[self trimStoreBeforeSaving];
 
 			NSError *saveError = nil;
 
@@ -379,14 +379,59 @@ NS_ASSUME_NONNULL_BEGIN
 	[self performSelector:@selector(saveData) withObject:nil afterDelay:(60 * 10)]; // 10 minutes
 }
 
-- (void)performMaintenance
+- (void)trimStoreBeforeSaving
 {
-#warning TODO: Implement
-}
+	/* To keep the store from going without check, we trim it here, ever so often. 
+	 To trim it, we first sort the entries by the channelId, then sort those from 
+	 the newest to oldest. Once we reach an old record that exceeds a specific 
+	 size (see macro at top of file), then we delete it and everything that follows. */
+	NSFetchRequest *fetchRequest =
+	[[self.managedObjectModel fetchRequestTemplateForName:@"LogLineFetchRequestForTrimming"] copy];
 
-- (NSSortDescriptor *)sortDescriptor
-{
-	return [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
+	fetchRequest.sortDescriptors =
+	@[[[NSSortDescriptor alloc] initWithKey:@"channelId" ascending:NO],
+	  [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO]];
+
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	NSError *fetchRequestError = nil;
+
+	NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&fetchRequestError];
+
+	if (fetchedObjects == nil) {
+		LogToConsoleError("Error occurred fetching objects: %@",
+			fetchRequestError.localizedDescription)
+
+		return;
+	}
+
+	context.propagatesDeletesAtEndOfEvent = NO;
+
+	NSMutableDictionary<NSString *, NSNumber *> *channelCounts = [NSMutableDictionary dictionary];
+
+	for (NSManagedObject *object in fetchedObjects) {
+		NSString *channelId = [object valueForKey:@"channelId"];
+
+		if (channelId == nil) {
+			continue;
+		}
+
+		NSNumber *channelCount = channelCounts[channelId];
+
+		if (channelCount == nil) {
+			channelCounts[channelId] = @(1);
+		} else {
+			channelCounts[channelId] = @(channelCount.unsignedIntegerValue + 1);
+		}
+
+		if (channelCount.unsignedIntegerValue > _maximumRowCountPerClient) {
+			[context deleteObject:object];
+		}
+	}
+
+	context.propagatesDeletesAtEndOfEvent = YES;
+
+	LogToConsoleInfo("Finished trimming Core Data store")
 }
 
 @end
