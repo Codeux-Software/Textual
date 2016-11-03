@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (nonatomic, copy) NSString *channelId;
-@property (nonatomic, copy) NSDate *creationDate;
+@property (nonatomic, copy) NSNumber *creationDate;
 @property (nonatomic, copy) NSData *data;
 @end
 
@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCLogLineManaged *newEntry = (id)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
 
-	[newEntry setValue:[NSDate date] forKey:@"creationDate"];
+	[newEntry setValue:@([NSDate timeIntervalSince1970]) forKey:@"creationDate"];
 
 	[newEntry setValue:channel.uniqueIdentifier forKey:@"channelId"];
 
