@@ -38,7 +38,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogLineManaged : NSManagedObject
-- (instancetype)initWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel;
+- (instancetype)initWithLogLine:(TVCLogLine *)logLine
+					  inChannel:(IRCChannel *)channel
+						context:(NSManagedObjectContext *)context;
 
 @property (readonly, copy, nullable) TVCLogLine *logLine;
 @end
