@@ -36,12 +36,62 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogLineManaged : NSManagedObject
-@property (readonly) TVCLogLine *logLine;
+/* TVCLogLineManaged is a container class for TVCLogLine when stored in a 
+ Core Data store. -data is the secure coded version of the class which is
+ portable and can be stored in an offline database. */
+@interface TVCLogLineManaged ()
+{
+@private
+	TVCLogLine *_logLine;
+}
+
+@property (nonatomic, copy) NSString *channelId;
+@property (nonatomic, copy) NSDate *creationDate;
+@property (nonatomic, copy) NSData *data;
+@end
+
+@implementation TVCLogLineManaged
+
+@dynamic channelId;
+@dynamic creationDate;
+@dynamic data;
+
+- (instancetype)initWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(logLine != nil);
+	NSParameterAssert(channel != nil);
+
+	NSManagedObjectContext *context = TVCLogControllerHistoricLogSharedInstance().managedObjectContext;
+
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"LogLine" inManagedObjectContext:context];
+
+	TVCLogLineManaged *newEntry = (id)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+
+	[newEntry setValue:[NSDate date] forKey:@"creationDate"];
+
+	[newEntry setValue:channel.uniqueIdentifier forKey:@"channelId"];
+
+	/* When we init using this initalizer, we do not intend to reuse the log line.
+	 Therefore, we do not store it in self->_logLine. If this changes, we should
+	 store it in that instance variable so we don't have to worry about rebuilding. */
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:logLine];
+
+	[newEntry setValue:data forKey:@"data"];
+
+	return newEntry;
+}
+
+- (nullable TVCLogLine *)logLine
+{
+	if (self->_logLine == nil) {
+		self->_logLine = [NSKeyedUnarchiver unarchiveObjectWithData:self.data];
+	}
+
+	return self->_logLine;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
