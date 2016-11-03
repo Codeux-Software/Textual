@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 #pragma mark -
 #pragma mark Immutable Object
 
-@interface TVCLogLine : NSObject <NSCopying, NSMutableCopying>
+@interface TVCLogLine : NSObject <NSCopying, NSMutableCopying, NSCoding, NSSecureCoding>
 @property (readonly) BOOL isEncrypted;
 @property (readonly) BOOL isHistoric; /* Identifies a line restored from previous session */
 @property (readonly, copy) NSDate *receivedAt;
@@ -98,10 +98,7 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (readonly, copy, nullable) NSArray<NSString *> *highlightKeywords;
 @property (readonly, copy, nullable) NSArray<NSString *> *excludeKeywords;
 
-- (nullable TVCLogLine *)initWithJSONData:(NSData *)data NS_DESIGNATED_INITIALIZER;
-- (TVCLogLine *)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
-
-@property (readonly, copy) NSData *jsonRepresentation;
+- (nullable instancetype)initWithData:(NSData *)data;
 
 @property (readonly, copy) NSString *formattedTimestamp;
 
