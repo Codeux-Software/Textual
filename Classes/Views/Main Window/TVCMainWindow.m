@@ -2432,7 +2432,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		return;
 	}
 
-	[self.serverList scrollRowToVisible:selectedRows.firstIndex];
+	[self.serverList scrollRowToVisible:itemIndexNew];
 
 	[self.serverList selectRowIndexes:selectedRowsNew byExtendingSelection:NO];
 }
