@@ -829,6 +829,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark Max Log Lines
 
++ (NSUInteger)scrollbackHistoryLimit
+{
+	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumHistoryCount"];
+}
+
 + (NSUInteger)scrollbackLimit
 {
 	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumLineCount"];
