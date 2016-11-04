@@ -413,6 +413,8 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *channelId = [object valueForKey:@"channelId"];
 
 		if (channelId == nil) {
+			[context deleteObject:object];
+
 			continue;
 		}
 
