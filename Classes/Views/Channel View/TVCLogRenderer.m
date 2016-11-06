@@ -628,7 +628,9 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	if ([TPCPreferences automaticallyDetectHighlightSpam]) {
 		double nicknamePercent = (((double)totalNicknameLength / bodyLength) * 100.0);
 
-		if (nicknamePercent > 75.0 && totalNicknameCount > 10) {
+		if ((nicknamePercent > 75.0 && totalNicknameCount > 10) ||
+			(nicknamePercent > 50.0 && totalNicknameCount > 20))
+		{
 			self->_outputDictionary[TVCLogRendererResultsKeywordMatchFoundAttribute] = @(NO);
 		}
 	}
