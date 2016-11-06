@@ -107,6 +107,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setTextFieldSmartLinks:(BOOL)value;
 + (void)setTextFieldDataDetectors:(BOOL)value;
 + (void)setTextFieldTextReplacement:(BOOL)value;
+
++ (void)setWebKit2Enabled:(BOOL)webKit2Enabled;
 @end
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

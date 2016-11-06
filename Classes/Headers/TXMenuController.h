@@ -202,6 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
 	928: "Enable App Nap"
 	929: "Collect Anonymous Statistics"
 	930: "Open Web Inspector"
+	931: "Enable WebKit2"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
@@ -451,6 +452,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)copyLogAsHtml:(id)sender;
 - (IBAction)forceReloadTheme:(id)sender;
 - (IBAction)openWebInspector:(id)sender;
+
+- (IBAction)toggleWebKit2:(id)sender;
 
 - (IBAction)toggleAutomaticallyCheckForUpdates:(id)sender;
 - (IBAction)toggleBetaUpdates:(id)sender;

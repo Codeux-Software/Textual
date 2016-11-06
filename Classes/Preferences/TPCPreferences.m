@@ -671,6 +671,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"AutomaticallyReloadCustomThemesWhenTheyChange"];
 }
 
++ (void)setWebKit2Enabled:(BOOL)webKit2Enabled
+{
+	[RZUserDefaults() setBool:webKit2Enabled forKey:@"UsesWebKit2WhenAvailable"];
+}
+
 + (BOOL)webKit2Enabled
 {
 	BOOL canUseWebKit2 = [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];

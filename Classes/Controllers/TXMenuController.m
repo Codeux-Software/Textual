@@ -265,7 +265,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				/* Disable everything by default except tag 900 through 916. These are various
 				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || (tag > 916 && tag < 930)) {
+				if (tag < 900 || (tag > 916 && tag < 931)) {
 					returnValue = NO;
 				}
 
@@ -779,6 +779,21 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 			 return YES;
+		}
+
+		case 931: // Enable WebKit2
+		{
+			if ([XRSystemInformation isUsingOSXElCapitanOrLater] == NO) {
+				menuItem.hidden = YES;
+			} else {
+				if ([TPCPreferences webKit2Enabled]) {
+					menuItem.state = NSOnState;
+				} else {
+					menuItem.state = NSOffState;
+				}
+			}
+
+			return YES;
 		}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -3221,6 +3236,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)toggleAppNap:(id)sender
 {
 	[TPCPreferences setAppNapEnabled:([TPCPreferences appNapEnabled] == NO)];
+}
+
+- (IBAction)toggleWebKit2:(id)sender
+{
+	[TPCPreferences setWebKit2Enabled:([TPCPreferences webKit2Enabled] == NO)];
 }
 
 - (void)resetDoNotAskMePopupWarnings:(id)sender
