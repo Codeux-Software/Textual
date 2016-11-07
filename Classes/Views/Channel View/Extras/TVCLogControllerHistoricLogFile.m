@@ -411,6 +411,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSUInteger channelsCountMaximum = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
 
+	LogToConsoleInfo("Maximum line count per-channel is: %ld",
+		channelsCountMaximum)
+
 	NSMutableDictionary<NSString *, NSNumber *> *channelCounts = [NSMutableDictionary dictionary];
 
 	for (NSManagedObject *object in fetchedObjects) {
@@ -432,6 +435,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (channelCount.unsignedIntegerValue > channelsCountMaximum) {
 			[context deleteObject:object];
+
+			LogToConsoleDebug("Deleting object %@ in %@",
+				object.description, channelId)
 		}
 	}
 
