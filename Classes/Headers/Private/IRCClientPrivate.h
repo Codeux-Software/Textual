@@ -38,11 +38,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 enum {
-	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 9,
-	ClientIRCv3SupportedCapacitySASLPlainText		= 1 << 10, // YES if SASL=plain CAP is supported
-	ClientIRCv3SupportedCapacitySASLExternal		= 1 << 11, // YES if SASL=external CAP is supported
-	ClientIRCv3SupportedCapacityZNCServerTime		= 1 << 12, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityZNCServerTimeISO	= 1 << 13, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 22,
+	ClientIRCv3SupportedCapacitySASLPlainText		= 1 << 23, // YES if SASL=plain CAP is supported
+	ClientIRCv3SupportedCapacitySASLExternal		= 1 << 24, // YES if SASL=external CAP is supported
+	ClientIRCv3SupportedCapacityZNCServerTime		= 1 << 25, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapacityZNCServerTimeISO	= 1 << 26, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapacityZNCPlaybackModule	= 1 << 27, // YES if the ZNC vendor specific CAP supported
 };
 
 @interface IRCClient ()

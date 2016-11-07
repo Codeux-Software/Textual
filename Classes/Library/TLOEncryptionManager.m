@@ -752,7 +752,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage]) {
 			ignoreMessage = [client nicknameIsMyself:nickname];
 		}
 	} inRelationToAccountName:username];
