@@ -64,7 +64,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 	defaults[@"autojoinWaitsForNickServ"] = @([TPCPreferences autojoinWaitsForNickServ]);
 TEXTUAL_IGNORE_DEPRECATION_END
 
-	defaults[@"cachedLastServerTimeCapacityReceivedAtTimestamp"] = @(0);
+	defaults[@"cachedLastServerTimeCapabilityReceivedAtTimestamp"] = @(0);
 	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[1004]");
 	defaults[@"connectionPrefersIPv4"] = @(NO);
 	defaults[@"connectionPrefersModernCiphers"] = @(YES);
@@ -300,7 +300,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_zncIgnorePlaybackNotifications forKey:@"zncIgnorePlaybackNotifications"];
 	[defaultsMutable assignBoolTo:&self->_zncIgnoreUserNotifications forKey:@"zncIgnoreUserNotifications"];
 
-	[defaultsMutable assignDoubleTo:&self->_lastMessageServerTime forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+	[defaultsMutable assignDoubleTo:&self->_lastMessageServerTime forKey:@"cachedLastServerTimeCapabilityReceivedAtTimestamp"];
 	[defaultsMutable assignObjectTo:&self->_identityClientSideCertificate forKey:@"identityClientSideCertificate"];
 	[defaultsMutable assignStringTo:&self->_awayNickname forKey:@"awayNickname"];
 	[defaultsMutable assignStringTo:&self->_connectionName forKey:@"connectionName"];
@@ -405,6 +405,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignUnsignedIntegerTo:&self->_proxyType forKey:@"proxyServerType"];
 
 	[defaultsMutable assignUnsignedShortTo:&self->_proxyPort forKey:@"proxyServerPort"];
+
+	[defaultsMutable assignDoubleTo:&self->_lastMessageServerTime forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 
 	/* Flood control */
 	/* This is here to migrate to the new properties. Saving these values
@@ -644,7 +646,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[dic setBool:self.sidebarItemExpanded forKey:@"sidebarItemExpanded"];
 
-		[dic setDouble:self.lastMessageServerTime forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+		[dic setDouble:self.lastMessageServerTime forKey:@"cachedLastServerTimeCapabilityReceivedAtTimestamp"];
 	}
 
 	/* Channel List */

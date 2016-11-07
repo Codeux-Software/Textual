@@ -126,7 +126,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *                           `TVCLogLineNoticeType`
  * @param client The client the message was received on
  * @param receivedAt The date & time of the message. Depending on whether a custom
- *          value was specified using the server-time IRCv3 capacity, this `NSDate`
+ *          value was specified using the server-time IRCv3 capability, this `NSDate`
  *          object may be very far in the past, or even possibly in the future.
  * @param wasEncrypted Whether or not the message was encrypted
  *
@@ -500,8 +500,8 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
  * @brief The date & time during which the input was received
  *
  * @discussion If the original message specifies a custom value using the server-time
- *  capacity, then the value of this property will reflect the value defined by the
- *  server-time capacity; not the exact date & time it was received on the socket.
+ *  capability, then the value of this property will reflect the value defined by the
+ *  server-time capability; not the exact date & time it was received on the socket.
  */
 @property (readonly, copy) NSDate *receivedAt;
 

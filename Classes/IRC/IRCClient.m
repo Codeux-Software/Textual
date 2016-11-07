@@ -130,7 +130,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign, readwrite) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign, readwrite) NSTimeInterval lastMessageReceived;
 @property (nonatomic, assign, readwrite) NSTimeInterval lastMessageServerTime;
-@property (nonatomic, assign, readwrite) ClientIRCv3SupportedCapacities capacities;
+@property (nonatomic, assign, readwrite) ClientIRCv3SupportedCapabilities capacities;
 @property (nonatomic, copy, readwrite) NSArray<IRCHighlightLogEntry *> *cachedHighlights;
 @property (nonatomic, copy, readwrite, nullable) NSString *userHostmask;
 @property (nonatomic, copy, readwrite) NSString *userNickname;
@@ -150,7 +150,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *whoTimer;
 @property (nonatomic, weak) IRCChannel *lagCheckDestinationChannel;
-@property (nonatomic, assign) BOOL capacityNegotiationIsPaused;
+@property (nonatomic, assign) BOOL capabilityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) BOOL reconnectEnabled;
@@ -773,13 +773,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)supportsAdvancedTracking
 {
-	return ([self isCapacityEnabled:ClientIRCv3SupportedCapacityMonitorCommand] ||
-			[self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand]);
+	return ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityMonitorCommand] ||
+			[self isCapabilityEnabled:ClientIRCv3SupportedCapabilityWatchCommand]);
 }
 
 - (BOOL)monitorAwayStatus
 {
-	return ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] ||
+	return ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityAwayNotify] ||
 			[TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0);
 }
 
@@ -1787,7 +1787,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(channel != nil);
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityPlayback] == NO) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityPlayback] == NO) {
 		return;
 	}
 
@@ -1808,7 +1808,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)requestPlayback
 {
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityPlayback] == NO) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityPlayback] == NO) {
 		return;
 	}
 
@@ -1897,7 +1897,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return YES;
 	}
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityBatch]) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
 		return (self.zncBouncerIsPlayingBackHistory == NO);
 	}
 
@@ -2430,7 +2430,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&lineMutable inChannel:channel onClient:self withLineType:lineType];
 
 			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
-				if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage] && wasEncrypted == NO) {
+				if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage] && wasEncrypted == NO) {
 					return;
 				}
 
@@ -3957,7 +3957,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 							return;
 						}
 
-						if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage] && wasEncrypted == NO) {
+						if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage] && wasEncrypted == NO) {
 							return;
 						}
 
@@ -4512,7 +4512,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.lastMessageReceived = 0;
 
 	self.capacities = 0;
-	self.capacityNegotiationIsPaused = NO;
+	self.capabilityNegotiationIsPaused = NO;
 
 	@synchronized (self.capacitiesPending) {
 		[self.capacitiesPending removeAllObjects];
@@ -4693,7 +4693,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		realName = self.config.nickname;
 	}
 
-	[self sendCapacity:@"LS" data:@"302"];
+	[self sendCapability:@"LS" data:@"302"];
 
 	if (serverPassword) {
 		[self sendPassword:serverPassword];
@@ -4825,7 +4825,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* If the playback module is in use, then all messages are
 	 set as historic, so we set any lines above our current 
 	 reference date as not historic to avoid collisions. */
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityPlayback]) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityPlayback]) {
 		[message markAsNotHistoric];
 	}
 }
@@ -4952,13 +4952,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			{
 				[self updateConnectedToZNCPropertyWithMessage:message];
 
-				[self receiveCapacityOrAuthenticationRequest:message];
+				[self receiveCapabilityOrAuthenticationRequest:message];
 
 				break;
 			}
 			case IRCPrivateCommandAwayIndex: // Command: AWAY (away-notify CAP)
 			{
-				[self receiveAwayNotifyCapacity:message];
+				[self receiveAwayNotifyCapability:message];
 
 				break;
 			}
@@ -5135,9 +5135,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *text = [m paramAt:1];
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIdentifyCTCP] && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityIdentifyCTCP] && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
 		text = [text substringFromIndex:1];
-	} else if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIdentifyMsg] && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
+	} else if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityIdentifyMsg] && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
 		text = [text substringFromIndex:1];
 	}
 
@@ -5299,7 +5299,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL isSelfMessage = NO;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage]) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage]) {
 		isSelfMessage = [self nicknameIsMyself:sender];
 	}
 
@@ -5416,8 +5416,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 module need the correct behavior which the self-message CAP evolved into. */
 	BOOL isSelfMessage = NO;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage] ||
-		[self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] ||
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage] ||
+		[self isCapabilityEnabled:ClientIRCv3SupportedCapabilityZNCSelfMessage] ||
 		self.isConnectedToZNC)
 	{
 		isSelfMessage = [self nicknameIsMyself:sender];
@@ -5764,7 +5764,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Ignore messages echoed back to ourselves */
 	NSString *sender = m.senderNickname;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage]) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage]) {
 		if ([self nicknameIsMyself:sender]) {
 			return;
 		}
@@ -6987,163 +6987,163 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
-#pragma mark Server Capacity
+#pragma mark Server Capability
 
-- (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity
+- (void)enableCapability:(ClientIRCv3SupportedCapabilities)capability
 {
-	if ([self isCapacityEnabled:capacity] == NO) {
-		self->_capacities |= capacity;
+	if ([self isCapabilityEnabled:capability] == NO) {
+		self->_capacities |= capability;
 	}
 }
 
-- (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity
+- (void)disableCapability:(ClientIRCv3SupportedCapabilities)capability
 {
-	if ([self isCapacityEnabled:capacity]) {
-		self->_capacities &= ~capacity;
+	if ([self isCapabilityEnabled:capability]) {
+		self->_capacities &= ~capability;
 	}
 }
 
-- (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity
+- (BOOL)isCapabilityEnabled:(ClientIRCv3SupportedCapabilities)capability
 {
-	return ((self->_capacities & capacity) == capacity);
+	return ((self->_capacities & capability) == capability);
 }
 
-- (void)enablePendingCapacity:(ClientIRCv3SupportedCapacities)capacity
+- (void)enablePendingCapability:(ClientIRCv3SupportedCapabilities)capability
 {
 	@synchronized (self.capacitiesPending) {
-		[self.capacitiesPending addObjectWithoutDuplication:@(capacity)];
+		[self.capacitiesPending addObjectWithoutDuplication:@(capability)];
 	}
 }
 
-- (void)disablePendingCapacity:(ClientIRCv3SupportedCapacities)capacity
+- (void)disablePendingCapability:(ClientIRCv3SupportedCapabilities)capability
 {
 	@synchronized (self.capacitiesPending) {
-		[self.capacitiesPending removeObject:@(capacity)];
+		[self.capacitiesPending removeObject:@(capability)];
 	}
 }
 
-- (BOOL)isPendingCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity
+- (BOOL)isPendingCapabilityEnabled:(ClientIRCv3SupportedCapabilities)capability
 {
 	@synchronized (self.capacitiesPending) {
-		return [self.capacitiesPending containsObject:@(capacity)];
+		return [self.capacitiesPending containsObject:@(capability)];
 	}
 }
 
-- (nullable NSString *)capacityStringValue:(ClientIRCv3SupportedCapacities)capacity
+- (nullable NSString *)capabilityStringValue:(ClientIRCv3SupportedCapabilities)capability
 {
 	NSString *stringValue = nil;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wswitch"
 
-	switch (capacity) {
-		case ClientIRCv3SupportedCapacityAwayNotify:
+	switch (capability) {
+		case ClientIRCv3SupportedCapabilityAwayNotify:
 		{
 			stringValue = @"away-notify";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityBatch:
+		case ClientIRCv3SupportedCapabilityBatch:
 		{
 			stringValue = @"batch";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityEchoMessage:
+		case ClientIRCv3SupportedCapabilityEchoMessage:
 		{
 			stringValue = @"echo-message";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityIdentifyCTCP:
+		case ClientIRCv3SupportedCapabilityIdentifyCTCP:
 		{
 			stringValue = @"identify-ctcp";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityIdentifyMsg:
+		case ClientIRCv3SupportedCapabilityIdentifyMsg:
 		{
 			stringValue = @"identify-msg";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityMultiPreifx:
+		case ClientIRCv3SupportedCapabilityMultiPreifx:
 		{
 			stringValue = @"multi-prefix";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityPlayback:
+		case ClientIRCv3SupportedCapabilityPlayback:
 		{
 			stringValue = @"playback";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacitySASLExternal:
-		case ClientIRCv3SupportedCapacitySASLPlainText:
-		case ClientIRCv3SupportedCapacitySASLGeneric:
-		case ClientIRCv3SupportedCapacityIsIdentifiedWithSASL:
-		case ClientIRCv3SupportedCapacityIsInSASLNegotiation:
+		case ClientIRCv3SupportedCapabilitySASLExternal:
+		case ClientIRCv3SupportedCapabilitySASLPlainText:
+		case ClientIRCv3SupportedCapabilitySASLGeneric:
+		case ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL:
+		case ClientIRCv3SupportedCapabilityIsInSASLNegotiation:
 		{
 			stringValue = @"sasl";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityServerTime:
+		case ClientIRCv3SupportedCapabilityServerTime:
 		{
 			stringValue = @"server-time";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityUserhostInNames:
+		case ClientIRCv3SupportedCapabilityUserhostInNames:
 		{
 			stringValue = @"userhost-in-names";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityMonitorCommand:
+		case ClientIRCv3SupportedCapabilityMonitorCommand:
 		{
 			stringValue = @"monitor-command";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityWatchCommand:
+		case ClientIRCv3SupportedCapabilityWatchCommand:
 		{
 			stringValue = @"watch-command";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityPlanioPlayback:
+		case ClientIRCv3SupportedCapabilityPlanioPlayback:
 		{
 			stringValue = @"plan.io/playback";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityZNCCertInfoModule:
+		case ClientIRCv3SupportedCapabilityZNCCertInfoModule:
 		{
 			stringValue = @"znc.in/tlsinfo";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityZNCPlaybackModule:
+		case ClientIRCv3SupportedCapabilityZNCPlaybackModule:
 		{
 			stringValue = @"znc.in/playback";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityZNCSelfMessage:
+		case ClientIRCv3SupportedCapabilityZNCSelfMessage:
 		{
 			stringValue = @"znc.in/self-message";
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityZNCServerTime:
+		case ClientIRCv3SupportedCapabilityZNCServerTime:
 		{
 			stringValue = @"znc.in/server-time";
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacityZNCServerTimeISO:
+		case ClientIRCv3SupportedCapabilityZNCServerTimeISO:
 		{
 			stringValue = @"znc.in/server-time-iso";
 			
@@ -7156,40 +7156,40 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return stringValue;
 }
 
-- (ClientIRCv3SupportedCapacities)capacityFromStringValue:(NSString *)capacityString
+- (ClientIRCv3SupportedCapabilities)capabilityFromStringValue:(NSString *)capabilityString
 {
-	NSParameterAssert(capacityString != nil);
+	NSParameterAssert(capabilityString != nil);
 
-	if ([capacityString isEqualIgnoringCase:@"away-notify"]) {
-		return ClientIRCv3SupportedCapacityAwayNotify;
-	} else if ([capacityString isEqualIgnoringCase:@"batch"]) {
-		return ClientIRCv3SupportedCapacityBatch;
-	} else if ([capacityString isEqualIgnoringCase:@"echo-message"]) {
-		return ClientIRCv3SupportedCapacityEchoMessage;
-	} else if ([capacityString isEqualIgnoringCase:@"multi-prefix"]) {
-		return ClientIRCv3SupportedCapacityMultiPreifx;
-	} else if ([capacityString isEqualIgnoringCase:@"identify-msg"]) {
-		return ClientIRCv3SupportedCapacityIdentifyMsg;
-	} else if ([capacityString isEqualIgnoringCase:@"identify-ctcp"]) {
-		return ClientIRCv3SupportedCapacityIdentifyCTCP;
-	} else if ([capacityString isEqualIgnoringCase:@"sasl"]) {
-		return ClientIRCv3SupportedCapacitySASLGeneric;
-	} else if ([capacityString isEqualIgnoringCase:@"server-time"]) {
-		return ClientIRCv3SupportedCapacityServerTime;
-	} else if ([capacityString isEqualIgnoringCase:@"userhost-in-names"]) {
-		return ClientIRCv3SupportedCapacityUserhostInNames;
-	} else if ([capacityString isEqualIgnoringCase:@"plan.io/playback"]) {
-		return ClientIRCv3SupportedCapacityPlanioPlayback;
-	} else if ([capacityString isEqualIgnoringCase:@"znc.in/playback"]) {
-		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
-	} else if ([capacityString isEqualIgnoringCase:@"znc.in/self-message"]) {
-		return ClientIRCv3SupportedCapacityZNCSelfMessage;
-	} else if ([capacityString isEqualIgnoringCase:@"znc.in/server-time"]) {
-		return ClientIRCv3SupportedCapacityZNCServerTime;
-	} else if ([capacityString isEqualIgnoringCase:@"znc.in/server-time-iso"]) {
-		return ClientIRCv3SupportedCapacityZNCServerTimeISO;
-	} else if ([capacityString isEqualIgnoringCase:@"znc.in/tlsinfo"]) {
-		return ClientIRCv3SupportedCapacityZNCCertInfoModule;
+	if ([capabilityString isEqualIgnoringCase:@"away-notify"]) {
+		return ClientIRCv3SupportedCapabilityAwayNotify;
+	} else if ([capabilityString isEqualIgnoringCase:@"batch"]) {
+		return ClientIRCv3SupportedCapabilityBatch;
+	} else if ([capabilityString isEqualIgnoringCase:@"echo-message"]) {
+		return ClientIRCv3SupportedCapabilityEchoMessage;
+	} else if ([capabilityString isEqualIgnoringCase:@"multi-prefix"]) {
+		return ClientIRCv3SupportedCapabilityMultiPreifx;
+	} else if ([capabilityString isEqualIgnoringCase:@"identify-msg"]) {
+		return ClientIRCv3SupportedCapabilityIdentifyMsg;
+	} else if ([capabilityString isEqualIgnoringCase:@"identify-ctcp"]) {
+		return ClientIRCv3SupportedCapabilityIdentifyCTCP;
+	} else if ([capabilityString isEqualIgnoringCase:@"sasl"]) {
+		return ClientIRCv3SupportedCapabilitySASLGeneric;
+	} else if ([capabilityString isEqualIgnoringCase:@"server-time"]) {
+		return ClientIRCv3SupportedCapabilityServerTime;
+	} else if ([capabilityString isEqualIgnoringCase:@"userhost-in-names"]) {
+		return ClientIRCv3SupportedCapabilityUserhostInNames;
+	} else if ([capabilityString isEqualIgnoringCase:@"plan.io/playback"]) {
+		return ClientIRCv3SupportedCapabilityPlanioPlayback;
+	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/playback"]) {
+		return ClientIRCv3SupportedCapabilityZNCPlaybackModule;
+	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/self-message"]) {
+		return ClientIRCv3SupportedCapabilityZNCSelfMessage;
+	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/server-time"]) {
+		return ClientIRCv3SupportedCapabilityZNCServerTime;
+	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/server-time-iso"]) {
+		return ClientIRCv3SupportedCapabilityZNCServerTimeISO;
+	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/tlsinfo"]) {
+		return ClientIRCv3SupportedCapabilityZNCCertInfoModule;
 	}
 
 	return 0;
@@ -7199,219 +7199,219 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSMutableArray *enabledCapacities = [NSMutableArray array];
 	
-	void (^appendValue)(ClientIRCv3SupportedCapacities) = ^(ClientIRCv3SupportedCapacities capacity) {
-		if ([self isCapacityEnabled:capacity] == NO) {
+	void (^appendValue)(ClientIRCv3SupportedCapabilities) = ^(ClientIRCv3SupportedCapabilities capability) {
+		if ([self isCapabilityEnabled:capability] == NO) {
 			return;
 		}
 
-		NSString *stringValue = [self capacityStringValue:capacity];
+		NSString *stringValue = [self capabilityStringValue:capability];
 			
 		if (stringValue) {
 			[enabledCapacities addObject:stringValue];
 		}
 	};
 
-	appendValue(ClientIRCv3SupportedCapacityAwayNotify);
-	appendValue(ClientIRCv3SupportedCapacityBatch);
-	appendValue(ClientIRCv3SupportedCapacityEchoMessage);
-	appendValue(ClientIRCv3SupportedCapacityIdentifyCTCP);
-	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
-	appendValue(ClientIRCv3SupportedCapacityIsIdentifiedWithSASL);
-	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
-	appendValue(ClientIRCv3SupportedCapacityServerTime);
-	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
-	appendValue(ClientIRCv3SupportedCapacityPlanioPlayback);
-	appendValue(ClientIRCv3SupportedCapacityZNCCertInfoModule);
-	appendValue(ClientIRCv3SupportedCapacityZNCPlaybackModule);
-	appendValue(ClientIRCv3SupportedCapacityZNCSelfMessage);
+	appendValue(ClientIRCv3SupportedCapabilityAwayNotify);
+	appendValue(ClientIRCv3SupportedCapabilityBatch);
+	appendValue(ClientIRCv3SupportedCapabilityEchoMessage);
+	appendValue(ClientIRCv3SupportedCapabilityIdentifyCTCP);
+	appendValue(ClientIRCv3SupportedCapabilityIdentifyMsg);
+	appendValue(ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL);
+	appendValue(ClientIRCv3SupportedCapabilityMultiPreifx);
+	appendValue(ClientIRCv3SupportedCapabilityServerTime);
+	appendValue(ClientIRCv3SupportedCapabilityUserhostInNames);
+	appendValue(ClientIRCv3SupportedCapabilityPlanioPlayback);
+	appendValue(ClientIRCv3SupportedCapabilityZNCCertInfoModule);
+	appendValue(ClientIRCv3SupportedCapabilityZNCPlaybackModule);
+	appendValue(ClientIRCv3SupportedCapabilityZNCSelfMessage);
 	
 	NSString *stringValue = [enabledCapacities componentsJoinedByString:@", "];
 	
 	return stringValue;
 }
 
-- (void)sendNextCapacity
+- (void)sendNextCapability
 {
-	if (self.capacityNegotiationIsPaused) {
+	if (self.capabilityNegotiationIsPaused) {
 		return;
 	}
 
 	@synchronized (self.capacitiesPending) {
 		/* -capacitiesPending can contain values that are used internally for state traking 
 		 and should never meet the socket. To workaround this as best we can, we scan the 
-		 array for the first capacity that is acceptable for negotation. */
-		NSUInteger nextCapacityIndex =
-		[self.capacitiesPending indexOfObjectPassingTest:^BOOL(NSNumber *capacityPending, NSUInteger index, BOOL *stop) {
-			ClientIRCv3SupportedCapacities capacity = capacityPending.unsignedIntegerValue;
+		 array for the first capability that is acceptable for negotation. */
+		NSUInteger nextCapabilityIndex =
+		[self.capacitiesPending indexOfObjectPassingTest:^BOOL(NSNumber *capabilityPending, NSUInteger index, BOOL *stop) {
+			ClientIRCv3SupportedCapabilities capability = capabilityPending.unsignedIntegerValue;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wtautological-compare"
 
 			return
-			(capacity == ClientIRCv3SupportedCapacityAwayNotify				||
-			 capacity == ClientIRCv3SupportedCapacityBatch					||
-			 capacity == ClientIRCv3SupportedCapacityEchoMessage			||
-			 capacity == ClientIRCv3SupportedCapacityIdentifyCTCP			||
-			 capacity == ClientIRCv3SupportedCapacityIdentifyMsg			||
-			 capacity == ClientIRCv3SupportedCapacityMultiPreifx			||
-			 capacity == ClientIRCv3SupportedCapacitySASLGeneric			||
-			 capacity == ClientIRCv3SupportedCapacityServerTime				||
-			 capacity == ClientIRCv3SupportedCapacityUserhostInNames		||
-			 capacity == ClientIRCv3SupportedCapacityPlanioPlayback			||
-			 capacity == ClientIRCv3SupportedCapacityZNCCertInfoModule		||
-			 capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule		||
-			 capacity == ClientIRCv3SupportedCapacityZNCSelfMessage			||
-			 capacity == ClientIRCv3SupportedCapacityZNCServerTime			||
-			 capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO);
+			(capability == ClientIRCv3SupportedCapabilityAwayNotify				||
+			 capability == ClientIRCv3SupportedCapabilityBatch					||
+			 capability == ClientIRCv3SupportedCapabilityEchoMessage			||
+			 capability == ClientIRCv3SupportedCapabilityIdentifyCTCP			||
+			 capability == ClientIRCv3SupportedCapabilityIdentifyMsg			||
+			 capability == ClientIRCv3SupportedCapabilityMultiPreifx			||
+			 capability == ClientIRCv3SupportedCapabilitySASLGeneric			||
+			 capability == ClientIRCv3SupportedCapabilityServerTime				||
+			 capability == ClientIRCv3SupportedCapabilityUserhostInNames		||
+			 capability == ClientIRCv3SupportedCapabilityPlanioPlayback			||
+			 capability == ClientIRCv3SupportedCapabilityZNCCertInfoModule		||
+			 capability == ClientIRCv3SupportedCapabilityZNCPlaybackModule		||
+			 capability == ClientIRCv3SupportedCapabilityZNCSelfMessage			||
+			 capability == ClientIRCv3SupportedCapabilityZNCServerTime			||
+			 capability == ClientIRCv3SupportedCapabilityZNCServerTimeISO);
 
 #pragma clang diagnostic pop
 		}];
 
-		if (nextCapacityIndex == NSNotFound) {
-			[self sendCapacity:@"END" data:nil];
+		if (nextCapabilityIndex == NSNotFound) {
+			[self sendCapability:@"END" data:nil];
 
 			return;
 		}
 
-		ClientIRCv3SupportedCapacities capacity =
-		[self.capacitiesPending unsignedIntegerAtIndex:nextCapacityIndex];
+		ClientIRCv3SupportedCapabilities capability =
+		[self.capacitiesPending unsignedIntegerAtIndex:nextCapabilityIndex];
 
-		[self.capacitiesPending removeObjectAtIndex:nextCapacityIndex];
+		[self.capacitiesPending removeObjectAtIndex:nextCapabilityIndex];
 
-		NSString *stringValue = [self capacityStringValue:capacity];
+		NSString *stringValue = [self capabilityStringValue:capability];
 
-		[self sendCapacity:@"REQ" data:stringValue];
+		[self sendCapability:@"REQ" data:stringValue];
 	}
 }
 
-- (void)pauseCapacityNegotation
+- (void)pauseCapabilityNegotation
 {
-	self.capacityNegotiationIsPaused = YES;
+	self.capabilityNegotiationIsPaused = YES;
 }
 
-- (void)resumeCapacityNegotation
+- (void)resumeCapabilityNegotation
 {
-	self.capacityNegotiationIsPaused = NO;
+	self.capabilityNegotiationIsPaused = NO;
 
-	[self sendNextCapacity];
+	[self sendNextCapability];
 }
 
-- (BOOL)isCapacitySupported:(NSString *)capacityString
+- (BOOL)isCapabilitySupported:(NSString *)capabilityString
 {
-	NSParameterAssert(capacityString != nil);
+	NSParameterAssert(capabilityString != nil);
 
 	// Information about several of these supported CAP
 	// extensions can be found at: http://ircv3.atheme.org
 
-	if ([capacityString isEqualIgnoringCase:@"echo-message"]) {
-		return [TPCPreferences enableEchoMessageCapacity];
+	if ([capabilityString isEqualIgnoringCase:@"echo-message"]) {
+		return [TPCPreferences enableEchoMessageCapability];
 	}
 
 	return
-	([capacityString isEqualIgnoringCase:@"away-notify"]			||
-	 [capacityString isEqualIgnoringCase:@"batch"]					||
-	 [capacityString isEqualIgnoringCase:@"identify-ctcp"]			||
-	 [capacityString isEqualIgnoringCase:@"identify-msg"]			||
-	 [capacityString isEqualIgnoringCase:@"multi-prefix"]			||
-	 [capacityString isEqualIgnoringCase:@"sasl"]					||
-	 [capacityString isEqualIgnoringCase:@"server-time"]			||
-	 [capacityString isEqualIgnoringCase:@"userhost-in-names"]		||
-	 [capacityString isEqualIgnoringCase:@"plan.io/playback"]		||
-	 [capacityString isEqualIgnoringCase:@"znc.in/playback"]		||
-	 [capacityString isEqualIgnoringCase:@"znc.in/self-message"]	||
-	 [capacityString isEqualIgnoringCase:@"znc.in/server-time"]		||
-	 [capacityString isEqualIgnoringCase:@"znc.in/server-time-iso"]	||
-	 [capacityString isEqualIgnoringCase:@"znc.in/tlsinfo"]);
+	([capabilityString isEqualIgnoringCase:@"away-notify"]			||
+	 [capabilityString isEqualIgnoringCase:@"batch"]					||
+	 [capabilityString isEqualIgnoringCase:@"identify-ctcp"]			||
+	 [capabilityString isEqualIgnoringCase:@"identify-msg"]			||
+	 [capabilityString isEqualIgnoringCase:@"multi-prefix"]			||
+	 [capabilityString isEqualIgnoringCase:@"sasl"]					||
+	 [capabilityString isEqualIgnoringCase:@"server-time"]			||
+	 [capabilityString isEqualIgnoringCase:@"userhost-in-names"]		||
+	 [capabilityString isEqualIgnoringCase:@"plan.io/playback"]		||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/playback"]		||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/self-message"]	||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/server-time"]		||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/server-time-iso"]	||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/tlsinfo"]);
 }
 
-- (void)toggleCapacity:(NSString *)capacityString enabled:(BOOL)enabled
+- (void)toggleCapability:(NSString *)capabilityString enabled:(BOOL)enabled
 {
-	[self toggleCapacity:capacityString enabled:enabled isUpdateRequest:NO];
+	[self toggleCapability:capabilityString enabled:enabled isUpdateRequest:NO];
 }
 
-- (void)toggleCapacity:(NSString *)capacityString enabled:(BOOL)enabled isUpdateRequest:(BOOL)isUpdateRequest
+- (void)toggleCapability:(NSString *)capabilityString enabled:(BOOL)enabled isUpdateRequest:(BOOL)isUpdateRequest
 {
-	NSParameterAssert(capacityString != nil);
+	NSParameterAssert(capabilityString != nil);
 
-	if ([capacityString isEqualIgnoringCase:@"sasl"]) {
+	if ([capabilityString isEqualIgnoringCase:@"sasl"]) {
 		if (enabled) {
 			if ([self sendSASLIdentificationRequest]) {
-				[self pauseCapacityNegotation];
+				[self pauseCapabilityNegotation];
 			}
 		}
 
 		return;
 	}
 
-	ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:capacityString];
+	ClientIRCv3SupportedCapabilities capability = [self capabilityFromStringValue:capabilityString];
 	
-	if (capacity == 0) {
+	if (capability == 0) {
 		return;
 	}
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wtautological-compare"
 
-	if (capacity == ClientIRCv3SupportedCapacityZNCServerTime ||
-		capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO)
+	if (capability == ClientIRCv3SupportedCapabilityZNCServerTime ||
+		capability == ClientIRCv3SupportedCapabilityZNCServerTimeISO)
 	{
-		capacity = ClientIRCv3SupportedCapacityServerTime;
+		capability = ClientIRCv3SupportedCapabilityServerTime;
 	}
 
-	if (capacity == ClientIRCv3SupportedCapacityPlanioPlayback ||
-		capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule)
+	if (capability == ClientIRCv3SupportedCapabilityPlanioPlayback ||
+		capability == ClientIRCv3SupportedCapabilityZNCPlaybackModule)
 	{
-		capacity = ClientIRCv3SupportedCapacityPlayback;
+		capability = ClientIRCv3SupportedCapabilityPlayback;
 	}
 
 #pragma clang diagnostic pop
 
 	if (enabled) {
-		[self enableCapacity:capacity];
+		[self enableCapability:capability];
 	} else {
-		[self disableCapacity:capacity];
+		[self disableCapability:capability];
 	}
 }
 
-- (void)processPendingCapacity:(NSString *)capacityString
+- (void)processPendingCapability:(NSString *)capabilityString
 {
-	NSParameterAssert(capacityString != nil);
+	NSParameterAssert(capabilityString != nil);
 
-	NSArray *components = [capacityString componentsSeparatedByString:@"="];
+	NSArray *components = [capabilityString componentsSeparatedByString:@"="];
 
-	NSString *capacity = capacityString;
+	NSString *capability = capabilityString;
 
-	NSArray<NSString *> *capacityOptions = nil;
+	NSArray<NSString *> *capabilityOptions = nil;
 
 	if (components.count == 2) {
-		capacity = components[0];
+		capability = components[0];
 
-		capacityOptions = [components[1] componentsSeparatedByString:@","];
+		capabilityOptions = [components[1] componentsSeparatedByString:@","];
 	}
 
-	[self processPendingCapacity:capacity options:capacityOptions];
+	[self processPendingCapability:capability options:capabilityOptions];
 }
 
-- (void)processPendingCapacity:(NSString *)capacityString options:(nullable NSArray<NSString *> *)capacityOpions
+- (void)processPendingCapability:(NSString *)capabilityString options:(nullable NSArray<NSString *> *)capabilityOpions
 {
-	NSParameterAssert(capacityString != nil);
+	NSParameterAssert(capabilityString != nil);
 
-	if ([self isCapacitySupported:capacityString] == NO) {
+	if ([self isCapabilitySupported:capabilityString] == NO) {
 		return;
 	}
 
-	if ([capacityString isEqualToString:@"sasl"]) {
-		[self processPendingCapacityForSASL:capacityOpions];
+	if ([capabilityString isEqualToString:@"sasl"]) {
+		[self processPendingCapabilityForSASL:capabilityOpions];
 
 		return;
 	}
 
-	ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:capacityString];
+	ClientIRCv3SupportedCapabilities capability = [self capabilityFromStringValue:capabilityString];
 
-	[self enablePendingCapacity:capacity];
+	[self enablePendingCapability:capability];
 }
 
-- (void)receiveCapacityOrAuthenticationRequest:(IRCMessage *)m
+- (void)receiveCapabilityOrAuthenticationRequest:(IRCMessage *)m
 {
 	/* Implementation based off Colloquy's own. */
 	NSParameterAssert(m != nil);
@@ -7429,35 +7429,35 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self processPendingCapacity:cap];
+				[self processPendingCapability:cap];
 			}
 		} else if ([subcommand isEqualIgnoringCase:@"ACK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self toggleCapacity:cap enabled:YES isUpdateRequest:NO];
+				[self toggleCapability:cap enabled:YES isUpdateRequest:NO];
 			}
 		} else if ([subcommand isEqualIgnoringCase:@"NAK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self toggleCapacity:cap enabled:NO isUpdateRequest:NO];
+				[self toggleCapability:cap enabled:NO isUpdateRequest:NO];
 			}
 		} else if ([subcommand isEqualIgnoringCase:@"NEW"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self toggleCapacity:cap enabled:YES isUpdateRequest:YES];
+				[self toggleCapability:cap enabled:YES isUpdateRequest:YES];
 			}
 		} else if ([subcommand isEqualIgnoringCase:@"DEL"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self toggleCapacity:cap enabled:NO isUpdateRequest:YES];
+				[self toggleCapability:cap enabled:NO isUpdateRequest:YES];
 			}
 		}
 
-		[self sendNextCapacity];
+		[self sendNextCapability];
 	}
 	else if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("cap_authenticate")])
 	{
@@ -7472,46 +7472,46 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark SASL Negotation
 
-- (void)processPendingCapacityForSASL:(nullable NSArray<NSString *> *)capacityOptions
+- (void)processPendingCapabilityForSASL:(nullable NSArray<NSString *> *)capabilityOptions
 {
-	ClientIRCv3SupportedCapacities identificationMechanism = 0;
+	ClientIRCv3SupportedCapabilities identificationMechanism = 0;
 
 	if (self.socket.isConnectedWithClientSideCertificate &&
 		self.config.saslAuthenticationDisableExternalMechanism == NO)
 	{
-		if (capacityOptions.count == 0 ||
-			[capacityOptions containsObjectIgnoringCase:@"EXTERNAL"])
+		if (capabilityOptions.count == 0 ||
+			[capabilityOptions containsObjectIgnoringCase:@"EXTERNAL"])
 		{
-			identificationMechanism = ClientIRCv3SupportedCapacitySASLExternal;
+			identificationMechanism = ClientIRCv3SupportedCapabilitySASLExternal;
 
-			[self enablePendingCapacity:ClientIRCv3SupportedCapacitySASLExternal];
+			[self enablePendingCapability:ClientIRCv3SupportedCapabilitySASLExternal];
 		}
 	}
 
 	if (identificationMechanism == 0 &&
 		self.config.nicknamePassword.length > 0)
 	{
-		if (capacityOptions.count == 0 ||
-			[capacityOptions containsObjectIgnoringCase:@"PLAIN"])
+		if (capabilityOptions.count == 0 ||
+			[capabilityOptions containsObjectIgnoringCase:@"PLAIN"])
 		{
-			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
+			identificationMechanism = ClientIRCv3SupportedCapabilitySASLPlainText;
 
-			[self enablePendingCapacity:ClientIRCv3SupportedCapacitySASLPlainText];
+			[self enablePendingCapability:ClientIRCv3SupportedCapabilitySASLPlainText];
 		}
 	}
 
 	if (identificationMechanism != 0) {
-		[self enablePendingCapacity:ClientIRCv3SupportedCapacitySASLGeneric];
+		[self enablePendingCapability:ClientIRCv3SupportedCapabilitySASLGeneric];
 	}
 }
 
 - (void)sendSASLIdentificationInformation
 {
-	if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacityIsInSASLNegotiation] == NO) {
+	if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilityIsInSASLNegotiation] == NO) {
 		return;
 	}
 
-	if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacitySASLPlainText])
+	if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilitySASLPlainText])
 	{
 		NSString *authString = [NSString stringWithFormat:@"%@%C%@%C%@",
 								 self.config.username, 0x00,
@@ -7521,37 +7521,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSArray *authStrings = [authString base64EncodingWithLineLength:400];
 
 		for (NSString *string in authStrings) {
-			[self sendCapacityAuthenticate:string];
+			[self sendCapabilityAuthenticate:string];
 		}
 
 		if (authStrings.count == 0 || ((NSString *)authStrings.lastObject).length == 400) {
-			[self sendCapacityAuthenticate:@"+"];
+			[self sendCapabilityAuthenticate:@"+"];
 		}
 	}
-	else if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacitySASLExternal])
+	else if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilitySASLExternal])
 	{
-		[self sendCapacityAuthenticate:@"+"];
+		[self sendCapabilityAuthenticate:@"+"];
 	}
 }
 
 - (BOOL)sendSASLIdentificationRequest
 {
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL]) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL]) {
 		return NO;
 	}
 
-	if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacityIsInSASLNegotiation]) {
+	if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilityIsInSASLNegotiation]) {
 		return NO;
 	}
 
-	[self enablePendingCapacity:ClientIRCv3SupportedCapacityIsInSASLNegotiation];
+	[self enablePendingCapability:ClientIRCv3SupportedCapabilityIsInSASLNegotiation];
 
-	if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacitySASLPlainText]) {
-		[self sendCapacityAuthenticate:@"PLAIN"];
+	if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilitySASLPlainText]) {
+		[self sendCapabilityAuthenticate:@"PLAIN"];
 
 		return YES;
-	} else if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacitySASLExternal]) {
-		[self sendCapacityAuthenticate:@"EXTERNAL"];
+	} else if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilitySASLExternal]) {
+		[self sendCapabilityAuthenticate:@"EXTERNAL"];
 
 		return YES;
 	}
@@ -7575,11 +7575,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	(void)[self postReceivedMessage:m];
 }
 
-- (void)receiveAwayNotifyCapacity:(IRCMessage *)m
+- (void)receiveAwayNotifyCapability:(IRCMessage *)m
 {
 	NSParameterAssert(m != nil);
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityAwayNotify] == NO) {
 		return;
 	}
 
@@ -7641,7 +7641,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Request certificate information */
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCCertInfoModule]) {
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityZNCCertInfoModule]) {
 		[self sendCommand:@"send-data" toZNCModuleNamed:@"tlsinfo"];
 	}
 
@@ -7664,7 +7664,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[mainWindowTextField() updateSegmentedController];
 
 	/* Everything else */
-	if (self.config.autojoinWaitsForNickServ == NO || [self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL]) {
+	if (self.config.autojoinWaitsForNickServ == NO || [self isCapabilityEnabled:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL]) {
 		[self performAutoJoin];
 	} else {
         /* If we wait for NickServ we set a timer of 3.0 seconds before performing auto join.
@@ -7857,9 +7857,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *kind = [m paramAt:1];
 
 			if ([kind isEqualIgnoringCase:@"identify-msg"]) {
-				[self enableCapacity:ClientIRCv3SupportedCapacityIdentifyMsg];
+				[self enableCapability:ClientIRCv3SupportedCapabilityIdentifyMsg];
 			} else if ([kind isEqualIgnoringCase:@"identify-ctcp"]) {
-				[self enableCapacity:ClientIRCv3SupportedCapacityIdentifyCTCP];
+				[self enableCapability:ClientIRCv3SupportedCapabilityIdentifyCTCP];
 			}
 
 			if (printMessage) {
@@ -7917,7 +7917,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
             /* Update our own status. This has to only be done with away-notify CAP enabled.
              Old, WHO based information requests will still show our own status. */
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
+			if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityAwayNotify] == NO) {
 				break;
 			}
 
@@ -9027,7 +9027,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturn([m paramsCount] > 3);
 
-			[self enableCapacity:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL];
+			[self enableCapability:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL];
 
 			if (printMessage) {
 				[self print:[m sequence:3]
@@ -9059,10 +9059,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
-			if ([self isPendingCapacityEnabled:ClientIRCv3SupportedCapacityIsInSASLNegotiation]) {
-				[self disablePendingCapacity:ClientIRCv3SupportedCapacityIsInSASLNegotiation];
+			if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilityIsInSASLNegotiation]) {
+				[self disablePendingCapability:ClientIRCv3SupportedCapabilityIsInSASLNegotiation];
 
-				[self resumeCapacityNegotation];
+				[self resumeCapabilityNegotation];
 			}
 
 			break;
@@ -9335,7 +9335,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		/* Do nothing unless certain conditions are met */
-		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] == NO) {
+		if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL] == NO) {
 			if (self.config.autojoinWaitsForNickServ) {
 				if (self.serverHasNickServ && self.userIsIdentifiedWithNickServ == NO) {
 					return;
@@ -10555,7 +10555,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self send:IRCPrivateCommandIndex("topic"), channel, topic, nil];
 }
 
-- (void)sendCapacity:(NSString *)subcommand data:(nullable NSString *)data
+- (void)sendCapability:(NSString *)subcommand data:(nullable NSString *)data
 {
 	NSParameterAssert(subcommand != nil);
 
@@ -10566,7 +10566,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self send:IRCPrivateCommandIndex("cap"), subcommand, data, nil];
 }
 
-- (void)sendCapacityAuthenticate:(NSString *)data
+- (void)sendCapabilityAuthenticate:(NSString *)data
 {
 	NSParameterAssert(data != nil);
 
@@ -10647,7 +10647,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *modifier = nil;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityMonitorCommand])
+	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityMonitorCommand])
 	{
 		if (adding) {
 			modifier = @"+";
@@ -10659,7 +10659,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self send:IRCPrivateCommandIndex("monitor"), modifier, nicknamesString, nil];
 	}
-	else if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand])
+	else if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityWatchCommand])
 	{
 		if (adding) {
 			modifier = @" +";
@@ -11413,7 +11413,7 @@ present_error:
 				continue;
 			}
 		} else {
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]) {
+			if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityAwayNotify]) {
 				continue;
 			}
 
