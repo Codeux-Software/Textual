@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TPI_ChatFilterLogic : NSObject <THOPluginProtocol>
 - (instancetype)initWithParentObject:(TPI_ChatFilterExtension *)parentObject;
+
+- (void)reloadFilterActionPerforms;
 @end
 
 NS_ASSUME_NONNULL_END

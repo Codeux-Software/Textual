@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TPI_ChatFilterLogic ()
 @property (nonatomic, weak) TPI_ChatFilterExtension *parentObject;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *filterActionLastPerforms;
 @end
 
 @implementation TPI_ChatFilterLogic
@@ -54,10 +55,17 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((self = [super init])) {
 		self.parentObject = parentObject;
 
+		[self prepareInitialState];
+
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.filterActionLastPerforms = [NSMutableDictionary dictionary];
 }
 
 - (BOOL)testFilterDestination:(TPI_ChatFilter *)filter authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client
@@ -366,6 +374,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client referenceMessage:(nullable IRCMessage *)referenceMessage
 {
+	if ([self isItSafeToPerformActionForFilter:filter] == NO) {
+		return;
+	}
+
 	if (text == nil) {
 		text = NSStringEmptyPlaceholder;
 	}
@@ -452,6 +464,64 @@ NS_ASSUME_NONNULL_BEGIN
 			  command:IRCPrivateCommandIndex("privmsg")];
 		
 		[client setUnreadStateForChannel:filterActionReportQuery];
+	}
+}
+
+- (BOOL)isItSafeToPerformActionForFilter:(TPI_ChatFilter *)filter
+{
+	NSUInteger floodControlInterval = filter.filterActionFloodControlInterval;
+
+	if (floodControlInterval == 0) {
+		return YES;
+	}
+
+	NSTimeInterval now = [NSDate timeIntervalSince1970];
+
+	@synchronized (self.filterActionLastPerforms) {
+		NSString *filterIdentifier = filter.uniqueIdentifier;
+
+		NSTimeInterval filterLastPerform = [self.filterActionLastPerforms doubleForKey:filterIdentifier];
+
+		if ((now - filterLastPerform) <= floodControlInterval) {
+			return NO;
+		}
+
+		self.filterActionLastPerforms[filterIdentifier] = @(now);
+	}
+
+	return YES;
+}
+
+- (void)reloadFilterActionPerforms
+{
+	/* This rebuilds the -filterActionLastPerforms so that the only entries that
+	 exist are 1) filters that still exist 2) filters that require a timer */
+	@synchronized (self.filterActionLastPerforms) {
+		NSMutableDictionary *filterLastPerformsOld = self.filterActionLastPerforms;
+
+		NSMutableDictionary *filterLastPerformsNew = [NSMutableDictionary dictionary];
+
+		NSArray *filters = self.parentObject.filterArrayController.content;
+
+		for (TPI_ChatFilter *filter in filters) {
+			@autoreleasepool {
+				if (filter.filterActionFloodControlInterval == 0) {
+					continue;
+				}
+
+				NSString *filterIdentifier = filter.uniqueIdentifier;
+
+				NSNumber *filterLastPerform = filterLastPerformsOld[filterIdentifier];
+
+				if (filterLastPerform == nil) {
+					continue;
+				}
+
+				filterLastPerformsNew[filterIdentifier] = filterLastPerform;
+			}
+		}
+
+		self.filterActionLastPerforms = filterLastPerformsNew;
 	}
 }
 

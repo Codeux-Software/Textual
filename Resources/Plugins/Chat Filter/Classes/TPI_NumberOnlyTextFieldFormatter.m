@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,38 +35,27 @@
 
  *********************************************************************** */
 
-#import "TPI_ChatFilter.h"
+#import "TPI_NumberOnlyTextFieldFormatter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPI_ChatFilter ()
-{
-@protected
-	BOOL _filterIgnoreContent;
-	BOOL _filterIgnoreOperators;
-	BOOL _filterLogMatch;
-	BOOL _filterLimitedToMyself;
-	TPI_ChatFilterEventType _filterEvents;
-	TPI_ChatFilterLimitToValue _filterLimitedToValue;
-	NSArray<NSString *> *_filterLimitedToChannelsIDs;
-	NSArray<NSString *> *_filterLimitedToClientsIDs;
-	NSArray<NSString *> *_filterEventsNumerics;
-	NSUInteger _filterActionFloodControlInterval;
-	NSString *_filterAction;
-	NSString *_filterForwardToDestination;
-	NSString *_filterMatch;
-	NSString *_filterNotes;
-	NSString *_filterSenderMatch;
-	NSString *_filterTitle;
+@implementation TPI_NumberOnlyTextFieldFormatter
 
-@private
-	BOOL _objectInitialized;
-	NSString *_uniqueIdentifier;
-	NSDictionary *_defaults;
-	NSCache *_cachedIsCommandEnabledResponses;
+- (BOOL)isPartialStringValid:(NSString *)partialString newEditingString:(NSString **)newString errorDescription:(NSString **)error
+{
+	if (partialString.length == 0) {
+		return YES;
+	}
+
+	if (partialString.numericOnly == NO) {
+		NSBeep();
+
+		return NO;
+	}
+
+	return YES;
 }
 
-- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

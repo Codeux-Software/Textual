@@ -72,6 +72,7 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 @property (readonly, copy) NSArray<NSString *> *filterLimitedToChannelsIDs;
 @property (readonly, copy) NSArray<NSString *> *filterLimitedToClientsIDs;
 @property (readonly, copy) NSArray<NSString *> *filterEventsNumerics;
+@property (readonly) NSUInteger filterActionFloodControlInterval;
 @property (readonly, copy) NSString *filterAction;
 @property (readonly, copy) NSString *filterDescription;
 @property (readonly, copy) NSString *filterForwardToDestination;
@@ -106,6 +107,7 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *filterLimitedToChannelsIDs;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *filterLimitedToClientsIDs;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *filterEventsNumerics;
+@property (nonatomic, assign, readwrite) NSUInteger filterActionFloodControlInterval;
 @property (nonatomic, copy, readwrite) NSString *filterAction;
 @property (nonatomic, copy, readwrite) NSString *filterForwardToDestination;
 @property (nonatomic, copy, readwrite) NSString *filterMatch;
