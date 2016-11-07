@@ -7113,6 +7113,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case ClientIRCv3SupportedCapacityPlanioPlayback:
+		{
+			stringValue = @"plan.io/playback";
+
+			break;
+		}
 		case ClientIRCv3SupportedCapacityZNCCertInfoModule:
 		{
 			stringValue = @"znc.in/tlsinfo";
@@ -7173,7 +7179,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	} else if ([capacityString isEqualIgnoringCase:@"userhost-in-names"]) {
 		return ClientIRCv3SupportedCapacityUserhostInNames;
 	} else if ([capacityString isEqualIgnoringCase:@"plan.io/playback"]) {
-		return ClientIRCv3SupportedCapacityPlayback;
+		return ClientIRCv3SupportedCapacityPlanioPlayback;
 	} else if ([capacityString isEqualIgnoringCase:@"znc.in/playback"]) {
 		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
 	} else if ([capacityString isEqualIgnoringCase:@"znc.in/self-message"]) {
@@ -7212,9 +7218,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
 	appendValue(ClientIRCv3SupportedCapacityIsIdentifiedWithSASL);
 	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
-	appendValue(ClientIRCv3SupportedCapacityPlayback);
 	appendValue(ClientIRCv3SupportedCapacityServerTime);
 	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
+	appendValue(ClientIRCv3SupportedCapacityPlanioPlayback);
 	appendValue(ClientIRCv3SupportedCapacityZNCCertInfoModule);
 	appendValue(ClientIRCv3SupportedCapacityZNCPlaybackModule);
 	appendValue(ClientIRCv3SupportedCapacityZNCSelfMessage);
@@ -7248,10 +7254,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			 capacity == ClientIRCv3SupportedCapacityIdentifyCTCP			||
 			 capacity == ClientIRCv3SupportedCapacityIdentifyMsg			||
 			 capacity == ClientIRCv3SupportedCapacityMultiPreifx			||
-			 capacity == ClientIRCv3SupportedCapacityPlayback				||
 			 capacity == ClientIRCv3SupportedCapacitySASLGeneric			||
 			 capacity == ClientIRCv3SupportedCapacityServerTime				||
 			 capacity == ClientIRCv3SupportedCapacityUserhostInNames		||
+			 capacity == ClientIRCv3SupportedCapacityPlanioPlayback			||
 			 capacity == ClientIRCv3SupportedCapacityZNCCertInfoModule		||
 			 capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule		||
 			 capacity == ClientIRCv3SupportedCapacityZNCSelfMessage			||
@@ -7352,7 +7358,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		capacity = ClientIRCv3SupportedCapacityServerTime;
 	}
 
-	if (capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule) {
+	if (capacity == ClientIRCv3SupportedCapacityPlanioPlayback ||
+		capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule)
+	{
 		capacity = ClientIRCv3SupportedCapacityPlayback;
 	}
 
