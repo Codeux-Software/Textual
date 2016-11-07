@@ -361,7 +361,11 @@ NS_ASSUME_NONNULL_BEGIN
 			if ([context save:&saveError] == NO) {
 				LogToConsoleError("Failed to perform save: %@",
 					saveError.localizedDescription)
+			} else {
+				LogToConsoleInfo("Performed save")
 			}
+		} else {
+			LogToConsoleInfo("Did not perform save because nothing has changed")
 		}
 
 		self.isPerformingSave = NO;
