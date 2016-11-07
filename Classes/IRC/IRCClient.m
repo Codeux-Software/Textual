@@ -1781,23 +1781,68 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
+#pragma mark Playback
+
+- (void)playbackClearChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityPlayback] == NO) {
+		return;
+	}
+
+	if (channel.isPrivateMessage == NO || channel.isPrivateMessageForZNCUser) {
+		return;
+	}
+
+	NSString *command = [NSString stringWithFormat:@"clear %@", channel.name];
+
+	if (self.isConnectedToZNC) {
+		[self sendCommand:command toZNCModuleNamed:@"playback"];
+
+		return;
+	}
+
+	[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", command, nil];
+}
+
+- (void)requestPlayback
+{
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityPlayback] == NO) {
+		return;
+	}
+
+	/* For our first connect, only playback using timestamp if logging was enabled. */
+	/* For all other connects, then playback timestamp regardless of logging. */
+	NSString *command = nil;
+
+	if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDisk])) && self.lastMessageServerTime > 0) {
+		command = [NSString stringWithFormat:@"play * %.0f", self.lastMessageServerTime];
+	} else {
+		command = @"play * 0";
+	}
+
+	if (self.isConnectedToZNC) {
+		[self sendCommand:command toZNCModuleNamed:@"playback"];
+
+		return;
+	}
+
+	[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", command, nil];
+}
+
+#pragma mark -
 #pragma mark ZNC Bouncer Accessories
 
 - (void)zncPlaybackClearChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
 
-	if (channel.isPrivateMessage == NO || channel.isPrivateMessageForZNCUser) {
+	if (self.isConnectedToZNC) {
 		return;
 	}
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule] == NO) {
-		return;
-	}
-
-	NSString *command = [NSString stringWithFormat:@"clear %@", channel.name];
-
-	[self sendCommand:command toZNCModuleNamed:@"playback"];
+	[self playbackClearChannel:channel];
 }
 
 - (BOOL)nicknameIsZNCUser:(NSString *)nickname
@@ -2385,7 +2430,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&lineMutable inChannel:channel onClient:self withLineType:lineType];
 
 			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
-				if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule] && wasEncrypted == NO) {
+				if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage] && wasEncrypted == NO) {
 					return;
 				}
 
@@ -3912,7 +3957,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 							return;
 						}
 
-						if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule] && wasEncrypted == NO) {
+						if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage] && wasEncrypted == NO) {
 							return;
 						}
 
@@ -4780,7 +4825,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* If the playback module is in use, then all messages are
 	 set as historic, so we set any lines above our current 
 	 reference date as not historic to avoid collisions. */
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityPlayback]) {
 		[message markAsNotHistoric];
 	}
 }
@@ -5254,7 +5299,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL isSelfMessage = NO;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage]) {
 		isSelfMessage = [self nicknameIsMyself:sender];
 	}
 
@@ -5371,7 +5416,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 module need the correct behavior which the self-message CAP evolved into. */
 	BOOL isSelfMessage = NO;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule] ||
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage] ||
 		[self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] ||
 		self.isConnectedToZNC)
 	{
@@ -5719,7 +5764,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Ignore messages echoed back to ourselves */
 	NSString *sender = m.senderNickname;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessageModule]) {
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityEchoMessage]) {
 		if ([self nicknameIsMyself:sender]) {
 			return;
 		}
@@ -7004,7 +7049,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case ClientIRCv3SupportedCapacityEchoMessageModule:
+		case ClientIRCv3SupportedCapacityEchoMessage:
 		{
 			stringValue = @"echo-message";
 
@@ -7026,6 +7071,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			stringValue = @"multi-prefix";
 			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityPlayback:
+		{
+			stringValue = @"playback";
+
 			break;
 		}
 		case ClientIRCv3SupportedCapacitySASLExternal:
@@ -7074,6 +7125,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case ClientIRCv3SupportedCapacityZNCSelfMessage:
+		{
+			stringValue = @"znc.in/self-message";
+
+			break;
+		}
 		case ClientIRCv3SupportedCapacityZNCServerTime:
 		{
 			stringValue = @"znc.in/server-time";
@@ -7084,12 +7141,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			stringValue = @"znc.in/server-time-iso";
 			
-			break;
-		}
-		case ClientIRCv3SupportedCapacityZNCSelfMessage:
-		{
-			stringValue = @"znc.in/self-message";
-
 			break;
 		}
 	}
@@ -7103,22 +7154,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(capacityString != nil);
 
-	if ([capacityString isEqualIgnoringCase:@"echo-message"]) {
-		return ClientIRCv3SupportedCapacityEchoMessageModule;
-	} else if ([capacityString isEqualIgnoringCase:@"userhost-in-names"]) {
-		return ClientIRCv3SupportedCapacityUserhostInNames;
+	if ([capacityString isEqualIgnoringCase:@"away-notify"]) {
+		return ClientIRCv3SupportedCapacityAwayNotify;
+	} else if ([capacityString isEqualIgnoringCase:@"batch"]) {
+		return ClientIRCv3SupportedCapacityBatch;
+	} else if ([capacityString isEqualIgnoringCase:@"echo-message"]) {
+		return ClientIRCv3SupportedCapacityEchoMessage;
 	} else if ([capacityString isEqualIgnoringCase:@"multi-prefix"]) {
 		return ClientIRCv3SupportedCapacityMultiPreifx;
 	} else if ([capacityString isEqualIgnoringCase:@"identify-msg"]) {
 		return ClientIRCv3SupportedCapacityIdentifyMsg;
 	} else if ([capacityString isEqualIgnoringCase:@"identify-ctcp"]) {
 		return ClientIRCv3SupportedCapacityIdentifyCTCP;
-	} else if ([capacityString isEqualIgnoringCase:@"away-notify"]) {
-		return ClientIRCv3SupportedCapacityAwayNotify;
-	} else if ([capacityString isEqualIgnoringCase:@"batch"]) {
-		return ClientIRCv3SupportedCapacityBatch;
+	} else if ([capacityString isEqualIgnoringCase:@"sasl"]) {
+		return ClientIRCv3SupportedCapacitySASLGeneric;
 	} else if ([capacityString isEqualIgnoringCase:@"server-time"]) {
 		return ClientIRCv3SupportedCapacityServerTime;
+	} else if ([capacityString isEqualIgnoringCase:@"userhost-in-names"]) {
+		return ClientIRCv3SupportedCapacityUserhostInNames;
+	} else if ([capacityString isEqualIgnoringCase:@"plan.io/playback"]) {
+		return ClientIRCv3SupportedCapacityPlayback;
+	} else if ([capacityString isEqualIgnoringCase:@"znc.in/playback"]) {
+		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
 	} else if ([capacityString isEqualIgnoringCase:@"znc.in/self-message"]) {
 		return ClientIRCv3SupportedCapacityZNCSelfMessage;
 	} else if ([capacityString isEqualIgnoringCase:@"znc.in/server-time"]) {
@@ -7127,10 +7184,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return ClientIRCv3SupportedCapacityZNCServerTimeISO;
 	} else if ([capacityString isEqualIgnoringCase:@"znc.in/tlsinfo"]) {
 		return ClientIRCv3SupportedCapacityZNCCertInfoModule;
-	} else if ([capacityString isEqualIgnoringCase:@"znc.in/playback"]) {
-		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
-	} else if ([capacityString isEqualIgnoringCase:@"sasl"]) {
-		return ClientIRCv3SupportedCapacitySASLGeneric;
 	}
 
 	return 0;
@@ -7154,11 +7207,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	appendValue(ClientIRCv3SupportedCapacityAwayNotify);
 	appendValue(ClientIRCv3SupportedCapacityBatch);
-	appendValue(ClientIRCv3SupportedCapacityEchoMessageModule);
+	appendValue(ClientIRCv3SupportedCapacityEchoMessage);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyCTCP);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
-	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
 	appendValue(ClientIRCv3SupportedCapacityIsIdentifiedWithSASL);
+	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
+	appendValue(ClientIRCv3SupportedCapacityPlayback);
 	appendValue(ClientIRCv3SupportedCapacityServerTime);
 	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
 	appendValue(ClientIRCv3SupportedCapacityZNCCertInfoModule);
@@ -7184,21 +7238,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self.capacitiesPending indexOfObjectPassingTest:^BOOL(NSNumber *capacityPending, NSUInteger index, BOOL *stop) {
 			ClientIRCv3SupportedCapacities capacity = capacityPending.unsignedIntegerValue;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-compare"
+
 			return
-			(capacity == ClientIRCv3SupportedCapacitySASLGeneric			||
-			 capacity == ClientIRCv3SupportedCapacityAwayNotify				||
+			(capacity == ClientIRCv3SupportedCapacityAwayNotify				||
 			 capacity == ClientIRCv3SupportedCapacityBatch					||
-			 capacity == ClientIRCv3SupportedCapacityEchoMessageModule		||
+			 capacity == ClientIRCv3SupportedCapacityEchoMessage			||
 			 capacity == ClientIRCv3SupportedCapacityIdentifyCTCP			||
 			 capacity == ClientIRCv3SupportedCapacityIdentifyMsg			||
 			 capacity == ClientIRCv3SupportedCapacityMultiPreifx			||
+			 capacity == ClientIRCv3SupportedCapacityPlayback				||
+			 capacity == ClientIRCv3SupportedCapacitySASLGeneric			||
 			 capacity == ClientIRCv3SupportedCapacityServerTime				||
 			 capacity == ClientIRCv3SupportedCapacityUserhostInNames		||
 			 capacity == ClientIRCv3SupportedCapacityZNCCertInfoModule		||
 			 capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule		||
+			 capacity == ClientIRCv3SupportedCapacityZNCSelfMessage			||
 			 capacity == ClientIRCv3SupportedCapacityZNCServerTime			||
-			 capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO		||
-			 capacity == ClientIRCv3SupportedCapacityZNCSelfMessage);
+			 capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO);
+
+#pragma clang diagnostic pop
 		}];
 
 		if (nextCapacityIndex == NSNotFound) {
@@ -7242,19 +7302,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	return
-	([capacityString isEqualIgnoringCase:@"sasl"]					||
-	 [capacityString isEqualIgnoringCase:@"identify-msg"]			||
-	 [capacityString isEqualIgnoringCase:@"identify-ctcp"]			||
-	 [capacityString isEqualIgnoringCase:@"away-notify"]			||
+	([capacityString isEqualIgnoringCase:@"away-notify"]			||
 	 [capacityString isEqualIgnoringCase:@"batch"]					||
+	 [capacityString isEqualIgnoringCase:@"identify-ctcp"]			||
+	 [capacityString isEqualIgnoringCase:@"identify-msg"]			||
 	 [capacityString isEqualIgnoringCase:@"multi-prefix"]			||
-	 [capacityString isEqualIgnoringCase:@"userhost-in-names"]		||
+	 [capacityString isEqualIgnoringCase:@"sasl"]					||
 	 [capacityString isEqualIgnoringCase:@"server-time"]			||
-	 [capacityString isEqualIgnoringCase:@"znc.in/self-message"]	||
-	 [capacityString isEqualIgnoringCase:@"znc.in/tlsinfo"]			||
+	 [capacityString isEqualIgnoringCase:@"userhost-in-names"]		||
+	 [capacityString isEqualIgnoringCase:@"plan.io/playback"]		||
 	 [capacityString isEqualIgnoringCase:@"znc.in/playback"]		||
+	 [capacityString isEqualIgnoringCase:@"znc.in/self-message"]	||
 	 [capacityString isEqualIgnoringCase:@"znc.in/server-time"]		||
-	 [capacityString isEqualIgnoringCase:@"znc.in/server-time-iso"]);
+	 [capacityString isEqualIgnoringCase:@"znc.in/server-time-iso"]	||
+	 [capacityString isEqualIgnoringCase:@"znc.in/tlsinfo"]);
 }
 
 - (void)toggleCapacity:(NSString *)capacityString enabled:(BOOL)enabled
@@ -7282,11 +7343,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-compare"
+
 	if (capacity == ClientIRCv3SupportedCapacityZNCServerTime ||
 		capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO)
 	{
 		capacity = ClientIRCv3SupportedCapacityServerTime;
 	}
+
+	if (capacity == ClientIRCv3SupportedCapacityZNCPlaybackModule) {
+		capacity = ClientIRCv3SupportedCapacityPlayback;
+	}
+
+#pragma clang diagnostic pop
 
 	if (enabled) {
 		[self enableCapacity:capacity];
@@ -7568,20 +7638,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Request playback since the last seen message when previously connected */
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-		/* For our first connect, only playback using timestamp if logging was enabled. */
-		/* For all other connects, then playback timestamp regardless of logging. */
-
-		NSString *command = nil;
-
-		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDisk])) && self.lastMessageServerTime > 0) {
-			command = [NSString stringWithFormat:@"play * %.0f", self.lastMessageServerTime];
-		} else {
-			command = @"play * 0";
-		}
-
-		[self sendCommand:command toZNCModuleNamed:@"playback"];
-	}
+	[self requestPlayback];
 
 	/* Activate existing queries */
 	for (IRCChannel *c in self.channelList) {

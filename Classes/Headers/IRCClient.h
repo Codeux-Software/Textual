@@ -66,20 +66,20 @@ typedef NS_ENUM(NSUInteger, IRCClientDisconnectMode) {
 
 typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
 	ClientIRCv3SupportedCapacityAwayNotify				= 1 << 0, // YES if away-notify CAP supported
-	ClientIRCv3SupportedCapacityIdentifyCTCP			= 1 << 1, // YES if identify-ctcp CAP supported
-	ClientIRCv3SupportedCapacityIdentifyMsg				= 1 << 2, // YES if identify-msg CAP supported
-	ClientIRCv3SupportedCapacityMultiPreifx				= 1 << 3, // YES if multi-prefix CAP supported
-	ClientIRCv3SupportedCapacityServerTime				= 1 << 4, // YES if server-time CAP supported
-	ClientIRCv3SupportedCapacityUserhostInNames			= 1 << 5, // YES if userhost-in-names CAP supported
-	ClientIRCv3SupportedCapacityWatchCommand			= 1 << 6, // YES if the WATCH command is supported
-	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 7, // YES if in SASL CAP authentication request
-	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 8, // YES if SASL authentication was successful
-	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 14, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 15, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityBatch					= 1 << 16, // YES if batch CAP supported
-	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 17, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityEchoMessageModule		= 1 << 18, // YES if echo-message CAP supported
-	ClientIRCv3SupportedCapacityMonitorCommand			= 1 << 19 // YES if the MONITOR command is supported
+	ClientIRCv3SupportedCapacityBatch					= 1 << 1, // YES if batch CAP supported
+	ClientIRCv3SupportedCapacityEchoMessage				= 1 << 2, // YES if echo-message CAP supported
+	ClientIRCv3SupportedCapacityIdentifyCTCP			= 1 << 3, // YES if identify-ctcp CAP supported
+	ClientIRCv3SupportedCapacityIdentifyMsg				= 1 << 4, // YES if identify-msg CAP supported
+	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 5, // YES if SASL authentication was successful
+	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 6, // YES if in SASL CAP authentication request
+	ClientIRCv3SupportedCapacityMonitorCommand			= 1 << 7, // YES if the MONITOR command is supported
+	ClientIRCv3SupportedCapacityMultiPreifx				= 1 << 8, // YES if multi-prefix CAP supported
+	ClientIRCv3SupportedCapacityPlayback				= 1 << 9, // Special CAP which is subject to change
+	ClientIRCv3SupportedCapacityServerTime				= 1 << 10, // YES if server-time CAP supported
+	ClientIRCv3SupportedCapacityUserhostInNames			= 1 << 11, // YES if userhost-in-names CAP supported
+	ClientIRCv3SupportedCapacityWatchCommand			= 1 << 12, // YES if the WATCH command is supported
+	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 13, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 14  // YES if the ZNC vendor specific CAP supported
 };
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
