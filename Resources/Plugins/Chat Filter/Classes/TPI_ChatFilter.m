@@ -158,6 +158,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 
+	[defaultsMutable assignUnsignedIntegerTo:&self->_filterActionFloodControlInterval forKey:@"filterActionFloodControlInterval"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_filterLimitedToValue forKey:@"filterLimitedToValue"];
 
 	/* Maintain backwards compatibility by setting old key names */
@@ -220,6 +221,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.filterLimitedToMyself forKey:@"filterLimitedToMyself"];
 	[dic setBool:self.filterLogMatch forKey:@"filterLogMatch"];
 
+	[dic setUnsignedInteger:self.filterActionFloodControlInterval forKey:@"filterActionFloodControlInterval"];
 	[dic setUnsignedInteger:self.filterEvents forKey:@"filterEvents"];
 	[dic setUnsignedInteger:self.filterLimitedToValue forKey:@"filterLimitedToValue"];
 
@@ -360,6 +362,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic filterLimitedToChannelsIDs;
 @dynamic filterLimitedToClientsIDs;
 @dynamic filterEventsNumerics;
+@dynamic filterActionFloodControlInterval;
 @dynamic filterAction;
 @dynamic filterForwardToDestination;
 @dynamic filterMatch;
@@ -442,6 +445,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self->_filterEventsNumerics = [filterEventsNumerics copy];
 
 		[self purgeIsCommandEnabledResponses];
+	}
+}
+
+- (void)setFilterActionFloodControlInterval:(NSUInteger)filterActionFloodControlInterval
+{
+	if (self->_filterActionFloodControlInterval != filterActionFloodControlInterval) {
+		self->_filterActionFloodControlInterval = filterActionFloodControlInterval;
 	}
 }
 

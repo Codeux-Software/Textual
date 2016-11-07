@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTextField *filterSenderMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterTitleTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterNotesTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *filterActionFloodControlIntervalTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterEventNumericTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterForwardToDestinationTextField;
 @property (nonatomic, weak) IBOutlet TVCAutoExpandingTokenField *filterActionTokenField;
@@ -185,6 +186,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self setTokens:self.filter.filterAction inTokenField:self.filterActionTokenField];
 
+	self.filterActionFloodControlIntervalTextField.integerValue = self.filter.filterActionFloodControlInterval;
+
 	self.filterTitleTextField.stringValue = self.filter.filterTitle;
 	self.filterNotesTextField.stringValue = self.filter.filterNotes;
 
@@ -248,6 +251,14 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *filterActionStringValue = [self stringValueForTokenField:self.filterActionTokenField];;
 
 	self.filter.filterAction = filterActionStringValue;
+
+	NSInteger filterActionFloodControlInterval = self.filterActionFloodControlIntervalTextField.integerValue;
+
+	if (filterActionFloodControlInterval < 0) {
+		filterActionFloodControlInterval = 0;
+	}
+
+	self.filter.filterActionFloodControlInterval = filterActionFloodControlInterval;
 
 	self.filter.filterTitle = self.filterTitleTextField.stringValue;
 	self.filter.filterNotes = self.filterNotesTextField.stringValue;
