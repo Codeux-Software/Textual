@@ -187,8 +187,6 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 	NSString *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:publicSearch];
 
 	if (cachedValue == nil) {
-		LogToConsoleDebug("Cache miss for %{public}@", indexKey)
-
 		NSDictionary *index = [IRCCommandIndex indexFromIndexKey:indexKey publicSearch:publicSearch];
 
 		if (index) {
@@ -268,8 +266,6 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 	NSNumber *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:publicSearch];
 
 	if (cachedValue == nil) {
-		LogToConsoleDebug("Cache miss for %{public}@", command)
-
 		NSUInteger index = [IRCCommandIndex _indexOfIRCommand:command publicSearch:publicSearch];
 
 		if (index != NSNotFound) {
@@ -328,8 +324,6 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 	NSNumber *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:NO];
 
 	if (cachedValue == nil) {
-		LogToConsoleDebug("Cache miss for %{public}@", command)
-
 		NSUInteger index = [IRCCommandIndex _colonIndexForCommand:command];
 
 		if (index != NSNotFound) {

@@ -483,6 +483,9 @@ NS_ASSUME_NONNULL_BEGIN
 		NSTimeInterval filterLastPerform = [self.filterActionLastPerforms doubleForKey:filterIdentifier];
 
 		if ((now - filterLastPerform) <= floodControlInterval) {
+			LogToConsoleDebug("Not performing action because of flood control: %.2f %.2f",
+				now, filterLastPerform)
+
 			return NO;
 		}
 
