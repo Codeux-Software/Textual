@@ -130,7 +130,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign, readwrite) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign, readwrite) NSTimeInterval lastMessageReceived;
 @property (nonatomic, assign, readwrite) NSTimeInterval lastMessageServerTime;
-@property (nonatomic, assign, readwrite) ClientIRCv3SupportedCapabilities capacities;
+@property (nonatomic, assign, readwrite) ClientIRCv3SupportedCapabilities capabilities;
 @property (nonatomic, copy, readwrite) NSArray<IRCHighlightLogEntry *> *cachedHighlights;
 @property (nonatomic, copy, readwrite, nullable) NSString *userHostmask;
 @property (nonatomic, copy, readwrite) NSString *userNickname;
@@ -158,7 +158,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) BOOL zncBoucnerIsSendingCertificateInfo;
 @property (nonatomic, assign) BOOL zncBouncerIsPlayingBackHistory;
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *capacitiesPending;
+@property (nonatomic, strong) NSMutableArray<NSNumber *> *capabilitiesPending;
 @property (nonatomic, assign) NSTimeInterval lagCheckLastCheck;
 @property (nonatomic, assign) NSUInteger connectDelay;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
@@ -227,7 +227,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.cachedHighlights = @[];
 
-	self.capacitiesPending = [NSMutableArray array];
+	self.capabilitiesPending = [NSMutableArray array];
 	self.channelListPrivate = [NSMutableArray array];
 	self.commandQueue = [NSMutableArray array];
 
@@ -2696,12 +2696,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandCapIndex: // Command: CAP
 		case IRCPublicCommandCapsIndex: // Command: CAPS
 		{
-			NSString *capacities = self.enabledCapacitiesStringValue;
+			NSString *capabilites = self.enabledCapabilitiesStringValue;
 
-			if (capacities.length == 0) {
+			if (capabilites.length == 0) {
 				[self printDebugInformation:TXTLS(@"IRC[1036]")];
 			} else {
-				[self printDebugInformation:TXTLS(@"IRC[1037]", capacities)];
+				[self printDebugInformation:TXTLS(@"IRC[1037]", capabilites)];
 			}
 
 			break;
@@ -4511,11 +4511,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	
 	self.lastMessageReceived = 0;
 
-	self.capacities = 0;
+	self.Capabilities = 0;
 	self.capabilityNegotiationIsPaused = NO;
 
-	@synchronized (self.capacitiesPending) {
-		[self.capacitiesPending removeAllObjects];
+	@synchronized (self.capabilitiesPending) {
+		[self.capabilitiesPending removeAllObjects];
 	}
 
 	@synchronized(self.commandQueue) {
@@ -5831,7 +5831,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* CAP command */
 	/* Textual responding to CTCP CAP command is undocumented and is subject to change. */
-	/* Textual responds to this command by replying with the capacities it supports. */
+	/* Textual responds to this command by replying with the Capabilities it supports. */
 	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")])
 	{
 		NSString *subcommand = textMutable.token;
@@ -6992,40 +6992,40 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)enableCapability:(ClientIRCv3SupportedCapabilities)capability
 {
 	if ([self isCapabilityEnabled:capability] == NO) {
-		self->_capacities |= capability;
+		self->_capabilities |= capability;
 	}
 }
 
 - (void)disableCapability:(ClientIRCv3SupportedCapabilities)capability
 {
 	if ([self isCapabilityEnabled:capability]) {
-		self->_capacities &= ~capability;
+		self->_capabilities &= ~capability;
 	}
 }
 
 - (BOOL)isCapabilityEnabled:(ClientIRCv3SupportedCapabilities)capability
 {
-	return ((self->_capacities & capability) == capability);
+	return ((self->_capabilities & capability) == capability);
 }
 
 - (void)enablePendingCapability:(ClientIRCv3SupportedCapabilities)capability
 {
-	@synchronized (self.capacitiesPending) {
-		[self.capacitiesPending addObjectWithoutDuplication:@(capability)];
+	@synchronized (self.capabilitiesPending) {
+		[self.capabilitiesPending addObjectWithoutDuplication:@(capability)];
 	}
 }
 
 - (void)disablePendingCapability:(ClientIRCv3SupportedCapabilities)capability
 {
-	@synchronized (self.capacitiesPending) {
-		[self.capacitiesPending removeObject:@(capability)];
+	@synchronized (self.capabilitiesPending) {
+		[self.capabilitiesPending removeObject:@(capability)];
 	}
 }
 
 - (BOOL)isPendingCapabilityEnabled:(ClientIRCv3SupportedCapabilities)capability
 {
-	@synchronized (self.capacitiesPending) {
-		return [self.capacitiesPending containsObject:@(capability)];
+	@synchronized (self.capabilitiesPending) {
+		return [self.capabilitiesPending containsObject:@(capability)];
 	}
 }
 
@@ -7195,9 +7195,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return 0;
 }
 
-- (NSString *)enabledCapacitiesStringValue
+- (NSString *)enabledCapabilitiesStringValue
 {
-	NSMutableArray *enabledCapacities = [NSMutableArray array];
+	NSMutableArray *enabledCapabilities = [NSMutableArray array];
 	
 	void (^appendValue)(ClientIRCv3SupportedCapabilities) = ^(ClientIRCv3SupportedCapabilities capability) {
 		if ([self isCapabilityEnabled:capability] == NO) {
@@ -7207,7 +7207,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSString *stringValue = [self capabilityStringValue:capability];
 			
 		if (stringValue) {
-			[enabledCapacities addObject:stringValue];
+			[enabledCapabilities addObject:stringValue];
 		}
 	};
 
@@ -7218,14 +7218,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	appendValue(ClientIRCv3SupportedCapabilityIdentifyMsg);
 	appendValue(ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL);
 	appendValue(ClientIRCv3SupportedCapabilityMultiPreifx);
+	appendValue(ClientIRCv3SupportedCapabilityPlayback);
 	appendValue(ClientIRCv3SupportedCapabilityServerTime);
 	appendValue(ClientIRCv3SupportedCapabilityUserhostInNames);
-	appendValue(ClientIRCv3SupportedCapabilityPlanioPlayback);
 	appendValue(ClientIRCv3SupportedCapabilityZNCCertInfoModule);
 	appendValue(ClientIRCv3SupportedCapabilityZNCPlaybackModule);
 	appendValue(ClientIRCv3SupportedCapabilityZNCSelfMessage);
 	
-	NSString *stringValue = [enabledCapacities componentsJoinedByString:@", "];
+	NSString *stringValue = [enabledCapabilities componentsJoinedByString:@", "];
 	
 	return stringValue;
 }
@@ -7236,12 +7236,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	@synchronized (self.capacitiesPending) {
-		/* -capacitiesPending can contain values that are used internally for state traking 
+	@synchronized (self.capabilitiesPending) {
+		/* -CapabilitiesPending can contain values that are used internally for state traking 
 		 and should never meet the socket. To workaround this as best we can, we scan the 
 		 array for the first capability that is acceptable for negotation. */
 		NSUInteger nextCapabilityIndex =
-		[self.capacitiesPending indexOfObjectPassingTest:^BOOL(NSNumber *capabilityPending, NSUInteger index, BOOL *stop) {
+		[self.capabilitiesPending indexOfObjectPassingTest:^BOOL(NSNumber *capabilityPending, NSUInteger index, BOOL *stop) {
 			ClientIRCv3SupportedCapabilities capability = capabilityPending.unsignedIntegerValue;
 
 #pragma clang diagnostic push
@@ -7274,9 +7274,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		ClientIRCv3SupportedCapabilities capability =
-		[self.capacitiesPending unsignedIntegerAtIndex:nextCapabilityIndex];
+		[self.capabilitiesPending unsignedIntegerAtIndex:nextCapabilityIndex];
 
-		[self.capacitiesPending removeObjectAtIndex:nextCapabilityIndex];
+		[self.capabilitiesPending removeObjectAtIndex:nextCapabilityIndex];
 
 		NSString *stringValue = [self capabilityStringValue:capability];
 
