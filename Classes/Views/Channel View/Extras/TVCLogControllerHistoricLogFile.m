@@ -284,7 +284,7 @@ NS_ASSUME_NONNULL_BEGIN
 			/* If we failed to load our store, we create a brand new one at a new path
 			 incase the old one is corrupted. We also erase the old database to not allow
 			 the file to just hang on the OS. */
-			[self resetData]; // Destroy any data that may exist
+			[self resetDatabaseSavePath]; // Destroy any data that may exist
 
 			[self createBaseModelWithRecursion:1];
 		}
@@ -308,14 +308,21 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (void)resetDatabaseSavePath
+{
+	NSString *filename = [NSString stringWithFormat:@"logControllerHistoricLog_%@.sqlite", [NSString stringWithUUID]];
+
+	[RZUserDefaults() setObject:filename forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+}
+
 - (NSString *)databaseSavePath
 {
 	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
 
 	if (filename == nil) {
-		filename = [NSString stringWithFormat:@"logControllerHistoricLog_%@.sqlite", [NSString stringWithUUID]];
+		[self resetDatabaseSavePath];
 
-		[RZUserDefaults() setObject:filename forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+		return [self databaseSavePath];
 	}
 
 	NSString *sourcePath = [TPCPathInfo applicationCachesFolderPath];
