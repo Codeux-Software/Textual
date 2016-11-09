@@ -4511,7 +4511,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	
 	self.lastMessageReceived = 0;
 
-	self.Capabilities = 0;
+	self.capabilities = 0;
 	self.capabilityNegotiationIsPaused = NO;
 
 	@synchronized (self.capabilitiesPending) {
