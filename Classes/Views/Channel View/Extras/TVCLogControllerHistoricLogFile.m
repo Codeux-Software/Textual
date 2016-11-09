@@ -113,18 +113,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return fetchRequest;
 }
 
-- (void)resetData
-{
-	LogToConsoleDebug("Resetting data")
-
-	NSString *oldPath = [self databaseSavePath];
-
-	[RZFileManager() removeItemAtPath:oldPath error:NULL];
-
-	[RZFileManager() removeItemAtPath:[oldPath stringByAppendingString:@"-wal"] error:NULL];
-	[RZFileManager() removeItemAtPath:[oldPath stringByAppendingString:@"-shm"] error:NULL];
-}
-
 - (void)_resetDataForChannelUsingBatch:(IRCChannel *)channel
 {
 	NSParameterAssert(channel  != nil);
