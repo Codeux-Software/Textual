@@ -268,7 +268,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
 
 	NSDictionary *pragmaOptions = @{
-		@"synchronous" : @"OFF",
+		@"synchronous" : @"FULL",
 		@"journal_mode" : @"WAL"
 	};
 
