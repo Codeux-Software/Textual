@@ -539,15 +539,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL firstTimeLoadingHistory = (self.historyLoadedForFirstTime == NO);
 
-#define _numberOfDesiredLines			100
-
 	if (
 		/* 1 */ self.encrypted ||
-		/* 2 */ self.activeLineCount >= _numberOfDesiredLines ||
-		/* 3 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
-		/* 4 */  self.associatedChannel == nil ||
-		/* 5 */  self.associatedChannel.isUtility ||
-		/* 6 */ (self.associatedChannel.isPrivateMessage &&
+		/* 2 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
+		/* 3 */  self.associatedChannel == nil ||
+		/* 4 */  self.associatedChannel.isUtility ||
+		/* 5 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
 		self.historyLoadedForFirstTime = YES;
@@ -595,8 +592,6 @@ ClassWithDesignatedInitializerInitMethod
 	};
 
 	_enqueueBlockStandalone(operationBlock)
-
-#undef _numberOfDesiredLines
 }
 
 - (void)reloadTheme
