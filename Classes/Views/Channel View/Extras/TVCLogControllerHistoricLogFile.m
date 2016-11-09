@@ -40,11 +40,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) TLOTimer *saveTimer;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
@@ -61,10 +61,25 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		sharedSelf = [[self alloc] init];
 
-		[sharedSelf createBaseModel];
+		[sharedSelf prepareInitialState];
 	});
 
 	return sharedSelf;
+}
+
+- (void)prepareInitialState
+{
+	[self createBaseModel];
+
+	TLOTimer *saveTimer = [TLOTimer new];
+
+	saveTimer.target = self;
+	saveTimer.action = @selector(saveData:);
+	saveTimer.repeatTimer = YES;
+
+	[saveTimer start:(60 * 15)]; //  15 minutes
+
+	self.saveTimer = saveTimer;
 }
 
 - (NSFetchRequest *)fetchRequestForChannel:(IRCChannel *)channel
@@ -166,13 +181,9 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		context.propagatesDeletesAtEndOfEvent = NO;
-
 		for (NSManagedObject *object in fetchedObjects) {
 			[context deleteObject:object];
 		}
-
-		context.propagatesDeletesAtEndOfEvent = YES;
 	}];
 }
 
@@ -300,8 +311,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.persistentStoreCoordinator = persistentStoreCoordinator;
 	}
-
-	[self resetMaintenanceTimer];
 }
 
 - (NSString *)databaseSavePath
@@ -336,8 +345,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveDataDuringTermination:(BOOL)duringTermination
 {
-	[self resetMaintenanceTimer];
-
 	NSManagedObjectContext *context = self.managedObjectContext;
 
 	[context performBlock:^{
@@ -372,13 +379,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)resetMaintenanceTimer
+- (void)saveData:(id)sender
 {
-	[self cancelPerformRequestsWithSelector:@selector(saveData)]; // cancel previous timers
-
-	self.hasPendingAutosaveTimer = YES;
-
-	[self performSelector:@selector(saveData) withObject:nil afterDelay:(60 * 10)]; // 10 minutes
+	[self saveData];
 }
 
 - (void)trimStoreBeforeSaving
@@ -406,8 +409,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return;
 	}
-
-	context.propagatesDeletesAtEndOfEvent = NO;
 
 	NSUInteger channelsCountMaximum = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
 
@@ -440,8 +441,6 @@ NS_ASSUME_NONNULL_BEGIN
 				object.description, channelId)
 		}
 	}
-
-	context.propagatesDeletesAtEndOfEvent = YES;
 
 	LogToConsoleInfo("Finished trimming Core Data store")
 }
