@@ -115,6 +115,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetData
 {
+	LogToConsoleDebug("Resetting data")
+
 	NSString *oldPath = [self databaseSavePath];
 
 	[RZFileManager() removeItemAtPath:oldPath error:NULL];
@@ -189,6 +191,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetDataForChannel:(IRCChannel *)channel
 {
+	LogToConsoleDebug("Resetting the contents of channel: %@", channel.description)
+
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
 		[self _resetDataForChannelUsingBatch:channel];
 	} else {
@@ -218,10 +222,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (fetchedObjects == nil) {
 			LogToConsoleError("Error occurred fetching objects: %@",
-							  fetchRequestError.localizedDescription)
+				fetchRequestError.localizedDescription)
 
 			return;
 		}
+
+		LogToConsoleDebug("%ld results fetched for channel %@",
+			fetchedObjects.count, channel.description)
 
 		completionBlock(fetchedObjects);
 	}];
@@ -438,7 +445,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[context deleteObject:object];
 
 			LogToConsoleDebug("Deleting object %@ in %@",
-				object.description, channelId)
+				object.description, channelId.description)
 		}
 	}
 
