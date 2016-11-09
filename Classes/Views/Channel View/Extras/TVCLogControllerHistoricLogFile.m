@@ -200,7 +200,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[context performBlockAndWait:^{
 		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
-														 fetchLimit:0
+														 fetchLimit:fetchLimit
 														limitToDate:limitToDate
 														 resultType:NSManagedObjectResultType];
 
