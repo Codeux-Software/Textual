@@ -91,6 +91,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandLeaveIndex = 5036,
 	IRCPublicCommandListIndex = 5037,
 	IRCPublicCommandLocopsIndex = 5039,
+	IRCPublicCommandLoglogsIndex = 5111,
 	IRCPublicCommandMIndex = 5040,
 	IRCPublicCommandMeIndex = 5041,
 	IRCPublicCommandModeIndex = 5042,

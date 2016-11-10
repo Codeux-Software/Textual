@@ -360,7 +360,8 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			LogToConsoleError("Failed to commit editing")
 		}
-		else if ([context hasChanges])
+
+		if ([context hasChanges])
 		{
 			/* Truncate database before saving it */
 			[self trimStoreBeforeSaving];
