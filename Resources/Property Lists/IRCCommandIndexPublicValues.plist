@@ -619,6 +619,15 @@
 		<key>indexValue</key>
 		<integer>5055</integer>
 	</dict>
+	<key>loglogs</key>
+	<dict>
+		<key>command</key>
+		<string>LOGLOGS</string>
+		<key>developerModeOnly</key>
+		<true/>
+		<key>indexValue</key>
+		<real>5111</real>
+	</dict>
 	<key>query</key>
 	<dict>
 		<key>command</key>
