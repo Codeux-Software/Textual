@@ -936,7 +936,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	newEntry.renderedMessage = messageBodyRendered;
 
-	newEntry.timeLogged = [NSDate date];
+	newEntry.timeLogged = logLine.receivedAt;
 
 	/* We insert at head so that latest is always on top. */
 	NSMutableArray *cachedHighlights = [self.cachedHighlights mutableCopy];
