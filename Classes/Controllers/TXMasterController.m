@@ -492,13 +492,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	return (
 		/* Clients are still disconnecting */
-		self.terminatingClientCount == 0 ||
+		self.terminatingClientCount == 0 &&
 
 		/* Core Data is saving */
 		TVCLogControllerHistoricLogSharedInstance().isSaving == NO
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		||
+		&&
 
 		/* iCloud is syncing */
 		[sharedCloudManager() isTerminated]
