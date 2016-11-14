@@ -297,7 +297,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
 
-		managedObjectContext.retainsRegisteredObjects = NO;
+		managedObjectContext.retainsRegisteredObjects = YES;
 
 		managedObjectContext.undoManager = nil;
 
