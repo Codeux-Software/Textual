@@ -495,7 +495,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.terminatingClientCount == 0 ||
 
 		/* Core Data is saving */
-		TVCLogControllerHistoricLogSharedInstance().isSaving
+		TVCLogControllerHistoricLogSharedInstance().isSaving == NO
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		||
