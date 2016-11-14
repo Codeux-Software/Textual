@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
  by sending the QUIT command and waiting for a response. If clients do not
  shut down gracefully within the time allotted below, then we continue with
  termination regardless of their status. */
-#define _gracefulTerminateTimeout		4
+#define _gracefulTerminateTimeout		5
 
 @interface TXMasterController ()
 @property (nonatomic, strong, readwrite) IRCWorld *world;
