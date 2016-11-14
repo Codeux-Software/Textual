@@ -257,7 +257,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *pragmaOptions = @{
 		@"synchronous" : @"FULL",
-		@"journal_mode" : @"DELETE"
+		@"journal_mode" : @"WAL"
 	};
 
 	NSDictionary *persistentStoreOptions = @{NSSQLitePragmasOption : pragmaOptions};
