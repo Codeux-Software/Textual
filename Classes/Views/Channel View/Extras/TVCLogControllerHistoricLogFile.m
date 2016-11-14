@@ -347,15 +347,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveDataDuringTermination:(BOOL)duringTermination
 {
+	if (self.isPerformingSave == NO) {
+		self.isPerformingSave = YES;
+	} else {
+		return;
+	}
+
 	NSManagedObjectContext *context = self.managedObjectContext;
 
 	[context performBlock:^{
-		if (self.isPerformingSave == NO) {
-			self.isPerformingSave = YES;
-		} else {
-			return;
-		}
-
 		if ([context commitEditing] == NO)
 		{
 			LogToConsoleError("Failed to commit editing")
