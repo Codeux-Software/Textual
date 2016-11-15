@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
 #endif
 
++ (void)setNicknameColorHashingComputesRGBValue:(BOOL)nicknameColorHashingComputesRGBValue;
+
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
 
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors;
