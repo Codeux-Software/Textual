@@ -265,6 +265,9 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (BOOL)onlySpeakEventsForSelection;
 
++ (BOOL)channelMessageSpeakChannelName;
++ (BOOL)channelMessageSpeakNickname;
+
 + (nullable NSString *)soundForEvent:(TXNotificationType)event;
 
 + (BOOL)speakEvent:(TXNotificationType)event;

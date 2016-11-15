@@ -627,6 +627,43 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences setNicknameColorHashingComputesRGBValue:enableNewNicknameColorSystem];
 }
 
+- (BOOL)onlySpeakEventsForSelection
+{
+	return [TPCPreferences onlySpeakEventsForSelection];
+}
+
+- (void)setOnlySpeakEventsForSelection:(BOOL)onlySpeakEventsForSelection
+{
+	[TPCPreferences setOnlySpeakEventsForSelection:onlySpeakEventsForSelection];
+
+	[self willChangeValueForKey:@"channelMessageSpeakChannelName"];
+	[self didChangeValueForKey:@"channelMessageSpeakChannelName"];
+}
+
+- (BOOL)channelMessageSpeakChannelName
+{
+	if ([TPCPreferences onlySpeakEventsForSelection]) {
+		return NO;
+	}
+
+	return [TPCPreferences channelMessageSpeakChannelName];
+}
+
+- (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName
+{
+	[TPCPreferences setChannelMessageSpeakChannelName:channelMessageSpeakChannelName];
+}
+
+- (BOOL)channelMessageSpeakNickname
+{
+	return [TPCPreferences channelMessageSpeakNickname];
+}
+
+- (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname
+{
+	[TPCPreferences setChannelMessageSpeakNickname:channelMessageSpeakNickname];
+}
+
 - (BOOL)validateValue:(inout id *)value forKey:(NSString *)key error:(out NSError **)outError
 {
 	if ([key isEqualToString:@"scrollbackLimit"]) {
