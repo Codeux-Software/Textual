@@ -36,25 +36,11 @@
                                     <action selector="manageLicense:" target="267" id="9xt-Qu-8UP"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Updates" tag="103" id="San-DK-zUZ">
+                            <menuItem title="Check for updates…" tag="109" id="SKm-yR-9hI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Updates" id="0FM-8Y-44m">
-                                    <items>
-                                        <menuItem title="Check for updates…" tag="109" id="SKm-yR-9hI">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="checkForUpdates:" target="267" id="Khl-F9-d2t"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="6AQ-kD-brM"/>
-                                        <menuItem title="Automatically Check for Updates" state="on" tag="110" id="NoV-uq-0cX">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="toggleAutomaticallyCheckForUpdates:" target="267" id="5jx-rT-PEb"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="267" id="Khl-F9-d2t"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -969,7 +955,7 @@ CQ
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3079"/>
-                                        <menuItem title="Connecting with Certificate" tag="914" id="o9J-hu-dKA">
+                                        <menuItem title="Connecting with a Certificate" tag="914" id="o9J-hu-dKA">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openHelpMenuItem:" target="267" id="6Ax-wH-9h7"/>
@@ -1009,28 +995,10 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Advanced" id="2719">
                                     <items>
-                                        <menuItem title="Enable App Nap" tag="928" id="xJq-Kh-dY9">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="toggleAppNap:" target="267" id="OBl-GU-mhU"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Enable Beta Updates" tag="926" id="OUj-ks-huG">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="toggleBetaUpdates:" target="267" id="fwr-f1-tOW"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Enable Developer Mode" tag="920" id="2280">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="toggleDeveloperMode:" target="267" id="2281"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Enable WebKit2" tag="931" id="6d4-yM-pbm">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="toggleWebKit2:" target="267" id="JVs-zt-EUD"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2721">
@@ -1042,28 +1010,10 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open &quot;Welcome to Textual&quot; Dialog" tag="921" id="3103">
+                                        <menuItem title="Hidden Preferences…" tag="930" id="2725">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="showWelcomeSheet:" target="267" id="8jJ-Pr-Y90"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Open Web Inspector" tag="930" id="uSd-ZA-jhP">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openWebInspector:" target="267" id="JJH-eD-wK5"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="2725">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Simulate a Crash" tag="923" id="DCt-W4-lfW">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
+                                                <action selector="showHiddenPreferences:" target="267" id="SSd-K5-dFp"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3085"/>
@@ -1077,6 +1027,13 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="importPreferences:" target="267" id="3090"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="gIQ-2m-VHD"/>
+                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="UfC-Uf-EFM">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="resetDoNotAskMePopupWarnings:" target="267" id="z5V-jK-Ms7"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -1110,7 +1067,6 @@ CQ
                 <outlet property="mainMenuCloseWindowMenuItem" destination="1770" id="v1F-W5-HfU"/>
                 <outlet property="mainMenuNavigationChannelListMenu" destination="89a-J1-2zg" id="8Ju-VI-XQI"/>
                 <outlet property="mainMenuServerMenuItem" destination="286" id="OSj-f8-vqi"/>
-                <outlet property="mainMenuUpdatesMenuItem" destination="San-DK-zUZ" id="CwH-0j-nYs"/>
                 <outlet property="mainMenuWindowMenuItem" destination="19" id="w4D-Ns-fa4"/>
                 <outlet property="mainWindowSegmentedControllerCell0Menu" destination="2953" id="oCb-R7-qbx"/>
                 <outlet property="muteNotificationsDockMenuItem" destination="dnc-ku-aQ3" id="Af9-tD-wlC"/>

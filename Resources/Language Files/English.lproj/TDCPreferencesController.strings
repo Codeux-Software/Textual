@@ -44,8 +44,8 @@
 "TDCPreferencesController[1003]" = "No Location Selected";
 
 "TDCPreferencesController[1004]" = "Growl is running. Notifications will be forwarded to it.";
-"TDCPreferencesController[1005]" = "Notifications will be posted using Notification Center.";
-"TDCPreferencesController[1006]" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC */
+"TDCPreferencesController[1005]" = "Notifications will be shown using Notification Center.";
+"TDCPreferencesController[1006]" = "Growl is not running. Notifications will not be shown."; /* For Lion. It does not have NC */
 
 "TDCPreferencesController[1007][1]" = "Are you opening this style because you are interested in modifying it?";
 "TDCPreferencesController[1007][2]" = "Click “Yes” to create a copy of this style specifically for that purpose.";

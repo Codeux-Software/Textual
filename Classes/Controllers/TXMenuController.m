@@ -77,7 +77,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuCloseWindowMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuChannelMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuServerMenuItem;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuUpdatesMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuWindowMenuItem;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *mainWindowSegmentedControllerCell0Menu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *serverListNoSelectionMenu;
@@ -98,10 +97,6 @@ NS_ASSUME_NONNULL_BEGIN
 		self.muteNotificationsSoundsDockMenuItem.state = NSOnState;
 		self.muteNotificationsSoundsFileMenuItem.state = NSOnState;
 	}
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-	self.mainMenuUpdatesMenuItem.hidden = YES;
-#endif
 
 	[self setupOtherServices];
 
@@ -265,7 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				/* Disable everything by default except tag 900 through 916. These are various
 				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || (tag > 916 && tag < 931)) {
+				if (tag < 900 || (tag > 916 && tag < 930)) {
 					returnValue = NO;
 				}
 
@@ -383,21 +378,6 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 0
 			menuItem.hidden = YES;
-#endif
-
-			return YES;
-		}
-		case 110: // "Automatically Check for Updates"
-		{
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-			SUUpdater *updater = [SUUpdater sharedUpdater];
-
-			if (updater.automaticallyChecksForUpdates) {
-				menuItem.state = NSOnState;
-			} else {
-				menuItem.state = NSOffState;
-			}
 #endif
 
 			return YES;
@@ -738,33 +718,6 @@ NS_ASSUME_NONNULL_BEGIN
             return YES;
 		}
 
-		case 926: // Download Beta Updates
-		{
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-			menuItem.hidden = YES;
-#else
-			if ([TPCPreferences receiveBetaUpdates]) {
-				menuItem.state = NSOnState;
-			} else {
-				menuItem.state = NSOffState;
-			}
-#endif
-
-			return YES;
-		}
-
-		case 928: // Enable App Nap
-		{
-			if ([TPCPreferences appNapEnabled]) {
-				menuItem.state = NSOnState;
-			} else {
-				menuItem.state = NSOffState;
-			}
-
-			return YES;
-		}
-
 		case 929: // Collect Anonymous Statistics
 		{
 
@@ -779,21 +732,6 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 			 return YES;
-		}
-
-		case 931: // Enable WebKit2
-		{
-			if ([XRSystemInformation isUsingOSXElCapitanOrLater] == NO) {
-				menuItem.hidden = YES;
-			} else {
-				if ([TPCPreferences webKit2Enabled]) {
-					menuItem.state = NSOnState;
-				} else {
-					menuItem.state = NSOffState;
-				}
-			}
-
-			return YES;
 		}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -1409,6 +1347,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showPreferencesWindow:(id)sender
 {
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerDefaultNavigationSelection];
+}
+
+- (void)showHiddenPreferences:(id)sender
+{
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerHiddenPreferencesNavigationSelection];
+}
+
+- (void)showPreferencesWindowWithSelection:(TDCPreferencesControllerNavigationSelection)selection
+{
 	_popWindowViewIfExists(@"TDCPreferencesController");
 	
 	TDCPreferencesController *controller =
@@ -1416,7 +1364,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	controller.delegate = (id)self;
 	
-	[controller show];
+	[controller show:selection];
 
 	[windowController() addWindowToWindowList:controller];
 }
@@ -3233,16 +3181,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences performReloadAction:TPCPreferencesReloadIRCCommandCacheAction];
 }
 
-- (void)toggleAppNap:(id)sender
-{
-	[TPCPreferences setAppNapEnabled:([TPCPreferences appNapEnabled] == NO)];
-}
-
-- (IBAction)toggleWebKit2:(id)sender
-{
-	[TPCPreferences setWebKit2Enabled:([TPCPreferences webKit2Enabled] == NO)];
-}
-
 - (void)resetDoNotAskMePopupWarnings:(id)sender
 {
 	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
@@ -3510,28 +3448,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Sparkle Framework
-
-- (void)toggleAutomaticallyCheckForUpdates:(id)sender
-{
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	SUUpdater *updater = [SUUpdater sharedUpdater];
-
-	updater.automaticallyChecksForUpdates = (updater.automaticallyChecksForUpdates == NO);
-#endif
-}
-
-- (void)toggleBetaUpdates:(id)sender
-{
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	[TPCPreferences setReceiveBetaUpdates:([TPCPreferences receiveBetaUpdates] == NO)];
-
-	[TPCPreferences performReloadAction:TPCPreferencesReloadSparkleFrameworkFeedURLAction];
-
-	if ([TPCPreferences receiveBetaUpdates]) {
-		[self checkForUpdates:sender];
-	}
-#endif
-}
 
 - (void)checkForUpdates:(id)sender
 {
