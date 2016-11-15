@@ -3581,6 +3581,52 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case IRCPublicCommandNotifybubble: // Command: NOTIFYBUBBLE
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			if ([self stringIsChannelName:stringInString]) {
+				targetChannel = [self findChannel:stringIn.tokenAsString];
+			} else {
+				targetChannel = nil;
+			}
+
+			NSUserNotification *notification = [NSUserNotification new];
+
+			notification.deliveryDate = [NSDate date];
+
+			notification.title = [TPCApplicationInfo applicationName];
+
+			notification.informativeText = stringInString;
+
+			if (targetChannel) {
+				notification.userInfo = @{@"clientId": self.uniqueIdentifier, @"channelId": targetChannel.uniqueIdentifier};
+			} else {
+				notification.userInfo = @{@"clientId": self.uniqueIdentifier};
+			}
+
+			[RZUserNotificationCenter() deliverNotification:notification];
+
+			break;
+		}
+		case IRCPublicCommandNotifysound: // Command: NOTIFYSOUND
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			NSString *soundName = stringIn.tokenAsString;
+
+			[TLOSoundPlayer playAlertSound:soundName];
+
+			break;
+		}
+		case IRCPublicCommandNotifyspoken: // Command: NOTIFYSPOKEN
+		{
+			NSAssertReturnLoopBreak(stringInStringLength != 0);
+
+			[[TXSharedApplication sharedSpeechSynthesizer] speak:stringInString];
+
+			break;
+		}
 		case IRCPublicCommandQueryIndex: // Command: QUERY
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
