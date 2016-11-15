@@ -162,6 +162,10 @@
 	<true/>
 	<key>NotificationType -&gt; Private Message -&gt; Sound</key>
 	<string>Submarine</string>
+	<key>NotificationType -&gt; Public Message -&gt; Speak Channel Name</key>
+	<true/>
+	<key>NotificationType -&gt; Public Message -&gt; Speak Nickname</key>
+	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Receiving) -&gt; Bounce Dock Icon</key>
 	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Receiving) -&gt; Enabled</key>
