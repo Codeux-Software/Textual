@@ -938,12 +938,12 @@
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
                                         <connections>
+                                            <binding destination="-2" name="value" keyPath="self.channelMessageSpeakChannelName" id="dOK-qW-wcJ"/>
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.OnlySpeakNotificationsForSelection" id="vof-1F-5Zi">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                 </dictionary>
                                             </binding>
-                                            <binding destination="-2" name="value" keyPath="self.channelMessageSpeakChannelName" id="dOK-qW-wcJ"/>
                                         </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="evp-5y-vS7">
@@ -4914,13 +4914,13 @@
         </arrayController>
         <userDefaultsController id="G2Q-fc-ddg" userLabel="Preferences User Defaults Controller" customClass="TPCPreferencesUserDefaultsController"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="dAH-Sl-d77" userLabel="Hidden Preferences ✓">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="298"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="326"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Ce-CLv">
-                    <rect key="frame" x="38" y="172" width="112" height="18"/>
+                    <rect key="frame" x="38" y="200" width="112" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="W5w-EG-kiD">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4944,7 +4944,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
-                    <rect key="frame" x="38" y="144" width="295" height="18"/>
+                    <rect key="frame" x="38" y="172" width="295" height="18"/>
                     <buttonCell key="cell" type="check" title="Limit number of processes spawned by WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HKB-82-0XP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4978,7 +4978,7 @@
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="1Zi-eb-Hc6">
-                    <rect key="frame" x="129" y="234" width="332" height="34"/>
+                    <rect key="frame" x="129" y="262" width="332" height="34"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wnO-O0-7bL">
                             <rect key="frame" x="-2" y="18" width="59" height="16"/>
@@ -5017,7 +5017,7 @@
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
-                    <rect key="frame" x="38" y="200" width="113" height="18"/>
+                    <rect key="frame" x="38" y="228" width="113" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable App Nap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2nA-D4-FnZ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -5026,27 +5026,40 @@
                         <binding destination="-2" name="value" keyPath="self.appNapEnabled" id="kVr-7F-VmC"/>
                     </connections>
                 </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="r5x-9F-a6i">
+                    <rect key="frame" x="38" y="144" width="201" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable link previews in WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d67-Dk-gJt">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewPreviewLinks" id="ONL-hI-tz0"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="p75-KN-Sms" firstAttribute="top" secondItem="wM2-5T-Kcv" secondAttribute="bottom" constant="14" id="10a-Je-p7S"/>
                 <constraint firstItem="adq-18-C3D" firstAttribute="leading" secondItem="2Bh-Ce-CLv" secondAttribute="leading" id="5CV-aD-0Ie"/>
                 <constraint firstAttribute="bottom" secondItem="V0L-wf-MX5" secondAttribute="bottom" constant="30" id="7OR-U6-MQk"/>
+                <constraint firstItem="r5x-9F-a6i" firstAttribute="top" secondItem="adq-18-C3D" secondAttribute="bottom" constant="14" id="Aqc-4g-kde"/>
+                <constraint firstItem="r5x-9F-a6i" firstAttribute="leading" secondItem="adq-18-C3D" secondAttribute="leading" id="Fx1-bn-GaR"/>
                 <constraint firstItem="1Zi-eb-Hc6" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="I1j-VA-w0x"/>
                 <constraint firstItem="2Bh-Ce-CLv" firstAttribute="top" secondItem="1g9-Qk-YQN" secondAttribute="bottom" constant="14" id="Jim-aQ-Blt"/>
                 <constraint firstItem="2Bh-Ce-CLv" firstAttribute="leading" secondItem="1g9-Qk-YQN" secondAttribute="leading" id="KMI-iE-FlI"/>
-                <constraint firstItem="V0L-wf-MX5" firstAttribute="top" secondItem="Xl2-g8-NiZ" secondAttribute="bottom" constant="18" id="LiH-Cx-Hh6"/>
                 <constraint firstItem="1g9-Qk-YQN" firstAttribute="top" secondItem="1Zi-eb-Hc6" secondAttribute="bottom" constant="18" id="OLL-dW-eBS"/>
+                <constraint firstItem="wM2-5T-Kcv" firstAttribute="leading" secondItem="r5x-9F-a6i" secondAttribute="leading" id="OVo-Hx-3S4"/>
                 <constraint firstItem="Xl2-g8-NiZ" firstAttribute="leading" secondItem="p75-KN-Sms" secondAttribute="leading" id="Qp3-Qb-aat"/>
                 <constraint firstItem="p75-KN-Sms" firstAttribute="leading" secondItem="wM2-5T-Kcv" secondAttribute="leading" id="UF1-Q0-8FM"/>
+                <constraint firstItem="V0L-wf-MX5" firstAttribute="top" secondItem="Xl2-g8-NiZ" secondAttribute="bottom" constant="18" id="Z9m-1h-8dn"/>
                 <constraint firstItem="wM2-5T-Kcv" firstAttribute="leading" secondItem="adq-18-C3D" secondAttribute="leading" id="anE-DT-eZY"/>
                 <constraint firstItem="V0L-wf-MX5" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="b3i-fV-DOR"/>
+                <constraint firstItem="wM2-5T-Kcv" firstAttribute="top" secondItem="r5x-9F-a6i" secondAttribute="bottom" constant="14" id="cfg-XI-taa"/>
                 <constraint firstItem="adq-18-C3D" firstAttribute="top" secondItem="2Bh-Ce-CLv" secondAttribute="bottom" constant="14" id="jKQ-s0-2rL"/>
                 <constraint firstItem="1Zi-eb-Hc6" firstAttribute="top" secondItem="dAH-Sl-d77" secondAttribute="top" constant="30" id="lPM-zW-p6o"/>
                 <constraint firstItem="Xl2-g8-NiZ" firstAttribute="top" secondItem="p75-KN-Sms" secondAttribute="bottom" constant="14" id="ml1-ww-Bam"/>
-                <constraint firstItem="wM2-5T-Kcv" firstAttribute="top" secondItem="adq-18-C3D" secondAttribute="bottom" constant="14" id="nOk-Xh-gUu"/>
                 <constraint firstItem="1g9-Qk-YQN" firstAttribute="leading" secondItem="dAH-Sl-d77" secondAttribute="leading" constant="40" id="wuN-qQ-Fu2"/>
             </constraints>
-            <point key="canvasLocation" x="508.5" y="-294.5"/>
+            <point key="canvasLocation" x="508.5" y="-282"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="e8H-uo-073" userLabel="Mountain Lion Warning ✓">
             <rect key="frame" x="0.0" y="0.0" width="589" height="273"/>
