@@ -4925,6 +4925,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.UsesWebKit2WhenAvailable" id="Xds-VT-o1A"/>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-g8-NiZ">
                     <rect key="frame" x="38" y="60" width="263" height="18"/>
@@ -4932,6 +4935,13 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableSidebarTranslucency" id="QoU-AQ-Kep">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
                     <rect key="frame" x="38" y="144" width="295" height="18"/>
@@ -4939,6 +4949,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewProcessPoolSizeIsLimited" id="rPc-UM-cTW"/>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="p75-KN-Sms">
                     <rect key="frame" x="38" y="88" width="124" height="18"/>
@@ -4946,6 +4959,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Optimizations -&gt; Load History Lazily" id="4d0-ks-wbl"/>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="wM2-5T-Kcv">
                     <rect key="frame" x="38" y="116" width="164" height="18"/>
@@ -4953,6 +4969,13 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewDoNotUsesCustomScrollers" id="0SS-ZD-V6A">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="1Zi-eb-Hc6">
                     <rect key="frame" x="129" y="234" width="332" height="34"/>
