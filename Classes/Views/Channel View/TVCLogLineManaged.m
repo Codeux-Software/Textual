@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @dynamic creationDate;
 @dynamic data;
 
-- (instancetype)initWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel context:(NSManagedObjectContext *)context
++ (instancetype)managedObjectWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel context:(NSManagedObjectContext *)context
 {
 	NSParameterAssert(logLine != nil);
 	NSParameterAssert(channel != nil);
@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"LogLine" inManagedObjectContext:context];
 
-	TVCLogLineManaged *newEntry = (id)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+	TVCLogLineManaged *newEntry = (id)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
 
 	[newEntry setValue:@([NSDate timeIntervalSince1970]) forKey:@"creationDate"];
 
