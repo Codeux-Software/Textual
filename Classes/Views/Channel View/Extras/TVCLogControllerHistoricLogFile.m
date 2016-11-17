@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) TLOTimer *saveTimer;
+@property (nonatomic, strong) TLOTimer *trimTimer;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
@@ -77,9 +78,19 @@ NS_ASSUME_NONNULL_BEGIN
 	saveTimer.action = @selector(saveData:);
 	saveTimer.repeatTimer = YES;
 
-	[saveTimer start:(60 * 15)]; //  15 minutes
+	[saveTimer start:(60 * 2)]; // 2 minutes
 
-	self.saveTimer = saveTimer;
+	TLOTimer *trimTimer = [TLOTimer new];
+
+	trimTimer.target = self;
+	trimTimer.action = @selector(trimData:);
+	trimTimer.repeatTimer = YES;
+
+	/* A few seconds are added so saves do not land
+	 on save timer */
+	[trimTimer start:((60 * 30) + 12)]; // 30:12 minutes
+
+	self.trimTimer = trimTimer;
 }
 
 - (NSFetchRequest *)fetchRequestForChannel:(IRCChannel *)channel
@@ -229,14 +240,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSManagedObjectContext *context = self.managedObjectContext;
 
-	TVCLogLineManaged *newEntry =
-	[[TVCLogLineManaged alloc] initWithLogLine:logLine
-									 inChannel:channel
-									   context:context];
-
-	[context performBlockAndWait:^{
-		[context insertObject:newEntry];
-	}];
+	(void)
+	[TVCLogLineManaged managedObjectWithLogLine:logLine
+									  inChannel:channel
+										context:context];
 }
 
 #pragma mark -
@@ -363,9 +370,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if ([context hasChanges])
 		{
-			/* Truncate database before saving it */
-			[self trimStoreBeforeSaving];
-
 			NSError *saveError = nil;
 
 			if ([context save:&saveError] == NO) {
@@ -387,7 +391,21 @@ NS_ASSUME_NONNULL_BEGIN
 	[self saveData];
 }
 
+- (void)trimData:(id)sender
+{
+	[self trimStoreBeforeSaving];
+}
+
 - (void)trimStoreBeforeSaving
+{
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	[context performBlock:^{
+		[self _trimStoreBeforeSaving];
+	}];
+}
+
+- (void)_trimStoreBeforeSaving
 {
 	/* To keep the store from going without check, we trim it here, ever so often. 
 	 To trim it, we first sort the entries by the channelId, then sort those from 
