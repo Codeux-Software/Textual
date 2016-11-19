@@ -5011,28 +5011,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)processIncomingMessage:(IRCMessage *)message
 {
-	/* TODO: Fix this mess (October 1, 2016) */
-	/* -receivePrivmsgAndNotice: decrypts messages on a
-	 queue which means if we do not process other events
-	 on the same queue, prints will be out of order.
-	 Temporary workaround is to pass everything to that
-	 queue, but long term, a better system should be used
-	 so that we do not have to chain queue callouts. */
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	#define _performBlock(block)	\
-		[sharedEncryptionManager() performBlockAsynchronouslyOnInternalQueue:^{		\
-			dispatch_async(dispatch_get_main_queue(), block);	\
-		}];
-#else
-	#define _performBlock(block)	\
-		dispatch_async(dispatch_get_main_queue(), block);
-#endif
+	NSParameterAssert(message != nil);
 
-	_performBlock(^{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		[self _processIncomingMessage:message];
-	})
-
-#undef _performBlock
+	});
 }
 
 - (void)_processIncomingMessage:(IRCMessage *)message
