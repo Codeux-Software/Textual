@@ -186,7 +186,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-#warning TODO: Modify IRCClient to call this.
 - (void)clearQueueForClient:(IRCClient *)client
 {
 	@synchronized(self.itemsToBeSpoken) {
