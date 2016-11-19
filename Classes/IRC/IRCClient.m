@@ -1396,6 +1396,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(notification != nil);
 
+	if (self.isTerminating) {
+		return nil;
+	}
+
 	NSString *formattedMessage = nil;
 
 	TXNotificationType eventType = notification.notificationType;
