@@ -601,10 +601,10 @@
 		<key>indexValue</key>
 		<real>5113</real>
 	</dict>
-	<key>notifyspoken</key>
+	<key>notifyspeak</key>
 	<dict>
 		<key>command</key>
-		<string>NOTIFYSPOKEN</string>
+		<string>NOTIFYSPEAK</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>

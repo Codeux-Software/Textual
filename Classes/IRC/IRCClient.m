@@ -3694,7 +3694,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandNotifyspoken: // Command: NOTIFYSPOKEN
+		case IRCPublicCommandNotifyspeak: // Command: NOTIFYSPEAK
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
 
