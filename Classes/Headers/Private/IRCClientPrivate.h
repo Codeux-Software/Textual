@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TLOSpokenNotification;
+
 enum {
 	ClientIRCv3SupportedCapabilitySASLGeneric			= 1 << 22,
 	ClientIRCv3SupportedCapabilitySASLPlainText		= 1 << 23, // YES if SASL=plain CAP is supported
