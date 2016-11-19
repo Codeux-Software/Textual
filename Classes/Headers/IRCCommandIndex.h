@@ -106,7 +106,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandNoticeIndex = 5050,
 	IRCPublicCommandNotifybubble = 5112,
 	IRCPublicCommandNotifysound = 5113,
-	IRCPublicCommandNotifyspoken = 5114,
+	IRCPublicCommandNotifyspeak = 5114,
 	IRCPublicCommandOmsgIndex = 5051,
 	IRCPublicCommandOnoticeIndex = 5052,
 	IRCPublicCommandOpIndex = 5053,
