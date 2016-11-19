@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,22 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TLOSpeechSynthesizer : NSObject
-/* If stopped, any items supplied to speak: will be completely ignored. */
-/* Setting the synthesizer to stopped does not clear the queue. Just 
- forces speaking to stop and does not allow additions. */
-@property (nonatomic, assign) BOOL isStopped;
+@interface TLOSpokenNotification : NSObject
+@property (nonatomic, weak, null_unspecified, readonly) IRCClient *client;
+@property (nonatomic, weak, null_unspecified, readonly) IRCChannel *channel;
+@property (nonatomic, copy, null_unspecified, readonly) NSString *nickname;
+@property (nonatomic, copy, null_unspecified, readonly) NSString *text;
+@property (nonatomic, readonly) TVCLogLineType lineType;
+@property (nonatomic, readonly) TXNotificationType notificationType;
 
-- (void)speak:(id)object; // NSString or TLOSpokeNotification
-
-- (void)clearQueue; // Does not stop speaking. Only clears pending items.
-- (void)clearQueueForClient:(IRCClient *)client;
-
-- (void)stopSpeakingAndMoveForward;
+- (instancetype)initWithNotification:(TXNotificationType)notificationType
+							lineType:(TVCLogLineType)lineType
+							  target:(null_unspecified IRCChannel *)target
+							nickname:(null_unspecified NSString *)nickname
+								text:(null_unspecified NSString *)text;
 @end
 
 NS_ASSUME_NONNULL_END
