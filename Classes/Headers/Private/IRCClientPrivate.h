@@ -114,6 +114,8 @@ enum {
 - (void)closeLogFile;
 
 - (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isUtility:(BOOL)isUtility;
+
+- (nullable NSString *)formatNotificationToSpeak:(TLOSpokenNotification *)notification;
 @end
 
 NS_ASSUME_NONNULL_END

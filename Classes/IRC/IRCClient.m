@@ -1392,8 +1392,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Growl
 
-- (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCChannel *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
+- (nullable NSString *)formatNotificationToSpeak:(TLOSpokenNotification *)notification
 {
+	NSParameterAssert(notification != nil);
+
+	NSString *formattedMessage = nil;
+
+	TXNotificationType eventType = notification.notificationType;
+
+	IRCChannel *channel = notification.channel;
+
+	NSString *nickname = notification.nickname;
+
+	NSString *text = notification.text;
+
 	if (text) {
 		text = text.trim;
 
@@ -1402,14 +1414,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	NSString *formattedMessage = nil;
-	
 	switch (eventType) {
 		case TXNotificationHighlightType:
-		case TXNotificationChannelMessageType:
-		case TXNotificationChannelNoticeType:
 		{
-			NSParameterAssert(target != nil);
+			NSParameterAssert(channel != nil);
 			NSParameterAssert(nickname != nil);
 			NSParameterAssert(text != nil);
 
@@ -1417,35 +1425,102 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			BOOL includeChannelName = YES;
+			/* Highlights are spoken regardless of whether the user has configured
+			 Channel Messages to be only spoken for selection. When the user has 
+			 configured that preference, then we exclude the channel name at least
+			 because that information is uninteresting. */
+			/* For private messages, we speak everything, regardless of any preference. */
+			BOOL isChannel = channel.isChannel;
 
-			NSString *formatter = nil;
+			BOOL onlySpeakEventsForSelection = [TPCPreferences onlySpeakEventsForSelection];
 
-			if (eventType == TXNotificationChannelMessageType) {
-				if ([TPCPreferences onlySpeakEventsForSelection]) {
-					includeChannelName = NO;
+			BOOL speakChannelName =
+			/* 1 */	(isChannel == NO ||
+			/* 2 */ (onlySpeakEventsForSelection == NO &&
+					 [TPCPreferences channelMessageSpeakChannelName]) ||
+			/* 2 */	(onlySpeakEventsForSelection &&
+					 [mainWindow() isItemSelected:channel] == NO));
 
-					formatter = @"Notifications[1061]";
-				} else {
-					formatter = @"Notifications[1001]";
+			BOOL speakNickname = (isChannel == NO ||
+					[TPCPreferences channelMessageSpeakNickname]);
+
+			NSMutableString *mutableMessage = [NSMutableString string];
+
+			[mutableMessage appendString:TXTLS(@"Notifications[1003]")];
+
+			if (speakChannelName || speakNickname) {
+				if (speakChannelName) {
+					if (isChannel) {
+						[mutableMessage appendString:TXTLS(@"Notifications[1061]", channel.name.channelNameWithoutBang)]; // Channel
+					} else {
+						[mutableMessage appendString:TXTLS(@"Notifications[1062]")]; // Private Message
+					}
 				}
-			} else if (eventType == TXNotificationChannelNoticeType) {
-				if ([TPCPreferences onlySpeakEventsForSelection]) {
-					includeChannelName = NO;
 
-					formatter = @"Notifications[1062]";
-				} else {
-					formatter = @"Notifications[1002]";
+				if (speakNickname) {
+					if (isChannel) {
+						[mutableMessage appendString:TXTLS(@"Notifications[1063]", nickname)]; // by <nickname>
+					} else {
+						[mutableMessage appendString:TXTLS(@"Notifications[1064]", nickname)]; // from <nickname>
+					}
 				}
-			} else if (eventType == TXNotificationHighlightType) {
-				formatter = @"Notifications[1003]";
+
+				[mutableMessage appendString:TXTLS(@"Notifications[1065]")];
 			}
 
-			if (includeChannelName == NO) {
-				formattedMessage = TXTLS(formatter, nickname, text);
-			} else {
-				formattedMessage = TXTLS(formatter, target.name.channelNameWithoutBang, nickname, text);
+			[mutableMessage appendString:text];
+
+			formattedMessage = [mutableMessage copy];
+
+			break;
+		}
+		case TXNotificationChannelMessageType:
+		case TXNotificationChannelNoticeType:
+		{
+			NSParameterAssert(channel != nil);
+			NSParameterAssert(nickname != nil);
+			NSParameterAssert(text != nil);
+
+			if (text.length == 0) {
+				break;
 			}
+
+			BOOL onlySpeakEventsForSelection = [TPCPreferences onlySpeakEventsForSelection];
+
+			BOOL channelIsSelected = [mainWindow() isItemSelected:channel];
+
+			if (onlySpeakEventsForSelection && channelIsSelected == NO) {
+				break;
+			}
+
+			BOOL speakChannelName = (onlySpeakEventsForSelection == NO &&
+									 [TPCPreferences channelMessageSpeakChannelName]);
+
+			BOOL speakNickname = [TPCPreferences channelMessageSpeakNickname];
+
+			NSMutableString *mutableMessage = [NSMutableString string];
+
+			if (speakChannelName || speakNickname) {
+				if (eventType == TXNotificationChannelMessageType) {
+					[mutableMessage appendString:TXTLS(@"Notifications[1001]")];
+				} else if (eventType == TXNotificationChannelNoticeType) {
+					[mutableMessage appendString:TXTLS(@"Notifications[1002]")];
+				}
+
+				if (speakChannelName) {
+					[mutableMessage appendString:TXTLS(@"Notifications[1061]", channel.name.channelNameWithoutBang)];
+				}
+
+				if (speakNickname) {
+					[mutableMessage appendString:TXTLS(@"Notifications[1063]", nickname)];
+				}
+
+				[mutableMessage appendString:TXTLS(@"Notifications[1065]")];
+			}
+
+			[mutableMessage appendString:text];
+
+			formattedMessage = [mutableMessage copy];
 
 			break;
 		}
@@ -1471,17 +1546,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			formattedMessage = TXTLS(formatter, nickname, text);
-			
+
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			NSParameterAssert(target != nil);
+			NSParameterAssert(channel != nil);
 			NSParameterAssert(nickname != nil);
 
 			NSString *formatter = @"Notifications[1005]";
 
-			formattedMessage = TXTLS(formatter, target.name.channelNameWithoutBang, nickname);
+			formattedMessage = TXTLS(formatter, channel.name.channelNameWithoutBang, nickname);
 
 			break;
 		}
@@ -1508,7 +1583,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			formattedMessage = TXTLS(formatter, self.networkNameAlt);
-			
+
 			break;
 		}
 		case TXNotificationAddressBookMatchType:
@@ -1542,16 +1617,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			formattedMessage = TXTLS(formatter, nickname);
-
+			
 			break;
 		}
 	}
 
-	if (formattedMessage == nil) {
+	return formattedMessage;
+}
+
+- (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCChannel *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
+{
+	if ([TPCPreferences speakEvent:eventType] == NO) {
 		return;
 	}
 
-	[[TXSharedApplication sharedSpeechSynthesizer] speak:formattedMessage];
+	TLOSpokenNotification *notification =
+	[[TLOSpokenNotification alloc] initWithNotification:eventType
+											   lineType:lineType
+												 target:target
+											   nickname:nickname
+												   text:text];
+
+	[[TXSharedApplication sharedSpeechSynthesizer] speak:notification];
 }
 
 - (BOOL)notifyText:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(IRCChannel *)target nickname:(NSString *)nickname text:(NSString *)text
@@ -1625,16 +1712,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL onlySpeakEvent = (postNotificationsWhileFocused && mainWindowIsFocused && targetIsSelected);
 
-	BOOL onlySpeakEventsForSelection = [TPCPreferences onlySpeakEventsForSelection];
-
-	BOOL speakEvent =
-	/* 1 */ ((onlySpeakEventsForSelection == NO ||
-	/* 2 */  (onlySpeakEventsForSelection && targetIsSelected) ||
-	/* 3 */  (onlySpeakEventsForSelection && targetIsSelected == NO &&
-			  eventType != TXNotificationChannelMessageType &&
-			  eventType != TXNotificationChannelNoticeType)) &&
-	/* 4 */		[TPCPreferences speakEvent:eventType]);
-
 	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
 			NSString *soundName = [TPCPreferences soundForEvent:eventType];
@@ -1644,9 +1721,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 		}
 
-		if (speakEvent) {
-			[self speakEvent:eventType lineType:lineType target:target nickname:nickname text:text];
-		}
+		[self speakEvent:eventType lineType:lineType target:target nickname:nickname text:text];
 	}
 
 	if (onlySpeakEvent) {
