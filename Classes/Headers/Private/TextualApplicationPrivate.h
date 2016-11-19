@@ -45,7 +45,6 @@
 @class TVCMainWindowTitlebarAccessoryViewLockButton;
 @class TXMenuControllerMainWindowProxy;
 @class TXWindowController;
-@class TLOSpokenNotification;
 
 #import "TextualApplication.h"
 
