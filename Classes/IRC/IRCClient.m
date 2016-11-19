@@ -550,6 +550,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self closeLogFile];
 
+	[self clearEventsToSpeak];
+
 	[self clearTrackedUsers];
 
 	for (IRCChannel *c in self.channelList) {
@@ -570,6 +572,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self closeDialogs];
 
 	[self closeLogFile];
+
+	[self clearEventsToSpeak];
 
 	[self clearTrackedUsers];
 	
@@ -1627,6 +1631,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	return formattedMessage;
+}
+
+- (void)clearEventsToSpeak
+{
+	[[TXSharedApplication sharedSpeechSynthesizer] clearQueueForClient:self];
 }
 
 - (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCChannel *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
