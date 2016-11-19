@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,22 +35,43 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TLOSpeechSynthesizer : NSObject
-/* If stopped, any items supplied to speak: will be completely ignored. */
-/* Setting the synthesizer to stopped does not clear the queue. Just 
- forces speaking to stop and does not allow additions. */
-@property (nonatomic, assign) BOOL isStopped;
+@interface TLOSpokenNotification ()
+@property (nonatomic, weak, null_unspecified, readwrite) IRCClient *client;
+@property (nonatomic, weak, null_unspecified, readwrite) IRCChannel *channel;
+@property (nonatomic, copy, null_unspecified, readwrite) NSString *nickname;
+@property (nonatomic, copy, null_unspecified, readwrite) NSString *text;
+@property (nonatomic, readwrite) TVCLogLineType lineType;
+@property (nonatomic, readwrite) TXNotificationType notificationType;
+@end
 
-- (void)speak:(id)object; // NSString or TLOSpokeNotification
+@implementation TLOSpokenNotification
 
-- (void)clearQueue; // Does not stop speaking. Only clears pending items.
-- (void)clearQueueForClient:(IRCClient *)client;
+- (instancetype)initWithNotification:(TXNotificationType)notificationType
+							lineType:(TVCLogLineType)lineType
+							  target:(null_unspecified IRCChannel *)target
+							nickname:(null_unspecified NSString *)nickname
+								text:(null_unspecified NSString *)text
+{
+	if ((self = [super init])) {
+		self.notificationType = notificationType;
 
-- (void)stopSpeakingAndMoveForward;
+		self.lineType = lineType;
+
+		self.client = target.associatedClient;
+		self.channel = target;
+
+		self.nickname = nickname;
+
+		self.text = text;
+
+		return self;
+	}
+
+	return nil;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
