@@ -150,6 +150,8 @@ NS_ASSUME_NONNULL_BEGIN
 		if (batchDeleteResult == nil) {
 			LogToConsoleError("Failed to perform batch delete: %@",
 							  batchDeleteError.localizedDescription)
+
+			return;
 		}
 
 //		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
