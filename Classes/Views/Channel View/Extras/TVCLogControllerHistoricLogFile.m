@@ -80,6 +80,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[saveTimer start:(60 * 2)]; // 2 minutes
 
+	self.saveTimer = saveTimer;
+
 	TLOTimer *trimTimer = [TLOTimer new];
 
 	trimTimer.target = self;
