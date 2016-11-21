@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 								   userInfo:nil
 									repeats:self.repeatTimer];
 
-	[RZCurrentRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
+	[RZMainRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)stop
