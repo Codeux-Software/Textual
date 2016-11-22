@@ -88,7 +88,7 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="QvU-QG-4EI"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="4tt-rO-NHB"/>
-                    <toolbarItem implicitItemIdentifier="85E627A0-4579-4CC9-9CDD-932BB5A5C509" explicitItemIdentifier="101" label="General" paletteLabel="General" tag="101" image="TPWTB_General" selectable="YES" id="ye6-2h-R4p">
+                    <toolbarItem implicitItemIdentifier="85E627A0-4579-4CC9-9CDD-932BB5A5C509" explicitItemIdentifier="101" label="General" paletteLabel="General" tag="101" image="applicationIconYosemite" selectable="YES" id="ye6-2h-R4p">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="lUX-Dw-ox4"/>
                         </connections>
@@ -5122,5 +5122,6 @@ OS X Mavericks is supported by any Mac that supports OS X Mountain Lion.</string
         <image name="TPWTB_Interface" width="32" height="32"/>
         <image name="TPWTB_Notifications" width="32" height="32"/>
         <image name="TPWTB_Style" width="32" height="32"/>
+        <image name="applicationIconYosemite" width="512" height="512"/>
     </resources>
 </document>
