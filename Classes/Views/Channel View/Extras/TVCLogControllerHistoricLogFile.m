@@ -438,7 +438,9 @@ NS_ASSUME_NONNULL_BEGIN
 	LogToConsoleInfo("Maximum line count per-channel is: %ld",
 		channelsCountMaximum)
 
-	NSMutableDictionary<NSString *, NSNumber *> *channelCounts = [NSMutableDictionary dictionary];
+	NSString *currentChannelId = nil;
+
+	NSUInteger currentChannelIdCount = 0;
 
 	for (NSManagedObject *object in fetchedObjects) {
 		NSString *channelId = [object valueForKey:@"channelId"];
@@ -449,20 +451,20 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-		NSNumber *channelCount = channelCounts[channelId];
+		if ([currentChannelId isEqualToString:channelId] == NO) {
+			currentChannelId = channelId;
 
-		if (channelCount == nil) {
-			channelCounts[channelId] = @(1);
-		} else {
-			channelCounts[channelId] = @(channelCount.unsignedIntegerValue + 1);
+			currentChannelIdCount = 0;
 		}
 
-		if (channelCount.unsignedIntegerValue > channelsCountMaximum) {
+		if (currentChannelIdCount > channelsCountMaximum) {
 			[context deleteObject:object];
 
 			LogToConsoleDebug("Deleting object %@ in %@",
 				object.description, channelId.description)
 		}
+
+		currentChannelIdCount += 1;
 	}
 
 	LogToConsoleInfo("Finished trimming Core Data store")
