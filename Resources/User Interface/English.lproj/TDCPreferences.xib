@@ -4355,8 +4355,8 @@
                 <userLayoutGuide location="373" affinity="minY"/>
             </userGuides>
             <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZeM-Wr-wwc">
-                    <rect key="frame" x="100" y="30" width="402" height="14"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ZeM-Wr-wwc">
+                    <rect key="frame" x="100" y="30" width="405" height="14"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="The location in which transcripts are logged cannot be synced using iCloud. " id="2rT-lJ-27T">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -5008,7 +5008,7 @@
                         <constraint firstAttribute="bottom" secondItem="HLR-5q-A8j" secondAttribute="bottom" id="hB4-em-pF0"/>
                     </constraints>
                 </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V0L-wf-MX5">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V0L-wf-MX5">
                     <rect key="frame" x="130" y="30" width="329" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Some of these preference may require a restart to take effect." id="uly-It-UKM">
                         <font key="font" metaFont="smallSystem"/>
