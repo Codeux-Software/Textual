@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSArray<NSString *> *_filterLimitedToChannelsIDs;
 	NSArray<NSString *> *_filterLimitedToClientsIDs;
 	NSArray<NSString *> *_filterEventsNumerics;
+	NSUInteger _filterActionFloodControlInterval;
 	NSString *_filterAction;
 	NSString *_filterForwardToDestination;
 	NSString *_filterMatch;

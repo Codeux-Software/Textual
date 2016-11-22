@@ -40,11 +40,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) TLOTimer *saveTimer;
+@property (nonatomic, strong) TLOTimer *trimTimer;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
@@ -61,10 +62,37 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		sharedSelf = [[self alloc] init];
 
-		[sharedSelf createBaseModel];
+		[sharedSelf prepareInitialState];
 	});
 
 	return sharedSelf;
+}
+
+- (void)prepareInitialState
+{
+	[self createBaseModel];
+
+	TLOTimer *saveTimer = [TLOTimer new];
+
+	saveTimer.target = self;
+	saveTimer.action = @selector(saveData:);
+	saveTimer.repeatTimer = YES;
+
+	[saveTimer start:(60 * 2)]; // 2 minutes
+
+	self.saveTimer = saveTimer;
+
+	TLOTimer *trimTimer = [TLOTimer new];
+
+	trimTimer.target = self;
+	trimTimer.action = @selector(trimData:);
+	trimTimer.repeatTimer = YES;
+
+	/* A few seconds are added so saves do not land
+	 on save timer */
+	[trimTimer start:((60 * 30) + 12)]; // 30:12 minutes
+
+	self.trimTimer = trimTimer;
 }
 
 - (NSFetchRequest *)fetchRequestForChannel:(IRCChannel *)channel
@@ -93,19 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	fetchRequest.resultType = resultType;
 
-	fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
-
 	return fetchRequest;
-}
-
-- (void)resetData
-{
-	NSString *oldPath = [self databaseSavePath];
-
-	[RZFileManager() removeItemAtPath:oldPath error:NULL];
-
-	[RZFileManager() removeItemAtPath:[oldPath stringByAppendingString:@"-wal"] error:NULL];
-	[RZFileManager() removeItemAtPath:[oldPath stringByAppendingString:@"-shm"] error:NULL];
 }
 
 - (void)_resetDataForChannelUsingBatch:(IRCChannel *)channel
@@ -118,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
 														 fetchLimit:0
 														limitToDate:nil
-														 resultType:NSManagedObjectIDResultType];
+														 resultType:NSManagedObjectResultType];
 
 		NSBatchDeleteRequest *batchDeleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
 
@@ -127,19 +143,17 @@ NS_ASSUME_NONNULL_BEGIN
 		NSError *batchDeleteError = nil;
 
 		NSBatchDeleteResult *batchDeleteResult =
-		[self.persistentStoreCoordinator executeRequest:batchDeleteRequest
-											withContext:context
-												  error:&batchDeleteError];
+		[context executeRequest:batchDeleteRequest error:&batchDeleteError];
 
 		if (batchDeleteResult == nil) {
 			LogToConsoleError("Failed to perform batch delete: %@",
-							  batchDeleteError.localizedDescription)
+				batchDeleteError.localizedDescription)
+
+			return;
 		}
 
-//		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
-//													 intoContexts:@[context]];
-
-		[context refreshAllObjects];
+		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
+													 intoContexts:@[context]];
 	}];
 }
 
@@ -161,28 +175,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (fetchedObjects == nil) {
 			LogToConsoleError("Error occurred fetching objects: %@",
-							  fetchRequestError.localizedDescription)
+				fetchRequestError.localizedDescription)
 
 			return;
 		}
 
-		context.propagatesDeletesAtEndOfEvent = NO;
-
 		for (NSManagedObject *object in fetchedObjects) {
 			[context deleteObject:object];
 		}
-
-		context.propagatesDeletesAtEndOfEvent = YES;
 	}];
 }
 
 - (void)resetDataForChannel:(IRCChannel *)channel
 {
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		[self _resetDataForChannelUsingBatch:channel];
-	} else {
+	LogToConsoleDebug("Resetting the contents of channel: %@", channel.description)
+
+//	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+//		[self _resetDataForChannelUsingBatch:channel];
+//	} else {
 		[self _resetDataForChannelUsingEnumeration:channel];
-	}
+//	}
 }
 
 - (void)fetchEntriesForChannel:(IRCChannel *)channel
@@ -197,9 +209,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[context performBlockAndWait:^{
 		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
-														 fetchLimit:0
+														 fetchLimit:fetchLimit
 														limitToDate:limitToDate
 														 resultType:NSManagedObjectResultType];
+
+		fetchRequest.includesPropertyValues = YES;
+
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
 
 		NSError *fetchRequestError = nil;
 
@@ -207,10 +223,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (fetchedObjects == nil) {
 			LogToConsoleError("Error occurred fetching objects: %@",
-							  fetchRequestError.localizedDescription)
+				fetchRequestError.localizedDescription)
 
 			return;
 		}
+
+		LogToConsoleDebug("%ld results fetched for channel %@",
+			fetchedObjects.count, channel.description)
 
 		completionBlock(fetchedObjects);
 	}];
@@ -223,14 +242,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSManagedObjectContext *context = self.managedObjectContext;
 
-	TVCLogLineManaged *newEntry =
-	[[TVCLogLineManaged alloc] initWithLogLine:logLine
-									 inChannel:channel
-									   context:context];
-
-	[context performBlockAndWait:^{
-		[context insertObject:newEntry];
-	}];
+	(void)
+	[TVCLogLineManaged managedObjectWithLogLine:logLine
+									  inChannel:channel
+										context:context];
 }
 
 #pragma mark -
@@ -250,8 +265,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
 
 	NSDictionary *pragmaOptions = @{
-		@"synchronous" : @"OFF",
-		@"journal_mode" : @"WAL"
+		@"synchronous" : @"FULL",
+		@"journal_mode" : @"DELETE"
 	};
 
 	NSDictionary *persistentStoreOptions = @{NSSQLitePragmasOption : pragmaOptions};
@@ -278,7 +293,7 @@ NS_ASSUME_NONNULL_BEGIN
 			/* If we failed to load our store, we create a brand new one at a new path
 			 incase the old one is corrupted. We also erase the old database to not allow
 			 the file to just hang on the OS. */
-			[self resetData]; // Destroy any data that may exist
+			[self resetDatabaseSavePath]; // Destroy any data that may exist
 
 			[self createBaseModelWithRecursion:1];
 		}
@@ -291,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
 
-		managedObjectContext.retainsRegisteredObjects = NO;
+		managedObjectContext.retainsRegisteredObjects = YES;
 
 		managedObjectContext.undoManager = nil;
 
@@ -300,8 +315,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.persistentStoreCoordinator = persistentStoreCoordinator;
 	}
+}
 
-	[self resetMaintenanceTimer];
+- (void)resetDatabaseSavePath
+{
+	NSString *filename = [NSString stringWithFormat:@"logControllerHistoricLog_%@.sqlite", [NSString stringWithUUID]];
+
+	[RZUserDefaults() setObject:filename forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
 }
 
 - (NSString *)databaseSavePath
@@ -309,9 +329,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
 
 	if (filename == nil) {
-		filename = [NSString stringWithFormat:@"logControllerHistoricLog_%@.sqlite", [NSString stringWithUUID]];
+		[self resetDatabaseSavePath];
 
-		[RZUserDefaults() setObject:filename forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+		return [self databaseSavePath];
 	}
 
 	NSString *sourcePath = [TPCPathInfo applicationCachesFolderPath];
@@ -336,48 +356,58 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveDataDuringTermination:(BOOL)duringTermination
 {
-	[self resetMaintenanceTimer];
+	if (self.isPerformingSave == NO) {
+		self.isPerformingSave = YES;
+	} else {
+		return;
+	}
 
 	NSManagedObjectContext *context = self.managedObjectContext;
 
 	[context performBlock:^{
-		if (self.isPerformingSave == NO) {
-			self.isPerformingSave = YES;
-		} else {
-			return;
-		}
-
 		if ([context commitEditing] == NO)
 		{
 			LogToConsoleError("Failed to commit editing")
 		}
-		else if ([context hasChanges])
-		{
-			/* Truncate database before saving it */
-			[self trimStoreBeforeSaving];
 
+		if ([context hasChanges])
+		{
 			NSError *saveError = nil;
 
 			if ([context save:&saveError] == NO) {
 				LogToConsoleError("Failed to perform save: %@",
 					saveError.localizedDescription)
+			} else {
+				LogToConsoleInfo("Performed save")
 			}
+		} else {
+			LogToConsoleInfo("Did not perform save because nothing has changed")
 		}
 
 		self.isPerformingSave = NO;
 	}];
 }
 
-- (void)resetMaintenanceTimer
+- (void)saveData:(id)sender
 {
-	[self cancelPerformRequestsWithSelector:@selector(saveData)]; // cancel previous timers
+	[self saveData];
+}
 
-	self.hasPendingAutosaveTimer = YES;
-
-	[self performSelector:@selector(saveData) withObject:nil afterDelay:(60 * 10)]; // 10 minutes
+- (void)trimData:(id)sender
+{
+	[self trimStoreBeforeSaving];
 }
 
 - (void)trimStoreBeforeSaving
+{
+	NSManagedObjectContext *context = self.managedObjectContext;
+
+	[context performBlock:^{
+		[self _trimStoreBeforeSaving];
+	}];
+}
+
+- (void)_trimStoreBeforeSaving
 {
 	/* To keep the store from going without check, we trim it here, ever so often. 
 	 To trim it, we first sort the entries by the channelId, then sort those from 
@@ -403,11 +433,14 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	context.propagatesDeletesAtEndOfEvent = NO;
-
 	NSUInteger channelsCountMaximum = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
 
-	NSMutableDictionary<NSString *, NSNumber *> *channelCounts = [NSMutableDictionary dictionary];
+	LogToConsoleInfo("Maximum line count per-channel is: %ld",
+		channelsCountMaximum)
+
+	NSString *currentChannelId = nil;
+
+	NSUInteger currentChannelIdCount = 0;
 
 	for (NSManagedObject *object in fetchedObjects) {
 		NSString *channelId = [object valueForKey:@"channelId"];
@@ -418,20 +451,21 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-		NSNumber *channelCount = channelCounts[channelId];
+		if ([currentChannelId isEqualToString:channelId] == NO) {
+			currentChannelId = channelId;
 
-		if (channelCount == nil) {
-			channelCounts[channelId] = @(1);
-		} else {
-			channelCounts[channelId] = @(channelCount.unsignedIntegerValue + 1);
+			currentChannelIdCount = 0;
 		}
 
-		if (channelCount.unsignedIntegerValue > channelsCountMaximum) {
+		if (currentChannelIdCount > channelsCountMaximum) {
 			[context deleteObject:object];
-		}
-	}
 
-	context.propagatesDeletesAtEndOfEvent = YES;
+			LogToConsoleDebug("Deleting object %@ in %@",
+				object.description, channelId.description)
+		}
+
+		currentChannelIdCount += 1;
+	}
 
 	LogToConsoleInfo("Finished trimming Core Data store")
 }

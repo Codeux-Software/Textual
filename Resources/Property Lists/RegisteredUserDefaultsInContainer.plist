@@ -104,7 +104,7 @@
 	<integer>300</integer>
 	<key>InvertSidebarColors</key>
 	<false/>
-	<key>IRC -&gt; Enable echo-message Capacity</key>
+	<key>IRC -&gt; Enable echo-message Capability</key>
 	<false/>
 	<key>Keyboard -&gt; Command+W Key Action</key>
 	<integer>0</integer>
@@ -162,6 +162,10 @@
 	<true/>
 	<key>NotificationType -&gt; Private Message -&gt; Sound</key>
 	<string>Submarine</string>
+	<key>NotificationType -&gt; Public Message -&gt; Speak Channel Name</key>
+	<true/>
+	<key>NotificationType -&gt; Public Message -&gt; Speak Nickname</key>
+	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Receiving) -&gt; Bounce Dock Icon</key>
 	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Receiving) -&gt; Enabled</key>
@@ -213,7 +217,7 @@
 	<key>SetAwayOnScreenSleep</key>
 	<false/>
 	<key>ScrollbackMaximumLineCount</key>
-	<integer>300</integer>
+	<integer>500</integer>
 	<key>ScrollbackMaximumHistoryCount</key>
 	<integer>1000</integer>
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>

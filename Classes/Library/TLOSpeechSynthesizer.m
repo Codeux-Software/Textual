@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOSpeechSynthesizer ()
 @property (nonatomic, strong) NSSpeechSynthesizer *speechSynthesizer;
-@property (nonatomic, strong) NSMutableArray<NSString *> *itemsToBeSpoken;
+@property (nonatomic, strong) NSMutableArray *itemsToBeSpoken;
 @property (nonatomic, assign) BOOL isWaitingForSystemToStopSpeaking;
 @end
 
@@ -74,16 +74,16 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Public API
 
-- (void)speak:(NSString *)message
+- (void)speak:(id)object
 {
-	NSParameterAssert(message != nil);
+	NSParameterAssert(object != nil);
 
 	if (self.isStopped) {
 		return;
 	}
 
 	@synchronized(self.itemsToBeSpoken) {
-		[self.itemsToBeSpoken addObject:message];
+		[self.itemsToBeSpoken addObject:object];
 	}
 	
 	if (self.isSpeaking == NO) {
@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	@synchronized(self.itemsToBeSpoken) {
-		NSString *nextMessage = self.itemsToBeSpoken.firstObject;
+		id nextMessage = self.itemsToBeSpoken.firstObject;
 
 		if (nextMessage == nil) {
 			return;
@@ -130,6 +130,18 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		[self.itemsToBeSpoken removeObjectAtIndex:0];
+
+		if ([nextMessage isKindOfClass:[TLOSpokenNotification class]]) {
+			nextMessage = [(IRCClient *)[nextMessage client] formatNotificationToSpeak:nextMessage];
+
+			// Returning nil does not throw an assert so that the client can chose
+			// to reject specific events for whatever reason it wants.
+			if (nextMessage == nil) {
+				[self speakNextItem];
+
+				return;
+			}
+		}
 
 		[self.speechSynthesizer startSpeakingString:nextMessage];
 	}
@@ -171,6 +183,25 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	@synchronized(self.itemsToBeSpoken) {
 		[self.itemsToBeSpoken removeAllObjects];
+	}
+}
+
+- (void)clearQueueForClient:(IRCClient *)client
+{
+	@synchronized(self.itemsToBeSpoken) {
+		NSIndexSet *indexesToRemove = [self.itemsToBeSpoken indexesOfObjectsPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
+			if ([object isKindOfClass:[TLOSpokenNotification class]]) {
+				return ((IRCClient *)[object client] == client);
+			}
+
+			return NO;
+		}];
+
+		if (indexesToRemove.count == 0) {
+			return;
+		}
+
+		[self.itemsToBeSpoken removeObjectsAtIndexes:indexesToRemove];
 	}
 }
 

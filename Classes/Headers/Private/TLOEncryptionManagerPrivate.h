@@ -90,9 +90,6 @@ NS_ASSUME_NONNULL_BEGIN
 				  from:(NSString *)messageFrom
 					to:(NSString *)messageTo
 	  decodingCallback:(nullable TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
-
-/* Dispatch queue */
-- (void)performBlockAsynchronouslyOnInternalQueue:(dispatch_block_t)block;
 @end
 #endif
 

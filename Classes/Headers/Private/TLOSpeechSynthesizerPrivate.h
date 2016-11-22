@@ -45,9 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
  forces speaking to stop and does not allow additions. */
 @property (nonatomic, assign) BOOL isStopped;
 
-- (void)speak:(NSString *)message;
+- (void)speak:(id)object; // NSString or TLOSpokeNotification
 
 - (void)clearQueue; // Does not stop speaking. Only clears pending items.
+- (void)clearQueueForClient:(IRCClient *)client;
 
 - (void)stopSpeakingAndMoveForward;
 @end

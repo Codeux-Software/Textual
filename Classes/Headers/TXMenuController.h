@@ -60,7 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 	102: "Manage license…"
 	103: "Updates"
 	109: "Check for updates…"
-	110: "Automatically Check for Updates"
 	104: "Services"
 	105: "Hide Textual"
 	106: "Hide Others"
@@ -192,17 +191,13 @@ NS_ASSUME_NONNULL_BEGIN
 	918: "Connect to Testing Channel"
 	919: "Developer Resources"
 	920: "Enable Developer Mode"
-	921: "Open 'Welcome to Textual' Dialog"
 	922: "Reset 'Don't Ask Me' Warnings"
 	923: "Simulate a Crash"
 	924: "Export Preferences"
 	925: "Import Preferences"
-	926: "Download Beta Updates"
 	927: "End User License Agreement"
-	928: "Enable App Nap"
 	929: "Collect Anonymous Statistics"
-	930: "Open Web Inspector"
-	931: "Enable WebKit2"
+	930: "Hidden Preferences"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
@@ -403,6 +398,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)showChannelSpotlightWindow:(id)sender NS_AVAILABLE_MAC(10_10);
 - (IBAction)showFileTransfersWindow:(id)sender;
 - (IBAction)showFindPrompt:(id)sender;
+- (IBAction)showHiddenPreferences:(id)sender;
 - (IBAction)showIgnoreList:(id)sender;
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showPreferencesWindow:(id)sender;
@@ -422,7 +418,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)toggleMainWindowAppearance:(id)sender;
 
-- (IBAction)toggleAppNap:(id)sender;
 - (IBAction)toggleDeveloperMode:(id)sender;
 
 - (IBAction)toggleServerListVisibility:(id)sender;
@@ -453,10 +448,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)forceReloadTheme:(id)sender;
 - (IBAction)openWebInspector:(id)sender;
 
-- (IBAction)toggleWebKit2:(id)sender;
-
-- (IBAction)toggleAutomaticallyCheckForUpdates:(id)sender;
-- (IBAction)toggleBetaUpdates:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
 
 - (IBAction)resetDoNotAskMePopupWarnings:(id)sender;

@@ -37,12 +37,41 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogLineManaged : NSManagedObject
-+ (instancetype)managedObjectWithLogLine:(TVCLogLine *)logLine
-							   inChannel:(IRCChannel *)channel
-								 context:(NSManagedObjectContext *)context;
+@interface TLOSpokenNotification ()
+@property (nonatomic, weak, null_unspecified, readwrite) IRCClient *client;
+@property (nonatomic, weak, null_unspecified, readwrite) IRCChannel *channel;
+@property (nonatomic, copy, null_unspecified, readwrite) NSString *nickname;
+@property (nonatomic, copy, null_unspecified, readwrite) NSString *text;
+@property (nonatomic, readwrite) TVCLogLineType lineType;
+@property (nonatomic, readwrite) TXNotificationType notificationType;
+@end
 
-@property (readonly, copy, nullable) TVCLogLine *logLine;
+@implementation TLOSpokenNotification
+
+- (instancetype)initWithNotification:(TXNotificationType)notificationType
+							lineType:(TVCLogLineType)lineType
+							  target:(null_unspecified IRCChannel *)target
+							nickname:(null_unspecified NSString *)nickname
+								text:(null_unspecified NSString *)text
+{
+	if ((self = [super init])) {
+		self.notificationType = notificationType;
+
+		self.lineType = lineType;
+
+		self.client = target.associatedClient;
+		self.channel = target;
+
+		self.nickname = nickname;
+
+		self.text = text;
+
+		return self;
+	}
+
+	return nil;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

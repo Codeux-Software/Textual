@@ -57,6 +57,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
 #endif
 
++ (void)setOnlySpeakEventsForSelection:(BOOL)onlySpeakEventsForSelection;
+
++ (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName;
++ (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname;
+
++ (void)setNicknameColorHashingComputesRGBValue:(BOOL)nicknameColorHashingComputesRGBValue;
+
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
 
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors;

@@ -64,22 +64,22 @@ typedef NS_ENUM(NSUInteger, IRCClientDisconnectMode) {
 	IRCClientDisconnectServerRedirectMode,
 };
 
-typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
-	ClientIRCv3SupportedCapacityAwayNotify				= 1 << 0, // YES if away-notify CAP supported
-	ClientIRCv3SupportedCapacityBatch					= 1 << 1, // YES if batch CAP supported
-	ClientIRCv3SupportedCapacityEchoMessage				= 1 << 2, // YES if echo-message CAP supported
-	ClientIRCv3SupportedCapacityIdentifyCTCP			= 1 << 3, // YES if identify-ctcp CAP supported
-	ClientIRCv3SupportedCapacityIdentifyMsg				= 1 << 4, // YES if identify-msg CAP supported
-	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 5, // YES if SASL authentication was successful
-	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 6, // YES if in SASL CAP authentication request
-	ClientIRCv3SupportedCapacityMonitorCommand			= 1 << 7, // YES if the MONITOR command is supported
-	ClientIRCv3SupportedCapacityMultiPreifx				= 1 << 8, // YES if multi-prefix CAP supported
-	ClientIRCv3SupportedCapacityPlayback				= 1 << 9, // Special CAP which is subject to change
-	ClientIRCv3SupportedCapacityServerTime				= 1 << 10, // YES if server-time CAP supported
-	ClientIRCv3SupportedCapacityUserhostInNames			= 1 << 11, // YES if userhost-in-names CAP supported
-	ClientIRCv3SupportedCapacityWatchCommand			= 1 << 12, // YES if the WATCH command is supported
-	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 13, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 14  // YES if the ZNC vendor specific CAP supported
+typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapabilities) {
+	ClientIRCv3SupportedCapabilityAwayNotify			= 1 << 0, // YES if away-notify CAP supported
+	ClientIRCv3SupportedCapabilityBatch					= 1 << 1, // YES if batch CAP supported
+	ClientIRCv3SupportedCapabilityEchoMessage			= 1 << 2, // YES if echo-message CAP supported
+	ClientIRCv3SupportedCapabilityIdentifyCTCP			= 1 << 3, // YES if identify-ctcp CAP supported
+	ClientIRCv3SupportedCapabilityIdentifyMsg			= 1 << 4, // YES if identify-msg CAP supported
+	ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL	= 1 << 5, // YES if SASL authentication was successful
+	ClientIRCv3SupportedCapabilityIsInSASLNegotiation	= 1 << 6, // YES if in SASL CAP authentication request
+	ClientIRCv3SupportedCapabilityMonitorCommand		= 1 << 7, // YES if the MONITOR command is supported
+	ClientIRCv3SupportedCapabilityMultiPreifx			= 1 << 8, // YES if multi-prefix CAP supported
+	ClientIRCv3SupportedCapabilityPlayback				= 1 << 9, // Special CAP which is subject to change
+	ClientIRCv3SupportedCapabilityServerTime			= 1 << 10, // YES if server-time CAP supported
+	ClientIRCv3SupportedCapabilityUserhostInNames		= 1 << 11, // YES if userhost-in-names CAP supported
+	ClientIRCv3SupportedCapabilityWatchCommand			= 1 << 12, // YES if the WATCH command is supported
+	ClientIRCv3SupportedCapabilityZNCCertInfoModule		= 1 << 13, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityZNCSelfMessage		= 1 << 14  // YES if the ZNC vendor specific CAP supported
 };
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
@@ -144,12 +144,12 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 - (void)cancelReconnect;
 
-@property (readonly) ClientIRCv3SupportedCapacities capacities;
+@property (readonly) ClientIRCv3SupportedCapabilities capacities;
 @property (readonly, copy) NSString *enabledCapacitiesStringValue;
 
-- (BOOL)isCapacitySupported:(NSString *)capacityString;
+- (BOOL)isCapabilitySupported:(NSString *)capabilityString;
 
-- (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
+- (BOOL)isCapabilityEnabled:(ClientIRCv3SupportedCapabilities)capability;
 
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(nullable NSString *)password;
@@ -200,7 +200,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (void)sendTopicTo:(nullable NSString *)topic inChannel:(IRCChannel *)channel;
 - (void)sendTopicTo:(nullable NSString *)topic inChannelNamed:(NSString *)channel;
 
-- (void)sendCapacity:(NSString *)subcommand data:(nullable NSString *)data;
+- (void)sendCapability:(NSString *)subcommand data:(nullable NSString *)data;
 
 - (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames;
 - (void)sendIsonForNicknamesString:(NSString *)nicknames;

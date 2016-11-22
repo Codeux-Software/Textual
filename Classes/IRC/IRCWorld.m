@@ -342,7 +342,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	}
 
 	/* Schedule the timer on the run loop which will retain reference. */
-	[RZCurrentRunLoop() addTimer:midnightTimer forMode:NSDefaultRunLoopMode];
+	[RZMainRunLoop() addTimer:midnightTimer forMode:NSDefaultRunLoopMode];
 
 	/* Do not fire notification if day hasn't changed. 
 	 This check is down here, instead of at top, because we still want to

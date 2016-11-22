@@ -125,6 +125,7 @@
 #import "TLOLicenseManagerPrivate.h"
 #import "TLONicknameCompletionStatusPrivate.h"
 #import "TLOSpeechSynthesizerPrivate.h"
+#import "TLOSpokenNotificationPrivate.h"
 #import "TPCApplicationInfoPrivate.h"
 #import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"

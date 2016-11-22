@@ -255,6 +255,17 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[self.t_parentView webViewScrollAreaSizeChanged:documentView.frame.size];
 }
 
+- (void)scrollToEndOfDocument:(nullable id)sender
+{
+	NSView *documentView = self.mainFrame.frameView.documentView;
+
+	NSRect visibleRect = documentView.visibleRect;
+
+	visibleRect.origin.y = (NSHeight(documentView.frame) - NSHeight(visibleRect));
+
+	[documentView scrollRectToVisible:visibleRect];
+}
+
 #pragma mark -
 #pragma mark Web View Delegate
 

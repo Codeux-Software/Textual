@@ -35,14 +35,11 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogLineManaged : NSManagedObject
-+ (instancetype)managedObjectWithLogLine:(TVCLogLine *)logLine
-							   inChannel:(IRCChannel *)channel
-								 context:(NSManagedObjectContext *)context;
-
-@property (readonly, copy, nullable) TVCLogLine *logLine;
+@interface TPI_NumberOnlyTextFieldFormatter : NSNumberFormatter
 @end
 
 NS_ASSUME_NONNULL_END

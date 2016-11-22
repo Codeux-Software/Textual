@@ -345,7 +345,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Check for known capacities */
-	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
+	if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityServerTime]) {
 		/* We support two time extensions. The time= value is the date and
 		 time in the format as defined by ISO 8601:2004(E) 4.3.2. */
 		/* The t= value is a legacy value in a epoch time. We always favor
@@ -373,7 +373,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityBatch]) {
+	if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
 		NSString *batchToken = extensionsOut[@"batch"];
 
 		if ([batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters]) {

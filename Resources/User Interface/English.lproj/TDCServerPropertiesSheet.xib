@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -106,7 +106,7 @@
                         <rect key="frame" x="8" y="8" width="159" height="340"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="c7A-uX-FoM">
                             <rect key="frame" x="2" y="2" width="155" height="336"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9ke-X4-49Z" id="Uj0-Wm-eox" customClass="TVCContentNavigationOutlineView">
                                     <rect key="frame" x="0.0" y="0.0" width="155" height="336"/>
@@ -881,7 +881,7 @@ Gw
                     <rect key="frame" x="37" y="240" width="456" height="36"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Fx0-Yf-kbO">
                         <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
                                 <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
@@ -922,8 +922,8 @@ Gw
                     </scroller>
                 </scrollView>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2580">
-                    <rect key="frame" x="66" y="175" width="313" height="18"/>
-                    <buttonCell key="cell" type="check" title="Do not post notifications for the playback buffer" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2581">
+                    <rect key="frame" x="66" y="175" width="318" height="18"/>
+                    <buttonCell key="cell" type="check" title="Do not show notifications for the playback buffer" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2581">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -991,7 +991,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1147,7 +1147,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1297,7 +1297,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="179"/>
@@ -1404,7 +1404,7 @@ Gw
                     <rect key="frame" x="57" y="54" width="416" height="200"/>
                     <clipView key="contentView" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="414" height="198"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -1694,7 +1694,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
