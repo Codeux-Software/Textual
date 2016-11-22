@@ -1029,7 +1029,11 @@ CQ
                                                 <action selector="importPreferences:" target="267" id="3090"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="gIQ-2m-VHD"/>
+                                        <menuItem isSeparatorItem="YES" id="gIQ-2m-VHD">
+                                            <connections>
+                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="Bom-lT-0t7"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="UfC-Uf-EFM">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
