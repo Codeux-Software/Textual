@@ -186,9 +186,9 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 }
 #endif
 
-+ (BOOL)enableEchoMessageCapacity
++ (BOOL)enableEchoMessageCapability
 {
-	return [RZUserDefaults() boolForKey:@"IRC -> Enable echo-message Capacity"];
+	return [RZUserDefaults() boolForKey:@"IRC -> Enable echo-message Capability"];
 }
 
 + (BOOL)displayServerMOTD
@@ -229,6 +229,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 + (BOOL)nicknameColorHashingComputesRGBValue
 {
 	return [RZUserDefaults() boolForKey:@"NicknameColorHashingComputesRGBValue"];
+}
+
++ (void)setNicknameColorHashingComputesRGBValue:(BOOL)nicknameColorHashingComputesRGBValue
+{
+	[RZUserDefaults() setBool:nicknameColorHashingComputesRGBValue forKey:@"NicknameColorHashingComputesRGBValue"];
 }
 
 + (BOOL)conversationTrackingIncludesUserModeSymbol
@@ -1049,6 +1054,47 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 + (BOOL)onlySpeakEventsForSelection
 {
 	return [RZUserDefaults() boolForKey:@"OnlySpeakNotificationsForSelection"];
+}
+
++ (void)setOnlySpeakEventsForSelection:(BOOL)onlySpeakEventsForSelection
+{
+	[RZUserDefaults() setBool:onlySpeakEventsForSelection forKey:@"OnlySpeakNotificationsForSelection"];
+}
+
++ (BOOL)channelMessageSpeakChannelName
+{
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
+
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Channel Name"];
+
+	return [RZUserDefaults() boolForKey:eventKey];
+}
+
++ (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName
+{
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
+
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Channel Name"];
+
+	[RZUserDefaults() setBool:channelMessageSpeakChannelName forKey:eventKey];
+}
+
++ (BOOL)channelMessageSpeakNickname
+{
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
+
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Nickname"];
+
+	return [RZUserDefaults() boolForKey:eventKey];
+}
+
++ (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname
+{
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
+
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Nickname"];
+
+	[RZUserDefaults() setBool:channelMessageSpeakNickname forKey:eventKey];
 }
 
 #pragma mark -

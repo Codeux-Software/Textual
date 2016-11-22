@@ -35,14 +35,27 @@
 
  *********************************************************************** */
 
+#import "TPI_NumberOnlyTextFieldFormatter.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogLineManaged : NSManagedObject
-+ (instancetype)managedObjectWithLogLine:(TVCLogLine *)logLine
-							   inChannel:(IRCChannel *)channel
-								 context:(NSManagedObjectContext *)context;
+@implementation TPI_NumberOnlyTextFieldFormatter
 
-@property (readonly, copy, nullable) TVCLogLine *logLine;
+- (BOOL)isPartialStringValid:(NSString *)partialString newEditingString:(NSString **)newString errorDescription:(NSString **)error
+{
+	if (partialString.length == 0) {
+		return YES;
+	}
+
+	if (partialString.numericOnly == NO) {
+		NSBeep();
+
+		return NO;
+	}
+
+	return YES;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -188,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
-	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule] == NO) {
+	if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityZNCPlaybackModule] == NO) {
 		return input;
 	}
 

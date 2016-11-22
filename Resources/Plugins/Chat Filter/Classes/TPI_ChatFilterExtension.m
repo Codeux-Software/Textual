@@ -95,6 +95,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.filterArrayController removeAllArrangedObjects];
 
 	[self loadFilters];
+
+	[self.filterLogicController reloadFilterActionPerforms];
 }
 
 - (void)loadFilters
@@ -273,6 +275,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self saveFilters];
+
+	[self.filterLogicController reloadFilterActionPerforms];
 }
 
 - (void)chatFilterEditFilterSheetWillClose:(TPI_ChatFilterEditFilterSheet *)sender

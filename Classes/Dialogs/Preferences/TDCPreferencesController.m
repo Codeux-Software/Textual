@@ -49,29 +49,29 @@ NS_ASSUME_NONNULL_BEGIN
 #define _fileTransferPortRangeMax			TXMaximumTCPPort
 
 #define _toolbarItemIndexGeneral					101
-#define _toolbarItemIndexHighlights					102
+#define _toolbarItemIndexHighlights					104
 #define _toolbarItemIndexNotifications				103
-#define _toolbarItemIndexControls					104
+#define _toolbarItemIndexBehavior					102
+#define _toolbarItemIndexControls					107
 #define _toolbarItemIndexInterface					105
 #define _toolbarItemIndexStyle						106
-#define _toolbarItemIndexAddons						107
+#define _toolbarItemIndexAddons						109
 #define _toolbarItemIndexAdvanced					108
 
-#define _toolbarItemIndexChannelManagement			110
-#define _toolbarItemIndexCommandScope				111
-#define _toolbarItemIndexIncomingData				112
-#define _toolbarItemIndexFileTransfers				113
-#define _toolbarItemIndexFloodControl				114
-#define _toolbarItemIndexLogLocation				115
-#define _toolbarItemIndexDefaultIdentity			116
-#define _toolbarItemIndexDefualtIRCopMessages		117
-#define _toolbarItemIndexExperimentalSettings		119
+#define _toolbarItemIndexChannelManagement			108000
+#define _toolbarItemIndexCommandScope				108001
+#define _toolbarItemIndexFloodControl				108002
+#define _toolbarItemIndexIncomingData				108003
+#define _toolbarItemIndexFileTransfers				108004
+#define _toolbarItemIndexInlineMedia				108005
+#define _toolbarItemIndexLogLocation				108007
+#define _toolbarItemIndexDefaultIdentity			108008
+#define _toolbarItemIndexDefualtIRCopMessages		108009
+#define _toolbarItemIndexOffRecordMessaging		    108010
+#define _toolbarItemIndexExperimentalFeatures		108011
+#define _toolbarItemIndexHiddenPreferences			108012 // unused
 
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-#define _toolbarItemIndexOffRecordMessaging		    121
-#endif
-
-#define _addonsToolbarInstalledAddonsMenuItemIndex		120
+#define _addonsToolbarInstalledAddonsMenuItemIndex		109000
 #define _addonsToolbarItemMultiplier					995
 
 #define _unsignedIntegerString(_value_)			[NSString stringWithUnsignedInteger:_value_]
@@ -98,30 +98,37 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTableView *highlightKeywordsTable;
 @property (nonatomic, weak) IBOutlet NSTextField *alertNotificationDestinationTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
-@property (nonatomic, strong) IBOutlet NSView *contentViewNotifications;
-@property (nonatomic, strong) IBOutlet NSView *contentViewChannelManagement;
-@property (nonatomic, strong) IBOutlet NSView *contentViewCommandScope;
-@property (nonatomic, strong) IBOutlet NSView *contentViewControls;
-@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIdentity;
-@property (nonatomic, strong) IBOutlet NSView *contentViewExperimentalSettings;
-@property (nonatomic, strong) IBOutlet NSView *contentViewFileTransfers;
-@property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
-@property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
-@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
-@property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
-@property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
+@property (nonatomic, strong) IBOutlet NSView *contentViewNotifications;
+@property (nonatomic, strong) IBOutlet NSView *contentViewBehavior;
+@property (nonatomic, strong) IBOutlet NSView *contentViewControls;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
+@property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
+@property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
+@property (nonatomic, strong) IBOutlet NSView *contentViewChannelManagement;
+@property (nonatomic, strong) IBOutlet NSView *contentViewCommandScope;
+@property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
+@property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
+@property (nonatomic, strong) IBOutlet NSView *contentViewFileTransfers;
+@property (nonatomic, strong) IBOutlet NSView *contentViewInlineMedia;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
+@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIdentity;
+@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
 #endif
 
-@property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
+@property (nonatomic, strong) IBOutlet NSView *contentViewExperimentalFeatures;
+@property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
+@property (nonatomic, strong) IBOutlet NSView *contentViewHiddenPreferences;
+
+
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *shareDataBetweenDevicesView;
+@property (nonatomic, weak) IBOutlet NSMatrix *checkForUpdatesMatrix;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *checkForUpdatesHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *shareDataBetweenDevicesViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
@@ -141,8 +148,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedAlertSound:(id)sender;
 - (IBAction)onChangedAlertSpoken:(id)sender;
 - (IBAction)onChangedAlertType:(id)sender;
+- (IBAction)onChangedCheckForUpdates:(id)sender;
+- (IBAction)onChangedCheckForBetaUpdates:(id)sender;
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
+- (IBAction)onChangedDisableNicknameColorHashing:(id)sender;
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
 - (IBAction)onChangedInlineMediaOption:(id)sender;
@@ -233,6 +243,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self setUpToolbarItemsAndMenus];
 
 	[self updateAlertSelection];
+	[self updateCheckForUpdatesMatrix];
 	[self updateFileTransferDownloadDestinationFolder];
 	[self updateThemeSelection];
 	[self updateTranscriptFolder];
@@ -283,15 +294,42 @@ NS_ASSUME_NONNULL_BEGIN
 	 by setting the subview height to 0. Set height before calling firstPane:
 	 so that firstPane: can calculate the correct total height. */
 	self.shareDataBetweenDevicesViewHeightConstraint.constant = 0.0;
+#endif
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+	self.checkForUpdatesHeightConstraint.constant = 0.0;
+#endif
 
 	[self.contentViewGeneral layoutSubtreeIfNeeded];
-#endif
 }
 
 #pragma mark -
 #pragma mark Utilities
 
 - (void)show
+{
+	[self show:TDCPreferencesControllerDefaultNavigationSelection];
+}
+
+- (void)show:(TDCPreferencesControllerNavigationSelection)selection
+{
+	switch (selection) {
+		case TDCPreferencesControllerHiddenPreferencesNavigationSelection:
+		{
+			[self _showPane:self.contentViewHiddenPreferences selectedItem:_toolbarItemIndexAdvanced];
+
+			break;
+		}
+		default:
+		{
+			[self _showPane:self.contentViewGeneral selectedItem:_toolbarItemIndexGeneral];
+
+			break;
+		}
+	}
+}
+
+- (void)_showPane:(NSView *)view selectedItem:(NSInteger)selectedItem
 {
 	[self.window restoreWindowStateForClass:self.class];
 
@@ -300,7 +338,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self firstPane:self.mountainLionDeprecationWarningView selectedItem:_toolbarItemIndexGeneral];
 	} else {
-		[self firstPane:self.contentViewGeneral selectedItem:_toolbarItemIndexGeneral];
+		[self firstPane:view selectedItem:selectedItem];
 	}
 
 	[super show];
@@ -353,15 +391,17 @@ NS_ASSUME_NONNULL_BEGIN
 		_de(_toolbarItemIndexHighlights, self.contentViewHighlights, _toolbarItemIndexHighlights)
 		_de(_toolbarItemIndexNotifications, self.contentViewNotifications, _toolbarItemIndexNotifications)
 
+		_de(_toolbarItemIndexBehavior, self.contentViewBehavior, _toolbarItemIndexBehavior)
 		_de(_toolbarItemIndexControls, self.contentViewControls, _toolbarItemIndexControls)
 		_de(_toolbarItemIndexInterface, self.contentViewInterface, _toolbarItemIndexInterface)
 		_de(_toolbarItemIndexStyle, self.contentViewStyle, _toolbarItemIndexStyle)
 
 		_de(_toolbarItemIndexChannelManagement, self.contentViewChannelManagement, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexCommandScope, self.contentViewCommandScope, _toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexFloodControl, self.contentViewFloodControl, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexIncomingData, self.contentViewIncomingData, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexFileTransfers, self.contentViewFileTransfers, _toolbarItemIndexAdvanced)
-		_de(_toolbarItemIndexFloodControl, self.contentViewFloodControl, _toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexInlineMedia, self.contentViewInlineMedia, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexLogLocation, self.contentViewLogLocation, _toolbarItemIndexAdvanced);
 		_de(_toolbarItemIndexDefaultIdentity, self.contentViewDefaultIdentity, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages, self.contentViewDefaultIRCopMessages, _toolbarItemIndexAdvanced)
@@ -370,7 +410,7 @@ NS_ASSUME_NONNULL_BEGIN
 		_de(_toolbarItemIndexOffRecordMessaging, self.contentViewOffRecordMessaging, _toolbarItemIndexAdvanced)
 #endif
 
-		_de(_toolbarItemIndexExperimentalSettings, self.contentViewExperimentalSettings, _toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexExperimentalFeatures, self.contentViewExperimentalFeatures, _toolbarItemIndexAdvanced)
 
 		_de(_addonsToolbarInstalledAddonsMenuItemIndex, self.contentViewInstalledAddons, _toolbarItemIndexAddons)
 
@@ -561,6 +601,67 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setHighlightCurrentNickname:(BOOL)value
 {
 	[TPCPreferences setHighlightCurrentNickname:value];
+}
+
+- (BOOL)appNapEnabled
+{
+	return [TPCPreferences appNapEnabled];
+}
+
+- (void)setAppNapEnabled:(BOOL)appNapEnabled
+{
+	[TPCPreferences setAppNapEnabled:appNapEnabled];
+}
+
+- (BOOL)enableNewNicknameColorSystem
+{
+	if ([TPCPreferences disableNicknameColorHashing]) {
+		return NO;
+	}
+
+	return [TPCPreferences nicknameColorHashingComputesRGBValue];
+}
+
+- (void)setEnableNewNicknameColorSystem:(BOOL)enableNewNicknameColorSystem
+{
+	[TPCPreferences setNicknameColorHashingComputesRGBValue:enableNewNicknameColorSystem];
+}
+
+- (BOOL)onlySpeakEventsForSelection
+{
+	return [TPCPreferences onlySpeakEventsForSelection];
+}
+
+- (void)setOnlySpeakEventsForSelection:(BOOL)onlySpeakEventsForSelection
+{
+	[TPCPreferences setOnlySpeakEventsForSelection:onlySpeakEventsForSelection];
+
+	[self willChangeValueForKey:@"channelMessageSpeakChannelName"];
+	[self didChangeValueForKey:@"channelMessageSpeakChannelName"];
+}
+
+- (BOOL)channelMessageSpeakChannelName
+{
+	if ([TPCPreferences onlySpeakEventsForSelection]) {
+		return NO;
+	}
+
+	return [TPCPreferences channelMessageSpeakChannelName];
+}
+
+- (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName
+{
+	[TPCPreferences setChannelMessageSpeakChannelName:channelMessageSpeakChannelName];
+}
+
+- (BOOL)channelMessageSpeakNickname
+{
+	return [TPCPreferences channelMessageSpeakNickname];
+}
+
+- (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname
+{
+	[TPCPreferences setChannelMessageSpeakNickname:channelMessageSpeakNickname];
 }
 
 - (BOOL)validateValue:(inout id *)value forKey:(NSString *)key error:(out NSError **)outError
@@ -1082,7 +1183,69 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
+#pragma mark Updates
+
+- (void)updateCheckForUpdatesMatrix
+{
+	// Tags:
+	// 0 = Don't check for updates
+	// 1 = Just notify if there are updates
+	// 2 = Automatically download and install updates
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	SUUpdater *updater = [SUUpdater sharedUpdater];
+
+	if (updater.automaticallyDownloadsUpdates) {
+		[self.checkForUpdatesMatrix selectCellWithTag:2];
+	} else if (updater.automaticallyChecksForUpdates) {
+		[self.checkForUpdatesMatrix selectCellWithTag:1];
+	} else {
+		[self.checkForUpdatesMatrix selectCellWithTag:0];
+	}
+#endif
+}
+
+- (void)onChangedCheckForUpdates:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	NSInteger selectedTag = self.checkForUpdatesMatrix.selectedTag;
+
+	SUUpdater *updater = [SUUpdater sharedUpdater];
+
+	if (selectedTag == 2) {
+		updater.automaticallyChecksForUpdates = YES;
+		updater.automaticallyDownloadsUpdates = YES;
+	} else if (selectedTag == 1) {
+		updater.automaticallyChecksForUpdates = YES;
+		updater.automaticallyDownloadsUpdates = NO;
+	} else {
+		updater.automaticallyChecksForUpdates = NO;
+		updater.automaticallyDownloadsUpdates = NO;
+	}
+#endif
+}
+
+- (void)onChangedCheckForBetaUpdates:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	[TPCPreferences performReloadAction:TPCPreferencesReloadSparkleFrameworkFeedURLAction];
+
+	if ([TPCPreferences receiveBetaUpdates]) {
+		[menuController() checkForUpdates:nil];
+	}
+#endif
+}
+
+#pragma mark -
 #pragma mark Actions
+
+- (void)onChangedDisableNicknameColorHashing:(id)sender
+{
+	[self onChangedTheme:nil];
+
+	[self willChangeValueForKey:@"enableNewNicknameColorSystem"];
+	[self didChangeValueForKey:@"enableNewNicknameColorSystem"];
+}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)offRecordMessagingPolicyChanged:(id)sender

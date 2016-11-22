@@ -188,20 +188,20 @@ ClassWithDesignatedInitializerInitMethod
 				continue;
 			}
 
-			[client enableCapacity:ClientIRCv3SupportedCapacityMonitorCommand];
+			[client enableCapability:ClientIRCv3SupportedCapabilityMonitorCommand];
 		} else if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
-			[client enableCapacity:ClientIRCv3SupportedCapacityWatchCommand];
+			[client enableCapability:ClientIRCv3SupportedCapabilityWatchCommand];
 		} else if ([segmentKey isEqualIgnoringCase:@"NAMESX"]) {
-			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityMultiPreifx] == NO) {
+			if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityMultiPreifx] == NO) {
 				[client sendLine:@"PROTOCTL NAMESX"];
 
-				[client enableCapacity:ClientIRCv3SupportedCapacityMultiPreifx];
+				[client enableCapability:ClientIRCv3SupportedCapabilityMultiPreifx];
 			}
 		} else if ([segmentKey isEqualIgnoringCase:@"UHNAMES"]) {
-			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityUserhostInNames] == NO) {
+			if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityUserhostInNames] == NO) {
 				[client sendLine:@"PROTOCTL UHNAMES"];
 
-				[client enableCapacity:ClientIRCv3SupportedCapacityUserhostInNames];
+				[client enableCapability:ClientIRCv3SupportedCapabilityUserhostInNames];
 			}
 		}
 	} // while()

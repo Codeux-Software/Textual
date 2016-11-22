@@ -155,7 +155,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)textEncryptionIsEnabled;
 #endif
 
-+ (BOOL)enableEchoMessageCapacity;
++ (BOOL)enableEchoMessageCapability;
 
 + (BOOL)giveFocusOnMessageCommand;
 
@@ -264,6 +264,9 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)soundIsMuted;
 
 + (BOOL)onlySpeakEventsForSelection;
+
++ (BOOL)channelMessageSpeakChannelName;
++ (BOOL)channelMessageSpeakNickname;
 
 + (nullable NSString *)soundForEvent:(TXNotificationType)event;
 

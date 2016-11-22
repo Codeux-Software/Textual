@@ -38,10 +38,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, TDCPreferencesControllerNavigationSelection) {
+	TDCPreferencesControllerDefaultNavigationSelection = 0,
+	TDCPreferencesControllerHiddenPreferencesNavigationSelection
+};
+
 @protocol TDCPreferencesControllerDelegate;
 
 @interface TDCPreferencesController : TDCWindowBase
 + (void)showTorAnonymityNetworkInlineMediaWarning;
+
+- (void)show:(TDCPreferencesControllerNavigationSelection)selection;
 @end
 
 @protocol TDCPreferencesControllerDelegate <NSObject>

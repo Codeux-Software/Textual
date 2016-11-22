@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5111</real>
+		<real>5115</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -466,6 +466,15 @@
 		<key>indexValue</key>
 		<integer>5039</integer>
 	</dict>
+	<key>loglogs</key>
+	<dict>
+		<key>command</key>
+		<string>LOGLOGS</string>
+		<key>developerModeOnly</key>
+		<true/>
+		<key>indexValue</key>
+		<real>5111</real>
+	</dict>
 	<key>m</key>
 	<dict>
 		<key>command</key>
@@ -573,6 +582,33 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5050</integer>
+	</dict>
+	<key>notifybubble</key>
+	<dict>
+		<key>command</key>
+		<string>NOTIFYBUBBLE</string>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<real>5112</real>
+	</dict>
+	<key>notifysound</key>
+	<dict>
+		<key>command</key>
+		<string>NOTIFYSOUND</string>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<real>5113</real>
+	</dict>
+	<key>notifyspeak</key>
+	<dict>
+		<key>command</key>
+		<string>NOTIFYSPEAK</string>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<real>5114</real>
 	</dict>
 	<key>omsg</key>
 	<dict>

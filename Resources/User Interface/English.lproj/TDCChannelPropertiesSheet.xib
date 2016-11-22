@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelPropertiesSheet">
@@ -72,14 +72,11 @@ DQ
                             <action selector="cancel:" target="-2" id="z8V-Ah-QUU"/>
                         </connections>
                     </button>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4TH-0i-MkY">
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="4TH-0i-MkY">
                         <rect key="frame" x="12" y="59" width="301" height="5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="301" id="CdG-ff-goS"/>
                         </constraints>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
                     </box>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="185">
                         <rect key="frame" x="89" y="345" width="147" height="20"/>
@@ -155,15 +152,8 @@ DQ
                     <accessibility description="Channel Name"/>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="112">
-                    <rect key="frame" x="23" y="125" width="199" height="18"/>
-                    <buttonCell key="cell" type="check" title="Post notifications for channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="111">
-                    <rect key="frame" x="23" y="44" width="130" height="18"/>
-                    <buttonCell key="cell" type="check" title="Disable highlights" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
+                    <rect key="frame" x="23" y="125" width="205" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show notifications for channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -194,7 +184,7 @@ DQ
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="281">
-                    <rect key="frame" x="23" y="17" width="218" height="18"/>
+                    <rect key="frame" x="23" y="44" width="218" height="18"/>
                     <buttonCell key="cell" type="check" title="Disable general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -203,14 +193,11 @@ DQ
                         <binding destination="nwg-0t-IZ6" name="enabled" keyPath="values.DisplayEventInLogView -&gt; Join, Part, Quit" id="N9c-1s-IKF"/>
                     </connections>
                 </button>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="312">
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="312">
                     <rect key="frame" x="12" y="187" width="301" height="5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="301" id="lr6-Ke-ahF"/>
                     </constraints>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
                 </box>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="356">
                     <rect key="frame" x="23" y="98" width="226" height="18"/>
@@ -243,8 +230,17 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="111">
+                    <rect key="frame" x="23" y="17" width="130" height="18"/>
+                    <buttonCell key="cell" type="check" title="Disable highlights" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstItem="281" firstAttribute="top" secondItem="279" secondAttribute="bottom" constant="13" id="1hy-4M-El2"/>
+                <constraint firstItem="111" firstAttribute="top" secondItem="281" secondAttribute="bottom" constant="13" id="47N-xX-dHF"/>
                 <constraint firstItem="123" firstAttribute="leading" secondItem="119" secondAttribute="trailing" constant="8" symbolic="YES" id="4Kv-Ec-fEJ"/>
                 <constraint firstItem="312" firstAttribute="top" secondItem="117" secondAttribute="bottom" constant="16" id="5r5-C1-puo"/>
                 <constraint firstItem="279" firstAttribute="leading" secondItem="HBZ-KH-HBg" secondAttribute="leading" id="7BH-07-dda"/>
@@ -258,6 +254,7 @@ DQ
                 <constraint firstItem="124" firstAttribute="top" secondItem="123" secondAttribute="bottom" constant="8" id="OQH-Q2-qAL"/>
                 <constraint firstItem="281" firstAttribute="leading" secondItem="111" secondAttribute="leading" id="QS5-S7-alR"/>
                 <constraint firstItem="122" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="25" id="RjM-wl-Arc"/>
+                <constraint firstItem="281" firstAttribute="top" secondItem="HBZ-KH-HBg" secondAttribute="bottom" constant="13" id="TZD-aY-3pG"/>
                 <constraint firstItem="122" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="20" id="VfF-QA-A6l"/>
                 <constraint firstItem="124" firstAttribute="top" secondItem="118" secondAttribute="top" id="W8W-Ht-6GV"/>
                 <constraint firstItem="118" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="20" symbolic="YES" id="b3r-JH-lgz"/>
@@ -270,9 +267,7 @@ DQ
                 <constraint firstItem="279" firstAttribute="leading" secondItem="356" secondAttribute="leading" id="oAT-iQ-EKT"/>
                 <constraint firstItem="111" firstAttribute="leading" secondItem="HBZ-KH-HBg" secondAttribute="leading" id="p1d-mW-YmE"/>
                 <constraint firstItem="119" firstAttribute="baseline" secondItem="123" secondAttribute="baseline" constant="1" id="pyT-gi-Qws"/>
-                <constraint firstItem="281" firstAttribute="top" secondItem="111" secondAttribute="bottom" constant="13" id="tN4-ep-Fcc"/>
                 <constraint firstItem="124" firstAttribute="trailing" secondItem="123" secondAttribute="trailing" id="tsV-O4-sNc"/>
-                <constraint firstItem="111" firstAttribute="top" secondItem="279" secondAttribute="bottom" constant="13" id="u5r-nd-8QH"/>
                 <constraint firstItem="312" firstAttribute="centerX" secondItem="109" secondAttribute="centerX" id="z5p-bq-26v"/>
             </constraints>
             <point key="canvasLocation" x="205.5" y="339"/>

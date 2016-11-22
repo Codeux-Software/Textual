@@ -37,13 +37,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TLOSpokenNotification;
+
 enum {
-	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 22,
-	ClientIRCv3SupportedCapacitySASLPlainText		= 1 << 23, // YES if SASL=plain CAP is supported
-	ClientIRCv3SupportedCapacitySASLExternal		= 1 << 24, // YES if SASL=external CAP is supported
-	ClientIRCv3SupportedCapacityZNCServerTime		= 1 << 25, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityZNCServerTimeISO	= 1 << 26, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapacityZNCPlaybackModule	= 1 << 27, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilitySASLGeneric			= 1 << 22,
+	ClientIRCv3SupportedCapabilitySASLPlainText		= 1 << 23, // YES if SASL=plain CAP is supported
+	ClientIRCv3SupportedCapabilitySASLExternal		= 1 << 24, // YES if SASL=external CAP is supported
+	ClientIRCv3SupportedCapabilityZNCServerTime		= 1 << 25, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityZNCServerTimeISO	= 1 << 26, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityZNCPlaybackModule	= 1 << 27, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityPlanioPlayback		= 1 << 28  // YES if the plan.io vendor specific CAP supported.
 };
 
 @interface IRCClient ()
@@ -86,8 +89,8 @@ enum {
 - (void)inputText:(id)string asCommand:(IRCPrivateCommand)command;
 - (void)inputText:(id)string asCommand:(IRCPrivateCommand)command destination:(IRCTreeItem *)destination;
 
-- (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity;
-- (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
+- (void)enableCapability:(ClientIRCv3SupportedCapabilities)capability;
+- (void)disableCapability:(ClientIRCv3SupportedCapabilities)capability;
 
 - (void)noteReachabilityChanged:(BOOL)reachable;
 
@@ -113,6 +116,8 @@ enum {
 - (void)closeLogFile;
 
 - (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isUtility:(BOOL)isUtility;
+
+- (nullable NSString *)formatNotificationToSpeak:(TLOSpokenNotification *)notification;
 @end
 
 NS_ASSUME_NONNULL_END

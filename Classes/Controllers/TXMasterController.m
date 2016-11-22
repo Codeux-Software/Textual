@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
  by sending the QUIT command and waiting for a response. If clients do not
  shut down gracefully within the time allotted below, then we continue with
  termination regardless of their status. */
-#define _gracefulTerminateTimeout		4
+#define _gracefulTerminateTimeout		5
 
 @interface TXMasterController ()
 @property (nonatomic, strong, readwrite) IRCWorld *world;
@@ -492,13 +492,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	return (
 		/* Clients are still disconnecting */
-		self.terminatingClientCount == 0 ||
+		self.terminatingClientCount == 0 &&
 
 		/* Core Data is saving */
-		TVCLogControllerHistoricLogSharedInstance().isSaving
+		TVCLogControllerHistoricLogSharedInstance().isSaving == NO
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		||
+		&&
 
 		/* iCloud is syncing */
 		[sharedCloudManager() isTerminated]
