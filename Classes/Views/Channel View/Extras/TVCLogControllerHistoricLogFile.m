@@ -121,8 +121,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	fetchRequest.resultType = resultType;
 
-	fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
-
 	return fetchRequest;
 }
 
@@ -136,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSFetchRequest *fetchRequest = [self fetchRequestForChannel:channel
 														 fetchLimit:0
 														limitToDate:nil
-														 resultType:NSManagedObjectIDResultType];
+														 resultType:NSManagedObjectResultType];
 
 		NSBatchDeleteRequest *batchDeleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
 
@@ -145,21 +143,17 @@ NS_ASSUME_NONNULL_BEGIN
 		NSError *batchDeleteError = nil;
 
 		NSBatchDeleteResult *batchDeleteResult =
-		[self.persistentStoreCoordinator executeRequest:batchDeleteRequest
-											withContext:context
-												  error:&batchDeleteError];
+		[context executeRequest:batchDeleteRequest error:&batchDeleteError];
 
 		if (batchDeleteResult == nil) {
 			LogToConsoleError("Failed to perform batch delete: %@",
-							  batchDeleteError.localizedDescription)
+				batchDeleteError.localizedDescription)
 
 			return;
 		}
 
-//		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
-//													 intoContexts:@[context]];
-
-		[context refreshAllObjects];
+		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : batchDeleteResult.result}
+													 intoContexts:@[context]];
 	}];
 }
 
@@ -181,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (fetchedObjects == nil) {
 			LogToConsoleError("Error occurred fetching objects: %@",
-							  fetchRequestError.localizedDescription)
+				fetchRequestError.localizedDescription)
 
 			return;
 		}
@@ -196,11 +190,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	LogToConsoleDebug("Resetting the contents of channel: %@", channel.description)
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		[self _resetDataForChannelUsingBatch:channel];
-	} else {
+//	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+//		[self _resetDataForChannelUsingBatch:channel];
+//	} else {
 		[self _resetDataForChannelUsingEnumeration:channel];
-	}
+//	}
 }
 
 - (void)fetchEntriesForChannel:(IRCChannel *)channel
@@ -218,6 +212,10 @@ NS_ASSUME_NONNULL_BEGIN
 														 fetchLimit:fetchLimit
 														limitToDate:limitToDate
 														 resultType:NSManagedObjectResultType];
+
+		fetchRequest.includesPropertyValues = YES;
+
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
 
 		NSError *fetchRequestError = nil;
 
