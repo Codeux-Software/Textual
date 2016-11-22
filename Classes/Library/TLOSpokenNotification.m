@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithNotification:(TXNotificationType)notificationType
 							lineType:(TVCLogLineType)lineType
-							  target:(null_unspecified IRCChannel *)target
+							  target:(null_unspecified IRCTreeItem *)target
 							nickname:(null_unspecified NSString *)nickname
 								text:(null_unspecified NSString *)text
 {
@@ -59,8 +59,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.lineType = lineType;
 
-		self.client = target.associatedClient;
-		self.channel = target;
+		if (target.isClient) {
+			self.client = (IRCClient *)target;
+		} else {
+			self.client = (IRCClient *)target.associatedClient;
+			self.channel = (IRCChannel *)target;
+		}
 
 		self.nickname = nickname;
 

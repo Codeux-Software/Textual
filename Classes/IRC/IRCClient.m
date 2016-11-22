@@ -1638,10 +1638,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[[TXSharedApplication sharedSpeechSynthesizer] clearQueueForClient:self];
 }
 
-- (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCChannel *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
+- (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCTreeItem *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
 {
 	if ([TPCPreferences speakEvent:eventType] == NO) {
 		return;
+	}
+
+	if (target == nil) {
+		target = self;
 	}
 
 	TLOSpokenNotification *notification =
