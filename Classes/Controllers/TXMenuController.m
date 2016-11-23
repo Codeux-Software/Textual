@@ -284,7 +284,7 @@ NS_ASSUME_NONNULL_BEGIN
 					case 100: // "About Textual"
 					case 101: // "Preferences…"
 					case 102: // "Manage license…"
-					case 107: // "Check for updates…"
+					case 109: // "Check for updates…"
 					{
 						returnValue = YES;
 					}
@@ -343,7 +343,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (tag) {
-		case 107: // "Check for Updates"
+		case 109: // "Check for Updates"
 		{
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
 			menuItem.hidden = YES;
