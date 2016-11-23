@@ -343,6 +343,14 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (tag) {
+		case 107: // "Check for Updates"
+		{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+			menuItem.hidden = YES;
+#endif
+
+			return YES;
+		}
 		case 815: // "Buddy List"
 		{
 #ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
@@ -382,18 +390,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 930: // Open Web Inspector
-		case 921: // "Open 'Welcome to Textual' Dialog"
 		case 922: // "Reset 'Don't Ask Me' Warnings"
-		case 923: // "Simulate a Crash"
 		{
 			BOOL condition = [TPCPreferences developerModeEnabled];
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-			if (tag == 923) {
-				condition = NO;
-			}
-#endif
 
 			menuItem.hidden = (condition == NO);
 
