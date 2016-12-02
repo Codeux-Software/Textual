@@ -466,15 +466,6 @@
 		<key>indexValue</key>
 		<integer>5039</integer>
 	</dict>
-	<key>loglogs</key>
-	<dict>
-		<key>command</key>
-		<string>LOGLOGS</string>
-		<key>developerModeOnly</key>
-		<true/>
-		<key>indexValue</key>
-		<real>5111</real>
-	</dict>
 	<key>m</key>
 	<dict>
 		<key>command</key>
