@@ -149,6 +149,7 @@
 #import "TVCLogViewInternalWK2.h"
 #import "TVCLogViewPrivate.h"
 #import "TVCLogLineManagedPrivate.h"
+#import "TVCWK1AutoScrollerPrivate.h"
 #import "TVCMainWindowChannelViewPrivate.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSegmentedControlPrivate.h"

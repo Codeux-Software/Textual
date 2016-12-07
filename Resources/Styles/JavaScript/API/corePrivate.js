@@ -49,8 +49,12 @@ Textual.initializeCore = function(resourcesPath)
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/events.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/inlineMedia.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
-	
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/autoScroll.js");
+
+	/* Only load auto scroller if we believe this is WebKit2 */
+	if (window.webkit && typeof window.webkit.messageHandlers !== "undefined") {
+		Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/autoScroll.js");
+	}
+
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/conversationTracking.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/liveresize.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scriptSink.js");
