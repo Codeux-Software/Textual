@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -37,50 +37,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogView ()
-@property (nonatomic, weak) TVCLogController *viewController;
+@interface TVCWK1AutoScroller : NSObject
+@property (readonly) BOOL canScroll;
+@property (readonly) BOOL viewingBottom;
 
-@property (readonly) TVCLogPolicy *webViewPolicy;
+- (instancetype)initWitFrameView:(WebFrameView *)frameView;
 
-@property (nonatomic, copy, readwrite, nullable) NSString *selection;
-
-@property (nonatomic, assign) BOOL viewingBottom;
-
-- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
-
-- (void)informDelegateWebViewClosedUnexpectedly;
-- (void)informDelegateWebViewFinishedLoading;
-
-- (void)setViewFinishedLayout;
-
-- (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view;
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-
-- (void)copyContentString;
-
-- (void)print;
-@end
-
-@interface TVCLogView (TVCLogViewBackingViewProxy)
-+ (void)emptyCaches;
-
-- (void)stopLoading;
-
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
-
-- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
-
-- (void)redrawViewIfNeeded;
-- (void)redrawView;
+- (void)redrawFrame;
 
 - (void)restoreScrollerPosition;
-@end
-
-@interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
-- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(nullable NSArray *)arguments;
-
-- (id)webScriptObjectToCommon:(WebScriptObject *)object;
 @end
 
 NS_ASSUME_NONNULL_END

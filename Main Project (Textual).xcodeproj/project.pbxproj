@@ -1525,6 +1525,12 @@
 		4CEFD5291D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */; };
 		4CEFD52A1D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */; };
 		4CEFD52B1D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */; };
+		4CEFF3A21DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFF3A11DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h */; };
+		4CEFF3A31DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFF3A11DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h */; };
+		4CEFF3A41DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFF3A11DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h */; };
+		4CEFF3A61DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFF3A51DF6F59B00EE975E /* TVCWK1AutoScroller.m */; };
+		4CEFF3A71DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFF3A51DF6F59B00EE975E /* TVCWK1AutoScroller.m */; };
+		4CEFF3A81DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFF3A51DF6F59B00EE975E /* TVCWK1AutoScroller.m */; };
 		4CF1F4D31D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */; };
 		4CF1F4D41D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */; };
 		4CF1F4D51D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */; };
@@ -2488,6 +2494,8 @@
 		4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerDownloaderPrivate.h; path = Headers/Private/TLOLicenseManagerDownloaderPrivate.h; sourceTree = "<group>"; };
 		4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerPrivate.h; path = Headers/Private/TLOLicenseManagerPrivate.h; sourceTree = "<group>"; };
 		4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCBuddyListDialogInternal.h; sourceTree = "<group>"; };
+		4CEFF3A11DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCWK1AutoScrollerPrivate.h; path = Headers/Private/TVCWK1AutoScrollerPrivate.h; sourceTree = "<group>"; };
+		4CEFF3A51DF6F59B00EE975E /* TVCWK1AutoScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCWK1AutoScroller.m; sourceTree = "<group>"; };
 		4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManagerPrivate.h; path = Headers/Private/TLOEncryptionManagerPrivate.h; sourceTree = "<group>"; };
 		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTextField.m; path = "Views/Input Text Field/TVCAutoExpandingTextField.m"; sourceTree = "<group>"; };
 		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTokenField.m; path = "Views/Input Text Field/TVCAutoExpandingTokenField.m"; sourceTree = "<group>"; };
@@ -3244,6 +3252,7 @@
 				4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */,
 				4C76CC8E1D1DC6ED005CDDA9 /* TVCTextFormatterMenuPrivate.h */,
 				4C76CC8F1D1DC6ED005CDDA9 /* TVCTextViewWithIRCFormatterPrivate.h */,
+				4CEFF3A11DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h */,
 				4C4A1AE61D12245B004FBF12 /* TXGlobalModelsPrivate.h */,
 				4CD1C4C41D1F18A50034F6A1 /* TXMasterControllerPrivate.h */,
 				4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */,
@@ -3923,6 +3932,7 @@
 				4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */,
 				4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */,
 				4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */,
+				4CEFF3A51DF6F59B00EE975E /* TVCWK1AutoScroller.m */,
 			);
 			name = "Channel View";
 			path = "Views/Channel View";
@@ -4079,6 +4089,7 @@
 				4C7B033A1D1210A100295E82 /* OELReachability.h in Headers */,
 				4C7B033B1D1210A100295E82 /* IRC.h in Headers */,
 				4C7B033C1D1210A100295E82 /* IRCAddressBook.h in Headers */,
+				4CEFF3A21DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */,
 				4C083F9F1D2D5F4400192F09 /* IRCConnectionConfigInternal.h in Headers */,
 				4C7B033D1D1210A100295E82 /* IRCChannel.h in Headers */,
 				4C7B033E1D1210A100295E82 /* IRCChannelConfig.h in Headers */,
@@ -4371,6 +4382,7 @@
 				4C5DD5271D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4C7B03F31D1210A800295E82 /* TLOpenLink.h in Headers */,
 				4C7B03F41D1210A800295E82 /* TLOPopupPrompts.h in Headers */,
+				4CEFF3A31DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */,
 				4C7B03F51D1210A800295E82 /* TLOSoundPlayer.h in Headers */,
 				4C4A1AEC1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B03F71D1210A800295E82 /* TLOTimer.h in Headers */,
@@ -4618,6 +4630,7 @@
 				4C5DD5281D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4C7B04741D1210B000295E82 /* TLOpenLink.h in Headers */,
 				4C7B04751D1210B000295E82 /* TLOPopupPrompts.h in Headers */,
+				4CEFF3A41DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */,
 				4C7B04761D1210B000295E82 /* TLOSoundPlayer.h in Headers */,
 				4C4A1AED1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B04781D1210B000295E82 /* TLOTimer.h in Headers */,
@@ -5643,6 +5656,7 @@
 				4CF40E631AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
 				4C5B42351D59439C00B7C72A /* IRCUserRelations.m in Sources */,
 				4C673F1A1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */,
+				4CEFF3A71DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
 				4CF40E1B1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
 				4C0445BF16F1603C00EBB665 /* main.m in Sources */,
 				4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */,
@@ -5827,6 +5841,7 @@
 				4C0BA6C61990798800857343 /* TDCHighlightEntrySheet.m in Sources */,
 				4C083FB81D2D603E00192F09 /* IRCConnectionConfig.m in Sources */,
 				4C0EC1281AB49DE400D0015C /* TPCResourceManager.m in Sources */,
+				4CEFF3A61DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
 				4CF304D61CCD343F0005EA64 /* TVCAutoExpandingTextField.m in Sources */,
 				4CF304DD1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m in Sources */,
 			);
@@ -5979,6 +5994,7 @@
 				4CF40E641AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
 				4C5B42361D59439C00B7C72A /* IRCUserRelations.m in Sources */,
 				4C673F1B1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */,
+				4CEFF3A81DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
 				4CF40E1C1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
 				4C8AF6D1158E99520026668C /* TPCThemeController.m in Sources */,
 				4C8AF6D2158E99520026668C /* TPCPreferences.m in Sources */,

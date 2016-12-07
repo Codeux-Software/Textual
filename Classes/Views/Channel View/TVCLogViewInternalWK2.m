@@ -403,6 +403,24 @@ create_normal_pool:
 }
 
 #pragma mark -
+#pragma mark Scroll View
+
+- (void)redrawViewIfNeeded
+{
+	;
+}
+
+- (void)redrawView
+{
+	;
+}
+
+- (void)restoreScrollerPosition
+{
+	;
+}
+
+#pragma mark -
 #pragma mark Web View Delegate
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
@@ -460,11 +478,6 @@ create_normal_pool:
 	return [_sharedWebPolicy webView2:webView logView:self.t_parentView contextMenuWithDefaultMenu:menu];
 }
 
-- (void)_web_didChangeContentSize:(NSSize)newSize
-{
-	[self.t_parentView webViewScrollAreaSizeChanged:newSize];
-}
-
 @end
 
 #pragma mark -
@@ -483,24 +496,7 @@ create_normal_pool:
 
 	dispatch_once(&onceToken, ^{
 		XRExchangeInstanceMethod(@"WKView", @"performDragOperation:", @"__t_priv_performDragOperation:");
-
-		/* On Sierra, _web_didChangeContentSize: is invoked on WKWebView automatically which
-		 means we only have to swizzle the call in WKView on earlier versions of macOS */
-		if ([XRSystemInformation isUsingOSXSierraOrLater] == NO) {
-			XRExchangeInstanceMethod(@"WKView", @"_didChangeContentSize:", @"__t_priv_didChangeContentSize:");
-		}
 	});
-}
-
-- (void)__t_priv_didChangeContentSize:(NSSize)newSize
-{
-	[self __t_priv_didChangeContentSize:newSize]; // Be good citizen and invoke original
-
-	NSView *superview = self.superview;
-
-	if ([superview respondsToSelector:@selector(_web_didChangeContentSize:)]) {
-		[(id)superview _web_didChangeContentSize:newSize];
-	}
 }
 
 - (BOOL)__t_priv_performDragOperation:(id <NSDraggingInfo>)sender

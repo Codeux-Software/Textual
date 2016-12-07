@@ -42,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id webViewBacking;
 @property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;
 @property (nonatomic, getter=isLayingOutView, readwrite) BOOL layingOutView;
-@property (nonatomic, assign) NSSize scrollAreaLastSize;
 @end
 
 @implementation TVCLogView
@@ -275,45 +274,19 @@ ClassWithDesignatedInitializerInitMethod
 	[self.webViewBacking findString:searchString movingForward:movingForward];
 }
 
-- (void)scrollWebViewToEndOfDocument
+- (void)redrawViewIfNeeded
 {
-	/* In WKWebView, pre-Sierra, -scrollToEndOfDocument: is implemented by the 
-	 WebView's first subview, which is always WKView, else we're fucked. */
-	if (self.isUsingWebKit2 && [XRSystemInformation isUsingOSXSierraOrLater] == NO) {
-		[self.webView.subviews.firstObject scrollToEndOfDocument:nil];
-	} else {
-		[self.webView scrollToEndOfDocument:nil];
-	}
+	[(id)self.webView redrawViewIfNeeded];
 }
 
-- (void)scrollWebViewToLastSize
+- (void)redrawView
 {
-	NSSize lastSize = self.scrollAreaLastSize;
-
-	NSString *compiledScript = [NSString stringWithFormat:@"TextualScroller.viewHeightChanged(%f);", lastSize.height];
-
-	[self evaluateJavaScript:compiledScript completionHandler:^(id result) {
-		if (((NSNumber *)result).boolValue == NO) {
-			return;
-		}
-
-		[self scrollWebViewToEndOfDocument];
-	}];
+	[(id)self.webView redrawView];
 }
 
-- (void)webViewScrollAreaSizeChanged:(NSSize)newSize
+- (void)restoreScrollerPosition
 {
-	if (NSEqualSizes(self.scrollAreaLastSize, newSize) == NO) {
-		self.scrollAreaLastSize = newSize;
-	} else {
-		return;
-	}
-
-	if (self.viewController.visible == NO) {
-		return;
-	}
-
-	[self scrollWebViewToLastSize];
+	[(id)self.webView restoreScrollerPosition];
 }
 
 @end
