@@ -284,6 +284,11 @@ ClassWithDesignatedInitializerInitMethod
 	[(id)self.webView redrawView];
 }
 
+- (void)saveScrollerPosition
+{
+	[(id)self.webView saveScrollerPosition];
+}
+
 - (void)restoreScrollerPosition
 {
 	[(id)self.webView restoreScrollerPosition];

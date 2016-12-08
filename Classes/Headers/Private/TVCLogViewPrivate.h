@@ -74,6 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)redrawViewIfNeeded;
 - (void)redrawView;
 
+- (void)saveScrollerPosition;
 - (void)restoreScrollerPosition;
 @end
 

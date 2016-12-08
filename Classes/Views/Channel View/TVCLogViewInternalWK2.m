@@ -415,6 +415,11 @@ create_normal_pool:
 	;
 }
 
+- (void)saveScrollerPosition
+{
+	;
+}
+
 - (void)restoreScrollerPosition
 {
 	;
