@@ -666,6 +666,8 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyDidBecomeHidden
 {
 	[self _evaluateFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
+
+	[self.backingView saveScrollerPosition];
 }
 
 - (void)notifyViewFinishedLoadingHistory

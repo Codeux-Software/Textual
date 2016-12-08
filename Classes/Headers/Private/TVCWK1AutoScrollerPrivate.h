@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)redrawFrame;
 
+- (void)saveScrollerPosition;
 - (void)restoreScrollerPosition;
 @end
 

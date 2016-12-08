@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSRect lastFrame;
 @property (nonatomic, assign) NSRect lastVisibleRect;
 @property (nonatomic, weak) WebFrameView *frameView;
-@property (nonatomic, assign, readwrite) BOOL viewingBottom;
+@property (nonatomic, assign) BOOL wasViewingBottom;
 @end
 
 @implementation TVCWK1AutoScroller
@@ -63,26 +63,46 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	self.viewingBottom = YES;
-
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(webViewDidChangeFrame:)
 								   name:NSViewFrameDidChangeNotification
-								 object:self.frameView.documentView];
+								 object:nil];
 
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(webViewDidChangeBounds:)
 								   name:NSViewBoundsDidChangeNotification
-								 object:self.frameView.documentView.enclosingScrollView.contentView]; // clip view
+								 object:nil];
 
 	self.lastFrame = self.frameView.documentView.frame;
 
 	self.lastVisibleRect = self.frameView.documentView.visibleRect;
+
+	self.wasViewingBottom = YES;
+}
+
+- (BOOL)viewingBottom
+{
+	/* 25 points (pixels) is the maximum offset the user can be scrolled
+	 upward before we are no longer considered to be at the bottom.
+	 An offset is used to compensate for small changes to scrolling
+	 related to sensitivity of the TrackPad device. */
+	/* If this offset is changed, then update autoScroll.js too, so that
+	 WebKit2 uses the same offset for its scroller. */
+	if (NSMaxY(self.lastVisibleRect) >= (NSMaxY(self.lastFrame) - 25.0)) {
+		return YES;
+	}
+
+	return NO;
+}
+
+- (void)saveScrollerPosition
+{
+	self.wasViewingBottom = self.viewingBottom;
 }
 
 - (void)restoreScrollerPosition
 {
-	if (self.viewingBottom == NO) {
+	if (self.wasViewingBottom == NO) {
 		return;
 	}
 
@@ -94,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)scrollViewToBottom:(NSView *)aView
 {
 	NSRect visibleRect = aView.visibleRect;
-	
+
 	visibleRect.origin.y = (aView.frame.size.height - visibleRect.size.height);
 	
 	[aView scrollRectToVisible:visibleRect];
@@ -146,18 +166,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	NSRect lastVisibleRect = self.frameView.documentView.visibleRect;
+	NSClipView *clipView = self.frameView.documentView.enclosingScrollView.contentView;
 
-	self.lastVisibleRect = lastVisibleRect;
+	if (clipView != aNotification.object) {
+		return;
+	}
 
-	/* 25 points (pixels) is the maximum offset the user can be scrolled
-	 upward before we are no longer considered to be at the bottom.
-	 An offset is used to compensate for small changes to scrolling
-	 related to sensitivity of the TrackPad device. */
-	/* If this offset is changed, then update autoScroll.js too, so that
-	 WebKit2 uses the same offset for its scroller. */
-	self.viewingBottom =
-	(NSMaxY(lastVisibleRect) >= (NSMaxY(self.lastFrame) - 25));
+	self.lastVisibleRect = clipView.documentView.visibleRect;
 
 	[self redrawFrameIfNeeded];
 }
@@ -166,11 +181,26 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSView *aView = aNotification.object;
 
-	if (self.viewingBottom) {
-		[self scrollViewToBottom:aView];
-	}
+	WebFrameView *frameView = self.frameView;
 
-	self.lastFrame = aView.frame;
+	NSView *documentView = frameView.documentView;
+
+	if (aView == frameView)
+	{
+		if (self.viewingBottom) {
+			[self scrollViewToBottom:aView];
+		}
+	}
+	else if (aView == documentView)
+	{
+		if (self.viewingBottom) {
+			[self scrollViewToBottom:aView];
+
+			self.lastVisibleRect = aView.visibleRect;
+		}
+
+		self.lastFrame = aView.frame;
+	}
 }
 
 @end

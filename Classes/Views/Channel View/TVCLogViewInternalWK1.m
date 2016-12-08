@@ -261,6 +261,11 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[self.autoScroller redrawFrame];
 }
 
+- (void)saveScrollerPosition
+{
+	[self.autoScroller saveScrollerPosition];
+}
+
 - (void)restoreScrollerPosition
 {
 	[self.autoScroller restoreScrollerPosition];
