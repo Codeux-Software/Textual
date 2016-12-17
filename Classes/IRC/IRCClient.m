@@ -637,6 +637,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	/* Implement this method to allow client to be
+	 used as a dictionary key. */
+
+	return self;
+}
+
 #pragma mark -
 #pragma mark Properties
 
