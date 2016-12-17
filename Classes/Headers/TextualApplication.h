@@ -107,6 +107,7 @@
 	@class TVCAutoExpandingTextField;
 	@class TVCAutoExpandingTokenField;
 	@class TVCBasicTableView;
+	@class TVCChannelSelectionViewController;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
 	@class TVCInputPromptDialog;
@@ -281,6 +282,7 @@
 	#import "TVCAutoExpandingTextField.h"
 	#import "TVCAutoExpandingTokenField.h"
 	#import "TVCBasicTableView.h"
+	#import "TVCChannelSelectionViewController.h"
 	#import "TVCComboBoxWithValueValidation.h"
 	#import "TVCImageURLParser.h"
 	#import "TVCInputPromptDialog.h"

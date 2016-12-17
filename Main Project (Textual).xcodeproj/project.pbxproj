@@ -155,6 +155,15 @@
 		4C0879D0187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */; };
 		4C0879D3187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */; };
 		4C0879D4187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */; };
+		4C08AE3E1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */; };
+		4C08AE3F1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */; };
+		4C08AE401E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */; };
+		4C08AE471E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */; };
+		4C08AE481E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */; };
+		4C08AE491E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */; };
+		4C08AE4B1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */; };
+		4C08AE4C1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */; };
+		4C08AE4D1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */; };
 		4C092B5B1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C092B5C1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C092B5D1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */; };
@@ -395,6 +404,12 @@
 		4C195A8D1ABBC72E0009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
 		4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
 		4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
+		4C1A5C7B1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1A5C7A1E03FB340020C3DE /* TVCChannelSelectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1A5C7C1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1A5C7A1E03FB340020C3DE /* TVCChannelSelectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1A5C7D1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1A5C7A1E03FB340020C3DE /* TVCChannelSelectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1A5C801E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A5C7E1E03FF750020C3DE /* TVCChannelSelectionView.xib */; };
+		4C1A5C811E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A5C7E1E03FF750020C3DE /* TVCChannelSelectionView.xib */; };
+		4C1A5C821E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A5C7E1E03FF750020C3DE /* TVCChannelSelectionView.xib */; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C2065351D47929300D42CD2 /* TDCWindowBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2065331D47929300D42CD2 /* TDCWindowBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -427,6 +442,15 @@
 		4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */; };
 		4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
+		4C34F34D1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
+		4C34F34E1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
+		4C34F34F1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
+		4C34F3501E051523006E1004 /* TVCChannelSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */; };
+		4C34F3511E051523006E1004 /* TVCChannelSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */; };
+		4C34F3521E051523006E1004 /* TVCChannelSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */; };
+		4C34F3591E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
+		4C34F35A1E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
+		4C34F35B1E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
 		4C35F7A61D8D6F54004B7E15 /* IRCUserRelations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C35F7A71D8D6F54004B7E15 /* IRCUserRelations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C35F7A81D8D6F54004B7E15 /* IRCUserRelations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1995,6 +2019,9 @@
 		4C083FBB1D2D624000192F09 /* IRCConnectionInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionInternal.h; sourceTree = "<group>"; };
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
+		4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionViewControllerPrivate.h; path = Headers/Private/TVCChannelSelectionViewControllerPrivate.h; sourceTree = "<group>"; };
+		4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewPrivate.h; path = Headers/Private/TVCChannelSelectionOutlineViewPrivate.h; sourceTree = "<group>"; };
+		4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCChannelSelectionOutlineView.m; sourceTree = "<group>"; };
 		4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsInContainer.plist; path = "Resources/Property Lists/RegisteredUserDefaultsInContainer.plist"; sourceTree = SOURCE_ROOT; };
 		4C0A900F1D54D24300B64244 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCBuddyListDialog.xib"; sourceTree = SOURCE_ROOT; };
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2020,6 +2047,8 @@
 		4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSync.h; path = Classes/Headers/TPCPreferencesCloudSync.h; sourceTree = SOURCE_ROOT; };
 		4C1818B01B656C310068FAD9 /* TextualAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualAppStore.entitlements; path = Resources/Sandbox/Entitlements/TextualAppStore.entitlements; sourceTree = SOURCE_ROOT; };
 		4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSViewHelper.m; sourceTree = "<group>"; };
+		4C1A5C7A1E03FB340020C3DE /* TVCChannelSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionViewController.h; path = Headers/TVCChannelSelectionViewController.h; sourceTree = "<group>"; };
+		4C1A5C7F1E03FF750020C3DE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCChannelSelectionView.xib"; sourceTree = SOURCE_ROOT; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C2065331D47929300D42CD2 /* TDCWindowBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCWindowBase.h; path = Headers/Private/TDCWindowBase.h; sourceTree = "<group>"; };
@@ -2041,6 +2070,9 @@
 		4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListSharedUserInterfacePrivate.h; path = Headers/Private/TVCServerListSharedUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListYosemiteUserInterfacePrivate.h; path = Headers/Private/TVCServerListYosemiteUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
+		4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCChannelSelectionOutlineCellView.m; sourceTree = "<group>"; };
+		4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCChannelSelectionViewController.m; sourceTree = "<group>"; };
+		4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewCellPrivate.h; path = Headers/Private/TVCChannelSelectionOutlineViewCellPrivate.h; sourceTree = "<group>"; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserRelations.h; path = Headers/IRCUserRelations.h; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCTextFieldWithValueValidation.h; path = Headers/TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
@@ -2836,6 +2868,17 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
+		4C34F34A1E051523006E1004 /* Channel Selection Table */ = {
+			isa = PBXGroup;
+			children = (
+				4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */,
+				4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */,
+				4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */,
+			);
+			name = "Channel Selection Table";
+			path = "Views/Channel Selection Table";
+			sourceTree = "<group>";
+		};
 		4C46CB001580429D00846B64 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -2878,6 +2921,7 @@
 				4CF40EF61AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib */,
 				4CF40F041AC1A59500A26BE0 /* TDCServerPropertiesSheet.xib */,
 				4CF40F081AC1A59500A26BE0 /* TDCWelcomeSheet.xib */,
+				4C1A5C7E1E03FF750020C3DE /* TVCChannelSelectionView.xib */,
 				4CF40F0A1AC1A59500A26BE0 /* TVCInputPromptDialog.xib */,
 				4CF40F0C1AC1A59500A26BE0 /* TVCMainWindowMavericks.xib */,
 				4CF40F0E1AC1A59500A26BE0 /* TVCMainWindowYosemite.xib */,
@@ -3103,6 +3147,7 @@
 		4C5C08FA1D177F1200EB6340 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C34F34A1E051523006E1004 /* Channel Selection Table */,
 				4CF40DB11AC1A4AC00A26BE0 /* Channel View */,
 				4C038F4C1D1D768B00134FDB /* Main Window */,
 				4CF40DD91AC1A4AC00A26BE0 /* Member List */,
@@ -3216,6 +3261,9 @@
 				4C673EDF1D10FB5000979B60 /* TPCResourceManagerPrivate.h */,
 				4C673EE01D10FB5000979B60 /* TPCThemeControllerPrivate.h */,
 				4C673EE11D10FB5000979B60 /* TPCThemeSettingsPrivate.h */,
+				4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */,
+				4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */,
+				4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */,
 				4C5DD5041D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h */,
 				4C5DD5051D1E098600F2E1AE /* TVCDockIconPrivate.h */,
 				4C7B48EA1D131A2A008D7926 /* TVCImageURLoaderPrivate.h */,
@@ -3566,6 +3614,7 @@
 				4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */,
 				4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */,
 				4C8AF585158E99520026668C /* TVCBasicTableView.h */,
+				4C1A5C7A1E03FB340020C3DE /* TVCChannelSelectionViewController.h */,
 				4C001C09197A10E80061C2C5 /* TVCComboBoxWithValueValidation.h */,
 				4C8AF581158E99520026668C /* TVCImageURLParser.h */,
 				4C8AF582158E99520026668C /* TVCInputPromptDialog.h */,
@@ -4007,6 +4056,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1A5C7B1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C35F7A61D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4C0FDE2F1D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
@@ -4149,6 +4199,7 @@
 				4CD1C4C61D1F18A50034F6A1 /* TXMasterControllerPrivate.h in Headers */,
 				4CE474411D2F3D0100909766 /* IRCClientConfigPrivate.h in Headers */,
 				4CB2FA961D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */,
+				4C34F3591E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */,
 				4C0D97911D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4C7B036F1D1210A100295E82 /* TLOLanguagePreferences.h in Headers */,
 				4C7B03701D1210A100295E82 /* TLOLinkParser.h in Headers */,
@@ -4200,6 +4251,7 @@
 				4CEA29CC1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4CC8E10F1D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */,
 				4C620E881D3E618B0037F35E /* TDCChannelSpotlightSearchResultPrivate.h in Headers */,
+				4C08AE3E1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */,
 				4CB9E3C11D2B155500ED395A /* IRCCommandIndexPrivate.h in Headers */,
 				4CB9E3B11D2B144200ED395A /* IRCModeInfoInternal.h in Headers */,
 				4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
@@ -4236,6 +4288,7 @@
 				4C7B04EF1D1210E300295E82 /* TPCApplicationInfoPrivate.h in Headers */,
 				4C26F6E31D5A566D008DE497 /* IRCUserPrivate.h in Headers */,
 				4C7B04F01D1210E300295E82 /* TPCPathInfoPrivate.h in Headers */,
+				4C08AE471E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */,
 				4C7B04F11D1210E300295E82 /* TPCPreferencesCloudSyncPrivate.h in Headers */,
 				4CF642E91D2DC33700CB9165 /* IRCChannelPrivate.h in Headers */,
 				4C7B49011D131A2A008D7926 /* TVCLogLinePrivate.h in Headers */,
@@ -4257,6 +4310,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1A5C7C1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C35F7A71D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4C0D97891D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
@@ -4372,6 +4426,7 @@
 				4C7B03ED1D1210A800295E82 /* TLOGrowlController.h in Headers */,
 				4CF642FD1D2DC48200CB9165 /* IRCUserNicknameColorStyleGeneratorPrivate.h in Headers */,
 				4CC8E1101D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */,
+				4C08AE481E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */,
 				4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C0FDE301D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
 				4CD1C4CA1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
@@ -4381,11 +4436,13 @@
 				4C7B03F11D1210A800295E82 /* TLOLinkParser.h in Headers */,
 				4C5DD5271D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4C7B03F31D1210A800295E82 /* TLOpenLink.h in Headers */,
+				4C08AE3F1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */,
 				4C7B03F41D1210A800295E82 /* TLOPopupPrompts.h in Headers */,
 				4CEFF3A31DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */,
 				4C7B03F51D1210A800295E82 /* TLOSoundPlayer.h in Headers */,
 				4C4A1AEC1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B03F71D1210A800295E82 /* TLOTimer.h in Headers */,
+				4C34F35A1E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */,
 				4C7B03FA1D1210A800295E82 /* TVCAutoExpandingTextField.h in Headers */,
 				4C9BA41D1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h in Headers */,
 				4C7B03FB1D1210A800295E82 /* TVCAutoExpandingTokenField.h in Headers */,
@@ -4505,6 +4562,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1A5C7D1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C52EFA21D58C24C0003AA1C /* IRCUser.h in Headers */,
 				4C35F7A81D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
@@ -4620,6 +4678,7 @@
 				4C7B046E1D1210B000295E82 /* TLOGrowlController.h in Headers */,
 				4CF642FE1D2DC48200CB9165 /* IRCUserNicknameColorStyleGeneratorPrivate.h in Headers */,
 				4CC8E1111D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */,
+				4C08AE491E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */,
 				4CEFCB8C1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C0FDE311D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
 				4CD1C4CB1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
@@ -4629,11 +4688,13 @@
 				4C7B04721D1210B000295E82 /* TLOLinkParser.h in Headers */,
 				4C5DD5281D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4C7B04741D1210B000295E82 /* TLOpenLink.h in Headers */,
+				4C08AE401E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */,
 				4C7B04751D1210B000295E82 /* TLOPopupPrompts.h in Headers */,
 				4CEFF3A41DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */,
 				4C7B04761D1210B000295E82 /* TLOSoundPlayer.h in Headers */,
 				4C4A1AED1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B04781D1210B000295E82 /* TLOTimer.h in Headers */,
+				4C34F35B1E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */,
 				4C7B047B1D1210B000295E82 /* TVCAutoExpandingTextField.h in Headers */,
 				4C9BA41E1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h in Headers */,
 				4C7B047C1D1210B000295E82 /* TVCAutoExpandingTokenField.h in Headers */,
@@ -4986,6 +5047,7 @@
 				4C0BA50F1990798800857343 /* DIRedBadgeLeftYosemite.png in Resources */,
 				4C092B5B1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */,
 				4C0BA5101990798800857343 /* FormattingColor_0.png in Resources */,
+				4C1A5C801E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */,
 				4C0BA5111990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4C0BA5121990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
 				4CCFA66E1ABCF36A0083620F /* TPWTB_General.png in Resources */,
@@ -5208,6 +5270,7 @@
 				4CB2296C1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
 				4CCFA6641ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
 				4CB229421978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
+				4C1A5C821E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */,
 				4CB229441978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
 				4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
@@ -5324,6 +5387,7 @@
 				4CC164C51943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */,
 				4CCFA65F1ABCF36A0083620F /* TPWTB_Advanced.png in Resources */,
 				4CC164AF1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */,
+				4C1A5C811E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */,
 				4CF40F171AC1A59500A26BE0 /* TDCAddressBookSheet.xib in Resources */,
 				4CF40F371AC1A59500A26BE0 /* TDCChannelInviteSheet.xib in Resources */,
 				4CCFA68F1ABCF36A0083620F /* TPWTB_Style.png in Resources */,
@@ -5570,8 +5634,10 @@
 				4C52EF8C1D58BF2E0003AA1C /* IRCUser.m in Sources */,
 				4C0D97801D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
 				4CF40DEB1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
+				4C34F34E1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */,
 				4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */,
 				4C74FBBF1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
+				4C34F3511E051523006E1004 /* TVCChannelSelectionViewController.m in Sources */,
 				4C083FB91D2D603E00192F09 /* IRCConnectionConfig.m in Sources */,
 				4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
@@ -5591,6 +5657,7 @@
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
 				4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */,
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
+				4C08AE4C1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,
 				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
 				4C699C631B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
@@ -5727,6 +5794,7 @@
 				4C0BA6551990798800857343 /* NSColorHelper.m in Sources */,
 				4C0BA65F1990798800857343 /* NSStringHelper.m in Sources */,
 				4CD0A2251CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */,
+				4C34F34D1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */,
 				4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C0BA6621990798800857343 /* GTMEncodeHTML.m in Sources */,
 				4CF40DF21AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
@@ -5745,6 +5813,7 @@
 				4C77FF1D1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C0BA66F1990798800857343 /* IRCClient.m in Sources */,
 				4C645F5F1CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */,
+				4C34F3501E051523006E1004 /* TVCChannelSelectionViewController.m in Sources */,
 				4C0BA6711990798800857343 /* TXUserInterface.m in Sources */,
 				4C0BA6721990798800857343 /* IRCClientConfig.m in Sources */,
 				4CC2DC5B1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
@@ -5769,6 +5838,7 @@
 				4CF40E2E1AC1A4AC00A26BE0 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C0D977F1D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
 				4CF40E721AC1A4AC00A26BE0 /* TVCMemberListCell.m in Sources */,
+				4C08AE4B1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,
 				4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */,
 				4CF40E661AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */,
 				4C52EF8B1D58BF2E0003AA1C /* IRCUser.m in Sources */,
@@ -5908,8 +5978,10 @@
 				4C52EF8D1D58BF2E0003AA1C /* IRCUser.m in Sources */,
 				4CF40E3C1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4C0D97811D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
+				4C34F34F1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */,
 				4CF40DEC1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */,
+				4C34F3521E051523006E1004 /* TVCChannelSelectionViewController.m in Sources */,
 				4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
 				4C083FBA1D2D603E00192F09 /* IRCConnectionConfig.m in Sources */,
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
@@ -5929,6 +6001,7 @@
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
 				4C8AF6AC158E99520026668C /* IRCMessage.m in Sources */,
+				4C08AE4D1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
 				4C699C641B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
@@ -6039,6 +6112,14 @@
 				4C0A900F1D54D24300B64244 /* English */,
 			);
 			name = TDCBuddyListDialog.xib;
+			sourceTree = "<group>";
+		};
+		4C1A5C7E1E03FF750020C3DE /* TVCChannelSelectionView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C1A5C7F1E03FF750020C3DE /* English */,
+			);
+			name = TVCChannelSelectionView.xib;
 			sourceTree = "<group>";
 		};
 		4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */ = {
