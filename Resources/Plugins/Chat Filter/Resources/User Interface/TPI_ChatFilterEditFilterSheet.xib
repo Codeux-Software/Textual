@@ -706,7 +706,7 @@ Gw
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="28" id="HSG-4O-L60"/>
                                             </constraints>
-                                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Comma seperated list of named commands and/or numerics (1 through 999) which are not defined as a checkbox up above." id="gqg-Wn-ped">
+                                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Comma-separated list of named commands and/or numerics (1 through 999) which are not defined as a checkbox up above." id="gqg-Wn-ped">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
