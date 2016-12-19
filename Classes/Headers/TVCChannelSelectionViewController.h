@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol TVCChannelSelectionViewControllerDelegate <NSObject>
 @required
 
-- (void)channelSelectionTableViewSelectionChanged:(TVCChannelSelectionViewController *)tableView;
+- (void)channelSelectionControllerSelectionChanged:(TVCChannelSelectionViewController *)controller;
 @end
 
 NS_ASSUME_NONNULL_END

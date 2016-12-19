@@ -139,6 +139,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Reload checkbox state for all */
 	[self updateSelectedStateForItem:item];
+
+	/* Call out to delegate */
+	if ([self.delegate respondsToSelector:@selector(channelSelectionControllerSelectionChanged:)]) {
+		[self.delegate channelSelectionControllerSelectionChanged:self];
+	}
 }
 
 - (void)updateSelectedStateForItem:(IRCTreeItem *)item
