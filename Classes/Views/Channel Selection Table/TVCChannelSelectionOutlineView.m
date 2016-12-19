@@ -37,7 +37,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define _textLabelIndentationAmount		14.0
+
 @implementation TVCChannelSelectionOutlineView
+
+- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
+{
+	id item = [self itemAtRow:row];
+
+	BOOL isGroupItem = [self isGroupItem:item];
+
+	NSRect superFrame = [super frameOfCellAtColumn:column row:row];
+
+	if (isGroupItem) {
+		superFrame.origin.x -= _textLabelIndentationAmount;
+
+		superFrame.size.width += _textLabelIndentationAmount;
+	}
+
+	return superFrame;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
