@@ -37,11 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _textLabelIndentationAmount		16.0
-
 @interface TVCChannelSelectionOutlineCellView ()
 @property (readonly) IRCTreeItem *cellItem;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textLabelIndentationConstraint;
 
 - (IBAction)selectionCheckboxClicked:(id)sender;
 @end
@@ -59,11 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.textField.stringValue = cellItem.label;
 
 	self.selectedCheckbox.allowsMixedState = isGroupItem;
-
-	if (isGroupItem == NO) {
-		 self.textLabelIndentationConstraint.constant =
-		(self.textLabelIndentationConstraint.constant + _textLabelIndentationAmount);
-	}
 }
 
 - (void)selectionCheckboxClicked:(id)sender

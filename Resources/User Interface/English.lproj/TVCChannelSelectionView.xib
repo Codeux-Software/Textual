@@ -18,7 +18,7 @@
                 <rect key="frame" x="1" y="1" width="550" height="288"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="nwZ-Am-U4H" id="YUW-LN-mDa" customClass="TVCChannelSelectionOutlineView">
+                    <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="nwZ-Am-U4H" id="YUW-LN-mDa" customClass="TVCChannelSelectionOutlineView">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="288"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -55,11 +55,8 @@
                                                     <action selector="selectionCheckboxClicked:" target="tz7-a8-xMR" id="Nrh-FE-32E"/>
                                                 </connections>
                                             </button>
-                                            <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="KFL-kL-Tzv">
-                                                <rect key="frame" x="26" y="0.0" width="5" height="18"/>
-                                            </box>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="myz-4S-cMH">
-                                                <rect key="frame" x="33" y="1" width="515" height="17"/>
+                                                <rect key="frame" x="25" y="1" width="97" height="17"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="qI6-v7-m2V">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -68,19 +65,15 @@
                                             </textField>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="myz-4S-cMH" firstAttribute="leading" secondItem="O7s-3h-Zh7" secondAttribute="trailing" constant="3" id="8JQ-fU-Ohn"/>
                                             <constraint firstItem="myz-4S-cMH" firstAttribute="top" secondItem="tz7-a8-xMR" secondAttribute="top" id="9CN-xI-eNH"/>
-                                            <constraint firstItem="KFL-kL-Tzv" firstAttribute="top" secondItem="tz7-a8-xMR" secondAttribute="top" id="Chc-af-uEI"/>
-                                            <constraint firstAttribute="trailing" secondItem="myz-4S-cMH" secondAttribute="trailing" constant="4" id="ClH-9e-s2z"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="myz-4S-cMH" secondAttribute="trailing" constant="4" id="CtB-xB-BdD"/>
                                             <constraint firstItem="O7s-3h-Zh7" firstAttribute="top" secondItem="tz7-a8-xMR" secondAttribute="top" constant="2" id="Nwh-k7-XSd"/>
-                                            <constraint firstItem="myz-4S-cMH" firstAttribute="leading" secondItem="KFL-kL-Tzv" secondAttribute="trailing" constant="6" id="c6A-Ql-PLJ"/>
-                                            <constraint firstItem="KFL-kL-Tzv" firstAttribute="leading" secondItem="O7s-3h-Zh7" secondAttribute="trailing" constant="4" id="lCL-zW-ek9"/>
-                                            <constraint firstAttribute="bottom" secondItem="KFL-kL-Tzv" secondAttribute="bottom" id="pbd-g7-oIj"/>
                                             <constraint firstItem="O7s-3h-Zh7" firstAttribute="leading" secondItem="tz7-a8-xMR" secondAttribute="leading" constant="6" id="zTh-Lw-loA"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="selectedCheckbox" destination="O7s-3h-Zh7" id="hcW-LK-iIs"/>
                                             <outlet property="textField" destination="myz-4S-cMH" id="5wJ-Id-v0x"/>
-                                            <outlet property="textLabelIndentationConstraint" destination="c6A-Ql-PLJ" id="VXe-mG-N9o"/>
                                         </connections>
                                     </tableCellView>
                                 </prototypeCellViews>
