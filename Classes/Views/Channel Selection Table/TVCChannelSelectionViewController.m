@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray<NSString *> *cachedSelectedClientIds;
 @property (nonatomic, strong) NSMutableArray<NSString *> *cachedSelectedChannelIds;
 @property (nonatomic, copy) NSDictionary<IRCClient *, NSArray<IRCChannel *> *> *cachedChannelList;
+@property (nonatomic, strong) dispatch_source_t expandOutlineViewTimer;
 @end
 
 @implementation TVCChannelSelectionViewController
@@ -248,11 +249,40 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.outlineView reloadData];
 }
 
+- (void)expandOutlineViewItemsCancelTimer
+{
+	if (self.expandOutlineViewTimer != nil) {
+		XRCancelScheduledBlock(self.expandOutlineViewTimer);
+	}
+}
+
+- (void)expandOutlineViewItemsCreateTimer
+{
+	if (self.expandOutlineViewTimer != nil) {
+		return;
+	}
+
+	__weak TVCChannelSelectionViewController *weakSelf = self;
+
+	self.expandOutlineViewTimer =
+	XRScheduleBlockOnMainQueue(^{
+		if (weakSelf == nil) {
+			return;
+		}
+
+		[weakSelf.outlineView expandItem:nil expandChildren:YES];
+
+		weakSelf.expandOutlineViewTimer = nil;
+	}, 0.5);
+}
+
 - (void)channelListChanged:(id)sender
 {
 	[self rebuildCachedChannelList];
 
 	[self reloadOutlineView];
+
+	[self expandOutlineViewItemsCancelTimer];
 }
 
 - (void)rebuildCachedChannelList
@@ -317,7 +347,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* Perform work on next pass of the main thread to avoid exception:
 	 "insertRowsAtIndexes:withRowAnimation: can not happen while updating visible rows!" */
-
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		NSView *cellView = [rowView viewAtColumn:0];
 
@@ -325,12 +354,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 		id item = [outlineView itemAtRow:row];
 
-		if ([outlineView isGroupItem:item]) {
-			[outlineView expandItem:item];
-		}
-
 		[self updateSelectedStateForItem:item];
 	});
+
+	[self expandOutlineViewItemsCreateTimer];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
