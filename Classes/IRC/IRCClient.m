@@ -637,6 +637,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	/* Implement this method to allow client to be
+	 used as a dictionary key. */
+
+	return self;
+}
+
 #pragma mark -
 #pragma mark Properties
 
@@ -3540,51 +3548,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			[self requestChannelList];
-
-			break;
-		}
-		case IRCPublicCommandLoglogsIndex:
-		{
-#warning TODO: Remove command before 6.0.4 is finished.
-
-			if ([self stringIsChannelName:stringInString]) {
-				targetChannel = [self findChannel:stringInString];
-			}
-
-			if (targetChannel == nil) {
-				break;
-			}
-
-			/* We do not perform the fetch on the main thread to avoid
-			 deadlock but we also do work later on the main thread which
-			 means we need to invoke it once results are returned. */
-			XRPerformBlockAsynchronouslyOnGlobalQueue(^{
-				[TVCLogControllerHistoricLogSharedInstance()
-				 fetchEntriesForChannel:targetChannel
-							 fetchLimit:0
-							limitToDate:nil
-					withCompletionBlock:^(NSArray<TVCLogLineManaged *> *entries)
-				 {
-					 XRPerformBlockAsynchronouslyOnMainQueue(^{
-						 IRCChannel *logChannel =
-						 [self findChannelOrCreate:@"Fetch Results" isUtility:YES];
-
-						 [entries enumerateObjectsUsingBlock:^(TVCLogLineManaged *entry, NSUInteger entryIndex, BOOL *stop) {
-							 NSNumber *creationDate = [entry valueForKey:@"creationDate"];
-
-							 TVCLogLine *logLine = entry.logLine;
-
-							 NSString *formattedEntry = [logLine renderedBodyForTranscriptLogInChannel:targetChannel];
-
-							 NSString *formattedMessage =
-							 [NSString stringWithFormat:@"Entry %ld in %@ (inserted on %.2f): %@",
-							  entryIndex, targetChannel.name, creationDate.doubleValue, formattedEntry];
-
-							 [self printDebugInformation:formattedMessage inChannel:logChannel];
-						 }];
-					 }); // XRPerformBlockAsynchronouslyOnMainQueue()
-				 }]; // -fetchEntriesForChannel:::
-			}); // XRPerformBlockAsynchronouslyOnGlobalQueue()
 
 			break;
 		}

@@ -394,6 +394,8 @@ ClassWithDesignatedInitializerInitMethod
 												  resultInfo:NULL];
 
 		[self _evaluateFunction:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
+
+		[self.backingView redrawView];
 	};
 
 	_enqueueBlockStandalone(operationBlock)
@@ -573,6 +575,8 @@ ClassWithDesignatedInitializerInitMethod
 		self.historyLoadedForFirstTime = YES;
 
 		[self notifyViewFinishedLoadingHistory];
+
+		[self.backingView redrawViewIfNeeded];
 	};
 
 	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
@@ -635,9 +639,12 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(lineNumber != nil);
 
+#warning TODO: Fix jumping to line before switching to view not working correctly \
+	because the WebKit1 auto scroller does not detect frame changes when view is hidden. 
+
 	[self.backingView booleanByEvaluatingFunction:@"Textual.scrollToLine"
-								  withArguments:@[lineNumber]
-							  completionHandler:completionHandler];
+									withArguments:@[lineNumber]
+								completionHandler:completionHandler];
 }
 
 - (void)notifyDidBecomeVisible /* When the view is switched to */
@@ -646,7 +653,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self maybeReloadHistory];
 
-	[self.backingView scrollWebViewToLastSize];
+	[self.backingView restoreScrollerPosition];
+
+	[self.backingView redrawViewIfNeeded];
 }
 
 - (void)notifySelectionChanged
@@ -657,6 +666,8 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyDidBecomeHidden
 {
 	[self _evaluateFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
+
+	[self.backingView saveScrollerPosition];
 }
 
 - (void)notifyViewFinishedLoadingHistory
@@ -985,6 +996,9 @@ ClassWithDesignatedInitializerInitMethod
 			if (channel != nil && self.encrypted == NO) {
 				[TVCLogControllerHistoricLogSharedInstance() writeNewEntryWithLogLine:logLine inChannel:channel];
 			}
+
+			/* Redraw view if needed */
+			[self.backingView redrawViewIfNeeded];
 
 			/* Using informationi provided by conversation tracking we can update 
 			 our internal array of favored nicknames for nick completion. */

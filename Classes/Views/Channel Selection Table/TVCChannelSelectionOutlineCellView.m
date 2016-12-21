@@ -37,51 +37,37 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogView ()
-@property (nonatomic, weak) TVCLogController *viewController;
+@interface TVCChannelSelectionOutlineCellView ()
+@property (readonly) IRCTreeItem *cellItem;
 
-@property (readonly) TVCLogPolicy *webViewPolicy;
-
-@property (nonatomic, copy, readwrite, nullable) NSString *selection;
-
-@property (nonatomic, assign) BOOL viewingBottom;
-
-- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
-
-- (void)informDelegateWebViewClosedUnexpectedly;
-- (void)informDelegateWebViewFinishedLoading;
-
-- (void)setViewFinishedLayout;
-
-- (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view;
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-
-- (void)copyContentString;
-
-- (void)print;
+- (IBAction)selectionCheckboxClicked:(id)sender;
 @end
 
-@interface TVCLogView (TVCLogViewBackingViewProxy)
-+ (void)emptyCaches;
+@implementation TVCChannelSelectionOutlineCellView
 
-- (void)stopLoading;
+- (void)prepareInitialState
+{
+	NSOutlineView *outlineView = self.parentController.outlineView;
 
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
+	IRCTreeItem *cellItem = self.cellItem;
 
-- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
+	BOOL isGroupItem = [outlineView isGroupItem:cellItem];
 
-- (void)redrawViewIfNeeded;
-- (void)redrawView;
+	self.textField.stringValue = cellItem.label;
 
-- (void)saveScrollerPosition;
-- (void)restoreScrollerPosition;
-@end
+	self.selectedCheckbox.allowsMixedState = isGroupItem;
+}
 
-@interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
-- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(nullable NSArray *)arguments;
+- (void)selectionCheckboxClicked:(id)sender
+{
+	[self.parentController selectionCheckboxClickedInCell:self];
+}
 
-- (id)webScriptObjectToCommon:(WebScriptObject *)object;
+- (IRCTreeItem *)cellItem
+{
+	return self.objectValue;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

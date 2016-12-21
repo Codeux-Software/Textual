@@ -58,7 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenSenderNickname;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenSenderUsername;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenServerAddress;
-@property (nonatomic, weak) IBOutlet NSView *filterLimitedToTableHostView;
+@property (nonatomic, weak) IBOutlet NSView *filterLimitedToHostView;
+@property (nonatomic, weak) IBOutlet NSView *filterLimitedToSelectionHostView;
 @property (nonatomic, weak) IBOutlet NSMatrix *filterLimitToMatrix;
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoreContentCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoreOperatorsCheck;
@@ -76,13 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeReceivedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitedToMyselfCheck;
-@property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
 @property (nonatomic, assign) BOOL filterIgnoreOperatorsCheckEnabled;
 @property (nonatomic, copy) NSArray<NSString *> *filterActionAutoCompletedTokens;
-@property (nonatomic, strong) NSMutableArray<NSString *> *filterLimitedToClientsIDs;
-@property (nonatomic, strong) NSMutableArray<NSString *> *filterLimitedToChannelsIDs;
-@property (nonatomic, copy) NSArray<IRCClient *> *cachedClientList;
-@property (nonatomic, copy) NSDictionary<NSString *, NSArray *> *cachedChannelList;
+@property (nonatomic, strong) IBOutlet TVCChannelSelectionViewController *filterLimitToSelectionOutlineView;
 
 - (IBAction)viewFilterMatchHelpText:(id)sender;
 - (IBAction)viewFilterActionHelpText:(id)sender;
@@ -114,22 +111,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 
-@interface TPI_ChatFilterLimitToTableCellView : NSTableCellView
-@property (nonatomic, weak) TPI_ChatFilterEditFilterSheet *parentDialog;
-@property (nonatomic, weak) IBOutlet NSButton *checkbox;
-@property (readonly) IRCTreeItem *cellItem;
-@property (readonly) TPI_ChatFilterLimitToTableCellView *parentCellViewOrSelf;
-@property (readonly) NSOutlineView *parentOutlineView;
-
-- (void)populateDefaults;
-
-- (void)reloadCheckboxForChildren;
-
-- (IBAction)checkboxToggled:(id)sender;
-@end
-
-#pragma mark -
-
 @implementation TPI_ChatFilterEditFilterSheet
 
 #pragma mark -
@@ -156,8 +137,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	(void)[TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterEditFilterSheet" owner:self topLevelObjects:nil];
 
-	[self addObserverForChannelListUpdates];
-
 	[self populateTokenFieldStringValues];
 
 	[self setupTextFieldRules];
@@ -170,9 +149,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[self updateEnabledStateOfComponentsConstrainedByFilterEvents];
 	[self updateVisibilityOfLimitedToTableHostView];
 
-	[self rebuildCachedChannelList];
-
 	[self toggleOkButton];
+
+	[self.filterLimitToSelectionOutlineView attachToView:self.filterLimitedToSelectionHostView];
 }
 
 - (void)start
@@ -231,17 +210,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSArray *filterLimitedToClientsIDs = self.filter.filterLimitedToClientsIDs;
 	NSArray *filterLimitedToChannelsIDs = self.filter.filterLimitedToChannelsIDs;
 
-	if (filterLimitedToClientsIDs == nil) {
-		self.filterLimitedToClientsIDs = [NSMutableArray array];
-	} else {
-		self.filterLimitedToClientsIDs = [filterLimitedToClientsIDs mutableCopy];
-	}
-
-	if (filterLimitedToChannelsIDs == nil) {
-		self.filterLimitedToChannelsIDs = [NSMutableArray array];
-	} else {
-		self.filterLimitedToChannelsIDs = [filterLimitedToChannelsIDs mutableCopy];
-	}
+	self.filterLimitToSelectionOutlineView.selectedClientIds = filterLimitedToClientsIDs;
+	self.filterLimitToSelectionOutlineView.selectedChannelIds = filterLimitedToChannelsIDs;
 }
 
 - (void)saveFilter
@@ -281,8 +251,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.filter.filterEventsNumerics = [self compileFilterEventsNumericsOrReturnEmptyArray];
 
-	self.filter.filterLimitedToClientsIDs = self.filterLimitedToClientsIDs;
-	self.filter.filterLimitedToChannelsIDs = self.filterLimitedToChannelsIDs;
+	self.filter.filterLimitedToClientsIDs = self.filterLimitToSelectionOutlineView.selectedClientIds;
+	self.filter.filterLimitedToChannelsIDs = self.filterLimitToSelectionOutlineView.selectedChannelIds;
 }
 
 - (BOOL)filterIgnoreOperatorsCheckValue
@@ -410,9 +380,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	self.filterLimitToSelectionOutlineView.delegate = nil;
-	self.filterLimitToSelectionOutlineView.dataSource = nil;
-
 	[RZNotificationCenter() removeObserver:self];
 
 	if ([self.delegate respondsToSelector:@selector(chatFilterEditFilterSheetWillClose:)]) {
@@ -705,9 +672,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateVisibilityOfLimitedToTableHostView
 {
 	if (self.filterLimitToMatrix.selectedTag == TPI_ChatFilterLimitToSpecificItemsValue) {
-		self.filterLimitedToTableHostView.hidden = NO;
+		self.filterLimitedToHostView.hidden = NO;
 	} else {
-		self.filterLimitedToTableHostView.hidden = YES;
+		self.filterLimitedToHostView.hidden = YES;
 	}
 }
 
@@ -792,262 +759,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self updateEnableStateOfFilterActionTokenField];
 
 	[self toggleOkButton];
-}
-
-- (void)addObserverForChannelListUpdates
-{
-	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCWorldClientListWasModifiedNotification object:nil];
-
-	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCClientChannelListWasModifiedNotification object:nil];
-}
-
-- (void)channelListChanged:(id)sender
-{
-	[self rebuildCachedChannelList];
-
-	[self.filterLimitToSelectionOutlineView reloadData];
-}
-
-#pragma mark -
-#pragma mark Outline View Delegate
-
-- (void)rebuildCachedChannelList
-{
-	NSArray *clientList = worldController().clientList;
-
-	NSMutableDictionary<NSString *, NSArray *> *cachedChannelList = [NSMutableDictionary dictionary];
-
-	for (IRCClient *u in clientList) {
-		NSMutableArray *uChannelList = [NSMutableArray array];
-
-		for (IRCChannel *c in u.channelList) {
-			if (c.isChannel) {
-				[uChannelList addObject:c];
-			}
-		}
-
-		cachedChannelList[u.uniqueIdentifier] = [uChannelList copy];
-	}
-
-	self.cachedClientList = clientList;
-
-	self.cachedChannelList = cachedChannelList;
-}
-
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item;
-{
-	if (item) {
-		NSString *uniqueIdentifier = [item uniqueIdentifier];
-
-		return self.cachedChannelList[uniqueIdentifier].count;
-	}
-
-	return self.cachedClientList.count;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item;
-{
-	if (item) {
-		NSString *uniqueIdentifier = [item uniqueIdentifier];
-
-		return self.cachedChannelList[uniqueIdentifier][index];
-	}
-
-	return self.cachedClientList[index];
-}
-
-- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
-{
-	return item;
-}
-
-- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
-{
-	TPI_ChatFilterLimitToTableCellView *newView = (id)[outlineView makeViewWithIdentifier:@"tableEntry" owner:self];
-
-	newView.parentDialog = self;
-
-	return newView;
-}
-
-- (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
-{
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		NSView *cellView = [rowView viewAtColumn:0];
-
-		[(TPI_ChatFilterLimitToTableCellView *)cellView populateDefaults];
-
-		[(TPI_ChatFilterLimitToTableCellView *)cellView reloadCheckboxForChildren];
-	});
-
-	if ((row + 1) == outlineView.numberOfRows) {
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
-			[outlineView expandItem:nil expandChildren:YES];
-		});
-	}
-}
-
-- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
-{
-	NSString *uniqueIdentifier = [item uniqueIdentifier];
-
-	return (self.cachedChannelList[uniqueIdentifier].count > 0);
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
-{
-	return NO;
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item
-{
-	return NO;
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldShowOutlineCellForItem:(id)item
-{
-	return NO;
-}
-
-@end
-
-#pragma mark -
-#pragma mark Table Cell View
-
-@implementation TPI_ChatFilterLimitToTableCellView
-
-- (void)populateDefaults
-{
-	NSOutlineView *outlineView = self.parentOutlineView;
-
-	IRCTreeItem *cellItem = self.cellItem;
-
-	BOOL isGroupItem = [outlineView isGroupItem:cellItem];
-
-	self.textField.stringValue = cellItem.label;
-
-	self.checkbox.allowsMixedState = isGroupItem;
-}
-
-- (void)reloadCheckboxForChildren
-{
-	/* Define context for current operation */
-	TPI_ChatFilterEditFilterSheet *parentDialog = self.parentDialog;
-
-	NSOutlineView *outlineView = parentDialog.filterLimitToSelectionOutlineView;
-
-	TPI_ChatFilterLimitToTableCellView *parentCellItemView = self.parentCellViewOrSelf;
-
-	IRCTreeItem *parentCellItem = parentCellItemView.cellItem;
-
-	/* Process child items */
-	BOOL atleastOneChildChecked = NO;
-
-	BOOL parentItemInFilter = [parentDialog.filterLimitedToClientsIDs containsObject:parentCellItem.uniqueIdentifier];
-
-	NSArray *childrenItems = [outlineView itemsInGroup:parentCellItem];
-
-	for (IRCTreeItem *childItem in childrenItems) {
-		NSInteger childItemRow = [outlineView rowForItem:childItem];
-
-		TPI_ChatFilterLimitToTableCellView *childItemView = [outlineView viewAtColumn:0 row:childItemRow makeIfNecessary:NO];
-
-		BOOL childItemInFilter = [parentDialog.filterLimitedToChannelsIDs containsObject:childItem.uniqueIdentifier];
-
-		if (parentItemInFilter) {
-			childItemView.checkbox.state = NSOnState;
-		} else if (childItemInFilter) {
-			if (atleastOneChildChecked == NO) {
-				atleastOneChildChecked = YES;
-			}
-
-			childItemView.checkbox.state = NSOnState;
-		} else {
-			childItemView.checkbox.state = NSOffState;
-		}
-
-		childItemView.checkbox.enabled = (parentItemInFilter == NO);
-	}
-
-	/* Process parent item */
-	if (parentItemInFilter) {
-		parentCellItemView.checkbox.state = NSOnState;
-	} else if (atleastOneChildChecked) {
-		parentCellItemView.checkbox.state = NSMixedState;
-	} else {
-		parentCellItemView.checkbox.state = NSOffState;
-	}
-}
-
-- (void)checkboxToggled:(NSButton *)sender
-{
-	/* Define context for current operation.\ */
-	TPI_ChatFilterEditFilterSheet *parentDialog = self.parentDialog;
-
-	NSOutlineView *outlineView = parentDialog.filterLimitToSelectionOutlineView;
-
-	IRCTreeItem *cellItem = self.cellItem;
-
-	BOOL isGroupItem = [outlineView isGroupItem:cellItem];
-
-	BOOL isEnablingItem = (sender.state == NSOnState ||
-						   sender.state == NSMixedState);
-
-	/* Add or remove item from appropriate filter */
-	if (isGroupItem) {
-		if (isEnablingItem) {
-			[parentDialog.filterLimitedToClientsIDs addObject:cellItem.uniqueIdentifier];
-		} else {
-			[parentDialog.filterLimitedToClientsIDs removeObject:cellItem.uniqueIdentifier];
-		}
-	} else {
-		if (isEnablingItem) {
-			[parentDialog.filterLimitedToChannelsIDs addObject:cellItem.uniqueIdentifier];
-		} else {
-			[parentDialog.filterLimitedToChannelsIDs removeObject:cellItem.uniqueIdentifier];
-		}
-	}
-
-	/* Further process filters depending on state of other items */
-	if (isGroupItem && isEnablingItem) {
-		NSArray *childrenItems = [outlineView itemsFromParentGroup:cellItem];
-
-		for (IRCTreeItem *childItem in childrenItems) {
-			[parentDialog.filterLimitedToChannelsIDs removeObject:childItem.uniqueIdentifier];
-		}
-	}
-
-	/* Reload checkbox state for all */
-	[self reloadCheckboxForChildren];
-}
-
-- (NSOutlineView *)parentOutlineView
-{
-	TPI_ChatFilterEditFilterSheet *parentDialog = self.parentDialog;
-
-	return parentDialog.filterLimitToSelectionOutlineView;
-}
-
-- (TPI_ChatFilterLimitToTableCellView *)parentCellViewOrSelf
-{
-	NSOutlineView *outlineView = self.parentOutlineView;
-
-	IRCTreeItem *cellItem = self.cellItem;
-
-	id parentCellItem = [outlineView parentForItem:cellItem];
-
-	if (parentCellItem == nil) {
-		return self;
-	}
-
-	NSInteger parentCellItemRow = [outlineView rowForItem:parentCellItem];
-
-	return [outlineView viewAtColumn:0 row:parentCellItemRow makeIfNecessary:NO];
-}
-
-- (IRCTreeItem *)cellItem
-{
-	return self.objectValue;
 }
 
 @end
