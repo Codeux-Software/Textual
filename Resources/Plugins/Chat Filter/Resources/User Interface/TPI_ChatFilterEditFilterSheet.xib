@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -37,9 +37,10 @@
                 <outlet property="filterIgnoreContentCheck" destination="vdu-cW-fcy" id="1fS-BW-6xG"/>
                 <outlet property="filterIgnoreOperatorsCheck" destination="1Ft-El-Wak" id="Rh1-xw-ueF"/>
                 <outlet property="filterLimitToMatrix" destination="bT2-rB-pWP" id="jR3-Br-WDr"/>
-                <outlet property="filterLimitToSelectionOutlineView" destination="BTS-WW-BlV" id="IAH-Xf-9Ni"/>
+                <outlet property="filterLimitToSelectionOutlineView" destination="TdM-lk-raw" id="6z7-P1-1qV"/>
+                <outlet property="filterLimitedToHostView" destination="gTG-wG-y2s" id="zee-bm-f1M"/>
                 <outlet property="filterLimitedToMyselfCheck" destination="X5X-m4-re0" id="9Zk-xV-VDm"/>
-                <outlet property="filterLimitedToTableHostView" destination="gTG-wG-y2s" id="cxs-Xs-kZb"/>
+                <outlet property="filterLimitedToSelectionHostView" destination="akH-fU-k99" id="E06-30-IMS"/>
                 <outlet property="filterLogMatchCheck" destination="A8t-L5-qUs" id="ER5-sB-xJw"/>
                 <outlet property="filterMatchTextField" destination="TYu-Qh-WKq" id="ODf-sf-0P0"/>
                 <outlet property="filterNotesTextField" destination="Poo-f2-StF" id="gsx-YB-cca"/>
@@ -387,105 +388,20 @@ Gw
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="SE9-bF-Ele">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="akH-fU-k99">
                                                     <rect key="frame" x="20" y="15" width="454" height="287"/>
-                                                    <clipView key="contentView" id="dMC-Zd-9Do">
-                                                        <rect key="frame" x="1" y="1" width="452" height="285"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <subviews>
-                                                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="10" outlineTableColumn="DnG-4S-tlv" id="BTS-WW-BlV">
-                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="285"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <size key="intercellSpacing" width="3" height="2"/>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                                                <tableColumns>
-                                                                    <tableColumn width="449" minWidth="40" maxWidth="1000" id="DnG-4S-tlv">
-                                                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                                            <font key="font" metaFont="smallSystem"/>
-                                                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                        </tableHeaderCell>
-                                                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="mJZ-kr-4OX">
-                                                                            <font key="font" metaFont="system"/>
-                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                        <prototypeCellViews>
-                                                                            <tableCellView identifier="tableEntry" id="YsM-TD-4tI" customClass="TPI_ChatFilterLimitToTableCellView">
-                                                                                <rect key="frame" x="1" y="1" width="449" height="17"/>
-                                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                                <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="plc-6h-nFQ">
-                                                                                        <rect key="frame" x="0.0" y="1" width="423" height="17"/>
-                                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="R4q-WZ-vd1">
-                                                                                            <font key="font" metaFont="system"/>
-                                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                        </textFieldCell>
-                                                                                    </textField>
-                                                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="mFS-Kb-Jki">
-                                                                                        <rect key="frame" x="427" y="0.0" width="22" height="18"/>
-                                                                                        <constraints>
-                                                                                            <constraint firstAttribute="width" constant="18" id="Wh3-4S-1ix"/>
-                                                                                        </constraints>
-                                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" allowsMixedState="YES" inset="2" id="Zi5-If-el3">
-                                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                                            <font key="font" metaFont="system"/>
-                                                                                        </buttonCell>
-                                                                                        <accessibility description="Limit filter to item"/>
-                                                                                        <connections>
-                                                                                            <action selector="checkboxToggled:" target="YsM-TD-4tI" id="aIK-4f-eXk"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                </subviews>
-                                                                                <constraints>
-                                                                                    <constraint firstItem="mFS-Kb-Jki" firstAttribute="top" secondItem="YsM-TD-4tI" secondAttribute="top" constant="1" id="Hht-iI-F9J"/>
-                                                                                    <constraint firstItem="mFS-Kb-Jki" firstAttribute="leading" secondItem="plc-6h-nFQ" secondAttribute="trailing" constant="8" symbolic="YES" id="IsN-AR-7wf"/>
-                                                                                    <constraint firstItem="plc-6h-nFQ" firstAttribute="leading" secondItem="YsM-TD-4tI" secondAttribute="leading" constant="2" id="aQH-eT-VwG"/>
-                                                                                    <constraint firstItem="plc-6h-nFQ" firstAttribute="top" secondItem="YsM-TD-4tI" secondAttribute="top" constant="-1" id="f2i-oy-FTh"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="mFS-Kb-Jki" secondAttribute="trailing" constant="2" id="hR4-uw-NRc"/>
-                                                                                </constraints>
-                                                                                <connections>
-                                                                                    <outlet property="checkbox" destination="mFS-Kb-Jki" id="V8m-3F-emd"/>
-                                                                                    <outlet property="textField" destination="plc-6h-nFQ" id="MFU-N4-snh"/>
-                                                                                </connections>
-                                                                            </tableCellView>
-                                                                        </prototypeCellViews>
-                                                                    </tableColumn>
-                                                                </tableColumns>
-                                                                <accessibility description="Check checkbox for items to limit to"/>
-                                                                <connections>
-                                                                    <outlet property="dataSource" destination="-2" id="Ghl-LE-NJv"/>
-                                                                    <outlet property="delegate" destination="-2" id="FnP-3C-9nZ"/>
-                                                                </connections>
-                                                            </outlineView>
-                                                        </subviews>
-                                                    </clipView>
-                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="6am-6R-TqW">
-                                                        <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                    </scroller>
-                                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cif-pX-5eo">
-                                                        <rect key="frame" x="437" y="1" width="16" height="0.0"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                    </scroller>
-                                                    <connections>
-                                                        <accessibilityConnection property="title" destination="ogw-Wl-ucj" id="6Jr-wG-xVf"/>
-                                                    </connections>
-                                                </scrollView>
+                                                </customView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="SE9-bF-Ele" secondAttribute="bottom" constant="15" id="0EG-jy-YG4"/>
                                                 <constraint firstItem="ogw-Wl-ucj" firstAttribute="leading" secondItem="gTG-wG-y2s" secondAttribute="leading" constant="20" symbolic="YES" id="6kp-5l-xqn"/>
                                                 <constraint firstItem="ogw-Wl-ucj" firstAttribute="top" secondItem="UY2-pC-A0V" secondAttribute="bottom" constant="12" id="BlE-cF-VJm"/>
+                                                <constraint firstItem="akH-fU-k99" firstAttribute="leading" secondItem="gTG-wG-y2s" secondAttribute="leading" constant="20" id="Qxw-Db-mFf"/>
                                                 <constraint firstAttribute="trailing" secondItem="UY2-pC-A0V" secondAttribute="trailing" constant="12" id="RBi-fC-Kd1"/>
                                                 <constraint firstItem="UY2-pC-A0V" firstAttribute="leading" secondItem="gTG-wG-y2s" secondAttribute="leading" constant="12" id="Rlo-1E-5BW"/>
                                                 <constraint firstItem="UY2-pC-A0V" firstAttribute="top" secondItem="gTG-wG-y2s" secondAttribute="top" constant="10" id="anM-CS-HPX"/>
-                                                <constraint firstItem="SE9-bF-Ele" firstAttribute="top" secondItem="ogw-Wl-ucj" secondAttribute="bottom" constant="8" symbolic="YES" id="f8j-4Q-NCm"/>
-                                                <constraint firstItem="ogw-Wl-ucj" firstAttribute="leading" secondItem="SE9-bF-Ele" secondAttribute="leading" id="iVC-r4-IA3"/>
-                                                <constraint firstItem="UY2-pC-A0V" firstAttribute="centerX" secondItem="SE9-bF-Ele" secondAttribute="centerX" id="m46-dk-fR8"/>
+                                                <constraint firstAttribute="trailing" secondItem="akH-fU-k99" secondAttribute="trailing" constant="20" id="k8Z-NS-WUY"/>
+                                                <constraint firstAttribute="bottom" secondItem="akH-fU-k99" secondAttribute="bottom" constant="15" id="ws9-3A-D9p"/>
+                                                <constraint firstItem="akH-fU-k99" firstAttribute="top" secondItem="ogw-Wl-ucj" secondAttribute="bottom" constant="8" id="wzM-tU-XSg"/>
                                             </constraints>
                                         </customView>
                                         <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bT2-rB-pWP">
@@ -1060,6 +976,7 @@ Gw
             </connections>
             <point key="canvasLocation" x="-231.5" y="218.5"/>
         </window>
+        <customObject id="TdM-lk-raw" customClass="TVCChannelSelectionViewController"/>
         <numberFormatter formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="vGQ-Aw-wDg" customClass="TPI_NumberOnlyTextFieldFormatter">
             <real key="minimum" value="0.0"/>
             <real key="maximum" value="1296000"/>

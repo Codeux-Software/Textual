@@ -40,6 +40,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogViewInternalWK1 ()
+@property (nonatomic, strong) TVCWK1AutoScroller *autoScroller;
 @property (nonatomic, readwrite, strong) TVCLogScriptEventSink *webViewScriptSink;
 @end
 
@@ -107,14 +108,10 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	self.shouldUpdateWhileOffscreen = NO;
 
 	[self updateBackgroundColor];
-
-	[self startObservingScrollerNotifications];
 }
 
 - (void)dealloc
 {
-	[self stopObservingScrollerNotifications];
-
 	self.frameLoadDelegate = nil;
 	self.policyDelegate = nil;
 	self.resourceLoadDelegate = nil;
@@ -171,9 +168,13 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
-	if (self.t_viewHasLoaded && self.t_viewHasScriptObject) {
-		[self.t_parentView performSelectorInCommonModes:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
+	if (self.t_viewHasLoaded == NO || self.t_viewHasScriptObject == NO) {
+		return;
 	}
+
+	[self.t_parentView performSelectorInCommonModes:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
+
+	[self constructAutoScroller];
 }
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
@@ -234,36 +235,47 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 #pragma mark -
 #pragma mark Scroll View
 
-- (void)startObservingScrollerNotifications
+- (void)redrawViewIfNeeded
 {
-	[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
-}
-
-- (void)stopObservingScrollerNotifications
-{
-	[RZNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
-}
-
-- (void)webViewDidChangeFrame:(NSNotification *)aNotification
-{
-	NSView *documentView = self.mainFrame.frameView.documentView;
-
-	if (aNotification.object != documentView) {
+	/* The WebView is layer backed which means it is not redrawn unless it is told to do so.
+	 TVCWK1AutoScroller automatically tells it to do so if it scrolled programmatically or
+	 by the end user. When there is not enough content to scroll, the WebView is not redrawn
+	 because there is never a scroll event triggered. Therefore, this call exists to tell
+	 TVCWK1AutoScroller that we are interested in a redraw and it will then take appropriate
+	 actions depending on whether one is necessary or not. */
+	if (self.t_parentView.viewController.visible == NO) {
 		return;
 	}
 
-	[self.t_parentView webViewScrollAreaSizeChanged:documentView.frame.size];
+	if (self.autoScroller.canScroll == NO) {
+		[self.autoScroller redrawFrame];
+	}
 }
 
-- (void)scrollToEndOfDocument:(nullable id)sender
+- (void)redrawView
 {
-	NSView *documentView = self.mainFrame.frameView.documentView;
+	if (self.t_parentView.viewController.visible == NO) {
+		return;
+	}
 
-	NSRect visibleRect = documentView.visibleRect;
+	[self.autoScroller redrawFrame];
+}
 
-	visibleRect.origin.y = (NSHeight(documentView.frame) - NSHeight(visibleRect));
+- (void)saveScrollerPosition
+{
+	[self.autoScroller saveScrollerPosition];
+}
 
-	[documentView scrollRectToVisible:visibleRect];
+- (void)restoreScrollerPosition
+{
+	[self.autoScroller restoreScrollerPosition];
+}
+
+- (void)constructAutoScroller
+{
+	WebFrameView *frameView = self.mainFrame.frameView;
+
+	self.autoScroller = [[TVCWK1AutoScroller alloc] initWitFrameView:frameView];
 }
 
 #pragma mark -

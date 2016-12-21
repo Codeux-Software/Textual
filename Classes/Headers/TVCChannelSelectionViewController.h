@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,53 +35,27 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogView ()
-@property (nonatomic, weak) TVCLogController *viewController;
+@protocol TVCChannelSelectionViewControllerDelegate;
 
-@property (readonly) TVCLogPolicy *webViewPolicy;
+@interface TVCChannelSelectionViewController : NSObject
+@property (nonatomic, weak) id <TVCChannelSelectionViewControllerDelegate> delegate;
 
-@property (nonatomic, copy, readwrite, nullable) NSString *selection;
+@property (nonatomic, copy) NSArray<NSString *> *selectedClientIds;
+@property (nonatomic, copy) NSArray<NSString *> *selectedChannelIds;
 
-@property (nonatomic, assign) BOOL viewingBottom;
-
-- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
-
-- (void)informDelegateWebViewClosedUnexpectedly;
-- (void)informDelegateWebViewFinishedLoading;
-
-- (void)setViewFinishedLayout;
-
-- (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view;
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-
-- (void)copyContentString;
-
-- (void)print;
+- (void)attachToView:(NSView *)view;
 @end
 
-@interface TVCLogView (TVCLogViewBackingViewProxy)
-+ (void)emptyCaches;
+#pragma mark -
 
-- (void)stopLoading;
+@protocol TVCChannelSelectionViewControllerDelegate <NSObject>
+@required
 
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
-
-- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
-
-- (void)redrawViewIfNeeded;
-- (void)redrawView;
-
-- (void)saveScrollerPosition;
-- (void)restoreScrollerPosition;
-@end
-
-@interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
-- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(nullable NSArray *)arguments;
-
-- (id)webScriptObjectToCommon:(WebScriptObject *)object;
+- (void)channelSelectionControllerSelectionChanged:(TVCChannelSelectionViewController *)controller;
 @end
 
 NS_ASSUME_NONNULL_END

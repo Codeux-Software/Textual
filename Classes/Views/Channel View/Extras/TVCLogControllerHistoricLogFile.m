@@ -242,10 +242,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSManagedObjectContext *context = self.managedObjectContext;
 
-	(void)
-	[TVCLogLineManaged managedObjectWithLogLine:logLine
-									  inChannel:channel
-										context:context];
+	[context performBlockAndWait:^{
+		(void)
+		[TVCLogLineManaged managedObjectWithLogLine:logLine
+										  inChannel:channel
+											context:context];
+	}];
 }
 
 #pragma mark -

@@ -37,51 +37,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogView ()
-@property (nonatomic, weak) TVCLogController *viewController;
+#define _textLabelIndentationAmount		14.0
 
-@property (readonly) TVCLogPolicy *webViewPolicy;
+@implementation TVCChannelSelectionOutlineView
 
-@property (nonatomic, copy, readwrite, nullable) NSString *selection;
+- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
+{
+	id item = [self itemAtRow:row];
 
-@property (nonatomic, assign) BOOL viewingBottom;
+	BOOL isGroupItem = [self isGroupItem:item];
 
-- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
+	NSRect superFrame = [super frameOfCellAtColumn:column row:row];
 
-- (void)informDelegateWebViewClosedUnexpectedly;
-- (void)informDelegateWebViewFinishedLoading;
+	if (isGroupItem) {
+		superFrame.origin.x -= _textLabelIndentationAmount;
 
-- (void)setViewFinishedLayout;
+		superFrame.size.width += _textLabelIndentationAmount;
+	}
 
-- (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view;
+	return superFrame;
+}
 
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-
-- (void)copyContentString;
-
-- (void)print;
-@end
-
-@interface TVCLogView (TVCLogViewBackingViewProxy)
-+ (void)emptyCaches;
-
-- (void)stopLoading;
-
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
-
-- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
-
-- (void)redrawViewIfNeeded;
-- (void)redrawView;
-
-- (void)saveScrollerPosition;
-- (void)restoreScrollerPosition;
-@end
-
-@interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
-- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(nullable NSArray *)arguments;
-
-- (id)webScriptObjectToCommon:(WebScriptObject *)object;
 @end
 
 NS_ASSUME_NONNULL_END
