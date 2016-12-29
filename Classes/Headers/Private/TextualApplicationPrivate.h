@@ -144,7 +144,6 @@
 #import "TVCLogControllerHistoricLogFilePrivate.h"
 #import "TVCLogControllerOperationQueuePrivate.h"
 #import "TVCLogControllerPrivate.h"
-#import "TVCLogLineXPC.h"
 #import "TVCLogLinePrivate.h"
 #import "TVCLogPolicyPrivate.h"
 #import "TVCLogScriptEventSinkPrivate.h"
