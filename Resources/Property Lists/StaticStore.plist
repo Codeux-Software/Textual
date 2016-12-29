@@ -103,6 +103,8 @@
 		<string>=</string>
 		<key>TVCLogControllerHistoricLogFileSavePath_v2</key>
 		<string>=</string>
+		<key>TVCLogControllerHistoricLogFileSavePath_v3</key>
+		<string>=</string>
 	</dict>
 	<key>TPCPreferencesUserDefaults Obsolete Keys</key>
 	<dict>

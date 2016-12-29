@@ -80,7 +80,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 {
 	NSParameterAssert(data != nil);
 
-	return [NSUnarchiver unarchiveObjectWithData:data];
+	return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
+- (instancetype)initWithXPCObject:(TVCLogLineXPC *)xpcObject
+{
+	NSParameterAssert(xpcObject != nil);
+
+	return [NSKeyedUnarchiver unarchiveObjectWithData:xpcObject.data];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -165,6 +172,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 + (BOOL)supportsSecureCoding
 {
 	return YES;
+}
+
+- (TVCLogLineXPC *)xpcObjectForChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+
+	TVCLogLineXPC *xpcObject =
+	[[TVCLogLineXPC alloc] initWithLogLineData:data inChannel:channel.uniqueIdentifier];
+
+	return xpcObject;
 }
 
 + (NSString *)newUniqueIdentifier

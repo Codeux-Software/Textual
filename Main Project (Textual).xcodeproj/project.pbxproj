@@ -532,9 +532,6 @@
 		4C4A1AFD1D122707004FBF12 /* WebScriptObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */; };
 		4C4A1AFE1D122707004FBF12 /* WebScriptObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */; };
 		4C4A1AFF1D122707004FBF12 /* WebScriptObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */; };
-		4C51AA071DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */; };
-		4C51AA081DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */; };
-		4C51AA091DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
 		4C52EF8B1D58BF2E0003AA1C /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C52EF8A1D58BF2E0003AA1C /* IRCUser.m */; };
@@ -646,6 +643,18 @@
 		4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */; };
 		4C74FBC51B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */; };
 		4C74FBC61B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */; };
+		4C761BA31E155C2800A505B7 /* Historic Log File Manager.app in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C761BA51E155C4B00A505B7 /* Historic Log File Manager.app in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C761BA71E155C7500A505B7 /* Historic Log File Manager.app in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C761BB91E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */; };
+		4C761BBA1E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */; };
+		4C761BBB1E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */; };
+		4C761BBC1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB51E155FF800A505B7 /* TVCLogLineXPC.h */; };
+		4C761BBD1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB51E155FF800A505B7 /* TVCLogLineXPC.h */; };
+		4C761BBE1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB51E155FF800A505B7 /* TVCLogLineXPC.h */; };
+		4C761BBF1E155FF800A505B7 /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C761BB81E155FF800A505B7 /* TVCLogLineXPC.m */; };
+		4C761BC01E155FF800A505B7 /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C761BB81E155FF800A505B7 /* TVCLogLineXPC.m */; };
+		4C761BC11E155FF800A505B7 /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C761BB81E155FF800A505B7 /* TVCLogLineXPC.m */; };
 		4C76CC861D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4C76CC871D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4C76CC881D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
@@ -1367,12 +1376,6 @@
 		4CBD03C91D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
 		4CBD03CA1D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
 		4CBD03CB1D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
-		4CBD545E1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */; };
-		4CBD545F1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */; };
-		4CBD54601DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */; };
-		4CBD546B1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */; };
-		4CBD546C1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */; };
-		4CBD546D1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */; };
 		4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4CBE64C71743720600831D69 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
 		4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
@@ -1828,6 +1831,13 @@
 			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
 			remoteInfo = "Build Frameworks";
 		};
+		4C761B9E1E155BFF00A505B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4C442C881E13B3D200B187F4;
+			remoteInfo = "Historic Log File Manager";
+		};
 		4C83B90A1BA9BE4200BD7718 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */;
@@ -1932,6 +1942,39 @@
 				4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C761B901E155B7300A505B7 /* Copy XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				4C761BA31E155C2800A505B7 /* Historic Log File Manager.app in Copy XPC Services */,
+			);
+			name = "Copy XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C761BA41E155C4300A505B7 /* Copy XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				4C761BA51E155C4B00A505B7 /* Historic Log File Manager.app in Copy XPC Services */,
+			);
+			name = "Copy XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C761BA61E155C6E00A505B7 /* Copy XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				4C761BA71E155C7500A505B7 /* Historic Log File Manager.app in Copy XPC Services */,
+			);
+			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4C9E534415B4C171000E84A9 /* Copy Acknowledgements */ = {
@@ -2120,7 +2163,6 @@
 		4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebScriptObjectHelperPrivate.h; sourceTree = "<group>"; };
 		4C4C96C31C88BDC000E8F8F3 /* TextualWithoutSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C4C96C41C88BDC000E8F8F3 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
-		4C51AA061DC79677004B31D6 /* LogControllerStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogControllerStorageModel.xcdatamodel; sourceTree = "<group>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
 		4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
@@ -2182,6 +2224,11 @@
 		4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogViewInternalWK2.m; sourceTree = "<group>"; };
 		4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerRecoverLostLicenseSheet.m; path = Dialogs/TDCLicenseManagerRecoverLostLicenseSheet.m; sourceTree = "<group>"; };
 		4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerDialog.m; path = Dialogs/TDCLicenseManagerDialog.m; sourceTree = "<group>"; };
+		4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Historic Log File Manager.xcodeproj"; path = "XPC Services/Historic Log File Manager/Historic Log File Manager.xcodeproj"; sourceTree = "<group>"; };
+		4C761BAE1E155CB100A505B7 /* BuildServices.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildServices.sh; path = "Main Project (Textual).xcodeproj/BuildServices.sh"; sourceTree = SOURCE_ROOT; };
+		4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLSHistoricLogProtocol.h; sourceTree = "<group>"; };
+		4C761BB51E155FF800A505B7 /* TVCLogLineXPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogLineXPC.h; sourceTree = "<group>"; };
+		4C761BB81E155FF800A505B7 /* TVCLogLineXPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogLineXPC.m; sourceTree = "<group>"; };
 		4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextViewMavericksUserInterace.m; path = "Views/Main Window/TVCMainWindowTextViewMavericksUserInterace.m"; sourceTree = "<group>"; };
 		4C76CC851D1DC688005CDDA9 /* TVCMainWindowTextViewYosemiteUserInterace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextViewYosemiteUserInterace.m; path = "Views/Main Window/TVCMainWindowTextViewYosemiteUserInterace.m"; sourceTree = "<group>"; };
 		4C76CC8C1D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowTextViewMavericksUserInteracePrivate.h; path = Headers/Private/TVCMainWindowTextViewMavericksUserInteracePrivate.h; sourceTree = "<group>"; };
@@ -2455,8 +2502,6 @@
 		4CBC76AC1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TVCMainWindow.strings"; sourceTree = SOURCE_ROOT; };
 		4CBD03C41D5537CE0057D5B5 /* BuddyListDropArea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuddyListDropArea.png; sourceTree = "<group>"; };
 		4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BuddyListDropArea@2x.png"; sourceTree = "<group>"; };
-		4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogLineManaged.m; sourceTree = "<group>"; };
-		4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogLineManagedPrivate.h; path = Headers/Private/TVCLogLineManagedPrivate.h; sourceTree = "<group>"; };
 		4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TDCHighlightEntrySheet.m; path = Dialogs/TDCHighlightEntrySheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CBEACDE1BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowSidebarSmoothTextField.m; path = "Views/Main Window/TVCMainWindowSidebarSmoothTextField.m"; sourceTree = "<group>"; };
 		4CC1649E1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeCenterMavericks.png; sourceTree = "<group>"; };
@@ -2816,6 +2861,7 @@
 				4C1DC55C1580420500A47BC9 /* Resources */,
 				4C1DC5551580420500A47BC9 /* Frameworks */,
 				4C1DC5531580420500A47BC9 /* Products */,
+				4C761B921E155BD700A505B7 /* XPC Services */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2843,7 +2889,6 @@
 			isa = PBXGroup;
 			children = (
 				4CCC6B46158E8C1B003A102B /* Build Settings */,
-				4C51AA041DC79677004B31D6 /* Data Models */,
 				4C46CCA21580437400846B64 /* Documentation */,
 				4C46CCA6158043BB00846B64 /* Extensions */,
 				4C46F3C11943A654004CA8BA /* Images */,
@@ -2890,6 +2935,7 @@
 				4C7B05021D1214D600295E82 /* Library */,
 				4C8AF5E7158E99520026668C /* Others */,
 				4C7409041CCDA344002F026F /* Preferences */,
+				4C761BB21E155FF800A505B7 /* Shared */,
 				4C5C08FA1D177F1200EB6340 /* Views */,
 			);
 			name = "Source Code";
@@ -3091,15 +3137,6 @@
 			path = "Headers/Private/External Libraries";
 			sourceTree = "<group>";
 		};
-		4C51AA041DC79677004B31D6 /* Data Models */ = {
-			isa = PBXGroup;
-			children = (
-				4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */,
-			);
-			name = "Data Models";
-			path = "Resources/Data Models";
-			sourceTree = SOURCE_ROOT;
-		};
 		4C51B8B7196ACDBB00003A87 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -3270,7 +3307,6 @@
 				4C7B48EB1D131A2A008D7926 /* TVCLogControllerHistoricLogFilePrivate.h */,
 				4C7B48EC1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h */,
 				4C7B48ED1D131A2A008D7926 /* TVCLogControllerPrivate.h */,
-				4CBD546A1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h */,
 				4C7B48EE1D131A2A008D7926 /* TVCLogLinePrivate.h */,
 				4C7B48F01D131A2A008D7926 /* TVCLogPolicyPrivate.h */,
 				4C7B48F11D131A2A008D7926 /* TVCLogScriptEventSinkPrivate.h */,
@@ -3377,6 +3413,57 @@
 				4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */,
 			);
 			name = "License Manager";
+			sourceTree = "<group>";
+		};
+		4C761B921E155BD700A505B7 /* XPC Services */ = {
+			isa = PBXGroup;
+			children = (
+				4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */,
+			);
+			name = "XPC Services";
+			sourceTree = "<group>";
+		};
+		4C761B991E155BFF00A505B7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C761BB21E155FF800A505B7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4C761BB31E155FF800A505B7 /* Headers */,
+				4C761BB61E155FF800A505B7 /* Views */,
+			);
+			name = Shared;
+			path = "Classes (Shared)";
+			sourceTree = SOURCE_ROOT;
+		};
+		4C761BB31E155FF800A505B7 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */,
+				4C761BB51E155FF800A505B7 /* TVCLogLineXPC.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		4C761BB61E155FF800A505B7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C761BB71E155FF800A505B7 /* Channel View */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4C761BB71E155FF800A505B7 /* Channel View */ = {
+			isa = PBXGroup;
+			children = (
+				4C761BB81E155FF800A505B7 /* TVCLogLineXPC.m */,
+			);
+			path = "Channel View";
 			sourceTree = "<group>";
 		};
 		4C76CC9C1D1DC705005CDDA9 /* Text Fields */ = {
@@ -3974,7 +4061,6 @@
 				4CF40DB21AC1A4AC00A26BE0 /* Extras */,
 				4CF40DB71AC1A4AC00A26BE0 /* TVCLogController.m */,
 				4CF40DB81AC1A4AC00A26BE0 /* TVCLogLine.m */,
-				4CBD545D1DC8D62D00EACC6A /* TVCLogLineManaged.m */,
 				4CF40DB91AC1A4AC00A26BE0 /* TVCLogPolicy.m */,
 				4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */,
 				4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */,
@@ -4042,9 +4128,10 @@
 			children = (
 				5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */,
 				5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */,
+				4C761BAE1E155CB100A505B7 /* BuildServices.sh */,
 				5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */,
-				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
 				4CD6F7BB1CA7747600842597 /* ExportArchive.sh */,
+				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
 			);
 			name = "Build Scripts";
 			sourceTree = "<group>";
@@ -4170,7 +4257,6 @@
 				4C7B034D1D1210A100295E82 /* IRCChannelUser.h in Headers */,
 				4C7B034E1D1210A100295E82 /* IRCWorld.h in Headers */,
 				4C0DEB6C1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */,
-				4CBD546B1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C5DD51C1D1E1CB700F2E1AE /* TVCMainWindowSplitViewPrivate.h in Headers */,
 				4C7B490A1D131A2A008D7926 /* TVCLogScriptEventSinkPrivate.h in Headers */,
 				4C7B48F51D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
@@ -4226,6 +4312,7 @@
 				4C7B03801D1210A100295E82 /* TVCLogController.h in Headers */,
 				4CF642FC1D2DC48200CB9165 /* IRCUserNicknameColorStyleGeneratorPrivate.h in Headers */,
 				4CCD4CA71D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
+				4C761BB91E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */,
 				4C7B03831D1210A100295E82 /* TVCLogLine.h in Headers */,
 				4C5DD5221D1E1CB700F2E1AE /* TVCMainWindowTitlebarAccessoryViewPrivate.h in Headers */,
 				4C7B03851D1210A100295E82 /* TVCLogRenderer.h in Headers */,
@@ -4255,6 +4342,7 @@
 				4CB9E3C11D2B155500ED395A /* IRCCommandIndexPrivate.h in Headers */,
 				4CB9E3B11D2B144200ED395A /* IRCModeInfoInternal.h in Headers */,
 				4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
+				4C761BBC1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */,
 				4CB17EBC1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C7B05071D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
 				4CBC54251D2B26FC0067242C /* IRCMessageInternal.h in Headers */,
@@ -4351,6 +4439,7 @@
 				4C7B03AC1D1210A800295E82 /* GRMustache.h in Headers */,
 				4C7B03AD1D1210A800295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C116BE01D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
+				4C761BBD1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */,
 				4C7B03AE1D1210A800295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C7B03AF1D1210A800295E82 /* GRMustacheContentType.h in Headers */,
 				4CEA29BD1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
@@ -4394,6 +4483,7 @@
 				4C7B03C51D1210A800295E82 /* IRCConnection.h in Headers */,
 				4C7B48FC1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
 				4CEA29C11D2091F200AADC69 /* IRCColorFormatPrivate.h in Headers */,
+				4C761BBA1E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */,
 				4CB9E3BE1D2B14C400ED395A /* IRCMessageBatchPrivate.h in Headers */,
 				4C10B37B1D23283000868A74 /* TDCLicenseManagerDialogPrivate.h in Headers */,
 				4C7B03C81D1210A800295E82 /* IRCISupportInfo.h in Headers */,
@@ -4459,7 +4549,6 @@
 				4C056F1B1D1D89A100D85CEA /* TVCMemberListMavericksUserInterfacePrivate.h in Headers */,
 				4C056F271D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B04001D1210A800295E82 /* TVCInputPromptDialog.h in Headers */,
-				4CBD546C1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C7B04011D1210A800295E82 /* TVCLogController.h in Headers */,
 				4C7B490E1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B04041D1210A800295E82 /* TVCLogLine.h in Headers */,
@@ -4603,6 +4692,7 @@
 				4C7B042C1D1210B000295E82 /* GTMEncodeHTML.h in Headers */,
 				4C7B042D1D1210B000295E82 /* GRMustache.h in Headers */,
 				4C116BE11D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
+				4C761BBE1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */,
 				4C7B042E1D1210B000295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C7B042F1D1210B000295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C7B04301D1210B000295E82 /* GRMustacheContentType.h in Headers */,
@@ -4646,6 +4736,7 @@
 				4CB2FA981D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */,
 				4C7B04461D1210B000295E82 /* IRCConnection.h in Headers */,
 				4C7B48FD1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
+				4C761BBB1E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */,
 				4CEA29C21D2091F200AADC69 /* IRCColorFormatPrivate.h in Headers */,
 				4CB9E3BF1D2B14C400ED395A /* IRCMessageBatchPrivate.h in Headers */,
 				4C10B37C1D23283000868A74 /* TDCLicenseManagerDialogPrivate.h in Headers */,
@@ -4711,7 +4802,6 @@
 				4C056F1C1D1D89A100D85CEA /* TVCMemberListMavericksUserInterfacePrivate.h in Headers */,
 				4C056F281D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B04811D1210B000295E82 /* TVCInputPromptDialog.h in Headers */,
-				4CBD546D1DC8D6C400EACC6A /* TVCLogLineManagedPrivate.h in Headers */,
 				4C7B04821D1210B000295E82 /* TVCLogController.h in Headers */,
 				4C7B490F1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B04851D1210B000295E82 /* TVCLogLine.h in Headers */,
@@ -4825,6 +4915,8 @@
 				4C0BA6CB1990798800857343 /* Copy Extensions */,
 				4C0BA6D21990798800857343 /* Copy Acknowledgements */,
 				4CF76A731A91157B0088BF9A /* Embed Frameworks */,
+				4C761BB11E155E0000A505B7 /* Build XPC Services */,
+				4C761B901E155B7300A505B7 /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
@@ -4848,6 +4940,8 @@
 				4C52AED515811C2000940619 /* Copy Extensions */,
 				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
 				4CF76A911A9116520088BF9A /* Embed Frameworks */,
+				4C761BAF1E155D7400A505B7 /* Build XPC Services */,
+				4C761BA61E155C6E00A505B7 /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
@@ -4869,6 +4963,8 @@
 				4C0444F316F1602900EBB665 /* Sources */,
 				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
 				4CF76A821A9115910088BF9A /* Embed Frameworks */,
+				4C761BB01E155DD900A505B7 /* Build XPC Services */,
+				4C761BA41E155C4300A505B7 /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
@@ -4943,6 +5039,10 @@
 					ProjectRef = 4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */;
 				},
 				{
+					ProductGroup = 4C761B991E155BFF00A505B7 /* Products */;
+					ProjectRef = 4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */;
+				},
+				{
 					ProductGroup = 4C95689A194A887D003D97FD /* Products */;
 					ProjectRef = 4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */;
 				},
@@ -4972,6 +5072,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.xpc-service";
+			path = "Historic Log File Manager.app";
+			remoteRef = 4C761B9E1E155BFF00A505B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4C83B90B1BA9BE4200BD7718 /* ChatFilterExtension.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5557,6 +5664,50 @@
 			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\"";
 			showEnvVarsInLog = 0;
 		};
+		4C761BAF1E155D7400A505B7 /* Build XPC Services */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build XPC Services";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildServices.sh\"";
+			showEnvVarsInLog = 0;
+		};
+		4C761BB01E155DD900A505B7 /* Build XPC Services */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build XPC Services";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildServices.sh\"";
+		};
+		4C761BB11E155E0000A505B7 /* Build XPC Services */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build XPC Services";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildServices.sh\"";
+			showEnvVarsInLog = 0;
+		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5619,7 +5770,6 @@
 				4C7B05151D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CF40E471AC1A4AC00A26BE0 /* TVCServerListMavericksDarkUserInterface.m in Sources */,
 				4C052F7F1D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
-				4C51AA081DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */,
 				4CF40E2B1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */,
 				4CB9E3C61D2B17B900ED395A /* IRCMessageBatch.m in Sources */,
@@ -5685,6 +5835,7 @@
 				4C0445A916F1603C00EBB665 /* IRCSendingMessage.m in Sources */,
 				4C0445AA16F1603C00EBB665 /* IRCTreeItem.m in Sources */,
 				4C3A3DE11D4187B100569BA8 /* IRCNetworkList.m in Sources */,
+				4C761BC01E155FF800A505B7 /* TVCLogLineXPC.m in Sources */,
 				4C0445AB16F1603C00EBB665 /* IRCChannelUser.m in Sources */,
 				4CF40E3F1AC1A4AC00A26BE0 /* TVCServerList.m in Sources */,
 				4C992DCA1AB5138A0072AB0B /* TLOEncryptionManager.m in Sources */,
@@ -5700,7 +5851,6 @@
 				4C10B36C1D23247600868A74 /* TDCProgressIndicatorSheet.m in Sources */,
 				4CF40E5B1AC1A4AC00A26BE0 /* TVCContentNavigationOutlineView.m in Sources */,
 				4C0445B316F1603C00EBB665 /* TLOGrowlController.m in Sources */,
-				4CBD545F1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */,
 				4CF40E7F1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C0445B416F1603C00EBB665 /* TLOInputHistory.m in Sources */,
 				4C0445B516F1603C00EBB665 /* TLOKeyEventHandler.m in Sources */,
@@ -5801,7 +5951,6 @@
 				4CF40E221AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C790FCD1B82725C00EB318C /* TXWindowController.m in Sources */,
 				4C0BA6671990798800857343 /* IRCChannel.m in Sources */,
-				4CBD545E1DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */,
 				4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */,
 				4CF40E3A1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4CF40DEA1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
@@ -5871,7 +6020,6 @@
 				4C0BA68D1990798800857343 /* TLOInputHistory.m in Sources */,
 				4C0BA68E1990798800857343 /* THOPluginManager.m in Sources */,
 				4CF40E5A1AC1A4AC00A26BE0 /* TVCContentNavigationOutlineView.m in Sources */,
-				4C51AA071DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */,
 				4C0BA6901990798800857343 /* TLOKeyEventHandler.m in Sources */,
 				4CF40E7E1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C0BA6911990798800857343 /* TLOLanguagePreferences.m in Sources */,
@@ -5883,6 +6031,7 @@
 				4C0BA6971990798800857343 /* IRCAddressBook.m in Sources */,
 				4C0BA6981990798800857343 /* TLOpenLink.m in Sources */,
 				4C0BA6991990798800857343 /* TLOPopupPrompts.m in Sources */,
+				4C761BBF1E155FF800A505B7 /* TVCLogLineXPC.m in Sources */,
 				4C0BA69C1990798800857343 /* TLOSoundPlayer.m in Sources */,
 				4CA816B11D5F8A3000B3DAED /* TDCBuddyListDialogTable.m in Sources */,
 				4C0BA69E1990798800857343 /* TLOTimer.m in Sources */,
@@ -5963,7 +6112,6 @@
 				4C7B05161D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CF40E481AC1A4AC00A26BE0 /* TVCServerListMavericksDarkUserInterface.m in Sources */,
 				4C052F801D551CC70057522D /* IRCAddressBookUserTracking.m in Sources */,
-				4C51AA091DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld in Sources */,
 				4CF40E2C1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C8AF68F158E99520026668C /* NSColorHelper.m in Sources */,
 				4CB9E3C71D2B17B900ED395A /* IRCMessageBatch.m in Sources */,
@@ -6029,6 +6177,7 @@
 				4C8AF6B1158E99520026668C /* IRCChannelUser.m in Sources */,
 				4C8AF6B2158E99520026668C /* IRCWorld.m in Sources */,
 				4C3A3DE21D4187B100569BA8 /* IRCNetworkList.m in Sources */,
+				4C761BC11E155FF800A505B7 /* TVCLogLineXPC.m in Sources */,
 				4C992DCB1AB5138A0072AB0B /* TLOEncryptionManager.m in Sources */,
 				4CF40E401AC1A4AC00A26BE0 /* TVCServerList.m in Sources */,
 				4C8AF6B4158E99520026668C /* IRCColorFormat.m in Sources */,
@@ -6044,7 +6193,6 @@
 				4C10B36D1D23247600868A74 /* TDCProgressIndicatorSheet.m in Sources */,
 				4CF40E5C1AC1A4AC00A26BE0 /* TVCContentNavigationOutlineView.m in Sources */,
 				4C8AF6C3158E99520026668C /* TLOKeyEventHandler.m in Sources */,
-				4CBD54601DC8D62D00EACC6A /* TVCLogLineManaged.m in Sources */,
 				4CF40E801AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C8AF6C4158E99520026668C /* TLOLanguagePreferences.m in Sources */,
 				4C8AF6C5158E99520026668C /* TLOLinkParser.m in Sources */,
@@ -6498,6 +6646,7 @@
 		4C0BA6D51990798800857343 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -6506,6 +6655,7 @@
 		4C0BA6D61990798800857343 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -6514,6 +6664,7 @@
 		4C0BA6D81990798800857343 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -6701,19 +6852,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		4C51AA051DC79677004B31D6 /* LogControllerStorageModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				4C51AA061DC79677004B31D6 /* LogControllerStorageModel.xcdatamodel */,
-			);
-			currentVersion = 4C51AA061DC79677004B31D6 /* LogControllerStorageModel.xcdatamodel */;
-			path = LogControllerStorageModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 4C1DC5491580420500A47BC9 /* Project object */;
 }

@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,25 +35,36 @@
 
  *********************************************************************** */
 
+#import "HLSHistoricLogProtocol.h"
+#import "HSLHistoricLogProcessDelegate.h"
+#import "HLSHistoricLogProcessMain.h"
+
+#import <CocoaExtensions/CocoaExtensions.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
-#define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
+@implementation HSLHistoricLogProcessDelegate
 
-@interface TVCLogControllerHistoricLogFile : NSObject
-+ (TVCLogControllerHistoricLogFile *)sharedInstance;
+- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
+{
+	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
 
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel;
+	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+					  forSelector:@selector(fetchEntriesForChannel:fetchLimit:limitToDate:withCompletionBlock:)
+					argumentIndex:0
+						  ofReply:YES];
 
-- (void)saveData; // asynchronous operation
+	newConnection.exportedInterface = exportedInterface;
 
-@property (readonly) BOOL isSaving;
+	HLSHistoricLogProcessMain *exportedObject = [HLSHistoricLogProcessMain new];
 
-- (void)resetDataForChannel:(IRCChannel *)channel; // synchronous operation
+	newConnection.exportedObject = exportedObject;
 
-- (void)fetchEntriesForChannel:(IRCChannel *)channell
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
+	[newConnection resume];
+
+	return YES;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -449,7 +449,7 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
-- (void)reloadOldLines:(NSArray<TVCLogLineManaged *> *)oldLines isReload:(BOOL)isReload
+- (void)reloadOldLines:(NSArray<TVCLogLine *> *)oldLines isReload:(BOOL)isReload
 {
 	NSParameterAssert(oldLines != nil);
 
@@ -459,13 +459,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSMutableArray<THOPluginDidPostNewMessageConcreteObject *> *pluginObjects = nil;
 
-	for (TVCLogLineManaged *oldLine in oldLines) {
-		TVCLogLine *logLine = oldLine.logLine;
-
-		if (logLine == nil) {
-			continue;
-		}
-
+	for (TVCLogLine *logLine in oldLines) {
 		/* Render result info HTML */
 		NSDictionary<NSString *, id> *resultInfo = nil;
 
@@ -566,7 +560,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.reloadingHistory = YES;
 
-	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLineManaged *> *objects) {
+	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *objects) {
 		[self reloadOldLines:objects isReload:(firstTimeLoadingHistory == NO)];
 
 		self.reloadingHistory = NO;
@@ -586,7 +580,7 @@ ClassWithDesignatedInitializerInitMethod
 		 fetchEntriesForChannel:self.associatedChannel
 					 fetchLimit:0
 					limitToDate:limitToDate
-			withCompletionBlock:^(NSArray<TVCLogLineManaged *> *objects) {
+			withCompletionBlock:^(NSArray<TVCLogLine *> *objects) {
 				if ([operation isCancelled]) {
 					return;
 				}
