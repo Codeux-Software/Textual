@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,14 +35,27 @@
 
  *********************************************************************** */
 
+#import <Foundation/Foundation.h>
+
+#import "TVCLogLineXPC.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogLineManaged : NSManagedObject
-+ (instancetype)managedObjectWithLogLine:(TVCLogLine *)logLine
-							   inChannel:(IRCChannel *)channel
-								 context:(NSManagedObjectContext *)context;
+@protocol HLSHistoricLogProtocol
+- (void)openDatabaseAtPath:(NSString *)path;
 
-@property (readonly, copy, nullable) TVCLogLine *logLine;
+- (void)writeLogLine:(TVCLogLineXPC *)logLine;
+
+- (void)saveDataWithCompletionBlock:(void (^ _Nullable)(void))completionBlock;
+
+- (void)resetDataForChannel:(NSString *)channelId;
+
+- (void)fetchEntriesForChannel:(NSString *)channelId
+					fetchLimit:(NSUInteger)fetchLimit
+				   limitToDate:(nullable NSDate *)limitToDate
+		   withCompletionBlock:(void (^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
+
+- (void)resizeDatabaseToConformToRowLimit:(NSUInteger)rowLimit;
 @end
 
 NS_ASSUME_NONNULL_END

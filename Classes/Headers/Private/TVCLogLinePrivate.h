@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCLogLine ()
 - (NSString *)renderedBodyForTranscriptLog;
 - (NSString *)renderedBodyForTranscriptLogInChannel:(nullable IRCChannel *)channel;
+
+- (instancetype)initWithXPCObject:(TVCLogLineXPC *)xpcObject;
+- (TVCLogLineXPC *)xpcObjectForChannel:(IRCChannel *)channel;
 @end
 
 NS_ASSUME_NONNULL_END

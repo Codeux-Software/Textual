@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C442CB61E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C442CB31E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m */; };
+		4C442CB71E13B5FC00B187F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C442CB51E13B5FC00B187F4 /* main.m */; };
+		4C58C6D81E15374700934680 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6D71E15374700934680 /* CocoaExtensions.framework */; };
+		4C58C6DC1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C58C6DA1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld */; };
+		4C58C6E01E15427F00934680 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6DF1E15427F00934680 /* Foundation.framework */; };
+		4C58C6E21E15428300934680 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6E11E15428300934680 /* CoreData.framework */; };
+		4CB0FB1F1E13CA22001E2E3B /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0FB1E1E13CA22001E2E3B /* TVCLogLineXPC.m */; };
+		4CB0FB301E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HistoricLogFileManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C442CAB1E13B49B00B187F4 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C442CAC1E13B49B00B187F4 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
+		4C442CB11E13B5F000B187F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		4C442CB21E13B5FC00B187F4 /* HLSHistoricLogProcessMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProcessMain.h; path = Classes/HLSHistoricLogProcessMain.h; sourceTree = SOURCE_ROOT; };
+		4C442CB31E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLSHistoricLogProcessMain.m; path = Classes/HLSHistoricLogProcessMain.m; sourceTree = SOURCE_ROOT; };
+		4C442CB41E13B5FC00B187F4 /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProtocol.h; path = "../../Classes (Shared)/Headers/HLSHistoricLogProtocol.h"; sourceTree = SOURCE_ROOT; };
+		4C442CB51E13B5FC00B187F4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
+		4C58C6D71E15374700934680 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
+		4C58C6DB1E153A6B00934680 /* LogControllerStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogControllerStorageModel.xcdatamodel; sourceTree = "<group>"; };
+		4C58C6DF1E15427F00934680 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4C58C6E11E15428300934680 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4C761BEF1E15754100A505B7 /* HistoricLogFileManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HistoricLogFileManager.entitlements; path = Resources/Sandbox/Entitlements/HistoricLogFileManager.entitlements; sourceTree = "<group>"; };
+		4C761BF01E15754E00A505B7 /* HistoricLogFileManagerAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HistoricLogFileManagerAppStore.entitlements; path = Resources/Sandbox/Entitlements/HistoricLogFileManagerAppStore.entitlements; sourceTree = "<group>"; };
+		4CB0FB1E1E13CA22001E2E3B /* TVCLogLineXPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogLineXPC.m; path = "../../Classes (Shared)/Views/Channel View/TVCLogLineXPC.m"; sourceTree = SOURCE_ROOT; };
+		4CB0FB211E13CA96001E2E3B /* TVCLogLineXPC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogLineXPC.h; path = "../../Classes (Shared)/Headers/TVCLogLineXPC.h"; sourceTree = SOURCE_ROOT; };
+		4CB0FB2E1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSLHistoricLogProcessDelegate.h; path = Classes/HSLHistoricLogProcessDelegate.h; sourceTree = SOURCE_ROOT; };
+		4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSLHistoricLogProcessDelegate.m; path = Classes/HSLHistoricLogProcessDelegate.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4C442C851E13B3D200B187F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C58C6E21E15428300934680 /* CoreData.framework in Frameworks */,
+				4C58C6E01E15427F00934680 /* Foundation.framework in Frameworks */,
+				4C58C6D81E15374700934680 /* CocoaExtensions.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4C442C7F1E13B3D200B187F4 = {
+			isa = PBXGroup;
+			children = (
+				4C442C8A1E13B3D200B187F4 /* Source Code */,
+				4C442CA81E13B42900B187F4 /* Resources */,
+				4C442C891E13B3D200B187F4 /* Products */,
+				4C442CBE1E13B77200B187F4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4C442C891E13B3D200B187F4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C442C8A1E13B3D200B187F4 /* Source Code */ = {
+			isa = PBXGroup;
+			children = (
+				4CB0FB181E13CA22001E2E3B /* Shared */,
+				4C442CB21E13B5FC00B187F4 /* HLSHistoricLogProcessMain.h */,
+				4C442CB31E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m */,
+				4CB0FB2E1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.h */,
+				4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */,
+				4C442CB51E13B5FC00B187F4 /* main.m */,
+			);
+			name = "Source Code";
+			path = "Historic Log File Manager";
+			sourceTree = "<group>";
+		};
+		4C442CA81E13B42900B187F4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C761BE21E1565D800A505B7 /* Build Settings */,
+				4C58C6D91E153A6B00934680 /* Data Models */,
+				4C442CB01E13B56A00B187F4 /* Property Lists */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4C442CAF1E13B55900B187F4 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4C442CAB1E13B49B00B187F4 /* Base Configuration.xcconfig */,
+				4C442CAC1E13B49B00B187F4 /* Code Signing Identity.xcconfig */,
+				4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */,
+			);
+			name = Configurations;
+			sourceTree = "<group>";
+		};
+		4C442CB01E13B56A00B187F4 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C442CB11E13B5F000B187F4 /* Info.plist */,
+			);
+			name = "Property Lists";
+			sourceTree = "<group>";
+		};
+		4C442CBE1E13B77200B187F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C58C6D61E15372B00934680 /* External Frameworks */,
+				4C560E291E1558BA00D3ACB9 /* System Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4C560E291E1558BA00D3ACB9 /* System Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C58C6E11E15428300934680 /* CoreData.framework */,
+				4C58C6DF1E15427F00934680 /* Foundation.framework */,
+			);
+			name = "System Frameworks";
+			sourceTree = "<group>";
+		};
+		4C58C6D61E15372B00934680 /* External Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C58C6D71E15374700934680 /* CocoaExtensions.framework */,
+			);
+			name = "External Frameworks";
+			sourceTree = "<group>";
+		};
+		4C58C6D91E153A6B00934680 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C58C6DA1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld */,
+			);
+			name = "Data Models";
+			path = "Resources/Data Models";
+			sourceTree = "<group>";
+		};
+		4C761BE11E1565D000A505B7 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				4C761BF01E15754E00A505B7 /* HistoricLogFileManagerAppStore.entitlements */,
+				4C761BEF1E15754100A505B7 /* HistoricLogFileManager.entitlements */,
+			);
+			name = Entitlements;
+			sourceTree = "<group>";
+		};
+		4C761BE21E1565D800A505B7 /* Build Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4C442CAF1E13B55900B187F4 /* Configurations */,
+				4C761BE11E1565D000A505B7 /* Entitlements */,
+			);
+			name = "Build Settings";
+			sourceTree = "<group>";
+		};
+		4CB0FB181E13CA22001E2E3B /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4CB0FB191E13CA22001E2E3B /* Headers */,
+				4CB0FB1C1E13CA22001E2E3B /* Views */,
+			);
+			name = Shared;
+			path = "../../../Classes (Shared)";
+			sourceTree = "<group>";
+		};
+		4CB0FB191E13CA22001E2E3B /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C442CB41E13B5FC00B187F4 /* HLSHistoricLogProtocol.h */,
+				4CB0FB211E13CA96001E2E3B /* TVCLogLineXPC.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		4CB0FB1C1E13CA22001E2E3B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4CB0FB1D1E13CA22001E2E3B /* Channel View */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4CB0FB1D1E13CA22001E2E3B /* Channel View */ = {
+			isa = PBXGroup;
+			children = (
+				4CB0FB1E1E13CA22001E2E3B /* TVCLogLineXPC.m */,
+			);
+			name = "Channel View";
+			path = "Channel Views";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4C442C871E13B3D200B187F4 /* Historic Log File Manager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C442C941E13B3D200B187F4 /* Build configuration list for PBXNativeTarget "Historic Log File Manager" */;
+			buildPhases = (
+				4C442C841E13B3D200B187F4 /* Sources */,
+				4C442C851E13B3D200B187F4 /* Frameworks */,
+				4C442C861E13B3D200B187F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Historic Log File Manager";
+			productName = "Historic Log File Manager";
+			productReference = 4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4C442C801E13B3D200B187F4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Codeux Software, LLC";
+				TargetAttributes = {
+					4C442C871E13B3D200B187F4 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 4C442C831E13B3D200B187F4 /* Build configuration list for PBXProject "Historic Log File Manager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4C442C7F1E13B3D200B187F4;
+			productRefGroup = 4C442C891E13B3D200B187F4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4C442C871E13B3D200B187F4 /* Historic Log File Manager */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4C442C861E13B3D200B187F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C442C841E13B3D200B187F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C442CB71E13B5FC00B187F4 /* main.m in Sources */,
+				4CB0FB1F1E13CA22001E2E3B /* TVCLogLineXPC.m in Sources */,
+				4C58C6DC1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld in Sources */,
+				4CB0FB301E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m in Sources */,
+				4C442CB61E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4C442C921E13B3D200B187F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		4C442C931E13B3D200B187F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		4C442C951E13B3D200B187F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/HistoricLogFileManager.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
+				PRODUCT_NAME = HistoricLogFileManager;
+			};
+			name = Debug;
+		};
+		4C442C961E13B3D200B187F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/HistoricLogFileManager.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
+				PRODUCT_NAME = HistoricLogFileManager;
+			};
+			name = Release;
+		};
+		4C761BED1E15751C00A505B7 /* Release (App Store) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (App Store)";
+		};
+		4C761BEE1E15751C00A505B7 /* Release (App Store) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/HistoricLogFileManagerAppStore.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
+				PRODUCT_NAME = HistoricLogFileManager;
+			};
+			name = "Release (App Store)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4C442C831E13B3D200B187F4 /* Build configuration list for PBXProject "Historic Log File Manager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C442C921E13B3D200B187F4 /* Debug */,
+				4C442C931E13B3D200B187F4 /* Release */,
+				4C761BED1E15751C00A505B7 /* Release (App Store) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C442C941E13B3D200B187F4 /* Build configuration list for PBXNativeTarget "Historic Log File Manager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C442C951E13B3D200B187F4 /* Debug */,
+				4C442C961E13B3D200B187F4 /* Release */,
+				4C761BEE1E15751C00A505B7 /* Release (App Store) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4C58C6DA1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4C58C6DB1E153A6B00934680 /* LogControllerStorageModel.xcdatamodel */,
+			);
+			currentVersion = 4C58C6DB1E153A6B00934680 /* LogControllerStorageModel.xcdatamodel */;
+			path = HistoricLogFileStorageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 4C442C801E13B3D200B187F4 /* Project object */;
+}

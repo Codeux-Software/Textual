@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,25 +35,21 @@
 
  *********************************************************************** */
 
+#import "HSLHistoricLogProcessDelegate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-#define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
+int main(int argc, const char *argv[])
+{
+	HSLHistoricLogProcessDelegate *delegate = [HSLHistoricLogProcessDelegate new];
 
-@interface TVCLogControllerHistoricLogFile : NSObject
-+ (TVCLogControllerHistoricLogFile *)sharedInstance;
+    NSXPCListener *listener = [NSXPCListener serviceListener];
 
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel;
+	listener.delegate = delegate;
 
-- (void)saveData; // asynchronous operation
+    [listener resume];
 
-@property (readonly) BOOL isSaving;
-
-- (void)resetDataForChannel:(IRCChannel *)channel; // synchronous operation
-
-- (void)fetchEntriesForChannel:(IRCChannel *)channell
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
-@end
+    return 0;
+}
 
 NS_ASSUME_NONNULL_END

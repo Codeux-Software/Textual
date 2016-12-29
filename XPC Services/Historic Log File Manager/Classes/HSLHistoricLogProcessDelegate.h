@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,61 +35,11 @@
 
  *********************************************************************** */
 
+#import <Foundation/Foundation.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
-/* TVCLogLineManaged is a container class for TVCLogLine when stored in a 
- Core Data store. -data is the secure coded version of the class which is
- portable and can be stored in an offline database. */
-@interface TVCLogLineManaged ()
-{
-@private
-	TVCLogLine *_logLine;
-}
-
-@property (nonatomic, copy) NSString *channelId;
-@property (nonatomic, copy) NSNumber *creationDate;
-@property (nonatomic, copy) NSData *data;
-@end
-
-@implementation TVCLogLineManaged
-
-@dynamic channelId;
-@dynamic creationDate;
-@dynamic data;
-
-+ (instancetype)managedObjectWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel context:(NSManagedObjectContext *)context
-{
-	NSParameterAssert(logLine != nil);
-	NSParameterAssert(channel != nil);
-	NSParameterAssert(context != nil);
-
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"LogLine" inManagedObjectContext:context];
-
-	TVCLogLineManaged *newEntry = (id)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
-
-	[newEntry setValue:@([NSDate timeIntervalSince1970]) forKey:@"creationDate"];
-
-	[newEntry setValue:channel.uniqueIdentifier forKey:@"channelId"];
-
-	/* When we init using this initalizer, we do not intend to reuse the log line.
-	 Therefore, we do not store it in self->_logLine. If this changes, we should
-	 store it in that instance variable so we don't have to worry about rebuilding. */
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:logLine];
-
-	[newEntry setValue:data forKey:@"data"];
-
-	return newEntry;
-}
-
-- (nullable TVCLogLine *)logLine
-{
-	if (self->_logLine == nil) {
-		self->_logLine = [NSKeyedUnarchiver unarchiveObjectWithData:self.data];
-	}
-
-	return self->_logLine;
-}
-
+@interface HSLHistoricLogProcessDelegate : NSObject <NSXPCListenerDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

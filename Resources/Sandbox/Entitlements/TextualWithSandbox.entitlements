@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>8482Q6EPL6.com.codeux.irc.textual</string>
+		<string>com.coduex.apps.textual</string>
 	</array>
 	<key>com.apple.security.files.bookmarks.app-scope</key>
 	<true/>

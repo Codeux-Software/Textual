@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,25 +35,13 @@
 
  *********************************************************************** */
 
+#import <Foundation/Foundation.h>
+
+#import "HLSHistoricLogProtocol.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-#define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
-
-@interface TVCLogControllerHistoricLogFile : NSObject
-+ (TVCLogControllerHistoricLogFile *)sharedInstance;
-
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel;
-
-- (void)saveData; // asynchronous operation
-
-@property (readonly) BOOL isSaving;
-
-- (void)resetDataForChannel:(IRCChannel *)channel; // synchronous operation
-
-- (void)fetchEntriesForChannel:(IRCChannel *)channell
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
+@interface HLSHistoricLogProcessMain : NSObject <HLSHistoricLogProtocol>
 @end
 
 NS_ASSUME_NONNULL_END
