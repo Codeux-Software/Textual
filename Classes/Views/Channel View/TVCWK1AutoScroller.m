@@ -38,13 +38,21 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCWK1AutoScroller ()
-@property (nonatomic, assign) NSRect lastFrame;
-@property (nonatomic, assign) NSRect lastVisibleRect;
+{
+	CGFloat _scrollLastPosition1;
+	CGFloat _scrollLastPosition2;
+	CGFloat _currentScrollTopValue;
+	BOOL _isScrolledByUser;
+/*	NSRect _lastFrame; */
+}
+
 @property (nonatomic, weak) WebFrameView *frameView;
-@property (nonatomic, assign) BOOL wasViewingBottom;
 @end
 
 @implementation TVCWK1AutoScroller
+
+/* Maximum distance user can scroll up before automatic scrolling is disabled. */
+static CGFloat _scrollTopUserConstant = 25.0;
 
 - (instancetype)initWitFrameView:(WebFrameView *)frameView;
 {
@@ -63,46 +71,44 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+	WebFrameView *frameView = self.frameView;
+
+	NSView *documentView = frameView.documentView;
+
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(webViewDidChangeFrame:)
 								   name:NSViewFrameDidChangeNotification
-								 object:nil];
+								 object:frameView];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(webViewDidChangeFrame:)
+								   name:NSViewFrameDidChangeNotification
+								 object:documentView];
 
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(webViewDidChangeBounds:)
 								   name:NSViewBoundsDidChangeNotification
-								 object:nil];
+								 object:documentView.enclosingScrollView.contentView];
 
-	self.lastFrame = self.frameView.documentView.frame;
+	self->_scrollLastPosition1 = 0.0;
+	self->_scrollLastPosition2 = 0.0;
 
-	self.lastVisibleRect = self.frameView.documentView.visibleRect;
-
-	self.wasViewingBottom = YES;
+	self->_isScrolledByUser = NO;
 }
 
 - (BOOL)viewingBottom
 {
-	/* 25 points (pixels) is the maximum offset the user can be scrolled
-	 upward before we are no longer considered to be at the bottom.
-	 An offset is used to compensate for small changes to scrolling
-	 related to sensitivity of the TrackPad device. */
-	/* If this offset is changed, then update autoScroll.js too, so that
-	 WebKit2 uses the same offset for its scroller. */
-	if (NSMaxY(self.lastVisibleRect) >= (NSMaxY(self.lastFrame) - 25.0)) {
-		return YES;
-	}
-
-	return NO;
+	return (self->_isScrolledByUser == NO);
 }
 
 - (void)saveScrollerPosition
 {
-	self.wasViewingBottom = self.viewingBottom;
+	;
 }
 
 - (void)restoreScrollerPosition
 {
-	if (self.wasViewingBottom == NO) {
+	if (self->_isScrolledByUser) {
 		return;
 	}
 
@@ -116,6 +122,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSRect visibleRect = aView.visibleRect;
 
 	visibleRect.origin.y = (aView.frame.size.height - visibleRect.size.height);
+
+	self->_currentScrollTopValue = visibleRect.origin.y;
 	
 	[aView scrollRectToVisible:visibleRect];
 }
@@ -129,9 +137,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)canScroll
 {
-	NSRect frameRect = self.frameView.frame;
+	WebFrameView *frameView = self.frameView;
 
-	NSRect contentRect = self.frameView.documentView.frame;
+	NSRect frameRect = frameView.frame;
+
+	NSRect contentRect = frameView.documentView.frame;
 
 	return (contentRect.size.height > frameRect.size.height);
 }
@@ -166,41 +176,102 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	NSClipView *clipView = self.frameView.documentView.enclosingScrollView.contentView;
+	/* Context */
+	WebFrameView *frameView = self.frameView;
 
-	if (clipView != aNotification.object) {
+	NSView *documentView = frameView.documentView;
+
+	NSRect visibleRect = documentView.visibleRect;
+
+	/* The maximum scrollPosition can equal. The bottom */
+	CGFloat scrollHeight = (documentView.frame.size.height - visibleRect.size.height);
+
+	/* The current position. When at bottom, will == scrollHeight */
+	CGFloat scrollPosition = visibleRect.origin.y;
+
+	/* Ignore events that are related to elastic scrolling. */
+	if (scrollPosition > scrollHeight) {
 		return;
 	}
 
-	self.lastVisibleRect = clipView.documentView.visibleRect;
+	/* 	Record the last two known scrollY values. These properties are compared
+		to determine if the user is scrolling upwards or downwards. */
+	self->_scrollLastPosition2 = self->_scrollLastPosition1;
 
+	self->_scrollLastPosition1 = scrollPosition;
+
+	/* 	If the current scroll top value exceeds the view height, then it means
+		that some lines were probably removed to enforce size limit. */
+	/* 	Reset the value to be the absolute bottom when this occurs. */
+	if (self->_currentScrollTopValue > scrollHeight) {
+		self->_currentScrollTopValue = scrollHeight;
+
+		if (self->_currentScrollTopValue < 0) {
+			self->_currentScrollTopValue = 0;
+		}
+	}
+
+	if (self->_isScrolledByUser) {
+		/* Check whether the user has scrolled back to the bottom */
+		CGFloat scrollTop = (scrollHeight - self->_scrollLastPosition1);
+
+		if (scrollTop < _scrollTopUserConstant) {
+			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.")
+
+			self->_isScrolledByUser = NO;
+
+			self->_currentScrollTopValue = self->_scrollLastPosition1;
+		}
+	}
+	else
+	{
+		/* 	Check if the user is scrolling upwards. If they are, then check if they have went
+			above the threshold that defines whether its a user initated event or not. */
+		if (self->_scrollLastPosition1 < self->_scrollLastPosition2) {
+			CGFloat scrollTop = (self->_currentScrollTopValue - self->_scrollLastPosition1);
+
+			if (scrollTop > _scrollTopUserConstant) {
+				LogToConsoleDebug("User scrolled above threshold. Disabled auto scroll.")
+
+				self->_isScrolledByUser = YES;
+			}
+		}
+
+		/* 	If the user is scrolling downward and passes last threshold location, then
+			move the location further downward. */
+		if (self->_scrollLastPosition1 > self->_currentScrollTopValue) {
+			self->_currentScrollTopValue = self->_scrollLastPosition1;
+		}
+	}
+	
 	[self redrawFrameIfNeeded];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
-	NSView *aView = aNotification.object;
+	/* Never scroll if user scrolled up */
+	if (self->_isScrolledByUser) {
+		return;
+	}
 
+	/* Perform automatic scrolling */
 	WebFrameView *frameView = self.frameView;
 
 	NSView *documentView = frameView.documentView;
 
-	if (aView == frameView)
-	{
-		if (self.viewingBottom) {
-			[self scrollViewToBottom:aView];
-		}
-	}
-	else if (aView == documentView)
-	{
-		if (self.viewingBottom) {
-			[self scrollViewToBottom:aView];
+/*
+	if (aNotification.object == documentView) {
+		NSRect documentViewFrame = documentView.frame;
 
-			self.lastVisibleRect = aView.visibleRect;
+		if (NSEqualRects(documentViewFrame, self->_lastFrame)) {
+			return;
 		}
 
-		self.lastFrame = aView.frame;
-	}
+		self->_lastFrame = documentViewFrame;
+	} 
+*/
+
+	[self scrollViewToBottom:documentView];
 }
 
 @end
