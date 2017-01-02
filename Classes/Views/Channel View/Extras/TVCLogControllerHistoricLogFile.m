@@ -72,34 +72,47 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)relocateDatabaseFrom200PathTo300Path
 {
-	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+	NSString *filenameNew = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v3"];
 
-	if (filename == nil) {
+	NSString *filenameOld = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+
+	if (filenameNew != nil || filenameOld == nil) {
 		return;
 	}
 
 	NSString *oldPath = [TPCPathInfo applicationCachesFolderPath];
 
-	NSString *oldPathForFile = [oldPath stringByAppendingPathComponent:filename];
+	NSError *oldPathFilesError = nil;
 
-	if ([RZFileManager() fileExistsAtPath:oldPathForFile] == NO) {
-		[RZUserDefaults() removeObjectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+	NSArray *oldPathFiles = [RZFileManager() contentsOfDirectoryAtPath:oldPath error:&oldPathFilesError];
+
+	if (oldPathFiles == nil) {
+		LogToConsoleError("Failed to list contents of old directory: %@",
+			oldPathFilesError.localizedDescription)
 
 		return;
 	}
 
 	NSString *newPath = [TPCPathInfo applicationCachesFolderInsideGroupContainerPath];
 
-	NSString *newPathForFile = [newPath stringByAppendingPathComponent:filename];
+	for (NSString *file in oldPathFiles) {
+		if ([file hasPrefix:@"logControllerHistoricLog_"] == NO) {
+			continue;
+		}
 
-	(void)[RZFileManager() replaceItemAtPath:newPathForFile
-							  withItemAtPath:oldPathForFile
-						   moveToDestination:YES
-					  moveDestinationToTrash:YES];
+		NSString *oldFilePath = [oldPath stringByAppendingPathComponent:file];
+
+		NSString *newFilePath = [newPath stringByAppendingPathComponent:file];
+
+		(void)[RZFileManager() replaceItemAtPath:newFilePath
+								  withItemAtPath:oldFilePath
+							   moveToDestination:YES
+						  moveDestinationToTrash:YES];
+	}
 
 	[RZUserDefaults() removeObjectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
 
-	[RZUserDefaults() setObject:filename forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+	[RZUserDefaults() setObject:filenameOld forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
 }
 
 #pragma mark -
