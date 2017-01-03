@@ -86,6 +86,8 @@
 	<true/>
 	<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
 	<true/>
+	<key>GenerateLocalizedTimestampTemplateToken</key>
+	<true/>
 	<key>HockeySDK -&gt; Collect Anonymous Statistics</key>
 	<false/>
 	<key>HockeySDK -&gt; Collect Anonymous Statistics Permission Asked</key>
