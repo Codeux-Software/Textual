@@ -17,7 +17,11 @@
 		timestamp="{{timestamp}}">
 
 	<p>
-		<span class="time" title="{{localizedTimestamp}}">{{formattedTimestamp}} </span>
+		<span class="time"
+
+		{{^ isEmpty(localizedTimestamp) }}
+			title="{{localizedTimestamp}}"
+		{{/ isEmpty(localizedTimestamp) }}>{{formattedTimestamp}} </span>
 		
 {{#isEncrypted}}
 	{{{encryptedMessageLockTemplate}}}

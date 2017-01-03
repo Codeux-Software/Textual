@@ -382,6 +382,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"DisplayPublicMessageCountInDockBadge"];
 }
 
++ (BOOL)generateLocalizedTimestampTemplateToken
+{
+	return [RZUserDefaults() boolForKey:@"GenerateLocalizedTimestampTemplateToken"];
+}
+
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname
 {
 	[RZUserDefaults() setBool:highlightCurrentNickname forKey:@"TrackNicknameHighlightsOfLocalUser"];

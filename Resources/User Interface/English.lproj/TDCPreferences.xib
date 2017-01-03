@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -4914,13 +4914,13 @@
         </arrayController>
         <userDefaultsController id="G2Q-fc-ddg" userLabel="Preferences User Defaults Controller" customClass="TPCPreferencesUserDefaultsController"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="dAH-Sl-d77" userLabel="Hidden Preferences ✓">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="326"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="354"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Ce-CLv">
-                    <rect key="frame" x="38" y="200" width="112" height="18"/>
+                    <rect key="frame" x="38" y="228" width="112" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="W5w-EG-kiD">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4930,7 +4930,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-g8-NiZ">
-                    <rect key="frame" x="38" y="60" width="263" height="18"/>
+                    <rect key="frame" x="38" y="88" width="263" height="18"/>
                     <buttonCell key="cell" type="check" title="Server list and user list appear transparent" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4Sf-cU-A93">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4943,8 +4943,18 @@
                         </binding>
                     </connections>
                 </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="qGZ-er-ZEN">
+                    <rect key="frame" x="38" y="60" width="279" height="18"/>
+                    <buttonCell key="cell" type="check" title="Generate localized timestamp template token" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Tdi-g2-fnn">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.GenerateLocalizedTimestampTemplateToken" id="oWf-b2-M4x"/>
+                    </connections>
+                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
-                    <rect key="frame" x="38" y="172" width="295" height="18"/>
+                    <rect key="frame" x="38" y="200" width="295" height="18"/>
                     <buttonCell key="cell" type="check" title="Limit number of processes spawned by WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HKB-82-0XP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4954,7 +4964,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="p75-KN-Sms">
-                    <rect key="frame" x="38" y="88" width="124" height="18"/>
+                    <rect key="frame" x="38" y="116" width="124" height="18"/>
                     <buttonCell key="cell" type="check" title="Load history lazily" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xQW-RJ-brS">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4964,7 +4974,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="wM2-5T-Kcv">
-                    <rect key="frame" x="38" y="116" width="164" height="18"/>
+                    <rect key="frame" x="38" y="144" width="164" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable custom scrollbars" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wiu-qq-etM">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -4978,7 +4988,7 @@
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="1Zi-eb-Hc6">
-                    <rect key="frame" x="129" y="262" width="332" height="34"/>
+                    <rect key="frame" x="129" y="290" width="332" height="34"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wnO-O0-7bL">
                             <rect key="frame" x="-2" y="18" width="59" height="16"/>
@@ -5008,16 +5018,8 @@
                         <constraint firstAttribute="bottom" secondItem="HLR-5q-A8j" secondAttribute="bottom" id="hB4-em-pF0"/>
                     </constraints>
                 </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V0L-wf-MX5">
-                    <rect key="frame" x="130" y="30" width="329" height="14"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Some of these preference may require a restart to take effect." id="uly-It-UKM">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
-                    <rect key="frame" x="38" y="228" width="113" height="18"/>
+                    <rect key="frame" x="38" y="256" width="113" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable App Nap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2nA-D4-FnZ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -5027,7 +5029,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="r5x-9F-a6i">
-                    <rect key="frame" x="38" y="144" width="201" height="18"/>
+                    <rect key="frame" x="38" y="172" width="201" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable link previews in WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d67-Dk-gJt">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -5036,21 +5038,30 @@
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewPreviewLinks" id="ONL-hI-tz0"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V0L-wf-MX5">
+                    <rect key="frame" x="130" y="30" width="329" height="14"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Some of these preference may require a restart to take effect." id="uly-It-UKM">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="p75-KN-Sms" firstAttribute="top" secondItem="wM2-5T-Kcv" secondAttribute="bottom" constant="14" id="10a-Je-p7S"/>
+                <constraint firstItem="V0L-wf-MX5" firstAttribute="top" secondItem="qGZ-er-ZEN" secondAttribute="bottom" constant="18" id="1iX-HC-IEC"/>
                 <constraint firstItem="adq-18-C3D" firstAttribute="leading" secondItem="2Bh-Ce-CLv" secondAttribute="leading" id="5CV-aD-0Ie"/>
-                <constraint firstAttribute="bottom" secondItem="V0L-wf-MX5" secondAttribute="bottom" constant="30" id="7OR-U6-MQk"/>
                 <constraint firstItem="r5x-9F-a6i" firstAttribute="top" secondItem="adq-18-C3D" secondAttribute="bottom" constant="14" id="Aqc-4g-kde"/>
+                <constraint firstItem="qGZ-er-ZEN" firstAttribute="top" secondItem="Xl2-g8-NiZ" secondAttribute="bottom" constant="14" id="Dna-BB-OCo"/>
                 <constraint firstItem="r5x-9F-a6i" firstAttribute="leading" secondItem="adq-18-C3D" secondAttribute="leading" id="Fx1-bn-GaR"/>
                 <constraint firstItem="1Zi-eb-Hc6" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="I1j-VA-w0x"/>
                 <constraint firstItem="2Bh-Ce-CLv" firstAttribute="top" secondItem="1g9-Qk-YQN" secondAttribute="bottom" constant="14" id="Jim-aQ-Blt"/>
                 <constraint firstItem="2Bh-Ce-CLv" firstAttribute="leading" secondItem="1g9-Qk-YQN" secondAttribute="leading" id="KMI-iE-FlI"/>
                 <constraint firstItem="1g9-Qk-YQN" firstAttribute="top" secondItem="1Zi-eb-Hc6" secondAttribute="bottom" constant="18" id="OLL-dW-eBS"/>
                 <constraint firstItem="wM2-5T-Kcv" firstAttribute="leading" secondItem="r5x-9F-a6i" secondAttribute="leading" id="OVo-Hx-3S4"/>
+                <constraint firstAttribute="bottom" secondItem="V0L-wf-MX5" secondAttribute="bottom" constant="30" id="Oor-Kp-Ze7"/>
                 <constraint firstItem="Xl2-g8-NiZ" firstAttribute="leading" secondItem="p75-KN-Sms" secondAttribute="leading" id="Qp3-Qb-aat"/>
                 <constraint firstItem="p75-KN-Sms" firstAttribute="leading" secondItem="wM2-5T-Kcv" secondAttribute="leading" id="UF1-Q0-8FM"/>
-                <constraint firstItem="V0L-wf-MX5" firstAttribute="top" secondItem="Xl2-g8-NiZ" secondAttribute="bottom" constant="18" id="Z9m-1h-8dn"/>
                 <constraint firstItem="wM2-5T-Kcv" firstAttribute="leading" secondItem="adq-18-C3D" secondAttribute="leading" id="anE-DT-eZY"/>
                 <constraint firstItem="V0L-wf-MX5" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="b3i-fV-DOR"/>
                 <constraint firstItem="wM2-5T-Kcv" firstAttribute="top" secondItem="r5x-9F-a6i" secondAttribute="bottom" constant="14" id="cfg-XI-taa"/>
@@ -5058,8 +5069,9 @@
                 <constraint firstItem="1Zi-eb-Hc6" firstAttribute="top" secondItem="dAH-Sl-d77" secondAttribute="top" constant="30" id="lPM-zW-p6o"/>
                 <constraint firstItem="Xl2-g8-NiZ" firstAttribute="top" secondItem="p75-KN-Sms" secondAttribute="bottom" constant="14" id="ml1-ww-Bam"/>
                 <constraint firstItem="1g9-Qk-YQN" firstAttribute="leading" secondItem="dAH-Sl-d77" secondAttribute="leading" constant="40" id="wuN-qQ-Fu2"/>
+                <constraint firstItem="qGZ-er-ZEN" firstAttribute="leading" secondItem="Xl2-g8-NiZ" secondAttribute="leading" id="ycl-4g-5uy"/>
             </constraints>
-            <point key="canvasLocation" x="508.5" y="-282"/>
+            <point key="canvasLocation" x="508.5" y="-268.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="e8H-uo-073" userLabel="Mountain Lion Warning ✓">
             <rect key="frame" x="0.0" y="0.0" width="589" height="273"/>
