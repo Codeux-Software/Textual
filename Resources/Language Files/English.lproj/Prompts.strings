@@ -177,8 +177,5 @@
 "Prompts[1136][1]" = "The preference you have enabled will not work correctly because you do not have a password set.";
 "Prompts[1136][2]" = "Enter your NickServ password into the field labeled “Personal Password”";
 
-"Prompts[1136][1]" = "The preference you have enabled will not work correctly because you do not have a password set.";
-"Prompts[1136][2]" = "Enter your NickServ password into the field labeled “Personal Password”";
-
 "Prompts[1137][1]" = "The process responsible for managing historic logs is not working correctly. Please report this problem to support@codeux.com";
 "Prompts[1137][2]" = "Last known error message: %@";
