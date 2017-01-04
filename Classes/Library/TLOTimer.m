@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOTimer ()
 @property (nonatomic, assign) BOOL actionValidated;
-@property (nonatomic, strong, nullable) NSTimer *timer;
+@property (nonatomic, strong, nullable) dispatch_source_t timerSource;
 @end
 
 @implementation TLOTimer
@@ -82,41 +82,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)timerIsActive
 {
-	return (self.timer != nil);
+	return (self.timerSource != nil);
 }
 
 - (void)start:(NSTimeInterval)interval
 {
 	[self stop];
 
-	self.timer =
-	[NSTimer scheduledTimerWithTimeInterval:interval
-									 target:self
-								   selector:@selector(onTimer:)
-								   userInfo:nil
-									repeats:self.repeatTimer];
+	dispatch_queue_t sourceQueue = self.queue;
 
-	[RZMainRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
+	if (sourceQueue == nil) {
+		sourceQueue = dispatch_get_main_queue();
+	}
+
+	dispatch_source_t timerSource = XRScheduleBlockOnQueue(sourceQueue, ^{
+		[self fireTimer];
+	}, interval, self.repeatTimer);
+
+	XRResumeScheduledBlock(timerSource);
+
+	self.timerSource = timerSource;
 }
 
 - (void)stop
 {
-	if ( self.timer) {
-		[self.timer invalidate];
-		 self.timer = nil;
-	}
-}
+	dispatch_source_t timerSource = self.timerSource;
 
-- (void)onTimer:(id)sender
-{
-	if (self.timerIsActive == NO) {
+	if (timerSource == nil) {
 		return;
 	}
 
-	if (self.repeatTimer == NO) {
-		[self stop];
-	}
+	XRCancelScheduledBlock(timerSource);
 
+	self.timerSource = nil;
+}
+
+- (void)fireTimer
+{
 	if (self.target == nil || self.action == NULL) {
 		return;
 	}
