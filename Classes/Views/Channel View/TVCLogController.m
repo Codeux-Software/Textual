@@ -1278,9 +1278,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL usingWebKit2 = self.backingView.isUsingWebKit2;
 
-	LogToConsoleDebug("%{public}@ - preferredScrollerStyle: %{public}ld - usesCustomScrollers: %{public}@ - usingWebKit2: %{public}@",
-		self.description, preferredScrollerStyle, StringFromBOOL(usesCustomScrollers), StringFromBOOL(usingWebKit2))
-
 	return (onlyShowDuringScrolling == NO && usesCustomScrollers && usingWebKit2);
 }
 
