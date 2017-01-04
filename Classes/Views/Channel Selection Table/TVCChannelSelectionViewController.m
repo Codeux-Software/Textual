@@ -264,7 +264,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	__weak TVCChannelSelectionViewController *weakSelf = self;
 
-	self.expandOutlineViewTimer =
+	dispatch_source_t expandOutlineViewTimer =
 	XRScheduleBlockOnMainQueue(^{
 		if (weakSelf == nil) {
 			return;
@@ -274,6 +274,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 		weakSelf.expandOutlineViewTimer = nil;
 	}, 0.5);
+
+	XRResumeScheduledBlock(expandOutlineViewTimer);
+
+	self.expandOutlineViewTimer = expandOutlineViewTimer;
 }
 
 - (void)channelListChanged:(id)sender
