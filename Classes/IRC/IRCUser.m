@@ -268,6 +268,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	removeUserTimer = XRScheduleBlockOnGlobalQueue(blockToFire, _removeUserTimerInterval);
 
+	XRResumeScheduledBlock(removeUserTimer);
+
 	if (removeUserTimer == NULL) {
 		LogToConsoleError("Failed to create timer to remove user")
 

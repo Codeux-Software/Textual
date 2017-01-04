@@ -240,6 +240,7 @@ NS_ASSUME_NONNULL_BEGIN
 	saveTimer.target = self;
 	saveTimer.action = @selector(saveData:);
 	saveTimer.repeatTimer = YES;
+	saveTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
 
 	[saveTimer start:(60 * 2)]; // 2 minutes
 
@@ -250,6 +251,7 @@ NS_ASSUME_NONNULL_BEGIN
 	trimTimer.target = self;
 	trimTimer.action = @selector(trimData:);
 	trimTimer.repeatTimer = YES;
+	trimTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
 
 	/* A few seconds are added so saves do not land
 	 on save timer */
@@ -284,11 +286,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveData:(id)sender
 {
+	LogToConsoleInfo("Performing save")
+
 	[self saveData];
 }
 
 - (void)trimData:(id)sender
 {
+	LogToConsoleInfo("Performing trim")
+
 	NSUInteger rowLimit = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
 
 	LogToConsoleInfo("Maximum line count per-channel is: %ld", rowLimit)
