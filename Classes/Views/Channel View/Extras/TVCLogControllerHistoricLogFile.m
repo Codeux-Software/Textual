@@ -48,6 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
 @property (nonatomic, strong) TLOTimer *saveTimer;
 @property (nonatomic, strong) TLOTimer *trimTimer;
+@property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
+@property (nonatomic, assign) BOOL connectionInvalidatedErrorDialogDisplayed;
+@property (nonatomic, copy, nullable) NSError *lastServiceConnectionError;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
@@ -173,13 +176,13 @@ NS_ASSUME_NONNULL_BEGIN
 	serviceConnection.remoteObjectInterface = remoteObjectInterface;
 
 	serviceConnection.interruptionHandler = ^{
-#warning TODO: Implement
+		[self interuptionHandler];
 
 		LogToConsole("Interuption handler called")
 	};
 
 	serviceConnection.invalidationHandler = ^{
-#warning TODO: Implement
+		[self invalidationHandler];
 
 		LogToConsole("Invalidation handler called")
 	};
@@ -187,6 +190,47 @@ NS_ASSUME_NONNULL_BEGIN
 	[serviceConnection resume];
 
 	self.serviceConnection = serviceConnection;
+}
+
+- (void)interuptionHandler
+{
+	[self resetContext];
+}
+
+- (void)invalidationHandler
+{
+	self.serviceConnection = nil;
+
+	[self resetContext];
+
+	if (self.connectionInvalidatedVoluntarily) {
+		return;
+	}
+
+	/* Error dialog is purposely only ever shown once */
+	if (self.connectionInvalidatedErrorDialogDisplayed == NO) {
+		self.connectionInvalidatedErrorDialogDisplayed = YES;
+	} else {
+		return;
+	}
+
+	NSString *lastErrorMessage = self.lastServiceConnectionError.localizedDescription;
+
+	if (lastErrorMessage == nil) {
+		lastErrorMessage = NSStringEmptyPlaceholder;
+	} else {
+		lastErrorMessage = TXTLS(@"Prompts[1137][2]", lastErrorMessage);
+	}
+
+	(void)[TLOPopupPrompts dialogWindowWithMessage:lastErrorMessage
+											 title:TXTLS(@"Prompts[1137][1]")
+									 defaultButton:TXTLS(@"Prompts[0005]")
+								   alternateButton:nil];
+}
+
+- (void)resetContext
+{
+	self.isSaving = NO;
 }
 
 - (void)setupTimers
@@ -217,6 +261,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareForApplicationTermination
 {
 	[self saveData];
+
+	self.connectionInvalidatedVoluntarily = YES;
 }
 
 #pragma mark -
@@ -229,7 +275,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return [self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError *error) {
-		LogToConsoleError("Error occurred while communicating with service:  %@",
+		self.lastServiceConnectionError = error;
+
+		LogToConsoleError("Error occurred while communicating with service: %@",
 			error.localizedDescription);
 	}];
 }
