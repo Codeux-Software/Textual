@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[RZUserDefaults() removeObjectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
 
-	[RZUserDefaults() setObject:filenameOld forKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
+	[RZUserDefaults() setObject:filenameOld forKey:@"TVCLogControllerHistoricLogFileSavePath_v3"];
 }
 
 #pragma mark -
