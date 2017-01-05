@@ -643,9 +643,9 @@
 		4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */; };
 		4C74FBC51B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */; };
 		4C74FBC61B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */; };
-		4C761BA31E155C2800A505B7 /* Historic Log File Manager.app in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4C761BA51E155C4B00A505B7 /* Historic Log File Manager.app in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4C761BA71E155C7500A505B7 /* Historic Log File Manager.app in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C761BA31E155C2800A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C761BA51E155C4B00A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C761BA71E155C7500A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4C761BB91E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */; };
 		4C761BBA1E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */; };
 		4C761BBB1E155FF800A505B7 /* HLSHistoricLogProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C761BB41E155FF800A505B7 /* HLSHistoricLogProtocol.h */; };
@@ -1950,7 +1950,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				4C761BA31E155C2800A505B7 /* Historic Log File Manager.app in Copy XPC Services */,
+				4C761BA31E155C2800A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1961,7 +1961,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				4C761BA51E155C4B00A505B7 /* Historic Log File Manager.app in Copy XPC Services */,
+				4C761BA51E155C4B00A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1972,7 +1972,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				4C761BA71E155C7500A505B7 /* Historic Log File Manager.app in Copy XPC Services */,
+				4C761BA71E155C7500A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3426,7 +3426,7 @@
 		4C761B991E155BFF00A505B7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */,
+				4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5072,10 +5072,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4C761B9F1E155BFF00A505B7 /* Historic Log File Manager.app */ = {
+		4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */ = {
 			isa = PBXReferenceProxy;
 			fileType = "wrapper.xpc-service";
-			path = "Historic Log File Manager.app";
+			path = HistoricLogFileManager.xpc;
 			remoteRef = 4C761B9E1E155BFF00A505B7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -6646,7 +6646,6 @@
 		4C0BA6D51990798800857343 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -6655,7 +6654,6 @@
 		4C0BA6D61990798800857343 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -6664,9 +6662,9 @@
 		4C0BA6D81990798800857343 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE_SPECIFIER = "Development: com.codeux.irc.textual5";
 			};
 			name = "Release (App Store)";
 		};
