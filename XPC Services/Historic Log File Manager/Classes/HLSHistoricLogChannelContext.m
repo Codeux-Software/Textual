@@ -35,27 +35,11 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
-
-#import "TVCLogLineXPC.h"
+#import "HLSHistoricLogChannelContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol HLSHistoricLogProtocol
-- (void)openDatabaseAtPath:(NSString *)path;
-
-- (void)writeLogLine:(TVCLogLineXPC *)logLine;
-
-- (void)saveDataWithCompletionBlock:(void (^ _Nullable)(void))completionBlock;
-
-- (void)resetDataForChannel:(NSString *)channelId;
-
-- (void)fetchEntriesForChannel:(NSString *)channelId
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
-
-- (void)setMaximumLineCount:(NSUInteger)maximumLineCount;
+@implementation HLSHistoricLogChannelContext
 @end
 
 NS_ASSUME_NONNULL_END
