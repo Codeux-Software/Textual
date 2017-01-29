@@ -46,8 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCLogControllerHistoricLogFile ()
 @property (nonatomic, assign, readwrite) BOOL isSaving;
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@property (nonatomic, strong) TLOTimer *saveTimer;
-@property (nonatomic, strong) TLOTimer *trimTimer;
 @property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
 @property (nonatomic, assign) BOOL connectionInvalidatedErrorDialogDisplayed;
 @property (nonatomic, copy, nullable) NSError *lastServiceConnectionError;
@@ -235,29 +233,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setupTimers
 {
-	TLOTimer *saveTimer = [TLOTimer new];
+	NSUInteger maximumLineCount = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
 
-	saveTimer.target = self;
-	saveTimer.action = @selector(saveData:);
-	saveTimer.repeatTimer = YES;
-	saveTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-
-	[saveTimer start:(60 * 2)]; // 2 minutes
-
-	self.saveTimer = saveTimer;
-
-	TLOTimer *trimTimer = [TLOTimer new];
-
-	trimTimer.target = self;
-	trimTimer.action = @selector(trimData:);
-	trimTimer.repeatTimer = YES;
-	trimTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-
-	/* A few seconds are added so saves do not land
-	 on save timer */
-	[trimTimer start:((60 * 30) + 12)]; // 30:12 minutes
-
-	self.trimTimer = trimTimer;
+	[[self remoteObjectProxy] setMaximumLineCount:maximumLineCount];
 }
 
 - (void)prepareForApplicationTermination
@@ -289,17 +267,6 @@ NS_ASSUME_NONNULL_BEGIN
 	LogToConsoleInfo("Performing save")
 
 	[self saveData];
-}
-
-- (void)trimData:(id)sender
-{
-	LogToConsoleInfo("Performing trim")
-
-	NSUInteger rowLimit = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
-
-	LogToConsoleInfo("Maximum line count per-channel is: %ld", rowLimit)
-
-	[[self remoteObjectProxy] resizeDatabaseToConformToRowLimit:rowLimit];
 }
 
 #pragma mark -
