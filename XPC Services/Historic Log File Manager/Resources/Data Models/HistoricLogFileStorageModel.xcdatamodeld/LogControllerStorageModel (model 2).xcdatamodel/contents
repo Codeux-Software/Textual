@@ -8,7 +8,7 @@
     </entity>
     <fetchRequest name="LogLineFetchRequest" entity="LogLine" predicateString="channelId == $channel_id AND creationDate &lt; $creation_date" fetchBatchSize="100" includesPendingChanges="YES" returnObjectsAsFaults="YES" resultType="1"/>
     <fetchRequest name="LogLineFetchRequestAll" entity="LogLine" fetchBatchSize="100" includePropertyValues="YES" includesPendingChanges="YES" returnObjectsAsFaults="YES"/>
-    <fetchRequest name="LogLineFetchRequestTruncate" entity="LogLine" predicateString="channelId == $channel_id AND id &lt;= $lowest_id"/>
+    <fetchRequest name="LogLineFetchRequestTruncate" entity="LogLine" predicateString="channelId == $channel_id AND id &lt;= $lowest_id" includesPendingChanges="YES"/>
     <elements>
         <element name="LogLine" positionX="0" positionY="0" width="128" height="105"/>
     </elements>
