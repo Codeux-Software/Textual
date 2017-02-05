@@ -555,7 +555,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self startWithSelection:TDCServerPropertiesSheetDefaultNavigationSelection context:nil];
 }
 
-- (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable NSString *)context
+- (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
 {
 	switch (selection) {
 		case TDCServerPropertiesSheetFloodControlNavigationSelection:
@@ -574,7 +574,11 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			[self startWithViewAtIndex:_navigationIndexForAddressBook];
 
-			[self addIgnoreAddressBookEntryWithHostmask:context];
+			if ([context isKindOfClass:[NSString class]]) {
+				[self addIgnoreAddressBookEntryWithHostmask:context];
+			} else if ([context isKindOfClass:[IRCAddressBookEntry class]]) {
+				[self editAddressBookEntryWithObject:context];
+			}
 
 			break;
 		}
@@ -1629,6 +1633,19 @@ NS_ASSUME_NONNULL_BEGIN
 	} else if ([sender tag] == 4) {
 		[self addUserTrackingAddressBookEntry];
 	}
+}
+
+- (void)editAddressBookEntryWithObject:(IRCAddressBookEntry *)entryObject
+{
+	NSInteger tableIndex = [self.mutableAddressBookList indexOfObject:entryObject];
+
+	if (tableIndex == NSNotFound) {
+		return;
+	}
+
+	[self.addressBookTable selectItemAtIndex:tableIndex];
+
+	[self editAddressBookEntry:nil];
 }
 
 - (void)editAddressBookEntry:(id)sender

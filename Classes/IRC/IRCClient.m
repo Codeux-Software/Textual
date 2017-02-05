@@ -1195,7 +1195,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Ignore Matching
 
-- (nullable IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)hostmask withMatches:(NSArray<NSString *> *)matches
+- (nullable IRCAddressBookEntry *)findIgnoreForHostmask:(NSString *)hostmask
+{
+	NSParameterAssert(hostmask != nil);
+
+	for (IRCAddressBookEntry *g in self.config.ignoreList) {
+		if (g.entryType != IRCAddressBookIgnoreEntryType) {
+			continue;
+		}
+
+		if ([g checkMatch:hostmask] == NO) {
+			continue;
+		}
+
+		return g;
+	}
+
+	return nil;
+}
+
+- (nullable IRCAddressBookEntry *)findAddressBookEntryForHostmask:(NSString *)hostmask withMatches:(NSArray<NSString *> *)matches
 {
 	NSParameterAssert(hostmask != nil);
 	NSParameterAssert(matches != nil);
@@ -5363,12 +5382,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Perform ignore check */
-	IRCAddressBookEntry *ignoreInfo = [self checkIgnoreAgainstHostmask:m.senderHostmask
-															 withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
-																			IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,
-																			IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey,
-																			IRCAddressBookDictionaryValueIgnorePublicMessagesKey,
-																			IRCAddressBookDictionaryValueIgnorePrivateMessagesKey	]];
+	IRCAddressBookEntry *ignoreInfo = [self findAddressBookEntryForHostmask:m.senderHostmask
+																withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
+																				IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,
+																				IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey,
+																				IRCAddressBookDictionaryValueIgnorePublicMessagesKey,
+																				IRCAddressBookDictionaryValueIgnorePrivateMessagesKey	]];
 
 	if (ignoreInfo.ignorePublicMessageHighlights) {
 		if (lineType == TVCLogLineActionType) {
@@ -5900,9 +5919,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Find ignore for sender and possibly exit method */
-	IRCAddressBookEntry *ignoreInfo = [self checkIgnoreAgainstHostmask:m.senderHostmask
-														   withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey,
-																		 IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey]];
+	IRCAddressBookEntry *ignoreInfo = [self findAddressBookEntryForHostmask:m.senderHostmask
+																withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey,
+																			  IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey]];
 
 	if (ignoreInfo.ignoreClientToClientProtocol) {
 		return;
@@ -6082,8 +6101,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(text != nil);
 
 	/* Find ignore for sender and possibly exit method */
-	IRCAddressBookEntry *ignoreInfo = [self checkIgnoreAgainstHostmask:m.senderHostmask
-														   withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey]];
+	IRCAddressBookEntry *ignoreInfo = [self findAddressBookEntryForHostmask:m.senderHostmask
+																withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey]];
 
 	if (ignoreInfo.ignoreClientToClientProtocol) {
 		return;
@@ -6207,9 +6226,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (myself == NO) {
 		ignoreInfo =
-		[self checkIgnoreAgainstHostmask:m.senderHostmask
-							 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
-										   IRCAddressBookDictionaryValueTrackUserActivityKey]];
+		[self findAddressBookEntryForHostmask:m.senderHostmask
+								  withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
+												IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 		if (ignoreInfo && isPrintOnlyMessage == NO) {
 			[self updateUserTrackingStatusForEntry:ignoreInfo withMessage:m];
@@ -6297,8 +6316,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			printMessage = NO;
 		} else {
 			IRCAddressBookEntry *ignoreInfo =
-			[self checkIgnoreAgainstHostmask:m.senderHostmask
-								 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
+			[self findAddressBookEntryForHostmask:m.senderHostmask
+									  withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
 			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 				printMessage = (ignoreInfo.ignoreGeneralEventMessages == NO);
@@ -6384,8 +6403,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			printMessage = NO;
 		} else {
 			IRCAddressBookEntry *ignoreInfo =
-			[self checkIgnoreAgainstHostmask:m.senderHostmask
-								 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
+			[self findAddressBookEntryForHostmask:m.senderHostmask
+									  withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
 			if (ignoreInfo && ignoreInfo.entryType == IRCAddressBookIgnoreEntryType) {
 				printMessage = (ignoreInfo.ignoreGeneralEventMessages == NO);
@@ -6447,9 +6466,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (myself == NO) {
 		ignoreInfo =
-		[self checkIgnoreAgainstHostmask:m.senderHostmask
-							 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
-										   IRCAddressBookDictionaryValueTrackUserActivityKey]];
+		[self findAddressBookEntryForHostmask:m.senderHostmask
+								  withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
+												IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 		if (ignoreInfo && isPrintOnlyMessage == NO) {
 			[self updateUserTrackingStatusForEntry:ignoreInfo withMessage:m];
@@ -6607,9 +6626,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (myself == NO) {
 		oldNicknameIgnoreInfo =
-		[self checkIgnoreAgainstHostmask:m.senderHostmask
-							 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
-										   IRCAddressBookDictionaryValueTrackUserActivityKey]];
+		[self findAddressBookEntryForHostmask:m.senderHostmask
+								  withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
+												IRCAddressBookDictionaryValueTrackUserActivityKey]];
 	}
 
 	/* Perform restricted actions */
@@ -6633,8 +6652,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *newNicknameHostmask = [newNickname stringByAppendingString:@"!*@*"];
 
 			IRCAddressBookEntry *newNicknameIgnoreInfo =
-			[self checkIgnoreAgainstHostmask:newNicknameHostmask
-								 withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
+			[self findAddressBookEntryForHostmask:newNicknameHostmask
+									  withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 			if (newNicknameIgnoreInfo) {
 				[self updateUserTrackingStatusForEntry:newNicknameIgnoreInfo withMessage:m];
@@ -9045,8 +9064,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			IRCAddressBookEntry *addressBookEntry =
-			[self checkIgnoreAgainstHostmask:hostmask
-								 withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
+			[self findAddressBookEntryForHostmask:hostmask
+									  withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 			if (addressBookEntry == nil) {
 				break;
@@ -9097,8 +9116,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 
 				IRCAddressBookEntry *addressBookEntry =
-				[self checkIgnoreAgainstHostmask:hostmask
-									 withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
+				[self findAddressBookEntryForHostmask:hostmask
+										  withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 				if (addressBookEntry == nil) {
 					continue;

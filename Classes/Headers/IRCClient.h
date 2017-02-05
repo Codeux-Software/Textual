@@ -242,6 +242,8 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 @property (readonly, nullable) IRCUser *myself;
 
+- (nullable IRCAddressBookEntry *)findIgnoreForHostmask:(NSString *)hostmask;
+
 #pragma mark -
 
 - (nullable IRCChannel *)findChannel:(NSString *)withName;
@@ -261,8 +263,6 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 - (BOOL)stringIsNickname:(NSString *)string;
 - (BOOL)stringIsChannelName:(NSString *)string;
-
-- (nullable IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)hostmask withMatches:(NSArray<NSString *> *)matches;
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)message inChannel:(nullable IRCChannel *)channel;
 

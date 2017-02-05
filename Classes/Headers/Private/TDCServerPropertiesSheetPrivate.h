@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, TDCServerPropertiesSheetNavigationSelection) {
 @interface TDCServerPropertiesSheet : TDCSheetBase <TDCClientPrototype>
 - (instancetype)initWithClient:(nullable IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
-- (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable NSString *)context;
+- (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context;
 @end
 
 @protocol TDCServerPropertiesSheetDelegate <NSObject>
