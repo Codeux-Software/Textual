@@ -760,6 +760,48 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 #endif
 
+		case 1532: // "Add Ignore"
+		{
+			/* To make it as efficient as possible, we only check for ignore
+			 for the "Add Ignore" menu item. When that menu item is validated,
+			 we validate "Modify Ignore" and "Remove Ignore" at the same time. */
+			NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:menuItem];
+
+			NSMenuItem *modifyIgnoreMenuItem = [menuItem.menu itemWithTag:1533];
+			NSMenuItem *removeIgnoreMenuItem = [menuItem.menu itemWithTag:1534];
+
+			/* If less than or more than one user is selected, then hide all
+			 menu items except "Add Ignore" and disable the "Add Ignore" item. */
+			if (nicknames.count != 1) {
+				modifyIgnoreMenuItem.hidden = YES;
+				modifyIgnoreMenuItem.representedObject = nil;
+
+				removeIgnoreMenuItem.hidden = YES;
+
+				menuItem.hidden = NO;
+
+				return NO;
+			}
+
+			/* Update visiblity depending on whether ignore is available */
+			IRCAddressBookEntry *userIgnore = [u findIgnoreForHostmask:nicknames[0].user.hostmask];
+
+			BOOL condition = (userIgnore == nil);
+
+			modifyIgnoreMenuItem.hidden = condition;
+			modifyIgnoreMenuItem.representedObject = userIgnore;
+
+			removeIgnoreMenuItem.hidden = condition;
+
+			menuItem.hidden = (condition == NO);
+
+			return YES;
+		}
+		case 1533: // "Modify Ignore"
+		case 1534: // "Remove Ignore"
+		{
+			return YES;
+		}
 		case 1502: // "Private Message (Query)"
 		case 1503: // "Give Op (+o)"
 		case 1504: // "Give Halfop (+h)"
@@ -1783,7 +1825,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Server Properties
 
-- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable NSString *)context
+- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
 {
 	NSParameterAssert(client != nil);
 
@@ -2175,6 +2217,76 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)channelPropertiesSheetWillClose:(TDCChannelPropertiesSheet *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
+#pragma mark Menu Item Actions
+
+- (void)memberAddIgnore:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_noClientOrChannel) {
+		return;
+	}
+
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
+
+	if (nicknames.count == 0) {
+		return;
+	}
+
+	[self deselectMembers:sender];
+
+	NSString *command = [NSString stringWithFormat:@"ignore %@", nicknames[0]];
+
+	[u sendCommand:command completeTarget:YES target:c.name];
+}
+
+- (void)memberRemoveIgnore:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_noClientOrChannel) {
+		return;
+	}
+
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
+
+	if (nicknames.count == 0) {
+		return;
+	}
+
+	[self deselectMembers:sender];
+
+	NSString *command = [NSString stringWithFormat:@"unignore %@", nicknames[0]];
+
+	[u sendCommand:command completeTarget:YES target:c.name];
+}
+
+- (void)memberModifyIgnore:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+
+	if (_noClient) {
+		return;
+	}
+
+	id userIgnore = [sender representedObject];
+
+	if (userIgnore == nil) {
+		return;
+	}
+
+	[sender setRepresentedObject:nil];
+
+	[self deselectMembers:sender];
+
+	[self showServerPropertiesSheetForClient:u
+							   withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
+									 context:userIgnore];
 }
 
 #pragma mark -

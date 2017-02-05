@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -1126,13 +1126,32 @@ CQ
         </menu>
         <menu title="Menu" id="327" userLabel="User Controls Menu">
             <items>
+                <menuItem title="Add Ignore" tag="1532" id="fw1-yc-Vm1">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="memberAddIgnore:" target="267" id="drP-cu-7wg"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Modify Ignore" tag="1533" id="cg4-kn-WKm">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="memberModifyIgnore:" target="267" id="zwS-Rh-6dG"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Remove Ignore" tag="1534" id="twe-vV-VYO">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="memberRemoveIgnore:" target="267" id="01h-cr-wYk"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" tag="1535" id="lgn-Pi-rSn"/>
                 <menuItem title="Invite to..." tag="1500" id="1003">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="memberSendInvite:" target="267" id="2627"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" tag="1527" id="1777"/>
+                <menuItem isSeparatorItem="YES" tag="1527" id="7tS-Df-q8O"/>
                 <menuItem title="Get Info (Whois)" tag="1501" keyEquivalent="W" id="328">
                     <connections>
                         <action selector="memberSendWhois:" target="267" id="2625"/>
@@ -1297,7 +1316,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="421"/>
             </connections>
-            <point key="canvasLocation" x="-87" y="-63"/>
+            <point key="canvasLocation" x="18" y="-162"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="367" userLabel="Add Server Menu">
             <items>
