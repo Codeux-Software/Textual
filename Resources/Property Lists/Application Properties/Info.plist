@@ -92,7 +92,7 @@
 		</dict>
 	</array>
 	<key>SUAllowsAutomaticUpdates</key>
-	<false/>
+	<true/>
 	<key>SUBundleName</key>
 	<string>Textual</string>
 	<key>SUEnableSystemProfiling</key>
