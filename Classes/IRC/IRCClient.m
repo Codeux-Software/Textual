@@ -1957,7 +1957,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(channel != nil);
 
-	if (self.isConnectedToZNC) {
+	if (self.isConnectedToZNC == NO) {
 		return;
 	}
 
