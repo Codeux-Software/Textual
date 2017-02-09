@@ -467,6 +467,15 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self.inputTextField registerSelector:selector character:character modifiers:modifiers];
 }
 
+- (BOOL)performKeyEquivalent:(NSEvent *)e
+{
+	if ([self.keyEventHandler processKeyEvent:e]) {
+		return YES;
+	}
+
+	return [super performKeyEquivalent:e];
+}
+
 - (void)sendEvent:(NSEvent *)e
 {
 	if (e.type == NSKeyDown) {
