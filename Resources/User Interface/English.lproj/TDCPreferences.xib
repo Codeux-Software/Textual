@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -4781,7 +4781,7 @@
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRC -&gt; Enable echo-message Capacity" id="K6w-d5-u40"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRC -&gt; Enable echo-message Capability" id="JWt-1e-abq"/>
                     </connections>
                 </button>
             </subviews>

@@ -221,6 +221,10 @@ NS_ASSUME_NONNULL_BEGIN
 	1405: "View List of Fingerprints"
  
 	The following tags apply to the "User Control" menu:
+	1532: "Add Ignore"
+	1533: "Modify Ignore"
+	1534: "Remove Ignore"
+	1535: "-"
 	1500: "Invite to…"
 	1527: "-"
 	1501: "Get Info (Whois)"
@@ -340,6 +344,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)exportPreferences:(id)sender;
 - (IBAction)importPreferences:(id)sender;
+
+- (IBAction)memberAddIgnore:(id)sender;
+- (IBAction)memberModifyIgnore:(id)sender;
+- (IBAction)memberRemoveIgnore:(id)sender;
 
 - (IBAction)memberBanFromChannel:(id)sender;
 - (IBAction)memberKickFromChannel:(id)sender;
