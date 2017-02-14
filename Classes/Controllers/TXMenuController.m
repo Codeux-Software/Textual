@@ -770,9 +770,11 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMenuItem *modifyIgnoreMenuItem = [menuItem.menu itemWithTag:1533];
 			NSMenuItem *removeIgnoreMenuItem = [menuItem.menu itemWithTag:1534];
 
+			NSString *hostmask = nicknames.firstObject.user.hostmask;
+
 			/* If less than or more than one user is selected, then hide all
 			 menu items except "Add Ignore" and disable the "Add Ignore" item. */
-			if (nicknames.count != 1) {
+			if (nicknames.count != 1 || hostmask == nil) {
 				modifyIgnoreMenuItem.hidden = YES;
 				modifyIgnoreMenuItem.representedObject = nil;
 
@@ -784,7 +786,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			/* Update visiblity depending on whether ignore is available */
-			IRCAddressBookEntry *userIgnore = [u findIgnoreForHostmask:nicknames[0].user.hostmask];
+			IRCAddressBookEntry *userIgnore = [u findIgnoreForHostmask:hostmask];
 
 			BOOL condition = (userIgnore == nil);
 
