@@ -562,11 +562,11 @@ NS_ASSUME_NONNULL_BEGIN
 	/* This method is expected to be performed in a queue. */
 	NSParameterAssert(fetchRequest != nil);
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		return [self __deleteDataForFetchRequestUsingBatch:fetchRequest];
-	} else {
+	//	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	//		return [self __deleteDataForFetchRequestUsingBatch:fetchRequest];
+	//	} else {
 		return [self __deleteDataForFetchRequestUsingEnumeration:fetchRequest];
-	}
+	//	}
 }
 
 - (NSUInteger)__deleteDataForFetchRequestUsingBatch:(NSFetchRequest *)fetchRequest
