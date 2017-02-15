@@ -963,9 +963,9 @@ ClassWithDesignatedInitializerInitMethod
 				[THOPluginDispatcher didPostNewMessage:resultInfo[@"pluginConcreteObject"] forViewController:self];
 			}
 
-			/* Only cut lines if our number is divisible by 5. This makes it so every
+			/* Only cut lines if our number is divisible by 50. This makes it so every
 			 line is not using resources. */
-			if ((self.activeLineCount % 5) == 0) {
+			if ((self.activeLineCount % 50) == 0) {
 				[self limitNumberOfLinesIfNeeded];
 			}
 
