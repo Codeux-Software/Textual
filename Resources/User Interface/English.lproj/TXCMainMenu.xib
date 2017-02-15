@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+        <customObject id="-2" userLabel="File's Owner" customClass="TXApplication">
             <connections>
                 <outlet property="delegate" destination="196" id="197"/>
             </connections>

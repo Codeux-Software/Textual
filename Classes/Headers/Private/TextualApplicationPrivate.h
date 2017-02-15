@@ -174,6 +174,7 @@
 #import "TVCServerListYosemiteUserInterfacePrivate.h"
 #import "TVCTextFormatterMenuPrivate.h"
 #import "TVCTextViewWithIRCFormatterPrivate.h"
+#import "TXApplicationPrivate.h"
 #import "TXGlobalModelsPrivate.h"
 #import "TXMasterControllerPrivate.h"
 #import "TXMenuControllerPrivate.h"

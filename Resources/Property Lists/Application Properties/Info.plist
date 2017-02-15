@@ -71,7 +71,7 @@
 		<true/>
 	</dict>
 	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
+	<string>TXApplication</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>CFBundleURLTypes</key>

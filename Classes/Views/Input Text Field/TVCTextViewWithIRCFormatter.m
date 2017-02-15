@@ -108,13 +108,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.keyEventHandler registerSelector:selector characters:characterRange modifiers:modifiers];
 }
 
-- (void)keyDown:(NSEvent *)e
+- (BOOL)performedCustomKeyboardEvent:(NSEvent *)e
 {
 	if ([self.keyEventHandler processKeyEvent:e]) {
-		return;
+		return YES;
 	}
 
-	[super keyDown:e];
+	return NO;
 }
 
 - (void)keyDownToSuper:(NSEvent *)e
