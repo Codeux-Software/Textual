@@ -170,7 +170,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (characterMap) {
 		NSString *characterString = e.charactersIgnoringModifiers.lowercaseString;
 		
-		if (NSObjectIsNotEmpty(characterString)) {
+		if (characterString.length > 0) {
 			NSString *selectorName = characterMap[@([characterString characterAtIndex:0])];
 			
 			if (selectorName) {

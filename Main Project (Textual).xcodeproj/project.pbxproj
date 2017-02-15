@@ -1151,6 +1151,12 @@
 		4C8F2F631AAE647D007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C8F2F651AAE648B007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C8F2F671AAE6491007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4C90F6291E54F28A00DF5190 /* TXApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C90F6281E54F28A00DF5190 /* TXApplication.m */; };
+		4C90F62A1E54F28A00DF5190 /* TXApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C90F6281E54F28A00DF5190 /* TXApplication.m */; };
+		4C90F62B1E54F28A00DF5190 /* TXApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C90F6281E54F28A00DF5190 /* TXApplication.m */; };
+		4C90F6331E54F2AB00DF5190 /* TXApplicationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C90F6321E54F2AB00DF5190 /* TXApplicationPrivate.h */; };
+		4C90F6341E54F2AB00DF5190 /* TXApplicationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C90F6321E54F2AB00DF5190 /* TXApplicationPrivate.h */; };
+		4C90F6351E54F2AB00DF5190 /* TXApplicationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C90F6321E54F2AB00DF5190 /* TXApplicationPrivate.h */; };
 		4C9234AB195330D30009AAAE /* TXUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9234AA195330D30009AAAE /* TXUserInterface.m */; };
 		4C9234AC195330D30009AAAE /* TXUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9234AA195330D30009AAAE /* TXUserInterface.m */; };
 		4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */; };
@@ -2402,6 +2408,8 @@
 		4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeHTML.h; sourceTree = "<group>"; };
 		4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = Classes/Headers/TVCMainWindowLoadingScreen.h; sourceTree = SOURCE_ROOT; };
 		4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EncryptionKit.framework; path = ".tmp/SharedBuildResults-Frameworks/EncryptionKit.framework"; sourceTree = "<group>"; };
+		4C90F6281E54F28A00DF5190 /* TXApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXApplication.m; path = Controllers/TXApplication.m; sourceTree = "<group>"; };
+		4C90F6321E54F2AB00DF5190 /* TXApplicationPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXApplicationPrivate.h; path = Headers/Private/TXApplicationPrivate.h; sourceTree = "<group>"; };
 		4C9234AA195330D30009AAAE /* TXUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXUserInterface.m; path = Controllers/TXUserInterface.m; sourceTree = "<group>"; };
 		4C9234B2195330E30009AAAE /* TXUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXUserInterface.h; path = Headers/TXUserInterface.h; sourceTree = "<group>"; };
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCResourceManager.h; path = Headers/TPCResourceManager.h; sourceTree = "<group>"; };
@@ -3337,6 +3345,7 @@
 				4C76CC8E1D1DC6ED005CDDA9 /* TVCTextFormatterMenuPrivate.h */,
 				4C76CC8F1D1DC6ED005CDDA9 /* TVCTextViewWithIRCFormatterPrivate.h */,
 				4CEFF3A11DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h */,
+				4C90F6321E54F2AB00DF5190 /* TXApplicationPrivate.h */,
 				4C4A1AE61D12245B004FBF12 /* TXGlobalModelsPrivate.h */,
 				4CD1C4C41D1F18A50034F6A1 /* TXMasterControllerPrivate.h */,
 				4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */,
@@ -3369,6 +3378,7 @@
 		4C7409031CCDA33F002F026F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4C90F6281E54F28A00DF5190 /* TXApplication.m */,
 				4C8AF510158E99520026668C /* TXGlobalModels.m */,
 				4C8AF511158E99520026668C /* TXMasterController.m */,
 				4C8AF512158E99520026668C /* TXMenuController.m */,
@@ -4170,6 +4180,7 @@
 				4C7B031D1D12107500295E82 /* TPCPathInfo.h in Headers */,
 				4C7B031E1D12107500295E82 /* TPCPreferences.h in Headers */,
 				4C10B37D1D23283000868A74 /* TDCLicenseManagerMigrateAppStoreSheetPrivate.h in Headers */,
+				4C90F6331E54F2AB00DF5190 /* TXApplicationPrivate.h in Headers */,
 				4C7B031F1D12107500295E82 /* TPCPreferencesCloudSync.h in Headers */,
 				4C7B03201D12107500295E82 /* TPCPreferencesCloudSyncExtension.h in Headers */,
 				4C7B03211D12107500295E82 /* TPCPreferencesImportExport.h in Headers */,
@@ -4596,6 +4607,7 @@
 				4C7B04251D1210A800295E82 /* TXMenuController.h in Headers */,
 				4C7B04261D1210A800295E82 /* TXSharedApplication.h in Headers */,
 				4C7B04271D1210A800295E82 /* TXUserInterface.h in Headers */,
+				4C90F6341E54F2AB00DF5190 /* TXApplicationPrivate.h in Headers */,
 				4C76CC941D1DC6ED005CDDA9 /* TVCMainWindowTextViewYosemiteUserInteracePrivate.h in Headers */,
 				4C0DEB6D1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */,
 				4CB9E3B21D2B144200ED395A /* IRCModeInfoInternal.h in Headers */,
@@ -4849,6 +4861,7 @@
 				4C7B04A61D1210B000295E82 /* TXMenuController.h in Headers */,
 				4C7B04A71D1210B000295E82 /* TXSharedApplication.h in Headers */,
 				4C7B04A81D1210B000295E82 /* TXUserInterface.h in Headers */,
+				4C90F6351E54F2AB00DF5190 /* TXApplicationPrivate.h in Headers */,
 				4C76CC951D1DC6ED005CDDA9 /* TVCMainWindowTextViewYosemiteUserInteracePrivate.h in Headers */,
 				4C0DEB6E1D2B79050040DA91 /* IRCISupportInfoPrivate.h in Headers */,
 				4CB9E3B31D2B144200ED395A /* IRCModeInfoInternal.h in Headers */,
@@ -5752,6 +5765,7 @@
 				4C0444FF16F1603B00EBB665 /* TDCChannelBanListSheet.m in Sources */,
 				4CF621CC1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
 				4C04450116F1603B00EBB665 /* TDCChannelPropertiesSheet.m in Sources */,
+				4C90F62A1E54F28A00DF5190 /* TXApplication.m in Sources */,
 				4C04450216F1603B00EBB665 /* TDCServerHighlightListSheet.m in Sources */,
 				4CF40E071AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
 				4C04450316F1603B00EBB665 /* TDCChannelInviteSheet.m in Sources */,
@@ -5914,6 +5928,7 @@
 				4CF40E6A1AC1A4AC00A26BE0 /* TVCQueuedCertificateTrustPanel.m in Sources */,
 				4C0BA63C1990798800857343 /* TDCPreferencesController.m in Sources */,
 				4CF40E261AC1A4AC00A26BE0 /* TVCMainWindow.m in Sources */,
+				4C90F6291E54F28A00DF5190 /* TXApplication.m in Sources */,
 				4CF40E5E1AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
 				4C0BA63E1990798800857343 /* TDCPreferencesSoundWrapper.m in Sources */,
 				4C0BA63F1990798800857343 /* TDCAboutDialog.m in Sources */,
@@ -6094,6 +6109,7 @@
 				4C8AF615158E99520026668C /* TDCServerHighlightListSheet.m in Sources */,
 				4CF621CD1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
 				4C8AF616158E99520026668C /* TDCChannelInviteSheet.m in Sources */,
+				4C90F62B1E54F28A00DF5190 /* TXApplication.m in Sources */,
 				4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */,
 				4CF40E081AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
 				4C8AF617158E99520026668C /* TDCServerChannelListDialog.m in Sources */,
