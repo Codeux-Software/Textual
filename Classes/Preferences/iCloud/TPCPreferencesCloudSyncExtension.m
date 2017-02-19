@@ -74,7 +74,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 
 	NSString *localValue = [TPCPreferences themeName];
 
-	if ([localValue isEqual:remoteValue]) {
+	if (remoteValue == nil || [localValue isEqual:remoteValue]) {
 		return;
 	}
 
