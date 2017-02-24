@@ -82,6 +82,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define _autojoinDelayedWarningInterval		60
 #define _isonCheckInterval			30
 #define _pingInterval				270
 #define _pongCheckInterval			30
@@ -143,6 +144,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong) IRCMessageBatchMessageContainer *batchMessages;
 @property (nonatomic, strong, nullable) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *autojoinTimer;
+@property (nonatomic, strong) TLOTimer *autojoinDelayedWarningTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
@@ -242,6 +244,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.autojoinTimer.target = self;
 	self.autojoinTimer.action = @selector(onAutojoinTimer:);
 
+	self.autojoinDelayedWarningTimer = [TLOTimer new];
+	self.autojoinDelayedWarningTimer.repeatTimer = YES;
+	self.autojoinDelayedWarningTimer.target = self;
+	self.autojoinDelayedWarningTimer.action = @selector(onAutojoinDelayedWarningTimer:);
+
 	self.commandQueueTimer = [TLOTimer new];
 	self.commandQueueTimer.repeatTimer = NO;
 	self.commandQueueTimer.target = self;
@@ -280,6 +287,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[RZNotificationCenter() removeObserver:self];
 
 	[self.autojoinTimer stop];
+	[self.autojoinDelayedWarningTimer stop];
 	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
@@ -288,6 +296,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.whoTimer stop];
 
 	self.autojoinTimer = nil;
+	self.autojoinDelayedWarningTimer = nil;
 	self.commandQueueTimer = nil;
 	self.isonTimer = nil;
 	self.pongTimer = nil;
@@ -4703,6 +4712,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.socket = nil;
 
 	[self stopAutojoinTimer];
+	[self stopAutojoinDelayedWarningTimer];
 	[self stopISONTimer];
 	[self stopPongTimer];
 	[self stopRetryTimer];
@@ -7825,6 +7835,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		if (self.isConnectedToZNC) {
 			[self performSelectorInCommonModes:@selector(performAutoJoin) withObject:nil afterDelay:3.0];
+		} else {
+			[self startAutojoinDelayedWarningTimer];
 		}
 	}
 	
@@ -9387,6 +9399,45 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Autojoin
 
+- (void)startAutojoinDelayedWarningTimer
+{
+	if (self.autojoinDelayedWarningTimer.timerIsActive) {
+		return;
+	}
+
+	[self.autojoinDelayedWarningTimer start:_autojoinDelayedWarningInterval];
+}
+
+- (void)stopAutojoinDelayedWarningTimer
+{
+	if (self.autojoinDelayedWarningTimer.timerIsActive == NO) {
+		return;
+	}
+
+	[self.autojoinDelayedWarningTimer stop];
+}
+
+- (void)onAutojoinDelayedWarningTimer:(id)sender
+{
+	if (self.isLoggedIn == NO) {
+		[self stopAutojoinDelayedWarningTimer];
+			
+		return;
+	}
+
+	/* This message is posted to the server console and the 
+	 front most channel if it is on this server. */
+	NSString *text = TXTLS(@"IRC[1122]");
+
+	[self printDebugInformationToConsole:text];
+
+	IRCChannel *c = [mainWindow() selectedChannelOn:self];
+
+	if (c != nil) {
+		[self printDebugInformation:text inChannel:c];
+	}
+}
+
 - (void)startAutojoinTimer
 {
 	if (self.autojoinTimer.timerIsActive) {
@@ -9491,6 +9542,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 		}
 	}
+
+	[self stopAutojoinDelayedWarningTimer];
 
 	NSMutableArray<IRCChannel *> *channelsToAutojoin = [NSMutableArray array];
 	
