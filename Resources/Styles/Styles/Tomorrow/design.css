@@ -247,6 +247,10 @@ div[id=mark] {
 	opacity: 1.0;
 }
 
+#historic_messages.notransition {
+	transition: none;
+}
+
 /* @end */
 
 /* @group NOTICE / CTCP / WALLOPS */
