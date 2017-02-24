@@ -294,6 +294,19 @@ Textual.setHistoricMessagesLoaded = function(isLoaded)
 	}
 };
 
+Textual.setHistoricMessagesTransitionEnabled = function(enableTransition)
+{
+	var historicMessages = Textual.historicMessagesElement();
+
+	if (historicMessages) {
+		if (enableTransition) {
+			historicMessages.classList.remove("notransition");
+		} else {
+			historicMessages.classList.add("notransition");
+		}
+	}
+};
+
 /* Text */
 Textual.changeTextSizeMultiplier = function(sizeMultiplier)
 {

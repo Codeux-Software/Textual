@@ -282,6 +282,10 @@ body[dir=ltr] div[ltype=action] .sender:before {
 	opacity: 1.0;
 }
 
+#historic_messages.notransition {
+	transition: none;
+}
+
 /* NOTICE/CTCP/WALLOPS */
 body div.line[ltype=ctcp],
 body div.line[ltype=notice],

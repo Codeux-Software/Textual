@@ -52,6 +52,8 @@ Textual.notifyDidBecomeVisible = function()
 Textual.notifyDidBecomeHidden = function()
 {
 	Textual.clearSelection();
+
+	Textual.setHistoricMessagesTransitionEnabled(false);
 };
 
 Textual.notifySelectionChanged = function(isSelected)
