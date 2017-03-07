@@ -57,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL excludedFromCloudSyncing;
 #endif
 
+@property (readonly) BOOL hideAutojoinDelayedWarnings;
 @property (readonly) BOOL hideNetworkUnavailabilityNotices;
 @property (readonly) BOOL performDisconnectOnPongTimer;
 @property (readonly) BOOL performDisconnectOnReachabilityChange;
@@ -130,6 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL excludedFromCloudSyncing;
 #endif
 
+@property (nonatomic, assign, readwrite) BOOL hideAutojoinDelayedWarnings;
 @property (nonatomic, assign, readwrite) BOOL hideNetworkUnavailabilityNotices;
 @property (nonatomic, assign, readwrite) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign, readwrite) BOOL performDisconnectOnReachabilityChange;

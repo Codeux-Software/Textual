@@ -98,6 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *editChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *editHighlightButton;
 @property (nonatomic, weak) IBOutlet NSButton *excludedFromCloudSyncingCheck;
+@property (nonatomic, weak) IBOutlet NSButton *hideAutojoinDelayedWarningsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *performDisconnectOnPongTimerCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pongTimerCheck;
 @property (nonatomic, weak) IBOutlet NSButton *prefersSecuredConnectionCheck;
@@ -763,6 +764,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.autojoinWaitsForNickServCheck.state = self.config.autojoinWaitsForNickServ;
 
+	self.hideAutojoinDelayedWarningsCheck.state = (self.config.hideAutojoinDelayedWarnings == NO);
+
 	/* Messages */
 	self.normalLeavingCommentTextField.stringValue = self.config.normalLeavingComment;
 
@@ -811,6 +814,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self updateClientCertificatePage];
 	[self updateConnectionPage];
 	[self updateHighlightsPage];
+	[self updateIdentityPage];
 
 	[self proxyTypeChanged:nil];
 
@@ -874,6 +878,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.nicknamePassword = self.nicknamePasswordTextField.trimmedStringValue;
 
 	self.config.autojoinWaitsForNickServ = (self.autojoinWaitsForNickServCheck.state == NSOnState);
+
+	self.config.hideAutojoinDelayedWarnings = (self.hideAutojoinDelayedWarningsCheck.state != NSOnState);
 
 	/* Alternate nicknames */
 	NSString *alternateNicknamesString = self.alternateNicknamesTextField.stringValue;
@@ -1064,11 +1070,19 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (void)updateIdentityPage
+{
+	self.hideAutojoinDelayedWarningsCheck.hidden =
+	(self.autojoinWaitsForNickServCheck.state == NSOffState);
+}
+
 #pragma mark -
 #pragma mark Actions
 
 - (void)autojoinWaitsForNickServChanged:(id)sender
 {
+	[self updateIdentityPage];
+
 	if (self.autojoinWaitsForNickServCheck.state != NSOnState) {
 		return;
 	}
