@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _excludedFromCloudSyncing;
 #endif
 
+	BOOL _hideAutojoinDelayedWarnings;
 	BOOL _hideNetworkUnavailabilityNotices;
 	BOOL _performDisconnectOnPongTimer;
 	BOOL _performDisconnectOnReachabilityChange;

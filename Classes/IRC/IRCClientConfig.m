@@ -72,6 +72,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
 	defaults[@"floodControlDelayTimerInterval"] = @(IRCConnectionConfigFloodControlDefaultDelayInterval);
 	defaults[@"floodControlMaximumMessages"] = @(IRCConnectionConfigFloodControlDefaultMessageCount);
+	defaults[@"hideAutojoinDelayedWarnings"] = @(NO);
 	defaults[@"hideNetworkUnavailabilityNotices"] = @(NO);
 	defaults[@"normalLeavingComment"] = TXTLS(@"BasicLanguage[1003]");
 	defaults[@"performDisconnectOnPongTimer"] = @(NO);
@@ -285,6 +286,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
 #endif
 
+	[defaultsMutable assignBoolTo:&self->_hideAutojoinDelayedWarnings forKey:@"hideAutojoinDelayedWarnings"];
 	[defaultsMutable assignBoolTo:&self->_hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
@@ -616,6 +618,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
 #endif
 
+	[dic setBool:self.hideAutojoinDelayedWarnings forKey:@"hideAutojoinDelayedWarnings"];
 	[dic setBool:self.hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
 	[dic setBool:self.performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[dic setBool:self.performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
@@ -877,6 +880,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic fallbackEncoding;
 @dynamic floodControlDelayTimerInterval;
 @dynamic floodControlMaximumMessages;
+@dynamic hideAutojoinDelayedWarnings;
 @dynamic hideNetworkUnavailabilityNotices;
 @dynamic highlightList;
 @dynamic identityClientSideCertificate;
@@ -972,6 +976,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 #endif
+
+- (void)setHideAutojoinDelayedWarnings:(BOOL)hideAutojoinDelayedWarnings
+{
+	if (self->_hideAutojoinDelayedWarnings != hideAutojoinDelayedWarnings) {
+		self->_hideAutojoinDelayedWarnings = hideAutojoinDelayedWarnings;
+	}
+}
 
 - (void)setHideNetworkUnavailabilityNotices:(BOOL)hideNetworkUnavailabilityNotices
 {
