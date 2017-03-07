@@ -512,10 +512,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self registerSelector:@selector(selectPreviousSelection:) key:TXKeyTabCode modifiers:NSAlternateKeyMask];
 
 	[self registerSelector:@selector(textFormattingBold:) character:'b' modifiers:NSCommandKeyMask];
-	[self registerSelector:@selector(textFormattingUnderline:) character:'u' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
-	[self registerSelector:@selector(textFormattingItalic:)	character:'i' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
-	[self registerSelector:@selector(textFormattingForegroundColor:) character:'c' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
-	[self registerSelector:@selector(textFormattingBackgroundColor:) character:'h' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self registerSelector:@selector(textFormattingUnderline:) character:'u' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
+	[self registerSelector:@selector(textFormattingItalic:)	character:'i' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
+	[self registerSelector:@selector(textFormattingForegroundColor:) character:'c' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
+	[self registerSelector:@selector(textFormattingBackgroundColor:) character:'h' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
 
 	[self registerSelector:@selector(speakPendingNotifications:) character:'.' modifiers:NSCommandKeyMask];
 
