@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDCAboutDialog ()
 @property (nonatomic, weak) IBOutlet NSTextField *versionInfoTextField;
 
-- (IBAction)displayAcknowledgments:(id)sender;
+- (IBAction)displayAcknowledgements:(id)sender;
 @end
 
 @implementation TDCAboutDialog
@@ -72,11 +72,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[super show];
 }
 
-- (void)displayAcknowledgments:(id)sender
+- (void)displayAcknowledgements:(id)sender
 {
-	NSString *acknowledgmentsPath = [RZMainBundle() pathForResource:@"Acknowledgments" ofType:@"pdf" inDirectory:@"Documentation"];
+	NSString *AcknowledgementsPath = [RZMainBundle() pathForResource:@"Acknowledgements" ofType:@"pdf" inDirectory:@"Documentation"];
 
-	[RZWorkspace() openFile:acknowledgmentsPath];
+	[RZWorkspace() openFile:AcknowledgementsPath];
 }
 
 - (void)windowWillClose:(NSNotification *)note
