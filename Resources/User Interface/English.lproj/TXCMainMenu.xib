@@ -847,10 +847,10 @@ CQ
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="1385">
                         <items>
-                            <menuItem title="Acknowledgments" tag="900" id="1796">
+                            <menuItem title="Acknowledgements" tag="900" id="1796">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showAcknowledgments:" target="267" id="2556"/>
+                                    <action selector="showAcknowledgements:" target="267" id="2556"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="License Agreement" tag="927" id="BrC-PS-U3X">

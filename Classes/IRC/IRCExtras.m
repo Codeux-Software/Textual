@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([action isEqualToString:@"acknowledgements"])
 	{
-		[menuController() showAcknowledgments:nil];
+		[menuController() showAcknowledgements:nil];
 	}
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"contributors"])
 	{
-		[menuController() showAcknowledgments:nil];
+		[menuController() showAcknowledgements:nil];
 	}
 	else if ([action isEqualToString:@"custom-style-folder"] ||
 			 [action isEqualToString:@"custom-styles-folder"])
