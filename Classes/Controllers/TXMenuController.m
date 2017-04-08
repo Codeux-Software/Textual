@@ -319,6 +319,7 @@ NS_ASSUME_NONNULL_BEGIN
 					case 801: // "Zoom"
 					case 808: // "Main Window"
 					case 814: // "Bring All to Front"
+					case 924: // "Export Preferences"
 					{
 						returnValue = YES;
 					} // case
