@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -63,6 +63,7 @@
                 <outlet property="fallbackEncodingButton" destination="1685" id="2275"/>
                 <outlet property="floodControlDelayTimerSlider" destination="O6l-eN-3Uc" id="l2j-Kb-PsN"/>
                 <outlet property="floodControlMessageCountSlider" destination="RXW-HB-aEa" id="whf-jb-XgS"/>
+                <outlet property="hideAutojoinDelayedWarningsCheck" destination="ptP-ZP-JAf" id="LXI-a8-mzH"/>
                 <outlet property="highlightsTable" destination="2454" id="2474"/>
                 <outlet property="navigationOutlineview" destination="Uj0-Wm-eox" id="1KT-DU-Q7e"/>
                 <outlet property="nicknamePasswordTextField" destination="1601" id="i9R-Eg-aTO"/>
@@ -479,10 +480,10 @@ Gw
             <point key="canvasLocation" x="501" y="283.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1563" userLabel="Identity View">
-            <rect key="frame" x="0.0" y="0.0" width="530" height="365"/>
+            <rect key="frame" x="0.0" y="0.0" width="530" height="385"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1595" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="231" y="313" width="187" height="22"/>
+                    <rect key="frame" x="231" y="333" width="187" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="187" id="hj6-VY-Hi3"/>
                         <constraint firstAttribute="height" constant="22" id="tHM-OB-jwO"/>
@@ -498,7 +499,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1596">
-                    <rect key="frame" x="157" y="315" width="68" height="17"/>
+                    <rect key="frame" x="157" y="335" width="68" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="1618">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -506,7 +507,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1597" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="231" y="167" width="188" height="22"/>
+                    <rect key="frame" x="231" y="187" width="188" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="omE-Wa-vmp"/>
                         <constraint firstAttribute="width" constant="188" id="vED-Ke-jmg"/>
@@ -521,7 +522,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1598">
-                    <rect key="frame" x="155" y="169" width="70" height="17"/>
+                    <rect key="frame" x="155" y="189" width="70" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="1616">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -529,7 +530,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1599" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="231" y="133" width="188" height="22"/>
+                    <rect key="frame" x="231" y="153" width="188" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="7Ei-6t-q1V"/>
                     </constraints>
@@ -543,7 +544,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1602">
-                    <rect key="frame" x="231" y="245" width="187" height="22"/>
+                    <rect key="frame" x="231" y="265" width="187" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="gjQ-80-D8r"/>
                     </constraints>
@@ -557,7 +558,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1603">
-                    <rect key="frame" x="81" y="250" width="144" height="17"/>
+                    <rect key="frame" x="81" y="270" width="144" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Alternative Nicknames:" id="1611">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -565,7 +566,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1604">
-                    <rect key="frame" x="275" y="228" width="143" height="13"/>
+                    <rect key="frame" x="275" y="248" width="143" height="13"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="This field is space separated" id="1610">
                         <font key="font" metaFont="system" size="10"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -576,7 +577,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1606">
-                    <rect key="frame" x="176" y="273" width="47" height="11"/>
+                    <rect key="frame" x="176" y="293" width="47" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="1608">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -584,7 +585,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2335" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="231" y="279" width="187" height="22"/>
+                    <rect key="frame" x="231" y="299" width="187" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="8Rf-8E-ktB"/>
                     </constraints>
@@ -598,7 +599,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2336">
-                    <rect key="frame" x="122" y="284" width="103" height="17"/>
+                    <rect key="frame" x="122" y="304" width="103" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="2341">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -606,7 +607,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wi3-vs-sHb">
-                    <rect key="frame" x="176" y="239" width="47" height="11"/>
+                    <rect key="frame" x="176" y="259" width="47" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="rx2-Ws-W3v">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -614,10 +615,10 @@ Gw
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="A3c-XH-Q30">
-                    <rect key="frame" x="127" y="207" width="295" height="5"/>
+                    <rect key="frame" x="127" y="227" width="295" height="5"/>
                 </box>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1601" customClass="NSSecureTextField">
-                    <rect key="frame" x="231" y="70" width="187" height="22"/>
+                    <rect key="frame" x="231" y="90" width="187" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="apR-PV-7am"/>
                     </constraints>
@@ -631,7 +632,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1623">
-                    <rect key="frame" x="102" y="75" width="122" height="17"/>
+                    <rect key="frame" x="102" y="95" width="122" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Personal Password:" id="1626">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -639,7 +640,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v00-vi-7jl">
-                    <rect key="frame" x="176" y="64" width="47" height="11"/>
+                    <rect key="frame" x="176" y="84" width="47" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="H2d-Kp-L4O">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -647,10 +648,10 @@ Gw
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2Zg-jJ-evU">
-                    <rect key="frame" x="127" y="110" width="295" height="5"/>
+                    <rect key="frame" x="127" y="130" width="295" height="5"/>
                 </box>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="B1u-e0-30u">
-                    <rect key="frame" x="120" y="28" width="296" height="18"/>
+                    <rect key="frame" x="120" y="48" width="296" height="18"/>
                     <buttonCell key="cell" type="check" title="Wait for identification before joining channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8B6-j5-4cs">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -660,13 +661,20 @@ Gw
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1600">
-                    <rect key="frame" x="154" y="135" width="71" height="17"/>
+                    <rect key="frame" x="154" y="155" width="71" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="1614">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="ptP-ZP-JAf">
+                    <rect key="frame" x="138" y="28" width="215" height="18"/>
+                    <buttonCell key="cell" type="check" title="Warn if channels can't be joined" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9Uc-VR-STk">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="1623" firstAttribute="top" secondItem="1601" secondAttribute="top" id="7dg-zc-CG5"/>
@@ -683,6 +691,7 @@ Gw
                 <constraint firstItem="1602" firstAttribute="top" secondItem="2335" secondAttribute="bottom" constant="12" id="KY7-3P-LwN"/>
                 <constraint firstItem="1595" firstAttribute="leading" secondItem="1596" secondAttribute="trailing" constant="8" symbolic="YES" id="LtD-2l-AwN"/>
                 <constraint firstItem="1597" firstAttribute="leading" secondItem="1598" secondAttribute="trailing" constant="8" symbolic="YES" id="M1I-DF-Zwv"/>
+                <constraint firstItem="ptP-ZP-JAf" firstAttribute="leading" secondItem="B1u-e0-30u" secondAttribute="leading" constant="18" id="MpN-06-fIy"/>
                 <constraint firstItem="1597" firstAttribute="baseline" secondItem="1598" secondAttribute="baseline" constant="-1" id="OpD-vh-FQe"/>
                 <constraint firstItem="1602" firstAttribute="top" secondItem="1603" secondAttribute="top" id="P2e-zz-b7s"/>
                 <constraint firstItem="A3c-XH-Q30" firstAttribute="top" secondItem="1604" secondAttribute="bottom" constant="18" id="RQC-n1-MVZ"/>
@@ -692,6 +701,7 @@ Gw
                 <constraint firstItem="1597" firstAttribute="leading" secondItem="1599" secondAttribute="leading" id="TJL-el-Efr"/>
                 <constraint firstItem="A3c-XH-Q30" firstAttribute="top" secondItem="wi3-vs-sHb" secondAttribute="bottom" constant="29" id="UdW-Zy-ADU"/>
                 <constraint firstItem="1623" firstAttribute="top" secondItem="2Zg-jJ-evU" secondAttribute="bottom" constant="20" id="VfE-Ry-Iv0"/>
+                <constraint firstItem="ptP-ZP-JAf" firstAttribute="top" secondItem="B1u-e0-30u" secondAttribute="bottom" constant="6" id="XBk-Az-cXs"/>
                 <constraint firstItem="1597" firstAttribute="top" secondItem="A3c-XH-Q30" secondAttribute="bottom" constant="20" id="XED-ka-2fN"/>
                 <constraint firstItem="1599" firstAttribute="baseline" secondItem="1600" secondAttribute="baseline" constant="-1" id="YYc-GC-Agt"/>
                 <constraint firstItem="wi3-vs-sHb" firstAttribute="leading" secondItem="1606" secondAttribute="leading" id="YnY-Wy-PeV"/>
@@ -714,7 +724,7 @@ Gw
                 <constraint firstItem="1602" firstAttribute="leading" secondItem="1603" secondAttribute="trailing" constant="8" symbolic="YES" id="wNJ-C9-vib"/>
                 <constraint firstItem="1595" firstAttribute="top" secondItem="1563" secondAttribute="top" constant="30" id="z8Z-fl-6M4"/>
             </constraints>
-            <point key="canvasLocation" x="465.5" y="233"/>
+            <point key="canvasLocation" x="465" y="243.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1627" userLabel="Messages View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
@@ -881,7 +891,7 @@ Gw
                     <rect key="frame" x="37" y="240" width="456" height="36"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Fx0-Yf-kbO">
                         <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
                                 <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
@@ -991,7 +1001,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1147,7 +1157,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1297,7 +1307,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="179"/>
@@ -1404,7 +1414,7 @@ Gw
                     <rect key="frame" x="57" y="54" width="416" height="200"/>
                     <clipView key="contentView" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="414" height="198"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -1694,7 +1704,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
