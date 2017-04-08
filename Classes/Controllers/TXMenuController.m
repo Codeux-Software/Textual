@@ -260,7 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				/* Disable everything by default except tag 900 through 916. These are various
 				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || (tag > 916 && tag < 930)) {
+				if (tag < 900 || (tag >= 917 && tag <= 930)) {
 					returnValue = NO;
 				}
 
