@@ -390,7 +390,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)centerMainWindow:(id)sender;
 - (IBAction)resetMainWindowFrame:(id)sender;
 
-- (IBAction)showAcknowledgments:(id)sender;
+- (IBAction)showAcknowledgements:(id)sender;
 - (IBAction)showScriptingDocumentation:(id)sender;
 
 - (IBAction)showAboutWindow:(id)sender;

@@ -258,6 +258,40 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 	}
+    else if ([urlHost hasSuffix:@"arxius.io"] ||
+             [urlHost hasSuffix:@"i.arxius.io"] ||
+             [urlHost hasSuffix:@"v.arxius.io"])
+    {
+        NSObjectIsEmptyAssertReturn(urlPath, nil);
+
+        if ([urlHost hasSuffix:@"i.arxius.io"]) {
+            NSString *s = [urlPath substringFromIndex:1];
+
+            if (s.alphabeticNumericOnly) {
+                return [NSString stringWithFormat:@"https://i.arxius.io/%@", s];
+            }
+        } else if ([urlHost hasSuffix:@"v.arxius.io"]) {
+            NSString *v = [urlPath substringFromIndex:1];
+            
+            if (v.alphabeticNumericOnly) {
+                return [NSString stringWithFormat:@"https://v.arxius.io/%@_thumb", v];
+            }
+        } else {
+            if ([urlPath hasPrefix:@"/i/"]) {
+                NSString *s = [urlPath substringFromIndex:3];
+
+                if (s.alphabeticNumericOnly) {
+                    return [NSString stringWithFormat:@"https://i.arxius.io/%@", s];
+                }
+            } else if ([urlPath hasPrefix:@"/v/"]) {
+                NSString *v = [urlPath substringFromIndex:3];
+                
+                if (v.alphabeticNumericOnly) {
+                    return [NSString stringWithFormat:@"https://v.arxius.io/%@_thumb", v];
+                }
+            }
+        }
+    }
 	else if ([urlHost hasSuffix:@"i.4cdn.org"])
 	{
 		NSObjectIsEmptyAssertReturn(urlPath, nil);

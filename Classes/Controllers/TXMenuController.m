@@ -1480,11 +1480,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[mainWindow() exactlyCenterWindow];
 }
 
-- (void)showAcknowledgments:(id)sender
+- (void)showAcknowledgements:(id)sender
 {
-	NSString *acknowledgmentsPath = [RZMainBundle() pathForResource:@"Acknowledgments" ofType:@"pdf" inDirectory:@"Documentation"];
+	NSString *AcknowledgementsPath = [RZMainBundle() pathForResource:@"Acknowledgements" ofType:@"pdf" inDirectory:@"Documentation"];
 	
-	(void)[RZWorkspace() openFile:acknowledgmentsPath];
+	(void)[RZWorkspace() openFile:AcknowledgementsPath];
 }
 
 - (void)showScriptingDocumentation:(id)sender
