@@ -340,7 +340,7 @@
 		4C0BA6CF1990798800857343 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D01990798800857343 /* SmileyConverter.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C956893194A8862003D97FD /* SmileyConverter.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D11990798800857343 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C0BA6D31990798800857343 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
+		4C0BA6D31990798800857343 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C0D977F1D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
 		4C0D97801D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
 		4C0D97811D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D977E1D36350F001CD6D9 /* TLOInternetAddressLookup.m */; };
@@ -552,8 +552,8 @@
 		4C558DD51D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCE1D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h */; };
 		4C558DD61D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCE1D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h */; };
 		4C558DD71D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCE1D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h */; };
-		4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
-		4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
+		4C58B572186011B900834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
+		4C58B573186011BE00834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C5B42301D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */; };
 		4C5B42311D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */; };
 		4C5B42321D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */; };
@@ -1918,7 +1918,7 @@
 			dstPath = Documentation;
 			dstSubfolderSpec = 7;
 			files = (
-				4C0BA6D31990798800857343 /* Acknowledgments.pdf in Copy Acknowledgements */,
+				4C0BA6D31990798800857343 /* Acknowledgements.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1945,7 +1945,7 @@
 			dstPath = Documentation;
 			dstSubfolderSpec = 7;
 			files = (
-				4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */,
+				4C58B573186011BE00834882 /* Acknowledgements.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1989,7 +1989,7 @@
 			dstPath = Documentation;
 			dstSubfolderSpec = 7;
 			files = (
-				4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */,
+				4C58B572186011B900834882 /* Acknowledgements.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2178,7 +2178,7 @@
 		4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelModifyTopicSheetPrivate.h; path = Headers/Private/TDCChannelModifyTopicSheetPrivate.h; sourceTree = "<group>"; };
 		4C558DCD1D24055C00628B47 /* TDCServerChangeNicknameSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerChangeNicknameSheetPrivate.h; path = Headers/Private/TDCServerChangeNicknameSheetPrivate.h; sourceTree = "<group>"; };
 		4C558DCE1D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerHighlightListSheetPrivate.h; path = Headers/Private/TDCServerHighlightListSheetPrivate.h; sourceTree = "<group>"; };
-		4C58B570186011AC00834882 /* Acknowledgments.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgments.pdf; sourceTree = SOURCE_ROOT; };
+		4C58B570186011AC00834882 /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = SOURCE_ROOT; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesImportExport.h; path = Headers/TPCPreferencesImportExport.h; sourceTree = "<group>"; };
 		4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserRelationsPrivate.h; path = Headers/Private/IRCUserRelationsPrivate.h; sourceTree = "<group>"; };
 		4C5B42331D59439C00B7C72A /* IRCUserRelations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUserRelations.m; path = IRC/IRCUserRelations.m; sourceTree = "<group>"; };
@@ -2987,7 +2987,7 @@
 		4C46CCA21580437400846B64 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				4C58B570186011AC00834882 /* Acknowledgments.pdf */,
+				4C58B570186011AC00834882 /* Acknowledgements.pdf */,
 			);
 			name = Documentation;
 			sourceTree = "<group>";

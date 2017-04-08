@@ -49,13 +49,13 @@
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="40">
                         <rect key="frame" x="47" y="18" width="125" height="25"/>
-                        <buttonCell key="cell" type="roundTextured" title="Acknowledgments" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="41">
+                        <buttonCell key="cell" type="roundTextured" title="Acknowledgements" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="41">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
-                        <accessibility description="Acknowledgments"/>
+                        <accessibility description="Acknowledgements"/>
                         <connections>
-                            <action selector="displayAcknowledgments:" target="-2" id="44"/>
+                            <action selector="displayAcknowledgements:" target="-2" id="44"/>
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="MDL-oh-scd">
