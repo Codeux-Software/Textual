@@ -5,6 +5,12 @@
 
 /* Theme-wide preferences, as per milky's request */
 var Equinox = {
+  dateFormat: {
+    day: 'numeric',
+    month: 'long',
+    weekday: 'long',
+    year: 'numeric'
+  },
   fadeNicks: true,            // fade out nicknames when they appear multiple times in a row
   fadeNicksFreq: 10,          // how frequently to display a nick if they have fadeNickCounts lines in a row
   showDateChanges: true,      // show date changes
@@ -222,7 +228,7 @@ function dateChange(e) {
   div.appendChild(document.createElement('hr'));
 
   // Set the span's content to the current date (Friday, October 14th)
-  span.textContent = datetime.toLocaleDateString();
+  span.textContent = datetime.toLocaleDateString('default', Equinox.dateFormat);
 
   // Insert the date before the newly posted message
   e.parentElement.insertBefore(div, e);

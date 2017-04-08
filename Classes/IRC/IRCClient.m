@@ -82,7 +82,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _autojoinDelayedWarningInterval		60
+#define _autojoinDelayedWarningInterval		90
+#define _autojoinDelayedWarningMaxCount		3
+
 #define _isonCheckInterval			30
 #define _pingInterval				270
 #define _pongCheckInterval			30
@@ -166,6 +168,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSUInteger successfulConnects;
 @property (nonatomic, assign) NSUInteger tryingNicknameNumber;
+@property (nonatomic, assign) NSUInteger autojoinDelayedWarningCount;
 @property (nonatomic, copy, nullable) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelsToAutojoin;
@@ -4647,6 +4650,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.isAutojoining = NO;
 	self.isAutojoined = NO;
+
+	self.autojoinDelayedWarningCount = 0;
 
 	self.isConnected = NO;
 	self.isConnecting = NO;
@@ -9419,11 +9424,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)onAutojoinDelayedWarningTimer:(id)sender
 {
-	if (self.isLoggedIn == NO) {
+	if (self.isLoggedIn == NO ||
+		self.config.hideAutojoinDelayedWarnings ||
+		self.autojoinDelayedWarningCount >= _autojoinDelayedWarningMaxCount)
+	{
 		[self stopAutojoinDelayedWarningTimer];
 			
 		return;
 	}
+
+	self.autojoinDelayedWarningCount += 1;
 
 	/* This message is posted to the server console and the 
 	 front most channel if it is on this server. */
@@ -9520,6 +9530,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	[self stopAutojoinDelayedWarningTimer];
+
 	if (initiatedByUser == NO) {
 		/* Ignore previous invocations of this method */
 		if (self.isAutojoined) {
@@ -9542,8 +9554,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 		}
 	}
-
-	[self stopAutojoinDelayedWarningTimer];
 
 	NSMutableArray<IRCChannel *> *channelsToAutojoin = [NSMutableArray array];
 	

@@ -72,6 +72,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
 	defaults[@"floodControlDelayTimerInterval"] = @(IRCConnectionConfigFloodControlDefaultDelayInterval);
 	defaults[@"floodControlMaximumMessages"] = @(IRCConnectionConfigFloodControlDefaultMessageCount);
+	defaults[@"hideAutojoinDelayedWarnings"] = @(NO);
 	defaults[@"hideNetworkUnavailabilityNotices"] = @(NO);
 	defaults[@"normalLeavingComment"] = TXTLS(@"BasicLanguage[1003]");
 	defaults[@"performDisconnectOnPongTimer"] = @(NO);
@@ -187,7 +188,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[self populateDefaultsPreflight];
 		}
 
-		[self populateDictionaryValue:dic ignorePrivateMessages:ignorePrivateMessages applyDefaults:YES];
+		[self populateDictionaryValue:dic
+				ignorePrivateMessages:ignorePrivateMessages
+						applyDefaults:YES
+					bypassIsCopyCheck:NO];
 
 		if (self->_objectInitializedAsCopy == NO) {
 			[self populateDefaultsPostflight];
@@ -227,7 +231,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCClientConfigMutable *config1Mutable = [config1 mutableCopy];
 
-	[config1Mutable populateDictionaryValue:config2.dictionaryValue ignorePrivateMessages:NO applyDefaults:NO];
+	[config1Mutable populateDictionaryValue:config2.dictionaryValue
+					  ignorePrivateMessages:NO
+							  applyDefaults:NO
+						  bypassIsCopyCheck:YES];
 
 	return [config1Mutable copy];
 }
@@ -252,7 +259,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)populateDictionaryValue:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages applyDefaults:(BOOL)applyDefaults
+- (void)populateDictionaryValue:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages applyDefaults:(BOOL)applyDefaults bypassIsCopyCheck:(BOOL)bypassIsCopyCheck
 {
 	NSParameterAssert(dic != nil);
 
@@ -285,6 +292,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
 #endif
 
+	[defaultsMutable assignBoolTo:&self->_hideAutojoinDelayedWarnings forKey:@"hideAutojoinDelayedWarnings"];
 	[defaultsMutable assignBoolTo:&self->_hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
@@ -325,7 +333,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* If this is a copy operation, then we can just stop here. The rest of the data processed below,
 	 such as other configurations and backwards keys are already taken care of. */
-	if (self->_objectInitializedAsCopy) {
+	if (self->_objectInitializedAsCopy && bypassIsCopyCheck == NO) {
 		return;
 	}
 
@@ -616,6 +624,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
 #endif
 
+	[dic setBool:self.hideAutojoinDelayedWarnings forKey:@"hideAutojoinDelayedWarnings"];
 	[dic setBool:self.hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
 	[dic setBool:self.performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[dic setBool:self.performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
@@ -877,6 +886,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic fallbackEncoding;
 @dynamic floodControlDelayTimerInterval;
 @dynamic floodControlMaximumMessages;
+@dynamic hideAutojoinDelayedWarnings;
 @dynamic hideNetworkUnavailabilityNotices;
 @dynamic highlightList;
 @dynamic identityClientSideCertificate;
@@ -972,6 +982,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 #endif
+
+- (void)setHideAutojoinDelayedWarnings:(BOOL)hideAutojoinDelayedWarnings
+{
+	if (self->_hideAutojoinDelayedWarnings != hideAutojoinDelayedWarnings) {
+		self->_hideAutojoinDelayedWarnings = hideAutojoinDelayedWarnings;
+	}
+}
 
 - (void)setHideNetworkUnavailabilityNotices:(BOOL)hideNetworkUnavailabilityNotices
 {
