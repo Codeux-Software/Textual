@@ -176,7 +176,7 @@
                                                 <action selector="onPrefPaneSelected:" target="-2" id="lNC-y4-zJh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Inline Media" tag="108005" id="yys-I0-cMZ">
+                                        <menuItem title="Inline Media" tag="108006" id="yys-I0-cMZ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="h99-K3-frK"/>
