@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -22,10 +22,10 @@
                 <outlet property="contentViewBehavior" destination="iMS-Ox-Uda" id="Sff-A7-UVB"/>
                 <outlet property="contentViewChannelManagement" destination="kTM-XW-Yb5" id="yM5-Ac-xep"/>
                 <outlet property="contentViewCommandScope" destination="1YF-k7-FrW" id="cvJ-I0-CaK"/>
+                <outlet property="contentViewCompatibility" destination="e8Q-5b-yYH" id="ydU-7E-b7E"/>
                 <outlet property="contentViewControls" destination="Fnm-DD-Hbc" id="zeT-MV-IWQ"/>
                 <outlet property="contentViewDefaultIRCopMessages" destination="Pkr-Na-yb0" id="lW6-WQ-FZ7"/>
                 <outlet property="contentViewDefaultIdentity" destination="d6J-SH-Xgl" id="wDj-Vh-gXg"/>
-                <outlet property="contentViewExperimentalFeatures" destination="e8Q-5b-yYH" id="zVU-VZ-6op"/>
                 <outlet property="contentViewFileTransfers" destination="4pD-W0-ghZ" id="KMr-19-ETt"/>
                 <outlet property="contentViewFloodControl" destination="n4A-Pk-quE" id="s0E-dS-fnf"/>
                 <outlet property="contentViewGeneral" destination="Eyz-5p-IkU" id="lw2-bS-xCr"/>
@@ -65,7 +65,7 @@
         <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="367" y="318" width="589" height="240"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="4930">
                 <rect key="frame" x="0.0" y="0.0" width="589" height="240"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -162,8 +162,15 @@
                                                 <action selector="onPrefPaneSelected:" target="-2" id="Dyy-4W-dEd"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="W4U-AF-ygV"/>
+                                        <menuItem title="Compatibility" tag="108004" id="FDb-XE-P95">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="wJI-G9-QuF"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="GoV-UM-Is2"/>
-                                        <menuItem title="File Transfers" tag="108004" id="OeQ-Ms-xcp">
+                                        <menuItem title="File Transfers" tag="108005" id="OeQ-Ms-xcp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="lNC-y4-zJh"/>
@@ -233,13 +240,6 @@
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="W4U-AF-ygV"/>
-                                        <menuItem title="Experimental Features" tag="108011" id="FDb-XE-P95">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="onPrefPaneSelected:" target="-2" id="wJI-G9-QuF"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
@@ -297,7 +297,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="265" y="-795"/>
+            <point key="canvasLocation" x="652" y="-1056"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Eyz-5p-IkU" userLabel="General ✓">
             <rect key="frame" x="0.0" y="0.0" width="589" height="236"/>
@@ -1131,7 +1131,7 @@
                 <constraint firstItem="eWo-gj-0bg" firstAttribute="leading" secondItem="JM9-RW-haB" secondAttribute="leading" id="lhi-yh-6SX"/>
                 <constraint firstItem="JM9-RW-haB" firstAttribute="top" secondItem="yv4-kq-hGk" secondAttribute="bottom" constant="14" id="mMm-uK-W92"/>
             </constraints>
-            <point key="canvasLocation" x="322.5" y="-919"/>
+            <point key="canvasLocation" x="607" y="-1098"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fnm-DD-Hbc" userLabel="Controls ✓">
             <rect key="frame" x="0.0" y="0.0" width="589" height="475"/>
@@ -3047,6 +3047,30 @@
             </constraints>
             <point key="canvasLocation" x="558" y="-2581"/>
         </customView>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="e8Q-5b-yYH">
+            <rect key="frame" x="0.0" y="0.0" width="589" height="74"/>
+            <userGuides>
+                <userLayoutGuide location="373" affinity="minY"/>
+            </userGuides>
+            <subviews>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Ink-td-oFr">
+                    <rect key="frame" x="58" y="28" width="206" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable echo-message capability" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="k2j-qv-6ty">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRC -&gt; Enable echo-message Capability" id="JWt-1e-abq"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Ink-td-oFr" firstAttribute="top" secondItem="e8Q-5b-yYH" secondAttribute="top" constant="30" id="Rug-cD-ODk"/>
+                <constraint firstItem="Ink-td-oFr" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="60" id="Yvx-kI-Ikd"/>
+            </constraints>
+            <string key="userLabel">Compatibility	</string>
+            <point key="canvasLocation" x="709" y="-433"/>
+        </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1YF-k7-FrW" userLabel="Command Scope ✓">
             <rect key="frame" x="0.0" y="0.0" width="589" height="304"/>
             <userGuides>
@@ -4767,29 +4791,6 @@
                 <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="c2f-dF-OoT" secondAttribute="leading" id="gLD-YE-ihs"/>
             </constraints>
             <point key="canvasLocation" x="411.5" y="-3299"/>
-        </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="e8Q-5b-yYH" userLabel="Experimental Features ✓">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="74"/>
-            <userGuides>
-                <userLayoutGuide location="373" affinity="minY"/>
-            </userGuides>
-            <subviews>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="Ink-td-oFr">
-                    <rect key="frame" x="58" y="28" width="206" height="18"/>
-                    <buttonCell key="cell" type="check" title="Enable echo-message capability" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="k2j-qv-6ty">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRC -&gt; Enable echo-message Capability" id="JWt-1e-abq"/>
-                    </connections>
-                </button>
-            </subviews>
-            <constraints>
-                <constraint firstItem="Ink-td-oFr" firstAttribute="top" secondItem="e8Q-5b-yYH" secondAttribute="top" constant="30" id="Rug-cD-ODk"/>
-                <constraint firstItem="Ink-td-oFr" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="60" id="Yvx-kI-Ikd"/>
-            </constraints>
-            <point key="canvasLocation" x="709" y="-433"/>
         </customView>
         <arrayController alwaysUsesMultipleValuesMarker="YES" id="4310" userLabel="Keywords">
             <declaredKeys>

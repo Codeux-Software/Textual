@@ -62,14 +62,14 @@ NS_ASSUME_NONNULL_BEGIN
 #define _toolbarItemIndexCommandScope				108001
 #define _toolbarItemIndexFloodControl				108002
 #define _toolbarItemIndexIncomingData				108003
-#define _toolbarItemIndexFileTransfers				108004
-#define _toolbarItemIndexInlineMedia				108005
+#define _toolbarItemIndexCompatibility				108004
+#define _toolbarItemIndexFileTransfers				108005
+#define _toolbarItemIndexInlineMedia				108006
 #define _toolbarItemIndexLogLocation				108007
 #define _toolbarItemIndexDefaultIdentity			108008
 #define _toolbarItemIndexDefualtIRCopMessages		108009
 #define _toolbarItemIndexOffRecordMessaging		    108010
-#define _toolbarItemIndexExperimentalFeatures		108011
-#define _toolbarItemIndexHiddenPreferences			108012 // unused
+#define _toolbarItemIndexHiddenPreferences			108011 // unused
 
 #define _addonsToolbarInstalledAddonsMenuItemIndex		109000
 #define _addonsToolbarItemMultiplier					995
@@ -108,6 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, strong) IBOutlet NSView *contentViewChannelManagement;
 @property (nonatomic, strong) IBOutlet NSView *contentViewCommandScope;
+@property (nonatomic, strong) IBOutlet NSView *contentViewCompatibility;
 @property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
 @property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
 @property (nonatomic, strong) IBOutlet NSView *contentViewFileTransfers;
@@ -120,7 +121,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
 #endif
 
-@property (nonatomic, strong) IBOutlet NSView *contentViewExperimentalFeatures;
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHiddenPreferences;
 
@@ -398,6 +398,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		_de(_toolbarItemIndexChannelManagement, self.contentViewChannelManagement, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexCommandScope, self.contentViewCommandScope, _toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexCompatibility, self.contentViewCompatibility, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexFloodControl, self.contentViewFloodControl, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexIncomingData, self.contentViewIncomingData, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexFileTransfers, self.contentViewFileTransfers, _toolbarItemIndexAdvanced)
@@ -410,7 +411,6 @@ NS_ASSUME_NONNULL_BEGIN
 		_de(_toolbarItemIndexOffRecordMessaging, self.contentViewOffRecordMessaging, _toolbarItemIndexAdvanced)
 #endif
 
-		_de(_toolbarItemIndexExperimentalFeatures, self.contentViewExperimentalFeatures, _toolbarItemIndexAdvanced)
 
 		_de(_addonsToolbarInstalledAddonsMenuItemIndex, self.contentViewInstalledAddons, _toolbarItemIndexAddons)
 
