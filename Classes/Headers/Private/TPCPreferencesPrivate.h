@@ -96,6 +96,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event;
 
++ (nullable NSString *)keyForEvent:(TXNotificationType)event category:(NSString *)category;
+
 + (void)setFileTransferPortRangeStart:(uint16_t)value;
 + (void)setFileTransferPortRangeEnd:(uint16_t)value;
 
