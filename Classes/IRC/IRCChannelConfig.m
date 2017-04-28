@@ -67,6 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 	SetVariableIfNilCopy(self->_channelName, NSStringEmptyPlaceholder)
 
 	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+
+	SetVariableIfNil(self->_notificationsMutable, [NSMutableDictionary dictionary])
 }
 
 - (void)populateDefaultsByAppendingDictionary:(NSDictionary<NSString *, id> *)defaultsToAppend
@@ -165,6 +167,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[defaultsMutable assignStringTo:&self->_defaultModes forKey:@"defaultMode"];
 		[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
 
+		NSDictionary *notifications = [defaultsMutable dictionaryForKey:@"notifications"];
+
+		if (notifications != nil) {
+			self->_notificationsMutable = [notifications mutableCopy];
+		}
+
 		/* Load legacy keys (if they exist) */
 		if (self->_objectInitializedAsCopy == NO) {
 			[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"joinOnConnect"];
@@ -201,6 +209,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (self.type == IRCChannelChannelType) {
 		[dic maybeSetObject:self.defaultModes forKey:@"defaultMode"];
 		[dic maybeSetObject:self.defaultTopic forKey:@"defaultTopic"];
+		[dic maybeSetObject:self.notifications forKey:@"notifications"];
 
 		[dic setBool:self.autoJoin forKey:@"autoJoin"];
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
@@ -299,6 +308,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return NO;
 }
 
+- (NSDictionary<NSString *, NSNumber *> *)notifications
+{
+	@synchronized (self->_notificationsMutable) {
+		return [self->_notificationsMutable copy];
+	}
+}
+
+
 #pragma mark -
 #pragma mark Keychain Management
 
@@ -360,6 +377,98 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)resetTemporaryKeychainItems
 {
 	self->_secretKey = nil;
+}
+
+#pragma mark -
+#pragma mark Notifications
+
+- (nullable NSString *)soundForEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Sound"];
+
+	if (eventKey == nil) {
+		return nil;
+	}
+
+	/* @synchronized is used here because IRCChannelConfigMutable can modify
+	 this value underneath us. */
+	@synchronized (self->_notificationsMutable) {
+		return [self->_notificationsMutable objectForKey:eventKey];
+	}
+}
+
+- (NSUInteger)_stateForEventKey:(NSString *)eventKey
+{
+	NSParameterAssert(eventKey != nil);
+
+	@synchronized (self->_notificationsMutable) {
+		NSNumber *value = [self->_notificationsMutable objectForKey:eventKey];
+
+		if (value == nil) {
+			return NSMixedState;
+		}
+
+		if (value.boolValue == NO) {
+			return NSOffState;
+		}
+
+		return NSOnState;
+	}
+}
+
+- (NSUInteger)growlEnabledForEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Enabled"];
+
+	if (eventKey == nil) {
+		return NO;
+	}
+
+	return [self _stateForEventKey:eventKey];
+}
+
+- (NSUInteger)disabledWhileAwayForEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Disable While Away"];
+
+	if (eventKey == nil) {
+		return NO;
+	}
+
+	return [self _stateForEventKey:eventKey];
+}
+
+- (NSUInteger)bounceDockIconForEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon"];
+
+	if (eventKey == nil) {
+		return NO;
+	}
+
+	return [self _stateForEventKey:eventKey];
+}
+
+- (NSUInteger)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
+
+	if (eventKey == nil) {
+		return NO;
+	}
+
+	return [self _stateForEventKey:eventKey];
+}
+
+- (NSUInteger)speakEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Speak"];
+
+	if (eventKey == nil) {
+		return NO;
+	}
+
+	return [self _stateForEventKey:eventKey];
 }
 
 @end
@@ -462,6 +571,110 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (self->_secretKey != secretKey) {
 		self->_secretKey = [secretKey copy];
 	}
+}
+
+- (void)setSound:(nullable NSString *)value forEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Sound"];
+
+	if (eventKey == nil) {
+		return;
+	}
+
+	@synchronized (self->_notificationsMutable) {
+		if (value == nil) {
+			[self->_notificationsMutable removeObjectForKey:eventKey];
+		} else {
+			[self->_notificationsMutable setObject:value forKey:eventKey];
+		}
+	}
+}
+
+- (void)_setState:(NSUInteger)state forEventKey:(NSString *)eventKey
+{
+	NSParameterAssert(eventKey != nil);
+
+	@synchronized (self->_notificationsMutable) {
+		switch (state) {
+			case NSOnState:
+			{
+				[self->_notificationsMutable setObject:@(YES) forKey:eventKey];
+
+				break;
+			}
+			case NSOffState:
+			{
+				[self->_notificationsMutable setObject:@(NO) forKey:eventKey];
+
+				break;
+			}
+			case NSMixedState:
+			{
+				[self->_notificationsMutable removeObjectForKey:eventKey];
+
+				break;
+			}
+			default:
+			{
+				NSAssert(NO, @"Bad 'state'");
+			}
+		}
+	}
+}
+
+- (void)setGrowlEnabled:(NSUInteger)value forEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Enabled"];
+
+	if (eventKey == nil) {
+		return;
+	}
+
+	[self _setState:value forEventKey:eventKey];
+}
+
+- (void)setDisabledWhileAway:(NSUInteger)value forEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Disable While Away"];
+
+	if (eventKey == nil) {
+		return;
+	}
+
+	[self _setState:value forEventKey:eventKey];
+}
+
+- (void)setBounceDockIcon:(NSUInteger)value forEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon"];
+
+	if (eventKey == nil) {
+		return;
+	}
+
+	[self _setState:value forEventKey:eventKey];
+}
+
+- (void)setBounceDockIconRepeatedly:(NSUInteger)value forEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
+
+	if (eventKey == nil) {
+		return;
+	}
+
+	[self _setState:value forEventKey:eventKey];
+}
+
+- (void)setEventIsSpoken:(NSUInteger)value forEvent:(TXNotificationType)event
+{
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Speak"];
+
+	if (eventKey == nil) {
+		return;
+	}
+
+	[self _setState:value forEventKey:eventKey];
 }
 
 @end
