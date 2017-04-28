@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "TLOGrowlController.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCChannelType) {
@@ -71,6 +73,20 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 
 - (id)uniqueCopy;
 - (id)uniqueCopyMutable;
+
+/* Notifications */
+- (nullable NSString *)soundForEvent:(TXNotificationType)event;
+
+// These methods return an integer because there are more than
+// two possible values. When there is no channel defined value
+// for the given event, NSMixedState is returned which indicates
+// that the global value should be used. NSOnState and NSOffState
+// are returned when a channel defined value is available.
+- (NSUInteger)growlEnabledForEvent:(TXNotificationType)event;
+- (NSUInteger)disabledWhileAwayForEvent:(TXNotificationType)event;
+- (NSUInteger)bounceDockIconForEvent:(TXNotificationType)event;
+- (NSUInteger)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event;
+- (NSUInteger)speakEvent:(TXNotificationType)event;
 @end
 
 #pragma mark -
@@ -88,6 +104,18 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 @property (nonatomic, copy, readwrite, nullable) NSString *defaultModes;
 @property (nonatomic, copy, readwrite, nullable) NSString *defaultTopic;
 @property (nonatomic, copy, readwrite, nullable) NSString *secretKey;
+
+
+- (void)setSound:(nullable NSString *)value forEvent:(TXNotificationType)event;
+
+// NSOnState = YES
+// NSOffState = NO
+// NSMixedState = Reset, use default
+- (void)setGrowlEnabled:(NSUInteger)value forEvent:(TXNotificationType)event;
+- (void)setDisabledWhileAway:(NSUInteger)value forEvent:(TXNotificationType)event;
+- (void)setBounceDockIcon:(NSUInteger)value forEvent:(TXNotificationType)event;
+- (void)setBounceDockIconRepeatedly:(NSUInteger)value forEvent:(TXNotificationType)event;
+- (void)setEventIsSpoken:(NSUInteger)value forEvent:(TXNotificationType)event;
 @end
 
 NS_ASSUME_NONNULL_END

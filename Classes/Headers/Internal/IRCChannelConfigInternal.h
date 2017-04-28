@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_defaultModes;
 	NSString *_defaultTopic;
 	NSString *_secretKey;
+	NSMutableDictionary *_notificationsMutable;
 
 @private
 	BOOL _objectInitialized;
