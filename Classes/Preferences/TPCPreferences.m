@@ -872,186 +872,172 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	[RZUserDefaults() setBool:soundIsMuted forKey:@"Notification Sound Is Muted"];
 }
 
-+ (nullable NSString *)_keyForEvent:(TXNotificationType)event
++ (nullable NSString *)keyForEvent:(TXNotificationType)event category:(NSString *)category
 {
-	switch (event) {
-#define _dv(key, value)		case (key): { return (value); }
+	NSParameterAssert(category != nil);
 
-		_dv(TXNotificationAddressBookMatchType, @"NotificationType -> Address Book Match")
-		_dv(TXNotificationChannelMessageType, @"NotificationType -> Public Message")
-		_dv(TXNotificationChannelNoticeType, @"NotificationType -> Public Notice")
-		_dv(TXNotificationConnectType, @"NotificationType -> Connected")
-		_dv(TXNotificationDisconnectType, @"NotificationType -> Disconnected")
-		_dv(TXNotificationHighlightType, @"NotificationType -> Highlight")
-		_dv(TXNotificationInviteType, @"NotificationType -> Channel Invitation")
-		_dv(TXNotificationKickType, @"NotificationType -> Kicked from Channel")
-		_dv(TXNotificationNewPrivateMessageType, @"NotificationType -> Private Message (New)")
-		_dv(TXNotificationPrivateMessageType, @"NotificationType -> Private Message")
-		_dv(TXNotificationPrivateNoticeType, @"NotificationType -> Private Notice")
-		_dv(TXNotificationFileTransferSendSuccessfulType, @"NotificationType -> Successful File Transfer (Sending)")
-		_dv(TXNotificationFileTransferReceiveSuccessfulType, @"NotificationType -> Successful File Transfer (Receiving)")
-		_dv(TXNotificationFileTransferSendFailedType, @"NotificationType -> Failed File Transfer (Sending)")
-		_dv(TXNotificationFileTransferReceiveFailedType, @"NotificationType -> Failed File Transfer (Receiving)")
-		_dv(TXNotificationFileTransferReceiveRequestedType, @"NotificationType -> File Transfer Request")
+	NSString *returnValue = nil;
+
+	switch (event) {
+#define _dv(key, value)		case (key): { returnValue = (value); }
+
+		_dv(TXNotificationAddressBookMatchType, @"NotificationType -> Address Book Match -> ")
+		_dv(TXNotificationChannelMessageType, @"NotificationType -> Public Message -> ")
+		_dv(TXNotificationChannelNoticeType, @"NotificationType -> Public Notice -> ")
+		_dv(TXNotificationConnectType, @"NotificationType -> Connected -> ")
+		_dv(TXNotificationDisconnectType, @"NotificationType -> Disconnected -> ")
+		_dv(TXNotificationHighlightType, @"NotificationType -> Highlight -> ")
+		_dv(TXNotificationInviteType, @"NotificationType -> Channel Invitation -> ")
+		_dv(TXNotificationKickType, @"NotificationType -> Kicked from Channel -> ")
+		_dv(TXNotificationNewPrivateMessageType, @"NotificationType -> Private Message (New) -> ")
+		_dv(TXNotificationPrivateMessageType, @"NotificationType -> Private Message -> ")
+		_dv(TXNotificationPrivateNoticeType, @"NotificationType -> Private Notice -> ")
+		_dv(TXNotificationFileTransferSendSuccessfulType, @"NotificationType -> Successful File Transfer (Sending) -> ")
+		_dv(TXNotificationFileTransferReceiveSuccessfulType, @"NotificationType -> Successful File Transfer (Receiving) -> ")
+		_dv(TXNotificationFileTransferSendFailedType, @"NotificationType -> Failed File Transfer (Sending) -> ")
+		_dv(TXNotificationFileTransferReceiveFailedType, @"NotificationType -> Failed File Transfer (Receiving) -> ")
+		_dv(TXNotificationFileTransferReceiveRequestedType, @"NotificationType -> File Transfer Request -> ")
 
 #undef _dv
 	}
+
+	if (returnValue == nil) {
+		return nil;
+	}
+
+	return [returnValue stringByAppendingString:category];
 
 	return nil;
 }
 
 + (nullable NSString *)soundForEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Sound"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return nil;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Sound"];
 
 	return [RZUserDefaults() objectForKey:eventKey];
 }
 
 + (void)setSound:(nullable NSString *)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Sound"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Sound"];
 
 	[RZUserDefaults() setObject:value forKey:eventKey];
 }
 
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Enabled"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return NO;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Enabled"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Enabled"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Enabled"];
 
 	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Disable While Away"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return NO;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Disable While Away"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Disable While Away"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Disable While Away"];
 
 	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return NO;
 	}
-    
-    NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon"];
-    
+
     return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return;
 	}
-    
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon"];
-    
+
 	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return NO;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
 
 	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)speakEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Speak"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return NO;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Speak"];
 
-	if (eventKeyPrefix == nil) {
+	if (eventKey == nil) {
 		return;
 	}
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak"];
 
 	[RZUserDefaults() setBool:value forKey:eventKey];
 }
@@ -1068,36 +1054,28 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)channelMessageSpeakChannelName
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Channel Name"];
+	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Channel Name"];
+	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
 
 	[RZUserDefaults() setBool:channelMessageSpeakChannelName forKey:eventKey];
 }
 
 + (BOOL)channelMessageSpeakNickname
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Nickname"];
+	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname
 {
-	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:TXNotificationChannelMessageType];
-
-	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak Nickname"];
+	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
 
 	[RZUserDefaults() setBool:channelMessageSpeakNickname forKey:eventKey];
 }
