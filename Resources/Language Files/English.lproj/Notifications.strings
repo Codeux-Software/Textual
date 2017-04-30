@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1066 */
+/* Next unusued key: 1082 */
 
 /* Notification spoken text */
 /* Address Book spoken text uses the actual notification message for that
@@ -66,6 +66,11 @@
 "Notifications[1013]" = "File transfer to %@ failed";
 "Notifications[1014]" = "File transfer from %@ failed";
 "Notifications[1015]" = "Received file transfer request from %@";
+"Notifications[1066]" = "%1$@ joined %2$@";
+"Notifications[1067]" = "%1$@ joined"; // join without channel name (unused)
+"Notifications[1068]" = "%1$@ parted %2$@";
+"Notifications[1069]" = "%1$@ parted"; // part without channel name (unused)
+"Notifications[1081]" = "%1$@ disconnected"; // disconnect
 
 /* Notification bubble titles */
 "Notifications[1016]" = "Address Book Notification";
@@ -84,22 +89,30 @@
 "Notifications[1029]" = "File Transfer Failed: %@";
 "Notifications[1030]" = "File Transfer Failed: %@";
 "Notifications[1031]" = "File Transfer Request: %@";
+"Notifications[1070]" = "User Joined: %@";
+"Notifications[1071]" = "User Parted: %@";
+"Notifications[1072]" = "User Disconnected: %@";
 
 /* Notification bubble descriptions.
- These are only notifications that require localization. Many notifications
+ These are only notifications that require locali	zation. Many notifications
  just send the raw message received so they are not localized here */
 "Notifications[1032]" = "Connection successful";
 "Notifications[1033]" = "Disconnection successful";
-"Notifications[1034]" = "%1$@ has invited you to %2$@";
-"Notifications[1035]" = "%1$@ has kicked you out: %2$@";
+"Notifications[1034]" = "%1$@ invited you to join %2$@";
+"Notifications[1035]" = "%1$@ kicked you from %2$@ with reason: %3$@";
 "Notifications[1036]" = "%1$@ (%2$qi bytes)";
 "Notifications[1037]" = "%1$@ (%2$qi bytes)";
-"Notifications[1038]" = "%1$@";
-"Notifications[1039]" = "%1$@";
+"Notifications[1038]" = "%@";
+"Notifications[1039]" = "%@";
 "Notifications[1040]" = "%1$@ (%2$qi bytes)";
 "Notifications[1041]" = "User with nickname “%1$@” is available";
 "Notifications[1042]" = "User with nickname “%1$@” is no longer available";
 "Notifications[1043]" = "User with nickname “%1$@” is now available";
+"Notifications[1073]" = "%1$@ joined %2$@";
+"Notifications[1074]" = "%1$@ parted %2$@";
+"Notifications[1075]" = "%1$@ parted %2$@ with reason: %3$@";
+"Notifications[1076]" = "%1$@ disconnected";
+"Notifications[1077]" = "%1$@ disconnected with reason: %2$@";
 
 /* Notification bubble reply button placeholders */
 "Notifications[1044]" = "Enter message to reply to this private message";
@@ -121,3 +134,6 @@
 "Notifications[1058]" = "Failed File Transfer (Sending)";
 "Notifications[1059]" = "Failed File Transfer (Receiving)";
 "Notifications[1060]" = "File Transfer Request";
+"Notifications[1078]" = "User Joined Channel";
+"Notifications[1079]" = "User Parted Channel";
+"Notifications[1080]" = "User Disconnected";

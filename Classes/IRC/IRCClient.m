@@ -1667,6 +1667,34 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			break;
 		}
+		case TXNotificationUserJoinedType:
+		case TXNotificationUserPartedType:
+		{
+			NSParameterAssert(channel != nil);
+			NSParameterAssert(nickname != nil);
+
+			NSString *formatter = nil;
+
+			if (eventType == TXNotificationUserJoinedType) {
+				formatter = @"Notifications[1066]";
+			} else if (eventType == TXNotificationUserPartedType) {
+				formatter = @"Notifications[1068]";
+			}
+
+			formattedMessage = TXTLS(formatter, nickname, channel.name.channelNameWithoutBang);
+
+			break;
+		}
+		case TXNotificationUserDisconnectedType:
+		{
+			NSParameterAssert(nickname != nil);
+
+			NSString *formatter = @"Notifications[1081]";
+
+			formattedMessage = TXTLS(formatter, nickname);
+
+			break;
+		}
 	}
 
 	return formattedMessage;
@@ -1732,11 +1760,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	if (target) {
+	if (target && text != nil) {
 		if ([self outputRuleMatchedInMessage:text inChannel:target]) {
 			return NO;
 		}
+	}
 
+	if (target) {
 		if (eventType == TXNotificationHighlightType) {
 			if (target.config.ignoreHighlights) {
 				return YES;
@@ -1883,9 +1913,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSParameterAssert(nickname != nil);
 			NSParameterAssert(text != nil);
 
-			eventTitle = target.name;
+			eventTitle = self.networkNameAlt;
 			
-			eventDescription = TXTLS(@"Notifications[1035]", nickname, text);
+			eventDescription = TXTLS(@"Notifications[1035]", nickname, target.name, text);
 
 			break;
 		}
@@ -1897,6 +1927,48 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			eventTitle = self.networkNameAlt;
 			
 			eventDescription = TXTLS(@"Notifications[1034]", nickname, text);
+
+			break;
+		}
+		case TXNotificationUserJoinedType:
+		{
+			NSParameterAssert(target != nil);
+			NSParameterAssert(nickname != nil);
+
+			eventTitle = self.networkNameAlt;
+
+			eventDescription = TXTLS(@"Notifications[1073]", nickname, target.name);
+
+			break;
+		}
+		case TXNotificationUserPartedType:
+		{
+			NSParameterAssert(target != nil);
+			NSParameterAssert(nickname != nil);
+			NSParameterAssert(text != nil);
+
+			eventTitle = self.networkNameAlt;
+
+			if (text == nil || text.length == 0) {
+				eventDescription = TXTLS(@"Notifications[1074]", nickname, target.name);
+			} else {
+				eventDescription = TXTLS(@"Notifications[1075]", nickname, target.name, text);
+			}
+
+			break;
+		}
+		case TXNotificationUserDisconnectedType:
+		{
+			NSParameterAssert(nickname != nil);
+			NSParameterAssert(text != nil);
+
+			eventTitle = self.networkNameAlt;
+
+			if (text == nil || text.length == 0) {
+				eventDescription = TXTLS(@"Notifications[1076]", nickname, target.name);
+			} else {
+				eventDescription = TXTLS(@"Notifications[1077]", nickname, target.name, text);
+			}
 
 			break;
 		}
@@ -6286,6 +6358,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (self.config.sendWhoCommandRequestsToChannels && self.isBrokenIRCd_aka_Twitch == NO) {
 			[self requestModesForChannel:channel];
 		}
+	} else {
+		(void)[self notifyEvent:TXNotificationUserJoinedType lineType:TVCLogLineJoinType target:channel nickname:sender text:nil];
 	}
 }
 
@@ -6307,6 +6381,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *sender = m.senderNickname;
 
+	NSString *comment = [m paramAt:1];
+
 	BOOL myself = [self nicknameIsMyself:sender];
 	
 	if (isPrintOnlyMessage == NO) {
@@ -6316,10 +6392,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[mainWindow() reloadTreeItem:channel];
 		} else {
 			[channel removeMemberWithNickname:sender];
+
+			/* Notify user */
+			(void)[self notifyEvent:TXNotificationUserPartedType lineType:TVCLogLinePartType target:channel nickname:sender text:comment];
 		}
 	}
-
-	NSString *comment = [m paramAt:1];
 
 	BOOL printMessage = [self postReceivedMessage:m withText:comment destinedFor:channel];
 
@@ -6587,6 +6664,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (myself == NO) {
 		[mainWindow() updateTitleFor:self];
+
+		(void)[self notifyEvent:TXNotificationUserDisconnectedType lineType:TVCLogLineQuitType target:nil nickname:sender text:comment];
 	}
 }
 

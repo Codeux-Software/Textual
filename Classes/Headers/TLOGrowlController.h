@@ -57,6 +57,9 @@ typedef NS_ENUM(NSUInteger, TXNotificationType) {
 	TXNotificationFileTransferSendFailedType			= 1013,
 	TXNotificationFileTransferReceiveFailedType			= 1014,
 	TXNotificationFileTransferReceiveRequestedType		= 1015,
+	TXNotificationUserJoinedType						= 1016,
+	TXNotificationUserPartedType						= 1017,
+	TXNotificationUserDisconnectedType					= 1018
 };
 
 @interface TLOGrowlController : NSObject

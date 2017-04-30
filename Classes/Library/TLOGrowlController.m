@@ -93,6 +93,9 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			_df(TXNotificationFileTransferSendFailedType, @"Notifications[1058]")
 			_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[1059]")
 			_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1060]")
+			_df(TXNotificationUserJoinedType, @"Notifications[1078]")
+			_df(TXNotificationUserPartedType, @"Notifications[1079]")
+			_df(TXNotificationUserDisconnectedType, @"Notifications[1080]")
 	}
 
 #undef _df
@@ -210,6 +213,24 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
 			eventTitle = TXTLS(@"Notifications[1031]", eventTitle);
+
+			break;
+		}
+		case TXNotificationUserJoinedType:
+		{
+			eventTitle = TXTLS(@"Notifications[1070]", eventTitle);
+
+			break;
+		}
+		case TXNotificationUserPartedType:
+		{
+			eventTitle = TXTLS(@"Notifications[1071]", eventTitle);
+
+			break;
+		}
+		case TXNotificationUserDisconnectedType:
+		{
+			eventTitle = TXTLS(@"Notifications[1072]", eventTitle);
 
 			break;
 		}
@@ -338,6 +359,9 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	  TXTLS(@"Notifications[1058]"),
 	  TXTLS(@"Notifications[1059]"),
 	  TXTLS(@"Notifications[1060]"),
+	  TXTLS(@"Notifications[1078]"),
+	  TXTLS(@"Notifications[1079]"),
+	  TXTLS(@"Notifications[1080]"),
 	];
 
 	return @{
