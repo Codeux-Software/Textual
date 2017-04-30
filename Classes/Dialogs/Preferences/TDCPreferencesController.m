@@ -224,6 +224,10 @@ NS_ASSUME_NONNULL_BEGIN
 	[alertSounds addObject:@(TXNotificationPrivateMessageType)];
 	[alertSounds addObject:@(TXNotificationPrivateNoticeType)];
 	[alertSounds addObject:NSStringWhitespacePlaceholder];
+	[alertSounds addObject:@(TXNotificationUserJoinedType)];
+	[alertSounds addObject:@(TXNotificationUserPartedType)];
+	[alertSounds addObject:@(TXNotificationUserDisconnectedType)];
+	[alertSounds addObject:NSStringWhitespacePlaceholder];
 	[alertSounds addObject:@(TXNotificationFileTransferReceiveRequestedType)];
 	[alertSounds addObject:NSStringWhitespacePlaceholder];
 	[alertSounds addObject:@(TXNotificationFileTransferSendSuccessfulType)];

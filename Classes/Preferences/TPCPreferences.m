@@ -879,7 +879,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSString *returnValue = nil;
 
 	switch (event) {
-#define _dv(key, value)		case (key): { returnValue = (value); }
+#define _dv(key, value)		case (key): { returnValue = (value); break; }
 
 		_dv(TXNotificationAddressBookMatchType, @"NotificationType -> Address Book Match -> ")
 		_dv(TXNotificationChannelMessageType, @"NotificationType -> Public Message -> ")
@@ -897,6 +897,9 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 		_dv(TXNotificationFileTransferSendFailedType, @"NotificationType -> Failed File Transfer (Sending) -> ")
 		_dv(TXNotificationFileTransferReceiveFailedType, @"NotificationType -> Failed File Transfer (Receiving) -> ")
 		_dv(TXNotificationFileTransferReceiveRequestedType, @"NotificationType -> File Transfer Request -> ")
+		_dv(TXNotificationUserJoinedType, @"NotificationType -> User Joined -> ")
+		_dv(TXNotificationUserPartedType, @"NotificationType -> User Parted -> ")
+		_dv(TXNotificationUserDisconnectedType, @"NotificationType -> User Disconnected -> ")
 
 #undef _dv
 	}
@@ -906,8 +909,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	}
 
 	return [returnValue stringByAppendingString:category];
-
-	return nil;
 }
 
 + (nullable NSString *)soundForEvent:(TXNotificationType)event
