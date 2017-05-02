@@ -96,6 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 	407: "Toggle Fullscreen"
 
 	500: "Connect"
+	510: "Connect Without Proxy"
 	501: "Disconnect"
 	502: "Cancel Reconnect"
 	503: "Channel List…"
@@ -325,6 +326,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)leaveChannel:(id)sender;
 
 - (IBAction)connect:(id)sender;
+- (IBAction)connectBypassingProxy:(id)sender;
 
 - (IBAction)connectToTextualHelpChannel:(id)sender;
 - (IBAction)connectToTextualTestingChannel:(id)sender;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -373,6 +373,11 @@
                             <menuItem title="Connect" tag="500" id="288">
                                 <connections>
                                     <action selector="connect:" target="267" id="2599"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Connect Without Proxy" tag="510" id="WUj-Jg-uiz">
+                                <connections>
+                                    <action selector="connectBypassingProxy:" target="267" id="nq7-WC-EKW"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Disconnect" tag="501" id="289">
@@ -1049,7 +1054,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-382" y="-511"/>
+            <point key="canvasLocation" x="-668" y="-637"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>

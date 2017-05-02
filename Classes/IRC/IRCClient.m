@@ -10160,10 +10160,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	BOOL preferIPv4 = self.config.connectionPrefersIPv4;
 
-	[self connect:connectMode preferIPv4:preferIPv4];
+	[self connect:connectMode preferIPv4:preferIPv4 bypassProxy:NO];
 }
 
-- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4
+- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4 bypassProxy:(BOOL)bypassProxy
 {
 	/* Do not allow a connect to occur until the current 
 	 socket has completed disconnecting */
@@ -10234,17 +10234,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	socketConfig.identityClientSideCertificate = self.config.identityClientSideCertificate;
 
-	socketConfig.proxyType = self.config.proxyType;
+	if (bypassProxy == NO) {
+		socketConfig.proxyType = self.config.proxyType;
 
-	if (socketConfig.proxyType == IRCConnectionSocketSocks4ProxyType ||
-		socketConfig.proxyType == IRCConnectionSocketSocks5ProxyType ||
-		socketConfig.proxyType == IRCConnectionSocketHTTPProxyType ||
-		socketConfig.proxyType == IRCConnectionSocketHTTPSProxyType)
-	{
-		socketConfig.proxyPort = self.config.proxyPort;
-		socketConfig.proxyAddress = self.config.proxyAddress;
-		socketConfig.proxyPassword = self.config.proxyPassword;
-		socketConfig.proxyUsername = self.config.proxyUsername;
+		if (socketConfig.proxyType == IRCConnectionSocketSocks4ProxyType ||
+			socketConfig.proxyType == IRCConnectionSocketSocks5ProxyType ||
+			socketConfig.proxyType == IRCConnectionSocketHTTPProxyType ||
+			socketConfig.proxyType == IRCConnectionSocketHTTPSProxyType)
+		{
+			socketConfig.proxyPort = self.config.proxyPort;
+			socketConfig.proxyAddress = self.config.proxyAddress;
+			socketConfig.proxyPassword = self.config.proxyPassword;
+			socketConfig.proxyUsername = self.config.proxyUsername;
+		}
 	}
 
 	socketConfig.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
