@@ -499,6 +499,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
+		case 510: // "Connect Without Proxy"
+		{
+			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+			if (flags != NSShiftKeyMask) {
+				menuItem.hidden = YES;
+
+				return NO;
+			}
+
+			if (_noClient) {
+				menuItem.hidden = YES;
+
+				return NO;
+			}
+
+			BOOL condition = (_clientIsConnected || u.isConnecting||
+				u.config.proxyType == IRCConnectionSocketNoProxyType);
+
+			menuItem.hidden = condition;
+
+			return (condition == NO && u.isQuitting == NO);
+		}
 		case 500: // "Connect"
 		{
 			if (_noClient) {
@@ -515,7 +538,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
-			if (flags == NSAlternateKeyMask) {
+			if (flags == NSShiftKeyMask) {
 				if (prefersIPv4 == NO) {
 					prefersIPv4 = YES;
 
@@ -1640,7 +1663,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	[u connect:IRCClientConnectNormalMode preferIPv4:NO];
+	[u connect:IRCClientConnectNormalMode preferIPv4:NO bypassProxy:NO];
 
 	[mainWindow() expandClient:u];
 }
@@ -1653,7 +1676,20 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode preferIPv4:YES];
+	[u connect:IRCClientConnectNormalMode preferIPv4:YES bypassProxy:NO];
+
+	[mainWindow() expandClient:u];
+}
+
+- (void)connectBypassingProxy:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+
+	if (_noClient || _clientIsConnected || u.isQuitting) {
+		return;
+	}
+
+	[u connect:IRCClientConnectNormalMode preferIPv4:u.config.connectionPrefersIPv4 bypassProxy:YES];
 
 	[mainWindow() expandClient:u];
 }

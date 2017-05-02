@@ -137,7 +137,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)connectMode;
-- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4;
+- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4 bypassProxy:(BOOL)bypassProxy;
 
 - (void)quit;
 - (void)quitWithComment:(NSString *)comment;
