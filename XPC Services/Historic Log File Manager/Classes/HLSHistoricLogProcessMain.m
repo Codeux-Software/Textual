@@ -133,11 +133,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	LogToConsoleDebug("Resetting the contents of channel: %@", channelId)
 
-	[self cancelResizeForChannel:channelId];
-
 	NSManagedObjectContext *context = self.managedObjectContext;
 
 	[context performBlockAndWait:^{
+		[self cancelResizeForChannel:channelId];
+
 		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelId
 														  fetchLimit:0
 														 limitToDate:nil
