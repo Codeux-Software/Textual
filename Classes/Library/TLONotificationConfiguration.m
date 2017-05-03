@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,87 +37,113 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TDCPreferencesSoundWrapper
+NSString * const TXEmptyAlertSoundPreferenceValue = @"None";
 
-+ (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
+@interface TLONotificationConfiguration ()
+@property (nonatomic, assign, readwrite) TXNotificationType eventType;
+@end
+
+@implementation TLONotificationConfiguration
+
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithEventType:(TXNotificationType)aEventType
+{
+	if ((self = [super init])) {
+		self.eventType = aEventType;
+		
+		return self;
+	}
+
+	return nil;
+}
+
++ (instancetype)configurationWithEventType:(TXNotificationType)eventType
 {
 	return [[self alloc] initWithEventType:eventType];
 }
 
++ (NSString *)localizedAlertEmptySoundTitle
+{
+	return TXTLS(@"TDCPreferencesController[1011]");
+}
+
+- (NSString *)displayName
+{
+	return [sharedGrowlController() titleForEvent:self.eventType];
+}
+
 - (NSString *)alertSound
 {
-	NSString *sound = [TPCPreferences soundForEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 
-	if (sound == nil) {
-		return [TLONotificationConfiguration localizedAlertEmptySoundTitle];
-	}
-
-	return sound;
+	return nil;
 }
 
 - (void)setAlertSound:(NSString *)alertSound
 {
-	if ([alertSound isEqualToString:[TLONotificationConfiguration localizedAlertEmptySoundTitle]]) { // Do not set the default, none label
-		alertSound = TXEmptyAlertSoundPreferenceValue;
-	}
-
-	if (alertSound) {
-		[TLOSoundPlayer playAlertSound:alertSound];
-	}
-
-	[TPCPreferences setSound:alertSound forEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 }
 
 - (BOOL)pushNotification
 {
-	return [TPCPreferences growlEnabledForEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NO;
 }
 
 - (void)setPushNotification:(BOOL)pushNotification
 {
-	[TPCPreferences setGrowlEnabled:pushNotification forEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 }
 
 - (BOOL)speakEvent
 {
-	return [TPCPreferences speakEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NO;
 }
 
 - (void)setSpeakEvent:(BOOL)speakEvent
 {
-	[TPCPreferences setEventIsSpoken:speakEvent forEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 }
 
 - (BOOL)disabledWhileAway
 {
-	return [TPCPreferences disabledWhileAwayForEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NO;
 }
 
 - (void)setDisabledWhileAway:(BOOL)disabledWhileAway
 {
-	[TPCPreferences setDisabledWhileAway:disabledWhileAway forEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 }
 
 - (BOOL)bounceDockIcon
 {
-	return [TPCPreferences bounceDockIconForEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NO;
 }
 
 - (void)setBounceDockIcon:(BOOL)bounceDockIcon
 {
-	[TPCPreferences setBounceDockIcon:bounceDockIcon forEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 }
 
 - (BOOL)bounceDockIconRepeatedly
 {
-	return [TPCPreferences bounceDockIconRepeatedlyForEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NO;
 }
 
 - (void)setBounceDockIconRepeatedly:(BOOL)bounceDockIconRepeatedly
 {
-	[TPCPreferences setBounceDockIconRepeatedly:bounceDockIconRepeatedly forEvent:self.eventType];
+	[self doesNotRecognizeSelector:_cmd];
 }
-
 
 @end
 
