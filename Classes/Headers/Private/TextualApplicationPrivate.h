@@ -123,6 +123,7 @@
 #import "TLOLicenseManagerDownloaderPrivate.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLONicknameCompletionStatusPrivate.h"
+#import "TLONotificationConfigurationPrivate.h"
 #import "TLOSpeechSynthesizerPrivate.h"
 #import "TLOSpokenNotificationPrivate.h"
 #import "TPCApplicationInfoPrivate.h"

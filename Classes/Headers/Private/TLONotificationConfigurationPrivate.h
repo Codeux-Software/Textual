@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+  Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,12 +35,25 @@
 
  *********************************************************************** */
 
-#import "TLONotificationConfigurationPrivate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCPreferencesSoundWrapper : TLONotificationConfiguration
-+ (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
+TEXTUAL_EXTERN NSString * const TXEmptyAlertSoundPreferenceValue;
+
+@interface TLONotificationConfiguration : NSObject
+@property (readonly) TXNotificationType eventType;
+@property (readonly, copy) NSString *displayName;
+@property (nonatomic, copy) NSString *alertSound;
+@property (nonatomic, assign) BOOL speakEvent;
+@property (nonatomic, assign) BOOL pushNotification;
+@property (nonatomic, assign) BOOL disabledWhileAway;
+@property (nonatomic, assign) BOOL bounceDockIcon;
+@property (nonatomic, assign) BOOL bounceDockIconRepeatedly;
+
++ (NSString *)localizedAlertEmptySoundTitle;
+
++ (instancetype)configurationWithEventType:(TXNotificationType)eventType;
+
+- (instancetype)initWithEventType:(TXNotificationType)aEventType NS_DESIGNATED_INITIALIZER;
 @end
 
 NS_ASSUME_NONNULL_END

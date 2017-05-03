@@ -424,6 +424,12 @@
 		4C26F6EC1D5A56B1008DE497 /* IRCChannelUserPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C26F6EB1D5A56B1008DE497 /* IRCChannelUserPrivate.h */; };
 		4C26F6ED1D5A56B1008DE497 /* IRCChannelUserPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C26F6EB1D5A56B1008DE497 /* IRCChannelUserPrivate.h */; };
 		4C26F6EE1D5A56B1008DE497 /* IRCChannelUserPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C26F6EB1D5A56B1008DE497 /* IRCChannelUserPrivate.h */; };
+		4C2B1D771EBA48090093C629 /* TLONotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B1D761EBA48090093C629 /* TLONotificationConfiguration.m */; };
+		4C2B1D781EBA48090093C629 /* TLONotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B1D761EBA48090093C629 /* TLONotificationConfiguration.m */; };
+		4C2B1D791EBA48090093C629 /* TLONotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B1D761EBA48090093C629 /* TLONotificationConfiguration.m */; };
+		4C2B1D811EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2B1D801EBA48790093C629 /* TLONotificationConfigurationPrivate.h */; };
+		4C2B1D821EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2B1D801EBA48790093C629 /* TLONotificationConfigurationPrivate.h */; };
+		4C2B1D831EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2B1D801EBA48790093C629 /* TLONotificationConfigurationPrivate.h */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C2D6ABE1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */; };
 		4C2D6ABF1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */; };
@@ -2112,6 +2118,8 @@
 		4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Standard Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Standard Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C26F6E21D5A566D008DE497 /* IRCUserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserPrivate.h; path = Headers/Private/IRCUserPrivate.h; sourceTree = "<group>"; };
 		4C26F6EB1D5A56B1008DE497 /* IRCChannelUserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelUserPrivate.h; path = Headers/Private/IRCChannelUserPrivate.h; sourceTree = "<group>"; };
+		4C2B1D761EBA48090093C629 /* TLONotificationConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLONotificationConfiguration.m; path = Library/TLONotificationConfiguration.m; sourceTree = "<group>"; };
+		4C2B1D801EBA48790093C629 /* TLONotificationConfigurationPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLONotificationConfigurationPrivate.h; path = Headers/Private/TLONotificationConfigurationPrivate.h; sourceTree = "<group>"; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListCellPrivate.h; path = Headers/Private/TVCServerListCellPrivate.h; sourceTree = "<group>"; };
 		4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListMavericksUserInterfacePrivate.h; path = Headers/Private/TVCServerListMavericksUserInterfacePrivate.h; sourceTree = "<group>"; };
@@ -3294,6 +3302,7 @@
 				4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */,
 				4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */,
 				4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */,
+				4C2B1D801EBA48790093C629 /* TLONotificationConfigurationPrivate.h */,
 				4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */,
 				4CC934F91DE0BEA8003FF1B4 /* TLOSpokenNotificationPrivate.h */,
 				4C673ED81D10FB5000979B60 /* TPCApplicationInfoPrivate.h */,
@@ -3526,6 +3535,7 @@
 				4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */,
 				4C8AF5DE158E99520026668C /* TLOLinkParser.m */,
 				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
+				4C2B1D761EBA48090093C629 /* TLONotificationConfiguration.m */,
 				4C8AF5E0158E99520026668C /* TLOpenLink.m */,
 				4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */,
 				4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */,
@@ -4317,6 +4327,7 @@
 				4C7B037B1D1210A100295E82 /* TVCBasicTableView.h in Headers */,
 				4C7B037E1D1210A100295E82 /* TVCImageURLParser.h in Headers */,
 				4CEA29C81D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
+				4C2B1D811EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
 				4C558DD21D24055C00628B47 /* TDCServerChangeNicknameSheetPrivate.h in Headers */,
 				4C7B037F1D1210A100295E82 /* TVCInputPromptDialog.h in Headers */,
 				4CB17EC51D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
@@ -4589,6 +4600,7 @@
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
 				4C7B041F1D1210A800295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
 				4CEA29C91D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
+				4C2B1D821EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
 				4CB17EBD1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4CB9E3B51D2B144200ED395A /* IRCPrefixInternal.h in Headers */,
 				4CC215D51D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */,
@@ -4843,6 +4855,7 @@
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
 				4C7B04A01D1210B000295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
 				4CEA29CA1D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
+				4C2B1D831EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
 				4CB17EBE1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4CB9E3B61D2B144200ED395A /* IRCPrefixInternal.h in Headers */,
 				4CC215D61D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */,
@@ -5764,6 +5777,7 @@
 				4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */,
 				4C0444FF16F1603B00EBB665 /* TDCChannelBanListSheet.m in Sources */,
 				4CF621CC1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
+				4C2B1D781EBA48090093C629 /* TLONotificationConfiguration.m in Sources */,
 				4C04450116F1603B00EBB665 /* TDCChannelPropertiesSheet.m in Sources */,
 				4C90F62A1E54F28A00DF5190 /* TXApplication.m in Sources */,
 				4C04450216F1603B00EBB665 /* TDCServerHighlightListSheet.m in Sources */,
@@ -5970,6 +5984,7 @@
 				4CF40E3A1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4CF40DEA1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4C0BA6691990798800857343 /* TPCPathInfo.m in Sources */,
+				4C2B1D771EBA48090093C629 /* TLONotificationConfiguration.m in Sources */,
 				4C0BA66C1990798800857343 /* THOUnicodeHelper.m in Sources */,
 				4CB17ED11D125E0100FAEAD4 /* IRCHighlightLogEntry.m in Sources */,
 				4CF40E1E1AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m in Sources */,
@@ -6108,6 +6123,7 @@
 				4C8AF614158E99520026668C /* TDCChannelPropertiesSheet.m in Sources */,
 				4C8AF615158E99520026668C /* TDCServerHighlightListSheet.m in Sources */,
 				4CF621CD1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
+				4C2B1D791EBA48090093C629 /* TLONotificationConfiguration.m in Sources */,
 				4C8AF616158E99520026668C /* TDCChannelInviteSheet.m in Sources */,
 				4C90F62B1E54F28A00DF5190 /* TXApplication.m in Sources */,
 				4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */,
