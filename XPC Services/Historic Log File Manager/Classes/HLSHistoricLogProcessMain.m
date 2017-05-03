@@ -399,7 +399,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	NSTimeInterval resizeTimerInterval = (NSTimeInterval)arc4random_uniform(60); // Somewhere in 30 minutes
+	NSTimeInterval resizeTimerInterval = (NSTimeInterval)arc4random_uniform(60 * 30); // Somewhere in 30 minutes
 
 	dispatch_source_t resizeTimer =
 	XRScheduleBlockOnQueue(dispatch_get_main_queue(), ^{
