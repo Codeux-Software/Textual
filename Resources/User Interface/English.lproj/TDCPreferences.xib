@@ -299,7 +299,7 @@
             </connections>
             <point key="canvasLocation" x="652" y="-1056"/>
         </window>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Eyz-5p-IkU" userLabel="General ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="0.0" y="0.0" width="589" height="236"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="bKt-Ac-1I2">
@@ -438,7 +438,7 @@
             </constraints>
             <point key="canvasLocation" x="438" y="-992"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jdv-gk-kj9" userLabel="Highlights ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jdv-gk-kj9" userLabel="Highlights">
             <rect key="frame" x="0.0" y="0.0" width="589" height="336"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -732,7 +732,7 @@
             </constraints>
             <point key="canvasLocation" x="174" y="-630"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="09H-hp-iIC" userLabel="Alerts ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="09H-hp-iIC" userLabel="Alerts">
             <rect key="frame" x="0.0" y="0.0" width="589" height="294"/>
             <subviews>
                 <tabView controlSize="small" translatesAutoresizingMaskIntoConstraints="NO" id="5iv-Ob-ruv">
@@ -1030,7 +1030,7 @@
             <point key="canvasLocation" x="848" y="-386"/>
         </customView>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="iMS-Ox-Uda" userLabel="Behavior ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="iMS-Ox-Uda" userLabel="Behavior">
             <rect key="frame" x="0.0" y="0.0" width="589" height="260"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="utM-Q1-sGF">
@@ -1133,7 +1133,7 @@
             </constraints>
             <point key="canvasLocation" x="607" y="-1098"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fnm-DD-Hbc" userLabel="Controls ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fnm-DD-Hbc" userLabel="Controls">
             <rect key="frame" x="0.0" y="0.0" width="589" height="475"/>
             <subviews>
                 <tabView controlSize="small" translatesAutoresizingMaskIntoConstraints="NO" id="iOA-1f-6sc">
@@ -1639,7 +1639,7 @@
             </constraints>
             <point key="canvasLocation" x="436.5" y="-2385.5"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="2Th-u8-aIC" userLabel="Interface ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="2Th-u8-aIC" userLabel="Interface">
             <rect key="frame" x="0.0" y="0.0" width="589" height="421"/>
             <userGuides>
                 <userLayoutGuide location="445" affinity="minY"/>
@@ -2095,7 +2095,7 @@
             </constraints>
             <point key="canvasLocation" x="434.5" y="-893.5"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="oeR-nv-slx" userLabel="Style ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="oeR-nv-slx" userLabel="Style">
             <rect key="frame" x="0.0" y="0.0" width="589" height="370"/>
             <subviews>
                 <tabView controlSize="small" translatesAutoresizingMaskIntoConstraints="NO" id="lpz-77-UDw">
@@ -2810,7 +2810,7 @@
             </constraints>
             <point key="canvasLocation" x="444.5" y="-939"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="4zD-VW-F1h" userLabel="Installed Addons ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="4zD-VW-F1h" userLabel="Installed Addons">
             <rect key="frame" x="0.0" y="0.0" width="589" height="397.5"/>
             <userGuides>
                 <userLayoutGuide location="356" affinity="minY"/>
@@ -2954,7 +2954,7 @@
             </constraints>
             <point key="canvasLocation" x="490.5" y="-724"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="kTM-XW-Yb5" userLabel="Channel Management ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="kTM-XW-Yb5" userLabel="Channel Management">
             <rect key="frame" x="0.0" y="0.0" width="589" height="200"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -3071,7 +3071,7 @@
             <string key="userLabel">Compatibility	</string>
             <point key="canvasLocation" x="709" y="-433"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1YF-k7-FrW" userLabel="Command Scope ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="0.0" y="0.0" width="589" height="304"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -3464,7 +3464,7 @@
             </constraints>
             <point key="canvasLocation" x="697" y="-4138"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="589" height="257"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -3632,7 +3632,7 @@
             </constraints>
             <point key="canvasLocation" x="401.5" y="-851.5"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="KpN-mD-prv" userLabel="Incoming Data ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="KpN-mD-prv" userLabel="Incoming Data">
             <rect key="frame" x="0.0" y="0.0" width="589" height="242"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -3841,7 +3841,7 @@
             </constraints>
             <point key="canvasLocation" x="627" y="-4376"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="4pD-W0-ghZ" userLabel="File Transfers ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="4pD-W0-ghZ" userLabel="File Transfers">
             <rect key="frame" x="0.0" y="0.0" width="589" height="312"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -4098,7 +4098,7 @@
             </constraints>
             <point key="canvasLocation" x="699" y="-4426"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="c5A-lx-Ey9" userLabel="Inline Media ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="c5A-lx-Ey9" userLabel="Inline Media">
             <rect key="frame" x="0.0" y="0.0" width="589" height="267"/>
             <subviews>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iej-2N-jQT">
@@ -4373,7 +4373,7 @@
             </constraints>
             <point key="canvasLocation" x="332" y="-1008"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="DPg-Nu-HcZ" userLabel="Log Location ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="DPg-Nu-HcZ" userLabel="Log Location">
             <rect key="frame" x="0.0" y="0.0" width="589" height="100"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -4442,7 +4442,7 @@
             </constraints>
             <point key="canvasLocation" x="606.5" y="-793"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="d6J-SH-Xgl" userLabel="Default Identity ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="589" height="202"/>
             <userGuides>
                 <userLayoutGuide location="172" affinity="minY"/>
@@ -4732,7 +4732,7 @@
             </constraints>
             <point key="canvasLocation" x="348.5" y="-607.5"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-23-zvA" userLabel="Off-the-Record Messaging ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-23-zvA" userLabel="Off-the-Record Messaging">
             <rect key="frame" x="0.0" y="0.0" width="589" height="138"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -4816,7 +4816,7 @@
                 </binding>
             </connections>
         </arrayController>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="DSr-72-Tlk" userLabel="iCloud ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="DSr-72-Tlk" userLabel="iCloud">
             <rect key="frame" x="0.0" y="0.0" width="589" height="208"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
@@ -4914,7 +4914,7 @@
             </connections>
         </arrayController>
         <userDefaultsController id="G2Q-fc-ddg" userLabel="Preferences User Defaults Controller" customClass="TPCPreferencesUserDefaultsController"/>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="dAH-Sl-d77" userLabel="Hidden Preferences ✓">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="dAH-Sl-d77" userLabel="Hidden Preferences">
             <rect key="frame" x="0.0" y="0.0" width="589" height="354"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
