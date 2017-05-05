@@ -2412,6 +2412,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	block(userMutable);
 
+	if ([user.nickname isEqualToString:userMutable.nickname] == NO) {
+		[self removeUser:user];
+	}
+
 	[self addUser:userMutable];
 }
 
