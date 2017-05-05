@@ -478,7 +478,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		if (channelId) {
 			channel = [worldController() findChannelWithId:channelId onClientWithId:clientId];
 		} else {
-			client = [worldController() findClientWithId:channelId];
+			client = [worldController() findClientWithId:clientId];
 		}
 
 		if (changeFocus) {
