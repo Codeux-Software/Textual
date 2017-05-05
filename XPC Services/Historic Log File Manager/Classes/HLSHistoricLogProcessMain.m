@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.maximumLineCount = 100;
 }
 
-- (void)openDatabaseAtPath:(NSString *)path
+- (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (^ _Nullable)(BOOL))completionBlock
 {
 	NSParameterAssert(path != nil);
 
@@ -84,7 +84,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.savePath = path;
 
-	[self _createBaseModel];
+	BOOL success = [self _createBaseModel];
+
+	if (completionBlock) {
+		completionBlock(success);
+	}
+
+	if (success == NO) {
+		return;
+	}
 
 	[self _performOneTimeMigrationToIdentifiers];
 
@@ -222,12 +230,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)_createBaseModel
+- (BOOL)_createBaseModel
 {
 	[self _createBaseModelWithRecursion:0];
 }
 
-- (void)_createBaseModelWithRecursion:(NSUInteger)recursionDepth
+- (BOOL)_createBaseModelWithRecursion:(NSUInteger)recursionDepth
 {
 	NSURL *modelPath = [[NSBundle mainBundle] URLForResource:@"HistoricLogFileStorageModel" withExtension:@"momd"];
 
@@ -274,10 +282,10 @@ NS_ASSUME_NONNULL_BEGIN
 			 the file to just hang on the OS. */
 			[self resetDatabase]; // Destroy any data that may exist
 
-			[self _createBaseModelWithRecursion:1];
+			return [self _createBaseModelWithRecursion:1];
 		}
 
-		return;
+		return NO;
 	}
 	else
 	{
@@ -293,6 +301,8 @@ NS_ASSUME_NONNULL_BEGIN
 		self.managedObjectModel = managedObjectModel;
 
 		self.persistentStoreCoordinator = persistentStoreCoordinator;
+
+		return YES;
 	}
 }
 
