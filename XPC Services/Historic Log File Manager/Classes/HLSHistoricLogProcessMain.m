@@ -232,7 +232,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)_createBaseModel
 {
-	[self _createBaseModelWithRecursion:0];
+	return [self _createBaseModelWithRecursion:0];
 }
 
 - (BOOL)_createBaseModelWithRecursion:(NSUInteger)recursionDepth
