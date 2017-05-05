@@ -45,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerHistoricLogFile ()
 @property (nonatomic, assign, readwrite) BOOL isSaving;
+@property (nonatomic, assign, readwrite) BOOL processLoaded;
+@property (nonatomic, assign, readwrite) BOOL processLoading;
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
 @property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
 @property (nonatomic, assign) BOOL connectionInvalidatedErrorDialogDisplayed;
@@ -147,6 +149,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	[self relocateDatabaseFrom200PathTo300Path];
+}
+
+- (void)warmProcessIfNeeded
+{
+	if (self.processLoading || self.processLoaded) {
+		return;
+	}
+
+	LogToConsoleDebug("Warming process...")
+
+	self.processLoading = YES;
 
 	[self connectToService];
 
@@ -155,9 +168,32 @@ NS_ASSUME_NONNULL_BEGIN
 	[self setupTimers];
 }
 
+- (void)invalidateProcess
+{
+	LogToConsoleDebug("Invaliating process...")
+
+	self.connectionInvalidatedVoluntarily = YES;
+
+	[self.serviceConnection invalidate];
+}
+
 - (void)openDatabase
 {
-	[[self remoteObjectProxy] openDatabaseAtPath:[self databaseSavePath]];
+	[[self remoteObjectProxyWithErrorHandler:^(NSError *error) {
+		self.processLoading = NO;
+		self.processLoaded = NO;
+
+		LogToConsoleError("Failed to communicate with process to open database")
+	}] openDatabaseAtPath:[self databaseSavePath] withCompletionBlock:^(BOOL success) {
+		if (success) {
+			LogToConsoleDebug("Successfully opened database")
+		} else {
+			LogToConsoleError("Failed to open database")
+		}
+
+		self.processLoading = NO;
+		self.processLoaded = success;
+	}];
 }
 
 - (void)connectToService
@@ -192,7 +228,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)interuptionHandler
 {
-	[self resetContext];
+	[self invalidateProcess];
 }
 
 - (void)invalidationHandler
@@ -229,6 +265,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetContext
 {
 	self.isSaving = NO;
+
+	self.processLoading = NO;
+	self.processLoaded = NO;
 }
 
 - (void)setupTimers
@@ -250,23 +289,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id <HLSHistoricLogProtocol>)remoteObjectProxy
 {
-	if (self.serviceConnection == nil) {
-		[self connectToService];
-	}
+	return [self remoteObjectProxyWithErrorHandler:nil];
+}
 
+- (id <HLSHistoricLogProtocol>)remoteObjectProxyWithErrorHandler:(void (^ _Nullable)(NSError *error))handler
+{
 	return [self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError *error) {
 		self.lastServiceConnectionError = error;
 
 		LogToConsoleError("Error occurred while communicating with service: %@",
-			error.localizedDescription);
+						  error.localizedDescription);
+
+		if (handler) {
+			handler(error);
+		}
 	}];
-}
-
-- (void)saveData:(id)sender
-{
-	LogToConsoleInfo("Performing save")
-
-	[self saveData];
 }
 
 #pragma mark -
@@ -298,6 +335,8 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	};
 
+	[self warmProcessIfNeeded];
+
 	[[self remoteObjectProxy] fetchEntriesForChannel:channel.uniqueIdentifier
 										  fetchLimit:fetchLimit
 										 limitToDate:limitToDate
@@ -309,8 +348,12 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.isSaving == NO) {
 		self.isSaving = YES;
 	} else {
+		LogToConsoleDebug("Cancelled save because a save is already saving")
+
 		return;
 	}
+
+	[self warmProcessIfNeeded];
 
 	[[self remoteObjectProxy] saveDataWithCompletionBlock:^{
 		self.isSaving = NO;
@@ -319,11 +362,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetDataForChannel:(IRCChannel *)channel
 {
+	[self warmProcessIfNeeded];
+
 	[[self remoteObjectProxy] resetDataForChannel:channel.uniqueIdentifier];
 }
 
 - (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel
 {
+	[self warmProcessIfNeeded];
+
 	TVCLogLineXPC *newEntry = [logLine xpcObjectForChannel:channel];
 
 	[[self remoteObjectProxy] writeLogLine:newEntry];

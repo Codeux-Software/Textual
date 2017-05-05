@@ -42,7 +42,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol HLSHistoricLogProtocol
-- (void)openDatabaseAtPath:(NSString *)path;
+- (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (^ _Nullable)(BOOL success))completionBlock;
 
 - (void)writeLogLine:(TVCLogLineXPC *)logLine;
 
