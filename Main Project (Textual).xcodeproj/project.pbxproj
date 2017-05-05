@@ -137,8 +137,6 @@
 		4C083FA91D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C083FAA1D2D5F4D00192F09 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FA71D2D5F4D00192F09 /* IRCConnectionConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C083FAE1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */; };
-		4C083FAF1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */; };
-		4C083FB01D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAB1D2D5F5B00192F09 /* IRCConnectionPrivate.h */; };
 		4C083FB11D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */; };
 		4C083FB21D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */; };
 		4C083FB31D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C083FAC1D2D5F5B00192F09 /* IRCConnectionSocketPrivate.h */; };
@@ -1016,7 +1014,6 @@
 		4C7B04DF1D1210E000295E82 /* TPCThemeSettingsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673EE11D10FB5000979B60 /* TPCThemeSettingsPrivate.h */; };
 		4C7B04E31D1210E000295E82 /* TVCMainWindowPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673EE31D10FB5000979B60 /* TVCMainWindowPrivate.h */; };
 		4C7B04E51D1210E000295E82 /* WKWebViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673EE41D10FB5000979B60 /* WKWebViewPrivate.h */; };
-		4C7B04E61D1210E300295E82 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */; };
 		4C7B04E81D1210E300295E82 /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673ED61D10FB5000979B60 /* IRCWorldPrivate.h */; };
 		4C7B04E91D1210E300295E82 /* IRCWorldPrivateCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */; };
 		4C7B04EA1D1210E300295E82 /* NSObjectHelperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673F291D10FE8800979B60 /* NSObjectHelperPrivate.h */; };
@@ -4385,7 +4382,6 @@
 				4C6CCF051D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h in Headers */,
 				4C76CC901D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04FF1D1210EC00295E82 /* BuildConfig.h in Headers */,
-				4C7B04E61D1210E300295E82 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04E81D1210E300295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04E91D1210E300295E82 /* IRCWorldPrivateCloudExtension.h in Headers */,
 				4C10B3851D233B1A00868A74 /* TDCAboutDialogPrivate.h in Headers */,
@@ -4631,7 +4627,6 @@
 				4CEA29C51D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C5DD51A1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C7B04B41D1210DA00295E82 /* IRCConnectionPrivate.h in Headers */,
-				4C083FAF1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04B61D1210DA00295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04B81D1210DA00295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04B91D1210DA00295E82 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -4886,7 +4881,6 @@
 				4CEA29C61D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C5DD51B1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C7B04CD1D1210E000295E82 /* IRCConnectionPrivate.h in Headers */,
-				4C083FB01D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04CF1D1210E000295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04D11D1210E000295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04D21D1210E000295E82 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -5007,7 +5001,7 @@
 		4C1DC5491580420500A47BC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4C0BA4F81990798800857343 = {

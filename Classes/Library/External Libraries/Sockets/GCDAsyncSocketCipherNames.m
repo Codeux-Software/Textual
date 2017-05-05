@@ -240,7 +240,7 @@ static const CipherSuite kCipherSuites[] = {
 	{0xd002, 0x1477},  // TLS_ECDHE_PSK_WITH_AES_256_GCM_SHA384
 };
 
-static const char *kKeyExchangeNames[] = {
+static const char * _Nonnull kKeyExchangeNames[] = {
 	"NULL",
 	"RSA",
 	"RSA-EXPORT",
@@ -264,7 +264,7 @@ static const char *kKeyExchangeNames[] = {
 	"ECDHE_PSK"
 };
 
-static const char *kCipherNames[] = {
+static const char * _Nonnull kCipherNames[] = {
 	"NULL",
 	"RC4-40",
 	"RC4-128",
@@ -285,7 +285,7 @@ static const char *kCipherNames[] = {
 	"CHACHA20-POLY1305",
 };
 
-static const char *kMacNames[] = {
+static const char * _Nonnull kMacNames[] = {
 	"NULL",
 	"MD5",
 	"SHA1",
