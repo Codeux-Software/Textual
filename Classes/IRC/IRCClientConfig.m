@@ -831,12 +831,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)destroyKeychainItems
 {
-	NSString *nicknamePasswordServiceName = [NSString stringWithFormat:@"textual.nickserv.%@", self.uniqueIdentifier];
+	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
 
 	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:nicknamePasswordServiceName];
+					   serviceName:serverPasswordServiceName];
 
 	NSString *proxyPasswordServiceName = [NSString stringWithFormat:@"textual.proxy-server.%@", self.uniqueIdentifier];
 
@@ -845,12 +845,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					   forUsername:nil
 					   serviceName:proxyPasswordServiceName];
 
-	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
+	NSString *nicknamePasswordServiceName = [NSString stringWithFormat:@"textual.nickserv.%@", self.uniqueIdentifier];
 
 	[XRKeychain deleteKeychainItem:@"Textual (NickServ)"
 					  withItemKind:@"application password"
 					   forUsername:nil
-					   serviceName:serverPasswordServiceName];
+					   serviceName:nicknamePasswordServiceName];
 
 	[self resetTemporaryKeychainItems];
 }
