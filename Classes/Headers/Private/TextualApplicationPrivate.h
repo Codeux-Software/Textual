@@ -69,6 +69,7 @@
 #import "IRCISupportInfoPrivate.h"
 #import "IRCMessageBatchPrivate.h"
 #import "IRCMessagePrivate.h"
+#import "IRCServerPrivate.h"
 #import "IRCTimerCommandPrivate.h"
 #import "IRCTreeItemPrivate.h"
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"

@@ -80,6 +80,8 @@
 	@class IRCPrefix;
 	@class IRCPrefixMutable;
 	@class IRCSendingMessage;
+	@class IRCServer;
+	@class IRCServerMutable;
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
@@ -231,6 +233,7 @@
 	#import "IRCNetworkList.h"
 	#import "IRCPrefix.h"
 	#import "IRCSendingMessage.h"
+	#import "IRCServer.h"
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
 	#import "IRCUserRelations.h"
