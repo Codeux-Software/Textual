@@ -53,6 +53,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
+		[self populateDefaultsPreflight];
+
 		[self populateDictionaryValues:dic];
 
 		[self populateDefaultsPostflight];
@@ -79,20 +81,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(self->_serverPort > 0 && self->_serverPort <= TXMaximumTCPPort);
 }
 
-- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
+
+- (void)populateDefaultsPreflight
 {
-	NSParameterAssert(dic != nil);
+	ObjectIsAlreadyInitializedAssert
 
-	if ([self isMutable] == NO) {
-		ObjectIsAlreadyInitializedAssert
-	}
-
-	[dic assignBoolTo:&self->_prefersSecuredConnection forKey:@"prefersSecuredConnection"];
-
-	[dic assignStringTo:&self->_serverAddress forKey:@"serverAddress"];
-	[dic assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
-
-	[dic assignUnsignedShortTo:&self->_serverPort forKey:@"serverPort"];
+	self->_defaults = @{
+		@"serverPort" : @(IRCConnectionDefaultServerPort)
+	};
 }
 
 - (void)populateDefaultsPostflight
@@ -102,6 +98,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	SetVariableIfNil(self->_serverAddress, NSStringEmptyPlaceholder)
 
 	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
+}
+
+- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
+{
+	NSParameterAssert(dic != nil);
+
+	if ([self isMutable] == NO) {
+		ObjectIsAlreadyInitializedAssert
+	}
+
+	NSMutableDictionary<NSString *, id> *defaultsMutable = [self->_defaults mutableCopy];
+
+	[defaultsMutable addEntriesFromDictionary:dic];
+
+	[defaultsMutable assignBoolTo:&self->_prefersSecuredConnection forKey:@"prefersSecuredConnection"];
+
+	[defaultsMutable assignStringTo:&self->_serverAddress forKey:@"serverAddress"];
+	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
+
+	[defaultsMutable assignUnsignedShortTo:&self->_serverPort forKey:@"serverPort"];
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
@@ -123,6 +139,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	  IRCServer *object =
 	[[IRCServer allocWithZone:zone] initWithDictionary:self.dictionaryValue];
 
+	object->_serverPassword = self->_serverPassword;
+
 	return object;
 }
 
@@ -130,6 +148,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	  IRCServerMutable *object =
 	[[IRCServerMutable allocWithZone:zone] initWithDictionary:self.dictionaryValue];
+
+	((IRCServer *)object)->_serverPassword = self->_serverPassword;
 
 	return object;
 }
