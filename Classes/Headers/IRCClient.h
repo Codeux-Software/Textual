@@ -97,6 +97,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate>
 @property (readonly, copy) IRCClientConfig *config;
+@property (readonly, copy, nullable) IRCServer *server; // Where is being connected to. Use -serverAddress for server address connected to.
 @property (readonly) IRCISupportInfo *supportInfo;
 @property (readonly) IRCClientConnectMode connectType;
 @property (readonly) IRCClientDisconnectMode disconnectType;
@@ -129,7 +130,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 @property (readonly, copy) NSArray<IRCHighlightLogEntry *> *cachedHighlights;
 @property (readonly, copy, nullable) NSString *userHostmask; // The hostmask of the local user
 @property (readonly, copy) NSString *userNickname; // The nickname of the local user
-@property (readonly, copy) NSString *serverAddress; // The address of the server connected to or nil
+@property (readonly, copy, nullable) NSString *serverAddress; // The address of the server connected to or nil
 @property (readonly, copy, nullable) NSString *networkName; // The name of the network connected to or nil
 @property (readonly, copy) NSString *networkNameAlt; // The name of the network connected to or the configured Connection Name
 @property (readonly, copy, nullable) NSString *preAwayUserNickname; // Nickname before away was set or nil

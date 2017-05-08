@@ -38,11 +38,23 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCServer ()
-- (void)destroyKeychainItems;
-
-- (void)writeItemsToKeychain;
+/* IRCClient retains a copy of the active IRCServer instance.
+ When the -serverList in IRCClientConfig is modified, 
+ any servers that are removed will have their keychain 
+ items destroyed. We do not want to destroy the keychain
+ items for the IRCServer instance that IRCClient has a copy
+ of, so the -destroyKeychainItemsDuringDealloc flag is used.
+ This tells the IRCServer instance to hold onto the keychain
+ item until there is no longer a reference to it. */
+@property (nonatomic, assign) BOOL destroyKeychainItemsDuringDealloc;
 
 - (void)writeServerPasswordToKeychain;
+
+- (void)destroyServerPasswordKeychainItem;
+
+/* Deprecated */
+- (void)writeItemsToKeychain TEXTUAL_DEPRECATED("Use one or more -write*ToKeychain methods to avoid confusion on what is actually written.");
+- (void)destroyKeychainItems TEXTUAL_DEPRECATED("Use one or more -destroy*KeychainItem methods to avoid confusion on what is actually destroyed.");
 @end
 
 NS_ASSUME_NONNULL_END

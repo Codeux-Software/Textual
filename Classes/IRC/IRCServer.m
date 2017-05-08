@@ -185,6 +185,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return NO;
 }
 
+- (void)dealloc
+{
+	if (self.destroyKeychainItemsDuringDealloc) {
+		[self destroyServerPasswordKeychainItem];
+	}
+}
+
 #pragma mark -
 #pragma mark Keychain Management
 
@@ -211,6 +218,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)writeItemsToKeychain
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	[self writeServerPasswordToKeychain];
 }
 
@@ -231,7 +240,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self->_serverPassword = nil;
 }
 
-- (void)destroyKeychainItems
+- (void)destroyServerPasswordKeychainItem
 {
 	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
 
@@ -239,11 +248,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:serverPasswordServiceName];
+
+	self->_serverPassword = nil;
 }
 
-- (void)resetTemporaryKeychainItems
+- (void)destroyKeychainItems
 {
-	self->_serverPassword = nil;
+	TEXTUAL_DEPRECATED_WARNING
+
+	[self destroyServerPasswordKeychainItem];
 }
 
 @end
