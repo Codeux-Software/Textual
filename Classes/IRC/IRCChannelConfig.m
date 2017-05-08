@@ -342,6 +342,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)writeItemsToKeychain
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	[self writeSecretKeyToKeychain];
 }
 
@@ -362,7 +364,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self->_secretKey = nil;
 }
 
-- (void)destroyKeychainItems
+- (void)destroySecretKeyKeychainItem
 {
 	NSString *secretKeyServiceName = [NSString stringWithFormat:@"textual.cjoinkey.%@", self.uniqueIdentifier];
 
@@ -371,12 +373,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					   forUsername:nil
 					   serviceName:secretKeyServiceName];
 
-	[self resetTemporaryKeychainItems];
+	/* Reset temporary value */
+	self->_secretKey = nil;
 }
 
-- (void)resetTemporaryKeychainItems
+- (void)destroyKeychainItems
 {
-	self->_secretKey = nil;
+	TEXTUAL_DEPRECATED_WARNING
+
+	[self destroySecretKeyKeychainItem];
 }
 
 #pragma mark -
