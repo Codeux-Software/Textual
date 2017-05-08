@@ -78,7 +78,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if ((self = [super init])) {
 		self.config = config;
 
-		[self.config writeItemsToKeychain];
+		[self.config writeSecretKeyToKeychain];
 
 		[self prepareInitialState];
 	}
@@ -124,7 +124,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.config = config;
 
-	[self.config writeItemsToKeychain];
+	[self.config writeSecretKeyToKeychain];
 
 	if (updateStoredChannelList) {
 		[self.associatedClient updateStoredChannelList];
@@ -447,7 +447,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	
 	[self closeLogFile];
 	
-	[self.config destroyKeychainItems];
+	[self.config destroySecretKeyKeychainItem];
 
 	NSArray *openWindows = [windowController()
 							windowsFromWindowList:@[@"TDCChannelPropertiesSheet",
@@ -475,7 +475,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self closeLogFile];
 	
 	if (self.isPrivateMessage) {
-		[self.config destroyKeychainItems];
+		[self.config destroySecretKeyKeychainItem];
 	}
 
 	[self.viewController prepareForApplicationTermination];
