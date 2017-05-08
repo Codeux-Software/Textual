@@ -4843,8 +4843,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.lastWhoRequestChannelListIndex = 0;
 
-	self.lastServerSelected = NSNotFound;
-
 	self.server = nil;
 
 	self.userHostmask = nil;
