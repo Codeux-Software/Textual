@@ -69,7 +69,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	NSInteger selfInt = self.integerValue;
 
-	return (selfInt > 1 && selfInt <= TXMaximumTCPPort);
+	return (selfInt > 0 && selfInt <= TXMaximumTCPPort);
 }
 
 - (NSString *)stringByAppendingIRCFormattingStop
