@@ -38,6 +38,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#warning TODO: Fix Channel List table inheriting private messages when the \
+	preference to save private message state is enabled.
+
 #define _tableRowType		@"row"
 #define _tableRowTypes		[NSArray arrayWithObject:_tableRowType]
 
