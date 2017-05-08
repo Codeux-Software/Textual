@@ -81,7 +81,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(self->_serverPort > 0 && self->_serverPort <= TXMaximumTCPPort);
 }
 
-
 - (void)populateDefaultsPreflight
 {
 	ObjectIsAlreadyInitializedAssert
@@ -173,6 +172,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	} else {
 		object = [self mutableCopy];
 	}
+
+	object->_serverPassword = [self.serverPassword copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 
