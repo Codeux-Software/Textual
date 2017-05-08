@@ -109,6 +109,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @interface IRCClient ()
 // Properies that are public in IRCClient.h
 @property (nonatomic, copy, readwrite) IRCClientConfig *config;
+@property (nonatomic, copy, readwrite, nullable) IRCServer *server;
 @property (nonatomic, strong, readwrite) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign, readwrite) BOOL isAutojoined;
 @property (nonatomic, assign, readwrite) BOOL isAutojoining;
@@ -165,6 +166,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *capabilitiesPending;
 @property (nonatomic, assign) NSTimeInterval lagCheckLastCheck;
 @property (nonatomic, assign) NSUInteger connectDelay;
+@property (nonatomic, assign) NSUInteger lastServerSelected;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSUInteger successfulConnects;
 @property (nonatomic, assign) NSUInteger tryingNicknameNumber;
@@ -241,6 +243,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.trackedUsers = [[IRCAddressBookUserTrackingContainer alloc] initWithClient:self];
 
 	self.lastMessageServerTime = self.config.lastMessageServerTime;
+
+	self.lastServerSelected = NSNotFound;
 
 	self.autojoinTimer = [TLOTimer new];
 	self.autojoinTimer.repeatTimer = YES;
@@ -437,6 +441,63 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* Save updated channel list then safe its contents */
 		self.channelList = channelListNew;
 	}
+
+	/* Update server list */
+	{
+		/* To update the server list, we first make a map of all existing
+		 servers in a dictionary with the key as the identifier and the
+		 object is the server itself. */
+		NSArray *serverListOld = currentConfig.serverList;
+
+		NSMutableDictionary<NSString *, IRCServer *> *serverListOldMap =
+		[[NSMutableDictionary alloc] initWithCapacity:serverListOld.count];
+
+		for (IRCServer *server in serverListOld) {
+			serverListOldMap[server.uniqueIdentifier] = server;
+		}
+
+		/* We then make a map of the new server list */
+		NSArray *serverListNew = self.config.serverList;
+
+		NSMutableDictionary<NSString *, IRCServer *> *serverListNewMap =
+		[[NSMutableDictionary alloc] initWithCapacity:serverListNew.count];
+
+		for (IRCServer *server in serverListNew) {
+			serverListNewMap[server.uniqueIdentifier] = server;
+		}
+
+		/* Record information about the current server (if any). */
+		IRCServer *serverInUse = self.server;
+
+		NSString *uniqueIdentifierInUse = serverInUse.uniqueIdentifier;
+
+		/* Enumerate old server list */
+		/* If an old server no longer appears in the new list of identifiers,
+		 then we destroy its keychain items. If the server is the active server,
+		 then we mark the keychain items to be destroyed later, incase they
+		 need to be reused by IRCClient. */
+		[serverListOldMap enumerateKeysAndObjectsUsingBlock:^(NSString *uniqueIdentifier, IRCServer *server, BOOL *stop) {
+			if ([serverListNewMap containsKey:uniqueIdentifier]) {
+				return;
+			}
+
+			if ([uniqueIdentifier isEqualToString:uniqueIdentifierInUse]) {
+				serverInUse.destroyKeychainItemsDuringDealloc = YES;
+			} else {
+				[server destroyServerPasswordKeychainItem];
+			}
+		}];
+
+		/* Enumerate new server list */
+		/* All servers in the new server list have their keychain item written. */
+		if (serverListNew.count == 0) {
+			self.lastServerSelected = NSNotFound;
+		} else {
+			[serverListNewMap enumerateKeysAndObjectsUsingBlock:^(NSString *uniqueIdentifier, IRCServer *server, BOOL *stop) {
+				[server writeServerPasswordToKeychain];
+			}];
+		}
+	}
 	
 	/* -reloadItem will drop the views and reload them. */
 	/* We need to remember the selection because of this. */
@@ -477,7 +538,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)writePasswordsToKeychain
 {
-	[self.config writeItemsToKeychain];
+	[self.config writeNicknamePasswordToKeychain];
+	[self.config writeProxyPasswordToKeychain];
 }
 
 - (void)updateStoredConfiguration
@@ -589,7 +651,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self clearTrackedUsers];
 	
-	[self.config destroyKeychainItems];
+	[self.config destroyNicknamePasswordKeychainItem];
+	[self.config destroyProxyPasswordKeychainItem];
+
+	[self destroyServerPasswordsKeychainItems];
 
 	for (IRCChannel *c in self.channelList) {
 		[c prepareForPermanentDestruction];
@@ -658,6 +723,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
+#pragma mark Servers
+
+- (void)enumerateServers:(void (NS_NOESCAPE ^)(IRCServer *server, NSUInteger idnex, BOOL *stop))block
+{
+	[self.config.serverList enumerateObjectsUsingBlock:block];
+}
+
+- (void)writeServerPasswordsToKeychain
+{
+	[self enumerateServers:^(IRCServer *server, NSUInteger idnex, BOOL *stop) {
+		[server writeServerPasswordToKeychain];
+	}];
+}
+
+- (void)destroyServerPasswordsKeychainItems
+{
+	[self enumerateServers:^(IRCServer *server, NSUInteger idnex, BOOL *stop) {
+		[server destroyServerPasswordKeychainItem];
+	}];
+}
+
+#pragma mark -
 #pragma mark Properties
 
 - (NSString *)description
@@ -691,7 +778,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.config.connectionName;
 }
 
-- (NSString *)serverAddress
+- (nullable NSString *)serverAddress
 {
 	NSString *serverAddress = self.supportInfo.serverAddress;
 
@@ -705,7 +792,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return serverAddressOnSocket;
 	}
 
-	return self.config.serverAddress;
+	return self.server.serverAddress;
 }
 
 - (NSString *)userNickname
@@ -4756,6 +4843,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.lastWhoRequestChannelListIndex = 0;
 
+	self.lastServerSelected = NSNotFound;
+
+	self.server = nil;
+
 	self.userHostmask = nil;
 	self.userNickname = nil;
 
@@ -4935,7 +5026,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	
 	NSString *modeSymbols = @"0";
 	
-	NSString *serverPassword = self.config.serverPassword;
+	NSString *serverPassword = self.server.serverPassword;
 
 	if (self.config.setInvisibleModeOnConnect) {
 		modeSymbols = @"8";
@@ -10175,6 +10266,66 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	/* Do we have somewhere to connect to? */
+	NSArray *servers = self.config.serverList;
+
+	if (servers.count == 0) {
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1123]")];
+
+		return;
+	}
+
+	/* Begin populating configuration */
+	/* Temporary values take priority. When a temporary server
+	 address is specified, then the temporary port is used too,
+	 or 6667 without SSL is used. Nothing from the current
+	 server configuration is read if there is temporary server. */
+	NSString *serverAddress = nil;
+
+	uint16_t serverPort = IRCConnectionDefaultServerPort;
+
+	BOOL connectionPrefersSecuredConnection = NO;
+
+	if (self.temporaryServerAddressOverride) {
+		serverAddress = self.temporaryServerAddressOverride;
+
+		if (self.temporaryServerPortOverride > 0 &&
+			self.temporaryServerPortOverride <= TXMaximumTCPPort)
+		{
+			serverPort = self.temporaryServerPortOverride;
+		}
+	}
+
+	if (serverAddress.isValidInternetAddress == NO) {
+		NSUInteger serverIndex = self.lastServerSelected;
+
+		if (serverIndex == NSNotFound) {
+			serverIndex = 0;
+		} else {
+			serverIndex += 1;
+
+			if (serverIndex >= servers.count) {
+				serverIndex = 0;
+			}
+		}
+
+		self.lastServerSelected = serverIndex;
+
+		IRCServer *server = servers[serverIndex];
+
+		serverAddress = server.serverAddress;
+		serverPort = server.serverPort;
+
+		connectionPrefersSecuredConnection = server.prefersSecuredConnection;
+
+		self.server = server;
+	}
+
+	/* Do not wait for an actual connect before destroying the temporary
+	 store. Once its defined, its to be nil'd out no matter what. */
+	self.temporaryServerAddressOverride = nil;
+	self.temporaryServerPortOverride = 0;
+
 	/* Reset status */
 	self.connectType = connectMode;
 
@@ -10186,28 +10337,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self stopReconnectTimer];
 
 	self.reconnectEnabled = YES;
-
-	/* Begin populating configuration */
-	NSString *serverAddress = nil;
-
-	uint16_t serverPort = IRCConnectionDefaultServerPort;
-
-	if (self.temporaryServerAddressOverride) {
-		serverAddress = self.temporaryServerAddressOverride;
-	} else {
-		serverAddress = self.config.serverAddress;
-	}
-
-	if (self.temporaryServerPortOverride > 0) {
-		serverPort = self.temporaryServerPortOverride;
-	} else {
-		serverPort = self.config.serverPort;
-	}
-
-	/* Do not wait for an actual connect before destroying the temporary
-	 store. Once its defined, its to be nil'd out no matter what. */
-	self.temporaryServerAddressOverride = nil;
-	self.temporaryServerPortOverride = 0;
 
 	/* Present status to user */
 	[mainWindow() updateTitleFor:self];
@@ -10233,7 +10362,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	socketConfig.connectionPrefersIPv4 = preferIPv4;
 
 	socketConfig.connectionPrefersModernCiphers = self.config.connectionPrefersModernCiphers;
-	socketConfig.connectionPrefersSecuredConnection = self.config.prefersSecuredConnection;
+	socketConfig.connectionPrefersSecuredConnection = connectionPrefersSecuredConnection;
 	socketConfig.connectionShouldValidateCertificateChain = self.config.validateServerCertificateChain;
 
 	socketConfig.identityClientSideCertificate = self.config.identityClientSideCertificate;

@@ -62,7 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL performDisconnectOnPongTimer;
 @property (readonly) BOOL performDisconnectOnReachabilityChange;
 @property (readonly) BOOL performPongTimer;
-@property (readonly) BOOL prefersSecuredConnection;
 @property (readonly) BOOL saslAuthenticationDisableExternalMechanism;
 @property (readonly) BOOL sendAuthenticationRequestsToUserServ;
 @property (readonly) BOOL sendWhoCommandRequestsToChannels;
@@ -79,17 +78,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSUInteger floodControlDelayTimerInterval;
 @property (readonly) NSUInteger floodControlMaximumMessages;
 @property (readonly) uint16_t proxyPort;
-@property (readonly) uint16_t serverPort;
 @property (readonly, copy) NSArray<IRCChannelConfig *> *channelList;
 @property (readonly, copy) NSArray<IRCHighlightMatchCondition *> *highlightList;
 @property (readonly, copy) NSArray<IRCAddressBookEntry *> *ignoreList;
 @property (readonly, copy) NSArray<NSString *> *alternateNicknames;
 @property (readonly, copy) NSArray<NSString *> *loginCommands;
+@property (readonly, copy) NSArray<IRCServer *> *serverList;
 @property (readonly, copy) NSString *connectionName;
 @property (readonly, copy) NSString *nickname;
 @property (readonly, copy) NSString *normalLeavingComment;
 @property (readonly, copy) NSString *realName;
-@property (readonly, copy) NSString *serverAddress;
 @property (readonly, copy) NSString *sleepModeLeavingComment;
 @property (readonly, copy) NSString *uniqueIdentifier;
 @property (readonly, copy) NSString *username;
@@ -101,8 +99,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSString *proxyPassword;
 @property (readonly, copy, nullable) NSString *proxyPasswordFromKeychain;
 @property (readonly, copy, nullable) NSString *proxyUsername;
-@property (readonly, copy, nullable) NSString *serverPassword;
-@property (readonly, copy, nullable) NSString *serverPasswordFromKeychain;
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages NS_DESIGNATED_INITIALIZER;
@@ -114,6 +110,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)uniqueCopy;
 - (id)uniqueCopyMutable;
+
+/* Deprecated */
+/* Accessing one of these properties will return the value from the first server in -serverList */
+@property (readonly) BOOL prefersSecuredConnection TEXTUAL_DEPRECATED("Access property through -serverList");
+@property (readonly) uint16_t serverPort TEXTUAL_DEPRECATED("Access property through -serverList");
+@property (readonly, copy, nullable) NSString *serverAddress TEXTUAL_DEPRECATED("Access property through -serverList");
+@property (readonly, copy, nullable) NSString *serverPassword TEXTUAL_DEPRECATED("Access property through -serverList");
+@property (readonly, copy, nullable) NSString *serverPasswordFromKeychain TEXTUAL_DEPRECATED("Access property through -serverList");
 @end
 
 #pragma mark -
@@ -136,7 +140,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign, readwrite) BOOL performDisconnectOnReachabilityChange;
 @property (nonatomic, assign, readwrite) BOOL performPongTimer;
-@property (nonatomic, assign, readwrite) BOOL prefersSecuredConnection;
 @property (nonatomic, assign, readwrite) BOOL saslAuthenticationDisableExternalMechanism;
 @property (nonatomic, assign, readwrite) BOOL sendAuthenticationRequestsToUserServ;
 @property (nonatomic, assign, readwrite) BOOL sendWhoCommandRequestsToChannels;
@@ -153,17 +156,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) NSUInteger floodControlDelayTimerInterval;
 @property (nonatomic, assign, readwrite) NSUInteger floodControlMaximumMessages;
 @property (nonatomic, assign, readwrite) uint16_t proxyPort;
-@property (nonatomic, assign, readwrite) uint16_t serverPort;
 @property (nonatomic, copy, readwrite) NSArray<IRCChannelConfig *> *channelList;
 @property (nonatomic, copy, readwrite) NSArray<IRCHighlightMatchCondition *> *highlightList;
 @property (nonatomic, copy, readwrite) NSArray<IRCAddressBookEntry *> *ignoreList;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *alternateNicknames;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *loginCommands;
+@property (nonatomic, copy, readwrite) NSArray<IRCServer *> *serverList;
 @property (nonatomic, copy, readwrite) NSString *connectionName;
 @property (nonatomic, copy, readwrite) NSString *nickname;
 @property (nonatomic, copy, readwrite) NSString *normalLeavingComment;
 @property (nonatomic, copy, readwrite) NSString *realName;
-@property (nonatomic, copy, readwrite) NSString *serverAddress;
 @property (nonatomic, copy, readwrite) NSString *sleepModeLeavingComment;
 @property (nonatomic, copy, readwrite) NSString *username;
 @property (nonatomic, copy, readwrite, nullable) NSData *identityClientSideCertificate;
@@ -172,7 +174,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyAddress;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyPassword;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyUsername;
-@property (nonatomic, copy, readwrite, nullable) NSString *serverPassword;
+
+/* Deprecated */
+/* Trying to set one of the following properties will throw an exception. */
+@property (nonatomic, assign, readwrite) BOOL prefersSecuredConnection TEXTUAL_DEPRECATED("Modify property using -serverList instead");
+@property (nonatomic, assign, readwrite) uint16_t serverPort TEXTUAL_DEPRECATED("Modify property using -serverList instead");
+@property (nonatomic, copy, readwrite, nullable) NSString *serverAddress TEXTUAL_DEPRECATED("Modify property using -serverList instead");
+@property (nonatomic, copy, readwrite, nullable) NSString *serverPassword TEXTUAL_DEPRECATED("Modify property using -serverList instead");
 @end
 
 NS_ASSUME_NONNULL_END

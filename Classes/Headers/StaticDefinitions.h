@@ -104,6 +104,11 @@ typedef void (^TXEmtpyBlockDataType)(void);
 
 #define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED(reason)
 
+#define TEXTUAL_DEPRECATED_ASSERT				COCOA_EXTENSIONS_DEPRECATED_ASSERT
+#define TEXTUAL_DEPRECATED_ASSERT_C				COCOA_EXTENSIONS_DEPRECATED_ASSERT_C
+
+#define TEXTUAL_DEPRECATED_WARNING				COCOA_EXTENSIONS_DEPRECATED_WARNING
+
 #define TEXTUAL_IGNORE_DEPRECATION_BEGIN		_Pragma("clang diagnostic push")									\
 												_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
 

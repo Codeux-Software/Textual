@@ -40,8 +40,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define IRCClientConfigFloodControlDefaultDelayIntervalForFreenode		2
-#define IRCClientConfigFloodControlDefaultMessageCountForFreenode		2 // freenode gets a special case 'cause they are strict about flood control
+#define IRCClientConfigFloodControlDefaultDelayIntervalLimited		2
+#define IRCClientConfigFloodControlDefaultMessageCountLimited		2 // freenode gets a special case 'cause they are strict about flood control
 
 @implementation IRCClientConfig
 
@@ -78,14 +78,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"performDisconnectOnPongTimer"] = @(NO);
 	defaults[@"performDisconnectOnReachabilityChange"] = @(YES);
 	defaults[@"performPongTimer"] = @(YES);
-	defaults[@"prefersSecuredConnection"] = @(NO);
 	defaults[@"primaryEncoding"] = @(TXDefaultPrimaryStringEncoding);
 	defaults[@"proxyPort"] = @(IRCConnectionDefaultProxyPort);
 	defaults[@"proxyType"] = @(IRCConnectionSocketSystemSocksProxyType);
 	defaults[@"saslAuthenticationDisableExternalMechanism"] = @(NO);
 	defaults[@"sendAuthenticationRequestsToUserServ"] = @(NO);
 	defaults[@"sendWhoCommandRequestsToChannels"] = @(YES);
-	defaults[@"serverPort"] = @(IRCConnectionDefaultServerPort);
 	defaults[@"setInvisibleModeOnConnect"] = @(NO);
 	defaults[@"sidebarItemExpanded"] = @(YES);
 
@@ -126,7 +124,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	SetVariableIfNilCopy(self->_loginCommands, @[])
 
-	[self modifyFloodControlDefaultsForFreenode];
+	[self modifyFloodControlDefaults];
 }
 
 - (void)populateDefaultsByAppendingDictionary:(NSDictionary<NSString *, id> *)defaultsToAppend
@@ -138,13 +136,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self->_defaults = [self->_defaults dictionaryByAddingEntries:defaultsToAppend];
 }
 
-- (void)modifyFloodControlDefaultsForFreenode
+- (void)modifyFloodControlDefaults
 {
 	ObjectIsAlreadyInitializedAssert
-
-	if ([self.serverAddress hasSuffix:@".freenode.net"] == NO) {
-		return;
-	}
 
 	if (self.floodControlDelayTimerInterval != IRCConnectionConfigFloodControlDefaultDelayInterval ||
 		self.floodControlMaximumMessages != IRCConnectionConfigFloodControlDefaultMessageCount)
@@ -152,8 +146,24 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 
-	NSUInteger floodControlDelayTimerInterval = IRCClientConfigFloodControlDefaultDelayIntervalForFreenode;
-	NSUInteger floodControlMaximumMessages = IRCClientConfigFloodControlDefaultMessageCountForFreenode;
+	BOOL haveLimitedServer = NO;
+
+	for (IRCServer *server in self.serverList) {
+		if ([server.serverAddress hasSuffix:@".freenode.net"] == NO) {
+			continue;
+		}
+
+		haveLimitedServer = YES;
+
+		break;
+	}
+
+	if (haveLimitedServer == NO) {
+		return;
+	}
+
+	NSUInteger floodControlDelayTimerInterval = IRCClientConfigFloodControlDefaultDelayIntervalLimited;
+	NSUInteger floodControlMaximumMessages = IRCClientConfigFloodControlDefaultMessageCountLimited;
 
 	[self populateDefaultsByAppendingDictionary:@{
 		@"floodControlDelayTimerInterval" : @(floodControlDelayTimerInterval),
@@ -220,8 +230,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	NSParameterAssert(self->_connectionName.length > 0);
-	NSParameterAssert(self->_serverAddress.length > 0);
-	NSParameterAssert(self->_serverPort > 0 && self->_serverPort <= TXMaximumTCPPort);
 }
 
 + (instancetype)newConfigByMerging:(IRCClientConfig *)config1 with:(IRCClientConfig *)config2
@@ -247,10 +255,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	configMutable.connectionName = network.networkName;
 
-	configMutable.serverAddress = network.serverAddress;
-	configMutable.serverPort = network.serverPort;
+	IRCServerMutable *server = [IRCServerMutable new];
 
-	configMutable.prefersSecuredConnection = network.prefersSecuredConnection;
+	server.serverAddress = network.serverAddress;
+	server.serverPort = network.serverPort;
+
+	server.prefersSecuredConnection = network.prefersSecuredConnection;
+
+	configMutable.serverList = @[[server copy]];
 
 	if ([self isMutable]) {
 		return configMutable;
@@ -297,7 +309,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
 	[defaultsMutable assignBoolTo:&self->_performPongTimer forKey:@"performPongTimer"];
-	[defaultsMutable assignBoolTo:&self->_prefersSecuredConnection forKey:@"prefersSecuredConnection"];
 	[defaultsMutable assignBoolTo:&self->_saslAuthenticationDisableExternalMechanism forKey:@"saslAuthenticationDisableExternalMechanism"];
 	[defaultsMutable assignBoolTo:&self->_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
 	[defaultsMutable assignBoolTo:&self->_sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
@@ -317,7 +328,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignStringTo:&self->_proxyAddress forKey:@"proxyAddress"];
 	[defaultsMutable assignStringTo:&self->_proxyUsername forKey:@"proxyUsername"];
 	[defaultsMutable assignStringTo:&self->_realName forKey:@"realName"];
-	[defaultsMutable assignStringTo:&self->_serverAddress forKey:@"serverAddress"];
 	[defaultsMutable assignStringTo:&self->_sleepModeLeavingComment forKey:@"sleepModeLeavingComment"];
 	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[defaultsMutable assignStringTo:&self->_username forKey:@"username"];
@@ -329,7 +339,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignUnsignedIntegerTo:&self->_proxyType forKey:@"proxyType"];
 
 	[defaultsMutable assignUnsignedShortTo:&self->_proxyPort forKey:@"proxyPort"];
-	[defaultsMutable assignUnsignedShortTo:&self->_serverPort forKey:@"serverPort"];
 
 	/* If this is a copy operation, then we can just stop here. The rest of the data processed below,
 	 such as other configurations and backwards keys are already taken care of. */
@@ -382,6 +391,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self->_highlightList = [highlightListOut copy];
 
+	/* Server List */
+	NSMutableArray<IRCServer *> *serverListOut = [NSMutableArray array];
+
+	NSArray<NSDictionary *> *serverListIn = [defaultsMutable arrayForKey:@"serverList"];
+
+	for (NSDictionary<NSString *, id> *e in serverListIn) {
+		IRCServer *c = [[IRCServer alloc] initWithDictionary:e];
+
+		[serverListOut addObject:c];
+	}
+
+	self->_serverList = [serverListOut copy];
+
 	/* Load legacy keys (if they exist) */
 	/* If legacy keys were assigned before new keys, then a transition would not occur properly. */
 	/* Since the new keys will read from -defaults if they are not present in /dic/, then those
@@ -392,7 +414,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_autoReconnect forKey:@"connectOnDisconnect"];
 	[defaultsMutable assignBoolTo:&self->_autoSleepModeDisconnect forKey:@"disconnectOnSleepMode"];
 	[defaultsMutable assignBoolTo:&self->_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
-	[defaultsMutable assignBoolTo:&self->_prefersSecuredConnection forKey:@"connectUsingSSL"];
 	[defaultsMutable assignBoolTo:&self->_setInvisibleModeOnConnect forKey:@"setInvisibleOnConnect"];
 	[defaultsMutable assignBoolTo:&self->_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
 	[defaultsMutable assignBoolTo:&self->_validateServerCertificateChain forKey:@"validateServerSideSSLCertificate"];
@@ -458,6 +479,82 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self writeProxyPasswordToKeychain];
 	}
+
+	/* Migrate servers */
+	[self migrateDictionaryToServerListV1Layout:defaultsMutable];
+}
+
+- (void)migrateDictionaryToServerListV1Layout:(NSDictionary *)dic
+{
+	NSParameterAssert(dic != nil);
+
+	ObjectIsAlreadyInitializedAssert
+
+	/* Check whether this object has already been migrated. */
+	if (self->_migratedToServerListV1Layout != NO) {
+		return;
+	}
+
+	/* This local variable is declarated regardless of results because
+	 we ever only want to do this migration one time, even if it fails
+	 for some reason. */
+	self->_migratedToServerListV1Layout = YES;
+
+	/* Check whether this object has already been migrated,
+	 but the local status of this migration is unknown. */
+	id migratedToServerListV1Layout = [dic objectForKey:@"migratedToServerListV1Layout"];
+
+	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue] != NO) {
+		return;
+	}
+
+	/* Do not perform migration if already one server exists. */
+	/* IRCClientConfig inserts these values back into the exported dictionary 
+	 for backwards compatibility which means once we imported them and have
+	 at least one server, then importing again will not help. */
+	if (self.serverList.count > 0) {
+		return;
+	}
+
+	/* Perform migration */
+	NSString *serverAddress = [dic stringForKey:@"serverAddress"];
+
+	if (serverAddress.isValidInternetAddress == NO) {
+		return;
+	}
+
+	uint16_t serverPort = [dic unsignedShortForKey:@"serverPort"];
+
+	if (serverPort == 0 || serverPort > TXMaximumTCPPort) {
+		return;
+	}
+
+	BOOL prefersSecuredConnection = [dic boolForKey:@"prefersSecuredConnection"];
+
+	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
+
+	NSString *serverPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
+														  withItemKind:@"application password"
+														   forUsername:nil
+														   serviceName:serverPasswordServiceName];
+
+	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:serverPasswordServiceName];
+
+	IRCServerMutable *server = [IRCServerMutable new];
+
+	server.serverAddress = serverAddress;
+	server.serverPort = serverPort;
+
+	server.serverPassword = serverPassword;
+
+	server.prefersSecuredConnection = prefersSecuredConnection;
+
+	[server writeServerPasswordToKeychain];
+
+	self->_serverList = @[[server copy]];
 }
 
 - (BOOL)isEqual:(id)object
@@ -480,8 +577,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	return (NSObjectsAreEqual(s1, s2) &&
 			NSObjectsAreEqual(self->_nicknamePassword, ((IRCClientConfig *)object)->_nicknamePassword) &&
-			NSObjectsAreEqual(self->_proxyPassword, ((IRCClientConfig *)object)->_proxyPassword) &&
-			NSObjectsAreEqual(self->_serverPassword, ((IRCClientConfig *)object)->_serverPassword));
+			NSObjectsAreEqual(self->_proxyPassword, ((IRCClientConfig *)object)->_proxyPassword));
 }
 
 - (NSUInteger)hash
@@ -509,13 +605,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	// the value of the instance variable if present, else it uses keychain.
 	config->_nicknamePassword = [self->_nicknamePassword copyWithZone:zone];
 	config->_proxyPassword = [self->_proxyPassword copyWithZone:zone];
-	config->_serverPassword = [self->_serverPassword copyWithZone:zone];
 
 	config->_channelList = [self->_channelList copyWithZone:zone];
 	config->_highlightList = [self->_highlightList copyWithZone:zone];
 	config->_ignoreList = [self->_ignoreList copyWithZone:zone];
+	config->_serverList = [self->_serverList copyWithZone:zone];
 
 	config->_defaults = [self->_defaults copyWithZone:zone];
+
+	config->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
@@ -528,13 +626,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	config.nicknamePassword = self->_nicknamePassword;
 	config.proxyPassword = self->_proxyPassword;
-	config.serverPassword = self->_serverPassword;
 
 	config.channelList = self->_channelList;
 	config.highlightList = self->_highlightList;
 	config.ignoreList = self->_ignoreList;
+	config.serverList = self->_serverList;
 
 	((IRCClientConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
+
+	((IRCClientConfig *)config)->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
@@ -561,21 +661,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	object->_nicknamePassword = [self.nicknamePassword copy];
 	object->_proxyPassword = [self.proxyPassword copy];
-	object->_serverPassword = [self.serverPassword copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 
 	NSMutableArray *channelList = [self.channelList mutableCopy];
 	NSMutableArray *highlightList = [self.highlightList mutableCopy];
 	NSMutableArray *ignoreList = [self.ignoreList mutableCopy];
+	NSMutableArray *serverList = [self.serverList mutableCopy];
 
 	[channelList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
 	[highlightList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
 	[ignoreList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
+	[serverList performSelectorOnObjectValueAndReplace:@selector(uniqueCopy)];
 
 	object->_channelList = [channelList copy];
 	object->_highlightList = [highlightList copy];
 	object->_ignoreList = [ignoreList copy];
+	object->_serverList = [serverList copy];
 
 	return object;
 }
@@ -608,10 +710,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic maybeSetObject:self.proxyAddress forKey:@"proxyAddress"];
 	[dic maybeSetObject:self.proxyUsername forKey:@"proxyUsername"];
 	[dic maybeSetObject:self.realName forKey:@"realName"];
-	[dic maybeSetObject:self.serverAddress forKey:@"serverAddress"];
 	[dic maybeSetObject:self.sleepModeLeavingComment forKey:@"sleepModeLeavingComment"];
 	[dic maybeSetObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[dic maybeSetObject:self.username forKey:@"username"];
+
+	[dic setBool:self->_migratedToServerListV1Layout forKey:@"migratedToServerListV1Layout"];
 
 	[dic setBool:self.autoConnect forKey:@"autoConnect"];
 	[dic setBool:self.autoReconnect forKey:@"autoReconnect"];
@@ -629,7 +732,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[dic setBool:self.performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
 	[dic setBool:self.performPongTimer forKey:@"performPongTimer"];
-	[dic setBool:self.prefersSecuredConnection forKey:@"prefersSecuredConnection"];
 	[dic setBool:self.saslAuthenticationDisableExternalMechanism forKey:@"saslAuthenticationDisableExternalMechanism"];
 	[dic setBool:self.sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
 	[dic setBool:self.sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
@@ -646,7 +748,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setUnsignedInteger:self.proxyType forKey:@"proxyType"];
 
 	[dic setUnsignedShort:self.proxyPort forKey:@"proxyPort"];
-	[dic setUnsignedShort:self.serverPort forKey:@"serverPort"];
 
 	/* These are items that cannot be synced over iCloud because they access data specific to 
 	 this device or only contain state information which is not useful to other devices. */
@@ -657,6 +758,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[dic setDouble:self.lastMessageServerTime forKey:@"cachedLastServerTimeCapabilityReceivedAtTimestamp"];
 	}
+
+	/* Deprecated */
+	/* These values are inserted here for backwards compatibility 
+	 with earlier versions of Textual */
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
+	[dic maybeSetObject:self.serverAddress forKey:@"serverAddress"];
+
+	[dic setBool:self.prefersSecuredConnection forKey:@"prefersSecuredConnection"];
+
+	[dic setUnsignedShort:self.serverPort forKey:@"serverPort"];
+TEXTUAL_IGNORE_DEPRECATION_END
 
 	/* Channel List */
 	/* During a copy operation, it is faster to copy these arrays as a whole.
@@ -700,6 +812,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (ignoreListOut.count > 0) {
 			dic[@"ignoreList"] = [ignoreListOut copy];
 		}
+
+		/* Servers */
+		NSMutableArray<NSDictionary *> *serverListOut = [NSMutableArray array];
+
+		for (IRCServer *e in self.serverList) {
+			NSDictionary *d = e.dictionaryValue;
+
+			[serverListOut addObject:d];
+		}
+
+		if (serverListOut.count > 0) {
+			dic[@"serverList"] = [serverListOut copy];
+		}
+
 	}
 
 	return [dic dictionaryByRemovingDefaults:self->_defaults allowEmptyValues:YES];
@@ -750,32 +876,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return kcPassword;
 }
 
-- (nullable NSString *)serverPassword
-{
-	if (self->_serverPassword) {
-		return self->_serverPassword;
-	}
-
-	return self.serverPasswordFromKeychain;
-}
-
-- (nullable NSString *)serverPasswordFromKeychain
-{
-	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
-
-	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
-													  withItemKind:@"application password"
-													   forUsername:nil
-													   serviceName:serverPasswordServiceName];
-
-	return kcPassword;
-}
-
 - (void)writeItemsToKeychain
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	[self writeNicknamePasswordToKeychain];
 	[self writeProxyPasswordToKeychain];
-	[self writeServerPasswordToKeychain];
 }
 
 - (void)writeNicknamePasswordToKeychain
@@ -814,37 +920,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)writeServerPasswordToKeychain
 {
-	if (self->_serverPassword == nil) {
-		return;
-	}
-
-	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
-
-	[XRKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
-						   withItemKind:@"application password"
-							forUsername:nil
-						withNewPassword:self->_serverPassword
-							serviceName:serverPasswordServiceName];
-
-	self->_serverPassword = nil;
+	TEXTUAL_DEPRECATED_WARNING
 }
 
-- (void)destroyKeychainItems
+- (void)destroyNicknamePasswordKeychainItem
 {
-	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
-
-	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:serverPasswordServiceName];
-
-	NSString *proxyPasswordServiceName = [NSString stringWithFormat:@"textual.proxy-server.%@", self.uniqueIdentifier];
-
-	[XRKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:proxyPasswordServiceName];
-
 	NSString *nicknamePasswordServiceName = [NSString stringWithFormat:@"textual.nickserv.%@", self.uniqueIdentifier];
 
 	[XRKeychain deleteKeychainItem:@"Textual (NickServ)"
@@ -852,14 +932,71 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					   forUsername:nil
 					   serviceName:nicknamePasswordServiceName];
 
-	[self resetTemporaryKeychainItems];
+	self->_nicknamePassword = nil;
 }
 
-- (void)resetTemporaryKeychainItems
+- (void)destroyProxyPasswordKeychainItem
 {
-	self->_serverPassword = nil;
+	NSString *proxyPasswordServiceName = [NSString stringWithFormat:@"textual.proxy-server.%@", self.uniqueIdentifier];
+
+	[XRKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:proxyPasswordServiceName];
+
 	self->_proxyPassword = nil;
-	self->_nicknamePassword = nil;
+}
+
+- (void)destroyKeychainItems
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	[self destroyNicknamePasswordKeychainItem];
+	[self destroyProxyPasswordKeychainItem];
+}
+
+#pragma mark -
+#pragma mark Deprecated Properties
+
+- (nullable NSString *)serverAddress
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.serverList.firstObject.serverAddress;
+}
+
+- (uint16_t)serverPort
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	uint16_t serverPort = self.serverList.firstObject.serverPort;
+
+	if (serverPort == 0) {
+		return IRCConnectionDefaultServerPort;
+	}
+
+	return serverPort;
+}
+
+- (BOOL)prefersSecuredConnection
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.serverList.firstObject.prefersSecuredConnection;
+}
+
+- (nullable NSString *)serverPassword
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.serverList.firstObject.serverPassword;
+}
+
+- (nullable NSString *)serverPasswordFromKeychain
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.serverList.firstObject.serverPasswordFromKeychain;
 }
 
 @end
@@ -911,6 +1048,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic sendAuthenticationRequestsToUserServ;
 @dynamic sendWhoCommandRequestsToChannels;
 @dynamic serverAddress;
+@dynamic serverList;
 @dynamic serverPassword;
 @dynamic serverPort;
 @dynamic setInvisibleModeOnConnect;
@@ -1020,9 +1158,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)setPrefersSecuredConnection:(BOOL)prefersSecuredConnection
 {
-	if (self->_prefersSecuredConnection != prefersSecuredConnection) {
-		self->_prefersSecuredConnection = prefersSecuredConnection;
-	}
+	TEXTUAL_DEPRECATED_ASSERT
 }
 
 - (void)setSaslAuthenticationDisableExternalMechanism:(BOOL)saslAuthenticationDisableExternalMechanism
@@ -1140,6 +1276,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
+- (void)setServerList:(NSArray<IRCServer *> *)serverList
+{
+	NSParameterAssert(serverList != nil);
+
+	if (self->_serverList != serverList) {
+		self->_serverList = [serverList copy];
+	}
+}
+
 - (void)setIdentityClientSideCertificate:(nullable NSData *)identityClientSideCertificate
 {
 	if (self->_identityClientSideCertificate != identityClientSideCertificate) {
@@ -1218,20 +1363,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)setServerAddress:(NSString *)serverAddress
+- (void)setServerAddress:(nullable NSString *)serverAddress
 {
 	NSParameterAssert(serverAddress != nil);
 
-	if (self->_serverAddress != serverAddress) {
-		self->_serverAddress = [serverAddress copy];
-	}
+	TEXTUAL_DEPRECATED_ASSERT
 }
 
 - (void)setServerPassword:(nullable NSString *)serverPassword
 {
-	if (self->_serverPassword != serverPassword) {
-		self->_serverPassword = [serverPassword copy];
-	}
+	TEXTUAL_DEPRECATED_ASSERT
 }
 
 - (void)setSleepModeLeavingComment:(NSString *)sleepModeLeavingComment
@@ -1302,9 +1443,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)setServerPort:(uint16_t)serverPort
 {
-	if (self->_serverPort != serverPort) {
-		self->_serverPort = serverPort;
-	}
+	TEXTUAL_DEPRECATED_ASSERT
 }
 
 @end
