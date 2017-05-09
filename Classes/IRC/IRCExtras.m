@@ -454,16 +454,10 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *existingClient = nil;
 
 	if (mergeConnectionIfPossible && channelListCount > 0) {
-		for (IRCClient *u in worldController().clientList) {
-			if ([serverAddress isEqualIgnoringCase:u.config.serverAddress]) {
-				existingClient = u;
-
-				break;
-			}
-		}
+		existingClient = [worldController() findClientWithServerAddress:serverAddress];
 	}
 
-	if (existingClient) {
+	if (existingClient != nil) {
 		BOOL mergeConnection = NO;
 
 		if (channelListCount > 1) {
@@ -515,10 +509,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 		baseConfig.connectionName = serverAddress;
 
-		baseConfig.serverAddress = serverAddress;
-		baseConfig.serverPort = serverPort;
+		IRCServerMutable *server = [IRCServerMutable new];
 
-		baseConfig.prefersSecuredConnection = connectSecurely;
+		server.serverAddress = serverAddress;
+		server.serverPort = serverPort;
+
+		server.prefersSecuredConnection = connectSecurely;
+
+		if (serverPassword != nil) {
+			server.serverPassword = serverPassword;
+		}
+
+		baseConfig.serverList = @[[server copy]];
 
 		NSMutableArray<IRCChannelConfig *> *channelListConfigs = [NSMutableArray arrayWithCapacity:channelListCount];
 
@@ -529,10 +531,6 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		baseConfig.channelList = channelListConfigs;
-
-		if (serverPassword) {
-			baseConfig.serverPassword = serverPassword;
-		}
 
 		IRCClient *client = [worldController() createClientWithConfig:baseConfig reload:YES];
 

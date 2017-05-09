@@ -65,6 +65,8 @@ TEXTUAL_EXTERN NSString * const IRCWorldWillDestroyChannelNotification;
 - (nullable IRCClient *)findClientWithId:(NSString *)clientId;
 - (nullable IRCChannel *)findChannelWithId:(NSString *)channelId onClientWithId:(NSString *)clientId;
 
+- (nullable IRCClient *)findClientWithServerAddress:(NSString *)serverAddress;
+
 - (IRCClient *)createClientWithConfig:(IRCClientConfig *)config;
 - (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client;
 - (IRCChannel *)createPrivateMessage:(NSString *)nickname onClient:(IRCClient *)client;
