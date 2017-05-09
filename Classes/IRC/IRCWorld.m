@@ -423,6 +423,19 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	return item.uniqueIdentifier;
 }
 
+- (nullable IRCClient *)findClientWithServerAddress:(NSString *)serverAddress
+{
+	for (IRCClient *u in self.clientList) {
+		for (IRCServer *s in u.config.serverList) {
+			if ([s.serverAddress isEqualIgnoringCase:serverAddress]) {
+				return u;
+			}
+		}
+	}
+
+	return nil;
+}
+
 #pragma mark -
 #pragma mark JavaScript
 
