@@ -153,7 +153,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 		config.connectionName = serverAddress;
 
-		config.serverAddress = serverAddress;
+		IRCServerMutable *server = [IRCServerMutable new];
+
+		server.serverAddress = serverAddress;
+
+		config.serverList = @[[server copy]];
 	}
 
 	config.autoConnect = (self.autoConnectCheck.state == NSOnState);
