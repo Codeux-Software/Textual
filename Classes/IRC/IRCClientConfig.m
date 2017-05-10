@@ -78,12 +78,14 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"performDisconnectOnPongTimer"] = @(NO);
 	defaults[@"performDisconnectOnReachabilityChange"] = @(YES);
 	defaults[@"performPongTimer"] = @(YES);
+	defaults[@"prefersSecuredConnection"] = @(NO);
 	defaults[@"primaryEncoding"] = @(TXDefaultPrimaryStringEncoding);
 	defaults[@"proxyPort"] = @(IRCConnectionDefaultProxyPort);
 	defaults[@"proxyType"] = @(IRCConnectionSocketSystemSocksProxyType);
 	defaults[@"saslAuthenticationDisableExternalMechanism"] = @(NO);
 	defaults[@"sendAuthenticationRequestsToUserServ"] = @(NO);
 	defaults[@"sendWhoCommandRequestsToChannels"] = @(YES);
+	defaults[@"serverPort"] = @(IRCConnectionDefaultServerPort);
 	defaults[@"setInvisibleModeOnConnect"] = @(NO);
 	defaults[@"sidebarItemExpanded"] = @(YES);
 
@@ -309,6 +311,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
 	[defaultsMutable assignBoolTo:&self->_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
 	[defaultsMutable assignBoolTo:&self->_performPongTimer forKey:@"performPongTimer"];
+	[defaultsMutable assignBoolTo:&self->_prefersSecuredConnection forKey:@"prefersSecuredConnection"];
 	[defaultsMutable assignBoolTo:&self->_saslAuthenticationDisableExternalMechanism forKey:@"saslAuthenticationDisableExternalMechanism"];
 	[defaultsMutable assignBoolTo:&self->_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
 	[defaultsMutable assignBoolTo:&self->_sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
@@ -328,6 +331,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignStringTo:&self->_proxyAddress forKey:@"proxyAddress"];
 	[defaultsMutable assignStringTo:&self->_proxyUsername forKey:@"proxyUsername"];
 	[defaultsMutable assignStringTo:&self->_realName forKey:@"realName"];
+	[defaultsMutable assignStringTo:&self->_serverAddress forKey:@"serverAddress"];
 	[defaultsMutable assignStringTo:&self->_sleepModeLeavingComment forKey:@"sleepModeLeavingComment"];
 	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[defaultsMutable assignStringTo:&self->_username forKey:@"username"];
@@ -339,6 +343,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignUnsignedIntegerTo:&self->_proxyType forKey:@"proxyType"];
 
 	[defaultsMutable assignUnsignedShortTo:&self->_proxyPort forKey:@"proxyPort"];
+	[defaultsMutable assignUnsignedShortTo:&self->_serverPort forKey:@"serverPort"];
 
 	/* If this is a copy operation, then we can just stop here. The rest of the data processed below,
 	 such as other configurations and backwards keys are already taken care of. */
@@ -414,6 +419,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_autoReconnect forKey:@"connectOnDisconnect"];
 	[defaultsMutable assignBoolTo:&self->_autoSleepModeDisconnect forKey:@"disconnectOnSleepMode"];
 	[defaultsMutable assignBoolTo:&self->_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
+	[defaultsMutable assignBoolTo:&self->_prefersSecuredConnection forKey:@"connectUsingSSL"];
 	[defaultsMutable assignBoolTo:&self->_setInvisibleModeOnConnect forKey:@"setInvisibleOnConnect"];
 	[defaultsMutable assignBoolTo:&self->_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
 	[defaultsMutable assignBoolTo:&self->_validateServerCertificateChain forKey:@"validateServerSideSSLCertificate"];
@@ -492,6 +498,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Check whether this object has already been migrated. */
 	if (self->_migratedToServerListV1Layout != NO) {
+		LogToConsoleDebug("Migration cancelled at check 1")
+
 		return;
 	}
 
@@ -505,6 +513,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	id migratedToServerListV1Layout = [dic objectForKey:@"migratedToServerListV1Layout"];
 
 	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue] != NO) {
+		LogToConsoleDebug("Migration cancelled at check 2")
+
 		return;
 	}
 
@@ -513,6 +523,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 for backwards compatibility which means once we imported them and have
 	 at least one server, then importing again will not help. */
 	if (self.serverList.count > 0) {
+		LogToConsoleDebug("Migration cancelled at check 3")
+
 		return;
 	}
 
@@ -520,12 +532,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *serverAddress = [dic stringForKey:@"serverAddress"];
 
 	if (serverAddress.isValidInternetAddress == NO) {
+		LogToConsoleDebug("Migration cancelled because of bad server address")
+
 		return;
 	}
 
 	uint16_t serverPort = [dic unsignedShortForKey:@"serverPort"];
 
 	if (serverPort == 0 || serverPort > TXMaximumTCPPort) {
+		LogToConsoleDebug("Migration cancelled because of bad server port")
+
 		return;
 	}
 
@@ -537,11 +553,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 														  withItemKind:@"application password"
 														   forUsername:nil
 														   serviceName:serverPasswordServiceName];
-
-	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:serverPasswordServiceName];
 
 	IRCServerMutable *server = [IRCServerMutable new];
 
@@ -555,6 +566,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[server writeServerPasswordToKeychain];
 
 	self->_serverList = @[[server copy]];
+
+	self->_migratedToServerListV1Layout = YES;
+	self->_migratedServerPasswordPendingDestroy = YES;
 }
 
 - (BOOL)isEqual:(id)object
@@ -947,6 +961,22 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self->_proxyPassword = nil;
 }
 
+- (void)destroyServerPasswordKeychainItemAfterMigration
+{
+	if (self->_migratedServerPasswordPendingDestroy == NO) {
+		return;
+	}
+
+	self->_migratedServerPasswordPendingDestroy = NO;
+
+	NSString *serverPasswordServiceName = [NSString stringWithFormat:@"textual.server.%@", self.uniqueIdentifier];
+
+	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:serverPasswordServiceName];
+}
+
 - (void)destroyKeychainItems
 {
 	TEXTUAL_DEPRECATED_WARNING
@@ -962,41 +992,65 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	TEXTUAL_DEPRECATED_WARNING
 
-	return self.serverList.firstObject.serverAddress;
+	IRCServer *server = self.serverList.firstObject;
+
+	if (server == nil) {
+		return self->_serverAddress;
+	}
+
+	return server.serverAddress;
 }
 
 - (uint16_t)serverPort
 {
 	TEXTUAL_DEPRECATED_WARNING
 
-	uint16_t serverPort = self.serverList.firstObject.serverPort;
+	IRCServer *server = self.serverList.firstObject;
 
-	if (serverPort == 0) {
-		return IRCConnectionDefaultServerPort;
+	if (server == nil) {
+		return self->_serverPort;
 	}
 
-	return serverPort;
+	return server.serverPort;
 }
 
 - (BOOL)prefersSecuredConnection
 {
 	TEXTUAL_DEPRECATED_WARNING
 
-	return self.serverList.firstObject.prefersSecuredConnection;
+	IRCServer *server = self.serverList.firstObject;
+
+	if (server == nil) {
+		return self->_prefersSecuredConnection;
+	}
+
+	return server.prefersSecuredConnection;
 }
 
 - (nullable NSString *)serverPassword
 {
 	TEXTUAL_DEPRECATED_WARNING
 
-	return self.serverList.firstObject.serverPassword;
+	IRCServer *server = self.serverList.firstObject;
+
+	if (server == nil) {
+		return nil;
+	}
+
+	return server.serverPassword;
 }
 
 - (nullable NSString *)serverPasswordFromKeychain
 {
 	TEXTUAL_DEPRECATED_WARNING
 
-	return self.serverList.firstObject.serverPasswordFromKeychain;
+	IRCServer *server = self.serverList.firstObject;
+
+	if (server == nil) {
+		return nil;
+	}
+
+	return server.serverPasswordFromKeychain;
 }
 
 @end
