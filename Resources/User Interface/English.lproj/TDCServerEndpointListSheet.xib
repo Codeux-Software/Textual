@@ -35,10 +35,13 @@
                             <font key="font" metaFont="system"/>
                             <segments>
                                 <segment image="NSAddTemplate" width="32"/>
-                                <segment image="NSRemoveTemplate" width="32" enabled="NO" tag="1"/>
+                                <segment image="NSRemoveTemplate" width="32" tag="1"/>
                             </segments>
                         </segmentedCell>
                         <accessibility description="Add Entry or Remove Entry"/>
+                        <connections>
+                            <action selector="entryActionsSegmentedControlClicked:" target="-2" id="mor-eT-ZoC"/>
+                        </connections>
                     </segmentedControl>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UvC-Rd-H2d">
                         <rect key="frame" x="611" y="3" width="70" height="32"/>
@@ -114,7 +117,6 @@
                                                                         <bool key="NSValidatesImmediately" value="YES"/>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <outlet property="delegate" destination="-2" id="J5Z-i6-OX7"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -160,7 +162,6 @@
                                                                         <bool key="NSValidatesImmediately" value="YES"/>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <outlet property="delegate" destination="-2" id="Y0A-JO-VcS"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -175,7 +176,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="connectSecurely" width="100" minWidth="100" maxWidth="100" id="cqT-uh-Sy9">
+                                        <tableColumn identifier="prefersSecuredConnection" width="100" minWidth="100" maxWidth="100" id="cqT-uh-Sy9">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Connect Securely">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -260,6 +261,8 @@
                                     <accessibility description="Server List"/>
                                     <connections>
                                         <binding destination="Cq5-Tc-eTe" name="content" keyPath="arrangedObjects" id="DId-eq-eOU"/>
+                                        <binding destination="Cq5-Tc-eTe" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="DId-eq-eOU" id="Nbn-NS-kCL"/>
+                                        <outlet property="dataSource" destination="-2" id="f1X-tB-ald"/>
                                         <outlet property="delegate" destination="-2" id="wsM-bn-5m5"/>
                                     </connections>
                                 </tableView>
@@ -295,7 +298,10 @@
                     <constraint firstItem="4Gy-fQ-L47" firstAttribute="leading" secondItem="rOf-7y-CFb" secondAttribute="leading" id="yEg-C6-EQz"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="2235" y="835"/>
+            <connections>
+                <outlet property="delegate" destination="-2" id="Ng7-YB-dWH"/>
+            </connections>
+            <point key="canvasLocation" x="2498" y="1002"/>
         </window>
     </objects>
     <resources>

@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *serverPort;
 @property (nonatomic, copy) NSNumber *prefersSecuredConnection;
 @property (nonatomic, copy) NSString *serverPassword;
+@property (nonatomic, assign) BOOL observersRegistered;
 @end
 
 @implementation TDCServerEndpointListSheetTableCellView
@@ -190,6 +191,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setObjectValue:(nullable id)objectValue
 {
+	[self stopObservingObjectValue];
+
 	super.objectValue = objectValue;
 
 	[self startObservingObjectValue];
@@ -209,15 +212,23 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[objectValue addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
+
+	self.observersRegistered = YES;
 }
 
 - (void)stopObservingObjectValue
 {
+	if (self.observersRegistered == NO) {
+		return;
+	}
+
 	NSString *keyPath = self.identifier;
 
 	IRCServerMutable *objectValue = self.objectValue;
 
 	[objectValue removeObserver:self forKeyPath:keyPath];
+
+	self.observersRegistered = NO;
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
@@ -226,11 +237,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[self willChangeValueForKey:@"serverPort"];
 		[self didChangeValueForKey:@"serverPort"];
 	}
-}
-
-- (void)dealloc
-{
-	[self stopObservingObjectValue];
 }
 
 @end
