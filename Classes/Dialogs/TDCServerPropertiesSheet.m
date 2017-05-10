@@ -1514,7 +1514,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	server = [serverMutable copy];
 
-	if (server == nil) {
+	if (self.mutableServerList.count == 0) {
 		[self.mutableServerList addObject:server];
 	} else {
 		[self.mutableServerList replaceObjectAtIndex:0 withObject:server];
