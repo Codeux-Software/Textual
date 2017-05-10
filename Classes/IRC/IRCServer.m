@@ -59,7 +59,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self populateDefaultsPostflight];
 
-		[self initializedClassHealthCheck];
+		/* Health checks are disabled because Server Properties might
+		 write an empty server address to the class then perform a
+		 copy on the object which would throw an exception. */
+		/* TODO: Modify Server Properties to be more friendly. */
+//		[self initializedClassHealthCheck];
 
 		self->_objectInitialized = YES;
 
