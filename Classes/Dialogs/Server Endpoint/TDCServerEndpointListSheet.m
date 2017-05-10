@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (selectedSegment == 0) {
 		[self addEntry];
 	} else if (selectedSegment == 1) {
-		[self removeSelecedEntry];
+		[self removeSelectedEntry];
 	}
 }
 
@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)removeSelecedEntry
+- (void)removeSelectedEntry
 {
 	NSIndexSet *selectedRows = self.entryTable.selectedRowIndexes;
 
