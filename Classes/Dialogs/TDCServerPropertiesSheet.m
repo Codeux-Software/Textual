@@ -483,8 +483,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.navigationOutlineview reloadData];
 	
 	[self.navigationOutlineview expandItem:navigationTreeMatrix[0]];
-	[self.navigationOutlineview expandItem:navigationTreeMatrix[1]];
-	[self.navigationOutlineview expandItem:navigationTreeMatrix[2]];
 }
 
 - (void)populateEncodings
