@@ -158,7 +158,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"Prompts[1126][1]");
 			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"Prompts[1126][2]");
 
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
+			*outError = [NSError errorWithDomain:TXErrorDomain code:27984 userInfo:userInfo];
 		}
 
 		return NO;

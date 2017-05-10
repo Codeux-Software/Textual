@@ -54,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define themeSettings()				[themeController() customSettings]
 
+TEXTUAL_EXTERN NSString *TXErrorDomain;
+
 @interface TXSharedApplication : NSObject
 + (TPCThemeController *)sharedThemeController;
 @end
