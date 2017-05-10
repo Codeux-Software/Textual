@@ -673,10 +673,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];
-	}
 
-	object->_nicknamePassword = [self.nicknamePassword copy];
-	object->_proxyPassword = [self.proxyPassword copy];
+		object->_nicknamePassword = [self.nicknamePassword copy];
+		object->_proxyPassword = [self.proxyPassword copy];
+	}
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 

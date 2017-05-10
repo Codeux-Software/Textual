@@ -294,9 +294,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];
-	}
 
-	object->_secretKey = [self.secretKey copy];
+		object->_secretKey = [self.secretKey copy];
+	}
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
 
