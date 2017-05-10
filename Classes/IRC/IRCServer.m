@@ -173,6 +173,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self mutableCopy];
 	}
 
+#warning TODO: Evaluate whether we need this here (and in IRCClientConfig) \
+	when -copyWithZone: copies self->_serverPassword
+
 	object->_serverPassword = [self.serverPassword copy];
 
 	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
