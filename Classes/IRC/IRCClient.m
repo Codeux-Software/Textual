@@ -511,6 +511,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Write passwords to keychain */
 	[self writePasswordsToKeychain];
 
+	[self destroyServerPasswordKeychainItemAfterMigration];
+
 	/* Update main window title */
 	[mainWindow() updateTitleFor:self];
 
@@ -540,6 +542,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self.config writeNicknamePasswordToKeychain];
 	[self.config writeProxyPasswordToKeychain];
+}
+
+- (void)destroyServerPasswordKeychainItemAfterMigration
+{
+	[self.config destroyServerPasswordKeychainItemAfterMigration];
 }
 
 - (void)updateStoredConfiguration

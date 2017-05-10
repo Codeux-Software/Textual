@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _performDisconnectOnPongTimer;
 	BOOL _performDisconnectOnReachabilityChange;
 	BOOL _performPongTimer;
+	BOOL _prefersSecuredConnection;
 	BOOL _saslAuthenticationDisableExternalMechanism;
 	BOOL _sendAuthenticationRequestsToUserServ;
 	BOOL _sendWhoCommandRequestsToChannels;
@@ -82,6 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_proxyPassword;
 	NSString *_proxyUsername;
 	NSString *_realName;
+	NSString *_serverAddress;
 	NSString *_sleepModeLeavingComment;
 	NSString *_username;
 	NSStringEncoding _fallbackEncoding;
@@ -90,11 +92,13 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger _floodControlDelayTimerInterval;
 	NSUInteger _floodControlMaximumMessages;
 	uint16_t _proxyPort;
+	uint16_t _serverPort;
 
 @private
 	BOOL _objectInitialized;
 	BOOL _objectInitializedAsCopy;
 	BOOL _migratedToServerListV1Layout;
+	BOOL _migratedServerPasswordPendingDestroy;
 	NSString *_uniqueIdentifier;
 	NSDictionary *_defaults;
 }
