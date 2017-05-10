@@ -68,6 +68,7 @@
 "TDCServerPropertiesSheet[1006][15]" = "Basic Settings";
 "TDCServerPropertiesSheet[1006][16]" = "Vendor Specific";
 "TDCServerPropertiesSheet[1006][17]" = "Advanced";
+"TDCServerPropertiesSheet[1006][18]" = "Redundancy";
 
 /* Error localizations */
 "TDCServerPropertiesSheet[1007][01]" = "Misconfigured value in Identity section";

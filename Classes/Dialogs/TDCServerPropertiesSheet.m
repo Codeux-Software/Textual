@@ -72,13 +72,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerInputView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerSystemSocksView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerTorBrowserView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewRedundancy;
 @property (nonatomic, strong) IBOutlet NSView *contentViewZncBouncer;
 @property (nonatomic, strong) NSMutableArray *mutableAddressBookList;
 @property (nonatomic, strong) NSMutableArray *mutableChannelList;
 @property (nonatomic, strong) NSMutableArray *mutableHighlightList;
+@property (nonatomic, strong) NSMutableArray *mutableServerList;
 @property (nonatomic, strong, nullable) TDCAddressBookSheet *addressBookSheet;
 @property (nonatomic, strong, nullable) TDCHighlightEntrySheet *highlightSheet;
 @property (nonatomic, strong, nullable) TDCChannelPropertiesSheet *channelSheet;
+@property (nonatomic, strong, nullable) TDCServerEndpointListSheet *serverEndpointSheet;
 @property (nonatomic, weak) IBOutlet NSButton *addAddressBookEntryButton;
 @property (nonatomic, weak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *addHighlightButton;
@@ -169,6 +172,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)showAddAddressBookEntryMenu:(id)sender;
 
+- (IBAction)editSeverEndpoints:(id)sender;
+
 - (IBAction)useSSLCheckChanged:(id)sender;
 
 - (IBAction)autojoinWaitsForNickServChanged:(id)sender;
@@ -225,6 +230,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.mutableAddressBookList = [NSMutableArray array];
 	self.mutableChannelList = [NSMutableArray array];
 	self.mutableHighlightList = [NSMutableArray array];
+	self.mutableServerList = [NSMutableArray array];
 	
 	/* Connect commands text box better font */
 	self.connectCommandsField.font = [NSFont fontWithName:@"Lucida Grande" size:13.0];
@@ -463,6 +469,7 @@ NS_ASSUME_NONNULL_BEGIN
 			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][04]"),	@"view" : self.contentViewFloodControl},
 			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][13]"),	@"view" : self.contentViewNetworkSocket},
 			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][10]"),	@"view" : self.contentViewProxyServer},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][18]"),	@"view" : self.contentViewRedundancy},
 		]
 	}];
 
@@ -610,6 +617,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[self.channelSheet close];
 	} else if (self.highlightSheet) {
 		[self.highlightSheet close];
+	} else if (self.serverEndpointSheet) {
+		[self.serverEndpointSheet close];
 	}
 }
 
@@ -695,24 +704,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* General */
 	self.connectionNameTextField.stringValue = self.config.connectionName;
-
-	NSString *serverAddress = self.config.serverAddress;
-
-	if (serverAddress) {
-		IRCNetwork *serverAddressNetwork = [self.networkList networkWithServerAddress:serverAddress];
-
-		if (serverAddressNetwork) {
-			self.serverAddressComboBox.stringValue = serverAddressNetwork.networkName;
-		} else {
-			self.serverAddressComboBox.stringValue = serverAddress;
-		}
-	}
-
-	self.serverPortTextField.integerValue = self.config.serverPort;
-
-	self.prefersSecuredConnectionCheck.state = self.config.prefersSecuredConnection;
-
-	self.serverPasswordTextField.stringValue = self.config.serverPassword;
 
 	self.autoConnectCheck.state = self.config.autoConnect;
 	self.autoReconnectCheck.state = self.config.autoReconnect;
@@ -806,8 +797,47 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.mutableAddressBookList setArray:self.config.ignoreList];
 	[self.mutableChannelList setArray:self.config.channelList];
 	[self.mutableHighlightList setArray:self.config.highlightList];
+	[self.mutableServerList setArray:self.config.serverList];
+
+	/* Special loads */
+	[self loadPrimaryServerEndpoint];
 
 	[self loadConfigPostflight];
+}
+
+- (void)loadPrimaryServerEndpoint
+{
+	IRCServer *server = self.mutableServerList.firstObject;
+
+	if (server == nil) {
+		self.serverAddressComboBox.stringValue = NSStringEmptyPlaceholder;
+
+		self.serverPortTextField.integerValue = IRCConnectionDefaultServerPort;
+
+		self.prefersSecuredConnectionCheck.state = NSOffState;
+
+		self.serverPasswordTextField.stringValue = NSStringEmptyPlaceholder;
+
+		return;
+	}
+
+	NSString *serverAddress = server.serverAddress;
+
+	if (serverAddress) {
+		IRCNetwork *serverAddressNetwork = [self.networkList networkWithServerAddress:serverAddress];
+
+		if (serverAddressNetwork) {
+			self.serverAddressComboBox.stringValue = serverAddressNetwork.networkName;
+		} else {
+			self.serverAddressComboBox.stringValue = serverAddress;
+		}
+	}
+
+	self.serverPortTextField.integerValue = server.serverPort;
+
+	self.prefersSecuredConnectionCheck.state = server.prefersSecuredConnection;
+
+	self.serverPasswordTextField.stringValue = server.serverPassword;
 }
 
 - (void)loadConfigPostflight
@@ -830,22 +860,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* General */
 	self.config.connectionName = self.connectionNameTextField.value;
-
-	NSString *serverAddress = self.serverAddressComboBox.value;
-
-	IRCNetwork *serverAddressNetwork = [self.networkList networkNamed:serverAddress];
-
-	if (serverAddressNetwork) {
-		self.config.serverAddress = serverAddressNetwork.serverAddress;
-	} else {
-		self.config.serverAddress = serverAddress.lowercaseString;
-	}
-
-	self.config.serverPort = self.serverPortTextField.integerValue;
-
-	self.config.prefersSecuredConnection = (self.prefersSecuredConnectionCheck.state == NSOnState);
-
-	self.config.serverPassword = self.serverPasswordTextField.trimmedStringValue;
 
 	self.config.autoConnect	= (self.autoConnectCheck.state == NSOnState);
 	self.config.autoReconnect = (self.autoReconnectCheck.state == NSOnState);
@@ -929,6 +943,16 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.channelList = self.mutableChannelList;
 	self.config.highlightList = self.mutableHighlightList;
 	self.config.ignoreList = self.mutableAddressBookList;
+	self.config.serverList = self.mutableServerList;
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+	NSControl *sender = obj.object;
+
+	if (sender == self.serverPasswordTextField) {
+		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	}
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
@@ -937,6 +961,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (sender == self.serverAddressComboBox) {
 		[self populateDefaultsForPreconfiguredNetwork];
+
+		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	} else if (sender == self.serverPortTextField) {
+		[self rebuildMutableServerEndpointListIfNeeded:sender];
 	}
 }
 
@@ -1071,6 +1099,8 @@ NS_ASSUME_NONNULL_BEGIN
 			self.serverPortTextField.stringValue = @"6667";
 		}
 	}
+
+	[self rebuildMutableServerEndpointListIfNeeded:sender];
 }
 
 - (void)updateIdentityPage
@@ -1418,6 +1448,93 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self updateClientCertificatePage];
 	}
+}
+
+#pragma mark -
+#pragma mark Redundancy
+
+- (void)editSeverEndpoints:(id)sender
+{
+	TDCServerEndpointListSheet *sheet = [TDCServerEndpointListSheet new];
+
+	sheet.delegate = self;
+
+	sheet.window = self.sheet;
+
+	[sheet startWithServerList:self.mutableServerList];
+
+	self.serverEndpointSheet = sheet;
+}
+
+- (void)serverEndpointListSheet:(TDCServerEndpointListSheet *)ender onOk:(NSArray<IRCServer *> *)serverList
+{
+	[self.mutableServerList setArray:serverList];
+
+	[self loadPrimaryServerEndpoint];
+}
+
+- (void)serverEndpointListSheetWillClose:(TDCServerEndpointListSheet *)sender;
+{
+	self.serverEndpointSheet = nil;
+}
+
+- (void)rebuildMutableServerEndpointList:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	IRCServer *server = self.mutableServerList.firstObject;
+
+	IRCServerMutable *serverMutable = nil;
+
+	if (server == nil) {
+		serverMutable = [IRCServerMutable new];
+	} else {
+		serverMutable = [server mutableCopy];
+	}
+
+	if (sender == self.serverAddressComboBox) {
+		NSString *serverAddress = self.serverAddressComboBox.value;
+
+		IRCNetwork *serverAddressNetwork = [self.networkList networkNamed:serverAddress];
+
+		if (serverAddressNetwork) {
+			serverMutable.serverAddress = serverAddressNetwork.serverAddress;
+		} else {
+			serverMutable.serverAddress = serverAddress.lowercaseString;
+		}
+	} else if (sender == self.serverPortTextField) {
+		serverMutable.serverPort = self.serverPortTextField.integerValue;
+	} else if (sender == self.prefersSecuredConnectionCheck) {
+		serverMutable.prefersSecuredConnection = (self.prefersSecuredConnectionCheck.state == NSOnState);
+	} else if (sender == self.serverPasswordTextField) {
+		serverMutable.serverPassword = self.serverPasswordTextField.trimmedStringValue;
+	} else {
+		NSAssert(NO, @"Bad 'sender'");
+	}
+
+	server = [serverMutable copy];
+
+	if (server == nil) {
+		[self.mutableServerList addObject:server];
+	} else {
+		[self.mutableServerList replaceObjectAtIndex:0 withObject:server];
+	}
+}
+
+- (void)rebuildMutableServerEndpointListIfNeeded:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	/* We only want to rebuild the IRCServer at index 0 when the
+	 user changes it. This method is invoked whenever something
+	 changes related to that server. If it was not changed while
+	 the server endpoint sheet was open, then we must update the
+	 mutable server list to include the change. */
+	if (self.serverEndpointSheet != nil) {
+		return;
+	}
+
+	[self rebuildMutableServerEndpointList:sender];
 }
 
 #pragma mark -
