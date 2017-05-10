@@ -306,7 +306,7 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1543" customClass="NSSecureTextField">
+                <textField toolTip="Password to be sent using the PASS command. This is NOT your password for NickServ." verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1543" customClass="NSSecureTextField">
                     <rect key="frame" x="210" y="131" width="231" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="4xc-jp-f9K"/>
