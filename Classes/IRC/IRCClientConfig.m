@@ -628,6 +628,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	config->_defaults = [self->_defaults copyWithZone:zone];
 
 	config->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
+	config->_migratedServerPasswordPendingDestroy = self->_migratedServerPasswordPendingDestroy;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
@@ -649,6 +650,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	((IRCClientConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
 
 	((IRCClientConfig *)config)->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
+	((IRCClientConfig *)config)->_migratedServerPasswordPendingDestroy = self->_migratedServerPasswordPendingDestroy;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
