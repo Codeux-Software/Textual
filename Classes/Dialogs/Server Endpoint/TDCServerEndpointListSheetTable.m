@@ -1,0 +1,238 @@
+/* ********************************************************************* 
+                  _____         _               _
+                 |_   _|____  _| |_ _   _  __ _| |
+                   | |/ _ \ \/ / __| | | |/ _` | |
+                   | |  __/>  <| |_| |_| | (_| | |
+                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
+        Please see Acknowledgements.pdf for additional information.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
+      names of its contributors may be used to endorse or promote products 
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TDCServerEndpointListSheetTableCellView ()
+@property (nonatomic, copy) NSString *serverAddress;
+@property (nonatomic, copy) NSString *serverPort;
+@property (nonatomic, copy) NSNumber *prefersSecuredConnection;
+@property (nonatomic, copy) NSString *serverPassword;
+@end
+
+@implementation TDCServerEndpointListSheetTableCellView
+
+- (BOOL)validateValue:(inout id *)ioValue forKeyPath:(NSString *)inKeyPath error:(out NSError **)outError
+{
+	if ([inKeyPath isEqualToString:@"serverAddress"]) {
+		if (((NSString *)*ioValue).isValidInternetAddress == NO) {
+			*outError = [NSError errorWithDomain:TXErrorDomain
+											 code:71013
+										userInfo:@{
+				NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1000][1]"),
+				NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1000][2]")}
+						 ];
+
+			return NO;
+		}
+	} else if ([inKeyPath isEqualToString:@"serverPort"]) {
+		if (((NSString *)*ioValue).isValidInternetPort == NO) {
+			*outError = [NSError errorWithDomain:TXErrorDomain
+											code:71014
+										userInfo:@{
+					NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1001][1]"),
+					NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1001][2]")}
+						 ];
+
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
+- (NSString *)serverAddress
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return NSStringEmptyPlaceholder;
+	}
+
+	return objectValue.serverAddress;
+}
+
+- (void)setServerAddress:(NSString *)serverAddress
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return;
+	}
+
+	objectValue.serverAddress = serverAddress;
+}
+
+- (NSString *)serverPort
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return NSStringEmptyPlaceholder;
+	}
+
+	return [NSString stringWithUnsignedShort:objectValue.serverPort];
+}
+
+- (void)setServerPort:(NSString *)serverPort
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return;
+	}
+
+	objectValue.serverPort = (uint16_t)serverPort.integerValue;
+}
+
+- (NSNumber *)prefersSecuredConnection
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return @(NSOffState);
+	}
+
+	if (objectValue.prefersSecuredConnection) {
+		return @(NSOnState);
+	} else {
+		return @(NSOffState);
+	}
+}
+
+- (void)setPrefersSecuredConnection:(NSNumber *)prefersSecuredConnection
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return;
+	}
+
+	BOOL l_prefersSecuredConnection =
+	(prefersSecuredConnection.unsignedIntegerValue == NSOnState);
+
+	if (l_prefersSecuredConnection) {
+		objectValue.prefersSecuredConnection = YES;
+
+		if (objectValue.serverPort == 6667) {
+			objectValue.serverPort = 6697;
+		}
+	} else {
+		objectValue.prefersSecuredConnection = NO;
+
+		if (objectValue.serverPort == 6697) {
+			objectValue.serverPort = 6667;
+		}
+	}
+}
+
+- (NSString *)serverPassword
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return NSStringEmptyPlaceholder;
+	}
+
+	NSString *serverPassword = objectValue.serverPassword;
+
+	if (serverPassword == nil) {
+		return NSStringEmptyPlaceholder;
+	}
+
+	return serverPassword;
+}
+
+- (void)setServerPassword:(NSString *)serverPassword
+{
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return;
+	}
+
+	objectValue.serverPassword = serverPassword;
+}
+
+- (void)setObjectValue:(nullable id)objectValue
+{
+	super.objectValue = objectValue;
+
+	[self startObservingObjectValue];
+}
+
+- (void)startObservingObjectValue
+{
+	NSString *keyPath = self.identifier;
+
+	[self willChangeValueForKey:keyPath];
+	[self didChangeValueForKey:keyPath];
+
+	IRCServerMutable *objectValue = self.objectValue;
+
+	if (objectValue == nil) {
+		return;
+	}
+
+	[objectValue addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)stopObservingObjectValue
+{
+	NSString *keyPath = self.identifier;
+
+	IRCServerMutable *objectValue = self.objectValue;
+
+	[objectValue removeObserver:self forKeyPath:keyPath];
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+{
+	if ([keyPath isEqualToString:@"serverPort"]) {
+		[self willChangeValueForKey:@"serverPort"];
+		[self didChangeValueForKey:@"serverPort"];
+	}
+}
+
+- (void)dealloc
+{
+	[self stopObservingObjectValue];
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

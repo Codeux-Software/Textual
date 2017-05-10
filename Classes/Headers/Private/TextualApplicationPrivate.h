@@ -101,6 +101,8 @@
 #import "TDCProgressIndicatorSheetPrivate.h"
 #import "TDCServerChangeNicknameSheetPrivate.h"
 #import "TDCServerChannelListDialogPrivate.h"
+#import "TDCServerEndpointListSheetPrivate.h"
+#import "TDCServerEndpointListSheetTablePrivate.h"
 #import "TDCServerHighlightListSheetPrivate.h"
 #import "TDCServerPropertiesSheetPrivate.h"
 #import "TDCWelcomeSheetPrivate.h"
