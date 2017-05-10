@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSString *TXErrorDomain = @"TextualErrorDomain";
+
 #define _defineSharedInstance(si_name, si_class, si_init_method)	\
 			+ (si_class *)si_name									\
 			{														\

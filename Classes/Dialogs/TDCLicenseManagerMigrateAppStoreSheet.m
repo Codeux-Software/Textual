@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TLOLicenseManager[1009][2]");
 
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
+			*outError = [NSError errorWithDomain:TXErrorDomain code:27984 userInfo:userInfo];
 		}
 
 		return NO;
