@@ -82,7 +82,7 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 			return;
 		}
 
-		[self _addTrackedUser:trackingNickname];
+		[self _addTrackedUser:nickname];
 	}
 }
 
