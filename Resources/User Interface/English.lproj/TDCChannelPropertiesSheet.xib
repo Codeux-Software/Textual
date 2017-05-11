@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelPropertiesSheet">
@@ -14,6 +15,7 @@
                 <outlet property="contentViewDefaultsView" destination="243" id="8M0-FU-10I"/>
                 <outlet property="contentViewGeneralView" destination="109" id="kgV-mp-d6m"/>
                 <outlet property="contentViewHeightConstraint" destination="ydh-Kx-F2Z" id="2Cw-vm-6VV"/>
+                <outlet property="contentViewNotifications" destination="oPK-zd-8TW" id="M71-k5-KKM"/>
                 <outlet property="contentViewTabView" destination="185" id="329"/>
                 <outlet property="contentViewWidthConstraint" destination="cW1-Ut-AEa" id="m2p-Z2-hXq"/>
                 <outlet property="defaultModesTextField" destination="251" id="kwe-lU-JDc"/>
@@ -22,6 +24,7 @@
                 <outlet property="enableInlineImagesCheck" destination="HBZ-KH-HBg" id="IAK-i2-siX"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="281" id="Nmo-db-2KD"/>
                 <outlet property="ignoreHighlightsCheck" destination="111" id="334"/>
+                <outlet property="notificationsController" destination="9qT-tK-TGk" id="xgI-Z3-Unm"/>
                 <outlet property="okButton" destination="RKI-lY-4zM" id="gk7-vj-fV9"/>
                 <outlet property="pushNotificationsCheck" destination="112" id="333"/>
                 <outlet property="secretKeyTextField" destination="124" id="heJ-2E-yYH"/>
@@ -35,7 +38,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="1103" y="493" width="325" height="384"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="325" height="384"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -74,17 +77,15 @@ DQ
                     </button>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="4TH-0i-MkY">
                         <rect key="frame" x="12" y="59" width="301" height="5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="301" id="CdG-ff-goS"/>
-                        </constraints>
                     </box>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="185">
-                        <rect key="frame" x="89" y="345" width="147" height="20"/>
+                        <rect key="frame" x="44" y="345" width="238" height="20"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
                             <font key="font" metaFont="titleBar" size="12"/>
                             <segments>
                                 <segment label="General" width="71" selected="YES"/>
                                 <segment label="Defaults" tag="1"/>
+                                <segment label="Notifications"/>
                             </segments>
                         </segmentedCell>
                         <accessibility description="Navigation Bar"/>
@@ -98,16 +99,17 @@ DQ
                     <constraint firstItem="185" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" id="8vf-wM-e5J"/>
                     <constraint firstItem="RKI-lY-4zM" firstAttribute="leading" secondItem="p4S-DM-ZI2" secondAttribute="trailing" constant="9" id="Equ-64-l9C"/>
                     <constraint firstItem="RKI-lY-4zM" firstAttribute="top" secondItem="4TH-0i-MkY" secondAttribute="bottom" constant="20" id="IbY-Qw-l7n"/>
+                    <constraint firstItem="185" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="OEB-cH-fn5"/>
                     <constraint firstItem="4TH-0i-MkY" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="Q7c-g2-WTK"/>
+                    <constraint firstAttribute="trailing" secondItem="4TH-0i-MkY" secondAttribute="trailing" constant="12" id="Wid-BE-cAq"/>
                     <constraint firstItem="187" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="dqx-Ws-uBR"/>
                     <constraint firstItem="4TH-0i-MkY" firstAttribute="top" secondItem="187" secondAttribute="bottom" constant="-1" id="h5f-YL-65X"/>
                     <constraint firstAttribute="trailing" secondItem="RKI-lY-4zM" secondAttribute="trailing" constant="23" id="irU-vt-YTa"/>
-                    <constraint firstItem="185" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="90" id="p4t-Ey-aUe"/>
+                    <constraint firstItem="4TH-0i-MkY" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="12" id="lBU-aA-TQC"/>
                     <constraint firstAttribute="trailing" secondItem="187" secondAttribute="trailing" id="ryd-02-ZcK"/>
                     <constraint firstAttribute="bottom" secondItem="RKI-lY-4zM" secondAttribute="bottom" constant="20" id="v4F-ey-NcZ"/>
                     <constraint firstAttribute="bottom" secondItem="p4S-DM-ZI2" secondAttribute="bottom" constant="20" id="wYh-XI-5ZX"/>
                     <constraint firstItem="p4S-DM-ZI2" firstAttribute="top" secondItem="4TH-0i-MkY" secondAttribute="bottom" constant="20" id="xLK-HX-RDd"/>
-                    <constraint firstAttribute="trailing" secondItem="185" secondAttribute="trailing" constant="90" id="xou-d3-ghj"/>
                 </constraints>
             </view>
             <connections>
@@ -115,10 +117,10 @@ DQ
             </connections>
             <point key="canvasLocation" x="255.5" y="273"/>
         </window>
-        <view translatesAutoresizingMaskIntoConstraints="NO" id="109" userLabel="View">
+        <view translatesAutoresizingMaskIntoConstraints="NO" id="109" userLabel="General">
             <rect key="frame" x="0.0" y="0.0" width="325" height="284"/>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="124" customClass="NSSecureTextField">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="124" customClass="NSSecureTextField">
                     <rect key="frame" x="93" y="212" width="212" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="212" id="cFa-vZ-Byo"/>
@@ -138,7 +140,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="123" customClass="TVCTextFieldWithValueValidation">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="123" customClass="TVCTextFieldWithValueValidation">
                     <rect key="frame" x="93" y="242" width="212" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="212" id="Cgb-nt-TtE"/>
@@ -157,6 +159,9 @@ DQ
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onPushNotificationsCheckChanged:" target="-2" id="0C6-Nq-ny7"/>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="279">
                     <rect key="frame" x="23" y="71" width="150" height="18"/>
@@ -179,7 +184,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onChangedInlineMediaOption:" target="-2" id="hpg-z2-23h"/>
+                        <action selector="onInlineMediaCheckChanged:" target="-2" id="sZf-FM-EAV"/>
                         <binding destination="nwg-0t-IZ6" name="hidden" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="hta-DL-5Yo"/>
                     </connections>
                 </button>
@@ -206,7 +211,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="118">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="118">
                     <rect key="frame" x="18" y="217" width="69" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="135">
                         <font key="font" metaFont="system"/>
@@ -214,7 +219,7 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="117">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="117">
                     <rect key="frame" x="37" y="206" width="47" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="136">
                         <font key="font" metaFont="miniSystem"/>
@@ -222,7 +227,7 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="119">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="119">
                     <rect key="frame" x="29" y="244" width="58" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Channel:" id="134">
                         <font key="font" metaFont="system"/>
@@ -275,7 +280,7 @@ DQ
         <view translatesAutoresizingMaskIntoConstraints="NO" id="243">
             <rect key="frame" x="0.0" y="0.0" width="325" height="170"/>
             <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="252">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="252">
                     <rect key="frame" x="30" y="99" width="41" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="37" id="UsB-2B-x2g"/>
@@ -286,7 +291,7 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="250">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="250">
                     <rect key="frame" x="77" y="53" width="228" height="66"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="66" id="jhC-2M-Ecm"/>
@@ -298,7 +303,7 @@ DQ
                     </textFieldCell>
                     <accessibility description="Default topic to set if channel is empty when joined."/>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="253">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="253">
                     <rect key="frame" x="18" y="23" width="53" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Modes:" id="267">
                         <font key="font" metaFont="system"/>
@@ -306,7 +311,7 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="S13-Uc-xNq">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S13-Uc-xNq">
                     <rect key="frame" x="18" y="135" width="241" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Values to apply if the channel is empty:" id="Yvg-62-eMH">
                         <font key="font" metaFont="system"/>
@@ -314,7 +319,7 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="251">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="251">
                     <rect key="frame" x="77" y="21" width="228" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="O1P-Su-Zm1"/>
@@ -347,5 +352,10 @@ DQ
             <point key="canvasLocation" x="179.5" y="272"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="oPK-zd-8TW" userLabel="Notifications">
+            <rect key="frame" x="0.0" y="0.0" width="543" height="229"/>
+            <point key="canvasLocation" x="108" y="573"/>
+        </customView>
+        <customObject id="9qT-tK-TGk" customClass="TVCNotificationConfigurationViewController"/>
     </objects>
 </document>

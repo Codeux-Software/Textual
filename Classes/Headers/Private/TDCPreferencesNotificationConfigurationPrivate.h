@@ -40,8 +40,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCPreferencesSoundWrapper : TLONotificationConfiguration
-+ (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
+@interface TDCPreferencesNotificationConfiguration : TLONotificationConfiguration
++ (TDCPreferencesNotificationConfiguration *)objectWithEventType:(TXNotificationType)eventType;
 @end
 
 NS_ASSUME_NONNULL_END

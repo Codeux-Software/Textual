@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,79 +35,93 @@
 
  *********************************************************************** */
 
+#import "TDCChannelPropertiesSheetInternal.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TDCPreferencesSoundWrapper
+@interface TDCChannelPropertiesNotificationConfiguration ()
+@property (nonatomic, weak) TDCChannelPropertiesSheet *sheet;
+@property (readonly) IRCChannelConfigMutable *config;
+@end
 
-+ (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
+@implementation TDCChannelPropertiesNotificationConfiguration
+
+- (instancetype)initWithEventType:(TXNotificationType)aEventType inSheet:(TDCChannelPropertiesSheet *)sheet
 {
-	return [[self alloc] initWithEventType:eventType];
-}
+	NSParameterAssert(sheet != nil);
 
-- (NSString *)alertSound
-{
-	NSString *sound = [TPCPreferences soundForEvent:self.eventType];
+	if ((self = [super initWithEventType:aEventType])) {
+		self.sheet = sheet;
 
-	if (sound == nil) {
-		return [TLONotificationConfiguration localizedAlertEmptySoundTitle];
+		return self;
 	}
 
-	return sound;
+	return nil;
 }
 
-- (void)setAlertSound:(NSString *)alertSound
+- (IRCChannelConfigMutable *)config
 {
-	[TPCPreferences setSound:alertSound forEvent:self.eventType];
+	return self.sheet.config;
 }
 
-- (BOOL)pushNotification
+- (nullable NSString *)alertSound
 {
-	return [TPCPreferences growlEnabledForEvent:self.eventType];
+	return [self.config soundForEvent:self.eventType];
 }
 
-- (void)setPushNotification:(BOOL)pushNotification
+- (void)setAlertSound:(nullable NSString *)alertSound
 {
-	[TPCPreferences setGrowlEnabled:pushNotification forEvent:self.eventType];
+	[self.config setSound:alertSound forEvent:self.eventType];
 }
 
-- (BOOL)speakEvent
+- (NSUInteger)pushNotification
 {
-	return [TPCPreferences speakEvent:self.eventType];
+	return [self.config growlEnabledForEvent:self.eventType];
 }
 
-- (void)setSpeakEvent:(BOOL)speakEvent
+- (void)setPushNotification:(NSUInteger)pushNotification
 {
-	[TPCPreferences setEventIsSpoken:speakEvent forEvent:self.eventType];
+	[self.config setGrowlEnabled:pushNotification forEvent:self.eventType];
 }
 
-- (BOOL)disabledWhileAway
+- (NSUInteger)speakEvent
 {
-	return [TPCPreferences disabledWhileAwayForEvent:self.eventType];
+	return [self.config speakEvent:self.eventType];
 }
 
-- (void)setDisabledWhileAway:(BOOL)disabledWhileAway
+- (void)setSpeakEvent:(NSUInteger)speakEvent
 {
-	[TPCPreferences setDisabledWhileAway:disabledWhileAway forEvent:self.eventType];
+	[self.config setEventIsSpoken:speakEvent forEvent:self.eventType];
 }
 
-- (BOOL)bounceDockIcon
+- (NSUInteger)disabledWhileAway
 {
-	return [TPCPreferences bounceDockIconForEvent:self.eventType];
+	return [self.config disabledWhileAwayForEvent:self.eventType];
 }
 
-- (void)setBounceDockIcon:(BOOL)bounceDockIcon
+- (void)setDisabledWhileAway:(NSUInteger)disabledWhileAway
 {
-	[TPCPreferences setBounceDockIcon:bounceDockIcon forEvent:self.eventType];
+	[self.config setDisabledWhileAway:disabledWhileAway forEvent:self.eventType];
 }
 
-- (BOOL)bounceDockIconRepeatedly
+- (NSUInteger)bounceDockIcon
 {
-	return [TPCPreferences bounceDockIconRepeatedlyForEvent:self.eventType];
+	return [self.config bounceDockIconForEvent:self.eventType];
 }
 
-- (void)setBounceDockIconRepeatedly:(BOOL)bounceDockIconRepeatedly
+- (void)setBounceDockIcon:(NSUInteger)bounceDockIcon
 {
-	[TPCPreferences setBounceDockIconRepeatedly:bounceDockIconRepeatedly forEvent:self.eventType];
+	[self.config setBounceDockIcon:bounceDockIcon forEvent:self.eventType];
+}
+
+- (NSUInteger)bounceDockIconRepeatedly
+{
+	return [self.config bounceDockIconRepeatedlyForEvent:self.eventType];
+}
+
+- (void)setBounceDockIconRepeatedly:(NSUInteger)bounceDockIconRepeatedly
+{
+	[self.config setBounceDockIconRepeatedly:bounceDockIconRepeatedly forEvent:self.eventType];
 }
 
 @end
