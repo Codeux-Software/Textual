@@ -43,11 +43,11 @@ TEXTUAL_EXTERN NSString * const TXEmptyAlertSoundPreferenceValue;
 @property (readonly) TXNotificationType eventType;
 @property (readonly, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *alertSound;
-@property (nonatomic, assign) BOOL speakEvent;
-@property (nonatomic, assign) BOOL pushNotification;
-@property (nonatomic, assign) BOOL disabledWhileAway;
-@property (nonatomic, assign) BOOL bounceDockIcon;
-@property (nonatomic, assign) BOOL bounceDockIconRepeatedly;
+@property (nonatomic, assign) NSUInteger speakEvent;
+@property (nonatomic, assign) NSUInteger pushNotification;
+@property (nonatomic, assign) NSUInteger disabledWhileAway;
+@property (nonatomic, assign) NSUInteger bounceDockIcon;
+@property (nonatomic, assign) NSUInteger bounceDockIconRepeatedly;
 
 + (NSString *)localizedAlertEmptySoundTitle;
 

@@ -37,22 +37,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol TVCNotificationConfigurationViewControllerDelegate;
-
 @interface TVCNotificationConfigurationViewController : NSObject
-@property (nonatomic, weak) id <TVCNotificationConfigurationViewControllerDelegate> delegate;
-
 @property (nonatomic, copy) NSArray *notifications; // __kindof TVCNotificationConfiguration* or NSString*
 
+@property (nonatomic, assign) BOOL allowsMixedState; // Default: NO
+
 - (void)attachToView:(NSView *)view;
-@end
-
-#pragma mark -
-
-@protocol TVCNotificationConfigurationViewControllerDelegate <NSObject>
-@required
-
-- (void)notificationConfigurationControllerSelectionChanged:(TVCNotificationConfigurationViewController *)sender;
 @end
 
 NS_ASSUME_NONNULL_END
