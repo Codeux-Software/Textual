@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	SetVariableIfNil(self->_filterAction, NSStringEmptyPlaceholder)
 	SetVariableIfNil(self->_filterForwardToDestination, NSStringEmptyPlaceholder)
-	SetVariableIfNiC(self->_filterMatch, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterMatch, NSStringEmptyPlaceholder)
 	SetVariableIfNil(self->_filterNotes, NSStringEmptyPlaceholder)
 	SetVariableIfNil(self->_filterSenderMatch, NSStringEmptyPlaceholder)
 	SetVariableIfNil(self->_filterTitle, NSStringEmptyPlaceholder)
