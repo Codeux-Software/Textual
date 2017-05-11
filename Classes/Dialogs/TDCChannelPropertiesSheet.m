@@ -199,6 +199,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSMutableArray *notifications = [NSMutableArray array];
 
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationHighlightType inSheet:self]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
 	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationChannelMessageType inSheet:self]];
 	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationChannelNoticeType inSheet:self]];
 	[notifications addObject:NSStringWhitespacePlaceholder];
