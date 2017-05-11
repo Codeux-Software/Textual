@@ -83,11 +83,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNilCopy(self->_command, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_messageTags, @{})
-	SetVariableIfNilCopy(self->_params, @[])
-	SetVariableIfNilCopy(self->_receivedAt, [NSDate date])
-	SetVariableIfNilCopy(self->_sender, [IRCPrefix new])
+	SetVariableIfNil(self->_command, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_messageTags, @{})
+	SetVariableIfNil(self->_params, @[])
+	SetVariableIfNil(self->_receivedAt, [NSDate date])
+	SetVariableIfNil(self->_sender, [IRCPrefix new])
 }
 
 - (NSUInteger)paramsCount
@@ -168,16 +168,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCMessage *object = [[IRCMessage allocWithZone:zone] init];
 
-	object->_batchToken = [self.batchToken copyWithZone:zone];
-	object->_command = [self.command copyWithZone:zone];
-	object->_commandNumeric = self.commandNumeric;
-	object->_isHistoric = self.isHistoric;
-	object->_isEventOnlyMessage = self.isEventOnlyMessage;
-	object->_isPrintOnlyMessage = self.isPrintOnlyMessage;
-	object->_messageTags = [self.messageTags copyWithZone:zone];
-	object->_params = [self.params copyWithZone:zone];
-	object->_receivedAt = [self.receivedAt copyWithZone:zone];
-	object->_sender = [self.sender copyWithZone:zone];
+	object->_batchToken = self->_batchToken;
+	object->_command = self->_command;
+	object->_commandNumeric = self->_commandNumeric;
+	object->_isHistoric = self->_isHistoric;
+	object->_isEventOnlyMessage = self->_isEventOnlyMessage;
+	object->_isPrintOnlyMessage = self->_isPrintOnlyMessage;
+	object->_messageTags = self->_messageTags;
+	object->_params = self->_params;
+	object->_receivedAt = self->_receivedAt;
+	object->_sender = self->_sender;
 
 	return object;
 }
@@ -186,16 +186,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCMessageMutable *object = [[IRCMessageMutable allocWithZone:zone] init];
 
-	object.batchToken = self.batchToken;
-	object.command = self.command;
-	object.commandNumeric = self.commandNumeric;
-	object.isHistoric = self.isHistoric;
-	object.isEventOnlyMessage = self.isEventOnlyMessage;
-	object.isPrintOnlyMessage = self.isPrintOnlyMessage;
-	object.messageTags = self.messageTags;
-	object.params = self.params;
-	object.receivedAt = self.receivedAt;
-	object.sender = self.sender;
+	((IRCMessage *)object)->_batchToken = self->_batchToken;
+	((IRCMessage *)object)->_command = self->_command;
+	((IRCMessage *)object)->_commandNumeric = self->_commandNumeric;
+	((IRCMessage *)object)->_isHistoric = self->_isHistoric;
+	((IRCMessage *)object)->_isEventOnlyMessage = self->_isEventOnlyMessage;
+	((IRCMessage *)object)->_isPrintOnlyMessage = self->_isPrintOnlyMessage;
+	((IRCMessage *)object)->_messageTags = self->_messageTags;
+	((IRCMessage *)object)->_params = self->_params;
+	((IRCMessage *)object)->_receivedAt = self->_receivedAt;
+	((IRCMessage *)object)->_sender = self->_sender;
 
 	return object;
 }

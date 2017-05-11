@@ -198,13 +198,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 							 onClient:self.client
 				  withPersistentStore:self.persistentStore];
 
-	object->_username = [self.username copyWithZone:zone];
-	object->_address = [self.address copyWithZone:zone];
+	object->_username = self->_username;
+	object->_address = self->_address;
 
-	object->_realName = [self.realName copyWithZone:zone];
+	object->_realName = self->_realName;
 
-	object->_isAway = self.isAway;
-	object->_isIRCop = self.isIRCop;
+	object->_isAway = self->_isAway;
+	object->_isIRCop = self->_isIRCop;
 
 	return object;
 }
@@ -216,13 +216,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 									onClient:self.client
 						 withPersistentStore:self.persistentStore];
 
-	object.username = self.username;
-	object.address = self.address;
+	((IRCUser *)object)->_username = self->_username;
+	((IRCUser *)object)->_address = self->_address;
 
-	object.realName = self.realName;
+	((IRCUser *)object)->_realName = self->_realName;
 
-	object.isAway = self.isAway;
-	object.isIRCop = self.isIRCop;
+	((IRCUser *)object)->_isAway = self->_isAway;
+	((IRCUser *)object)->_isIRCop = self->_isIRCop;
 
 	return object;
 }

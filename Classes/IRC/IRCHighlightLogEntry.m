@@ -72,11 +72,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCHighlightLogEntry *object = [[IRCHighlightLogEntry allocWithZone:zone] init];
 
-	object->_renderedMessage = [self.renderedMessage copyWithZone:zone];
-	object->_timeLogged = [self.timeLogged copyWithZone:zone];
-	object->_clientId = [self.clientId copyWithZone:zone];
-	object->_channelId = [self.channelId copyWithZone:zone];
-	object->_lineNumber = [self.lineNumber copyWithZone:zone];
+	object->_renderedMessage = self->_renderedMessage;
+	object->_timeLogged = self->_timeLogged;
+	object->_clientId = self->_clientId;
+	object->_channelId = self->_channelId;
+	object->_lineNumber = self->_lineNumber;
 
 	return object;
 }
@@ -85,11 +85,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCHighlightLogEntryMutable *object = [[IRCHighlightLogEntryMutable allocWithZone:zone] init];
 
-	object.renderedMessage = self.renderedMessage;
-	object.timeLogged = self.timeLogged;
-	object.clientId = self.clientId;
-	object.channelId = self.channelId;
-	object.lineNumber = self.lineNumber;
+	((IRCHighlightLogEntry *)object)->_renderedMessage = self->_renderedMessage;
+	((IRCHighlightLogEntry *)object)->_timeLogged = self->_timeLogged;
+	((IRCHighlightLogEntry *)object)->_clientId = self->_clientId;
+	((IRCHighlightLogEntry *)object)->_channelId = self->_channelId;
+	((IRCHighlightLogEntry *)object)->_lineNumber = self->_lineNumber;
 
 	return object;
 }

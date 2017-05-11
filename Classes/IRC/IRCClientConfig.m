@@ -111,20 +111,21 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 
-	SetVariableIfNilCopy(self->_nickname, [TPCPreferences defaultNickname])
-	SetVariableIfNilCopy(self->_awayNickname, [TPCPreferences defaultAwayNickname])
-	SetVariableIfNilCopy(self->_username, [TPCPreferences defaultUsername])
-	SetVariableIfNilCopy(self->_realName, [TPCPreferences defaultRealName])
+	SetVariableIfNil(self->_nickname, [TPCPreferences defaultNickname])
+	SetVariableIfNil(self->_awayNickname, [TPCPreferences defaultAwayNickname])
+	SetVariableIfNil(self->_username, [TPCPreferences defaultUsername])
+	SetVariableIfNil(self->_realName, [TPCPreferences defaultRealName])
 
-	SetVariableIfNilCopy(self->_ignoreList, @[])
-	SetVariableIfNilCopy(self->_channelList, @[])
-	SetVariableIfNilCopy(self->_highlightList, @[])
+	SetVariableIfNil(self->_ignoreList, @[])
+	SetVariableIfNil(self->_channelList, @[])
+	SetVariableIfNil(self->_highlightList, @[])
+	SetVariableIfNil(self->_serverList, @[])
 
-	SetVariableIfNilCopy(self->_alternateNicknames, @[])
+	SetVariableIfNil(self->_alternateNicknames, @[])
 
-	SetVariableIfNilCopy(self->_loginCommands, @[])
+	SetVariableIfNil(self->_loginCommands, @[])
 
 	[self modifyFloodControlDefaults];
 }
@@ -617,15 +618,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	// Instance variable is copied because self.nicknamePassward can return
 	// the value of the instance variable if present, else it uses keychain.
-	config->_nicknamePassword = [self->_nicknamePassword copyWithZone:zone];
-	config->_proxyPassword = [self->_proxyPassword copyWithZone:zone];
+	config->_nicknamePassword = self->_nicknamePassword;
+	config->_proxyPassword = self->_proxyPassword;
 
-	config->_channelList = [self->_channelList copyWithZone:zone];
-	config->_highlightList = [self->_highlightList copyWithZone:zone];
-	config->_ignoreList = [self->_ignoreList copyWithZone:zone];
-	config->_serverList = [self->_serverList copyWithZone:zone];
+	config->_channelList = self->_channelList;
+	config->_highlightList = self->_highlightList;
+	config->_ignoreList = self->_ignoreList;
+	config->_serverList = self->_serverList;
 
-	config->_defaults = [self->_defaults copyWithZone:zone];
+	config->_defaults = self->_defaults;
 
 	config->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
 	config->_migratedServerPasswordPendingDestroy = self->_migratedServerPasswordPendingDestroy;
@@ -639,13 +640,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	((IRCClientConfig *)config)->_objectInitializedAsCopy = YES;
 
-	config.nicknamePassword = self->_nicknamePassword;
-	config.proxyPassword = self->_proxyPassword;
+	((IRCClientConfig *)config)->_nicknamePassword = self->_nicknamePassword;
+	((IRCClientConfig *)config)->_proxyPassword = self->_proxyPassword;
 
-	config.channelList = self->_channelList;
-	config.highlightList = self->_highlightList;
-	config.ignoreList = self->_ignoreList;
-	config.serverList = self->_serverList;
+	((IRCClientConfig *)config)->_channelList = self->_channelList;
+	((IRCClientConfig *)config)->_highlightList = self->_highlightList;
+	((IRCClientConfig *)config)->_ignoreList = self->_ignoreList;
+	((IRCClientConfig *)config)->_serverList = self->_serverList;
 
 	((IRCClientConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
 
@@ -673,12 +674,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];
-
-		object->_nicknamePassword = [self.nicknamePassword copy];
-		object->_proxyPassword = [self.proxyPassword copy];
 	}
 
-	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+	object->_uniqueIdentifier = [NSString stringWithUUID];
 
 	NSMutableArray *channelList = [self.channelList mutableCopy];
 	NSMutableArray *highlightList = [self.highlightList mutableCopy];

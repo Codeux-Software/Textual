@@ -76,7 +76,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNilCopy(self->_modes, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_modes, NSStringEmptyPlaceholder)
 }
 
 - (void)changeUserToUser:(IRCUser *)user
@@ -339,7 +339,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCChannelUser *object = [[IRCChannelUser alloc] initWithUser:self.user];
 
-	object->_modes = [self.modes copyWithZone:zone];
+	object->_modes = self->_modes;
 
 	object->_incomingWeight = self->_incomingWeight;
 	object->_outgoingWeight = self->_outgoingWeight;
@@ -352,7 +352,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCChannelUserMutable *object = [[IRCChannelUserMutable alloc] initWithUser:self.user];
 
-	object.modes = self.modes;
+	((IRCChannelUser *)object)->_modes = self->_modes;
 
 	((IRCChannelUser *)object)->_incomingWeight = self->_incomingWeight;
 	((IRCChannelUser *)object)->_outgoingWeight = self->_outgoingWeight;

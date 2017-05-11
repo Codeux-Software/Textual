@@ -138,10 +138,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNilCopy(self->_command, TVCLogLineDefaultCommandValue)
-	SetVariableIfNilCopy(self->_messageBody, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_receivedAt, [NSDate date])
-	SetVariableIfNilCopy(self->_uniqueIdentifier, [TVCLogLine newUniqueIdentifier])
+	SetVariableIfNil(self->_command, TVCLogLineDefaultCommandValue)
+	SetVariableIfNil(self->_messageBody, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_receivedAt, [NSDate date])
+	SetVariableIfNil(self->_uniqueIdentifier, [TVCLogLine newUniqueIdentifier])
 
 	if (self->_lineType == TVCLogLineActionNoHighlightType) {
 		self->_lineType = TVCLogLineActionType;

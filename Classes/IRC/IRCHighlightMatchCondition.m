@@ -151,7 +151,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self mutableCopy];
 	}
 
-	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+	object->_uniqueIdentifier = [NSString stringWithUUID];
 
 	return object;
 }

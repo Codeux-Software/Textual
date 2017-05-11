@@ -65,18 +65,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNilCopy(self->_filterLimitedToChannelsIDs, @[])
-	SetVariableIfNilCopy(self->_filterLimitedToClientsIDs, @[])
-	SetVariableIfNilCopy(self->_filterEventsNumerics, @[])
+	SetVariableIfNil(self->_filterLimitedToChannelsIDs, @[])
+	SetVariableIfNil(self->_filterLimitedToClientsIDs, @[])
+	SetVariableIfNil(self->_filterEventsNumerics, @[])
 
-	SetVariableIfNilCopy(self->_filterAction, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_filterForwardToDestination, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_filterMatch, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_filterNotes, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_filterSenderMatch, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_filterTitle, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterAction, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterForwardToDestination, NSStringEmptyPlaceholder)
+	SetVariableIfNiC(self->_filterMatch, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterNotes, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterSenderMatch, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterTitle, NSStringEmptyPlaceholder)
 
-	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 }
 
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN

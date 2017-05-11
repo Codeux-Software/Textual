@@ -175,11 +175,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];
-
-		object->_serverPassword = [self.serverPassword copy];
 	}
 
-	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+	object->_uniqueIdentifier = [NSString stringWithUUID];
 
 	return object;
 }
