@@ -170,6 +170,7 @@
 #import "TVCMemberListSharedUserInterfacePrivate.h"
 #import "TVCMemberListUserInfoPopoverPrivate.h"
 #import "TVCMemberListYosemiteUserInterfacePrivate.h"
+#import "TVCNotificationConfigurationViewControllerPrivate.h"
 #import "TVCQueuedCertificateTrustPanelPrivate.h"
 #import "TVCServerListCellPrivate.h"
 #import "TVCServerListMavericksUserInterfacePrivate.h"

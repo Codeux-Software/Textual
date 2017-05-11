@@ -458,6 +458,12 @@
 		4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */; };
 		4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
+		4C2F6AE21EBBB262002246A7 /* TVCNotificationConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F6AE11EBBB262002246A7 /* TVCNotificationConfigurationViewController.m */; };
+		4C2F6AE31EBBB262002246A7 /* TVCNotificationConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F6AE11EBBB262002246A7 /* TVCNotificationConfigurationViewController.m */; };
+		4C2F6AE41EBBB262002246A7 /* TVCNotificationConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F6AE11EBBB262002246A7 /* TVCNotificationConfigurationViewController.m */; };
+		4C2F6AEB1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F6AE91EBBB390002246A7 /* TVCNotificationConfigurationView.xib */; };
+		4C2F6AEC1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F6AE91EBBB390002246A7 /* TVCNotificationConfigurationView.xib */; };
+		4C2F6AED1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F6AE91EBBB390002246A7 /* TVCNotificationConfigurationView.xib */; };
 		4C34F34D1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
 		4C34F34E1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
 		4C34F34F1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
@@ -1487,6 +1493,12 @@
 		4CCD93FD1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
 		4CCD93FE1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
 		4CCD93FF1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
+		4CCDC6991EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6981EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h */; };
+		4CCDC69A1EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6981EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h */; };
+		4CCDC69B1EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6981EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h */; };
+		4CCDC69E1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */; };
+		4CCDC69F1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */; };
+		4CCDC6A01EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */; };
 		4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
 		4CCFA6571ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
 		4CCFA6581ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
@@ -2158,6 +2170,8 @@
 		4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListSharedUserInterfacePrivate.h; path = Headers/Private/TVCServerListSharedUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListYosemiteUserInterfacePrivate.h; path = Headers/Private/TVCServerListYosemiteUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
+		4C2F6AE11EBBB262002246A7 /* TVCNotificationConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCNotificationConfigurationViewController.m; path = Views/Preferences/TVCNotificationConfigurationViewController.m; sourceTree = "<group>"; };
+		4C2F6AEA1EBBB390002246A7 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCNotificationConfigurationView.xib"; sourceTree = SOURCE_ROOT; };
 		4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCChannelSelectionOutlineCellView.m; sourceTree = "<group>"; };
 		4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCChannelSelectionViewController.m; sourceTree = "<group>"; };
 		4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewCellPrivate.h; path = Headers/Private/TVCChannelSelectionOutlineViewCellPrivate.h; sourceTree = "<group>"; };
@@ -2582,6 +2596,8 @@
 		4CCD4CA21D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerChannelListDialogPrivate.h; path = Headers/Private/TDCServerChannelListDialogPrivate.h; sourceTree = "<group>"; };
 		4CCD4CA61D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCWelcomeSheetPrivate.h; path = Headers/Private/TDCWelcomeSheetPrivate.h; sourceTree = "<group>"; };
 		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JavaScript; path = Resources/Styles/JavaScript; sourceTree = SOURCE_ROOT; };
+		4CCDC6981EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCNotificationConfigurationViewControllerPrivate.h; path = Headers/Private/TVCNotificationConfigurationViewControllerPrivate.h; sourceTree = "<group>"; };
+		4CCDC69D1EC4E075001DDE9A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TVCNotificationConfigurationView.strings"; sourceTree = SOURCE_ROOT; };
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Addons.png; sourceTree = "<group>"; };
@@ -2977,6 +2993,14 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
+		4C2F6ADA1EBBB1F4002246A7 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				4C2F6AE11EBBB262002246A7 /* TVCNotificationConfigurationViewController.m */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 		4C34F34A1E051523006E1004 /* Channel Selection Table */ = {
 			isa = PBXGroup;
 			children = (
@@ -3036,6 +3060,7 @@
 				4CF40F0A1AC1A59500A26BE0 /* TVCInputPromptDialog.xib */,
 				4CF40F0C1AC1A59500A26BE0 /* TVCMainWindowMavericks.xib */,
 				4CF40F0E1AC1A59500A26BE0 /* TVCMainWindowYosemite.xib */,
+				4C2F6AE91EBBB390002246A7 /* TVCNotificationConfigurationView.xib */,
 				4CF40F101AC1A59500A26BE0 /* TXCMainMenu.xib */,
 			);
 			name = "User Interface";
@@ -3223,6 +3248,7 @@
 				4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */,
 				4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */,
 				4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */,
+				4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */,
 			);
 			name = "Language Files";
 			sourceTree = "<group>";
@@ -3250,6 +3276,7 @@
 		4C5C08FA1D177F1200EB6340 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C2F6ADA1EBBB1F4002246A7 /* Preferences */,
 				4C34F34A1E051523006E1004 /* Channel Selection Table */,
 				4CF40DB11AC1A4AC00A26BE0 /* Channel View */,
 				4C038F4C1D1D768B00134FDB /* Main Window */,
@@ -3398,6 +3425,7 @@
 				4C056F141D1D89A100D85CEA /* TVCMemberListSharedUserInterfacePrivate.h */,
 				4C056F151D1D89A100D85CEA /* TVCMemberListUserInfoPopoverPrivate.h */,
 				4C056F161D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h */,
+				4CCDC6981EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h */,
 				4C5DD5061D1E098600F2E1AE /* TVCQueuedCertificateTrustPanelPrivate.h */,
 				4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */,
 				4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */,
@@ -4361,6 +4389,7 @@
 				4C0D46081EC27ED900256D58 /* TDCServerEndpointListSheetTablePrivate.h in Headers */,
 				4C7B036C1D1210A100295E82 /* TLOGrowlController.h in Headers */,
 				4CEFD5291D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h in Headers */,
+				4CCDC6991EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C083FB41D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */,
 				4C0D97941D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h in Headers */,
 				4C7B036E1D1210A100295E82 /* TLOKeyEventHandler.h in Headers */,
@@ -4582,6 +4611,7 @@
 				4C056F211D1D89A100D85CEA /* TVCMemberListSharedUserInterfacePrivate.h in Headers */,
 				4C9EEC391D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
 				4C7B03CE1D1210A800295E82 /* IRCChannelUser.h in Headers */,
+				4CCDC69A1EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C038F541D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C4A1AFB1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C7B03CF1D1210A800295E82 /* IRCWorld.h in Headers */,
@@ -4841,6 +4871,7 @@
 				4C5DD50C1D1E098600F2E1AE /* TVCDockIconPrivate.h in Headers */,
 				4C056F221D1D89A100D85CEA /* TVCMemberListSharedUserInterfacePrivate.h in Headers */,
 				4C9EEC3A1D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */,
+				4CCDC69B1EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C7B044F1D1210B000295E82 /* IRCChannelUser.h in Headers */,
 				4C038F551D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C4A1AFC1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
@@ -5235,6 +5266,7 @@
 				4C0BA5071990798800857343 /* channelRoomStatusIconYosemiteLightActive@2x.tif in Resources */,
 				4CF40F5E1AC1A59500A26BE0 /* TVCMainWindowMavericks.xib in Resources */,
 				4C0BA5081990798800857343 /* DIGreenBadgeLeftYosemite.png in Resources */,
+				4CCDC69E1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */,
 				4C0BA5091990798800857343 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4CF40F561AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
 				4C0BA50A1990798800857343 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
@@ -5335,6 +5367,7 @@
 				4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
 				4CBC76B61CC72B5100484A13 /* Notifications.strings in Resources */,
 				4CF40F621AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
+				4C2F6AEB1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */,
 				4C0BA54F1990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4CBC76BF1CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */,
 				4C0A90101D54D24300B64244 /* TDCBuddyListDialog.xib in Resources */,
@@ -5429,6 +5462,7 @@
 				4CC164C41943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */,
 				4CCFA6601ABCF36A0083620F /* TPWTB_Advanced.png in Resources */,
 				4CC164AE1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */,
+				4C2F6AED1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */,
 				4CF40F181AC1A59500A26BE0 /* TDCAddressBookSheet.xib in Resources */,
 				4CF40F381AC1A59500A26BE0 /* TDCChannelInviteSheet.xib in Resources */,
 				4CCFA6901ABCF36A0083620F /* TPWTB_Style.png in Resources */,
@@ -5465,6 +5499,7 @@
 				4C7A21971979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229281978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4CCD93FF1CA7291300335381 /* JavaScript in Resources */,
+				4CCDC6A01EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */,
 				4C0A90121D54D24300B64244 /* TDCBuddyListDialog.xib in Resources */,
 				4CB229661978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB2293E1978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
@@ -5585,6 +5620,7 @@
 				4CB229471978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CF40F4B1AC1A59500A26BE0 /* TDCProgressIndicatorSheet.xib in Resources */,
+				4CCDC69F1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */,
 				4CF40F1B1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
 				4C46F4621943A654004CA8BA /* FormattingColor_13.png in Resources */,
 				4C77664D1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
@@ -5660,6 +5696,7 @@
 				4CF40F631AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
 				4C7766431978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C7A21961979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
+				4C2F6AEC1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */,
 				4CCFA66B1ABCF36A0083620F /* TPWTB_Controls@2x.png in Resources */,
 				4C46F4561943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
 				4C7766491978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
@@ -5855,6 +5892,7 @@
 				4C2B1D781EBA48090093C629 /* TLONotificationConfiguration.m in Sources */,
 				4C04450116F1603B00EBB665 /* TDCChannelPropertiesSheet.m in Sources */,
 				4C90F62A1E54F28A00DF5190 /* TXApplication.m in Sources */,
+				4C2F6AE31EBBB262002246A7 /* TVCNotificationConfigurationViewController.m in Sources */,
 				4C04450216F1603B00EBB665 /* TDCServerHighlightListSheet.m in Sources */,
 				4CF40E071AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
 				4C04450316F1603B00EBB665 /* TDCChannelInviteSheet.m in Sources */,
@@ -6042,6 +6080,7 @@
 				4C741C421C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C0BA64E1990798800857343 /* TDCSheetBase.m in Sources */,
 				4C0BA6501990798800857343 /* TDCChannelModifyTopicSheet.m in Sources */,
+				4C2F6AE21EBBB262002246A7 /* TVCNotificationConfigurationViewController.m in Sources */,
 				4C0BA6511990798800857343 /* TDCWelcomeSheet.m in Sources */,
 				4CA816BB1D5F8C4900B3DAED /* TDCBuddyListDialogEntry.m in Sources */,
 				4C0BA6541990798800857343 /* TDCFileTransferDialogTransferController.m in Sources */,
@@ -6207,6 +6246,7 @@
 				4C2B1D791EBA48090093C629 /* TLONotificationConfiguration.m in Sources */,
 				4C8AF616158E99520026668C /* TDCChannelInviteSheet.m in Sources */,
 				4C90F62B1E54F28A00DF5190 /* TXApplication.m in Sources */,
+				4C2F6AE41EBBB262002246A7 /* TVCNotificationConfigurationViewController.m in Sources */,
 				4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */,
 				4CF40E081AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
 				4C8AF617158E99520026668C /* TDCServerChannelListDialog.m in Sources */,
@@ -6401,6 +6441,14 @@
 			name = TDCLicenseManagerDialog.xib;
 			sourceTree = "<group>";
 		};
+		4C2F6AE91EBBB390002246A7 /* TVCNotificationConfigurationView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C2F6AEA1EBBB390002246A7 /* English */,
+			);
+			name = TVCNotificationConfigurationView.xib;
+			sourceTree = "<group>";
+		};
 		4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -6551,6 +6599,14 @@
 				4CBC76AC1CC72B5100484A13 /* English */,
 			);
 			name = TVCMainWindow.strings;
+			sourceTree = "<group>";
+		};
+		4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CCDC69D1EC4E075001DDE9A /* English */,
+			);
+			name = TVCNotificationConfigurationView.strings;
 			sourceTree = "<group>";
 		};
 		4CDBF7261EC11CAA00F846A6 /* TDCServerEndpointListSheet.xib */ = {
