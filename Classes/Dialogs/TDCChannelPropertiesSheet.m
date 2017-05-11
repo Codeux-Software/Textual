@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TDCChannelPropertiesSheetInternal.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelPropertiesSheet ()
@@ -42,7 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite, nullable) IRCChannel *channel;
 @property (nonatomic, copy, readwrite, nullable) NSString *clientId;
 @property (nonatomic, copy, readwrite, nullable) NSString *channelId;
-@property (nonatomic, strong) IRCChannelConfigMutable *config;
 @property (nonatomic, assign) BOOL isNewConfiguration;
 @property (nonatomic, copy) NSArray *navigationTree;
 @property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
@@ -60,12 +61,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewNotifications;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
+@property (nonatomic, strong) IBOutlet TVCNotificationConfigurationViewController *notificationsController;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
 
-- (IBAction)onChangedInlineMediaOption:(id)sender;
+- (IBAction)onInlineMediaCheckChanged:(id)sender;
+- (IBAction)onPushNotificationsCheckChanged:(id)sender;
 @end
 
 @implementation TDCChannelPropertiesSheet
@@ -170,6 +174,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		//		view								first responder
 		@[self.contentViewGeneralView,			self.channelNameTextField],
 		@[self.contentViewDefaultsView,			self.defaultTopicTextField],
+		@[self.contentViewNotifications,		[NSNull null]],
 	];
 
 	self.channelNameTextField.onlyShowStatusIfErrorOccurs = YES;
@@ -184,6 +189,38 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	};
 
 	[self addConfigurationDidChangeObserver];
+
+	[self setupNotificationsController];
+}
+
+- (void)setupNotificationsController
+{
+	self.notificationsController.allowsMixedState = YES;
+
+	NSMutableArray *notifications = [NSMutableArray array];
+
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationChannelMessageType inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationChannelNoticeType inSheet:self]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationUserJoinedType inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationUserPartedType inSheet:self]];
+
+	self.notificationsController.notifications = notifications;
+
+	[self.notificationsController attachToView:self.contentViewNotifications];
+}
+
+- (void)reloadNotificationsController
+{
+	[self.notificationsController reload];
+}
+
+- (void)updateNavigationEnabledState
+{
+	#define _navigationIndexForNotifications			2
+
+	[self.contentViewTabView setEnabled:(self.pushNotificationsCheck.state == NSOnState)
+							 forSegment:_navigationIndexForNotifications];
 }
 
 - (void)loadConfig
@@ -207,6 +244,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	} else {
 		self.enableInlineImagesCheck.state = self.config.ignoreInlineMedia;
 	}
+
+	[self updateNavigationEnabledState];
 }
 
 - (void)onMenuBarItemChanged:(id)sender
@@ -218,7 +257,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self selectPane:self.navigationTree[row][0]];
 
-	[self.sheet makeFirstResponder:self.navigationTree[row][1]];
+	id firstResponder = self.navigationTree[row][1];
+
+	if ([firstResponder isKindOfClass:[NSControl class]]) {
+		[self.sheet makeFirstResponder:firstResponder];
+	}
 }
 
 - (void)selectPane:(NSView *)view
@@ -287,17 +330,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 							   [self loadConfig];
 
+							   [self reloadNotificationsController];
+
 							   [self start];
 						   }];
 }
 
-- (void)onChangedInlineMediaOption:(id)sender
+- (void)onInlineMediaCheckChanged:(id)sender
 {
 	if (self.enableInlineImagesCheck.state != NSOnState) {
 		return;
 	}
 
 	[TDCPreferencesController showTorAnonymityNetworkInlineMediaWarning];
+}
+
+- (void)onPushNotificationsCheckChanged:(id)sender
+{
+	[self updateNavigationEnabledState];
 }
 
 #pragma mark -
@@ -323,7 +373,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.config.autoJoin = self.autoJoinCheck.state;
 	self.config.pushNotifications = self.pushNotificationsCheck.state;
-	self.config.showTreeBadgeCount =	self.showTreeBadgeCountCheck.state;
+	self.config.showTreeBadgeCount = self.showTreeBadgeCountCheck.state;
 
 	self.config.ignoreGeneralEventMessages = self.ignoreGeneralEventMessagesCheck.state;
 	self.config.ignoreHighlights = self.ignoreHighlightsCheck.state;

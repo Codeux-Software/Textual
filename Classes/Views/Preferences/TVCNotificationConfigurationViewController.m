@@ -37,6 +37,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define _alertSoundsDefaultSoundIndex			0
+#define _alertSoundsNoSoundIndex				2
+
 @interface TVCNotificationConfigurationViewController ()
 @property (nonatomic, weak) NSView *attachedView;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
@@ -49,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
 @property (nonatomic, weak) IBOutlet NSTextField *alertNotificationDestinationTextField;
 @property (nonatomic, strong) TLONotificationConfiguration *activeAlert;
+@property (nonatomic, assign) BOOL activeAlertPropertyChangedByUser;
 @property (nonatomic, copy) NSArray *alertSounds;
 
 - (IBAction)onChangedAlertBounceDockIcon:(id)sender;
@@ -71,6 +75,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return nil;
+}
+
+- (void)dealloc
+{
+	[self stopObservingActiveAlert];
 }
 
 - (void)prepareInitialState
@@ -188,11 +197,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[self onChangedAlertType:nil];
 }
 
-- (void)onChangedAlertType:(id)sender
+- (void)reload
 {
-	TXNotificationType alertTag = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-
-	TLONotificationConfiguration *alert = self.notifications[alertTag];
+	TLONotificationConfiguration *alert = self.activeAlert;
 
 	self.alertSpeakEventButton.state = alert.speakEvent;
 	self.alertBounceDockIconButton.state = alert.bounceDockIcon;
@@ -201,19 +208,36 @@ NS_ASSUME_NONNULL_BEGIN
 	self.alertDisableWhileAwayButton.state = alert.disabledWhileAway;
 	self.alertPushNotificationButton.state = alert.pushNotification;
 
-	NSUInteger soundIndex = [self.alertSounds indexOfObject:alert.alertSound];
+	NSString *alertSound = alert.alertSound;
 
-	if (soundIndex == NSNotFound) {
-		[self.alertSoundChoiceButton selectItemAtIndex:0];
+	if (alertSound == nil) {
+		[self.alertSoundChoiceButton selectItemAtIndex:_alertSoundsDefaultSoundIndex];
+	} else if ([alertSound isEqualToString:TXNoAlertSoundPreferenceValue]) {
+		[self.alertSoundChoiceButton selectItemAtIndex:_alertSoundsNoSoundIndex];
 	} else {
-		[self.alertSoundChoiceButton selectItemAtIndex:soundIndex];
-	}
+		NSUInteger soundIndex = [self.alertSounds indexOfObject:alert.alertSound];
 
-	self.activeAlert = alert;
+		if (soundIndex == NSNotFound) {
+			[self.alertSoundChoiceButton selectItemAtIndex:_alertSoundsNoSoundIndex];
+		} else {
+			[self.alertSoundChoiceButton selectItemAtIndex:soundIndex];
+		}
+	}
+}
+
+- (void)onChangedAlertType:(id)sender
+{
+	TXNotificationType alertTag = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
+
+	self.activeAlert = self.notifications[alertTag];
+
+	[self reload];
 }
 
 - (void)onChangedAlertPushNotification:(id)sender
 {
+	self.activeAlertPropertyChangedByUser = YES;
+
 	TLONotificationConfiguration *alert = self.activeAlert;
 
 	alert.pushNotification = self.alertPushNotificationButton.state;
@@ -221,6 +245,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedAlertSpoken:(id)sender
 {
+	self.activeAlertPropertyChangedByUser = YES;
+
 	TLONotificationConfiguration *alert = self.activeAlert;
 
 	alert.speakEvent = self.alertSpeakEventButton.state;
@@ -228,6 +254,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedAlertDisableWhileAway:(id)sender
 {
+	self.activeAlertPropertyChangedByUser = YES;
+
 	TLONotificationConfiguration *alert = self.activeAlert;
 
 	alert.disabledWhileAway = self.alertDisableWhileAwayButton.state;
@@ -235,6 +263,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedAlertBounceDockIcon:(id)sender
 {
+	self.activeAlertPropertyChangedByUser = YES;
+
 	TLONotificationConfiguration *alert = self.activeAlert;
 
 	alert.bounceDockIcon = self.alertBounceDockIconButton.state;
@@ -244,6 +274,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedAlertBounceDockIconRepeatedly:(id)sender
 {
+	self.activeAlertPropertyChangedByUser = YES;
+
 	TLONotificationConfiguration *alert = self.activeAlert;
 
 	alert.bounceDockIconRepeatedly = self.alertBounceDockIconRepeatedlyButton.state;
@@ -251,12 +283,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedAlertSound:(id)sender
 {
+	self.activeAlertPropertyChangedByUser = YES;
+
 	TLONotificationConfiguration *alert = self.activeAlert;
 
 	NSString *alertSound = self.alertSoundChoiceButton.titleOfSelectedItem;
 
-	if ([alertSound isEqualToString:[TLONotificationConfiguration localizedAlertEmptySoundTitle]]) { // Do not set the default, none label
-		alertSound = TXEmptyAlertSoundPreferenceValue;
+	if ([alertSound isEqualToString:[TLONotificationConfiguration localizedAlertDefaultSoundTitle]]) {
+		alertSound = nil;
+	} else if ([alertSound isEqualToString:[TLONotificationConfiguration localizedAlertNoSoundTitle]]) {
+		alertSound = TXNoAlertSoundPreferenceValue;
 	}
 
 	if (alertSound) {
@@ -264,6 +300,66 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	alert.alertSound = alertSound;
+}
+
+- (void)setActiveAlert:(TLONotificationConfiguration *)activeAlert
+{
+	NSParameterAssert(activeAlert != nil);
+
+	if (self->_activeAlert != activeAlert) {
+		[self stopObservingActiveAlert];
+
+		self->_activeAlert = activeAlert;
+
+		[self startObservingActiveAlert];
+	}
+}
+
+- (void)startObservingActiveAlert
+{
+	TLONotificationConfiguration *activeAlert = self.activeAlert;
+
+	if (activeAlert == nil) {
+		return;
+	}
+
+	[activeAlert addObserver:self forKeyPath:@"alertSound" options:NSKeyValueObservingOptionNew context:NULL];
+	[activeAlert addObserver:self forKeyPath:@"speakEvent" options:NSKeyValueObservingOptionNew context:NULL];
+	[activeAlert addObserver:self forKeyPath:@"pushNotification" options:NSKeyValueObservingOptionNew context:NULL];
+	[activeAlert addObserver:self forKeyPath:@"disableWhileAway" options:NSKeyValueObservingOptionNew context:NULL];
+	[activeAlert addObserver:self forKeyPath:@"bounceDockIcon" options:NSKeyValueObservingOptionNew context:NULL];
+	[activeAlert addObserver:self forKeyPath:@"bounceDockIconRepeatedly" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)stopObservingActiveAlert
+{
+	TLONotificationConfiguration *activeAlert = self.activeAlert;
+
+	if (activeAlert == nil) {
+		return;
+	}
+
+	[activeAlert removeObserver:self forKeyPath:@"alertSound"];
+	[activeAlert removeObserver:self forKeyPath:@"speakEvent"];
+	[activeAlert removeObserver:self forKeyPath:@"pushNotification"];
+	[activeAlert removeObserver:self forKeyPath:@"disableWhileAway"];
+	[activeAlert removeObserver:self forKeyPath:@"bounceDockIcon"];
+	[activeAlert removeObserver:self forKeyPath:@"bounceDockIconRepeatedly"];
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+{
+	if (object == self.activeAlert) {
+		if (self.activeAlertPropertyChangedByUser) {
+			self.activeAlertPropertyChangedByUser = NO;
+
+			return;
+		}
+
+		LogToConsoleDebug("Reloading user interface because key %@ changed remotely", keyPath)
+
+		[self reload];
+	}
 }
 
 - (void)updateAvailableSounds
@@ -291,8 +387,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSMutableArray *sounds = [NSMutableArray array];
 
-	[sounds addObject:[TLONotificationConfiguration localizedAlertEmptySoundTitle]];
-
+	[sounds addObject:[TLONotificationConfiguration localizedAlertDefaultSoundTitle]];
+	[sounds addObject:[NSMenuItem separatorItem]];
+	[sounds addObject:[TLONotificationConfiguration localizedAlertNoSoundTitle]];
 	[sounds addObject:[NSMenuItem separatorItem]];
 
 	[sounds addObjectsFromArray:[TLOSoundPlayer uniqueListOfSounds]];

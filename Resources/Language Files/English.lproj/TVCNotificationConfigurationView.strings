@@ -35,8 +35,11 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1004 */
+/* Next unusued key: 1005 */
 
 "TVCNotificationConfigurationView[1000]" = "Growl is running. Notifications will be forwarded to it.";
 "TVCNotificationConfigurationView[1001]" = "Notifications will be shown using Notification Center.";
 "TVCNotificationConfigurationView[1002]" = "Growl is not running. Notifications will not be shown."; /* For Lion. It does not have NC */
+
+"TVCNotificationConfigurationView[1003]" = "No Sound";
+"TVCNotificationConfigurationView[1004]" = "Default Sound";

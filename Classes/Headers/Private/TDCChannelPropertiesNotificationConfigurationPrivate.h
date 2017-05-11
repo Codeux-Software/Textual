@@ -35,16 +35,12 @@
 
  *********************************************************************** */
 
+#import "TLONotificationConfigurationPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCNotificationConfigurationViewController : NSObject
-@property (nonatomic, copy) NSArray *notifications; // __kindof TVCNotificationConfiguration* or NSString*
-
-@property (nonatomic, assign) BOOL allowsMixedState; // Default: NO
-
-- (void)attachToView:(NSView *)view;
-
-- (void)reload;
+@interface TDCChannelPropertiesNotificationConfiguration : TLONotificationConfiguration
+- (instancetype)initWithEventType:(TXNotificationType)aEventType inSheet:(TDCChannelPropertiesSheet *)sheet;
 @end
 
 NS_ASSUME_NONNULL_END

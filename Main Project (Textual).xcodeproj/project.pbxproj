@@ -55,7 +55,7 @@
 		4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
 		4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
+		4C0444FB16F1603B00EBB665 /* TDCPreferencesNotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesNotificationConfiguration.m */; };
 		4C0444FC16F1603B00EBB665 /* TDCAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutDialog.m */; };
 		4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
 		4C0444FF16F1603B00EBB665 /* TDCChannelBanListSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51B158E99520026668C /* TDCChannelBanListSheet.m */; };
@@ -263,7 +263,7 @@
 		4C0BA63A1990798800857343 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C0BA63B1990798800857343 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
 		4C0BA63C1990798800857343 /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C0BA63E1990798800857343 /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
+		4C0BA63E1990798800857343 /* TDCPreferencesNotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesNotificationConfiguration.m */; };
 		4C0BA63F1990798800857343 /* TDCAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutDialog.m */; };
 		4C0BA6401990798800857343 /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
 		4C0BA6431990798800857343 /* TDCChannelBanListSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51B158E99520026668C /* TDCChannelBanListSheet.m */; };
@@ -1119,7 +1119,7 @@
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
 		4C8AF60C158E99520026668C /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C8AF60E158E99520026668C /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
+		4C8AF60E158E99520026668C /* TDCPreferencesNotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesNotificationConfiguration.m */; };
 		4C8AF60F158E99520026668C /* TDCAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutDialog.m */; };
 		4C8AF610158E99520026668C /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
 		4C8AF612158E99520026668C /* TDCChannelBanListSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51B158E99520026668C /* TDCChannelBanListSheet.m */; };
@@ -1465,9 +1465,6 @@
 		4CC215D41D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC215D21D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h */; };
 		4CC215D51D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC215D21D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h */; };
 		4CC215D61D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC215D21D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h */; };
-		4CC215D71D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC215D31D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h */; };
-		4CC215D81D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC215D31D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h */; };
-		4CC215D91D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC215D31D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h */; };
 		4CC2DC5B1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
 		4CC2DC5C1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
 		4CC2DC5D1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
@@ -1499,6 +1496,18 @@
 		4CCDC69E1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */; };
 		4CCDC69F1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */; };
 		4CCDC6A01EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */; };
+		4CCDC6AF1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6AE1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h */; };
+		4CCDC6B01EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6AE1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h */; };
+		4CCDC6B11EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6AE1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h */; };
+		4CCDC6B31EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDC6B21EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m */; };
+		4CCDC6B41EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDC6B21EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m */; };
+		4CCDC6B51EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDC6B21EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m */; };
+		4CCDC6B81EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6B71EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h */; };
+		4CCDC6B91EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6B71EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h */; };
+		4CCDC6BA1EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6B71EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h */; };
+		4CCDC6BC1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6BB1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h */; };
+		4CCDC6BD1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6BB1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h */; };
+		4CCDC6BE1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCDC6BB1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h */; };
 		4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
 		4CCFA6571ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
 		4CCFA6581ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
@@ -2358,7 +2367,7 @@
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXMasterController.m; path = Controllers/TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXMenuController.m; path = Controllers/TXMenuController.m; sourceTree = "<group>"; };
 		4C8AF515158E99520026668C /* TDCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesController.m; sourceTree = "<group>"; };
-		4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesSoundWrapper.m; sourceTree = "<group>"; };
+		4C8AF517158E99520026668C /* TDCPreferencesNotificationConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesNotificationConfiguration.m; sourceTree = "<group>"; };
 		4C8AF518158E99520026668C /* TDCAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAboutDialog.m; path = Dialogs/TDCAboutDialog.m; sourceTree = "<group>"; };
 		4C8AF519158E99520026668C /* TDCAddressBookSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAddressBookSheet.m; path = Dialogs/TDCAddressBookSheet.m; sourceTree = "<group>"; };
 		4C8AF51B158E99520026668C /* TDCChannelBanListSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCChannelBanListSheet.m; path = Dialogs/TDCChannelBanListSheet.m; sourceTree = "<group>"; };
@@ -2583,7 +2592,6 @@
 		4CC164AC1943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIRedBadgeLeftYosemite.png; sourceTree = "<group>"; };
 		4CC164AD1943B17100B0D4B6 /* DIRedBadgeRightYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIRedBadgeRightYosemite.png; sourceTree = "<group>"; };
 		4CC215D21D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCPreferencesControllerPrivate.h; path = Headers/Private/TDCPreferencesControllerPrivate.h; sourceTree = "<group>"; };
-		4CC215D31D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCPreferencesSoundWrapperPrivate.h; path = Headers/Private/TDCPreferencesSoundWrapperPrivate.h; sourceTree = "<group>"; };
 		4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewHelper.m; sourceTree = "<group>"; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogInternal.h; sourceTree = "<group>"; };
@@ -2598,6 +2606,10 @@
 		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JavaScript; path = Resources/Styles/JavaScript; sourceTree = SOURCE_ROOT; };
 		4CCDC6981EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCNotificationConfigurationViewControllerPrivate.h; path = Headers/Private/TVCNotificationConfigurationViewControllerPrivate.h; sourceTree = "<group>"; };
 		4CCDC69D1EC4E075001DDE9A /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TVCNotificationConfigurationView.strings"; sourceTree = SOURCE_ROOT; };
+		4CCDC6AE1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCPreferencesNotificationConfigurationPrivate.h; path = Headers/Private/TDCPreferencesNotificationConfigurationPrivate.h; sourceTree = "<group>"; };
+		4CCDC6B21EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCChannelPropertiesNotificationConfiguration.m; path = Dialogs/TDCChannelPropertiesNotificationConfiguration.m; sourceTree = "<group>"; };
+		4CCDC6B71EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelPropertiesNotificationConfigurationPrivate.h; path = Headers/Private/TDCChannelPropertiesNotificationConfigurationPrivate.h; sourceTree = "<group>"; };
+		4CCDC6BB1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCChannelPropertiesSheetInternal.h; sourceTree = "<group>"; };
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Addons.png; sourceTree = "<group>"; };
@@ -3346,6 +3358,7 @@
 				4CAAAE451D24207C00A6F9B9 /* TDCChannelInviteSheetPrivate.h */,
 				4CAAAE461D24207C00A6F9B9 /* TDCChannelModifyModesSheetPrivate.h */,
 				4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */,
+				4CCDC6B71EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h */,
 				4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */,
 				4C620E831D3E614E0037F35E /* TDCChannelSpotlightControllerPanelPrivate.h */,
 				4CFEE1481D3AEEF70052709F /* TDCChannelSpotlightControllerPrivate.h */,
@@ -3360,7 +3373,7 @@
 				4C10B3791D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h */,
 				4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */,
 				4CC215D21D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h */,
-				4CC215D31D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h */,
+				4CCDC6AE1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h */,
 				4C10B3731D23249100868A74 /* TDCProgressIndicatorSheetPrivate.h */,
 				4C558DCD1D24055C00628B47 /* TDCServerChangeNicknameSheetPrivate.h */,
 				4CCD4CA21D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h */,
@@ -3650,7 +3663,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF515158E99520026668C /* TDCPreferencesController.m */,
-				4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */,
+				4C8AF517158E99520026668C /* TDCPreferencesNotificationConfiguration.m */,
 			);
 			name = Preferences;
 			path = Dialogs/Preferences;
@@ -3923,6 +3936,7 @@
 				4CB1B6E71EBFBB5900F2CCBA /* IRCServerInternal.h */,
 				4C52EF9B1D58BF930003AA1C /* IRCUserInternal.h */,
 				4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */,
+				4CCDC6BB1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h */,
 				4C6B21991D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h */,
 				4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */,
 				4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */,
@@ -4006,6 +4020,7 @@
 			isa = PBXGroup;
 			children = (
 				4C9BA40D1D57D3590023B433 /* Buddy List */,
+				4CCDC6B61EC4FEA1001DDE9A /* Channel Properties */,
 				4C620E721D3E607A0037F35E /* Channel Spotlight */,
 				4C0879C4187061920034F5EB /* File Transfers */,
 				4C74FBB91B557A6200DD1615 /* License Manager */,
@@ -4017,7 +4032,6 @@
 				4C8AF51F158E99520026668C /* TDCChannelInviteSheet.m */,
 				4C8AF521158E99520026668C /* TDCChannelModifyModesSheet.m */,
 				4C8AF525158E99520026668C /* TDCChannelModifyTopicSheet.m */,
-				4C8AF51D158E99520026668C /* TDCChannelPropertiesSheet.m */,
 				4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */,
 				4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */,
 				4C10B36A1D23247600868A74 /* TDCProgressIndicatorSheet.m */,
@@ -4144,6 +4158,15 @@
 				4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4CCDC6B61EC4FEA1001DDE9A /* Channel Properties */ = {
+			isa = PBXGroup;
+			children = (
+				4C8AF51D158E99520026668C /* TDCChannelPropertiesSheet.m */,
+				4CCDC6B21EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m */,
+			);
+			name = "Channel Properties";
 			sourceTree = "<group>";
 		};
 		4CD6202E16E31EE600D780D6 /* Configurations */ = {
@@ -4304,6 +4327,7 @@
 				4C7B032C1D1210A100295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C99A7301D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4C6CCF081D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */,
+				4CCDC6AF1EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */,
 				4C7B032D1D1210A100295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C2D6AC11D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */,
 				4C7B032E1D1210A100295E82 /* GRMustacheContentType.h in Headers */,
@@ -4358,7 +4382,6 @@
 				4C2065341D47929300D42CD2 /* TDCWindowBase.h in Headers */,
 				4C7B034C1D1210A100295E82 /* IRCTreeItem.h in Headers */,
 				4CF1F4D31D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */,
-				4CC215D71D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */,
 				4C083FAE1D2D5F5B00192F09 /* IRCConnectionPrivate.h in Headers */,
 				4CEA29BC1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4C2D6ACA1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
@@ -4373,6 +4396,7 @@
 				4CD1C4C91D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
 				4CEA29B31D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */,
 				4C620E8C1D3E61C20037F35E /* TDCChannelSpotlightSearchResultsTablePrivate.h in Headers */,
+				4CCDC6BC1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */,
 				4C6B219A1D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h in Headers */,
 				4CB9E3CD1D2B199900ED395A /* IRCChannelModePrivate.h in Headers */,
 				4C10B37A1D23283000868A74 /* TDCLicenseManagerDialogPrivate.h in Headers */,
@@ -4414,6 +4438,7 @@
 				4C7B03791D1210A100295E82 /* TVCAutoExpandingTextField.h in Headers */,
 				4C7B037A1D1210A100295E82 /* TVCAutoExpandingTokenField.h in Headers */,
 				4CB9E3BD1D2B14C400ED395A /* IRCMessageBatchPrivate.h in Headers */,
+				4CCDC6B81EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
 				4C7B037B1D1210A100295E82 /* TVCBasicTableView.h in Headers */,
 				4C7B037E1D1210A100295E82 /* TVCImageURLParser.h in Headers */,
 				4CEA29C81D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
@@ -4552,6 +4577,7 @@
 				4C7B03AC1D1210A800295E82 /* GRMustache.h in Headers */,
 				4C7B03AD1D1210A800295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C116BE01D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
+				4CCDC6B91EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
 				4C761BBD1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */,
 				4C7B03AE1D1210A800295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C7B03AF1D1210A800295E82 /* GRMustacheContentType.h in Headers */,
@@ -4577,7 +4603,6 @@
 				4CBC54261D2B26FC0067242C /* IRCMessageInternal.h in Headers */,
 				4CAAAE481D24207C00A6F9B9 /* TDCChannelBanListSheetPrivate.h in Headers */,
 				4C7B03BB1D1210A800295E82 /* OELReachability.h in Headers */,
-				4CC215D81D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */,
 				4C7B49021D131A2A008D7926 /* TVCLogLinePrivate.h in Headers */,
 				4C7B03BC1D1210A800295E82 /* IRC.h in Headers */,
 				4C7B03BD1D1210A800295E82 /* IRCAddressBook.h in Headers */,
@@ -4676,6 +4701,7 @@
 				4C7B04081D1210A800295E82 /* TVCLogView.h in Headers */,
 				4C083FB51D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */,
 				4C7B04091D1210A800295E82 /* TVCMainWindow.h in Headers */,
+				4CCDC6BD1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */,
 				4CCD4CA81D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C2D6ACB1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C056F1E1D1D89A100D85CEA /* TVCMemberListPrivate.h in Headers */,
@@ -4692,6 +4718,7 @@
 				4C7B49141D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
+				4CCDC6B01EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */,
 				4C7B041F1D1210A800295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
 				4CEA29C91D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4C2B1D821EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
@@ -4812,6 +4839,7 @@
 				4C7B042C1D1210B000295E82 /* GTMEncodeHTML.h in Headers */,
 				4C7B042D1D1210B000295E82 /* GRMustache.h in Headers */,
 				4C116BE11D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
+				4CCDC6BA1EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
 				4C761BBE1E155FF800A505B7 /* TVCLogLineXPC.h in Headers */,
 				4C7B042E1D1210B000295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C7B042F1D1210B000295E82 /* GRMustacheConfiguration.h in Headers */,
@@ -4838,7 +4866,6 @@
 				4CBC54271D2B26FC0067242C /* IRCMessageInternal.h in Headers */,
 				4CAAAE491D24207C00A6F9B9 /* TDCChannelBanListSheetPrivate.h in Headers */,
 				4C7B043C1D1210B000295E82 /* OELReachability.h in Headers */,
-				4CC215D91D23181400FCD0F5 /* TDCPreferencesSoundWrapperPrivate.h in Headers */,
 				4C7B49031D131A2A008D7926 /* TVCLogLinePrivate.h in Headers */,
 				4C7B043D1D1210B000295E82 /* IRC.h in Headers */,
 				4C7B043E1D1210B000295E82 /* IRCAddressBook.h in Headers */,
@@ -4936,6 +4963,7 @@
 				4C7B04891D1210B000295E82 /* TVCLogView.h in Headers */,
 				4C083FB61D2D5F5B00192F09 /* IRCExtrasPrivate.h in Headers */,
 				4C7B048A1D1210B000295E82 /* TVCMainWindow.h in Headers */,
+				4CCDC6BE1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */,
 				4CCD4CA91D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C056F1F1D1D89A100D85CEA /* TVCMemberListPrivate.h in Headers */,
@@ -4952,6 +4980,7 @@
 				4C7B49151D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
+				4CCDC6B11EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */,
 				4C7B04A01D1210B000295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
 				4CEA29CA1D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4C2B1D831EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
@@ -5109,6 +5138,12 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
+					4C01B9FC1580C591007E2DAF = {
+						DevelopmentTeam = 8482Q6EPL6;
+					};
+					4C01BA0415810DD8007E2DAF = {
+						DevelopmentTeam = 8482Q6EPL6;
+					};
 					4C0BA4F81990798800857343 = {
 						DevelopmentTeam = 8482Q6EPL6;
 						DevelopmentTeamName = "Codeux Software, LLC";
@@ -5141,6 +5176,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					4CCF301015804DCE006FFE21 = {
+						DevelopmentTeam = 8482Q6EPL6;
 					};
 				};
 			};
@@ -5884,7 +5922,7 @@
 				4CF40E5F1AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
 				4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */,
 				4C620E811D3E60B50037F35E /* TDCChannelSpotlightSearchResult.m in Sources */,
-				4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */,
+				4C0444FB16F1603B00EBB665 /* TDCPreferencesNotificationConfiguration.m in Sources */,
 				4C0444FC16F1603B00EBB665 /* TDCAboutDialog.m in Sources */,
 				4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */,
 				4C0444FF16F1603B00EBB665 /* TDCChannelBanListSheet.m in Sources */,
@@ -6015,6 +6053,7 @@
 				4CF40E631AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
 				4C5B42351D59439C00B7C72A /* IRCUserRelations.m in Sources */,
 				4C673F1A1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */,
+				4CCDC6B41EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
 				4CEFF3A71DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
 				4CF40E1B1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
 				4C0445BF16F1603C00EBB665 /* main.m in Sources */,
@@ -6059,7 +6098,7 @@
 				4CF40E261AC1A4AC00A26BE0 /* TVCMainWindow.m in Sources */,
 				4C90F6291E54F28A00DF5190 /* TXApplication.m in Sources */,
 				4CF40E5E1AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
-				4C0BA63E1990798800857343 /* TDCPreferencesSoundWrapper.m in Sources */,
+				4C0BA63E1990798800857343 /* TDCPreferencesNotificationConfiguration.m in Sources */,
 				4C0D46011EC27E9F00256D58 /* TDCServerEndpointListSheet.m in Sources */,
 				4C0BA63F1990798800857343 /* TDCAboutDialog.m in Sources */,
 				4C0BA6401990798800857343 /* TDCAddressBookSheet.m in Sources */,
@@ -6161,6 +6200,7 @@
 				4CF40E8A1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */,
 				4C0BA6851990798800857343 /* GCDAsyncSocket.m in Sources */,
 				4C0BA6861990798800857343 /* GCDAsyncSocketExtensions.m in Sources */,
+				4CCDC6B31EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
 				4C76CC891D1DC688005CDDA9 /* TVCMainWindowTextViewYosemiteUserInterace.m in Sources */,
 				4C0BA6891990798800857343 /* TLOFileLogger.m in Sources */,
 				4C0BA68B1990798800857343 /* IRCWorldCloudExtension.m in Sources */,
@@ -6235,7 +6275,7 @@
 				4CF40E281AC1A4AC00A26BE0 /* TVCMainWindow.m in Sources */,
 				4C635EE51D27F4DA00B64A0C /* IRCTimerCommand.m in Sources */,
 				4CF40E601AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
-				4C8AF60E158E99520026668C /* TDCPreferencesSoundWrapper.m in Sources */,
+				4C8AF60E158E99520026668C /* TDCPreferencesNotificationConfiguration.m in Sources */,
 				4C8AF60F158E99520026668C /* TDCAboutDialog.m in Sources */,
 				4C620E821D3E60B50037F35E /* TDCChannelSpotlightSearchResult.m in Sources */,
 				4C8AF610158E99520026668C /* TDCAddressBookSheet.m in Sources */,
@@ -6369,6 +6409,7 @@
 				4CF40E641AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
 				4C5B42361D59439C00B7C72A /* IRCUserRelations.m in Sources */,
 				4C673F1B1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */,
+				4CCDC6B51EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
 				4CEFF3A81DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
 				4CF40E1C1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
 				4C8AF6D1158E99520026668C /* TPCThemeController.m in Sources */,
