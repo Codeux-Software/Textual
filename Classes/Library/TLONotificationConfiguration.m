@@ -85,62 +85,62 @@ ClassWithDesignatedInitializerInitMethod
 	[self doesNotRecognizeSelector:_cmd];
 }
 
-- (BOOL)pushNotification
+- (NSUInteger)pushNotification
 {
 	[self doesNotRecognizeSelector:_cmd];
 
-	return NO;
+	return NSOffState;
 }
 
-- (void)setPushNotification:(BOOL)pushNotification
-{
-	[self doesNotRecognizeSelector:_cmd];
-}
-
-- (BOOL)speakEvent
-{
-	[self doesNotRecognizeSelector:_cmd];
-
-	return NO;
-}
-
-- (void)setSpeakEvent:(BOOL)speakEvent
+- (void)setPushNotification:(NSUInteger)pushNotification
 {
 	[self doesNotRecognizeSelector:_cmd];
 }
 
-- (BOOL)disabledWhileAway
+- (NSUInteger)speakEvent
 {
 	[self doesNotRecognizeSelector:_cmd];
 
-	return NO;
+	return NSOffState;
 }
 
-- (void)setDisabledWhileAway:(BOOL)disabledWhileAway
-{
-	[self doesNotRecognizeSelector:_cmd];
-}
-
-- (BOOL)bounceDockIcon
-{
-	[self doesNotRecognizeSelector:_cmd];
-
-	return NO;
-}
-
-- (void)setBounceDockIcon:(BOOL)bounceDockIcon
+- (void)setSpeakEvent:(NSUInteger)speakEvent
 {
 	[self doesNotRecognizeSelector:_cmd];
 }
 
-- (BOOL)bounceDockIconRepeatedly
+- (NSUInteger)disabledWhileAway
 {
 	[self doesNotRecognizeSelector:_cmd];
 
-	return NO;
+	return NSOffState;
 }
 
-- (void)setBounceDockIconRepeatedly:(BOOL)bounceDockIconRepeatedly
+- (void)setDisabledWhileAway:(NSUInteger)disabledWhileAway
+{
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (NSUInteger)bounceDockIcon
+{
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NSOffState;
+}
+
+- (void)setBounceDockIcon:(NSUInteger)bounceDockIcon
+{
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+- (NSUInteger)bounceDockIconRepeatedly
+{
+	[self doesNotRecognizeSelector:_cmd];
+
+	return NSOffState;
+}
+
+- (void)setBounceDockIconRepeatedly:(NSUInteger)bounceDockIconRepeatedly
 {
 	[self doesNotRecognizeSelector:_cmd];
 }

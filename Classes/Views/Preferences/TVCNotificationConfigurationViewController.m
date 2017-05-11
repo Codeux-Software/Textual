@@ -113,6 +113,26 @@ NS_ASSUME_NONNULL_BEGIN
 											   views:NSDictionaryOfVariableBindings(contentView)]];
 }
 
+- (void)setAllowsMixedState:(BOOL)allowsMixedState
+{
+	if (self->_allowsMixedState != allowsMixedState) {
+		self->_allowsMixedState = allowsMixedState;
+
+		[self updateMixedState];
+	}
+}
+
+- (void)updateMixedState
+{
+	BOOL allowsMixedState = self.allowsMixedState;
+
+	self.alertSpeakEventButton.allowsMixedState = allowsMixedState;
+	self.alertBounceDockIconButton.allowsMixedState = allowsMixedState;
+	self.alertBounceDockIconRepeatedlyButton.allowsMixedState = allowsMixedState;
+	self.alertDisableWhileAwayButton.allowsMixedState = allowsMixedState;
+	self.alertPushNotificationButton.allowsMixedState = allowsMixedState;
+}
+
 - (void)setNotifications:(NSArray *)notifications
 {
 	if (self->_notifications != notifications) {
@@ -271,7 +291,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSMutableArray *sounds = [NSMutableArray array];
 
-	[sounds addObject:[TDCPreferencesSoundWrapper localizedAlertEmptySoundTitle]];
+	[sounds addObject:[TLONotificationConfiguration localizedAlertEmptySoundTitle]];
 
 	[sounds addObject:[NSMenuItem separatorItem]];
 
