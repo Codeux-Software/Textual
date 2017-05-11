@@ -48,6 +48,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCChannelSelectionViewController
 
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
 - (void)prepareInitialState
 {
 	[RZMainBundle() loadNibNamed:@"TVCChannelSelectionView" owner:self topLevelObjects:nil];
@@ -66,8 +77,6 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		NSAssert(NO, @"Table view is already attached to a view");
 	}
-
-	[self prepareInitialState];
 
 	NSScrollView *outlineViewScroller = self.outlineView.enclosingScrollView;
 
