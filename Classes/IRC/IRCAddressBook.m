@@ -76,10 +76,10 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNilCopy(self->_hostmask, NSStringEmptyPlaceholder)
-	SetVariableIfNilCopy(self->_hostmaskRegularExpression, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_hostmask, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_hostmaskRegularExpression, NSStringEmptyPlaceholder)
 
-	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 }
 
 + (instancetype)newIgnoreEntry
@@ -327,7 +327,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self mutableCopy];
 	}
 
-	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+	object->_uniqueIdentifier = [NSString stringWithUUID];
 
 	return object;
 }

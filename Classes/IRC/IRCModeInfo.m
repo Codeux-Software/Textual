@@ -79,16 +79,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNilCopy(self->_modeSymbol, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_modeSymbol, NSStringEmptyPlaceholder)
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	IRCModeInfo *object = [[IRCModeInfo allocWithZone:zone] init];
 
-	object->_modeIsSet = self.modeIsSet;
-	object->_modeSymbol = [self.modeSymbol copyWithZone:zone];
-	object->_modeParameter = [self.modeParameter copyWithZone:zone];
+	object->_modeIsSet = self->_modeIsSet;
+	object->_modeSymbol = self->_modeSymbol;
+	object->_modeParameter = self->_modeParameter;
 
 	return object;
 }
@@ -97,9 +97,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCModeInfoMutable *object = [[IRCModeInfoMutable allocWithZone:zone] init];
 
-	object.modeIsSet = self.modeIsSet;
-	object.modeSymbol = self.modeSymbol;
-	object.modeParameter = self.modeParameter;
+	((IRCModeInfo *)object)->_modeIsSet = self->_modeIsSet;
+	((IRCModeInfo *)object)->_modeSymbol = self->_modeSymbol;
+	((IRCModeInfo *)object)->_modeParameter = self->_modeParameter;
 
 	return object;
 }

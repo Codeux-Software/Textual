@@ -64,9 +64,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNilCopy(self->_channelName, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_channelName, NSStringEmptyPlaceholder)
 
-	SetVariableIfNilCopy(self->_uniqueIdentifier, [NSString stringWithUUID])
+	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 
 	SetVariableIfNil(self->_notificationsMutable, [NSMutableDictionary dictionary])
 }
@@ -256,9 +256,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCChannelConfig *config = [IRCChannelConfig allocWithZone:zone];
 
-	config->_defaults = [self->_defaults copyWithZone:zone];
+	config->_defaults = self->_defaults;
 
-	config->_secretKey = [self->_secretKey copyWithZone:zone];
+	config->_secretKey = self->_secretKey;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation];
 }
@@ -267,9 +267,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	IRCChannelConfigMutable *config = [IRCChannelConfigMutable allocWithZone:zone];
 
-	((IRCChannelConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
+	((IRCChannelConfig *)config)->_defaults = self->_defaults;
 
-	config.secretKey = self->_secretKey;
+	((IRCChannelConfig *)config)->_secretKey = self->_secretKey;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation];
 }
@@ -294,11 +294,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		object = [self copy];
 	} else {
 		object = [self mutableCopy];
-
-		object->_secretKey = [self.secretKey copy];
 	}
 
-	object->_uniqueIdentifier = [[NSString stringWithUUID] copy];
+	object->_uniqueIdentifier = [NSString stringWithUUID];
 
 	return object;
 }

@@ -62,11 +62,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCPrefix *object = [[IRCPrefix allocWithZone:zone] init];
 
-	object->_isServer = self.isServer;
-	object->_nickname = [self.nickname copyWithZone:zone];
-	object->_username = [self.username copyWithZone:zone];
-	object->_address = [self.address copyWithZone:zone];
-	object->_hostmask = [self.hostmask copyWithZone:zone];
+	object->_isServer = self->_isServer;
+	object->_nickname = self->_nickname;
+	object->_username = self->_username;
+	object->_address = self->_address;
+	object->_hostmask = self->_hostmask;
 
 	return object;
 }
@@ -75,11 +75,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCPrefixMutable *object = [[IRCPrefixMutable allocWithZone:zone] init];
 
-	object.isServer = self.isServer;
-	object.nickname = self.nickname;
-	object.username = self.username;
-	object.address = self.address;
-	object.hostmask = self.hostmask;
+	((IRCPrefix *)object)->_isServer = self->_isServer;
+	((IRCPrefix *)object)->_nickname = self->_nickname;
+	((IRCPrefix *)object)->_username = self->_username;
+	((IRCPrefix *)object)->_address = self->_address;
+	((IRCPrefix *)object)->_hostmask = self->_hostmask;
 
 	return object;
 }

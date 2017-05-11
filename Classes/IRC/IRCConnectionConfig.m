@@ -57,7 +57,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNilCopy(self->_serverAddress, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_serverAddress, NSStringEmptyPlaceholder)
 
 	self->_proxyPort = IRCConnectionDefaultProxyPort;
 
@@ -72,20 +72,20 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	IRCConnectionConfig *object = [[IRCConnectionConfig allocWithZone:zone] init];
 
-	object->_connectionPrefersIPv4 = self.connectionPrefersIPv4;
-	object->_connectionPrefersModernCiphers = self.connectionPrefersModernCiphers;
-	object->_connectionPrefersSecuredConnection = self.connectionPrefersSecuredConnection;
-	object->_connectionShouldValidateCertificateChain = self.connectionShouldValidateCertificateChain;
-	object->_floodControlDelayInterval = self.floodControlDelayInterval;
-	object->_floodControlMaximumMessages = self.floodControlMaximumMessages;
-	object->_identityClientSideCertificate = [self.identityClientSideCertificate copyWithZone:zone];
-	object->_proxyAddress = [self.proxyAddress copyWithZone:zone];
-	object->_proxyPassword = [self.proxyPassword copyWithZone:zone];
-	object->_proxyPort = self.proxyPort;
-	object->_proxyType = self.proxyType;
-	object->_proxyUsername = [self.proxyUsername copyWithZone:zone];
-	object->_serverAddress = [self.serverAddress copyWithZone:zone];
-	object->_serverPort = self.serverPort;
+	object->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
+	object->_connectionPrefersModernCiphers = self->_connectionPrefersModernCiphers;
+	object->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
+	object->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
+	object->_floodControlDelayInterval = self->_floodControlDelayInterval;
+	object->_floodControlMaximumMessages = self->_floodControlMaximumMessages;
+	object->_identityClientSideCertificate = self->_identityClientSideCertificate;
+	object->_proxyAddress = self->_proxyAddress;
+	object->_proxyPassword = self->_proxyPassword;
+	object->_proxyPort = self->_proxyPort;
+	object->_proxyType = self->_proxyType;
+	object->_proxyUsername = self->_proxyUsername;
+	object->_serverAddress = self->_serverAddress;
+	object->_serverPort = self->_serverPort;
 
 	return object;
 }
@@ -94,20 +94,20 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	IRCConnectionConfigMutable *object = [[IRCConnectionConfigMutable allocWithZone:zone] init];
 
-	object.connectionPrefersIPv4 = self.connectionPrefersIPv4;
-	object.connectionPrefersModernCiphers = self.connectionPrefersModernCiphers;
-	object.connectionPrefersSecuredConnection = self.connectionPrefersSecuredConnection;
-	object.connectionShouldValidateCertificateChain = self.connectionShouldValidateCertificateChain;
-	object.floodControlDelayInterval = self.floodControlDelayInterval;
-	object.floodControlMaximumMessages = self.floodControlMaximumMessages;
-	object.identityClientSideCertificate = self.identityClientSideCertificate;
-	object.proxyAddress = self.proxyAddress;
-	object.proxyPassword = self.proxyPassword;
-	object.proxyPort = self.proxyPort;
-	object.proxyType = self.proxyType;
-	object.proxyUsername = self.proxyUsername;
-	object.serverAddress = self.serverAddress;
-	object.serverPort = self.serverPort;
+	((IRCConnectionConfig *)object)->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
+	((IRCConnectionConfig *)object)->_connectionPrefersModernCiphers = self->_connectionPrefersModernCiphers;
+	((IRCConnectionConfig *)object)->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
+	((IRCConnectionConfig *)object)->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
+	((IRCConnectionConfig *)object)->_floodControlDelayInterval = self->_floodControlDelayInterval;
+	((IRCConnectionConfig *)object)->_floodControlMaximumMessages = self->_floodControlMaximumMessages;
+	((IRCConnectionConfig *)object)->_identityClientSideCertificate = self->_identityClientSideCertificate;
+	((IRCConnectionConfig *)object)->_proxyAddress = self->_proxyAddress;
+	((IRCConnectionConfig *)object)->_proxyPassword = self->_proxyPassword;
+	((IRCConnectionConfig *)object)->_proxyPort = self->_proxyPort;
+	((IRCConnectionConfig *)object)->_proxyType = self->_proxyType;
+	((IRCConnectionConfig *)object)->_proxyUsername = self->_proxyUsername;
+	((IRCConnectionConfig *)object)->_serverAddress = self->_serverAddress;
+	((IRCConnectionConfig *)object)->_serverPort = self->_serverPort;
 
 	return object;
 }
