@@ -77,26 +77,17 @@ NS_ASSUME_NONNULL_BEGIN
 #define _unsignedIntegerString(_value_)			[NSString stringWithUnsignedInteger:_value_]
 
 @interface TDCPreferencesController ()
-@property (nonatomic, copy) NSArray *alertSounds;
 @property (nonatomic, strong) IBOutlet NSArrayController *excludeKeywordsArrayController;
 @property (nonatomic, strong) IBOutlet NSArrayController *highlightKeywordsArrayController;
 @property (nonatomic, strong) IBOutlet NSArrayController *installedScriptsController;
 @property (nonatomic, weak) IBOutlet NSButton *addExcludeKeywordButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertBounceDockIconButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertBounceDockIconRepeatedlyButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertDisableWhileAwayButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertPushNotificationButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertSpeakEventButton;
 @property (nonatomic, weak) IBOutlet NSButton *highlightNicknameButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *themeSelectionButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *transcriptFolderButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
 @property (nonatomic, weak) IBOutlet NSTableView *excludeKeywordsTable;
 @property (nonatomic, weak) IBOutlet NSTableView *installedScriptsTable;
 @property (nonatomic, weak) IBOutlet NSTableView *highlightKeywordsTable;
-@property (nonatomic, weak) IBOutlet NSTextField *alertNotificationDestinationTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
@@ -138,16 +129,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
 @property (nonatomic, assign) BOOL reloadingTheme;
 @property (nonatomic, assign) BOOL reloadingThemeBySelection;
+@property (nonatomic, weak) IBOutlet NSView *notificationControllerHostView;
+@property (nonatomic, strong) IBOutlet TVCNotificationConfigurationViewController *notificationController;
 
 - (IBAction)onAddExcludeKeyword:(id)sender;
 - (IBAction)onAddHighlightKeyword:(id)sender; // changed
-- (IBAction)onChangedAlertBounceDockIcon:(id)sender;
-- (IBAction)onChangedAlertBounceDockIconRepeatedly:(id)sender;
-- (IBAction)onChangedAlertDisableWhileAway:(id)sender;
-- (IBAction)onChangedAlertNotification:(id)sender;
-- (IBAction)onChangedAlertSound:(id)sender;
-- (IBAction)onChangedAlertSpoken:(id)sender;
-- (IBAction)onChangedAlertType:(id)sender;
 - (IBAction)onChangedCheckForUpdates:(id)sender;
 - (IBAction)onChangedCheckForBetaUpdates:(id)sender;
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
@@ -205,54 +191,48 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)awakeFromNib
 {
-	NSMutableArray *alertSounds = [NSMutableArray new];
+	NSMutableArray *notifications = [NSMutableArray array];
 
-	[alertSounds addObject:@(TXNotificationAddressBookMatchType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationConnectType)];
-	[alertSounds addObject:@(TXNotificationDisconnectType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationHighlightType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationInviteType)];
-	[alertSounds addObject:@(TXNotificationKickType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationChannelMessageType)];
-	[alertSounds addObject:@(TXNotificationChannelNoticeType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationNewPrivateMessageType)];
-	[alertSounds addObject:@(TXNotificationPrivateMessageType)];
-	[alertSounds addObject:@(TXNotificationPrivateNoticeType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationUserJoinedType)];
-	[alertSounds addObject:@(TXNotificationUserPartedType)];
-	[alertSounds addObject:@(TXNotificationUserDisconnectedType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationFileTransferReceiveRequestedType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationFileTransferSendSuccessfulType)];
-	[alertSounds addObject:@(TXNotificationFileTransferReceiveSuccessfulType)];
-	[alertSounds addObject:NSStringWhitespacePlaceholder];
-	[alertSounds addObject:@(TXNotificationFileTransferSendFailedType)];
-	[alertSounds addObject:@(TXNotificationFileTransferReceiveFailedType)];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewPrivateMessageType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateMessageType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateNoticeType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationUserJoinedType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationUserPartedType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationUserDisconnectedType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveRequestedType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendSuccessfulType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveSuccessfulType]];
+	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendFailedType]];
+	[notifications addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveFailedType]];
 
-	self.alertSounds = alertSounds;
+	self.notificationController.notifications = notifications;
 
-	if ([GrowlApplicationBridge isGrowlRunning]) {
-		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1004]");
-	} else {
-		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1005]");
-	}
+	[self.notificationController attachToView:self.notificationControllerHostView];
 
 	[self setUpToolbarItemsAndMenus];
 
-	[self updateAlertSelection];
 	[self updateCheckForUpdatesMatrix];
 	[self updateFileTransferDownloadDestinationFolder];
 	[self updateThemeSelection];
 	[self updateTranscriptFolder];
 
-	[self onChangedAlertType:nil];
 	[self onChangedHighlightType:nil];
 
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
@@ -729,146 +709,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return YES;
-}
-
-#pragma mark -
-#pragma mark Sounds
-
-- (void)updateAlertSelection
-{
-    [self.alertTypeChoiceButton removeAllItems];
-
-    NSArray *alerts = self.alertSounds;
-
-    for (id alert in alerts) {
-		if ([alert isKindOfClass:[NSNumber class]]) {
-			 TDCPreferencesSoundWrapper *alertWrapper =
-			[TDCPreferencesSoundWrapper soundWrapperWithEventType:[alert unsignedIntegerValue]];
-
-			NSMenuItem *item = [NSMenuItem new];
-
-			item.tag = alertWrapper.eventType;
-
-			item.title = alertWrapper.displayName;
-
-			[self.alertTypeChoiceButton.menu addItem:item];
-		} else {
-			[self.alertTypeChoiceButton.menu addItem:[NSMenuItem separatorItem]];
-		}
-    }
-
-    [self.alertTypeChoiceButton selectItemAtIndex:0];
-
-	/* ======================================== */
-
-	[self.alertSoundChoiceButton removeAllItems];
-
-	NSArray *alertSounds = [self availableSounds];
-
-    for (id alertSound in alertSounds) {
-		if ([alertSound isKindOfClass:[NSMenuItem class]] == NO) {
-			NSMenuItem *item = [NSMenuItem new];
-
-			item.title = alertSound;
-
-			[self.alertSoundChoiceButton.menu addItem:item];
-		} else {
-			[self.alertSoundChoiceButton.menu addItem:alertSound];
-		}
-	}
-
-    [self.alertSoundChoiceButton selectItemAtIndex:0];
-}
-
-- (void)onChangedAlertType:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-
-	self.alertSpeakEventButton.state = alert.speakEvent;
-    self.alertBounceDockIconButton.state = alert.bounceDockIcon;
-    self.alertBounceDockIconRepeatedlyButton.enabled = (self.alertBounceDockIconButton.state == NSOnState);
-    self.alertBounceDockIconRepeatedlyButton.state = alert.bounceDockIconRepeatedly;
-    self.alertDisableWhileAwayButton.state = alert.disabledWhileAway;
-    self.alertPushNotificationButton.state = alert.pushNotification;
-
-	NSUInteger soundIndex = [[self availableSounds] indexOfObject:alert.alertSound];
-	
-	if (soundIndex == NSNotFound) {
-		[self.alertSoundChoiceButton selectItemAtIndex:0];
-	} else {
-		[self.alertSoundChoiceButton selectItemAtIndex:soundIndex];
-	}
-}
-
-- (void)onChangedAlertNotification:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-
-    alert.pushNotification = self.alertPushNotificationButton.state;
-}
-
-- (void)onChangedAlertSpoken:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-
-	alert.speakEvent = self.alertSpeakEventButton.state;
-}
-
-- (void)onChangedAlertDisableWhileAway:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-
-	alert.disabledWhileAway = self.alertDisableWhileAwayButton.state;
-}
-
-- (void)onChangedAlertBounceDockIcon:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-    
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-    
-	alert.bounceDockIcon = self.alertBounceDockIconButton.state;
-    
-	self.alertBounceDockIconRepeatedlyButton.enabled = (self.alertBounceDockIconButton.state == NSOnState);
-}
-
-- (void)onChangedAlertBounceDockIconRepeatedly:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-    
-	TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-    
-	alert.bounceDockIconRepeatedly = self.alertBounceDockIconRepeatedlyButton.state;
-}
-
-- (void)onChangedAlertSound:(id)sender
-{
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedTag;
-
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-
-	alert.alertSound = self.alertSoundChoiceButton.titleOfSelectedItem;
-}
-
-- (NSArray *)availableSounds
-{
-	NSMutableArray *sounds = [NSMutableArray array];
-
-	[sounds addObject:[TDCPreferencesSoundWrapper localizedAlertEmptySoundTitle]];
-
-	[sounds addObject:[NSMenuItem separatorItem]];
-
-	[sounds addObjectsFromArray:[TLOSoundPlayer uniqueListOfSounds]];
-
-	return [sounds copy];
 }
 
 #pragma mark -

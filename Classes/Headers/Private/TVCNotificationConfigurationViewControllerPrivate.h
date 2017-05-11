@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,79 +37,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TDCPreferencesSoundWrapper
+@protocol TVCNotificationConfigurationViewControllerDelegate;
 
-+ (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
-{
-	return [[self alloc] initWithEventType:eventType];
-}
+@interface TVCNotificationConfigurationViewController : NSObject
+@property (nonatomic, weak) id <TVCNotificationConfigurationViewControllerDelegate> delegate;
 
-- (NSString *)alertSound
-{
-	NSString *sound = [TPCPreferences soundForEvent:self.eventType];
+@property (nonatomic, copy) NSArray *notifications; // __kindof TVCNotificationConfiguration* or NSString*
 
-	if (sound == nil) {
-		return [TLONotificationConfiguration localizedAlertEmptySoundTitle];
-	}
+- (void)attachToView:(NSView *)view;
+@end
 
-	return sound;
-}
+#pragma mark -
 
-- (void)setAlertSound:(NSString *)alertSound
-{
-	[TPCPreferences setSound:alertSound forEvent:self.eventType];
-}
+@protocol TVCNotificationConfigurationViewControllerDelegate <NSObject>
+@required
 
-- (BOOL)pushNotification
-{
-	return [TPCPreferences growlEnabledForEvent:self.eventType];
-}
-
-- (void)setPushNotification:(BOOL)pushNotification
-{
-	[TPCPreferences setGrowlEnabled:pushNotification forEvent:self.eventType];
-}
-
-- (BOOL)speakEvent
-{
-	return [TPCPreferences speakEvent:self.eventType];
-}
-
-- (void)setSpeakEvent:(BOOL)speakEvent
-{
-	[TPCPreferences setEventIsSpoken:speakEvent forEvent:self.eventType];
-}
-
-- (BOOL)disabledWhileAway
-{
-	return [TPCPreferences disabledWhileAwayForEvent:self.eventType];
-}
-
-- (void)setDisabledWhileAway:(BOOL)disabledWhileAway
-{
-	[TPCPreferences setDisabledWhileAway:disabledWhileAway forEvent:self.eventType];
-}
-
-- (BOOL)bounceDockIcon
-{
-	return [TPCPreferences bounceDockIconForEvent:self.eventType];
-}
-
-- (void)setBounceDockIcon:(BOOL)bounceDockIcon
-{
-	[TPCPreferences setBounceDockIcon:bounceDockIcon forEvent:self.eventType];
-}
-
-- (BOOL)bounceDockIconRepeatedly
-{
-	return [TPCPreferences bounceDockIconRepeatedlyForEvent:self.eventType];
-}
-
-- (void)setBounceDockIconRepeatedly:(BOOL)bounceDockIconRepeatedly
-{
-	[TPCPreferences setBounceDockIconRepeatedly:bounceDockIconRepeatedly forEvent:self.eventType];
-}
-
+- (void)notificationConfigurationControllerSelectionChanged:(TVCNotificationConfigurationViewController *)sender;
 @end
 
 NS_ASSUME_NONNULL_END
