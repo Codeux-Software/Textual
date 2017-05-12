@@ -105,10 +105,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 - (void)notify:(TXNotificationType)eventType title:(nullable NSString *)eventTitle description:(nullable NSString *)eventDescription userInfo:(nullable NSDictionary<NSString *,id> *)eventContext
 {
-	if ([TPCPreferences growlEnabledForEvent:eventType] == NO) {
-		return; // This event is disabled by the user
-	}
-
 	NSUInteger eventPriority = 0;
 
 	switch (eventType) {
@@ -499,6 +495,91 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 		[channel.associatedClient inputText:message destination:channel];
 	}
+}
+
+@end
+
+#pragma mark -
+
+@implementation TLOGrowlController (Preferences)
+
+
+- (nullable NSString *)soundForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
+{
+	if (channel) {
+		NSString *channelValue = [channel.config soundForEvent:event];
+
+		if (channelValue != nil) {
+			return channelValue;
+		}
+	}
+
+	return [TPCPreferences soundForEvent:event];
+}
+
+- (BOOL)speakEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
+{
+	if (channel) {
+		NSUInteger channelValue = [channel.config speakEvent:event];
+
+		if (channelValue != NSMixedState) {
+			return (channelValue == NSOnState);
+		}
+	}
+
+	return [TPCPreferences speakEvent:event];
+}
+
+- (BOOL)growlEnabledForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
+{
+	if (channel) {
+		NSUInteger channelValue = [channel.config speakEvent:event];
+
+		if (channelValue != NSMixedState) {
+			return (channelValue == NSOnState);
+		}
+	}
+
+	return [TPCPreferences speakEvent:event];
+}
+
+- (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
+{
+	if (channel) {
+		NSUInteger channelValue = [channel.config disabledWhileAwayForEvent:event];
+
+		if (channelValue != NSMixedState) {
+			return (channelValue == NSOnState);
+		}
+	}
+
+	return [TPCPreferences disabledWhileAwayForEvent:event];
+}
+
+- (BOOL)bounceDockIconForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
+{
+	if (channel) {
+		NSUInteger channelValue = [channel.config bounceDockIconForEvent:event];
+
+		if (channelValue != NSMixedState) {
+			return (channelValue == NSOnState);
+		}
+	}
+
+	return [TPCPreferences bounceDockIconForEvent:event];
+}
+
+- (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
+{
+	if (channel) {
+		NSUInteger channelValue = [channel.config bounceDockIconRepeatedlyForEvent:event];
+
+		if (channelValue != NSMixedState) {
+			return (channelValue == NSOnState);
+		}
+	}
+
+	return [TPCPreferences bounceDockIconRepeatedlyForEvent:event];
 }
 
 @end

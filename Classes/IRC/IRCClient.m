@@ -1801,14 +1801,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCTreeItem *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
 {
-	BOOL targetSpeakEvent =
-	((target == nil) ? NSMixedState :
-	 [[((id)target) config] speakEvent:eventType]);
-
-	if (([TPCPreferences speakEvent:eventType] == NO &&
-		 targetSpeakEvent == NSMixedState) ||
-		targetSpeakEvent == NSOffState)
-	{
+	if ([sharedGrowlController() speakEvent:eventType inChannel:(IRCChannel *)target] == NO) {
 		return;
 	}
 
@@ -1883,27 +1876,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	{
-		NSUInteger targetBounceDockIcon =
-		((targetConfig == nil) ? NSMixedState :
-		 [targetConfig bounceDockIconForEvent:eventType]);
-
-		if (([TPCPreferences bounceDockIconForEvent:eventType] &&
-			 targetBounceDockIcon == NSMixedState) ||
-			targetBounceDockIcon == NSOnState)
-		{
-			NSUInteger targetBounceDockIconRepeatedly =
-			((targetConfig == nil) ? NSMixedState :
-			 [targetConfig bounceDockIconRepeatedlyForEvent:eventType]);
-
-			if (([TPCPreferences bounceDockIconRepeatedlyForEvent:eventType] &&
-				 targetBounceDockIconRepeatedly == NSMixedState) ||
-				targetBounceDockIconRepeatedly == NSOnState)
-			{
-				[NSApp requestUserAttention:NSCriticalRequest];
-			} else {
-				[NSApp requestUserAttention:NSInformationalRequest];
-			}
+	if ([sharedGrowlController() bounceDockIconForEvent:eventType inChannel:target]) {
+		if ([sharedGrowlController() bounceDockIconRepeatedlyForEvent:eventType inChannel:target]) {
+			[NSApp requestUserAttention:NSCriticalRequest];
+		} else {
+			[NSApp requestUserAttention:NSInformationalRequest];
 		}
 	}
 
@@ -1921,11 +1898,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
-			NSString *soundName = [targetConfig soundForEvent:eventType];
-
-			if (soundName == nil) {
-				soundName = [TPCPreferences soundForEvent:eventType];
-			}
+			NSString *soundName = [sharedGrowlController() soundForEvent:eventType inChannel:target];
 
 			if (soundName) {
 				[TLOSoundPlayer playAlertSound:soundName];
@@ -1939,17 +1912,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return YES;
 	}
 
-	{
-		NSUInteger targetGrowlEnabled =
-		((targetConfig == nil) ? NSMixedState :
-		 [targetConfig growlEnabledForEvent:eventType]);
-
-		if (([TPCPreferences growlEnabledForEvent:eventType] == NO &&
-			 targetGrowlEnabled == NSMixedState) ||
-			targetGrowlEnabled == NSOffState)
-		{
-			return YES;
-		}
+	if ([sharedGrowlController() growlEnabledForEvent:eventType inChannel:target] == NO) {
+		return YES;
 	}
 
 	if (postNotificationsWhileFocused == NO && mainWindowIsFocused) {
@@ -1958,18 +1922,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	{
-		NSUInteger targetDisableWhileAway =
-		((targetConfig == nil) ? NSMixedState :
-		 [targetConfig disabledWhileAwayForEvent:eventType]);
-
-		if (([TPCPreferences disabledWhileAwayForEvent:eventType] &&
-			 targetDisableWhileAway == NSMixedState) ||
-			targetDisableWhileAway == NSOnState)
-		{
-			if (self.userIsAway) {
-				return YES;
-			}
+	if ([sharedGrowlController() disabledWhileAwayForEvent:eventType inChannel:target]) {
+		if (self.userIsAway) {
+			return YES;
 		}
 	}
 

@@ -68,4 +68,13 @@ typedef NS_ENUM(NSUInteger, TXNotificationType) {
 - (NSString *)titleForEvent:(TXNotificationType)event;
 @end
 
+@interface TLOGrowlController (Preferences)
+- (nullable NSString *)soundForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel;
+- (BOOL)speakEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel;
+- (BOOL)growlEnabledForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel;
+- (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel;
+- (BOOL)bounceDockIconForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel;
+- (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel;
+@end
+
 NS_ASSUME_NONNULL_END
