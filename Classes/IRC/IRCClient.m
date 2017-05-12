@@ -6695,7 +6695,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 				case IRCChannelPrivateMessageType:
 				{
-					if (NSObjectsAreEqual(channel.name, sender) == NO) {
+					if ([sender isEqualIgnoringCase:channel.name] == NO) {
 						return;
 					}
 
@@ -6898,7 +6898,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				case IRCChannelPrivateMessageType:
 				{
 					/* Rename private message if one with old name is found */
-					if (NSObjectsAreEqual(channel.name, oldNickname) == NO) {
+					if ([oldNickname isEqualIgnoringCase:channel.name] == NO) {
 						return;
 					}
 
