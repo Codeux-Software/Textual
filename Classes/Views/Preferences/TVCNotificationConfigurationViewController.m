@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.alertSpeakEventButton.state = alert.speakEvent;
 	self.alertBounceDockIconButton.state = alert.bounceDockIcon;
-	self.alertBounceDockIconRepeatedlyButton.enabled = (self.alertBounceDockIconButton.state == NSOnState);
+	self.alertBounceDockIconRepeatedlyButton.enabled = (self.alertBounceDockIconButton.state != NSOffState);
 	self.alertBounceDockIconRepeatedlyButton.state = alert.bounceDockIconRepeatedly;
 	self.alertDisableWhileAwayButton.state = alert.disabledWhileAway;
 	self.alertPushNotificationButton.state = alert.pushNotification;
