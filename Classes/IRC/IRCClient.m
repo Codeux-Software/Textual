@@ -1860,23 +1860,43 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
+	IRCChannelConfig *targetConfig = nil;
+
 	if (target) {
+		targetConfig = target.config;
+
 		if (eventType == TXNotificationHighlightType) {
-			if (target.config.ignoreHighlights) {
+			if (targetConfig.ignoreHighlights) {
 				return YES;
 			}
 		} else {
-			if (target.config.pushNotifications == NO) {
+			if (targetConfig.pushNotifications == NO) {
 				return YES;
 			}
 		}
 	}
 
-	if ([TPCPreferences bounceDockIconForEvent:eventType]) {
-		if ([TPCPreferences bounceDockIconRepeatedlyForEvent:eventType] == NO) {
-			[NSApp requestUserAttention:NSInformationalRequest];
-		} else {
-			[NSApp requestUserAttention:NSCriticalRequest];
+	{
+		NSUInteger targetBounceDockIcon =
+		((targetConfig == nil) ? NSMixedState :
+		 [targetConfig bounceDockIconForEvent:eventType]);
+
+		if (([TPCPreferences bounceDockIconForEvent:eventType] &&
+			 targetBounceDockIcon == NSMixedState) ||
+			targetBounceDockIcon == NSOnState)
+		{
+			NSUInteger targetBounceDockIconRepeatedly =
+			((targetConfig == nil) ? NSMixedState :
+			 [targetConfig bounceDockIconRepeatedlyForEvent:eventType]);
+
+			if (([TPCPreferences bounceDockIconRepeatedlyForEvent:eventType] &&
+				 targetBounceDockIconRepeatedly == NSMixedState) ||
+				targetBounceDockIconRepeatedly == NSOnState)
+			{
+				[NSApp requestUserAttention:NSCriticalRequest];
+			} else {
+				[NSApp requestUserAttention:NSInformationalRequest];
+			}
 		}
 	}
 
@@ -1894,7 +1914,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
-			NSString *soundName = [TPCPreferences soundForEvent:eventType];
+			NSString *soundName = [targetConfig soundForEvent:eventType];
+
+			if (soundName == nil) {
+				soundName = [TPCPreferences soundForEvent:eventType];
+			}
 
 			if (soundName) {
 				[TLOSoundPlayer playAlertSound:soundName];
@@ -1908,8 +1932,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return YES;
 	}
 
-	if ([TPCPreferences growlEnabledForEvent:eventType] == NO) {
-		return YES;
+	{
+		NSUInteger targetGrowlEnabled =
+		((targetConfig == nil) ? NSMixedState :
+		 [targetConfig growlEnabledForEvent:eventType]);
+
+		if (([TPCPreferences growlEnabledForEvent:eventType] == NO &&
+			 targetGrowlEnabled == NSMixedState) ||
+			targetGrowlEnabled == NSOffState)
+		{
+			return YES;
+		}
 	}
 
 	if (postNotificationsWhileFocused == NO && mainWindowIsFocused) {
@@ -1918,9 +1951,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	if ([TPCPreferences disabledWhileAwayForEvent:eventType]) {
-		if (self.userIsAway) {
-			return YES;
+	{
+		NSUInteger targetDisableWhileAway =
+		((targetConfig == nil) ? NSMixedState :
+		 [targetConfig disabledWhileAwayForEvent:eventType]);
+
+		if (([TPCPreferences disabledWhileAwayForEvent:eventType] &&
+			 targetDisableWhileAway == NSMixedState) ||
+			targetDisableWhileAway == NSOnState)
+		{
+			if (self.userIsAway) {
+				return YES;
+			}
 		}
 	}
 
