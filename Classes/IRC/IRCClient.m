@@ -1801,7 +1801,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)speakEvent:(TXNotificationType)eventType lineType:(TVCLogLineType)lineType target:(null_unspecified IRCTreeItem *)target nickname:(null_unspecified NSString *)nickname text:(null_unspecified NSString *)text
 {
-	if ([TPCPreferences speakEvent:eventType] == NO) {
+	BOOL targetSpeakEvent =
+	((target == nil) ? NSMixedState :
+	 [[((id)target) config] speakEvent:eventType]);
+
+	if (([TPCPreferences speakEvent:eventType] == NO &&
+		 targetSpeakEvent == NSMixedState) ||
+		targetSpeakEvent == NSOffState)
+	{
 		return;
 	}
 
