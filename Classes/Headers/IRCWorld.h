@@ -60,6 +60,8 @@ TEXTUAL_EXTERN NSString * const IRCWorldWillDestroyChannelNotification;
 - (void)save;
 - (void)savePeriodically;
 
+- (NSArray<__kindof IRCTreeItem *> *)findItemsWithIds:(NSArray<NSString *> *)itemIds;
+
 - (nullable IRCTreeItem *)findItemWithId:(NSString *)itemId;
 
 - (nullable IRCClient *)findClientWithId:(NSString *)clientId;
