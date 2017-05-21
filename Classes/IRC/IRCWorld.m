@@ -380,6 +380,27 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 #pragma mark -
 #pragma mark Tree Items
 
+- (NSArray<__kindof IRCTreeItem *> *)findItemsWithIds:(NSArray<NSString *> *)itemIds
+{
+	NSParameterAssert(itemIds != nil);
+
+	NSMutableArray<__kindof IRCTreeItem *> *items = [NSMutableArray array];
+
+	for (IRCClient *u in self.clientList) {
+		if ([itemIds containsObject:u.uniqueIdentifier]) {
+			[items addObject:u];
+		}
+
+		for (IRCChannel *c in u.channelList) {
+			if ([itemIds containsObject:c.uniqueIdentifier]) {
+				[items addObject:c];
+			}
+		}
+	}
+
+	return [items copy];
+}
+
 - (nullable IRCTreeItem *)findItemWithId:(NSString *)itemId
 {
 	if (itemId == nil) {
