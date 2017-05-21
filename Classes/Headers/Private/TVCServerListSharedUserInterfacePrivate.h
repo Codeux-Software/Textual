@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCServerListSharedUserInterface : NSObject
 @property (readonly, weak) TVCServerList *serverList;
 
+@property (readonly) BOOL isRetina;
+
 - (instancetype)initWithServerList:(TVCServerList *)serverList NS_DESIGNATED_INITIALIZER;
 
 - (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image;
