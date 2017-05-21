@@ -54,12 +54,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
-- (instancetype)initWithServerList:(TVCServerList *)serverList
+- (instancetype)initWithSharedInterface:(TVCServerListSharedUserInterface *)sharedInterface
 {
-	NSParameterAssert(serverList != nil);
+	NSParameterAssert(sharedInterface != nil);
 
 	if ((self = [super init])) {
-		self.isRetina = serverList.mainWindow.runningInHighResolutionMode;
+		self.isRetina = sharedInterface.isRetina;
 
 		return self;
 	}

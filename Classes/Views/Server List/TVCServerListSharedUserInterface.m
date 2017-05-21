@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListSharedUserInterface ()
 @property (nonatomic, weak, readwrite) TVCServerList *serverList;
+@property (nonatomic, assign, readwrite) BOOL isRetina;
 @end
 
 @interface TVCServerListMavericksUserInterfaceBackground ()
@@ -59,6 +60,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ((self = [super init])) {
 		self.serverList = serverList;
+
+		self.isRetina = serverList.mainWindow.runningInHighResolutionMode;
 
 		return self;
 	}
@@ -143,7 +146,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	if ((self = [super initWithServerList:serverList])) {
 		self.constraints =
-		[[TVCServerListYosemiteScaledUserInterface alloc] initWithServerList:serverList];
+		[[TVCServerListYosemiteScaledUserInterface alloc] initWithSharedInterface:self];
 
 		return self;
 	}

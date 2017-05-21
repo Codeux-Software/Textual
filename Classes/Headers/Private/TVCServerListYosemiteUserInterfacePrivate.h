@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCServerListYosemiteScaledUserInterface : NSObject <TVCServerListYosemiteScaledUserInterfaceProtocol>
-- (instancetype)initWithServerList:(TVCServerList *)serverList;
+- (instancetype)initWithSharedInterface:(TVCServerListSharedUserInterface *)sharedInterface;
 @end
 
 @interface TVCServerListYosemiteScaledUserInterfaceSize2 : TVCServerListYosemiteScaledUserInterface
