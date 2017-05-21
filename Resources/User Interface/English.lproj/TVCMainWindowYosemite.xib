@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -17,7 +19,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="515" y="206" width="800" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" wantsLayer="YES" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -145,15 +147,12 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="GroupView" id="LOI-ud-jS4" customClass="TVCServerListCellGroupItem">
+                                                                <tableCellView identifier="GroupView" misplaced="YES" id="LOI-ud-jS4" customClass="TVCServerListCellGroupItem">
                                                                     <rect key="frame" x="1" y="0.0" width="147" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
-                                                                            <rect key="frame" x="4" y="2" width="142" height="17"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="17" id="9Yk-87-EWm"/>
-                                                                            </constraints>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
+                                                                            <rect key="frame" x="4" y="0.0" width="142" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="fBN-3b-ksS" customClass="TVCMainWindowSidebarYosemtieSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="systemBold"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -164,26 +163,27 @@
                                                                     <constraints>
                                                                         <constraint firstItem="wBU-6B-7f4" firstAttribute="leading" secondItem="LOI-ud-jS4" secondAttribute="leading" constant="6" id="2oH-FN-ein"/>
                                                                         <constraint firstAttribute="trailing" secondItem="wBU-6B-7f4" secondAttribute="trailing" constant="3" id="Ygw-F2-KHY"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="wBU-6B-7f4" secondAttribute="bottom" constant="2" id="dcK-p5-FXI"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="wBU-6B-7f4" secondAttribute="bottom" id="dcK-p5-FXI"/>
+                                                                        <constraint firstItem="wBU-6B-7f4" firstAttribute="top" secondItem="LOI-ud-jS4" secondAttribute="top" constant="2" id="v79-hJ-CyL"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="wBU-6B-7f4" id="jkE-JW-N5b"/>
+                                                                        <outlet property="textFieldTopConstraint" destination="v79-hJ-CyL" id="ykH-Up-KEA"/>
                                                                     </connections>
                                                                 </tableCellView>
-                                                                <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
-                                                                    <rect key="frame" x="1" y="17" width="139" height="17"/>
+                                                                <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" misplaced="YES" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
+                                                                    <rect key="frame" x="1" y="17" width="147" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="68i-pd-Me5">
-                                                                            <rect key="frame" x="3" y="2" width="16" height="16"/>
+                                                                            <rect key="frame" x="3" y="2" width="13" height="13"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="16" id="EBt-4R-RlY"/>
-                                                                                <constraint firstAttribute="height" constant="16" id="UIZ-VB-Xyc"/>
+                                                                                <constraint firstAttribute="width" secondItem="68i-pd-Me5" secondAttribute="height" multiplier="1:1" id="bly-rt-n34"/>
                                                                             </constraints>
-                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="L7W-3b-gZZ"/>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="L7W-3b-gZZ"/>
                                                                         </imageView>
-                                                                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="YvY-15-HQ3">
-                                                                            <rect key="frame" x="25" y="1" width="91" height="16"/>
+                                                                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YvY-15-HQ3">
+                                                                            <rect key="frame" x="22" y="0.0" width="91" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="aWH-di-A9U" customClass="TVCMainWindowSidebarYosemtieSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -191,7 +191,7 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ybi-Bk-q6V">
-                                                                            <rect key="frame" x="122" y="1" width="14" height="15"/>
+                                                                            <rect key="frame" x="119" y="1" width="14" height="15"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="14" id="SMf-ml-CNa"/>
                                                                             </constraints>
@@ -201,10 +201,12 @@
                                                                     <constraints>
                                                                         <constraint firstItem="68i-pd-Me5" firstAttribute="leading" secondItem="AKs-o3-7CO" secondAttribute="leading" constant="3" id="30q-JO-bxw"/>
                                                                         <constraint firstItem="Ybi-Bk-q6V" firstAttribute="leading" secondItem="YvY-15-HQ3" secondAttribute="trailing" constant="8" id="4RY-SZ-rtF"/>
+                                                                        <constraint firstItem="68i-pd-Me5" firstAttribute="top" secondItem="AKs-o3-7CO" secondAttribute="top" constant="2" id="4bj-uN-9BF"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="68i-pd-Me5" secondAttribute="bottom" constant="2" id="5La-r3-bcy"/>
                                                                         <constraint firstAttribute="trailing" secondItem="Ybi-Bk-q6V" secondAttribute="trailing" constant="3" id="F6K-Cf-KhL"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="68i-pd-Me5" secondAttribute="bottom" constant="2" id="W7H-8m-Mbw"/>
+                                                                        <constraint firstItem="YvY-15-HQ3" firstAttribute="top" secondItem="AKs-o3-7CO" secondAttribute="top" constant="1" id="GXK-XG-sLQ"/>
                                                                         <constraint firstAttribute="bottom" secondItem="Ybi-Bk-q6V" secondAttribute="bottom" constant="1" id="abh-oh-dxR"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="YvY-15-HQ3" secondAttribute="bottom" constant="1" id="hzj-6d-cux"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="YvY-15-HQ3" secondAttribute="bottom" id="hzj-6d-cux"/>
                                                                         <constraint firstItem="YvY-15-HQ3" firstAttribute="leading" secondItem="68i-pd-Me5" secondAttribute="trailing" constant="8" id="tLx-Q1-geB"/>
                                                                         <constraint firstItem="Ybi-Bk-q6V" firstAttribute="top" secondItem="AKs-o3-7CO" secondAttribute="top" constant="1" id="zDv-Ef-pSt"/>
                                                                     </constraints>
@@ -212,8 +214,10 @@
                                                                         <outlet property="cellTextField" destination="YvY-15-HQ3" id="9HX-hd-ONy"/>
                                                                         <outlet property="imageView" destination="68i-pd-Me5" id="cX3-Mq-zsK"/>
                                                                         <outlet property="messageCountBadgeImageView" destination="Ybi-Bk-q6V" id="4Ke-5o-esE"/>
+                                                                        <outlet property="messageCountBadgeTopConstraint" destination="zDv-Ef-pSt" id="asJ-l1-wBq"/>
                                                                         <outlet property="messageCountBadgeTrailingConstraint" destination="F6K-Cf-KhL" id="neb-Bn-pnI"/>
                                                                         <outlet property="messageCountBadgeWidthConstraint" destination="SMf-ml-CNa" id="HDd-Xy-9nK"/>
+                                                                        <outlet property="textFieldTopConstraint" destination="GXK-XG-sLQ" id="kJa-5y-MAA"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
@@ -294,7 +298,7 @@
                                                                             </constraints>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="FormattingColor_2" id="BUR-Kw-QiD"/>
                                                                         </imageView>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dg2-9M-ak9">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dg2-9M-ak9">
                                                                             <rect key="frame" x="26" y="1" width="118" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="ey9-hk-PaU"/>
@@ -372,7 +376,7 @@
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y3v-lS-079" userLabel="Loading View Content.">
                                     <rect key="frame" x="237" y="97" width="326" height="244"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fz8-Wh-g0h">
+                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fz8-Wh-g0h">
                                             <rect key="frame" x="31" y="38" width="264" height="36"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="f6F-uK-l7k">
                                                 <font key="font" metaFont="system" size="30"/>
@@ -388,7 +392,7 @@
                                             </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="5xB-av-btS"/>
                                         </imageView>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E2G-N5-yqM">
+                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2G-N5-yqM">
                                             <rect key="frame" x="71" y="13" width="158" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Loading Configuration …" id="5ke-cK-ja2">
                                                 <font key="font" metaFont="system"/>
@@ -428,7 +432,7 @@
                                             </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="JiD-hU-EwZ"/>
                                         </imageView>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="spu-WD-Kde">
+                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spu-WD-Kde">
                                             <rect key="frame" x="109" y="112" width="264" height="36"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="aIb-aM-sre">
                                                 <font key="font" metaFont="system" size="30"/>
@@ -436,7 +440,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9GT-ck-dw6">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9GT-ck-dw6">
                                             <rect key="frame" x="31" y="53" width="420" height="51"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="saT-mF-f7z">
                                                 <font key="font" metaFont="system"/>
@@ -476,7 +480,7 @@
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Itg-Wv-Smb" userLabel="Trial Expired">
                                     <rect key="frame" x="160" y="23" width="480" height="393"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TJC-pY-dZB">
+                                        <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJC-pY-dZB">
                                             <rect key="frame" x="27" y="195" width="426" height="36"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Your trial of Textual has expired!" id="buR-BS-Smi">
                                                 <font key="font" metaFont="system" size="30"/>
@@ -484,7 +488,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WCI-kd-zR4">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCI-kd-zR4">
                                             <rect key="frame" x="50" y="136" width="365" height="51"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="tqd-zg-pOm">
                                                 <font key="font" metaFont="system"/>
@@ -520,7 +524,7 @@ To continue using Textual, you will need to purchase it.</string>
                                                 <constraint firstAttribute="height" id="Vcq-ii-CSf"/>
                                             </constraints>
                                         </box>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2mT-pv-zKw">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mT-pv-zKw">
                                             <rect key="frame" x="144" y="53" width="192" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual?" id="po5-nW-oOG">
                                                 <font key="font" metaFont="system"/>
@@ -625,7 +629,7 @@ To continue using Textual, you will need to purchase it.</string>
                 <userLayoutGuide location="395" affinity="minX"/>
             </userGuides>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2989">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2989">
                     <rect key="frame" x="95" y="70" width="249" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2990">
                         <font key="font" metaFont="cellTitle"/>
@@ -636,7 +640,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <accessibilityConnection property="title" destination="OJS-rH-GO8" id="XbZ-Dd-995"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MUG-Yv-LiF">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUG-Yv-LiF">
                     <rect key="frame" x="95" y="50" width="250" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="Tcg-Vx-hyl">
                         <font key="font" metaFont="cellTitle"/>
@@ -647,7 +651,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <accessibilityConnection property="title" destination="0fc-JU-NU4" id="Q2Y-l0-UtB"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2991">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2991">
                     <rect key="frame" x="94" y="30" width="250" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2992">
                         <font key="font" metaFont="cellTitle"/>
@@ -658,7 +662,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <accessibilityConnection property="title" destination="sD4-2b-G9I" id="y0H-Pa-rer"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CiH-kG-t5w">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiH-kG-t5w">
                     <rect key="frame" x="21" y="110" width="73" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="59B-t9-R34">
                         <font key="font" metaFont="systemBold"/>
@@ -666,7 +670,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jIV-Th-xbm">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIV-Th-xbm">
                     <rect key="frame" x="20" y="90" width="75" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="7Na-1R-gmg">
                         <font key="font" metaFont="systemBold"/>
@@ -674,7 +678,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-JU-NU4">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-JU-NU4">
                     <rect key="frame" x="20" y="50" width="75" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="rAb-ds-4lA">
                         <font key="font" metaFont="systemBold"/>
@@ -682,7 +686,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-2b-G9I">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-2b-G9I">
                     <rect key="frame" x="22" y="30" width="73" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Privileges:" id="d8b-Oo-eQc">
                         <font key="font" metaFont="systemBold"/>
@@ -690,7 +694,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OJS-rH-GO8">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OJS-rH-GO8">
                     <rect key="frame" x="34" y="70" width="62" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Address:" id="LZ5-NL-XEb">
                         <font key="font" metaFont="systemBold"/>
@@ -698,7 +702,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4m-I3-8kS">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4m-I3-8kS">
                     <rect key="frame" x="8" y="10" width="87" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Away status:" id="sfH-4y-JSY">
                         <font key="font" metaFont="systemBold"/>
@@ -706,7 +710,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2987">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2987">
                     <rect key="frame" x="95" y="90" width="249" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2988">
                         <font key="font" metaFont="cellTitle"/>
@@ -717,7 +721,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <accessibilityConnection property="title" destination="jIV-Th-xbm" id="J2K-aR-HDo"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2985">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2985">
                     <rect key="frame" x="94" y="110" width="250" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2986">
                         <font key="font" metaFont="cellTitle"/>
@@ -728,7 +732,7 @@ To continue using Textual, you will need to purchase it.</string>
                         <accessibilityConnection property="title" destination="CiH-kG-t5w" id="ZFX-r1-SRv"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-T9-61V">
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-T9-61V">
                     <rect key="frame" x="95" y="10" width="249" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
                         <font key="font" metaFont="cellTitle"/>

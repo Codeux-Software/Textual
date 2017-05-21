@@ -45,6 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet TVCServerList *serverList;
 @end
 
+@interface TVCServerListYosemiteUserInterface ()
+@property (nonatomic, strong) TVCServerListYosemiteScaledUserInterface *constraints;
+@end
+
 @implementation TVCServerListSharedUserInterface
 
 ClassWithDesignatedInitializerInitMethod
@@ -134,6 +138,84 @@ ClassWithDesignatedInitializerInitMethod
 @end
 
 @implementation TVCServerListYosemiteUserInterface
+
+- (instancetype)initWithServerList:(TVCServerList *)serverList
+{
+	if ((self = [super initWithServerList:serverList])) {
+		self.constraints =
+		[[TVCServerListYosemiteScaledUserInterface alloc] initWithServerList:serverList];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (CGFloat)serverCellRowHeight
+{
+	return self.constraints.serverCellRowHeight;
+}
+
+- (CGFloat)channelCellRowHeight
+{
+	return self.constraints.channelCellRowHeight;
+}
+
+- (CGFloat)serverCellTextTopOffset
+{
+	return self.constraints.serverCellTextTopOffset;
+}
+
+- (CGFloat)channelCellTextTopOffset
+{
+	return self.constraints.channelCellTextTopOffset;
+}
+
+- (NSFont *)serverCellFont
+{
+	return self.constraints.serverCellFont;
+}
+
+- (NSFont *)channelCellFont
+{
+	return self.constraints.channelCellFont;
+}
+
+- (NSFont *)messageCountBadgeFont
+{
+	return self.constraints.messageCountBadgeFont;
+}
+
+- (CGFloat)messageCountBadgeHeight
+{
+	return self.constraints.messageCountBadgeHeight;
+}
+
+- (CGFloat)messageCountBadgeMinimumWidth
+{
+	return self.constraints.messageCountBadgeMinimumWidth;
+}
+
+- (CGFloat)messageCountBadgePadding
+{
+	return self.constraints.messageCountBadgePadding;
+}
+
+- (CGFloat)messageCountBadgeRightMargin
+{
+	return self.constraints.messageCountBadgeRightMargin;
+}
+
+- (CGFloat)messageCountBadgeTopOffset
+{
+	return self.constraints.messageCountBadgeTopOffset;
+}
+
+- (CGFloat)messageCountBadgeTextCenterYOffset
+{
+	return self.constraints.messageCountBadgeTextCenterYOffset;
+}
+
 @end
 #pragma clang diagnostic pop
 
