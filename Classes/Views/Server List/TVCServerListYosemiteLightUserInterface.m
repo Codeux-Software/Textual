@@ -53,16 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (CGFloat)serverCellRowHeight
-{
-	return 22.0;
-}
-
-- (CGFloat)channelCellRowHeight
-{
-	return 20.0;
-}
-
 - (NSColor *)channelCellNormalItemTextColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
@@ -141,35 +131,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-}
-
-- (NSFont *)messageCountBadgeFont
-{
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		return [NSFont monospacedDigitSystemFontOfSize:11.0 weight:NSFontWeightRegular];
-	} else {
-		return [NSFont systemFontOfSize:11.0];
-	}
-}
-
-- (CGFloat)messageCountBadgeHeight
-{
-	return 14.0;
-}
-
-- (CGFloat)messageCountBadgeMinimumWidth
-{
-	return 22.0;
-}
-
-- (CGFloat)messageCountBadgePadding
-{
-	return 6.0;
-}
-
-- (CGFloat)messageCountBadgeRightMargin
-{
-	return 3.0;
 }
 
 - (NSColor *)messageCountNormalBadgeTextColorForActiveWindow

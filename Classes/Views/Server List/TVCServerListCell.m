@@ -51,6 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textFieldTopConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTopConstraint;
 @property (readonly) TVCServerList *serverList;
 @property (readonly) __kindof TVCServerListRowCell *rowCell;
 @property (readonly) IRCTreeItem *cellItem;
@@ -62,11 +64,29 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Cell Drawing
 
-- (void)awakeFromNib
+- (void)viewDidMoveToWindow
 {
-	/* On Mountain Lion and maybe earlier, NSOutlineView does not properly honor our 
-	 leading constraint on our group item resulting in the text field hugging the 
-	 disclosure triangle of the group view. This is a dirty hack that fixes this 
+	[super viewDidMoveToWindow];
+
+	[self tx_updateConstraints];
+}
+
+- (void)tx_updateConstraints
+{
+	id interfaceObjects = self.serverList.userInterfaceObjects;
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[self updateConstraintsForYosemite:interfaceObjects];
+	} else {
+		[self updateConstraintsForMavericks:interfaceObjects];
+	}
+}
+
+- (void)updateConstraintsForMavericks:(id)interfaceObjects
+{
+	/* On Mountain Lion and maybe earlier, NSOutlineView does not properly honor our
+	 leading constraint on our group item resulting in the text field hugging the
+	 disclosure triangle of the group view. This is a dirty hack that fixes this
 	 by updating our leading constraint. */
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		return;
@@ -74,6 +94,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (self.groupItemTextFieldLeadingConstraint) {
 		self.groupItemTextFieldLeadingConstraint.constant = _groupItemLeadingConstraintQuirkCorrectedConstraint;
+	}
+}
+
+- (void)updateConstraintsForYosemite:(id)interfaceObjects
+{
+	NSDictionary *drawingContext = self.drawingContext;
+
+	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
+
+	if (isGroupItem) {
+		self.textFieldTopConstraint.constant = [interfaceObjects serverCellTextTopOffset];
+	} else {
+		self.textFieldTopConstraint.constant = [interfaceObjects channelCellTextTopOffset];
+
+		self.messageCountBadgeTopConstraint.constant = [interfaceObjects messageCountBadgeTopOffset];
 	}
 }
 
@@ -167,7 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	
+
 	if (isGroupItem == NO) {
 		IRCTreeItem *cellItem = self.cellItem;
 
@@ -496,6 +531,12 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
+	if (isGroupItem == NO) {
+		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects channelCellFont] range:stringValueRange];
+	} else {
+		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects serverCellFont] range:stringValueRange];
+	}
+
 	[mutableStringValue endEditing];
 
 	return mutableStringValue;
@@ -720,9 +761,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMakePoint((NSMidX(badgeFrame) - (stringToDraw.size.width  / 2.0)),
 				(NSMidY(badgeFrame) - (stringToDraw.size.height / 2.0)));
 
-//	if (mainWindow.runningInHighResolutionMode) {
-//		badgeTextPoint.y -= 0.0;
-//	}
+	badgeTextPoint.y += [interfaceObjects messageCountBadgeTextCenterYOffset];
 
 	/* Perform draw and set image */
 	[stringToDraw drawAtPoint:badgeTextPoint];
@@ -829,7 +868,6 @@ NS_ASSUME_NONNULL_BEGIN
 		 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
 		 @"isGroupItem"			: @([self isKindOfClass:[TVCServerListCellGroupItem class]]),
 		 @"isInverted"			: @([TPCPreferences invertSidebarColors]),
-		 @"isRetina"			: @(mainWindow.runningInHighResolutionMode),
 		 @"isSelected"			: @([serverList isRowSelected:rowIndex]),
 		 @"isSelectedFrontmost"	: @([mainWindow isItemSelected:cellItem]),
 		 @"rowIndex"			: @(rowIndex)
