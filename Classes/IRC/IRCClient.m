@@ -2997,6 +2997,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				[client toggleAwayStatus:NO withComment:nil];
 			}
+
+			break;
 		}
 		case IRCPublicCommandCapIndex: // Command: CAP
 		case IRCPublicCommandCapsIndex: // Command: CAPS
