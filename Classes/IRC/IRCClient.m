@@ -5510,6 +5510,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		lineType = TVCLogLineNoticeType;
 	}
 
+#warning TODO: Fix OTR negotation opening a private message \
+	even if a user is ignored.
+
 	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 		if (lineType == TVCLogLineActionType ||
 			lineType == TVCLogLinePrivateMessageType ||
