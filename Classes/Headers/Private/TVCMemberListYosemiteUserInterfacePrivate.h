@@ -37,9 +37,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface
-@property (readonly) CGFloat cellRowHeight;
+@protocol TVCMemberListYosemiteScaledUserInterfaceProtocol;
 
+@interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface <TVCMemberListYosemiteScaledUserInterfaceProtocol>
 @property (readonly, copy) NSColor *normalCellTextColorForActiveWindow;
 @property (readonly, copy) NSColor *normalCellTextColorForInactiveWindow;
 
@@ -64,6 +64,36 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCMemberListDarkYosemiteUserInterface : TVCMemberListYosemiteUserInterface
+@end
+
+@protocol TVCMemberListYosemiteScaledUserInterfaceProtocol <NSObject>
+@required
+
+@property (readonly) CGFloat cellRowHeight;
+
+@property (readonly, copy) NSFont *cellTextFont;
+
+@property (readonly) CGFloat cellTextTopOffset;
+
+@property (readonly, copy) NSFont *userMarkBadgeFont;
+@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
+
+@property (readonly) CGFloat userMarkBadgeHeight;
+@property (readonly) CGFloat userMarkBadgeWidth;
+@property (readonly) CGFloat userMarkBadgeTopOffset;
+@end
+
+@interface TVCMemberListYosemiteScaledUserInterface : NSObject <TVCMemberListYosemiteScaledUserInterfaceProtocol>
+- (instancetype)initWithSharedInterface:(TVCMemberListSharedUserInterface *)sharedInterface;
+@end
+
+@interface TVCMemberListYosemiteScaledUserInterfaceSize2 : TVCMemberListYosemiteScaledUserInterface
+@end
+
+@interface TVCMemberListYosemiteScaledUserInterfaceSize3 : TVCMemberListYosemiteScaledUserInterface
+@end
+
+@interface TVCMemberListYosemiteScaledUserInterfaceSize4 : TVCMemberListYosemiteScaledUserInterface
 @end
 
 NS_ASSUME_NONNULL_END

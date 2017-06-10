@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TVCMemberListMavericksDarkUserInterface
+@implementation TVCMemberListMavericksLightUserInterface
 
 - (CGFloat)cellRowHeight
 {
@@ -46,22 +46,58 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSImage *)rowSelectionImageForActiveWindow
 {
-	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
+	return nil; // Use system default
 }
 
 - (nullable NSImage *)rowSelectionImageForInactiveWindow
 {
-	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
+	return nil; // Use system default
+}
+
+- (NSFont *)userMarkBadgeFont
+{
+	CGFloat fontSize;
+
+	if (self.isRetina) {
+		fontSize = 12.0;
+	} else {
+		fontSize = 12.5;
+	}
+
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:fontSize];
+}
+
+- (NSFont *)userMarkBadgeFontSelected
+{
+	CGFloat fontSize;
+
+	if (self.isRetina) {
+		fontSize = 12.0;
+	} else {
+		fontSize = 12.5;
+	}
+
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:fontSize];
+}
+
+- (CGFloat)userMarkBadgeWidth
+{
+	return 20.0;
+}
+
+- (CGFloat)userMarkBadgeHeight
+{
+	return 16.0;
 }
 
 - (NSColor *)userMarkBadgeBackgroundColorForGraphite
 {
-	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.515 green:0.574 blue:0.636 alpha:1.0];
 }
 
 - (NSColor *)userMarkBadgeBackgroundColorForAqua
 {
-	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.593 green:0.656 blue:0.789 alpha:1.0];
 }
 
 - (NSColor *)userMarkBadgeSelectedBackgroundColor
@@ -76,52 +112,52 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)userMarkBadgeSelectedTextColor
 {
-	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
 }
 
 - (NSColor *)userMarkBadgeShadowColor
 {
-	return [NSColor colorWithCalibratedRed:0.234 green:0.234 blue:0.234 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
 }
 
-- (NSFont *)normalCellFont
+- (NSFont *)normalCellTextFont
 {
 	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:0 size:12.0];
 }
 
-- (NSFont *)selectedCellFont
+- (NSFont *)selectedCellTextFont
 {
 	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:12.0];
 }
 
 - (NSColor *)normalCellTextColor
 {
-	return [NSColor whiteColor];
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.8];
 }
 
 - (NSColor *)awayUserCellTextColor
 {
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.6];
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.35];
 }
 
 - (NSColor *)selectedCellTextColor
 {
-	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
+	return [NSColor whiteColor];
 }
 
 - (NSColor *)normalCellTextShadowColor
 {
-	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+	return [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
 }
 
 - (NSColor *)normalSelectedCellTextShadowColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
 }
 
 - (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
 }
 
 - (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
@@ -131,12 +167,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSColor *)memberListBackgroundColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
+	return nil;
 }
 
 - (nullable NSColor *)memberListBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.901 green:0.901 blue:0.901 alpha:1.0];
 }
 
 @end

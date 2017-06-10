@@ -45,6 +45,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSImage *rowSelectionImageForActiveWindow;
 @property (readonly, copy, nullable) NSImage *rowSelectionImageForInactiveWindow;
 
+@property (readonly, copy) NSFont *userMarkBadgeFont;
+@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
+
+@property (readonly) CGFloat userMarkBadgeHeight;
+@property (readonly) CGFloat userMarkBadgeWidth;
+
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForAqua;
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForGraphite;
 
@@ -55,8 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, copy) NSColor *userMarkBadgeShadowColor;
 
-@property (readonly, copy) NSFont *normalCellFont;
-@property (readonly, copy) NSFont *selectedCellFont;
+@property (readonly, copy) NSFont *normalCellTextFont;
+@property (readonly, copy) NSFont *selectedCellTextFont;
 
 @property (readonly, copy) NSColor *normalCellTextColor;
 @property (readonly, copy) NSColor *awayUserCellTextColor;

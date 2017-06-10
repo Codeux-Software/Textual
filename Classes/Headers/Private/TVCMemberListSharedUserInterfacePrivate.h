@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCMemberListSharedUserInterface : NSObject
 @property (readonly, weak) TVCMemberList *memberList;
 
+@property (readonly) BOOL isRetina;
+
 - (instancetype)initWithMemberList:(TVCMemberList *)memberList NS_DESIGNATED_INITIALIZER;
 
 - (nullable NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)modeSymbol rank:(IRCUserRank)rank;
@@ -63,15 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_ODefault;
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_QDefault;
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_VDefault;
-
-@property (readonly, copy) NSFont *userMarkBadgeFont;
-@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
-
-@property (readonly, copy) NSFont *userMarkBadgeFontForRetina;
-@property (readonly, copy) NSFont *userMarkBadgeFontSelectedForRetina;
-
-@property (readonly) CGFloat userMarkBadgeHeight;
-@property (readonly) CGFloat userMarkBadgeWidth;
 @end
 
 @interface TVCMemberListMavericksUserInterfaceBackground : NSBox

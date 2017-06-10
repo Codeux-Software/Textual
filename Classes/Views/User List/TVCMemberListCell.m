@@ -43,6 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListCell ()
 @property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textFieldTopConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *userMarkBadgeTopConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *userMarkBadgeWidthConstraint;
 @property (readonly, copy) NSDictionary<NSString *, id> *drawingContext;
 @property (readonly) TVCMemberList *memberList;
 @property (readonly) TVCMemberListRowCell *rowCell;
@@ -53,6 +56,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Drawing
+- (void)viewDidMoveToWindow
+{
+	[super viewDidMoveToWindow];
+
+	[self tx_updateConstraints];
+}
+
+- (void)tx_updateConstraints
+{
+	id interfaceObjects = self.memberList.userInterfaceObjects;
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[self updateConstraintsForYosemite:interfaceObjects];
+	}
+}
+
+- (void)updateConstraintsForYosemite:(TVCMemberListYosemiteUserInterface *)interfaceObjects
+{
+	self.textFieldTopConstraint.constant = [interfaceObjects cellTextTopOffset];
+
+	self.userMarkBadgeTopConstraint.constant = [interfaceObjects userMarkBadgeTopOffset];
+
+	self.userMarkBadgeWidthConstraint.constant = [interfaceObjects userMarkBadgeWidth];
+}
 
 - (BOOL)wantsUpdateLayer
 {
@@ -163,11 +190,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (isSelected) {
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects selectedCellFont] range:stringValueRange];
+		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects selectedCellTextFont] range:stringValueRange];
 		
 		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects selectedCellTextColor] range:stringValueRange];
 	} else {
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects normalCellFont] range:stringValueRange];
+		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects normalCellTextFont] range:stringValueRange];
 		
 		if (cellItem.user.isAway) {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects awayUserCellTextColor] range:stringValueRange];
@@ -222,6 +249,8 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
+	[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects cellTextFont] range:stringValueRange];
+
 	[mutableStringValue endEditing];
 
 	return mutableStringValue;
@@ -244,20 +273,12 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	if (isSelected) {
 		textColor = [interfaceObjects userMarkBadgeSelectedTextColor];
-		
-		if (isDrawingForRetina) {
-			textFont = [interfaceObjects userMarkBadgeFontSelectedForRetina];
-		} else {
-			textFont = [interfaceObjects userMarkBadgeFontSelected];
-		}
+
+		textFont = [interfaceObjects userMarkBadgeFontSelected];
 	} else {
 		textColor = [interfaceObjects userMarkBadgeNormalTextColor];
-		
-		if (isDrawingForRetina) {
-			textFont = [interfaceObjects userMarkBadgeFontForRetina];
-		} else {
-			textFont = [interfaceObjects userMarkBadgeFont];
-		}
+
+		textFont = [interfaceObjects userMarkBadgeFont];
 	}
 	
 	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
@@ -399,69 +420,69 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Begin building the actual mode string */
 	if (stringToDraw.length > 0) {
 		NSAttributedString *badgeText = [self modeBadgeText:stringToDraw isSelected:isSelected];
-		
+
 		NSSize badgeTextSize = badgeText.size;
 
 		NSPoint badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (badgeTextSize.width / 2.0)),
-											((NSMidY(badgeFrame) - (badgeTextSize.height / 2.0))));
+											 (NSMidY(badgeFrame) - (badgeTextSize.height / 2.0)));
 
-		BOOL isDrawingForRetina = mainWindow.runningInHighResolutionMode;
-
-		if (isDrawingForRetina)
-		{
-			if ([stringToDraw isEqualToString:@"+"] ||
-				[stringToDraw isEqualToString:@"~"] ||
-				[stringToDraw isEqualToString:@"×"])
+		if (isDrawingOnMavericks) {
+			if (mainWindow.runningInHighResolutionMode)
 			{
-				badgeTextPoint.y -= (-1.0);
+				if ([stringToDraw isEqualToString:@"+"] ||
+					[stringToDraw isEqualToString:@"~"] ||
+					[stringToDraw isEqualToString:@"×"])
+				{
+					badgeTextPoint.y -= (-1.0);
+				}
+				else if ([stringToDraw isEqualToString:@"^"])
+				{
+					badgeTextPoint.y -= 2.0;
+				}
+				else if ([stringToDraw isEqualToString:@"*"])
+				{
+					badgeTextPoint.y -= 2.5;
+				}
+	/*			else if ([stringToDraw isEqualToString:@"@"] ||
+						 [stringToDraw isEqualToString:@"!"] ||
+						 [stringToDraw isEqualToString:@"%"] ||
+						 [stringToDraw isEqualToString:@"&"] ||
+						 [stringToDraw isEqualToString:@"#"] ||
+						 [stringToDraw isEqualToString:@"?"] ||
+						 [stringToDraw isEqualToString:@"$"])
+				{
+					badgeTextPoint.y -= 0.0;
+				} */
 			}
-			else if ([stringToDraw isEqualToString:@"^"])
+			else // isDrawingForRetina
 			{
-				badgeTextPoint.y -= 2.0;
-			}
-			else if ([stringToDraw isEqualToString:@"*"])
-			{
-				badgeTextPoint.y -= 2.5;
-			}
-/*			else if ([stringToDraw isEqualToString:@"@"] ||
-					 [stringToDraw isEqualToString:@"!"] ||
-					 [stringToDraw isEqualToString:@"%"] ||
-					 [stringToDraw isEqualToString:@"&"] ||
-					 [stringToDraw isEqualToString:@"#"] ||
-					 [stringToDraw isEqualToString:@"?"] ||
-					 [stringToDraw isEqualToString:@"$"])
-			{
-				badgeTextPoint.y -= 0.0;
-			} */
-		}
-		else // isDrawingForRetina
-		{
-			if ([stringToDraw isEqualToString:@"+"] ||
-				[stringToDraw isEqualToString:@"~"] ||
-				[stringToDraw isEqualToString:@"×"])
-			{
-				badgeTextPoint.y -= (-2.0);
-			}
-			else if ([stringToDraw isEqualToString:@"@"] ||
-					 [stringToDraw isEqualToString:@"!"] ||
-					 [stringToDraw isEqualToString:@"%"] ||
-					 [stringToDraw isEqualToString:@"&"] ||
-					 [stringToDraw isEqualToString:@"#"] ||
-					 [stringToDraw isEqualToString:@"?"])
-			{
-				badgeTextPoint.y -= (-1.0);
-			}
-/*			else if ([stringToDraw isEqualToString:@"^"])
-			{
-				badgeTextPoint.y -= 0.0;
-			} */
-			else if ([stringToDraw isEqualToString:@"*"])
-			{
-				badgeTextPoint.y -= 1.0;
-			}
-			else if ([stringToDraw isEqualToString:@"$"])
-			{
-				badgeTextPoint.y -= (-1.0);
+				if ([stringToDraw isEqualToString:@"+"] ||
+					[stringToDraw isEqualToString:@"~"] ||
+					[stringToDraw isEqualToString:@"×"])
+				{
+					badgeTextPoint.y -= (-2.0);
+				}
+				else if ([stringToDraw isEqualToString:@"@"] ||
+						 [stringToDraw isEqualToString:@"!"] ||
+						 [stringToDraw isEqualToString:@"%"] ||
+						 [stringToDraw isEqualToString:@"&"] ||
+						 [stringToDraw isEqualToString:@"#"] ||
+						 [stringToDraw isEqualToString:@"?"])
+				{
+					badgeTextPoint.y -= (-1.0);
+				}
+	/*			else if ([stringToDraw isEqualToString:@"^"])
+				{
+					badgeTextPoint.y -= 0.0;
+				} */
+				else if ([stringToDraw isEqualToString:@"*"])
+				{
+					badgeTextPoint.y -= 1.0;
+				}
+				else if ([stringToDraw isEqualToString:@"$"])
+				{
+					badgeTextPoint.y -= (-1.0);
+				}
 			}
 		}
 
