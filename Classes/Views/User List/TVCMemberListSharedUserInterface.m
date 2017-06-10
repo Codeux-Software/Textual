@@ -39,11 +39,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListSharedUserInterface ()
 @property (nonatomic, weak, readwrite) TVCMemberList *memberList;
+@property (nonatomic, assign, readwrite) BOOL isRetina;
 @property (nonatomic, strong) NSCache *cachedUserMarkBadges;
 @end
 
 @interface TVCMemberListMavericksUserInterfaceBackground ()
 @property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
+@end
+
+@interface TVCMemberListYosemiteUserInterface ()
+@property (nonatomic, strong) TVCMemberListYosemiteScaledUserInterface *constraints;
 @end
 
 @implementation TVCMemberListSharedUserInterface
@@ -56,6 +61,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ((self = [super init])) {
 		self.memberList = memberList;
+
+		self.isRetina = memberList.mainWindow.runningInHighResolutionMode;
 
 		return self;
 	}
@@ -187,36 +194,6 @@ ClassWithDesignatedInitializerInitMethod
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +v"];
 }
 
-- (NSFont *)userMarkBadgeFont
-{
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.5];
-}
-
-- (NSFont *)userMarkBadgeFontForRetina
-{
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.0];
-}
-
-- (NSFont *)userMarkBadgeFontSelected
-{
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.5];
-}
-
-- (NSFont *)userMarkBadgeFontSelectedForRetina
-{
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.0];
-}
-
-- (CGFloat)userMarkBadgeWidth
-{
-	return 20.0;
-}
-
-- (CGFloat)userMarkBadgeHeight
-{
-	return 16.0;
-}
-
 @end
 
 #pragma mark -
@@ -261,6 +238,59 @@ ClassWithDesignatedInitializerInitMethod
 @end
 
 @implementation TVCMemberListYosemiteUserInterface
+
+- (instancetype)initWithMemberList:(TVCMemberList *)memberList
+{
+	if ((self = [super initWithMemberList:memberList])) {
+		self.constraints =
+		[[TVCMemberListYosemiteScaledUserInterface alloc] initWithSharedInterface:self];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (CGFloat)cellRowHeight
+{
+	return self.constraints.cellRowHeight;
+}
+
+- (NSFont *)cellTextFont
+{
+	return self.constraints.cellTextFont;
+}
+
+- (CGFloat)cellTextTopOffset
+{
+	return self.constraints.cellTextTopOffset;
+}
+
+- (NSFont *)userMarkBadgeFont
+{
+	return self.constraints.userMarkBadgeFont;
+}
+
+- (NSFont *)userMarkBadgeFontSelected
+{
+	return self.constraints.userMarkBadgeFontSelected;
+}
+
+- (CGFloat)userMarkBadgeWidth
+{
+	return self.constraints.userMarkBadgeWidth;
+}
+
+- (CGFloat)userMarkBadgeHeight
+{
+	return self.constraints.userMarkBadgeHeight;
+}
+
+- (CGFloat)userMarkBadgeTopOffset
+{
+	return self.constraints.userMarkBadgeTopOffset;
+}
+
 @end
 #pragma clang diagnostic pop
 
