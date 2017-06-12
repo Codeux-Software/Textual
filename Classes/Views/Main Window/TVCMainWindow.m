@@ -327,8 +327,24 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self.serverList windowDidChangeKeyState];
 }
 
+- (void)reloadViewControllerDrawings
+{
+	if (masterController().applicationIsTerminating) {
+		return;
+	}
+
+	for (IRCTreeItem *item in self.selectedItems) {
+		[item.viewController.backingView redrawViewIfNeeded];
+	}
+}
+
 #pragma mark -
 #pragma mark NSWindow Delegate
+
+- (void)windowDidDeminiaturize:(NSNotification *)notification
+{
+	[self reloadViewControllerDrawings];
+}
 
 - (void)windowDidChangeScreen:(NSNotification *)notification
 {
