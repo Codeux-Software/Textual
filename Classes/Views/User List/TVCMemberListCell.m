@@ -264,9 +264,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TVCMainWindow *mainWindow = self.mainWindow;
 
 	id interfaceObjects = mainWindow.memberList.userInterfaceObjects;
-	
-	BOOL isDrawingForRetina = mainWindow.runningInHighResolutionMode;
-	
+
 	NSColor *textColor = nil;
 	
 	NSFont *textFont = nil;
