@@ -171,9 +171,6 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 - (void)redrawFrame
 {
-#warning TODO: Fix view not redrawing when new message is received and \
-	the main window is minimized.
-
 	[self.frameView.documentView setNeedsLayout:YES];
 }
 
