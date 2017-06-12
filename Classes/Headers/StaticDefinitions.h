@@ -46,6 +46,10 @@
 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_12_AND_LATER)
 		#define TXSystemIsOSXSierraOrLater
 	#endif
+
+	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER)
+		#define TXSystemIsOSXHighSierraOrLater
+	#endif
 #endif
 
 /* Shortcut defines. */
