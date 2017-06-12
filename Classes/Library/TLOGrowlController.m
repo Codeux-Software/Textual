@@ -336,7 +336,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	return [TPCApplicationInfo applicationName];
 }
 
-- (NSDictionary<NSString *, NSString *> *)registrationDictionaryForGrowl
+- (NSDictionary<NSString *, NSArray<NSString *> *> *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
 	  TXTLS(@"Notifications[1045]"),
