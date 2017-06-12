@@ -35,7 +35,7 @@
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
                                     <font key="font" metaFont="system"/>
                                     <segments>
-                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate">
                                             <nil key="label"/>
                                         </segment>
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
