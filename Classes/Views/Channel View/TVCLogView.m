@@ -276,22 +276,30 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)redrawViewIfNeeded
 {
-	[(id)self.webView redrawViewIfNeeded];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView redrawViewIfNeeded];
+	});
 }
 
 - (void)redrawView
 {
-	[(id)self.webView redrawView];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView redrawView];
+	});
 }
 
 - (void)saveScrollerPosition
 {
-	[(id)self.webView saveScrollerPosition];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView saveScrollerPosition];
+	});
 }
 
 - (void)restoreScrollerPosition
 {
-	[(id)self.webView restoreScrollerPosition];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView restoreScrollerPosition];
+	});
 }
 
 @end
