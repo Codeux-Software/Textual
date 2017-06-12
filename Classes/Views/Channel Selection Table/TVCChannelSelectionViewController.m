@@ -38,7 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCChannelSelectionViewController ()
-@property (nonatomic, strong) IBOutlet TVCChannelSelectionOutlineView *outlineView;
+@property (nonatomic, strong) IBOutlet NSScrollView *outlineViewScrollView;
+@property (nonatomic, weak) IBOutlet TVCChannelSelectionOutlineView *outlineView;
 @property (nonatomic, weak) NSView *attachedView;
 @property (nonatomic, strong) NSMutableArray<NSString *> *cachedSelectedClientIds;
 @property (nonatomic, strong) NSMutableArray<NSString *> *cachedSelectedChannelIds;
@@ -78,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSAssert(NO, @"Table view is already attached to a view");
 	}
 
-	NSScrollView *outlineViewScroller = self.outlineView.enclosingScrollView;
+	NSScrollView *outlineViewScroller = self.outlineViewScrollView;
 
 	[view addSubview:outlineViewScroller];
 
