@@ -261,6 +261,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self saveWindowStateUsingKeyword:@"Main Window"];
 
 	[self saveContentSplitViewState];
+
+	[self saveSelection];
 }
 
 - (void)prepareForApplicationTermination
@@ -1995,6 +1997,68 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 #pragma mark -
 #pragma mark Server List
 
+- (void)saveSelection
+{
+	NSMutableArray<NSString *> *selectedIdentifiers = [NSMutableArray array];
+
+	for (IRCTreeItem *item in self.selectedItems) {
+		[selectedIdentifiers addObject:item.uniqueIdentifier];
+	}
+
+	[RZUserDefaults() setObject:[selectedIdentifiers copy]
+						 forKey:@"Window -> Main Window -> Server List Selection"];
+}
+
+- (void)restoreSelectionDuringSetup
+{
+	NSArray *selectedIdentifiers = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Server List Selection"];
+
+	if (selectedIdentifiers == nil || selectedIdentifiers.count == 0) {
+		[self selectBestChoiceDuringSetup];
+
+		return;
+	}
+
+	NSArray *selection = [worldController() findItemsWithIds:selectedIdentifiers];
+
+	if (selection.count == 0) {
+		[self selectBestChoiceDuringSetup];
+
+		return;
+	}
+
+	[self adjustSelectionWithItems:selection selectedItem:nil];
+}
+
+- (void)selectBestChoiceDuringSetup
+{
+	IRCClient *firstSelection = nil;
+
+	for (IRCClient *e in worldController().clientList) {
+		if (e.config.sidebarItemExpanded) {
+			[self expandClient:e];
+
+			if (e.config.autoConnect) {
+				if (firstSelection == nil) {
+					firstSelection = e;
+				}
+			}
+		}
+	}
+
+	if (firstSelection) {
+		NSInteger n = [self.serverList rowForItem:firstSelection];
+
+		if (firstSelection.channelCount > 0) {
+			n++;
+		}
+
+		[self.serverList selectItemAtIndex:n];
+	} else {
+		[self.serverList selectItemAtIndex:0];
+	}
+}
+
 - (void)setupTrees
 {
 	self.memberList.keyDelegate = self;
@@ -2014,32 +2078,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
 	
 	/* Prepare our first selection */
-	IRCClient *firstSelection = nil;
-	
-	for (IRCClient *e in worldController().clientList) {
-		if (e.config.sidebarItemExpanded) {
-			[self expandClient:e];
-			
-			if (e.config.autoConnect) {
-				if (firstSelection == nil) {
-					firstSelection = e;
-				}
-			}
-		}
-	}
-	
-	/* Find firt selection and select it */
-	if (firstSelection) {
-		NSInteger n = [self.serverList rowForItem:firstSelection];
-		
-		if (firstSelection.channelCount > 0) {
-			n++;
-		}
-		
-		[self.serverList selectItemAtIndex:n];
-	} else {
-		[self.serverList selectItemAtIndex:0];
-	}
+	[self restoreSelectionDuringSetup];
 	
 	/* Fake the delegate call */
 	[self outlineViewSelectionDidChange:nil];
@@ -2173,7 +2212,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)storePreviousSelections
 {
-	NSMutableArray *previousSelectedItems = [NSMutableArray array];
+	NSMutableArray<NSString *> *previousSelectedItems = [NSMutableArray array];
 
 	for (IRCTreeItem *item in self.selectedItems) {
 		[previousSelectedItems addObject:item.uniqueIdentifier];
@@ -2217,7 +2256,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	/* Build list of rows in the table view that contain previous group */
-	NSMutableArray *itemsPrevious = [NSMutableArray array];
+	NSMutableArray<IRCTreeItem *> *itemsPrevious = [NSMutableArray array];
 
 	for (NSString *itemIdentifier in self.previousSelectedItemsId) {
 		IRCTreeItem *item = [worldController() findItemWithId:itemIdentifier];
