@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.pendingOperations = [NSMutableDictionary dictionary];
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		self.qualityOfService = NSQualityOfServiceDefault;
 	}
  }

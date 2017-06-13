@@ -265,7 +265,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.mountainLionDeprecationWarningIsVisible = NO;
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks) == NO) {
 		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 
 		if (warningViewHidden == NO) {

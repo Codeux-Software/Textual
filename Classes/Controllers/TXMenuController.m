@@ -355,7 +355,7 @@ NS_ASSUME_NONNULL_BEGIN
 		case 815: // "Buddy List"
 		{
 #ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
-			menuItem.hidden = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
 #else 
 			menuItem.hidden = YES;
 #endif
@@ -379,7 +379,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case 718: // "Search channels…"
 		{
-			menuItem.hidden = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
 
 			return YES;
 		}
@@ -2128,7 +2128,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showChannelSpotlightWindow:(id)sender
 {
-	NSAssert([XRSystemInformation isUsingOSXYosemiteOrLater],
+	NSAssert(TEXTUAL_RUNNING_ON(10.10, Yosemite),
 		@"This feature requires OS X Yosemite or later");
 
 	_popWindowViewIfExists(@"TDCChannelSpotlightController");

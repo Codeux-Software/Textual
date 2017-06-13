@@ -218,7 +218,7 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 	promptObject.completionBlock = completionBlock;
 
 	/* Pop alert */
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
 			[TLOPopupPrompts _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptObject];
 		}];

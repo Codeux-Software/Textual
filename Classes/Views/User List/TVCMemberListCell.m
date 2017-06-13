@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	id interfaceObjects = self.memberList.userInterfaceObjects;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateConstraintsForYosemite:interfaceObjects];
 	}
 }
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:interfaceObjects inContext:drawingContext];
 
 		textField.attributedStringValue = newValue;
@@ -329,7 +329,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	id interfaceObjects = mainWindow.memberList.userInterfaceObjects;
 
-	BOOL isDrawingOnMavericks = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+	BOOL isDrawingOnMavericks = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
 
 	NSString *stringToDraw = self.cellItem.mark;
 	
@@ -661,7 +661,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if (self.isSelected)
 	{
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+		if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 		{
 			if ([TPCPreferences invertSidebarColors]) {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
@@ -701,7 +701,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	id interfaceObjects = mainWindow.memberList.userInterfaceObjects;
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		NSColor *selectionColor = nil;
 

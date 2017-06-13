@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateBackgroundColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateBackgroundColorOnYosemite];
 	}
 
@@ -173,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.attributedStringValue = attributedStringValue;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateAllFontColorsToMatchTheDefaultFont];
 	}
 }
@@ -312,7 +312,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	CGFloat contentBorderPadding = 0;
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		contentBorderPadding = _WindowContentBorderTotalPaddingYosemite;
 	} else {
 		contentBorderPadding = _WindowContentBorderTotalPaddingMavericks;
@@ -336,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.textViewHeightConstraint.constant = backgroundHeight;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		[window setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 	}
 
@@ -687,7 +687,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSFont *)systemSpecificFontWithSize:(CGFloat)fontSize
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		return [NSFont systemFontOfSize:fontSize];
 	} else {
 		return [NSFont fontWithName:@"Helvetica" size:fontSize];
@@ -696,7 +696,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)systemSpecificFontColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor];
 		} else {
@@ -709,7 +709,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)systemSpecificPlaceholderStringFontColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor];
 		} else {
@@ -736,7 +736,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self drawControllerForYosemite];
 	} else {
 		[self drawControllerForMavericks];

@@ -214,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (didReloadUserInterface == NO) {
 			/* The color used for unread badges on Yosemite also apply to the text color
 			 so we must reload all drawings instead of only the badges themselves. */
-			if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+			if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 				[mainWindowServerList() reloadAllDrawings];
 			} else {
 				[mainWindowServerList() reloadAllUnreadMessageCountBadges];

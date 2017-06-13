@@ -214,7 +214,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	d.nameFieldStringValue = url.lastPathComponent;
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 		d.showsTagField = NO;
 	}
 

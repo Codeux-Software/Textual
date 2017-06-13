@@ -75,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	id interfaceObjects = self.serverList.userInterfaceObjects;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateConstraintsForYosemite:interfaceObjects];
 	} else {
 		[self updateConstraintsForMavericks:interfaceObjects];
@@ -88,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 leading constraint on our group item resulting in the text field hugging the
 	 disclosure triangle of the group view. This is a dirty hack that fixes this
 	 by updating our leading constraint. */
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 		return;
 	}
 
@@ -138,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self updateTextFieldValue];
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateDrawingForYosemite:interfaceObjects];
 	} else {
 		[self updateDrawingForMavericks:interfaceObjects];
@@ -579,7 +579,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (associatedChannel.config.showTreeBadgeCount == NO) {
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 			drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
 		} else {
 			if (isHighlight) {
@@ -670,7 +670,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	id interfaceObjects = mainWindow.serverList.userInterfaceObjects;
 
-	BOOL isDrawingOnMavericks = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
+	BOOL isDrawingOnMavericks = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
 
 	/* Create image that we will draw into. If we are drawing for Mavericks,
 	 then the frame of our image is one pixel greater because we draw a shadow. */
@@ -814,7 +814,7 @@ NS_ASSUME_NONNULL_BEGIN
 	theButton.alternateImage = nil;
 	theButton.alternateImage = alternateImage;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		theButton.highlightsBy = NSNoCellMask;
 	} else {
 		if (isSelected) {
@@ -903,7 +903,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if (self.isSelected)
 	{
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+		if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 		{
 			if ([TPCPreferences invertSidebarColors]) {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
@@ -959,7 +959,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	id interfaceObjects = mainWindow.serverList.userInterfaceObjects;
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		NSColor *selectionColor = nil;
 

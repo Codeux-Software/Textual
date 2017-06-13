@@ -283,7 +283,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)disableSystemSleep
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks) == NO) {
 		return;
 	}
 

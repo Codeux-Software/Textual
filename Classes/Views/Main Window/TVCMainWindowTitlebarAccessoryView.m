@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	CGFloat totalViewWidth = (buttonLeftMargin + buttonWidth + buttonRightMargin);
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		NSRect superviewFrame = self.superview.frame;
 
 		superviewFrame.size.width = totalViewWidth;
@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)disableDrawingCustomBackgroundColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		return;
 	}
 
@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)enableDrawingCustomBackgroundColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		return;
 	}
 

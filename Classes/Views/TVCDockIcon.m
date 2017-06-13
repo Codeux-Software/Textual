@@ -139,7 +139,7 @@ static NSInteger _cachedMessageCount = (-1);
 
 	CGFloat badgeTextFrameCorrection = 0.0;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		badgeTextFrameCorrection = 2.0;
 
 		badgeTextAttributes = @{
@@ -169,7 +169,7 @@ static NSInteger _cachedMessageCount = (-1);
 	NSImage *greenBadgeCenter = nil;
 	NSImage *greenBadgeRight = nil;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		redBadgeLeft = [NSImage imageNamed:@"DIRedBadgeLeftYosemite.png"];
 		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterYosemite.png"];
@@ -200,7 +200,7 @@ static NSInteger _cachedMessageCount = (-1);
 
 	[appIcon lockFocus];
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		/* Red Badge Size */
 		redBadgeRightFrame.size.height = 53.0;

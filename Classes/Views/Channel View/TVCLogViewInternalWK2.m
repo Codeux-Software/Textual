@@ -81,7 +81,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelName"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
 
-		if ([XRSystemInformation isUsingOSXSierraOrLater] == NO) {
+		if (TEXTUAL_RUNNING_ON(10.12, Sierra) == NO) {
 			[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"displayContextMenu"];
 		}
 
@@ -176,7 +176,7 @@ create_normal_pool:
 
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
 		self.allowsLinkPreview = [TPCPreferences webKit2PreviewLinks];
 
 		self.customUserAgent = TVCLogViewCommonUserAgentString;
@@ -274,9 +274,9 @@ create_normal_pool:
 {
 	WKPageRef pageRef = NULL;
 
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.12, Sierra)) {
 		pageRef = [self _pageForTesting];
-	} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	} else if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
 		WKView *webViewParent = (id)self.subviews[0];
 
 		pageRef = [webViewParent pageRef];
@@ -493,7 +493,7 @@ create_normal_pool:
 
 + (void)load
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		return;
 	}
 
