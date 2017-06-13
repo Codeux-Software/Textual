@@ -337,7 +337,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 						userInfo:nil
 						 repeats:NO];
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 		midnightTimer.tolerance = 0.0;
 	}
 

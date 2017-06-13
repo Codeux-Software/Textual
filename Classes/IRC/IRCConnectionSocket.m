@@ -116,7 +116,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 //	self.socketConnection.autoDisconnectOnClosedReadStream = NO;
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 		self.socketConnection.useStrictTimers = YES;
 	}
 

@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		[super drawWithFrame:cellFrame inView:controlView];
 
 		return;

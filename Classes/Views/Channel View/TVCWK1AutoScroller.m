@@ -158,8 +158,8 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 	dispatch_once(&onceToken, ^{
 		_performForceRedraw =
-		([XRSystemInformation isUsingOSXYosemiteOrLater] &&
-		 [XRSystemInformation isUsingOSXElCapitanOrLater] == NO);
+		(TEXTUAL_RUNNING_ON(10.10, Yosemite) &&
+		 TEXTUAL_RUNNING_ON(10.11, ElCapitan) == NO);
 	});
 
 	if (_performForceRedraw == NO) {

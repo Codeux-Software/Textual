@@ -217,7 +217,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 {
 	Class newObjects = NULL;
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		if ([TPCPreferences invertSidebarColors]) {
 			newObjects = [TVCServerListDarkYosemiteUserInterface class];
@@ -274,13 +274,13 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	
 	[self deselectAll:nil];
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateVibrancy];
 	}
 	
 	[self reloadUserInterfaceObjects];
 	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		if ([TPCPreferences invertSidebarColors]) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {

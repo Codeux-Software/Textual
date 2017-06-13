@@ -69,7 +69,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (instancetype)_t_init
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 		return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
 #else

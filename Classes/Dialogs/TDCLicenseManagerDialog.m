@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *appStoreIconPath = nil;
 
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.12, Sierra)) {
 		appStoreIconPath = [appStoreApplication pathForResource:@"AppIcon" ofType:@"icns"];
 	} else {
 		appStoreIconPath = [appStoreApplication pathForResource:@"appStore" ofType:@"icns"];
@@ -446,7 +446,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	notification.userInfo = @{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)};
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 		[notification setValue:@(YES) forKey:@"_showsButtons"];
 
 		notification.actionButtonTitle = TXTLS(@"TLOLicenseManager[1017][3]");

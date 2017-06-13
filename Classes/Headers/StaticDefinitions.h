@@ -106,6 +106,8 @@ typedef void (^TXEmtpyBlockDataType)(void);
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							extern
 
+#define TEXTUAL_RUNNING_ON(version, name)		COCOA_EXTENSIONS_RUNNING_ON(version, name)
+
 #define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED(reason)
 
 #define TEXTUAL_DEPRECATED_ASSERT				COCOA_EXTENSIONS_DEPRECATED_ASSERT

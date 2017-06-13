@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[resultString appendString:TPILocalizedString(@"BasicLanguage[1038]")];
 	}
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		if ([TXUserInterface systemWideDarkModeEnabledOnYosemite]) {
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]", [XRSystemInformation systemOperatingSystemName])];
 		} else {

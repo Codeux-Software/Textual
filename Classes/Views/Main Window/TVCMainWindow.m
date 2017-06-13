@@ -162,7 +162,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)observeNotifications
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		return;
 	}
 
@@ -212,7 +212,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)updateBackgroundColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateBackgroundColorOnYosemite];
 	}
 
@@ -1875,7 +1875,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)addAccessoryViewsToTitlebar
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self addAccessoryViewsToTitlebarOnYosemite];
 	} else {
 		[self addAccessoryViewsToTitlebarOnMavericks];

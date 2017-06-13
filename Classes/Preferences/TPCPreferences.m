@@ -694,7 +694,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 		return NO;
 	}
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
 		return YES;
 	}
 
@@ -1315,11 +1315,12 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[dynamicDefaults setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
-	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
-	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXMavericksOrLater]			forKey:@"System -> Running Mac OS Mavericks Or Newer"];
-	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXYosemiteOrLater]			forKey:@"System -> Running Mac OS Yosemite Or Newer"];
-	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXElCapitanOrLater]			forKey:@"System -> Running Mac OS El Capitan Or Newer"];
-	[dynamicDefaults setBool:[XRSystemInformation isUsingOSXSierraOrLater]				forKey:@"System -> Running Mac OS Sierra Or Newer"];
+	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON(10.8, MountainLion)	forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
+	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON(10.9, Mavericks)		forKey:@"System -> Running Mac OS Mavericks Or Newer"];
+	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON(10.10, Yosemite)		forKey:@"System -> Running Mac OS Yosemite Or Newer"];
+	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON(10.11, ElCapitan)		forKey:@"System -> Running Mac OS El Capitan Or Newer"];
+	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON(10.12, Sierra)			forKey:@"System -> Running Mac OS Sierra Or Newer"];
+	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON(10.13, HighSierra)		forKey:@"System -> Running Mac OS High Sierra Or Newer"];
 
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[dynamicDefaults setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];

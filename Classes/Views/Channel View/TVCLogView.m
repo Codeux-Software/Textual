@@ -185,7 +185,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
 		[TVCLogViewInternalWK2 emptyCaches:^{
 			dispatch_semaphore_signal(semaphore);
 		}];

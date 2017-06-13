@@ -244,7 +244,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		notification.title = eventTitle;
 		notification.userInfo = eventContext;
 
-		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 			/* These private APIs are not available on Mountain Lion */
 			if (eventType == TXNotificationFileTransferReceiveRequestedType) {
 				/* sshhhh... you didn't see nothing. */
@@ -293,7 +293,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 {
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
 			NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
 
