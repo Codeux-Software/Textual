@@ -51,23 +51,27 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if ([inKeyPath isEqualToString:@"serverAddress"]) {
 		if (((NSString *)*ioValue).isValidInternetAddress == NO) {
-			*outError = [NSError errorWithDomain:TXErrorDomain
-											 code:71013
-										userInfo:@{
-				NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1000][1]"),
-				NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1000][2]")}
-						 ];
+			if (outError) {
+				*outError = [NSError errorWithDomain:TXErrorDomain
+												 code:71013
+											userInfo:@{
+					NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1000][1]"),
+					NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1000][2]")}
+							 ];
+			}
 
 			return NO;
 		}
 	} else if ([inKeyPath isEqualToString:@"serverPort"]) {
 		if (((NSString *)*ioValue).isValidInternetPort == NO) {
-			*outError = [NSError errorWithDomain:TXErrorDomain
-											code:71014
-										userInfo:@{
-					NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1001][1]"),
-					NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1001][2]")}
-						 ];
+			if (outError) {
+				*outError = [NSError errorWithDomain:TXErrorDomain
+												code:71014
+											userInfo:@{
+						NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1001][1]"),
+						NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1001][2]")}
+							 ];
+			}
 
 			return NO;
 		}
