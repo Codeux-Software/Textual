@@ -395,15 +395,19 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 
 	CFRelease(verifyFunction);
 
+	BOOL verifyResult = NO;
+
 	if (CFGetTypeID(cfVerifyResult) == CFBooleanGetTypeID()) {
-		if (cfVerifyResult == kCFBooleanTrue) {
-			return YES;
-		}
+		verifyResult = (cfVerifyResult == kCFBooleanTrue);
 	} else {
 		LogToConsoleError("SecTransformExecute() returned a result that is not of type: CFBooleanRef")
 	}
 
-	return NO;
+	if (cfVerifyResult != NULL) {
+		CFRelease(cfVerifyResult);
+	}
+
+	return verifyResult;
 }
 
 #pragma mark -

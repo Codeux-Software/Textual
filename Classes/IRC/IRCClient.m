@@ -9990,10 +9990,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(propertyPointerValue != nil);
 
-	void *propertyPointer = propertyPointerValue.pointerValue;
+	BOOL *propertyPointer = propertyPointerValue.pointerValue;
 
 	if (propertyPointer != NO) {
-		propertyPointer = NO;
+		*propertyPointer = NO;
 	}
 }
 
