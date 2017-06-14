@@ -503,7 +503,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 @implementation TLOGrowlController (Preferences)
 
-
 - (nullable NSString *)soundForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
 {
 	if (channel) {
@@ -533,14 +532,14 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 - (BOOL)growlEnabledForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
 {
 	if (channel) {
-		NSUInteger channelValue = [channel.config speakEvent:event];
+		NSUInteger channelValue = [channel.config growlEnabledForEvent:event];
 
 		if (channelValue != NSMixedState) {
 			return (channelValue == NSOnState);
 		}
 	}
 
-	return [TPCPreferences speakEvent:event];
+	return [TPCPreferences growlEnabledForEvent:event];
 }
 
 - (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event inChannel:(nullable IRCChannel *)channel
