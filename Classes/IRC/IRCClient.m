@@ -6478,6 +6478,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSAssertReturn([m paramsCount] > 0);
 
+	/* ZNC sends PART messages for every channel when the client disconnects to force
+	 it to update its local status. This is incredibly misleading to the user, as they
+	 see the message that they left the channel and believe they did. This condition
+	 filters out these messages. Because Textual is intelligent enough to clear status
+	 related to channels when the connection is quit, this is safe. */
+	if (self.isQuitting && self.isConnectedToZNC) {
+		return;
+	}
+
 	BOOL isPrintOnlyMessage = m.isPrintOnlyMessage;
 	
 	NSString *channelName = [m paramAt:0];
