@@ -214,8 +214,6 @@
 	<false/>
 	<key>ServerListRetainsQueriesBetweenRestarts</key>
 	<false/>
-	<key>Server List Unread Message Count Badge Colors -&gt; Highlight</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgAAhg==</data>
 	<key>SetAwayOnScreenSleep</key>
 	<false/>
 	<key>ScrollbackMaximumLineCount</key>
