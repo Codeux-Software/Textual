@@ -168,6 +168,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[NSColorPanel setPickerMask:(NSColorPanelRGBModeMask | NSColorPanelGrayModeMask | NSColorPanelColorListModeMask | NSColorPanelWheelModeMask | NSColorPanelCrayonModeMask)];
 
+	[[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
+
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		[TPCResourceManager copyResourcesToApplicationSupportFolder];
 	}, DISPATCH_QUEUE_PRIORITY_BACKGROUND);
