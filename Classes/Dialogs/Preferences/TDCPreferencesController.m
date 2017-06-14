@@ -648,6 +648,27 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences setChannelMessageSpeakNickname:channelMessageSpeakNickname];
 }
 
+- (NSColor *)serverListUnreadCountBadgeHighlightColor
+{
+	NSColor *value = [RZUserDefaults() colorForKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+
+	if (value == nil) {
+		value = [NSColor clearColor];
+	}
+
+	return nil;
+}
+
+- (void)setServerListUnreadCountBadgeHighlightColor:(NSColor *)serverListUnreadCountBadgeHighlightColor
+{
+	if ([serverListUnreadCountBadgeHighlightColor isEqual:[NSColor clearColor]]) {
+		serverListUnreadCountBadgeHighlightColor = nil;
+	}
+
+	[RZUserDefaults() setColor:serverListUnreadCountBadgeHighlightColor
+						forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+}
+
 - (BOOL)validateValue:(inout id *)value forKey:(NSString *)key error:(out NSError **)outError
 {
 	if ([key isEqualToString:@"scrollbackLimit"]) {
@@ -1244,7 +1265,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onResetServerListUnreadBadgeColorsToDefault:(id)sender
 {
+	[self willChangeValueForKey:@"serverListUnreadCountBadgeHighlightColor"];
+
 	[RZUserDefaults() setObject:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+
+	[self didChangeValueForKey:@"serverListUnreadCountBadgeHighlightColor"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
