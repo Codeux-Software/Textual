@@ -35,13 +35,13 @@
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
                                     <font key="font" metaFont="system"/>
                                     <segments>
-                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate">
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="50">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
+                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="50" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="50" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -69,7 +69,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="610" height="19"/>
-                                                    <size key="maxSize" width="629" height="10000000"/>
+                                                    <size key="maxSize" width="632" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <accessibility description="Main Text Field"/>
                                                     <connections>
