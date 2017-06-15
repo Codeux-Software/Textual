@@ -524,7 +524,7 @@
 		4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBE1580469E00846B64 /* Foundation.framework */; };
 		4C46CCC91580469E00846B64 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC01580469E00846B64 /* Security.framework */; };
-		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
+		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4C46F44F1943A654004CA8BA /* encryptionLockIconDark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DC1943A654004CA8BA /* encryptionLockIconDark.tif */; };
 		4C46F4501943A654004CA8BA /* encryptionLockIconDark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DC1943A654004CA8BA /* encryptionLockIconDark.tif */; };
 		4C46F4511943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DD1943A654004CA8BA /* encryptionLockIconDark@2x.tif */; };
