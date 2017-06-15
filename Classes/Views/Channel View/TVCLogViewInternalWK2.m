@@ -254,8 +254,8 @@ create_normal_pool:
 
 	if ( wk2WebsiteDataStore) {
 		NSSet *itemsToRemove = [NSSet setWithArray:@[
-			@"WKWebsiteDataTypeDiskCache",
-			@"WKWebsiteDataTypeMemoryCache"
+			WKWebsiteDataTypeDiskCache,
+			WKWebsiteDataTypeMemoryCache
 		]];
 
 		[wk2WebsiteDataStore removeDataOfTypes:itemsToRemove
