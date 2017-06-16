@@ -2219,7 +2219,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		 the correct next item is selected when moving to previous group. */
 		self.ignoreNextOutlineViewSelectionChange = YES;
 
-		[self.serverList selectRowIndexes:itemRows byExtendingSelection:NO];
+		[self.serverList selectRowIndexes:itemRows
+					 byExtendingSelection:NO
+						scrollToSelection:YES];
 	}
 
 	/* Perform selection logic */
@@ -2492,9 +2494,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		return;
 	}
 
-	[self.serverList scrollRowToVisible:itemIndexNew];
-
-	[self.serverList selectRowIndexes:selectedRowsNew byExtendingSelection:NO];
+	[self.serverList selectRowIndexes:selectedRowsNew
+				 byExtendingSelection:NO
+					scrollToSelection:YES];
 }
 
 #pragma mark -
