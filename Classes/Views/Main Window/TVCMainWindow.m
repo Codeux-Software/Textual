@@ -2025,6 +2025,15 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 						 forKey:@"Window -> Main Window -> Server List Selection"];
 }
 
+- (void)restoreExpandedClients
+{
+	for (IRCClient *e in worldController().clientList) {
+		if (e.config.sidebarItemExpanded) {
+			[self expandClient:e];
+		}
+	}
+}
+
 - (void)restoreSelectionDuringSetup
 {
 	NSArray *selectedIdentifiers = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Server List Selection"];
@@ -2051,13 +2060,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	IRCClient *firstSelection = nil;
 
 	for (IRCClient *e in worldController().clientList) {
-		if (e.config.sidebarItemExpanded) {
-			[self expandClient:e];
-
-			if (e.config.autoConnect) {
-				if (firstSelection == nil) {
-					firstSelection = e;
-				}
+		if (e.config.autoConnect && e.config.sidebarItemExpanded) {
+			if (firstSelection == nil) {
+				firstSelection = e;
 			}
 		}
 	}
@@ -2094,6 +2099,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
 	
 	/* Prepare our first selection */
+	[self restoreExpandedClients];
+
 	[self restoreSelectionDuringSetup];
 	
 	/* Fake the delegate call */
