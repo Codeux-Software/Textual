@@ -656,7 +656,13 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	}
 #endif
 
-	[mainWindowServerList() removeItemFromList:client];
+	@try {
+		[mainWindowServerList() removeItemFromList:client];
+	}
+	@catch (NSException *exception) {
+		LogToConsoleError("Caught exception: %@", exception.reason)
+		LogToConsoleCurrentStackTrace
+	}
 
 	@synchronized(self.clients) {
 		[self.clients removeObjectIdenticalTo:client];
@@ -702,7 +708,13 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	}
 
 	if (reload) {
-		[mainWindowServerList() removeItemFromList:channel];
+		@try {
+			[mainWindowServerList() removeItemFromList:channel];
+		}
+		@catch (NSException *exception) {
+			LogToConsoleError("Caught exception: %@", exception.reason)
+			LogToConsoleCurrentStackTrace
+		}
 
 		[client removeChannel:channel];
 
