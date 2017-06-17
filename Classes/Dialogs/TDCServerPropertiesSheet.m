@@ -481,7 +481,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.navigationOutlineview.contentViewPreferredWidth = _forcedPreferencePaneViewFrameWidth;
 	self.navigationOutlineview.contentViewPreferredHeight = _forcedPreferencePaneViewFrameHeight;
-	
+
+	self.navigationOutlineview.expandParentonDoubleClick = YES;
+
 	[self.navigationOutlineview reloadData];
 	
 	[self.navigationOutlineview expandItem:navigationTreeMatrix[0]];
