@@ -54,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.dataSource = (id)self;
 	self.delegate = (id)self;
+
+	self.doubleAction = @selector(outlineViewDoubleClicked:);
 }
 
 - (void)startAtSelectionIndex:(NSUInteger)startingSelection
@@ -73,6 +75,27 @@ NS_ASSUME_NONNULL_BEGIN
 	id parentItem = [self parentForItem:self.lastSelectionWeakRef];
 
 	return parentItem;
+}
+
+- (void)outlineViewDoubleClicked:(id)sender
+{
+	if (self.expandParentonDoubleClick == NO) {
+		return;
+	}
+
+	NSInteger clickedRow = self.clickedRow;
+
+	if (clickedRow < 0) {
+		return;
+	}
+
+	id itemAtRow = [self itemAtRow:clickedRow];
+
+	if ([self isGroupItem:itemAtRow] == NO) {
+		return;
+	}
+
+	[self expandItem:itemAtRow];
 }
 
 #pragma mark -
