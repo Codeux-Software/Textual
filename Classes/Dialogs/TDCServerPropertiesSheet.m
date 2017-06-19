@@ -148,6 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextView *connectCommandsField;
 @property (nonatomic, assign) NSUInteger floodControlDelayTimerSliderTempValue;
 @property (nonatomic, assign) NSUInteger floodControlMessageCountSliderTempValue;
+@property (nonatomic, weak) NSPanel *clientCertificateSelectCertificatePanel;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign) BOOL requestRemovalFromCloudOnClose;
@@ -621,6 +622,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[self.highlightSheet close];
 	} else if (self.serverEndpointSheet) {
 		[self.serverEndpointSheet close];
+	} else if (self.clientCertificateSelectCertificatePanel) {
+		[NSApp stopModalWithCode:NSModalResponseCancel];
 	}
 }
 
@@ -1432,7 +1435,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
-	
+
+	self.clientCertificateSelectCertificatePanel = panel;
+
 	[panel setInformativeText:TXTLS(@"TDCServerPropertiesSheet[1009][2]")];
 	
 	[panel setAlternateButtonTitle:TXTLS(@"Prompts[0004]")];
@@ -1450,6 +1455,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self updateClientCertificatePage];
 	}
+
+	self.clientCertificateSelectCertificatePanel = nil;
 }
 
 #pragma mark -
