@@ -42,9 +42,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)open:(NSURL *)url
 {
+	BOOL inBackground = [TPCPreferences openBrowserInBackground];
+
+	[self open:url inBackground:inBackground];
+}
+
++ (void)open:(NSURL *)url inBackground:(BOOL)inBackground
+{
 	NSParameterAssert(url != nil);
 
-	if ([TPCPreferences openBrowserInBackground])
+	if (inBackground)
 	{
 		(void)[RZWorkspace() openURLs:@[url]
 			  withAppBundleIdentifier:nil

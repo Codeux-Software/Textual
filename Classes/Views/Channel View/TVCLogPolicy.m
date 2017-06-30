@@ -330,11 +330,19 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(webpageURL != nil);
 
+	BOOL openInBackground = [TPCPreferences openBrowserInBackground];
+
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+	if ((keyboardKeys & NSCommandKeyMask) == NSCommandKeyMask) {
+		openInBackground = !openInBackground;
+	}
+
 	if (NSObjectsAreEqual(webpageURL.scheme, @"http") ||
 		NSObjectsAreEqual(webpageURL.scheme, @"https") ||
 		NSObjectsAreEqual(webpageURL.scheme, @"textual"))
 	{
-		[TLOpenLink open:webpageURL];
+		[TLOpenLink open:webpageURL inBackground:openInBackground];
 
 		return;
 	}
@@ -353,7 +361,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[TLOpenLink open:webpageURL];
+	[TLOpenLink open:webpageURL inBackground:openInBackground];
 }
 
 @end
