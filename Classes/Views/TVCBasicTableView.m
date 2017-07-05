@@ -36,12 +36,34 @@
 
  *********************************************************************** */
 
+#import <objc/runtime.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCBasicTableView
 
 #pragma mark -
-#pragma mark Table V@@iew
+#pragma mark Table View
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+	/* AppKit will stop on a response that has copy: but if we have
+	 no delegate for this method, then it's best to lie about having
+	 it in our class. */
+	if (aSelector == @selector(copy:)) {
+		return [self.pasteboardDelegate respondsToSelector:@selector(copy:)];
+	}
+
+	return class_respondsToSelector(self.class, aSelector);
+}
+
+- (void)copy:(id)sender
+{
+	/* There is no need for a delegate response check here because it
+	 is assumed the only way we can lead to this path is if we responded
+	 to the call to -respondsToSelector: */
+	[self.pasteboardDelegate copy:sender];
+}
 
 - (nullable NSMenu *)menuForEvent:(NSEvent *)event
 {
