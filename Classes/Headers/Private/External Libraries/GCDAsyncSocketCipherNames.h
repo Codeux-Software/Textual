@@ -9,8 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL sslConnectedWithDeprecatedCipher;
 
 + (NSArray<NSNumber *> *)cipherList;
-+ (NSArray<NSNumber *> *)cipherListModern;
-+ (NSArray<NSNumber *> *)cipherListDeprecated;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -158,6 +158,9 @@ static const CipherSuite kCipherSuites[] = {
 	{0xc3, 0x85b},     // TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA256
 	{0xc4, 0xa5b},     // TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256
 	{0xc5, 0xc5b},     // TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA256
+	{0x1301, 0x1f6f},  // TLS_AES_128_GCM_SHA256
+	{0x1302, 0x1f77},  // TLS_AES_256_GCM_SHA384
+	{0x1303, 0x1f8f},  // TLS_CHACHA20_POLY1305_SHA256
 	{0x16b7, 0x128f},  // TLS_CECPQ1_RSA_WITH_CHACHA20_POLY1305_SHA256 (exper)
 	{0x16b8, 0x138f},  // TLS_CECPQ1_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (exper)
 	{0x16b9, 0x1277},  // TLS_CECPQ1_RSA_WITH_AES_256_GCM_SHA384 (exper)
@@ -235,9 +238,6 @@ static const CipherSuite kCipherSuites[] = {
 	{0xcc14, 0x0e8f},  // TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305 (non-standard)
 	{0xcca8, 0x108f},  // TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
 	{0xcca9, 0x0e8f},  // TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-	{0xccab, 0x148f},  // TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256
-	{0xd001, 0x146f},  // TLS_ECDHE_PSK_WITH_AES_128_GCM_SHA256
-	{0xd002, 0x1477},  // TLS_ECDHE_PSK_WITH_AES_256_GCM_SHA384
 };
 
 static const char * _Nonnull kKeyExchangeNames[] = {
@@ -261,7 +261,6 @@ static const char * _Nonnull kKeyExchangeNames[] = {
 	"ECDH-anon",
 	"CECPQ1_RSA",
 	"CECPQ1_ECDSA"
-	"ECDHE_PSK"
 };
 
 static const char * _Nonnull kCipherNames[] = {
@@ -291,6 +290,12 @@ static const char * _Nonnull kMacNames[] = {
 	"SHA1",
 	"SHA256",
 	"SHA384",
+};
+
+typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
+	GCDsyncSocketCipherSuiteDefaultVersion  	= 0,
+	GCDsyncSocketCipherSuite2015Version  		= 1,
+	GCDsyncSocketCipherSuite2017Version  		= 2
 };
 
 @implementation GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
@@ -362,6 +367,16 @@ static const char * _Nonnull kMacNames[] = {
 
 			break;
 		}
+
+#ifdef TXSystemIsOSXHighSierraOrLater
+		case kTLSProtocol13:
+		{
+			protocolString = @"Transport Layer Security (TLS), version 1.3";
+
+			break;
+		}
+#endif
+
 		default:
 		{
 			break;
@@ -419,49 +434,102 @@ static const char * _Nonnull kMacNames[] = {
 
 + (NSArray<NSNumber *> *)cipherList
 {
-	id allowDeprecatedCiphers = [RZUserDefaults() objectForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
+	BOOL allowDeprecatedCiphers = [RZUserDefaults() boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
 
-	if (allowDeprecatedCiphers && [allowDeprecatedCiphers boolValue] == NO) {
-		return [GCDAsyncSocket cipherListModern];
+	if (allowDeprecatedCiphers == NO) {
+		return [self cipherListModern];
 	}
 
 	NSMutableArray<NSNumber *> *_cipherList = [NSMutableArray array];
 
-	[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListModern]];
-	[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListDeprecated]];
+	[_cipherList addObjectsFromArray:[self cipherListModern]];
+	[_cipherList addObjectsFromArray:[self cipherListDeprecated]];
 
 	return [_cipherList copy];
 }
 
++ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDsyncSocketCipherSuiteVersion)version
+{
+	switch (version) {
+		case GCDsyncSocketCipherSuite2015Version:
+		{
+			/* The following list of ciphers, which is ordered from most important
+			 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
+
+			return @[
+				 @(TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256),			// ECDHE-RSA-AES128-GCM-SHA256
+				 @(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256),		// ECDHE-ECDSA-AES128-GCM-SHA256
+				 @(TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384),			// ECDHE-RSA-AES256-GCM-SHA384
+				 @(TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384),		// ECDHE-ECDSA-AES256-GCM-SHA384
+				 @(TLS_DHE_RSA_WITH_AES_128_GCM_SHA256),			// DHE-RSA-AES128-GCM-SHA256
+				 @(TLS_DHE_DSS_WITH_AES_128_GCM_SHA256),			// DHE-DSS-AES128-GCM-SHA256
+				 @(TLS_DHE_DSS_WITH_AES_256_GCM_SHA384),			// DHE-DSS-AES256-GCM-SHA384
+				 @(TLS_DHE_RSA_WITH_AES_256_GCM_SHA384),			// DHE-RSA-AES256-GCM-SHA384
+				 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256),			// ECDHE-RSA-AES128-SHA256
+				 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256),		// ECDHE-ECDSA-AES128-SHA256
+				 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA),				// ECDHE-RSA-AES128-SHA
+				 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),			// ECDHE-ECDSA-AES128-SHA
+				 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384),			// ECDHE-RSA-AES256-SHA384
+				 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384),		// ECDHE-ECDSA-AES256-SHA384
+				 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA),				// ECDHE-RSA-AES256-SHA
+				 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA),			// ECDHE-ECDSA-AES256-SHA
+				 @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA256),			// DHE-RSA-AES128-SHA256
+				 @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA),				// DHE-RSA-AES128-SHA
+				 @(TLS_DHE_DSS_WITH_AES_128_CBC_SHA256),			// DHE-DSS-AES128-SHA256
+				 @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA256),			// DHE-RSA-AES256-SHA256
+				 @(TLS_DHE_DSS_WITH_AES_256_CBC_SHA),				// DHE-DSS-AES256-SHA
+				 @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA),				// DHE-RSA-AES256-SHA
+			 ];
+
+			break;
+		}
+		case GCDsyncSocketCipherSuiteDefaultVersion:
+		case GCDsyncSocketCipherSuite2017Version:
+		{
+			/* The following list of ciphers, which is ordered from most important
+			 to least important, was aquired from Mozilla's wiki on July 5, 2017. */
+			/* This list has some slight differences compared to the original wiki
+			 article. Mozilla had/has recommended use of ECDHE-ECDSA-CHACHA20-POLY1305
+			 and ECDHE-RSA-CHACHA20-POLY1305. These are not ciphers that Apple
+			 provides support for. These entries have been omited and a comment
+			 is shown in the place where they would originally sit. */
+			/* This list includes three cipher suites for TLS 1.3 which were not
+			 included in Mozilla's list as well. */
+
+			return @[
+				 /* TLS 1.3 */
+#ifdef TXSystemIsOSXHighSierraOrLater
+				 @(TLS_AES_256_GCM_SHA384),
+				 @(TLS_CHACHA20_POLY1305_SHA256),
+				 @(TLS_AES_128_GCM_SHA256),
+#endif
+
+				 /* TLS 1.2 */
+				 @(TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384), 	// ECDHE-ECDSA-AES256-GCM-SHA384
+				 @(TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384), 		// ECDHE-RSA-AES256-GCM-SHA384
+//				 @(TLS_?), 										// ECDHE-ECDSA-CHACHA20-POLY1305
+//				 @(TLS_?), 										// ECDHE-RSA-CHACHA20-POLY1305
+				 @(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256), 	// ECDHE-ECDSA-AES128-GCM-SHA256
+				 @(TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256), 		// ECDHE-RSA-AES128-GCM-SHA256
+				 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384), 	// ECDHE-ECDSA-AES256-SHA384
+				 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384), 		// ECDHE-RSA-AES256-SHA384
+				 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256), 	// ECDHE-ECDSA-AES128-SHA256
+				 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256), 		// ECDHE-RSA-AES128-SHA256
+			 ];
+
+			break;
+		}
+	}
+
+	return @[];
+}
+
 + (NSArray<NSNumber *> *)cipherListModern
 {
-	/* The following list of ciphers, which is ordered from most important
-	 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
+	NSUInteger cipherSuiteVersion =
+	[RZUserDefaults() unsignedIntegerForKey:@"GCDAsyncSocket Cipher List Version"];
 
-	return @[
-		 @(TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256),			// ECDHE-RSA-AES128-GCM-SHA256
-		 @(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256),		// ECDHE-ECDSA-AES128-GCM-SHA256
-		 @(TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384),			// ECDHE-RSA-AES256-GCM-SHA384
-		 @(TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384),		// ECDHE-ECDSA-AES256-GCM-SHA384
-		 @(TLS_DHE_RSA_WITH_AES_128_GCM_SHA256),			// DHE-RSA-AES128-GCM-SHA256
-		 @(TLS_DHE_DSS_WITH_AES_128_GCM_SHA256),			// DHE-DSS-AES128-GCM-SHA256
-		 @(TLS_DHE_DSS_WITH_AES_256_GCM_SHA384),			// DHE-DSS-AES256-GCM-SHA384
-		 @(TLS_DHE_RSA_WITH_AES_256_GCM_SHA384),			// DHE-RSA-AES256-GCM-SHA384
-		 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256),			// ECDHE-RSA-AES128-SHA256
-		 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256),		// ECDHE-ECDSA-AES128-SHA256
-		 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA),			// ECDHE-RSA-AES128-SHA
-		 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),			// ECDHE-ECDSA-AES128-SHA
-		 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384),			// ECDHE-RSA-AES256-SHA384
-		 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384),		// ECDHE-ECDSA-AES256-SHA384
-		 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA),			// ECDHE-RSA-AES256-SHA
-		 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA),			// ECDHE-ECDSA-AES256-SHA
-		 @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA256),			// DHE-RSA-AES128-SHA256
-		 @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA),				// DHE-RSA-AES128-SHA
-		 @(TLS_DHE_DSS_WITH_AES_128_CBC_SHA256),			// DHE-DSS-AES128-SHA256
-		 @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA256),			// DHE-RSA-AES256-SHA256
-		 @(TLS_DHE_DSS_WITH_AES_256_CBC_SHA),				// DHE-DSS-AES256-SHA
-		 @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA),				// DHE-RSA-AES256-SHA
-	];
+	return [self cipherListOfVersion:cipherSuiteVersion];
 }
 
 + (NSArray<NSNumber *> *)cipherListDeprecated
