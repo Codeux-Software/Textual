@@ -45,7 +45,6 @@ NSString * const TXNotificationDialogActionNicknameFormat		= @"\u2022 %@: %@";
 
 NSString * const TXNotificationHighlightLogStandardActionFormat			= @"\u2022 %@: %@";
 NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
-NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %@ %@";
 
 @interface TLOGrowlController ()
 @property (nonatomic, copy, nullable) NSDictionary<NSString *, id> *lastClickedContext;
