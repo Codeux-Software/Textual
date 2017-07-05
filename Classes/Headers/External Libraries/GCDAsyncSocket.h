@@ -89,6 +89,15 @@ typedef NS_ENUM(NSInteger, GCDAsyncSocketError) {
 - (instancetype)initWithDelegate:(nullable id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq;
 - (instancetype)initWithDelegate:(nullable id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq socketQueue:(nullable dispatch_queue_t)sq;
 
+/**
+ * Create GCDAsyncSocket from already connect BSD socket file descriptor
+**/
++ (nullable instancetype)socketFromConnectedSocketFD:(int)socketFD socketQueue:(nullable dispatch_queue_t)sq error:(NSError**)error;
+
++ (nullable instancetype)socketFromConnectedSocketFD:(int)socketFD delegate:(nullable id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq error:(NSError**)error;
+
++ (nullable instancetype)socketFromConnectedSocketFD:(int)socketFD delegate:(nullable id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(nullable dispatch_queue_t)dq socketQueue:(nullable dispatch_queue_t)sq error:(NSError **)error;
+
 #pragma mark Configuration
 
 @property (atomic, weak, readwrite, nullable) id<GCDAsyncSocketDelegate> delegate;
@@ -354,7 +363,7 @@ typedef NS_ENUM(NSInteger, GCDAsyncSocketError) {
  * Returns whether the socket is disconnected or connected.
  * 
  * A disconnected socket may be recycled.
- * That is, it can used again for connecting or listening.
+ * That is, it can be used again for connecting or listening.
  * 
  * If a socket is in the process of connecting, it may be neither disconnected nor connected.
 **/
