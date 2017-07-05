@@ -40,11 +40,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCHighlightLogEntry : NSObject <NSCopying, NSMutableCopying>
-@property (readonly, copy) NSAttributedString *renderedMessage;
+@property (readonly, copy) TVCLogLine *lineLogged;
 @property (readonly, copy) NSDate *timeLogged;
 @property (readonly, copy) NSString *clientId;
 @property (readonly, copy) NSString *channelId;
 @property (readonly, copy) NSString *lineNumber;
+@property (readonly, copy) NSAttributedString *renderedMessage;
 @end
 
 NS_ASSUME_NONNULL_END

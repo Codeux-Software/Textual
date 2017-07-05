@@ -45,11 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface IRCHighlightLogEntryMutable : IRCHighlightLogEntry
-@property (nonatomic, copy, readwrite) NSAttributedString *renderedMessage;
-@property (nonatomic, copy, readwrite) NSDate *timeLogged;
+@property (nonatomic, copy, readwrite) TVCLogLine *lineLogged;
 @property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, copy, readwrite) NSString *channelId;
-@property (nonatomic, copy, readwrite) NSString *lineNumber;
 @end
 
 NS_ASSUME_NONNULL_END

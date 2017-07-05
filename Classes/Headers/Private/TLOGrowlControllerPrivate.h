@@ -45,7 +45,6 @@ TEXTUAL_EXTERN NSString * const TXNotificationDialogActionNicknameFormat;
 
 TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogStandardActionFormat;
 TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogStandardMessageFormat;
-TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogAlternativeActionFormat;
 
 @interface TLOGrowlController ()
 - (void)notify:(TXNotificationType)eventType

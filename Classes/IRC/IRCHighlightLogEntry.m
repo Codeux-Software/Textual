@@ -41,9 +41,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCHighlightLogEntry
 
+- (NSString *)description
+{
+	IRCChannel *channel = self.channel;
+
+	if (channel == nil) {
+		return [super description];
+	}
+
+	TVCLogLine *logLine = self.lineLogged;
+
+	return [logLine renderedBodyForTranscriptLog];
+}
+
 - (NSString *)timeLoggedFormatted
 {
-	NSTimeInterval timeInterval = self.timeLogged.timeIntervalSinceNow;
+	TVCLogLine *logLine = self.lineLogged;
+
+	NSTimeInterval timeInterval = logLine.receivedAt.timeIntervalSinceNow;
 
 	NSString *formattedTimeInterval = TXHumanReadableTimeInterval(timeInterval, YES, 0);
 
@@ -68,15 +83,54 @@ NS_ASSUME_NONNULL_BEGIN
 	return TXTLS(@"BasicLanguage[1002]");
 }
 
+- (NSAttributedString *)renderedMessage
+{
+	IRCChannel *channel = self.channel;
+
+	TVCLogLine *logLine = self.lineLogged;
+
+	NSString *nicknameBody = nil;
+
+	NSString *messageBody = nil;
+
+	if (logLine.lineType == TVCLogLineActionType) {
+		/* Actions are presented in the format "• <nickname>: <message" in the Highlight List. */
+		nicknameBody = logLine.nickname;
+
+		messageBody = TXNotificationHighlightLogStandardActionFormat;
+	} else {
+		nicknameBody = [logLine formattedNicknameInChannel:channel];
+
+		messageBody = TXNotificationHighlightLogStandardMessageFormat;
+	}
+
+	messageBody = [NSString stringWithFormat:messageBody, nicknameBody, logLine.messageBody];
+
+	return [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont]
+									   preferredFontColor:[NSColor blackColor]];
+}
+
+- (NSString *)lineNumber
+{
+	TVCLogLine *logLine = self.lineLogged;
+
+	return logLine.uniqueIdentifier;
+}
+
+- (NSDate *)timeLogged
+{
+	TVCLogLine *logLine = self.lineLogged;
+
+	return logLine.receivedAt;
+}
+
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	IRCHighlightLogEntry *object = [[IRCHighlightLogEntry allocWithZone:zone] init];
 
-	object->_renderedMessage = self->_renderedMessage;
-	object->_timeLogged = self->_timeLogged;
+	object->_lineLogged = self->_lineLogged;
 	object->_clientId = self->_clientId;
 	object->_channelId = self->_channelId;
-	object->_lineNumber = self->_lineNumber;
 
 	return object;
 }
@@ -85,11 +139,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCHighlightLogEntryMutable *object = [[IRCHighlightLogEntryMutable allocWithZone:zone] init];
 
-	((IRCHighlightLogEntry *)object)->_renderedMessage = self->_renderedMessage;
-	((IRCHighlightLogEntry *)object)->_timeLogged = self->_timeLogged;
+	((IRCHighlightLogEntry *)object)->_lineLogged = self->_lineLogged;
 	((IRCHighlightLogEntry *)object)->_clientId = self->_clientId;
 	((IRCHighlightLogEntry *)object)->_channelId = self->_channelId;
-	((IRCHighlightLogEntry *)object)->_lineNumber = self->_lineNumber;
 
 	return object;
 }
@@ -105,23 +157,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCHighlightLogEntryMutable
 
-@dynamic renderedMessage;
-@dynamic timeLogged;
+@dynamic lineLogged;
 @dynamic clientId;
 @dynamic channelId;
-@dynamic lineNumber;
 
 - (BOOL)isMutable
 {
 	return YES;
 }
 
-- (void)setRenderedMessage:(NSAttributedString *)renderedMessage
+- (void)setLineLogged:(TVCLogLine *)lineLogged
 {
-	NSParameterAssert(renderedMessage != nil);
+	NSParameterAssert(lineLogged != nil);
 
-	if (self->_renderedMessage != renderedMessage) {
-		self->_renderedMessage = [renderedMessage copy];
+	if (self->_lineLogged != lineLogged) {
+		self->_lineLogged = [lineLogged copy];
 	}
 }
 
@@ -140,24 +190,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (self->_channelId != channelId) {
 		self->_channelId = [channelId copy];
-	}
-}
-
-- (void)setLineNumber:(NSString *)lineNumber
-{
-	NSParameterAssert(lineNumber != nil);
-
-	if (self->_lineNumber != lineNumber) {
-		self->_lineNumber = [lineNumber copy];
-	}
-}
-
-- (void)setTimeLogged:(NSDate *)timeLogged
-{
-	NSParameterAssert(timeLogged != nil);
-
-	if (self->_timeLogged != timeLogged) {
-		self->_timeLogged = [timeLogged copy];
 	}
 }
 

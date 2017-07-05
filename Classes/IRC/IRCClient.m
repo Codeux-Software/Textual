@@ -1027,34 +1027,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	/* Render message */
-	NSString *nicknameBody = [logLine formattedNicknameInChannel:channel];
-	
-	NSString *messageBody = nil;
-
-	if (logLine.lineType == TVCLogLineActionType) {
-		if ([nicknameBody hasSuffix:@":"]) {
-			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, nicknameBody.trim, logLine.messageBody];
-		} else {
-			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardActionFormat, nicknameBody.trim, logLine.messageBody];
-		}
-	} else {
-		messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardMessageFormat, nicknameBody.trim, logLine.messageBody];
-	}
-
-	NSAttributedString *messageBodyRendered = [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
-
 	/* Create entry */
 	IRCHighlightLogEntryMutable *newEntry = [IRCHighlightLogEntryMutable new];
 
 	newEntry.clientId = self.uniqueIdentifier;
 	newEntry.channelId = channel.uniqueIdentifier;
 
-	newEntry.lineNumber = logLine.uniqueIdentifier;
-
-	newEntry.renderedMessage = messageBodyRendered;
-
-	newEntry.timeLogged = logLine.receivedAt;
+	newEntry.lineLogged = logLine;
 
 	/* We insert at head so that latest is always on top. */
 	NSMutableArray *cachedHighlights = [self.cachedHighlights mutableCopy];
