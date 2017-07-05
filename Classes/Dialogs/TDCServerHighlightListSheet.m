@@ -73,6 +73,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.highlightListTable.doubleAction = @selector(highlightDoubleClicked:);
 
+	self.highlightListTable.pasteboardDelegate = self;
+
 	self.highlightListTable.sortDescriptors = @[
 		[NSSortDescriptor sortDescriptorWithKey:@"timeLogged" ascending:NO selector:@selector(compare:)],
 		[NSSortDescriptor sortDescriptorWithKey:@"channelName" ascending:NO selector:@selector(caseInsensitiveCompare:)]
@@ -175,6 +177,29 @@ NS_ASSUME_NONNULL_BEGIN
 			[self cancel:nil];
 		}
 	}];
+}
+
+- (void)copy:(id)sender
+{
+	NSIndexSet *selectedRows = self.highlightListTable.selectedRowIndexes;
+
+	if (selectedRows.count == 0) {
+		return;
+	}
+
+	NSMutableString *stringToCopy = [NSMutableString string];
+
+	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[index];
+
+		[stringToCopy appendString:entryItem.description];
+
+		if (index != selectedRows.lastIndex) {
+			[stringToCopy appendString:NSStringNewlinePlaceholder];
+		}
+	}];
+
+	[RZPasteboard() setStringContent:stringToCopy];
 }
 
 #pragma mark -
