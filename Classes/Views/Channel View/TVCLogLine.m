@@ -271,7 +271,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	
 	NSString *time = TXFormattedTimestamp(self.receivedAt, format);
 
-	return [time stringByAppendingString:NSStringWhitespacePlaceholder];
+	return time;
 }
 
 - (nullable NSString *)formattedNicknameInChannel:(nullable IRCChannel *)channel
@@ -309,6 +309,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	if (timeFormatted) {
 		[s appendString:timeFormatted];
+		[s appendString:NSStringWhitespacePlaceholder];
 	}
 
 	NSString *nicknameFormatted = nil;
