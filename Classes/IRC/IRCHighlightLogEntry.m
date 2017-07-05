@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCLogLine *logLine = self.lineLogged;
 
-	return [logLine renderedBodyForTranscriptLog];
+	return [logLine renderedBodyForTranscriptLogInChannel:channel];
 }
 
 - (NSString *)timeLoggedFormatted
