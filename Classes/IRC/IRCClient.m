@@ -1487,7 +1487,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if (messageBody.length == 0) {
+	if (messageBody.length == 0 || [TPCPreferences textEncryptionIsEnabled] == NO) {
 #endif
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
