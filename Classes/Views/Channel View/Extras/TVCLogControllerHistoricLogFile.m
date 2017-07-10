@@ -39,7 +39,7 @@
 
 #import "HLSHistoricLogProtocol.h"
 
-#import "TVCLogLineXPC.h"
+#import "TVCLogLineXPCPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -238,6 +238,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self resetContext];
 
 	if (self.connectionInvalidatedVoluntarily) {
+		self.connectionInvalidatedVoluntarily = NO;
+
 		return;
 	}
 

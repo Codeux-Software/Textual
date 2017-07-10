@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "HSLHistoricLogProcessDelegate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 int main(int argc, const char *argv[])

@@ -35,12 +35,6 @@
 
  *********************************************************************** */
 
-#import "HLSHistoricLogProtocol.h"
-#import "HSLHistoricLogProcessDelegate.h"
-#import "HLSHistoricLogProcessMain.h"
-
-#import <CocoaExtensions/CocoaExtensions.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation HSLHistoricLogProcessDelegate

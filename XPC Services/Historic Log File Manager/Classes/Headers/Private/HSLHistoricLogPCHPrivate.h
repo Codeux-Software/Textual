@@ -37,25 +37,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TVCLogLineXPC.h"
+#import <CoreData/CoreData.h>
 
-NS_ASSUME_NONNULL_BEGIN
+#import <CocoaExtensions/CocoaExtensions.h>
 
-@protocol HLSHistoricLogProtocol
-- (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (^ _Nullable)(BOOL success))completionBlock;
+#import "TVCLogLineXPCPrivate.h"
 
-- (void)writeLogLine:(TVCLogLineXPC *)logLine;
-
-- (void)saveDataWithCompletionBlock:(void (^ _Nullable)(void))completionBlock;
-
-- (void)resetDataForChannel:(NSString *)channelId;
-
-- (void)fetchEntriesForChannel:(NSString *)channelId
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
-
-- (void)setMaximumLineCount:(NSUInteger)maximumLineCount;
-@end
-
-NS_ASSUME_NONNULL_END
+#import "HLSHistoricLogProtocol.h"
+#import "HLSHistoricLogChannelContextPrivate.h"
+#import "HLSHistoricLogProcessMainPrivate.h"
+#import "HSLHistoricLogProcessDelegatePrivate.h"
