@@ -47,8 +47,6 @@
 //  Copyright (c) 2013 ChatSecure. All rights reserved.
 //
 
-#import "IRCConnectionInternal.h"
-
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -180,8 +178,6 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)destroySocket
 {
-	[self tearDownQueuedCertificateTrustDialog];
-
 	self.socketConnection = nil;
 
 	[self destroyDispatchQueue];
@@ -194,11 +190,6 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	self.isConnecting = NO;
 
 	self.isSecured = NO;
-}
-
-- (void)tearDownQueuedCertificateTrustDialog
-{
-	[[TXSharedApplication sharedQueuedCertificateTrustPanel] dequeueEntryForSocket:self.socketConnection];
 }
 
 #pragma mark -
@@ -303,7 +294,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 			return;
 		} else if (evaluationResult == kSecTrustResultRecoverableTrustFailure) {
-			[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:self.socketConnection withCompletionBlock:completionHandler];
+#warning TODO: Implement trust dialog
+			completionHandler(YES);
 
 			return;
 		}
@@ -352,9 +344,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	[self waitForData];
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self tcpClientDidConnect];
-	});
+	[self tcpClientDidConnectToHost:self.connectedAddress];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
@@ -435,13 +425,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		readData = [mutableReadData copy];
 	}
 
-	NSString *dataAsString = [self convertFromCommonEncoding:readData];
-
-	if (dataAsString == nil) {
-		return;
-	}
-
-	[self tcpClientDidReceiveData:dataAsString];
+	[self tcpClientDidReceiveData:readData];
 }
 
 - (void)didReadNormalData:(NSData *)data
@@ -464,81 +448,47 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self tcpClientDidSendData];
-	});
+	[self tcpClientDidSendData];
 }
 
 - (void)socketDidSecure:(GCDAsyncSocket *)sock
 {
 	self.isSecured = YES;
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self tcpClientDidSecureConnection];
-	});
+	[self tcpClientDidSecureConnectionWithProtocolVersion:self.socketConnection.sslNegotiatedProtocolVersion
+											  cipherSuite:self.socketConnection.sslNegotiatedCipherSuite];
 }
 
 #pragma mark -
 #pragma mark SSL Certificate Trust Message
 
-- (nullable NSString *)localizedSecureConnectionProtocolString
+- (void)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock
 {
-	return [self localizedSecureConnectionProtocolString:YES];
-}
+	NSParameterAssert(completionBlock != nil);
 
-- (nullable NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText
-{
-	NSString *protocol = self.socketConnection.sslNegotiatedProtocolString;
+	if (self.isSecured == NO) {
+		completionBlock(NULL, kSSLProtocolUnknown, SSL_NO_SUCH_CIPHERSUITE, @[]);
 
-	NSString *cipher = self.socketConnection.sslNegotiatedCipherSuiteString;
-
-	if (protocol == nil || cipher == nil) {
-		return nil;
-	}
-
-	BOOL cipherIsDeprecated = self.socketConnection.sslConnectedWithDeprecatedCipher;
-
-	if (plainText && cipherIsDeprecated) {
-		return TXTLS(@"Prompts[1122][2]", protocol, cipher);
-	} else if (plainText && cipherIsDeprecated == NO) {
-		return TXTLS(@"Prompts[1122][1]", protocol, cipher);
-	} else if (plainText == NO && cipherIsDeprecated) {
-		return TXTLS(@"IRC[1112][2]", protocol, cipher);
-	} else {
-		return TXTLS(@"IRC[1112][1]", protocol, cipher);
-	}
-}
-
-- (void)openSSLCertificateTrustDialog
-{
-	SecTrustRef trustRef = self.socketConnection.sslCertificateTrustInformation;
-
-	if (trustRef == NULL) {
 		return;
 	}
 
-	NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
+	NSString *policyName = self.socketConnection.sslNegotiatedCertificatePolicyName;
 
-	NSString *policyName = self.socketConnection.sslCertificateTrustPolicyName;
-
-	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
-
-	[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
-
-	[panel setAlternateButtonTitle:nil];
-
-	if (protocolString == nil) {
-		[panel setInformativeText:TXTLS(@"Prompts[1121][2]", policyName)];
-	} else {
-		[panel setInformativeText:TXTLS(@"Prompts[1121][3]", policyName, protocolString)];
+	if (policyName == nil) {
+		policyName = @"unknown.policy.name";
 	}
 
-	[panel beginSheetForWindow:[NSApp keyWindow]
-				 modalDelegate:nil
-				didEndSelector:NULL
-				   contextInfo:NULL
-						 trust:trustRef
-					   message:TXTLS(@"Prompts[1121][1]", policyName)];
+	SSLProtocol protocolVersion = self.socketConnection.sslNegotiatedProtocolVersion;
+
+	SSLCipherSuite cipherSuite = self.socketConnection.sslNegotiatedCipherSuite;
+
+	NSArray *certificateChain = self.socketConnection.sslNegotiatedCertificatesData;
+
+	if (certificateChain == nil) {
+		certificateChain = @[];
+	}
+
+	completionBlock(policyName, protocolVersion, cipherSuite, certificateChain);
 }
 
 #pragma mark -

@@ -231,55 +231,6 @@ NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 }
 
 #pragma mark -
-#pragma mark Localized String File
-
-NSString *TXTLS(NSString *key, ...)
-{
-	NSCParameterAssert(key != nil);
-
-	va_list arguments;
-	va_start(arguments, key);
-	
-	NSString *result = TXLocalizedString(RZMainBundle(), key, arguments);
-	
-	va_end(arguments);
-
-	return result;
-}
-
-NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
-{
-	NSCParameterAssert(bundle != nil);
-	NSCParameterAssert(key != nil);
-	NSCParameterAssert(args != NULL);
-
-	NSInteger openBracketPosition = [key stringPosition:@"["];
-
-	if (openBracketPosition > 0) {
-		NSString *table = [key substringToIndex:openBracketPosition];
-
-		return [TLOLanguagePreferences localizedStringWithKey:key from:bundle table:table arguments:args];
-	} else {
-		return [TLOLanguagePreferences localizedStringWithKey:key from:bundle arguments:args];
-	}
-}
-
-NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
-{
-	NSCParameterAssert(bundle != nil);
-	NSCParameterAssert(key != nil);
-
-	va_list arguments;
-	va_start(arguments, key);
-	
-	NSString *result = TXLocalizedString(bundle, key, arguments);
-	
-	va_end(arguments);
-
-	return result;
-}
-
-#pragma mark -
 #pragma mark Misc
 
 NSUInteger TXRandomNumber(u_int32_t maximum)

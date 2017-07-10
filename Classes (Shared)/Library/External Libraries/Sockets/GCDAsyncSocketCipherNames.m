@@ -300,43 +300,11 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 
 @implementation GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
 
-- (SSLProtocol)sslNegotiatedProtocol
++ (nullable NSString *)descriptionForProtocolVersion:(SSLProtocol)protocolVersion
 {
-	__block SSLProtocol protocol;
-
-	dispatch_block_t block = ^{
-		OSStatus status = SSLGetNegotiatedProtocolVersion(self.sslContext, &protocol);
-
-#pragma unused(status)
-	};
-
-	[self performBlock:block];
-
-	return protocol;
-}
-
-- (SSLCipherSuite)sslNegotiatedCipherSuite
-{
-	__block SSLCipherSuite cipher;
-
-	dispatch_block_t block = ^{
-		OSStatus status = SSLGetNegotiatedCipher(self.sslContext, &cipher);
-
-#pragma unused(status)
-	};
-
-	[self performBlock:block];
-
-	return cipher;
-}
-
-- (nullable NSString *)sslNegotiatedProtocolString
-{
-	SSLProtocol protocol = self.sslNegotiatedProtocol;
-
 	NSString *protocolString = @"Unknown";
 
-	switch (protocol) {
+	switch (protocolVersion) {
 		case kSSLProtocol2:
 		{
 			protocolString = @"Secure Sockets Layer (SSL), version 2.0";
@@ -386,14 +354,12 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 	return protocolString;
 }
 
-- (nullable NSString *)sslNegotiatedCipherSuiteString
++ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite
 {
-	SSLCipherSuite cipher = self.sslNegotiatedCipherSuite;
-
 	for (unsigned long pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
 		CipherSuite cs = kCipherSuites[pos];
 
-		if (cs.cipher_suite != cipher) {
+		if (cs.cipher_suite != cipherSuite) {
 			continue;
 		}
 
@@ -425,16 +391,14 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 	return @"Unknown";
 }
 
-- (BOOL)sslConnectedWithDeprecatedCipher
++ (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite
 {
-	SSLCipherSuite cipher = self.sslNegotiatedCipherSuite;
-
-	return [[GCDAsyncSocket cipherListDeprecated] containsObject:@(cipher)];
+	return [[GCDAsyncSocket cipherListDeprecated] containsObject:@(cipherSuite)];
 }
 
 + (NSArray<NSNumber *> *)cipherList
 {
-	BOOL allowDeprecatedCiphers = [RZUserDefaults() boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
+	BOOL allowDeprecatedCiphers = [[NSUserDefaults standardUserDefaults] boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
 
 	if (allowDeprecatedCiphers == NO) {
 		return [self cipherListModern];
@@ -527,7 +491,7 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 + (NSArray<NSNumber *> *)cipherListModern
 {
 	NSUInteger cipherSuiteVersion =
-	[RZUserDefaults() unsignedIntegerForKey:@"GCDAsyncSocket Cipher List Version"];
+	[[NSUserDefaults standardUserDefaults] unsignedIntegerForKey:@"GCDAsyncSocket Cipher List Version"];
 
 	return [self cipherListOfVersion:cipherSuiteVersion];
 }

@@ -46,9 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isConnected;
 @property (readonly) BOOL isConnectedWithClientSideCertificate;
 @property (readonly) BOOL isConnecting;
+@property (readonly) BOOL isDisconnecting;
 @property (readonly) BOOL isSecured;
 @property (readonly) BOOL isSending;
 @property (readonly) BOOL EOFReceived;
+@property (readonly, nullable) NSString *connectedAddress; // nil if connected to a proxy
 
 - (instancetype)initWithConfig:(IRCConnectionConfig *)config onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
@@ -63,15 +65,19 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol IRCConnectionDelegate <NSObject>
 @required
 
+- (void)ircConnection:(IRCConnection *)sender
+   willConnectToProxy:(NSString *)proxyHost
+				 port:(uint16_t)proxyPort;
 - (void)ircConnectionDidConnect:(IRCConnection *)sender;
-- (void)ircConnection:(IRCConnection *)sender willConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
-- (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError;
+- (void)ircConnectionDidSecureConnection:(IRCConnection *)sender
+					 withProtocolVersion:(SSLProtocol)protocolVersion
+							 cipherSuite:(SSLCipherSuite)cipherSuite;
 - (void)ircConnectionDidCloseReadStream:(IRCConnection *)sender;
 - (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error;
+- (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError;
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data;
-- (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data;
-- (void)ircConnectionDidSecureConnection:(IRCConnection *)sender;
 - (void)ircConnectionDidReceivedAnInsecureCertificate:(IRCConnection *)sender;
+- (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data;
 @end
 
 NS_ASSUME_NONNULL_END

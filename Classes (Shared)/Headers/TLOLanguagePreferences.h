@@ -35,22 +35,22 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, copy, readwrite, nullable) NSString *connectedAddress;
+TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
 
-- (void)enforceFloodControl;
+TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list arguments);
+TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
 
-- (void)openSecuredConnectionCertificateModal;
+@interface TLOLanguagePreferences : NSObject 
++ (NSString *)localizedStringWithKey:(NSString *)key;
++ (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle arguments:(va_list)arguments;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments;
 @end
 
 NS_ASSUME_NONNULL_END

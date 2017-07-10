@@ -36,16 +36,16 @@
  *********************************************************************** */
 
 #ifdef __OBJC__
+#ifdef TEXTUAL_PRIMARY_PUBLIC_HEADER_ENABLED
 	#import <Cocoa/Cocoa.h>
 
 	#import <QuartzCore/QuartzCore.h>
 
 	#import <Security/Security.h>
+
 	#import <SecurityInterface/SFCertificatePanel.h>
 	#import <SecurityInterface/SFCertificateTrustPanel.h>
 	#import <SecurityInterface/SFChooseIdentityPanel.h>
-
-	#import <SystemConfiguration/SystemConfiguration.h>
 
 	#import <WebKit/WebKit.h>
 
@@ -137,6 +137,8 @@
 
 	/* Static Defeinitions */
 	#import "StaticDefinitions.h"
+
+	#import "TextualApplicationShared.h"
 
 	/* Import frameworks based on defines */
 	#ifndef TEXTUAL_BUILT_INSIDE_SANDBOX
@@ -308,6 +310,7 @@
 	#import "TXMenuController.h"
 	#import "TXSharedApplication.h"
 	#import "TXUserInterface.h"
+#endif
 #endif
 
 /* @end */

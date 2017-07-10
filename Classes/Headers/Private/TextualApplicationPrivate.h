@@ -53,6 +53,7 @@
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
+#import "GCDAsyncSocketTrustPanel.h"
 #import "IRCAddressBookUserTrackingPrivate.h"
 #import "IRCChannelConfigPrivate.h"
 #import "IRCChannelModePrivate.h"
@@ -63,7 +64,6 @@
 #import "IRCColorFormatPrivate.h"
 #import "IRCCommandIndexPrivate.h"
 #import "IRCConnectionPrivate.h"
-#import "IRCConnectionSocketPrivate.h"
 #import "IRCExtrasPrivate.h"
 #import "IRCHighlightLogEntryPrivate.h"
 #import "IRCISupportInfoPrivate.h"
@@ -172,7 +172,6 @@
 #import "TVCMemberListUserInfoPopoverPrivate.h"
 #import "TVCMemberListYosemiteUserInterfacePrivate.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
-#import "TVCQueuedCertificateTrustPanelPrivate.h"
 #import "TVCServerListCellPrivate.h"
 #import "TVCServerListMavericksUserInterfacePrivate.h"
 #import "TVCServerListPrivate.h"

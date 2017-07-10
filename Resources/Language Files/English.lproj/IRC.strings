@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1124 */
+/* Next unusued key: 1125 */
 
 /* Script errors */
 "IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
@@ -226,3 +226,6 @@
 "IRC[1116]" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
 "IRC[1117]" = "No ignores could be found that matches \002%@\002";
 "IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* XPC errors */
+"IRC[1124]" = "Connection service closed unexpectedly";

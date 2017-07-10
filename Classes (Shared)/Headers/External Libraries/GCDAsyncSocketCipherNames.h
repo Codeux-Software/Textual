@@ -4,9 +4,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
-@property (readonly, copy, nullable) NSString *sslNegotiatedProtocolString;
-@property (readonly, copy, nullable) NSString *sslNegotiatedCipherSuiteString;
-@property (readonly) BOOL sslConnectedWithDeprecatedCipher;
++ (nullable NSString *)descriptionForProtocolVersion:(SSLProtocol)protocolVersion;
++ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite;
++ (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite;
 
 + (NSArray<NSNumber *> *)cipherList;
 @end

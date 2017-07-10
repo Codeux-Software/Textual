@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,26 +35,52 @@
 
  *********************************************************************** */
 
+/* *** XPC PROTOCOL HEADERS ARE PRIVATE *** */
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection (IRCConnectionSocket)
-- (void)openSocket;
-- (void)closeSocket;
+typedef void (^RCMSecureConnectionInformationCompletionBlock)(NSString * _Nullable policyName,
+															  SSLProtocol protocolVersion,
+															  SSLCipherSuite cipherSuites,
+															  NSArray<NSData *> *certificateChain);
 
-@property (readonly, copy, nullable) NSString *localizedSecureConnectionProtocolString;
+/* The server protocol is what the daemon responds to. */
+@protocol RCMConnectionManagerServerProtocol
+@required
 
-- (nullable NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText;
+- (void)openWithConfig:(IRCConnectionConfig *)config;
+- (void)close;
 
-// When using a proxy, -connectedAddress will always return nil
-// In proxy mode we do not know the actual address that the proxy
-// connected to, only the proxy address itself. While we could
-// return the address the proxy was instructed to connect to, that
-// does not equal the resolved address.
-@property (readonly, copy, nullable) NSString *connectedAddress;
+/* -sendData: does not append \r\n. It is assumed client does that. */
+- (void)sendData:(NSData *)data;
+- (void)sendData:(NSData *)data bypassQueue:(BOOL)bypassQueue;
 
-- (void)writeDataToSocket:(NSData *)data;
+- (void)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock;
 
-- (void)openSSLCertificateTrustDialog;
+- (void)enforceFloodControl;
+
+- (void)clearSendQueue;
+@end
+
+/* The client protocol is what Textual (the client) implements
+ so that the daemon can communicate state with it. */
+@protocol RCMConnectionManagerClientProtocol
+@required
+
+- (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
+
+/* host is nil if we are connected to a proxy because we do not have enough context
+ at the point this delegate method is called to know where the proxy itself connected. */
+- (void)ircConnectionDidConnectToHost:(nullable NSString *)host;
+- (void)ircConnectionDidSecureConnectionWithProtocolVersion:(SSLProtocol)protocolVersion
+												cipherSuite:(SSLCipherSuite)cipherSuite;
+- (void)ircConnectionDidCloseReadStream;
+- (void)ircConnectionDidError:(NSString *)error;
+- (void)ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError;
+- (void)ircConnectionDidReceiveData:(NSData *)data;
+- (void)ircConnectionDidReceivedAnInsecureCertificate;
+- (void)ircConnectionWillSendData:(NSData *)data;
+- (void)ircConnectionDidSendData;
 @end
 
 NS_ASSUME_NONNULL_END

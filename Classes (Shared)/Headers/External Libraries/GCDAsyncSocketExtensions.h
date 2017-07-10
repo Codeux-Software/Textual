@@ -37,20 +37,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, copy, readwrite, nullable) NSString *connectedAddress;
+@interface GCDAsyncSocket (GCDsyncSocketExtensions)
++ (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
-- (void)enforceFloodControl;
++ (BOOL)badSSLCertificateErrorFound:(NSError *)error;
++ (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode;
 
-- (void)openSecuredConnectionCertificateModal;
+@property (readonly) SSLProtocol sslNegotiatedProtocolVersion;
+@property (readonly) SSLCipherSuite sslNegotiatedCipherSuite;
+@property (readonly) SecTrustRef sslNegotiatedCertificateTrustRef;
+@property (readonly, copy, nullable) NSArray<NSData *> *sslNegotiatedCertificatesData;
+@property (readonly, copy, nullable) NSString *sslNegotiatedCertificatePolicyName;
+
++ (SecTrustRef)trustFromCertificateChain:(NSArray<NSData *> *)certificatecChain withPolicyName:(NSString *)policyName;
 @end
 
 NS_ASSUME_NONNULL_END
