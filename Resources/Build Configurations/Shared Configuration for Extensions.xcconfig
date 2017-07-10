@@ -16,9 +16,9 @@ CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts-Exten
 
 CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_ROOT}/Resources/Sandbox/Entitlements/Auxiliary.entitlements
 
-HEADER_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**"
-LIBRARY_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**"
-FRAMEWORK_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**" "${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults-Frameworks/**"
+HEADER_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Classes/Headers/** ${TEXTUAL_PROJECT_ROOT}/Classes\ \(Shared\)/Headers/**
+LIBRARY_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Frameworks/**
+FRAMEWORK_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Frameworks/** ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults-Frameworks/**
 
 // The actual path of the copy of Textual being built is passed during during
 // the time that these are compiled. However, we still pass the installed
