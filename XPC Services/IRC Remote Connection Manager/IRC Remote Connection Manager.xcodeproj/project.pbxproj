@@ -1,0 +1,572 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C0194BB1F128F380019C8D8 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C0194BA1F128F380019C8D8 /* RegisteredUserDefaults.plist */; };
+		4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */; };
+		4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */; };
+		4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */; };
+		4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */; };
+		4C2C52D21F12ED5A009701E0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2C52D11F12ED5A009701E0 /* AppKit.framework */; };
+		4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */; };
+		4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */; };
+		4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */; };
+		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
+		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
+		4C8C72FD1F121EF000ED72DB /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F41F121EF000ED72DB /* IRCConnection.m */; };
+		4C8C72FE1F121EF000ED72DB /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F51F121EF000ED72DB /* IRCConnectionSocket.m */; };
+		4C8C73001F121EF000ED72DB /* RCMProcessDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F81F121EF000ED72DB /* RCMProcessDelegate.m */; };
+		4C8C73011F121EF000ED72DB /* RCMProcessMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F91F121EF000ED72DB /* RCMProcessMain.m */; };
+		4C8C73021F121EF000ED72DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72FA1F121EF000ED72DB /* main.m */; };
+		4C8C73071F1221C600ED72DB /* IRCConnectionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */; };
+		4CAC2A091F12AFFB00D06046 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A071F12AFFB00D06046 /* Security.framework */; };
+		4CAC2A0A1F12AFFB00D06046 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */; };
+		4CAC2A0C1F12B01700D06046 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */; };
+		4CAC2A151F12C64500D06046 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72831F1201A000ED72DB /* TLOTimer.m */; };
+		4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */; };
+		4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */; };
+		4CF880B31F127F9700ED9EA2 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4C0194BA1F128F380019C8D8 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaults.plist; path = "Resources/Property Lists/RegisteredUserDefaults.plist"; sourceTree = "<group>"; };
+		4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = RemoteConnectionManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C14065B1F1195A900C73D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		4C14065C1F1195B600C73D53 /* ConnectionManagerAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ConnectionManagerAppStore.entitlements; path = Resources/Sandbox/Entitlements/ConnectionManagerAppStore.entitlements; sourceTree = "<group>"; };
+		4C14065D1F1195B600C73D53 /* ConnectionManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ConnectionManager.entitlements; path = Resources/Sandbox/Entitlements/ConnectionManager.entitlements; sourceTree = "<group>"; };
+		4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
+		4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLOLanguagePreferences.h; sourceTree = "<group>"; };
+		4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLOLanguagePreferences.m; sourceTree = "<group>"; };
+		4C2C52D11F12ED5A009701E0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketExtensions.h; sourceTree = "<group>"; };
+		4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketCipherNames.m; sourceTree = "<group>"; };
+		4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketExtensions.m; sourceTree = "<group>"; };
+		4C6706D11F1290F4009673EB /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
+		4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMConnectionManagerProtocol.h; sourceTree = "<group>"; };
+		4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextualApplicationShared.h; sourceTree = "<group>"; };
+		4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticDefinitions.h; sourceTree = "<group>"; };
+		4C8C72761F1201A000ED72DB /* TLOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOTimer.h; sourceTree = "<group>"; };
+		4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		4C8C72831F1201A000ED72DB /* TLOTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLOTimer.m; sourceTree = "<group>"; };
+		4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
+		4C8C72D51F1208F200ED72DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4C8C72EC1F121EF000ED72DB /* RCMProcessMainPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMProcessMainPrivate.h; sourceTree = "<group>"; };
+		4C8C72ED1F121EF000ED72DB /* IRCConnectionSocketPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionSocketPrivate.h; sourceTree = "<group>"; };
+		4C8C72EE1F121EF000ED72DB /* RCMProcessDelegatePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMProcessDelegatePrivate.h; sourceTree = "<group>"; };
+		4C8C72EF1F121EF000ED72DB /* RCMProcessPCHPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMProcessPCHPrivate.h; sourceTree = "<group>"; };
+		4C8C72F01F121EF000ED72DB /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionPrivate.h; sourceTree = "<group>"; };
+		4C8C72F41F121EF000ED72DB /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnection.m; sourceTree = "<group>"; };
+		4C8C72F51F121EF000ED72DB /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnectionSocket.m; sourceTree = "<group>"; };
+		4C8C72F81F121EF000ED72DB /* RCMProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMProcessDelegate.m; sourceTree = "<group>"; };
+		4C8C72F91F121EF000ED72DB /* RCMProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMProcessMain.m; sourceTree = "<group>"; };
+		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCConnectionConfig.h; sourceTree = "<group>"; };
+		4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnectionConfig.m; sourceTree = "<group>"; };
+		4C8C73091F1221F300ED72DB /* IRCConnectionConfigInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionConfigInternal.h; sourceTree = "<group>"; };
+		4CAC2A071F12AFFB00D06046 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
+		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
+		4CAC2A2D1F12DDC600D06046 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
+		4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = ../Private/NSObjectHelperPrivate.h; sourceTree = "<group>"; };
+		4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4C14063F1F11942B00C73D53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C2C52D21F12ED5A009701E0 /* AppKit.framework in Frameworks */,
+				4CAC2A0C1F12B01700D06046 /* SystemConfiguration.framework in Frameworks */,
+				4CAC2A091F12AFFB00D06046 /* Security.framework in Frameworks */,
+				4CAC2A0A1F12AFFB00D06046 /* SecurityInterface.framework in Frameworks */,
+				4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */,
+				4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4C1406391F11942B00C73D53 = {
+			isa = PBXGroup;
+			children = (
+				4C1406511F1194D700C73D53 /* Source Code */,
+				4C1406521F1194E900C73D53 /* Resources */,
+				4C8C72D71F1208F200ED72DB /* Frameworks */,
+				4C1406431F11942B00C73D53 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4C1406431F11942B00C73D53 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C1406511F1194D700C73D53 /* Source Code */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72E31F121EF000ED72DB /* Headers */,
+				4C8C72F31F121EF000ED72DB /* IRC */,
+				4C8C72F71F121EF000ED72DB /* Service */,
+				4C1406701F11A1F600C73D53 /* Shared */,
+			);
+			name = "Source Code";
+			sourceTree = "<group>";
+		};
+		4C1406521F1194E900C73D53 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C1406531F1194F100C73D53 /* Build Settings */,
+				4C6706CF1F1290F4009673EB /* Language Files */,
+				4C1406561F11950F00C73D53 /* Property Lists */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4C1406531F1194F100C73D53 /* Build Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4C1406541F1194F900C73D53 /* Configurations */,
+				4C1406551F11950600C73D53 /* Entitlements */,
+			);
+			name = "Build Settings";
+			sourceTree = "<group>";
+		};
+		4C1406541F1194F900C73D53 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */,
+				4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */,
+				4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */,
+			);
+			name = Configurations;
+			sourceTree = "<group>";
+		};
+		4C1406551F11950600C73D53 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				4C14065D1F1195B600C73D53 /* ConnectionManager.entitlements */,
+				4C14065C1F1195B600C73D53 /* ConnectionManagerAppStore.entitlements */,
+			);
+			name = Entitlements;
+			sourceTree = "<group>";
+		};
+		4C1406561F11950F00C73D53 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C14065B1F1195A900C73D53 /* Info.plist */,
+				4C0194BA1F128F380019C8D8 /* RegisteredUserDefaults.plist */,
+			);
+			name = "Property Lists";
+			sourceTree = "<group>";
+		};
+		4C1406701F11A1F600C73D53 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72621F1201A000ED72DB /* Headers */,
+				4CF880B01F127F9700ED9EA2 /* Helpers */,
+				4C8C73051F1221C600ED72DB /* IRC */,
+				4C8C727C1F1201A000ED72DB /* Library */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		4C6706CF1F1290F4009673EB /* Language Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */,
+				4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */,
+			);
+			name = "Language Files";
+			path = "Resources/Language Files";
+			sourceTree = "<group>";
+		};
+		4C8C72621F1201A000ED72DB /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4CF880AE1F127F7700ED9EA2 /* Private */,
+				4C8C72631F1201A000ED72DB /* External Libraries */,
+				4C8C73081F1221F300ED72DB /* Internal */,
+				4C8C72651F1201A000ED72DB /* XPC Protocols */,
+				4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */,
+				4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */,
+				4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */,
+				4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */,
+				4C8C72761F1201A000ED72DB /* TLOTimer.h */,
+			);
+			name = Headers;
+			path = "../../Classes (Shared)/Headers";
+			sourceTree = "<group>";
+		};
+		4C8C72631F1201A000ED72DB /* External Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */,
+				4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */,
+				4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */,
+			);
+			path = "External Libraries";
+			sourceTree = "<group>";
+		};
+		4C8C72651F1201A000ED72DB /* XPC Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */,
+			);
+			path = "XPC Protocols";
+			sourceTree = "<group>";
+		};
+		4C8C727C1F1201A000ED72DB /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C727D1F1201A000ED72DB /* External Libraries */,
+				4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */,
+				4C8C72831F1201A000ED72DB /* TLOTimer.m */,
+			);
+			name = Library;
+			path = "../../Classes (Shared)/Library";
+			sourceTree = "<group>";
+		};
+		4C8C727D1F1201A000ED72DB /* External Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C727E1F1201A000ED72DB /* Sockets */,
+			);
+			path = "External Libraries";
+			sourceTree = "<group>";
+		};
+		4C8C727E1F1201A000ED72DB /* Sockets */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */,
+				4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */,
+				4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */,
+			);
+			path = Sockets;
+			sourceTree = "<group>";
+		};
+		4C8C72D31F1208F200ED72DB /* External Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */,
+			);
+			name = "External Frameworks";
+			sourceTree = "<group>";
+		};
+		4C8C72D61F1208F200ED72DB /* System Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C2C52D11F12ED5A009701E0 /* AppKit.framework */,
+				4C8C72D51F1208F200ED72DB /* Foundation.framework */,
+				4CAC2A071F12AFFB00D06046 /* Security.framework */,
+				4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */,
+				4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */,
+			);
+			name = "System Frameworks";
+			sourceTree = "<group>";
+		};
+		4C8C72D71F1208F200ED72DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72D31F1208F200ED72DB /* External Frameworks */,
+				4C8C72D61F1208F200ED72DB /* System Frameworks */,
+			);
+			name = Frameworks;
+			path = "../Historic Log File Manager";
+			sourceTree = "<group>";
+		};
+		4C8C72E31F121EF000ED72DB /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72EB1F121EF000ED72DB /* Private */,
+			);
+			name = Headers;
+			path = Classes/Headers;
+			sourceTree = "<group>";
+		};
+		4C8C72EB1F121EF000ED72DB /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72F01F121EF000ED72DB /* IRCConnectionPrivate.h */,
+				4C8C72ED1F121EF000ED72DB /* IRCConnectionSocketPrivate.h */,
+				4C8C72EE1F121EF000ED72DB /* RCMProcessDelegatePrivate.h */,
+				4C8C72EC1F121EF000ED72DB /* RCMProcessMainPrivate.h */,
+				4C8C72EF1F121EF000ED72DB /* RCMProcessPCHPrivate.h */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		4C8C72F31F121EF000ED72DB /* IRC */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72F41F121EF000ED72DB /* IRCConnection.m */,
+				4C8C72F51F121EF000ED72DB /* IRCConnectionSocket.m */,
+			);
+			name = IRC;
+			path = Classes/IRC;
+			sourceTree = "<group>";
+		};
+		4C8C72F71F121EF000ED72DB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72F81F121EF000ED72DB /* RCMProcessDelegate.m */,
+				4C8C72F91F121EF000ED72DB /* RCMProcessMain.m */,
+				4C8C72FA1F121EF000ED72DB /* main.m */,
+			);
+			name = Service;
+			path = Classes/Service;
+			sourceTree = "<group>";
+		};
+		4C8C73051F1221C600ED72DB /* IRC */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */,
+			);
+			name = IRC;
+			path = "../../Classes (Shared)/IRC";
+			sourceTree = "<group>";
+		};
+		4C8C73081F1221F300ED72DB /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C73091F1221F300ED72DB /* IRCConnectionConfigInternal.h */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		4CF880AE1F127F7700ED9EA2 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */,
+			);
+			name = Private;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		4CF880B01F127F9700ED9EA2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4CF880B11F127F9700ED9EA2 /* Cocoa (Objective-C) */,
+			);
+			name = Helpers;
+			path = "../../Classes (Shared)/Helpers";
+			sourceTree = "<group>";
+		};
+		4CF880B11F127F9700ED9EA2 /* Cocoa (Objective-C) */ = {
+			isa = PBXGroup;
+			children = (
+				4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */,
+			);
+			path = "Cocoa (Objective-C)";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4C1406411F11942B00C73D53 /* IRC Remote Connection Manager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C14064E1F11942B00C73D53 /* Build configuration list for PBXNativeTarget "IRC Remote Connection Manager" */;
+			buildPhases = (
+				4C14063E1F11942B00C73D53 /* Sources */,
+				4C14063F1F11942B00C73D53 /* Frameworks */,
+				4C1406401F11942B00C73D53 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "IRC Remote Connection Manager";
+			productName = "Connection Manager";
+			productReference = 4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4C14063A1F11942B00C73D53 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Codeux Software, LLC";
+				TargetAttributes = {
+					4C1406411F11942B00C73D53 = {
+						CreatedOnToolsVersion = 9.0;
+					};
+				};
+			};
+			buildConfigurationList = 4C14063D1F11942B00C73D53 /* Build configuration list for PBXProject "IRC Remote Connection Manager" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				English,
+			);
+			mainGroup = 4C1406391F11942B00C73D53;
+			productRefGroup = 4C1406431F11942B00C73D53 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4C1406411F11942B00C73D53 /* IRC Remote Connection Manager */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4C1406401F11942B00C73D53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */,
+				4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */,
+				4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */,
+				4C0194BB1F128F380019C8D8 /* RegisteredUserDefaults.plist in Resources */,
+				4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */,
+				4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C14063E1F11942B00C73D53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */,
+				4C8C72FD1F121EF000ED72DB /* IRCConnection.m in Sources */,
+				4C8C73011F121EF000ED72DB /* RCMProcessMain.m in Sources */,
+				4CF880B31F127F9700ED9EA2 /* NSObjectHelper.m in Sources */,
+				4C8C73071F1221C600ED72DB /* IRCConnectionConfig.m in Sources */,
+				4C8C72FE1F121EF000ED72DB /* IRCConnectionSocket.m in Sources */,
+				4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */,
+				4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */,
+				4C8C73021F121EF000ED72DB /* main.m in Sources */,
+				4CAC2A151F12C64500D06046 /* TLOTimer.m in Sources */,
+				4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */,
+				4C8C73001F121EF000ED72DB /* RCMProcessDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C6706D11F1290F4009673EB /* English */,
+			);
+			name = SecureTransportErrorCodes.strings;
+			sourceTree = "<group>";
+		};
+		4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CAC2A2D1F12DDC600D06046 /* English */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4C14064C1F11942B00C73D53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
+			};
+			name = Debug;
+		};
+		4C14064D1F11942B00C73D53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
+			};
+			name = Release;
+		};
+		4C14064F1F11942B00C73D53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/ConnectionManager.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
+				PRODUCT_NAME = RemoteConnectionManager;
+			};
+			name = Debug;
+		};
+		4C1406501F11942B00C73D53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/ConnectionManager.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
+				PRODUCT_NAME = RemoteConnectionManager;
+			};
+			name = Release;
+		};
+		4C1406641F11965A00C73D53 /* Release (App Store) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
+			};
+			name = "Release (App Store)";
+		};
+		4C1406651F11965A00C73D53 /* Release (App Store) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/ConnectionManagerAppStore.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
+				PRODUCT_NAME = RemoteConnectionManager;
+			};
+			name = "Release (App Store)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4C14063D1F11942B00C73D53 /* Build configuration list for PBXProject "IRC Remote Connection Manager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C14064C1F11942B00C73D53 /* Debug */,
+				4C14064D1F11942B00C73D53 /* Release */,
+				4C1406641F11965A00C73D53 /* Release (App Store) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C14064E1F11942B00C73D53 /* Build configuration list for PBXNativeTarget "IRC Remote Connection Manager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C14064F1F11942B00C73D53 /* Debug */,
+				4C1406501F11942B00C73D53 /* Release */,
+				4C1406651F11965A00C73D53 /* Release (App Store) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4C14063A1F11942B00C73D53 /* Project object */;
+}

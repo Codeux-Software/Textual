@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,18 +37,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, strong, nullable) dispatch_queue_t dispatchQueue;
-@property (nonatomic, strong, nullable) dispatch_queue_t socketQueue;
-@property (nonatomic, strong, nullable) GCDAsyncSocket *socketConnection;
-@property (nonatomic, copy, nullable) NSError *alternateDisconnectError;
-@end
+int main(int argc, const char *argv[])
+{
+	RCMProcessDelegate *delegate = [RCMProcessDelegate new];
+
+	NSXPCListener *listener = [NSXPCListener serviceListener];
+
+	listener.delegate = delegate;
+
+	[listener resume];
+
+	return 0;
+}
 
 NS_ASSUME_NONNULL_END

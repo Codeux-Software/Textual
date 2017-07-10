@@ -59,7 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (OELReachability *)sharedNetworkReachabilityNotifier;
 + (THOPluginManager *)sharedPluginManager;
 + (TVCLogControllerPrintingOperationQueue *)sharedPrintingQueue;
-+ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 + (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
 + (TXWindowController *)sharedWindowController;
 @end

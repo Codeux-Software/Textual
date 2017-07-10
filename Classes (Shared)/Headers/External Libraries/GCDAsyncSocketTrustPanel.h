@@ -37,20 +37,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, copy, readwrite, nullable) NSString *connectedAddress;
+typedef void (^GCDAsyncSocketTrustPanelCompletionBlock)(SecTrustRef trustRef, BOOL trusted, id _Nullable contextInfo);
 
-- (void)enforceFloodControl;
+@interface GCDAsyncSocket (GCDsyncSocketTrustPanel)
++ (SFCertificateTrustPanel *)presentTrustPanelInWindow:(nullable NSWindow *)window
+												  body:(NSString *)bodyText
+												 title:(NSString *)titleText
+										 defaultButton:(NSString *)buttonDefault
+									   alternateButton:(nullable NSString *)buttonAlternate
+											  trustRef:(SecTrustRef)trustRef
+									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock;
 
-- (void)openSecuredConnectionCertificateModal;
++ (SFCertificateTrustPanel *)presentTrustPanelInWindow:(nullable NSWindow *)window
+												  body:(NSString *)bodyText
+												 title:(NSString *)titleText
+										 defaultButton:(NSString *)buttonDefault
+									   alternateButton:(nullable NSString *)buttonAlternate
+											  trustRef:(SecTrustRef)trustRef
+									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock
+										   contextInfo:(nullable id)contextInfo;
 @end
 
 NS_ASSUME_NONNULL_END

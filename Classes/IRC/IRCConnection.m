@@ -36,15 +36,14 @@
 
  *********************************************************************** */
 
-#import "IRCConnectionInternal.h"
+#import "RCMConnectionManagerProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection ()
 @property (nonatomic, weak, readwrite) IRCClient *client;
-@property (nonatomic, strong) NSMutableArray<NSString *> *sendQueue;
-@property (nonatomic, strong) TLOTimer *floodControlTimer;
-@property (nonatomic, assign) NSUInteger floodControlCurrentMessageCount;
+@property (nonatomic, strong) NSXPCConnection *serviceConnection;
+@property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
 @end
 
 @implementation IRCConnection
@@ -63,31 +62,120 @@ ClassWithDesignatedInitializerInitMethod
 		self.client = client;
 
 		self.config = config;
-
-		[self prepareInitialState];
 	}
 	
 	return self;
 }
 
-- (void)prepareInitialState
+- (void)resetState
 {
-	self.sendQueue = [NSMutableArray new];
+	self.isConnecting = NO;
+	self.isConnected = NO;
+	self.isConnectedWithClientSideCertificate = NO;
+	self.isDisconnecting = NO;
+	self.EOFReceived = NO;
+	self.isSecured = NO;
+	self.isSending = NO;
 
-	self.floodControlTimer = [TLOTimer new];
-
-	self.floodControlTimer.repeatTimer = YES;
-
-	self.floodControlTimer.target = self;
-	self.floodControlTimer.action = @selector(onFloodControlTimer:);
+	self.connectedAddress = nil;
 }
 
-- (void)dealloc
-{
-	[self.floodControlTimer stop];
-	 self.floodControlTimer = nil;
+#pragma mark -
+#pragma mark Process Management
 
-	[self close];
+- (void)invalidateProcess
+{
+	if (self.serviceConnection == nil) {
+		return;
+	}
+
+	LogToConsoleDebug("Invaliating process...")
+
+	self.connectionInvalidatedVoluntarily = YES;
+
+	[self.serviceConnection invalidate];
+}
+
+- (void)warmProcessIfNeeded
+{
+	if (self.serviceConnection != nil) {
+		return;
+	}
+
+	[self warmProcess];
+}
+
+- (void)warmProcess
+{
+	NSXPCConnection *serviceConnection = [[NSXPCConnection alloc] initWithServiceName:@"com.codeux.app-utilities.Textual-RemoteConnectionManager"];
+
+	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(RCMConnectionManagerServerProtocol)];
+
+	serviceConnection.remoteObjectInterface = remoteObjectInterface;
+
+	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(RCMConnectionManagerClientProtocol)];
+
+	serviceConnection.exportedInterface = exportedInterface;
+
+	serviceConnection.exportedObject = self;
+
+	serviceConnection.interruptionHandler = ^{
+		[self interuptionHandler];
+
+		LogToConsole("Interuption handler called")
+	};
+
+	serviceConnection.invalidationHandler = ^{
+		[self invalidationHandler];
+
+		LogToConsole("Invalidation handler called")
+	};
+
+	[serviceConnection resume];
+
+	self.serviceConnection = serviceConnection;
+}
+
+- (void)interuptionHandler
+{
+	[self invalidateProcess];
+}
+
+- (void)invalidationHandler
+{
+	self.serviceConnection = nil;
+
+	[self resetState];
+
+	if (self.connectionInvalidatedVoluntarily) {
+		self.connectionInvalidatedVoluntarily = NO;
+
+		return;
+	}
+
+	/* -ircConnectionDidDisconnectWithError: instructs the process to
+	 voluntarily invalidate, so if we reach here, then its pretty certain
+	 something big happened and we need to let the client know. */
+	[self ircConnectionDidError:TXTLS(@"IRC[1124]")];
+
+	[self ircConnectionDidDisconnectWithError:nil];
+}
+
+- (id <RCMConnectionManagerServerProtocol>)remoteObjectProxy
+{
+	return [self remoteObjectProxyWithErrorHandler:nil];
+}
+
+- (id <RCMConnectionManagerServerProtocol>)remoteObjectProxyWithErrorHandler:(void (^ _Nullable)(NSError *error))handler
+{
+	return [self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError *error) {
+		LogToConsoleError("Error occurred while communicating with service: %@",
+			  error.localizedDescription);
+
+		if (handler) {
+			handler(error);
+		}
+	}];
 }
 
 #pragma mark -
@@ -95,22 +183,103 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)open
 {
-	[self startFloodControlTimer];
+	if (self.isConnecting || self.isConnected || self.isDisconnecting) {
+		return;
+	}
 
-	[self openSocket];
+	[self warmProcessIfNeeded];
+
+	self.isConnecting = YES;
+
+	[[self remoteObjectProxy] openWithConfig:self.config];
 }
 
 - (void)close
 {
-	self.isSending = NO;
+	if (self.isDisconnecting) {
+		return;
+	}
 
-	self.floodControlCurrentMessageCount = 0;
+	if (self.isConnecting || self.isConnected) {
+		/* Disconnect caused by calling -close on the service will
+		 cacuse -ircConnectionDidDisconnectWithError: to invoke
+		 -invalidateProcess for us, so don't call it on this condition. */
+		self.isDisconnecting = YES;
 
-	[self.sendQueue removeAllObjects];
-	
-	[self stopFloodControlTimer];
-	
-	[self closeSocket];
+		[[self remoteObjectProxy] close];
+	} else {
+		[self invalidateProcess];
+	}
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (void)enforceFloodControl
+{
+	if (self.isConnected == NO) {
+		return;
+	}
+
+	[[self remoteObjectProxy] enforceFloodControl];
+}
+
+- (void)openSecuredConnectionCertificateModal
+{
+	if (self.isConnected == NO || self.isSecured == NO) {
+		return;
+	}
+
+	[[self remoteObjectProxy] exportSecureConnectionInformation:^(NSString * _Nullable policyName, SSLProtocol protocolVersion, SSLCipherSuite cipherSuites, NSArray<NSData *> *certificateChain) {
+		if (policyName == nil) {
+			return;
+		}
+
+		SecTrustRef trustRef = [GCDAsyncSocket trustFromCertificateChain:certificateChain withPolicyName:policyName];
+
+		if (trustRef == NULL) {
+			return;
+		}
+
+		NSString *protocolDescription = [GCDAsyncSocket descriptionForProtocolVersion:protocolVersion];
+
+		NSString *cipherDescription = [GCDAsyncSocket descriptionForCipherSuite:cipherSuites];
+
+		if (protocolDescription == nil || cipherDescription == nil) {
+			return;
+		}
+
+		NSString *protocolSummary = nil;
+
+		if ([GCDAsyncSocket isCipherSuiteDeprecated:cipherSuites] == NO) {
+			protocolSummary = TXTLS(@"Prompts[1122][1]", protocolDescription, cipherDescription);
+		} else {
+			protocolSummary = TXTLS(@"Prompts[1122][2]", protocolDescription, cipherDescription);
+		}
+
+		NSString *defaultButtonTitle = TXTLS(@"Prompts[0008]");
+		NSString *alternateButtonTitle = nil;
+
+		NSString *promptTitleText = TXTLS(@"Prompts[1121][1]", policyName);
+		NSString *promptInformativeText = nil;
+
+		if (protocolSummary == nil) {
+			promptInformativeText = TXTLS(@"Prompts[1121][2]", policyName);
+		} else {
+			promptInformativeText = TXTLS(@"Prompts[1121][3]", policyName, protocolSummary);
+		}
+
+		(void)
+		[GCDAsyncSocket presentTrustPanelInWindow:[NSApp keyWindow]
+											 body:promptInformativeText
+											title:promptTitleText
+									defaultButton:defaultButtonTitle
+								  alternateButton:alternateButtonTitle
+										 trustRef:trustRef
+								  completionBlock:^(SecTrustRef trustRef, BOOL trusted, id contextInfo) {
+									  CFRelease(trustRef);
+								  }];
+	}];
 }
 
 #pragma mark -
@@ -133,175 +302,129 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(line != nil);
 
-	/* PONG replies are extremely important. There is no reason they should be
-	 placed in the flood control queue. This writes them directly to the socket
-	 instead of actuallying waiting for the queue. We only need this check if
-	 we actually have flood control enabled. */
-	if ([line hasPrefix:@"PONG"]) {
-		[self sendData:line removeFromQueue:NO];
+	line = [line stringByAppendingString:@"\x0d\x0a"];
 
-		return;
-	}
+	NSData *dataToSend = [self convertToCommonEncoding:line];
 
-	[self.sendQueue addObject:line];
-
-	[self tryToSend];
-}
-
-- (BOOL)tryToSend
-{
-	if (self.isSending) {
-		return NO;
-	}
-
-	if (self.sendQueue.count == 0) {
-		return NO;
-	}
-
-	if (self.client.isLoggedIn) {
-		if (self.floodControlCurrentMessageCount >= self.config.floodControlMaximumMessages) {
-			return NO;
-		}
-
-		self.floodControlCurrentMessageCount += 1;
-	}
-
-	[self sendNextLine];
-	
-	return YES;
-}
-
-- (void)sendNextLine
-{
-	NSString *line = self.sendQueue.firstObject;
-
-	if (line == nil) {
+	if (dataToSend == nil) {
 		return;
 	}
 
 	self.isSending = YES;
 
-	[self sendData:line removeFromQueue:YES];
-}
+	/* PONG replies are extremely important. There is no reason they should be
+	 placed in the flood control queue. This writes them directly to the socket
+	 instead of actuallying waiting for the queue. We only need this check if
+	 we actually have flood control enabled. */
+	if ([line hasPrefix:@"PONG"]) {
+		[[self remoteObjectProxy] sendData:dataToSend bypassQueue:YES];
 
-- (void)sendData:(NSString *)stringToSend
-{
-	[self sendData:stringToSend removeFromQueue:NO];
-}
-
-- (void)sendData:(NSString *)stringToSend removeFromQueue:(BOOL)removeFromQueue
-{
-	NSParameterAssert(stringToSend != nil);
-
-	if (removeFromQueue) {
-		[self.sendQueue removeObjectAtIndex:0];
+		return;
 	}
-	
-	stringToSend = [stringToSend stringByAppendingString:@"\x0d\x0a"];
 
-	NSData *dataToSend = [self convertToCommonEncoding:stringToSend];
-
-	if (dataToSend) {
-		[self writeDataToSocket:dataToSend];
-
-		[self tcpClientWillSendData:stringToSend];
-	}
+	[[self remoteObjectProxy] sendData:dataToSend];
 }
 
 - (void)clearSendQueue
 {
-	[self.sendQueue removeAllObjects];
-
-	self.floodControlCurrentMessageCount = 0;
-}
-
-#pragma mark -
-#pragma mark Flood Control Timer
-
-- (void)startFloodControlTimer
-{
-	if (self.floodControlTimer.timerIsActive == NO) {
-		[self.floodControlTimer start:self.config.floodControlDelayInterval];
-	}
-}
-
-- (void)stopFloodControlTimer
-{
-	if (self.floodControlTimer.timerIsActive) {
-		[self.floodControlTimer stop];
-	}
-}
-
-- (void)onFloodControlTimer:(id)sender
-{
-	self.floodControlCurrentMessageCount = 0;
-
-	while ([self tryToSend] != NO) {
-		;
-	}
+	[[self remoteObjectProxy] clearSendQueue];
 }
 
 #pragma mark -
 #pragma mark Socket Delegate
 
-- (void)tcpClientDidConnect
+- (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort
 {
-	[self clearSendQueue];
-
-	[self.client ircConnectionDidConnect:self];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnection:self willConnectToProxy:proxyHost port:proxyPort];
+	});
 }
 
-- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort
+- (void)ircConnectionDidConnectToHost:(nullable NSString *)host
 {
-	[self.client ircConnection:self willConnectToProxy:proxyHost port:proxyPort];
+	self.connectedAddress = host;
+
+	self.isConnecting = NO;
+	self.isConnected = YES;
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnectionDidConnect:self];
+	});
 }
 
-- (void)tcpClientDidError:(NSString *)error
+- (void)ircConnectionDidSecureConnectionWithProtocolVersion:(SSLProtocol)protocolVersion cipherSuite:(SSLCipherSuite)cipherSuite
 {
-	[self clearSendQueue];
+	self.isSecured = YES;
 
-	[self.client ircConnection:self didError:error];
+	if (self.config.identityClientSideCertificate != nil) {
+		self.isConnectedWithClientSideCertificate = YES;
+	}
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnectionDidSecureConnection:self withProtocolVersion:protocolVersion cipherSuite:cipherSuite];
+	});
 }
 
-- (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError
-{
-	[self clearSendQueue];
-
-	[self.client ircConnection:self didDisconnectWithError:disconnectError];
-}
-
-- (void)tcpClientDidCloseReadStream
+- (void)ircConnectionDidCloseReadStream
 {
 	self.EOFReceived = YES;
 
-	[self.client ircConnectionDidCloseReadStream:self];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnectionDidCloseReadStream:self];
+	});
 }
 
-- (void)tcpClientDidReceiveData:(NSString *)data
+- (void)ircConnectionDidError:(NSString *)error
 {
-	[self.client ircConnection:self didReceiveData:data];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnection:self didError:error];
+	});
 }
 
-- (void)tcpClientDidSecureConnection
+- (void)ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError
 {
-	[self.client ircConnectionDidSecureConnection:self];
+	[self invalidateProcess];
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnection:self didDisconnectWithError:disconnectError];
+	});
 }
 
-- (void)tcpClientDidReceivedAnInsecureCertificate
+- (void)ircConnectionDidReceiveData:(NSData *)data
 {
-	[self.client ircConnectionDidReceivedAnInsecureCertificate:self];
+	/* IRCClient performs call to main thread later in stack. */
+	NSString *dataString = [self convertFromCommonEncoding:data];
+
+	if (dataString == nil) {
+		return;
+	}
+
+	[self.client ircConnection:self didReceiveData:dataString];
 }
 
-- (void)tcpClientWillSendData:(NSString *)data
+- (void)ircConnectionDidReceivedAnInsecureCertificate
 {
-	[self.client ircConnection:self willSendData:data];
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self.client ircConnectionDidReceivedAnInsecureCertificate:self];
+	});
 }
 
-- (void)tcpClientDidSendData
+- (void)ircConnectionWillSendData:(NSData *)data
+{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		NSString *dataString = [self convertFromCommonEncoding:data];
+
+		if (dataString == nil) {
+			return;
+		}
+
+		[self.client ircConnection:self willSendData:dataString];
+	});
+}
+
+- (void)ircConnectionDidSendData
 {
 	self.isSending = NO;
-	
-	[self tryToSend];
 }
 
 @end

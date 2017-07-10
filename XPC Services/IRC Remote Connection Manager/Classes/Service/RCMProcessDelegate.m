@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,29 +37,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnectionConfig ()
-{
-@protected
-	BOOL _connectionPrefersIPv4;
-	BOOL _connectionPrefersModernCiphers;
-	BOOL _connectionPrefersSecuredConnection;
-	BOOL _connectionShouldValidateCertificateChain;
-	IRCConnectionSocketProxyType _proxyType;
-	NSData *_identityClientSideCertificate;
-	NSString *_proxyAddress;
-	NSString *_proxyPassword;
-	NSString *_proxyUsername;
-	NSString *_serverAddress;
-	NSUInteger _floodControlDelayInterval;
-	NSUInteger _floodControlMaximumMessages;
-	uint16_t _proxyPort;
-	uint16_t _serverPort;
+@implementation RCMProcessDelegate
 
-@private
-	BOOL _objectInitialized;
+- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
+{
+	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(RCMConnectionManagerServerProtocol)];
+
+	newConnection.exportedInterface = exportedInterface;
+
+	RCMProcessMain *exportedObject = [[RCMProcessMain alloc] initWithXPCConnection:newConnection];
+
+	newConnection.exportedObject = exportedObject;
+
+	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(RCMConnectionManagerClientProtocol)];
+
+	newConnection.remoteObjectInterface = remoteObjectInterface;
+
+	[newConnection resume];
+
+	return YES;
 }
 
-- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

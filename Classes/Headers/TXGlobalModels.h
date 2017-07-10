@@ -39,12 +39,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* Localization */
-TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
-
-TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list arguments);
-TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
-
 /* Time */
 TEXTUAL_EXTERN NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString *format);
 

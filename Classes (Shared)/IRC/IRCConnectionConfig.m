@@ -57,15 +57,80 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNil(self->_serverAddress, NSStringEmptyPlaceholder)
+	if (self->_serverAddress == nil) {
+		self->_serverAddress = NSStringEmptyPlaceholder;
+	}
 
-	self->_proxyPort = IRCConnectionDefaultProxyPort;
+	if (self->_proxyPort == 0) {
+		self->_proxyPort = IRCConnectionDefaultProxyPort;
+	}
 
-	self->_serverPort = IRCConnectionDefaultServerPort;
+	if (self->_serverPort == 0) {
+		self->_serverPort = IRCConnectionDefaultServerPort;
+	}
 
-	self->_floodControlDelayInterval = IRCConnectionConfigFloodControlDefaultDelayInterval;
+	if (self->_floodControlDelayInterval == 0) {
+		self->_floodControlDelayInterval = IRCConnectionConfigFloodControlDefaultDelayInterval;
+	}
 
-	self->_floodControlMaximumMessages = IRCConnectionConfigFloodControlDefaultMessageCount;
+	if (self->_floodControlMaximumMessages == 0) {
+		self->_floodControlMaximumMessages = IRCConnectionConfigFloodControlDefaultMessageCount;
+	}
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+	NSParameterAssert(aDecoder != nil);
+
+	if ((self = [super init])) {
+		self->_connectionPrefersIPv4 = [aDecoder decodeBoolForKey:@"connectionPrefersIPv4"];
+		self->_connectionPrefersModernCiphers = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphers"];
+		self->_connectionPrefersSecuredConnection = [aDecoder decodeBoolForKey:@"connectionPrefersSecuredConnection"];
+		self->_connectionShouldValidateCertificateChain = [aDecoder decodeBoolForKey:@"connectionShouldValidateCertificateChain"];
+		self->_floodControlDelayInterval = [aDecoder decodeUnsignedIntegerForKey:@"floodControlDelayInterval"];
+		self->_floodControlMaximumMessages = [aDecoder decodeUnsignedIntegerForKey:@"floodControlMaximumMessages"];
+		self->_identityClientSideCertificate = [aDecoder decodeDataForKey:@"identityClientSideCertificate"];
+		self->_proxyAddress = [aDecoder decodeStringForKey:@"proxyAddress"];
+		self->_proxyPassword = [aDecoder decodeStringForKey:@"proxyPassword"];
+		self->_proxyPort = [aDecoder decodeUnsignedShortForKey:@"proxyPort"];
+		self->_proxyType = [aDecoder decodeUnsignedIntegerForKey:@"proxyType"];
+		self->_proxyUsername = [aDecoder decodeStringForKey:@"proxyUsername"];
+		self->_serverAddress = [aDecoder decodeStringForKey:@"serverAddress"];
+		self->_serverPort = [aDecoder decodeUnsignedShortForKey:@"serverPort"];
+		self->_primaryEncoding = [aDecoder decodeUnsignedIntegerForKey:@"primaryEncoding"];
+		self->_fallbackEncoding = [aDecoder decodeUnsignedIntegerForKey:@"fallbackEncoding"];
+
+		[self populateDefaultsPostflight];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeBool:self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
+	[aCoder encodeBool:self->_connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
+	[aCoder encodeBool:self->_connectionPrefersSecuredConnection forKey:@"connectionPrefersSecuredConnection"];
+	[aCoder encodeBool:self->_connectionShouldValidateCertificateChain forKey:@"connectionShouldValidateCertificateChain"];
+	[aCoder encodeUnsignedInteger:self->_floodControlDelayInterval forKey:@"floodControlDelayInterval"];
+	[aCoder encodeUnsignedInteger:self->_floodControlMaximumMessages forKey:@"floodControlMaximumMessages"];
+	[aCoder maybeEncodeObject:self->_identityClientSideCertificate forKey:@"identityClientSideCertificate"];
+	[aCoder maybeEncodeObject:self->_proxyAddress forKey:@"proxyAddress"];
+	[aCoder maybeEncodeObject:self->_proxyPassword forKey:@"proxyPassword"];
+	[aCoder encodeUnsignedShort:self->_proxyPort forKey:@"proxyPort"];
+	[aCoder encodeUnsignedInteger:self->_proxyType forKey:@"proxyType"];
+	[aCoder maybeEncodeObject:self->_proxyUsername forKey:@"proxyUsername"];
+	[aCoder encodeString:self->_serverAddress forKey:@"serverAddress"];
+	[aCoder encodeUnsignedShort:self->_serverPort forKey:@"serverPort"];
+	[aCoder encodeUnsignedInteger:self->_primaryEncoding forKey:@"primaryEncoding"];
+	[aCoder encodeUnsignedInteger:self->_fallbackEncoding forKey:@"fallbackEncoding"];
+}
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
@@ -86,6 +151,8 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	object->_proxyUsername = self->_proxyUsername;
 	object->_serverAddress = self->_serverAddress;
 	object->_serverPort = self->_serverPort;
+	object->_primaryEncoding = self->_primaryEncoding;
+	object->_fallbackEncoding = self->_fallbackEncoding;
 
 	return object;
 }
@@ -108,6 +175,8 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	((IRCConnectionConfig *)object)->_proxyUsername = self->_proxyUsername;
 	((IRCConnectionConfig *)object)->_serverAddress = self->_serverAddress;
 	((IRCConnectionConfig *)object)->_serverPort = self->_serverPort;
+	((IRCConnectionConfig *)object)->_primaryEncoding = self->_primaryEncoding;
+	((IRCConnectionConfig *)object)->_fallbackEncoding = self->_fallbackEncoding;
 
 	return object;
 }
@@ -137,6 +206,8 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 @dynamic proxyUsername;
 @dynamic serverAddress;
 @dynamic serverPort;
+@dynamic primaryEncoding;
+@dynamic fallbackEncoding;
 
 - (BOOL)isMutable
 {
@@ -246,6 +317,20 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	if (self->_serverPort != serverPort) {
 		self->_serverPort = serverPort;
+	}
+}
+
+- (void)setPrimaryEncoding:(NSStringEncoding)primaryEncoding
+{
+	if (self->_primaryEncoding != primaryEncoding) {
+		self->_primaryEncoding = primaryEncoding;
+	}
+}
+
+- (void)setFallbackEncoding:(NSStringEncoding)fallbackEncoding
+{
+	if (self->_fallbackEncoding != fallbackEncoding) {
+		self->_fallbackEncoding = fallbackEncoding;
 	}
 }
 

@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,20 +37,31 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, copy, readwrite, nullable) NSString *connectedAddress;
+@interface IRCConnectionConfig ()
+{
+@protected
+	BOOL _connectionPrefersIPv4;
+	BOOL _connectionPrefersModernCiphers;
+	BOOL _connectionPrefersSecuredConnection;
+	BOOL _connectionShouldValidateCertificateChain;
+	IRCConnectionSocketProxyType _proxyType;
+	NSData *_identityClientSideCertificate;
+	NSString *_proxyAddress;
+	NSString *_proxyPassword;
+	NSString *_proxyUsername;
+	NSString *_serverAddress;
+	NSUInteger _floodControlDelayInterval;
+	NSUInteger _floodControlMaximumMessages;
+	uint16_t _proxyPort;
+	uint16_t _serverPort;
+	NSStringEncoding _primaryEncoding;
+	NSStringEncoding _fallbackEncoding;
 
-- (void)enforceFloodControl;
+@private
+	BOOL _objectInitialized;
+}
 
-- (void)openSecuredConnectionCertificateModal;
+- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

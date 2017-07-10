@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,17 +35,3 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface TLOLanguagePreferences : NSObject 
-+ (NSString *)localizedStringWithKey:(NSString *)key;
-+ (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle arguments:(va_list)arguments;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments;
-@end
-
-NS_ASSUME_NONNULL_END

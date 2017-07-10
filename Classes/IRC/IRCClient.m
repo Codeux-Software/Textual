@@ -4967,17 +4967,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.disconnectType = IRCClientDisconnectBadCertificateMode;
 }
 
-- (void)ircConnectionDidSecureConnection:(IRCConnection *)sender
+- (void)ircConnectionDidSecureConnection:(IRCConnection *)sender withProtocolVersion:(SSLProtocol)protocolVersion cipherSuite:(SSLCipherSuite)cipherSuite;
 {
 	NSParameterAssert(sender == self.socket);
 
-	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString:NO];
+	NSString *protocolDescription = [GCDAsyncSocket descriptionForProtocolVersion:protocolVersion];
 
-	if (sslProtocolString == nil) {
+	NSString *cipherDescription = [GCDAsyncSocket descriptionForCipherSuite:cipherSuite];
+
+	if (protocolDescription == nil || cipherDescription == nil) {
 		return;
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1047]", sslProtocolString)];
+	NSString *description = nil;
+
+	if ([GCDAsyncSocket isCipherSuiteDeprecated:cipherSuite] == NO) {
+		description = TXTLS(@"IRC[1112][1]", protocolDescription, cipherDescription);
+	} else {
+		description = TXTLS(@"IRC[1112][2]", protocolDescription, cipherDescription);
+	}
+
+	[self printDebugInformationToConsole:TXTLS(@"IRC[1047]", description)];
 }
 
 - (void)ircConnectionDidConnect:(IRCConnection *)sender
@@ -7964,6 +7974,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.userNickname = [m paramAt:0];
 
 	self.successfulConnects += 1;
+
+	/* Begin enforcing flood control */
+	[self.socket enforceFloodControl];
 	
 	/* Post event */
 	[self postEventToViewController:@"serverConnected"];
@@ -10852,7 +10865,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self.socket openSSLCertificateTrustDialog];
+	[self.socket openSecuredConnectionCertificateModal];
 }
 
 - (void)requestModesForChannel:(IRCChannel *)channel

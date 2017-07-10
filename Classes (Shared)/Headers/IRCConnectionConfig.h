@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define IRCConnectionConfigFloodControlDefaultDelayInterval					2
@@ -60,7 +62,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 #pragma mark -
 #pragma mark Immutable Object
 
-@interface IRCConnectionConfig : NSObject <NSCopying, NSMutableCopying>
+@interface IRCConnectionConfig : NSObject <NSCopying, NSMutableCopying, NSCoding, NSSecureCoding>
 @property (readonly) BOOL connectionPrefersIPv4;
 @property (readonly) BOOL connectionPrefersModernCiphers;
 @property (readonly) BOOL connectionPrefersSecuredConnection;
@@ -75,6 +77,8 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (readonly, copy, nullable) NSString *proxyPassword;
 @property (readonly, copy, nullable) NSString *proxyUsername;
 @property (readonly, copy, nullable) NSData *identityClientSideCertificate;
+@property (readonly) NSStringEncoding primaryEncoding;
+@property (readonly) NSStringEncoding fallbackEncoding;
 @end
 
 #pragma mark -
@@ -95,6 +99,8 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyPassword;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyUsername;
 @property (nonatomic, copy, readwrite, nullable) NSData *identityClientSideCertificate;
+@property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding;
+@property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,16 +35,28 @@
 
  *********************************************************************** */
 
-NS_ASSUME_NONNULL_BEGIN
+#import <Foundation/Foundation.h>
 
-@interface GCDAsyncSocket (GCDsyncSocketExtensions)
-+ (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
+#import <Security/Security.h>
 
-+ (BOOL)badSSLCertificateErrorFound:(NSError *)error;
-+ (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode;
+#import <SecurityInterface/SFCertificatePanel.h>
+#import <SecurityInterface/SFCertificateTrustPanel.h>
+#import <SecurityInterface/SFChooseIdentityPanel.h>
 
-@property (readonly) SecTrustRef sslCertificateTrustInformation;
-@property (readonly, copy, nullable) NSString *sslCertificateTrustPolicyName;
-@end
+#import <SystemConfiguration/SystemConfiguration.h>
 
-NS_ASSUME_NONNULL_END
+#import <CocoaExtensions/CocoaExtensions.h>
+
+#import "StaticDefinitions.h"
+#import "GCDAsyncSocket.h"
+#import "GCDAsyncSocketCipherNames.h"
+#import "GCDAsyncSocketExtensions.h"
+#import "NSObjectHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOTimer.h"
+#import "IRCConnectionConfig.h"
+#import "IRCConnectionPrivate.h"
+#import "IRCConnectionSocketPrivate.h"
+#import "RCMConnectionManagerProtocol.h"
+#import "RCMProcessDelegatePrivate.h"
+#import "RCMProcessMainPrivate.h"

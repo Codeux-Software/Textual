@@ -37,20 +37,42 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
+@interface IRCConnection : NSObject
 @property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
 @property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
+@property (nonatomic, assign, readwrite) BOOL isConnected;
 @property (nonatomic, assign, readwrite) BOOL isSending;
 @property (nonatomic, assign, readwrite) BOOL isSecured;
 @property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
+@property (nonatomic, assign, readwrite) BOOL isFloodControlEnforced;
 @property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, copy, readwrite, nullable) NSString *connectedAddress;
+@property (nonatomic, strong, nullable) dispatch_queue_t dispatchQueue;
+@property (nonatomic, strong, nullable) dispatch_queue_t socketQueue;
+@property (nonatomic, strong, nullable) GCDAsyncSocket *socketConnection;
+@property (nonatomic, copy, nullable) NSError *alternateDisconnectError;
+
+- (instancetype)initWithConfig:(IRCConnectionConfig *)config onConnection:(NSXPCConnection *)connection NS_DESIGNATED_INITIALIZER;
+
+- (void)open;
+- (void)close;
+
+- (void)sendData:(NSData *)data;
 
 - (void)enforceFloodControl;
 
-- (void)openSecuredConnectionCertificateModal;
+- (void)clearSendQueue;
+
+- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
+- (void)tcpClientDidConnectToHost:(nullable NSString *)host;
+- (void)tcpClientDidSecureConnectionWithProtocolVersion:(SSLProtocol)protocolVersion
+											cipherSuite:(SSLCipherSuite)cipherSuite;
+- (void)tcpClientDidCloseReadStream;
+- (void)tcpClientDidError:(NSString *)error;
+- (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError;
+- (void)tcpClientDidReceiveData:(NSData *)data;
+- (void)tcpClientDidReceivedAnInsecureCertificate;
+- (void)tcpClientWillSendData:(NSData *)data;
+- (void)tcpClientDidSendData;
 @end
 
 NS_ASSUME_NONNULL_END
