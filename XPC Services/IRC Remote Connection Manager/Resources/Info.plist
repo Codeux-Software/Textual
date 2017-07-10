@@ -16,6 +16,8 @@
 	<string>1.0.0</string>
 	<key>XPCService</key>
 	<dict>
+		<key>JoinExistingSession</key>
+		<true/>
 		<key>ServiceType</key>
 		<string>Application</string>
 	</dict>
