@@ -424,63 +424,61 @@ NS_ASSUME_NONNULL_BEGIN
 		NSPoint badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (badgeTextSize.width / 2.0)),
 											 (NSMidY(badgeFrame) - (badgeTextSize.height / 2.0)));
 
-		if (isDrawingOnMavericks) {
-			if (mainWindow.runningInHighResolutionMode)
+		if (mainWindow.runningInHighResolutionMode)
+		{
+			if ([stringToDraw isEqualToString:@"+"] ||
+				[stringToDraw isEqualToString:@"~"] ||
+				[stringToDraw isEqualToString:@"×"])
 			{
-				if ([stringToDraw isEqualToString:@"+"] ||
-					[stringToDraw isEqualToString:@"~"] ||
-					[stringToDraw isEqualToString:@"×"])
-				{
-					badgeTextPoint.y -= (-1.0);
-				}
-				else if ([stringToDraw isEqualToString:@"^"])
-				{
-					badgeTextPoint.y -= 2.0;
-				}
-				else if ([stringToDraw isEqualToString:@"*"])
-				{
-					badgeTextPoint.y -= 2.5;
-				}
-	/*			else if ([stringToDraw isEqualToString:@"@"] ||
-						 [stringToDraw isEqualToString:@"!"] ||
-						 [stringToDraw isEqualToString:@"%"] ||
-						 [stringToDraw isEqualToString:@"&"] ||
-						 [stringToDraw isEqualToString:@"#"] ||
-						 [stringToDraw isEqualToString:@"?"] ||
-						 [stringToDraw isEqualToString:@"$"])
-				{
-					badgeTextPoint.y -= 0.0;
-				} */
+				badgeTextPoint.y -= (-1.0);
 			}
-			else // isDrawingForRetina
+			else if ([stringToDraw isEqualToString:@"^"])
 			{
-				if ([stringToDraw isEqualToString:@"+"] ||
-					[stringToDraw isEqualToString:@"~"] ||
-					[stringToDraw isEqualToString:@"×"])
-				{
-					badgeTextPoint.y -= (-2.0);
-				}
-				else if ([stringToDraw isEqualToString:@"@"] ||
-						 [stringToDraw isEqualToString:@"!"] ||
-						 [stringToDraw isEqualToString:@"%"] ||
-						 [stringToDraw isEqualToString:@"&"] ||
-						 [stringToDraw isEqualToString:@"#"] ||
-						 [stringToDraw isEqualToString:@"?"])
-				{
-					badgeTextPoint.y -= (-1.0);
-				}
-	/*			else if ([stringToDraw isEqualToString:@"^"])
-				{
-					badgeTextPoint.y -= 0.0;
-				} */
-				else if ([stringToDraw isEqualToString:@"*"])
-				{
-					badgeTextPoint.y -= 1.0;
-				}
-				else if ([stringToDraw isEqualToString:@"$"])
-				{
-					badgeTextPoint.y -= (-1.0);
-				}
+				badgeTextPoint.y -= 2.0;
+			}
+			else if ([stringToDraw isEqualToString:@"*"])
+			{
+				badgeTextPoint.y -= 2.5;
+			}
+/*			else if ([stringToDraw isEqualToString:@"@"] ||
+					 [stringToDraw isEqualToString:@"!"] ||
+					 [stringToDraw isEqualToString:@"%"] ||
+					 [stringToDraw isEqualToString:@"&"] ||
+					 [stringToDraw isEqualToString:@"#"] ||
+					 [stringToDraw isEqualToString:@"?"] ||
+					 [stringToDraw isEqualToString:@"$"])
+			{
+				badgeTextPoint.y -= 0.0;
+			} */
+		}
+		else // isDrawingForRetina
+		{
+			if ([stringToDraw isEqualToString:@"+"] ||
+				[stringToDraw isEqualToString:@"~"] ||
+				[stringToDraw isEqualToString:@"×"])
+			{
+				badgeTextPoint.y -= (-2.0);
+			}
+			else if ([stringToDraw isEqualToString:@"@"] ||
+					 [stringToDraw isEqualToString:@"!"] ||
+					 [stringToDraw isEqualToString:@"%"] ||
+					 [stringToDraw isEqualToString:@"&"] ||
+					 [stringToDraw isEqualToString:@"#"] ||
+					 [stringToDraw isEqualToString:@"?"])
+			{
+				badgeTextPoint.y -= (-1.0);
+			}
+/*			else if ([stringToDraw isEqualToString:@"^"])
+			{
+				badgeTextPoint.y -= 0.0;
+			} */
+			else if ([stringToDraw isEqualToString:@"*"])
+			{
+				badgeTextPoint.y -= 1.0;
+			}
+			else if ([stringToDraw isEqualToString:@"$"])
+			{
+				badgeTextPoint.y -= (-1.0);
 			}
 		}
 
