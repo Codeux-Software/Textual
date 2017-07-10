@@ -35,21 +35,9 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
-
-#import <CoreData/CoreData.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogLineXPC : NSObject <NSCoding, NSSecureCoding>
-@property (copy, readonly) NSString *channelId;
-@property (copy, readonly) NSNumber *creationDate;
-@property (copy, readonly) NSData *data;
-
-- (instancetype)initWithLogLineData:(NSData *)data inChannel:(NSString *)channelId;
-- (instancetype)initWithLogLineData:(NSData *)data inChannel:(NSString *)channelId withCreationDate:(NSDate *)creationDate;
-
-- (instancetype)initWithManagedObject:(NSManagedObject *)managedObject;
+@interface HSLHistoricLogProcessDelegate : NSObject <NSXPCListenerDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

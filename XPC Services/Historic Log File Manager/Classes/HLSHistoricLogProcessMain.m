@@ -35,13 +35,6 @@
 
  *********************************************************************** */
 
-#import "HLSHistoricLogProcessMain.h"
-#import "HLSHistoricLogChannelContext.h"
-
-#import <CoreData/CoreData.h>
-
-#import <CocoaExtensions/CocoaExtensions.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HLSHistoricLogProcessMain ()

@@ -38,7 +38,7 @@
 
 #import "TVCLogLineInternal.h"
 
-#import "TVCLogLineXPC.h"
+#import "TVCLogLineXPCPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

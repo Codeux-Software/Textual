@@ -35,11 +35,9 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HSLHistoricLogProcessDelegate : NSObject <NSXPCListenerDelegate>
+@interface HLSHistoricLogProcessMain : NSObject <HLSHistoricLogProtocol>
 @end
 
 NS_ASSUME_NONNULL_END

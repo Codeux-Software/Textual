@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,20 +37,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCConnection ()
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isDisconnecting;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, copy, readwrite, nullable) NSString *connectedAddress;
+@interface TVCLogLineXPC : NSObject <NSCoding, NSSecureCoding>
+@property (copy, readonly) NSString *channelId;
+@property (copy, readonly) NSNumber *creationDate;
+@property (copy, readonly) NSData *data;
 
-- (void)enforceFloodControl;
+- (instancetype)initWithLogLineData:(NSData *)data inChannel:(NSString *)channelId;
+- (instancetype)initWithLogLineData:(NSData *)data inChannel:(NSString *)channelId withCreationDate:(NSDate *)creationDate;
 
-- (void)openSecuredConnectionCertificateModal;
+- (instancetype)initWithManagedObject:(NSManagedObject *)managedObject;
 @end
 
 NS_ASSUME_NONNULL_END

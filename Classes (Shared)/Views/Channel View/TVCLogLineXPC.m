@@ -35,9 +35,7 @@
 
  *********************************************************************** */
 
-#import "TVCLogLineXPC.h"
-
-#import <CocoaExtensions/CocoaExtensions.h>
+#import "TVCLogLineXPCPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

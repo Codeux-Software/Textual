@@ -13,8 +13,8 @@
 		4C58C6DC1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C58C6DA1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld */; };
 		4C58C6E01E15427F00934680 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6DF1E15427F00934680 /* Foundation.framework */; };
 		4C58C6E21E15428300934680 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6E11E15428300934680 /* CoreData.framework */; };
+		4C8C72D01F1208BF00ED72DB /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72CF1F1208BF00ED72DB /* TVCLogLineXPC.m */; };
 		4C9215EF1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9215EE1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.m */; };
-		4CB0FB1F1E13CA22001E2E3B /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0FB1E1E13CA22001E2E3B /* TVCLogLineXPC.m */; };
 		4CB0FB301E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */; };
 /* End PBXBuildFile section */
 
@@ -24,9 +24,7 @@
 		4C442CAB1E13B49B00B187F4 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C442CAC1E13B49B00B187F4 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C442CB11E13B5F000B187F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		4C442CB21E13B5FC00B187F4 /* HLSHistoricLogProcessMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProcessMain.h; path = Classes/HLSHistoricLogProcessMain.h; sourceTree = SOURCE_ROOT; };
 		4C442CB31E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLSHistoricLogProcessMain.m; path = Classes/HLSHistoricLogProcessMain.m; sourceTree = SOURCE_ROOT; };
-		4C442CB41E13B5FC00B187F4 /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProtocol.h; path = "../../Classes (Shared)/Headers/HLSHistoricLogProtocol.h"; sourceTree = SOURCE_ROOT; };
 		4C442CB51E13B5FC00B187F4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
 		4C58C6D71E15374700934680 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4C58C6DB1E153A6B00934680 /* LogControllerStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogControllerStorageModel.xcdatamodel; sourceTree = "<group>"; };
@@ -34,12 +32,15 @@
 		4C58C6E11E15428300934680 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4C761BEF1E15754100A505B7 /* HistoricLogFileManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HistoricLogFileManager.entitlements; path = Resources/Sandbox/Entitlements/HistoricLogFileManager.entitlements; sourceTree = "<group>"; };
 		4C761BF01E15754E00A505B7 /* HistoricLogFileManagerAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = HistoricLogFileManagerAppStore.entitlements; path = Resources/Sandbox/Entitlements/HistoricLogFileManagerAppStore.entitlements; sourceTree = "<group>"; };
-		4C9215ED1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogChannelContext.h; path = Classes/HLSHistoricLogChannelContext.h; sourceTree = SOURCE_ROOT; };
+		4C8C72CB1F12088C00ED72DB /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLSHistoricLogProtocol.h; sourceTree = "<group>"; };
+		4C8C72CD1F1208A800ED72DB /* TVCLogLineXPCPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogLineXPCPrivate.h; path = ../Private/TVCLogLineXPCPrivate.h; sourceTree = "<group>"; };
+		4C8C72CF1F1208BF00ED72DB /* TVCLogLineXPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogLineXPC.m; path = "../Channel View/TVCLogLineXPC.m"; sourceTree = "<group>"; };
+		4C8C72DB1F12099800ED72DB /* HLSHistoricLogChannelContextPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogChannelContextPrivate.h; path = Classes/Headers/Private/HLSHistoricLogChannelContextPrivate.h; sourceTree = SOURCE_ROOT; };
+		4C8C72DC1F12099800ED72DB /* HLSHistoricLogProcessMainPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProcessMainPrivate.h; path = Classes/Headers/Private/HLSHistoricLogProcessMainPrivate.h; sourceTree = SOURCE_ROOT; };
+		4C8C72DD1F12099800ED72DB /* HSLHistoricLogPCHPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HSLHistoricLogPCHPrivate.h; path = Classes/Headers/Private/HSLHistoricLogPCHPrivate.h; sourceTree = SOURCE_ROOT; };
+		4C8C72DE1F12099800ED72DB /* HSLHistoricLogProcessDelegatePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HSLHistoricLogProcessDelegatePrivate.h; path = Classes/Headers/Private/HSLHistoricLogProcessDelegatePrivate.h; sourceTree = SOURCE_ROOT; };
 		4C9215EE1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLSHistoricLogChannelContext.m; path = Classes/HLSHistoricLogChannelContext.m; sourceTree = SOURCE_ROOT; };
 		4CACFE821E3C2A96007B3034 /* LogControllerStorageModel (model 2).xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LogControllerStorageModel (model 2).xcdatamodel"; sourceTree = "<group>"; };
-		4CB0FB1E1E13CA22001E2E3B /* TVCLogLineXPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogLineXPC.m; path = "../../Classes (Shared)/Views/Channel View/TVCLogLineXPC.m"; sourceTree = SOURCE_ROOT; };
-		4CB0FB211E13CA96001E2E3B /* TVCLogLineXPC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogLineXPC.h; path = "../../Classes (Shared)/Headers/TVCLogLineXPC.h"; sourceTree = SOURCE_ROOT; };
-		4CB0FB2E1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSLHistoricLogProcessDelegate.h; path = Classes/HSLHistoricLogProcessDelegate.h; sourceTree = SOURCE_ROOT; };
 		4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSLHistoricLogProcessDelegate.m; path = Classes/HSLHistoricLogProcessDelegate.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -62,8 +63,8 @@
 			children = (
 				4C442C8A1E13B3D200B187F4 /* Source Code */,
 				4C442CA81E13B42900B187F4 /* Resources */,
-				4C442C891E13B3D200B187F4 /* Products */,
 				4C442CBE1E13B77200B187F4 /* Frameworks */,
+				4C442C891E13B3D200B187F4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,17 +79,15 @@
 		4C442C8A1E13B3D200B187F4 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
-				4C9215ED1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.h */,
+				4C8C72C81F12085600ED72DB /* Headers */,
 				4C9215EE1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.m */,
-				4C442CB21E13B5FC00B187F4 /* HLSHistoricLogProcessMain.h */,
 				4C442CB31E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m */,
-				4CB0FB2E1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.h */,
 				4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */,
 				4C442CB51E13B5FC00B187F4 /* main.m */,
 				4CB0FB181E13CA22001E2E3B /* Shared */,
 			);
 			name = "Source Code";
-			path = "Historic Log File Manager";
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		4C442CA81E13B42900B187F4 /* Resources */ = {
@@ -172,6 +171,53 @@
 			name = "Build Settings";
 			sourceTree = "<group>";
 		};
+		4C8C72C71F12068E00ED72DB /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72DB1F12099800ED72DB /* HLSHistoricLogChannelContextPrivate.h */,
+				4C8C72DC1F12099800ED72DB /* HLSHistoricLogProcessMainPrivate.h */,
+				4C8C72DD1F12099800ED72DB /* HSLHistoricLogPCHPrivate.h */,
+				4C8C72DE1F12099800ED72DB /* HSLHistoricLogProcessDelegatePrivate.h */,
+			);
+			name = Private;
+			path = "../../../../Classes (Shared)/Headers/New Group1";
+			sourceTree = "<group>";
+		};
+		4C8C72C81F12085600ED72DB /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72C71F12068E00ED72DB /* Private */,
+			);
+			name = Headers;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		4C8C72C91F12088C00ED72DB /* XPC Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72CB1F12088C00ED72DB /* HLSHistoricLogProtocol.h */,
+			);
+			path = "XPC Protocols";
+			sourceTree = "<group>";
+		};
+		4C8C72CE1F1208AB00ED72DB /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72CD1F1208A800ED72DB /* TVCLogLineXPCPrivate.h */,
+			);
+			name = Private;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		4C8C72D11F1208C700ED72DB /* Channel View */ = {
+			isa = PBXGroup;
+			children = (
+				4C8C72CF1F1208BF00ED72DB /* TVCLogLineXPC.m */,
+			);
+			name = "Channel View";
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		4CB0FB181E13CA22001E2E3B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,8 +231,8 @@
 		4CB0FB191E13CA22001E2E3B /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				4C442CB41E13B5FC00B187F4 /* HLSHistoricLogProtocol.h */,
-				4CB0FB211E13CA96001E2E3B /* TVCLogLineXPC.h */,
+				4C8C72CE1F1208AB00ED72DB /* Private */,
+				4C8C72C91F12088C00ED72DB /* XPC Protocols */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -194,18 +240,9 @@
 		4CB0FB1C1E13CA22001E2E3B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4CB0FB1D1E13CA22001E2E3B /* Channel View */,
+				4C8C72D11F1208C700ED72DB /* Channel View */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		4CB0FB1D1E13CA22001E2E3B /* Channel View */ = {
-			isa = PBXGroup;
-			children = (
-				4CB0FB1E1E13CA22001E2E3B /* TVCLogLineXPC.m */,
-			);
-			name = "Channel View";
-			path = "Channel Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,8 +313,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C442CB71E13B5FC00B187F4 /* main.m in Sources */,
-				4CB0FB1F1E13CA22001E2E3B /* TVCLogLineXPC.m in Sources */,
 				4C58C6DC1E153A6B00934680 /* HistoricLogFileStorageModel.xcdatamodeld in Sources */,
+				4C8C72D01F1208BF00ED72DB /* TVCLogLineXPC.m in Sources */,
 				4CB0FB301E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m in Sources */,
 				4C442CB61E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m in Sources */,
 				4C9215EF1E3E7D8B0029E369 /* HLSHistoricLogChannelContext.m in Sources */,
@@ -291,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
 			buildSettings = {
+				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 			};
 			name = Debug;
 		};
@@ -298,6 +336,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
 			buildSettings = {
+				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 			};
 			name = Release;
 		};
@@ -329,6 +368,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
 			buildSettings = {
+				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 			};
 			name = "Release (App Store)";
 		};
