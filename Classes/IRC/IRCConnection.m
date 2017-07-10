@@ -43,7 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IRCConnection ()
 @property (nonatomic, weak, readwrite) IRCClient *client;
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
 @end
 
 @implementation IRCConnection
@@ -90,8 +89,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	LogToConsoleDebug("Invaliating process...")
-
-	self.connectionInvalidatedVoluntarily = YES;
 
 	[self.serviceConnection invalidate];
 }
@@ -145,20 +142,16 @@ ClassWithDesignatedInitializerInitMethod
 {
 	self.serviceConnection = nil;
 
-	[self resetState];
-
-	if (self.connectionInvalidatedVoluntarily) {
-		self.connectionInvalidatedVoluntarily = NO;
-
-		return;
-	}
-
 	/* -ircConnectionDidDisconnectWithError: instructs the process to
 	 voluntarily invalidate, so if we reach here, then its pretty certain
 	 something big happened and we need to let the client know. */
-	[self ircConnectionDidError:TXTLS(@"IRC[1124]")];
+	if ((self.isConnecting || self.isConnected) && self.isDisconnecting == NO) {
+		[self ircConnectionDidError:TXTLS(@"IRC[1124]")];
 
-	[self ircConnectionDidDisconnectWithError:nil];
+		[self ircConnectionDidDisconnectWithError:nil];
+	}
+
+	[self resetState];
 }
 
 - (id <RCMConnectionManagerServerProtocol>)remoteObjectProxy
