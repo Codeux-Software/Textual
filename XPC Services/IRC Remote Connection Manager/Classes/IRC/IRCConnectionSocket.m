@@ -294,8 +294,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 			return;
 		} else if (evaluationResult == kSecTrustResultRecoverableTrustFailure) {
-#warning TODO: Implement trust dialog
-			completionHandler(YES);
+			[self tcpClientRequestInsecureCertificateTrust:completionHandler];
 
 			return;
 		}
@@ -386,10 +385,6 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
 		errorMessage = [GCDAsyncSocket sslHandshakeErrorStringFromError:error.code];
-
-		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
-			[self tcpClientDidReceivedAnInsecureCertificate];
-		}
 	}
 
 	if (errorMessage == nil) {
@@ -466,16 +461,12 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 {
 	NSParameterAssert(completionBlock != nil);
 
-	if (self.isSecured == NO) {
-		completionBlock(NULL, kSSLProtocolUnknown, SSL_NO_SUCH_CIPHERSUITE, @[]);
-
-		return;
-	}
-
 	NSString *policyName = self.socketConnection.sslNegotiatedCertificatePolicyName;
 
 	if (policyName == nil) {
-		policyName = @"unknown.policy.name";
+		completionBlock(NULL, kSSLProtocolUnknown, SSL_NO_SUCH_CIPHERSUITE, @[]);
+
+		return;
 	}
 
 	SSLProtocol protocolVersion = self.socketConnection.sslNegotiatedProtocolVersion;

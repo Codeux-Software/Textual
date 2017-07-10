@@ -4960,13 +4960,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)ircConnectionDidReceivedAnInsecureCertificate:(IRCConnection *)sender
-{
-	NSParameterAssert(sender == self.socket);
-
-	self.disconnectType = IRCClientDisconnectBadCertificateMode;
-}
-
 - (void)ircConnectionDidSecureConnection:(IRCConnection *)sender withProtocolVersion:(SSLProtocol)protocolVersion cipherSuite:(SSLCipherSuite)cipherSuite;
 {
 	NSParameterAssert(sender == self.socket);
@@ -5058,6 +5051,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 //	if (self.isTerminating) {
 //		return;
 //	}
+
+	if (disconnectError && [GCDAsyncSocket isBadSSLCertificateError:disconnectError]) {
+		self.disconnectType = IRCClientDisconnectBadCertificateMode;
+	}
 
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self changeStateOff];

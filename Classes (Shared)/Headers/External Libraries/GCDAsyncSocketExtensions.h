@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
 + (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
-+ (BOOL)badSSLCertificateErrorFound:(NSError *)error;
++ (BOOL)isBadSSLCertificateError:(NSError *)error;
 + (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode;
 
 @property (readonly) SSLProtocol sslNegotiatedProtocolVersion;

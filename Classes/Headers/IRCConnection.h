@@ -76,7 +76,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error;
 - (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError;
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data;
-- (void)ircConnectionDidReceivedAnInsecureCertificate:(IRCConnection *)sender;
 - (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data;
 @end
 

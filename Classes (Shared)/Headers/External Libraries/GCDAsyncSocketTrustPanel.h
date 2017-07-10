@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^GCDAsyncSocketTrustResponseCompletionBlock)(BOOL trusted);
+
 typedef void (^GCDAsyncSocketTrustPanelCompletionBlock)(SecTrustRef trustRef, BOOL trusted, id _Nullable contextInfo);
 
 @interface GCDAsyncSocket (GCDsyncSocketTrustPanel)

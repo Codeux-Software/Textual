@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tcpClientDidError:(NSString *)error;
 - (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError;
 - (void)tcpClientDidReceiveData:(NSData *)data;
-- (void)tcpClientDidReceivedAnInsecureCertificate;
+- (void)tcpClientRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock;
 - (void)tcpClientWillSendData:(NSData *)data;
 - (void)tcpClientDidSendData;
 @end
