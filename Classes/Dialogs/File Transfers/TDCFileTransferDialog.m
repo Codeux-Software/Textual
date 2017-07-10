@@ -85,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.maintenanceTimer.repeatTimer = YES;
 	self.maintenanceTimer.target = self;
 	self.maintenanceTimer.action = @selector(onMaintenanceTimer:);
+	self.maintenanceTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
 	[RZNotificationCenter() addObserver:self selector:@selector(clientWillBeDestroyed:) name:IRCWorldWillDestroyClientNotification object:nil];
 }
