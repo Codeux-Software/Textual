@@ -36,7 +36,7 @@
  *********************************************************************** */
 
 #ifdef __OBJC__
-#ifdef TEXTUAL_PRIMARY_PUBLIC_HEADER_ENABLED
+#ifndef TEXTUAL_PRIMARY_PUBLIC_HEADER_DISABLED
 	#import <Cocoa/Cocoa.h>
 
 	#import <QuartzCore/QuartzCore.h>
