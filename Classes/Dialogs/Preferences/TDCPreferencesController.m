@@ -656,7 +656,7 @@ NS_ASSUME_NONNULL_BEGIN
 		value = [NSColor clearColor];
 	}
 
-	return nil;
+	return value;
 }
 
 - (void)setServerListUnreadCountBadgeHighlightColor:(NSColor *)serverListUnreadCountBadgeHighlightColor
