@@ -91,12 +91,12 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
 void TLOLicenseManagerSetPublicKeyIsGenuine(void);
 BOOL TLOLicenseManagerUserLicenseFileExists(void);
 CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPublicKey);
-NSData *TLOLicenseManagerPublicKeyContents(void);
-NSData *TLOLicenseManagerUserLicenseFileContents(void);
-NSDictionary<NSString *, id> *TLOLicenseManagerLicenseDictionary(void);
-NSDictionary<NSString *, id> *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
-NSURL *TLOLicenseManagerTrialModeInformationFilePath(void);
-NSURL *TLOLicenseManagerUserLicenseFilePath(void);
+NSData * _Nullable TLOLicenseManagerPublicKeyContents(void);
+NSData * _Nullable TLOLicenseManagerUserLicenseFileContents(void);
+NSDictionary<NSString *, id> * _Nullable TLOLicenseManagerLicenseDictionary(void);
+NSDictionary<NSString *, id> * _Nullable TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
+NSURL * _Nullable TLOLicenseManagerTrialModeInformationFilePath(void);
+NSURL * _Nullable TLOLicenseManagerUserLicenseFilePath(void);
 
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
