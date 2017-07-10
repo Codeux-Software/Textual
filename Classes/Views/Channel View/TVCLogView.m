@@ -321,11 +321,11 @@ ClassWithDesignatedInitializerInitMethod
 		[self.webViewBacking _t_evaluateJavaScript:code completionHandler:completionHandler];
 	};
 
-	if (self.isUsingWebKit2) {
-		blockToPerform();
-	} else {
+//	if (self.isUsingWebKit2) {
+//		blockToPerform();
+//	} else {
 		XRPerformBlockAsynchronouslyOnMainQueue(blockToPerform);
-	}
+//	}
 }
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
