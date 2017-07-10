@@ -38,11 +38,16 @@
 
 #import "RCMConnectionManagerProtocol.h"
 
+#import <objc/message.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection ()
 @property (nonatomic, weak, readwrite) IRCClient *client;
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
+@property (nonatomic, strong, nullable) SFCertificateTrustPanel *trustPanel;
+@property (nonatomic, assign) BOOL trustPanelDoNotInvokeCompletionBlock;
+@property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
 @end
 
 @implementation IRCConnection
@@ -77,6 +82,8 @@ ClassWithDesignatedInitializerInitMethod
 	self.isSending = NO;
 
 	self.connectedAddress = nil;
+
+	self.connectionInvalidatedVoluntarily = NO;
 }
 
 #pragma mark -
@@ -145,10 +152,12 @@ ClassWithDesignatedInitializerInitMethod
 	/* -ircConnectionDidDisconnectWithError: instructs the process to
 	 voluntarily invalidate, so if we reach here, then its pretty certain
 	 something big happened and we need to let the client know. */
-	if ((self.isConnecting || self.isConnected) && self.isDisconnecting == NO) {
+	if ((self.isConnecting || self.isConnected) &&
+		self.connectionInvalidatedVoluntarily == NO)
+	{
 		[self ircConnectionDidError:TXTLS(@"IRC[1124]")];
 
-		[self ircConnectionDidDisconnectWithError:nil];
+		[self _ircConnectionDidDisconnectWithError:nil];
 	}
 
 	[self resetState];
@@ -219,7 +228,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)openSecuredConnectionCertificateModal
 {
-	if (self.isConnected == NO || self.isSecured == NO) {
+	if (self.isConnected == NO) {
 		return;
 	}
 
@@ -273,6 +282,70 @@ ClassWithDesignatedInitializerInitMethod
 									  CFRelease(trustRef);
 								  }];
 	}];
+}
+
+- (void)openInsecureCertificateTrustPanel:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock
+{
+	if (self.isConnected == NO || self.trustPanel != nil) {
+		return;
+	}
+
+	[[self remoteObjectProxy] exportSecureConnectionInformation:^(NSString * _Nullable policyName, SSLProtocol protocolVersion, SSLCipherSuite cipherSuites, NSArray<NSData *> *certificateChain) {
+		if (policyName == nil) {
+			return;
+		}
+
+		SecTrustRef trustRef = [GCDAsyncSocket trustFromCertificateChain:certificateChain withPolicyName:policyName];
+
+		if (trustRef == NULL) {
+			return;
+		}
+
+		NSString *defaultButtonTitle = TXTLS(@"Prompts[0003]");
+		NSString *alternateButtonTitle = TXTLS(@"Prompts[0004]");
+
+		NSString *promptTitleText = TXTLS(@"Prompts[1131][1]", policyName);
+		NSString *promptInformativeText = TXTLS(@"Prompts[1131][2]", policyName);
+
+		__weak typeof(self) weakSelf = self;
+
+		self.trustPanel =
+		[GCDAsyncSocket presentTrustPanelInWindow:nil
+											 body:promptInformativeText
+											title:promptTitleText
+									defaultButton:defaultButtonTitle
+								  alternateButton:alternateButtonTitle
+										 trustRef:trustRef
+								  completionBlock:^(SecTrustRef trustRef, BOOL trusted, id contextInfo) {
+									  CFRelease(trustRef);
+
+									  weakSelf.trustPanel = nil;
+
+									  if (weakSelf.trustPanelDoNotInvokeCompletionBlock) {
+										  weakSelf.trustPanelDoNotInvokeCompletionBlock = NO;
+
+										  return;
+									  }
+
+									  ((GCDAsyncSocketTrustResponseCompletionBlock)contextInfo)(trusted);
+								  }
+									  contextInfo:trustBlock];
+	}];
+}
+
+- (void)closeInsecureCertificateTrustPanel
+{
+	if (self.trustPanel == nil) {
+		return;
+	}
+
+	SEL dismissSelector = NSSelectorFromString(@"_dismissWithCode:");
+
+	if ([self.trustPanel respondsToSelector:dismissSelector]) {
+		self.trustPanelDoNotInvokeCompletionBlock = YES;
+
+		(void)objc_msgSend(self.trustPanel, dismissSelector, NSModalResponseCancel);
+	}
 }
 
 #pragma mark -
@@ -376,7 +449,16 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError
 {
+	self.connectionInvalidatedVoluntarily = YES;
+
 	[self invalidateProcess];
+
+	[self _ircConnectionDidDisconnectWithError:disconnectError];
+}
+
+- (void)_ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError
+{
+	[self closeInsecureCertificateTrustPanel];
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self.client ircConnection:self didDisconnectWithError:disconnectError];
@@ -395,10 +477,10 @@ ClassWithDesignatedInitializerInitMethod
 	[self.client ircConnection:self didReceiveData:dataString];
 }
 
-- (void)ircConnectionDidReceivedAnInsecureCertificate
+- (void)ircConnectionRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self.client ircConnectionDidReceivedAnInsecureCertificate:self];
+		[self openInsecureCertificateTrustPanel:trustBlock];
 	});
 }
 

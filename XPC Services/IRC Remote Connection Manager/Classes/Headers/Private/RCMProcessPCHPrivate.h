@@ -51,6 +51,7 @@
 #import "GCDAsyncSocket.h"
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
+#import "GCDAsyncSocketTrustPanel.h"
 #import "NSObjectHelperPrivate.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOTimer.h"

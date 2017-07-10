@@ -30,6 +30,7 @@
 		4CAC2A151F12C64500D06046 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72831F1201A000ED72DB /* TLOTimer.m */; };
 		4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */; };
 		4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */; };
+		4CE07AE11F13C8790066007A /* GCDAsyncSocketTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */; };
 		4CF880B31F127F9700ED9EA2 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketExtensions.h; sourceTree = "<group>"; };
 		4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketCipherNames.m; sourceTree = "<group>"; };
 		4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketExtensions.m; sourceTree = "<group>"; };
+		4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketTrustPanel.h; sourceTree = "<group>"; };
 		4C6706D11F1290F4009673EB /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
 		4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMConnectionManagerProtocol.h; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
 		4CAC2A2D1F12DDC600D06046 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
+		4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketTrustPanel.m; sourceTree = "<group>"; };
 		4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = ../Private/NSObjectHelperPrivate.h; sourceTree = "<group>"; };
 		4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +220,7 @@
 				4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */,
 				4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */,
 				4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */,
+				4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */,
 			);
 			path = "External Libraries";
 			sourceTree = "<group>";
@@ -254,6 +258,7 @@
 				4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */,
 				4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */,
 				4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */,
+				4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */,
 			);
 			path = Sockets;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 				4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */,
 				4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
+				4CE07AE11F13C8790066007A /* GCDAsyncSocketTrustPanel.m in Sources */,
 				4CAC2A151F12C64500D06046 /* TLOTimer.m in Sources */,
 				4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */,
 				4C8C73001F121EF000ED72DB /* RCMProcessDelegate.m in Sources */,

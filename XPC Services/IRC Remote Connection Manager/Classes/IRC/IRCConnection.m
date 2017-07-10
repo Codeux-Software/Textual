@@ -235,7 +235,7 @@ ClassWithDesignatedInitializerInitMethod
 	[[self remoteObjectProxy] ircConnectionWillConnectToProxy:proxyHost port:proxyPort];
 }
 
-- (void)tcpClientDidConnectToHost:(nullable NSString *)host;
+- (void)tcpClientDidConnectToHost:(nullable NSString *)host
 {
 	[self clearSendQueue];
 
@@ -273,9 +273,9 @@ ClassWithDesignatedInitializerInitMethod
 	[[self remoteObjectProxy] ircConnectionDidReceiveData:data];
 }
 
-- (void)tcpClientDidReceivedAnInsecureCertificate
+- (void)tcpClientRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock
 {
-	[[self remoteObjectProxy] ircConnectionDidReceivedAnInsecureCertificate];
+	[[self remoteObjectProxy] ircConnectionRequestInsecureCertificateTrust:trustBlock];
 }
 
 - (void)tcpClientWillSendData:(NSData *)data

@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
-+ (BOOL)badSSLCertificateErrorFound:(NSError *)error
++ (BOOL)isBadSSLCertificateError:(NSError *)error
 {
 	NSParameterAssert(error != nil);
 

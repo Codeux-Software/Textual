@@ -78,7 +78,7 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(NSString * _Nullab
 - (void)ircConnectionDidError:(NSString *)error;
 - (void)ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError;
 - (void)ircConnectionDidReceiveData:(NSData *)data;
-- (void)ircConnectionDidReceivedAnInsecureCertificate;
+- (void)ircConnectionRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock;
 - (void)ircConnectionWillSendData:(NSData *)data;
 - (void)ircConnectionDidSendData;
 @end
