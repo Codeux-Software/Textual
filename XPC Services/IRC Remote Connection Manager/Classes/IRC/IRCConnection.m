@@ -93,6 +93,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)open
 {
+	LogToConsoleDebug("Opening connection...")
+
 	[self startFloodControlTimer];
 
 	[self openSocket];
@@ -100,15 +102,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)close
 {
+	LogToConsoleDebug("Closing connection...")
+
 	self.isSending = NO;
 
 	self.isFloodControlEnforced = NO;
 
-	self.floodControlCurrentMessageCount = 0;
-
-    @synchronized(self.sendQueue) {
-        [self.sendQueue removeAllObjects];
-    }
+	[self clearSendQueue];
 
 	[self stopFloodControlTimer];
 	
@@ -188,7 +188,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (removeFromQueue) {
         @synchronized(self.sendQueue) {
-            [self.sendQueue removeObjectAtIndex:0];
+			[self.sendQueue removeObject:data];
         }
 	}
 
@@ -199,6 +199,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)clearSendQueue
 {
+	LogToConsoleDebug("Clearing send queue")
+
     @synchronized(self.sendQueue) {
         [self.sendQueue removeAllObjects];
     }
