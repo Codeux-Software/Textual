@@ -77,8 +77,8 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (readonly, copy, nullable) NSString *proxyPassword;
 @property (readonly, copy, nullable) NSString *proxyUsername;
 @property (readonly, copy, nullable) NSData *identityClientSideCertificate;
-@property (readonly) NSStringEncoding primaryEncoding;
-@property (readonly) NSStringEncoding fallbackEncoding;
+@property (readonly) NSStringEncoding primaryEncoding NS_UNAVAILABLE;
+@property (readonly) NSStringEncoding fallbackEncoding NS_UNAVAILABLE;
 @end
 
 #pragma mark -
@@ -99,8 +99,8 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyPassword;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyUsername;
 @property (nonatomic, copy, readwrite, nullable) NSData *identityClientSideCertificate;
-@property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding;
-@property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding;
+@property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding NS_UNAVAILABLE;
+@property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding NS_UNAVAILABLE;
 @end
 
 NS_ASSUME_NONNULL_END

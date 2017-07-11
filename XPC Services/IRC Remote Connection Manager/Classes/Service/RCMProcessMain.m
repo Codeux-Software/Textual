@@ -102,7 +102,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self.connection sendData:data];
 }
 
-- (void)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock
+- (void)exportSecureConnectionInformation:(NS_NOESCAPE RCMSecureConnectionInformationCompletionBlock)completionBlock
 {
 	NSAssert((self.connection != nil),
 		 @"Method invoked without performing setup first");

@@ -151,7 +151,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	if ([url.relativePath hasPrefix:scriptsPath] == NO) {
 		if (outError) {
-			NSMutableDictionary<NSDictionary *, id> *userInfo = [NSMutableDictionary dictionary];
+			NSMutableDictionary<NSString *, id> *userInfo = [NSMutableDictionary dictionary];
 
 			userInfo[NSURLErrorKey] = url;
 

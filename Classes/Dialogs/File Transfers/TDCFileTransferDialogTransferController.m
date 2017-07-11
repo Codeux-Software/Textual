@@ -376,7 +376,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.transferStatus = TDCFileTransferDialogTransferConnectingStatus;
 
 	GCDAsyncSocket *connectionToRemoteServer =
-	[[GCDAsyncSocket alloc] initWithDelegate:self
+	[[GCDAsyncSocket alloc] initWithDelegate:(id)self
 							   delegateQueue:self.serverDispatchQueue
 								 socketQueue:self.serverSocketQueue];
 
@@ -437,7 +437,7 @@ ClassWithDesignatedInitializerInitMethod
 - (BOOL)tryToOpenConnectionAsServer
 {
 	GCDAsyncSocket *listeningServer =
-	[[GCDAsyncSocket alloc] initWithDelegate:self
+	[[GCDAsyncSocket alloc] initWithDelegate:(id)self
 							   delegateQueue:self.serverDispatchQueue
 								 socketQueue:self.serverSocketQueue];
 

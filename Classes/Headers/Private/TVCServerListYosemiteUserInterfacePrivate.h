@@ -37,7 +37,28 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol TVCServerListYosemiteScaledUserInterfaceProtocol;
+@protocol TVCServerListYosemiteScaledUserInterfaceProtocol <NSObject>
+@required
+
+@property (readonly, copy) NSFont *serverCellFont;
+@property (readonly, copy) NSFont *channelCellFont;
+
+@property (readonly) CGFloat serverCellRowHeight;
+@property (readonly) CGFloat channelCellRowHeight;
+
+/* Top constraint is used instead of Center Y to give us greater control. */
+@property (readonly) CGFloat serverCellTextTopOffset;
+@property (readonly) CGFloat channelCellTextTopOffset;
+
+@property (readonly, copy) NSFont *messageCountBadgeFont;
+
+@property (readonly) CGFloat messageCountBadgeMinimumWidth;
+@property (readonly) CGFloat messageCountBadgeHeight;
+@property (readonly) CGFloat messageCountBadgePadding;
+@property (readonly) CGFloat messageCountBadgeRightMargin;
+@property (readonly) CGFloat messageCountBadgeTopOffset;
+@property (readonly) CGFloat messageCountBadgeTextCenterYOffset;
+@end
 
 @interface TVCServerListYosemiteUserInterface : TVCServerListSharedUserInterface <TVCServerListYosemiteScaledUserInterfaceProtocol>
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
@@ -92,29 +113,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCServerListDarkYosemiteUserInterface : TVCServerListYosemiteUserInterface
-@end
-
-@protocol TVCServerListYosemiteScaledUserInterfaceProtocol <NSObject>
-@required
-
-@property (readonly, copy) NSFont *serverCellFont;
-@property (readonly, copy) NSFont *channelCellFont;
-
-@property (readonly) CGFloat serverCellRowHeight;
-@property (readonly) CGFloat channelCellRowHeight;
-
-/* Top constraint is used instead of Center Y to give us greater control. */
-@property (readonly) CGFloat serverCellTextTopOffset;
-@property (readonly) CGFloat channelCellTextTopOffset;
-
-@property (readonly, copy) NSFont *messageCountBadgeFont;
-
-@property (readonly) CGFloat messageCountBadgeMinimumWidth;
-@property (readonly) CGFloat messageCountBadgeHeight;
-@property (readonly) CGFloat messageCountBadgePadding;
-@property (readonly) CGFloat messageCountBadgeRightMargin;
-@property (readonly) CGFloat messageCountBadgeTopOffset;
-@property (readonly) CGFloat messageCountBadgeTextCenterYOffset;
 @end
 
 @interface TVCServerListYosemiteScaledUserInterface : NSObject <TVCServerListYosemiteScaledUserInterfaceProtocol>

@@ -37,6 +37,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-inferred-on-nested-type"
+
 int main(int argc, const char *argv[])
 {
 	RCMProcessDelegate *delegate = [RCMProcessDelegate new];
@@ -49,5 +52,7 @@ int main(int argc, const char *argv[])
 
 	return 0;
 }
+
+#pragma clang diagnostic pop
 
 NS_ASSUME_NONNULL_END

@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.maximumLineCount = 100;
 }
 
-- (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (^ _Nullable)(BOOL))completionBlock
+- (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(BOOL))completionBlock
 {
 	NSParameterAssert(path != nil);
 
@@ -151,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchEntriesForChannel:(NSString *)channelId
 					fetchLimit:(NSUInteger)fetchLimit
 				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
+		   withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
 {
 	NSParameterAssert(channelId != nil);
 	NSParameterAssert(completionBlock != nil);
@@ -352,7 +352,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)saveDataWithCompletionBlock:(void (^ _Nullable)(void))completionBlock
+- (void)saveDataWithCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(void))completionBlock
 {
 	if (self.isPerformingSave == NO) {
 		self.isPerformingSave = YES;

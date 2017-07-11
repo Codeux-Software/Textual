@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSArray<NSData *> *sslNegotiatedCertificatesData;
 @property (readonly, copy, nullable) NSString *sslNegotiatedCertificatePolicyName;
 
-+ (SecTrustRef)trustFromCertificateChain:(NSArray<NSData *> *)certificatecChain withPolicyName:(NSString *)policyName;
++ (SecTrustRef)trustFromCertificateChain:(NSArray<NSData *> *)certificatecChain withPolicyName:(NSString *)policyName CF_RETURNS_RETAINED;
 @end
 
 NS_ASSUME_NONNULL_END

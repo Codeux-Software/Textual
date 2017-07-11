@@ -39,10 +39,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^RCMSecureConnectionInformationCompletionBlock)(NSString * _Nullable policyName,
-															  SSLProtocol protocolVersion,
-															  SSLCipherSuite cipherSuites,
-															  NSArray<NSData *> *certificateChain);
+typedef void (^RCMSecureConnectionInformationCompletionBlock)(
+											  NSString * _Nullable policyName,
+											  SSLProtocol protocolVersion,
+											  SSLCipherSuite cipherSuites,
+											  NSArray<NSData *> *certificateChain);
 
 /* The server protocol is what the daemon responds to. */
 @protocol RCMConnectionManagerServerProtocol
@@ -55,7 +56,7 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(NSString * _Nullab
 - (void)sendData:(NSData *)data;
 - (void)sendData:(NSData *)data bypassQueue:(BOOL)bypassQueue;
 
-- (void)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock;
+- (void)exportSecureConnectionInformation:(NS_NOESCAPE RCMSecureConnectionInformationCompletionBlock)completionBlock;
 
 - (void)enforceFloodControl;
 
