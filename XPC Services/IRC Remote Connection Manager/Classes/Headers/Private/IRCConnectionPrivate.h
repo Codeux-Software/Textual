@@ -38,16 +38,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection : NSObject
-@property (nonatomic, copy, readwrite) IRCConnectionConfig *config;
-@property (nonatomic, assign, readwrite) BOOL isConnecting;
-@property (nonatomic, assign, readwrite) BOOL isConnected;
-@property (nonatomic, assign, readwrite) BOOL isSending;
-@property (nonatomic, assign, readwrite) BOOL isSecured;
-@property (nonatomic, assign, readwrite) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign, readwrite) BOOL isFloodControlEnforced;
-@property (nonatomic, assign, readwrite) BOOL EOFReceived;
-@property (nonatomic, strong, nullable) dispatch_queue_t dispatchQueue;
-@property (nonatomic, strong, nullable) dispatch_queue_t socketQueue;
+@property (nonatomic, copy) IRCConnectionConfig *config;
+@property (nonatomic, assign) BOOL isConnecting;
+@property (nonatomic, assign) BOOL isConnected;
+@property (nonatomic, assign) BOOL isSending;
+@property (nonatomic, assign) BOOL isSecured;
+@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
+@property (nonatomic, assign) BOOL isFloodControlEnforced;
+@property (nonatomic, assign) BOOL EOFReceived;
+@property (nonatomic, copy) NSString *uniqueIdentifier;
+@property (nonatomic, strong, nullable) dispatch_queue_t socketDelegateQueue;
+@property (nonatomic, strong, nullable) dispatch_queue_t socketReadWriteQueue;
+@property (nonatomic, strong, nullable) dispatch_queue_t workerQueue;
 @property (nonatomic, strong, nullable) GCDAsyncSocket *socketConnection;
 @property (nonatomic, copy, nullable) NSError *alternateDisconnectError;
 
