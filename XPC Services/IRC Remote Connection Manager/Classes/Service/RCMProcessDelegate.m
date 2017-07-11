@@ -39,6 +39,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation RCMProcessDelegate
 
+#pragma mark -
+#pragma mark Preferences
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	[self registerDefaults];
+}
+
+- (void)registerDefaults
+{
+	NSURL *defaultsFileURL =
+	[[NSBundle mainBundle] URLForResource:@"RegisteredUserDefaults" withExtension:@"plist"];
+
+	NSDictionary *defaults =
+	[NSDictionary dictionaryWithContentsOfURL:defaultsFileURL];
+
+	NSAssert((defaults != nil),
+			 @"Failed to load defaults");
+
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
+#pragma mark -
+#pragma mark XPC Delegate
+
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
 {
 	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(RCMConnectionManagerServerProtocol)];
