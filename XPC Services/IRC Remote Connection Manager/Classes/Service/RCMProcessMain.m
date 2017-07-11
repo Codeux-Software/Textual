@@ -53,17 +53,10 @@ ClassWithDesignatedInitializerInitMethod
 	if ((self = [super init])) {
 		self.serviceConnection = connection;
 
-		[self registerDefaults];
-
 		return self;
 	}
 
 	return nil;
-}
-
-- (void)prepareInitialState
-{
-	[self registerDefaults];
 }
 
 #pragma mark -
@@ -124,23 +117,6 @@ ClassWithDesignatedInitializerInitMethod
 		 @"Method invoked without performing setup first");
 
 	[self.connection clearSendQueue];
-}
-
-#pragma mark -
-#pragma mark Preferences
-
-- (void)registerDefaults
-{
-	NSURL *defaultsFileURL =
-	[[NSBundle mainBundle] URLForResource:@"RegisteredUserDefaults" withExtension:@"plist"];
-
-	NSDictionary *defaults =
-	[NSDictionary dictionaryWithContentsOfURL:defaultsFileURL];
-
-	NSAssert((defaults != nil),
-		 @"Failed to load defaults");
-
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 @end
