@@ -77,26 +77,26 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 #pragma mark -
 #pragma mark Grand Centeral Dispatch
 
-- (void)destroyDispatchQueue
+- (void)destroySocketDispatchQueue
 {
-	self.dispatchQueue = NULL;
+	self.socketDelegateQueue = NULL;
 
-	self.socketQueue = NULL;
+	self.socketReadWriteQueue = NULL;
 }
 
-- (void)createDispatchQueue
+- (void)createSocketDispatchQueue
 {
-	NSString *dispatchId = [NSString stringWithUUID];
+	NSString *socketDelegateQueueName =
+	[@"Textual.IRCConnection.socketDelegateQueue." stringByAppendingString:self.uniqueIdentifier];
 
-	NSString *dispatchQueueName = [@"Textual.IRCConnection.socketDispatchQueue." stringByAppendingString:dispatchId];
+	self.socketDelegateQueue =
+	XRCreateDispatchQueueWithPriority(socketDelegateQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 
-	self.dispatchQueue =
-	XRCreateDispatchQueueWithPriority(dispatchQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
+	NSString *socketReadWriteQueueName =
+	[@"Textual.IRCConnection.socketReadWriteQueue." stringByAppendingString:self.uniqueIdentifier];
 
-	NSString *socketQueueName = [@"Textual.IRCConnection.socketReadWriteQueue." stringByAppendingString:dispatchId];
-
-	self.socketQueue =
-	XRCreateDispatchQueueWithPriority(socketQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
+	self.socketReadWriteQueue =
+	XRCreateDispatchQueueWithPriority(socketReadWriteQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 }
 
 #pragma mark -
@@ -104,13 +104,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)openSocket
 {
-    [self createDispatchQueue];
+    [self createSocketDispatchQueue];
 	
 	self.isConnecting = YES;
 
 	self.socketConnection = [GCDAsyncSocket socketWithDelegate:self
-												 delegateQueue:self.dispatchQueue
-												   socketQueue:self.socketQueue];
+												 delegateQueue:self.socketDelegateQueue
+												   socketQueue:self.socketReadWriteQueue];
 
 //	self.socketConnection.autoDisconnectOnClosedReadStream = NO;
 
@@ -180,7 +180,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 {
 	self.socketConnection = nil;
 
-	[self destroyDispatchQueue];
+	[self destroySocketDispatchQueue];
 
 	self.alternateDisconnectError = nil;
 	

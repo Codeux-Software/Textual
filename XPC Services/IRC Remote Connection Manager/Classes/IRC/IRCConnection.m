@@ -78,6 +78,23 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.floodControlTimer.target = self;
 	self.floodControlTimer.action = @selector(onFloodControlTimer:);
+	self.floodControlTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+	self.uniqueIdentifier = [NSString stringWithUUID];
+}
+
+- (void)destroyWorkerDispatchQueue
+{
+	self.workerQueue = NULL;
+}
+
+- (void)createWorkerDispatchQueue
+{
+	NSString *workerQueueName =
+	[@"Textual.IRCConnection.workerQueue." stringByAppendingString:self.uniqueIdentifier];
+
+	self.workerQueue =
+	XRCreateDispatchQueueWithPriority(workerQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 }
 
 - (void)dealloc
@@ -93,7 +110,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)open
 {
-	LogToConsoleDebug("Opening connection...")
+	LogToConsoleDebug("Opening connection %@...", self.uniqueIdentifier)
+
+	[self createWorkerDispatchQueue];
 
 	[self startFloodControlTimer];
 
@@ -102,7 +121,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)close
 {
-	LogToConsoleDebug("Closing connection...")
+	LogToConsoleDebug("Closing connection %@...", self.uniqueIdentifier)
 
 	self.isSending = NO;
 
@@ -113,10 +132,13 @@ ClassWithDesignatedInitializerInitMethod
 	[self stopFloodControlTimer];
 	
 	[self closeSocket];
+
+	[self destroyWorkerDispatchQueue];
 }
 
 #pragma mark -
 #pragma mark Send Data
+
 
 - (BOOL)tryToSend
 {
@@ -124,11 +146,9 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
-    @synchronized(self.sendQueue) {
-        if (self.sendQueue.count == 0) {
-            return NO;
-        }
-    }
+	if ([self sendQueueCount] == 0) {
+		return NO;
+	}
 
 	if (self.isFloodControlEnforced) {
 		if (self.floodControlCurrentMessageCount >= self.config.floodControlMaximumMessages) {
@@ -145,11 +165,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)sendNextLine
 {
-    NSData *line = nil;
-    
-    @synchronized(self.sendQueue) {
-        line = self.sendQueue.firstObject;
-    }
+	NSData *line = [self nextEntryInSendQueue];
     
 	if (line == nil) {
 		return;
@@ -175,11 +191,9 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-    @synchronized(self.sendQueue) {
-        [self.sendQueue addObject:data];
-    }
+	[self addDataToSendQueue:data];
 
-	[self tryToSend];
+	(void)[self tryToSend];
 }
 
 - (void)_sendData:(NSData *)data removeFromQueue:(BOOL)removeFromQueue
@@ -187,9 +201,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(data != nil);
 
 	if (removeFromQueue) {
-        @synchronized(self.sendQueue) {
-			[self.sendQueue removeObject:data];
-        }
+		[self removeDataFromSendQueue:data];
 	}
 
 	[self writeDataToSocket:data];
@@ -197,13 +209,54 @@ ClassWithDesignatedInitializerInitMethod
 	[self tcpClientWillSendData:data];
 }
 
+
+- (NSUInteger)sendQueueCount
+{
+	__block NSUInteger sendQueueCount = 0;
+
+	XRPerformBlockSynchronouslyOnQueue(self.workerQueue, ^{
+		sendQueueCount = self.sendQueue.count;
+	});
+
+	return sendQueueCount;
+}
+
+- (nullable NSData *)nextEntryInSendQueue
+{
+	__block NSData *nextEntry = nil;
+
+	XRPerformBlockSynchronouslyOnQueue(self.workerQueue, ^{
+		nextEntry = self.sendQueue.firstObject;
+	});
+
+	return nextEntry;
+}
+
+- (void)addDataToSendQueue:(NSData *)data
+{
+	NSParameterAssert(data != nil);
+
+	XRPerformBlockSynchronouslyOnQueue(self.workerQueue, ^{
+		[self.sendQueue addObject:data];
+	});
+}
+
+- (void)removeDataFromSendQueue:(NSData *)data
+{
+	NSParameterAssert(data != nil);
+
+	XRPerformBlockSynchronouslyOnQueue(self.workerQueue, ^{
+		[self.sendQueue removeObject:data];
+	});
+}
+
 - (void)clearSendQueue
 {
-	LogToConsoleDebug("Clearing send queue")
+	LogToConsoleDebug("Clearing send queue on connection %@", self.uniqueIdentifier)
 
-    @synchronized(self.sendQueue) {
-        [self.sendQueue removeAllObjects];
-    }
+	XRPerformBlockSynchronouslyOnQueue(self.workerQueue, ^{
+		[self.sendQueue removeAllObjects];
+	});
 
 	self.floodControlCurrentMessageCount = 0;
 }
@@ -306,7 +359,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[[self remoteObjectProxy] ircConnectionDidSendData];
 	
-	[self tryToSend];
+	(void)[self tryToSend];
 }
 
 @end
