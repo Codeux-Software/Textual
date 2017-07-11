@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IRCConnection ()
 @property (nonatomic, strong) NSMutableArray<NSData *> *sendQueue;
 @property (nonatomic, strong) TLOTimer *floodControlTimer;
-@property (nonatomic, assign) NSUInteger floodControlCurrentMessageCount;
+@property (atomic, assign) NSUInteger floodControlCurrentMessageCount;
 @property (nonatomic, weak) NSXPCConnection *serviceConnection;
 @end
 
@@ -103,10 +103,13 @@ ClassWithDesignatedInitializerInitMethod
 	self.isSending = NO;
 
 	self.isFloodControlEnforced = NO;
+
 	self.floodControlCurrentMessageCount = 0;
 
-	[self.sendQueue removeAllObjects];
-	
+    @synchronized(self.sendQueue) {
+        [self.sendQueue removeAllObjects];
+    }
+
 	[self stopFloodControlTimer];
 	
 	[self closeSocket];
@@ -121,9 +124,11 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
-	if (self.sendQueue.count == 0) {
-		return NO;
-	}
+    @synchronized(self.sendQueue) {
+        if (self.sendQueue.count == 0) {
+            return NO;
+        }
+    }
 
 	if (self.isFloodControlEnforced) {
 		if (self.floodControlCurrentMessageCount >= self.config.floodControlMaximumMessages) {
@@ -140,8 +145,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)sendNextLine
 {
-	NSData *line = self.sendQueue.firstObject;
-
+    NSData *line = nil;
+    
+    @synchronized(self.sendQueue) {
+        line = self.sendQueue.firstObject;
+    }
+    
 	if (line == nil) {
 		return;
 	}
@@ -166,7 +175,9 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	[self.sendQueue addObject:data];
+    @synchronized(self.sendQueue) {
+        [self.sendQueue addObject:data];
+    }
 
 	[self tryToSend];
 }
@@ -176,7 +187,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(data != nil);
 
 	if (removeFromQueue) {
-		[self.sendQueue removeObjectAtIndex:0];
+        @synchronized(self.sendQueue) {
+            [self.sendQueue removeObjectAtIndex:0];
+        }
 	}
 
 	[self writeDataToSocket:data];
@@ -186,7 +199,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)clearSendQueue
 {
-	[self.sendQueue removeAllObjects];
+    @synchronized(self.sendQueue) {
+        [self.sendQueue removeAllObjects];
+    }
 
 	self.floodControlCurrentMessageCount = 0;
 }
