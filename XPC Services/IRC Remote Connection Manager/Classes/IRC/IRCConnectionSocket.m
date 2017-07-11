@@ -457,7 +457,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 #pragma mark -
 #pragma mark SSL Certificate Trust Message
 
-- (void)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock
+- (void)exportSecureConnectionInformation:(NS_NOESCAPE RCMSecureConnectionInformationCompletionBlock)completionBlock
 {
 	NSParameterAssert(completionBlock != nil);
 

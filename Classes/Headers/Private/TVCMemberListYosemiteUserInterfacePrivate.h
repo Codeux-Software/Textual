@@ -37,7 +37,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol TVCMemberListYosemiteScaledUserInterfaceProtocol;
+@protocol TVCMemberListYosemiteScaledUserInterfaceProtocol <NSObject>
+@required
+
+@property (readonly) CGFloat cellRowHeight;
+
+@property (readonly, copy) NSFont *cellTextFont;
+
+@property (readonly) CGFloat cellTextTopOffset;
+
+@property (readonly, copy) NSFont *userMarkBadgeFont;
+@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
+
+@property (readonly) CGFloat userMarkBadgeHeight;
+@property (readonly) CGFloat userMarkBadgeWidth;
+@property (readonly) CGFloat userMarkBadgeTopOffset;
+@end
 
 @interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface <TVCMemberListYosemiteScaledUserInterfaceProtocol>
 @property (readonly, copy) NSColor *normalCellTextColorForActiveWindow;
@@ -64,23 +79,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCMemberListDarkYosemiteUserInterface : TVCMemberListYosemiteUserInterface
-@end
-
-@protocol TVCMemberListYosemiteScaledUserInterfaceProtocol <NSObject>
-@required
-
-@property (readonly) CGFloat cellRowHeight;
-
-@property (readonly, copy) NSFont *cellTextFont;
-
-@property (readonly) CGFloat cellTextTopOffset;
-
-@property (readonly, copy) NSFont *userMarkBadgeFont;
-@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
-
-@property (readonly) CGFloat userMarkBadgeHeight;
-@property (readonly) CGFloat userMarkBadgeWidth;
-@property (readonly) CGFloat userMarkBadgeTopOffset;
 @end
 
 @interface TVCMemberListYosemiteScaledUserInterface : NSObject <TVCMemberListYosemiteScaledUserInterfaceProtocol>

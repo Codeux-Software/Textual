@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)writeDataToSocket:(NSData *)data;
 
-- (void)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock;
+- (void)exportSecureConnectionInformation:(NS_NOESCAPE RCMSecureConnectionInformationCompletionBlock)completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END
