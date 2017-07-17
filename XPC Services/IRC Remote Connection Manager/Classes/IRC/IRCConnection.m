@@ -97,14 +97,6 @@ ClassWithDesignatedInitializerInitMethod
 	XRCreateDispatchQueueWithPriority(workerQueueName.UTF8String, DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
 }
 
-- (void)dealloc
-{
-	[self.floodControlTimer stop];
-	 self.floodControlTimer = nil;
-
-	[self close];
-}
-
 #pragma mark -
 #pragma mark Open/Close Connection
 
@@ -123,7 +115,11 @@ ClassWithDesignatedInitializerInitMethod
 {
 	LogToConsoleDebug("Closing connection %@...", self.uniqueIdentifier)
 
-	self.isSending = NO;
+    if (self.isConnecting == NO && self.isConnected == NO) {
+        LogToConsoleError("Not connected")
+    }
+
+    self.isDisconnecting = YES;
 
 	self.isFloodControlEnforced = NO;
 
@@ -132,13 +128,10 @@ ClassWithDesignatedInitializerInitMethod
 	[self stopFloodControlTimer];
 	
 	[self closeSocket];
-
-	[self destroyWorkerDispatchQueue];
 }
 
 #pragma mark -
 #pragma mark Send Data
-
 
 - (BOOL)tryToSend
 {
@@ -184,6 +177,12 @@ ClassWithDesignatedInitializerInitMethod
 - (void)sendData:(NSData *)data bypassQueue:(BOOL)bypassQueue
 {
 	NSParameterAssert(data != nil);
+
+    if (self.isConnecting == NO && self.isConnected == NO) {
+        LogToConsoleError("Cannot send data while disconnected");
+
+        return;
+    }
 
 	if (bypassQueue) {
 		[self _sendData:data removeFromQueue:NO];
@@ -259,6 +258,8 @@ ClassWithDesignatedInitializerInitMethod
 	});
 
 	self.floodControlCurrentMessageCount = 0;
+
+    self.isSending = NO;
 }
 
 #pragma mark -
@@ -334,6 +335,10 @@ ClassWithDesignatedInitializerInitMethod
 - (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError
 {
 	[self clearSendQueue];
+
+    [self destroyWorkerDispatchQueue];
+
+    self.isDisconnecting = NO;
 
 	[[self remoteObjectProxy] ircConnectionDidDisconnectWithError:disconnectError];
 }

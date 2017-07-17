@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) IRCConnectionConfig *config;
 @property (nonatomic, assign) BOOL isConnecting;
 @property (nonatomic, assign) BOOL isConnected;
+@property (nonatomic, assign) BOOL isDisconnecting;
 @property (nonatomic, assign) BOOL isSending;
 @property (nonatomic, assign) BOOL isSecured;
 @property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
