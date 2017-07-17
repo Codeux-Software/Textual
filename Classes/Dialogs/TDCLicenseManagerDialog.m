@@ -172,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)unregisteredViewPurchaseTextual:(id)sender
 {
-	[menuController() openFastSpringStoreWebpage:nil];
+	[menuController() openStripetoreWebpage:nil];
 }
 
 - (void)unregisteredViewCancel:(id)sender

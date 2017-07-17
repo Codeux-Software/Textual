@@ -1567,7 +1567,7 @@ To continue using Textual, you will need to purchase it.</string>
                                             </buttonCell>
                                             <accessibility description="Purchase Textual"/>
                                             <connections>
-                                                <action selector="openFastSpringStoreWebpage:" target="oRw-Te-R5j" id="SM7-Vd-8YP"/>
+                                                <action selector="openStripeStoreWebpage:" target="oRw-Te-R5j" id="SM7-Vd-8YP"/>
                                             </connections>
                                         </button>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="be0-qc-Z4Y">
