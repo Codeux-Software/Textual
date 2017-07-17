@@ -444,7 +444,7 @@ present_fatal_error:
 
 - (void)contactSupport
 {
-	[TLOpenLink openWithString:@"mailto:support@codeux.com"];
+    [TLOpenLink openWithString:@"https://contact.codeux.com/"];
 }
 
 @end
