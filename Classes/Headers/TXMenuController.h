@@ -383,7 +383,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onNextHighlight:(id)sender;
 - (IBAction)onPreviousHighlight:(id)sender;
 
-- (IBAction)openFastSpringStoreWebpage:(id)sender;
+- (IBAction)openStripetoreWebpage:(id)sender;
 - (IBAction)openMacAppStoreWebpage:(id)sender;
 
 - (IBAction)openChannelLogs:(id)sender;

@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)manageLicense:(id)sender;
 
-- (IBAction)openFastSpringStoreWebpage:(id)sender;
+- (IBAction)openStripeStoreWebpage:(id)sender;
 - (IBAction)openMacAppStoreWebpage:(id)sender;
 @end
 

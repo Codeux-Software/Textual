@@ -3197,9 +3197,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store"];
 }
 
-- (void)openFastSpringStoreWebpage:(id)sender
+- (void)openStripetoreWebpage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/fastspring-store"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/stripe-store"];
 }
 
 - (void)performNavigationAction:(id)sender
@@ -3612,9 +3612,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXMenuControllerMainWindowProxy
 
-- (void)openFastSpringStoreWebpage:(id)sender
+- (void)openStripeStoreWebpage:(id)sender
 {
-	[menuController() openFastSpringStoreWebpage:sender];
+	[menuController() openStripetoreWebpage:sender];
 }
 
 - (void)openMacAppStoreWebpage:(id)sender
