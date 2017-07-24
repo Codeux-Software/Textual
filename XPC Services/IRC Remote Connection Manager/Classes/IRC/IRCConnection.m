@@ -130,6 +130,20 @@ ClassWithDesignatedInitializerInitMethod
 	[self closeSocket];
 }
 
+- (void)disconnectTeardown
+{
+    /* Method invoked when a disconnect occurs. */
+    self.isDisconnecting = YES;
+
+    self.isFloodControlEnforced = NO;
+
+    [self clearSendQueue];
+
+    [self stopFloodControlTimer];
+
+    [self destroyWorkerDispatchQueue];
+}
+
 #pragma mark -
 #pragma mark Send Data
 
@@ -334,11 +348,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError
 {
-	[self clearSendQueue];
-
-    [self destroyWorkerDispatchQueue];
-
-    self.isDisconnecting = NO;
+    [self disconnectTeardown];
 
 	[[self remoteObjectProxy] ircConnectionDidDisconnectWithError:disconnectError];
 }
