@@ -119,6 +119,16 @@ ClassWithDesignatedInitializerInitMethod
 	[self.connection clearSendQueue];
 }
 
+- (void)enableAppNap
+{
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(NO)}];
+}
+
+- (void)disableAppNap
+{
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(YES)}];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

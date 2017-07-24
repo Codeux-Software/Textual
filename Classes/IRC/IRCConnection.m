@@ -194,6 +194,10 @@ ClassWithDesignatedInitializerInitMethod
 	self.isConnecting = YES;
 
 	[[self remoteObjectProxy] openWithConfig:self.config];
+
+    if ([TPCPreferences appNapEnabled] == NO) {
+        [[self remoteObjectProxy] disableAppNap];
+    }
 }
 
 - (void)close
