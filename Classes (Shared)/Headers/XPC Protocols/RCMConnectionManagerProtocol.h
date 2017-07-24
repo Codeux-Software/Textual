@@ -60,6 +60,9 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(
 
 - (void)enforceFloodControl;
 
+- (void)enableAppNap;
+- (void)disableAppNap;
+
 - (void)clearSendQueue;
 @end
 
