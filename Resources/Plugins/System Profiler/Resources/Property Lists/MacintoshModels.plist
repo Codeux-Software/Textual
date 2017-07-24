@@ -20,6 +20,10 @@
 	<string>MacBook (Mid-2010)</string>
 	<key>MacBook8,1</key>
 	<string>MacBook (Early 2015)</string>
+	<key>MacBook9,1</key>
+	<string>MacBook (Early 2016)</string>
+	<key>MacBook10,1</key>
+	<string>MacBook (Mid-2017)</string>
 	<key>MacBookAir1,1</key>
 	<string>MacBook Air (Early 2008)</string>
 	<key>MacBookAir2,1</key>
@@ -98,6 +102,18 @@
 	<string>MacBook Pro (15-inch, Retina, Mid-2015)</string>
 	<key>MacBookPro12,1</key>
 	<string>MacBook Pro (13-inch, Retina, Early 2015)</string>
+	<key>MacBookPro13,1</key>
+	<string>MacBook Pro (13-inch, Retina, Late 2016)</string>
+	<key>MacBookPro13,2</key>
+	<string>MacBook Pro (13-inch, Retina, Touch Bar, Late 2016)</string>
+	<key>MacBookPro13,3</key>
+	<string>MacBook Pro (15-inch, Retina, Touch Bar, Late 2016)</string>
+	<key>MacBookPro14,1</key>
+	<string>MacBook Pro (13-inch, Retina, Mid-2017)</string>
+	<key>MacBookPro14,2</key>
+	<string>MacBook Pro (13-inch, Retina, Touch Bar, Mid-2017)</string>
+	<key>MacBookPro14,3</key>
+	<string>MacBook Pro (15-inch, Retina, Touch Bar, Mid-2017)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
@@ -168,6 +184,12 @@
 	<string>iMac (21.5-Inch, Late 2015)</string>
 	<key>iMac17,1</key>
 	<string>iMac (27-inch, Retina, Late 2015)</string>
+	<key>iMac18,1</key>
+	<string>iMac (21.5-Inch, Mid-2017)</string>
+	<key>iMac18,2</key>
+	<string>iMac (21.5-Inch, Retina, Mid-2017)</string>
+	<key>iMac18,3</key>
+	<string>iMac (27-inch, Retina, Mid-2017)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
