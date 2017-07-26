@@ -45,6 +45,9 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(
 											  SSLCipherSuite cipherSuites,
 											  NSArray<NSData *> *certificateChain);
 
+#pragma mark -
+#pragma mark Server Protocol
+
 /* The server protocol is what the daemon responds to. */
 @protocol RCMConnectionManagerServerProtocol
 @required
@@ -60,11 +63,20 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(
 
 - (void)enforceFloodControl;
 
+- (void)clearSendQueue;
+
+#pragma mark -
+#pragma mark Resource Usage
+
 - (void)enableAppNap;
 - (void)disableAppNap;
 
-- (void)clearSendQueue;
+- (void)enableSuddenTermination;
+- (void)disableSuddenTermination;
 @end
+
+#pragma mark -
+#pragma mark Client Protocol
 
 /* The client protocol is what Textual (the client) implements
  so that the daemon can communicate state with it. */
