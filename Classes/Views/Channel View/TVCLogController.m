@@ -537,10 +537,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (
 		/* 1 */ self.encrypted ||
-		/* 2 */ (firstTimeLoadingHistory && [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
+		/* 2 */ (firstTimeLoadingHistory &&
+				 [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
 		/* 3 */  self.associatedChannel == nil ||
 		/* 4 */  self.associatedChannel.isUtility ||
-		/* 5 */ (self.associatedChannel.isPrivateMessage &&
+		/* 5 */ (firstTimeLoadingHistory &&
+				 self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
 		self.historyLoadedForFirstTime = YES;
