@@ -8049,7 +8049,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL printMessage = YES;
 
-	if (numeric != 324 && numeric != 332) {
+	if (numeric != 324 &&
+		numeric != 332 &&
+		numeric != 333)
+	{
 		printMessage = [self postReceivedMessage:m];
 	}
 
@@ -8555,9 +8558,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturn([m paramsCount] > 3);
 
-			NSAssertReturn(printMessage);
-
 			NSString *channelName = [m paramAt:1];
+
+			IRCChannel *channel = [self findChannel:channelName];
+
+			if (channel == nil) {
+				break;
+			}
+
+			printMessage = [self postReceivedMessage:m withText:nil destinedFor:channel];
+
+			if (printMessage == NO) {
+				return;
+			}
+
 			NSString *topicSetter = [m paramAt:2];
 			NSString *setTime = [m paramAt:3];
 
@@ -8566,12 +8580,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSDate *setTimeDate = [NSDate dateWithTimeIntervalSince1970:setTime.doubleValue];
 
 			setTime = TXFormatDateLongStyle(setTimeDate, YES);
-
-			IRCChannel *channel = [self findChannel:channelName];
-
-			if (channel == nil) {
-				break;
-			}
 
 			NSString *message = TXTLS(@"IRC[1041]", topicSetter, setTime);
 

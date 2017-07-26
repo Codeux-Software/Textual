@@ -259,6 +259,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		else _commandMatchesEvent(@"TOPIC", TPI_ChatFilterChannelTopicChangedEventType)
 		else _commandMatchesEvent(@"MODE", TPI_ChatFilterChannelModeChangedEventType)
 		else _commandMatchesEvent(@"332", TPI_ChatFilterChannelTopicReceivedEventType)
+		else _commandMatchesEvent(@"333", TPI_ChatFilterChannelTopicReceivedEventType)
 		else _commandMatchesEvent(@"324", TPI_ChatFilterChannelModeReceivedEventType)
 		else
 		{
