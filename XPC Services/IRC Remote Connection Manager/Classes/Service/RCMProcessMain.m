@@ -129,6 +129,16 @@ ClassWithDesignatedInitializerInitMethod
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(YES)}];
 }
 
+- (void)enableSuddenTermination
+{
+	[[NSProcessInfo processInfo] enableSuddenTermination];
+}
+
+- (void)disableSuddenTermination
+{
+	[[NSProcessInfo processInfo] disableSuddenTermination];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

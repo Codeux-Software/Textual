@@ -198,6 +198,8 @@ ClassWithDesignatedInitializerInitMethod
     if ([TPCPreferences appNapEnabled] == NO) {
         [[self remoteObjectProxy] disableAppNap];
     }
+
+	[[self remoteObjectProxy] disableSuddenTermination];
 }
 
 - (void)close
