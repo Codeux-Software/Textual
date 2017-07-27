@@ -3554,11 +3554,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument
 {
-	_popWindowViewIfExists(@"TDCLicenseManagerDialog");
+	TDCLicenseManagerDialog *licensePanel = [windowController() windowFromWindowList:@"TDCLicenseManagerDialog"];
 
-	TDCLicenseManagerDialog *licensePanel = [TDCLicenseManagerDialog new];
+	BOOL isNewPanel = (licensePanel == nil);
 
-	licensePanel.delegate = (id)self;
+	if (isNewPanel) {
+		licensePanel = [TDCLicenseManagerDialog new];
+
+		licensePanel.delegate = (id)self;
+	}
 
 	[licensePanel show];
 
@@ -3568,7 +3572,9 @@ NS_ASSUME_NONNULL_BEGIN
 		[licensePanel activateLicenseKey:licenseKey];
 	}
 
-	[windowController() addWindowToWindowList:licensePanel];
+	if (isNewPanel) {
+		[windowController() addWindowToWindowList:licensePanel];
+	}
 }
 
 - (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
