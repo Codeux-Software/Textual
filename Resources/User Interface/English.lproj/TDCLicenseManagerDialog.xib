@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCLicenseManagerDialog">
@@ -69,7 +70,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIconYosemite" id="9c6-9f-bCg"/>
                     <accessibility description="Textual Logo"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uu0-L6-ebd">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uu0-L6-ebd">
                     <rect key="frame" x="109" y="268" width="317" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="To activate Textual, enter your license key below" id="6U9-rS-tAa">
                         <font key="font" metaFont="systemBold"/>
@@ -109,7 +110,7 @@
                         <outlet property="delegate" destination="-2" id="zgj-VN-7dM"/>
                     </connections>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c0t-Vn-Ofk">
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c0t-Vn-Ofk">
                     <rect key="frame" x="438" y="144" width="137" height="32"/>
                     <buttonCell key="cell" type="push" title="Activate Textual" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="THe-1N-yO3">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -123,7 +124,7 @@ DQ
                         <action selector="unregisteredViewActivateTextual:" target="-2" id="kRg-rx-FHU"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xG8-Rq-yMt">
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xG8-Rq-yMt">
                     <rect key="frame" x="356" y="144" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JkJ-96-lcW">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -137,11 +138,8 @@ Gw
                         <action selector="unregisteredViewCancel:" target="-2" id="bnG-2K-cqj"/>
                     </connections>
                 </button>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="20p-td-tPI">
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="20p-td-tPI">
                     <rect key="frame" x="-2" y="128" width="591" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
                 </box>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d73-PX-OkW">
                     <rect key="frame" x="13" y="144" width="177" height="32"/>
@@ -157,19 +155,16 @@ Gw
                         <action selector="unregisteredViewRecoveryLostLicense:" target="-2" id="3C7-JU-Wr0"/>
                     </connections>
                 </button>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="WHr-3v-nQP">
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="WHr-3v-nQP">
                     <rect key="frame" x="0.0" y="303" width="590" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
                 </box>
                 <box boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-61-R0Z">
                     <rect key="frame" x="-1" y="305" width="590" height="41"/>
-                    <view key="contentView">
+                    <view key="contentView" id="Y04-Ui-XYn">
                         <rect key="frame" x="0.0" y="0.0" width="590" height="41"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pho-XN-fdp">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pho-XN-fdp">
                                 <rect key="frame" x="14" y="11" width="248" height="19"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Your trial of Textual expires in %@" id="b62-vg-HHg">
                                     <font key="font" metaFont="system" size="16"/>
@@ -191,17 +186,17 @@ Gw
                         </subviews>
                     </view>
                     <constraints>
-                        <constraint firstItem="Pho-XN-fdp" firstAttribute="leading" secondItem="NPe-61-R0Z" secondAttribute="leading" constant="16" id="6kq-fQ-ov0"/>
-                        <constraint firstItem="Pho-XN-fdp" firstAttribute="centerY" secondItem="UK4-RN-UQO" secondAttribute="centerY" id="8Bg-lR-sBO"/>
-                        <constraint firstAttribute="trailing" secondItem="UK4-RN-UQO" secondAttribute="trailing" constant="16" id="UG0-RI-6sx"/>
-                        <constraint firstItem="Pho-XN-fdp" firstAttribute="centerY" secondItem="NPe-61-R0Z" secondAttribute="centerY" id="fFC-f9-4bX"/>
+                        <constraint firstAttribute="trailing" secondItem="UK4-RN-UQO" secondAttribute="trailing" constant="16" id="3jM-9g-0Bt"/>
+                        <constraint firstItem="Pho-XN-fdp" firstAttribute="centerY" secondItem="NPe-61-R0Z" secondAttribute="centerY" id="bqB-AJ-x5k"/>
+                        <constraint firstItem="Pho-XN-fdp" firstAttribute="centerY" secondItem="UK4-RN-UQO" secondAttribute="centerY" id="eH6-k4-3Nx"/>
+                        <constraint firstItem="Pho-XN-fdp" firstAttribute="leading" secondItem="NPe-61-R0Z" secondAttribute="leading" constant="16" id="rdC-hX-TsX"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.040000000000000001" colorSpace="calibratedWhite"/>
                 </box>
                 <box boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="gvB-hL-TZu">
                     <rect key="frame" x="0.0" y="0.0" width="590" height="131"/>
-                    <view key="contentView">
+                    <view key="contentView" id="kNO-08-Kd4">
                         <rect key="frame" x="0.0" y="0.0" width="590" height="131"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -223,7 +218,7 @@ Gw
                             </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LBa-p3-Krv">
                                 <rect key="frame" x="105" y="54" width="453" height="34"/>
-                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You can request a free license key if you already own Textual 5 or a newer version in the Mac App Store." id="QVB-9e-QPb">
+                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You can request a free license key if you already own Textual 7 or a newer version in the Mac App Store." id="QVB-9e-QPb">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -246,17 +241,17 @@ Gw
                         </subviews>
                     </view>
                     <constraints>
-                        <constraint firstItem="jg7-PN-SWb" firstAttribute="leading" secondItem="gvB-hL-TZu" secondAttribute="leading" constant="16" id="01b-Hu-AwJ"/>
-                        <constraint firstItem="Fil-u7-1Jf" firstAttribute="centerX" secondItem="gvB-hL-TZu" secondAttribute="centerX" id="FKg-4K-c5G"/>
-                        <constraint firstItem="Fil-u7-1Jf" firstAttribute="top" secondItem="LBa-p3-Krv" secondAttribute="bottom" constant="14" id="JOe-rO-xYs"/>
-                        <constraint firstAttribute="bottom" secondItem="Fil-u7-1Jf" secondAttribute="bottom" constant="19" id="MGl-sv-N0P"/>
-                        <constraint firstItem="jg7-PN-SWb" firstAttribute="top" secondItem="gvB-hL-TZu" secondAttribute="top" constant="18" id="NRW-at-ubk"/>
-                        <constraint firstAttribute="bottom" secondItem="jg7-PN-SWb" secondAttribute="bottom" constant="38" id="QPH-Rj-j2D"/>
-                        <constraint firstItem="x6V-ip-XZY" firstAttribute="leading" secondItem="jg7-PN-SWb" secondAttribute="trailing" constant="16" id="Tnr-FC-CU7"/>
-                        <constraint firstItem="jg7-PN-SWb" firstAttribute="top" secondItem="x6V-ip-XZY" secondAttribute="top" id="Ur9-ZK-omD"/>
-                        <constraint firstItem="LBa-p3-Krv" firstAttribute="top" secondItem="x6V-ip-XZY" secondAttribute="bottom" constant="8" symbolic="YES" id="dHy-mI-lZk"/>
-                        <constraint firstAttribute="trailing" secondItem="LBa-p3-Krv" secondAttribute="trailing" constant="34" id="gYi-yu-rZm"/>
-                        <constraint firstItem="x6V-ip-XZY" firstAttribute="leading" secondItem="LBa-p3-Krv" secondAttribute="leading" id="ju6-k3-cmX"/>
+                        <constraint firstAttribute="bottom" secondItem="Fil-u7-1Jf" secondAttribute="bottom" constant="19" id="5c5-ki-HMU"/>
+                        <constraint firstItem="x6V-ip-XZY" firstAttribute="leading" secondItem="LBa-p3-Krv" secondAttribute="leading" id="62f-c0-Fc8"/>
+                        <constraint firstItem="x6V-ip-XZY" firstAttribute="leading" secondItem="jg7-PN-SWb" secondAttribute="trailing" constant="16" id="NvY-3q-sG6"/>
+                        <constraint firstItem="Fil-u7-1Jf" firstAttribute="top" secondItem="LBa-p3-Krv" secondAttribute="bottom" constant="14" id="OvJ-sO-527"/>
+                        <constraint firstItem="Fil-u7-1Jf" firstAttribute="centerX" secondItem="gvB-hL-TZu" secondAttribute="centerX" id="XkE-Wd-GJe"/>
+                        <constraint firstItem="jg7-PN-SWb" firstAttribute="top" secondItem="gvB-hL-TZu" secondAttribute="top" constant="18" id="goN-ED-mBV"/>
+                        <constraint firstItem="jg7-PN-SWb" firstAttribute="top" secondItem="x6V-ip-XZY" secondAttribute="top" id="qBW-QX-lr9"/>
+                        <constraint firstAttribute="bottom" secondItem="jg7-PN-SWb" secondAttribute="bottom" constant="38" id="qmF-j6-rec"/>
+                        <constraint firstItem="LBa-p3-Krv" firstAttribute="top" secondItem="x6V-ip-XZY" secondAttribute="bottom" constant="8" symbolic="YES" id="uOi-oU-frx"/>
+                        <constraint firstItem="jg7-PN-SWb" firstAttribute="leading" secondItem="gvB-hL-TZu" secondAttribute="leading" constant="16" id="wlr-5r-uAu"/>
+                        <constraint firstAttribute="trailing" secondItem="LBa-p3-Krv" secondAttribute="trailing" constant="34" id="z7k-t1-tic"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -301,15 +296,12 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="548" height="199"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Tjp-KZ-IkI">
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Tjp-KZ-IkI">
                     <rect key="frame" x="0.0" y="51" width="548" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
                 </box>
                 <box boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="3oo-eQ-fra">
                     <rect key="frame" x="0.0" y="0.0" width="548" height="53"/>
-                    <view key="contentView">
+                    <view key="contentView" id="zKM-uE-oT6">
                         <rect key="frame" x="0.0" y="0.0" width="548" height="53"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -329,14 +321,14 @@ Gw
                         </subviews>
                     </view>
                     <constraints>
-                        <constraint firstItem="o0O-rL-T0z" firstAttribute="centerX" secondItem="3oo-eQ-fra" secondAttribute="centerX" id="24o-iH-XlJ"/>
-                        <constraint firstItem="o0O-rL-T0z" firstAttribute="top" secondItem="3oo-eQ-fra" secondAttribute="top" constant="16" id="3Bs-Pk-62s"/>
-                        <constraint firstAttribute="bottom" secondItem="o0O-rL-T0z" secondAttribute="bottom" constant="16" id="WdC-ny-XxJ"/>
+                        <constraint firstItem="o0O-rL-T0z" firstAttribute="centerX" secondItem="3oo-eQ-fra" secondAttribute="centerX" id="3WG-7N-TQT"/>
+                        <constraint firstItem="o0O-rL-T0z" firstAttribute="top" secondItem="3oo-eQ-fra" secondAttribute="top" constant="16" id="FSS-O9-oyH"/>
+                        <constraint firstAttribute="bottom" secondItem="o0O-rL-T0z" secondAttribute="bottom" constant="16" id="fmb-ZL-eth"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0241231274" colorSpace="calibratedWhite"/>
                 </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-Tb-DrN">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-Tb-DrN">
                     <rect key="frame" x="80" y="155" width="388" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Thank you for your purchase of Textual!" id="VEa-9u-paw">
                         <font key="font" metaFont="systemBold" size="20"/>
