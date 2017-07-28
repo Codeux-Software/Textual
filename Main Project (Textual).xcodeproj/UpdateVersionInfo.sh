@@ -29,7 +29,7 @@ else
 	if [[ "${GCC_PREPROCESSOR_DEFINITIONS}" == *"TEXTUAL_BUILT_INSIDE_SANDBOX=1"* ]]; then
 		# While we are here, check to make sure that the user
 		# performed the necessary configuration changes
-		if [ "${TEXTUAL_BUNDLE_IDENTIFIER}" != "com.codeux.irc.textual5" ] || [ "${TEXTUAL_GROUP_CONTAINER_IDENTIFIER}" != "8482Q6EPL6.com.codeux.irc.textual" ]; then
+		if [ "${TEXTUAL_BUNDLE_IDENTIFIER}" != "com.codeux.apps.textual-mas" ] || [ "${TEXTUAL_GROUP_CONTAINER_IDENTIFIER}" != "8482Q6EPL6.com.codeux.irc.textual" ]; then
 			echo "Before changing TEXTUAL_BULIT_INSIDE_SANDBOX to 1, make the changes noted in the comments of the configuration file.";
 
 			exit 1;

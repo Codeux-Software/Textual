@@ -20,22 +20,6 @@
 			<key>pathType</key>
 			<string>file-propertyList</string>
 		</dict>
-		<dict>
-			<key>createSourceIfMissing</key>
-			<false/>
-			<key>hideOriginalOnMigration</key>
-			<false/>
-			<key>lockSource</key>
-			<false/>
-			<key>replaceSource</key>
-			<false/>
-			<key>destinationPath</key>
-			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
-			<key>sourcePath</key>
-			<string>~/Library/Containers/com.codeux.irc.textual5/Data/Library/Preferences/com.codeux.irc.textual5.plist</string>
-			<key>pathType</key>
-			<string>file-propertyList</string>
-		</dict>
 	</array>
 	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
 	<dict>

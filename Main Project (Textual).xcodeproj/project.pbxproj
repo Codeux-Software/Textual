@@ -6959,7 +6959,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE_SPECIFIER = "Development: com.codeux.irc.textual5";
+				PROVISIONING_PROFILE_SPECIFIER = "Development: com.codeux.apps.textual-mas";
 			};
 			name = "Release (App Store)";
 		};
@@ -7036,7 +7036,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
-				PRODUCT_NAME = Textual;
+				PRODUCT_NAME = "Textual 7";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				WRAPPER_EXTENSION = app;
