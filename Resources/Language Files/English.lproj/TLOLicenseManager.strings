@@ -63,7 +63,7 @@
 "TLOLicenseManager[1008]" = "Select a copy of Textual downloaded from the Mac App Store to receive a free license key.";
 
 "TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key";
-"TLOLicenseManager[1009][2]" = "This application is not Textual 5 or a newer version, or was not downloaded from the Mac App Store.";
+"TLOLicenseManager[1009][2]" = "This application is not Textual 7 or a newer version, or was not downloaded from the Mac App Store.";
 
 "TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase";
 "TLOLicenseManager[1010][2]" = "An e-mail which contains your license key will be delivered to %@ in the next few minutes.";

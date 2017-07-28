@@ -175,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([self canUseApplicationAtURL:applicationURL applicationName:NULL]) {
 			matchedApplication = applicationURL;
 
-			LogToConsoleInfo("Automatically detected Mac App Store Textual 5 at the following path: %{public}@",
+			LogToConsoleInfo("Automatically detected Mac App Store Textual 7 at the following path: %{public}@",
 					matchedApplication.path)
 
 			break;
