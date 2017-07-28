@@ -44,7 +44,7 @@ typedef NS_ENUM(NSUInteger, TLOLicenseManagerDownloaderRequestType) {
 	TLOLicenseManagerDownloaderRequestUpgradeEligibilityType
 };
 
-typedef BOOL (^TLOLicenseManagerDownloaderActionBlock)(id _Nullable statusContext);
+typedef BOOL (^TLOLicenseManagerDownloaderActionBlock)(NSUInteger statusCode, id _Nullable statusContext);
 typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
 
 @interface TLOLicenseManagerDownloader : NSObject
