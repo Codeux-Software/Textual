@@ -18,7 +18,7 @@
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
     * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
-      names of its contributors may be used to endorse or promote products 
+      names of its contributors may be usedr promote products
       derived from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
@@ -41,11 +41,12 @@ typedef NS_ENUM(NSUInteger, TLOLicenseManagerDownloaderRequestType) {
 	TLOLicenseManagerDownloaderRequestActivationType,
 	TLOLicenseManagerDownloaderRequestMigrateAppStoreType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
-	TLOLicenseManagerDownloaderRequestUpgradeEligibilityType
+	TLOLicenseManagerDownloaderRequestLicenseUpgradeEligibilityType,
+	TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType
 };
 
 typedef BOOL (^TLOLicenseManagerDownloaderActionBlock)(NSUInteger statusCode, id _Nullable statusContext);
-typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
+typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful, NSUInteger statusCode, id _Nullable statusContext);
 
 @interface TLOLicenseManagerDownloader : NSObject
 @property (nonatomic, copy, nullable) TLOLicenseManagerDownloaderActionBlock actionBlock;
@@ -58,6 +59,7 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful
 - (void)deactivateLicense;
 
 - (void)checkUpgradeEligibilityOfLicense:(NSString *)licenseKey;
+- (void)checkUpgradeEligibilityOfReceipt:(NSString *)receiptData;
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 
