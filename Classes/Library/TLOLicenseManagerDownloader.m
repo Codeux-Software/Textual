@@ -300,9 +300,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 												   alternateButton:nil];
 				}
 			}
-			else if ((requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType && statusCodeInt == TLOLicenseManagerDownloaderRequestStatusCodeSuccess) ||
-					 (requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType && statusCodeInt == 6700001) ||
-					 (requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType && statusCodeInt == 6700002))
+			else if (requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType && statusCodeInt == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
