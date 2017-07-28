@@ -3243,7 +3243,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Present list of features */
 			else if (NSObjectsAreEqual(action, @"features"))
 			{
-				[TLOpenLink openWithString:@"https://help.codeux.com/textual/Command-Reference.kb#cr=defaults"];
+				[TLOpenLink openWithString:@"https://help.codeux.com/textual/Command-Reference.kb#cr=defaults" inBackground:NO];
 
 				break;
 			}

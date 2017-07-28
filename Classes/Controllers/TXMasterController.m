@@ -260,7 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
 								{
 									[TPCPreferences setCollectAnonymousStatistics:NO];
 
-									[TLOpenLink openWithString:@"https://www.hockeyapp.net/features/user-metrics/"];
+									[TLOpenLink openWithString:@"https://www.hockeyapp.net/features/user-metrics/" inBackground:NO];
 								}
 
 								[self hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:NO];

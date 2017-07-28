@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)open:(NSURL *)url inBackground:(BOOL)inBackground;
 
 + (void)openWithString:(NSString *)url;
++ (void)openWithString:(NSString *)url inBackground:(BOOL)inBackground;
 @end
 
 NS_ASSUME_NONNULL_END
