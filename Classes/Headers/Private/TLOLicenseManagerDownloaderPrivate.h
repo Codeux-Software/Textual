@@ -37,22 +37,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 typedef NS_ENUM(NSUInteger, TLOLicenseManagerDownloaderRequestType) {
 	TLOLicenseManagerDownloaderRequestActivationType,
 	TLOLicenseManagerDownloaderRequestMigrateAppStoreType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
+	TLOLicenseManagerDownloaderRequestUpgradeEligibilityType
 };
 
+typedef BOOL (^TLOLicenseManagerDownloaderActionBlock)(id _Nullable statusContext);
 typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
 
 @interface TLOLicenseManagerDownloader : NSObject
+@property (nonatomic, copy, nullable) TLOLicenseManagerDownloaderActionBlock actionBlock;
 @property (nonatomic, copy, nullable) TLOLicenseManagerDownloaderCompletionBlock completionBlock;
+@property (nonatomic, assign) BOOL isSilentOnFailure;
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
 
 - (void)activateLicense:(NSString *)licenseKey;
 
 - (void)deactivateLicense;
+
+- (void)checkUpgradeEligibilityOfLicense:(NSString *)licenseKey;
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 
@@ -60,6 +65,5 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful
 				  licenseOwnerName:(NSString *)licenseOwnerName
 		licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
 @end
-#endif
 
 NS_ASSUME_NONNULL_END

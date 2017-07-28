@@ -240,6 +240,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
+	self.licenseManagerDownloader.actionBlock = ^BOOL(id _Nullable statusContext) {
+		return TLOLicenseManagerUserLicenseWriteFileContents(statusContext);
+	};
+
 	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
@@ -311,6 +315,10 @@ NS_ASSUME_NONNULL_BEGIN
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	self.licenseManagerDownloader.actionBlock = ^BOOL(id _Nullable statusContext) {
+		return TLOLicenseManagerDeleteUserLicenseFile();
+	};
 
 	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];

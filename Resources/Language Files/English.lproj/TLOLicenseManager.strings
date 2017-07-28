@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1018 */
+/* Next unusued key: 1021 */
 
 "TLOLicenseManager[1001][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
 "TLOLicenseManager[1001][2]" = "Try again in a few minutes then contact support if the problem persists.";
@@ -46,13 +46,13 @@
 "TLOLicenseManager[1002][3]" = "Contact Support";
 
 "TLOLicenseManager[1003][1]" = "The following error was returned while processing request:";
-"TLOLicenseManager[1003][2]" = "Improperly formatted e-mail address";
+"TLOLicenseManager[1003][2]" = "Improperly formatted e-mail address or missing";
 
 "TLOLicenseManager[1004][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1004][2]" = "Unknown or improperly formatted license key";
 
 "TLOLicenseManager[1005][1]" = "Successfully queued e-mail for %@";
-"TLOLicenseManager[1005][2]" = "An e-mail which contains your license key will be delivered to %@ in the next few minutes.";
+"TLOLicenseManager[1005][2]" = "An e-mail which contains your license key will be delivered to %@ within the next few minutes.";
 
 "TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual!";
 "TLOLicenseManager[1006][2]" = "All limitations have been lifted.";
@@ -72,7 +72,7 @@
 "TLOLicenseManager[1011][2]" = "Click the “Recover Lost License” button if you have lost your license key.";
 
 "TLOLicenseManager[1012][1]" = "The following error was returned while processing request:";
-"TLOLicenseManager[1012][2]" = "Improperly formatted e-mail address";
+"TLOLicenseManager[1012][2]" = "Improperly formatted e-mail address or is missing";
 
 "TLOLicenseManager[1013][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1013][2]" = "Unable to locate an order that is linked to the e-mail address “%@“";
@@ -85,3 +85,12 @@
 
 "TLOLicenseManager[1017][2]" = "Please purchase Textual to prevent disruption to your chat experience.";
 "TLOLicenseManager[1017][3]" = "More Info";
+
+"TLOLicenseManager[1018][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1018][2]" = "Improperly formatted name or is missing";
+
+"TLOLicenseManager[1019][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1019][2]" = "Receipt could not validated because of the following error:\n\n“%@“";
+
+"TLOLicenseManager[1020][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1020][2]" = "Unknown or improperly formatted license key";
