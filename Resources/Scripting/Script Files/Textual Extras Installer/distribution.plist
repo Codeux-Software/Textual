@@ -6,7 +6,7 @@
     
     <welcome file="Welcome.rtf"/>
     
-    <options customize="allow" require-scripts="false"/>
+    <options customize="always" require-scripts="false"/>
    
     <volume-check>
         <allowed-os-versions>
@@ -72,6 +72,25 @@
     <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-BlowfishEncryption" version="1.0.9">#Extension-BlowfishEncryption.pkg</pkg-ref>
     <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-Caffeine" version="1.0.4">#Extension-Caffeine.pkg</pkg-ref>
     <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-WikiStyleLinkParser" version="1.0.4">#Extension-WikiStyleLinkParser.pkg</pkg-ref>
+
+    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-BlowfishEncryption">
+        <must-close>
+	        <app id="com.codeux.apps.textual"/>
+	        <app id="com.codeux.apps.textual-mas"/>
+        </must-close>
+    </pkg-ref>
+    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-Caffeine">
+        <must-close>
+	        <app id="com.codeux.apps.textual"/>
+	        <app id="com.codeux.apps.textual-mas"/>
+        </must-close>
+    </pkg-ref>
+    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-WikiStyleLinkParser">
+        <must-close>
+	        <app id="com.codeux.apps.textual"/>
+	        <app id="com.codeux.apps.textual-mas"/>
+        </must-close>
+    </pkg-ref>
 
 <!--
     <pkg-ref id="de.incnet.TXTunes-installer" version="1.0.0">#de.incnet.TXTunes.pkg</pkg-ref>
