@@ -1262,6 +1262,9 @@
 		4CAC2A281F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; };
 		4CAC2A291F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; };
 		4CAC2A2A1F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; };
+		4CAC9D7B1F2B076100AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
+		4CAC9D831F2B076400AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
+		4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C711F2AF38E0017D3B7 /* Textual-Extras-MAS.pkg */; };
 		4CB17EBC1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB17EBA1D125B3700FAEAD4 /* IRCHighlightLogEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB17EBD1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB17EBA1D125B3700FAEAD4 /* IRCHighlightLogEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB17EBE1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB17EBA1D125B3700FAEAD4 /* IRCHighlightLogEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -5376,6 +5379,7 @@
 				4CCFA6661ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F321AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
 				4C0BA5041990798800857343 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
+				4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */,
 				4C0BA5051990798800857343 /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4C0BA5061990798800857343 /* DIGreenBadgeLeftMavericks.png in Resources */,
 				4CF40F661AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */,
@@ -5535,6 +5539,7 @@
 				4C46F45B1943A654004CA8BA /* FormattingColor_10.png in Resources */,
 				4CBC76DC1CC72B5100484A13 /* TVCMainWindow.strings in Resources */,
 				4CCFA6841ABCF36A0083620F /* TPWTB_Interface@2x.png in Resources */,
+				4CAC9D7B1F2B076100AD5F12 /* Textual-Extras.pkg in Resources */,
 				4CCFA6681ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F341AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
 				4CB229261978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
@@ -5700,6 +5705,7 @@
 				4CBC76C31CC72B5100484A13 /* TDCAboutDialog.strings in Resources */,
 				4CCFA6671ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F331AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
+				4CAC9D831F2B076400AD5F12 /* Textual-Extras.pkg in Resources */,
 				4CB229271978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
 				4C46F47A1943A654004CA8BA /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CC164B11943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */,
