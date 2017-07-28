@@ -332,9 +332,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	for (NSRunningApplication *application in RZWorkspace().runningApplications) {
 		if ([application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual-mas"] ||
 			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5.trial"])
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"])
 		{
 			if ([application.bundleIdentifier isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
 				if (foundOneMatchForSelf == NO) {

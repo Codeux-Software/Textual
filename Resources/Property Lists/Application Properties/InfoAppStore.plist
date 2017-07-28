@@ -93,12 +93,12 @@
 	</array>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>iCloud.com.codeux.irc.textual5</key>
+		<key>iCloud.com.codeux.apps.textual-mas</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
 			<key>NSUbiquitousContainerName</key>
-			<string>Textual IRC Client</string>
+			<string>${PRODUCT_NAME}</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
 		</dict>

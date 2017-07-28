@@ -2,7 +2,7 @@
 If you are using a copy of Textual downloaded through the Mac
 App Store, then custom scripts can be installed in the folder:
 
-"~/Library/Application Scripts/com.codeux.irc.textual5/"
+"~/Library/Application Scripts/com.codeux.apps.textual-mas/"
 
 Otherwise, custom scripts can be installed in the folder:
 
