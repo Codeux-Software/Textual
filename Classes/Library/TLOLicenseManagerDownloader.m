@@ -41,7 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://textual-license-key-backend.codeux.com/activateLicense.cs";
 NSString * const TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL				= @"https://textual-license-key-backend.codeux.com/convertReceiptToLicense.cs";
 NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://textual-license-key-backend.codeux.com/sendLostLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIUpgradeEligibilityURL				= @"https://textual-license-key-backend.codeux.com/upgradeEligibility.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPILicenseUpgradeEligibilityURL		= @"https://textual-license-key-backend.codeux.com/upgradeEligibility.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIReceiptUpgradeEligibilityURL		= @"https://textual-license-key-backend.codeux.com/upgradeEligibilityForReceipt.cs";
 
 /* The license API throttles requests to prevent abuse. The following HTTP status 
  code will inform Textual if it the license API has been overwhelmed. */
@@ -99,7 +100,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 	BOOL operationResult = self.actionBlock(TLOLicenseManagerDownloaderRequestStatusCodeSuccess, nil);
 
 	if (self.completionBlock) {
-		self.completionBlock(operationResult);
+		self.completionBlock(operationResult, TLOLicenseManagerDownloaderRequestStatusCodeSuccess, nil);
 	}
 }
 
@@ -109,7 +110,24 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 
 	NSDictionary *contextInfo = @{@"licenseKey" : licenseKey};
 
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestUpgradeEligibilityType
+	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestLicenseUpgradeEligibilityType
+								context:contextInfo];
+}
+
+- (void)checkUpgradeEligibilityOfReceipt:(NSString *)receiptData
+{
+	NSParameterAssert(receiptData != nil);
+
+	NSString *macAddress = [XRSystemInformation formattedEthernetMacAddress];
+
+	NSParameterAssert(macAddress != nil);
+
+	NSDictionary *contextInfo = @{
+		@"receiptData" : receiptData,
+		@"licenseOwnerMacAddress" : macAddress
+    };
+
+	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType
 								context:contextInfo];
 }
 
@@ -181,7 +199,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 
 #define _performCompletionBlockAndReturn(operationResult) \
 	if (self.completionBlock) { 	\
-		self.completionBlock((operationResult)); 	\
+		self.completionBlock((operationResult), (statusCode), (statusContext)); 	\
 	} 	\
 		\
 	return;
@@ -205,23 +223,27 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 	}
 
 	/* Process resulting property list (if it was successful) */
+	NSUInteger statusCode = TLOLicenseManagerDownloaderRequestStatusCodeGenericError;
+
+	id statusContext = nil;
+
 	if (propertyList) {
-		id statusCode = propertyList[@"Status Code"];
+		id l_statusCode = propertyList[@"Status Code"];
 
-		id statusContext = propertyList[@"Status Context"];
-
-		if (statusCode == nil || [statusCode isKindOfClass:[NSNumber class]] == NO) {
+		if (l_statusCode == nil || [l_statusCode isKindOfClass:[NSNumber class]] == NO) {
 			LogToConsoleError("'Status Code' is nil or not of kind 'NSNumber'")
 
 			goto present_fatal_error;
 		}
 
-		NSUInteger statusCodeInt = [statusCode unsignedIntegerValue];
+		statusCode = [l_statusCode unsignedIntegerValue];
+
+		statusContext = propertyList[@"Status Context"];
 
 		if (requestHttpStatusCode == TLOLicenseManagerDownloaderRequestHTTPStatusSuccess)
 		{
 			/* Process successful results */
-			if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCodeInt == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSData class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSData'")
@@ -229,7 +251,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 					goto present_fatal_error;
 				}
 
-				if (self.actionBlock(statusCodeInt, statusContext) == NO) {
+				if (self.actionBlock(statusCode, statusContext) == NO) {
 					LogToConsoleError("Failed to write user license file contents")
 
 					goto present_fatal_error;
@@ -242,7 +264,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 												   alternateButton:nil];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCodeInt == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
@@ -250,7 +272,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 					goto present_fatal_error;
 				}
 
-				if (self.actionBlock != nil && self.actionBlock(statusCodeInt, statusContext) == NO) {
+				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
 					LogToConsoleError("Action blocked returned error")
 
 					goto present_fatal_error;
@@ -271,7 +293,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 												   alternateButton:nil];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCodeInt == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
@@ -279,7 +301,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 					goto present_fatal_error;
 				}
 
-				if (self.actionBlock != nil && self.actionBlock(statusCodeInt, statusContext) == NO) {
+				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
 					LogToConsoleError("Action blocked returned error")
 
 					goto present_fatal_error;
@@ -300,7 +322,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 												   alternateButton:nil];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType && statusCodeInt == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestLicenseUpgradeEligibilityType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
@@ -309,7 +331,19 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 				}
 
 				if (self.actionBlock != nil) {
-					(void)self.actionBlock(statusCodeInt, statusContext);
+					(void)self.actionBlock(statusCode, statusContext);
+				}
+			}
+			else if (requestType == TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			{
+				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
+
+					goto present_fatal_error;
+				}
+
+				if (self.actionBlock != nil) {
+					(void)self.actionBlock(statusCode, statusContext);
 				}
 			}
 
@@ -322,14 +356,14 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 			}
 
 			/* Errors related to license activation. */
-			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCodeInt == 6500000)
+			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500000)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1004][2]")
 														 title:TXTLS(@"TLOLicenseManager[1004][1]")
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCodeInt == 6500001)
+			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500001)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
@@ -354,7 +388,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 					[self contactSupport];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCodeInt == 6500002)
+			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500002)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
@@ -379,14 +413,14 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 			}
 
 			/* Errors related to lost license recovery. */
-			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCodeInt == 6400000)
+			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == 6400000)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1003][2]")
 														 title:TXTLS(@"TLOLicenseManager[1003][1]")
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCodeInt == 6400001)
+			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == 6400001)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
@@ -409,14 +443,14 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 			}
 
 			/* Error messages related to Mac App Store migration. */
-			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCodeInt == 6600002)
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600002)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1012][2]")
 														 title:TXTLS(@"TLOLicenseManager[1012][1]")
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCodeInt == 6600003)
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600003)
 			{
 				/* We do not present a custom dialog for this error, but we still log
 				 the contents of the context to the console to help diagnose issues. */
@@ -441,26 +475,17 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCodeInt == 6600004)
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600004)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1011][2]")
 														 title:TXTLS(@"TLOLicenseManager[1011][1]")
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCodeInt == 6600006)
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600006)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1018][2]")
 														 title:TXTLS(@"TLOLicenseManager[1018][1]")
-												 defaultButton:TXTLS(@"Prompts[0005]")
-											   alternateButton:nil];
-			}
-
-			/* Errors related to license eligiblity */
-			else if (requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType && statusCodeInt == 6700000)
-			{
-				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1020][2]")
-														 title:TXTLS(@"TLOLicenseManager[1020][1]")
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
@@ -513,8 +538,10 @@ present_fatal_error:
 		requestURLString = TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL;
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType) {
 		requestURLString = TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL;
-	} else if (self.requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType) {
-		requestURLString = TLOLicenseManagerDownloaderLicenseAPIUpgradeEligibilityURL;
+	} else if (self.requestType == TLOLicenseManagerDownloaderRequestLicenseUpgradeEligibilityType) {
+		requestURLString = TLOLicenseManagerDownloaderLicenseAPILicenseUpgradeEligibilityURL;
+	} else if (self.requestType == TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType) {
+		requestURLString = TLOLicenseManagerDownloaderLicenseAPIReceiptUpgradeEligibilityURL;
 	}
 
 	return [NSURL URLWithString:requestURLString];
@@ -568,12 +595,20 @@ present_fatal_error:
 		[NSString stringWithFormat:@"receiptData=%@&licenseOwnerMacAddress=%@&licenseOwnerContactAddress=%@&licenseOwnerName=%@&lang=%@&version=%@",
 				receiptData, licenseOwnerMacAddress, licenseOwnerContactAddress, licenseOwnerName, currentUserLanguage];
 	}
-	else if (self.requestType == TLOLicenseManagerDownloaderRequestUpgradeEligibilityType)
+	else if (self.requestType == TLOLicenseManagerDownloaderRequestLicenseUpgradeEligibilityType)
 	{
 		NSString *encodedContextInfo = [self encodedRequestContextValue:@"licenseKey"];
 
 		requestBodyString = [NSString stringWithFormat:@"licenseKey=%@&lang=%@&outputFormat=plist&version=%@",
 				 encodedContextInfo, currentUserLanguage, applicationVersion];
+	}
+	else if (self.requestType == TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType)
+	{
+		NSString *receiptData = [self encodedRequestContextValue:@"receiptData"];
+		NSString *licenseOwnerMacAddress = [self encodedRequestContextValue:@"licenseOwnerMacAddress"];
+
+		requestBodyString = [NSString stringWithFormat:@"receiptData=%@&licenseOwnerMacAddress=%@&lang=%@&outputFormat=plist&version=%@",
+				 receiptData, licenseOwnerMacAddress, currentUserLanguage, applicationVersion];
 	}
 
 	if (requestBodyString == nil) {
