@@ -178,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* The Textual Extras installer can detect operating system and will not
 	 allow it to be installed on Mountain Lion, but still good to have some
 	 type of sanity type. */
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
+	if (TEXTUAL_RUNNING_ON(10.9, Mavericks) == NO) {
 		return;
 	}
 
