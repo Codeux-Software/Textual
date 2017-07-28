@@ -491,7 +491,7 @@ present_fatal_error:
 
 - (void)contactSupport
 {
-	[TLOpenLink openWithString:@"https://contact.codeux.com/"];
+	[TLOpenLink openWithString:@"https://contact.codeux.com/" inBackground:NO];
 }
 
 @end

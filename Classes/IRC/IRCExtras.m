@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"newsletter"])
 	{
-		[TLOpenLink openWithString:@"https://www.codeux.com/textual/newsletter/"];
+		[TLOpenLink openWithString:@"https://www.codeux.com/textual/newsletter/" inBackground:NO];
 	}
 	else if ([action isEqualToString:@"diagnostic-reports-folder"])
 	{
@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"knowledge-base"])
 	{
-		[TLOpenLink openWithString:@"https://help.codeux.com/textual/"];
+		[TLOpenLink openWithString:@"https://help.codeux.com/textual/" inBackground:NO];
 	}
 	else if ([action isEqualToString:@"application-support-folder"])
 	{

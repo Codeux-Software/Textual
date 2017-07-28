@@ -67,11 +67,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)openWithString:(NSString *)url
 {
+	BOOL inBackground = [TPCPreferences openBrowserInBackground];
+
+	[self openWithString:url inBackground:inBackground];
+}
+
++ (void)openWithString:(NSString *)url inBackground:(BOOL)inBackground
+{
 	NSParameterAssert(url != nil);
 
 	NSURL *urlObject = [NSURL URLWithString:url];
 
-	[self open:urlObject];
+	[self open:urlObject inBackground:inBackground];
 }
 
 @end

@@ -1513,7 +1513,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showScriptingDocumentation:(id)sender
 {
-	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Writing-Scripts.kb"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Writing-Scripts.kb" inBackground:NO];
 }
 
 - (NSString *)searchProviderName
@@ -3189,17 +3189,17 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	NSString *link = _helpMenuLinks[@([sender tag])];
 	
-	[TLOpenLink openWithString:link];
+	[TLOpenLink openWithString:link inBackground:NO];
 }
 
 - (void)openMacAppStoreWebpage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store" inBackground:NO];
 }
 
 - (void)openStripetoreWebpage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/stripe-store"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/stripe-store" inBackground:NO];
 }
 
 - (void)performNavigationAction:(id)sender
@@ -3445,7 +3445,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)encryptionWhatIsThisInformation:(id)sender
 {
-	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Off-the-Record-Messaging.kb"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Off-the-Record-Messaging.kb" inBackground:NO];
 }
 
 #undef _encryptionNotEnabled
