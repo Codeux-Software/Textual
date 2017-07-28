@@ -13,3 +13,6 @@ xcuserdata
 *.xcworkspace
 Resources/Build Configurations/Provisioning Profile.xcconfig
 Resources/Documents/Header Documentation/Results/*
+Resources/Scripting/Script Files/Textual Extras Installer/Installation Files/Extensions/*
+Resources/Scripting/Script Files/Textual Extras Installer/Packages/MACAPPSTORE/*
+Resources/Scripting/Script Files/Textual Extras Installer/Packages/STANDALONE/*

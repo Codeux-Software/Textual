@@ -1347,7 +1347,6 @@
 		4CB2296D1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229211978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif */; };
 		4CB26C7019529003005F927C /* IRCCommandIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26C6F19529003005F927C /* IRCCommandIndex.m */; };
 		4CB26C7119529003005F927C /* IRCCommandIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26C6F19529003005F927C /* IRCCommandIndex.m */; };
-		4CB295471B9CB88C002B7972 /* Textual-Extras-MAS.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */; };
 		4CB2FA961D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */; };
 		4CB2FA971D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */; };
 		4CB2FA981D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */; };
@@ -1651,8 +1650,6 @@
 		4CEA29CC1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
 		4CEA29CD1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
 		4CEA29CE1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
-		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
-		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEFCB881D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
 		4CEFCB891D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
 		4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
@@ -2192,6 +2189,8 @@
 		4C2DBBFD1F13207B0096654E /* GCDAsyncSocketTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketTrustPanel.m; path = "Library/External Libraries/Sockets/GCDAsyncSocketTrustPanel.m"; sourceTree = "<group>"; };
 		4C2DBC081F1320C60096654E /* GCDAsyncSocketTrustPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketTrustPanel.h; path = "External Libraries/GCDAsyncSocketTrustPanel.h"; sourceTree = "<group>"; };
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
+		4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Scripting/Script Files/Textual Extras Installer/Packages/Textual-Extras.pkg"; sourceTree = "<group>"; };
+		4C2F0C711F2AF38E0017D3B7 /* Textual-Extras-MAS.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras-MAS.pkg"; path = "Scripting/Script Files/Textual Extras Installer/Packages/Textual-Extras-MAS.pkg"; sourceTree = "<group>"; };
 		4C2F6AE11EBBB262002246A7 /* TVCNotificationConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCNotificationConfigurationViewController.m; path = Views/Preferences/TVCNotificationConfigurationViewController.m; sourceTree = "<group>"; };
 		4C2F6AEA1EBBB390002246A7 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCNotificationConfigurationView.xib"; sourceTree = SOURCE_ROOT; };
 		4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCChannelSelectionOutlineCellView.m; sourceTree = "<group>"; };
@@ -2556,7 +2555,6 @@
 		4CB229211978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = YosemiteDarkServerListViewDisclosureUp.tif; sourceTree = "<group>"; };
 		4CB26C6F19529003005F927C /* IRCCommandIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCCommandIndex.m; path = Classes/IRC/IRCCommandIndex.m; sourceTree = SOURCE_ROOT; };
 		4CB26C7219529016005F927C /* IRCCommandIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCCommandIndex.h; path = Headers/IRCCommandIndex.h; sourceTree = "<group>"; };
-		4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras-MAS.pkg"; path = "Resources/Scripting/Script Files/Sandbox Exceptions/Installers/Mac App Store/Textual-Extras-MAS.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCHighlightEntrySheetPrivate.h; path = Headers/Private/TDCHighlightEntrySheetPrivate.h; sourceTree = "<group>"; };
 		4CB2FA9F1D21A677004736D2 /* TLOInputHistoryPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOInputHistoryPrivate.h; path = Headers/Private/TLOInputHistoryPrivate.h; sourceTree = "<group>"; };
 		4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -2667,7 +2665,6 @@
 		4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOGrowlControllerPrivate.h; path = Headers/Private/TLOGrowlControllerPrivate.h; sourceTree = "<group>"; };
 		4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTimerCommandPrivate.h; path = Headers/Private/IRCTimerCommandPrivate.h; sourceTree = "<group>"; };
 		4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOSpeechSynthesizerPrivate.h; path = Headers/Private/TLOSpeechSynthesizerPrivate.h; sourceTree = "<group>"; };
-		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/Scripting/Script Files/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerDownloaderPrivate.h; path = Headers/Private/TLOLicenseManagerDownloaderPrivate.h; sourceTree = "<group>"; };
 		4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerPrivate.h; path = Headers/Private/TLOLicenseManagerPrivate.h; sourceTree = "<group>"; };
 		4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCBuddyListDialogInternal.h; sourceTree = "<group>"; };
@@ -3469,8 +3466,8 @@
 		4C69E3571B65C266002782D4 /* Installers */ = {
 			isa = PBXGroup;
 			children = (
-				4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */,
-				4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */,
+				4C2F0C711F2AF38E0017D3B7 /* Textual-Extras-MAS.pkg */,
+				4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */,
 			);
 			name = Installers;
 			sourceTree = "<group>";
@@ -5452,7 +5449,6 @@
 				4C0BA5371990798800857343 /* channelRoomStatusIconMavericksDarkInactive@2x.tif in Resources */,
 				4C0BA5381990798800857343 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C0BA5391990798800857343 /* FormattingColor_3.png in Resources */,
-				4CB295471B9CB88C002B7972 /* Textual-Extras-MAS.pkg in Resources */,
 				4CF40EDA1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
 				4CBC76BC1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4CBC76AD1CC72B5100484A13 /* Accessibility.strings in Resources */,
@@ -5601,7 +5597,6 @@
 				4C77663E1978CECA00759774 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */,
 				4CB2293C1978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive@2x.tif in Resources */,
 				4CC164BC1943B17100B0D4B6 /* DIRedBadgeLeftMavericks.png in Resources */,
-				4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4C46F4591943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C1383241AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */,
 				4CBC76B51CC72B5100484A13 /* IRC.strings in Resources */,
@@ -5773,7 +5768,6 @@
 				4C46F45A1943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C1383231AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */,
 				4C46F4721943A654004CA8BA /* FormattingColor_7.png in Resources */,
-				4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4C46F4681943A654004CA8BA /* FormattingColor_2.png in Resources */,
 				4CB2296B1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureDown.tif in Resources */,
 				4CB2292B1978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive@2x.tif in Resources */,
