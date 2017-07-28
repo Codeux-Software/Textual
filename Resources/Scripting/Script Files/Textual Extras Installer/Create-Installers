@@ -1,0 +1,59 @@
+
+set -e
+
+export BUILD_PATH="/private/tmp/Textual-${RANDOM}"
+
+export BUILD_PATH_SCRIPTS_MACAPPSTORE="${BUILD_PATH}/Library/Application Scripts/com.codeux.apps.textual-mas"
+export BUILD_PATH_SCRIPTS_STANDALONE="${BUILD_PATH}/Library/Application Scripts/com.codeux.apps.textual"
+
+export BUILD_PATH_EXTENSIONS_MACAPPSTORE="${BUILD_PATH}/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Application Support/Textual/Extensions"
+export BUILD_PATH_EXTENSIONS_STANDALONE="${BUILD_PATH}/Library/Group Containers/com.codeux.apps.textual/Library/Application Support/Textual/Extensions"
+
+export SOURCE_FILES_SCRIPTS="./Installation Files/Scripts"
+export SOURCE_FILES_EXTENSIONS="./Installation Files/Extensions"
+
+export PACKAGES_DESTINATION="./Packages"
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Scripts-Package "AudioVideo" \
+"hermes" \
+"music" \
+"np" \
+"qt" \
+"radium" \
+"spotify" \
+"vlc"
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Scripts-Package "Fun" \
+"banhammer" \
+"ffuu" \
+"o_o" \
+"slap"
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Scripts-Package "Utilities" \
+"apps" \
+"flip" \
+"page" \
+"reverse" \
+"shell"
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Extension-Package "BlowfishEncryption"
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Extension-Package "Caffeine"
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Extension-Package "WikiStyleLinkParser" 
+
+echo "**************************"
+
+./Installer\ Helpers/Build-Final-Package
