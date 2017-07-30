@@ -343,7 +343,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	else if ([scriptResult isKindOfClass:[NSNumber class]])
 	{
-		if (strcmp([scriptResult objCType], @encode(BOOL)) == 0) {
+		if ([scriptResult isBooleanValue]) {
 			if ([scriptResult boolValue]) {
 				return @"true";
 			} else {
@@ -556,7 +556,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	else if ([object isKindOfClass:[NSNumber class]])
 	{
-		if (strcmp([object objCType], @encode(BOOL)) == 0) {
+		if ([object isBooleanValue]) {
 			if ([object boolValue]) {
 				return @"true";
 			} else {
