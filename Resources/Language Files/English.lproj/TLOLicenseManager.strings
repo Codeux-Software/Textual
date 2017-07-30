@@ -91,6 +91,3 @@
 
 "TLOLicenseManager[1019][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1019][2]" = "Receipt could not validated because of the following error:\n\n“%@“";
-
-"TLOLicenseManager[1020][1]" = "The following error was returned while processing request:";
-"TLOLicenseManager[1020][2]" = "Unknown or improperly formatted license key";
