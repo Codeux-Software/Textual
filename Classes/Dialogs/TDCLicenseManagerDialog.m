@@ -238,13 +238,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
-	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+	TLOLicenseManagerDownloader *licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	self.licenseManagerDownloader.actionBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
+	licenseManagerDownloader.actionBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
 		return TLOLicenseManagerWriteLicenseFileContents(statusContext);
 	};
 
-	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
+	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
 		if (operationSuccessful) {
@@ -254,9 +254,11 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	};
 
-	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
+	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
-	[self.licenseManagerDownloader activateLicense:licenseKey.trim];
+	[licenseManagerDownloader activateLicense:licenseKey.trim];
+
+	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
 #pragma mark -
@@ -264,26 +266,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)unregisteredViewRecoveryLostLicense:(id)sender
 {
-	self.recoverLostLicenseSheet = [[TDCLicenseManagerRecoverLostLicenseSheet alloc] initWithWindow:self.window];
+	  TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet =
+	[[TDCLicenseManagerRecoverLostLicenseSheet alloc] initWithWindow:self.window];
 
-	self.recoverLostLicenseSheet.delegate = self;
+	recoverLostLicenseSheet.delegate = self;
 
-	[self.recoverLostLicenseSheet start];
+	[recoverLostLicenseSheet start];
+
+	self.recoverLostLicenseSheet = recoverLostLicenseSheet;
 }
 
 - (void)licenseManagerRecoverLostLicenseSheet:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress
 {
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
-	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+	TLOLicenseManagerDownloader *licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
+	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 	};
 
-	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
+	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
-	[self.licenseManagerDownloader requestLostLicenseKeyForContactAddress:contactAddress];
+	[licenseManagerDownloader requestLostLicenseKeyForContactAddress:contactAddress];
+
+	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
 - (void)licenseManagerRecoverLostLicenseSheetWillClose:(TDCLicenseManagerRecoverLostLicenseSheet *)sender
@@ -314,21 +321,23 @@ NS_ASSUME_NONNULL_BEGIN
 	 on the hard drive which is typically instant. */
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
-	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+	TLOLicenseManagerDownloader *licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	self.licenseManagerDownloader.actionBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
+	licenseManagerDownloader.actionBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
 		return TLOLicenseManagerDeleteLicenseFile();
 	};
 
-	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
+	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
 		[weakSelf reloadMainWindowLoadingScreen];
 	};
 
-	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
+	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
-	[self.licenseManagerDownloader deactivateLicense];
+	[licenseManagerDownloader deactivateLicense];
+
+	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
 #pragma mark -
@@ -336,11 +345,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)unregisteredViewMigrateMacAppStorePurchase:(id)sender
 {
-	self.migrateAppStoreSheet = [[TDCLicenseManagerMigrateAppStoreSheet alloc] initWithWindow:self.window];
+	  TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet =
+	[[TDCLicenseManagerMigrateAppStoreSheet alloc] initWithWindow:self.window];
 
-	self.migrateAppStoreSheet.delegate = self;
+	migrateAppStoreSheet.delegate = self;
 
-	[self.migrateAppStoreSheet start];
+	[migrateAppStoreSheet start];
+
+	self.migrateAppStoreSheet = migrateAppStoreSheet;
 }
 
 - (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender
@@ -350,17 +362,19 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
-	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+	TLOLicenseManagerDownloader *licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
+	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 	};
 
-	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
+	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
-	[self.licenseManagerDownloader migrateMacAppStorePurcahse:receiptData
+	[licenseManagerDownloader migrateMacAppStorePurcahse:receiptData
 											 licenseOwnerName:licenseOwnerName
 								   licenseOwnerContactAddress:licenseOwnerContactAddress];
+
+	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
 - (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender
