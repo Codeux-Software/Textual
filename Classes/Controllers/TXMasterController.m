@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#import "BuildConfig.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1

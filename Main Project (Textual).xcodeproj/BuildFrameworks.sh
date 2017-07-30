@@ -12,7 +12,7 @@ mkdir -p "${BUILD_DESTINATION_FOLDER}"
 cd "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/"
 
 xcodebuild -target "AutoHyperlinks.framework" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
@@ -25,7 +25,7 @@ rm -rf "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/.tmp/"
 cd "${PROJECT_DIR}/Frameworks/Encryption Kit/"
 
 xcodebuild -target "EncryptionKit" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
@@ -38,7 +38,7 @@ rm -rf "${PROJECT_DIR}/Frameworks/Encryption Kit/.tmp/"
 cd "${PROJECT_DIR}/Frameworks/Cocoa Extensions/"
 
 xcodebuild -target "CocoaExtensions (OS X)" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
