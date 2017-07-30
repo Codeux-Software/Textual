@@ -1509,6 +1509,8 @@
 		4CC31D7D1EC93FD500FBDC69 /* TVCServerListYosemiteScaledUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC31D661EC93FD400FBDC69 /* TVCServerListYosemiteScaledUserInterface.m */; };
 		4CC31D7E1EC93FD500FBDC69 /* TVCServerListYosemiteScaledUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC31D661EC93FD400FBDC69 /* TVCServerListYosemiteScaledUserInterface.m */; };
 		4CC475FE1B57F72500AFD3E5 /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */; };
+		4CC65AA71F2E74A4007870BE /* TLOLicenseManagerLastGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF56DA71F2E6A6A001F661C /* TLOLicenseManagerLastGen.m */; };
+		4CC65AAF1F2E74AA007870BE /* TLOLicenseManagerLastGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF56DA71F2E6A6A001F661C /* TLOLicenseManagerLastGen.m */; };
 		4CC8E10F1D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */; };
 		4CC8E1101D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */; };
 		4CC8E1111D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */; };
@@ -2729,6 +2731,8 @@
 		4CF40F0F1AC1A59500A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCMainWindowYosemite.xib"; sourceTree = SOURCE_ROOT; };
 		4CF40F111AC1A59500A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TXCMainMenu.xib"; sourceTree = SOURCE_ROOT; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4CF56DA71F2E6A6A001F661C /* TLOLicenseManagerLastGen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TLOLicenseManagerLastGen.m; path = Library/TLOLicenseManagerLastGen.m; sourceTree = "<group>"; };
+		4CF56DAF1F2E6A8B001F661C /* TLOLicenseManagerLastGenPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerLastGenPrivate.h; path = Headers/Private/TLOLicenseManagerLastGenPrivate.h; sourceTree = "<group>"; };
 		4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCNicknameColorSheet.m; path = Dialogs/TDCNicknameColorSheet.m; sourceTree = "<group>"; };
 		4CF621D31C7F675A000969CB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCNicknameColorSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4CF642E31D2DC33700CB9165 /* IRCChannelConfigPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCChannelConfigPrivate.h; path = Headers/Private/IRCChannelConfigPrivate.h; sourceTree = "<group>"; };
@@ -3393,6 +3397,7 @@
 				4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */,
 				4CB2FA9F1D21A677004736D2 /* TLOInputHistoryPrivate.h */,
 				4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */,
+				4CF56DAF1F2E6A8B001F661C /* TLOLicenseManagerLastGenPrivate.h */,
 				4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */,
 				4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */,
 				4C2B1D801EBA48790093C629 /* TLONotificationConfigurationPrivate.h */,
@@ -3632,6 +3637,7 @@
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
 				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
 				4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */,
+				4CF56DA71F2E6A6A001F661C /* TLOLicenseManagerLastGen.m */,
 				4C8AF5DE158E99520026668C /* TLOLinkParser.m */,
 				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
 				4C2B1D761EBA48090093C629 /* TLONotificationConfiguration.m */,
@@ -5982,6 +5988,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C7E61E11B9C84A700C35BC9 /* TPCPreferencesImportExport.m in Sources */,
+				4CC65AA71F2E74A4007870BE /* TLOLicenseManagerLastGen.m in Sources */,
 				4C0D46051EC27E9F00256D58 /* TDCServerEndpointListSheetTable.m in Sources */,
 				4CA816BC1D5F8C4900B3DAED /* TDCBuddyListDialogEntry.m in Sources */,
 				4C0879D4187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */,
@@ -6345,6 +6352,7 @@
 				4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */,
 				4CF40E381AC1A4AC00A26BE0 /* TVCMainWindowTextView.m in Sources */,
 				4CF40E341AC1A4AC00A26BE0 /* TVCMainWindowSplitView.m in Sources */,
+				4CC65AAF1F2E74AA007870BE /* TLOLicenseManagerLastGen.m in Sources */,
 				4C74FBC61B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */,
 				4C8AF60A158E99520026668C /* TXMasterController.m in Sources */,
 				4C8AF60B158E99520026668C /* TXMenuController.m in Sources */,
