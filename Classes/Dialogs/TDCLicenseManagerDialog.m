@@ -241,7 +241,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
 	self.licenseManagerDownloader.actionBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
-		return TLOLicenseManagerUserLicenseWriteFileContents(statusContext);
+		return TLOLicenseManagerWriteLicenseFileContents(statusContext);
 	};
 
 	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
@@ -317,7 +317,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
 	self.licenseManagerDownloader.actionBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
-		return TLOLicenseManagerDeleteUserLicenseFile();
+		return TLOLicenseManagerDeleteLicenseFile();
 	};
 
 	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
