@@ -47,10 +47,6 @@
 
 #import "TextualApplication.h"
 
-#if __has_include("BuildConfig.h")
-#import "BuildConfig.h"
-#endif
-
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
 #import "GCDAsyncSocketTrustPanel.h"

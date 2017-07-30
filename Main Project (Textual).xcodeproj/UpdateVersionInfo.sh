@@ -48,12 +48,12 @@ cd "${PROJECT_DIR}/.tmp/"
 gitBundle=`which git`
 
 if [ -z "${gitBundle}" ]; then
-gitDateOfLastCommit="000000.00"
+bundleVersion="000000.00"
 else 
 gitDateOfLastCommit=`"${gitBundle}" log -n1 --format="%at"`
-fi
 
 bundleVersion=`/bin/date -u -r "${gitDateOfLastCommit}" "+%y%m%d.%H"`
+fi;
 
 /usr/libexec/PlistBuddy -c "Set \"CFBundleVersion\" \"${bundleVersion}\"" Info.plist
 

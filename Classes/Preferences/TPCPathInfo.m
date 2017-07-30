@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "BuildConfig.h"
+
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 #include <pwd.h>            // -------
 #include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox

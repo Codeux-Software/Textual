@@ -4,7 +4,7 @@ set -e
 
 cd "${PROJECT_DIR}/Resources/Plugins/Brag Spam"
 xcodebuild -target "BragSpam" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -12,7 +12,7 @@ xcodebuild -target "BragSpam" \
 
 cd "${PROJECT_DIR}/Resources/Plugins/Chat Filter"
 xcodebuild -target "ChatFilterExtension" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -20,7 +20,7 @@ xcodebuild -target "ChatFilterExtension" \
 
 cd "${PROJECT_DIR}/Resources/Plugins/Smiley Converter"
 xcodebuild -target "SmileyConverter" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -28,7 +28,7 @@ xcodebuild -target "SmileyConverter" \
 
 cd "${PROJECT_DIR}/Resources/Plugins/Spammer Paradise"
 xcodebuild -target "SpammerParadise" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -36,7 +36,7 @@ xcodebuild -target "SpammerParadise" \
 
 cd "${PROJECT_DIR}/Resources/Plugins/System Profiler"
 xcodebuild -target "SystemProfiler" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -44,7 +44,7 @@ xcodebuild -target "SystemProfiler" \
 
 cd "${PROJECT_DIR}/Resources/Plugins/ZNC Additions"
 xcodebuild -target "ZNCAdditions" \
- -configuration "Release" \
+ -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
