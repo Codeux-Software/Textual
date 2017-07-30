@@ -46,8 +46,7 @@
 "BasicLanguage[1005]" = " \002Uptime:\002 %@ \002•\002";
 "BasicLanguage[1006]" = " \002Disk Space:\002 %@ \002•\002";
 "BasicLanguage[1008]" = " \002Graphics:\002 %@ \002•\002";
-"BasicLanguage[1009]" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
-"BasicLanguage[1010]" = " \002Screen Resolution:\002 %.0f x %.0f (HiDPI Mode) \002•\002";
+"BasicLanguage[1009]" = " \002Display Resolution:\002 %@ \002•\002";
 "BasicLanguage[1012]" = " \002OS:\002 %1$@ (Version %2$@, Build %3$@)";
 
 "BasicLanguage[1013]" = "%@";
@@ -86,10 +85,8 @@
 "BasicLanguage[1051]" = ", and dark mode on %@";
 
 /* /screens/ command. */
-"BasicLanguage[1040]" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
-"BasicLanguage[1041]" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
-"BasicLanguage[1042]" = "; Monitor %1$ld: %2$.0f x %3$.0f";
-"BasicLanguage[1043]" = " (HiDPI Mode)";
+"BasicLanguage[1041]" = "\002Display Resolution:\002 #%1$ld: %2$@";
+"BasicLanguage[1042]" = "; #%1$ld: %2$@";
 
 /* Misc., one line commands. */
 "BasicLanguage[1045]" = "System Uptime: %1$@ - Textual Uptime: %2$@";

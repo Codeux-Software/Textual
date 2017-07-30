@@ -280,11 +280,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *localization = nil;
 
 		if (screenNumber == 1) {
-			if (screens.count == 1) {
-				localization = @"BasicLanguage[1040]";
-			} else {
-				localization = @"BasicLanguage[1041]";
-			}
+			localization = @"BasicLanguage[1041]";
 		} else {
 			localization = @"BasicLanguage[1042]";
 		}
@@ -292,12 +288,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[rsultString appendString:
 		 TPILocalizedString(localization,
 			screenNumber,
-			screen.frame.size.width,
-			screen.frame.size.height)];
-
-		if (screen.runningInHighResolutionMode) {
-			[rsultString appendString:TPILocalizedString(@"BasicLanguage[1043]")];
-		}
+			screen.screenResolutionString)];
 	}];
 
 	return [rsultString copy];
@@ -403,17 +394,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (showScreenResolution) {
 		NSScreen *mainScreen = RZMainScreen();
 
-		if (mainScreen.runningInHighResolutionMode) {
-			[resultString appendString:
-			 TPILocalizedString(@"BasicLanguage[1010]",
-				mainScreen.frame.size.width,
-				mainScreen.frame.size.height)];
-		} else {
-			[resultString appendString:
-			 TPILocalizedString(@"BasicLanguage[1009]",
-				mainScreen.frame.size.width,
-				mainScreen.frame.size.height)];
-		}
+        [resultString appendString:
+         TPILocalizedString(@"BasicLanguage[1009]",
+            mainScreen.screenResolutionString)];
 	}
 
 	if (showOperatingSystem) {
