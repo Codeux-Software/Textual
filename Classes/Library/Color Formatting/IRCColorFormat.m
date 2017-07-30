@@ -267,10 +267,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 		}
 
 		if (hasForegroundColor) {
-			[result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundColorObj integerWithLeadingZero]];
+			[result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundColorObj integerStringValueWithLeadingZero]];
 
 			if (hasBackgroundColor) {
-				[result appendFormat:@",%@", [backgroundColorObj integerWithLeadingZero]];
+				[result appendFormat:@",%@", [backgroundColorObj integerStringValueWithLeadingZero]];
 			}
 		}
 
@@ -450,10 +450,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 		 }
 
 		 if (hasForegroundColor) {
-			 [result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundColorObj integerWithLeadingZero]];
+			 [result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundColorObj integerStringValueWithLeadingZero]];
 
 			 if (hasBackgroundColor) {
-				 [result appendFormat:@",%@", [backgroundColorObj integerWithLeadingZero]];
+				 [result appendFormat:@",%@", [backgroundColorObj integerStringValueWithLeadingZero]];
 			 }
 		 }
 
