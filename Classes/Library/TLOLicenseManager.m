@@ -394,6 +394,15 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 		return NO;
 	}
 
+	/* Retrieve license generation */
+	NSUInteger licenseGeneration = [licenseDictionary unsignedIntegerForKey:TLOLicenseManagerLicenseDictionaryLicenseGenerationKey];
+
+	if (licenseGeneration != TLOLicenseManagerCurrentLicenseGeneration) {
+		LogToConsoleError("Mismatched license generation in license dictionary")
+
+		return NO;
+	}
+
 	CFDataRef cfLicenseSignature = (__bridge CFDataRef)(licenseSignature);
 
 	/* Combine all contents of the dictionary, in sorted order, excluding
