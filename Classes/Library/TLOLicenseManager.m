@@ -75,7 +75,7 @@ static BOOL TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 
 static NSDictionary<NSString *, id> * _Nullable TLOLicenseManagerCachedLicenseDictionary = nil;
 
-NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"9d9a02f1f861a203aa761230c1ee02040002314502d75826a97a948bcf4bb1d6";
+NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"2e14fea44d634095e91a8048404c4ea90d9487a0676f48e89b846a6926b2f4c1";
 
 NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})\\-([a-z]{1,12})\\-([a-z]{1,12})\\-([0-9]{1,35})$";
 
