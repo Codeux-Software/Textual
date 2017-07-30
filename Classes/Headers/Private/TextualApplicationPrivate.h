@@ -121,6 +121,7 @@
 #import "TLOGrowlControllerPrivate.h"
 #import "TLOInputHistoryPrivate.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
+#import "TLOLicenseManagerLastGenPrivate.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLONicknameCompletionStatusPrivate.h"
 #import "TLONotificationConfigurationPrivate.h"
