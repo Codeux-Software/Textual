@@ -649,7 +649,7 @@ present_fatal_error:
 
 		requestBodyString =
 		[NSString stringWithFormat:@"receiptHash=%@&licenseOwnerContactAddress=%@&licenseOwnerName=%@&lang=%@&version=%@",
-		 receiptHash, licenseOwnerContactAddress, licenseOwnerName, currentUserLanguage, applicationVersion];
+				 receiptHash, licenseOwnerContactAddress, licenseOwnerName, currentUserLanguage, applicationVersion];
 	}
 
 	if (requestBodyString == nil) {
