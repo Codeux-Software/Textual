@@ -115,12 +115,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)actionActivateLicense:(id)sender
 {
-	[self.delegate upgradeActivateSheetActivateLicense:sender];
+	[self.delegate upgradeActivateSheetActivateLicense:self];
 }
 
 - (void)actionPurchaseUpgrade:(id)sender
 {
-	[self.delegate upgradeActivateSheetPurchaseUpgrade:sender];
+	[self.delegate upgradeActivateSheetPurchaseUpgrade:self];
 }
 
 - (void)actionCancel:(id)sender
