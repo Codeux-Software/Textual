@@ -9,8 +9,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TDCLicenseUpgradeActivateSheet">
             <connections>
                 <outlet property="sheetAlreadyUpgraded" destination="W7a-9a-xd5" id="xia-Iu-bGZ"/>
+                <outlet property="sheetAlreadyUpgradedSuppressionButton" destination="0o9-2E-KZX" id="FdR-MY-hIP"/>
                 <outlet property="sheetAlreadyUpgradedTitleTextField" destination="9DC-Cm-7Ox" id="NhW-bl-6kR"/>
                 <outlet property="sheetEligible" destination="5MA-QY-tCu" id="imi-8f-Toc"/>
+                <outlet property="sheetEligibleSuppressionButton" destination="2SF-Ht-d5j" id="uXJ-cW-ZBR"/>
                 <outlet property="sheetEligibleTitleTextField" destination="Nyv-md-SOc" id="m5p-zr-3tu"/>
             </connections>
         </customObject>
