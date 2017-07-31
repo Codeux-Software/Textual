@@ -543,6 +543,25 @@ return_method:
 	return nil;
 }
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (nullable NSString *)prettyLicenseKey
+{
+	NSRange lastDashRange = [self rangeOfString:@"-" options:NSBackwardsSearch];
+
+	if (lastDashRange.location == NSNotFound) {
+		return nil;
+	}
+
+	/* Go from dash outward by 5 */
+	lastDashRange.length = (lastDashRange.location + 6); // 1 = dash, 5 = numbers (1+5)
+	lastDashRange.location = 0;
+
+	NSString *licenseKey = [self substringWithRange:lastDashRange];
+
+	return [licenseKey stringByAppendingString:@"…"];
+}
+#endif
+
 @end
 
 NS_ASSUME_NONNULL_END

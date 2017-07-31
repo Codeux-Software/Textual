@@ -424,7 +424,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				}
 
 				BOOL userResponse = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1002][2]")
-																	   title:TXTLS(@"TLOLicenseManager[1002][1]", licenseKey)
+																	   title:TXTLS(@"TLOLicenseManager[1002][1]", licenseKey.prettyLicenseKey)
 															   defaultButton:TXTLS(@"Prompts[0005]")
 															 alternateButton:TXTLS(@"TLOLicenseManager[1002][3]")];
 
@@ -451,7 +451,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSInteger licenseKeyActivationLimit = [statusContext integerForKey:@"licenseKeyActivationLimit"];
 
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1014][2]", licenseKeyActivationLimit)
-														 title:TXTLS(@"TLOLicenseManager[1014][1]", licenseKey)
+														 title:TXTLS(@"TLOLicenseManager[1014][1]", licenseKey.prettyLicenseKey)
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}

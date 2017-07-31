@@ -135,7 +135,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][2]")
-									 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][1]", self.licenseKey)
+									 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][1]", self.licenseKey.prettyLicenseKey)
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][3]")
 							   otherButton:nil

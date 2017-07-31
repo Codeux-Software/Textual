@@ -268,7 +268,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 only necessary here... at least for now. */
 	if (self.operationInProgress) {
 		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1020][2]")
-										   title:TXTLS(@"TLOLicenseManager[1020][1]", licenseKey)
+										   title:TXTLS(@"TLOLicenseManager[1020][1]", licenseKey.prettyLicenseKey)
 								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil];
 
@@ -278,7 +278,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Do not activate license we are already using. */
 	if (licenseKey == TLOLicenseManagerLicenseKey()) {
 		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1021][2]")
-										   title:TXTLS(@"TLOLicenseManager[1021][1]", licenseKey)
+										   title:TXTLS(@"TLOLicenseManager[1021][1]", licenseKey.prettyLicenseKey)
 								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil];
 
@@ -314,7 +314,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (lastGenLicenseKey != nil) {
 			[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1022][2]")
-											   title:TXTLS(@"TLOLicenseManager[1022][1]", lastGenLicenseKey)
+											   title:TXTLS(@"TLOLicenseManager[1022][1]", lastGenLicenseKey.prettyLicenseKey)
 									   defaultButton:TXTLS(@"TLOLicenseManager[1022][3]")
 									 alternateButton:nil];
 
