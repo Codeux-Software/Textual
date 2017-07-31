@@ -66,6 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
 		@"Object is already initialized");
 
 @interface NSObject (TXObjectHelper)
+- (void)applicationDidFinishLaunching;
+
 - (void)preferencesChanged;
 
 - (void)prepareInitialState;

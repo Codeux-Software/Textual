@@ -64,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *currentSearchPhrase;
 @property (readonly, nullable) TVCLogController *selectedViewController;
 @property (readonly, nullable) TVCLogView *selectedViewControllerBackingView;
+@property (readonly) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewChannelNameMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewDefaultMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewURLMenu;
@@ -106,8 +107,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setupOtherServices
 {
- 	 self.fileTransferController = [TDCFileTransferDialog new];
-
 	[self.fileTransferController startUsingDownloadDestinationURL];
 }
 
@@ -1078,6 +1077,14 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self resetSelectedItems];
+}
+
+#pragma mark -
+#pragma mark Properties
+
+- (TDCFileTransferDialog *)fileTransferController
+{
+	return [TXSharedApplication sharedFileTransferDialog];
 }
 
 #pragma mark -
@@ -3554,32 +3561,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument
 {
-	TDCLicenseManagerDialog *licensePanel = [windowController() windowFromWindowList:@"TDCLicenseManagerDialog"];
+	TDCLicenseManagerDialog *licenseDialog = [TXSharedApplication sharedLicenseManagerDialog];
 
-	BOOL isNewPanel = (licensePanel == nil);
-
-	if (isNewPanel) {
-		licensePanel = [TDCLicenseManagerDialog new];
-
-		licensePanel.delegate = (id)self;
-	}
-
-	[licensePanel show];
+	[licenseDialog show];
 
 	if (licenseKey) {
-		licensePanel.isSilentOnSuccess = licenseKeyPassedByArgument;
-
-		[licensePanel activateLicenseKey:licenseKey];
+		[licenseDialog activateLicenseKey:licenseKey silently:licenseKeyPassedByArgument];
 	}
-
-	if (isNewPanel) {
-		[windowController() addWindowToWindowList:licensePanel];
-	}
-}
-
-- (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
 }
 #endif
 

@@ -434,7 +434,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 		NSString *uniqueIdentifier = context[@"fileTransferUniqeIdentifier"];
 
-		TDCFileTransferDialogTransferController *fileTransfer = [menuController().fileTransferController fileTransferWithUniqueIdentifier:uniqueIdentifier];
+		TDCFileTransferDialogTransferController *fileTransfer = [[TXSharedApplication sharedFileTransferDialog] fileTransferWithUniqueIdentifier:uniqueIdentifier];
 
 		if (fileTransfer == nil) {
 			return;
@@ -454,7 +454,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 		[fileTransfer openWithPath:savePath];
 
-		[menuController().fileTransferController show:YES restorePosition:NO];
+		[[TXSharedApplication sharedFileTransferDialog] show:YES restorePosition:NO];
 	}
 
 	/* Handle all other IRC related notifications. */

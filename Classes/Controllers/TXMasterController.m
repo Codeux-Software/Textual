@@ -324,7 +324,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TLOLicenseManagerSetup();
 
-	[TDCLicenseManagerDialog applicationDidFinishLaunching];
+	[[TXSharedApplication sharedLicenseManagerDialog] applicationDidFinishLaunching];
 }
 #endif
 

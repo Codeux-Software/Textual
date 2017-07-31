@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TXMenuController ()
 @property (nonatomic, copy, nullable) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
-@property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 
 - (void)mainWindowSelectionDidChange;
 
