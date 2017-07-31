@@ -215,6 +215,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *argumentLicenseKey = commandLineArguments[@"-licenseKey"];
 
+	if (argumentLicenseKey == nil) {
+		return;
+	}
+
 	[self activateLicenseKey:argumentLicenseKey silently:YES];
 }
 
