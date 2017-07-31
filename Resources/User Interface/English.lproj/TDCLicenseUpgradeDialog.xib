@@ -160,6 +160,7 @@ Click “Purchase Upgrade” to find out which you are eligible for.</string>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="7Xr-wP-3CI" firstAttribute="centerX" secondItem="mBF-7S-a0m" secondAttribute="centerX" id="CHo-7c-UNY"/>
+                                <constraint firstAttribute="bottom" secondItem="hYc-Tg-ZB6" secondAttribute="bottom" constant="14" id="DAe-Z6-BtG"/>
                                 <constraint firstItem="hYc-Tg-ZB6" firstAttribute="centerX" secondItem="mBF-7S-a0m" secondAttribute="centerX" id="JJC-OI-sul"/>
                                 <constraint firstItem="hYc-Tg-ZB6" firstAttribute="top" secondItem="7Xr-wP-3CI" secondAttribute="bottom" constant="6" id="P0C-X0-08A"/>
                                 <constraint firstItem="7Xr-wP-3CI" firstAttribute="top" secondItem="mBF-7S-a0m" secondAttribute="top" constant="14" id="iPo-wQ-nsz"/>
