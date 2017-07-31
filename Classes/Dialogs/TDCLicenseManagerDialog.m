@@ -54,10 +54,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewCancelButton;
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewRecoveryLostLicenseButton;
 @property (nonatomic, weak) IBOutlet NSImageView *unregisteredViewMacAppStoreIconImageView;
-@property (nonatomic, strong) TDCProgressIndicatorSheet *progressIndicator;
-@property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
-@property (nonatomic, strong) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
-@property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
+@property (nonatomic, strong, nullable) TDCProgressIndicatorSheet *progressIndicator;
+@property (nonatomic, strong, nullable) TLOLicenseManagerDownloader *licenseManagerDownloader;
+@property (nonatomic, strong, nullable) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
+@property (nonatomic, strong, nullable) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
 @property (nonatomic, assign) BOOL operationInProgress;
