@@ -58,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) TLOLicenseManagerDownloader *licenseManagerDownloader;
 @property (nonatomic, strong, nullable) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
 @property (nonatomic, strong, nullable) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
+@property (nonatomic, strong, nullable) TDCLicenseUpgradeDialog *upgradeDialog;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
 @property (nonatomic, assign) BOOL operationInProgress;
@@ -323,6 +324,10 @@ NS_ASSUME_NONNULL_BEGIN
 			weakSelf.unregisteredViewLicenseKeyTextField.stringValue = NSStringEmptyPlaceholder;
 
 			[weakSelf reloadMainWindowLoadingScreen];
+
+			/* We close the upgrade dialog if a key is activated because
+			 why would we keep it around under that condition? */
+			[self closeUpgradeDialog];
 		}
 
 		weakSelf.operationInProgress = NO;
@@ -340,7 +345,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showUpgradeDialogForLicenseKey:(NSString *)licenseKey
 {
-	
+	NSParameterAssert(licenseKey != nil);
+
+	if (self.upgradeDialog) {
+		if ([self.upgradeDialog.licenseKey isEqualToString:licenseKey]) {
+			[self.upgradeDialog show];
+
+			return;
+		} else {
+			[self.upgradeDialog close];
+		}
+	}
+
+	  TDCLicenseUpgradeDialog *upgradeDialog =
+	[[TDCLicenseUpgradeDialog alloc] initWithLicenseKey:licenseKey];
+
+	upgradeDialog.delegate = self;
+
+	[upgradeDialog show];
+
+	self.upgradeDialog = upgradeDialog;
+}
+
+- (void)closeUpgradeDialog
+{
+	if (self.upgradeDialog) {
+		[self.upgradeDialog close];
+	}
+}
+
+- (void)licenseUpgradeDialogEligibilityChanged:(TDCLicenseUpgradeDialog *)sender
+{
+	LogToConsoleInfo("Eligibility changed");
+}
+
+- (void)licenseUpgradeDialogWillClose:(TDCLicenseUpgradeDialog *)sender
+{
+	self.upgradeDialog = nil;
 }
 
 #pragma mark -
