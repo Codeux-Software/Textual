@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,14 +19,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="W7a-9a-xd5" userLabel="Activate Reduced License Sheet">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="550" height="151"/>
+            <rect key="contentRect" x="283" y="305" width="550" height="180"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="SB9-Q0-CzN">
-                <rect key="frame" x="0.0" y="0.0" width="550" height="151"/>
+                <rect key="frame" x="0.0" y="0.0" width="550" height="180"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9DC-Cm-7Ox">
-                        <rect key="frame" x="103" y="80" width="429" height="51"/>
+                        <rect key="frame" x="103" y="109" width="429" height="51"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="425" id="cE0-XT-C9V"/>
                         </constraints>
@@ -37,7 +38,7 @@
                         </textFieldCell>
                     </textField>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="cK1-OF-8hQ">
-                        <rect key="frame" x="20" y="66" width="65" height="65"/>
+                        <rect key="frame" x="20" y="95" width="65" height="65"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="5SU-3J-ZZk"/>
                             <constraint firstAttribute="width" constant="65" id="6DE-IJ-9J1"/>
@@ -46,6 +47,21 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="c9J-Ve-qDK"/>
                         <accessibility description="Textual Logo"/>
                     </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JWM-xV-yeI">
+                        <rect key="frame" x="103" y="85" width="429" height="14"/>
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Click “Activate License“ button to activate this license." id="rv5-Cc-yyP">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="0o9-2E-KZX">
+                        <rect key="frame" x="103" y="54" width="218" height="18"/>
+                        <buttonCell key="cell" type="check" title="Do not show this message again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="kZv-2K-5bI">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q4Q-Jx-jim">
                         <rect key="frame" x="400" y="13" width="136" height="32"/>
                         <buttonCell key="cell" type="push" title="Activate Textual" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qrA-X1-UYV">
@@ -59,22 +75,11 @@ DQ
                             <action selector="actionActivateLicense:" target="-2" id="uxP-LI-z7K"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JWM-xV-yeI">
-                        <rect key="frame" x="103" y="56" width="429" height="14"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Click “Activate License“ button to activate this license." id="rv5-Cc-yyP">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JZc-k5-pGr">
-                        <rect key="frame" x="318" y="13" width="82" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="afW-I7-Zd6">
+                        <rect key="frame" x="268" y="13" width="132" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="afW-I7-Zd6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
                         </buttonCell>
                         <connections>
                             <action selector="actionCancel:" target="-2" id="tmf-SC-buC"/>
@@ -85,12 +90,14 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="9DC-Cm-7Ox" secondAttribute="trailing" constant="20" id="0CD-4F-VLA"/>
                     <constraint firstItem="9DC-Cm-7Ox" firstAttribute="top" secondItem="SB9-Q0-CzN" secondAttribute="top" constant="20" id="4zM-Pe-BH9"/>
                     <constraint firstItem="JWM-xV-yeI" firstAttribute="top" secondItem="9DC-Cm-7Ox" secondAttribute="bottom" constant="10" id="BU4-4J-0bZ"/>
+                    <constraint firstItem="0o9-2E-KZX" firstAttribute="top" secondItem="JWM-xV-yeI" secondAttribute="bottom" constant="15" id="HqP-Qg-Chv"/>
+                    <constraint firstItem="0o9-2E-KZX" firstAttribute="leading" secondItem="JWM-xV-yeI" secondAttribute="leading" id="M3x-ys-ggY"/>
                     <constraint firstItem="Q4Q-Jx-jim" firstAttribute="leading" secondItem="JZc-k5-pGr" secondAttribute="trailing" constant="12" id="R8f-Ef-3q8"/>
+                    <constraint firstItem="Q4Q-Jx-jim" firstAttribute="top" secondItem="0o9-2E-KZX" secondAttribute="bottom" constant="15" id="Y1N-go-jhE"/>
                     <constraint firstItem="JZc-k5-pGr" firstAttribute="baseline" secondItem="Q4Q-Jx-jim" secondAttribute="baseline" id="Y5P-yA-Rjb"/>
                     <constraint firstItem="JWM-xV-yeI" firstAttribute="trailing" secondItem="9DC-Cm-7Ox" secondAttribute="trailing" id="aaO-0f-ldm"/>
+                    <constraint firstAttribute="bottom" secondItem="Q4Q-Jx-jim" secondAttribute="bottom" constant="20" id="cf3-47-kxv"/>
                     <constraint firstItem="Q4Q-Jx-jim" firstAttribute="trailing" secondItem="9DC-Cm-7Ox" secondAttribute="trailing" id="e2Z-Yo-XmL"/>
-                    <constraint firstAttribute="bottom" secondItem="Q4Q-Jx-jim" secondAttribute="bottom" constant="20" id="eKy-u1-Yxi"/>
-                    <constraint firstItem="Q4Q-Jx-jim" firstAttribute="top" secondItem="JWM-xV-yeI" secondAttribute="bottom" constant="15" id="ea7-gM-34U"/>
                     <constraint firstItem="9DC-Cm-7Ox" firstAttribute="leading" secondItem="cK1-OF-8hQ" secondAttribute="trailing" constant="20" id="ev9-Fo-UKw"/>
                     <constraint firstItem="cK1-OF-8hQ" firstAttribute="leading" secondItem="SB9-Q0-CzN" secondAttribute="leading" constant="20" id="kVE-ie-dyJ"/>
                     <constraint firstItem="JWM-xV-yeI" firstAttribute="leading" secondItem="9DC-Cm-7Ox" secondAttribute="leading" id="peJ-Ed-DI2"/>
@@ -100,19 +107,19 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="9pT-TM-GLY"/>
             </connections>
-            <point key="canvasLocation" x="367" y="188"/>
+            <point key="canvasLocation" x="367" y="202"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="5MA-QY-tCu" userLabel="Activate Free License Sheet">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="550" height="179"/>
+            <rect key="contentRect" x="283" y="305" width="550" height="208"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="U5i-TO-XPF">
-                <rect key="frame" x="0.0" y="0.0" width="550" height="179"/>
+                <rect key="frame" x="0.0" y="0.0" width="550" height="208"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nyv-md-SOc">
-                        <rect key="frame" x="103" y="108" width="429" height="51"/>
+                        <rect key="frame" x="103" y="137" width="429" height="51"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="425" id="9ud-Dp-nPl"/>
                         </constraints>
@@ -124,7 +131,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="aXS-Qj-RLk">
-                        <rect key="frame" x="20" y="94" width="65" height="65"/>
+                        <rect key="frame" x="20" y="123" width="65" height="65"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="K2Y-Af-R3q"/>
                             <constraint firstAttribute="width" constant="65" id="SKK-db-McA"/>
@@ -133,9 +140,27 @@ Gw
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="rq0-Lj-paJ"/>
                         <accessibility description="Textual Logo"/>
                     </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o0n-HD-iWG">
+                        <rect key="frame" x="103" y="85" width="429" height="42"/>
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="64r-7V-Omc">
+                            <font key="font" metaFont="smallSystem"/>
+                            <string key="title">Click “Purchase Upgrade“ button to purchase the upgrade.
+
+Click “Activate License“ button to activate this license.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="2SF-Ht-d5j">
+                        <rect key="frame" x="103" y="54" width="218" height="18"/>
+                        <buttonCell key="cell" type="check" title="Do not show this message again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="6UQ-dP-l0Z">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EfF-Qd-ylO">
-                        <rect key="frame" x="99" y="13" width="82" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oAZ-QL-JtH">
+                        <rect key="frame" x="99" y="13" width="132" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oAZ-QL-JtH">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -169,41 +194,31 @@ DQ
                             <action selector="actionPurchaseUpgrade:" target="-2" id="Ozi-p9-UH1"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o0n-HD-iWG">
-                        <rect key="frame" x="103" y="56" width="429" height="42"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="64r-7V-Omc">
-                            <font key="font" metaFont="smallSystem"/>
-                            <string key="title">Click “Purchase Upgrade“ button to purchase the upgrade.
-
-Click “Activate License“ button to activate this license.</string>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="EfF-Qd-ylO" firstAttribute="baseline" secondItem="Zze-6B-XGM" secondAttribute="baseline" id="1sU-7s-lvt"/>
                     <constraint firstItem="o0n-HD-iWG" firstAttribute="leading" secondItem="Nyv-md-SOc" secondAttribute="leading" id="1ye-k6-oXO"/>
                     <constraint firstItem="EfF-Qd-ylO" firstAttribute="leading" secondItem="o0n-HD-iWG" secondAttribute="leading" id="2pG-tL-Yxv"/>
-                    <constraint firstItem="HF7-u3-fmP" firstAttribute="top" secondItem="o0n-HD-iWG" secondAttribute="bottom" constant="15" id="AT0-Z9-Xvt"/>
+                    <constraint firstItem="HF7-u3-fmP" firstAttribute="top" secondItem="2SF-Ht-d5j" secondAttribute="bottom" constant="15" id="BJT-wo-GWU"/>
                     <constraint firstItem="aXS-Qj-RLk" firstAttribute="leading" secondItem="U5i-TO-XPF" secondAttribute="leading" constant="20" id="CY5-7i-Bvl"/>
                     <constraint firstItem="Nyv-md-SOc" firstAttribute="top" secondItem="U5i-TO-XPF" secondAttribute="top" constant="20" id="EFL-45-o4J"/>
                     <constraint firstItem="Zze-6B-XGM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EfF-Qd-ylO" secondAttribute="trailing" constant="20" id="FUI-3Z-c3e"/>
                     <constraint firstItem="aXS-Qj-RLk" firstAttribute="top" secondItem="U5i-TO-XPF" secondAttribute="top" constant="20" id="GcM-FX-qpA"/>
+                    <constraint firstItem="2SF-Ht-d5j" firstAttribute="leading" secondItem="o0n-HD-iWG" secondAttribute="leading" id="MO6-Tr-OlB"/>
                     <constraint firstItem="HF7-u3-fmP" firstAttribute="trailing" secondItem="Nyv-md-SOc" secondAttribute="trailing" id="RkP-e5-mDo"/>
                     <constraint firstItem="Zze-6B-XGM" firstAttribute="baseline" secondItem="HF7-u3-fmP" secondAttribute="baseline" id="W8C-BG-lol"/>
                     <constraint firstItem="o0n-HD-iWG" firstAttribute="trailing" secondItem="Nyv-md-SOc" secondAttribute="trailing" id="WRW-Ye-qav"/>
                     <constraint firstItem="HF7-u3-fmP" firstAttribute="leading" secondItem="Zze-6B-XGM" secondAttribute="trailing" constant="12" id="YFg-HT-QBG"/>
                     <constraint firstItem="o0n-HD-iWG" firstAttribute="top" secondItem="Nyv-md-SOc" secondAttribute="bottom" constant="10" id="YwO-Zl-me2"/>
-                    <constraint firstAttribute="bottom" secondItem="HF7-u3-fmP" secondAttribute="bottom" constant="20" id="fdb-pL-AlJ"/>
                     <constraint firstAttribute="trailing" secondItem="Nyv-md-SOc" secondAttribute="trailing" constant="20" id="lew-Li-vff"/>
                     <constraint firstItem="Nyv-md-SOc" firstAttribute="leading" secondItem="aXS-Qj-RLk" secondAttribute="trailing" constant="20" id="mjk-z9-gVO"/>
+                    <constraint firstItem="2SF-Ht-d5j" firstAttribute="top" secondItem="o0n-HD-iWG" secondAttribute="bottom" constant="15" id="t8s-gG-DrC"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="flr-gX-buN"/>
             </connections>
-            <point key="canvasLocation" x="429" y="12"/>
+            <point key="canvasLocation" x="429" y="26"/>
         </window>
     </objects>
     <resources>

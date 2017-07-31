@@ -57,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)upgradeActivateSheetActivateLicense:(TDCLicenseUpgradeActivateSheet *)sender;
 - (void)upgradeActivateSheetPurchaseUpgrade:(TDCLicenseUpgradeActivateSheet *)sender;
+- (void)upgradeActivateSheetSuppressed:(TDCLicenseUpgradeActivateSheet *)sender;
 - (void)upgradeActivateSheetWillClose:(TDCLicenseUpgradeActivateSheet *)sender;
 @end
 #endif

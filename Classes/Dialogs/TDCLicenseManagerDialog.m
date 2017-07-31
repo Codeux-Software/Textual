@@ -534,6 +534,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[TDCLicenseUpgradeCommonActions purchaseUpgradeForLicense:sender.licenseKey];
 }
 
+- (void)upgradeActivateSheetSuppressed:(TDCLicenseUpgradeActivateSheet *)sender
+{
+	[self resetUpgradeActivateSheetContext];
+}
+
 - (void)upgradeActivateSheetWillClose:(TDCLicenseUpgradeActivateSheet *)sender
 {
 	self.upgradeActivateSheet = nil;
