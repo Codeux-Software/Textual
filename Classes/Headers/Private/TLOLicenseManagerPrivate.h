@@ -46,6 +46,8 @@ TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerCo
 TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey;
 TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
 
+TEXTUAL_EXTERN NSUInteger const TLOLicenseManagerCurrentLicenseGeneration;
+
 TEXTUAL_EXTERN void TLOLicenseManagerSetup(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerTextualIsRegistered(void);
