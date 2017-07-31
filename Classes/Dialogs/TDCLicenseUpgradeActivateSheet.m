@@ -43,8 +43,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) TLOLicenseUpgradeEligibility eligibility;
 @property (nonatomic, strong) IBOutlet NSWindow *sheetEligible;
 @property (nonatomic, weak) IBOutlet NSTextField *sheetEligibleTitleTextField;
+@property (nonatomic, weak) IBOutlet NSButton *sheetEligibleSuppressionButton;
 @property (nonatomic, strong) IBOutlet NSWindow *sheetAlreadyUpgraded;
 @property (nonatomic, weak) IBOutlet NSTextField *sheetAlreadyUpgradedTitleTextField;
+@property (nonatomic, weak) IBOutlet NSButton *sheetAlreadyUpgradedSuppressionButton;
 
 - (IBAction)actionActivateLicense:(id)sender;
 - (IBAction)actionPurchaseUpgrade:(id)sender;
@@ -125,6 +127,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)actionCancel:(id)sender
 {
+	/* Only one of two sheets can ever be visible so just check if one is on. */
+	if (self.sheetEligibleSuppressionButton.state == NSOnState ||
+		self.sheetAlreadyUpgradedSuppressionButton.state == NSOnState)
+	{
+		[self.delegate upgradeActivateSheetSuppressed:self];
+	}
+
 	[self endSheet];
 }
 
