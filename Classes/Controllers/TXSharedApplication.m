@@ -71,6 +71,12 @@ _defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer, new)
 _defineSharedInstance(sharedThemeController, TPCThemeController, new)
 _defineSharedInstance(sharedWindowController, TXWindowController, new)
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+_defineSharedInstance(sharedLicenseManagerDialog, TDCLicenseManagerDialog, new)
+#endif
+
+_defineSharedInstance(sharedFileTransferDialog, TDCFileTransferDialog, new)
+
 @end
 
 #pragma mark -

@@ -59,6 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
 @property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
+@property (nonatomic, assign) BOOL isSilentOnSuccess;
 
 - (IBAction)unregisteredViewActivateTextual:(id)sender;
 - (IBAction)unregisteredViewCancel:(id)sender;
@@ -88,19 +89,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	(void)[RZMainBundle() loadNibNamed:@"TDCLicenseManagerDialog" owner:self topLevelObjects:nil];
+
+	[self populateMacAppStoreIconImageView];
 }
 
 - (void)show
 {
 	[super show];
 
-	[self populateMacAppStoreIconImageView];
-
 	[self updateSelectedPane];
 }
 
-+ (void)applicationDidFinishLaunching
+- (void)applicationDidFinishLaunching
 {
+	[self scheduleTimeRemainingInTrialNotification];
+
 	[self activateLicenseKeyUsingArgumentDictionary];
 }
 
@@ -157,7 +160,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		contentView = self.contentViewUnregisteredTextualView;
 
-		NSString *formattedTrialInformation = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
+		NSString *formattedTrialInformation = [self timeRemainingInTrialFormattedMessage];
 
 		self.unregisteredViewTrialInformationTextField.stringValue = formattedTrialInformation;
 	}
@@ -202,7 +205,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self attemptToActivateLicenseKey:licenseKeyValue];
 }
 
-+ (void)activateLicenseKeyUsingArgumentDictionary
+- (void)activateLicenseKeyUsingArgumentDictionary
 {
 	if (TLOLicenseManagerTextualIsRegistered()) {
 		return; // Nothing to do here...
@@ -212,16 +215,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *argumentLicenseKey = commandLineArguments[@"-licenseKey"];
 
-	if (argumentLicenseKey) {
-		[menuController() manageLicense:nil activateLicenseKey:argumentLicenseKey licenseKeyPassedByArgument:YES];
-	} else {
-		[self scheduleTimeRemainingInTrialNotification];
-	}
+	[self activateLicenseKey:argumentLicenseKey silently:YES];
 }
 
 - (void)activateLicenseKey:(NSString *)licenseKey
 {
 	NSParameterAssert(licenseKey != nil);
+
+	[self activateLicenseKey:licenseKey silently:NO];
+}
+
+- (void)activateLicenseKey:(NSString *)licenseKey silently:(BOOL)silently
+{
+	self.isSilentOnSuccess = YES;
 
 	/* This method is allowed to be invoked by another class in order
 	 to activate a license. It is not invoked by this class on its own. */
@@ -439,7 +445,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Notification Center
 
-+ (NSString *)timeRemainingInTrialFormattedMessage
+- (NSString *)timeRemainingInTrialFormattedMessage
 {
 	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
 
@@ -452,7 +458,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return TXTLS(@"TLOLicenseManager[1015]", formattedTimeRemainingString);
 }
 
-+ (void)scheduleTimeRemainingInTrialNotification
+- (void)scheduleTimeRemainingInTrialNotification
 {
 	if (TLOLicenseManagerIsTrialExpired()) {
 		return; // Do not schedule notification...
@@ -464,7 +470,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	notification.informativeText = TXTLS(@"TLOLicenseManager[1017][2]");
 
-	notification.title = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
+	notification.title = [self timeRemainingInTrialFormattedMessage];
 
 	notification.userInfo = @{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)};
 
@@ -475,14 +481,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[RZUserNotificationCenter() scheduleNotification:notification];
-}
-
-#pragma mark -
-#pragma mark NSWindow Delegate
-
-- (void)windowWillClose:(NSNotification *)note
-{
-	[self.delegate licenseManagerDialogWillClose:self];
 }
 
 @end

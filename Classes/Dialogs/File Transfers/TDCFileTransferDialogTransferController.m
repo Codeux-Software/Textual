@@ -1147,7 +1147,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (TDCFileTransferDialog *)transferDialog
 {
-	return menuController().fileTransferController;
+	return [TXSharedApplication sharedFileTransferDialog];
 }
 
 - (NSArray<NSNumber *> *)speedRecords

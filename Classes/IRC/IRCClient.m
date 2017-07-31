@@ -829,7 +829,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (TDCFileTransferDialog *)fileTransferController
 {
-	return menuController().fileTransferController;
+	return [TXSharedApplication sharedFileTransferDialog];
 }
 
 - (BOOL)isReconnecting

@@ -760,7 +760,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateFileTransferDownloadDestinationFolder
 {
-	TDCFileTransferDialog *transferController = menuController().fileTransferController;
+	TDCFileTransferDialog *transferController = [TXSharedApplication sharedFileTransferDialog];
 
 	NSURL *path = transferController.downloadDestinationURL;
 	
@@ -783,7 +783,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onFileTransferDownloadDestinationFolderChanged:(id)sender
 {
-	TDCFileTransferDialog *transferController = menuController().fileTransferController;
+	TDCFileTransferDialog *transferController = [TXSharedApplication sharedFileTransferDialog];
 
 	if (self.fileTransferDownloadDestinationButton.selectedTag == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];

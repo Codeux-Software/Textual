@@ -84,7 +84,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	self.upgradeDialogContinueTrialButton.enabled = (TLOLicenseManagerIsTrialExpired() == NO);
 
-	self.upgradeDialogTrialPeriodTextField.stringValue = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
+	self.upgradeDialogTrialPeriodTextField.stringValue = [[TXSharedApplication sharedLicenseManagerDialog] timeRemainingInTrialFormattedMessage];
 
 	[super show];
 }

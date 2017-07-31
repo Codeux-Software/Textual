@@ -61,6 +61,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (TVCLogControllerPrintingOperationQueue *)sharedPrintingQueue;
 + (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
 + (TXWindowController *)sharedWindowController;
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
++ (TDCLicenseManagerDialog *)sharedLicenseManagerDialog;
+#endif
+
++ (TDCFileTransferDialog *)sharedFileTransferDialog;
 @end
 
 @interface NSObject (TXSharedApplicationObjectExtensionPrivate)
