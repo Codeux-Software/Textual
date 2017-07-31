@@ -38,6 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#define _upgradeDialogRemindMeInterval 		345600 // 4 days
+
 @interface TDCLicenseManagerDialog ()
 @property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewUnregisteredTextualView;
@@ -59,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
 @property (nonatomic, strong, nullable) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, strong, nullable) TDCLicenseUpgradeDialog *upgradeDialog;
+@property (nonatomic, strong, nullable) TDCLicenseUpgradeActivateSheet *upgradeActivateSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
 @property (nonatomic, assign) BOOL operationInProgress;
@@ -113,6 +116,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self scheduleTimeRemainingInTrialNotification];
 
 	[self activateLicenseKeyUsingArgumentDictionary];
+
+	[self upgradeDialogAppFinishedLaunchingRoutine];
 }
 
 - (void)populateMacAppStoreIconImageView
@@ -280,6 +285,12 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	/* The activate sheet will close itself when user clicks to make purchase,
+	 but if user activates a license by other means (such as clicking the link
+	 in their e-mail), then we dismiss it here, so that we can do activation. */
+	[self closeUpgradeActivateSheet];
+
+	/* Perform activation */
 	self.isSilentOnSuccess = silently;
 
 	[self beginProgressIndicator];
@@ -328,6 +339,9 @@ NS_ASSUME_NONNULL_BEGIN
 			/* We close the upgrade dialog if a key is activated because
 			 why would we keep it around under that condition? */
 			[self closeUpgradeDialog];
+
+			/* Reset context for activate sheet. */
+			[self resetUpgradeActivateSheetContext];
 		}
 
 		weakSelf.operationInProgress = NO;
@@ -341,7 +355,59 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark License Upgrade
+#pragma mark License Upgrade Launch Routine
+
+- (void)upgradeDialogAppFinishedLaunchingRoutine
+{
+	/* There is no reason to perform this check if this copy of Textual
+	 is already registered. */
+	if (TLOLicenseManagerTextualIsRegistered()) {
+		/* If Textual is registered, then we reset these values because
+		 there is no reason to have them hanging around. */
+		[self resetUpgradeActivateSheetContext];
+
+		return;
+	}
+
+	/* Check if we have license key saved from Textual 6 upgrade dialog. */
+	if ([self showUpgradeActivateSheet]) {
+		return;
+	}
+
+	/* Show upgrade dialog */
+	[self showUpgradeDialogForLastGenLicense];
+}
+
+- (void)showUpgradeDialogForLastGenLicense
+{
+	/* Is there even a last generation key? */
+	NSString *lastGenLicenseKey = [TLOLicenseManagerLastGen licenseKey];
+
+	if (lastGenLicenseKey == nil) {
+		return;
+	}
+
+	/* When was the last time the user was nagged? */
+	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation"];
+
+	if (lastCheckTime > 0) {
+		NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+
+		if ((currentTime - lastCheckTime) < _upgradeDialogRemindMeInterval) {
+			LogToConsoleInfo("Not enough time has passed since last presentation")
+
+			return;
+		}
+
+		[RZUserDefaults() setDouble:currentTime forKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation (LMD)"];
+	}
+
+	/* Nag user */
+	[self showUpgradeDialogForLicenseKey:lastGenLicenseKey];
+}
+
+#pragma mark -
+#pragma mark License Upgrade Dialog
 
 - (void)showUpgradeDialogForLicenseKey:(NSString *)licenseKey
 {
@@ -376,12 +442,101 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)licenseUpgradeDialogEligibilityChanged:(TDCLicenseUpgradeDialog *)sender
 {
-	LogToConsoleInfo("Eligibility changed");
+	/* Record eligibility status so that we might present an activate sheet
+	 next time the user opens the app. */
+	[self setUpgradeActivateSheetContextWithDialog:sender];
 }
 
 - (void)licenseUpgradeDialogWillClose:(TDCLicenseUpgradeDialog *)sender
 {
 	self.upgradeDialog = nil;
+}
+
+#pragma mark -
+#pragma mark Upgrade Activate Sheet
+
+- (BOOL)showUpgradeActivateSheet
+{
+	/* Do we have a properly formatted license key? */
+	NSString *licenseKey = [RZUserDefaults() objectForKey:@"Textual 7 Upgrade -> Tv7 -> Eligible License Key"];
+
+	if (licenseKey == nil) {
+		return NO;
+	}
+
+	if (TLOLicenseManagerLicenseKeyIsValid(licenseKey) == NO) {
+		return NO;
+	}
+
+	/* Do we have an eligibility that is acceptable? */
+	NSUInteger eligibility = [RZUserDefaults() unsignedIntegerForKey:@"Textual 7 Upgrade -> Tv7 -> Eligibility"];
+
+	if (eligibility != TLOLicenseUpgradeEligible &&
+		eligibility != TLOLicenseUpgradeAlreadyUpgraded)
+	{
+		return NO;
+	}
+
+	/* Show ourselves because we will place the sheet on self. */
+	[self show];
+
+	/* Create sheet and start it. */
+	  TDCLicenseUpgradeActivateSheet *activateSheet =
+	[[TDCLicenseUpgradeActivateSheet alloc] initWithLicenseKey:licenseKey eligibility:eligibility];
+
+	activateSheet.delegate = self;
+
+	activateSheet.window = self.window;
+
+	[activateSheet start];
+
+	self.upgradeActivateSheet = activateSheet;
+
+	/* Inform launch routine to do nothing more. */
+	return YES;
+}
+
+- (void)closeUpgradeActivateSheet
+{
+	if (self.upgradeActivateSheet) {
+		[self.upgradeActivateSheet endSheet];
+	}
+}
+
+- (void)setUpgradeActivateSheetContextWithDialog:(TDCLicenseUpgradeDialog *)upgradeDialog
+{
+	NSParameterAssert(upgradeDialog != nil);
+
+	[RZUserDefaults() setUnsignedInteger:upgradeDialog.eligibility forKey:@"Textual 7 Upgrade -> Tv7 -> Eligibility"];
+
+	[RZUserDefaults() setObject:upgradeDialog.licenseKey forKey:@"Textual 7 Upgrade -> Tv7 -> Eligible License Key"];
+}
+
+- (void)resetUpgradeActivateSheetContext
+{
+	/* We reset these values for any successful activation.
+	 It is probably more proper to compare the key activated to the context,
+	 but I don't think it will matter in the real world. */
+	[RZUserDefaults() removeObjectForKey:@"Textual 7 Upgrade -> Tv7 -> Eligibility"];
+
+	[RZUserDefaults() removeObjectForKey:@"Textual 7 Upgrade -> Tv7 -> Eligible License Key"];
+}
+
+- (void)upgradeActivateSheetActivateLicense:(TDCLicenseUpgradeActivateSheet *)sender
+{
+	[sender endSheet];
+
+	[self attemptToActivateLicenseKey:sender.licenseKey];
+}
+
+- (void)upgradeActivateSheetPurchaseUpgrade:(TDCLicenseUpgradeActivateSheet *)sender
+{
+	[TDCLicenseUpgradeCommonActions purchaseUpgradeForLicense:sender.licenseKey];
+}
+
+- (void)upgradeActivateSheetWillClose:(TDCLicenseUpgradeActivateSheet *)sender
+{
+	self.upgradeActivateSheet = nil;
 }
 
 #pragma mark -
