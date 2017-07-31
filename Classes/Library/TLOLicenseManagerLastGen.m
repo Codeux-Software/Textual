@@ -94,6 +94,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return licenseKey;
 	}
 
+	if ([licenseGeneration unsignedIntegerValue] != TLOLicenseManagerCurrentLicenseGeneration) {
+		return licenseKey;
+	}
+
 	return nil;
 }
 
