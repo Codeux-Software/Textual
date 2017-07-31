@@ -3204,9 +3204,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store" inBackground:NO];
 }
 
-- (void)openStripetoreWebpage:(id)sender
+- (void)openStandaloneStoreWebpage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/stripe-store" inBackground:NO];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/standalone-store" inBackground:NO];
 }
 
 - (void)performNavigationAction:(id)sender
@@ -3606,9 +3606,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXMenuControllerMainWindowProxy
 
-- (void)openStripeStoreWebpage:(id)sender
+- (void)openStandaloneStoreWebpage:(id)sender
 {
-	[menuController() openStripetoreWebpage:sender];
+	[menuController() openStandaloneStoreWebpage:sender];
 }
 
 - (void)openMacAppStoreWebpage:(id)sender

@@ -508,7 +508,7 @@ To continue using Textual, you will need to purchase it.</string>
                                             </buttonCell>
                                             <accessibility description="Purchase Textual"/>
                                             <connections>
-                                                <action selector="openStripeStoreWebpage:" target="U6M-jc-NbT" id="7Hf-dQ-R5J"/>
+                                                <action selector="openStandaloneStoreWebpage:" target="U6M-jc-NbT" id="7Hf-dQ-R5J"/>
                                             </connections>
                                         </button>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="PTm-Lj-txK">

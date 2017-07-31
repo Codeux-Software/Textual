@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)openStandaloneStore
 {
-	[menuController() openStripetoreWebpage:nil];
+	[menuController() openStandaloneStoreWebpage:nil];
 }
 
 + (void)openMacAppStore
