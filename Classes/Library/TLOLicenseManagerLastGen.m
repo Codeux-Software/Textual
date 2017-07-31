@@ -54,19 +54,19 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self lastGenLicenseKeyWithLicenseDictionary:licenseDictionary];
 }
 
-+ (BOOL)isLastGenLicenseContents:(NSData *)licenseContents
++ (nullable NSString *)licenseKeyForLicenseContents:(NSData *)licenseContents
 {
 	NSParameterAssert(licenseContents != nil);
 
 	NSDictionary *licenseDictionary = [self lastGenLicenseDictionaryWithData:licenseContents];
 
 	if (licenseDictionary == nil) {
-		return NO;
+		return nil;
 	}
 
 	NSString *licenseKey = [self lastGenLicenseKeyWithLicenseDictionary:licenseDictionary];
 
-	return (licenseKey != nil);
+	return licenseKey;
 }
 
 #pragma mark -
