@@ -115,7 +115,8 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 							   otherButton:otherButton
 							suppressionKey:nil
 						   suppressionText:nil
-						   completionBlock:nil];
+						   completionBlock:nil
+							 accessoryView:nil];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -134,7 +135,29 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 							   otherButton:otherButton
 							suppressionKey:nil
 						   suppressionText:nil
-						   completionBlock:completionBlock];
+						   completionBlock:completionBlock
+							 accessoryView:nil];
+}
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
+				accessoryView:(nullable NSView *)accessoryView
+{
+	[TLOPopupPrompts sheetWindowWithWindow:window
+									  body:bodyText
+									 title:titleText
+							 defaultButton:buttonDefault
+						   alternateButton:buttonAlternate
+							   otherButton:otherButton
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:completionBlock
+							 accessoryView:accessoryView];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -146,6 +169,29 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 			   suppressionKey:(nullable NSString *)suppressKey
 			  suppressionText:(nullable NSString *)suppressText
 			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
+{
+	[TLOPopupPrompts sheetWindowWithWindow:window
+									body:bodyText
+								   title:titleText
+						   defaultButton:buttonDefault
+						 alternateButton:buttonAlternate
+							 otherButton:otherButton
+						  suppressionKey:suppressKey
+					     suppressionText:suppressText
+						 completionBlock:completionBlock
+						   accessoryView:nil];
+}
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
+				accessoryView:(nullable NSView *)accessoryView
 {
 	NSParameterAssert(window != nil);
 	NSParameterAssert(bodyText != nil);
@@ -163,7 +209,8 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 									   otherButton:otherButton
 									suppressionKey:suppressKey
 								   suppressionText:suppressText
-								   completionBlock:completionBlock];
+								   completionBlock:completionBlock
+									 accessoryView:accessoryView];
 		}];
 
 		return;
@@ -205,6 +252,10 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 		alert.showsSuppressionButton = YES;
 
 		alert.suppressionButton.title = suppressText;
+	}
+
+	if (accessoryView != nil) {
+		alert.accessoryView = accessoryView;
 	}
 
 	/* Construct alert context */

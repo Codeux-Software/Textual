@@ -97,9 +97,29 @@ typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonCl
 				defaultButton:(NSString *)buttonDefault
 			  alternateButton:(nullable NSString *)buttonAlternate
 				  otherButton:(nullable NSString *)otherButton
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
+				accessoryView:(nullable NSView *)accessoryView;
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
 			   suppressionKey:(nullable NSString *)suppressKey
 			  suppressionText:(nullable NSString *)suppressText
 			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock;
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
+				accessoryView:(nullable NSView *)accessoryView;
 @end
 
 NS_ASSUME_NONNULL_END
