@@ -39,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSObject (TXObjectHelper)
 
+- (void)applicationDidFinishLaunching
+{
+	[self doesNotRecognizeSelector:_cmd];
+}
+
 - (void)preferencesChanged
 {
 	[self doesNotRecognizeSelector:_cmd];
