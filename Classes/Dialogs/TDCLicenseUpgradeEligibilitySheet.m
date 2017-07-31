@@ -292,7 +292,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)actionClose:(id)sender
 {
-	[self close];
+	[self endSheet];
 }
 
 #pragma mark -
