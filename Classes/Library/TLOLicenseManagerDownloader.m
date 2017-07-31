@@ -380,12 +380,16 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 		}
 		else // TLOLicenseManagerDownloaderRequestStatusCodeSuccess
 		{
+			if (self.errorBlock != nil && self.errorBlock(statusCode, statusContext)) {
+				goto perform_return;
+			}
+
 			if (self.isSilentOnFailure) {
-				// ...
+				goto perform_return;
 			}
 
 			/* Errors related to license activation. */
-			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500000)
+			if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500000)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1004][2]")
 														 title:TXTLS(@"TLOLicenseManager[1004][1]")
@@ -524,10 +528,14 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 	}
 
 present_fatal_error:
-	if (self.isSilentOnFailure == NO) {
+	if ((self.errorBlock == nil ||
+		 self.errorBlock(statusCode, statusContext) == NO) &&
+		self.isSilentOnFailure == NO)
+	{
 		[self presentTryAgainLaterErrorDialog];
 	}
 
+perform_return:
 	_performCompletionBlockAndReturn(NO)
 
 #undef _performCompletionBlockAndReturn
