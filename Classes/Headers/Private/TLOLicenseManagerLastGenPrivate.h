@@ -41,6 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
  TLOLicenseManager* functions are functions because a plugin can't override the
  logic of the functions as easily. There is no risk in security if
  TLOLicenseManagerLastGen is swizzled. */
+/* TLOLicenseManagerLastGen processes the old location for license file and
+ returns license key from it if it is not the current generation. The class
+ is also capable of doing the same for a data object so that the activation
+ system can know whether a license key is old. */
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
@@ -51,9 +55,9 @@ typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
 };
 
 @interface TLOLicenseManagerLastGen : NSObject
-@property (class, copy, nullable, readonly) NSString *licenseKey;
-
-+ (BOOL)isLastGenLicenseContents:(NSData *)licenseContents;
+/* Only returns a value if license key is old. */
++ (nullable NSString *)licenseKey; // From saved license file (last gen location)
++ (nullable NSString *)licenseKeyForLicenseContents:(NSData *)licenseContents;
 @end
 #endif
 
