@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1021 */
+/* Next unusued key: 1023 */
 
 "TLOLicenseManager[1001][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
 "TLOLicenseManager[1001][2]" = "Try again in a few minutes then contact support if the problem persists.";
@@ -91,3 +91,13 @@
 
 "TLOLicenseManager[1019][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1019][2]" = "Receipt could not validated because of the following error:\n\n“%@“";
+
+"TLOLicenseManager[1020][1]" = "The license key “%@“ cannot be activated because another operation is already in progress";
+"TLOLicenseManager[1020][2]" = "";
+
+"TLOLicenseManager[1021][1]" = "The license key “%@“ cannot be activated because it is already in use";
+"TLOLicenseManager[1021][2]" = "";
+
+"TLOLicenseManager[1022][1]" = "The license key “%@“ cannot be activated because it requires an upgrade";
+"TLOLicenseManager[1022][2]" = "";
+"TLOLicenseManager[1022][3]" = "Learn More";
