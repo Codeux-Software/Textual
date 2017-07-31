@@ -91,13 +91,19 @@ NS_ASSUME_NONNULL_BEGIN
 	(void)[RZMainBundle() loadNibNamed:@"TDCLicenseManagerDialog" owner:self topLevelObjects:nil];
 
 	[self populateMacAppStoreIconImageView];
+
+	[self updateSelectedPane];
 }
 
 - (void)show
 {
+	BOOL windowVisible = self.window.visible;
+
 	[super show];
 
-	[self updateSelectedPane];
+	if (windowVisible == NO) {
+		[self.window restoreWindowStateForClass:self.class];
+	}
 }
 
 - (void)applicationDidFinishLaunching
@@ -485,6 +491,14 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[RZUserNotificationCenter() scheduleNotification:notification];
+}
+
+#pragma mark -
+#pragma mark Window Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	[self.window saveWindowStateForClass:self.class];
 }
 
 @end
