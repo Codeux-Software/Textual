@@ -390,17 +390,17 @@ NS_ASSUME_NONNULL_BEGIN
 	/* When was the last time the user was nagged? */
 	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation"];
 
-	if (lastCheckTime > 0) {
-		NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
+	if (lastCheckTime > 0) {
 		if ((currentTime - lastCheckTime) < _upgradeDialogRemindMeInterval) {
 			LogToConsoleInfo("Not enough time has passed since last presentation")
 
 			return;
 		}
-
-		[RZUserDefaults() setDouble:currentTime forKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation (LMD)"];
 	}
+
+	[RZUserDefaults() setDouble:currentTime forKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation (LMD)"];
 
 	/* Nag user */
 	[self showUpgradeDialogForLicenseKey:lastGenLicenseKey];
