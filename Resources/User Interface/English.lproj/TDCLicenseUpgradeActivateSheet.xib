@@ -55,6 +55,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="actionActivateLicense:" target="-2" id="uxP-LI-z7K"/>
+                        </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JWM-xV-yeI">
                         <rect key="frame" x="103" y="56" width="429" height="14"/>
@@ -153,7 +156,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="actionActivateLicense:" target="-2" id="qIR-ls-ZJs"/>
+                            <action selector="actionActivateLicense:" target="-2" id="XKc-ms-bBu"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zze-6B-XGM">
