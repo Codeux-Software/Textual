@@ -60,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
+@property (nonatomic, assign) BOOL operationInProgress;
 
 - (IBAction)unregisteredViewActivateTextual:(id)sender;
 - (IBAction)unregisteredViewCancel:(id)sender;
@@ -149,15 +150,11 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.textualIsRegistered)
 	{
 		NSString *licenseKey = TLOLicenseManagerLicenseKey();
-
 		NSString *licenseKeyOwner = TLOLicenseManagerLicenseOwnerName();
-
 		NSString *licenseKeyCreationDate = TLOLicenseManagerLicenseCreationDateFormatted();
 
 		self.registeredViewLicenseKeyTextField.stringValue = licenseKey;
-
 		self.registeredViewLicenseOwnerTextField.stringValue = licenseKeyOwner;
-
 		self.registeredViewLicensePurchaseDateTextField.stringValue = licenseKeyCreationDate;
 
 		contentView = self.contentViewRegisteredTextualView;
@@ -181,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)unregisteredViewPurchaseTextual:(id)sender
 {
-	[menuController() openStripetoreWebpage:nil];
+	[menuController() openStandaloneStoreWebpage:nil];
 }
 
 - (void)unregisteredViewCancel:(id)sender
@@ -237,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)activateLicenseKey:(NSString *)licenseKey silently:(BOOL)silently
 {
-	self.isSilentOnSuccess = YES;
+	NSParameterAssert(licenseKey != nil);
 
 	/* This method is allowed to be invoked by another class in order
 	 to activate a license. It is not invoked by this class on its own. */
@@ -250,6 +247,40 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(licenseKey != nil);
 
+	[self attemptToActivateLicenseKey:licenseKey silently:NO];
+}
+
+- (void)attemptToActivateLicenseKey:(NSString *)licenseKey silently:(BOOL)silently
+{
+	NSParameterAssert(licenseKey != nil);
+
+	/* User can click a link or do something else while an activation is already in
+	 progress, so we try to recognize when that happens so that we can prevent
+	 confusion when an operation is already in progress. */
+	/* This is the only place in the dialog where user can perform an action by
+	 outside influence. Everything else is internalized which means this check is
+	 only necessary here... at least for now. */
+	if (self.operationInProgress) {
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1020][2]")
+										   title:TXTLS(@"TLOLicenseManager[1020][1]", licenseKey)
+								   defaultButton:TXTLS(@"Prompts[0005]")
+								 alternateButton:nil];
+
+		return;
+	}
+
+	/* Do not activate license we are already using. */
+	if (licenseKey == TLOLicenseManagerLicenseKey()) {
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1021][2]")
+										   title:TXTLS(@"TLOLicenseManager[1021][1]", licenseKey)
+								   defaultButton:TXTLS(@"Prompts[0005]")
+								 alternateButton:nil];
+
+		return;
+	}
+
+	self.isSilentOnSuccess = silently;
+
 	[self beginProgressIndicator];
 
 	__weak TDCLicenseManagerDialog *weakSelf = self;
@@ -260,6 +291,31 @@ NS_ASSUME_NONNULL_BEGIN
 		return TLOLicenseManagerWriteLicenseFileContents(statusContext);
 	};
 
+	licenseManagerDownloader.errorBlock = ^BOOL(NSUInteger statusCode, id _Nullable statusContext) {
+		if (statusCode != 0 || statusContext == nil) {
+			return NO;
+		}
+
+		/* lastGenLicenseKey will only be non-nil if the contents of licenseContents
+		 are for a license that have not been upgraded to Textual 7 yet. */
+		NSString *lastGenLicenseKey = [TLOLicenseManagerLastGen licenseKeyForLicenseContents:statusContext];
+
+		if (lastGenLicenseKey != nil) {
+			[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1022][2]")
+											   title:TXTLS(@"TLOLicenseManager[1022][1]", lastGenLicenseKey)
+									   defaultButton:TXTLS(@"TLOLicenseManager[1022][3]")
+									 alternateButton:nil];
+
+			[weakSelf showUpgradeDialogForLicenseKey:lastGenLicenseKey];
+
+			/* We return YES so no error is displayed except the one above. */
+			return YES;
+		}
+
+		/* We did not handle the error. */
+		return NO;
+	};
+
 	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
@@ -268,6 +324,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 			[weakSelf reloadMainWindowLoadingScreen];
 		}
+
+		weakSelf.operationInProgress = NO;
 	};
 
 	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
@@ -275,6 +333,14 @@ NS_ASSUME_NONNULL_BEGIN
 	[licenseManagerDownloader activateLicense:licenseKey.trim];
 
 	self.licenseManagerDownloader = licenseManagerDownloader;
+}
+
+#pragma mark -
+#pragma mark License Upgrade
+
+- (void)showUpgradeDialogForLicenseKey:(NSString *)licenseKey
+{
+	
 }
 
 #pragma mark -
