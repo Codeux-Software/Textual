@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCLicenseUpgradeEligibilitySheet">
+            <connections>
+                <outlet property="sheetAlreadyUpgraded" destination="NMV-Qs-7lz" id="T4P-T1-DWX"/>
+                <outlet property="sheetEligible" destination="Vqb-So-6Ho" id="lTg-Ts-rMH"/>
+                <outlet property="sheetNotEligible" destination="s7V-Ks-YGu" id="tJY-Km-9Kx"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="s7V-Ks-YGu" userLabel="Eligibility Check - Not">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <rect key="contentRect" x="128" y="143" width="369" height="260"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="zmB-R2-bXm">
+                <rect key="frame" x="0.0" y="0.0" width="369" height="260"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eX9-9T-nFn">
+                        <rect key="frame" x="94" y="216" width="182" height="24"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="You are not eligible" id="oiB-Uh-16m">
+                            <font key="font" metaFont="systemBold" size="20"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="86o-pP-6Hi">
+                        <rect key="frame" x="18" y="167" width="333" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="329" id="vep-O9-gy7"/>
+                        </constraints>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Unfortunately, you are not eligible for a free or discounted upgrade." id="axq-6T-VR5">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kly-4d-CEl">
+                        <rect key="frame" x="40" y="60" width="289" height="41"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="39" id="WjR-PJ-Rnm"/>
+                            <constraint firstAttribute="width" constant="289" id="dbv-k6-C6O"/>
+                        </constraints>
+                        <buttonCell key="cell" type="smallSquare" title="Purchase in Mac App Store" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4On-qj-WpA">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="15"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionPurchaseMacAppStore:" target="-2" id="zsS-Ki-6qp"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ln-qj-Yq8">
+                        <rect key="frame" x="40" y="107" width="289" height="41"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="289" id="3kR-Eq-2lT"/>
+                            <constraint firstAttribute="height" constant="39" id="ce1-t9-gol"/>
+                        </constraints>
+                        <buttonCell key="cell" type="smallSquare" title="Purchase in Codeux Software Store" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cbV-gz-k63">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="15"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionPurchaseStandalone:" target="-2" id="mAQ-mY-NVy"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aEw-pj-DLf">
+                        <rect key="frame" x="147" y="13" width="75" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YZx-ou-Quq">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionClose:" target="-2" id="bUV-gQ-Jnd"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="86o-pP-6Hi" firstAttribute="top" secondItem="eX9-9T-nFn" secondAttribute="bottom" constant="15" id="3Tz-Zv-TwS"/>
+                    <constraint firstItem="kly-4d-CEl" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="5ra-l5-MWt"/>
+                    <constraint firstItem="0Ln-qj-Yq8" firstAttribute="top" secondItem="86o-pP-6Hi" secondAttribute="bottom" constant="20" id="8ID-h8-21C"/>
+                    <constraint firstItem="0Ln-qj-Yq8" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="PbD-hr-R3p"/>
+                    <constraint firstAttribute="bottom" secondItem="aEw-pj-DLf" secondAttribute="bottom" constant="20" id="Qcu-ML-BJW"/>
+                    <constraint firstItem="eX9-9T-nFn" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="SlH-Zp-lew"/>
+                    <constraint firstItem="kly-4d-CEl" firstAttribute="top" secondItem="0Ln-qj-Yq8" secondAttribute="bottom" constant="8" id="dTY-aj-NKd"/>
+                    <constraint firstItem="aEw-pj-DLf" firstAttribute="top" secondItem="kly-4d-CEl" secondAttribute="bottom" constant="20" id="e1s-RY-TJw"/>
+                    <constraint firstItem="eX9-9T-nFn" firstAttribute="top" secondItem="zmB-R2-bXm" secondAttribute="top" constant="20" id="ndK-Ox-HJg"/>
+                    <constraint firstItem="aEw-pj-DLf" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="s6j-zm-p4H"/>
+                    <constraint firstItem="86o-pP-6Hi" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="z0O-Ba-I88"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="A8Q-WT-FhN"/>
+            </connections>
+            <point key="canvasLocation" x="-49" y="44"/>
+        </window>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Vqb-So-6Ho" userLabel="Eligibility Check - Reduced">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <rect key="contentRect" x="128" y="143" width="380" height="298"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="MHB-dt-yu8">
+                <rect key="frame" x="0.0" y="0.0" width="380" height="298"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Oi-4c-Yln">
+                        <rect key="frame" x="56" y="254" width="268" height="24"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your upgrade is discounted!" id="4LA-tc-vdW">
+                            <font key="font" metaFont="systemBold" size="20"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svY-JN-wRd">
+                        <rect key="frame" x="17" y="120" width="347" height="119"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="343" id="aEK-gG-zN7"/>
+                        </constraints>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="1V5-vh-2id">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Congratulations, you are eligible for a discount.
+
+Click the “Purchase Upgrade” button to purchase the upgrade.
+
+When your order is finished being processed, click the “Activate Textual“ button to continue.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W1h-Tu-uqZ">
+                        <rect key="frame" x="153" y="13" width="75" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zYo-FM-XDl">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionClose:" target="-2" id="o0R-kX-dZA"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mIg-BY-n6R">
+                        <rect key="frame" x="22" y="60" width="165" height="41"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="165" id="gpP-f5-X4S"/>
+                            <constraint firstAttribute="height" constant="39" id="pmZ-lK-JMG"/>
+                        </constraints>
+                        <buttonCell key="cell" type="smallSquare" title="Purchase Upgrade" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Psq-Ta-ai7">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="15"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionPurchaseUpgrade:" target="-2" id="fjD-RU-thi"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iK4-4C-6gn">
+                        <rect key="frame" x="195" y="60" width="165" height="41"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="39" id="daB-pF-r0B"/>
+                            <constraint firstAttribute="width" constant="165" id="rPj-Hi-kCN"/>
+                        </constraints>
+                        <buttonCell key="cell" type="smallSquare" title="Activate Textual" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oDA-Wn-QrS">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="15"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionActivateLicense:" target="-2" id="JQM-0j-h3l"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="W1h-Tu-uqZ" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="6pw-w3-Ued"/>
+                    <constraint firstItem="0Oi-4c-Yln" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="Edi-QM-hFh"/>
+                    <constraint firstItem="svY-JN-wRd" firstAttribute="top" secondItem="0Oi-4c-Yln" secondAttribute="bottom" constant="15" id="FRt-HK-aUa"/>
+                    <constraint firstItem="mIg-BY-n6R" firstAttribute="top" secondItem="svY-JN-wRd" secondAttribute="bottom" constant="20" id="LMl-SG-kzu"/>
+                    <constraint firstAttribute="bottom" secondItem="W1h-Tu-uqZ" secondAttribute="bottom" constant="20" id="efG-Ly-JWX"/>
+                    <constraint firstItem="iK4-4C-6gn" firstAttribute="top" secondItem="svY-JN-wRd" secondAttribute="bottom" constant="20" id="eru-wx-Nm8"/>
+                    <constraint firstItem="W1h-Tu-uqZ" firstAttribute="top" secondItem="mIg-BY-n6R" secondAttribute="bottom" constant="20" id="q2h-vJ-Hr4"/>
+                    <constraint firstItem="0Oi-4c-Yln" firstAttribute="top" secondItem="MHB-dt-yu8" secondAttribute="top" constant="20" id="uCC-Hr-hsv"/>
+                    <constraint firstAttribute="trailing" secondItem="iK4-4C-6gn" secondAttribute="trailing" constant="20" id="uMy-Mf-qvE"/>
+                    <constraint firstItem="mIg-BY-n6R" firstAttribute="leading" secondItem="MHB-dt-yu8" secondAttribute="leading" constant="22" id="w6l-a2-C1b"/>
+                    <constraint firstItem="svY-JN-wRd" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="zeG-vL-Drq"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="CWu-X2-HAd"/>
+            </connections>
+            <point key="canvasLocation" x="-49" y="557"/>
+        </window>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="NMV-Qs-7lz" userLabel="Eligibility Check - Free">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <rect key="contentRect" x="128" y="143" width="414" height="230"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="TsN-yE-dfp">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="USW-SV-QEO">
+                        <rect key="frame" x="108" y="186" width="199" height="24"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your upgrade is free!" id="swW-rG-FFU">
+                            <font key="font" metaFont="systemBold" size="20"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PUt-g1-NNM">
+                        <rect key="frame" x="18" y="120" width="378" height="51"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="374" id="RNv-p4-zYH"/>
+                        </constraints>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="T1q-Ug-ZcD">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Congratulations, you are eligible for a free upgrade.
+
+Click the “Activate Textual“ button to continue.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X2Q-y1-pP6">
+                        <rect key="frame" x="170" y="13" width="75" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IhF-mk-CHo">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionClose:" target="-2" id="BDY-Df-7gd"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VXG-Ri-gpe">
+                        <rect key="frame" x="134" y="60" width="147" height="41"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="39" id="PCb-Ra-OAH"/>
+                            <constraint firstAttribute="width" constant="147" id="sq5-x8-F3g"/>
+                        </constraints>
+                        <buttonCell key="cell" type="smallSquare" title="Activate Textual" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OZr-al-Gi8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="systemBold" size="15"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actionActivateLicense:" target="-2" id="ffc-z4-rzc"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VXG-Ri-gpe" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="AdD-HJ-CT3"/>
+                    <constraint firstItem="USW-SV-QEO" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="BVd-J5-LXW"/>
+                    <constraint firstItem="USW-SV-QEO" firstAttribute="top" secondItem="TsN-yE-dfp" secondAttribute="top" constant="20" id="Chb-ro-o6B"/>
+                    <constraint firstAttribute="bottom" secondItem="X2Q-y1-pP6" secondAttribute="bottom" constant="20" id="EQ2-SQ-8Gw"/>
+                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="HiL-i7-lGY"/>
+                    <constraint firstItem="PUt-g1-NNM" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="VPr-II-qGr"/>
+                    <constraint firstItem="PUt-g1-NNM" firstAttribute="top" secondItem="USW-SV-QEO" secondAttribute="bottom" constant="15" id="aMk-rd-Ejm"/>
+                    <constraint firstItem="VXG-Ri-gpe" firstAttribute="top" secondItem="PUt-g1-NNM" secondAttribute="bottom" constant="20" id="nWw-mo-fwM"/>
+                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="top" secondItem="VXG-Ri-gpe" secondAttribute="bottom" constant="20" id="pA9-hB-Vkq"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="gBF-uB-lZl"/>
+            </connections>
+            <point key="canvasLocation" x="-49" y="270"/>
+        </window>
+    </objects>
+</document>

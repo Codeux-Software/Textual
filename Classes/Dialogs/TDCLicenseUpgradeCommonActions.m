@@ -37,23 +37,49 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* TLOLicenseManagerLastGen is a class because classes are easier to work with.
- TLOLicenseManager* functions are functions because a plugin can't override the
- logic of the functions as easily. There is no risk in security if
- TLOLicenseManagerLastGen is swizzled. */
-
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
-	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligible = 1,
-	TLOLicenseUpgradeAlreadyUpgraded = 2,
-};
+@implementation TDCLicenseUpgradeCommonActions
 
-@interface TLOLicenseManagerLastGen : NSObject
-@property (class, copy, nullable, readonly) NSString *licenseKey;
++ (void)contactSupport
+{
+	NSURL *urlToOpen = [NSURL URLWithString:@"https://contact.codeux.com/"];
 
-+ (BOOL)isLastGenLicenseContents:(NSData *)licenseContents;
+	[TLOpenLink open:urlToOpen inBackground:NO];
+}
+
++ (void)activateLicense:(NSString *)licenseKey
+{
+	NSParameterAssert(licenseKey != nil);
+
+	[menuController() manageLicense:nil activateLicenseKey:licenseKey];
+}
+
++ (void)purchaseUpgradeForLicense:(NSString *)licenseKey
+{
+	NSParameterAssert(licenseKey != nil);
+
+	NSString *linkToOpen = [NSString stringWithFormat:@"https://www.codeux.com/textual/version-7-upgrade/upgradeLicense/%@", licenseKey];
+
+	[TLOpenLink openWithString:linkToOpen inBackground:NO];
+}
+
++ (void)learnMore
+{
+	NSURL *urlToOpen = [NSURL URLWithString:@"https://www.codeux.com/textual/version-7-upgrade/learnMore"];
+
+	[TLOpenLink open:urlToOpen inBackground:NO];
+}
+
++ (void)openStandaloneStore
+{
+	[menuController() openStripetoreWebpage:nil];
+}
+
++ (void)openMacAppStore
+{
+	[menuController() openMacAppStoreWebpage:nil];
+}
+
 @end
 #endif
 

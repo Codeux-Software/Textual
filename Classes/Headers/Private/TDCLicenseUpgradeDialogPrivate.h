@@ -35,25 +35,25 @@
 
  *********************************************************************** */
 
+#import "TLOLicenseManagerLastGenPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-/* TLOLicenseManagerLastGen is a class because classes are easier to work with.
- TLOLicenseManager* functions are functions because a plugin can't override the
- logic of the functions as easily. There is no risk in security if
- TLOLicenseManagerLastGen is swizzled. */
-
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
-	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligible = 1,
-	TLOLicenseUpgradeAlreadyUpgraded = 2,
-};
+@protocol TDCLicenseUpgradeDialogDelegate;
 
-@interface TLOLicenseManagerLastGen : NSObject
-@property (class, copy, nullable, readonly) NSString *licenseKey;
+@interface TDCLicenseUpgradeDialog : TDCWindowBase
+@property (readonly, copy) NSString *licenseKey;
+@property (readonly) TLOLicenseUpgradeEligibility eligibility;
 
-+ (BOOL)isLastGenLicenseContents:(NSData *)licenseContents;
+- (instancetype)initWithLicenseKey:(NSString *)licenseKey;
+@end
+
+@protocol TDCLicenseUpgradeDialogDelegate <NSObject>
+@required
+
+- (void)licenseUpgradeDialogEligibilityChanged:(TDCLicenseUpgradeDialog *)sender;
+- (void)licenseUpgradeDialogWillClose:(TDCLicenseUpgradeDialog *)sender;
 @end
 #endif
 
