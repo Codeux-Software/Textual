@@ -125,7 +125,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)actionCancel:(id)sender
 {
-	[self close];
+	[self endSheet];
 }
 
 #pragma mark -
