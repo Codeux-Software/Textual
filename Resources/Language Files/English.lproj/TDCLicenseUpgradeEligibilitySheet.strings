@@ -35,26 +35,8 @@
 
  *********************************************************************** */
 
-NS_ASSUME_NONNULL_BEGIN
+/* Next unusued key: 1002 */
 
-/* TLOLicenseManagerLastGen is a class because classes are easier to work with.
- TLOLicenseManager* functions are functions because a plugin can't override the
- logic of the functions as easily. There is no risk in security if
- TLOLicenseManagerLastGen is swizzled. */
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
-	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligible = 1,
-	TLOLicenseUpgradeAlreadyUpgraded = 2,
-};
-
-@interface TLOLicenseManagerLastGen : NSObject
-@property (class, copy, nullable, readonly) NSString *licenseKey;
-
-+ (BOOL)isLastGenLicenseContents:(NSData *)licenseContents;
-@end
-#endif
-
-NS_ASSUME_NONNULL_END
+"TDCLicenseUpgradeEligibilitySheet[1001][1]" = "A problem was encountered when checking the upgrade eligibility for the license key “%@”";
+"TDCLicenseUpgradeEligibilitySheet[1001][2]" = "Try again in a few minutes then contact support if the problem persists.";
+"TDCLicenseUpgradeEligibilitySheet[1001][3]" = "Contact Support";

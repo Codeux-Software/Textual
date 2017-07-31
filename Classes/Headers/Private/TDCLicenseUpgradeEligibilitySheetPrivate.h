@@ -35,25 +35,32 @@
 
  *********************************************************************** */
 
+#import "TLOLicenseManagerLastGenPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-/* TLOLicenseManagerLastGen is a class because classes are easier to work with.
- TLOLicenseManager* functions are functions because a plugin can't override the
- logic of the functions as easily. There is no risk in security if
- TLOLicenseManagerLastGen is swizzled. */
-
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
-	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligible = 1,
-	TLOLicenseUpgradeAlreadyUpgraded = 2,
-};
+@protocol TDCLicenseUpgradeEligibilitySheetDelegate;
 
-@interface TLOLicenseManagerLastGen : NSObject
-@property (class, copy, nullable, readonly) NSString *licenseKey;
+@interface TDCLicenseUpgradeEligibilitySheet : TDCSheetBase
+@property (readonly, copy) NSString *licenseKey;
+@property (readonly) TLOLicenseUpgradeEligibility eligibility;
 
-+ (BOOL)isLastGenLicenseContents:(NSData *)licenseContents;
+- (instancetype)initWithLicenseKey:(NSString *)licenseKey NS_DESIGNATED_INITIALIZER;
+
+- (void)checkEligibility;
+@end
+
+@protocol TDCLicenseUpgradeEligibilitySheetDelegate <NSObject>
+@required
+
+- (void)upgradeEligibilitySheetContactSupport:(TDCLicenseUpgradeEligibilitySheet *)sender;
+- (void)upgradeEligibilitySheetActivateLicense:(TDCLicenseUpgradeEligibilitySheet *)sender;
+- (void)upgradeEligibilitySheetPurchaseUpgrade:(TDCLicenseUpgradeEligibilitySheet *)sender;
+- (void)upgradeEligibilitySheetPurchaseMacAppStore:(TDCLicenseUpgradeEligibilitySheet *)sender;
+- (void)upgradeEligibilitySheetPurchaseStandalone:(TDCLicenseUpgradeEligibilitySheet *)sender;
+- (void)upgradeEligibilitySheetChanged:(TDCLicenseUpgradeEligibilitySheet *)sender;
+- (void)upgradeEligibilitySheetWillClose:(TDCLicenseUpgradeEligibilitySheet *)sender;
 @end
 #endif
 

@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)activateLicenseKey:(NSString *)licenseKey;
 
 + (void)applicationDidFinishLaunching;
+
++ (NSString *)timeRemainingInTrialFormattedMessage;
 @end
 
 @protocol TDCLicenseManagerDialogDelegate <NSObject>
