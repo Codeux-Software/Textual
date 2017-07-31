@@ -110,6 +110,13 @@ ClassWithDesignatedInitializerInitMethod
 	self.eligiblitySheet = eligibilitySheet;
 }
 
+- (void)closeEligibilitySheet
+{
+	if (self.eligiblitySheet) {
+		[self.eligiblitySheet endSheet];
+	}
+}
+
 - (void)upgradeEligibilitySheetContactSupport:(TDCLicenseUpgradeEligibilitySheet *)sender
 {
 	[TDCLicenseUpgradeCommonActions contactSupport];
@@ -175,6 +182,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self closeEligibilitySheet];
+
 	[self.delegate licenseUpgradeDialogWillClose:self];
 }
 
