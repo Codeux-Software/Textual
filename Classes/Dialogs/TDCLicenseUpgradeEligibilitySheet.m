@@ -90,6 +90,13 @@ ClassWithDesignatedInitializerInitMethod
 	LogToConsoleError("This method does nothing. Use -checkEligibility instead.")
 }
 
+- (void)endSheet
+{
+	[self _cancelEligiblityCheck];
+
+	[super endSheet];
+}
+
 - (void)checkEligibility
 {
 	[self _checkEligiblity];
@@ -137,6 +144,17 @@ ClassWithDesignatedInitializerInitMethod
 								   [self actionContactSupport:nil];
 							   }
 						   }];
+}
+
+- (void)_cancelEligiblityCheck
+{
+	if (self.checkingEligibility == NO) {
+		return;
+	}
+
+	[self.licenseManagerDownloader cancelRequest];
+
+	[self _checkEligiblityCompletionBlock];
 }
 
 - (void)_checkEligiblity
