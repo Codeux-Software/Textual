@@ -73,6 +73,8 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful
 - (void)migrateMacAppStorePurcahse:(NSString *)receiptData
 				  licenseOwnerName:(NSString *)licenseOwnerName
 		licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
+
+- (void)cancelRequest;
 @end
 
 NS_ASSUME_NONNULL_END

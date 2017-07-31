@@ -67,6 +67,8 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 @property (nonatomic, strong) NSMutableData *requestResponseData; // Will be set by the object, readonly
 
 - (BOOL)setupConnectionRequest;
+
+- (void)cancelRequest;
 @end
 
 @interface TLOLicenseManagerDownloader ()
@@ -76,8 +78,6 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					   httpStatusCode:(NSUInteger)requestHttpStatusCode
 							 contents:(nullable NSData *)requestContents;
 @end
-
-static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 
 #define _connectionTimeoutInterval			30.0
 
@@ -183,10 +183,8 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 {
 	NSParameterAssert(requestContext != nil);
 
-	if (TLOLicenseManagerDownloaderConnectionActive == NO) {
-		TLOLicenseManagerDownloaderConnectionActive = YES;
-	} else {
-		return;
+	if (self.activeConnection != nil) {
+		[self.activeConnection cancelRequest];
 	}
 
 	TLOLicenseManagerDownloaderConnection *connectionObject = [TLOLicenseManagerDownloaderConnection new];
@@ -202,6 +200,21 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 	(void)[connectionObject setupConnectionRequest];
 }
 
+- (void)cancelRequest
+{
+	if (self.activeConnection == nil) {
+		return;
+	}
+
+	[self.activeConnection cancelRequest];
+
+	self.activeConnection = nil;
+
+	self.actionBlock = nil;
+	self.errorBlock = nil;
+	self.completionBlock = nil;
+}
+
 - (void)processResponseForRequestType:(TLOLicenseManagerDownloaderRequestType)requestType httpStatusCode:(NSUInteger)requestHttpStatusCode contents:(nullable NSData *)requestContents
 {
 	/* The license API returns content as property lists, including errors. This method
@@ -210,8 +223,6 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 	 logs to the console that the contents could not parsed. */
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		self.activeConnection = nil;
-
-		TLOLicenseManagerDownloaderConnectionActive = NO;
 	});
 
 #define _performCompletionBlockAndReturn(operationResult) \
@@ -268,7 +279,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionActive = NO;
 					goto present_fatal_error;
 				}
 
-				if (self.actionBlock(statusCode, statusContext) == NO) {
+				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
 					LogToConsoleError("Failed to write user license file contents")
 
 					goto present_fatal_error;
@@ -689,6 +700,11 @@ perform_return:
 	self.requestConnection = nil;
 	self.requestResponse = nil;
 	self.requestResponseData = nil;
+}
+
+- (void)cancelRequest
+{
+	[self destroyConnectionRequest];
 }
 
 - (BOOL)setupConnectionRequest
