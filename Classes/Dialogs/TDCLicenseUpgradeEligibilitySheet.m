@@ -134,10 +134,10 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_presentEligibilityCheckFailedSheet
 {
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][2]")
-									 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][1]", self.licenseKey.prettyLicenseKey)
+									  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][2]")
+									 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][1]", self.licenseKey.prettyLicenseKey)
 							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1000][3]")
+						   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][3]")
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
