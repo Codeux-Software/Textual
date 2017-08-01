@@ -131,10 +131,12 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Eligibility Sheet Actions
 
-- (void)_presentEligibilityCheckFailedSheet
+- (void)_presentEligibilityCheckFailedSheetWithError:(NSString *)errorMessage
 {
+	NSParameterAssert(errorMessage != nil);
+
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][2]")
+									  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][2]", errorMessage)
 									 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][1]", self.licenseKey.prettyLicenseKey)
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][3]")
@@ -214,16 +216,20 @@ ClassWithDesignatedInitializerInitMethod
 	LogToConsoleDebug("Status code: %ld", statusCode)
 
 #define _presentEligibilityCheckFailedSheet 	\
-	[self _presentEligibilityCheckFailedSheet]; 	\
+	[self _presentEligibilityCheckFailedSheetWithError:errorMessage]; 	\
 	return;
 
 	/* Check for common status codes. */
 	if (statusCode != 0) {
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][1]", statusCode);
+
 		_presentEligibilityCheckFailedSheet
 	}
 
 	/* There is never a time a status context should be nil for this check. */
 	if (statusContext == nil) {
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][2]");
+
 		_presentEligibilityCheckFailedSheet
 	}
 
@@ -232,6 +238,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (eligibilityObject == nil || [eligibilityObject isKindOfClass:[NSNumber class]] == NO) {
 		LogToConsoleError("'licenseUpgradeEligibility' is nil or not of kind 'NSNumber'")
+
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][3]");
 
 		_presentEligibilityCheckFailedSheet
 	}
@@ -243,6 +251,8 @@ ClassWithDesignatedInitializerInitMethod
 		eligibility != TLOLicenseUpgradeNotEligible &&
 		eligibility != TLOLicenseUpgradeAlreadyUpgraded)
 	{
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][4]", eligibility);
+
 		_presentEligibilityCheckFailedSheet
 	}
 
