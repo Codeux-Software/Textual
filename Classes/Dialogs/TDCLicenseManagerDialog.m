@@ -737,7 +737,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)scheduleTimeRemainingInTrialNotification
 {
-	if (TLOLicenseManagerIsTrialExpired()) {
+	if (TLOLicenseManagerTextualIsRegistered() || TLOLicenseManagerIsTrialExpired()) {
 		return; // Do not schedule notification...
 	}
 
