@@ -143,6 +143,8 @@ ClassWithDesignatedInitializerInitMethod
 							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
 								   [self actionContactSupport:nil];
 							   }
+
+							   [self windowWillClose:nil];
 						   }];
 }
 
