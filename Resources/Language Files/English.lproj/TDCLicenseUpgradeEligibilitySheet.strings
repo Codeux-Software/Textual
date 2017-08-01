@@ -35,8 +35,13 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1002 */
+/* Next unusued key: 1003 */
 
 "TDCLicenseUpgradeEligibilitySheet[1001][1]" = "A problem was encountered when checking the upgrade eligibility for the license key “%@”";
-"TDCLicenseUpgradeEligibilitySheet[1001][2]" = "Try again in a few minutes then contact support if the problem persists.";
+"TDCLicenseUpgradeEligibilitySheet[1001][2]" = "%@\n\nTry again in a few minutes then contact support if the problem persists.";
 "TDCLicenseUpgradeEligibilitySheet[1001][3]" = "Contact Support";
+
+"TDCLicenseUpgradeEligibilitySheet[1002][1]" = "Service returned a non-zero response code: %ld";
+"TDCLicenseUpgradeEligibilitySheet[1002][2]" = "Service returned an empty status context.";
+"TDCLicenseUpgradeEligibilitySheet[1002][3]" = "Service returned an malformed status context.";
+"TDCLicenseUpgradeEligibilitySheet[1002][4]" = "Service returned an unusual eligibility: %ld";
