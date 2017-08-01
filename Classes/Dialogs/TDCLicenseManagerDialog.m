@@ -388,7 +388,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* When was the last time the user was nagged? */
-	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation"];
+	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation (LMD)"];
 
 	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
