@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,14 +23,14 @@
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="213" width="695" height="317"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="695" height="317"/>
             <view key="contentView" id="rOf-7y-CFb">
                 <rect key="frame" x="0.0" y="0.0" width="695" height="317"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ThC-su-OJ3">
-                        <rect key="frame" x="18" y="8" width="71" height="24"/>
+                        <rect key="frame" x="18" y="8" width="70" height="24"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="dUS-P9-b7z">
                             <font key="font" metaFont="system"/>
                             <segments>
@@ -43,30 +43,8 @@
                             <action selector="entryActionsSegmentedControlClicked:" target="-2" id="mor-eT-ZoC"/>
                         </connections>
                     </segmentedControl>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UvC-Rd-H2d">
-                        <rect key="frame" x="611" y="3" width="70" height="32"/>
-                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IGk-Ag-g5S">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Save"/>
-                        <connections>
-                            <action selector="ok:" target="-2" id="F2r-c1-BYU"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xvV-vQ-BBH">
-                        <rect key="frame" x="529" y="3" width="82" height="32"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uLP-la-kWC">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Cancel"/>
-                        <connections>
-                            <action selector="cancel:" target="-2" id="ztf-N5-eU7"/>
-                        </connections>
-                    </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pOF-VD-WZg">
-                        <rect key="frame" x="18" y="287" width="649" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pOF-VD-WZg">
+                        <rect key="frame" x="18" y="287" width="648" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="The order of this table, from top to bottom, determines the order in which Textual connects to each server." id="qeA-Ep-V8r">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -103,7 +81,7 @@
                                                     <rect key="frame" x="1" y="1" width="282" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField identifier="serverAddressTextField" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZ5-1k-jqr">
+                                                        <textField identifier="serverAddressTextField" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="NZ5-1k-jqr">
                                                             <rect key="frame" x="0.0" y="0.0" width="282" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="irc.example.com" id="DC0-dd-X4r">
                                                                 <font key="font" metaFont="system"/>
@@ -148,7 +126,7 @@
                                                     <rect key="frame" x="286" y="1" width="85" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField identifier="serverPortTextField" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3x-SV-fcf">
+                                                        <textField identifier="serverPortTextField" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="N3x-SV-fcf">
                                                             <rect key="frame" x="0.0" y="0.0" width="85" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="65535" id="llo-Jr-fJz">
                                                                 <font key="font" metaFont="system"/>
@@ -233,7 +211,7 @@
                                                     <rect key="frame" x="477" y="1" width="214" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <secureTextField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cB8-GH-3UE">
+                                                        <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cB8-GH-3UE">
                                                             <rect key="frame" x="0.0" y="0.0" width="214" height="17"/>
                                                             <secureTextFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" id="YHA-fW-1Az">
                                                                 <font key="font" metaFont="system"/>
@@ -281,6 +259,28 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UvC-Rd-H2d">
+                        <rect key="frame" x="611" y="3" width="70" height="32"/>
+                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IGk-Ag-g5S">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Save"/>
+                        <connections>
+                            <action selector="ok:" target="-2" id="F2r-c1-BYU"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xvV-vQ-BBH">
+                        <rect key="frame" x="529" y="3" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uLP-la-kWC">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Cancel"/>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="ztf-N5-eU7"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="xvV-vQ-BBH" firstAttribute="baseline" secondItem="UvC-Rd-H2d" secondAttribute="baseline" id="3vd-Kr-bcI"/>
@@ -288,10 +288,10 @@
                     <constraint firstItem="pOF-VD-WZg" firstAttribute="leading" secondItem="rOf-7y-CFb" secondAttribute="leading" constant="20" id="EWm-cg-xPW"/>
                     <constraint firstItem="4Gy-fQ-L47" firstAttribute="top" secondItem="pOF-VD-WZg" secondAttribute="bottom" constant="13" id="LMR-wr-Rxa"/>
                     <constraint firstAttribute="trailing" secondItem="4Gy-fQ-L47" secondAttribute="trailing" id="PVF-ga-z6L"/>
+                    <constraint firstAttribute="bottom" secondItem="UvC-Rd-H2d" secondAttribute="bottom" constant="10" id="R1a-hK-yfg"/>
                     <constraint firstItem="ThC-su-OJ3" firstAttribute="leading" secondItem="rOf-7y-CFb" secondAttribute="leading" constant="20" id="T03-Wi-3PA"/>
                     <constraint firstItem="pOF-VD-WZg" firstAttribute="top" secondItem="rOf-7y-CFb" secondAttribute="top" constant="13" id="fTm-yf-ce7"/>
                     <constraint firstItem="UvC-Rd-H2d" firstAttribute="leading" secondItem="xvV-vQ-BBH" secondAttribute="trailing" constant="12" symbolic="YES" id="fzO-Vr-rpf"/>
-                    <constraint firstItem="xvV-vQ-BBH" firstAttribute="baseline" secondItem="ThC-su-OJ3" secondAttribute="baseline" id="hH0-CA-ded"/>
                     <constraint firstAttribute="bottom" secondItem="ThC-su-OJ3" secondAttribute="bottom" constant="10" id="hm5-rL-vUR"/>
                     <constraint firstAttribute="trailing" secondItem="UvC-Rd-H2d" secondAttribute="trailing" constant="20" symbolic="YES" id="jPt-SV-qn6"/>
                     <constraint firstItem="ThC-su-OJ3" firstAttribute="top" secondItem="4Gy-fQ-L47" secondAttribute="bottom" constant="10" id="r4Z-jy-Wv6"/>
