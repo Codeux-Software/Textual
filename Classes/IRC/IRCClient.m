@@ -2042,9 +2042,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			eventTitle = self.networkNameAlt;
 
 			if (text == nil || text.length == 0) {
-				eventDescription = TXTLS(@"Notifications[1076]", nickname, target.name);
+				eventDescription = TXTLS(@"Notifications[1076]", nickname);
 			} else {
-				eventDescription = TXTLS(@"Notifications[1077]", nickname, target.name, text);
+				eventDescription = TXTLS(@"Notifications[1077]", nickname, text);
 			}
 
 			break;
