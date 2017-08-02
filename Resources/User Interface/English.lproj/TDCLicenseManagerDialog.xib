@@ -218,7 +218,7 @@ Gw
                             </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LBa-p3-Krv">
                                 <rect key="frame" x="105" y="54" width="453" height="34"/>
-                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You can request a free license key if you already own Textual 7 or a newer version in the Mac App Store." id="QVB-9e-QPb">
+                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You can request a free license key if you already own Textual 5 or a newer version in the Mac App Store." id="QVB-9e-QPb">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
