@@ -66,7 +66,7 @@
 "TLOLicenseManager[1009][2]" = "This application is not Textual 5 or a newer version, or was not downloaded from the Mac App Store.";
 
 "TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase";
-"TLOLicenseManager[1010][2]" = "An e-mail which contains your license key will be delivered to %@ in the next few minutes.";
+"TLOLicenseManager[1010][2]" = "An e-mail which contains your license key will be delivered to %@ within the next few minutes.";
 
 "TLOLicenseManager[1011][1]" = "Cannot migrate Mac App Store purchase because it has already been migrated";
 "TLOLicenseManager[1011][2]" = "Click the “Recover Lost License” button if you have lost your license key.";
@@ -78,7 +78,7 @@
 "TLOLicenseManager[1013][2]" = "Unable to locate an order that is linked to the e-mail address “%@“";
 
 "TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit";
-"TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
+"TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times within a twenty-four (24) hour period. Please try again at a later time.";
 
 "TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
 "TLOLicenseManager[1016]" = "Your trial of Textual has expired.";
