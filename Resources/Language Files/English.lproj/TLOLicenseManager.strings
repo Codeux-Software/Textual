@@ -90,7 +90,7 @@
 "TLOLicenseManager[1018][2]" = "Improperly formatted name or is missing";
 
 "TLOLicenseManager[1019][1]" = "The following error was returned while processing request:";
-"TLOLicenseManager[1019][2]" = "Receipt could not validated because of the following error:\n\n“%@“";
+"TLOLicenseManager[1019][2]" = "Receipt did not pass validation because of the following error:\n\n“%@“";
 
 "TLOLicenseManager[1020][1]" = "The license key “%@“ cannot be activated because another operation is already in progress";
 "TLOLicenseManager[1020][2]" = "";
