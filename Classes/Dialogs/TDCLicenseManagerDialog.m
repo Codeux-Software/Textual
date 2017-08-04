@@ -388,11 +388,17 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* When was the last time the user was nagged? */
+	/* Unless user hits "Remind Me Later", then the upgrade dialog is
+	 not hidden due to time limit. This change was made so that if the
+	 user is performing some type of action that causes them to miss the
+	 dialog, such as installing an update, it will show next launch. */
+	BOOL remindMeLater = [RZUserDefaults() boolForKey:@"Textual 7 Upgrade -> Tv7 -> Remind Me Later"];
+
 	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation (LMD)"];
 
 	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
-	if (lastCheckTime > 0) {
+	if (lastCheckTime > 0 && remindMeLater == NO) {
 		if ((currentTime - lastCheckTime) < _upgradeDialogRemindMeInterval) {
 			LogToConsoleInfo("Not enough time has passed since last presentation")
 
@@ -445,6 +451,11 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Record eligibility status so that we might present an activate sheet
 	 next time the user opens the app. */
 	[self setUpgradeActivateSheetContextWithDialog:sender];
+}
+
+- (void)licenseUpgradeDialogWRemindMeLater:(TDCLicenseUpgradeDialog *)sender
+{
+	[RZUserDefaults() setBool:YES forKey:@"Textual 7 Upgrade -> Tv7 -> Remind Me Later"];
 }
 
 - (void)licenseUpgradeDialogWillClose:(TDCLicenseUpgradeDialog *)sender
