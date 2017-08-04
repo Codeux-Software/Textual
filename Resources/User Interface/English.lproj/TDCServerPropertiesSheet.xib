@@ -865,18 +865,19 @@ Gw
                 <constraint firstItem="1687" firstAttribute="centerY" secondItem="1684" secondAttribute="centerY" id="fsg-z1-x6H"/>
                 <constraint firstItem="2315" firstAttribute="leading" secondItem="1675" secondAttribute="leading" constant="109" id="kBg-Zv-dCR"/>
             </constraints>
+            <point key="canvasLocation" x="142" y="154"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2542" userLabel="ZNC View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <userGuides>
                 <userLayoutGuide location="48" affinity="minX"/>
-                <userLayoutGuide location="264" affinity="minY"/>
+                <userLayoutGuide location="266" affinity="minY"/>
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2590">
-                    <rect key="frame" x="84" y="140" width="367" height="29"/>
+                    <rect key="frame" x="84" y="141" width="358" height="28"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="29" id="Xng-fT-ptW"/>
+                        <constraint firstAttribute="width" constant="354" id="gMe-FL-Mer"/>
                     </constraints>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not show notification bubbles or play sounds for messages that are part of the playback buffer." id="2591">
                         <font key="font" metaFont="smallSystem"/>
@@ -895,16 +896,16 @@ Gw
                     </buttonCell>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="pKk-0J-UQ0">
-                    <rect key="frame" x="37" y="240" width="456" height="36"/>
+                    <rect key="frame" x="35" y="240" width="460" height="36"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Fx0-Yf-kbO">
-                        <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <rect key="frame" x="0.0" y="0.0" width="460" height="36"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
-                                <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
+                                <rect key="frame" x="0.0" y="0.0" width="460" height="36"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="456" height="36"/>
+                                <size key="minSize" width="460" height="36"/>
                                 <size key="maxSize" width="1155" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="The following options will automatically take effect when Textual detects that it is connecting to ">
@@ -946,7 +947,7 @@ Gw
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2599">
-                    <rect key="frame" x="127" y="30" width="281" height="14"/>
+                    <rect key="frame" x="123" y="30" width="281" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="These options target version 1.2 of ZNC and later." id="2600">
                         <font key="font" metaFont="smallSystemBold"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -959,12 +960,11 @@ Gw
                 <constraint firstItem="75N-79-v1S" firstAttribute="leading" secondItem="2542" secondAttribute="leading" constant="68" id="3Mo-P8-y8F"/>
                 <constraint firstItem="2590" firstAttribute="top" secondItem="2580" secondAttribute="bottom" constant="8" symbolic="YES" id="C1H-0R-rhw"/>
                 <constraint firstItem="pKk-0J-UQ0" firstAttribute="top" secondItem="2542" secondAttribute="top" constant="31" id="Gpi-bg-PTb"/>
-                <constraint firstItem="pKk-0J-UQ0" firstAttribute="leading" secondItem="2542" secondAttribute="leading" constant="37" id="LFh-o9-uep"/>
+                <constraint firstItem="pKk-0J-UQ0" firstAttribute="leading" secondItem="2542" secondAttribute="leading" constant="35" id="LFh-o9-uep"/>
                 <constraint firstItem="pKk-0J-UQ0" firstAttribute="centerX" secondItem="2542" secondAttribute="centerX" id="O5e-ot-cil"/>
                 <constraint firstItem="2590" firstAttribute="leading" secondItem="2542" secondAttribute="leading" constant="86" id="baN-um-kGt"/>
                 <constraint firstItem="2580" firstAttribute="top" secondItem="75N-79-v1S" secondAttribute="bottom" constant="14" id="dt7-N4-fPR"/>
                 <constraint firstItem="2599" firstAttribute="centerX" secondItem="2590" secondAttribute="centerX" id="fpr-ef-r5g"/>
-                <constraint firstAttribute="trailing" secondItem="2590" secondAttribute="trailing" constant="81" id="lTd-5h-njH"/>
                 <constraint firstItem="75N-79-v1S" firstAttribute="leading" secondItem="2580" secondAttribute="leading" id="rhF-3O-ghC"/>
                 <constraint firstItem="75N-79-v1S" firstAttribute="top" secondItem="pKk-0J-UQ0" secondAttribute="bottom" constant="21" id="ta7-ZW-K0o"/>
             </constraints>
@@ -1424,7 +1424,7 @@ Gw
                     <rect key="frame" x="57" y="54" width="416" height="200"/>
                     <clipView key="contentView" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="414" height="198"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -1714,7 +1714,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
@@ -1738,7 +1738,7 @@ Gw
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="Images and other content that is displayed inline with chat uses whatever proxy, if any, is configured in the ">
+                                    <fragment content="Images and other media that is displayed inline with chat uses whatever proxy, if any, is configured in the ">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -1923,7 +1923,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CGo-eo-J2e">
-                    <rect key="frame" x="18" y="260" width="376" height="17"/>
+                    <rect key="frame" x="33" y="260" width="376" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Do not send more than X number of commands in Y seconds." id="XQt-eN-ufQ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1945,7 +1945,7 @@ Gw
                 <constraint firstItem="RXW-HB-aEa" firstAttribute="leading" secondItem="O6l-eN-3Uc" secondAttribute="leading" id="UTI-iV-v5E"/>
                 <constraint firstItem="w11-kJ-IPr" firstAttribute="leading" secondItem="rXs-B6-ItZ" secondAttribute="leading" id="Vvz-DM-uPj"/>
                 <constraint firstItem="1gq-lL-Ur6" firstAttribute="top" secondItem="O6l-eN-3Uc" secondAttribute="bottom" constant="55" id="YRH-a7-2w8"/>
-                <constraint firstItem="CGo-eo-J2e" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="20" id="Yn2-kb-Ij1"/>
+                <constraint firstItem="CGo-eo-J2e" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="35" id="Yn2-kb-Ij1"/>
                 <constraint firstItem="0Af-cs-B5g" firstAttribute="leading" secondItem="Itb-Ee-5gX" secondAttribute="leading" id="Yp5-Vu-Mw3"/>
                 <constraint firstItem="1gq-lL-Ur6" firstAttribute="centerX" secondItem="2078" secondAttribute="centerX" id="aT5-KN-Bfy"/>
                 <constraint firstItem="0Af-cs-B5g" firstAttribute="baseline" secondItem="w11-kJ-IPr" secondAttribute="baseline" id="bGY-bX-5bn"/>
@@ -1965,42 +1965,42 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2536">
-                    <rect key="frame" x="34" y="161" width="355" height="18"/>
+                    <rect key="frame" x="33" y="161" width="355" height="18"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when no PING response is received" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2537">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="7Re-Oa-iNx">
-                    <rect key="frame" x="34" y="113" width="303" height="18"/>
+                    <rect key="frame" x="33" y="113" width="303" height="18"/>
                     <buttonCell key="cell" type="check" title="Validate the certificate chain when connecting" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="w5K-aH-URS">
-                    <rect key="frame" x="34" y="141" width="303" height="18"/>
+                    <rect key="frame" x="33" y="141" width="303" height="18"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when reachability changes" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mLI-Vm-l2s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="VLy-2l-FGP">
-                    <rect key="frame" x="34" y="85" width="234" height="18"/>
+                    <rect key="frame" x="33" y="85" width="234" height="18"/>
                     <buttonCell key="cell" type="check" title="Prefer Textual's list of cipher suites" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="PVf-DV-Q7i">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
-                    <rect key="frame" x="34" y="181" width="338" height="18"/>
+                    <rect key="frame" x="33" y="181" width="338" height="18"/>
                     <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2530">
-                    <rect key="frame" x="34" y="209" width="90" height="18"/>
+                    <rect key="frame" x="33" y="209" width="90" height="18"/>
                     <buttonCell key="cell" type="check" title="Prefer IPv4" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2533">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2015,7 +2015,7 @@ Gw
                 <constraint firstItem="7Re-Oa-iNx" firstAttribute="leading" secondItem="VLy-2l-FGP" secondAttribute="leading" id="Q1u-bQ-oPe"/>
                 <constraint firstItem="2536" firstAttribute="top" secondItem="2531" secondAttribute="bottom" constant="6" symbolic="YES" id="V1d-cP-qJf"/>
                 <constraint firstItem="2531" firstAttribute="leading" secondItem="2536" secondAttribute="leading" id="cGt-cj-hzU"/>
-                <constraint firstItem="2530" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="36" id="f8b-Hh-PW6"/>
+                <constraint firstItem="2530" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="35" id="f8b-Hh-PW6"/>
                 <constraint firstItem="2530" firstAttribute="leading" secondItem="2531" secondAttribute="leading" id="fbV-dI-oEE"/>
                 <constraint firstItem="VLy-2l-FGP" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="14" id="oeQ-C4-kD7"/>
                 <constraint firstItem="2531" firstAttribute="top" secondItem="2530" secondAttribute="bottom" constant="14" id="w1S-6W-u5R"/>
@@ -2055,7 +2055,7 @@ Gw
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
-                    <rect key="frame" x="39" y="260" width="468" height="17"/>
+                    <rect key="frame" x="33" y="260" width="339" height="17"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select a certificate to send when you connect securely." id="rIl-yx-VEH">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2195,7 +2195,6 @@ Gw
                 <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="leading" id="QJT-2X-nOI"/>
                 <constraint firstItem="f9F-WF-ubf" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="trailing" constant="9" id="Rp5-aL-h9I"/>
                 <constraint firstItem="fdC-a6-iNA" firstAttribute="baseline" secondItem="2ie-9H-xb2" secondAttribute="baseline" id="SOq-Cx-7EN"/>
-                <constraint firstAttribute="trailing" secondItem="zU1-IR-zpt" secondAttribute="trailing" constant="25" id="U3e-V8-1tN"/>
                 <constraint firstItem="Grr-p8-MOF" firstAttribute="trailing" secondItem="nFm-83-7HQ" secondAttribute="trailing" id="WST-sP-H5d"/>
                 <constraint firstItem="h8M-bR-Uth" firstAttribute="baseline" secondItem="nFm-83-7HQ" secondAttribute="baseline" id="WeZ-hn-clQ"/>
                 <constraint firstItem="Grr-p8-MOF" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="leading" id="WhV-pQ-2JL"/>
@@ -2206,7 +2205,7 @@ Gw
                 <constraint firstItem="nly-3d-FIq" firstAttribute="trailing" secondItem="758-2B-Ka3" secondAttribute="trailing" id="dXz-vT-WAq"/>
                 <constraint firstItem="758-2B-Ka3" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="trailing" constant="8" id="irc-C6-5ex"/>
                 <constraint firstItem="nly-3d-FIq" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="leading" id="mtd-w4-ZmE"/>
-                <constraint firstItem="zU1-IR-zpt" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="41" id="nF1-La-ZqG"/>
+                <constraint firstItem="zU1-IR-zpt" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="35" id="nF1-La-ZqG"/>
                 <constraint firstItem="KJ9-QR-tAv" firstAttribute="leading" secondItem="Grr-p8-MOF" secondAttribute="trailing" constant="9" id="nft-xE-Q6v"/>
                 <constraint firstItem="sab-tw-7nn" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="115" id="or6-Eh-u6z"/>
                 <constraint firstAttribute="trailing" secondItem="758-2B-Ka3" secondAttribute="trailing" constant="25" id="ovE-zZ-KC3"/>
@@ -2237,12 +2236,22 @@ Gw
             <point key="canvasLocation" x="328.5" y="557.5"/>
         </menu>
         <userDefaultsController id="iuc-Sg-eeB" customClass="TPCPreferencesUserDefaultsController"/>
-        <customView id="O3J-xl-nwg" userLabel="Redundancy">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="O3J-xl-nwg" userLabel="Redundancy">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I5e-l8-5t3">
+                    <rect key="frame" x="33" y="243" width="464" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="460" id="1B8-A5-cRW"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click the “Modify Servers” button to configure additional servers to connect to." id="SnQ-4b-NG2">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="InI-Fw-HoN">
-                    <rect key="frame" x="199" y="136" width="132" height="32"/>
+                    <rect key="frame" x="199" y="185" width="132" height="32"/>
                     <buttonCell key="cell" type="push" title="Modify Servers" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8N1-4l-slN">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2253,7 +2262,9 @@ Gw
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="InI-Fw-HoN" firstAttribute="centerY" secondItem="O3J-xl-nwg" secondAttribute="centerY" id="Vuw-rK-t5i"/>
+                <constraint firstItem="I5e-l8-5t3" firstAttribute="leading" secondItem="O3J-xl-nwg" secondAttribute="leading" constant="35" id="Cqb-qW-NO5"/>
+                <constraint firstItem="I5e-l8-5t3" firstAttribute="top" secondItem="O3J-xl-nwg" secondAttribute="top" constant="30" id="FVa-gl-UpL"/>
+                <constraint firstItem="InI-Fw-HoN" firstAttribute="top" secondItem="I5e-l8-5t3" secondAttribute="bottom" constant="30" id="Okx-lj-vGZ"/>
                 <constraint firstItem="InI-Fw-HoN" firstAttribute="centerX" secondItem="O3J-xl-nwg" secondAttribute="centerX" id="vRU-oE-jRr"/>
             </constraints>
             <point key="canvasLocation" x="535" y="64.5"/>
