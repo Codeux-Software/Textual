@@ -169,11 +169,15 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)actionContinueTrial:(id)sender
 {
+	[self.delegate licenseUpgradeDialogWRemindMeLater:self];
+
 	[self close];
 }
 
 - (void)actionRemindMeLater:(id)sender
 {
+	[self.delegate licenseUpgradeDialogWRemindMeLater:self];
+
 	[self close];
 }
 

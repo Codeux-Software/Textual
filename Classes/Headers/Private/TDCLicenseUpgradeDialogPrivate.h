@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 - (void)licenseUpgradeDialogEligibilityChanged:(TDCLicenseUpgradeDialog *)sender;
+- (void)licenseUpgradeDialogWRemindMeLater:(TDCLicenseUpgradeDialog *)sender;
 - (void)licenseUpgradeDialogWillClose:(TDCLicenseUpgradeDialog *)sender;
 @end
 #endif
