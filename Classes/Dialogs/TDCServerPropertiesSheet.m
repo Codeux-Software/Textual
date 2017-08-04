@@ -38,11 +38,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#warning TODO: Fix Channel List table inheriting private messages when the \
-	preference to save private message state is enabled.
-
-#warning TODO: Make user interface for "Redundancy" section.
-
 #define _tableDragToken		@"TDCServerPropertiesSheetTableDragToken"
 
 #define _preferencePaneViewFramePadding				47
