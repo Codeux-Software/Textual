@@ -398,7 +398,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
-	if (lastCheckTime > 0 && remindMeLater == NO) {
+	if (lastCheckTime > 0 && remindMeLater) {
 		if ((currentTime - lastCheckTime) < _upgradeDialogRemindMeInterval) {
 			LogToConsoleInfo("Not enough time has passed since last presentation")
 
@@ -407,6 +407,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[RZUserDefaults() setDouble:currentTime forKey:@"Textual 7 Upgrade -> Tv7 -> Last Dialog Presentation (LMD)"];
+
+	[RZUserDefaults() removeObjectForKey:@"Textual 7 Upgrade -> Tv7 -> Remind Me Later"];
 
 	/* Nag user */
 	[self showUpgradeDialogForLicenseKey:lastGenLicenseKey];
