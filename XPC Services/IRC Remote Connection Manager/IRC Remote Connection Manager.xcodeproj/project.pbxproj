@@ -408,7 +408,8 @@
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4C1406411F11942B00C73D53 = {
-						CreatedOnToolsVersion = 9.0;
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
