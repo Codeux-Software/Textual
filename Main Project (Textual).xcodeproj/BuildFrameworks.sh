@@ -17,7 +17,7 @@ xcodebuild -target "AutoHyperlinks.framework" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
 
-mv "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/Release/AutoHyperlinks.framework" "${BUILD_DESTINATION_FOLDER}"
+mv "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/${TEXTUAL_FRAMEWORK_BUILD_SCHEME}/AutoHyperlinks.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/"
 rm -rf "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/.tmp/"
 
@@ -30,7 +30,7 @@ xcodebuild -target "EncryptionKit" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
 
-mv "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/Release/EncryptionKit.framework" "${BUILD_DESTINATION_FOLDER}"
+mv "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/${TEXTUAL_FRAMEWORK_BUILD_SCHEME}/EncryptionKit.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/"
 rm -rf "${PROJECT_DIR}/Frameworks/Encryption Kit/.tmp/"
 
@@ -43,6 +43,6 @@ xcodebuild -target "CocoaExtensions (OS X)" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
 
-mv "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/Release/CocoaExtensions.framework" "${BUILD_DESTINATION_FOLDER}"
+mv "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/${TEXTUAL_FRAMEWORK_BUILD_SCHEME}/CocoaExtensions.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/"
 rm -rf "${PROJECT_DIR}/Frameworks/Cocoa Extensions/.tmp/"
