@@ -1112,6 +1112,7 @@
 		4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */; };
 		4C7B49181D131A7B008D7926 /* TVCLogLineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */; };
 		4C7B49191D131A7B008D7926 /* TVCLogLineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */; };
+		4C7DFFA71F38D40000C55DC2 /* TLOAppStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7DFFA51F38C55A00C55DC2 /* TLOAppStoreManager.m */; };
 		4C7E61E11B9C84A700C35BC9 /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
 		4C8083261B43911100746327 /* TLOLicenseManagerDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */; };
 		4C8083271B43911100746327 /* TLOLicenseManagerDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */; };
@@ -2381,6 +2382,8 @@
 		4C7B48F31D131A2A008D7926 /* TVCLogViewInternalWK2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogViewInternalWK2.h; path = Classes/Headers/Private/TVCLogViewInternalWK2.h; sourceTree = SOURCE_ROOT; };
 		4C7B48F41D131A2A008D7926 /* TVCLogViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogViewPrivate.h; path = Classes/Headers/Private/TVCLogViewPrivate.h; sourceTree = SOURCE_ROOT; };
 		4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogLineInternal.h; sourceTree = "<group>"; };
+		4C7DFFA51F38C55A00C55DC2 /* TLOAppStoreManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TLOAppStoreManager.m; path = Library/TLOAppStoreManager.m; sourceTree = "<group>"; };
+		4C7DFFA61F38C57B00C55DC2 /* TLOAppStoreManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOAppStoreManagerPrivate.h; path = Headers/Private/TLOAppStoreManagerPrivate.h; sourceTree = "<group>"; };
 		4C7E0F8A19AC25900084173D /* GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GRMustache.h; path = "../../../Frameworks/Static Libraries/Headers/libmustache/GRMustache.h"; sourceTree = "<group>"; };
 		4C7E0F8B19AC25900084173D /* GRMustacheAvailabilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GRMustacheAvailabilityMacros.h; path = "../../../Frameworks/Static Libraries/Headers/libmustache/GRMustacheAvailabilityMacros.h"; sourceTree = "<group>"; };
 		4C7E0F8C19AC25900084173D /* GRMustacheConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GRMustacheConfiguration.h; path = "../../../Frameworks/Static Libraries/Headers/libmustache/GRMustacheConfiguration.h"; sourceTree = "<group>"; };
@@ -3455,6 +3458,7 @@
 				4C7B05041D12168C00295E82 /* THOPluginItemPrivate.h */,
 				4C7B05051D12168C00295E82 /* THOPluginManagerPrivate.h */,
 				4C673ED71D10FB5000979B60 /* THOPluginProtocolPrivate.h */,
+				4C7DFFA61F38C57B00C55DC2 /* TLOAppStoreManagerPrivate.h */,
 				4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */,
 				4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */,
 				4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */,
@@ -3694,6 +3698,7 @@
 			children = (
 				4C8AF5C7158E99520026668C /* Color Formatting */,
 				4C8AF5C9158E99520026668C /* External Libraries */,
+				4C7DFFA51F38C55A00C55DC2 /* TLOAppStoreManager.m */,
 				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5D8158E99520026668C /* TLOFileLogger.m */,
 				4C8AF5DA158E99520026668C /* TLOGrowlController.m */,
@@ -6261,6 +6266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7DFFA71F38D40000C55DC2 /* TLOAppStoreManager.m in Sources */,
 				4C620E781D3E607A0037F35E /* TDCChannelSpotlightSearchResultsTable.m in Sources */,
 				4C0BA6351990798800857343 /* TDCFileTransferDialogTableCell.m in Sources */,
 				4CC31D671EC93FD400FBDC69 /* TVCServerList.m in Sources */,
