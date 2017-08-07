@@ -3,10 +3,41 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCInAppPurchaseDialog"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Zfm-I8-Tnh">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="283" y="305" width="250" height="64"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="BPC-fO-FhQ">
+                <rect key="frame" x="0.0" y="0.0" width="250" height="64"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YG1-hy-uRV">
+                        <rect key="frame" x="75" y="24" width="157" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Requesting new receipt…" id="vun-bi-ADj">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Dpc-zd-HIx">
+                        <rect key="frame" x="20" y="16" width="32" height="32"/>
+                    </progressIndicator>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="YG1-hy-uRV" secondAttribute="trailing" constant="20" symbolic="YES" id="2kh-bP-SU2"/>
+                    <constraint firstItem="Dpc-zd-HIx" firstAttribute="centerY" secondItem="BPC-fO-FhQ" secondAttribute="centerY" id="UWf-xF-x6s"/>
+                    <constraint firstItem="Dpc-zd-HIx" firstAttribute="leading" secondItem="BPC-fO-FhQ" secondAttribute="leading" constant="20" symbolic="YES" id="jky-hu-SCL"/>
+                    <constraint firstItem="YG1-hy-uRV" firstAttribute="centerY" secondItem="Dpc-zd-HIx" secondAttribute="centerY" id="lz2-kK-nSQ"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="491.5" y="397"/>
+        </window>
     </objects>
 </document>
