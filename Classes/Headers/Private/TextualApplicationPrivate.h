@@ -138,6 +138,7 @@
 #import "THOPluginItemPrivate.h"
 #import "THOPluginManagerPrivate.h"
 #import "THOPluginProtocolPrivate.h"
+#import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TLOGrowlControllerPrivate.h"
