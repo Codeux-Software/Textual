@@ -195,23 +195,6 @@
 
 	/* 3rd-party Extensions */
 	#import "GCDAsyncSocket.h"
-	#import "GRMustacheAvailabilityMacros.h"
-	#import "GRMustache.h"
-	#import "GRMustacheConfiguration.h"
-	#import "GRMustacheContentType.h"
-	#import "GRMustacheContext.h"
-	#import "GRMustacheError.h"
-	#import "GRMustacheFilter.h"
-	#import "GRMustacheLocalizer.h"
-	#import "GRMustacheRendering.h"
-	#import "GRMustacheSafeKeyAccess.h"
-	#import "GRMustacheTag.h"
-	#import "GRMustacheTagDelegate.h"
-	#import "GRMustacheTemplate.h"
-	#import "GRMustacheTemplateRepository.h"
-	#import "GRMustacheVersion.h"
-	#import "GTMEncodeHTML.h"
-	#import "OELReachability.h"
 
 	/* IRC Controllers — Core */
 	#import "IRC.h"
