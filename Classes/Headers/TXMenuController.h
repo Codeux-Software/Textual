@@ -197,7 +197,6 @@ NS_ASSUME_NONNULL_BEGIN
 	924: "Export Preferences"
 	925: "Import Preferences"
 	927: "End User License Agreement"
-	929: "Collect Anonymous Statistics"
 	930: "Hidden Preferences"
  
 	The following tags apply to the "Join Channel" menu:
@@ -439,7 +438,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)manageLicense:(id)sender;
 
 - (IBAction)simulateCrash:(id)sender;
-- (IBAction)toggleCollectAnonymousStatistics:(id)sender;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;

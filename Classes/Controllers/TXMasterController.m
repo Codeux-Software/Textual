@@ -40,10 +40,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
-#define _betaTesterMaxApplicationLifespan			5184000 // 60 days
-#endif
-
 /* During termination Textual will try to allow clients to shut down gracefully
  by sending the QUIT command and waiting for a response. If clients do not
  shut down gracefully within the time allotted below, then we continue with
@@ -208,71 +204,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:(id)self];
 
-	[self hockeyAppToggleCollectAnonymousStatistics];
+	[BITHockeyManager sharedHockeyManager].disableMetricsManager = YES;
 
 	[[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 }
-
-- (void)hockeyAppToggleCollectAnonymousStatistics
-{
-	[self hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:YES];
-}
-
-- (void)hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:(BOOL)askPermission
-{
-#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
-	if ([TPCPreferences collectAnonymousStatistics]) {
-		[BITHockeyManager sharedHockeyManager].disableMetricsManager = NO;
-	} else {
-		if (askPermission) {
-			[self hockeyAppAskPermissionToCollectAnonymousStatistics];
-		}
-
-#endif
-
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-		[BITHockeyManager sharedHockeyManager].disableMetricsManager = YES;
-#endif
-
-#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
-	}
-#endif
-}
-
-#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
-- (void)hockeyAppAskPermissionToCollectAnonymousStatistics
-{
-	if ([TPCPreferences collectAnonymousStatisticsPermissionAsked]) {
-		return;
-	}
-
-	[TLOPopupPrompts sheetWindowWithWindow:self.mainWindow
-									  body:TXTLS(@"Prompts[1135][2]")
-									 title:TXTLS(@"Prompts[1135][1]")
-							 defaultButton:TXTLS(@"Prompts[1135][3]")
-						   alternateButton:TXTLS(@"Prompts[1135][4]")
-							   otherButton:TXTLS(@"Prompts[1135][5]")
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse)
-							{
-								if (buttonClicked == TLOPopupPromptReturnPrimaryType ||
-									buttonClicked == TLOPopupPromptReturnSecondaryType)
-								{
-									[TPCPreferences setCollectAnonymousStatistics:(buttonClicked == TLOPopupPromptReturnPrimaryType)];
-
-									[TPCPreferences setCollectAnonymousStatisticsPermissionAsked:YES];
-								}
-								else if (buttonClicked == TLOPopupPromptReturnOtherType)
-								{
-									[TPCPreferences setCollectAnonymousStatistics:NO];
-
-									[TLOpenLink openWithString:@"https://www.hockeyapp.net/features/user-metrics/" inBackground:NO];
-								}
-
-								[self hockeyAppToggleCollectAnonymousStatisticsAndAskPermission:NO];
-						   }];
-}
-#endif
 
 - (void)prepareThirdPartyServiceSparkleFramework
 {
@@ -372,47 +308,10 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark NSApplication Terminate Procedure
-
-#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
-- (void)presentBetaTesterDialog
-{
-	NSTimeInterval currentTime = [NSDate timeIntervalSince1970];
-
-	NSTimeInterval buildTime = [TXBundleBuildDate doubleValue];
-
-	NSTimeInterval timeSpent = (currentTime - buildTime);
-	NSTimeInterval timeRemaining = (_betaTesterMaxApplicationLifespan - timeSpent);
-
-	if (timeSpent > _betaTesterMaxApplicationLifespan) {
-		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1120][2]")
-												 title:TXTLS(@"Prompts[1120][1]")
-										 defaultButton:TXTLS(@"Prompts[0005]")
-									   alternateButton:nil];
-
-		[self forceTerminate];
-	} else {
-		NSString *formattedTime = TXHumanReadableTimeInterval(timeRemaining, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
-
-		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1119][2]", formattedTime)
-												 title:TXTLS(@"Prompts[1119][1]")
-										 defaultButton:TXTLS(@"Prompts[0005]")
-									   alternateButton:nil];
-	}
-}
-#endif
-
-#pragma mark -
 #pragma mark NSApplication Delegate
 
 - (void)applicationDidFinishLaunching
 {
-#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
-	[self presentBetaTesterDialog];
-
-	[self.mainWindow makeKeyAndOrderFront:nil];
-#endif
-
 	if ([self.mainWindow reloadLoadingScreen]) {
 		[self.world autoConnectAfterWakeup:NO];
 	}

@@ -118,12 +118,6 @@
 "Prompts[1118][1]" = "The style named “%@” is not designed to work with this version of Textual";
 "Prompts[1118][2]" = "Some features will not work correctly with this style selected.";
 
-"Prompts[1119][1]" = "Thank you for beta testing Textual";
-"Prompts[1119][2]" = "This copy of Textual will expire in %@.";
-
-"Prompts[1120][1]" = "Thank you for beta testing Textual";
-"Prompts[1120][2]" = "This copy of Textual has expired.\n\nPlease download the latest release.";
-
 "Prompts[1121][1]" = "Textual is using an encrypted connection to “%@“";
 "Prompts[1121][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
 "Prompts[1121][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
@@ -167,12 +161,6 @@
 
 "Prompts[1134][1]" = "Textual is unable to access the folder that's configured for your log location because the resource is 'stale'";
 "Prompts[1134][2]" = "Navigate to Preferences \U279C Advanced \U279C Log Location to repair this preference";
-
-"Prompts[1135][1]" = "Are you willing to share anonymous usage statistics with Codeux Software to help make Textual better?";
-"Prompts[1135][2]" = "The information we collect, which does not contain personal information, is used to better understand how Textual is used on a day-to-day basis.\n\nClick “Learn More” to temporarily opt-out while you learn more.";
-"Prompts[1135][3]" = "Share";
-"Prompts[1135][4]" = "Don't Share";
-"Prompts[1135][5]" = "Learn More";
 
 "Prompts[1136][1]" = "The preference you have enabled will not work correctly because you do not have a password set.";
 "Prompts[1136][2]" = "Enter your NickServ password into the field labeled “Personal Password”";

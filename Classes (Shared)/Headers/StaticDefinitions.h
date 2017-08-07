@@ -94,9 +94,6 @@ typedef unsigned long long						TXUnsignedLongLong;
 /* Empty block for cleaner parameters. */
 typedef void (^TXEmtpyBlockDataType)(void);
 
-/* Include a forced lifespan for beta builds. */
-// #define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 1
-
 /* Include Off-the-Record Messaging (OTR) support */
 #define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 1
 
