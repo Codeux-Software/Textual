@@ -39,6 +39,7 @@
                     <constraint firstItem="44f-oq-qcQ" firstAttribute="centerY" secondItem="nX8-Wu-d5N" secondAttribute="centerY" id="bPQ-VF-UKr"/>
                     <constraint firstAttribute="trailing" secondItem="44f-oq-qcQ" secondAttribute="trailing" constant="20" symbolic="YES" id="fCX-3Q-GAC"/>
                     <constraint firstItem="nX8-Wu-d5N" firstAttribute="leading" secondItem="WV3-RL-BkV" secondAttribute="leading" constant="20" symbolic="YES" id="iPN-xW-rt4"/>
+                    <constraint firstItem="44f-oq-qcQ" firstAttribute="leading" secondItem="nX8-Wu-d5N" secondAttribute="trailing" constant="25" id="tCK-cN-bD3"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="412.5" y="397"/>
