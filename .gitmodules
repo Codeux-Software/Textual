@@ -13,4 +13,6 @@
 [submodule "Frameworks/Static Libraries"]
 	path = Frameworks/Static Libraries
 	url = https://github.com/Codeux-Software/Static-Libraries.git
-
+[submodule "Frameworks/Apple Receipt Loader"]
+	path = Frameworks/Apple Receipt Loader
+	url = https://github.com/Codeux-Software/Apple-Receipt-Loader.git

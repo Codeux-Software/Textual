@@ -375,6 +375,7 @@
 		4C10B3881D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */; };
 		4C10B3891D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */; };
 		4C10B38A1D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */; };
+		4C10C00E1F37E8800004C624 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C10C00D1F37E59B0004C624 /* IOKit.framework */; };
 		4C116BD61D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */; };
 		4C116BD71D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */; };
 		4C116BD81D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */; };
@@ -1223,6 +1224,7 @@
 		4C9BA41C1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9BA41B1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h */; };
 		4C9BA41D1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9BA41B1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h */; };
 		4C9BA41E1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9BA41B1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h */; };
+		4C9DDECC1F37974000C94AFC /* libreceipt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9DDEC41F37972600C94AFC /* libreceipt.a */; };
 		4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
 		4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
 		4C9EEC381D552D8600B78FC3 /* IRCAddressBookUserTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2163,6 +2165,7 @@
 		4C10B3791D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCLicenseManagerRecoverLostLicenseSheetPrivate.h; path = Headers/Private/TDCLicenseManagerRecoverLostLicenseSheetPrivate.h; sourceTree = "<group>"; };
 		4C10B3831D233B1A00868A74 /* TDCAboutDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCAboutDialogPrivate.h; path = Headers/Private/TDCAboutDialogPrivate.h; sourceTree = "<group>"; };
 		4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCNicknameColorSheetPrivate.h; path = Headers/Private/TDCNicknameColorSheetPrivate.h; sourceTree = "<group>"; };
+		4C10C00D1F37E59B0004C624 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUserPersistentStore.m; path = IRC/IRCUserPersistentStore.m; sourceTree = "<group>"; };
 		4C116BDE1D5CC5D200787223 /* IRCUserPersistentStorePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserPersistentStorePrivate.h; path = Headers/Private/IRCUserPersistentStorePrivate.h; sourceTree = "<group>"; };
 		4C12C35B1ED1812700E98CA4 /* TVCMemberList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberList.m; sourceTree = "<group>"; };
@@ -2232,6 +2235,7 @@
 		4C3D873D1EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerEndpointListSheetPrivate.h; path = Headers/Private/TDCServerEndpointListSheetPrivate.h; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THOUnicodeHelper.h; path = Headers/THOUnicodeHelper.h; sourceTree = "<group>"; };
 		4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCAddressBookInternal.h; sourceTree = "<group>"; };
+		4C41B5BF1F366E560010999B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "User Interface/English.lproj/TDCInAppPurchaseDialog.xib"; sourceTree = "<group>"; };
 		4C46CCBB1580469E00846B64 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		4C46CCBC1580469E00846B64 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		4C46CCBE1580469E00846B64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -2521,6 +2525,10 @@
 		4C9BA40E1D57D3590023B433 /* TDCBuddyListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCBuddyListDialog.m; sourceTree = "<group>"; };
 		4C9BA4171D57D3710023B433 /* TDCBuddyListDialogDropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCBuddyListDialogDropView.m; sourceTree = "<group>"; };
 		4C9BA41B1D57D3850023B433 /* TDCBuddyListDialogDropViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCBuddyListDialogDropViewPrivate.h; path = Classes/Headers/Private/TDCBuddyListDialogDropViewPrivate.h; sourceTree = SOURCE_ROOT; };
+		4C9DDEC41F37972600C94AFC /* libreceipt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libreceipt.a; path = ".tmp/SharedBuildResults-Frameworks/libreceipt.a"; sourceTree = "<group>"; };
+		4C9DDED11F3797C900C94AFC /* ARLReceiptLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ARLReceiptLoader.h; path = "Frameworks/Apple Receipt Loader/Classes/Headers/ARLReceiptLoader.h"; sourceTree = SOURCE_ROOT; };
+		4C9DDED21F3797C900C94AFC /* ARLReceiptContents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ARLReceiptContents.h; path = "Frameworks/Apple Receipt Loader/Classes/Headers/ARLReceiptContents.h"; sourceTree = SOURCE_ROOT; };
+		4C9DDED31F3797C900C94AFC /* ARLReceiptLoaderHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ARLReceiptLoaderHelpers.h; path = "Frameworks/Apple Receipt Loader/Classes/Headers/ARLReceiptLoaderHelpers.h"; sourceTree = SOURCE_ROOT; };
 		4C9E85B41B561AAC00B2670D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerRecoverLostLicenseSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4C9EEC371D552D8600B78FC3 /* IRCAddressBookUserTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCAddressBookUserTracking.h; path = Headers/IRCAddressBookUserTracking.h; sourceTree = "<group>"; };
 		4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebScriptObjectHelper.m; path = "Helpers/External Libraries/WebKit/WebScriptObjectHelper.m"; sourceTree = "<group>"; };
@@ -2796,8 +2804,10 @@
 				4C0BA6281990798800857343 /* Foundation.framework in Frameworks */,
 				4CF76A6B1A91157B0088BF9A /* Growl.framework in Frameworks */,
 				4CF76A6D1A91157B0088BF9A /* HockeySDK.framework in Frameworks */,
+				4C10C00E1F37E8800004C624 /* IOKit.framework in Frameworks */,
 				4CB58C211CAE10BB0052CA83 /* JavaScriptCore.framework in Frameworks */,
 				4C0BA62B1990798800857343 /* libmustache.a in Frameworks */,
+				4C9DDECC1F37974000C94AFC /* libreceipt.a in Frameworks */,
 				4C0BA62C1990798800857343 /* QuartzCore.framework in Frameworks */,
 				4C0BA62D1990798800857343 /* Security.framework in Frameworks */,
 				4C0BA62E1990798800857343 /* SecurityInterface.framework in Frameworks */,
@@ -3039,6 +3049,7 @@
 			isa = PBXGroup;
 			children = (
 				4C211D5615BF21BA00E218DA /* libmustache.a */,
+				4C9DDEC41F37972600C94AFC /* libreceipt.a */,
 			);
 			name = "External Libraries";
 			sourceTree = "<group>";
@@ -3185,6 +3196,7 @@
 				4C46CCBC1580469E00846B64 /* Cocoa.framework */,
 				4CA8EC621B63C2970087BF72 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
+				4C10C00D1F37E59B0004C624 /* IOKit.framework */,
 				4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */,
 				4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,
@@ -3784,6 +3796,9 @@
 		4C8AF73E158EB6CA0026668C /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4C9DDED21F3797C900C94AFC /* ARLReceiptContents.h */,
+				4C9DDED11F3797C900C94AFC /* ARLReceiptLoader.h */,
+				4C9DDED31F3797C900C94AFC /* ARLReceiptLoaderHelpers.h */,
 				4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */,
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
 				4C8BC0EB16DE552900360EEF /* Mustache */,
