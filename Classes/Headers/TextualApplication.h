@@ -193,6 +193,10 @@
 		#define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 0
 	#endif
 
+	#ifndef TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION
+		#define TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION 0
+	#endif
+
 	/* 3rd-party Extensions */
 	#import "GCDAsyncSocket.h"
 

@@ -75,6 +75,10 @@ _defineSharedInstance(sharedWindowController, TXWindowController, new)
 _defineSharedInstance(sharedLicenseManagerDialog, TDCLicenseManagerDialog, new)
 #endif
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+_defineSharedInstance(sharedInAppPurchaseDialog, TDCInAppPurchaseDialog, new)
+#endif
+
 _defineSharedInstance(sharedFileTransferDialog, TDCFileTransferDialog, new)
 
 @end

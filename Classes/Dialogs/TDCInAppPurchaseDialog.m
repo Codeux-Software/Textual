@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,46 +35,56 @@
 
  *********************************************************************** */
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+#import "ARLReceiptLoader.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-#define windowController()				[TXSharedApplication sharedWindowController]
-
-#define sharedGrowlController()			[TXSharedApplication sharedGrowlController]
-
-#define sharedPluginManager()			[TXSharedApplication sharedPluginManager]
-#define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
-
-@class OELReachability;
-
-@interface TXSharedApplication ()
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (TPCPreferencesCloudSync *)sharedCloudSyncManager;
-#endif
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-+ (TLOEncryptionManager *)sharedEncryptionManager;
-#endif
-
-+ (TLOGrowlController *)sharedGrowlController;
-+ (OELReachability *)sharedNetworkReachabilityNotifier;
-+ (THOPluginManager *)sharedPluginManager;
-+ (TVCLogControllerPrintingOperationQueue *)sharedPrintingQueue;
-+ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
-+ (TXWindowController *)sharedWindowController;
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-+ (TDCLicenseManagerDialog *)sharedLicenseManagerDialog;
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-+ (TDCInAppPurchaseDialog *)sharedInAppPurchaseDialog;
-#endif
-
-+ (TDCFileTransferDialog *)sharedFileTransferDialog;
+@interface TDCInAppPurchaseDialog ()
+@property (nonatomic, strong) ARLReceiptContents *receiptContents;
 @end
 
-@interface NSObject (TXSharedApplicationObjectExtensionPrivate)
-+ (void)setGlobalMasterControllerClassReference:(TXMasterController *)masterController;
+@implementation TDCInAppPurchaseDialog
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return self;
+}
+
+- (void)prepareInitialState
+{
+	(void)[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseDialog" owner:self topLevelObjects:nil];
+}
+
+- (void)applicationDidFinishLaunching
+{
+	[self loadReceiptContents];
+}
+
+- (void)loadReceiptContents
+{
+	ARLReceiptContents *receiptContents = nil;
+
+	BOOL loadSuccessful = ARLReadReceiptFromBundle(RZMainBundle(), &receiptContents);
+
+	if (loadSuccessful == NO) {
+		NSString *errorMessage = ARLLastErrorMessage();
+
+		LogToConsoleError("Failed to laod receipt contents: %@", errorMessage)
+
+		exit(173);
+	}
+
+	self.receiptContents = receiptContents;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
+#endif

@@ -376,6 +376,8 @@
 		4C10B3891D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */; };
 		4C10B38A1D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */; };
 		4C10C00E1F37E8800004C624 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C10C00D1F37E59B0004C624 /* IOKit.framework */; };
+		4C10C0101F37EF030004C624 /* TDCInAppPurchaseDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C10C00F1F37EF030004C624 /* TDCInAppPurchaseDialog.m */; };
+		4C10C0131F37EF290004C624 /* TDCInAppPurchaseDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C10C0121F37EF290004C624 /* TDCInAppPurchaseDialogPrivate.h */; };
 		4C116BD61D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */; };
 		4C116BD71D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */; };
 		4C116BD81D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */; };
@@ -523,6 +525,7 @@
 		4C3F5D391D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
 		4C3F5D3A1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
 		4C3F5D3B1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
+		4C41B5C01F366E560010999B /* TDCInAppPurchaseDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C41B5BE1F366E560010999B /* TDCInAppPurchaseDialog.xib */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
 		4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBE1580469E00846B64 /* Foundation.framework */; };
@@ -2166,6 +2169,8 @@
 		4C10B3831D233B1A00868A74 /* TDCAboutDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCAboutDialogPrivate.h; path = Headers/Private/TDCAboutDialogPrivate.h; sourceTree = "<group>"; };
 		4C10B3841D233B1A00868A74 /* TDCNicknameColorSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCNicknameColorSheetPrivate.h; path = Headers/Private/TDCNicknameColorSheetPrivate.h; sourceTree = "<group>"; };
 		4C10C00D1F37E59B0004C624 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		4C10C00F1F37EF030004C624 /* TDCInAppPurchaseDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCInAppPurchaseDialog.m; path = Dialogs/TDCInAppPurchaseDialog.m; sourceTree = "<group>"; };
+		4C10C0121F37EF290004C624 /* TDCInAppPurchaseDialogPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCInAppPurchaseDialogPrivate.h; path = Headers/Private/TDCInAppPurchaseDialogPrivate.h; sourceTree = "<group>"; };
 		4C116BD51D5CC5AE00787223 /* IRCUserPersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUserPersistentStore.m; path = IRC/IRCUserPersistentStore.m; sourceTree = "<group>"; };
 		4C116BDE1D5CC5D200787223 /* IRCUserPersistentStorePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserPersistentStorePrivate.h; path = Headers/Private/IRCUserPersistentStorePrivate.h; sourceTree = "<group>"; };
 		4C12C35B1ED1812700E98CA4 /* TVCMemberList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberList.m; sourceTree = "<group>"; };
@@ -2914,6 +2919,14 @@
 			path = "Classes/Dialogs/Server Endpoint";
 			sourceTree = SOURCE_ROOT;
 		};
+		4C10C0111F37EF0F0004C624 /* App Store */ = {
+			isa = PBXGroup;
+			children = (
+				4C10C00F1F37EF030004C624 /* TDCInAppPurchaseDialog.m */,
+			);
+			name = "App Store";
+			sourceTree = "<group>";
+		};
 		4C1382E91AA9F9A20099F887 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -3105,6 +3118,7 @@
 				4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */,
 				4CF40EEA1AC1A59500A26BE0 /* TDCFileTransferDialog.xib */,
 				4CF40EF41AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib */,
+				4C41B5BE1F366E560010999B /* TDCInAppPurchaseDialog.xib */,
 				4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */,
 				4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */,
 				4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */,
@@ -3416,6 +3430,7 @@
 				4C0D978C1D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h */,
 				4C0D978D1D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h */,
 				4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */,
+				4C10C0121F37EF290004C624 /* TDCInAppPurchaseDialogPrivate.h */,
 				4C10B3771D23283000868A74 /* TDCLicenseManagerDialogPrivate.h */,
 				4C10B3781D23283000868A74 /* TDCLicenseManagerMigrateAppStoreSheetPrivate.h */,
 				4C10B3791D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h */,
@@ -3571,6 +3586,7 @@
 		4C74FBB91B557A6200DD1615 /* License Manager */ = {
 			isa = PBXGroup;
 			children = (
+				4C10C0111F37EF0F0004C624 /* App Store */,
 				4CFFFD5B1F2EF862003CAC46 /* Upgrade */,
 				4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */,
 				4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */,
@@ -4489,6 +4505,7 @@
 				4CE474441D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C2D6AC71D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */,
 				4C7B033B1D1210A100295E82 /* IRC.h in Headers */,
+				4C10C0131F37EF290004C624 /* TDCInAppPurchaseDialogPrivate.h in Headers */,
 				4C7B033C1D1210A100295E82 /* IRCAddressBook.h in Headers */,
 				4CEFF3A21DF6F57800EE975E /* TVCWK1AutoScrollerPrivate.h in Headers */,
 				4C7B033D1D1210A100295E82 /* IRCChannel.h in Headers */,
@@ -5578,6 +5595,7 @@
 				4CCFA6721ABCF36A0083620F /* TPWTB_General@2x.png in Resources */,
 				4C0BA5621990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CF40F421AC1A59500A26BE0 /* TDCServerChangeNicknameSheet.xib in Resources */,
+				4C41B5C01F366E560010999B /* TDCInAppPurchaseDialog.xib in Resources */,
 				4CCFA68A1ABCF36A0083620F /* TPWTB_Notifications@2x.png in Resources */,
 				4C0BA5641990798800857343 /* FormattingColor_11.png in Resources */,
 				4C0BA5651990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
@@ -6380,6 +6398,7 @@
 				4C76CC861D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */,
 				4C0BA6971990798800857343 /* IRCAddressBook.m in Sources */,
 				4C0BA6981990798800857343 /* TLOpenLink.m in Sources */,
+				4C10C0101F37EF030004C624 /* TDCInAppPurchaseDialog.m in Sources */,
 				4C0BA6991990798800857343 /* TLOPopupPrompts.m in Sources */,
 				4C761BBF1E155FF800A505B7 /* TVCLogLineXPC.m in Sources */,
 				4C12C3791ED1812700E98CA4 /* TVCMemberListYosemiteDarkUserInterface.m in Sources */,
@@ -6672,6 +6691,14 @@
 				4C35DC861F2ED8C900FDE01E /* English */,
 			);
 			name = TDCLicenseUpgradeEligibilitySheet.strings;
+			sourceTree = "<group>";
+		};
+		4C41B5BE1F366E560010999B /* TDCInAppPurchaseDialog.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C41B5BF1F366E560010999B /* English */,
+			);
+			name = TDCInAppPurchaseDialog.xib;
 			sourceTree = "<group>";
 		};
 		4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */ = {
