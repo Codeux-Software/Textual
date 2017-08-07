@@ -116,11 +116,6 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)receiveBetaUpdates;
 #endif
 
-#if TEXTUAL_HOCKEYAPP_SDK_METRICS_ENABLED == 1
-+ (BOOL)collectAnonymousStatistics;
-+ (BOOL)collectAnonymousStatisticsPermissionAsked;
-#endif
-
 + (BOOL)channelNavigationIsServerSpecific;
 
 + (BOOL)automaticallyDetectHighlightSpam;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXApplication">
@@ -868,21 +868,6 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="openHelpMenuItem:" target="267" id="7cF-3R-5pW"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="5Mm-1o-ObO">
-                                <connections>
-                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with HockeyApp Framework Metrics" id="mdU-gU-Lu8">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Collect Anonymous Statistics" tag="929" id="caT-5T-9yC">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleCollectAnonymousStatistics:" target="267" id="6AX-tD-7Ux"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1661"/>
