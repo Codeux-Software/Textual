@@ -16,7 +16,7 @@ CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts-Exten
 
 CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_ROOT}/Resources/Sandbox/Entitlements/Auxiliary.entitlements
 
-HEADER_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Classes/Headers/** ${TEXTUAL_PROJECT_ROOT}/Classes\ \(Shared\)/Headers/**
+HEADER_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Classes/Headers/** ${TEXTUAL_PROJECT_ROOT}/Classes\ \(Shared\)/Headers/** ${TEXTUAL_PROJECT_ROOT}/Frameworks/**
 LIBRARY_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Frameworks/**
 FRAMEWORK_SEARCH_PATHS = ${TEXTUAL_PROJECT_ROOT}/Frameworks/** ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults-Frameworks/**
 
