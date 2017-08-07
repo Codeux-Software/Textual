@@ -180,6 +180,10 @@ NS_ASSUME_NONNULL_BEGIN
 	[self prepareLicenseManager];
 #endif
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[self prepareInAppPurchases];
+#endif
+
 	[self prepareThirdPartyServices];
 
 	/* Load plugins last so that -applicationDidFinishLaunching is posted
@@ -325,6 +329,13 @@ NS_ASSUME_NONNULL_BEGIN
 	TLOLicenseManagerSetup();
 
 	[[TXSharedApplication sharedLicenseManagerDialog] applicationDidFinishLaunching];
+}
+#endif
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+- (void)prepareInAppPurchases
+{
+	[[TXSharedApplication sharedInAppPurchaseDialog] applicationDidFinishLaunching];
 }
 #endif
 

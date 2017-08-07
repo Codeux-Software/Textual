@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,44 +37,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define windowController()				[TXSharedApplication sharedWindowController]
-
-#define sharedGrowlController()			[TXSharedApplication sharedGrowlController]
-
-#define sharedPluginManager()			[TXSharedApplication sharedPluginManager]
-#define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
-
-@class OELReachability;
-
-@interface TXSharedApplication ()
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (TPCPreferencesCloudSync *)sharedCloudSyncManager;
-#endif
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-+ (TLOEncryptionManager *)sharedEncryptionManager;
-#endif
-
-+ (TLOGrowlController *)sharedGrowlController;
-+ (OELReachability *)sharedNetworkReachabilityNotifier;
-+ (THOPluginManager *)sharedPluginManager;
-+ (TVCLogControllerPrintingOperationQueue *)sharedPrintingQueue;
-+ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
-+ (TXWindowController *)sharedWindowController;
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-+ (TDCLicenseManagerDialog *)sharedLicenseManagerDialog;
-#endif
-
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-+ (TDCInAppPurchaseDialog *)sharedInAppPurchaseDialog;
+@interface TDCInAppPurchaseDialog : TDCWindowBase
+- (void)loadReceiptContents;
+@end
 #endif
-
-+ (TDCFileTransferDialog *)sharedFileTransferDialog;
-@end
-
-@interface NSObject (TXSharedApplicationObjectExtensionPrivate)
-+ (void)setGlobalMasterControllerClassReference:(TXMasterController *)masterController;
-@end
 
 NS_ASSUME_NONNULL_END
