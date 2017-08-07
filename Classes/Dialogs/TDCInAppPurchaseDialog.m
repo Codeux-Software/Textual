@@ -38,6 +38,8 @@
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 #import "ARLReceiptLoader.h"
 
+#import "BuildConfig.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCInAppPurchaseDialog ()
@@ -77,6 +79,12 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *errorMessage = ARLLastErrorMessage();
 
 		LogToConsoleError("Failed to laod receipt contents: %@", errorMessage)
+
+		exit(173);
+	}
+
+	if ([receiptContents.bundleId isEqualToString:TXBundleBuildProductIdentifier] == NO) {
+		LogToConsoleError("Mismatched bundle identifier")
 
 		exit(173);
 	}
