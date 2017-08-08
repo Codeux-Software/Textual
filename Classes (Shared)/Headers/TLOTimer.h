@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, nullable) SEL action;
 @property (nonatomic, assign) BOOL repeatTimer; // defaults to YES
 @property (nonatomic, strong, nullable) dispatch_queue_t queue; // Defaults to main queue. Changed ignored while active.
+@property (nonatomic, strong, nullable) id context;
 
 @property (readonly) BOOL timerIsActive;
 
