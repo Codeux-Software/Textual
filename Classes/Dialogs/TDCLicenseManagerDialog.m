@@ -38,6 +38,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#warning TODO: Add warning when clicking the Purchase button if \
+	user may be eligible for a discounted ugprade.
+
+#warning TODO: Post notifications for changes in license, such as \
+	when a license is activated or the trial expires.
+
 #define _upgradeDialogRemindMeInterval 		345600 // 4 days
 
 @interface TDCLicenseManagerDialog ()
