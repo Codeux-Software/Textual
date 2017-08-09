@@ -6,38 +6,116 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCInAppPurchaseDialog"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCInAppPurchaseDialog">
+            <connections>
+                <outlet property="contentViewProducts" destination="Zck-S6-jkS" id="4d4-Ew-rJJ"/>
+                <outlet property="contentViewProgress" destination="lkd-lf-FMT" id="Wm6-6j-rEG"/>
+                <outlet property="progressViewIndicator" destination="b03-92-7hd" id="YrA-PQ-j3N"/>
+                <outlet property="progressViewTextField" destination="gTa-O0-6Lc" id="icQ-Gb-FDh"/>
+                <outlet property="window" destination="71U-wg-DxX" id="gSx-iQ-jEQ"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Zfm-I8-Tnh">
-            <windowStyleMask key="styleMask" titled="YES"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="71U-wg-DxX">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="250" height="64"/>
+            <rect key="contentRect" x="283" y="305" width="500" height="392"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="BPC-fO-FhQ">
-                <rect key="frame" x="0.0" y="0.0" width="250" height="64"/>
+            <view key="contentView" id="sk3-oG-BsZ">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="392"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YG1-hy-uRV">
-                        <rect key="frame" x="75" y="24" width="157" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Requesting new receipt…" id="vun-bi-ADj">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Dpc-zd-HIx">
-                        <rect key="frame" x="20" y="16" width="32" height="32"/>
-                    </progressIndicator>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="trailing" secondItem="YG1-hy-uRV" secondAttribute="trailing" constant="20" symbolic="YES" id="2kh-bP-SU2"/>
-                    <constraint firstItem="Dpc-zd-HIx" firstAttribute="centerY" secondItem="BPC-fO-FhQ" secondAttribute="centerY" id="UWf-xF-x6s"/>
-                    <constraint firstItem="Dpc-zd-HIx" firstAttribute="leading" secondItem="BPC-fO-FhQ" secondAttribute="leading" constant="20" symbolic="YES" id="jky-hu-SCL"/>
-                    <constraint firstItem="YG1-hy-uRV" firstAttribute="centerY" secondItem="Dpc-zd-HIx" secondAttribute="centerY" id="lz2-kK-nSQ"/>
-                </constraints>
             </view>
-            <point key="canvasLocation" x="491.5" y="397"/>
+            <connections>
+                <outlet property="delegate" destination="-2" id="cbe-og-fxh"/>
+            </connections>
+            <point key="canvasLocation" x="92" y="63"/>
         </window>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Zck-S6-jkS">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="392"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MkI-zy-mdx">
+                    <rect key="frame" x="195" y="334" width="112" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Pay for Trial" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CPM-Qj-Bn0">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="payForFreeTrial:" target="-2" id="34c-WS-q7y"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g1B-bG-JNy">
+                    <rect key="frame" x="158" y="301" width="186" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Pay for Standard Edition" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kfr-da-Afa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="payForStandardEdition:" target="-2" id="4X6-9s-ulO"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Cm-YC-wb7">
+                    <rect key="frame" x="152" y="268" width="197" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Pay for Textual 6 Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JcG-BY-Y7P">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="payForUpgradeFromV6:" target="-2" id="gQb-mQ-thp"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bfY-RT-g9C">
+                    <rect key="frame" x="133" y="235" width="235" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Pay for Textual 6 Upgrade (free)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0Sw-Zr-hWI">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="payForUpgradeFromV6Free:" target="-2" id="ZtQ-AK-kLH"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X7V-pk-tAa">
+                    <rect key="frame" x="167" y="202" width="168" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Restore Transactions" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wZa-9W-fCU">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="restoreTransactions:" target="-2" id="dGL-jw-myq"/>
+                    </connections>
+                </button>
+            </subviews>
+        </customView>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="lkd-lf-FMT">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="392"/>
+            <subviews>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="b03-92-7hd">
+                    <rect key="frame" x="123" y="180" width="32" height="32"/>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gTa-O0-6Lc">
+                    <rect key="frame" x="163" y="184" width="216" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="610" id="brB-cA-0HO"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloading products…" id="RdL-j5-R4V">
+                        <font key="font" metaFont="system" size="20"/>
+                        <color key="textColor" red="0.388623805861399" green="0.388623805861399" blue="0.388623805861399" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerY" secondItem="lkd-lf-FMT" secondAttribute="centerY" id="d1c-fx-phO"/>
+                <constraint firstItem="gTa-O0-6Lc" firstAttribute="leading" secondItem="b03-92-7hd" secondAttribute="trailing" constant="10" id="e3T-bN-RKr"/>
+                <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerX" secondItem="lkd-lf-FMT" secondAttribute="centerX" constant="21" id="iLf-pc-Zte"/>
+                <constraint firstItem="b03-92-7hd" firstAttribute="centerY" secondItem="gTa-O0-6Lc" secondAttribute="centerY" id="jrJ-mX-tzB"/>
+            </constraints>
+            <point key="canvasLocation" x="27" y="143"/>
+        </customView>
     </objects>
 </document>
