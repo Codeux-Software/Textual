@@ -129,9 +129,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	
 	self.alphaValue = [TPCPreferences mainWindowTransparency];
 	
-	[self.loadingScreen hideAll];
-
-	[self.loadingScreen showLoadingConfigurationView];
+	(void)[self reloadLoadingScreen];
 	
 	[self makeMainWindow];
 
@@ -1736,25 +1734,35 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		return NO;
 	}
 
+	if (masterController().applicationIsLaunched == NO) {
+		[self.loadingScreen hideAll];
+
+		[self.loadingScreen showLoadingConfigurationView];
+
+		return NO;
+	}
+
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 		[self.loadingScreen hideAll];
 
 		[self.loadingScreen showTrialExpiredView];
-	} else
+
+		return NO;
+	}
 #endif
 
 	if (worldController().clientCount <= 0) {
 		[self.loadingScreen hideAll];
 
 		[self.loadingScreen showWelcomeAddServerView];
-	} else {
-		[self.loadingScreen hideAllAnimated];
 
-		return YES;
+		return NO;
 	}
 
-	return NO;
+	[self.loadingScreen hideAllAnimated];
+
+	return YES;
 }
 
 #pragma mark -
