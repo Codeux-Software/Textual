@@ -51,12 +51,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL debugModeIsOn;
 @property (nonatomic, assign, readwrite) BOOL ghostModeIsOn;
 @property (nonatomic, assign, readwrite) BOOL applicationIsActive;
+@property (nonatomic, assign, readwrite) BOOL applicationIsLaunched;
 @property (nonatomic, assign, readwrite) BOOL applicationIsTerminating;
 @property (nonatomic, assign, readwrite) BOOL applicationIsChangingActiveState;
 @property (nonatomic, assign) CFAbsoluteTime applicationTerminationTimestamp;
 @property (readonly) BOOL isSafeToPerformApplicationTermination;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
+@property (nonatomic, assign) NSUInteger applicationLaunchRemainder;
 @end
 
 @implementation TXMasterController
@@ -161,7 +163,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(pluginsFinishedLoading:) name:THOPluginManagerFinishedLoadingPluginsNotification object:nil];
-	
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[RZNotificationCenter() addObserver:self selector:@selector(inAppPurchaseDialogFinishedLoading:) name:TDCInAppPurchaseDialogFinishedLoadingNotification object:nil];
+#endif
+
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 
 	[NSColorPanel setPickerMask:(NSColorPanelRGBModeMask | NSColorPanelGrayModeMask | NSColorPanelColorListModeMask | NSColorPanelWheelModeMask | NSColorPanelCrayonModeMask)];
@@ -171,6 +177,14 @@ NS_ASSUME_NONNULL_BEGIN
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		[TPCResourceManager copyResourcesToApplicationSupportFolder];
 	}, DISPATCH_QUEUE_PRIORITY_BACKGROUND);
+
+	/* We want to gurantee some specific things happen before the
+	 app is considered "launched" and ready to use. This property
+	 counts down once each task completes and once it reaches 0,
+	 then the app is considered launched. */
+	/* 1 is default value because we want plugins to be loaded
+	 before we are finished launching. */
+	self.applicationLaunchRemainder = 1;
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	[self prepareLicenseManager];
@@ -187,10 +201,28 @@ NS_ASSUME_NONNULL_BEGIN
 	[sharedPluginManager() loadPlugins];
 }
 
+- (void)setApplicationLaunchRemainder:(NSUInteger)applicationLaunchRemainder
+{
+	if (self->_applicationLaunchRemainder != applicationLaunchRemainder) {
+		self->_applicationLaunchRemainder = applicationLaunchRemainder;
+
+		if (self->_applicationLaunchRemainder == 0) {
+			[self applicationDidFinishLaunching];
+		}
+	}
+}
+
 - (void)pluginsFinishedLoading:(NSNotification *)notification
 {
-	[self applicationDidFinishLaunching];
+	self.applicationLaunchRemainder -= 1;
 }
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+- (void)inAppPurchaseDialogFinishedLoading:(NSNotification *)notification
+{
+	self.applicationLaunchRemainder -= 1;
+}
+#endif
 
 #pragma mark -
 #pragma mark Services
@@ -271,6 +303,8 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 - (void)prepareInAppPurchases
 {
+	self.applicationLaunchRemainder += 1; // Add to count
+
 	[[TXSharedApplication sharedInAppPurchaseDialog] applicationDidFinishLaunching];
 }
 #endif
@@ -312,6 +346,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)applicationDidFinishLaunching
 {
+	self.applicationIsLaunched = YES;
+
 	if ([self.mainWindow reloadLoadingScreen]) {
 		[self.world autoConnectAfterWakeup:NO];
 	}

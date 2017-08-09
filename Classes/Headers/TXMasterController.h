@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL applicationIsActive;
 @property (readonly) BOOL applicationIsChangingActiveState;
 
+@property (readonly) BOOL applicationIsLaunched;
 @property (readonly) BOOL applicationIsTerminating;
 
 @property (readonly) IRCWorld *world;
