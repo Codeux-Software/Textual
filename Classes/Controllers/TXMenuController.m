@@ -172,6 +172,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	BOOL appFinishedLaunching = masterController().applicationIsLaunched;
+#endif
+
 	BOOL isMainWindowMain = mainWindow().mainWindow;
 
 	BOOL mainWindowHasSheet = (mainWindow().attachedSheet != nil);
@@ -252,21 +256,43 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 			}
 
-			/* If trial is expired, default everything to disabled. */
+			/* If trial is expired, or app has not finished launching,
+			 then default everything to disabled. */
 			BOOL isTrialExpired = NO;
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1 || TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+			if (
+
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
-				/* Disable everything by default except tag 900 through 916. These are various
-				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || (tag >= 917 && tag <= 930)) {
+				(TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired())
+#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+				appFinishedLaunching == NO
+#endif
+
+				)
+			{
+				/* Disable everything by default except for items that are considred
+				 helpful. See TXMenuController.h for complete list of tags. */
+				if (tag < 900 ||
+					(tag >= 900 && tag <= 902) ||
+					(tag >= 930 && tag <= 944))
+				{
 					returnValue = NO;
 				}
 
 				/* Enable specific items after it has been disabled. */
 				/* Other always-required items are enabled further 
 				 below this switch statement. */
-				if (tag == 102) { // "Manage license…"
+				if (
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+					tag == 102 // "Manage license…"
+#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+					tag == 110 // "In-app Purchase…"
+#endif
+
+					)
+				{
 					menuItem.hidden = NO;
 
 					returnValue = YES;
@@ -283,6 +309,7 @@ NS_ASSUME_NONNULL_BEGIN
 					case 100: // "About Textual"
 					case 101: // "Preferences…"
 					case 102: // "Manage license…"
+					case 110: // "In-app Purchase…"
 					case 109: // "Check for updates…"
 					{
 						returnValue = YES;
@@ -318,7 +345,7 @@ NS_ASSUME_NONNULL_BEGIN
 					case 801: // "Zoom"
 					case 808: // "Main Window"
 					case 814: // "Bring All to Front"
-					case 924: // "Export Preferences"
+					case 963: // "Export Preferences"
 					{
 						returnValue = YES;
 					} // case
@@ -390,7 +417,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 922: // "Reset 'Don't Ask Me' Warnings"
+		case 110: // "In-app Purchase…"
+		{
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+			menuItem.hidden = YES;
+#endif
+
+			return YES;
+		}
+		case 965: // "Reset 'Don't Ask Me' Warnings"
 		{
 			BOOL condition = [TPCPreferences developerModeEnabled];
 
@@ -729,7 +764,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return [TPCPreferences logHighlights];
 		}
-        case 920: // Developer Mode
+        case 961: // Developer Mode
         {
 			if ([TPCPreferences developerModeEnabled]) {
                 menuItem.state = NSOnState;
@@ -3161,21 +3196,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)openHelpMenuItem:(id)sender
 {
 	NSDictionary *_helpMenuLinks = @{
-	   @(901) : @"https://help.codeux.com/textual/Privacy-Policy.kb",
+	   @(901) : @"https://help.codeux.com/textual/End-User-License-Agreement.kb",
+	   @(902) : @"https://help.codeux.com/textual/Privacy-Policy.kb",
 	   @(902) : @"https://help.codeux.com/textual/Frequently-Asked-Questions.kb",
-	   @(905) : @"https://help.codeux.com/textual/home.kb",
-	   @(906) : @"https://help.codeux.com/textual/iCloud-Syncing.kb",
-	   @(907) : @"https://help.codeux.com/textual/Off-the-Record-Messaging.kb",
-	   @(908) : @"https://help.codeux.com/textual/Command-Reference.kb",
-	   @(909) : @"https://help.codeux.com/textual/Support.kb",
-	   @(910) : @"https://help.codeux.com/textual/Keyboard-Shortcuts.kb",
-	   @(911) : @"https://help.codeux.com/textual/Memory-Management.kb",
-	   @(912) : @"https://help.codeux.com/textual/Text-Formatting.kb",
-	   @(913) : @"https://help.codeux.com/textual/Styles.kb",
-	   @(914) : @"https://help.codeux.com/textual/Using-CertFP.kb",
-	   @(915) : @"https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb",
-	   @(916) : @"https://help.codeux.com/textual/DCC-File-Transfer-Information.kb",
-	   @(927) : @"https://help.codeux.com/textual/End-User-License-Agreement.kb"
+	   @(933) : @"https://help.codeux.com/textual/home.kb",
+	   @(934) : @"https://help.codeux.com/textual/iCloud-Syncing.kb",
+	   @(935) : @"https://help.codeux.com/textual/Off-the-Record-Messaging.kb",
+	   @(936) : @"https://help.codeux.com/textual/Command-Reference.kb",
+	   @(937) : @"https://help.codeux.com/textual/Support.kb",
+	   @(938) : @"https://help.codeux.com/textual/Keyboard-Shortcuts.kb",
+	   @(939) : @"https://help.codeux.com/textual/Memory-Management.kb",
+	   @(940) : @"https://help.codeux.com/textual/Text-Formatting.kb",
+	   @(941) : @"https://help.codeux.com/textual/Styles.kb",
+	   @(942) : @"https://help.codeux.com/textual/Using-CertFP.kb",
+	   @(943) : @"https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb",
+	   @(944) : @"https://help.codeux.com/textual/DCC-File-Transfer-Information.kb"
 	};
 	
 	NSString *link = _helpMenuLinks[@([sender tag])];
@@ -3554,6 +3589,16 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 #endif
+
+#pragma mark -
+#pragma mark In-app Purchase
+
+- (void)manageInAppPurchase:(id)sender
+{
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[[TXSharedApplication sharedInAppPurchaseDialog] show];
+#endif
+}
 
 #pragma mark -
 #pragma mark Developer Tools
