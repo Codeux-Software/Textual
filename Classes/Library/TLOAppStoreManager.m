@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+#import "BuildConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -70,7 +71,7 @@ BOOL TLOAppStoreLoadReceipt(void)
 		return NO;
 	}
 
-	if (NSObjectsAreEqual(TXBundleBuildProductIdentifier, receiptContents.bundleId) == NO) {
+	if (NSObjectsAreEqual(TXBundleBuildProductIdentifier, receiptContents.bundleIdentifier) == NO) {
 		LogToConsoleError("Mismatched bundle identifier")
 
 		TLOAppStoreReceiptContents = nil;
