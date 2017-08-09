@@ -38,8 +38,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogTransactionFinishedNotification;
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogTransactionRestoredNotification; // unused
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogWillReloadReceiptNotification;
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogDidReloadReceiptNotification;
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogFinishedLoadingNotification;
+
 @interface TDCInAppPurchaseDialog : TDCWindowBase
-- (void)loadReceiptContents;
 @end
 #endif
 

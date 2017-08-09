@@ -36,14 +36,44 @@
  *********************************************************************** */
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-#import "ARLReceiptLoader.h"
-
-#import "BuildConfig.h"
+#import <StoreKit/StoreKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSString * const TDCInAppPurchaseDialogTransactionFinishedNotification = @"TDCInAppPurchaseDialogTransactionFinishedNotification";
+NSString * const TDCInAppPurchaseDialogTransactionRestoredNotification = @"TDCInAppPurchaseDialogTransactionRestoredNotification";
+NSString * const TDCInAppPurchaseDialogWillReloadReceiptNotification = @"TDCInAppPurchaseDialogWillReloadReceiptNotification";
+NSString * const TDCInAppPurchaseDialogDidReloadReceiptNotification = @"DCInAppPurchaseDialogDidReloadReceiptNotification";
+NSString * const TDCInAppPurchaseDialogFinishedLoadingNotification = @"TDCInAppPurchaseDialogFinishedLoadingNotification";
+
+enum {
+	SKPaymentTransactionStateUnknown = LONG_MAX
+};
+
 @interface TDCInAppPurchaseDialog ()
-@property (nonatomic, strong) ARLReceiptContents *receiptContents;
+@property (nonatomic, assign) BOOL windowIsAllowedToClose;
+@property (nonatomic, assign) BOOL finishedLoading;
+@property (nonatomic, assign) BOOL requestingProducts;
+@property (nonatomic, assign) BOOL performingRestore;
+@property (nonatomic, assign) BOOL performingPurchase;
+@property (nonatomic, assign) NSUInteger purchasedProductState;
+@property (nonatomic, copy, nullable) NSString *purchasedProductIdentifier;
+@property (nonatomic, copy, nullable) NSError *purchasedProductError;
+@property (nonatomic, strong) SKProductsRequest *productsRequest;
+@property (nonatomic, copy) NSDictionary<NSString *, SKProduct *> *products;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProducts;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProgress;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
+@property (nonatomic, weak) IBOutlet NSTextField *progressViewTextField;
+
+- (IBAction)payForItem:(id)sender;
+- (IBAction)restoreTransactions:(id)sender;
+
+/* Temporary actions */
+- (IBAction)payForFreeTrial:(id)sender;
+- (IBAction)payForStandardEdition:(id)sender;
+- (IBAction)payForUpgradeFromV6:(id)sender;
+- (IBAction)payForUpgradeFromV6Free:(id)sender;
 @end
 
 @implementation TDCInAppPurchaseDialog
@@ -62,37 +92,679 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	(void)[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseDialog" owner:self topLevelObjects:nil];
+
+	self.windowIsAllowedToClose = YES;
+
+	self.purchasedProductState = SKPaymentTransactionStateUnknown;
+
+	[self addPaymentQueueObserver];
+}
+
+- (void)prepareForApplicationTermination
+{
+	[self removePaymentQueueObserver];
 }
 
 - (void)applicationDidFinishLaunching
 {
-	[self loadReceiptContents];
+	[self loadReceiptDuringLaunch];
+
+	[self show];
 }
 
-- (void)loadReceiptContents
+- (void)postDialogFinishedLoadingNotification
 {
-	ARLReceiptContents *receiptContents = nil;
+	self.finishedLoading = YES;
 
-	BOOL loadSuccessful = ARLReadReceiptFromBundle(RZMainBundle(), &receiptContents);
+	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogFinishedLoadingNotification object:self];
+}
 
-	if (loadSuccessful == NO) {
-		NSString *errorMessage = ARLLastErrorMessage();
-
-		LogToConsoleError("Failed to laod receipt contents: %@", errorMessage)
-
-		exit(173);
+- (void)show
+{
+	if (self.products == nil) {
+		[self requestProducts];
 	}
 
-	if ([receiptContents.bundleId isEqualToString:TXBundleBuildProductIdentifier] == NO) {
-		LogToConsoleError("Mismatched bundle identifier")
+	[super show];
+}
 
-		exit(173);
+#pragma mark -
+#pragma mark Payment Queue Observer
+
+- (void)addPaymentQueueObserver
+{
+	[[SKPaymentQueue defaultQueue] addTransactionObserver:(id)self];
+}
+
+- (void)removePaymentQueueObserver
+{
+	[[SKPaymentQueue defaultQueue] removeTransactionObserver:(id)self];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	/* Sort transactions with state as key and value as array of related transactions. */
+	NSMutableDictionary<NSNumber *, NSMutableArray<SKPaymentTransaction *> *> *sortedTransactions = [NSMutableDictionary new];
+
+	for (SKPaymentTransaction *transaction in transactions) {
+		NSNumber *transactionKey = @(transaction.transactionState);
+
+		NSMutableArray *relatedTransactions = sortedTransactions[transactionKey];
+
+		if (relatedTransactions == nil) {
+			relatedTransactions = [NSMutableArray array];
+
+			[sortedTransactions setObject:relatedTransactions forKey:transactionKey];
+		}
+
+		[relatedTransactions addObject:transaction];
+	} // for loop
+
+	/* Process transactions by state */
+	for (NSNumber *transactionState in sortedTransactions) {
+		NSArray *transactions = sortedTransactions[transactionState];
+
+		switch (transactionState.unsignedIntegerValue) {
+			case SKPaymentTransactionStatePurchasing:
+			{
+				[self showTransactionsAsInProgress:transactions deferred:NO];
+
+				break;
+			}
+			case SKPaymentTransactionStateDeferred:
+			{
+				[self showTransactionsAsInProgress:transactions deferred:YES];
+
+				break;
+			}
+			case SKPaymentTransactionStateFailed:
+			{
+				[self failedTransactions:transactions];
+
+				break;
+			}
+			case SKPaymentTransactionStatePurchased:
+			case SKPaymentTransactionStateRestored:
+			{
+				[self processSuccessfulTransactions:transactions];
+
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		} // switch
+	} // for loop
+}
+
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+	self.performingRestore = NO;
+
+	[self detachProgressView];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+	self.performingRestore = NO;
+
+	[self detachProgressView];
+
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]", error.localizedDescription)
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
+							 defaultButton:TXTLS(@"Prompts[0005]")
+						   alternateButton:nil
+							   otherButton:nil];
+}
+
+- (void)showTransactionsAsInProgress:(NSArray<SKPaymentTransaction *> *)transactions deferred:(BOOL)deferred
+{
+	NSParameterAssert(transactions != nil);
+}
+
+- (void)failedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	NSParameterAssert(transactions != nil);
+
+	/* Process transactions */
+	NSString *purchaedProductIdentifier = self.purchasedProductIdentifier;
+
+	for (SKPaymentTransaction *transaction in transactions) {
+		/* Record product status */
+		if (purchaedProductIdentifier != nil) {
+			NSString *productIdentifier = transaction.payment.productIdentifier;
+
+			if (NSObjectsAreEqual(productIdentifier, purchaedProductIdentifier)) {
+				self.purchasedProductState = transaction.transactionState;
+
+				self.purchasedProductError = transaction.error;
+			}
+		}
+
+		/* Finish transaction */
+		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 	}
 
-	self.receiptContents = receiptContents;
+	/* Clear progress */
+	[self finishProductPurchase];
+}
+
+- (void)processSuccessfulTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	NSParameterAssert(transactions != nil);
+
+	/* This method should never be invoked for transactions that
+	 are not finished or restored. */
+	/* This method uses asserts on conditions that should never
+	 be met unless someone was tampering with the transaction. */
+	BOOL receiptLoaded = [self loadReceipt];
+
+	if (receiptLoaded == NO) {
+		[TLOPopupPrompts sheetWindowWithWindow:self.window
+										  body:TXTLS(@"TDCInAppPurchaseDialog[0003][1]")
+										 title:TXTLS(@"TDCInAppPurchaseDialog[0003][2]")
+								 defaultButton:TXTLS(@"Prompts[0005]")
+							   alternateButton:nil
+								   otherButton:nil];
+
+		NSAssert(NO, @"Receipt is invalid");
+	}
+
+	/* Process transactions */
+	NSString *purchaedProductIdentifier = self.purchasedProductIdentifier;
+
+	for (SKPaymentTransaction *transaction in transactions)	{
+		/* Record product status */
+		if (purchaedProductIdentifier != nil) {
+			NSString *productIdentifier = transaction.payment.productIdentifier;
+
+			if (NSObjectsAreEqual(productIdentifier, purchaedProductIdentifier)) {
+				self.purchasedProductState = transaction.transactionState;
+			}
+		}
+
+		/* Finish transaction */
+		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+	} // for loop
+
+	/* Post notifications */
+	[self postTransactionFinishedNotification:transactions];
+
+	/* Clear progress */
+	[self finishProductPurchase];
+
+	/* Reload launch status if necessary */
+	if (self.finishedLoading == NO) {
+		[self loadReceiptDuringLaunchPostflight];
+	}
+}
+
+- (void)finishProductPurchase
+{
+	if (self.performingPurchase == NO) {
+		return;
+	}
+
+	if (self.purchasedProductState == SKPaymentTransactionStateUnknown ||
+		self.purchasedProductState == SKPaymentTransactionStatePurchasing ||
+		self.purchasedProductState == SKPaymentTransactionStateDeferred)
+	{
+		return;
+	}
+
+	if (self.purchasedProductState == SKPaymentTransactionStateFailed) {
+		if (self.purchasedProductError.code != SKErrorPaymentCancelled) {
+			[TLOPopupPrompts sheetWindowWithWindow:self.window
+											  body:TXTLS(@"TDCInAppPurchaseDialog[0008][2]", self.purchasedProductError.localizedDescription)
+											 title:TXTLS(@"TDCInAppPurchaseDialog[0008][1]")
+									 defaultButton:TXTLS(@"Prompts[0005]")
+								   alternateButton:nil
+									   otherButton:nil];
+
+			self.purchasedProductError = nil;
+		}
+	}
+
+	self.performingPurchase = NO;
+
+	self.purchasedProductState = SKPaymentTransactionStateUnknown;
+
+	self.purchasedProductIdentifier = nil;
+
+	[self detachProgressView];
+}
+
+- (void)postTransactionFinishedNotification:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	NSParameterAssert(transactions != nil);
+
+	[self postNotification:TDCInAppPurchaseDialogTransactionFinishedNotification withTransactions:transactions];
+}
+
+/*
+- (void)postTransactionRestoredNotification:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	NSParameterAssert(transactions != nil);
+
+	[self postNotification:TDCInAppPurchaseDialogTransactionRestoredNotification withTransactions:transactions];
+}
+*/
+
+- (void)postNotification:(NSString *)notification withTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+	NSParameterAssert(notification != nil);
+	NSParameterAssert(transactions != nil);
+
+	NSMutableArray *productIdentifiers = [NSMutableArray arrayWithCapacity:transactions.count];
+
+	for (SKPaymentTransaction *transaction in transactions) {
+		[productIdentifiers addObject:transaction.payment.productIdentifier];
+	}
+
+	NSDictionary *userInfo = @{
+		@"productIdentifiers" : [productIdentifiers copy]
+    };
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[RZNotificationCenter() postNotificationName:notification
+											  object:self
+											userInfo:userInfo];
+	});
+}
+
+#pragma mark -
+#pragma mark Content Views
+
+- (void)attachProductsView
+{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		NSView *windowContentView = self.window.contentView;
+
+		NSView *productsContentView = self.contentViewProducts;
+
+		[windowContentView attachSubview:productsContentView
+				 adjustedWidthConstraint:nil
+				adjustedHeightConstraint:nil];
+	});
+}
+
+- (void)attachProgressViewWithReason:(NSString *)progressReason
+{
+	NSParameterAssert(progressReason != nil);
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		NSView *windowContentView = self.window.contentView;
+
+		NSView *progressContentView = self.contentViewProgress;
+
+		[windowContentView attachSubview:progressContentView
+				 adjustedWidthConstraint:nil
+				adjustedHeightConstraint:nil];
+
+		self.progressViewTextField.stringValue = progressReason;
+
+		[self.progressViewIndicator startAnimation:nil];
+
+		self.windowIsAllowedToClose = NO;
+	});
+}
+
+- (void)detachProgressView
+{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		self.windowIsAllowedToClose = YES;
+
+		[self.progressViewIndicator stopAnimation:nil];
+
+		[self attachProductsView];
+	});
+}
+
+- (void)setWindowIsAllowedToClose:(BOOL)windowIsAllowedToClose
+{
+	if (self->_windowIsAllowedToClose != windowIsAllowedToClose) {
+		self->_windowIsAllowedToClose = windowIsAllowedToClose;
+
+		[self.window standardWindowButton:NSWindowCloseButton].enabled = windowIsAllowedToClose;
+	}
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (void)payForItem:(id)sender
+{
+
+}
+
+- (void)payForFreeTrial:(id)sender
+{
+	[self payForFreeTrial];
+}
+
+- (void)payForStandardEdition:(id)sender
+{
+	[self payForStandardEdition];
+}
+
+- (void)payForUpgradeFromV6:(id)sender
+{
+	[self payForUpgradeFromV6];
+}
+
+- (void)payForUpgradeFromV6Free:(id)sender
+{
+	[self payForUpgradeFromV6Free];
+}
+
+- (void)restoreTransactions:(id)sender
+{
+	[self restoreTransactions];
+}
+
+#pragma mark -
+#pragma mark Products
+
+- (nullable NSString *)localizedTitleForProduct:(SKProduct *)product
+{
+	NSParameterAssert(product != nil);
+
+	return [self localizedTitleForProductIdentifier:product.productIdentifier];
+}
+
+- (nullable NSString *)localizedTitleForProductIdentifier:(NSString *)productId
+{
+	NSParameterAssert(productId);
+
+	NSString *titleKey = [NSString stringWithFormat:@"TDCInAppPurchaseDialog[0001][%@]", productId];
+
+	NSString *title = TXTLS(titleKey);
+
+	return title;
+}
+
+- (BOOL)isProductPaidFor:(NSString *)productId
+{
+	NSParameterAssert(productId != nil);
+
+	return TLOAppStoreIsProductPurchased(productId);
+}
+
+- (void)payForFreeTrial
+{
+	[self payForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier];
+}
+
+- (void)payForStandardEdition
+{
+	[self payForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier];
+}
+
+- (void)payForUpgradeFromV6
+{
+	[self payForProductIdentifier:TLOAppStoreIAPUpgradeFromV6ProductIdentifier];
+}
+
+- (void)payForUpgradeFromV6Free
+{
+	[self payForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier];
+}
+
+- (void)payForProductIdentifier:(NSString *)productIdentifier
+{
+	[self payForProductIdentifier:productIdentifier quantity:1];
+}
+
+- (void)payForProductIdentifier:(NSString *)productIdentifier quantity:(NSUInteger)quantity
+{
+	NSParameterAssert(productIdentifier != nil);
+
+	SKProduct *product = self.products[productIdentifier];
+
+	if (product == nil) {
+		NSString *productTitle = [self localizedTitleForProductIdentifier:productIdentifier];
+
+		[TLOPopupPrompts sheetWindowWithWindow:self.window
+										  body:TXTLS(@"TDCInAppPurchaseDialog[0002][2]")
+										 title:TXTLS(@"TDCInAppPurchaseDialog[0002][1]", productTitle)
+								 defaultButton:TXTLS(@"Prompts[0005]")
+							   alternateButton:nil
+								   otherButton:nil];
+
+		return;
+	}
+
+	[self payForProduct:product quantity:quantity];
+}
+
+- (void)payForProduct:(SKProduct *)product
+{
+	[self payForProduct:product quantity:1];
+}
+
+- (void)payForProduct:(SKProduct *)product quantity:(NSUInteger)quantity
+{
+	NSParameterAssert(product != nil);
+	NSParameterAssert(quantity > 0);
+
+	/* Set status properties */
+	if (self.performingRestore) {
+		return;
+	}
+
+	if (self.performingPurchase == NO) {
+		self.performingPurchase = YES;
+	} else {
+		return;
+	}
+
+	self.purchasedProductIdentifier = product.productIdentifier;
+
+	/* Show progress view */
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0005]")];
+
+	/* Perform purchase */
+	SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
+
+	payment.quantity = quantity;
+
+	[[SKPaymentQueue defaultQueue] addPayment:payment];
+}
+
+- (void)restoreTransactions
+{
+	/* Set status properties */
+	if (self.performingPurchase) {
+		return;
+	}
+
+	if (self.performingRestore == NO) {
+		self.performingRestore = YES;
+	} else {
+		return;
+	}
+
+	/* Show progress view */
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0006]")];
+
+	/* Perform restore */
+	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
+
+#pragma mark -
+#pragma mark Receipt
+
+- (BOOL)loadReceipt
+{
+	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogWillReloadReceiptNotification object:self];
+
+	BOOL loadResult = TLOAppStoreLoadReceipt();
+
+	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogDidReloadReceiptNotification object:self];
+
+	return loadResult;
+}
+
+- (void)loadReceiptDuringLaunch
+{
+	(void)[self loadReceipt];
+
+	/* If the receipt fails to load for some reason,
+	 then we aren't going to make a stink behind it.
+	 At least not during launch. */
+	/* If there is no receipt, then we show the normal
+	 dialog, which includes the option to restore
+	 transactions. Let the user restore transactions
+	 instead of trying to get a new receipt. */
+	[self loadReceiptDuringLaunchPostflight];
+}
+
+- (void)loadReceiptDuringLaunchPostflight
+{
+	/* Show dialog if registration is not performed. */
+	/* We do not fire the launch notification at this
+	 point because we want time for the user to make
+	 a selection before continuing. */
+	if (TLOAppStoreTextualIsRegistered() == NO &&
+		TLOAppStoreIsTrialPurchased() == NO)
+	{
+		[self show];
+
+		return;
+	}
+
+	/* User owns something, continue */
+	[self postDialogFinishedLoadingNotification];
+}
+
+#pragma mark -
+#pragma mark Products Request
+
+- (void)requestProducts
+{
+	[self requestProductsAgain:NO];
+}
+
+- (void)requestProductsAgain:(BOOL)requestProductsAgain
+{
+	if (self.requestingProducts == NO) {
+		self.requestingProducts = YES;
+	} else {
+		return;
+	}
+
+	if (requestProductsAgain == NO) {
+		[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0004]")];
+	}
+
+	NSSet *productIdentifiers =
+	[NSSet setWithArray:
+	 @[
+		TLOAppStoreIAPFreeTrialProductIdentifier,
+		TLOAppStoreIAPStandardEditionProductIdentifier,
+		TLOAppStoreIAPUpgradeFromV6ProductIdentifier,
+		TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier
+      ]
+    ];
+
+	SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
+
+	productsRequest.delegate = (id)self;
+
+	[productsRequest start];
+
+	self.productsRequest = productsRequest;
+}
+
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+{
+	NSMutableDictionary<NSString *, SKProduct *> *productsDict = [NSMutableDictionary dictionary];
+
+	for (SKProduct *product in response.products) {
+		[productsDict setObject:product forKey:product.productIdentifier];
+	}
+
+	self.products = productsDict;
+
+	/* We only hide the progress view when we have a list of products,
+	 otherwise the user will be seeing a blank products page. */
+	[self detachProgressView];
+}
+
+- (void)onRequestProductsError:(NSError *)error
+{
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0003][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0003][1]")
+							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0003][3]")
+						   alternateButton:nil
+							   otherButton:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   [self requestProductsAgain:YES];
+						   }];
+}
+
+- (void)onRequestProductsFinished
+{
+	[self onRequestProductsFinishedWithError:nil];
+}
+
+- (void)onRequestProductsFinishedWithError:(nullable NSError *)error
+{
+	self.requestingProducts = NO;
+
+	self.productsRequest = nil;
+
+	/* Error callback is called after the properties have been
+	 unset so that when -requestProductsAgain: is called by the
+	 error callback, self.requestingProducts is already NO,
+	 which would otherwise do nothing if it was YES. */
+	if (error) {
+		[self onRequestProductsError:error];
+	}
+}
+
+#pragma mark -
+#pragma mark Requests Delegate
+
+- (void)requestDidFinish:(SKRequest *)request
+{
+	if (request == self.productsRequest) {
+		[self onRequestProductsFinished];
+	}
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+	if (request == self.productsRequest) {
+		[self onRequestProductsFinishedWithError:error];
+	}
+}
+
+#pragma mark -
+#pragma mark Window Delegate
+
+- (BOOL)windowShouldClose:(NSWindow *)sender
+{
+	if (self.windowIsAllowedToClose == NO) {
+		NSBeep();
+
+		return NO;
+	}
+
+	return YES;
+}
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+	/* Clear product list when window clears */
+	self.products = nil;
 }
 
 @end
 
 NS_ASSUME_NONNULL_END
+
 #endif
