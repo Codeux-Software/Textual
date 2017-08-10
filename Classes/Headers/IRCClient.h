@@ -327,6 +327,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 			  command:(nullable NSString *)command
 		   receivedAt:(NSDate *)receivedAt
 		  isEncrypted:(BOOL)isEncrypted
+	    escapeMessage:(BOOL)escapeMessage
 	 referenceMessage:(nullable IRCMessage *)referenceMessage
 	  completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
@@ -334,6 +335,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt;
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted;
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted referenceMessage:(nullable IRCMessage *)referenceMessage;
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted referenceMessage:(nullable IRCMessage *)referenceMessage completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
 - (void)printDebugInformationToConsole:(NSString *)message;
 - (void)printDebugInformationToConsole:(NSString *)message asCommand:(NSString *)command;

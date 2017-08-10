@@ -96,6 +96,7 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (readonly) TVCLogLineMemberType memberType;
 @property (readonly, copy, nullable) NSArray<NSString *> *highlightKeywords;
 @property (readonly, copy, nullable) NSArray<NSString *> *excludeKeywords;
+@property (readonly, copy, nullable) NSDictionary<NSString *, id> *rendererAttributes;
 
 - (nullable instancetype)initWithData:(NSData *)data;
 
@@ -124,6 +125,7 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (nonatomic, assign, readwrite) TVCLogLineMemberType memberType;
 @property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *highlightKeywords;
 @property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *excludeKeywords;
+@property (nonatomic, copy, readwrite, nullable) NSDictionary<NSString *, id> *rendererAttributes;
 @end
 
 NS_ASSUME_NONNULL_END
