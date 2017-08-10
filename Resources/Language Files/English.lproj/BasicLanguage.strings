@@ -85,3 +85,7 @@
 "BasicLanguage[1025]" = "%@ ago";
 
 "BasicLanguage[1026]" = "No Actions Available";
+
+"BasicLanguage[1027]" = "Loading configuration…";
+"BasicLanguage[1028]" = "Waiting for in-app purchase…";
+"BasicLanguage[1029]" = "Importing preferences…";
