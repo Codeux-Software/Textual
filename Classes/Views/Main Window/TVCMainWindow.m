@@ -153,13 +153,20 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[TVCDockIcon drawWithoutCount];
 
-	[masterController() performAwakeningAfterMainWindowDidLoad];
-
 	[self observeNotifications];
+
+	[masterController() performAwakeningAfterMainWindowDidLoad];
 }
 
 - (void)observeNotifications
 {
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(loadingDelayedByLackOfInAppPurchase:)
+								   name:TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification
+								 object:nil];
+#endif
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		return;
 	}
@@ -1722,6 +1729,16 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	return (self.contentSplitView.serverListCollapsed == NO);
 }
+
+#pragma mark -
+#pragma mark In-app Purchase
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+- (void)loadingDelayedByLackOfInAppPurchase:(NSNotification *)notification
+{
+	[self setLoadingScreenProgressViewReason:TXTLS(@"BasicLanguage[1028]")];
+}
+#endif
 
 #pragma mark -
 #pragma mark Loading Screen
