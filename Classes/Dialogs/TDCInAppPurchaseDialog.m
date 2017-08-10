@@ -45,6 +45,7 @@ NSString * const TDCInAppPurchaseDialogTransactionRestoredNotification = @"TDCIn
 NSString * const TDCInAppPurchaseDialogWillReloadReceiptNotification = @"TDCInAppPurchaseDialogWillReloadReceiptNotification";
 NSString * const TDCInAppPurchaseDialogDidReloadReceiptNotification = @"DCInAppPurchaseDialogDidReloadReceiptNotification";
 NSString * const TDCInAppPurchaseDialogFinishedLoadingNotification = @"TDCInAppPurchaseDialogFinishedLoadingNotification";
+NSString * const TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification = @"TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification";
 
 enum {
 	SKPaymentTransactionStateUnknown = LONG_MAX
@@ -630,6 +631,8 @@ enum {
 	if (TLOAppStoreTextualIsRegistered() == NO &&
 		TLOAppStoreIsTrialPurchased() == NO)
 	{
+		[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification object:self];
+
 		[self show];
 
 		return;

@@ -43,6 +43,7 @@ TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogTransactionRestoredNotific
 TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogWillReloadReceiptNotification;
 TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogDidReloadReceiptNotification;
 TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogFinishedLoadingNotification;
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification;
 
 @interface TDCInAppPurchaseDialog : TDCWindowBase
 @end
