@@ -1113,7 +1113,6 @@
 		4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */; };
 		4C7B49181D131A7B008D7926 /* TVCLogLineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */; };
 		4C7B49191D131A7B008D7926 /* TVCLogLineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */; };
-		4C7DFF9D1F38BDCB00C55DC2 /* TDCInAppPurchaseDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C7DFF9B1F38BDCB00C55DC2 /* TDCInAppPurchaseDialog.strings */; };
 		4C7DFFA71F38D40000C55DC2 /* TLOAppStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7DFFA51F38C55A00C55DC2 /* TLOAppStoreManager.m */; };
 		4C7E61E11B9C84A700C35BC9 /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
 		4C8083261B43911100746327 /* TLOLicenseManagerDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */; };
@@ -2385,7 +2384,6 @@
 		4C7B48F31D131A2A008D7926 /* TVCLogViewInternalWK2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogViewInternalWK2.h; path = Classes/Headers/Private/TVCLogViewInternalWK2.h; sourceTree = SOURCE_ROOT; };
 		4C7B48F41D131A2A008D7926 /* TVCLogViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogViewPrivate.h; path = Classes/Headers/Private/TVCLogViewPrivate.h; sourceTree = SOURCE_ROOT; };
 		4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogLineInternal.h; sourceTree = "<group>"; };
-		4C7DFF9C1F38BDCB00C55DC2 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "User Interface/English.lproj/TDCInAppPurchaseDialog.strings"; sourceTree = "<group>"; };
 		4C7DFFA51F38C55A00C55DC2 /* TLOAppStoreManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TLOAppStoreManager.m; path = Library/TLOAppStoreManager.m; sourceTree = "<group>"; };
 		4C7DFFA61F38C57B00C55DC2 /* TLOAppStoreManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOAppStoreManagerPrivate.h; path = Headers/Private/TLOAppStoreManagerPrivate.h; sourceTree = "<group>"; };
 		4C7E0F8A19AC25900084173D /* GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GRMustache.h; path = "../../../Frameworks/Static Libraries/Headers/libmustache/GRMustache.h"; sourceTree = "<group>"; };
@@ -2605,6 +2603,7 @@
 		4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCHighlightEntrySheetPrivate.h; path = Headers/Private/TDCHighlightEntrySheetPrivate.h; sourceTree = "<group>"; };
 		4CB2FA9F1D21A677004736D2 /* TLOInputHistoryPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOInputHistoryPrivate.h; path = Headers/Private/TLOInputHistoryPrivate.h; sourceTree = "<group>"; };
 		4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		4CB82D791F3CA6C300D32D9F /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Language Files/English.lproj/TDCInAppPurchaseDialog.strings"; sourceTree = "<group>"; };
 		4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOUnicodeHelper.m; path = Helpers/THOUnicodeHelper.m; sourceTree = "<group>"; };
 		4CB9E3AF1D2B144200ED395A /* IRCModeInfoInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCModeInfoInternal.h; sourceTree = "<group>"; };
 		4CB9E3B01D2B144200ED395A /* IRCPrefixInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCPrefixInternal.h; sourceTree = "<group>"; };
@@ -3327,7 +3326,7 @@
 				4CBC76A11CC72B5100484A13 /* TDCChannelInviteSheet.strings */,
 				4C8354781D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings */,
 				4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */,
-				4C7DFF9B1F38BDCB00C55DC2 /* TDCInAppPurchaseDialog.strings */,
+				4CB82D781F3CA6C300D32D9F /* TDCInAppPurchaseDialog.strings */,
 				4C35DC851F2ED8C900FDE01E /* TDCLicenseUpgradeEligibilitySheet.strings */,
 				4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */,
 				4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */,
@@ -5562,7 +5561,6 @@
 				4C0BA53D1990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CBC76B01CC72B5100484A13 /* BasicLanguage.strings in Resources */,
 				4C0BA53E1990798800857343 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
-				4C7DFF9D1F38BDCB00C55DC2 /* TDCInAppPurchaseDialog.strings in Resources */,
 				4C0BA53F1990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4CF40ED21AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */,
 				4C1383271AA9F9CF0099F887 /* birthdayIcon.icns in Resources */,
@@ -6734,20 +6732,20 @@
 			name = TDCLicenseManagerMigrateAppStoreSheet.xib;
 			sourceTree = "<group>";
 		};
-		4C7DFF9B1F38BDCB00C55DC2 /* TDCInAppPurchaseDialog.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4C7DFF9C1F38BDCB00C55DC2 /* English */,
-			);
-			name = TDCInAppPurchaseDialog.strings;
-			sourceTree = "<group>";
-		};
 		4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4C9E85B41B561AAC00B2670D /* English */,
 			);
 			name = TDCLicenseManagerRecoverLostLicenseSheet.xib;
+			sourceTree = "<group>";
+		};
+		4CB82D781F3CA6C300D32D9F /* TDCInAppPurchaseDialog.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CB82D791F3CA6C300D32D9F /* English */,
+			);
+			name = TDCInAppPurchaseDialog.strings;
 			sourceTree = "<group>";
 		};
 		4CBC768D1CC72B5100484A13 /* Accessibility.strings */ = {
