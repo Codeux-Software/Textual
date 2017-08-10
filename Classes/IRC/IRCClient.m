@@ -10094,8 +10094,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.softwareTrialTimer start:timeRemaining];
 
 	self.softwareTrialTimer.context = @(0);
-
-	[self onSoftwareTrialTimer:nil];
 }
 
 - (void)stopSoftwareTrialTimer
