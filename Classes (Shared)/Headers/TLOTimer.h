@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) dispatch_queue_t queue; // Defaults to main queue. Changed ignored while active.
 @property (nonatomic, strong, nullable) id context;
 
+@property (readonly) NSTimeInterval interval;
 @property (readonly) BOOL timerIsActive;
 
 - (void)start:(NSTimeInterval)interval;

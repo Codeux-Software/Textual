@@ -39,6 +39,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOTimer ()
+@property (nonatomic, assign, readwrite) NSTimeInterval interval;
 @property (nonatomic, assign) BOOL actionValidated;
 @property (nonatomic, strong, nullable) dispatch_source_t timerSource;
 @end
@@ -100,6 +101,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}, interval, self.repeatTimer);
 
 	XRResumeScheduledBlock(timerSource);
+
+	self.interval = interval;
 
 	self.timerSource = timerSource;
 }
