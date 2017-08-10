@@ -1378,6 +1378,7 @@
 		4CB58C1B1CAE0DE20052CA83 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */; };
 		4CB58C211CAE10BB0052CA83 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */; };
 		4CB58C221CAE10C00052CA83 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */; };
+		4CB82D7A1F3CD72D00D32D9F /* TDCInAppPurchaseDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CB82D781F3CA6C300D32D9F /* TDCInAppPurchaseDialog.strings */; };
 		4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CB9E3B11D2B144200ED395A /* IRCModeInfoInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB9E3AF1D2B144200ED395A /* IRCModeInfoInternal.h */; };
@@ -5488,6 +5489,7 @@
 				4C0BA5081990798800857343 /* DIGreenBadgeLeftYosemite.png in Resources */,
 				4CCDC69E1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */,
 				4C0BA5091990798800857343 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
+				4CB82D7A1F3CD72D00D32D9F /* TDCInAppPurchaseDialog.strings in Resources */,
 				4CF40F561AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
 				4C0BA50A1990798800857343 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
 				4C0BA50C1990798800857343 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
