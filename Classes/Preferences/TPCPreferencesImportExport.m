@@ -120,9 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* The loading screen is a generic way to show something during import */
-	[mainWindowLoadingScreen() hideAll];
-
-	[mainWindowLoadingScreen() showLoadingConfigurationView];
+	[mainWindowLoadingScreen() showProgressViewWithReason:TXTLS(@"BasicLanguage[1029]")];
 
 	[worldController() setIsImportingConfiguration:YES];
 

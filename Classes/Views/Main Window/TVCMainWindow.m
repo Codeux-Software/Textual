@@ -1726,6 +1726,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 #pragma mark -
 #pragma mark Loading Screen
 
+- (void)setLoadingScreenProgressViewReason:(NSString *)progressReason
+{
+	NSParameterAssert(progressReason != nil);
+
+	[self.loadingScreen setProgressViewReason:progressReason];
+}
+
 - (BOOL)reloadLoadingScreen
 {
 	/* This method returns YES (success) if the loading screen is dismissed
@@ -1735,17 +1742,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	if (masterController().applicationIsLaunched == NO) {
-		[self.loadingScreen hideAll];
-
-		[self.loadingScreen showLoadingConfigurationView];
+		[self.loadingScreen showProgressViewWithReason:TXTLS(@"BasicLanguage[1027]")];
 
 		return NO;
 	}
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
-		[self.loadingScreen hideAll];
-
 		[self.loadingScreen showTrialExpiredView];
 
 		return NO;
@@ -1753,14 +1756,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 #endif
 
 	if (worldController().clientCount <= 0) {
-		[self.loadingScreen hideAll];
-
 		[self.loadingScreen showWelcomeAddServerView];
 
 		return NO;
 	}
 
-	[self.loadingScreen hideAllAnimated];
+	[self.loadingScreen hideAnimated];
 
 	return YES;
 }

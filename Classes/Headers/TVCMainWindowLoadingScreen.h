@@ -42,23 +42,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Animation is disabled unless an animated method is invoked */
 @interface TVCMainWindowLoadingScreenView : NSBox
-- (void)showLoadingConfigurationView;
+- (void)showProgressViewWithReason:(NSString *)progressReason;
+- (void)setProgressViewReason:(NSString *)progressReason;
+
 - (void)showTrialExpiredView;
 - (void)showWelcomeAddServerView;
 
 @property (readonly) BOOL viewIsVisible;
 
-- (void)hideAll;
-- (void)hideAllAnimated;
-
-- (void)hideWelcomeAddServerView;
-- (void)hideWelcomeAddServerViewAnimated;
-
-- (void)hideLoadingConfigurationView;
-- (void)hideLoadingConfigurationViewAnimated;
-
-- (void)hideTrialExpiredView;
-- (void)hideTrialExpiredViewAnimated;
+- (void)hide;
+- (void)hideAnimated;
 @end
 
 NS_ASSUME_NONNULL_END

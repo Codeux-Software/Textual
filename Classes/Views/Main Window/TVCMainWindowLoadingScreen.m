@@ -38,14 +38,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowLoadingScreenView ()
-@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
-@property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
-@property (nonatomic, weak) IBOutlet NSView *trialExpiredView;
-@property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
-@property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
+@property (nonatomic, weak) NSView *visibleView;
+@property (nonatomic, strong) IBOutlet NSView *welcomeAddServerView;
+@property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewContinueButton;
+@property (nonatomic, strong) IBOutlet NSView *progressView;
+@property (nonatomic, weak) IBOutlet NSTextField *progressViewDescriptionTextField;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
+@property (nonatomic, strong) IBOutlet NSView *trialExpiredView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
-@property (nonatomic, assign) BOOL isAnimating; // YES when animation is in progress
 @end
 
 @implementation TVCMainWindowLoadingScreenView
@@ -55,113 +56,47 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showWelcomeAddServerView
 {
-	if (self.isAnimating) {
-		return;
-	}
-
-	[self displayView:self.welcomeAddServerNormalView];
+	[self displayView:self.welcomeAddServerView];
 }
 
-- (void)showLoadingConfigurationView
+- (void)showProgressViewWithReason:(NSString *)progressReason
 {
-	if (self.isAnimating) {
-		return;
-	}
+	NSParameterAssert(progressReason != nil);
 
-	[self displayView:self.loadingConfigurationView];
+	[self displayView:self.progressView];
 
-	[self.loadingConfigurationViewPI startAnimation:nil];
+	[self setProgressViewReason:progressReason];
+
+	[self.progressViewIndicator startAnimation:nil];
+}
+
+- (void)setProgressViewReason:(NSString *)progressReason
+{
+	NSParameterAssert(progressReason != nil);
+
+	self.progressViewDescriptionTextField.stringValue = progressReason;
 }
 
 - (void)showTrialExpiredView
 {
-	if (self.isAnimating) {
-		return;
-	}
-
 	[self displayView:self.trialExpiredView];
 }
 
 #pragma mark -
-#pragma mark Hide View (Public)
 
-- (void)hideLoadingConfigurationView
+- (void)hide
 {
-	if (self.isAnimating == NO) {
-		[self.loadingConfigurationViewPI stopAnimation:nil];
-	}
-
-	[self hideAllWithoutAnimation];
+	[self hideAnimated:NO];
 }
 
-- (void)hideLoadingConfigurationViewAnimated
+- (void)hideAnimated
 {
-	if (self.isAnimating == NO) {
-		[self.loadingConfigurationViewPI stopAnimation:nil];
-	}
-
-	[self hideAllWithAnimation];
+	[self hideAnimated:YES];
 }
 
-#pragma mark -
-
-- (void)hideWelcomeAddServerView
+- (void)hideAnimated:(BOOL)animated
 {
-	[self hideAllWithoutAnimation];
-}
-
-- (void)hideWelcomeAddServerViewAnimated
-{
-	[self hideAllWithAnimation];
-}
-
-#pragma mark -
-
-- (void)hideTrialExpiredView
-{
-	[self hideAllWithoutAnimation];
-}
-
-- (void)hideTrialExpiredViewAnimated
-{
-	[self hideAllWithAnimation];
-}
-
-#pragma mark -
-
-- (void)hideAll
-{
-	[self hideAllAnimated:NO];
-}
-
-- (void)hideAllAnimated
-{
-	[self hideAllWithAnimation];
-}
-
-- (void)hideAllWithAnimation
-{
-	[self hideAllAnimated:YES];
-}
-
-- (void)hideAllWithoutAnimation
-{
-	[self hideAllAnimated:NO];
-}
-
-- (void)hideAllAnimated:(BOOL)animate
-{
-	if (self.isAnimating) {
-		return;
-	}
-
-	for (NSView *subview in self.contentView.subviews) {
-		if (subview.hidden) {
-			continue;
-		}
-
-		[self hideView:subview animate:animate];
-	}
+	[self hideView:self.visibleView animate:animated];
 }
 
 #pragma mark -
@@ -169,6 +104,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)displayView:(NSView *)view
 {
+	NSParameterAssert(view != nil);
+
+	if (self.visibleView != nil) {
+		[self.visibleView removeFromSuperview];
+	}
+
+	self.visibleView = view;
+
 	[self disableBackgroundControlsStepOne];
 
 	NSRect viewFrame = view.frame;
@@ -176,7 +119,31 @@ NS_ASSUME_NONNULL_BEGIN
 	self.loadingScreenMinimumWidthConstraint.constant = viewFrame.size.width;
 	self.loadingScreenMinimumHeightConstraint.constant = viewFrame.size.height;
 
-	view.hidden = NO;
+	[self addSubview:view];
+
+	NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
+
+	[constraints addObject:
+	 [NSLayoutConstraint constraintWithItem:view
+								  attribute:NSLayoutAttributeCenterX
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:self
+								  attribute:NSLayoutAttributeCenterX
+								 multiplier:1.0
+								   constant:0.0]
+	 ];
+
+	[constraints addObject:
+	 [NSLayoutConstraint constraintWithItem:view
+								  attribute:NSLayoutAttributeCenterY
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:self
+								  attribute:NSLayoutAttributeCenterY
+								 multiplier:1.0
+								   constant:0.0]
+	 ];
+
+	[self addConstraints:constraints];
 
 	self.alphaValue = 1.0;
 
@@ -199,12 +166,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* ================================== */
 
-	TXEmtpyBlockDataType phaseTwoBlock = ^{
-		view.hidden = YES;
+	void (^phaseTwoBlock)(NSView *) = ^(NSView *viewToHide) {
+		[view removeFromSuperview];
 
-		self.hidden = YES;
+		/* We only continue with phase two if we have not
+		 replaced the visible view with a new one. */
+		if (self.visibleView == viewToHide) {
+			self.visibleView = nil;
 
-		[self enableBackgroundControlsStepTwo];
+			self.hidden = YES;
+
+			[self enableBackgroundControlsStepTwo];
+		}
 	};
 
 	/* ================================== */
@@ -212,23 +185,19 @@ NS_ASSUME_NONNULL_BEGIN
 	if (animate == NO) {
 		self.alphaValue = 0.0;
 
-		phaseTwoBlock();
+		phaseTwoBlock(view);
 
 		return;
 	}
 
 	/* ================================== */
 
-	self.isAnimating = YES;
-
 	RZAnimationCurrentContext().duration = 1.0;
 
 	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-		[self animator].alphaValue = 0.0;
+		self.animator.alphaValue = 0.0;
 	} completionHandler:^{
-		phaseTwoBlock();
-
-		self.isAnimating = NO;
+		phaseTwoBlock(view);
 	}];
 }
 
@@ -237,7 +206,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)viewIsVisible
 {
-	return (self.isAnimating && self.isHidden == NO);
+	return (self.isHidden == NO);
 }
 
 - (void)disableBackgroundControlsStepOne
