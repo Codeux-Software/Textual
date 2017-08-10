@@ -48,6 +48,7 @@ TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationLineTypeAttribute; //
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationMemberTypeAttribute; // TVCLogMemberType
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationHighlightKeywordsAttribute; // NSArray<NSString *>
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationExcludedKeywordsAttribute; // NSArray<NSString *>
+TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationDoNotEscapeBodyAttribute; // BOOL
 
 /* These properties apply to attributed strings */
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationAttributedStringPreferredFontAttribute; // NSFont

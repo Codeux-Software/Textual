@@ -1038,6 +1038,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSMutableDictionary<NSString *, id> *rendererAttributes = [NSMutableDictionary dictionary];
 
+	if (logLine.rendererAttributes != nil) {
+		[rendererAttributes addEntriesFromDictionary:logLine.rendererAttributes];
+	}
+
 	[rendererAttributes maybeSetObject:logLine.excludeKeywords forKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 	[rendererAttributes maybeSetObject:logLine.highlightKeywords forKey:TVCLogRendererConfigurationHighlightKeywordsAttribute];
 	

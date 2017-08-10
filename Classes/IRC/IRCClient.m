@@ -4608,25 +4608,35 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command
 {
-	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:[NSDate date] isEncrypted:NO referenceMessage:nil completionBlock:nil];
+	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:[NSDate date] isEncrypted:NO escapeMessage:YES referenceMessage:nil completionBlock:nil];
+}
+
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command escapeMessage:(BOOL)escapeMessage
+{
+	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:[NSDate date] isEncrypted:NO escapeMessage:escapeMessage referenceMessage:nil completionBlock:nil];
 }
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt
 {
-	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:NO referenceMessage:nil completionBlock:nil];
+	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:NO escapeMessage:YES referenceMessage:nil completionBlock:nil];
 }
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted
 {
-	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:isEncrypted referenceMessage:nil completionBlock:nil];
+	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:isEncrypted escapeMessage:YES referenceMessage:nil completionBlock:nil];
 }
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted referenceMessage:(nullable IRCMessage *)referenceMessage
 {
-	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:isEncrypted referenceMessage:referenceMessage completionBlock:nil];
+	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:isEncrypted escapeMessage:YES referenceMessage:referenceMessage completionBlock:nil];
 }
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted referenceMessage:(nullable IRCMessage *)referenceMessage completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock
+{
+	[self print:messageBody by:nickname inChannel:channel asType:lineType command:command receivedAt:receivedAt isEncrypted:isEncrypted escapeMessage:YES referenceMessage:referenceMessage completionBlock:completionBlock];
+}
+
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(nullable NSString *)command receivedAt:(NSDate *)receivedAt isEncrypted:(BOOL)isEncrypted escapeMessage:(BOOL)escapeMessage referenceMessage:(nullable IRCMessage *)referenceMessage completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock
 {
 	NSParameterAssert(messageBody != nil);
 	NSParameterAssert(command != nil || referenceMessage != nil);
@@ -4687,6 +4697,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		lineType = TVCLogLinePrivateMessageType;
 	}
 
+	/* Renderer attributes */
+	NSDictionary<NSString *, id> *rendererAttributes = nil;
+
+	if (escapeMessage == NO) {
+		rendererAttributes = @{
+			TVCLogRendererConfigurationDoNotEscapeBodyAttribute : @(YES)
+		};
+	}
+
 	/* Create new log entry */
 	TVCLogLineMutable *logLine = [TVCLogLineMutable new];
 
@@ -4699,6 +4718,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	logLine.excludeKeywords = excludeKeywords;
 	logLine.highlightKeywords = matchKeywords;
+
+	logLine.rendererAttributes = rendererAttributes;
 
 	logLine.nickname = nickname;
 
@@ -4765,48 +4786,88 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)printDebugInformationToConsole:(NSString *)message
 {
-	[self print:message by:nil inChannel:nil asType:TVCLogLineDebugType command:TVCLogLineDefaultCommandValue];
+	[self printDebugInformationToConsole:message asCommand:TVCLogLineDefaultCommandValue escapeMessage:YES];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)message asCommand:(NSString *)command
 {
-	[self print:message by:nil inChannel:nil asType:TVCLogLineDebugType command:command];
+	[self printDebugInformationToConsole:message asCommand:command escapeMessage:YES];
+}
+
+- (void)printDebugInformationToConsole:(NSString *)message escapeMessage:(BOOL)escapeMessage
+{
+	[self printDebugInformationToConsole:message asCommand:TVCLogLineDefaultCommandValue escapeMessage:escapeMessage];
+}
+
+- (void)printDebugInformationToConsole:(NSString *)message asCommand:(NSString *)command escapeMessage:(BOOL)escapeMessage
+{
+	[self print:message by:nil inChannel:nil asType:TVCLogLineDebugType command:command escapeMessage:escapeMessage];
 }
 
 - (void)printDebugInformation:(NSString *)message
 {
-	[self printDebugInformation:message asCommand:TVCLogLineDefaultCommandValue];
+	[self printDebugInformation:message asCommand:TVCLogLineDefaultCommandValue escapeMessage:YES];
 }
 
 - (void)printDebugInformation:(NSString *)message asCommand:(NSString *)command
 {
+	[self printDebugInformation:message asCommand:command escapeMessage:YES];
+}
+
+- (void)printDebugInformation:(NSString *)message escapeMessage:(BOOL)escapeMessage
+{
+	[self printDebugInformation:message asCommand:TVCLogLineDefaultCommandValue escapeMessage:escapeMessage];
+}
+
+- (void)printDebugInformation:(NSString *)message asCommand:(NSString *)command escapeMessage:(BOOL)escapeMessage
+{
 	IRCChannel *channel = [mainWindow() selectedChannelOn:self];
 
-	[self printDebugInformation:message inChannel:channel asCommand:command];
+	[self printDebugInformation:message inChannel:channel asCommand:TVCLogLineDefaultCommandValue escapeMessage:YES];
 }
 
 - (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel
 {
-	[self printDebugInformation:message inChannel:channel asCommand:TVCLogLineDefaultCommandValue];
+	[self printDebugInformation:message inChannel:channel asCommand:TVCLogLineDefaultCommandValue escapeMessage:YES];
 }
 
 - (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel asCommand:(NSString *)command
 {
-	[self print:message by:nil inChannel:channel asType:TVCLogLineDebugType command:command];
+	[self print:message by:nil inChannel:channel asType:TVCLogLineDebugType command:command escapeMessage:YES];
+}
+
+- (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel escapeMessage:(BOOL)escapeMessage
+{
+	[self printDebugInformation:message inChannel:channel asCommand:TVCLogLineDefaultCommandValue escapeMessage:escapeMessage];
+}
+
+- (void)printDebugInformation:(NSString *)message inChannel:(IRCChannel *)channel asCommand:(NSString *)command escapeMessage:(BOOL)escapeMessage
+{
+	[self print:message by:nil inChannel:channel asType:TVCLogLineDebugType command:command escapeMessage:escapeMessage];
 }
 
 - (void)printDebugInformationInAllViews:(NSString *)message
 {
-	[self printDebugInformationInAllViews:message asCommand:TVCLogLineDefaultCommandValue];
+	[self printDebugInformationInAllViews:message asCommand:TVCLogLineDefaultCommandValue escapeMessage:YES];
 }
 
 - (void)printDebugInformationInAllViews:(NSString *)message asCommand:(NSString *)command
 {
+	[self printDebugInformationInAllViews:message asCommand:command escapeMessage:YES];
+}
+
+- (void)printDebugInformationInAllViews:(NSString *)message escapeMessage:(BOOL)escapeMessage
+{
+	[self printDebugInformationInAllViews:message asCommand:TVCLogLineDefaultCommandValue escapeMessage:escapeMessage];
+}
+
+- (void)printDebugInformationInAllViews:(NSString *)message asCommand:(NSString *)command escapeMessage:(BOOL)escapeMessage
+{
 	for (IRCChannel *channel in self.channelList) {
-		[self printDebugInformation:message inChannel:channel asCommand:command];
+		[self printDebugInformation:message inChannel:channel asCommand:command escapeMessage:escapeMessage];
 	}
 
-	[self printDebugInformationToConsole:message asCommand:command];
+	[self printDebugInformationToConsole:message asCommand:command escapeMessage:escapeMessage];
 }
 
 - (void)printCannotSendMessageToWindowErrorInChannel:(IRCChannel *)channel

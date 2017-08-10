@@ -120,6 +120,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	self->_excludeKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"excludeKeywords"] copy];
 	self->_highlightKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"highlightKeywords"] copy];
 
+	self->_rendererAttributes = [[aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"rendererAttributes"] copy];
+
 	self->_isEncrypted = [aDecoder decodeBoolForKey:@"isEncrypted"];
 
 	self->_command = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"command"] copy];
@@ -161,6 +163,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	[aCoder maybeEncodeObject:self.excludeKeywords forKey:@"excludeKeywords"];
 	[aCoder maybeEncodeObject:self.highlightKeywords forKey:@"highlightKeywords"];
+	[aCoder maybeEncodeObject:self.rendererAttributes forKey:@"rendererAttributes"];
 	[aCoder maybeEncodeObject:self.nickname forKey:@"nickname"];
 
 	[aCoder encodeBool:self.isEncrypted forKey:@"isEncrypted"];
@@ -374,6 +377,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	object->_excludeKeywords = self->_excludeKeywords;
 	object->_highlightKeywords = self->_highlightKeywords;
 
+	object->_rendererAttributes = self->_rendererAttributes;
+
 	object->_receivedAt = self->_receivedAt;
 
 	object->_command = self->_command;
@@ -413,6 +418,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 @dynamic command;
 @dynamic excludeKeywords;
 @dynamic highlightKeywords;
+@dynamic rendererAttributes;
 @dynamic isEncrypted;
 @dynamic lineType;
 @dynamic memberType;
@@ -443,6 +449,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 {
 	if (self->_highlightKeywords != highlightKeywords) {
 		self->_highlightKeywords = [highlightKeywords copy];
+	}
+}
+
+- (void)setRendererAttributes:(nullable NSDictionary<NSString *, id> *)rendererAttributes
+{
+	if (self->_rendererAttributes != rendererAttributes) {
+		self->_rendererAttributes = [rendererAttributes copy];
 	}
 }
 

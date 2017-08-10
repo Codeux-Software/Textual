@@ -53,6 +53,7 @@ typedef uint32_t attr_t;
 @property (nonatomic, weak) TVCLogController *viewController;
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogLineMemberType memberType;
+@property (nonatomic, assign) BOOL escapeBody;
 @end
 
 NSString * const TVCLogRendererConfigurationRenderLinksAttribute = @"TVCLogRendererConfigurationRenderLinksAttribute";
@@ -60,6 +61,7 @@ NSString * const TVCLogRendererConfigurationLineTypeAttribute = @"TVCLogRenderer
 NSString * const TVCLogRendererConfigurationMemberTypeAttribute = @"TVCLogRendererConfigurationMemberTypeAttribute";
 NSString * const TVCLogRendererConfigurationHighlightKeywordsAttribute = @"TVCLogRendererConfigurationHighlightKeywordsAttribute";
 NSString * const TVCLogRendererConfigurationExcludedKeywordsAttribute = @"TVCLogRendererConfigurationExcludedKeywordsAttribute";
+NSString * const TVCLogRendererConfigurationDoNotEscapeBodyAttribute = @"TVCLogRendererConfigurationDoNotEscapeBodyAttribute";
 
 NSString * const TVCLogRendererConfigurationAttributedStringPreferredFontAttribute = @"TVCLogRendererConfigurationAttributedStringPreferredFontAttribute";
 NSString * const TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute = @"TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute";
@@ -723,8 +725,6 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 	NSString *fragment = [string substringWithRange:NSMakeRange(rangeStart, rangeLength)];
 
-	NSString *fragmentEscaped = [TVCLogRenderer escapeString:fragment];
-
 	NSMutableDictionary<NSString *, id> *templateTokens = [NSMutableDictionary dictionary];
 
 	if (attributes & _rendererURLAttribute)
@@ -752,26 +752,24 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 		templateTokens[@"anchorLocation"] = anchorLocation;
 
-		templateTokens[@"anchorTitle"] = fragmentEscaped;
+		templateTokens[@"anchorTitle"] = [TVCLogRenderer escapeString:fragment];
 
 		html = [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
 	else if (attributes & _rendererChannelNameAttribute)
 	{
-		templateTokens[@"channelName"] = fragmentEscaped;
+		templateTokens[@"channelName"] = [TVCLogRenderer escapeString:fragment];
 
 		html = [TVCLogRenderer renderTemplate:@"renderedChannelNameLinkResource" attributes:templateTokens];
 	}
 	else if (attributes & _rendererConversationTrackerAttribute)
 	{
-		templateTokens[@"messageFragment"] = fragmentEscaped;
-
 		if ([TPCPreferences disableNicknameColorHashing]) {
 			templateTokens[@"inlineNicknameMatchFound"] = @(NO);
 		} else {
 			IRCChannel *channel = self->_viewController.associatedChannel;
 
-			IRCChannelUser *member = [channel findMember:fragmentEscaped];
+			IRCChannelUser *member = [channel findMember:fragment];
 
 			NSString *nickname = member.user.nickname;
 
@@ -804,10 +802,20 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 				templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 			}
 		}
+
+		html = [TVCLogRenderer escapeString:fragment];
 	}
 
+	BOOL escapeBody = self.escapeBody;
+
+	templateTokens[@"messageFragmentEscaped"] = @(escapeBody);
+
 	if (html == nil) {
-		html = fragmentEscaped;
+		if (escapeBody) {
+			html = [TVCLogRenderer escapeString:fragment];
+		} else {
+			html = fragment;
+		}
 	}
 
 	// --- //
@@ -860,14 +868,16 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	}
 
 	/* Escape spaces that are prefix and suffix characters */
-	if ([html hasPrefix:NSStringWhitespacePlaceholder]) {
-		html = [html stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-											 withString:@"&nbsp;"];
-	}
+	if (escapeBody) {
+		if ([html hasPrefix:NSStringWhitespacePlaceholder]) {
+			html = [html stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+												 withString:@"&nbsp;"];
+		}
 
-	if ([html hasSuffix:NSStringWhitespacePlaceholder]) {
-		html = [html stringByReplacingCharactersInRange:NSMakeRange((html.length - 1), 1)
-											 withString:@"&nbsp;"];
+		if ([html hasSuffix:NSStringWhitespacePlaceholder]) {
+			html = [html stringByReplacingCharactersInRange:NSMakeRange((html.length - 1), 1)
+												 withString:@"&nbsp;"];
+		}
 	}
 
 	// --- //
@@ -966,6 +976,8 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 	TVCLogLineMemberType memberType = [inputDictionary unsignedIntegerForKey:TVCLogRendererConfigurationMemberTypeAttribute];
 
+	BOOL escapeBody = ([inputDictionary boolForKey:TVCLogRendererConfigurationDoNotEscapeBodyAttribute] == NO);
+
 	TVCLogRenderer *renderer = [TVCLogRenderer new];
 
 	renderer.body =
@@ -977,6 +989,8 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	renderer.lineType = lineType;
 
 	renderer.memberType = memberType;
+
+	renderer.escapeBody = escapeBody;
 
 	renderer.rendererAttributes = inputDictionary;
 
@@ -1066,6 +1080,16 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	return templateRender.removeAllNewlines;
 }
 
++ (NSString *)escapeStringSimple:(NSString *)string
+{
+	NSParameterAssert(string != nil);
+
+	string = [string stringByReplacingOccurrencesOfString:@"\t" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
+	string = [string stringByReplacingOccurrencesOfString:@"  " withString:@"&nbsp;&nbsp;"];
+
+	return string;
+}
+
 + (NSString *)escapeString:(NSString *)string
 {
 	NSParameterAssert(string != nil);
@@ -1076,10 +1100,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 		stringEscaped = NSStringEmptyPlaceholder;
 	}
 
-	stringEscaped = [stringEscaped stringByReplacingOccurrencesOfString:@"\t" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
-	stringEscaped = [stringEscaped stringByReplacingOccurrencesOfString:@"  " withString:@"&nbsp;&nbsp;"];
-
-	return stringEscaped;
+	return [TVCLogRenderer escapeStringSimple:stringEscaped];
 }
 
 + (NSColor *)mapColorCode:(NSUInteger)colorCode
