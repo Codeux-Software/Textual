@@ -68,6 +68,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @property (nonatomic, assign, readwrite) BOOL reloadingTheme;
 @property (nonatomic, assign, readwrite) BOOL channelSpotlightPanelAttached;
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+@property (nonatomic, assign) BOOL disabledByLackOfInAppPurchase;
+#endif
 @end
 
 #define _treeDragItemType		TVCServerListDragType
@@ -164,6 +168,11 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(loadingDelayedByLackOfInAppPurchase:)
 								   name:TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(loadingInAppPurchaseDialogFinished:)
+								   name:TDCInAppPurchaseDialogFinishedLoadingNotification
 								 object:nil];
 #endif
 
@@ -1400,12 +1409,53 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (BOOL)canBecomeKeyWindow
 {
-	return (self.channelSpotlightPanelAttached == NO);
+	return (self.channelSpotlightPanelAttached == NO
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+			&&
+			self.disabledByLackOfInAppPurchase == NO
+#endif
+			);
 }
 
 - (BOOL)canBecomeMainWindow
 {
-	return (self.channelSpotlightPanelAttached == NO);
+	return (self.channelSpotlightPanelAttached == NO
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+			&&
+			self.disabledByLackOfInAppPurchase == NO
+#endif
+			);
+}
+
+- (BOOL)isDisabled
+{
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	if (self.disabledByLackOfInAppPurchase) {
+		return YES;
+	}
+#endif
+
+	return NO;
+}
+
+- (void)makeKeyAndOrderFront:(nullable id)sender
+{
+	if (self.disabled) {
+		return;
+	}
+
+	[super makeKeyAndOrderFront:nil];
+}
+
+- (void)orderFront:(nullable id)sender
+{
+	if (self.disabled) {
+		return;
+	}
+
+	[super orderFront:nil];
 }
 
 - (NSRect)defaultWindowFrame
@@ -1736,7 +1786,22 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 - (void)loadingDelayedByLackOfInAppPurchase:(NSNotification *)notification
 {
+	self.disabledByLackOfInAppPurchase = YES;
+
 	[self setLoadingScreenProgressViewReason:TXTLS(@"BasicLanguage[1028]")];
+
+	[self close];
+}
+
+- (void)loadingInAppPurchaseDialogFinished:(NSNotification *)notification
+{
+	if (self.disabledByLackOfInAppPurchase == NO) {
+		return;
+	}
+
+	self.disabledByLackOfInAppPurchase = NO;
+
+	[self makeKeyAndOrderFront:nil];
 }
 #endif
 

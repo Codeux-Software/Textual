@@ -177,9 +177,8 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 	BOOL isMainWindowMain = mainWindow().mainWindow;
-
+	BOOL isMainWindowDisabled = mainWindow().disabled;
 	BOOL mainWindowHasSheet = (mainWindow().attachedSheet != nil);
-
 	BOOL frontmostWindowIsMainWindow = mainWindow().isBeneathMouse;
 
 	BOOL returnValue = [self validateSpecificMenuItem:menuItem withTag:tag];
@@ -226,19 +225,13 @@ NS_ASSUME_NONNULL_BEGIN
 						/* Hide "Main Window" if Main Window is key. */
 						/* Hide all other items when Main Window is NOT key. */
 						if (tag == 808) { // "Main Window"
-							if (isMainWindowMain) {
-								menuItem.hidden = YES;
-							} else {
-								menuItem.hidden = NO;
-							}
+							menuItem.enabled = (isMainWindowDisabled == NO);
+
+							menuItem.hidden = isMainWindowMain;
 						}
 						else // tag == 808
 						{
-							if (isMainWindowMain == NO) {
-								menuItem.hidden = YES;
-							} else {
-								menuItem.hidden = NO;
-							}
+							menuItem.hidden = (isMainWindowMain == NO);
 						}
 					}
 				} // switch
@@ -319,7 +312,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			/* These are the bare minimium of menu items that must be enabled
 			 at all times because they are essential to the entire application. */
-			if (returnValue == NO) {
+			if (returnValue == NO && menuItem.enabled) {
 				switch (tag) {
 					case 100: // "About Textual"
 					case 104: // "Services"

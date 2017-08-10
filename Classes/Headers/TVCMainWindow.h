@@ -60,6 +60,8 @@ TEXTUAL_EXTERN NSString * const TVCMainWindowDidReloadThemeNotification;
 TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 
 @interface TVCMainWindow : NSWindow
+@property (readonly, getter=isDisabled) BOOL disabled;
+
 @property (readonly, weak) TVCMainWindowLoadingScreenView *loadingScreen;
 @property (readonly, weak) TVCMainWindowSplitView *contentSplitView;
 @property (readonly, unsafe_unretained) TVCMainWindowTextView *inputTextField;
