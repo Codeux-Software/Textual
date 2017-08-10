@@ -4,7 +4,7 @@
 "TDCInAppPurchaseDialog[0001][com.codeux.iap.textual_upgrade_v6]" = "Textual 6 Upgrade";
 "TDCInAppPurchaseDialog[0001][com.codeux.iap.textual_upgrade_v6_free]" = "Textual 6 Upgrade (free)";
 
-"TDCInAppPurchaseDialog[0002][1]" = "Cannot place order for “%@“ because this product is not currently available";
+"TDCInAppPurchaseDialog[0002][1]" = "Cannot unlock “%@“ because this product is not currently available";
 "TDCInAppPurchaseDialog[0002][2]" = "";
 
 "TDCInAppPurchaseDialog[0003][1]" = "Cannot continue transaction because a valid receipt file is missing";
@@ -23,3 +23,6 @@
 
 "TDCInAppPurchaseDialog[0008][1]" = "The following error was returned while processing request:";
 "TDCInAppPurchaseDialog[0008][2]" = "%@";
+
+"TDCInAppPurchaseDialog[0009][1]" = "Please select an item to unlock";
+"TDCInAppPurchaseDialog[0009][2]" = "";
