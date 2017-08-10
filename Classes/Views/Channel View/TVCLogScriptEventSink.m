@@ -487,6 +487,13 @@ ClassWithDesignatedInitializerInitMethod
 			}];
 }
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+- (void)showInAppPurchaseWindow:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_showInAppPurchaseWindow:)];
+}
+#endif
+
 - (void)sidebarInversionIsEnabled:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_sidebarInversionIsEnabled:)];
@@ -763,6 +770,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	context.webViewPolicy.anchorURL = value;
 }
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+- (void)_showInAppPurchaseWindow:(TVCLogScriptEventSinkContext *)context
+{
+	[[TXSharedApplication sharedInAppPurchaseDialog] show];
+}
+#endif
 
 - (id)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
 {

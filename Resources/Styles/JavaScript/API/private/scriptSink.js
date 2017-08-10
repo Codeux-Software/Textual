@@ -416,3 +416,12 @@ app.sendPluginPayload = function(payloadLabel, payloadContent)
 		TextualScriptSink.sendPluginPayload(dataValue);
 	}
 };
+
+app.showInAppPurchaseWindow = function()
+{
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.showInAppPurchaseWindow.postMessage(null);
+	} else {
+		TextualScriptSink.showInAppPurchaseWindow();
+	}
+};
