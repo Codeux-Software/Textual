@@ -10124,7 +10124,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		NSTimeInterval timeRemaining = (_softwareTrialDisconnectInterval - timerInterval);
 
-		[self printDebugInformationInAllViews:TXTLS(@"IRC[1126]", (timeRemaining / 60.0))];
+		[self printDebugInformationInAllViews:TXTLS(@"IRC[1126]", (timeRemaining / 60.0)) escapeMessage:NO];
 
 		NSTimeInterval nextStepInterval = 0;
 
