@@ -290,16 +290,18 @@ enum {
 		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 	} // for loop
 
-	/* Post notifications */
-	[self postTransactionFinishedNotification:transactions];
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		/* Post notifications */
+		[self postTransactionFinishedNotification:transactions];
 
-	/* Clear progress */
-	[self finishProductPurchase];
+		/* Clear progress */
+		[self finishProductPurchase];
 
-	/* Reload launch status if necessary */
-	if (self.finishedLoading == NO) {
-		[self loadReceiptDuringLaunchPostflight];
-	}
+		/* Reload launch status if necessary */
+		if (self.finishedLoading == NO) {
+			[self loadReceiptDuringLaunchPostflight];
+		}
+	});
 }
 
 - (void)finishProductPurchase
@@ -368,11 +370,9 @@ enum {
 		@"productIdentifiers" : [productIdentifiers copy]
     };
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[RZNotificationCenter() postNotificationName:notification
-											  object:self
-											userInfo:userInfo];
-	});
+	[RZNotificationCenter() postNotificationName:notification
+										  object:self
+										userInfo:userInfo];
 }
 
 #pragma mark -
