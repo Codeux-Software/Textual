@@ -62,6 +62,10 @@ typedef NS_ENUM(NSUInteger, IRCClientDisconnectMode) {
 	IRCClientDisconnectBadCertificateMode,
 	IRCClientDisconnectReachabilityChangeMode,
 	IRCClientDisconnectServerRedirectMode,
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	IRCClientDisconnectSoftwareTrialMode,
+#endif
 };
 
 typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapabilities) {

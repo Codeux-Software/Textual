@@ -186,6 +186,10 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedNeedIdentificationTokens;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedSuccessfulIdentificationTokens;
 @property (nonatomic, strong, nullable) IRCChannel *rawDataLogQuery;
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+@property (nonatomic, strong, nullable) TLOTimer *softwareTrialTimer;
+#endif
 @end
 
 @implementation IRCClient
@@ -286,12 +290,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.whoTimer.target = self;
 	self.whoTimer.action = @selector(onWhoTimer:);
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	self.softwareTrialTimer = [TLOTimer new];
+	self.softwareTrialTimer.repeatTimer = NO;
+	self.softwareTrialTimer.target = self;
+	self.softwareTrialTimer.action = @selector(onSoftwareTrialTimer:);
+#endif
+
 	[RZNotificationCenter() addObserver:self selector:@selector(willDestroyChannel:) name:IRCWorldWillDestroyChannelNotification object:nil];
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[RZNotificationCenter() addObserver:self selector:@selector(onInAppPurchaseTransactionFinished:) name:TDCInAppPurchaseDialogTransactionFinishedNotification object:nil];
+#endif
 }
 
 - (void)dealloc
 {
 	[RZNotificationCenter() removeObserver:self];
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[self.softwareTrialTimer stop];
+	self.softwareTrialTimer = nil;
+#endif
 
 	[self.autojoinTimer stop];
 	[self.autojoinDelayedWarningTimer stop];
@@ -4775,6 +4795,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self print:message by:nil inChannel:channel asType:TVCLogLineDebugType command:command];
 }
 
+- (void)printDebugInformationInAllViews:(NSString *)message
+{
+	[self printDebugInformationInAllViews:message asCommand:TVCLogLineDefaultCommandValue];
+}
+
+- (void)printDebugInformationInAllViews:(NSString *)message asCommand:(NSString *)command
+{
+	for (IRCChannel *channel in self.channelList) {
+		[self printDebugInformation:message inChannel:channel asCommand:command];
+	}
+
+	[self printDebugInformationToConsole:message asCommand:command];
+}
+
 - (void)printCannotSendMessageToWindowErrorInChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
@@ -4879,6 +4913,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self stopPongTimer];
 	[self stopRetryTimer];
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[self stopSoftwareTrialTimer];
+#endif
+
 	[self cancelPerformRequests];
 
 	if (isTerminating == NO && self.reconnectEnabled) {
@@ -4908,8 +4946,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			disconnectMessage = TXTLS(@"IRC[1051]");
 		}
 
-		for (IRCChannel *channel in self.channelList) {
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+		else if (self.disconnectType == IRCClientDisconnectSoftwareTrialMode) {
+			disconnectMessage = TXTLS(@"IRC[1125]");
+		}
+#endif
 
+		for (IRCChannel *channel in self.channelList) {
 			if (channel.isActive == NO) {
 				channel.errorOnLastJoinAttempt = NO;
 			} else {
@@ -7955,6 +7998,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Manage timers */
 	[self startPongTimer];
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[self startSoftwareTrialTimer];
+#endif
+
 	[self stopRetryTimer];
 
 	/* Manage properties */
@@ -9948,6 +9995,104 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self disconnect];
 	}];
 }
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+#define _softwareTrialWarningInterval1 			5400 // 1 hour, 30 minutes
+#define _softwareTrialWarningInterval2 			6300 // 1 hour, 45 minutes
+#define _softwareTrialWarningInterval3 			6900 // 1 hour, 55 minutes
+#define _softwareTrialWarningInterval4 			7140 // 1 hour, 59 minutes
+#define _softwareTrialDisconnectInterval 		7200 // 2 hours
+
+- (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
+{
+	[self toggleSoftwareTrialTimer];
+}
+
+- (void)toggleSoftwareTrialTimer
+{
+	if (TLOAppStoreTextualIsRegistered()) {
+		[self stopSoftwareTrialTimer];
+
+		return;
+	}
+}
+
+- (void)startSoftwareTrialTimer
+{
+	if (self.softwareTrialTimer.timerIsActive) {
+		return;
+	}
+
+	if (TLOAppStoreTextualIsRegistered()) {
+		return;
+	}
+
+	NSTimeInterval timeReaminingInTrial = (TLOAppStoreTimeReaminingInTrial() * (-1.0));
+	NSTimeInterval timeRemaining = (timeReaminingInTrial + _softwareTrialWarningInterval1);
+
+	[self.softwareTrialTimer start:timeRemaining];
+
+	self.softwareTrialTimer.context = @(0);
+
+	[self onSoftwareTrialTimer:nil];
+}
+
+- (void)stopSoftwareTrialTimer
+{
+	if (self.softwareTrialTimer.timerIsActive == NO) {
+		return;
+	}
+
+	[self.softwareTrialTimer stop];
+}
+
+- (void)onSoftwareTrialTimer:(id)sender
+{
+	NSUInteger timerStep = ((NSNumber *)self.softwareTrialTimer.context).unsignedIntegerValue;
+
+	if (timerStep <= 2)
+	{
+		NSTimeInterval timerInterval = self.softwareTrialTimer.interval;
+
+		/* The interval can be greater than the first because in
+		 -startSoftwareTrialTimer, we add the remainder of the trial
+		 period to determine when we will start the timer. */
+		if (timerInterval >= _softwareTrialWarningInterval1) {
+			timerInterval = _softwareTrialWarningInterval1;
+		}
+
+		NSTimeInterval timeRemaining = (_softwareTrialDisconnectInterval - timerInterval);
+
+		[self printDebugInformationInAllViews:TXTLS(@"IRC[1126]", (timeRemaining / 60.0))];
+
+		NSTimeInterval nextStepInterval = 0;
+
+		if (timerStep == 0) {
+			nextStepInterval = _softwareTrialWarningInterval2;
+		} else if (timerStep == 1) {
+			nextStepInterval = _softwareTrialWarningInterval3;
+		} else if (timerStep == 2) {
+			nextStepInterval = _softwareTrialWarningInterval4;
+		}
+
+		[self.softwareTrialTimer start:(nextStepInterval - timeRemaining)];
+
+		self.softwareTrialTimer.context = @(timerStep + 1);
+	}
+	else
+	{
+		self.disconnectType = IRCClientDisconnectSoftwareTrialMode;
+
+		[self quit];
+	}
+}
+
+#undef _softwareTrialWarningInterval1
+#undef _softwareTrialWarningInterval2
+#undef _softwareTrialWarningInterval3
+#undef _softwareTrialWarningInterval4
+#undef _softwareTrialDisconnectInterval
+#endif
 
 #pragma mark -
 #pragma mark User Invoked Command Controls
