@@ -275,7 +275,7 @@ NS_ASSUME_NONNULL_BEGIN
 				 helpful. See TXMenuController.h for complete list of tags. */
 				if (tag < 900 ||
 					(tag >= 900 && tag <= 902) ||
-					(tag >= 930 && tag <= 944))
+					(tag >= 960 && tag <= 965))
 				{
 					returnValue = NO;
 				}
