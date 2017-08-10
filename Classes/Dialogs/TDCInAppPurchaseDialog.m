@@ -594,6 +594,16 @@ enum {
 	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 
+- (void)showPleaseSelectItemError
+{
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0009][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0009][1]")
+							 defaultButton:TXTLS(@"Prompts[0005]")
+						   alternateButton:nil
+							   otherButton:nil];
+}
+
 #pragma mark -
 #pragma mark Receipt
 
@@ -751,6 +761,12 @@ enum {
 
 - (BOOL)windowShouldClose:(NSWindow *)sender
 {
+	if (self.finishedLoading == NO) {
+		[self showPleaseSelectItemError];
+
+		return NO;
+	}
+
 	if (self.windowIsAllowedToClose == NO) {
 		NSBeep();
 
