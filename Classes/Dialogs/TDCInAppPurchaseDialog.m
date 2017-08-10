@@ -760,12 +760,6 @@ enum {
 	return YES;
 }
 
-- (void)windowWillClose:(NSNotification *)notification
-{
-	/* Clear product list when window clears */
-	self.products = nil;
-}
-
 @end
 
 NS_ASSUME_NONNULL_END
