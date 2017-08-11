@@ -46,15 +46,20 @@ NSString * const TDCInAppPurchaseDialogWillReloadReceiptNotification = @"TDCInAp
 NSString * const TDCInAppPurchaseDialogDidReloadReceiptNotification = @"DCInAppPurchaseDialogDidReloadReceiptNotification";
 NSString * const TDCInAppPurchaseDialogFinishedLoadingNotification = @"TDCInAppPurchaseDialogFinishedLoadingNotification";
 NSString * const TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification = @"TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification";
+NSString * const TDCInAppPurchaseDialogTrialExpiredNotification = @"TDCInAppPurchaseDialogTrialExpiredNotification";
 
 enum {
 	SKPaymentTransactionStateUnknown = LONG_MAX
 };
 
+#define _trialExpiredRemindMeInterval		432000 // 5 days
+
 @interface TDCInAppPurchaseDialog ()
+@property (nonatomic, strong) TLOTimer *trialTimer;
 @property (nonatomic, assign) BOOL windowIsAllowedToClose;
 @property (nonatomic, assign) BOOL finishedLoading;
 @property (nonatomic, assign) BOOL requestingProducts;
+@property (nonatomic, assign) BOOL performRestoreOnShow;
 @property (nonatomic, assign) BOOL performingRestore;
 @property (nonatomic, assign) BOOL performingPurchase;
 @property (nonatomic, assign) NSUInteger purchasedProductState;
@@ -97,18 +102,22 @@ enum {
 	self.windowIsAllowedToClose = YES;
 
 	self.purchasedProductState = SKPaymentTransactionStateUnknown;
-
-	[self addPaymentQueueObserver];
 }
 
 - (void)prepareForApplicationTermination
 {
+	[self stopTrialTimer];
+
 	[self removePaymentQueueObserver];
 }
 
 - (void)applicationDidFinishLaunching
 {
 	[self loadReceiptDuringLaunch];
+
+	[self toggleTrialTimer];
+
+	[self addPaymentQueueObserver];
 }
 
 - (void)postDialogFinishedLoadingNotification
@@ -125,6 +134,138 @@ enum {
 	}
 
 	[super show];
+}
+
+#pragma mark -
+#pragma mark Trial Timer
+
+- (void)toggleTrialTimer
+{
+	if (TLOAppStoreIsTrialPurchased() == NO) {
+		return;
+	}
+
+	if (TLOAppStoreTextualIsRegistered()) {
+		[self stopTrialTimer];
+	} else {
+		[self startTrialTimer];
+	}
+}
+
+- (void)startTrialTimer
+{
+	if (self.trialTimer != nil) {
+		return;
+	}
+
+	NSTimeInterval timeRemaining = (TLOAppStoreTimeReaminingInTrial() * (-1.0));
+
+	if (timeRemaining == 0) {
+		return;
+	}
+
+	self.trialTimer = [TLOTimer new];
+	self.trialTimer.repeatTimer = NO;
+	self.trialTimer.target = self;
+	self.trialTimer.action = @selector(onTrialTimer:);
+
+	[self.trialTimer start:timeRemaining];
+}
+
+- (void)stopTrialTimer
+{
+	if (self.trialTimer == nil) {
+		return;
+	}
+
+	[self.trialTimer stop];
+	self.trialTimer = nil;
+}
+
+- (void)onTrialTimer:(id)sender
+{
+	[self show];
+
+	[self _showTrialIsExpiredMessageInWindow:self.window];
+
+	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogTrialExpiredNotification object:self];
+}
+
+#pragma mark -
+#pragma mark Messages
+
+- (void)showTrialIsExpiredMessageInWindow:(NSWindow *)window
+{
+	NSParameterAssert(window != nil);
+
+	/* Is the trial even expired? */
+	if (TLOAppStoreIsTrialExpired() == NO) {
+		return;
+	}
+
+	/* Do not show trial is expired message too often. */
+	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual In-App Purchase -> Trial Expired Message Last Presentation"];
+
+	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+
+	if (lastCheckTime > 0) {
+		if ((currentTime - lastCheckTime) < _trialExpiredRemindMeInterval) {
+			LogToConsoleInfo("Not enough time has passed since last presentation")
+
+			return;
+		}
+	}
+
+	[RZUserDefaults() setDouble:currentTime forKey:@"Textual In-App Purchase -> Trial Expired Message Last Presentation"];
+
+	/* Show trial expired message */
+	[self _showTrialIsExpiredMessageInWindow:window];
+}
+
+- (void)_showTrialIsExpiredMessageInWindow:(NSWindow *)window
+{
+	NSParameterAssert(window != nil);
+
+	[TLOPopupPrompts sheetWindowWithWindow:window.deepestWindow
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0011][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0011][1]")
+							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0011][3]")
+						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0011][4]")
+							   otherButton:TXTLS(@"Prompts[0008]")
+							suppressionKey:@"trial_is_expired_mas"
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
+								   self.performRestoreOnShow = YES;
+							   }
+
+							   if (buttonClicked != TLOPopupPromptReturnOtherType) {
+								   [self show];
+							   }
+						   }];
+}
+
+- (void)showFeatureIsLimitedMessageInWindow:(NSWindow *)window
+{
+	NSParameterAssert(window != nil);
+
+	[TLOPopupPrompts sheetWindowWithWindow:window.deepestWindow
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0010][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0010][1]")
+							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0010][3]")
+						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0010][4]")
+							   otherButton:TXTLS(@"Prompts[0008]")
+							suppressionKey:@"trial_is_expired_mas"
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
+								   self.performRestoreOnShow = YES;
+							   }
+
+							   if (buttonClicked != TLOPopupPromptReturnOtherType) {
+								   [self show];
+							   }
+						   }];
 }
 
 #pragma mark -
@@ -210,7 +351,7 @@ enum {
 
 	[self detachProgressView];
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
+	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]", error.localizedDescription)
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
@@ -261,7 +402,7 @@ enum {
 	BOOL receiptLoaded = [self loadReceipt];
 
 	if (receiptLoaded == NO) {
-		[TLOPopupPrompts sheetWindowWithWindow:self.window
+		[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
 										  body:TXTLS(@"TDCInAppPurchaseDialog[0003][1]")
 										 title:TXTLS(@"TDCInAppPurchaseDialog[0003][2]")
 								 defaultButton:TXTLS(@"Prompts[0005]")
@@ -292,8 +433,18 @@ enum {
 		/* Post notifications */
 		[self postTransactionFinishedNotification:transactions];
 
+		/* This method may be called without the window visible because there
+		 may be items left in the queue when launching (e.g. crash). */
+		if (self.window.visible == NO) {
+			[self show];
+		}
+
 		/* Clear progress */
 		[self finishProductPurchase];
+
+		[self toggleTrialTimer];
+
+		[self showThankYouAfterProductPurchase];
 
 		/* Reload launch status if necessary */
 		if (self.finishedLoading == NO) {
@@ -317,7 +468,7 @@ enum {
 
 	if (self.purchasedProductState == SKPaymentTransactionStateFailed) {
 		if (self.purchasedProductError.code != SKErrorPaymentCancelled) {
-			[TLOPopupPrompts sheetWindowWithWindow:self.window
+			[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
 											  body:TXTLS(@"TDCInAppPurchaseDialog[0008][2]", self.purchasedProductError.localizedDescription)
 											 title:TXTLS(@"TDCInAppPurchaseDialog[0008][1]")
 									 defaultButton:TXTLS(@"Prompts[0005]")
@@ -335,6 +486,23 @@ enum {
 	self.purchasedProductIdentifier = nil;
 
 	[self detachProgressView];
+}
+
+- (void)showThankYouAfterProductPurchase
+{
+	if (TLOAppStoreTextualIsRegistered() == NO) {
+		[self close];
+	}
+
+	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
+							 defaultButton:TXTLS(@"Prompts[0005]")
+						   alternateButton:nil
+							   otherButton:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   [self close];
+						   }];
 }
 
 - (void)postTransactionFinishedNotification:(NSArray<SKPaymentTransaction *> *)transactions
@@ -525,7 +693,7 @@ enum {
 	if (product == nil) {
 		NSString *productTitle = [self localizedTitleForProductIdentifier:productIdentifier];
 
-		[TLOPopupPrompts sheetWindowWithWindow:self.window
+		[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
 										  body:TXTLS(@"TDCInAppPurchaseDialog[0002][2]")
 										 title:TXTLS(@"TDCInAppPurchaseDialog[0002][1]", productTitle)
 								 defaultButton:TXTLS(@"Prompts[0005]")
@@ -572,6 +740,17 @@ enum {
 	[[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
+- (void)restoreTransactionsOnShow
+{
+	if (self.performRestoreOnShow) {
+		self.performRestoreOnShow = NO;
+	} else {
+		return;
+	}
+
+	[self restoreTransactions];
+}
+
 - (void)restoreTransactions
 {
 	/* Set status properties */
@@ -594,7 +773,7 @@ enum {
 
 - (void)showPleaseSelectItemError
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
+	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0009][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0009][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
@@ -702,11 +881,14 @@ enum {
 	/* We only hide the progress view when we have a list of products,
 	 otherwise the user will be seeing a blank products page. */
 	[self detachProgressView];
+
+	/* Restore transactions if user clicked certain button. */
+	[self restoreTransactionsOnShow];
 }
 
 - (void)onRequestProductsError:(NSError *)error
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
+	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0003][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0003][1]")
 							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0003][3]")

@@ -44,8 +44,11 @@ TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogWillReloadReceiptNotificat
 TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogDidReloadReceiptNotification;
 TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogFinishedLoadingNotification;
 TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification;
+TEXTUAL_EXTERN NSString * const TDCInAppPurchaseDialogTrialExpiredNotification;
 
 @interface TDCInAppPurchaseDialog : TDCWindowBase
+- (void)showTrialIsExpiredMessageInWindow:(NSWindow *)window;
+- (void)showFeatureIsLimitedMessageInWindow:(NSWindow *)window;
 @end
 #endif
 

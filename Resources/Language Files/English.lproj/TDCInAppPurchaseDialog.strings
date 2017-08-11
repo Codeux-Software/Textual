@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1010 */
+/* Next unusued key: 1013 */
 
 "TDCInAppPurchaseDialog[0001][com.codeux.iap.textual_free_trial]" = "Free Trial";
 "TDCInAppPurchaseDialog[0001][com.codeux.iap.textual_standard_edition]" = "Standard Edition";
@@ -64,3 +64,16 @@
 
 "TDCInAppPurchaseDialog[0009][1]" = "Please select an item to unlock";
 "TDCInAppPurchaseDialog[0009][2]" = "";
+
+"TDCInAppPurchaseDialog[0010][1]" = "Please unlock the Standard Edition of Textual to use this feature";
+"TDCInAppPurchaseDialog[0010][2]" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
+"TDCInAppPurchaseDialog[0010][3]" = "Unlock";
+"TDCInAppPurchaseDialog[0010][4]" = "Restore Purchase";
+
+"TDCInAppPurchaseDialog[0011][1]" = "Your trial of Textual has expired. You can continue to use the app for free, but some features have been limited or outright disabled. Please unlock Standard Edition to lift these limitations.";
+"TDCInAppPurchaseDialog[0011][2]" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
+"TDCInAppPurchaseDialog[0011][3]" = "Unlock";
+"TDCInAppPurchaseDialog[0011][4]" = "Restore Purchase";
+
+"TDCInAppPurchaseDialog[0012][1]" = "Thank you for your purchase of Textual!";
+"TDCInAppPurchaseDialog[0012][2]" = "All limitations have been lifted.";

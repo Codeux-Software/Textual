@@ -221,6 +221,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)inAppPurchaseDialogFinishedLoading:(NSNotification *)notification
 {
 	self.applicationLaunchRemainder -= 1;
+
+	[[TXSharedApplication sharedInAppPurchaseDialog] showTrialIsExpiredMessageInWindow:mainWindow()];
 }
 #endif
 
@@ -475,6 +477,10 @@ NS_ASSUME_NONNULL_BEGIN
 	[[TXSharedApplication sharedNetworkReachabilityNotifier] stopNotifier];
 
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[[TXSharedApplication sharedInAppPurchaseDialog] prepareForApplicationTermination];
+#endif
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() prepareForApplicationTermination];
