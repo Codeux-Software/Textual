@@ -160,6 +160,10 @@ BOOL TLOAppStoreIsTrialPurchased(void)
 
 BOOL TLOAppStoreIsTrialExpired(void)
 {
+	if (TLOAppStoreIsTrialPurchased() == NO) {
+		return NO;
+	}
+
 	NSTimeInterval timeLeft = TLOAppStoreTimeReaminingInTrial();
 
 	return (timeLeft >= 0);
