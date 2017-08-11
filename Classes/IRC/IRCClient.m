@@ -4419,9 +4419,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)reopenLogFileIfNeeded
 {
-	if ([TPCPreferences logToDiskIsEnabled]) {
+	if ([TPCPreferences logToDiskIsEnabled]
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+		&&
+		(TLOAppStoreTextualIsRegistered() || TLOAppStoreIsTrialExpired() == NO)
+#endif
+
+		)
+	{
 		if ( self.logFile) {
-			[self.logFile reopen];
+			[self.logFile reopenIfNeeded];
 		}
 	} else {
 		[self closeLogFile];
