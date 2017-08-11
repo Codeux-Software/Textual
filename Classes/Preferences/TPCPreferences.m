@@ -1374,6 +1374,8 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[TPCPreferences _loadExcludeKeywords];
 	[TPCPreferences _loadMatchKeywords];
+
+	[TPCPreferences observeReloadableNotifications];
 }
 
 #pragma mark -

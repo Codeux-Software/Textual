@@ -155,6 +155,7 @@
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesImportExportPrivate.h"
 #import "TPCPreferencesPrivate.h"
+#import "TPCPreferencesReloadPrivate.h"
 #import "TPCPreferencesUserDefaultsMigratePrivate.h"
 #import "TPCPreferencesUserDefaultsPrivate.h"
 #import "TPCResourceManagerPrivate.h"

@@ -39,6 +39,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPreferences (TPCPreferencesReload)
 
++ (void)observeReloadableNotifications
+{
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[RZNotificationCenter() addObserver:self.class
+							   selector:@selector(onInAppPurchaseTrialExpired:)
+								   name:TDCInAppPurchaseDialogTrialExpiredNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self.class
+							   selector:@selector(onInAppPurchaseTransactionFinished:)
+								   name:TDCInAppPurchaseDialogTransactionFinishedNotification
+								 object:nil];
+#endif
+}
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
++ (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
+{
+	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+}
+
++ (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
+{
+	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+}
+#endif
+
 + (void)performReloadActionForKeys:(NSArray<NSString *> *)keys
 {
 	NSParameterAssert(keys != nil);
