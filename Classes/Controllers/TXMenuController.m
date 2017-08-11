@@ -412,7 +412,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case 110: // "In-app Purchase…"
 		{
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 0
 			menuItem.hidden = YES;
 #endif
 
