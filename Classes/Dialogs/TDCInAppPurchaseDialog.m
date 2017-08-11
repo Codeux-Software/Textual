@@ -109,8 +109,6 @@ enum {
 - (void)applicationDidFinishLaunching
 {
 	[self loadReceiptDuringLaunch];
-
-	[self show];
 }
 
 - (void)postDialogFinishedLoadingNotification
