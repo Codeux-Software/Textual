@@ -2280,6 +2280,8 @@
 		4C4A1AF61D122707004FBF12 /* WebScriptObjectHelperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebScriptObjectHelperPrivate.h; sourceTree = "<group>"; };
 		4C4C96C31C88BDC000E8F8F3 /* TextualWithoutSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C4C96C41C88BDC000E8F8F3 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
+		4C5073E61F3E432B00733E51 /* TPCPreferencesReloadPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesReloadPrivate.h; path = Headers/Private/TPCPreferencesReloadPrivate.h; sourceTree = "<group>"; };
+		4C50E0401F3E983400B3E744 /* TPCPreferencesCloudSyncExtensionPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSyncExtensionPrivate.h; path = Headers/Private/TPCPreferencesCloudSyncExtensionPrivate.h; sourceTree = "<group>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
 		4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
@@ -3479,9 +3481,11 @@
 				4CC934F91DE0BEA8003FF1B4 /* TLOSpokenNotificationPrivate.h */,
 				4C673ED81D10FB5000979B60 /* TPCApplicationInfoPrivate.h */,
 				4C673ED91D10FB5000979B60 /* TPCPathInfoPrivate.h */,
+				4C50E0401F3E983400B3E744 /* TPCPreferencesCloudSyncExtensionPrivate.h */,
 				4C673EDA1D10FB5000979B60 /* TPCPreferencesCloudSyncPrivate.h */,
 				4C673EDB1D10FB5000979B60 /* TPCPreferencesImportExportPrivate.h */,
 				4C673EDC1D10FB5000979B60 /* TPCPreferencesPrivate.h */,
+				4C5073E61F3E432B00733E51 /* TPCPreferencesReloadPrivate.h */,
 				4C673EDD1D10FB5000979B60 /* TPCPreferencesUserDefaultsMigratePrivate.h */,
 				4C673EDE1D10FB5000979B60 /* TPCPreferencesUserDefaultsPrivate.h */,
 				4C673EDF1D10FB5000979B60 /* TPCResourceManagerPrivate.h */,

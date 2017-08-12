@@ -38,6 +38,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+#pragma mark -
+#pragma mark Public
+
 @implementation TPCPreferences (TPCPreferencesCloudSync)
 
 NSString * const TPCPreferencesCloudSyncServicesEnabledDefaultsKey = @"SyncPreferencesToTheCloud";
@@ -59,8 +62,14 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 @end
 
 #pragma mark -
+#pragma mark Private
 
 @implementation TPCPreferences (TPCPreferencesCloudSyncPrivate)
+
++ (void)setSyncPreferencesToTheCloud:(BOOL)syncPreferencesToTheCloud
+{
+	return [RZUserDefaults() setBool:syncPreferencesToTheCloud forKey:TPCPreferencesCloudSyncServicesEnabledDefaultsKey];
+}
 
 + (void)fixThemeNameMissingDuringSync
 {

@@ -327,7 +327,7 @@
                             </buttonCell>
                             <connections>
                                 <action selector="onChangedCloudSyncingServices:" target="-2" id="o6w-6C-81G"/>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloud" id="bTv-iA-cqh"/>
+                                <binding destination="-2" name="value" keyPath="syncPreferencesToTheCloud" id="Sf2-80-Hrb"/>
                                 <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.System -&gt; Built with iCloud Support" id="Fof-Ne-kAE"/>
                             </connections>
                         </button>
@@ -4216,7 +4216,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogTranscript" id="uqm-Rw-J1g"/>
+                        <binding destination="-2" name="value" keyPath="logTranscript" id="XFM-G7-oO2"/>
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H7x-dV-MZS">
@@ -4249,7 +4249,7 @@
                     <accessibility description="Log Transcript Folder"/>
                     <connections>
                         <action selector="onChangedTranscriptFolder:" target="-2" id="LYi-hQ-pgj"/>
-                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.LogTranscript" id="nTX-GF-Bpv"/>
+                        <binding destination="-2" name="enabled" keyPath="logTranscript" id="MJL-pl-Rso"/>
                     </connections>
                 </popUpButton>
             </subviews>
@@ -4644,7 +4644,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="aGt-bM-H9F"/>
-                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.SyncPreferencesToTheCloud" id="lle-4r-Aum"/>
+                        <binding destination="-2" name="enabled" keyPath="syncPreferencesToTheCloud" id="Oqp-VL-z3S"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloudLimitedToServers" id="FES-mD-uM5"/>
                     </connections>
                 </button>
