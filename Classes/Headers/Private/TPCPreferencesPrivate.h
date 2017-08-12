@@ -52,6 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
 #endif
 
++ (void)setLogToDisk:(BOOL)logToDisk;
+
 + (void)setOnlySpeakEventsForSelection:(BOOL)onlySpeakEventsForSelection;
 
 + (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName;
@@ -116,12 +118,5 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)generateLocalizedTimestampTemplateToken;
 @end
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-@interface TPCPreferences (TPCPreferencesCloudSyncPrivate)
-+ (void)fixThemeNameMissingDuringSync;
-+ (void)fixThemeFontNameMissingDuringSync;
-@end
-#endif
 
 NS_ASSUME_NONNULL_END

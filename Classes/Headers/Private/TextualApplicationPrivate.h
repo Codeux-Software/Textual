@@ -152,6 +152,7 @@
 #import "TLOSpokenNotificationPrivate.h"
 #import "TPCApplicationInfoPrivate.h"
 #import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesCloudSyncExtensionPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesImportExportPrivate.h"
 #import "TPCPreferencesPrivate.h"

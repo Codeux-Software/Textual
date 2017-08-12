@@ -346,6 +346,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"LogTranscript"];
 }
 
++ (void)setLogToDisk:(BOOL)logToDisk
+{
+	[RZUserDefaults() setBool:logToDisk forKey:@"LogTranscript"];
+}
+
 + (BOOL)logToDiskIsEnabled
 {
 	return ([RZUserDefaults() boolForKey:@"LogTranscript"] &&
