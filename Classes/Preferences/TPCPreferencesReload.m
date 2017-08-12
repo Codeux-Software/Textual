@@ -37,7 +37,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TPCPreferences (TPCPreferencesReload)
+#pragma mark -
+#pragma mark Private
+
+@implementation TPCPreferences (TPCPreferencesReloadPrivate)
 
 + (void)observeReloadableNotifications
 {
@@ -65,6 +68,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
 }
 #endif
+
+@end
+
+#pragma mark -
+#pragma mark Public
+
+@implementation TPCPreferences (TPCPreferencesReload)
 
 + (void)performReloadActionForKeys:(NSArray<NSString *> *)keys
 {
