@@ -71,11 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return TXBundleBuildScheme;
 }
 
-+ (BOOL)runningInHighResolutionMode
-{
-	return [TXUserInterface runningInHighResolutionMode];
-}
-
 + (NSDictionary<NSString *, id> *)applicationInfoPlist
 {
 	return RZMainBundle().infoDictionary;
