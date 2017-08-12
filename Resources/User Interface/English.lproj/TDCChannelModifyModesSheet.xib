@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelModifyModesSheet">
@@ -34,7 +35,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="62">
-                        <rect key="frame" x="136" y="109" width="163" height="22"/>
+                        <rect key="frame" x="137" y="109" width="162" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="5It-6s-7uW"/>
                         </constraints>
@@ -295,7 +296,7 @@
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="63">
-                        <rect key="frame" x="206" y="82" width="93" height="22"/>
+                        <rect key="frame" x="207" y="82" width="92" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="bw9-zM-uph"/>
                         </constraints>
@@ -317,7 +318,7 @@
                         </connections>
                     </textField>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="82">
-                        <rect key="frame" x="18" y="110" width="112" height="18"/>
+                        <rect key="frame" x="18" y="110" width="113" height="18"/>
                         <buttonCell key="cell" type="check" title="Password (+k):" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="217">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -328,7 +329,7 @@
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="83">
-                        <rect key="frame" x="18" y="83" width="182" height="18"/>
+                        <rect key="frame" x="18" y="83" width="183" height="18"/>
                         <buttonCell key="cell" type="check" title="Limit number of users (+l):" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="218">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -361,7 +362,7 @@
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="192">
-                        <rect key="frame" x="18" y="218" width="236" height="18"/>
+                        <rect key="frame" x="18" y="218" width="237" height="18"/>
                         <buttonCell key="cell" type="check" title="No external channel messages (+n)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="221">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -369,7 +370,7 @@
                         </buttonCell>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="194">
-                        <rect key="frame" x="18" y="191" width="245" height="18"/>
+                        <rect key="frame" x="18" y="191" width="246" height="18"/>
                         <buttonCell key="cell" type="check" title="Only operators can change topic (+t)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="222">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -392,14 +393,11 @@
                             <string key="keyEquivalent">m</string>
                         </buttonCell>
                     </button>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="244">
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="244">
                         <rect key="frame" x="12" y="59" width="295" height="5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="295" id="odm-dp-O25"/>
                         </constraints>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64">
                         <rect key="frame" x="153" y="13" width="82" height="32"/>
@@ -435,12 +433,12 @@ DQ
                     <constraint firstItem="195" firstAttribute="top" secondItem="194" secondAttribute="bottom" constant="13" id="1SV-4M-oAl"/>
                     <constraint firstItem="195" firstAttribute="leading" secondItem="194" secondAttribute="leading" id="1mc-EX-iXH"/>
                     <constraint firstItem="82" firstAttribute="baseline" secondItem="62" secondAttribute="baseline" constant="1" id="2lK-2J-ysb"/>
+                    <constraint firstAttribute="trailing" secondItem="65" secondAttribute="trailing" constant="20" id="31b-Tn-1aA"/>
                     <constraint firstAttribute="bottom" secondItem="64" secondAttribute="bottom" constant="20" symbolic="YES" id="4Y5-te-pde"/>
                     <constraint firstItem="197" firstAttribute="leading" secondItem="195" secondAttribute="leading" id="5C9-2x-Sr0"/>
                     <constraint firstItem="171" firstAttribute="leading" secondItem="172" secondAttribute="leading" id="9VR-Of-q0q"/>
                     <constraint firstItem="244" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="C9c-gD-HOc"/>
                     <constraint firstItem="194" firstAttribute="top" secondItem="192" secondAttribute="bottom" constant="13" id="DfD-ZG-e0p"/>
-                    <constraint firstItem="63" firstAttribute="trailing" secondItem="65" secondAttribute="trailing" id="EWg-fv-cUv"/>
                     <constraint firstItem="63" firstAttribute="baseline" secondItem="83" secondAttribute="baseline" constant="-1" id="Gow-aM-93x"/>
                     <constraint firstItem="83" firstAttribute="leading" secondItem="82" secondAttribute="leading" id="H0x-iM-6B1"/>
                     <constraint firstItem="192" firstAttribute="leading" secondItem="194" secondAttribute="leading" id="MHo-g8-g8D"/>

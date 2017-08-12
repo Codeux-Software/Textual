@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
         <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterEditFilterSheet">
@@ -94,11 +95,8 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vBs-bR-T5n">
-                                            <rect key="frame" x="31" y="390" width="82" height="17"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="78" id="QPC-dA-awZ"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Filter Match:" id="a2n-La-LMB">
+                                            <rect key="frame" x="31" y="390" width="81" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Match:" id="a2n-La-LMB">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -120,8 +118,8 @@ Gw
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CsT-6O-3Gc">
-                                            <rect key="frame" x="31" y="240" width="82" height="17"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Filter Action:" id="3HI-Ry-Pmd">
+                                            <rect key="frame" x="31" y="240" width="81" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Action:" id="3HI-Ry-Pmd">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -291,7 +289,7 @@ Gw
                                         </box>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IBT-nM-IFM">
                                             <rect key="frame" x="31" y="430" width="69" height="17"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Filter Title:" id="GOZ-2v-y7k">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Title:" id="GOZ-2v-y7k">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -364,11 +362,8 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u00-83-eYs">
-                                            <rect key="frame" x="106" y="430" width="89" height="17"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="85" id="clI-pz-PKJ"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Limit Filter to:" id="ewY-OS-bvC">
+                                            <rect key="frame" x="106" y="430" width="88" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit Filter to:" id="ewY-OS-bvC">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -380,7 +375,7 @@ Gw
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="UY2-pC-A0V">
                                                     <rect key="frame" x="12" y="337" width="470" height="5"/>
                                                 </box>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ogw-Wl-ucj">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogw-Wl-ucj">
                                                     <rect key="frame" x="18" y="310" width="251" height="17"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select one or more items to limit filter to:" id="xeZ-GM-gcw">
                                                         <font key="font" metaFont="system"/>
@@ -405,7 +400,7 @@ Gw
                                             </constraints>
                                         </customView>
                                         <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bT2-rB-pWP">
-                                            <rect key="frame" x="201" y="369" width="233" height="78"/>
+                                            <rect key="frame" x="200" y="369" width="233" height="78"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="233" id="eD3-Vs-Jrn"/>
                                             </constraints>
@@ -590,7 +585,7 @@ Gw
                                             </buttonCell>
                                             <accessibility description="Filter &quot;Channel mode received&quot; event"/>
                                         </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
                                             <rect key="frame" x="49" y="191" width="49" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Others:" id="hII-je-7Zh">
                                                 <font key="font" metaFont="system"/>
@@ -678,7 +673,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="1Ft-El-Wak">
-                                            <rect key="frame" x="48" y="424" width="416" height="18"/>
+                                            <rect key="frame" x="48" y="424" width="417" height="18"/>
                                             <buttonCell key="cell" type="check" title="Filter does not apply to users ranked Half-Operator (+h) or above" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8eG-ng-a2k">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -696,7 +691,7 @@ Gw
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="16" id="IiW-Kv-chd"/>
                                             </constraints>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sender Match:" id="efZ-aQ-jSL">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sender Match:" id="efZ-aQ-jSL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -704,7 +699,7 @@ Gw
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Vj-YR-p2q">
                                             <rect key="frame" x="102" y="328" width="47" height="11"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="(optional)" id="uMI-RE-rQe">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="uMI-RE-rQe">
                                                 <font key="font" metaFont="miniSystem"/>
                                                 <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -844,7 +839,7 @@ Gw
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="16" id="hvZ-fQ-3Pi"/>
                                             </constraints>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Forward to:" id="rsF-qW-N0y">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Forward to:" id="rsF-qW-N0y">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -852,7 +847,7 @@ Gw
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZVP-ho-Ddx">
                                             <rect key="frame" x="92" y="329" width="47" height="11"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="(optional)" id="60g-lP-t8x">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="60g-lP-t8x">
                                                 <font key="font" metaFont="miniSystem"/>
                                                 <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -882,7 +877,7 @@ Gw
                                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="x0Z-6b-fhh">
                                             <rect key="frame" x="46" y="312" width="451" height="5"/>
                                         </box>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KgF-yt-KDi">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KgF-yt-KDi">
                                             <rect key="frame" x="59" y="274" width="308" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Do not perform Filter Action more than once every" id="y97-oT-WNv">
                                                 <font key="font" metaFont="system"/>
@@ -904,7 +899,7 @@ Gw
                                                 <outlet property="formatter" destination="vGQ-Aw-wDg" id="fgR-HD-NFG"/>
                                             </connections>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZUu-lu-9qu">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZUu-lu-9qu">
                                             <rect key="frame" x="427" y="274" width="56" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="4O9-2v-odd">
                                                 <font key="font" metaFont="system"/>
@@ -912,8 +907,8 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1cG-xA-EzB">
-                                            <rect key="frame" x="67" y="252" width="248" height="14"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cG-xA-EzB">
+                                            <rect key="frame" x="67" y="252" width="249" height="14"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Change value to zero (0) to disable limitations." id="cvx-mI-PZ4">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
