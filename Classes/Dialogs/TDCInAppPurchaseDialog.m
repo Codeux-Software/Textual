@@ -164,12 +164,15 @@ enum {
 		return;
 	}
 
-	self.trialTimer = [TLOTimer new];
-	self.trialTimer.repeatTimer = NO;
-	self.trialTimer.target = self;
-	self.trialTimer.action = @selector(onTrialTimer:);
+	TLOTimer *trialTimer = [TLOTimer new];
 
-	[self.trialTimer start:timeRemaining];
+	trialTimer.repeatTimer = NO;
+	trialTimer.target = self;
+	trialTimer.action = @selector(onTrialTimer:);
+
+	[trialTimer start:timeRemaining];
+
+	self.trialTimer = trialTimer;
 }
 
 - (void)stopTrialTimer
