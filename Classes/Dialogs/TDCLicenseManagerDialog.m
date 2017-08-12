@@ -38,9 +38,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#warning TODO: Add warning when clicking the Purchase button if \
-	user may be eligible for a discounted ugprade.
-
 NSString * const TDCLicenseManagerActivatedLicenseNotification = @"TDCLicenseManagerActivatedLicenseNotification";
 NSString * const TDCLicenseManagerDeactivatedLicenseNotification = @"TDCLicenseManagerDeactivatedLicenseNotification";
 NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManagerTrialExpiredNotification";
@@ -245,6 +242,22 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 - (void)unregisteredViewPurchaseTextual:(id)sender
 {
+	NSString *lastGenLicenseKey = [TLOLicenseManagerLastGen licenseKey];
+
+	if (lastGenLicenseKey != nil) {
+		BOOL upgradeLicense =
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1024][2]", lastGenLicenseKey.prettyLicenseKey)
+										   title:TXTLS(@"TLOLicenseManager[1024][1]")
+								   defaultButton:TXTLS(@"TLOLicenseManager[1024][3]")
+								 alternateButton:TXTLS(@"TLOLicenseManager[1024][4]")];
+
+		if (upgradeLicense) {
+			[self showUpgradeDialogForLicenseKey:lastGenLicenseKey];
+
+			return;
+		}
+	}
+
 	[menuController() openStandaloneStoreWebpage:nil];
 }
 

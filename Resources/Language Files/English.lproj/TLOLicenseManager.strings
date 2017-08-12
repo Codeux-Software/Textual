@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1024 */
+/* Next unusued key: 1025 */
 
 "TLOLicenseManager[1001][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
 "TLOLicenseManager[1001][2]" = "Try again in a few minutes then contact support if the problem persists.";
@@ -105,3 +105,7 @@
 "TLOLicenseManager[1023][1]" = "Cannot migrate Mac App Store purchase because the appropriate in-app purchase is missing";
 "TLOLicenseManager[1023][2]" = "The Standard Edition in-app purchase is required to perform migration.";
 
+"TLOLicenseManager[1024][1]" = "Are you sure you want to purchase a new license key?";
+"TLOLicenseManager[1024][2]" = "You already own the license key “%@.”";
+"TLOLicenseManager[1024][3]" = "Upgrade Existing License Key";
+"TLOLicenseManager[1024][4]" = "Purchase New License Key";
