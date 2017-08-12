@@ -711,7 +711,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	[licenseManagerDownloader deactivateLicense];
 
-	self.licenseManagerDownloader = licenseManagerDownloader;
+//	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
 #pragma mark -
