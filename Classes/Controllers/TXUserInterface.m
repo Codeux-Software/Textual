@@ -39,11 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXUserInterface
 
-+ (BOOL)runningInHighResolutionMode
-{
-	return [[[NSApp mainWindow] screen] runningInHighResolutionMode];
-}
-
 + (BOOL)systemWideDarkModeEnabledOnYosemite
 {
 	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];

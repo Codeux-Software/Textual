@@ -40,8 +40,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TXUserInterface : NSObject
-+ (BOOL)runningInHighResolutionMode;
-
 + (BOOL)systemWideDarkModeEnabledOnYosemite;
 @end
 
