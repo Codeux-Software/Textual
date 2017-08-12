@@ -94,6 +94,16 @@ NS_ASSUME_NONNULL_BEGIN
 		return [NSAttributedString attributedString];
 	}
 
+	static NSParagraphStyle *paragraphStyle = nil;
+
+	if (paragraphStyle == nil) {
+		NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+
+		[style setLineBreakMode:NSLineBreakByTruncatingTail];
+
+		paragraphStyle = [style copy];
+	}
+
 	NSString *channelName = searchResult.channel.name;
 
 	NSFont *channelNameFieldFont = self.channelNameField.font;
@@ -102,7 +112,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[NSMutableAttributedString
 	 mutableAttributedStringWithString:TXTLS(@"TDCChannelSpotlightController[1001]", channelName)
 							attributes:@{
-								NSFontAttributeName : channelNameFieldFont
+								NSFontAttributeName : channelNameFieldFont,
+								NSParagraphStyleAttributeName : paragraphStyle
 							}];
 
 	TDCChannelSpotlightController *controller = searchResult.controller;
