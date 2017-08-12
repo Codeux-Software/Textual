@@ -2144,7 +2144,7 @@
 		4C056F151D1D89A100D85CEA /* TVCMemberListUserInfoPopoverPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListUserInfoPopoverPrivate.h; path = Headers/Private/TVCMemberListUserInfoPopoverPrivate.h; sourceTree = "<group>"; };
 		4C056F161D1D89A100D85CEA /* TVCMemberListYosemiteUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListYosemiteUserInterfacePrivate.h; path = Headers/Private/TVCMemberListYosemiteUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C083FAD1D2D5F5B00192F09 /* IRCExtrasPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCExtrasPrivate.h; path = Headers/Private/IRCExtrasPrivate.h; sourceTree = "<group>"; };
-		4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionConfig.m; path = ../../IRC/IRCConnectionConfig.m; sourceTree = "<group>"; };
+		4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnectionConfig.m; sourceTree = "<group>"; };
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
 		4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionViewControllerPrivate.h; path = Headers/Private/TVCChannelSelectionViewControllerPrivate.h; sourceTree = "<group>"; };
@@ -4300,8 +4300,7 @@
 			children = (
 				4C083FB71D2D603E00192F09 /* IRCConnectionConfig.m */,
 			);
-			name = IRC;
-			path = Views/IRC;
+			path = IRC;
 			sourceTree = "<group>";
 		};
 		4CD98D5D1F12A18800D9ADC4 /* Library */ = {
