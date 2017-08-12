@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13122.19" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.19"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -184,7 +184,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="281">
-                            <rect key="frame" x="0.0" y="0.0" width="648.5" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="648.5" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                         <accessibility description="Highlight List"/>
@@ -214,17 +214,17 @@ Gw
                             <action selector="cancel:" target="-2" id="282"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="249">
-                        <rect key="frame" x="18" y="301" width="175" height="17"/>
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="249">
+                        <rect key="frame" x="18" y="301" width="176" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="277">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="277">
                         <rect key="frame" x="18" y="13" width="348" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Messages that begin with a bullet (•) represent an action" id="278">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Messages that begin with a bullet (•) represent an action" id="278">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -233,6 +233,7 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="246" firstAttribute="top" secondItem="249" secondAttribute="bottom" constant="13" id="2eU-2Y-oXs"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="249" secondAttribute="trailing" constant="20" id="Icy-sJ-SEY"/>
                     <constraint firstItem="247" firstAttribute="baseline" secondItem="248" secondAttribute="baseline" id="R8L-kg-ypT"/>
                     <constraint firstItem="248" firstAttribute="leading" secondItem="247" secondAttribute="trailing" constant="12" symbolic="YES" id="UhY-2I-PFH"/>
                     <constraint firstItem="277" firstAttribute="leading" secondItem="249" secondAttribute="leading" id="Yg8-pk-yLy"/>

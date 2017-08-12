@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAddressBookSheet">
@@ -45,10 +46,7 @@
                         <rect key="frame" x="18" y="59" width="333" height="5"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="530">
-                        <rect key="frame" x="167" y="13" width="94" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="82" id="mZU-SC-ob8"/>
-                        </constraints>
+                        <rect key="frame" x="203" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="551">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -59,10 +57,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="529">
-                        <rect key="frame" x="261" y="13" width="94" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="82" id="kiu-FV-GFB"/>
-                        </constraints>
+                        <rect key="frame" x="285" y="13" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="552">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -91,7 +86,7 @@ DQ
                             <rect key="frame" x="0.0" y="0.0" width="323" height="81"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="TVw-lr-Mo6">
+                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="TVw-lr-Mo6">
                                     <rect key="frame" x="0.0" y="0.0" width="323" height="81"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -160,9 +155,9 @@ DQ
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="541">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="541">
                         <rect key="frame" x="14" y="251" width="68" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Nickname:" id="542">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Nickname:" id="542">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -236,61 +231,61 @@ DQ
                             <accessibilityConnection property="title" destination="296" id="orM-OL-W3d"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="300">
-                        <rect key="frame" x="160" y="300" width="205" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="300">
+                        <rect key="frame" x="161" y="300" width="205" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <accessibility description="Format for Ignore Entry"/>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="594">
-                        <rect key="frame" x="111" y="300" width="47" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="594">
+                        <rect key="frame" x="112" y="300" width="47" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="96" y="284" width="62" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Examples:" id="303">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="302">
+                        <rect key="frame" x="97" y="284" width="62" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="160" y="284" width="309" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="304">
+                        <rect key="frame" x="161" y="284" width="308" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="306">
-                        <rect key="frame" x="160" y="271" width="315" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="306">
+                        <rect key="frame" x="161" y="271" width="314" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="308">
-                        <rect key="frame" x="160" y="258" width="304" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="308">
+                        <rect key="frame" x="161" y="258" width="303" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="309">
-                        <rect key="frame" x="160" y="245" width="265" height="14"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="309">
+                        <rect key="frame" x="161" y="245" width="264" height="14"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -355,16 +350,16 @@ DQ
                         <accessibility description="Ignore File Transfer Requests from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
-                        <rect key="frame" x="280" y="134" width="149" height="18"/>
+                        <rect key="frame" x="280" y="134" width="148" height="18"/>
                         <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <accessibility description="Ignore Highlights by User in a Private Message"/>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
-                        <rect key="frame" x="36" y="193" width="454" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
+                        <rect key="frame" x="61" y="193" width="405" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -378,19 +373,16 @@ DQ
                         </buttonCell>
                         <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="296">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="296">
                         <rect key="frame" x="18" y="331" width="69" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="484">
-                        <rect key="frame" x="342" y="13" width="85" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="73" id="o4H-oh-EqI"/>
-                        </constraints>
+                        <rect key="frame" x="360" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="487">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -400,10 +392,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="485">
-                        <rect key="frame" x="427" y="13" width="85" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="73" id="rND-Mc-x8P"/>
-                        </constraints>
+                        <rect key="frame" x="442" y="13" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="486">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -421,7 +410,6 @@ DQ
                     <constraint firstItem="482" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="76" id="0rX-P1-qmK"/>
                     <constraint firstItem="rur-OE-BUc" firstAttribute="top" secondItem="479" secondAttribute="bottom" constant="14" id="293-dY-bqb"/>
                     <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" constant="-1" id="2M6-Zr-1e8"/>
-                    <constraint firstItem="632" firstAttribute="leading" secondItem="PQp-5W-SVj" secondAttribute="leading" id="2Uz-Lb-DpF"/>
                     <constraint firstItem="476" firstAttribute="leading" secondItem="477" secondAttribute="leading" id="3K7-Fz-KM8"/>
                     <constraint firstItem="480" firstAttribute="leading" secondItem="479" secondAttribute="leading" id="51B-Ip-WYq"/>
                     <constraint firstItem="479" firstAttribute="leading" secondItem="rur-OE-BUc" secondAttribute="leading" id="5fv-OJ-Tzn"/>
@@ -429,12 +417,10 @@ DQ
                     <constraint firstItem="304" firstAttribute="leading" secondItem="300" secondAttribute="leading" id="8xv-3j-IIn"/>
                     <constraint firstItem="298" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="BR4-Fl-myM"/>
                     <constraint firstItem="482" firstAttribute="top" secondItem="PQp-5W-SVj" secondAttribute="bottom" constant="15" id="Bf7-Sa-qdR"/>
-                    <constraint firstItem="PQp-5W-SVj" firstAttribute="trailing" secondItem="314" secondAttribute="trailing" id="BvZ-KD-MmD"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="CXj-wL-SUJ"/>
                     <constraint firstItem="304" firstAttribute="baseline" secondItem="302" secondAttribute="baseline" id="Dgq-fR-czw"/>
                     <constraint firstItem="594" firstAttribute="top" secondItem="298" secondAttribute="bottom" constant="15" id="G1Q-Vh-L5K"/>
                     <constraint firstAttribute="trailing" secondItem="306" secondAttribute="trailing" constant="53" id="Grb-6Z-8ZJ"/>
-                    <constraint firstItem="632" firstAttribute="trailing" secondItem="PQp-5W-SVj" secondAttribute="trailing" id="H5Z-lB-Tm0"/>
                     <constraint firstItem="480" firstAttribute="top" secondItem="482" secondAttribute="bottom" constant="14" id="HUb-bd-cbs"/>
                     <constraint firstItem="485" firstAttribute="trailing" secondItem="298" secondAttribute="trailing" id="Hvg-9U-IrZ"/>
                     <constraint firstItem="476" firstAttribute="baseline" secondItem="479" secondAttribute="baseline" id="IBa-TA-kGg"/>
@@ -455,13 +441,15 @@ DQ
                     <constraint firstItem="304" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="hi2-A9-vwX"/>
                     <constraint firstItem="314" firstAttribute="top" secondItem="309" secondAttribute="bottom" constant="18" id="jCP-Ku-yxu"/>
                     <constraint firstItem="298" firstAttribute="leading" secondItem="296" secondAttribute="trailing" constant="8" symbolic="YES" id="kZO-a5-URC"/>
+                    <constraint firstItem="632" firstAttribute="trailing" secondItem="314" secondAttribute="trailing" id="mV6-BH-O7l"/>
                     <constraint firstItem="300" firstAttribute="leading" secondItem="594" secondAttribute="trailing" constant="6" id="pGp-Ox-fW2"/>
                     <constraint firstItem="300" firstAttribute="baseline" secondItem="594" secondAttribute="baseline" id="ph8-pR-q7d"/>
                     <constraint firstItem="481" firstAttribute="baseline" secondItem="482" secondAttribute="baseline" id="rFb-wM-IqF"/>
+                    <constraint firstItem="632" firstAttribute="leading" secondItem="314" secondAttribute="leading" id="rf3-di-18P"/>
                     <constraint firstItem="476" firstAttribute="leading" secondItem="479" secondAttribute="trailing" constant="39" id="rie-Cg-2sE"/>
-                    <constraint firstItem="314" firstAttribute="leading" secondItem="PQp-5W-SVj" secondAttribute="leading" id="ryK-RP-yiN"/>
                     <constraint firstItem="476" firstAttribute="leading" secondItem="44o-H8-79C" secondAttribute="leading" id="s6u-BD-lvn"/>
                     <constraint firstItem="309" firstAttribute="top" secondItem="306" secondAttribute="bottom" constant="12" id="sUo-oc-VZu"/>
+                    <constraint firstItem="PQp-5W-SVj" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="tvK-Lf-7Tb"/>
                     <constraint firstItem="484" firstAttribute="top" secondItem="632" secondAttribute="bottom" constant="20" id="x2o-Lh-hhK"/>
                     <constraint firstItem="44o-H8-79C" firstAttribute="leading" secondItem="481" secondAttribute="leading" id="xib-Yx-EM4"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="309" secondAttribute="leading" id="yi4-Qh-uRn"/>

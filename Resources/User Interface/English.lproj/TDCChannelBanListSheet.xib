@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelBanListSheet">
@@ -43,7 +44,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="36" viewBased="YES" floatsGroupRows="NO" id="6" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="598" height="204"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +66,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="8at-zo-TEe">
-                                                    <rect key="frame" x="1" y="1" width="379" height="17"/>
+                                                    <rect key="frame" x="1" y="1" width="378" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vB7-5n-Ybk">
@@ -151,7 +152,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="iDS-Kx-r1t">
-                                                    <rect key="frame" x="486.5" y="1" width="109" height="17"/>
+                                                    <rect key="frame" x="487" y="1" width="109" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="lWl-sU-LRh">
@@ -186,7 +187,6 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="5">
                             <rect key="frame" x="1" y="211" width="598" height="16"/>
@@ -217,10 +217,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                        <rect key="frame" x="501" y="3" width="85" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="73" id="AqM-n0-1B6"/>
-                        </constraints>
+                        <rect key="frame" x="511" y="3" width="75" height="32"/>
                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="19">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -234,10 +231,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="390" y="3" width="111" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="99" id="Qua-l1-yi0"/>
-                        </constraints>
+                        <rect key="frame" x="401" y="3" width="110" height="32"/>
                         <buttonCell key="cell" type="push" title="Update List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="17">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -247,21 +241,20 @@ Gw
                             <action selector="onUpdate:" target="-2" id="55"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="33">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="33">
                         <rect key="frame" x="18" y="282" width="84" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Bans for %@" id="34">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Bans for %@" id="34">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mxf-43-RTj">
-                        <rect key="frame" x="322" y="282" width="260" height="17"/>
+                        <rect key="frame" x="547" y="282" width="35" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="BjX-hz-9vr"/>
-                            <constraint firstAttribute="width" constant="256" id="gv7-wv-mdo"/>
                         </constraints>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="1234" id="VEA-PK-9MZ">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="1234" id="VEA-PK-9MZ">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -276,6 +269,7 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="mxf-43-RTj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="33" secondAttribute="trailing" constant="20" id="1iZ-r9-Lbu"/>
                     <constraint firstItem="3" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="2Bd-76-9yw"/>
                     <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="6zy-UX-gxj"/>
                     <constraint firstAttribute="trailing" secondItem="mxf-43-RTj" secondAttribute="trailing" constant="20" id="AZG-85-OZC"/>

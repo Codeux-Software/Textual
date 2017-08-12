@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,12 +34,12 @@
                         <action selector="onChangedAlertDisableWhileAway:" target="-2" id="7Dj-r0-X56"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3x1-zP-s54">
+                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3x1-zP-s54">
                     <rect key="frame" x="112" y="28" width="116" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="DJx-Xn-C09"/>
                     </constraints>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Play sound on alert:" id="EOI-iY-erP">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Play sound on alert:" id="EOI-iY-erP">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -55,9 +55,9 @@
                         <action selector="onChangedAlertSpoken:" target="-2" id="ZOs-jC-zxl"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hg1-dW-6ce">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hg1-dW-6ce">
                     <rect key="frame" x="112" y="136" width="282" height="14"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="3fI-xx-VQs">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="3fI-xx-VQs">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -117,9 +117,9 @@
                         <action selector="onChangedAlertSound:" target="-2" id="ly7-zq-XQ4"/>
                     </connections>
                 </popUpButton>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Vh-Zp-QDA">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Vh-Zp-QDA">
                     <rect key="frame" x="123" y="193" width="95" height="16"/>
-                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Selected Alert:" id="Pw9-kC-IY0">
+                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Selected Alert:" id="Pw9-kC-IY0">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -174,6 +174,7 @@
                 <constraint firstItem="SF6-68-nMU" firstAttribute="bottom" secondItem="3x1-zP-s54" secondAttribute="bottom" constant="2" id="Ww5-wt-1P9"/>
                 <constraint firstItem="Hg1-dW-6ce" firstAttribute="leading" secondItem="357-Bn-nqF" secondAttribute="leading" constant="18" id="YLt-7y-4QA"/>
                 <constraint firstItem="DI1-B4-QPV" firstAttribute="centerY" secondItem="6Vh-Zp-QDA" secondAttribute="centerY" id="co8-DL-HxU"/>
+                <constraint firstAttribute="bottom" secondItem="SF6-68-nMU" secondAttribute="bottom" constant="26" id="duw-Lj-vKN"/>
                 <constraint firstItem="bgs-Yr-nUE" firstAttribute="baseline" secondItem="Hkh-C6-mUr" secondAttribute="baseline" id="eIg-2D-RNz"/>
                 <constraint firstItem="bgs-Yr-nUE" firstAttribute="leading" secondItem="Hkh-C6-mUr" secondAttribute="trailing" constant="8" id="fa4-je-B48"/>
                 <constraint firstItem="Hg1-dW-6ce" firstAttribute="top" secondItem="357-Bn-nqF" secondAttribute="bottom" constant="8" symbolic="YES" id="fc7-5D-DiH"/>
