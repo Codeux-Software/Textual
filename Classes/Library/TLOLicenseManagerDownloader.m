@@ -533,6 +533,13 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 			}
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600007)
+			{
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1023][2]")
+														 title:TXTLS(@"TLOLicenseManager[1023][1]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
+											   alternateButton:nil];
+			}
 
 			_performCompletionBlockAndReturn(NO)
 		}
