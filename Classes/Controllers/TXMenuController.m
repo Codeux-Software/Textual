@@ -2152,6 +2152,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	_popWindowViewIfExists(@"TDCChannelSpotlightController");
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	if (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired()) {
+		[[TXSharedApplication sharedInAppPurchaseDialog] showFeatureIsLimitedMessageInWindow:mainWindow()];
+
+		return;
+	}
+#endif
+
 	TDCChannelSpotlightController *dialog =
 	[[TDCChannelSpotlightController alloc] initWithParentWindow:mainWindow()];
 
