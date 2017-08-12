@@ -133,7 +133,13 @@ enum {
 		[self requestProducts];
 	}
 
+	BOOL windowVisible = self.window.visible;
+
 	[super show];
+
+	if (windowVisible == NO) {
+		[self.window restoreWindowStateForClass:self.class];
+	}
 }
 
 #pragma mark -
@@ -957,6 +963,11 @@ enum {
 	}
 
 	return YES;
+}
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	[self.window saveWindowStateForClass:self.class];
 }
 
 @end
