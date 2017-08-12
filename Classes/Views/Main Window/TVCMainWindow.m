@@ -174,6 +174,16 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 							   selector:@selector(loadingInAppPurchaseDialogFinished:)
 								   name:TDCInAppPurchaseDialogFinishedLoadingNotification
 								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onInAppPurchaseTrialExpired:)
+								   name:TDCInAppPurchaseDialogTrialExpiredNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onInAppPurchaseTransactionFinished:)
+								   name:TDCInAppPurchaseDialogTransactionFinishedNotification
+								 object:nil];
 #endif
 
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
@@ -1796,12 +1806,33 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)loadingInAppPurchaseDialogFinished:(NSNotification *)notification
 {
 	if (self.disabledByLackOfInAppPurchase == NO) {
+		[self reloadInAppPurchaseFeatures];
+
 		return;
 	}
 
 	self.disabledByLackOfInAppPurchase = NO;
 
 	[self makeKeyAndOrderFront:nil];
+}
+
+- (void)reloadInAppPurchaseFeatures
+{
+	if (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired()) {
+		self.serverList.allowsMultipleSelection = NO;
+	} else {
+		self.serverList.allowsMultipleSelection = YES;
+	}
+}
+
+- (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
+{
+	[self reloadInAppPurchaseFeatures];
+}
+
+- (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
+{
+	[self reloadInAppPurchaseFeatures];
 }
 #endif
 
