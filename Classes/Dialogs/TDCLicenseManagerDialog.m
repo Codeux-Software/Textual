@@ -41,8 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 #warning TODO: Add warning when clicking the Purchase button if \
 	user may be eligible for a discounted ugprade.
 
-#warning TODO: Post notifications for changes in license, such as \
-	when a license is activated or the trial expires.
+NSString * const TDCLicenseManagerActivatedLicenseNotification = @"TDCLicenseManagerActivatedLicenseNotification";
+NSString * const TDCLicenseManagerDeactivatedLicenseNotification = @"TDCLicenseManagerDeactivatedLicenseNotification";
+NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManagerTrialExpiredNotification";
 
 #define _upgradeDialogRemindMeInterval 		345600 // 4 days
 
@@ -71,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL textualIsRegistered;
 @property (nonatomic, assign) BOOL isSilentOnSuccess;
 @property (nonatomic, assign) BOOL operationInProgress;
+@property (nonatomic, strong) TLOTimer *trialTimer;
 
 - (IBAction)unregisteredViewActivateTextual:(id)sender;
 - (IBAction)unregisteredViewCancel:(id)sender;
@@ -120,6 +122,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)applicationDidFinishLaunching
 {
 	[self scheduleTimeRemainingInTrialNotification];
+
+	[self toggleTrialTimer];
 
 	[self activateLicenseKeyUsingArgumentDictionary];
 
@@ -183,6 +187,57 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.contentView attachSubview:contentView
 			adjustedWidthConstraint:self.contentViewWidthConstraint
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
+}
+
+
+#pragma mark -
+#pragma mark Trial Timer
+
+- (void)toggleTrialTimer
+{
+	if (TLOLicenseManagerTextualIsRegistered()) {
+		[self stopTrialTimer];
+	} else {
+		[self startTrialTimer];
+	}
+}
+
+- (void)startTrialTimer
+{
+	if (self.trialTimer != nil) {
+		return;
+	}
+
+	NSTimeInterval timeRemaining = (TLOLicenseManagerTimeReaminingInTrial() * (-1.0));
+
+	if (timeRemaining == 0) {
+		return;
+	}
+
+	TLOTimer *trialTimer = [TLOTimer new];
+
+	trialTimer.repeatTimer = NO;
+	trialTimer.target = self;
+	trialTimer.action = @selector(onTrialTimer:);
+
+	[trialTimer start:timeRemaining];
+
+	self.trialTimer = trialTimer;
+}
+
+- (void)stopTrialTimer
+{
+	if (self.trialTimer == nil) {
+		return;
+	}
+
+	[self.trialTimer stop];
+	self.trialTimer = nil;
+}
+
+- (void)onTrialTimer:(id)sender
+{
+	[RZNotificationCenter() postNotificationName:TDCLicenseManagerTrialExpiredNotification object:self];
 }
 
 #pragma mark -
@@ -340,14 +395,16 @@ NS_ASSUME_NONNULL_BEGIN
 		if (operationSuccessful) {
 			weakSelf.unregisteredViewLicenseKeyTextField.stringValue = NSStringEmptyPlaceholder;
 
-			[weakSelf reloadMainWindowLoadingScreen];
+			[weakSelf toggleTrialTimer];
+
+			[RZNotificationCenter() postNotificationName:TDCLicenseManagerActivatedLicenseNotification object:self];
 
 			/* We close the upgrade dialog if a key is activated because
 			 why would we keep it around under that condition? */
-			[self closeUpgradeDialog];
+			[weakSelf closeUpgradeDialog];
 
 			/* Reset context for activate sheet. */
-			[self resetUpgradeActivateSheetContext];
+			[weakSelf resetUpgradeActivateSheetContext];
 		}
 
 		weakSelf.operationInProgress = NO;
@@ -632,7 +689,9 @@ NS_ASSUME_NONNULL_BEGIN
 	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
-		[weakSelf reloadMainWindowLoadingScreen];
+		[weakSelf toggleTrialTimer];
+
+		[RZNotificationCenter() postNotificationName:TDCLicenseManagerDeactivatedLicenseNotification object:self];
 	};
 
 	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
@@ -700,11 +759,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Helper Methods
-
-- (void)reloadMainWindowLoadingScreen
-{
-	(void)[mainWindow() reloadLoadingScreen];
-}
 
 - (void)licenseManagerDownloaderCompletionBlock
 {
