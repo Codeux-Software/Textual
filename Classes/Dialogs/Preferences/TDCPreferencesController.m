@@ -727,9 +727,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 #endif
 
-	return [TPCPreferences setSyncPreferencesToTheCloud:syncPreferencesToTheCloud];
-#else
-	return NO;
+	[TPCPreferences setSyncPreferencesToTheCloud:syncPreferencesToTheCloud];
 #endif
 }
 
