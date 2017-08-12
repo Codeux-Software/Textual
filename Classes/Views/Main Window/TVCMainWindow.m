@@ -164,6 +164,23 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)observeNotifications
 {
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(licenseManagerActivatedLicense:)
+								   name:TDCLicenseManagerActivatedLicenseNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(licenseManagerDeactivatedLicense:)
+								   name:TDCLicenseManagerDeactivatedLicenseNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(licenseManagerTrialExpired:)
+								   name:TDCLicenseManagerTrialExpiredNotification
+								 object:nil];
+#endif
+
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(loadingDelayedByLackOfInAppPurchase:)
@@ -1789,6 +1806,26 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	return (self.contentSplitView.serverListCollapsed == NO);
 }
+
+#pragma mark -
+#pragma mark License Manager
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)licenseManagerActivatedLicense:(NSNotification *)notification
+{
+	(void)[self reloadLoadingScreen];
+}
+
+- (void)licenseManagerDeactivatedLicense:(NSNotification *)notification
+{
+	(void)[self reloadLoadingScreen];
+}
+
+- (void)licenseManagerTrialExpired:(NSNotification *)notification
+{
+	(void)[self reloadLoadingScreen];
+}
+#endif
 
 #pragma mark -
 #pragma mark In-app Purchase

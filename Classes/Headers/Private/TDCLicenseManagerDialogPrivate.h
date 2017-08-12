@@ -38,6 +38,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+TEXTUAL_EXTERN NSString * const TDCLicenseManagerActivatedLicenseNotification;
+TEXTUAL_EXTERN NSString * const TDCLicenseManagerDeactivatedLicenseNotification;
+TEXTUAL_EXTERN NSString * const TDCLicenseManagerTrialExpiredNotification;
+
 @interface TDCLicenseManagerDialog : TDCWindowBase
 - (void)activateLicenseKey:(NSString *)licenseKey;
 - (void)activateLicenseKey:(NSString *)licenseKey silently:(BOOL)silently;
