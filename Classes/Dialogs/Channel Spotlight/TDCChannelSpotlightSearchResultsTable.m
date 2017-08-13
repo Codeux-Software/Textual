@@ -94,14 +94,12 @@ NS_ASSUME_NONNULL_BEGIN
 		return [NSAttributedString attributedString];
 	}
 
-	static NSParagraphStyle *paragraphStyle = nil;
+	static NSMutableParagraphStyle *paragraphStyle = nil;
 
 	if (paragraphStyle == nil) {
-		NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+		paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 
-		[style setLineBreakMode:NSLineBreakByTruncatingTail];
-
-		paragraphStyle = [style copy];
+		paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
 	}
 
 	NSString *channelName = searchResult.channel.name;
