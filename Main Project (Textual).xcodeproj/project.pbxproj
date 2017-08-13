@@ -607,6 +607,8 @@
 		4C558DD71D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C558DCE1D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h */; };
 		4C58B572186011B900834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C58B573186011BE00834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
+		4C58FF711F400FE700BC1431 /* TDCInAppPurchaseProductTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C58FF691F400FE700BC1431 /* TDCInAppPurchaseProductTableCellView.m */; };
+		4C58FF751F40136700BC1431 /* TDCInAppPurchaseProductTableEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C58FF741F40136700BC1431 /* TDCInAppPurchaseProductTableEntry.m */; };
 		4C5B42301D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */; };
 		4C5B42311D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */; };
 		4C5B42321D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */; };
@@ -2292,6 +2294,10 @@
 		4C558DCD1D24055C00628B47 /* TDCServerChangeNicknameSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerChangeNicknameSheetPrivate.h; path = Headers/Private/TDCServerChangeNicknameSheetPrivate.h; sourceTree = "<group>"; };
 		4C558DCE1D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerHighlightListSheetPrivate.h; path = Headers/Private/TDCServerHighlightListSheetPrivate.h; sourceTree = "<group>"; };
 		4C58B570186011AC00834882 /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgements.pdf; sourceTree = SOURCE_ROOT; };
+		4C58FF691F400FE700BC1431 /* TDCInAppPurchaseProductTableCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCInAppPurchaseProductTableCellView.m; path = Dialogs/TDCInAppPurchaseProductTableCellView.m; sourceTree = "<group>"; };
+		4C58FF721F40100B00BC1431 /* TDCInAppPurchaseProductTableCellViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCInAppPurchaseProductTableCellViewPrivate.h; path = Headers/Private/TDCInAppPurchaseProductTableCellViewPrivate.h; sourceTree = "<group>"; };
+		4C58FF731F40131B00BC1431 /* TDCInAppPurchaseProductTableEntryPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCInAppPurchaseProductTableEntryPrivate.h; path = Headers/Private/TDCInAppPurchaseProductTableEntryPrivate.h; sourceTree = "<group>"; };
+		4C58FF741F40136700BC1431 /* TDCInAppPurchaseProductTableEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCInAppPurchaseProductTableEntry.m; path = Dialogs/TDCInAppPurchaseProductTableEntry.m; sourceTree = "<group>"; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesImportExport.h; path = Headers/TPCPreferencesImportExport.h; sourceTree = "<group>"; };
 		4C5B422F1D59438B00B7C72A /* IRCUserRelationsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserRelationsPrivate.h; path = Headers/Private/IRCUserRelationsPrivate.h; sourceTree = "<group>"; };
 		4C5B42331D59439C00B7C72A /* IRCUserRelations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUserRelations.m; path = IRC/IRCUserRelations.m; sourceTree = "<group>"; };
@@ -2933,6 +2939,8 @@
 			isa = PBXGroup;
 			children = (
 				4C10C00F1F37EF030004C624 /* TDCInAppPurchaseDialog.m */,
+				4C58FF691F400FE700BC1431 /* TDCInAppPurchaseProductTableCellView.m */,
+				4C58FF741F40136700BC1431 /* TDCInAppPurchaseProductTableEntry.m */,
 			);
 			name = "App Store";
 			sourceTree = "<group>";
@@ -3443,6 +3451,8 @@
 				4C0D978D1D363953001CD6D9 /* TDCFileTransferDialogTransferControllerPrivate.h */,
 				4CB2FA951D219A3F004736D2 /* TDCHighlightEntrySheetPrivate.h */,
 				4C10C0121F37EF290004C624 /* TDCInAppPurchaseDialogPrivate.h */,
+				4C58FF721F40100B00BC1431 /* TDCInAppPurchaseProductTableCellViewPrivate.h */,
+				4C58FF731F40131B00BC1431 /* TDCInAppPurchaseProductTableEntryPrivate.h */,
 				4C10B3771D23283000868A74 /* TDCLicenseManagerDialogPrivate.h */,
 				4C10B3781D23283000868A74 /* TDCLicenseManagerMigrateAppStoreSheetPrivate.h */,
 				4C10B3791D23283000868A74 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h */,
@@ -6325,6 +6335,7 @@
 				4C0BA6511990798800857343 /* TDCWelcomeSheet.m in Sources */,
 				4CA816BB1D5F8C4900B3DAED /* TDCBuddyListDialogEntry.m in Sources */,
 				4C0BA6541990798800857343 /* TDCFileTransferDialogTransferController.m in Sources */,
+				4C58FF751F40136700BC1431 /* TDCInAppPurchaseProductTableEntry.m in Sources */,
 				4C620E801D3E60B50037F35E /* TDCChannelSpotlightSearchResult.m in Sources */,
 				4CF40E2A1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0BA6551990798800857343 /* NSColorHelper.m in Sources */,
@@ -6372,6 +6383,7 @@
 				4C0BA67C1990798800857343 /* TPCPreferencesUserDefaults.m in Sources */,
 				4CF40E2E1AC1A4AC00A26BE0 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C0D977F1D36350F001CD6D9 /* TLOInternetAddressLookup.m in Sources */,
+				4C58FF711F400FE700BC1431 /* TDCInAppPurchaseProductTableCellView.m in Sources */,
 				4CAC2A1D1F12D48700D06046 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C2C52CE1F12E254009701E0 /* TLOLanguagePreferences.m in Sources */,
 				4C08AE4B1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,

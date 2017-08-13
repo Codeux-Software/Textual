@@ -54,32 +54,32 @@ enum {
 
 #define _trialExpiredRemindMeInterval		432000 // 5 days
 
+#define _trialInformationViewDefaultHeight	42
+
 @interface TDCInAppPurchaseDialog ()
 @property (nonatomic, strong) TLOTimer *trialTimer;
-@property (nonatomic, assign) BOOL windowIsAllowedToClose;
-@property (nonatomic, assign) BOOL finishedLoading;
+@property (nonatomic, weak) IBOutlet NSView *trialInformationView;
+@property (nonatomic, weak) IBOutlet NSTextField *trialInformationTextField;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *trialInformationHeightConstraint;
 @property (nonatomic, assign) BOOL requestingProducts;
-@property (nonatomic, assign) BOOL performRestoreOnShow;
-@property (nonatomic, assign) BOOL performingRestore;
-@property (nonatomic, assign) BOOL performingPurchase;
-@property (nonatomic, assign) NSUInteger purchasedProductState;
-@property (nonatomic, copy, nullable) NSString *purchasedProductIdentifier;
-@property (nonatomic, copy, nullable) NSError *purchasedProductError;
 @property (nonatomic, strong) SKProductsRequest *productsRequest;
 @property (nonatomic, copy) NSDictionary<NSString *, SKProduct *> *products;
+@property (nonatomic, weak) IBOutlet NSTableView *productsTable;
+@property (nonatomic, strong) IBOutlet NSArrayController *productsTableController;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *productsTableHeightConstraint;
+@property (nonatomic, assign) BOOL performingPurchase;
+@property (nonatomic, assign) BOOL performRestoreOnShow;
+@property (nonatomic, assign) BOOL performingRestore;
+@property (nonatomic, assign) BOOL atleastOnePurchaseRestored;
+@property (nonatomic, assign) BOOL windowIsAllowedToClose;
+@property (nonatomic, assign) BOOL finishedLoading;
+@property (nonatomic, strong) IBOutlet NSView *contentViewThankYou;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProducts;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProgress;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
 @property (nonatomic, weak) IBOutlet NSTextField *progressViewTextField;
 
-- (IBAction)payForItem:(id)sender;
 - (IBAction)restoreTransactions:(id)sender;
-
-/* Temporary actions */
-- (IBAction)payForFreeTrial:(id)sender;
-- (IBAction)payForStandardEdition:(id)sender;
-- (IBAction)payForUpgradeFromV6:(id)sender;
-- (IBAction)payForUpgradeFromV6Free:(id)sender;
 @end
 
 @implementation TDCInAppPurchaseDialog
@@ -100,8 +100,6 @@ enum {
 	(void)[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseDialog" owner:self topLevelObjects:nil];
 
 	self.windowIsAllowedToClose = YES;
-
-	self.purchasedProductState = SKPaymentTransactionStateUnknown;
 }
 
 - (void)prepareForApplicationTermination
@@ -114,8 +112,6 @@ enum {
 - (void)applicationDidFinishLaunching
 {
 	[self loadReceiptDuringLaunch];
-
-	[self toggleTrialTimer];
 
 	[self addPaymentQueueObserver];
 }
@@ -131,6 +127,8 @@ enum {
 {
 	if (self.products == nil) {
 		[self requestProducts];
+	} else {
+		(void)[self restoreTransactionsOnShow];
 	}
 
 	BOOL windowVisible = self.window.visible;
@@ -195,9 +193,24 @@ enum {
 {
 	[self show];
 
+	[self refreshTrialInformationView];
+
 	[self _showTrialIsExpiredMessageInWindow:self.window];
 
 	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogTrialExpiredNotification object:self];
+}
+
+- (NSString *)timeRemainingInTrialFormattedMessage
+{
+	NSTimeInterval timeLeft = TLOAppStoreTimeReaminingInTrial();
+
+	if (timeLeft >= 0) {
+		return TXTLS(@"TDCInAppPurchaseDialog[0018]");
+	}
+
+	NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
+
+	return TXTLS(@"TDCInAppPurchaseDialog[0017]", formattedTimeRemainingString);
 }
 
 #pragma mark -
@@ -236,10 +249,10 @@ enum {
 	NSParameterAssert(window != nil);
 
 	[TLOPopupPrompts sheetWindowWithWindow:window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0011][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0011][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0011][3]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0011][4]")
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0015][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0015][1]")
+							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0015][3]")
+						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0015][4]")
 							   otherButton:TXTLS(@"Prompts[0008]")
 							suppressionKey:@"trial_is_expired_mas"
 						   suppressionText:nil
@@ -259,10 +272,10 @@ enum {
 	NSParameterAssert(window != nil);
 
 	[TLOPopupPrompts sheetWindowWithWindow:window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0010][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0010][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0010][3]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0010][4]")
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0014][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0014][1]")
+							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0014][3]")
+						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0014][4]")
 							   otherButton:TXTLS(@"Prompts[0008]")
 							suppressionKey:@"trial_is_expired_mas"
 						   suppressionText:nil
@@ -292,50 +305,19 @@ enum {
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
-	/* Sort transactions with state as key and value as array of related transactions. */
-	NSMutableDictionary<NSNumber *, NSMutableArray<SKPaymentTransaction *> *> *sortedTransactions = [NSMutableDictionary new];
+	NSMutableArray<SKPaymentTransaction *> *finishedTransactions = nil;
 
 	for (SKPaymentTransaction *transaction in transactions) {
-		NSNumber *transactionKey = @(transaction.transactionState);
-
-		NSMutableArray *relatedTransactions = sortedTransactions[transactionKey];
-
-		if (relatedTransactions == nil) {
-			relatedTransactions = [NSMutableArray array];
-
-			[sortedTransactions setObject:relatedTransactions forKey:transactionKey];
-		}
-
-		[relatedTransactions addObject:transaction];
-	} // for loop
-
-	/* Process transactions by state */
-	for (NSNumber *transactionState in sortedTransactions) {
-		NSArray *transactions = sortedTransactions[transactionState];
-
-		switch (transactionState.unsignedIntegerValue) {
-			case SKPaymentTransactionStatePurchasing:
-			{
-				[self showTransactionsAsInProgress:transactions deferred:NO];
-
-				break;
-			}
-			case SKPaymentTransactionStateDeferred:
-			{
-				[self showTransactionsAsInProgress:transactions deferred:YES];
-
-				break;
-			}
+		switch (transaction.transactionState) {
 			case SKPaymentTransactionStateFailed:
-			{
-				[self failedTransactions:transactions];
-
-				break;
-			}
 			case SKPaymentTransactionStatePurchased:
 			case SKPaymentTransactionStateRestored:
 			{
-				[self processSuccessfulTransactions:transactions];
+				if (finishedTransactions == nil) {
+					finishedTransactions = [NSMutableArray array];
+				}
+
+				[finishedTransactions addObject:transaction];
 
 				break;
 			}
@@ -343,174 +325,176 @@ enum {
 			{
 				break;
 			}
-		} // switch
-	} // for loop
+		}
+	}
+
+	if (finishedTransactions == nil) {
+		return;
+	}
+
+	[self processFinishedTransactions:transactions];
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
-	self.performingRestore = NO;
-
-	[self detachProgressView];
+	[self postflightForRestore];
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
 {
-	self.performingRestore = NO;
-
-	[self detachProgressView];
+	[self postflightForRestore];
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]", error.localizedDescription)
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0011][2]", error.localizedDescription)
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0011][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil];
 }
 
-- (void)showTransactionsAsInProgress:(NSArray<SKPaymentTransaction *> *)transactions deferred:(BOOL)deferred
-{
-	NSParameterAssert(transactions != nil);
-}
-
-- (void)failedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+- (void)processFinishedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
 	NSParameterAssert(transactions != nil);
 
 	/* Process transactions */
-	NSString *purchaedProductIdentifier = self.purchasedProductIdentifier;
-
 	for (SKPaymentTransaction *transaction in transactions) {
-		/* Record product status */
-		if (purchaedProductIdentifier != nil) {
-			NSString *productIdentifier = transaction.payment.productIdentifier;
-
-			if (NSObjectsAreEqual(productIdentifier, purchaedProductIdentifier)) {
-				self.purchasedProductState = transaction.transactionState;
-
-				self.purchasedProductError = transaction.error;
-			}
-		}
-
-		/* Finish transaction */
 		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 	}
 
-	/* Clear progress */
-	[self finishProductPurchase];
+	/* Complete order */
+	[self postflightForTransactions:transactions];
 }
 
-- (void)processSuccessfulTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+- (void)postflightForTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
 	NSParameterAssert(transactions != nil);
 
-	/* This method should never be invoked for transactions that
-	 are not finished or restored. */
-	/* This method uses asserts on conditions that should never
-	 be met unless someone was tampering with the transaction. */
-	BOOL receiptLoaded = [self loadReceipt];
+	BOOL performingPurchase = self.performingPurchase;
+	BOOL performingRestore = self.performingRestore;
 
-	if (receiptLoaded == NO) {
-		[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-										  body:TXTLS(@"TDCInAppPurchaseDialog[0003][1]")
-										 title:TXTLS(@"TDCInAppPurchaseDialog[0003][2]")
-								 defaultButton:TXTLS(@"Prompts[0005]")
-							   alternateButton:nil
-								   otherButton:nil];
+	if (performingPurchase == NO && performingRestore == NO) {
+		LogToConsoleInfo("Transaction without ownership received")
 
-		NSAssert(NO, @"Receipt is invalid");
+		return;
 	}
-
-	/* Process transactions */
-	NSString *purchaedProductIdentifier = self.purchasedProductIdentifier;
-
-	for (SKPaymentTransaction *transaction in transactions)	{
-		/* Record product status */
-		if (purchaedProductIdentifier != nil) {
-			NSString *productIdentifier = transaction.payment.productIdentifier;
-
-			if (NSObjectsAreEqual(productIdentifier, purchaedProductIdentifier)) {
-				self.purchasedProductState = transaction.transactionState;
-			}
-		}
-
-		/* Finish transaction */
-		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-	} // for loop
 
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		/* Post notifications */
-		[self postTransactionFinishedNotification:transactions];
+		BOOL atleastOneTransactionFinished = NO;
 
-		/* This method may be called without the window visible because there
-		 may be items left in the queue when launching (e.g. crash). */
-		if (self.window.visible == NO) {
-			[self show];
+		for (SKPaymentTransaction *transaction in transactions) {
+			switch (transaction.transactionState) {
+				case SKPaymentTransactionStateFailed:
+				{
+					if (performingPurchase == NO) {
+						break;
+					}
+
+					NSError *transationError = transaction.error;
+
+					if (transationError.code == SKErrorPaymentCancelled) {
+						break;
+					}
+
+					[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+													  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]", transationError.localizedDescription)
+													 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
+											 defaultButton:TXTLS(@"Prompts[0005]")
+										   alternateButton:nil
+											   otherButton:nil];
+
+					break;
+				}
+				case SKPaymentTransactionStatePurchased:
+				{
+					atleastOneTransactionFinished = YES;
+
+					break;
+				}
+				case SKPaymentTransactionStateRestored:
+				{
+					atleastOneTransactionFinished = YES;
+
+					break;
+				}
+				default:
+				{
+					LogToConsoleError("Unexpected status");
+
+					return;
+				}
+			}
 		}
 
-		/* Clear progress */
-		[self finishProductPurchase];
+		if (performingPurchase) {
+			self.performingPurchase = NO;
+		}
 
-		[self toggleTrialTimer];
+		if (atleastOneTransactionFinished == NO) {
+			[self _updateSelectedPane];
+
+			return;
+		}
+
+		if ([self loadReceipt] == NO) {
+			[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+											  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]")
+											 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
+									 defaultButton:TXTLS(@"Prompts[0005]")
+								   alternateButton:nil
+									   otherButton:nil];
+
+			NSAssert(NO, @"Receipt is invalid");
+		}
+
+		if (performingRestore) {
+			self.atleastOnePurchaseRestored = YES;
+		}
+
+		[self _refreshProductsTableContents];
+		
+		[self _updateSelectedPane];
+
+		[self postTransactionFinishedNotification:transactions];
 
 		[self showThankYouAfterProductPurchase];
 
-		/* Reload launch status if necessary */
 		if (self.finishedLoading == NO) {
 			[self loadReceiptDuringLaunchPostflight];
 		}
 	});
 }
 
-- (void)finishProductPurchase
+- (void)postflightForRestore
 {
-	if (self.performingPurchase == NO) {
+	if (self.performingRestore) {
+		self.performingRestore = NO;
+	} else {
 		return;
 	}
 
-	if (self.purchasedProductState == SKPaymentTransactionStateUnknown ||
-		self.purchasedProductState == SKPaymentTransactionStatePurchasing ||
-		self.purchasedProductState == SKPaymentTransactionStateDeferred)
-	{
-		return;
+	if (self.atleastOnePurchaseRestored) {
+		self.atleastOnePurchaseRestored = NO;
+	} else {
+		[self updateSelectedPane];
 	}
-
-	if (self.purchasedProductState == SKPaymentTransactionStateFailed) {
-		if (self.purchasedProductError.code != SKErrorPaymentCancelled) {
-			[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-											  body:TXTLS(@"TDCInAppPurchaseDialog[0008][2]", self.purchasedProductError.localizedDescription)
-											 title:TXTLS(@"TDCInAppPurchaseDialog[0008][1]")
-									 defaultButton:TXTLS(@"Prompts[0005]")
-								   alternateButton:nil
-									   otherButton:nil];
-
-			self.purchasedProductError = nil;
-		}
-	}
-
-	self.performingPurchase = NO;
-
-	self.purchasedProductState = SKPaymentTransactionStateUnknown;
-
-	self.purchasedProductIdentifier = nil;
-
-	[self detachProgressView];
 }
 
 - (void)showThankYouAfterProductPurchase
 {
 	if (TLOAppStoreTextualIsRegistered() == NO) {
-		[self close];
+		//[self close];
+
+		return;
 	}
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0016][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0016][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [self close];
+							 //  [self close];
 						   }];
 }
 
@@ -553,49 +537,104 @@ enum {
 #pragma mark -
 #pragma mark Content Views
 
-- (void)attachProductsView
+
+- (void)refreshProductsTableContents
 {
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		NSView *windowContentView = self.window.contentView;
-
-		NSView *productsContentView = self.contentViewProducts;
-
-		[windowContentView attachSubview:productsContentView
-				 adjustedWidthConstraint:nil
-				adjustedHeightConstraint:nil];
+		[self _refreshProductsTableContents];
 	});
+}
+
+- (void)_refreshProductsTableContents
+{
+	[self.productsTableController removeAllArrangedObjects];
+
+	if (TLOAppStoreIsTrialPurchased() == NO) {
+		[self.productsTableController addObject:
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier]];
+	}
+
+	[self.productsTableController addObject:
+	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier]];
+}
+
+- (void)updateSelectedPane
+{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self _updateSelectedPane];
+	});
+}
+
+- (void)_updateSelectedPane
+{
+	[self detachProgressView];
+
+	if (TLOAppStoreTextualIsRegistered()) {
+		[self attachThankYouView];
+
+		return;
+	}
+
+	[self attachProductsView];
+
+	[self refreshTrialInformationView];
+}
+
+- (void)refreshTrialInformationView
+{
+	if (TLOAppStoreIsTrialPurchased() == NO) {
+		self.trialInformationHeightConstraint.constant = 0.0;
+	} else {
+		self.trialInformationHeightConstraint.constant = _trialInformationViewDefaultHeight;
+
+		NSString *formattedTrialInformation = [self timeRemainingInTrialFormattedMessage];
+
+		self.trialInformationTextField.stringValue = formattedTrialInformation;
+	}
+}
+
+- (void)attachThankYouView
+{
+	NSView *windowContentView = self.window.contentView;
+
+	NSView *thankYouContentView = self.contentViewThankYou;
+
+	[windowContentView attachSubviewToHugEdges:thankYouContentView];
+}
+
+- (void)attachProductsView
+{
+	NSView *windowContentView = self.window.contentView;
+
+	NSView *productsContentView = self.contentViewProducts;
+
+	[windowContentView attachSubviewToHugEdges:productsContentView];
 }
 
 - (void)attachProgressViewWithReason:(NSString *)progressReason
 {
 	NSParameterAssert(progressReason != nil);
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		NSView *windowContentView = self.window.contentView;
+	NSView *windowContentView = self.window.contentView;
 
-		NSView *progressContentView = self.contentViewProgress;
+	NSView *progressContentView = self.contentViewProgress;
 
-		[windowContentView attachSubview:progressContentView
-				 adjustedWidthConstraint:nil
-				adjustedHeightConstraint:nil];
+	[windowContentView attachSubviewToHugEdges:progressContentView];
 
-		self.progressViewTextField.stringValue = progressReason;
+	self.progressViewTextField.stringValue = progressReason;
 
-		[self.progressViewIndicator startAnimation:nil];
+	[self.progressViewIndicator startAnimation:nil];
 
-		self.windowIsAllowedToClose = NO;
-	});
+	self.windowIsAllowedToClose = NO;
 }
 
 - (void)detachProgressView
 {
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		self.windowIsAllowedToClose = YES;
+	self.windowIsAllowedToClose = YES;
 
-		[self.progressViewIndicator stopAnimation:nil];
+	[self.progressViewIndicator stopAnimation:nil];
 
-		[self attachProductsView];
-	});
+	self.progressViewTextField.stringValue = NSStringEmptyPlaceholder;
 }
 
 - (void)setWindowIsAllowedToClose:(BOOL)windowIsAllowedToClose
@@ -610,38 +649,167 @@ enum {
 #pragma mark -
 #pragma mark Actions
 
-- (void)payForItem:(id)sender
-{
-
-}
-
-- (void)payForFreeTrial:(id)sender
-{
-	[self payForFreeTrial];
-}
-
-- (void)payForStandardEdition:(id)sender
-{
-	[self payForStandardEdition];
-}
-
-- (void)payForUpgradeFromV6:(id)sender
-{
-	[self payForUpgradeFromV6];
-}
-
-- (void)payForUpgradeFromV6Free:(id)sender
-{
-	[self payForUpgradeFromV6Free];
-}
-
 - (void)restoreTransactions:(id)sender
 {
 	[self restoreTransactions];
 }
 
 #pragma mark -
+#pragma mark Table View Delegate
+
+- (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	TDCInAppPurchaseProductsTableCellView *newView = nil;
+
+	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
+
+	if (entryItem.entryType == TDCInAppPurchaseProductsTableEntryProductType) {
+		newView = [tableView makeViewWithIdentifier:@"productType" owner:self];
+	} else if (entryItem.entryType == TDCInAppPurchaseProductsTableEntryOtherType) {
+		newView = [tableView makeViewWithIdentifier:@"otherType" owner:self];
+	}
+
+	return newView;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
+
+	if (entryItem.rowHeight > 0) {
+		return entryItem.rowHeight;
+	}
+
+	return tableView.rowHeight;
+}
+
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+	[self calculateHeightOfRowInProductsTable:row];
+
+	if ((tableView.numberOfRows - 1) == row) {
+		[self calculateHeightOfProductsTable];
+	}
+}
+
+- (void)calculateHeightOfRowInProductsTable:(NSUInteger)row
+{
+	NSTableView *tableView = self.productsTable;
+
+	TDCInAppPurchaseProductsTableCellView *cellView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
+
+	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
+
+	entryItem.rowHeight = cellView.innerContentViewSize.height;
+
+	[NSAnimationContext performBlockWithoutAnimation:^{
+		[tableView noteHeightOfRowsWithIndexesChanged:
+			 [NSIndexSet indexSetWithIndex:row]];
+	}];
+}
+
+- (void)calculateHeightOfProductsTable
+{
+	CGFloat tableViewHeight = 2.0; // 1 pixel margin on top and bottom
+
+	for (TDCInAppPurchaseProductsTableEntry *entryItem in self.productsTableController.arrangedObjects) {
+		tableViewHeight += entryItem.rowHeight;
+	}
+
+	self.productsTableHeightConstraint.constant = tableViewHeight;
+}
+
+#pragma mark -
 #pragma mark Products
+
+- (nullable TDCInAppPurchaseProductsTableEntry *)productsTableEntryForProduct:(SKProduct *)product
+{
+	NSParameterAssert(product != nil);
+
+	NSString *productIdentifier = product.productIdentifier;
+	
+	TLOAppStoreIAPProduct productType = TLOAppStoreProductFromProductIdentifier(productIdentifier);
+
+	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
+
+	tableEntry.productIdentifier = productIdentifier;
+
+	tableEntry.productPrice = product.price;
+	tableEntry.productPriceLocale = product.priceLocale;
+
+	tableEntry.target = self;
+	tableEntry.action = @selector(payForProductsTableEntry:);
+
+	switch (productType) {
+		case TLOAppStoreIAPFreeTrialProduct:
+		{
+			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
+			
+			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
+			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0001][2]");
+			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][3]");
+
+			break;
+		}
+		case TLOAppStoreIAPStandardEditionProduct:
+		{
+			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
+			
+			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
+			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0002][2]");
+			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][3]");
+			
+			break;
+		}
+		case TLOAppStoreIAPUpgradeFromV6Product:
+		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
+		{
+			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
+			
+			SKProduct *standardEdition = self.products[TLOAppStoreIAPStandardEditionProductIdentifier];
+			
+			if (standardEdition == nil) {
+				NSAssert(NO, @"The 'Standard Edition' product is missing");
+			}
+			
+			tableEntry.productPriceDiscounted = standardEdition.price;
+			
+			if (productType == TLOAppStoreIAPUpgradeFromV6Product)
+			{
+				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
+				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0004][2]");
+				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][3]");
+			}
+			else if (productType == TLOAppStoreIAPUpgradeFromV6FreeProduct)
+			{
+				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][1]");
+				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0005][2]");
+				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][3]");
+			}
+
+			break;
+		}
+		default:
+		{
+			return nil;
+		}
+	}
+
+	return tableEntry;
+}
+
+- (nullable TDCInAppPurchaseProductsTableEntry *)productsTableEntryForProductIdentifier:(NSString *)productIdentifier
+{
+	NSParameterAssert(productIdentifier != nil);
+
+	SKProduct *product = self.products[productIdentifier];
+
+	if (product == nil) {
+		return nil;
+	}
+
+	return [self productsTableEntryForProduct:product];
+}
 
 - (nullable NSString *)localizedTitleForProduct:(SKProduct *)product
 {
@@ -650,42 +818,55 @@ enum {
 	return [self localizedTitleForProductIdentifier:product.productIdentifier];
 }
 
-- (nullable NSString *)localizedTitleForProductIdentifier:(NSString *)productId
+- (nullable NSString *)localizedTitleForProductIdentifier:(NSString *)productIdentifier
 {
-	NSParameterAssert(productId);
+	NSParameterAssert(productIdentifier != nil);
 
-	NSString *titleKey = [NSString stringWithFormat:@"TDCInAppPurchaseDialog[0001][%@]", productId];
+	TLOAppStoreIAPProduct productType = TLOAppStoreProductFromProductIdentifier(productIdentifier);
 
-	NSString *title = TXTLS(titleKey);
-
-	return title;
+	NSString *productTitle = nil;
+	
+	switch (productType) {
+		case TLOAppStoreIAPFreeTrialProduct:
+		{
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
+			
+			break;
+		}
+		case TLOAppStoreIAPStandardEditionProduct:
+		{
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
+			
+			break;
+		}
+		case TLOAppStoreIAPUpgradeFromV6Product:
+		{
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
+			
+			break;
+		}
+		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
+		{
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][1]");
+			
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+	
+	return productTitle;
 }
 
-- (BOOL)isProductPaidFor:(NSString *)productId
+- (void)payForProductsTableEntry:(TDCInAppPurchaseProductsTableEntry *)product
 {
-	NSParameterAssert(productId != nil);
+	NSParameterAssert(product != nil);
 
-	return TLOAppStoreIsProductPurchased(productId);
-}
+	NSString *productIdentifier = product.productIdentifier;
 
-- (void)payForFreeTrial
-{
-	[self payForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier];
-}
-
-- (void)payForStandardEdition
-{
-	[self payForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier];
-}
-
-- (void)payForUpgradeFromV6
-{
-	[self payForProductIdentifier:TLOAppStoreIAPUpgradeFromV6ProductIdentifier];
-}
-
-- (void)payForUpgradeFromV6Free
-{
-	[self payForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier];
+	[self payForProductIdentifier:productIdentifier];
 }
 
 - (void)payForProductIdentifier:(NSString *)productIdentifier
@@ -703,8 +884,8 @@ enum {
 		NSString *productTitle = [self localizedTitleForProductIdentifier:productIdentifier];
 
 		[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-										  body:TXTLS(@"TDCInAppPurchaseDialog[0002][2]")
-										 title:TXTLS(@"TDCInAppPurchaseDialog[0002][1]", productTitle)
+										  body:TXTLS(@"TDCInAppPurchaseDialog[0006][2]")
+										 title:TXTLS(@"TDCInAppPurchaseDialog[0006][1]", productTitle)
 								 defaultButton:TXTLS(@"Prompts[0005]")
 							   alternateButton:nil
 								   otherButton:nil];
@@ -736,10 +917,8 @@ enum {
 		return;
 	}
 
-	self.purchasedProductIdentifier = product.productIdentifier;
-
 	/* Show progress view */
-	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0005]")];
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0009]")];
 
 	/* Perform purchase */
 	SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
@@ -749,15 +928,17 @@ enum {
 	[[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
-- (void)restoreTransactionsOnShow
+- (BOOL)restoreTransactionsOnShow
 {
 	if (self.performRestoreOnShow) {
 		self.performRestoreOnShow = NO;
 	} else {
-		return;
+		return NO;
 	}
 
 	[self restoreTransactions];
+
+	return YES;
 }
 
 - (void)restoreTransactions
@@ -774,7 +955,7 @@ enum {
 	}
 
 	/* Show progress view */
-	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0006]")];
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0010]")];
 
 	/* Perform restore */
 	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
@@ -783,8 +964,8 @@ enum {
 - (void)showPleaseSelectItemError
 {
 	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0009][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0009][1]")
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0013][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0013][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil];
@@ -834,6 +1015,9 @@ enum {
 		return;
 	}
 
+	/* Start trial timer if applicable */
+	[self toggleTrialTimer];
+
 	/* User owns something, continue */
 	[self postDialogFinishedLoadingNotification];
 }
@@ -855,7 +1039,7 @@ enum {
 	}
 
 	if (requestProductsAgain == NO) {
-		[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0004]")];
+		[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0008]")];
 	}
 
 	NSSet *productIdentifiers =
@@ -886,21 +1070,20 @@ enum {
 	}
 
 	self.products = productsDict;
+	
+	[self refreshProductsTableContents];
 
-	/* We only hide the progress view when we have a list of products,
-	 otherwise the user will be seeing a blank products page. */
-	[self detachProgressView];
-
-	/* Restore transactions if user clicked certain button. */
-	[self restoreTransactionsOnShow];
+	if ([self restoreTransactionsOnShow] == NO) {
+		[self updateSelectedPane];
+	}
 }
 
 - (void)onRequestProductsError:(NSError *)error
 {
 	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0003][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0003][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0003][3]")
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
+							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")
 						   alternateButton:nil
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
