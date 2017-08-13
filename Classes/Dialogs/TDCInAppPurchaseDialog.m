@@ -696,11 +696,13 @@ enum {
 {
 	NSTableView *tableView = self.productsTable;
 
+	NSSize cellViewSpacing = tableView.intercellSpacing;
+	
 	TDCInAppPurchaseProductsTableCellView *cellView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
 
 	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
 
-	entryItem.rowHeight = cellView.innerContentViewSize.height;
+	entryItem.rowHeight = (cellView.innerContentViewSize.height + cellViewSpacing.height);
 
 	[NSAnimationContext performBlockWithoutAnimation:^{
 		[tableView noteHeightOfRowsWithIndexesChanged:
