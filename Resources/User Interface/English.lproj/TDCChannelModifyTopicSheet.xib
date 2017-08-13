@@ -26,7 +26,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="595" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="26">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
                         <rect key="frame" x="18" y="163" width="87" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Topic for %@:" id="27">
                             <font key="font" metaFont="system"/>
@@ -109,6 +109,7 @@ Gw
                     <constraint firstItem="26" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="kkM-IF-4TV"/>
                     <constraint firstItem="10" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="ofe-J5-e16"/>
                     <constraint firstItem="9" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="12" symbolic="YES" id="ttT-T7-e4m"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="26" secondAttribute="trailing" constant="20" id="xYx-me-knl"/>
                 </constraints>
             </view>
             <connections>

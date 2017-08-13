@@ -214,7 +214,7 @@ Gw
                             <action selector="cancel:" target="-2" id="282"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="249">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="249">
                         <rect key="frame" x="18" y="301" width="176" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
                             <font key="font" metaFont="systemBold"/>

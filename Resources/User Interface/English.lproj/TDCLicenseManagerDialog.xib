@@ -184,6 +184,9 @@ Gw
                                 </connections>
                             </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="UK4-RN-UQO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pho-XN-fdp" secondAttribute="trailing" constant="20" id="ob1-UO-aGU"/>
+                        </constraints>
                     </view>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="UK4-RN-UQO" secondAttribute="trailing" constant="16" id="3jM-9g-0Bt"/>

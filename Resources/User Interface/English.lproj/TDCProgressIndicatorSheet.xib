@@ -23,9 +23,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="411" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44f-oq-qcQ">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44f-oq-qcQ">
                         <rect key="frame" x="75" y="24" width="318" height="17"/>
-                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Please wait a moment while this task is completed…" id="Wtt-QE-OE3">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Please wait a moment while this task is completed…" id="Wtt-QE-OE3">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
