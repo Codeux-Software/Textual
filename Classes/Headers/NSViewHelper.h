@@ -40,7 +40,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSView (TXViewHelper)
-- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint;
+- (void)attachSubviewToHugEdges:(NSView *)subview;
+- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(nullable NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(nullable NSLayoutConstraint *)parentViewHeightConstraint;
 @end
 
 NS_ASSUME_NONNULL_END
