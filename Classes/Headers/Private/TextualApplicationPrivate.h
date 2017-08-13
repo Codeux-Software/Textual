@@ -106,6 +106,8 @@
 #import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCHighlightEntrySheetPrivate.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCInAppPurchaseProductTableEntryPrivate.h"
+#import "TDCInAppPurchaseProductTableCellViewPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
 #import "TDCLicenseManagerRecoverLostLicenseSheetPrivate.h"
