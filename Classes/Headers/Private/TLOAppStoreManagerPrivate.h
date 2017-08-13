@@ -40,6 +40,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, TLOAppStoreIAPProduct)
+{
+	TLOAppStoreIAPUnknownProduct,
+	TLOAppStoreIAPFreeTrialProduct,
+	TLOAppStoreIAPStandardEditionProduct,
+	TLOAppStoreIAPUpgradeFromV6Product,
+	TLOAppStoreIAPUpgradeFromV6FreeProduct
+};
+
 TEXTUAL_EXTERN NSString * const TLOAppStoreIAPFreeTrialProductIdentifier;
 TEXTUAL_EXTERN NSString * const TLOAppStoreIAPStandardEditionProductIdentifier;
 TEXTUAL_EXTERN NSString * const TLOAppStoreIAPUpgradeFromV6ProductIdentifier;
@@ -54,9 +63,7 @@ TEXTUAL_EXTERN BOOL TLOAppStoreIsTrialPurchased(void);
 TEXTUAL_EXTERN BOOL TLOAppStoreIsTrialExpired(void);
 TEXTUAL_EXTERN NSTimeInterval TLOAppStoreTimeReaminingInTrial(void);
 
-TEXTUAL_EXTERN BOOL TLOAppStoreIsProductPurchased(NSString *productIdentifier);
-
-TEXTUAL_EXTERN ARLInAppPurchaseContents * _Nullable TLOAppStorePurchasedProductDetails(NSString *productIdentifier);
+TEXTUAL_EXTERN TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(NSString *productIdentifier);
 
 NS_ASSUME_NONNULL_END
 #endif

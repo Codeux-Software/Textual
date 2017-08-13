@@ -53,6 +53,8 @@ NSInteger const TLOAppStoreTrialModeMaximumLifespan = (-2592000); // 30 days in 
 static ARLReceiptContents *TLOAppStoreReceiptContents = nil;
 
 BOOL TLOAppStoreIsOneProductPurchased(NSArray<NSString *> *productIdentifiers);
+BOOL TLOAppStoreIsProductPurchased(NSString *productIdentifier);
+ARLInAppPurchaseContents * _Nullable TLOAppStorePurchasedProductDetails(NSString *productIdentifier);
 
 #pragma mark -
 #pragma mark Implementation
@@ -131,6 +133,23 @@ ARLInAppPurchaseContents * _Nullable TLOAppStorePurchasedProductDetails(NSString
 	}
 
 	return receipt.inAppPurchases[productIdentifier];
+}
+
+TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(NSString *productIdentifier)
+{
+	NSCParameterAssert(productIdentifier != nil);
+
+	if ([productIdentifier isEqualToString:TLOAppStoreIAPFreeTrialProductIdentifier]) {
+		return TLOAppStoreIAPFreeTrialProduct;
+	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPStandardEditionProductIdentifier]) {
+		return TLOAppStoreIAPStandardEditionProduct;
+	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPUpgradeFromV6ProductIdentifier]) {
+		return TLOAppStoreIAPUpgradeFromV6Product;
+	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]) {
+		return TLOAppStoreIAPUpgradeFromV6FreeProduct;
+	}
+	
+	return TLOAppStoreIAPUnknownProduct;
 }
 
 #pragma mark -
