@@ -56,7 +56,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSView (TXViewHelper)
 
-- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint
+- (void)attachSubviewToHugEdges:(NSView *)subview
+{
+	NSParameterAssert(subview != nil);
+
+	/* Remove any views that may already be in place. */
+	NSArray *contentSubviews = self.subviews;
+
+	if (contentSubviews.count > 0) {
+		[contentSubviews[0] removeFromSuperview];
+	}
+
+	[self addSubview:subview];
+
+	/* Add new constraints. */
+	[self addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[subview]-0-|"
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(subview)]];
+
+	[self addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[subview]-0-|"
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(subview)]];
+}
+
+- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(nullable NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(nullable NSLayoutConstraint *)parentViewHeightConstraint
 {
 	NSParameterAssert(subview != nil);
 
