@@ -120,28 +120,19 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSTableView *tableView = self.highlightListTable;
 
-	NSTableColumn *tableColumn = [tableView tableColumnWithIdentifier:@"renderedMessage"];
-
-	NSTableCellView *cellView = (id)[self tableView:tableView viewForTableColumn:tableColumn row:row];
+	NSSize cellViewSpacing = tableView.intercellSpacing;
+	
+	NSTableCellView *cellView = [tableView viewAtColumn:1 row:row makeIfNecessary:NO];
 
 	NSRect textFieldFrame = cellView.textField.frame;
 
-	[self performBlockOnGlobalQueue:^{
-		IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
+	IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
 
-		CGFloat textHeight = [entryItem.renderedMessage pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2.0))];
+	entryItem.rowHeight = (textFieldFrame.size.height + cellViewSpacing.height);
 
-		CGFloat finalRowHeight = (ceil(textHeight / tableView.rowHeight) * tableView.rowHeight);
-
-		entryItem.rowHeight = finalRowHeight;
-
-		[self performBlockOnMainThread:^{
-			NSIndexSet *rowIndexSet = [NSIndexSet indexSetWithIndex:row];
-
-			[NSAnimationContext performBlockWithoutAnimation:^{
-				[tableView noteHeightOfRowsWithIndexesChanged:rowIndexSet];
-			}];
-		}];
+	[NSAnimationContext performBlockWithoutAnimation:^{
+		[tableView noteHeightOfRowsWithIndexesChanged:
+		 [NSIndexSet indexSetWithIndex:row]];
 	}];
 }
 
