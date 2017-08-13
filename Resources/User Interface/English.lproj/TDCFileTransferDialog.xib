@@ -60,16 +60,16 @@
                                                         <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="fkg-tB-oW2">
                                                             <rect key="frame" x="69" y="25" width="458" height="12"/>
                                                         </progressIndicator>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-ly-KOo">
-                                                            <rect key="frame" x="67" y="43" width="372" height="17"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-ly-KOo">
+                                                            <rect key="frame" x="67" y="43" width="94" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="5dv-pa-ldM">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="22V-bc-ITj">
-                                                            <rect key="frame" x="67" y="6" width="462" height="14"/>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="22V-bc-ITj">
+                                                            <rect key="frame" x="67" y="6" width="290" height="14"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="VVN-xJ-iKJ">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -84,8 +84,8 @@
                                                             </constraints>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yRx-w7-oXd"/>
                                                         </imageView>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-pI-cPd">
-                                                            <rect key="frame" x="455" y="43" width="74" height="14"/>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-pI-cPd">
+                                                            <rect key="frame" x="492" y="43" width="37" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="70" id="fDX-u0-Cff"/>
                                                             </constraints>
@@ -99,14 +99,14 @@
                                                     <constraints>
                                                         <constraint firstItem="tvE-ly-KOo" firstAttribute="baseline" secondItem="qsO-pI-cPd" secondAttribute="baseline" id="2ex-Th-hxI"/>
                                                         <constraint firstItem="tvE-ly-KOo" firstAttribute="leading" secondItem="NYx-LB-DAM" secondAttribute="trailing" constant="8" id="7o2-gu-oax"/>
-                                                        <constraint firstAttribute="trailing" secondItem="22V-bc-ITj" secondAttribute="trailing" constant="20" id="AES-tc-3mu"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="22V-bc-ITj" secondAttribute="trailing" constant="20" id="AES-tc-3mu"/>
                                                         <constraint firstItem="NYx-LB-DAM" firstAttribute="leading" secondItem="rFe-Pm-QDv" secondAttribute="leading" id="Aks-Nu-Q9F"/>
                                                         <constraint firstAttribute="trailing" secondItem="qsO-pI-cPd" secondAttribute="trailing" constant="20" id="Cwc-na-g2p"/>
                                                         <constraint firstAttribute="trailing" secondItem="fkg-tB-oW2" secondAttribute="trailing" constant="20" id="F6I-RK-DFp"/>
                                                         <constraint firstAttribute="bottom" secondItem="NYx-LB-DAM" secondAttribute="bottom" id="MRx-7c-RFt"/>
                                                         <constraint firstAttribute="bottom" secondItem="22V-bc-ITj" secondAttribute="bottom" constant="6" id="NgU-gF-1BD"/>
                                                         <constraint firstItem="fkg-tB-oW2" firstAttribute="top" secondItem="rFe-Pm-QDv" secondAttribute="top" constant="27" id="Skz-Lf-LFX"/>
-                                                        <constraint firstItem="qsO-pI-cPd" firstAttribute="leading" secondItem="tvE-ly-KOo" secondAttribute="trailing" constant="20" id="Ugx-DI-HCB"/>
+                                                        <constraint firstItem="qsO-pI-cPd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tvE-ly-KOo" secondAttribute="trailing" constant="20" id="Ugx-DI-HCB"/>
                                                         <constraint firstItem="fkg-tB-oW2" firstAttribute="leading" secondItem="tvE-ly-KOo" secondAttribute="leading" id="bOT-h1-9yG"/>
                                                         <constraint firstItem="tvE-ly-KOo" firstAttribute="top" secondItem="rFe-Pm-QDv" secondAttribute="top" constant="4" id="fE3-Pt-GL0"/>
                                                         <constraint firstItem="22V-bc-ITj" firstAttribute="leading" secondItem="fkg-tB-oW2" secondAttribute="leading" id="xtB-1N-wsd"/>

@@ -220,7 +220,7 @@ Gw
                             <action selector="onUpdate:" target="-2" id="122"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="132">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="132">
                         <rect key="frame" x="18" y="269" width="108" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
                             <font key="font" metaFont="systemBold"/>
@@ -265,6 +265,7 @@ Gw
                     <constraint firstItem="74" firstAttribute="trailing" secondItem="103" secondAttribute="trailing" id="1Tu-Kp-wDR"/>
                     <constraint firstAttribute="bottom" secondItem="139" secondAttribute="bottom" constant="13" id="1fY-x5-bpK"/>
                     <constraint firstAttribute="trailing" secondItem="103" secondAttribute="trailing" constant="20" symbolic="YES" id="Cz5-Bb-inG"/>
+                    <constraint firstItem="103" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="132" secondAttribute="trailing" constant="20" id="Few-xO-gBE"/>
                     <constraint firstItem="139" firstAttribute="top" secondItem="65" secondAttribute="bottom" constant="13" id="Ga2-F9-ab6"/>
                     <constraint firstItem="65" firstAttribute="top" secondItem="103" secondAttribute="bottom" constant="10" id="Idf-R4-CqE"/>
                     <constraint firstItem="74" firstAttribute="leading" secondItem="76" secondAttribute="trailing" constant="12" symbolic="YES" id="NqQ-Of-1y7"/>

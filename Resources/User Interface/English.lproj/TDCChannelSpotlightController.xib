@@ -97,8 +97,8 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-0z-qfJ">
-                                                                            <rect key="frame" x="8" y="21" width="514" height="19"/>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-0z-qfJ">
+                                                                            <rect key="frame" x="8" y="21" width="255" height="19"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="#channel on freenode IRC network" id="KNo-4X-COi">
                                                                                 <font key="font" metaFont="system" size="16"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -119,11 +119,8 @@
                                                                                 <binding destination="G8b-ye-mjd" name="value" keyPath="self.unreadCountDescription" id="F6Q-hG-sKu"/>
                                                                             </connections>
                                                                         </textField>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-YI-lSG">
-                                                                            <rect key="frame" x="538" y="11" width="54" height="24"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="IeB-8X-JP7"/>
-                                                                            </constraints>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-YI-lSG">
+                                                                            <rect key="frame" x="558" y="11" width="34" height="24"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="⌘1" id="wPt-pE-DBY">
                                                                                 <font key="font" metaFont="system" size="20"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -141,7 +138,7 @@
                                                                         <constraint firstItem="d8V-0z-qfJ" firstAttribute="top" secondItem="G8b-ye-mjd" secondAttribute="top" constant="6" id="Pez-e3-n1I"/>
                                                                         <constraint firstItem="Js1-ti-O0L" firstAttribute="top" secondItem="d8V-0z-qfJ" secondAttribute="bottom" constant="-1" id="bds-0C-hYT"/>
                                                                         <constraint firstItem="d8V-0z-qfJ" firstAttribute="leading" secondItem="G8b-ye-mjd" secondAttribute="leading" constant="10" id="jsX-oK-3kx"/>
-                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" secondItem="d8V-0z-qfJ" secondAttribute="trailing" constant="20" id="vNH-SU-jCE"/>
+                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d8V-0z-qfJ" secondAttribute="trailing" constant="20" id="vNH-SU-jCE"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="channelNameField" destination="d8V-0z-qfJ" id="i8T-hL-mg0"/>

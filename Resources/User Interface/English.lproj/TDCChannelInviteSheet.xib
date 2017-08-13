@@ -66,7 +66,7 @@ Gw
                         </popUpButtonCell>
                         <accessibility description="Channel to Invite User(s) To"/>
                     </popUpButton>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="37">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="37">
                         <rect key="frame" x="18" y="98" width="85" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Invite nick to:" id="38">
                             <font key="font" metaFont="system"/>
