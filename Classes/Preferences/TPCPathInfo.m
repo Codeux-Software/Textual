@@ -322,6 +322,28 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 }
 
++ (nullable NSString *)systemApplicationFolderPath
+{
+	NSURL *folderURL = [self systemApplicationFolderURL];
+	
+	if (folderURL == nil) {
+		return nil;
+	}
+	
+	return folderURL.path;
+}
+
++ (nullable NSURL *)systemApplicationFolderURL
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
+	
+	if (searchArray.count == 0) {
+		return nil;
+	}
+	
+	return [NSURL fileURLWithPath:searchArray[0] isDirectory:YES];
+}
+
 @end
 
 #pragma mark -

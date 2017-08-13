@@ -51,6 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)applicationSupportFolderPathInGroupContainer;
 + (nullable NSString *)applicationSupportFolderPathInLocalContainer;
 
++ (nullable NSString *)systemApplicationFolderPath;
++ (nullable NSURL *)systemApplicationFolderURL;
+
 + (NSString *)systemDiagnosticReportsFolderPath;
 + (NSString *)userDiagnosticReportsFolderPath;
 

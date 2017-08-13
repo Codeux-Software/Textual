@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSOpenPanel *d = [NSOpenPanel openPanel];
 
-	NSURL *applicationsPath = [self systemApplicationFolderPath];
+	NSURL *applicationsPath = [TPCPathInfo systemApplicationFolderURL];
 
 	if (applicationsPath) {
 		d.directoryURL = applicationsPath;
@@ -324,17 +324,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Return successful result */
 	return YES;
-}
-
-- (nullable NSURL *)systemApplicationFolderPath
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
-
-	if (searchArray.count == 0) {
-		return nil;
-	}
-
-	return [NSURL fileURLWithPath:searchArray[0] isDirectory:YES];
 }
 
 #pragma mark -
