@@ -97,6 +97,14 @@ ClassWithDesignatedInitializerInitMethod
 	[super endSheet];
 }
 
+- (void)endSheetEarly
+{
+	/* If we end sheet early, before self.sheet is ever defined,
+	 then trying to close it wont fire this delegate call.
+	 We fake the call to the delegate so that the sheet can be released. */
+	[self windowWillClose:nil];
+}
+
 - (void)checkEligibility
 {
 	[self _checkEligiblity];
@@ -146,7 +154,7 @@ ClassWithDesignatedInitializerInitMethod
 								   [self actionContactSupport:nil];
 							   }
 
-							   [self windowWillClose:nil];
+							   [self endSheetEarly];
 						   }];
 }
 
