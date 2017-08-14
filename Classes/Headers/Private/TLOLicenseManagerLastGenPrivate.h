@@ -47,13 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
  system can know whether a license key is old. */
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
-	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligible = 1,
-	TLOLicenseUpgradeAlreadyUpgraded = 2,
-};
-
 @interface TLOLicenseManagerLastGen : NSObject
 /* Only returns a value if license key is old. */
 + (nullable NSString *)licenseKey; // From saved license file (last gen location)

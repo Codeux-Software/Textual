@@ -35,11 +35,16 @@
 
  *********************************************************************** */
 
-#import "TLOLicenseManagerLastGenPrivate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
+	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
+	TLOLicenseUpgradeNotEligible = 0,
+	TLOLicenseUpgradeEligible = 1,
+	TLOLicenseUpgradeAlreadyUpgraded = 2,
+};
+
 @protocol TDCLicenseUpgradeEligibilitySheetDelegate;
 
 @interface TDCLicenseUpgradeEligibilitySheet : TDCSheetBase
