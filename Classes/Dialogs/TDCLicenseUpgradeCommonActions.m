@@ -42,9 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)contactSupport
 {
-	NSURL *urlToOpen = [NSURL URLWithString:@"https://contact.codeux.com/"];
-
-	[TLOpenLink open:urlToOpen inBackground:NO];
+	[menuController() contactSupport:nil];
 }
 
 + (void)activateLicense:(NSString *)licenseKey

@@ -3229,6 +3229,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[TLOpenLink openWithString:@"https://www.textualapp.com/standalone-store" inBackground:NO];
 }
 
+- (void)contactSupport:(id)sender
+{
+	[TLOpenLink openWithString:@"https://contact.codeux.com/" inBackground:NO];
+}
+
 - (void)performNavigationAction:(id)sender
 {
 	IRCClient *u = self.selectedClient;
