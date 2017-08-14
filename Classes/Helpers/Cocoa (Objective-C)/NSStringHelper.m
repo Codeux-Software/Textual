@@ -543,9 +543,9 @@ return_method:
 	return nil;
 }
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (nullable NSString *)prettyLicenseKey
 {
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	NSRange lastDashRange = [self rangeOfString:@"-" options:NSBackwardsSearch];
 
 	if (lastDashRange.location == NSNotFound) {
@@ -559,8 +559,10 @@ return_method:
 	NSString *licenseKey = [self substringWithRange:lastDashRange];
 
 	return [licenseKey stringByAppendingString:@"…"];
-}
+#else
+	return nil;
 #endif
+}
 
 @end
 
