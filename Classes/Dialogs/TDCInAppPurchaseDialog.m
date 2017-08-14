@@ -56,6 +56,8 @@ enum {
 
 #define _trialInformationViewDefaultHeight	42
 
+#define _upgradeFromV6FreeThreshold		1497484800 // June 15, 2017
+
 @interface TDCInAppPurchaseDialog ()
 @property (nonatomic, strong) TLOTimer *trialTimer;
 @property (nonatomic, weak) IBOutlet NSView *trialInformationView;
@@ -78,8 +80,14 @@ enum {
 @property (nonatomic, strong) IBOutlet NSView *contentViewProgress;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
 @property (nonatomic, weak) IBOutlet NSTextField *progressViewTextField;
+@property (nonatomic, assign) BOOL performingUpgradeEligibilityCheck;
+@property (nonatomic, strong) IBOutlet NSWindow *upgradeEligibilityDiscountedSheet;
+@property (nonatomic, strong) IBOutlet NSWindow *upgradeEligibilityFreeSheet;
 
 - (IBAction)restoreTransactions:(id)sender;
+- (IBAction)writeReview:(id)sender;
+
+- (IBAction)closeUpgradeEligiblitySheet:(id)sender;
 @end
 
 @implementation TDCInAppPurchaseDialog
@@ -344,7 +352,7 @@ enum {
 {
 	[self postflightForRestore];
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0011][2]", error.localizedDescription)
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0011][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
@@ -395,7 +403,7 @@ enum {
 						break;
 					}
 
-					[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+					[TLOPopupPrompts sheetWindowWithWindow:self.window
 													  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]", transationError.localizedDescription)
 													 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
 											 defaultButton:TXTLS(@"Prompts[0005]")
@@ -429,34 +437,36 @@ enum {
 			self.performingPurchase = NO;
 		}
 
+		if (atleastOneTransactionFinished) {
+			if ([self loadReceipt] == NO) {
+				[TLOPopupPrompts sheetWindowWithWindow:self.window
+												  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]")
+												 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
+										 defaultButton:TXTLS(@"Prompts[0005]")
+									   alternateButton:nil
+										   otherButton:nil];
+
+				atleastOneTransactionFinished = NO;
+			}
+		}
+
 		if (atleastOneTransactionFinished == NO) {
 			[self _updateSelectedPane];
-
+			
 			return;
 		}
-
-		if ([self loadReceipt] == NO) {
-			[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
-											  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]")
-											 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
-									 defaultButton:TXTLS(@"Prompts[0005]")
-								   alternateButton:nil
-									   otherButton:nil];
-
-			NSAssert(NO, @"Receipt is invalid");
-		}
-
+		
 		if (performingRestore) {
 			self.atleastOnePurchaseRestored = YES;
 		}
+		
+		[self showThankYouAfterProductPurchase];
+
+		[self _updateSelectedPane];
 
 		[self _refreshProductsTableContents];
 		
-		[self _updateSelectedPane];
-
 		[self postTransactionFinishedNotification:transactions];
-
-		[self showThankYouAfterProductPurchase];
 
 		if (self.finishedLoading == NO) {
 			[self loadReceiptDuringLaunchPostflight];
@@ -482,19 +492,19 @@ enum {
 - (void)showThankYouAfterProductPurchase
 {
 	if (TLOAppStoreTextualIsRegistered() == NO) {
-		//[self close];
+		[self close];
 
 		return;
 	}
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0016][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0016][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							 //  [self close];
+							  [self close];
 						   }];
 }
 
@@ -549,6 +559,10 @@ enum {
 {
 	[self.productsTableController removeAllArrangedObjects];
 
+	if (TLOAppStoreTextualIsRegistered()) {
+		return;
+	}
+	
 	if (TLOAppStoreIsTrialPurchased() == NO) {
 		[self.productsTableController addObject:
 		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier]];
@@ -556,6 +570,12 @@ enum {
 
 	[self.productsTableController addObject:
 	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier]];
+	
+	TDCInAppPurchaseProductsTableEntry *discountEntry = [self productsTableUpgradeEligibilityEntry];
+	
+	if (discountEntry != nil) {
+		[self.productsTableController addObject:discountEntry];
+	}
 }
 
 - (void)updateSelectedPane
@@ -647,7 +667,157 @@ enum {
 }
 
 #pragma mark -
+#pragma mark Discount
+
+- (void)closeUpgradeEligiblitySheet:(id)sender
+{
+	[NSApp endSheet:((NSButton *)sender).window];
+}
+
+- (void)upgradeEligibilitySheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sender close];
+	
+	self.performingUpgradeEligibilityCheck = NO;
+}
+
+- (void)showEligiblitySheetForDiscountedUpgradeSheet
+{
+	[NSApp beginSheet:self.upgradeEligibilityDiscountedSheet
+	   modalForWindow:self.window
+		modalDelegate:self
+	   didEndSelector:@selector(upgradeEligibilitySheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+}
+
+- (void)showEligiblitySheetForFreeUpgradeSheet
+{
+	[NSApp beginSheet:self.upgradeEligibilityFreeSheet
+	   modalForWindow:self.window
+		modalDelegate:self
+	   didEndSelector:@selector(upgradeEligibilitySheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+}
+
+- (void)showApplicationIsNotEligibleForDiscountError:(NSBundle *)applicationBundle
+{
+	NSParameterAssert(applicationBundle != nil);
+
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]")
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0021][1]", applicationBundle.displayName)
+							 defaultButton:TXTLS(@"Prompts[0005]")
+						   alternateButton:nil
+							   otherButton:nil];
+}
+
+- (void)checkUpgradeEligiblityOfApplicationAtURL:(NSURL *)applicationURL
+{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self _checkUpgradeEligiblityOfApplicationAtURL:applicationURL];
+	});
+}
+
+- (void)_checkUpgradeEligiblityOfApplicationAtURL:(NSURL *)applicationURL
+{
+	NSParameterAssert(applicationURL != nil);
+
+	NSBundle *applicationBundle = [NSBundle bundleWithURL:applicationURL];
+	
+	if (applicationBundle == nil) {
+		LogToConsoleError("Not application")
+
+		return;
+	}
+
+	/* Read receipt contents. */
+	ARLReceiptContents *receiptContents = nil;
+	
+	if (ARLReadReceiptFromBundle(applicationBundle, &receiptContents) == NO) {
+		LogToConsoleError("Failed to laod receipt contents: %@", ARLLastErrorMessage())
+		
+		[self showApplicationIsNotEligibleForDiscountError:applicationBundle];
+
+		self.performingUpgradeEligibilityCheck = NO;
+		
+		return;
+	}
+
+	/* Compare bundle identifier. */
+	if (NSObjectsAreEqual(receiptContents.bundleIdentifier, @"com.codeux.irc.textual5") == NO) {
+		LogToConsoleError("Bundle identifier mismatch")
+		
+		[self showApplicationIsNotEligibleForDiscountError:applicationBundle];
+		
+		self.performingUpgradeEligibilityCheck = NO;
+		
+		return;
+	}
+
+	/* Process receipts contents. */
+	NSTimeInterval originalPurchaseDateInterval = receiptContents.originalPurchaseDate.timeIntervalSince1970;
+	
+	BOOL freeUpgrade = (originalPurchaseDateInterval >= _upgradeFromV6FreeThreshold);
+	
+	if (freeUpgrade) {
+		[self showEligiblitySheetForFreeUpgradeSheet];
+	} else {
+		[self showEligiblitySheetForDiscountedUpgradeSheet];
+	}
+	
+	[self.productsTableController removeAllArrangedObjects];
+
+	if (freeUpgrade) {
+		[self.productsTableController addObject:
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]];
+	} else {
+		[self.productsTableController addObject:
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6ProductIdentifier]];
+	}
+}
+
+#pragma mark -
 #pragma mark Actions
+
+- (void)checkUpgradeEligiblity:(id)sender
+{
+	self.performingUpgradeEligibilityCheck = YES;
+
+	NSOpenPanel *d = [NSOpenPanel openPanel];
+	
+	NSURL *applicationsPath = [TPCPathInfo systemApplicationFolderURL];
+	
+	if (applicationsPath) {
+		d.directoryURL = applicationsPath;
+	}
+	
+	d.allowedFileTypes = @[@"app"];
+	
+	d.delegate = (id)self;
+	
+	d.allowsMultipleSelection = NO;
+	d.canChooseDirectories = NO;
+	d.canChooseFiles = YES;
+	d.canCreateDirectories = NO;
+	d.resolvesAliases = YES;
+	
+	d.message = TXTLS(@"TDCInAppPurchaseDialog[0020]");
+	
+	d.prompt = TXTLS(@"Prompts[0006]");
+	
+	[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+		if (result == NSModalResponseOK) {
+			[self checkUpgradeEligiblityOfApplicationAtURL:d.URL];
+		} else {
+			self.performingUpgradeEligibilityCheck = NO;
+		}
+	}];
+}
+
+- (void)writeReview:(id)sender
+{
+	[menuController() openMacAppStoreWebpage:nil];
+}
 
 - (void)restoreTransactions:(id)sender
 {
@@ -723,6 +893,30 @@ enum {
 
 #pragma mark -
 #pragma mark Products
+
+- (nullable TDCInAppPurchaseProductsTableEntry *)productsTableUpgradeEligibilityEntry
+{
+	/* Do not offer upgrade if one of these two are disabled (missing) */
+	if ([self.products containsKey:TLOAppStoreIAPUpgradeFromV6ProductIdentifier] == NO ||
+		[self.products containsKey:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier] == NO)
+	{
+		return nil;
+	}
+	
+	/* Create entry */
+	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
+	
+	tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
+	
+	tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][1]");
+	tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0003][2]");
+	tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][3]");
+
+	tableEntry.target = self;
+	tableEntry.action = @selector(checkUpgradeEligiblity:);
+	
+	return tableEntry;
+}
 
 - (nullable TDCInAppPurchaseProductsTableEntry *)productsTableEntryForProduct:(SKProduct *)product
 {
@@ -885,7 +1079,7 @@ enum {
 	if (product == nil) {
 		NSString *productTitle = [self localizedTitleForProductIdentifier:productIdentifier];
 
-		[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+		[TLOPopupPrompts sheetWindowWithWindow:self.window
 										  body:TXTLS(@"TDCInAppPurchaseDialog[0006][2]")
 										 title:TXTLS(@"TDCInAppPurchaseDialog[0006][1]", productTitle)
 								 defaultButton:TXTLS(@"Prompts[0005]")
@@ -946,7 +1140,11 @@ enum {
 - (void)restoreTransactions
 {
 	/* Set status properties */
-	if (self.performingPurchase) {
+	if (self.requestingProducts) {
+		return;
+	} else if (self.performingUpgradeEligibilityCheck) {
+		return;
+	} else if (self.performingPurchase) {
 		return;
 	}
 
@@ -965,7 +1163,7 @@ enum {
 
 - (void)showPleaseSelectItemError
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0013][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0013][1]")
 							 defaultButton:TXTLS(@"Prompts[0005]")
@@ -1073,16 +1271,16 @@ enum {
 
 	self.products = productsDict;
 	
-	[self refreshProductsTableContents];
-
 	if ([self restoreTransactionsOnShow] == NO) {
 		[self updateSelectedPane];
 	}
+	
+	[self refreshProductsTableContents];
 }
 
 - (void)onRequestProductsError:(NSError *)error
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window.deepestWindow
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
 							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")

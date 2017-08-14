@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1020 */
+/* Next unusued key: 1022 */
 
 /* Product detail: Free Trial */
 /* 1 = Title, 2 = Description, 3 = Action button title */
@@ -50,7 +50,7 @@
 
 /* Product detail: Upgrade from Textual 6 */
 "TDCInAppPurchaseDialog[0003][1]" = "Upgrade from Textual 6";
-"TDCInAppPurchaseDialog[0003][2]" = "If you purchased an Textual 5 or Textual 6 in the Mac App Store, then you may be eligible for a discount.";
+"TDCInAppPurchaseDialog[0003][2]" = "You may be eligible for a discount if you already own Textual 5 or Textual 6 in the Mac App Store.";
 "TDCInAppPurchaseDialog[0003][3]" = "Check Eligibility";
 
 /* "TDCInAppPurchaseDialog[0004][1]" = "Textual 6 Upgrade"; */
@@ -104,3 +104,8 @@
 "TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app purchases could not be downloaded";
 "TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";
 "TDCInAppPurchaseDialog[0019][3]" = "Try Again";
+
+"TDCInAppPurchaseDialog[0020]" = "Select a copy of Textual 5 or Textual 6 downloaded from the Mac App Store.";
+
+"TDCInAppPurchaseDialog[0021][1]" = "The application “%@“ cannot be used to check upgrade eligibility";
+"TDCInAppPurchaseDialog[0021][2]" = "This application is not Textual 5 or Textual 6, or was not downloaded from the Mac App Store.";
