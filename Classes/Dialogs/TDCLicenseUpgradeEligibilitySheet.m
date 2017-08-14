@@ -262,6 +262,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Present sheet */
 	[self _eligibilityDetermined];
+
+#undef _presentEligibilityCheckFailedSheet
 }
 
 - (void)_eligibilityDetermined
