@@ -97,9 +97,7 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 - (nullable NSString *)padNicknameWithCharacter:(UniChar)padCharacter maximumLength:(NSUInteger)maximumLength;
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @property (readonly, copy, nullable) NSString *prettyLicenseKey;
-#endif
 @end
 
 NS_ASSUME_NONNULL_END
