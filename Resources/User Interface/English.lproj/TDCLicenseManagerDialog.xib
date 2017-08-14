@@ -224,15 +224,15 @@ Gw
                                 <constraints>
                                     <constraint firstAttribute="width" constant="449" id="eXi-ii-rPF"/>
                                 </constraints>
-                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You can request a free license key if you already own Textual 5 or a newer version in the Mac App Store." id="QVB-9e-QPb">
+                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You can request a license key if you already own Textual 5 or a newer version in the Mac App Store." id="QVB-9e-QPb">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fil-u7-1Jf">
-                                <rect key="frame" x="210" y="12" width="171" height="32"/>
-                                <buttonCell key="cell" type="push" title="Request Free License" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ciz-0p-zdv">
+                                <rect key="frame" x="225" y="12" width="140" height="32"/>
+                                <buttonCell key="cell" type="push" title="Request License" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ciz-0p-zdv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
