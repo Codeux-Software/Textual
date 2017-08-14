@@ -314,6 +314,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)closeWindow:(id)sender;
 
+- (IBAction)contactSupport:(id)sender;
+
 - (IBAction)addChannel:(id)sender;
 - (IBAction)deleteChannel:(id)sender;
 

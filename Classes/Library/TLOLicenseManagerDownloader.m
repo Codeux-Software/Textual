@@ -573,7 +573,7 @@ perform_return:
 
 - (void)contactSupport
 {
-	[TLOpenLink openWithString:@"https://contact.codeux.com/" inBackground:NO];
+	[menuController() contactSupport:nil];
 }
 
 @end
