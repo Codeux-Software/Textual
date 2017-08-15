@@ -476,21 +476,22 @@ enum {
 			}
 		} // for loop
 
+		BOOL success = (self.atleastOnePurchaseFinished ||
+						self.atleastOnePurchaseRestored);
+
 		if (self.performingPurchase) {
 			self.performingPurchase = NO;
 		}
+
+		self.transactionsPending = NO;
+
+		self.atleastOnePurchaseFinished = NO;
 
 		if (self.performingRestore == NO) {
 			self.atleastOnePurchaseRestored = NO;
 		}
 
-		if (self.transactionsPending) {
-			self.transactionsPending = NO;
-		}
-
-		if (self.atleastOnePurchaseFinished) {
-			self.atleastOnePurchaseFinished = NO;
-		} else if (self.atleastOnePurchaseRestored == NO) {
+		if (success == NO) {
 			[self _updateSelectedPane];
 
 			return;
