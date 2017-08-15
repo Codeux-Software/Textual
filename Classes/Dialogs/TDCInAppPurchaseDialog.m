@@ -63,18 +63,21 @@ enum {
 @property (nonatomic, weak) IBOutlet NSView *trialInformationView;
 @property (nonatomic, weak) IBOutlet NSTextField *trialInformationTextField;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *trialInformationHeightConstraint;
-@property (nonatomic, assign) BOOL requestingProducts;
+@property (nonatomic, strong) SKReceiptRefreshRequest *receiptRefreshRequest;
 @property (nonatomic, strong) SKProductsRequest *productsRequest;
 @property (nonatomic, copy) NSDictionary<NSString *, SKProduct *> *products;
 @property (nonatomic, weak) IBOutlet NSTableView *productsTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *productsTableController;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *productsTableHeightConstraint;
 @property (nonatomic, assign) BOOL performingPurchase;
-@property (nonatomic, assign) BOOL performRestoreOnShow;
 @property (nonatomic, assign) BOOL performingRestore;
-@property (nonatomic, assign) BOOL atleastOnePurchaseRestored;
+@property (nonatomic, assign) BOOL performRestoreOnShow;
 @property (nonatomic, assign) BOOL windowIsAllowedToClose;
 @property (nonatomic, assign) BOOL finishedLoading;
+@property (nonatomic, assign) BOOL workInProgress;
+@property (nonatomic, assign) BOOL transactionsPending;
+@property (nonatomic, assign) BOOL atleastOnePurchaseFinished;
+@property (nonatomic, assign) BOOL atleastOnePurchaseRestored;
 @property (nonatomic, strong) IBOutlet NSView *contentViewThankYou;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProducts;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProgress;
@@ -310,19 +313,29 @@ enum {
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
-	NSMutableArray<SKPaymentTransaction *> *finishedTransactions = nil;
+	BOOL atleastOneTransaction = NO;
+	BOOL atleastOneTransactionFinished = NO;
+	BOOL atleastOneTransactionRestored = NO;
 
 	for (SKPaymentTransaction *transaction in transactions) {
 		switch (transaction.transactionState) {
 			case SKPaymentTransactionStateFailed:
+			{
+				atleastOneTransaction = YES;
+
+				break;
+			}
 			case SKPaymentTransactionStatePurchased:
+			{
+				atleastOneTransaction = YES;
+				atleastOneTransactionFinished = YES;
+
+				break;
+			}
 			case SKPaymentTransactionStateRestored:
 			{
-				if (finishedTransactions == nil) {
-					finishedTransactions = [NSMutableArray array];
-				}
-
-				[finishedTransactions addObject:transaction];
+				atleastOneTransaction = YES;
+				atleastOneTransactionRestored = YES;
 
 				break;
 			}
@@ -333,11 +346,15 @@ enum {
 		}
 	}
 
-	if (finishedTransactions == nil) {
+	if (atleastOneTransaction == NO) {
 		return;
 	}
 
-	[self processFinishedTransactions:transactions];
+	self.transactionsPending = atleastOneTransaction;
+	self.atleastOnePurchaseFinished = atleastOneTransactionFinished;
+	self.atleastOnePurchaseRestored = atleastOneTransactionRestored;
+
+	[self processFinishedTransactions];
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
@@ -357,41 +374,73 @@ enum {
 							   otherButton:nil];
 }
 
-- (void)processFinishedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+- (void)processFinishedTransactions
 {
-	NSParameterAssert(transactions != nil);
-
-	/* Process transactions */
-	for (SKPaymentTransaction *transaction in transactions) {
-		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-	}
-
-	/* Complete order */
-	[self postflightForTransactions:transactions];
+	[self processFinishedTransactionsOrShowError:YES];
 }
 
-- (void)postflightForTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+- (void)processFinishedTransactionsOrShowError:(BOOL)showErrorIfAny
 {
-	NSParameterAssert(transactions != nil);
+#define _postflight 	\
+	[self postflightForTransactions];
 
-	BOOL performingPurchase = self.performingPurchase;
-	BOOL performingRestore = self.performingRestore;
-
-	if (performingPurchase == NO && performingRestore == NO) {
-		LogToConsoleInfo("Transaction without ownership received")
+	/* If there are only failed transactions, then there
+	 is no need to refresh the contents of the receipt. */
+	if (self.atleastOnePurchaseFinished == NO &&
+		self.atleastOnePurchaseRestored == NO)
+	{
+		_postflight;
 
 		return;
 	}
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		BOOL atleastOneTransactionFinished = NO;
+	/* Refresh the contents of the receipt. */
+	if ([self loadReceipt] == NO) {
+		if (showErrorIfAny == NO) {
+			_postflight;
+		}
 
+		[TLOPopupPrompts sheetWindowWithWindow:self.window
+										  body:TXTLS(@"TDCInAppPurchaseDialog[0020][2]")
+										 title:TXTLS(@"TDCInAppPurchaseDialog[0020][1]")
+								 defaultButton:TXTLS(@"Prompts[0001]")
+							   alternateButton:TXTLS(@"Prompts[0002]")
+								   otherButton:nil
+							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+								   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {
+									   /* Request new receipt. */
+									   /* Request will call the postflight for us. */
+									   [self requestReceiptRefresh];
+								   } else {
+									   /* If the user chose not to refresh the receipt, then
+										call out to the postflight so that we can at least
+										update the appearance of the user interface. */
+									   _postflight;
+								   }
+							   }];
+
+		return;
+	}
+
+	/* Post transactions assuming there were no problems. */
+	_postflight;
+
+#undef _postflight
+}
+
+- (void)postflightForTransactions
+{
+	NSArray *transactions = [[SKPaymentQueue defaultQueue] transactions];
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		for (SKPaymentTransaction *transaction in transactions) {
+			BOOL finishTransaction = YES;
+
 			switch (transaction.transactionState) {
 				case SKPaymentTransactionStateFailed:
 				{
-					if (performingPurchase == NO) {
-						break;
+					if (self.performingRestore) {
+						break; // Do not show errors during restore
 					}
 
 					NSError *transationError = transaction.error;
@@ -410,59 +459,49 @@ enum {
 					break;
 				}
 				case SKPaymentTransactionStatePurchased:
-				{
-					atleastOneTransactionFinished = YES;
-
-					break;
-				}
 				case SKPaymentTransactionStateRestored:
 				{
-					atleastOneTransactionFinished = YES;
-
 					break;
 				}
 				default:
 				{
-					LogToConsoleError("Unexpected status");
+					finishTransaction = NO;
 
-					return;
+					break;
 				}
-			}
-		}
+			} // switch
 
-		if (performingPurchase) {
+			if (finishTransaction) {
+				[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+			}
+		} // for loop
+
+		if (self.performingPurchase) {
 			self.performingPurchase = NO;
 		}
 
-		if (atleastOneTransactionFinished) {
-			if ([self loadReceipt] == NO) {
-				[TLOPopupPrompts sheetWindowWithWindow:self.window
-												  body:TXTLS(@"TDCInAppPurchaseDialog[0007][2]")
-												 title:TXTLS(@"TDCInAppPurchaseDialog[0007][1]")
-										 defaultButton:TXTLS(@"Prompts[0005]")
-									   alternateButton:nil
-										   otherButton:nil];
-
-				atleastOneTransactionFinished = NO;
-			}
+		if (self.performingRestore == NO) {
+			self.atleastOnePurchaseRestored = NO;
 		}
 
-		if (atleastOneTransactionFinished == NO) {
+		if (self.transactionsPending) {
+			self.transactionsPending = NO;
+		}
+
+		if (self.atleastOnePurchaseFinished) {
+			self.atleastOnePurchaseFinished = NO;
+		} else if (self.atleastOnePurchaseRestored == NO) {
 			[self _updateSelectedPane];
-			
+
 			return;
 		}
-		
-		if (performingRestore) {
-			self.atleastOnePurchaseRestored = YES;
-		}
-		
+
 		[self showThankYouAfterProductPurchase];
 
 		[self _updateSelectedPane];
 
 		[self _refreshProductsTableContents];
-		
+
 		[self postTransactionFinishedNotification:transactions];
 
 		if (self.finishedLoading == NO) {
@@ -667,8 +706,8 @@ enum {
 
 - (void)checkUpgradeEligiblity
 {
-	if (self.performingUpgradeEligibilityCheck == NO) {
-		self.performingUpgradeEligibilityCheck = YES;
+	if (self.workInProgress == NO) {
+		self.workInProgress = YES;
 	} else {
 		return;
 	}
@@ -720,9 +759,9 @@ enum {
 
 - (void)upgradeEligibilitySheetWillClose:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
 {
-	self.upgradeEligiblitySheet = nil;
+	self.workInProgress = NO;
 
-	self.performingUpgradeEligibilityCheck = NO;
+	self.upgradeEligiblitySheet = nil;
 }
 
 #pragma mark -
@@ -1021,21 +1060,16 @@ enum {
 	NSParameterAssert(product != nil);
 	NSParameterAssert(quantity > 0);
 
-	/* Set status properties */
-	if (self.performingRestore) {
+	if (self.performingPurchase || self.workInProgress) {
 		return;
 	}
 
-	if (self.performingPurchase == NO) {
-		self.performingPurchase = YES;
-	} else {
-		return;
-	}
+	self.workInProgress = YES;
 
-	/* Show progress view */
+	self.performingPurchase = YES;
+
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0009]")];
 
-	/* Perform purchase */
 	SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
 
 	payment.quantity = quantity;
@@ -1051,33 +1085,22 @@ enum {
 		return NO;
 	}
 
-	[self restoreTransactions];
-
-	return YES;
+	return [self restoreTransactions];
 }
 
-- (void)restoreTransactions
+- (BOOL)restoreTransactions
 {
-	/* Set status properties */
-	if (self.requestingProducts) {
-		return;
-	} else if (self.performingUpgradeEligibilityCheck) {
-		return;
-	} else if (self.performingPurchase) {
-		return;
+	if (self.performingRestore || self.workInProgress) {
+		return NO;
 	}
 
-	if (self.performingRestore == NO) {
-		self.performingRestore = YES;
-	} else {
-		return;
-	}
+	self.performingRestore = YES;
 
-	/* Show progress view */
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0010]")];
 
-	/* Perform restore */
 	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+
+	return YES;
 }
 
 - (void)showPleaseSelectItemError
@@ -1142,6 +1165,66 @@ enum {
 }
 
 #pragma mark -
+#pragma mark Receipt Refresh
+
+- (void)requestReceiptRefresh
+{
+	if (self.workInProgress == NO) {
+		self.workInProgress = YES;
+	} else {
+		return;
+	}
+
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0007]")];
+
+	SKReceiptRefreshRequest *receiptRefreshRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
+
+	receiptRefreshRequest.delegate = (id)self;
+
+	[receiptRefreshRequest start];
+
+	self.receiptRefreshRequest = receiptRefreshRequest;
+}
+
+- (void)onRefreshReceiptError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	[TLOPopupPrompts sheetWindowWithWindow:self.window
+									  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]", error.localizedDescription)
+									 title:TXTLS(@"TDCInAppPurchaseDialog[0021][1]")
+							 defaultButton:TXTLS(@"Prompts[0005]")
+						   alternateButton:nil
+							   otherButton:nil];
+}
+
+- (void)onRefreshReceiptFinished
+{
+	[self onRequestProductsFinishedWithError:nil];
+}
+
+- (void)onRefreshReceiptFinishedWithError:(nullable NSError *)error
+{
+	self.workInProgress = NO;
+
+	self.receiptRefreshRequest = nil;
+
+	if (self.transactionsPending) {
+		/* Regardless of whether there was an error or not, we still
+		 perform transaction postflight because we need it to at least
+		 clean up the user interface for us. */
+		[self processFinishedTransactionsOrShowError:NO];
+	} else {
+		/* Dismiss progress view */
+		[self updateSelectedPane];
+	}
+
+	if (error == nil) {
+		[self onRefreshReceiptError:error];
+	}
+}
+
+#pragma mark -
 #pragma mark Products Request
 
 - (void)requestProducts
@@ -1151,8 +1234,8 @@ enum {
 
 - (void)requestProductsAgain:(BOOL)requestProductsAgain
 {
-	if (self.requestingProducts == NO) {
-		self.requestingProducts = YES;
+	if (self.workInProgress == NO) {
+		self.workInProgress = YES;
 	} else {
 		return;
 	}
@@ -1182,6 +1265,7 @@ enum {
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
+	/* Populate dictionary of products */
 	NSMutableDictionary<NSString *, SKProduct *> *productsDict = [NSMutableDictionary dictionary];
 
 	for (SKProduct *product in response.products) {
@@ -1189,16 +1273,12 @@ enum {
 	}
 
 	self.products = productsDict;
-	
-	if ([self restoreTransactionsOnShow] == NO) {
-		[self updateSelectedPane];
-	}
-	
-	[self refreshProductsTableContents];
 }
 
 - (void)onRequestProductsError:(NSError *)error
 {
+	NSParameterAssert(error != nil);
+
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
@@ -1217,7 +1297,7 @@ enum {
 
 - (void)onRequestProductsFinishedWithError:(nullable NSError *)error
 {
-	self.requestingProducts = NO;
+	self.workInProgress = NO;
 
 	self.productsRequest = nil;
 
@@ -1225,7 +1305,17 @@ enum {
 	 unset so that when -requestProductsAgain: is called by the
 	 error callback, self.requestingProducts is already NO,
 	 which would otherwise do nothing if it was YES. */
-	if (error) {
+	if (error == nil)
+	{
+		/* Perform postflight actions */
+		if ([self restoreTransactionsOnShow] == NO) {
+			[self updateSelectedPane];
+		}
+
+		[self refreshProductsTableContents];
+	}
+	else
+	{
 		[self onRequestProductsError:error];
 	}
 }
@@ -1237,6 +1327,8 @@ enum {
 {
 	if (request == self.productsRequest) {
 		[self onRequestProductsFinished];
+	} else if (request == self.receiptRefreshRequest) {
+		[self onRefreshReceiptFinished];
 	}
 }
 
@@ -1244,6 +1336,8 @@ enum {
 {
 	if (request == self.productsRequest) {
 		[self onRequestProductsFinishedWithError:error];
+	} else if (request == self.receiptRefreshRequest) {
+		[self onRefreshReceiptFinishedWithError:error];
 	}
 }
 
