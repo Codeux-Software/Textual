@@ -91,13 +91,14 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSTextField *sheetTitleTextField = nil;
 
-	if (self.eligibility == TLOLicenseUpgradeEligible)
+	if (self.eligibility == TLOLicenseUpgradeEligibleDiscount)
 	{
 		self.sheet = self.sheetEligible;
 
 		sheetTitleTextField = self.sheetEligibleTitleTextField;
 	}
-	else if (self.eligibility == TLOLicenseUpgradeAlreadyUpgraded)
+	else if (self.eligibility == TLOLicenseUpgradeEligibleFree ||
+			 self.eligibility == TLOLicenseUpgradeAlreadyUpgraded)
 	{
 		self.sheet = self.sheetAlreadyUpgraded;
 

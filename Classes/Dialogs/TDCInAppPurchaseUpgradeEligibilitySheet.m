@@ -431,7 +431,8 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Save eligibility */
 	NSUInteger eligibility = [eligibilityObject unsignedIntegerValue];
 
-	if (eligibility != TLOInAppPurchaseUpgradeEligible &&
+	if (eligibility != TLOInAppPurchaseUpgradeEligibleDiscount &&
+		eligibility != TLOInAppPurchaseUpgradeEligibleFree &&
 		eligibility != TLOInAppPurchaseUpgradeNotEligible &&
 		eligibility != TLOInAppPurchaseUpgradeAlreadyUpgraded)
 	{
@@ -453,11 +454,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_eligibilityDetermined
 {
-	if (self.eligibility == TLOInAppPurchaseUpgradeEligible) {
+	if (self.eligibility == TLOInAppPurchaseUpgradeEligibleDiscount) {
 		self.sheet = self.sheetEligible;
 	} else if (self.eligibility == TLOInAppPurchaseUpgradeNotEligible) {
 		self.sheet = self.sheetNotEligible;
-	} else if (self.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded) {
+	} else if (self.eligibility == TLOInAppPurchaseUpgradeEligibleFree ||
+			   self.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded)
+	{
 		self.sheet = self.sheetAlreadyUpgraded;
 	}
 

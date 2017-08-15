@@ -261,7 +261,8 @@ ClassWithDesignatedInitializerInitMethod
 	/* Save eligibility */
 	NSUInteger eligibility = [eligibilityObject unsignedIntegerValue];
 
-	if (eligibility != TLOLicenseUpgradeEligible &&
+	if (eligibility != TLOLicenseUpgradeEligibleDiscount &&
+		eligibility != TLOLicenseUpgradeEligibleFree &&
 		eligibility != TLOLicenseUpgradeNotEligible &&
 		eligibility != TLOLicenseUpgradeAlreadyUpgraded)
 	{
@@ -283,11 +284,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_eligibilityDetermined
 {
-	if (self.eligibility == TLOLicenseUpgradeEligible) {
+	if (self.eligibility == TLOLicenseUpgradeEligibleDiscount) {
 		self.sheet = self.sheetEligible;
 	} else if (self.eligibility == TLOLicenseUpgradeNotEligible) {
 		self.sheet = self.sheetNotEligible;
-	} else if (self.eligibility == TLOLicenseUpgradeAlreadyUpgraded) {
+	} else if (self.eligibility == TLOLicenseUpgradeEligibleFree ||
+			   self.eligibility == TLOLicenseUpgradeAlreadyUpgraded)
+	{
 		self.sheet = self.sheetAlreadyUpgraded;
 	}
 
