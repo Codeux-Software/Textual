@@ -111,7 +111,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	sheetTitleTextField.stringValue =
 	[NSString stringWithFormat:
-		 sheetTitleTextField.stringValue, self.licenseKey];
+		 sheetTitleTextField.stringValue, self.licenseKey.prettyLicenseKey];
 
 	[super startSheet];
 }
