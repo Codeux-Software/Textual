@@ -81,13 +81,10 @@ enum {
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
 @property (nonatomic, weak) IBOutlet NSTextField *progressViewTextField;
 @property (nonatomic, assign) BOOL performingUpgradeEligibilityCheck;
-@property (nonatomic, strong) IBOutlet NSWindow *upgradeEligibilityDiscountedSheet;
-@property (nonatomic, strong) IBOutlet NSWindow *upgradeEligibilityFreeSheet;
+@property (nonatomic, strong, nullable) TDCInAppPurchaseUpgradeEligibilitySheet *upgradeEligiblitySheet;
 
 - (IBAction)restoreTransactions:(id)sender;
 - (IBAction)writeReview:(id)sender;
-
-- (IBAction)closeUpgradeEligiblitySheet:(id)sender;
 @end
 
 @implementation TDCInAppPurchaseDialog
@@ -547,7 +544,6 @@ enum {
 #pragma mark -
 #pragma mark Content Views
 
-
 - (void)refreshProductsTableContents
 {
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
@@ -669,111 +665,60 @@ enum {
 #pragma mark -
 #pragma mark Discount
 
-- (void)closeUpgradeEligiblitySheet:(id)sender
+- (void)checkUpgradeEligiblity
 {
-	[NSApp endSheet:((NSButton *)sender).window];
-}
-
-- (void)upgradeEligibilitySheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	[sender close];
-	
-	self.performingUpgradeEligibilityCheck = NO;
-}
-
-- (void)showEligiblitySheetForDiscountedUpgradeSheet
-{
-	[NSApp beginSheet:self.upgradeEligibilityDiscountedSheet
-	   modalForWindow:self.window
-		modalDelegate:self
-	   didEndSelector:@selector(upgradeEligibilitySheetDidEnd:returnCode:contextInfo:)
-		  contextInfo:NULL];
-}
-
-- (void)showEligiblitySheetForFreeUpgradeSheet
-{
-	[NSApp beginSheet:self.upgradeEligibilityFreeSheet
-	   modalForWindow:self.window
-		modalDelegate:self
-	   didEndSelector:@selector(upgradeEligibilitySheetDidEnd:returnCode:contextInfo:)
-		  contextInfo:NULL];
-}
-
-- (void)showApplicationIsNotEligibleForDiscountError:(NSBundle *)applicationBundle
-{
-	NSParameterAssert(applicationBundle != nil);
-
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0021][1]", applicationBundle.displayName)
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:nil
-							   otherButton:nil];
-}
-
-- (void)checkUpgradeEligiblityOfApplicationAtURL:(NSURL *)applicationURL
-{
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self _checkUpgradeEligiblityOfApplicationAtURL:applicationURL];
-	});
-}
-
-- (void)_checkUpgradeEligiblityOfApplicationAtURL:(NSURL *)applicationURL
-{
-	NSParameterAssert(applicationURL != nil);
-
-	NSBundle *applicationBundle = [NSBundle bundleWithURL:applicationURL];
-	
-	if (applicationBundle == nil) {
-		LogToConsoleError("Not application")
-
-		return;
-	}
-
-	/* Read receipt contents. */
-	ARLReceiptContents *receiptContents = nil;
-	
-	if (ARLReadReceiptFromBundle(applicationBundle, &receiptContents) == NO) {
-		LogToConsoleError("Failed to laod receipt contents: %@", ARLLastErrorMessage())
-		
-		[self showApplicationIsNotEligibleForDiscountError:applicationBundle];
-
-		self.performingUpgradeEligibilityCheck = NO;
-		
-		return;
-	}
-
-	/* Compare bundle identifier. */
-	if (NSObjectsAreEqual(receiptContents.bundleIdentifier, @"com.codeux.irc.textual5") == NO) {
-		LogToConsoleError("Bundle identifier mismatch")
-		
-		[self showApplicationIsNotEligibleForDiscountError:applicationBundle];
-		
-		self.performingUpgradeEligibilityCheck = NO;
-		
-		return;
-	}
-
-	/* Process receipts contents. */
-	NSTimeInterval originalPurchaseDateInterval = receiptContents.originalPurchaseDate.timeIntervalSince1970;
-	
-	BOOL freeUpgrade = (originalPurchaseDateInterval >= _upgradeFromV6FreeThreshold);
-	
-	if (freeUpgrade) {
-		[self showEligiblitySheetForFreeUpgradeSheet];
+	if (self.performingUpgradeEligibilityCheck == NO) {
+		self.performingUpgradeEligibilityCheck = YES;
 	} else {
-		[self showEligiblitySheetForDiscountedUpgradeSheet];
+		return;
 	}
-	
+
+	TDCInAppPurchaseUpgradeEligibilitySheet *eligibilitySheet =
+	[[TDCInAppPurchaseUpgradeEligibilitySheet alloc] initWithWindow:self.window];
+
+	eligibilitySheet.delegate = self;
+
+	[eligibilitySheet checkEligibility];
+
+	self.upgradeEligiblitySheet = eligibilitySheet;
+}
+
+- (void)closeUpgradeEligibilitySheet
+{
+	if (self.upgradeEligiblitySheet) {
+		[self.upgradeEligiblitySheet endSheet];
+	}
+}
+
+- (void)upgradeEligibilitySheetContactSupport:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
+{
+	[menuController() contactSupport:nil];
+}
+
+- (void)upgradeEligibilitySheetChanged:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
+{
+	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibilityUnknown ||
+		sender.eligibility == TLOInAppPurchaseUpgradeNotEligible)
+	{
+		return;
+	}
+
 	[self.productsTableController removeAllArrangedObjects];
 
-	if (freeUpgrade) {
-		[self.productsTableController addObject:
-		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]];
-	} else {
+	if (sender.eligibility == TLOInAppPurchaseUpgradeEligible) {
 		[self.productsTableController addObject:
 		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6ProductIdentifier]];
+	} else if (sender.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded) {
+		[self.productsTableController addObject:
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]];
 	}
+}
+
+- (void)upgradeEligibilitySheetWillClose:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
+{
+	self.upgradeEligiblitySheet = nil;
+
+	self.performingUpgradeEligibilityCheck = NO;
 }
 
 #pragma mark -
@@ -781,37 +726,7 @@ enum {
 
 - (void)checkUpgradeEligiblity:(id)sender
 {
-	self.performingUpgradeEligibilityCheck = YES;
-
-	NSOpenPanel *d = [NSOpenPanel openPanel];
-	
-	NSURL *applicationsPath = [TPCPathInfo systemApplicationFolderURL];
-	
-	if (applicationsPath) {
-		d.directoryURL = applicationsPath;
-	}
-	
-	d.allowedFileTypes = @[@"app"];
-	
-	d.delegate = (id)self;
-	
-	d.allowsMultipleSelection = NO;
-	d.canChooseDirectories = NO;
-	d.canChooseFiles = YES;
-	d.canCreateDirectories = NO;
-	d.resolvesAliases = YES;
-	
-	d.message = TXTLS(@"TDCInAppPurchaseDialog[0020]");
-	
-	d.prompt = TXTLS(@"Prompts[0006]");
-	
-	[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
-		if (result == NSModalResponseOK) {
-			[self checkUpgradeEligiblityOfApplicationAtURL:d.URL];
-		} else {
-			self.performingUpgradeEligibilityCheck = NO;
-		}
-	}];
+	[self checkUpgradeEligiblity];
 }
 
 - (void)writeReview:(id)sender
