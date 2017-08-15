@@ -1810,7 +1810,7 @@
                 </imageView>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="spu-WD-Kde">
                     <rect key="frame" x="114" y="112" width="255" height="36"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="aIb-aM-sre">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="aIb-aM-sre">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
