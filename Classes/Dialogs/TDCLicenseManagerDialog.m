@@ -560,7 +560,8 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 	/* Do we have an eligibility that is acceptable? */
 	NSUInteger eligibility = [RZUserDefaults() unsignedIntegerForKey:@"Textual 7 Upgrade -> Tv7 -> Eligibility"];
 
-	if (eligibility != TLOLicenseUpgradeEligible &&
+	if (eligibility != TLOLicenseUpgradeEligibleDiscount &&
+		eligibility != TLOLicenseUpgradeEligibleFree &&
 		eligibility != TLOLicenseUpgradeAlreadyUpgraded)
 	{
 		return NO;

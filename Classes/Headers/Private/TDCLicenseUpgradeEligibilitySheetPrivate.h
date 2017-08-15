@@ -41,7 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
 	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
 	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligible = 1,
+	TLOLicenseUpgradeEligibleDiscount = 1,
+	TLOLicenseUpgradeEligibleFree = 3,
 	TLOLicenseUpgradeAlreadyUpgraded = 2,
 };
 

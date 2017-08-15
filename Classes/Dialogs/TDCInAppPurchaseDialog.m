@@ -705,10 +705,14 @@ enum {
 
 	[self.productsTableController removeAllArrangedObjects];
 
-	if (sender.eligibility == TLOInAppPurchaseUpgradeEligible) {
+	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibleDiscount)
+	{
 		[self.productsTableController addObject:
 		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6ProductIdentifier]];
-	} else if (sender.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded) {
+	}
+	else if (sender.eligibility == TLOInAppPurchaseUpgradeEligibleFree ||
+			 sender.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded)
+	{
 		[self.productsTableController addObject:
 		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]];
 	}
