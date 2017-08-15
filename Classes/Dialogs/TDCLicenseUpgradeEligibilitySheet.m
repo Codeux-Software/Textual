@@ -229,7 +229,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Check for common status codes. */
 	if (statusCode != 0) {
-		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][1]", statusCode);
+		NSString *errorMessage = nil;
+
+		if (statusCode == TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater) {
+			errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][5]");
+		} else {
+			errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][1]", statusCode);
+		}
 
 		_presentEligibilityCheckFailedSheet
 	}
