@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TLOLicenseManagerLastGenPrivate.h"
+#import "TDCLicenseUpgradeEligibilitySheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
