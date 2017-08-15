@@ -43,7 +43,6 @@ NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"
 NSString * const TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL				= @"https://textual-license-key-backend.codeux.com/convertReceiptToLicense.cs";
 NSString * const TLOLicenseManagerDownloaderLicenseAPILicenseUpgradeEligibilityURL		= @"https://textual-license-key-backend.codeux.com/upgradeEligibility.cs";
 NSString * const TLOLicenseManagerDownloaderLicenseAPIReceiptUpgradeEligibilityURL		= @"https://textual-license-key-backend.codeux.com/upgradeEligibilityForReceipt.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIClaimLicenseURL					= @"https://textual-license-key-backend.codeux.com/claimLicense.cs";
 
 /* The license API throttles requests to prevent abuse. The following HTTP status 
  code will inform Textual if it the license API has been overwhelmed. */
@@ -138,22 +137,6 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 	NSDictionary *contextInfo = @{@"licenseOwnerContactAddress" : contactAddress};
 
 	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestSendLostLicenseType
-								context:contextInfo];
-}
-
-- (void)claimMacAppStorePurcahse:(NSString *)receiptHash licenseOwnerName:(NSString *)licenseOwnerName licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress
-{
-	NSParameterAssert(receiptHash != nil);
-	NSParameterAssert(licenseOwnerName != nil);
-	NSParameterAssert(licenseOwnerContactAddress != nil);
-
-	NSDictionary *contextInfo = @{
-		@"receiptHash" : receiptHash,
-		@"licenseOwnerName"	: licenseOwnerName,
-		@"licenseOwnerContactAddress" : licenseOwnerContactAddress
-	};
-
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestClaimLicenseType
 								context:contextInfo];
 }
 
@@ -381,18 +364,6 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					(void)self.actionBlock(statusCode, statusContext);
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestClaimLicenseType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
-			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
-
-					goto present_fatal_error;
-				}
-
-				if (self.actionBlock != nil) {
-					(void)self.actionBlock(statusCode, statusContext);
-				}
-			}
 
 			_performCompletionBlockAndReturn(YES)
 		}
@@ -596,8 +567,6 @@ perform_return:
 
 	if (self.requestType == TLOLicenseManagerDownloaderRequestActivationType) {
 		requestURLString = TLOLicenseManagerDownloaderLicenseAPIActivationURL;
-	} else if (self.requestType == TLOLicenseManagerDownloaderRequestClaimLicenseType) {
-		requestURLString = TLOLicenseManagerDownloaderLicenseAPIClaimLicenseURL;
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType) {
 		requestURLString = TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL;
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType) {
@@ -673,16 +642,6 @@ perform_return:
 
 		requestBodyString = [NSString stringWithFormat:@"receiptData=%@&licenseOwnerMacAddress=%@&lang=%@&outputFormat=plist&version=%@",
 				 receiptData, licenseOwnerMacAddress, currentUserLanguage, applicationVersion];
-	}
-	else if (self.requestType == TLOLicenseManagerDownloaderRequestClaimLicenseType)
-	{
-		NSString *receiptHash = [self encodedRequestContextValue:@"receiptHash"];
-		NSString *licenseOwnerName = [self encodedRequestContextValue:@"licenseOwnerName"];
-		NSString *licenseOwnerContactAddress = [self encodedRequestContextValue:@"licenseOwnerContactAddress"];
-
-		requestBodyString =
-		[NSString stringWithFormat:@"receiptHash=%@&licenseOwnerContactAddress=%@&licenseOwnerName=%@&lang=%@&version=%@",
-				 receiptHash, licenseOwnerContactAddress, licenseOwnerName, currentUserLanguage, applicationVersion];
 	}
 
 	if (requestBodyString == nil) {
