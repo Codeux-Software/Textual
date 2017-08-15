@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "&#10;&quot;${PROJECT_DIR}/Main Project (Textual).xcodeproj/CleanUpResources.sh&quot;&#10;&quot;${PROJECT_DIR}/Main Project (Textual).xcodeproj/UpdateVersionInfo.sh&quot;&#10;"
+               scriptText = "&#10;&quot;${PROJECT_DIR}/Main Project (Textual).xcodeproj/CleanUpResources.sh&quot;&#10;&#10;mkdir -p &quot;${PROJECT_DIR}/.tmp/Script-Logs/&quot;&#10;&#10;&quot;${PROJECT_DIR}/Main Project (Textual).xcodeproj/UpdateVersionInfo.sh&quot; &gt; &quot;${PROJECT_DIR}/.tmp/Script-Logs/UpdateVersionInfo.txt&quot;&#10;"
                shellToInvoke = "/bin/sh">
                <EnvironmentBuildable>
                   <BuildableReference
@@ -45,6 +45,7 @@
       buildConfiguration = "Release (App Store)"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -64,6 +65,7 @@
       buildConfiguration = "Release (App Store)"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

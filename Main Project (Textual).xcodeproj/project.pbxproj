@@ -18,17 +18,6 @@
 			name = "Clean Up Resources";
 			productName = "Clean Up Resources";
 		};
-		4C01BA0415810DD8007E2DAF /* Update Version Info */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4C01BA0515810DD8007E2DAF /* Build configuration list for PBXAggregateTarget "Update Version Info" */;
-			buildPhases = (
-				4C01BA0B15810DDE007E2DAF /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Update Version Info";
-			productName = "Update Version Info";
-		};
 		4CCF301015804DCE006FFE21 /* Build Frameworks */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 4CCF301115804DCE006FFE21 /* Build configuration list for PBXAggregateTarget "Build Frameworks" */;
@@ -5336,9 +5325,6 @@
 					4C01B9FC1580C591007E2DAF = {
 						DevelopmentTeam = 8482Q6EPL6;
 					};
-					4C01BA0415810DD8007E2DAF = {
-						DevelopmentTeam = 8482Q6EPL6;
-					};
 					4C0BA4F81990798800857343 = {
 						DevelopmentTeam = 8482Q6EPL6;
 						DevelopmentTeamName = "Codeux Software, LLC";
@@ -5431,7 +5417,6 @@
 				4C1DC5511580420500A47BC9 /* Textual (Standard Release) */,
 				4CCF301015804DCE006FFE21 /* Build Frameworks */,
 				4C01B9FC1580C591007E2DAF /* Clean Up Resources */,
-				4C01BA0415810DD8007E2DAF /* Update Version Info */,
 			);
 		};
 /* End PBXProject section */
@@ -6014,19 +5999,6 @@
 			shellPath = /bin/sh;
 			shellScript = "exec \"${PROJECT_FILE_PATH}/CleanUpResources.sh\"";
 		};
-		4C01BA0B15810DDE007E2DAF /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "exec \"${PROJECT_FILE_PATH}/UpdateVersionInfo.sh\"\n\n";
-		};
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -6039,7 +6011,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\"";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildExtensions.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C0BA6CA1990798800857343 /* Build Extensions */ = {
@@ -6054,7 +6026,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\"";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildExtensions.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C761BAF1E155D7400A505B7 /* Build XPC Services */ = {
@@ -6069,7 +6041,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildServices.sh\"";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C761BB01E155DD900A505B7 /* Build XPC Services */ = {
@@ -6084,7 +6056,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildServices.sh\"";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 		};
 		4C761BB11E155E0000A505B7 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6098,7 +6070,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildServices.sh\"";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
@@ -7143,27 +7115,6 @@
 			};
 			name = "Release (App Store)";
 		};
-		4C01BA0615810DD8007E2DAF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		4C01BA0715810DD8007E2DAF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		4C01BA0815810DD8007E2DAF /* Release (App Store) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = "Release (App Store)";
-		};
 		4C0BA6D51990798800857343 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7309,16 +7260,6 @@
 				4C01B9FE1580C592007E2DAF /* Debug */,
 				4C01B9FF1580C592007E2DAF /* Release */,
 				4C01BA001580C592007E2DAF /* Release (App Store) */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4C01BA0515810DD8007E2DAF /* Build configuration list for PBXAggregateTarget "Update Version Info" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4C01BA0615810DD8007E2DAF /* Debug */,
-				4C01BA0715810DD8007E2DAF /* Release */,
-				4C01BA0815810DD8007E2DAF /* Release (App Store) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
