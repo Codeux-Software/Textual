@@ -266,10 +266,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.eligibility = eligibility;
 
-	[self.delegate upgradeEligibilitySheetChanged:self];
-
 	/* Present sheet */
 	[self _eligibilityDetermined];
+
+	/* Inform delegate */
+	[self.delegate upgradeEligibilitySheetChanged:self];
 
 #undef _presentEligibilityCheckFailedSheet
 }
