@@ -838,11 +838,9 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	notification.userInfo = @{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)};
 
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
-		[notification setValue:@(YES) forKey:@"_showsButtons"];
+	[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-		notification.actionButtonTitle = TXTLS(@"TLOLicenseManager[1017][3]");
-	}
+	notification.actionButtonTitle = TXTLS(@"TLOLicenseManager[1017][3]");
 
 	[RZUserNotificationCenter() scheduleNotification:notification];
 }

@@ -123,10 +123,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *shareDataBetweenDevicesViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
-@property (nonatomic, strong) IBOutlet NSView *mountainLionDeprecationWarningView;
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
 @property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
-@property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
 @property (nonatomic, assign) BOOL reloadingTheme;
 @property (nonatomic, assign) BOOL reloadingThemeBySelection;
 @property (nonatomic, weak) IBOutlet NSView *notificationControllerHostView;
@@ -155,7 +153,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedUserListModeSortOrder:(id)sender;
 - (IBAction)onFileTransferDownloadDestinationFolderChanged:(id)sender;
 - (IBAction)onFileTransferIPAddressDetectionMethodChanged:(id)sender;
-- (IBAction)onHideMountainLionDeprecationWarning:(id)sender;
 - (IBAction)onManageICloudButtonClicked:(id)sender; // changed
 - (IBAction)onOpenPathToCloudFolder:(id)sender;
 - (IBAction)onOpenPathToScripts:(id)sender;
@@ -275,16 +272,6 @@ NS_ASSUME_NONNULL_BEGIN
 								 object:nil];
 #endif
 
-	self.mountainLionDeprecationWarningIsVisible = NO;
-
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks) == NO) {
-		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
-
-		if (warningViewHidden == NO) {
-			self.mountainLionDeprecationWarningIsVisible = YES;
-		}
-	}
-
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
 	/* Hide "Share data between devices" when iCloud support is not enabled
 	 by setting the subview height to 0. Set height before calling firstPane:
@@ -329,13 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self.window restoreWindowStateForClass:self.class];
 
-	if (self.mountainLionDeprecationWarningIsVisible) {
-		self.mountainLionDeprecationWarningView.hidden = NO;
-
-		[self firstPane:self.mountainLionDeprecationWarningView selectedItem:_toolbarItemIndexGeneral];
-	} else {
-		[self firstPane:view selectedItem:selectedItem];
-	}
+	[self firstPane:view selectedItem:selectedItem];
 
 	[super show];
 }
@@ -366,14 +347,6 @@ NS_ASSUME_NONNULL_BEGIN
 
  - (void)onPrefPaneSelected:(id)sender
 {
-	if (self.mountainLionDeprecationWarningIsVisible) {
-		self.navigationToolbar.selectedItemIdentifier = _unsignedIntegerString(_toolbarItemIndexGeneral);
-
-		NSBeep();
-
-		return;
-	}
-
 #define _de(matchTag, view, selectionIndex)		\
 		case (matchTag): {	\
 			[self firstPane:(view) selectedItem:(selectionIndex)];	\
@@ -1183,17 +1156,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self didChangeValueForKey:@"textEncryptionIsOpportunistic"];
 }
 #endif
-
-- (void)onHideMountainLionDeprecationWarning:(id)sender
-{
-	self.mountainLionDeprecationWarningIsVisible = NO;
-
-	self.mountainLionDeprecationWarningView.hidden = YES;
-
-	[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
-
-	[self firstPane:self.contentViewGeneral selectedItem:_toolbarItemIndexGeneral];
-}
 
 - (void)onChangedHighlightType:(id)sender
 {

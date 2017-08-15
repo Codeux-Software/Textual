@@ -283,10 +283,6 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)disableSystemSleep
 {
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks) == NO) {
-		return;
-	}
-
 	self.transferProgressHandler = [RZProcessInfo() beginActivityWithOptions:NSActivityUserInitiated reason:@"Transferring file"];
 }
 

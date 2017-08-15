@@ -214,9 +214,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	d.nameFieldStringValue = url.lastPathComponent;
 
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
-		d.showsTagField = NO;
-	}
+	d.showsTagField = NO;
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {

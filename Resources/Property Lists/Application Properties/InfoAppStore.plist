@@ -64,7 +64,7 @@
 	<key>NSMainNibFile</key>
 	<string>TXCMainMenu</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.8.3</string>
+	<string>10.9.5</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

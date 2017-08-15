@@ -50,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *textFieldTopConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTopConstraint;
 @property (readonly) TVCServerList *serverList;
@@ -77,23 +76,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateConstraintsForYosemite:interfaceObjects];
-	} else {
-		[self updateConstraintsForMavericks:interfaceObjects];
-	}
-}
-
-- (void)updateConstraintsForMavericks:(id)interfaceObjects
-{
-	/* On Mountain Lion and maybe earlier, NSOutlineView does not properly honor our
-	 leading constraint on our group item resulting in the text field hugging the
-	 disclosure triangle of the group view. This is a dirty hack that fixes this
-	 by updating our leading constraint. */
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
-		return;
-	}
-
-	if (self.groupItemTextFieldLeadingConstraint) {
-		self.groupItemTextFieldLeadingConstraint.constant = _groupItemLeadingConstraintQuirkCorrectedConstraint;
 	}
 }
 
