@@ -104,8 +104,3 @@
 "TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app purchases could not be downloaded";
 "TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";
 "TDCInAppPurchaseDialog[0019][3]" = "Try Again";
-
-"TDCInAppPurchaseDialog[0020]" = "Select a copy of Textual 5 or Textual 6 downloaded from the Mac App Store.";
-
-"TDCInAppPurchaseDialog[0021][1]" = "The application “%@“ cannot be used to check upgrade eligibility";
-"TDCInAppPurchaseDialog[0021][2]" = "This application is not Textual 5 or Textual 6, or was not downloaded from the Mac App Store.";

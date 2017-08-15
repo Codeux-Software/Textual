@@ -108,6 +108,7 @@
 #import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCInAppPurchaseProductTableEntryPrivate.h"
 #import "TDCInAppPurchaseProductTableCellViewPrivate.h"
+#import "TDCInAppPurchaseUpgradeEligibilitySheetPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
 #import "TDCLicenseManagerRecoverLostLicenseSheetPrivate.h"
