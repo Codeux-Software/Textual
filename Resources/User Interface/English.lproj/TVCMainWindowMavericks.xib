@@ -1298,7 +1298,6 @@
                                                                                 </constraints>
                                                                                 <connections>
                                                                                     <outlet property="cellTextField" destination="ZCL-DX-q0C" id="n8s-tA-T2y"/>
-                                                                                    <outlet property="groupItemTextFieldLeadingConstraint" destination="gF3-6E-Pyp" id="xhD-ms-0OL"/>
                                                                                 </connections>
                                                                             </tableCellView>
                                                                             <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Pd5-iT-icw" customClass="TVCServerListCellChildItem">

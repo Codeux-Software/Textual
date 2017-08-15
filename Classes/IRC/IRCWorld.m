@@ -337,9 +337,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 						userInfo:nil
 						 repeats:NO];
 
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
-		midnightTimer.tolerance = 0.0;
-	}
+	midnightTimer.tolerance = 0.0;
 
 	/* Schedule the timer on the run loop which will retain reference. */
 	[RZMainRunLoop() addTimer:midnightTimer forMode:NSDefaultRunLoopMode];

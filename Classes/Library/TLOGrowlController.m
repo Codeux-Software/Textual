@@ -243,23 +243,20 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		notification.title = eventTitle;
 		notification.userInfo = eventContext;
 
-		if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
-			/* These private APIs are not available on Mountain Lion */
-			if (eventType == TXNotificationFileTransferReceiveRequestedType) {
-				/* sshhhh... you didn't see nothing. */
-				[notification setValue:@(YES) forKey:@"_showsButtons"];
+		if (eventType == TXNotificationFileTransferReceiveRequestedType) {
+			/* sshhhh... you didn't see nothing. */
+			[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-				notification.actionButtonTitle = TXTLS(@"Prompts[0009]");
-			}
+			notification.actionButtonTitle = TXTLS(@"Prompts[0009]");
+		}
 
-			/* These are the only event types we want to support for now */
-			if (eventType == TXNotificationNewPrivateMessageType ||
-				eventType == TXNotificationPrivateMessageType)
-			{
-				notification.hasReplyButton = YES;
+		/* These are the only event types we want to support for now */
+		if (eventType == TXNotificationNewPrivateMessageType ||
+			eventType == TXNotificationPrivateMessageType)
+		{
+			notification.hasReplyButton = YES;
 
-				notification.responsePlaceholder = TXTLS(@"Notifications[1044]");
-			}
+			notification.responsePlaceholder = TXTLS(@"Notifications[1044]");
 		}
 
 		[RZUserNotificationCenter() scheduleNotification:notification];
@@ -292,16 +289,14 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 {
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
-		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
-			NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
+	if (notification.activationType == NSUserNotificationActivationTypeReplied) {
+		NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
 
-			[self notificationWasClicked:notification.userInfo
-						  activationType:notification.activationType
-						withReplyMessage:replyMessage];
+		[self notificationWasClicked:notification.userInfo
+					  activationType:notification.activationType
+					withReplyMessage:replyMessage];
 
-			return; // Do not continue this method.
-		}
+		return; // Do not continue this method.
 	}
 
 	[self notificationWasClicked:notification.userInfo

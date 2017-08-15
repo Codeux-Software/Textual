@@ -71,15 +71,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (instancetype)_t_init
 {
-	if (TEXTUAL_RUNNING_ON(10.9, Mavericks)) {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-		return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+	return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
 #else
-		return [super initWithSuiteName:nil];
+	return [super initWithSuiteName:nil];
 #endif
-	} else {
-		return [super initWithUser:NSUserName()];
-	}
 }
 
 #pragma clang diagnostic push
