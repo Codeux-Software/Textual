@@ -8,9 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCLicenseUpgradeEligibilitySheet">
             <connections>
-                <outlet property="sheetAlreadyUpgraded" destination="NMV-Qs-7lz" id="T4P-T1-DWX"/>
-                <outlet property="sheetEligible" destination="Vqb-So-6Ho" id="lTg-Ts-rMH"/>
-                <outlet property="sheetNotEligible" destination="s7V-Ks-YGu" id="tJY-Km-9Kx"/>
+                <outlet property="sheetEligibleDiscount" destination="Vqb-So-6Ho" id="FcV-wg-1xZ"/>
+                <outlet property="sheetEligibleFree" destination="NMV-Qs-7lz" id="ipU-V8-UQb"/>
+                <outlet property="sheetNotEligible" destination="s7V-Ks-YGu" id="zCY-RA-d6f"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -269,7 +269,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="gBF-uB-lZl"/>
             </connections>
-            <point key="canvasLocation" x="-49" y="270"/>
+            <point key="canvasLocation" x="-479" y="264"/>
         </window>
     </objects>
 </document>

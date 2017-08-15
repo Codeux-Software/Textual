@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCLicenseUpgradeActivateSheet">
             <connections>
-                <outlet property="sheetAlreadyUpgraded" destination="W7a-9a-xd5" id="xia-Iu-bGZ"/>
-                <outlet property="sheetAlreadyUpgradedSuppressionButton" destination="0o9-2E-KZX" id="FdR-MY-hIP"/>
-                <outlet property="sheetAlreadyUpgradedTitleTextField" destination="9DC-Cm-7Ox" id="NhW-bl-6kR"/>
-                <outlet property="sheetEligible" destination="5MA-QY-tCu" id="imi-8f-Toc"/>
-                <outlet property="sheetEligibleSuppressionButton" destination="2SF-Ht-d5j" id="uXJ-cW-ZBR"/>
-                <outlet property="sheetEligibleTitleTextField" destination="Nyv-md-SOc" id="m5p-zr-3tu"/>
+                <outlet property="sheetEligibleDiscount" destination="5MA-QY-tCu" id="YhW-GO-SA1"/>
+                <outlet property="sheetEligibleDiscountSuppressionButton" destination="2SF-Ht-d5j" id="ivY-A8-fVn"/>
+                <outlet property="sheetEligibleDiscountTitleTextField" destination="Nyv-md-SOc" id="gx8-mh-RRX"/>
+                <outlet property="sheetEligibleFree" destination="W7a-9a-xd5" id="4vY-4E-qTY"/>
+                <outlet property="sheetEligibleFreeSuppressionButton" destination="0o9-2E-KZX" id="k5P-hv-Pjg"/>
+                <outlet property="sheetEligibleFreeTitleTextField" destination="9DC-Cm-7Ox" id="1Wf-1k-t7v"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -220,7 +220,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="flr-gX-buN"/>
             </connections>
-            <point key="canvasLocation" x="429" y="26"/>
+            <point key="canvasLocation" x="367" y="-79"/>
         </window>
     </objects>
     <resources>

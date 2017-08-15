@@ -41,12 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDCLicenseUpgradeActivateSheet ()
 @property (nonatomic, copy, readwrite) NSString *licenseKey;
 @property (nonatomic, assign, readwrite) TLOLicenseUpgradeEligibility eligibility;
-@property (nonatomic, strong) IBOutlet NSWindow *sheetEligible;
-@property (nonatomic, weak) IBOutlet NSTextField *sheetEligibleTitleTextField;
-@property (nonatomic, weak) IBOutlet NSButton *sheetEligibleSuppressionButton;
-@property (nonatomic, strong) IBOutlet NSWindow *sheetAlreadyUpgraded;
-@property (nonatomic, weak) IBOutlet NSTextField *sheetAlreadyUpgradedTitleTextField;
-@property (nonatomic, weak) IBOutlet NSButton *sheetAlreadyUpgradedSuppressionButton;
+@property (nonatomic, strong) IBOutlet NSWindow *sheetEligibleDiscount;
+@property (nonatomic, strong) IBOutlet NSWindow *sheetEligibleFree;
+@property (nonatomic, weak) IBOutlet NSTextField *sheetEligibleDiscountTitleTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *sheetEligibleFreeTitleTextField;
+@property (nonatomic, weak) IBOutlet NSButton *sheetEligibleDiscountSuppressionButton;
+@property (nonatomic, weak) IBOutlet NSButton *sheetEligibleFreeSuppressionButton;
 
 - (IBAction)actionActivateLicense:(id)sender;
 - (IBAction)actionPurchaseUpgrade:(id)sender;
@@ -93,16 +93,16 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (self.eligibility == TLOLicenseUpgradeEligibleDiscount)
 	{
-		self.sheet = self.sheetEligible;
+		self.sheet = self.sheetEligibleDiscount;
 
-		sheetTitleTextField = self.sheetEligibleTitleTextField;
+		sheetTitleTextField = self.sheetEligibleDiscountTitleTextField;
 	}
 	else if (self.eligibility == TLOLicenseUpgradeEligibleFree ||
 			 self.eligibility == TLOLicenseUpgradeAlreadyUpgraded)
 	{
-		self.sheet = self.sheetAlreadyUpgraded;
+		self.sheet = self.sheetEligibleFree;
 
-		sheetTitleTextField = self.sheetAlreadyUpgradedTitleTextField;
+		sheetTitleTextField = self.sheetEligibleFreeTitleTextField;
 	}
 	else
 	{
@@ -129,8 +129,8 @@ ClassWithDesignatedInitializerInitMethod
 - (void)actionCancel:(id)sender
 {
 	/* Only one of two sheets can ever be visible so just check if one is on. */
-	if (self.sheetEligibleSuppressionButton.state == NSOnState ||
-		self.sheetAlreadyUpgradedSuppressionButton.state == NSOnState)
+	if (self.sheetEligibleDiscountSuppressionButton.state == NSOnState ||
+		self.sheetEligibleFreeSuppressionButton.state == NSOnState)
 	{
 		[self.delegate upgradeActivateSheetSuppressed:self];
 	}

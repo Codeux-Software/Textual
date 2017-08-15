@@ -44,8 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
 @property (nonatomic, strong) TDCProgressIndicatorSheet *progressIndicator;
 @property (nonatomic, strong) IBOutlet NSWindow *sheetNotEligible;
-@property (nonatomic, strong) IBOutlet NSWindow *sheetEligible;
-@property (nonatomic, strong) IBOutlet NSWindow *sheetAlreadyUpgraded;
+@property (nonatomic, strong) IBOutlet NSWindow *sheetEligibleDiscount;
+@property (nonatomic, strong) IBOutlet NSWindow *sheetEligibleFree;
 @property (nonatomic, assign) BOOL checkingEligibility;
 
 - (IBAction)actionContactSupport:(id)sender;
@@ -285,13 +285,13 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_eligibilityDetermined
 {
 	if (self.eligibility == TLOLicenseUpgradeEligibleDiscount) {
-		self.sheet = self.sheetEligible;
+		self.sheet = self.sheetEligibleDiscount;
 	} else if (self.eligibility == TLOLicenseUpgradeNotEligible) {
 		self.sheet = self.sheetNotEligible;
 	} else if (self.eligibility == TLOLicenseUpgradeEligibleFree ||
 			   self.eligibility == TLOLicenseUpgradeAlreadyUpgraded)
 	{
-		self.sheet = self.sheetAlreadyUpgraded;
+		self.sheet = self.sheetEligibleFree;
 	}
 
 	[super startSheet];
