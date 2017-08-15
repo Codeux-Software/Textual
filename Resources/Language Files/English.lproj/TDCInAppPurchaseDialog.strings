@@ -69,9 +69,7 @@
 "TDCInAppPurchaseDialog[0006][1]" = "Cannot unlock “%@“ because this product is not currently available";
 "TDCInAppPurchaseDialog[0006][2]" = "";
 
-"TDCInAppPurchaseDialog[0007][1]" = "Cannot continue transaction because a valid receipt file is missing";
-"TDCInAppPurchaseDialog[0007][2]" = "";
-
+"TDCInAppPurchaseDialog[0007]" = "Refreshing receipt…";
 "TDCInAppPurchaseDialog[0008]" = "Downloading list of products…";
 "TDCInAppPurchaseDialog[0009]" = "Waiting for order to be completed…";
 "TDCInAppPurchaseDialog[0010]" = "Restoring purchase…";
@@ -104,3 +102,9 @@
 "TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app purchases could not be downloaded";
 "TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";
 "TDCInAppPurchaseDialog[0019][3]" = "Try Again";
+
+"TDCInAppPurchaseDialog[0020][1]" = "Cannot continue transaction because a valid receipt file is missing";
+"TDCInAppPurchaseDialog[0020][2]" = "Do you want to refresh the receipt file?";
+
+"TDCInAppPurchaseDialog[0021][1]" = "The following error was returned while processing request:";
+"TDCInAppPurchaseDialog[0021][2]" = "%@";
