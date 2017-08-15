@@ -53,7 +53,6 @@ NSUInteger const TLOLicenseManagerDownloaderRequestHTTPStatusTryAgainLater = 503
 /* The following constants note status codes that may be returned part of the 
  contents of a license API response body. This is not a complete list. */
 NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeSuccess = 0;
-
 NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeGenericError = 2000000;
 NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 2000001;
 
@@ -232,9 +231,22 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 		\
 	return;
 
-	/* Attempt to convert contents into a property list dictionary */
+	/* Define defaults */
 	id propertyList = nil;
 
+	NSUInteger statusCode = 0;
+
+	id statusContext = nil;
+
+	if (requestHttpStatusCode == TLOLicenseManagerDownloaderRequestHTTPStatusTryAgainLater) {
+		statusCode = TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater;
+
+		goto present_fatal_error;
+	} else {
+		statusCode = TLOLicenseManagerDownloaderRequestStatusCodeGenericError;
+	}
+
+	/* Attempt to convert contents into a property list dictionary */
 	if (requestContents) {
 		NSError *propertyListReadError = nil;
 
@@ -249,11 +261,6 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			}
 		}
 	}
-
-	/* Process resulting property list (if it was successful) */
-	NSUInteger statusCode = TLOLicenseManagerDownloaderRequestStatusCodeGenericError;
-
-	id statusContext = nil;
 
 	if (propertyList) {
 		id l_statusCode = propertyList[@"Status Code"];

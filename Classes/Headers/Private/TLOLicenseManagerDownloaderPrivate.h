@@ -46,6 +46,10 @@ typedef NS_ENUM(NSUInteger, TLOLicenseManagerDownloaderRequestType) {
 	TLOLicenseManagerDownloaderRequestClaimLicenseType
 };
 
+TEXTUAL_EXTERN NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeSuccess;
+TEXTUAL_EXTERN NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeGenericError;
+TEXTUAL_EXTERN NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater;
+
 typedef BOOL (^TLOLicenseManagerDownloaderActionBlock)(NSUInteger statusCode, id _Nullable statusContext);
 typedef BOOL (^TLOLicenseManagerDownloaderErrorBlock)(NSUInteger statusCode, id _Nullable statusContext);
 typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful, NSUInteger statusCode, id _Nullable statusContext);
