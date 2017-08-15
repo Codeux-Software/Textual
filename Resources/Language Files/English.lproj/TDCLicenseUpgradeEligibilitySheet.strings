@@ -45,3 +45,4 @@
 "TDCLicenseUpgradeEligibilitySheet[1002][2]" = "Service returned an empty status context.";
 "TDCLicenseUpgradeEligibilitySheet[1002][3]" = "Service returned an malformed status context.";
 "TDCLicenseUpgradeEligibilitySheet[1002][4]" = "Service returned an unusual eligibility: %ld";
+"TDCLicenseUpgradeEligibilitySheet[1002][5]" = "Request cannot be completed at this time.";
