@@ -25,11 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C24DC891A93CD350098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C24DC8A1A93CD350098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Configuration for Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C24DC891A93CD350098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C24DC8A1A93CD350098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Configuration for Extensions.xcconfig"; path = "../../Build Configurations/Shared Configuration for Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C40A3FC1AC45C6B0026FF91 /* TPIBlowfishEncryptionSwizzledClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPIBlowfishEncryptionSwizzledClasses.h; path = Classes/TPIBlowfishEncryptionSwizzledClasses.h; sourceTree = "<group>"; };
 		4C40A3FD1AC45C6B0026FF91 /* TPIBlowfishEncryptionSwizzledClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPIBlowfishEncryptionSwizzledClasses.m; path = Classes/TPIBlowfishEncryptionSwizzledClasses.m; sourceTree = "<group>"; };
-		4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
+		4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C69EB021AC1A9F9003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = "<group>"; };
 		4C69EB061AC1AA8A003EC07D /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
 		4C69EB071AC1AA8A003EC07D /* LICENSE-GPLv2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2.txt"; sourceTree = "<group>"; };
@@ -129,7 +129,6 @@
 				4C24DC8A1A93CD350098D1BE /* Shared Configuration for Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
-			path = "../../Build Configurations";
 			sourceTree = "<group>";
 		};
 		4C69EB041AC1AA05003EC07D /* Core */ = {

@@ -31,7 +31,6 @@
 		4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */; };
 		4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */; };
 		4CE07AE11F13C8790066007A /* GCDAsyncSocketTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */; };
-		4CF880B31F127F9700ED9EA2 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,44 +42,44 @@
 		4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
-		4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLOLanguagePreferences.h; sourceTree = "<group>"; };
-		4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLOLanguagePreferences.m; sourceTree = "<group>"; };
+		4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOLanguagePreferences.h; path = "../../Classes (Shared)/Headers/TLOLanguagePreferences.h"; sourceTree = "<group>"; };
+		4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLanguagePreferences.m; path = "../../Classes (Shared)/Library/TLOLanguagePreferences.m"; sourceTree = "<group>"; };
 		4C2C52D11F12ED5A009701E0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketExtensions.h; sourceTree = "<group>"; };
-		4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketCipherNames.m; sourceTree = "<group>"; };
-		4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketExtensions.m; sourceTree = "<group>"; };
-		4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketTrustPanel.h; sourceTree = "<group>"; };
+		4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketExtensions.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketExtensions.h"; sourceTree = "<group>"; };
+		4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketCipherNames.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketCipherNames.m"; sourceTree = "<group>"; };
+		4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketExtensions.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketExtensions.m"; sourceTree = "<group>"; };
+		4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketTrustPanel.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketTrustPanel.h"; sourceTree = "<group>"; };
 		4C6706D11F1290F4009673EB /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
-		4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMConnectionManagerProtocol.h; sourceTree = "<group>"; };
-		4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextualApplicationShared.h; sourceTree = "<group>"; };
-		4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticDefinitions.h; sourceTree = "<group>"; };
-		4C8C72761F1201A000ED72DB /* TLOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOTimer.h; sourceTree = "<group>"; };
-		4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
-		4C8C72831F1201A000ED72DB /* TLOTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLOTimer.m; sourceTree = "<group>"; };
+		4C6EF2E41F4431CD00A80A7B /* IRCConnectionConfigInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfigInternal.h; path = "../../Classes (Shared)/Headers/Internal/IRCConnectionConfigInternal.h"; sourceTree = "<group>"; };
+		4C6EF2E51F44324400A80A7B /* NSObjectHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = "../../Classes (Shared)/Helpers/Cocoa (Objective-C)/NSObjectHelper.m"; sourceTree = "<group>"; };
+		4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocket.h"; sourceTree = "<group>"; };
+		4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = "../../Classes (Shared)/Headers/XPC Protocols/RCMConnectionManagerProtocol.h"; sourceTree = "<group>"; };
+		4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplicationShared.h; path = "../../Classes (Shared)/Headers/TextualApplicationShared.h"; sourceTree = "<group>"; };
+		4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = "../../Classes (Shared)/Headers/StaticDefinitions.h"; sourceTree = "<group>"; };
+		4C8C72761F1201A000ED72DB /* TLOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOTimer.h; path = "../../Classes (Shared)/Headers/TLOTimer.h"; sourceTree = "<group>"; };
+		4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocket.m"; sourceTree = "<group>"; };
+		4C8C72831F1201A000ED72DB /* TLOTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOTimer.m; path = "../../Classes (Shared)/Library/TLOTimer.m"; sourceTree = "<group>"; };
 		4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4C8C72D51F1208F200ED72DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		4C8C72EC1F121EF000ED72DB /* RCMProcessMainPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMProcessMainPrivate.h; sourceTree = "<group>"; };
-		4C8C72ED1F121EF000ED72DB /* IRCConnectionSocketPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionSocketPrivate.h; sourceTree = "<group>"; };
-		4C8C72EE1F121EF000ED72DB /* RCMProcessDelegatePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMProcessDelegatePrivate.h; sourceTree = "<group>"; };
-		4C8C72EF1F121EF000ED72DB /* RCMProcessPCHPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMProcessPCHPrivate.h; sourceTree = "<group>"; };
-		4C8C72F01F121EF000ED72DB /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionPrivate.h; sourceTree = "<group>"; };
-		4C8C72F41F121EF000ED72DB /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnection.m; sourceTree = "<group>"; };
-		4C8C72F51F121EF000ED72DB /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnectionSocket.m; sourceTree = "<group>"; };
-		4C8C72F81F121EF000ED72DB /* RCMProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMProcessDelegate.m; sourceTree = "<group>"; };
-		4C8C72F91F121EF000ED72DB /* RCMProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMProcessMain.m; sourceTree = "<group>"; };
-		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCConnectionConfig.h; sourceTree = "<group>"; };
-		4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnectionConfig.m; sourceTree = "<group>"; };
-		4C8C73091F1221F300ED72DB /* IRCConnectionConfigInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionConfigInternal.h; sourceTree = "<group>"; };
+		4C8C72EC1F121EF000ED72DB /* RCMProcessMainPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMProcessMainPrivate.h; path = Classes/Headers/Private/RCMProcessMainPrivate.h; sourceTree = "<group>"; };
+		4C8C72ED1F121EF000ED72DB /* IRCConnectionSocketPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocketPrivate.h; path = Classes/Headers/Private/IRCConnectionSocketPrivate.h; sourceTree = "<group>"; };
+		4C8C72EE1F121EF000ED72DB /* RCMProcessDelegatePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMProcessDelegatePrivate.h; path = Classes/Headers/Private/RCMProcessDelegatePrivate.h; sourceTree = "<group>"; };
+		4C8C72EF1F121EF000ED72DB /* RCMProcessPCHPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMProcessPCHPrivate.h; path = Classes/Headers/Private/RCMProcessPCHPrivate.h; sourceTree = "<group>"; };
+		4C8C72F01F121EF000ED72DB /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionPrivate.h; path = Classes/Headers/Private/IRCConnectionPrivate.h; sourceTree = "<group>"; };
+		4C8C72F41F121EF000ED72DB /* IRCConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnection.m; path = Classes/IRC/IRCConnection.m; sourceTree = "<group>"; };
+		4C8C72F51F121EF000ED72DB /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = Classes/IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
+		4C8C72F81F121EF000ED72DB /* RCMProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCMProcessDelegate.m; path = Classes/Service/RCMProcessDelegate.m; sourceTree = "<group>"; };
+		4C8C72F91F121EF000ED72DB /* RCMProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCMProcessMain.m; path = Classes/Service/RCMProcessMain.m; sourceTree = "<group>"; };
+		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Service/main.m; sourceTree = "<group>"; };
+		4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfig.h; path = "../../Classes (Shared)/Headers/IRCConnectionConfig.h"; sourceTree = "<group>"; };
+		4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionConfig.m; path = "../../Classes (Shared)/IRC/IRCConnectionConfig.m"; sourceTree = "<group>"; };
 		4CAC2A071F12AFFB00D06046 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
+		4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketCipherNames.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketCipherNames.h"; sourceTree = "<group>"; };
 		4CAC2A2D1F12DDC600D06046 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
-		4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketTrustPanel.m; sourceTree = "<group>"; };
-		4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = ../Private/NSObjectHelperPrivate.h; sourceTree = "<group>"; };
-		4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
+		4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketTrustPanel.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketTrustPanel.m"; sourceTree = "<group>"; };
+		4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = "../../Classes (Shared)/Headers/Private/NSObjectHelperPrivate.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,7 +193,6 @@
 				4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */,
 			);
 			name = "Language Files";
-			path = "Resources/Language Files";
 			sourceTree = "<group>";
 		};
 		4C8C72621F1201A000ED72DB /* Headers */ = {
@@ -211,7 +209,6 @@
 				4C8C72761F1201A000ED72DB /* TLOTimer.h */,
 			);
 			name = Headers;
-			path = "../../Classes (Shared)/Headers";
 			sourceTree = "<group>";
 		};
 		4C8C72631F1201A000ED72DB /* External Libraries */ = {
@@ -222,7 +219,7 @@
 				4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */,
 				4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */,
 			);
-			path = "External Libraries";
+			name = "External Libraries";
 			sourceTree = "<group>";
 		};
 		4C8C72651F1201A000ED72DB /* XPC Protocols */ = {
@@ -230,7 +227,7 @@
 			children = (
 				4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */,
 			);
-			path = "XPC Protocols";
+			name = "XPC Protocols";
 			sourceTree = "<group>";
 		};
 		4C8C727C1F1201A000ED72DB /* Library */ = {
@@ -241,7 +238,6 @@
 				4C8C72831F1201A000ED72DB /* TLOTimer.m */,
 			);
 			name = Library;
-			path = "../../Classes (Shared)/Library";
 			sourceTree = "<group>";
 		};
 		4C8C727D1F1201A000ED72DB /* External Libraries */ = {
@@ -249,7 +245,7 @@
 			children = (
 				4C8C727E1F1201A000ED72DB /* Sockets */,
 			);
-			path = "External Libraries";
+			name = "External Libraries";
 			sourceTree = "<group>";
 		};
 		4C8C727E1F1201A000ED72DB /* Sockets */ = {
@@ -260,7 +256,7 @@
 				4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */,
 				4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */,
 			);
-			path = Sockets;
+			name = Sockets;
 			sourceTree = "<group>";
 		};
 		4C8C72D31F1208F200ED72DB /* External Frameworks */ = {
@@ -290,7 +286,6 @@
 				4C8C72D61F1208F200ED72DB /* System Frameworks */,
 			);
 			name = Frameworks;
-			path = "../Historic Log File Manager";
 			sourceTree = "<group>";
 		};
 		4C8C72E31F121EF000ED72DB /* Headers */ = {
@@ -299,7 +294,6 @@
 				4C8C72EB1F121EF000ED72DB /* Private */,
 			);
 			name = Headers;
-			path = Classes/Headers;
 			sourceTree = "<group>";
 		};
 		4C8C72EB1F121EF000ED72DB /* Private */ = {
@@ -311,7 +305,7 @@
 				4C8C72EC1F121EF000ED72DB /* RCMProcessMainPrivate.h */,
 				4C8C72EF1F121EF000ED72DB /* RCMProcessPCHPrivate.h */,
 			);
-			path = Private;
+			name = Private;
 			sourceTree = "<group>";
 		};
 		4C8C72F31F121EF000ED72DB /* IRC */ = {
@@ -321,7 +315,6 @@
 				4C8C72F51F121EF000ED72DB /* IRCConnectionSocket.m */,
 			);
 			name = IRC;
-			path = Classes/IRC;
 			sourceTree = "<group>";
 		};
 		4C8C72F71F121EF000ED72DB /* Service */ = {
@@ -332,7 +325,6 @@
 				4C8C72FA1F121EF000ED72DB /* main.m */,
 			);
 			name = Service;
-			path = Classes/Service;
 			sourceTree = "<group>";
 		};
 		4C8C73051F1221C600ED72DB /* IRC */ = {
@@ -341,15 +333,14 @@
 				4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */,
 			);
 			name = IRC;
-			path = "../../Classes (Shared)/IRC";
 			sourceTree = "<group>";
 		};
 		4C8C73081F1221F300ED72DB /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				4C8C73091F1221F300ED72DB /* IRCConnectionConfigInternal.h */,
+				4C6EF2E41F4431CD00A80A7B /* IRCConnectionConfigInternal.h */,
 			);
-			path = Internal;
+			name = Internal;
 			sourceTree = "<group>";
 		};
 		4CF880AE1F127F7700ED9EA2 /* Private */ = {
@@ -358,7 +349,6 @@
 				4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */,
 			);
 			name = Private;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		4CF880B01F127F9700ED9EA2 /* Helpers */ = {
@@ -367,15 +357,14 @@
 				4CF880B11F127F9700ED9EA2 /* Cocoa (Objective-C) */,
 			);
 			name = Helpers;
-			path = "../../Classes (Shared)/Helpers";
 			sourceTree = "<group>";
 		};
 		4CF880B11F127F9700ED9EA2 /* Cocoa (Objective-C) */ = {
 			isa = PBXGroup;
 			children = (
-				4CF880B21F127F9700ED9EA2 /* NSObjectHelper.m */,
+				4C6EF2E51F44324400A80A7B /* NSObjectHelper.m */,
 			);
-			path = "Cocoa (Objective-C)";
+			name = "Cocoa (Objective-C)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,7 +444,6 @@
 				4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */,
 				4C8C72FD1F121EF000ED72DB /* IRCConnection.m in Sources */,
 				4C8C73011F121EF000ED72DB /* RCMProcessMain.m in Sources */,
-				4CF880B31F127F9700ED9EA2 /* NSObjectHelper.m in Sources */,
 				4C8C73071F1221C600ED72DB /* IRCConnectionConfig.m in Sources */,
 				4C8C72FE1F121EF000ED72DB /* IRCConnectionSocket.m in Sources */,
 				4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */,
@@ -477,6 +465,7 @@
 				4C6706D11F1290F4009673EB /* English */,
 			);
 			name = SecureTransportErrorCodes.strings;
+			path = "Resources/Language Files";
 			sourceTree = "<group>";
 		};
 		4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */ = {
@@ -485,6 +474,7 @@
 				4CAC2A2D1F12DDC600D06046 /* English */,
 			);
 			name = BasicLanguage.strings;
+			path = "Resources/Language Files";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
