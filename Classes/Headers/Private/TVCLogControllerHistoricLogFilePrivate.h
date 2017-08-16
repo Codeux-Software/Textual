@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) BOOL isSaving;
 
+- (void)forgetChannel:(IRCChannel *)channel;
 - (void)resetDataForChannel:(IRCChannel *)channel; // synchronous operation
 
 - (void)fetchEntriesForChannel:(IRCChannel *)channell
