@@ -78,6 +78,7 @@ enum {
 @property (nonatomic, assign) BOOL transactionsPending;
 @property (nonatomic, assign) BOOL atleastOnePurchaseFinished;
 @property (nonatomic, assign) BOOL atleastOnePurchaseRestored;
+@property (nonatomic, assign) BOOL skipRestorePostflight;
 @property (nonatomic, strong) IBOutlet NSView *contentViewThankYou;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProducts;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProgress;
@@ -363,6 +364,8 @@ enum {
 	self.transactionsPending = atleastOneTransaction;
 	self.atleastOnePurchaseFinished = atleastOneTransactionFinished;
 	self.atleastOnePurchaseRestored = atleastOneTransactionRestored;
+	self.skipRestorePostflight = (atleastOneTransactionFinished ||
+								  atleastOneTransactionRestored);
 
 	LogToConsoleDebug("atleastOnePurchaseFinished: %@, atleastOnePurchaseRestored: %@",
 		  StringFromBOOL(atleastOneTransactionFinished),
@@ -509,13 +512,13 @@ enum {
 			self.performingPurchase = NO;
 		}
 
-		self.transactionsPending = NO;
-
-		self.atleastOnePurchaseFinished = NO;
-
-		if (self.performingRestore == NO) {
-			self.atleastOnePurchaseRestored = NO;
+		if (self.performingRestore) {
+			self.performingRestore = NO;
 		}
+
+		self.transactionsPending = NO;
+		self.atleastOnePurchaseFinished = NO;
+		self.atleastOnePurchaseRestored = NO;
 
 		if (success == NO) {
 			LogToConsoleDebug("Finished processing transactions with only failures");
@@ -543,17 +546,13 @@ enum {
 
 - (void)postflightForRestore
 {
-	if (self.performingRestore) {
-		self.performingRestore = NO;
-	} else {
+	if (self.skipRestorePostflight) {
+		self.skipRestorePostflight = NO;
+
 		return;
 	}
 
-	if (self.atleastOnePurchaseRestored) {
-		self.atleastOnePurchaseRestored = NO;
-	} else {
-		[self updateSelectedPane];
-	}
+	[self updateSelectedPane];
 }
 
 - (void)showThankYouAfterProductPurchase
@@ -875,6 +874,8 @@ enum {
 
 	entryItem.rowHeight = (cellView.innerContentViewSize.height + cellViewSpacing.height);
 
+	LogToConsoleDebug("Height of row %ld is %f", row, entryItem.rowHeight);
+
 	[NSAnimationContext performBlockWithoutAnimation:^{
 		[tableView noteHeightOfRowsWithIndexesChanged:
 			 [NSIndexSet indexSetWithIndex:row]];
@@ -1109,7 +1110,7 @@ enum {
 
 	self.performingPurchase = YES;
 
-	LogToConsoleDebug("Paying for product %@", product.productIdentifier);
+	LogToConsoleDebug("Paying for product '%@'", product.productIdentifier);
 
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0009]")];
 
