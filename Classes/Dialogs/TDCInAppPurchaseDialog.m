@@ -388,7 +388,7 @@ enum {
 	[self postflightForRestore];
 
 	if (error.code == SKErrorPaymentCancelled) {
-		break;
+		return;
 	}
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
