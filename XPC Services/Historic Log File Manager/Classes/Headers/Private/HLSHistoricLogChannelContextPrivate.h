@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HLSHistoricLogChannelContext : NSManagedObjectContext
 @property (nonatomic, copy) NSString *hls_channelId;
 @property (nonatomic, assign) NSUInteger hls_totalLineCount;
-@property (nonatomic, assign) NSUInteger hls_unsavedLineCount;
 @property (nonatomic, assign) NSUInteger hls_newestIdentifier;
 @property (nonatomic, strong, nullable) dispatch_source_t hls_resizeTimer;
 @end
