@@ -746,6 +746,13 @@ enum {
 
 - (void)checkUpgradeEligibility
 {
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self _checkUpgradeEligibility];
+	});
+}
+
+- (void)_checkUpgradeEligibility
+{
 	if (self.workInProgress == NO) {
 		self.workInProgress = YES;
 	} else {
