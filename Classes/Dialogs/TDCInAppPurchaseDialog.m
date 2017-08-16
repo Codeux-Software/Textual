@@ -1256,7 +1256,7 @@ enum {
 
 - (void)onRefreshReceiptFinished
 {
-	[self onRequestProductsFinishedWithError:nil];
+	[self onRefreshReceiptFinishedWithError:nil];
 }
 
 - (void)onRefreshReceiptFinishedWithError:(nullable NSError *)error
