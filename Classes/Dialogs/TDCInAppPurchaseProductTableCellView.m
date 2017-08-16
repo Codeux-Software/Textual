@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCInAppPurchaseProductsTableCellView
 
+/*
 - (BOOL)wantsLayer
 {
 	return YES;
@@ -56,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
 }
+*/
 
 - (NSSize)innerContentViewSize
 {
