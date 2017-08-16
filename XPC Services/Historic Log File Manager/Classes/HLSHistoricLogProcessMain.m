@@ -165,6 +165,8 @@ NS_ASSUME_NONNULL_BEGIN
 	HLSHistoricLogChannelContext *channelContext = [self contextForChannel:channelId];
 	
 	[channelContext performBlockAndWait:^{
+        [channelContext reset];
+
 		[self cancelResizeInChannelContext:channelContext];
 		
 		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelContext.hls_channelId
@@ -362,6 +364,8 @@ NS_ASSUME_NONNULL_BEGIN
 		LogToConsoleError("Failed to perform save: %@",
 			  saveError.localizedDescription);
 	}
+    
+    [context reset];
 }
 
 - (void)saveDataWithCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(void))completionBlock
@@ -380,7 +384,9 @@ NS_ASSUME_NONNULL_BEGIN
 		[self _rescheduleSave];
 		
 		[self.contextObjects enumerateKeysAndObjectsUsingBlock:^(NSString *channelId, HLSHistoricLogChannelContext *channelContext, BOOL *stop) {
-			[self _quickSaveContext:channelContext];
+            [context performBlockAndWait:^{
+                [self _quickSaveContext:channelContext];
+            }];
 		}];
 		
 		[self _quickSaveContext:context];
