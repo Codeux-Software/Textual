@@ -247,7 +247,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[volumes enumerateObjectsUsingBlock:^(NSURL *volume, NSUInteger index, BOOL *stop) {
 		NSString *volumeName = [volume resourceValueForKey:NSURLVolumeNameKey];
 
-		TXUnsignedLongLong totalSpace = [[volume resourceValueForKey:NSURLVolumeTotalCapacityKey] longLongValue];;
+		TXUnsignedLongLong totalSpace = [[volume resourceValueForKey:NSURLVolumeTotalCapacityKey] longLongValue];
 		TXUnsignedLongLong freeSpace = [[volume resourceValueForKey:NSURLVolumeAvailableCapacityKey] longLongValue];
 
 		if (index == 0) {

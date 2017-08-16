@@ -373,7 +373,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Fall back to the default repository */
-	[self loadApplicationTemplateRespository:templateEngineVersion];;
+	[self loadApplicationTemplateRespository:templateEngineVersion];
 
 	/* Inform our defaults controller about a few overrides. */
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 

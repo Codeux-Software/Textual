@@ -589,7 +589,7 @@ ClassWithDesignatedInitializerInitMethod
 	UniChar searchPatternFirstCharacter = 0; // null
 
 	if (NSObjectIsEmpty(self.cachedSearchPattern) == NO) {
-		searchPatternFirstCharacter = [self.cachedSearchPattern characterAtIndex:0];;
+		searchPatternFirstCharacter = [self.cachedSearchPattern characterAtIndex:0];
 	}
 
 	if (self.searchPatternIsAtStart && searchPatternFirstCharacter == '\x02f')

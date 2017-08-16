@@ -218,7 +218,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.filter.filterMatch = self.filterMatchTextField.stringValue;
 
-	NSString *filterActionStringValue = [self stringValueForTokenField:self.filterActionTokenField];;
+	NSString *filterActionStringValue = [self stringValueForTokenField:self.filterActionTokenField];
 
 	self.filter.filterAction = filterActionStringValue;
 
