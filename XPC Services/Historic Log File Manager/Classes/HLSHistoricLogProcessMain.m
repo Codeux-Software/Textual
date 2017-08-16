@@ -453,6 +453,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(channelContext != nil);
 	
+	LogToConsoleDebug("Resizing channel %@", channelContext.hls_channelId);
+	
 	channelContext.hls_resizeTimer = nil;
 	
 	NSString *channelId = channelContext.hls_channelId;
@@ -472,8 +474,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self _deleteDataInChannelContext:channelContext withFetchRequest:fetchRequest performOnQueue:NO];
 	
 	channelContext.hls_totalLineCount -= rowsDeleted;
-	
-	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, channelId);
 }
 
 #pragma mark -
@@ -498,6 +498,8 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		blockToPerform();
 	}
+	
+	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, channelContext.hls_channelId);
 	
 	return rowsDeleted;
 }
