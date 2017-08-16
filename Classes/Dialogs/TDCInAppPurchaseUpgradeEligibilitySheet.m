@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)endSheet
 {
-	[self _cancelEligiblityCheck];
+	[self _cancelEligibilityCheck];
 
 	[super endSheet];
 }
@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)checkEligibility
 {
-	[self _checkEligiblity];
+	[self _checkEligibility];
 }
 
 #pragma mark -
@@ -259,7 +259,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 		if (result == NSModalResponseOK) {
-			[self _checkEligiblityOfApplicationAtURL:d.URL];
+			[self _checkEligibilityOfApplicationAtURL:d.URL];
 		} else {
 			[self endSheetEarly];
 		}
@@ -305,7 +305,7 @@ NS_ASSUME_NONNULL_BEGIN
 						   }];
 }
 
-- (void)_cancelEligiblityCheck
+- (void)_cancelEligibilityCheck
 {
 	if (self.checkingEligibility == NO) {
 		return;
@@ -313,10 +313,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self.licenseManagerDownloader cancelRequest];
 
-	[self _checkEligiblityCompletionBlock];
+	[self _checkEligibilityCompletionBlock];
 }
 
-- (void)_checkEligiblity
+- (void)_checkEligibility
 {
 	if (self.eligibility != TLOInAppPurchaseUpgradeEligibilityUnknown) {
 		[self _eligibilityDetermined];
@@ -327,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self _presentOpenDialog];
 }
 
-- (void)_checkEligiblityOfApplicationAtURL:(NSURL *)applicationURL
+- (void)_checkEligibilityOfApplicationAtURL:(NSURL *)applicationURL
 {
 	NSParameterAssert(applicationURL != nil);
 
@@ -357,7 +357,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TLOLicenseManagerDownloader *licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
 	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
-		[weakSelf _checkEligiblityCompletionBlock];
+		[weakSelf _checkEligibilityCompletionBlock];
 
 		[weakSelf _extractEligibilityFromResponseWithStatusCode:statusCode statusContext:statusContext];
 	};
@@ -370,7 +370,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
-- (void)_checkEligiblityCompletionBlock
+- (void)_checkEligibilityCompletionBlock
 {
 	self.licenseManagerDownloader = nil;
 

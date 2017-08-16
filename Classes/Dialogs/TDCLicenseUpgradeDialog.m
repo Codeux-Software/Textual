@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDCLicenseUpgradeDialog ()
 @property (nonatomic, copy, readwrite) NSString *licenseKey;
 @property (nonatomic, assign, readwrite) TLOLicenseUpgradeEligibility eligibility;
-@property (nonatomic, strong, nullable) TDCLicenseUpgradeEligibilitySheet *eligiblitySheet;
+@property (nonatomic, strong, nullable) TDCLicenseUpgradeEligibilitySheet *EligibilitySheet;
 @property (nonatomic, weak) IBOutlet NSButton *upgradeDialogContinueTrialButton;
 @property (nonatomic, weak) IBOutlet NSTextField *upgradeDialogTrialPeriodTextField;
 
@@ -92,9 +92,9 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Eligibility Sheet Actions
 
-- (void)checkEligiblity
+- (void)checkEligibility
 {
-	if (self.eligiblitySheet != nil) {
+	if (self.EligibilitySheet != nil) {
 		return;
 	}
 
@@ -107,13 +107,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	[eligibilitySheet checkEligibility];
 
-	self.eligiblitySheet = eligibilitySheet;
+	self.EligibilitySheet = eligibilitySheet;
 }
 
 - (void)closeEligibilitySheet
 {
-	if (self.eligiblitySheet) {
-		[self.eligiblitySheet endSheet];
+	if (self.EligibilitySheet) {
+		[self.EligibilitySheet endSheet];
 	}
 }
 
@@ -151,7 +151,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)upgradeEligibilitySheetWillClose:(TDCLicenseUpgradeEligibilitySheet *)sender
 {
-	self.eligiblitySheet = nil;
+	self.EligibilitySheet = nil;
 }
 
 #pragma mark -
@@ -164,7 +164,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)actionPurchaseUpgrade:(id)sender
 {
-	[self checkEligiblity];
+	[self checkEligibility];
 }
 
 - (void)actionContinueTrial:(id)sender
