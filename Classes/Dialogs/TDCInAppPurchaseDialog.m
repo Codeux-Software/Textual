@@ -551,6 +551,10 @@ enum {
 
 		return;
 	}
+    
+    if (self.performingRestore) {
+        self.performingRestore = NO;
+    }
 
 	[self updateSelectedPane];
 }
