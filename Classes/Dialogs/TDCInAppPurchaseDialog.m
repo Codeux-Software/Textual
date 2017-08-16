@@ -129,6 +129,8 @@ enum {
 	self.finishedLoading = YES;
 
 	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogFinishedLoadingNotification object:self];
+
+	LogToConsoleDebug("Posting 'finished loading' notification");
 }
 
 - (void)show
@@ -185,6 +187,8 @@ enum {
 	[trialTimer start:timeRemaining];
 
 	self.trialTimer = trialTimer;
+
+	LogToConsoleDebug("Starting trial timer to end on %d", timeRemaining);
 }
 
 - (void)stopTrialTimer
@@ -195,6 +199,8 @@ enum {
 
 	[self.trialTimer stop];
 	self.trialTimer = nil;
+
+	LogToConsoleDebug("Stopping trial timer");
 }
 
 - (void)onTrialTimer:(id)sender
@@ -206,6 +212,8 @@ enum {
 	[self _showTrialIsExpiredMessageInWindow:self.window];
 
 	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogTrialExpiredNotification object:self];
+
+	LogToConsoleDebug("Trial timer fired");
 }
 
 - (NSString *)timeRemainingInTrialFormattedMessage
@@ -313,6 +321,8 @@ enum {
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
+	LogToConsoleDebug("Updating %ld transactions", transactions.count);
+
 	BOOL atleastOneTransaction = NO;
 	BOOL atleastOneTransactionFinished = NO;
 	BOOL atleastOneTransactionRestored = NO;
@@ -354,12 +364,18 @@ enum {
 	self.atleastOnePurchaseFinished = atleastOneTransactionFinished;
 	self.atleastOnePurchaseRestored = atleastOneTransactionRestored;
 
+	LogToConsoleDebug("atleastOnePurchaseFinished: %@, atleastOnePurchaseRestored: %@",
+		  StringFromBOOL(atleastOneTransactionFinished),
+		  StringFromBOOL(atleastOneTransactionRestored));
+
 	[self processFinishedTransactions];
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
 	[self postflightForRestore];
+
+	LogToConsoleDebug("Transaction restore successful");
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
@@ -372,6 +388,8 @@ enum {
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil];
+
+	LogToConsoleDebug("Transaction restore failed");
 }
 
 - (void)processFinishedTransactions
@@ -381,6 +399,8 @@ enum {
 
 - (void)processFinishedTransactionsOrShowError:(BOOL)showErrorIfAny
 {
+	LogToConsoleDebug("Processing finished transactions");
+
 #define _postflight 	\
 	[self postflightForTransactions];
 
@@ -396,7 +416,11 @@ enum {
 
 	/* Refresh the contents of the receipt. */
 	if ([self loadReceipt] == NO) {
+		LogToConsoleDebug("Failed to load receipt");
+
 		if (showErrorIfAny == NO) {
+			LogToConsoleDebug("Continuing without a receipt");
+
 			_postflight;
 		}
 
@@ -431,6 +455,8 @@ enum {
 - (void)postflightForTransactions
 {
 	NSArray *transactions = [[SKPaymentQueue defaultQueue] transactions];
+
+	LogToConsoleDebug("Processing %ld transactions", transactions.count);
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		for (SKPaymentTransaction *transaction in transactions) {
@@ -492,10 +518,14 @@ enum {
 		}
 
 		if (success == NO) {
+			LogToConsoleDebug("Finished processing transactions with only failures");
+
 			[self _updateSelectedPane];
 
 			return;
 		}
+
+		LogToConsoleDebug("Finished processing transactions");
 
 		[self showThankYouAfterProductPurchase];
 
@@ -593,9 +623,13 @@ enum {
 
 - (void)_refreshProductsTableContents
 {
+	LogToConsoleDebug("Refreshing products table");
+
 	[self.productsTableController removeAllArrangedObjects];
 
 	if (TLOAppStoreTextualIsRegistered()) {
+		LogToConsoleDebug("No products displayed because Textual is registered");
+
 		return;
 	}
 	
@@ -623,6 +657,8 @@ enum {
 
 - (void)_updateSelectedPane
 {
+	LogToConsoleDebug("Updating selected pane");
+
 	[self detachProgressView];
 
 	if (TLOAppStoreTextualIsRegistered()) {
@@ -713,6 +749,8 @@ enum {
 		return;
 	}
 
+	LogToConsoleDebug("Upgrade eligibility check start");
+
 	TDCInAppPurchaseUpgradeEligibilitySheet *eligibilitySheet =
 	[[TDCInAppPurchaseUpgradeEligibilitySheet alloc] initWithWindow:self.window];
 
@@ -737,6 +775,8 @@ enum {
 
 - (void)upgradeEligibilitySheetChanged:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
 {
+	LogToConsoleDebug("Eligibility changed to %ld", sender.eligibility);
+
 	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibilityUnknown ||
 		sender.eligibility == TLOInAppPurchaseUpgradeNotEligible)
 	{
@@ -760,6 +800,8 @@ enum {
 
 - (void)upgradeEligibilitySheetWillClose:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
 {
+	LogToConsoleDebug("Upgrade eligibility check end");
+
 	self.workInProgress = NO;
 
 	self.upgradeEligiblitySheet = nil;
@@ -1069,6 +1111,8 @@ enum {
 
 	self.performingPurchase = YES;
 
+	LogToConsoleDebug("Paying for product %@", product.productIdentifier);
+
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0009]")];
 
 	SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
@@ -1086,6 +1130,8 @@ enum {
 		return NO;
 	}
 
+	LogToConsoleDebug("Restoring transactions on show");
+
 	return [self restoreTransactions];
 }
 
@@ -1096,6 +1142,8 @@ enum {
 	}
 
 	self.performingRestore = YES;
+
+	LogToConsoleDebug("Restoring transactions");
 
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0010]")];
 
@@ -1119,6 +1167,8 @@ enum {
 
 - (BOOL)loadReceipt
 {
+	LogToConsoleDebug("Loading receipt");
+
 	[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogWillReloadReceiptNotification object:self];
 
 	BOOL loadResult = TLOAppStoreLoadReceipt();
@@ -1151,6 +1201,8 @@ enum {
 	if (TLOAppStoreTextualIsRegistered() == NO &&
 		TLOAppStoreIsTrialPurchased() == NO)
 	{
+		LogToConsoleDebug("No item purchased. Showing dialog.");
+
 		[RZNotificationCenter() postNotificationName:TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification object:self];
 
 		[self show];
@@ -1176,6 +1228,8 @@ enum {
 		return;
 	}
 
+	LogToConsoleDebug("Receipt refresh start");
+
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0007]")];
 
 	SKReceiptRefreshRequest *receiptRefreshRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
@@ -1190,6 +1244,8 @@ enum {
 - (void)onRefreshReceiptError:(NSError *)error
 {
 	NSParameterAssert(error != nil);
+
+	LogToConsoleDebug("Receipt refresh error: %@", error.localizedDescription);
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]", error.localizedDescription)
@@ -1206,6 +1262,8 @@ enum {
 
 - (void)onRefreshReceiptFinishedWithError:(nullable NSError *)error
 {
+	LogToConsoleDebug("Receipt refresh end");
+
 	self.workInProgress = NO;
 
 	self.receiptRefreshRequest = nil;
@@ -1240,6 +1298,8 @@ enum {
 	} else {
 		return;
 	}
+
+	LogToConsoleDebug("Products request start");
 
 	if (requestProductsAgain == NO) {
 		[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0008]")];
@@ -1280,6 +1340,8 @@ enum {
 {
 	NSParameterAssert(error != nil);
 
+	LogToConsoleDebug("Products request error: %@", error.localizedDescription);
+
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
@@ -1298,6 +1360,8 @@ enum {
 
 - (void)onRequestProductsFinishedWithError:(nullable NSError *)error
 {
+	LogToConsoleDebug("Products request end");
+
 	self.workInProgress = NO;
 
 	self.productsRequest = nil;
