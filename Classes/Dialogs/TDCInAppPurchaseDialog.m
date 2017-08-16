@@ -1107,8 +1107,6 @@ enum {
 		return;
 	}
 
-	self.workInProgress = YES;
-
 	self.performingPurchase = YES;
 
 	LogToConsoleDebug("Paying for product %@", product.productIdentifier);
