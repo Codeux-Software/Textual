@@ -93,7 +93,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)endSheet
 {
-	[self _cancelEligiblityCheck];
+	[self _cancelEligibilityCheck];
 
 	[super endSheet];
 }
@@ -108,7 +108,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)checkEligibility
 {
-	[self _checkEligiblity];
+	[self _checkEligibility];
 }
 
 #pragma mark -
@@ -159,7 +159,7 @@ ClassWithDesignatedInitializerInitMethod
 						   }];
 }
 
-- (void)_cancelEligiblityCheck
+- (void)_cancelEligibilityCheck
 {
 	if (self.checkingEligibility == NO) {
 		return;
@@ -167,10 +167,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self.licenseManagerDownloader cancelRequest];
 
-	[self _checkEligiblityCompletionBlock];
+	[self _checkEligibilityCompletionBlock];
 }
 
-- (void)_checkEligiblity
+- (void)_checkEligibility
 {
 	if (self.eligibility != TLOLicenseUpgradeEligibilityUnknown) {
 		[self _eligibilityDetermined];
@@ -178,10 +178,10 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	[self _checkEligiblityOfLicense:self.licenseKey];
+	[self _checkEligibilityOfLicense:self.licenseKey];
 }
 
-- (void)_checkEligiblityOfLicense:(NSString *)licenseKey
+- (void)_checkEligibilityOfLicense:(NSString *)licenseKey
 {
 	NSParameterAssert(licenseKey != nil);
 
@@ -198,7 +198,7 @@ ClassWithDesignatedInitializerInitMethod
 	TLOLicenseManagerDownloader *licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
 	licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful, NSUInteger statusCode, id _Nullable statusContext) {
-		[weakSelf _checkEligiblityCompletionBlock];
+		[weakSelf _checkEligibilityCompletionBlock];
 
 		[weakSelf _extractEligibilityFromResponseWithStatusCode:statusCode statusContext:statusContext];
 	};
@@ -211,7 +211,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.licenseManagerDownloader = licenseManagerDownloader;
 }
 
-- (void)_checkEligiblityCompletionBlock
+- (void)_checkEligibilityCompletionBlock
 {
 	self.licenseManagerDownloader = nil;
 

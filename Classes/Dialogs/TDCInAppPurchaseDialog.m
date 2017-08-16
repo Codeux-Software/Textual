@@ -84,7 +84,7 @@ enum {
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
 @property (nonatomic, weak) IBOutlet NSTextField *progressViewTextField;
 @property (nonatomic, assign) BOOL performingUpgradeEligibilityCheck;
-@property (nonatomic, strong, nullable) TDCInAppPurchaseUpgradeEligibilitySheet *upgradeEligiblitySheet;
+@property (nonatomic, strong, nullable) TDCInAppPurchaseUpgradeEligibilitySheet *upgradeEligibilitySheet;
 
 - (IBAction)restoreTransactions:(id)sender;
 - (IBAction)writeReview:(id)sender;
@@ -741,7 +741,7 @@ enum {
 #pragma mark -
 #pragma mark Discount
 
-- (void)checkUpgradeEligiblity
+- (void)checkUpgradeEligibility
 {
 	if (self.workInProgress == NO) {
 		self.workInProgress = YES;
@@ -758,13 +758,13 @@ enum {
 
 	[eligibilitySheet checkEligibility];
 
-	self.upgradeEligiblitySheet = eligibilitySheet;
+	self.upgradeEligibilitySheet = eligibilitySheet;
 }
 
 - (void)closeUpgradeEligibilitySheet
 {
-	if (self.upgradeEligiblitySheet) {
-		[self.upgradeEligiblitySheet endSheet];
+	if (self.upgradeEligibilitySheet) {
+		[self.upgradeEligibilitySheet endSheet];
 	}
 }
 
@@ -804,15 +804,15 @@ enum {
 
 	self.workInProgress = NO;
 
-	self.upgradeEligiblitySheet = nil;
+	self.upgradeEligibilitySheet = nil;
 }
 
 #pragma mark -
 #pragma mark Actions
 
-- (void)checkUpgradeEligiblity:(id)sender
+- (void)checkUpgradeEligibility:(id)sender
 {
-	[self checkUpgradeEligiblity];
+	[self checkUpgradeEligibility];
 }
 
 - (void)writeReview:(id)sender
@@ -914,7 +914,7 @@ enum {
 	tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][3]");
 
 	tableEntry.target = self;
-	tableEntry.action = @selector(checkUpgradeEligiblity:);
+	tableEntry.action = @selector(checkUpgradeEligibility:);
 	
 	return tableEntry;
 }
