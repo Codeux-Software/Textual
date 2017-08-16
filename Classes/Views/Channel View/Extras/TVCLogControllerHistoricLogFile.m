@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerHistoricLogFile ()
 @property (nonatomic, assign, readwrite) BOOL isSaving;
+@property (nonatomic, assign, readwrite) BOOL isTerminating;
 @property (nonatomic, assign, readwrite) BOOL processLoaded;
 @property (nonatomic, assign, readwrite) BOOL processLoading;
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
@@ -226,9 +227,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareForApplicationTermination
 {
-	[self saveData];
+	self.isTerminating = YES;
 
-	self.connectionInvalidatedVoluntarily = YES;
+	[self saveData];
 }
 
 #pragma mark -
@@ -292,6 +293,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveData
 {
+	if (self.isTerminating) {
+		if (self.processLoaded == NO && self.processLoading == NO) {
+			return;
+		}
+	}
+
 	if (self.isSaving == NO) {
 		self.isSaving = YES;
 	} else {
@@ -304,6 +311,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[[self remoteObjectProxy] saveDataWithCompletionBlock:^{
 		self.isSaving = NO;
+
+		if (self.isTerminating) {
+			[self invalidateProcess];
+		}
 	}];
 }
 
