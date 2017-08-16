@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (oldPathFiles == nil) {
 		LogToConsoleError("Failed to list contents of old directory: %@",
-			oldPathFilesError.localizedDescription)
+			  oldPathFilesError.localizedDescription);
 
 		return;
 	}
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	LogToConsoleDebug("Warming process...")
+	LogToConsoleDebug("Warming process...");
 
 	self.processLoading = YES;
 
@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)invalidateProcess
 {
-	LogToConsoleDebug("Invaliating process...")
+	LogToConsoleDebug("Invaliating process...");
 
 	self.connectionInvalidatedVoluntarily = YES;
 
@@ -183,12 +183,12 @@ NS_ASSUME_NONNULL_BEGIN
 		self.processLoading = NO;
 		self.processLoaded = NO;
 
-		LogToConsoleError("Failed to communicate with process to open database")
+		LogToConsoleError("Failed to communicate with process to open database");
 	}] openDatabaseAtPath:[self databaseSavePath] withCompletionBlock:^(BOOL success) {
 		if (success) {
-			LogToConsoleDebug("Successfully opened database")
+			LogToConsoleDebug("Successfully opened database");
 		} else {
-			LogToConsoleError("Failed to open database")
+			LogToConsoleError("Failed to open database");
 		}
 
 		self.processLoading = NO;
@@ -212,13 +212,13 @@ NS_ASSUME_NONNULL_BEGIN
 	serviceConnection.interruptionHandler = ^{
 		[self interuptionHandler];
 
-		LogToConsole("Interuption handler called")
+		LogToConsole("Interuption handler called");
 	};
 
 	serviceConnection.invalidationHandler = ^{
 		[self invalidationHandler];
 
-		LogToConsole("Invalidation handler called")
+		LogToConsole("Invalidation handler called");
 	};
 
 	[serviceConnection resume];
@@ -300,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.lastServiceConnectionError = error;
 
 		LogToConsoleError("Error occurred while communicating with service: %@",
-						  error.localizedDescription);
+			error.localizedDescription);
 
 		if (handler) {
 			handler(error);
@@ -325,7 +325,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 				if (logLine == nil) {
 					LogToConsoleError("Failed to initalize object %@. Corrupt data?",
-						entry.description)
+						  entry.description);
 
 					continue;
 				}
@@ -350,7 +350,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.isSaving == NO) {
 		self.isSaving = YES;
 	} else {
-		LogToConsoleDebug("Cancelled save because a save is already saving")
+		LogToConsoleDebug("Cancelled save because a save is already saving");
 
 		return;
 	}

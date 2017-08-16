@@ -331,7 +331,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (propertyList == nil) {
 		if (parseError) {
-			LogToConsoleError("Error Creating Property List: %{public}@", parseError.localizedDescription)
+			LogToConsoleError("Error Creating Property List: %{public}@", parseError.localizedDescription);
 		}
 
 		return NO;
@@ -340,7 +340,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	BOOL writeResult = [propertyList writeToURL:url atomically:YES];
 
 	if (writeResult == NO) {
-		LogToConsoleError("Write failed")
+		LogToConsoleError("Write failed");
 
 		return NO;
 	}

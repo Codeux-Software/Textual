@@ -2591,7 +2591,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		if (itemIndexNew >= 0) {
 			[selectedRowsNew addIndex:itemIndexNew];
 		} else {
-			LogToConsoleDebug("Tried to shift selection to an item not in the server list")
+			LogToConsoleDebug("Tried to shift selection to an item not in the server list");
 
 			return;
 		}
@@ -2680,7 +2680,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		}
 		else if (u.isQuitting)
 		{
-			LogToConsole("Double click event ignored because client is quitting")
+			LogToConsole("Double click event ignored because client is quitting");
 		}
 		else
 		{

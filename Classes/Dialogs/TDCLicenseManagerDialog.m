@@ -476,7 +476,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	if (lastCheckTime > 0 && remindMeLater) {
 		if ((currentTime - lastCheckTime) < _upgradeDialogRemindMeInterval) {
-			LogToConsoleInfo("Not enough time has passed since last presentation")
+			LogToConsoleInfo("Not enough time has passed since last presentation");
 
 			return;
 		}

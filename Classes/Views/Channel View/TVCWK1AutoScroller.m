@@ -216,7 +216,7 @@ static CGFloat _scrollTopUserConstant = 25.0;
 		CGFloat scrollTop = (scrollHeight - self->_scrollLastPosition1);
 
 		if (scrollTop < _scrollTopUserConstant) {
-			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.")
+			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
 
 			self->_isScrolledByUser = NO;
 
@@ -231,7 +231,7 @@ static CGFloat _scrollTopUserConstant = 25.0;
 			CGFloat scrollTop = (self->_currentScrollTopValue - self->_scrollLastPosition1);
 
 			if (scrollTop > _scrollTopUserConstant) {
-				LogToConsoleDebug("User scrolled above threshold. Disabled auto scroll.")
+				LogToConsoleDebug("User scrolled above threshold. Disabled auto scroll.");
 
 				self->_isScrolledByUser = YES;
 			}

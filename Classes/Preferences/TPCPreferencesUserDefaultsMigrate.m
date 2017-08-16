@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Create a backup of the source */
 		if (replaceSource) {
 			if ([TPCPreferencesUserDefaults createBackupOfPath:sourcePath] == NO) {
-				LogToConsoleError("Failed to create backup of source path: '%{public}@'", sourcePath)
+				LogToConsoleError("Failed to create backup of source path: '%{public}@'", sourcePath);
 
 				return;
 			}
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if ([RZFileManager() removeItemAtPath:sourcePath error:&removeSourcePathError] == NO) {
 				LogToConsoleError("Failed to erase source path: '%{public}@' - '%{public}@'",
-					sourcePath, [removeSourcePathError localizedDescription])
+					  sourcePath, removeSourcePathError.localizedDescription);
 
 				return;
 			}
@@ -166,7 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if ([RZFileManager() fileExistsAtPath:sourcePathLeading] == NO) {
 				if ([RZFileManager() createDirectoryAtPath:sourcePathLeading withIntermediateDirectories:YES attributes:nil error:&createSourcePathLeadingError] == NO) {
 					LogToConsoleError("Failed to create source path: '%{public}@' - '%{public}@'",
-									  sourcePathLeading, [createSourcePathLeadingError localizedDescription])
+						sourcePathLeading, createSourcePathLeadingError.localizedDescription);
 
 					return;
 				}
@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if ([RZFileManager() createSymbolicLinkAtPath:sourcePath withDestinationPath:destinationPath error:&createSymbolicLinkError] == NO) {
 			LogToConsoleError("Failed to create symbolic link to destination path: '%{public}@' -> '%{public}@' - %{public}@",
-							  sourcePath, destinationPath, [createSymbolicLinkError localizedDescription])
+				 sourcePath, destinationPath, createSymbolicLinkError.localizedDescription);
 		}
 
 		/* Modify source attributes */
@@ -188,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
 				LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
-								  [sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
+					sourcePathURL.absoluteString, modifySourcePathAttributesError.localizedDescription);
 			}
 		}
 
@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
 				LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
-								  [sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
+					sourcePathURL.absoluteString, modifySourcePathAttributesError.localizedDescription);
 			}
 		}
 	}

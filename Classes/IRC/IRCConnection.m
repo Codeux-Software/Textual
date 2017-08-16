@@ -95,7 +95,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	LogToConsoleDebug("Invaliating process...")
+	LogToConsoleDebug("Invaliating process...");
 
 	[self.serviceConnection invalidate];
 }
@@ -126,13 +126,13 @@ ClassWithDesignatedInitializerInitMethod
 	serviceConnection.interruptionHandler = ^{
 		[self interuptionHandler];
 
-		LogToConsole("Interuption handler called")
+		LogToConsole("Interuption handler called");
 	};
 
 	serviceConnection.invalidationHandler = ^{
 		[self invalidationHandler];
 
-		LogToConsole("Invalidation handler called")
+		LogToConsole("Invalidation handler called");
 	};
 
 	[serviceConnection resume];

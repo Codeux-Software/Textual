@@ -152,7 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TXUnsignedLongLong totalFilesize = [fileAttributes fileSize];
 
 	if (totalFilesize == 0) {
-		LogToConsoleError("Fatal error: Cannot create sender because filesize == 0")
+		LogToConsoleError("Fatal error: Cannot create sender because filesize == 0");
 
 		return nil;
 	}
@@ -392,7 +392,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (isConnected == NO) {
 		if (connectionError) {
-			LogToConsoleError("DCC Connect Error: %{public}@", connectionError.localizedDescription)
+			LogToConsoleError("DCC Connect Error: %{public}@", connectionError.localizedDescription);
 		}
 
 		[self closeWithLocalizedError:@"TDCFileTransferDialog[1017]"];
@@ -478,12 +478,12 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.portMapping.isMapped) {
 		[self updateIPAddress];
 
-		LogToConsoleInfo("Successful port mapping on port %{public}hu", self.hostPort)
+		LogToConsoleInfo("Successful port mapping on port %{public}hu", self.hostPort);
 
 		return;
 	}
 
-	LogToConsoleError("Port mapping failed with error code: %{public}i", self.portMapping.error)
+	LogToConsoleError("Port mapping failed with error code: %{public}i", self.portMapping.error);
 
 	if (self.isReversed) {
 		[self closeWithLocalizedError:@"TDCFileTransferDialog[1018]"];
@@ -504,14 +504,14 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *address = self.transferDialog.IPAddress;
 
-	LogToConsoleDebug("TDCFileTransferDialog cached IP address: %{public}@", address)
+	LogToConsoleDebug("TDCFileTransferDialog cached IP address: %{public}@", address);
 
 	BOOL manuallyDetect = ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod);
 
 	if (address == nil && manuallyDetect == NO) {
 		NSString *publicAddress = self.portMapping.publicAddress;
 
-		LogToConsoleDebug("Port mapper public IP address: %{public}@", publicAddress)
+		LogToConsoleDebug("Port mapper public IP address: %{public}@", publicAddress);
 
 		if (publicAddress.isIPAddress) {
 			self.transferDialog.IPAddress = publicAddress;
@@ -523,11 +523,11 @@ ClassWithDesignatedInitializerInitMethod
 	/* Request address? */
 	if (address == nil) {
 		if (manuallyDetect) {
-			LogToConsoleError("User has set IP address detection to be manual but have no address set")
+			LogToConsoleError("User has set IP address detection to be manual but have no address set");
 
 			[self noteIPAddressLookupFailed];
 		} else {
-			LogToConsoleDebug("Performing IP address lookup using the Internet")
+			LogToConsoleDebug("Performing IP address lookup using the Internet");
 
 			[self.transferDialog requestIPAddress];
 
@@ -557,7 +557,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)noteIPAddressLookupSucceeded
 {
-	LogCurrentStackTraceWithType(LogToConsoleTypeDebug)
+	LogCurrentStackTraceWithType(LogToConsoleTypeDebug);
 
 	if (self.isSender) {
 		if (self.isReversed) {

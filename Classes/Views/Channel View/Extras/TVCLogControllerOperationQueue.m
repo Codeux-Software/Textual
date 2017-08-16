@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSMutableArray *pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
 
 		if (pendingOperations == nil) {
-			LogToConsoleError("'pendingOperations' is nil when it's not supposed to be. wat?")
+			LogToConsoleError("'pendingOperations' is nil when it's not supposed to be. wat?");
 
 			return;
 		}

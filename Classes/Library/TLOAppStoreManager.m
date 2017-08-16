@@ -66,7 +66,7 @@ BOOL TLOAppStoreLoadReceipt(void)
 	BOOL loadSuccessful = ARLReadReceiptFromBundle(RZMainBundle(), &receiptContents);
 
 	if (loadSuccessful == NO) {
-		LogToConsoleError("Failed to laod receipt contents: %@", ARLLastErrorMessage())
+		LogToConsoleError("Failed to laod receipt contents: %@", ARLLastErrorMessage());
 
 		TLOAppStoreReceiptContents = nil;
 
@@ -74,7 +74,7 @@ BOOL TLOAppStoreLoadReceipt(void)
 	}
 
 	if (NSObjectsAreEqual(TXBundleBuildProductIdentifier, receiptContents.bundleIdentifier) == NO) {
-		LogToConsoleError("Mismatched bundle identifier")
+		LogToConsoleError("Mismatched bundle identifier");
 
 		TLOAppStoreReceiptContents = nil;
 

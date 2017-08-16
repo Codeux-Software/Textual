@@ -240,7 +240,8 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 		if (propertyList == nil || [propertyList isKindOfClass:[NSDictionary class]] == NO) {
 			if (propertyListReadError) {
-				LogToConsoleError("Failed to convert contents of request into dictionary. Error: %{public}@", [propertyListReadError localizedDescription])
+				LogToConsoleError("Failed to convert contents of request into dictionary. Error: %{public}@",
+					  propertyListReadError.localizedDescription);
 			}
 		}
 	}
@@ -249,7 +250,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 		id l_statusCode = propertyList[@"Status Code"];
 
 		if (l_statusCode == nil || [l_statusCode isKindOfClass:[NSNumber class]] == NO) {
-			LogToConsoleError("'Status Code' is nil or not of kind 'NSNumber'")
+			LogToConsoleError("'Status Code' is nil or not of kind 'NSNumber'");
 
 			goto present_fatal_error;
 		}
@@ -264,13 +265,13 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSData class]] == NO) {
-					LogToConsoleError("'Status Context' is nil or not of kind 'NSData'")
+					LogToConsoleError("'Status Context' is nil or not of kind 'NSData'");
 
 					goto present_fatal_error;
 				}
 
 				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
-					LogToConsoleError("Failed to write user license file contents")
+					LogToConsoleError("Failed to write user license file contents");
 
 					goto present_fatal_error;
 				}
@@ -285,13 +286,13 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
+					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
 
 				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
-					LogToConsoleError("Action blocked returned error")
+					LogToConsoleError("Action blocked returned error");
 
 					goto present_fatal_error;
 				}
@@ -299,7 +300,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
 
 				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
-					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length")
+					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length");
 
 					goto present_fatal_error;
 				}
@@ -314,13 +315,13 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
+					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
 
 				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
-					LogToConsoleError("Action blocked returned error")
+					LogToConsoleError("Action blocked returned error");
 
 					goto present_fatal_error;
 				}
@@ -328,7 +329,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
 
 				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
-					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length")
+					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length");
 
 					goto present_fatal_error;
 				}
@@ -343,7 +344,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestLicenseUpgradeEligibilityType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
+					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
@@ -355,7 +356,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'")
+					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
@@ -388,7 +389,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500001)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
+					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
@@ -396,7 +397,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSString *licenseKey = statusContext[@"licenseKey"];
 
 				if (NSObjectIsEmpty(licenseKey)) {
-					LogToConsoleError("'licenseKey' is nil or of zero length")
+					LogToConsoleError("'licenseKey' is nil or of zero length");
 
 					goto present_fatal_error;
 				}
@@ -413,7 +414,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500002)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
+					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
@@ -421,7 +422,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSString *licenseKey = statusContext[@"licenseKey"];
 
 				if (NSObjectIsEmpty(licenseKey)) {
-					LogToConsoleError("'licenseKey' is nil or of zero length")
+					LogToConsoleError("'licenseKey' is nil or of zero length");
 
 					goto present_fatal_error;
 				}
@@ -445,7 +446,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == 6400001)
 			{
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
+					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
@@ -453,7 +454,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSString *originalInput = statusContext[@"originalInput"];
 
 				if (NSObjectIsEmpty(originalInput)) {
-					LogToConsoleError("'originalInput' is nil or of zero length")
+					LogToConsoleError("'originalInput' is nil or of zero length");
 
 					goto present_fatal_error;
 				}
@@ -477,7 +478,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				/* We do not present a custom dialog for this error, but we still log
 				 the contents of the context to the console to help diagnose issues. */
 				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'")
+					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 
 					goto present_fatal_error;
 				}
@@ -485,12 +486,12 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				NSString *errorMessage = statusContext[@"Error Message"];
 
 				if (NSObjectIsEmpty(errorMessage)) {
-					LogToConsoleError("'errorMessage' is nil or of zero length")
+					LogToConsoleError("'errorMessage' is nil or of zero length");
 
 					goto present_fatal_error;
 				}
 
-				LogToConsoleError("Receipt validation failed:\n%{public}@", errorMessage)
+				LogToConsoleError("Receipt validation failed:\n%{public}@", errorMessage);
 
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1019][2]", errorMessage)
 														 title:TXTLS(@"TLOLicenseManager[1019][1]")
@@ -730,7 +731,7 @@ perform_return:
 {
 	[self destroyConnectionRequest]; // Destroy the existing request
 
-	LogToConsoleError("Failed to complete connection request with error: %{public}@", [error localizedDescription])
+	LogToConsoleError("Failed to complete connection request with error: %{public}@", error.localizedDescription);
 
 	if ( self.delegate) {
 		[self.delegate processResponseForRequestType:self.requestType

@@ -297,7 +297,7 @@ NS_ASSUME_NONNULL_BEGIN
 								continue;
 							}
 						} else {
-							LogToConsoleDebug("senderUser == nil — Skipping to next filter")
+							LogToConsoleDebug("senderUser == nil — Skipping to next filter");
 
 							continue;
 						}
@@ -484,7 +484,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if ((now - filterLastPerform) <= floodControlInterval) {
 			LogToConsoleDebug("Not performing action because of flood control: %.2f %.2f",
-				now, filterLastPerform)
+				  now, filterLastPerform);
 
 			return NO;
 		}

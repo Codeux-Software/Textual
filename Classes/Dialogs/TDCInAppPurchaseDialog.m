@@ -240,7 +240,7 @@ enum {
 
 	if (lastCheckTime > 0) {
 		if ((currentTime - lastCheckTime) < _trialExpiredRemindMeInterval) {
-			LogToConsoleInfo("Not enough time has passed since last presentation")
+			LogToConsoleInfo("Not enough time has passed since last presentation");
 
 			return;
 		}

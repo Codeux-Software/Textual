@@ -87,7 +87,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)startSheet
 {
-	LogToConsoleError("This method does nothing. Use -checkEligibility instead.")
+	LogToConsoleCurrentStackTrace
+	LogToConsoleError("This method does nothing. Use -checkEligibility instead.");
 }
 
 - (void)endSheet
@@ -221,7 +222,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_extractEligibilityFromResponseWithStatusCode:(NSUInteger)statusCode statusContext:(nullable NSDictionary<NSString *, id> *)statusContext
 {
-	LogToConsoleDebug("Status code: %ld", statusCode)
+	LogToConsoleDebug("Status code: %ld", statusCode);
 
 #define _presentEligibilityCheckFailedSheet 	\
 	[self _presentEligibilityCheckFailedSheetWithError:errorMessage]; 	\
@@ -251,7 +252,7 @@ ClassWithDesignatedInitializerInitMethod
 	id eligibilityObject = [statusContext objectForKey:@"licenseUpgradeEligibility"];
 
 	if (eligibilityObject == nil || [eligibilityObject isKindOfClass:[NSNumber class]] == NO) {
-		LogToConsoleError("'licenseUpgradeEligibility' is nil or not of kind 'NSNumber'")
+		LogToConsoleError("'licenseUpgradeEligibility' is nil or not of kind 'NSNumber'");
 
 		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][3]");
 

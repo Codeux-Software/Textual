@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(path != nil);
 
-	LogToConsoleInfo("Opening database at path: %@", path)
+	LogToConsoleInfo("Opening database at path: %@", path);
 
 	self.savePath = path;
 
@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetDataForChannel:(NSString *)channelId
 {
-	LogToConsoleDebug("Resetting the contents of channel: %@", channelId)
+	LogToConsoleDebug("Resetting the contents of channel: %@", channelId);
 
 	NSManagedObjectContext *context = self.managedObjectContext;
 
@@ -173,13 +173,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (fetchedObjects == nil) {
 			LogToConsoleError("Error occurred fetching objects: %@",
-				fetchRequestError.localizedDescription)
+				fetchRequestError.localizedDescription);
 
 			return;
 		}
 
 		LogToConsoleDebug("%ld results fetched for channel %@",
-			fetchedObjects.count, channelId)
+			  fetchedObjects.count, channelId);
 
 		@autoreleasepool {
 			NSMutableArray<TVCLogLineXPC *> *fetchedEntries = [NSMutableArray arrayWithCapacity:fetchedObjects.count];
@@ -260,10 +260,10 @@ NS_ASSUME_NONNULL_BEGIN
 	if (persistentStore == nil)
 	{
 		LogToConsoleError("Error Creating Persistent Store: %@",
-			addPersistentStoreError.localizedDescription)
+			  addPersistentStoreError.localizedDescription);
 
 		if (recursionDepth == 0) {
-			LogToConsoleInfo("Attempting to create a new persistent store")
+			LogToConsoleInfo("Attempting to create a new persistent store");
 
 			/* If we failed to load our store, we create a brand new one at a new path
 			 incase the old one is corrupted. We also erase the old database to not allow
@@ -329,7 +329,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([context commitEditing] == NO)
 	{
-		LogToConsoleError("Failed to commit editing")
+		LogToConsoleError("Failed to commit editing");
 	}
 
 	if ([context hasChanges])
@@ -338,12 +338,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if ([context save:&saveError] == NO) {
 			LogToConsoleError("Failed to perform save: %@",
-							  saveError.localizedDescription)
+			  saveError.localizedDescription);
 		} else {
-			LogToConsoleInfo("Performed save")
+			LogToConsoleInfo("Performed save");
 		}
 	} else {
-		LogToConsoleInfo("Did not perform save because nothing has changed")
+		LogToConsoleInfo("Did not perform save because nothing has changed");
 	}
 }
 
@@ -409,7 +409,7 @@ NS_ASSUME_NONNULL_BEGIN
 	channel.resizeTimer = resizeTimer;
 
 	LogToConsoleDebug("Scheduled to resize %@ in %f seconds",
-		channelId, resizeTimerInterval)
+		  channelId, resizeTimerInterval);
 }
 
 - (void)resizeChannel:(NSString *)channelId
@@ -448,7 +448,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	channel.lineCount = (channel.lineCount - rowsDeleted);
 
-	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, channelId)
+	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, channelId);
 }
 
 #pragma mark -
@@ -483,7 +483,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (batchDeleteResult == nil) {
 		LogToConsoleError("Failed to perform batch delete: %@",
-			batchDeleteError.localizedDescription)
+			  batchDeleteError.localizedDescription);
 
 		return 0;
 	}
@@ -509,7 +509,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (fetchedObjects == nil) {
 		LogToConsoleError("Error occurred fetching objects: %@",
-			fetchRequestError.localizedDescription)
+			  fetchRequestError.localizedDescription);
 
 		return 0;
 	}
@@ -549,7 +549,7 @@ NS_ASSUME_NONNULL_BEGIN
 	channel.newestIdentifier = [self _newestIdentifierForChannelFromDatabase:channelId];
 
 	LogToConsoleDebug("Context created for %@ - Line count: %ld, Newest identifier: %ld",
-		channel.channelId, channel.lineCount, channel.newestIdentifier)
+		  channel.channelId, channel.lineCount, channel.newestIdentifier);
 
 	[self.contextObjects setObject:channel forKey:channelId];
 

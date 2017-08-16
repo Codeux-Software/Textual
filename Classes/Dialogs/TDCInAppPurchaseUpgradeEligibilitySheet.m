@@ -75,7 +75,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startSheet
 {
-	LogToConsoleError("This method does nothing. Use -checkEligibility instead.")
+	LogToConsoleCurrentStackTrace
+	LogToConsoleError("This method does nothing. Use -checkEligibility instead.");
 }
 
 - (void)endSheet
@@ -156,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (receiptData == nil) {
 		LogToConsoleError("Failed to read the contents of the receipt file: %{public}@",
-			receiptDataReadError.localizedDescription)
+		  receiptDataReadError.localizedDescription);
 
 		return nil;
 	}
@@ -380,7 +381,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_extractEligibilityFromResponseWithStatusCode:(NSUInteger)statusCode statusContext:(nullable NSDictionary<NSString *, id> *)statusContext
 {
-	LogToConsoleDebug("Status code: %ld", statusCode)
+	LogToConsoleDebug("Status code: %ld", statusCode);
 
 #define _presentEligibilityCheckFailedSheet 	\
 	[self _presentEligibilityCheckFailedSheetWithError:errorMessage]; 	\
@@ -421,7 +422,7 @@ NS_ASSUME_NONNULL_BEGIN
 	id eligibilityObject = [statusContext objectForKey:@"receiptUpgradeEligibility"];
 
 	if (eligibilityObject == nil || [eligibilityObject isKindOfClass:[NSNumber class]] == NO) {
-		LogToConsoleError("'receiptUpgradeEligibility' is nil or not of kind 'NSNumber'")
+		LogToConsoleError("'receiptUpgradeEligibility' is nil or not of kind 'NSNumber'");
 
 		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1005][3]");
 

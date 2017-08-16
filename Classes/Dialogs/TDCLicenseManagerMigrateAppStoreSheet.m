@@ -176,7 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
 			matchedApplication = applicationURL;
 
 			LogToConsoleInfo("Automatically detected Mac App Store Textual 7 at the following path: %{public}@",
-					matchedApplication.path)
+			 matchedApplication.path);
 
 			break;
 		}
@@ -274,7 +274,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (receiptData == nil) {
 		LogToConsoleError("Failed to read the contents of the receipt file: %{public}@",
-				receiptDataReadError.localizedDescription)
+		  receiptDataReadError.localizedDescription);
 
 		return nil;
 	}

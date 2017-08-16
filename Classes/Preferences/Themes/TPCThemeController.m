@@ -285,7 +285,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	NSError *removeItemError = nil;
 
 	if ([RZFileManager() removeItemAtPath:temporaryPath error:&removeItemError] == NO) {
-		LogToConsoleError("Failed to remove temporary directory: %{public}@", [removeItemError localizedDescription])
+		LogToConsoleError("Failed to remove temporary directory: %{public}@", removeItemError.localizedDescription);
 	}
 }
 
@@ -325,7 +325,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 - (BOOL)validateThemeAndRelaodIfNecessary
 {
 	if ([self resetPreferencesForActiveTheme]) {
-		LogToConsoleInfo("Reloading theme because it failed validation")
+		LogToConsoleInfo("Reloading theme because it failed validation");
 
 		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
 		
@@ -397,7 +397,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	
 	NSString *themeSource = [TPCThemeController extractThemeSource:validatedTheme];
 
-	LogToConsoleInfo("Performing validation on theme named '%{public}@' with source type of '%{public}@'", themeName, themeSource)
+	LogToConsoleInfo("Performing validation on theme named '%{public}@' with source type of '%{public}@'", themeName, themeSource);
 
 	if ([themeSource isEqualToString:TPCThemeControllerBundledThemeNameBasicPrefix] || themeSource == nil)
 	{
@@ -689,7 +689,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	
 		if (activeThemeContentsWereDeleted)
 		{
-			LogToConsoleInfo("The contents of the configured theme was deleted. Validation and reload will now occur.")
+			LogToConsoleInfo("The contents of the configured theme was deleted. Validation and reload will now occur.");
 
 			(void)[themeController validateThemeAndRelaodIfNecessary];
 		}
@@ -774,13 +774,13 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		@"Tried to create a new copy operation with operation already in progress");
 
 	if (self.storageLocation == destinationLocation) {
-		LogToConsoleError("Tried to copy active theme to same storage location that it already exists within")
+		LogToConsoleError("Tried to copy active theme to same storage location that it already exists within");
 
 		return;
 	}
 
 	if (TPCThemeControllerStorageBundleLocation == destinationLocation) {
-		LogToConsoleError("Tried to copy active theme to the application itself")
+		LogToConsoleError("Tried to copy active theme to the application itself");
 
 		return;
 	}
@@ -856,10 +856,10 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 			NSError *trashItemError = nil;
 
 			if ([RZFileManager() trashItemAtURL:destinationURL resultingItemURL:NULL error:&trashItemError]) {
-				LogToConsoleInfo("A copy of the theme being copied already exists at the destination path. This copy has been moved to the trash.")
+				LogToConsoleInfo("A copy of the theme being copied already exists at the destination path. This copy has been moved to the trash.");
 			} else {
 				LogToConsoleError("Failed to trash destination: '%{public}@': %{public}@",
-					[destinationURL path], [trashItemError localizedDescription])
+					destinationURL.path, trashItemError.localizedDescription);
 
 				_cancelOperationAndReturn
 			}
@@ -876,7 +876,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 		if ([RZFileManager() copyItemAtURL:sourceURL toURL:fakeDestinationURL error:&copyFileError] == NO) {
 			LogToConsoleError("Failed to perform copy: '%{public}@' -> '%{public}@': %{public}@",
-				[sourceURL path], [fakeDestinationURL path], [copyFileError localizedDescription])
+				sourceURL.path, fakeDestinationURL.path, copyFileError.localizedDescription);
 
 			_cancelOperationAndReturn
 		}
@@ -886,7 +886,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 		if ([RZFileManager() setUbiquitous:YES itemAtURL:fakeDestinationURL destinationURL:destinationURL error:&setUbiquitousError] == NO) {
 			LogToConsoleError("Failed to set item as ubiquitous: '%{public}@': %{public}@",
-				[fakeDestinationURL path], [setUbiquitousError localizedDescription])
+				fakeDestinationURL.path, setUbiquitousError.localizedDescription);
 
 			_cancelOperationAndReturn
 		}

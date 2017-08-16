@@ -347,7 +347,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	 reschedule timer when the system date changes. */
 	if (self.lastDateHasChangedDate != nil) {
 		if ([self.lastDateHasChangedDate isInSameDayAsDate:lastMidnight]) {
-			LogToConsoleInfo("Date changed event received but the day hasn't changed")
+			LogToConsoleInfo("Date changed event received but the day hasn't changed");
 
 			return;
 		}
@@ -658,7 +658,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 		[mainWindowServerList() removeItemFromList:client];
 	}
 	@catch (NSException *exception) {
-		LogToConsoleError("Caught exception: %@", exception.reason)
+		LogToConsoleError("Caught exception: %@", exception.reason);
 		LogToConsoleCurrentStackTrace
 	}
 
@@ -710,7 +710,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 			[mainWindowServerList() removeItemFromList:channel];
 		}
 		@catch (NSException *exception) {
-			LogToConsoleError("Caught exception: %@", exception.reason)
+			LogToConsoleError("Caught exception: %@", exception.reason);
 			LogToConsoleCurrentStackTrace
 		}
 

@@ -373,13 +373,13 @@ create_normal_pool:
 	}
 
 	if (lineNumber == nil || errorMessage == nil || sourceURL == nil) {
-		LogToConsoleError("JavaScript Error in %{public}@: %{public}@", channelName, error.localizedDescription)
+		LogToConsoleError("JavaScript Error in %{public}@: %{public}@", channelName, error.localizedDescription);
 
 		return;
 	}
 
 	LogToConsoleError("A JavaScript error occurred in %{public}@ on line %{public}ld of %{public}@: %{public}@",
-		channelName, lineNumber.unsignedIntegerValue, sourceURL.path, errorMessage)
+		  channelName, lineNumber.unsignedIntegerValue, sourceURL.path, errorMessage);
 }
 
 - (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable))completionHandler

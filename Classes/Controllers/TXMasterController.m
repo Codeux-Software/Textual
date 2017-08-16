@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		LogToConsoleSetDebugLoggingEnabled(YES);
 
-		LogToConsoleDebug("Launching in debug mode")
+		LogToConsoleDebug("Launching in debug mode");
 	}
 
 #if defined(DEBUG)
@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask) {
 		self.ghostModeIsOn = YES;
 
-		LogToConsoleInfo("Launching without autoconnecting to the configured servers")
+		LogToConsoleInfo("Launching without autoconnecting to the configured servers");
 	}
 #endif
 }

@@ -324,7 +324,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *tempServerAddress = [tempStore substringWithRange:serverAddressRange];
 
 		if (tempServerAddress.IPv6Address == NO) {
-			LogToConsoleError("Server address was surrounded by square brackets but the enclosed value was not an IPv6 address")
+			LogToConsoleError("Server address was surrounded by square brackets but the enclosed value was not an IPv6 address");
 
 			return;
 		}
@@ -358,7 +358,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (serverAddress.validInternetAddress == NO) {
-		LogToConsoleError("Invalid internet address")
+		LogToConsoleError("Invalid internet address");
 
 		return;
 	}
@@ -382,7 +382,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		if (tempServerPort.validInternetPort == NO) {
-			LogToConsoleError("Invalid internet port")
+			LogToConsoleError("Invalid internet port");
 
 			return;
 		}
