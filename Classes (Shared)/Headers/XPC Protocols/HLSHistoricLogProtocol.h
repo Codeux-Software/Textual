@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveDataWithCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(void))completionBlock;
 
+- (void)forgetChannel:(NSString *)channelId;
 - (void)resetDataForChannel:(NSString *)channelId;
 
 - (void)fetchEntriesForChannel:(NSString *)channelId

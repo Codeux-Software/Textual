@@ -145,7 +145,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self.printingQueue cancelOperationsForViewController:self];
 
-	[self closeHistoricLog:(isTerminatingApplication == NO)];
+	if (isTerminatingApplication) {
+		[self closeHistoricLog];
+	} else {
+		[self historicLogForgetChannel];
+	}
 }
 
 - (void)prepareForApplicationTermination
@@ -213,8 +217,21 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Manage Historic Log
 
-- (void)resetHistoricLog
+- (void)historicLogForgetChannel
 {
+	/* Delete any trace of the channel, including context */
+	IRCChannel *channel = self.associatedChannel;
+	
+	if (channel == nil) {
+		return;
+	}
+	
+	[TVCLogControllerHistoricLogSharedInstance() forgetChannel:self.associatedChannel];
+}
+	
+- (void)historicLogResetChannel
+{
+	/* Delete log for channel but keep context */
 	IRCChannel *channel = self.associatedChannel;
 
 	if (channel == nil) {
@@ -226,11 +243,6 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)closeHistoricLog
 {
-	[self closeHistoricLog:NO];
-}
-
-- (void)closeHistoricLog:(BOOL)forceReset
-{
 	/* The historic log file is always open regardless of whether the user asked
 	 Textual to remember the history between restarts. It is always open because
 	 the reloading of a theme uses it to fill in the backlog after a reload.
@@ -240,14 +252,13 @@ ClassWithDesignatedInitializerInitMethod
 	 path that it is written to entirely. */
 
 	if (
-		/* 1 */ forceReset ||
-		/* 2 */ [TPCPreferences reloadScrollbackOnLaunch] == NO ||
-		/* 3 */  self.associatedChannel.isUtility ||
-		/* 4 */ (self.associatedChannel.isPrivateMessage &&
+		/* 1 */ [TPCPreferences reloadScrollbackOnLaunch] == NO ||
+		/* 2 */  self.associatedChannel.isUtility ||
+		/* 3 */ (self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO) ||
-		/* 5 */ self.encrypted)
+		/* 4 */ self.encrypted)
 	{
-		[self resetHistoricLog];
+		[self historicLogResetChannel];
 	}
 }
 
@@ -854,7 +865,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self.printingQueue cancelOperationsForViewController:self];
 
 	if (clearWithReset) {
-		[self resetHistoricLog];
+		[self historicLogResetChannel];
 	}
 	
 	@synchronized(self.highlightedLineNumbers) {

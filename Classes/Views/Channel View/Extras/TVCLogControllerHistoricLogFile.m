@@ -63,59 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	dispatch_once(&onceToken, ^{
 		sharedSelf = [[self alloc] init];
-
-		[sharedSelf prepareInitialState];
 	});
 
 	return sharedSelf;
-}
-
-#pragma mark -
-#pragma mark Migration
-
-- (void)relocateDatabaseFrom200PathTo300Path
-{
-	NSString *filenameNew = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v3"];
-
-	NSString *filenameOld = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
-
-	if (filenameNew != nil || filenameOld == nil) {
-		return;
-	}
-
-	NSString *oldPath = [TPCPathInfo applicationCachesFolderPath];
-
-	NSError *oldPathFilesError = nil;
-
-	NSArray *oldPathFiles = [RZFileManager() contentsOfDirectoryAtPath:oldPath error:&oldPathFilesError];
-
-	if (oldPathFiles == nil) {
-		LogToConsoleError("Failed to list contents of old directory: %@",
-			  oldPathFilesError.localizedDescription);
-
-		return;
-	}
-
-	NSString *newPath = [TPCPathInfo applicationCachesFolderInsideGroupContainerPath];
-
-	for (NSString *file in oldPathFiles) {
-		if ([file hasPrefix:@"logControllerHistoricLog_"] == NO) {
-			continue;
-		}
-
-		NSString *oldFilePath = [oldPath stringByAppendingPathComponent:file];
-
-		NSString *newFilePath = [newPath stringByAppendingPathComponent:file];
-
-		(void)[RZFileManager() replaceItemAtPath:newFilePath
-								  withItemAtPath:oldFilePath
-							   moveToDestination:YES
-						  moveDestinationToTrash:YES];
-	}
-
-	[RZUserDefaults() removeObjectForKey:@"TVCLogControllerHistoricLogFileSavePath_v2"];
-
-	[RZUserDefaults() setObject:filenameOld forKey:@"TVCLogControllerHistoricLogFileSavePath_v3"];
 }
 
 #pragma mark -
@@ -145,11 +95,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Construction
-
-- (void)prepareInitialState
-{
-	[self relocateDatabaseFrom200PathTo300Path];
-}
 
 - (void)warmProcessIfNeeded
 {
@@ -360,6 +305,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[[self remoteObjectProxy] saveDataWithCompletionBlock:^{
 		self.isSaving = NO;
 	}];
+}
+
+- (void)forgetChannel:(IRCChannel *)channel
+{
+	[self warmProcessIfNeeded];
+	
+	[[self remoteObjectProxy] forgetChannel:channel.uniqueIdentifier];
 }
 
 - (void)resetDataForChannel:(IRCChannel *)channel
