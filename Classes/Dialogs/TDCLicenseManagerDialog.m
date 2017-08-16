@@ -294,7 +294,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		return; // Nothing to do here...
 	}
 
-	NSDictionary *commandLineArguments = [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSArgumentDomain];;
+	NSDictionary *commandLineArguments = [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSArgumentDomain];
 
 	NSString *argumentLicenseKey = commandLineArguments[@"-licenseKey"];
 

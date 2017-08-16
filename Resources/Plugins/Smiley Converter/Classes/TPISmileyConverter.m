@@ -156,7 +156,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[self stringWithReplacedSmiley:smiley inString:finalString];
 	}
 
-	return [finalString copy];;
+	return [finalString copy];
 }
 
 /* The replacement call uses a lot of work done by the actual Textual renderring engine. */

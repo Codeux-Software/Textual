@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForInactiveWindow;
 @property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
 
-@property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForActiveWindow;;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForActiveWindow;
 @property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForInactiveWindow;
 
 @property (readonly, copy) NSColor *messageCountNormalBadgeBackgroundColorForActiveWindow;
