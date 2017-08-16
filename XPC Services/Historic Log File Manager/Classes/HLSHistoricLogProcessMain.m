@@ -39,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HLSHistoricLogProcessMain ()
 @property (nonatomic, assign) BOOL isPerformingSave;
-@property (nonatomic, assign) BOOL isNewDatabase;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -249,10 +248,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSURL *persistentStorePath = [NSURL fileURLWithPath:self.savePath];
 
-	/* Assigning a value to self.isNewDatabase allows us to know whether we 
-	 can skip certain migration steps, thus reducing overhead. */
-	self.isNewDatabase = ([[NSFileManager defaultManager] fileExistsAtPath:persistentStorePath.path] == NO);
-
 	NSError *addPersistentStoreError = nil;
 
 	NSPersistentStore *persistentStore =
@@ -454,107 +449,6 @@ NS_ASSUME_NONNULL_BEGIN
 	channel.lineCount = (channel.lineCount - rowsDeleted);
 
 	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, channelId)
-}
-
-#pragma mark -
-#pragma mark Migration
-
-/* A 'id' column now exists in the database. The 'id' column is a non-unique 64-bit number.
- It starts at 0 and increments by 1. It acts as an index on a per-channel basis.
-
- For example:
-
- | id |   channel   |
- --------------------
- | 0  |  #textual   |
- | 1  |  #textual   |
- | 2  |  #textual   |
- | 0  |  #freenode  |
-
- This allows us to batch delete by taking last 'id' value for a channel,
- subtracting by a specific amount, and deleting all rows that meet that
- condition.
-
- A better solution would to use raw sqlite quries. That is the end goal
- if this design proves to be ineffecient. */
-/* This migration method is in itself terribly ineffecient since it 
- enumerates the entire database, but the trade off is believed to be
- worth it, since it is only performed one time. */
-- (void)_performOneTimeMigrationToIdentifiers
-{
-#define _defaultsKey		@"Migration -> Migrated to Model 2"
-
-	LogToConsoleDebug("Performing one time migration to identifiers")
-
-	if (self.isNewDatabase) {
-		LogToConsoleDebug("Migration cancelled becase this is a new database")
-
-		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:_defaultsKey];
-
-		return;
-	}
-
-	BOOL performedMigration = [[NSUserDefaults standardUserDefaults] boolForKey:_defaultsKey];
-
-	if (performedMigration != NO) {
-		LogToConsoleDebug("Migration cancelled becase it has already been performed")
-
-		return;
-	}
-
-	NSManagedObjectContext *context = self.managedObjectContext;
-
-	[context performBlockAndWait:^{
-		NSFetchRequest *fetchRequest =
-		[[self.managedObjectModel fetchRequestTemplateForName:@"LogLineFetchRequestAll"] copy];
-
-		fetchRequest.sortDescriptors =
-		@[[[NSSortDescriptor alloc] initWithKey:@"channelId" ascending:NO],
-		  [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
-
-		NSManagedObjectContext *context = self.managedObjectContext;
-
-		NSError *fetchRequestError = nil;
-
-		NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&fetchRequestError];
-
-		if (fetchedObjects == nil) {
-			LogToConsoleError("Error occurred fetching objects: %@",
-				fetchRequestError.localizedDescription)
-
-			return;
-		}
-
-		__block NSString *currentChannelId = nil;
-
-		__block NSInteger currentIdentifier = 0;
-
-		[fetchedObjects enumerateObjectsUsingBlock:^(NSManagedObject *object, NSUInteger index, BOOL *stop) {
-			NSString *channelId = [object valueForKey:@"channelId"];
-
-			if (currentChannelId == nil) {
-				currentChannelId = channelId;
-			} else {
-				if ([currentChannelId isEqualToString:channelId] == NO) {
-					currentChannelId = channelId;
-
-					currentIdentifier = 0;
-				}
-			}
-
-			[object setValue:@(currentIdentifier) forKey:@"id"];
-
-			currentIdentifier += 1;
-		}];
-
-		[self _quickSave];
-
-		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:_defaultsKey];
-
-		LogToConsoleDebug("Migration completed")
-	}];
-
-#undef _defaultsKey
 }
 
 #pragma mark -
