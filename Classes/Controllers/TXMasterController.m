@@ -40,12 +40,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* During termination Textual will try to allow clients to shut down gracefully
- by sending the QUIT command and waiting for a response. If clients do not
- shut down gracefully within the time allotted below, then we continue with
- termination regardless of their status. */
-#define _gracefulTerminateTimeout		5
-
 @interface TXMasterController ()
 @property (nonatomic, strong, readwrite) IRCWorld *world;
 @property (nonatomic, assign, readwrite) BOOL debugModeIsOn;
@@ -54,7 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL applicationIsLaunched;
 @property (nonatomic, assign, readwrite) BOOL applicationIsTerminating;
 @property (nonatomic, assign, readwrite) BOOL applicationIsChangingActiveState;
-@property (nonatomic, assign) CFAbsoluteTime applicationTerminationTimestamp;
 @property (readonly) BOOL isSafeToPerformApplicationTermination;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
@@ -453,7 +446,7 @@ NS_ASSUME_NONNULL_BEGIN
 		&&
 
 		/* iCloud is syncing */
-		[sharedCloudManager() isTerminated]
+		sharedCloudManager().isTerminated
 #endif
 	);
 }
@@ -461,8 +454,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performApplicationTerminationStepOne
 {
 	self.applicationIsTerminating = YES;
-
-	self.applicationTerminationTimestamp = CFAbsoluteTimeGetCurrent();
 
 	[self.mainWindow prepareForApplicationTermination];
 	
@@ -492,8 +483,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self.menuController prepareForApplicationTermination];
 
-	[TVCLogControllerHistoricLogSharedInstance() prepareForApplicationTermination];
-
 	[self performApplicationTerminationStepTwo];
 }
 
@@ -512,15 +501,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return;
 	}
-
+    
+    /* We want certain things to 100% happen before the app completely closes.
+     This block that is performed below loops until all these actions are completed.
+     Notable actions: gracefully leaving IRC, saving historic logs, and closing
+     down iCloud syncing (if applicable). */ 
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
-		while (self.isSafeToPerformApplicationTermination == NO) {
-			if ((CFAbsoluteTimeGetCurrent() - self.applicationTerminationTimestamp) > _gracefulTerminateTimeout) {
-				break;
-			}
-
-			[NSThread sleepForTimeInterval:0.5];
-		}
+        do {
+            /* We wait until this value reaches zero so that
+             view controllers had the chance to perform any
+             changes they want to historic log. */
+            if (self.terminatingClientCount == 0) {
+                [TVCLogControllerHistoricLogSharedInstance() prepareForApplicationTermination];
+            }
+            
+            /* Sleep a little bit so we aren't looping a lot. */
+            [NSThread sleepForTimeInterval:0.5];
+        } while (self.isSafeToPerformApplicationTermination == NO);
 
 		[self performApplicationTerminationStepThree];
 	}, DISPATCH_QUEUE_PRIORITY_HIGH);
