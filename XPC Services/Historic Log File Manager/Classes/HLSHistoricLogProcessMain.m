@@ -86,8 +86,6 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[self _performOneTimeMigrationToIdentifiers];
-
 	[self _scheduleSave];
 }
 
