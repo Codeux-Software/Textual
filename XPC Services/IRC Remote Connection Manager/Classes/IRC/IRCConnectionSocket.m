@@ -124,7 +124,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		if ([self socksProxyPopulateSystemSocksProxy:&proxyPopulateError] == NO) {
 			if (proxyPopulateError) {
-				LogToConsoleError("%{public}@", proxyPopulateError)
+				LogToConsoleError("%{public}@", proxyPopulateError);
 			}
 		} else {
 			[self tpcClientWillConnectToProxy:self.config.proxyAddress port:self.config.proxyPort];
@@ -242,7 +242,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	OSStatus status = SecKeychainItemCopyFromPersistentReference(certificateDataInRef, &certificateRef);
 
 	if (status != noErr) {
-		LogToConsoleError("Operation Failed (1): %i", status)
+		LogToConsoleError("Operation Failed (1): %i", status);
 
 		return @[];
 	}
@@ -256,7 +256,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	if (status != noErr) {
 		CFRelease(certificateRef);
 
-		LogToConsoleError("Operation Failed (2): %i", status)
+		LogToConsoleError("Operation Failed (2): %i", status);
 
 		return @[];
 	}
@@ -389,7 +389,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		errorMessage = error.localizedDescription;
 	}
 
-	LogToConsoleInfo("Disconnect failure reason: %{public}", error.localizedFailureReason)
+	LogToConsoleInfo("Disconnect failure reason: %{public}", error.localizedFailureReason);
 
 	[self tcpClientDidError:errorMessage];
 

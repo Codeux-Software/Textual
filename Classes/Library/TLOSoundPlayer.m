@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 		kUTTagClassFilenameExtension, (__bridge CFStringRef)fileExtension, NULL);
 
 	if (UTTypeConformsTo(fileUTI, kUTTypeAudio) == false) {
-		LogToConsoleDebug("File is not audio file: '%{public}@'", filePath)
+		LogToConsoleDebug("File is not audio file: '%{public}@'", filePath);
 
 		CFRelease(fileUTI);
 
@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	LogToConsoleError("Returned error code %d when loading file at path: %{public}@",
-		soundLoadError, [soundPathURL description])
+		  soundLoadError, soundPathURL.description);
 
 	return 0;
 }
@@ -187,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		// AudioServicesDisposeSystemSoundID(soundID);
 	} else {
-		LogToConsoleError("Error: Unable to locate sound '%{public}@'", name)
+		LogToConsoleError("Error: Unable to locate sound '%{public}@'", name);
 	}
 }
 

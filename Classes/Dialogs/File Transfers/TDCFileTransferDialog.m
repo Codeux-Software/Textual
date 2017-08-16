@@ -202,7 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* A hard limit exists to prevent a bad person continously sending file transfers 
 	 which appear in the file transfer, exhausting resources. */
 	if ([self receiverCount] > _addReceiverHardLimit) {
-		LogToConsoleError("Max receiver count of %{public}i exceeded.", _addReceiverHardLimit)
+		LogToConsoleError("Max receiver count of %{public}i exceeded.", _addReceiverHardLimit);
 		
 		return nil;
 	}
@@ -831,7 +831,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (resolvedBookmark == nil) {
 		LogToConsoleError("Error creating bookmark for URL: %{public}@",
-				[resolvedBookmarkError localizedDescription])
+			  resolvedBookmarkError.localizedDescription);
 
 		return;
 	}
@@ -839,7 +839,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.downloadDestinationURLPrivate = resolvedBookmark;
 
 	if ([self.downloadDestinationURLPrivate startAccessingSecurityScopedResource] == NO) {
-		LogToConsoleError("Failed to access bookmark")
+		LogToConsoleError("Failed to access bookmark");
 	}
 }
 

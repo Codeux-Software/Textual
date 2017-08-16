@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([componentPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&attributesChangeError] == NO) {
 		LogToConsoleError("Failed to hide the folder at the path '%{public}@': %{public}@",
-				componentPathURL, attributesChangeError.localizedDescription)
+			  componentPathURL, attributesChangeError.localizedDescription);
 	}
 
 	[otrKit setMaximumProtocolSize:[self otrKitProtocolMaximumMessageSize]
@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if ([NSStringEmptyPlaceholder writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&writeError] == NO) {
 			LogToConsoleError("Failed to create base file for encryption component at path: %@",
-					writeError.localizedDescription)
+				  writeError.localizedDescription);
 		}
 	}
 
@@ -140,7 +140,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([pathURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&attributesChangeError] == NO) {
 		LogToConsoleError("Failed to exclude the files at the path '%{public}@' from backup: %{public}@",
-				pathURL, attributesChangeError.localizedDescription)
+			  pathURL, attributesChangeError.localizedDescription);
 	}
 }
 

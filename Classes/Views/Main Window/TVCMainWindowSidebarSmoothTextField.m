@@ -147,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return superviewSmoothingColor;
 	}
 
-	LogToConsoleError("*** WARNING: -fontSmoothingBackgroundColorForParentTableRow returned nil value")
+	LogToConsoleError("*** WARNING: -fontSmoothingBackgroundColorForParentTableRow returned nil value");
 
 	return [NSColor clearColor];
 }

@@ -116,7 +116,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSObjectsAreEqual(currentConfig.channelName, config.channelName) == NO ||
 			NSObjectsAreEqual(currentConfig.uniqueIdentifier, config.uniqueIdentifier) == NO)
 		{
-			LogToConsoleError("Tried to load configuration for incorrect channel")
+			LogToConsoleError("Tried to load configuration for incorrect channel");
 
 			return;
 		}

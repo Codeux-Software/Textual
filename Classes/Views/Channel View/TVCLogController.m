@@ -466,7 +466,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html == nil) {
-			LogToConsoleError("Failed to render log line %{public}@", logLine.description)
+			LogToConsoleError("Failed to render log line %{public}@", logLine.description);
 
 			continue;
 		}
@@ -926,7 +926,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html == nil) {
-			LogToConsoleError("Failed to render log line %{public}@", logLine.description)
+			LogToConsoleError("Failed to render log line %{public}@", logLine.description);
 
 			return;
 		}

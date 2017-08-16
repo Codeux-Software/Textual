@@ -171,7 +171,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSData *certificateData = (__bridge_transfer NSData *)SecCertificateCopyData(certificateRef);
 
 		if (certificateData == nil) {
-			LogToConsoleError("Bad certificate data at index: %lu", trustCertificateIndex)
+			LogToConsoleError("Bad certificate data at index: %lu", trustCertificateIndex);
 
 			continue;
 		}
@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 	OSStatus trustPoliciesStatus = SecTrustCopyPolicies(trustRef, &trustPolicies);
 
 	if (trustPoliciesStatus != noErr) {
-		LogToConsoleError("SecTrustCopyPolicies() returned %i", trustPoliciesStatus)
+		LogToConsoleError("SecTrustCopyPolicies() returned %i", trustPoliciesStatus);
 
 		return nil;
 	}
@@ -252,7 +252,7 @@ NS_ASSUME_NONNULL_BEGIN
 	OSStatus trustRefStatus = SecTrustCreateWithCertificates(certificatesMutableRef, policyRef, &trustRef);
 
 	if (trustRefStatus != noErr) {
-		LogToConsoleError("SecTrustCreateWithCertificates() returned %i", trustRefStatus)
+		LogToConsoleError("SecTrustCreateWithCertificates() returned %i", trustRefStatus);
 	}
 
 	CFRelease(certificatesMutableRef);

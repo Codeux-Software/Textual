@@ -102,7 +102,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)open
 {
-	LogToConsoleDebug("Opening connection %@...", self.uniqueIdentifier)
+	LogToConsoleDebug("Opening connection %@...", self.uniqueIdentifier);
 
 	[self createWorkerDispatchQueue];
 
@@ -113,10 +113,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)close
 {
-	LogToConsoleDebug("Closing connection %@...", self.uniqueIdentifier)
+	LogToConsoleDebug("Closing connection %@...", self.uniqueIdentifier);
 
     if (self.isConnecting == NO && self.isConnected == NO) {
-        LogToConsoleError("Not connected")
+		LogToConsoleError("Not connected");
     }
 
     self.isDisconnecting = YES;
@@ -265,7 +265,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)clearSendQueue
 {
-	LogToConsoleDebug("Clearing send queue on connection %@", self.uniqueIdentifier)
+	LogToConsoleDebug("Clearing send queue on connection %@", self.uniqueIdentifier);
 
 	XRPerformBlockSynchronouslyOnQueue(self.workerQueue, ^{
 		[self.sendQueue removeAllObjects];

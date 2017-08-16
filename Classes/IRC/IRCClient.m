@@ -394,7 +394,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		if (NSObjectsAreEqual(currentConfig.uniqueIdentifier, config.uniqueIdentifier) == NO) {
-			LogToConsoleError("Tried to load configuration for incorrect client")
+			LogToConsoleError("Tried to load configuration for incorrect client");
 
 			return;
 		}
@@ -2219,7 +2219,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (NSObjectsAreEqual(message.senderNickname, @"irc.znc.in")) {
 		self.isConnectedToZNC = YES;
 
-		LogToConsoleInfo("ZNC detected...")
+		LogToConsoleInfo("ZNC detected...");
 	}
 }
 
@@ -3092,7 +3092,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSString *serverAddress = stringIn.lowercaseGetToken;
 
 				if (serverAddress.isValidInternetAddress == NO) {
-					LogToConsoleInfo("Silently ignoring bad server address")
+					LogToConsoleInfo("Silently ignoring bad server address");
 
 					return;
 				}
@@ -4208,7 +4208,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 not exist, then fail here. The user may be trying to send something 
 				 secret with an expectation for privacy and we cannot deliver that. */
 				if (channelNamePrefix == nil) {
-					LogToConsoleError("User wants to send operator message but there is no +o mode")
+					LogToConsoleError("User wants to send operator message but there is no +o mode");
 
 					break;
 				}
@@ -4228,7 +4228,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (targetChannelName.length == 0) {
-				LogToConsoleError("Bad target channel name")
+				LogToConsoleError("Bad target channel name");
 
 				break;
 			}
@@ -4373,7 +4373,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound)
 			{
-				LogToConsoleError("%{public}@", TXTLS(@"IRC[1001]", uppercaseCommand))
+				LogToConsoleError("%{public}@", TXTLS(@"IRC[1001]", uppercaseCommand));
 			}
 			else if (pluginFound && scriptFound == NO)
 			{
@@ -6301,7 +6301,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")])
 	{
 		if (textMutable.length > 50) {
-			LogToConsoleInfo("Ignoring PING query that exceeds 50 bytes")
+			LogToConsoleInfo("Ignoring PING query that exceeds 50 bytes");
 
 			return;
 		}
@@ -7293,7 +7293,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *batchToken = [m paramAt:0];
 
 	if (batchToken.length <= 1) {
-		LogToConsoleError("Cannot process BATCH command because [batchToken length] <= 1")
+		LogToConsoleError("Cannot process BATCH command because [batchToken length] <= 1");
 
 		return;
 	}
@@ -7311,13 +7311,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		isBatchOpening = NO;
 	} else {
-		LogToConsoleError("Cannot process BATCH command because there was no open or close modifier")
+		LogToConsoleError("Cannot process BATCH command because there was no open or close modifier");
 
 		return;
 	}
 
 	if (batchToken.length < 4 && [batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters] == NO) {
-		LogToConsoleError("Cannot process BATCH command because the batch token contains illegal characters")
+		LogToConsoleError("Cannot process BATCH command because the batch token contains illegal characters");
 
 		return;
 	}
@@ -7328,7 +7328,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		IRCMessageBatchMessage *thisBatchMessage = [self.batchMessages queuedEntryWithBatchToken:batchToken];
 
 		if (thisBatchMessage == nil) {
-			LogToConsoleError("Cannot process BATCH command because -queuedEntryWithBatchToken: returned nil")
+			LogToConsoleError("Cannot process BATCH command because -queuedEntryWithBatchToken: returned nil");
 
 			return;
 		}
@@ -10242,7 +10242,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self printDebugInformation:TXTLS(@"IRC[1003]", filename, inputString, errorDescription)];
 
-	LogToConsoleError("%{public}@", TXTLS(@"IRC[1002]", errorDescription))
+	LogToConsoleError("%{public}@", TXTLS(@"IRC[1002]", errorDescription));
 }
 
 - (void)sendTextualCmdScriptResult:(NSString *)resultString toChannel:(nullable NSString *)channel
@@ -10258,7 +10258,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (destination == nil) {
-		LogToConsoleError("A script returned a result but its destination no longer exists")
+		LogToConsoleError("A script returned a result but its destination no longer exists");
 
 		return;
 	}
@@ -11502,7 +11502,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Important checks */
 	if (transferToken.length > 0 && transferToken.numericOnly == NO) {
-		LogToConsoleError("Fatal error: Received transfer token that is not a number")
+		LogToConsoleError("Fatal error: Received transfer token that is not a number");
 
 		goto present_error;
 	}
@@ -11510,11 +11510,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSInteger hostPortInt = hostPort.integerValue;
 
 	if (hostPortInt == 0 && transferToken == nil) {
-		LogToConsoleError("Fatal error: Port cannot be zero without a transfer token")
+		LogToConsoleError("Fatal error: Port cannot be zero without a transfer token");
 
 		goto present_error;
 	} else if (hostPortInt < 0 || hostPortInt > TXMaximumTCPPort) {
-		LogToConsoleError("Fatal error: Port cannot be less than zero or greater than 65535")
+		LogToConsoleError("Fatal error: Port cannot be less than zero or greater than 65535");
 
 		goto present_error;
 	}
@@ -11522,7 +11522,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	long long filesizeInt = filesize.longLongValue;
 
 	if (filesizeInt <= 0 || filesizeInt > powl(1000, 4)) { // 1 TB
-		LogToConsoleError("Fatal error: Filesize is silly")
+		LogToConsoleError("Fatal error: Filesize is silly");
 
 		goto present_error;
 	}
@@ -11538,7 +11538,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (hostPortInt == 0)
 			{
 				if (e != nil) {
-					LogToConsoleError("Fatal error: Received reverse DCC request with token '%{public}@' but the token already exists.", transferToken)
+					LogToConsoleError("Fatal error: Received reverse DCC request with token '%{public}@' but the token already exists.", transferToken);
 
 					goto present_error;
 				}
@@ -11555,7 +11555,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			else if (e)
 			{
 				if (e.transferStatus != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus) {
-					LogToConsoleError("Fatal error: Unexpected request to begin transfer")
+					LogToConsoleError("Fatal error: Unexpected request to begin transfer");
 
 					goto present_error;
 				}
@@ -11589,7 +11589,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		if (e == nil) {
-			LogToConsoleError("Fatal error: Could not locate file transfer that matches resume request")
+			LogToConsoleError("Fatal error: Could not locate file transfer that matches resume request");
 
 			goto present_error;
 		}
@@ -11598,7 +11598,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 								 e.transferStatus != TDCFileTransferDialogTransferIsListeningAsSenderStatus)) ||
 			(isAcceptRequest && e.transferStatus != TDCFileTransferDialogTransferWaitingForResumeAcceptStatus))
 		{
-			LogToConsoleError("Fatal error: Bad transfer status")
+			LogToConsoleError("Fatal error: Bad transfer status");
 
 			goto present_error;
 		}
@@ -11732,7 +11732,7 @@ present_error:
 	NSArray *addressOctets = [address componentsSeparatedByString:@"."];
 
 	if (addressOctets.count != 4) {
-		LogToConsoleError("User configured a silly IP address")
+		LogToConsoleError("User configured a silly IP address");
 
 		return nil;
 	}

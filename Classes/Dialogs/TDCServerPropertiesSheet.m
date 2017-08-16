@@ -1353,7 +1353,7 @@ NS_ASSUME_NONNULL_BEGIN
 	OSStatus status = SecIdentityCopyCertificate(identityInRef, &certificateRef);
 
 	if (status != noErr) {
-		LogToConsoleError("Operation Failed (2): %i", status)
+		LogToConsoleError("Operation Failed (2): %i", status);
 
 		return;
 	}
@@ -1367,7 +1367,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (status != noErr) {
 		CFRelease(certificateRef);
 
-		LogToConsoleError("Operation Failed (3): %i", status)
+		LogToConsoleError("Operation Failed (3): %i", status);
 
 		return;
 	}
@@ -1444,7 +1444,7 @@ NS_ASSUME_NONNULL_BEGIN
 	OSStatus queryStatus = SecItemCopyMatching((__bridge CFDictionaryRef)queryFlags, (CFTypeRef *)&identities);
 
 	if (queryStatus != noErr) {
-		LogToConsoleError("Operation Failed (1): %i", queryStatus)
+		LogToConsoleError("Operation Failed (1): %i", queryStatus);
 
 		return;
 	}

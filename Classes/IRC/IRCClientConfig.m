@@ -499,7 +499,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Check whether this object has already been migrated. */
 	if (self->_migratedToServerListV1Layout != NO) {
-		LogToConsoleDebug("Migration cancelled at check 1")
+		LogToConsoleDebug("Migration cancelled at check 1");
 
 		return;
 	}
@@ -514,7 +514,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	id migratedToServerListV1Layout = [dic objectForKey:@"migratedToServerListV1Layout"];
 
 	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue] != NO) {
-		LogToConsoleDebug("Migration cancelled at check 2")
+		LogToConsoleDebug("Migration cancelled at check 2");
 
 		return;
 	}
@@ -524,7 +524,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 for backwards compatibility which means once we imported them and have
 	 at least one server, then importing again will not help. */
 	if (self.serverList.count > 0) {
-		LogToConsoleDebug("Migration cancelled at check 3")
+		LogToConsoleDebug("Migration cancelled at check 3");
 
 		return;
 	}
@@ -533,7 +533,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *serverAddress = [dic stringForKey:@"serverAddress"];
 
 	if (serverAddress.isValidInternetAddress == NO) {
-		LogToConsoleDebug("Migration cancelled because of bad server address")
+		LogToConsoleDebug("Migration cancelled because of bad server address");
 
 		return;
 	}
@@ -541,7 +541,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	uint16_t serverPort = [dic unsignedShortForKey:@"serverPort"];
 
 	if (serverPort == 0 || serverPort > TXMaximumTCPPort) {
-		LogToConsoleDebug("Migration cancelled because of bad server port")
+		LogToConsoleDebug("Migration cancelled because of bad server port");
 
 		return;
 	}

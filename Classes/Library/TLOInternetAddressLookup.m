@@ -198,7 +198,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	LogToConsole("Lookup failed with error: %@", error.localizedDescription)
+	LogToConsole("Lookup failed with error: %@", error.localizedDescription);
 
 	[self teardownConnectionRequest];
 }
@@ -210,7 +210,7 @@ ClassWithDesignatedInitializerInitMethod
 	// There is no reasonable explanation for the content of a request,
 	// without headers, to exceed this length when it's sent in plain text.
 	if (self.connectionResponseData.length > 1024) {
-		LogToConsoleError("Too much data has been received for this to be a valid request")
+		LogToConsoleError("Too much data has been received for this to be a valid request");
 
 		[self teardownConnectionRequest];
 	}

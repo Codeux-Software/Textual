@@ -271,7 +271,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	XRResumeScheduledBlock(removeUserTimer);
 
 	if (removeUserTimer == NULL) {
-		LogToConsoleError("Failed to create timer to remove user")
+		LogToConsoleError("Failed to create timer to remove user");
 
 		blockToFire(); // Remove user if timer isn't available
 

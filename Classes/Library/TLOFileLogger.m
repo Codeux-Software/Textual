@@ -179,7 +179,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)open
 {
 	if (self.fileHandle != nil) {
-		LogToConsoleError("Tried to open log file when a file handle already exists")
+		LogToConsoleError("Tried to open log file when a file handle already exists");
 
 		return;
 	}
@@ -197,7 +197,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		if ([RZFileManager() createDirectoryAtPath:pathLeading withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
 			LogToConsoleError("Error Creating Folder: %{public}@",
-					createDirectoryError.localizedDescription)
+				 createDirectoryError.localizedDescription);
 
 			return;
 		}
@@ -208,7 +208,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		if ([NSStringEmptyPlaceholder writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
 			LogToConsoleError("Error Creating File: %{public}@",
-					writeFileError.localizedDescription)
+				  writeFileError.localizedDescription);
 
 			return;
 		}
@@ -222,7 +222,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	LogToConsoleError("Failed to open file handle at path '%{public}@'", path)
+	LogToConsoleError("Failed to open file handle at path '%{public}@'", path);
 }
 
 #pragma mark -
