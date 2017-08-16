@@ -376,14 +376,20 @@ enum {
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
-	[self postflightForRestore];
-
 	LogToConsoleDebug("Transaction restore successful");
+
+	[self postflightForRestore];
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
 {
+	LogToConsoleDebug("Transaction restore failed");
+
 	[self postflightForRestore];
+
+	if (error.code == SKErrorPaymentCancelled) {
+		break;
+	}
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0011][2]", error.localizedDescription)
@@ -391,8 +397,6 @@ enum {
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil];
-
-	LogToConsoleDebug("Transaction restore failed");
 }
 
 - (void)processFinishedTransactions
