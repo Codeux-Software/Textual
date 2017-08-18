@@ -6298,7 +6298,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* TIME command */
 	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_time")])
 	{
-		NSString *text = [[NSDate date] descriptionWithLocale:[NSLocale systemLocale]];
+		NSDateFormatter *dateFormatter = TXSharedISOStandardDateFormatter();
+
+		NSString *text = [dateFormatter stringFromDate:[NSDate date]];
 		
 		[self sendCTCPReply:sender command:command text:text];
 	}
