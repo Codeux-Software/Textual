@@ -6305,9 +6305,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self sendCTCPReply:sender command:command text:text];
 	}
 
-	/* USERINFO command and VERSION command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
-			 [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
+	/* USERINFO command */
+	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")])
+	{
+		[self sendCTCPReply:sender command:command text:self.config.realName];
+	}
+
+	/* VERSION command */
+	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
 	{
 		NSString *fakeVersion = [TPCPreferences masqueradeCTCPVersion];
 
