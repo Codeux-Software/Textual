@@ -3199,7 +3199,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *_helpMenuLinks = @{
 	   @(901) : @"https://help.codeux.com/textual/End-User-License-Agreement.kb",
 	   @(902) : @"https://help.codeux.com/textual/Privacy-Policy.kb",
-	   @(902) : @"https://help.codeux.com/textual/Frequently-Asked-Questions.kb",
+	   @(930) : @"https://help.codeux.com/textual/Frequently-Asked-Questions.kb",
 	   @(933) : @"https://help.codeux.com/textual/home.kb",
 	   @(934) : @"https://help.codeux.com/textual/iCloud-Syncing.kb",
 	   @(935) : @"https://help.codeux.com/textual/Off-the-Record-Messaging.kb",
