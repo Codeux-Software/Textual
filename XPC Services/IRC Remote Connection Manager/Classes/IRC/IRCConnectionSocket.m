@@ -312,7 +312,9 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
 
 	if (self.config.connectionPrefersModernCiphers) {
-		settings[GCDAsyncSocketSSLCipherSuites] = [GCDAsyncSocket cipherList];
+		settings[GCDAsyncSocketSSLCipherSuites] =
+		[GCDAsyncSocket cipherListOfVersion:self.config.cipherSuites
+				   includeDeprecatedCiphers:self.config.connectionPrefersModernCiphersOnly];
 	}
 
 	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);

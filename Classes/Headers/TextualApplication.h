@@ -185,9 +185,6 @@
 		#define TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION 0
 	#endif
 
-	/* 3rd-party Extensions */
-	#import "GCDAsyncSocket.h"
-
 	/* IRC Controllers — Core */
 	#import "IRC.h"
 	#import "IRCAddressBook.h"

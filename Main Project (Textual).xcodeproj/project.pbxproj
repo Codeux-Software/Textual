@@ -1269,9 +1269,9 @@
 		4CAC2A1D1F12D48700D06046 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAC2A1C1F12D48700D06046 /* GCDAsyncSocketCipherNames.m */; };
 		4CAC2A1E1F12D48700D06046 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAC2A1C1F12D48700D06046 /* GCDAsyncSocketCipherNames.m */; };
 		4CAC2A1F1F12D48700D06046 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAC2A1C1F12D48700D06046 /* GCDAsyncSocketCipherNames.m */; };
-		4CAC2A281F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; };
-		4CAC2A291F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; };
-		4CAC2A2A1F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; };
+		4CAC2A281F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CAC2A291F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CAC2A2A1F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAC2A271F12D86200D06046 /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAC9D7B1F2B076100AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
 		4CAC9D831F2B076400AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
 		4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C711F2AF38E0017D3B7 /* Textual-Extras-MAS.pkg */; };
