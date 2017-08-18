@@ -112,7 +112,7 @@
 "IRC[1031]" = "Be back later";
 "IRC[1032]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
 "IRC[1033]" = "away-notify multi-prefix userhost-in-names sasl server-time";
-"IRC[1034]" = "CAP CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
+"IRC[1034]" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
 "IRC[1035]" = "Stop fingering me pervert!";
 "IRC[1036]" = "There are no capabilities that are enabled";
 "IRC[1037]" = "The following capabilities are currently enabled: %@";

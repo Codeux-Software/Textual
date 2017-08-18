@@ -106,17 +106,6 @@
 		<key>outgoingColonIndex</key>
 		<integer>999</integer>
 	</dict>
-	<key>ctcp_cap</key>
-	<dict>
-		<key>command</key>
-		<string>CAP</string>
-		<key>indexValue</key>
-		<integer>1052</integer>
-		<key>isStandalone</key>
-		<false/>
-		<key>outgoingColonIndex</key>
-		<integer>999</integer>
-	</dict>
 	<key>ctcp_clientinfo</key>
 	<dict>
 		<key>command</key>
