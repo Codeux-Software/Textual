@@ -1030,7 +1030,11 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetDoNotAskMePopupWarnings:" target="267" id="z5V-jK-Ms7"/>
-                                                <binding destination="pWR-n3-bT9" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="Gs4-cb-rkJ"/>
+                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="B8q-Zl-Mul">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -1565,6 +1569,5 @@ CA
         <menuItem title="Item" id="Hay-Ss-EHs">
             <modifierMask key="keyEquivalentModifierMask"/>
         </menuItem>
-        <userDefaultsController representsSharedInstance="YES" id="pWR-n3-bT9"/>
     </objects>
 </document>
