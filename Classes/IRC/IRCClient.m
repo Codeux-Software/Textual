@@ -6271,20 +6271,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self receiveCTCPLagCheckQuery:m];
 	}
 
-	/* CAP command */
-	/* Textual responding to CTCP CAP command is undocumented and is subject to change. */
-	/* Textual responds to this command by replying with the Capabilities it supports. */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")])
-	{
-		NSString *subcommand = textMutable.token;
-
-		if ([subcommand isEqualIgnoringCase:@"LS"] == NO) {
-			return;
-		}
-
-		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[1033]")];
-	}
-
 	/* CLIENTINFO command */
 	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")])
 	{
