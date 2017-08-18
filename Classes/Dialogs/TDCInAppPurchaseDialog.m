@@ -425,7 +425,7 @@ enum {
 	if ([self loadReceipt] == NO) {
 		LogToConsoleDebug("Failed to load receipt");
 
-		if (showErrorIfAny == NO) {
+		if (showErrorIfAny == NO || self.products == nil) {
 			LogToConsoleDebug("Continuing without a receipt");
 
 			_postflight;
@@ -524,21 +524,27 @@ enum {
 		self.atleastOnePurchaseFinished = NO;
 		self.atleastOnePurchaseRestored = NO;
 
+		BOOL windowIsVisible = (self.window.visible && self.products != nil);
+
 		if (success == NO) {
 			LogToConsoleDebug("Finished processing transactions with only failures");
 
-			[self _updateSelectedPane];
+			if (windowIsVisible == NO) {
+				[self _updateSelectedPane];
+			}
 
 			return;
 		}
 
 		LogToConsoleDebug("Finished processing transactions");
 
-		[self showThankYouAfterProductPurchase];
+		if (windowIsVisible == NO) {
+			[self showThankYouAfterProductPurchase];
 
-		[self _updateSelectedPane];
+			[self _updateSelectedPane];
 
-		[self _refreshProductsTableContents];
+			[self _refreshProductsTableContents];
+		}
 
 		[self postTransactionFinishedNotification:transactions];
 
