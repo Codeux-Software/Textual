@@ -10617,6 +10617,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	socketConfig.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
 	socketConfig.floodControlMaximumMessages = self.config.floodControlMaximumMessages;
 
+	// TODO: Make this configurable outside of command line
+	socketConfig.connectionPrefersModernCiphersOnly = [RZUserDefaults() boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
+	socketConfig.cipherSuites = [RZUserDefaults() unsignedIntegerForKey:@"GCDAsyncSocket Cipher List Version"];
+
 	self.socket = [[IRCConnection alloc] initWithConfig:socketConfig onClient:self];
 
 	[self.socket open];

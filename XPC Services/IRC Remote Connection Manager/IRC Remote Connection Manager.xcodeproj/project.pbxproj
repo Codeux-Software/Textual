@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C0194BB1F128F380019C8D8 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C0194BA1F128F380019C8D8 /* RegisteredUserDefaults.plist */; };
 		4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */; };
 		4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */; };
 		4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */; };
@@ -34,7 +33,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C0194BA1F128F380019C8D8 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaults.plist; path = "Resources/Property Lists/RegisteredUserDefaults.plist"; sourceTree = "<group>"; };
 		4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = RemoteConnectionManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C14065B1F1195A900C73D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C14065C1F1195B600C73D53 /* ConnectionManagerAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ConnectionManagerAppStore.entitlements; path = Resources/Sandbox/Entitlements/ConnectionManagerAppStore.entitlements; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				4C14065B1F1195A900C73D53 /* Info.plist */,
-				4C0194BA1F128F380019C8D8 /* RegisteredUserDefaults.plist */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -428,7 +425,6 @@
 				4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */,
 				4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */,
 				4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */,
-				4C0194BB1F128F380019C8D8 /* RegisteredUserDefaults.plist in Resources */,
 				4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */,
 				4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */,
 			);

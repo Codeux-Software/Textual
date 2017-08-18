@@ -292,12 +292,6 @@ static const char * _Nonnull kMacNames[] = {
 	"SHA384",
 };
 
-typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
-	GCDsyncSocketCipherSuiteDefaultVersion  	= 0,
-	GCDsyncSocketCipherSuite2015Version  		= 1,
-	GCDsyncSocketCipherSuite2017Version  		= 2
-};
-
 @implementation GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
 
 + (nullable NSString *)descriptionForProtocolVersion:(SSLProtocol)protocolVersion
@@ -396,26 +390,24 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 	return [[GCDAsyncSocket cipherListDeprecated] containsObject:@(cipherSuite)];
 }
 
-+ (NSArray<NSNumber *> *)cipherList
++ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version includeDeprecatedCiphers:(BOOL)includeDepecatedCiphers
 {
-	BOOL allowDeprecatedCiphers = [[NSUserDefaults standardUserDefaults] boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
-
-	if (allowDeprecatedCiphers == NO) {
-		return [self cipherListModern];
+	if (includeDepecatedCiphers == NO) {
+		return [self cipherListOfVersion:version];
 	}
 
 	NSMutableArray<NSNumber *> *_cipherList = [NSMutableArray array];
 
-	[_cipherList addObjectsFromArray:[self cipherListModern]];
+	[_cipherList addObjectsFromArray:[self cipherListOfVersion:version]];
 	[_cipherList addObjectsFromArray:[self cipherListDeprecated]];
 
 	return [_cipherList copy];
 }
 
-+ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDsyncSocketCipherSuiteVersion)version
++ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version
 {
 	switch (version) {
-		case GCDsyncSocketCipherSuite2015Version:
+		case GCDAsyncSocketCipherSuite2015Version:
 		{
 			/* The following list of ciphers, which is ordered from most important
 			 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
@@ -447,8 +439,9 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 
 			break;
 		}
-		case GCDsyncSocketCipherSuiteDefaultVersion:
-		case GCDsyncSocketCipherSuite2017Version:
+		case GCDAsyncSocketCipherSuiteDefaultVersion:
+		case GCDAsyncSocketCipherSuite2017Version:
+		default:
 		{
 			/* The following list of ciphers, which is ordered from most important
 			 to least important, was aquired from Mozilla's wiki on July 5, 2017. */
@@ -486,14 +479,6 @@ typedef NS_ENUM(NSUInteger, GCDsyncSocketCipherSuiteVersion) {
 	}
 
 	return @[];
-}
-
-+ (NSArray<NSNumber *> *)cipherListModern
-{
-	NSUInteger cipherSuiteVersion =
-	[[NSUserDefaults standardUserDefaults] unsignedIntegerForKey:@"GCDAsyncSocket Cipher List Version"];
-
-	return [self cipherListOfVersion:cipherSuiteVersion];
 }
 
 + (NSArray<NSNumber *> *)cipherListDeprecated

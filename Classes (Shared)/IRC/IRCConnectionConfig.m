@@ -85,6 +85,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	if ((self = [super init])) {
 		self->_connectionPrefersIPv4 = [aDecoder decodeBoolForKey:@"connectionPrefersIPv4"];
 		self->_connectionPrefersModernCiphers = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphers"];
+		self->_connectionPrefersModernCiphersOnly = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphersOnly"];
 		self->_connectionPrefersSecuredConnection = [aDecoder decodeBoolForKey:@"connectionPrefersSecuredConnection"];
 		self->_connectionShouldValidateCertificateChain = [aDecoder decodeBoolForKey:@"connectionShouldValidateCertificateChain"];
 		self->_floodControlDelayInterval = [aDecoder decodeUnsignedIntegerForKey:@"floodControlDelayInterval"];
@@ -99,6 +100,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 		self->_serverPort = [aDecoder decodeUnsignedShortForKey:@"serverPort"];
 		self->_primaryEncoding = [aDecoder decodeUnsignedIntegerForKey:@"primaryEncoding"];
 		self->_fallbackEncoding = [aDecoder decodeUnsignedIntegerForKey:@"fallbackEncoding"];
+		self->_cipherSuites = [aDecoder decodeUnsignedIntegerForKey:@"cipherSuites"];
 
 		[self populateDefaultsPostflight];
 
@@ -112,6 +114,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	[aCoder encodeBool:self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 	[aCoder encodeBool:self->_connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
+	[aCoder encodeBool:self->_connectionPrefersModernCiphersOnly forKey:@"connectionPrefersModernCiphersOnly"];
 	[aCoder encodeBool:self->_connectionPrefersSecuredConnection forKey:@"connectionPrefersSecuredConnection"];
 	[aCoder encodeBool:self->_connectionShouldValidateCertificateChain forKey:@"connectionShouldValidateCertificateChain"];
 	[aCoder encodeUnsignedInteger:self->_floodControlDelayInterval forKey:@"floodControlDelayInterval"];
@@ -126,6 +129,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	[aCoder encodeUnsignedShort:self->_serverPort forKey:@"serverPort"];
 	[aCoder encodeUnsignedInteger:self->_primaryEncoding forKey:@"primaryEncoding"];
 	[aCoder encodeUnsignedInteger:self->_fallbackEncoding forKey:@"fallbackEncoding"];
+	[aCoder encodeUnsignedInteger:self->_cipherSuites forKey:@"cipherSuites"];
 }
 
 + (BOOL)supportsSecureCoding
@@ -139,6 +143,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	object->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
 	object->_connectionPrefersModernCiphers = self->_connectionPrefersModernCiphers;
+	object->_connectionPrefersModernCiphersOnly = self->_connectionPrefersModernCiphersOnly;
 	object->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
 	object->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
 	object->_floodControlDelayInterval = self->_floodControlDelayInterval;
@@ -153,6 +158,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	object->_serverPort = self->_serverPort;
 	object->_primaryEncoding = self->_primaryEncoding;
 	object->_fallbackEncoding = self->_fallbackEncoding;
+	object->_cipherSuites = self->_cipherSuites;
 
 	return object;
 }
@@ -163,6 +169,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	((IRCConnectionConfig *)object)->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
 	((IRCConnectionConfig *)object)->_connectionPrefersModernCiphers = self->_connectionPrefersModernCiphers;
+	((IRCConnectionConfig *)object)->_connectionPrefersModernCiphersOnly = self->_connectionPrefersModernCiphersOnly;
 	((IRCConnectionConfig *)object)->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
 	((IRCConnectionConfig *)object)->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
 	((IRCConnectionConfig *)object)->_floodControlDelayInterval = self->_floodControlDelayInterval;
@@ -177,6 +184,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	((IRCConnectionConfig *)object)->_serverPort = self->_serverPort;
 	((IRCConnectionConfig *)object)->_primaryEncoding = self->_primaryEncoding;
 	((IRCConnectionConfig *)object)->_fallbackEncoding = self->_fallbackEncoding;
+	((IRCConnectionConfig *)object)->_cipherSuites = self->_cipherSuites;
 
 	return object;
 }
@@ -194,6 +202,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 @dynamic connectionPrefersIPv4;
 @dynamic connectionPrefersModernCiphers;
+@dynamic connectionPrefersModernCiphersOnly;
 @dynamic connectionPrefersSecuredConnection;
 @dynamic connectionShouldValidateCertificateChain;
 @dynamic floodControlDelayInterval;
@@ -208,6 +217,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 @dynamic serverPort;
 @dynamic primaryEncoding;
 @dynamic fallbackEncoding;
+@dynamic cipherSuites;
 
 - (BOOL)isMutable
 {
@@ -225,6 +235,13 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	if (self->_connectionPrefersModernCiphers != connectionPrefersModernCiphers) {
 		self->_connectionPrefersModernCiphers = connectionPrefersModernCiphers;
+	}
+}
+
+- (void)setConnectionPrefersModernCiphersOnly:(BOOL)connectionPrefersModernCiphersOnly
+{
+	if (self->_connectionPrefersModernCiphersOnly != connectionPrefersModernCiphersOnly) {
+		self->_connectionPrefersModernCiphersOnly = connectionPrefersModernCiphersOnly;
 	}
 }
 
@@ -331,6 +348,13 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	if (self->_fallbackEncoding != fallbackEncoding) {
 		self->_fallbackEncoding = fallbackEncoding;
+	}
+}
+
+- (void)setCipherSuites:(GCDAsyncSocketCipherSuiteVersion)cipherSuites
+{
+	if (self->_cipherSuites != cipherSuites) {
+		self->_cipherSuites = cipherSuites;
 	}
 }
 

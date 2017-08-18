@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
 	BOOL _connectionPrefersIPv4;
 	BOOL _connectionPrefersModernCiphers;
+	BOOL _connectionPrefersModernCiphersOnly;
 	BOOL _connectionPrefersSecuredConnection;
 	BOOL _connectionShouldValidateCertificateChain;
 	IRCConnectionSocketProxyType _proxyType;
@@ -56,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 	uint16_t _serverPort;
 	NSStringEncoding _primaryEncoding;
 	NSStringEncoding _fallbackEncoding;
+	GCDAsyncSocketCipherSuiteVersion _cipherSuites;
 
 @private
 	BOOL _objectInitialized;
