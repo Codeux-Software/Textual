@@ -634,6 +634,14 @@ enum {
 	});
 }
 
+- (void)_addTrialToProductsTableContents
+{
+	if (TLOAppStoreIsTrialPurchased() == NO) {
+		[self.productsTableController addObject:
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier]];
+	}
+}
+
 - (void)_refreshProductsTableContents
 {
 	LogToConsoleDebug("Refreshing products table");
@@ -646,10 +654,7 @@ enum {
 		return;
 	}
 	
-	if (TLOAppStoreIsTrialPurchased() == NO) {
-		[self.productsTableController addObject:
-		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier]];
-	}
+	[self _addTrialToProductsTableContents];
 
 	[self.productsTableController addObject:
 	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier]];
@@ -804,6 +809,8 @@ enum {
 	}
 
 	[self.productsTableController removeAllArrangedObjects];
+
+	[self _addTrialToProductsTableContents];
 
 	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibleDiscount)
 	{
