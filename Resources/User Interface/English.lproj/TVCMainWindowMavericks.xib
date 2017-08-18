@@ -130,9 +130,63 @@
                             <action selector="insertItalicCharIntoTextBox:" target="yyd-f5-aHb" id="ou4-3z-i03"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Srikethrough" tag="95008" id="8dI-sd-HIl">
+                    <menuItem title="Monospace" tag="95009" id="WyY-wv-D69" userLabel="Monospace">
                         <attributedString key="attributedTitle">
-                            <fragment content="Srikethrough">
+                            <fragment content="Monospace">
+                                <attributes>
+                                    <font key="NSFont" size="13" name="Menlo-Regular"/>
+                                    <font key="NSOriginalFont" size="13" name="Menlo-Regular"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
+                                        <tabStops>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="insertMonospaceCharIntoTextBox:" target="yyd-f5-aHb" id="ExC-qe-eLr"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Strikethrough" tag="95008" id="8dI-sd-HIl">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Strikethrough">
                                 <attributes>
                                     <font key="NSFont" metaFont="system"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">

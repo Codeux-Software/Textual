@@ -267,6 +267,15 @@ NS_ASSUME_NONNULL_BEGIN
 	self.typingAttributes = typingAttributesMutable;
 }
 
+- (void)resetFontInRange:(NSRange)range
+{
+	NSDictionary *newAttributes = @{
+		NSFontAttributeName : self.preferredFont
+	};
+
+	[self.textStorage addAttributes:newAttributes range:range];
+}
+
 - (void)resetFontColorInRange:(NSRange)range
 {
 	NSDictionary *newAttributes = @{

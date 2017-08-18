@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * const IRCTextFormatterBoldAttributeName = @"IRCTextFormatterBoldAttributeName";
 NSString * const IRCTextFormatterItalicAttributeName = @"IRCTextFormatterItalicAttributeName";
+NSString * const IRCTextFormatterMonospaceAttributeName = @"IRCTextFormatterMonospaceAttributeName";
 NSString * const IRCTextFormatterStrikethroughAttributeName = @"IRCTextFormatterStrikethroughAttributeName";
 NSString * const IRCTextFormatterUnderlineAttributeName = @"IRCTextFormatterUnderlineAttributeName";
 NSString * const IRCTextFormatterForegroundColorAttributeName = @"IRCTextFormatterForegroundColorAttributeName";
@@ -176,6 +177,7 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
 		BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
+		BOOL textIsMonospace = [attributes boolForKey:IRCTextFormatterMonospaceAttributeName];
 		BOOL textIsStruckthrough = [attributes boolForKey:IRCTextFormatterStrikethroughAttributeName];
 		BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
 
@@ -185,6 +187,11 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 		}
 
 		if (textIsItalicized) {
+			startCharacterCount += 1; // control character
+			stopCharacterCount += 1; // control character
+		}
+
+		if (textIsMonospace) {
 			startCharacterCount += 1; // control character
 			stopCharacterCount += 1; // control character
 		}
@@ -256,6 +263,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		if (textIsStruckthrough) {
 			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
+		}
+
+		if (textIsMonospace) {
+			[result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
 		}
 
 		if (textIsItalicized) {
@@ -352,6 +363,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
 		}
 
+		if (textIsMonospace) {
+			[result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
+		}
+
 		if (textIsStruckthrough) {
 			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
 		}
@@ -430,6 +445,7 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		 BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
 		 BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
+		 BOOL textIsMonospace = [attributes boolForKey:IRCTextFormatterMonospaceAttributeName];
 		 BOOL textIsStruckthrough = [attributes boolForKey:IRCTextFormatterStrikethroughAttributeName];
 		 BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
 
@@ -439,6 +455,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		 if (textIsStruckthrough) {
 			 [result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
+		 }
+
+		 if (textIsMonospace) {
+			 [result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
 		 }
 
 		 if (textIsItalicized) {
@@ -469,6 +489,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		 if (textIsItalicized) {
 			 [result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
+		 }
+
+		 if (textIsMonospace) {
+			 [result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
 		 }
 
 		 if (textIsStruckthrough) {
@@ -512,6 +536,18 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 case IRCTextFormatterItalicEffect:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterItalicAttributeName] == NO) {
+					 return;
+				 }
+
+				 returnValue = YES;
+
+				 *stop = YES;
+
+				 break;
+			 }
+			 case IRCTextFormatterMonospaceEffect:
+			 {
+				 if ([attributes boolForKey:IRCTextFormatterMonospaceAttributeName] == NO) {
 					 return;
 				 }
 
@@ -637,6 +673,16 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 				 break;
 			 }
+			 case IRCTextFormatterMonospaceEffect:
+			 {
+				 baseFont = [RZFontManager() convertFont:baseFont toFamily:@"Menlo"];
+
+				 [self addAttribute:IRCTextFormatterMonospaceAttributeName value:@(YES) range:effectiveRange];
+
+				 [self addAttribute:NSFontAttributeName value:baseFont range:effectiveRange];
+
+				 break;
+			 }
 			 case IRCTextFormatterUnderlineEffect:
 			 {
 				 [self addAttribute:IRCTextFormatterUnderlineAttributeName value:@(YES) range:effectiveRange];
@@ -732,6 +778,14 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 					 [self removeAttribute:IRCTextFormatterItalicAttributeName range:effectiveRange];
 				 }
+
+				 break;
+			 }
+			 case IRCTextFormatterMonospaceEffect:
+			 {
+				 [self removeAttribute:NSFontAttributeName range:effectiveRange];
+
+				 [self removeAttribute:IRCTextFormatterMonospaceAttributeName range:effectiveRange];
 
 				 break;
 			 }

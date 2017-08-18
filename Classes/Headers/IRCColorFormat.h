@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
 	IRCTextFormatterNoEffect = 0, // does nothing, unimplemented
 	IRCTextFormatterBoldEffect,
 	IRCTextFormatterItalicEffect,
+	IRCTextFormatterMonospaceEffect,
 	IRCTextFormatterStrikethroughEffect,
 	IRCTextFormatterUnderlineEffect,
 	IRCTextFormatterForegroundColorEffect,
@@ -54,6 +55,7 @@ typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
 
 TEXTUAL_EXTERN NSString * const IRCTextFormatterBoldAttributeName; // BOOL
 TEXTUAL_EXTERN NSString * const IRCTextFormatterItalicAttributeName; // BOOL
+TEXTUAL_EXTERN NSString * const IRCTextFormatterMonospaceAttributeName; // BOOL
 TEXTUAL_EXTERN NSString * const IRCTextFormatterStrikethroughAttributeName; // BOOL
 TEXTUAL_EXTERN NSString * const IRCTextFormatterUnderlineAttributeName; // BOOL
 TEXTUAL_EXTERN NSString * const IRCTextFormatterForegroundColorAttributeName; // NSNumber, 0-15
@@ -63,6 +65,7 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; //
 #define IRCTextFormatterBoldEffectCharacter				0x02
 #define IRCTextFormatterItalicEffectCharacter			0x1d
 #define IRCTextFormatterItalicEffectCharacterOld		0x16
+#define IRCTextFormatterMonospaceEffectCharacter		0x11
 #define IRCTextFormatterStrikethroughEffectCharacter	0x1e
 #define IRCTextFormatterUnderlineEffectCharacter		0x1F
 #define IRCTextFormatterTerminatingCharacter			0x0F
