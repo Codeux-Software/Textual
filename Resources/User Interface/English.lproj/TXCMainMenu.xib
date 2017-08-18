@@ -987,31 +987,31 @@ CQ
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1795"/>
-                            <menuItem title="Advanced" tag="919" id="2718">
+                            <menuItem title="Advanced" tag="960" id="2718">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Advanced" id="2719">
                                     <items>
-                                        <menuItem title="Enable Developer Mode" tag="920" id="2280">
+                                        <menuItem title="Enable Developer Mode" tag="961" id="2280">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="toggleDeveloperMode:" target="267" id="2281"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2721"/>
-                                        <menuItem title="Hidden Preferences…" tag="930" id="2725">
+                                        <menuItem title="Hidden Preferences…" tag="962" id="2725">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showHiddenPreferences:" target="267" id="SSd-K5-dFp"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3085"/>
-                                        <menuItem title="Export Preferences" tag="924" id="3088">
+                                        <menuItem title="Export Preferences" tag="963" id="3088">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportPreferences:" target="267" id="3091"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Import Preferences" tag="925" id="3086">
+                                        <menuItem title="Import Preferences" tag="964" id="3086">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="importPreferences:" target="267" id="3090"/>
@@ -1026,10 +1026,11 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="UfC-Uf-EFM">
+                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="965" id="UfC-Uf-EFM">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetDoNotAskMePopupWarnings:" target="267" id="z5V-jK-Ms7"/>
+                                                <binding destination="pWR-n3-bT9" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="Gs4-cb-rkJ"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -1045,7 +1046,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-668" y="-637"/>
+            <point key="canvasLocation" x="-1192" y="-891"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
@@ -1564,5 +1565,6 @@ CA
         <menuItem title="Item" id="Hay-Ss-EHs">
             <modifierMask key="keyEquivalentModifierMask"/>
         </menuItem>
+        <userDefaultsController representsSharedInstance="YES" id="pWR-n3-bT9"/>
     </objects>
 </document>
