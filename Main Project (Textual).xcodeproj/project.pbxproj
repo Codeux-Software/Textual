@@ -420,9 +420,6 @@
 		4C2533491F4439180003A3F4 /* TDCLicenseUpgradeActivateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C25333D1F44390C0003A3F4 /* TDCLicenseUpgradeActivateSheet.xib */; };
 		4C25334A1F4439180003A3F4 /* TDCLicenseUpgradeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C25333B1F44390B0003A3F4 /* TDCLicenseUpgradeDialog.xib */; };
 		4C25334B1F4439180003A3F4 /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2533431F44390C0003A3F4 /* TDCLicenseUpgradeEligibilitySheet.xib */; };
-		4C25334C1F4439180003A3F4 /* TDCLicenseUpgradeActivateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C25333D1F44390C0003A3F4 /* TDCLicenseUpgradeActivateSheet.xib */; };
-		4C25334D1F4439180003A3F4 /* TDCLicenseUpgradeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C25333B1F44390B0003A3F4 /* TDCLicenseUpgradeDialog.xib */; };
-		4C25334E1F4439180003A3F4 /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2533431F44390C0003A3F4 /* TDCLicenseUpgradeEligibilitySheet.xib */; };
 		4C2533551F4439400003A3F4 /* TDCInAppPurchaseDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C25334F1F44393C0003A3F4 /* TDCInAppPurchaseDialog.strings */; };
 		4C2533561F4439400003A3F4 /* TDCInAppPurchaseUpgradeEligibilitySheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C2533511F44393C0003A3F4 /* TDCInAppPurchaseUpgradeEligibilitySheet.strings */; };
 		4C2533571F4439430003A3F4 /* TDCLicenseUpgradeEligibilitySheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C2533531F44393C0003A3F4 /* TDCLicenseUpgradeEligibilitySheet.strings */; };
@@ -1671,6 +1668,9 @@
 		4CEA29CC1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
 		4CEA29CD1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
 		4CEA29CE1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
+		4CEC28611F46DBB20070D178 /* TDCLicenseUpgradeActivateSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C25333D1F44390C0003A3F4 /* TDCLicenseUpgradeActivateSheet.xib */; };
+		4CEC286A1F46DBBF0070D178 /* TDCLicenseUpgradeDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C25333B1F44390B0003A3F4 /* TDCLicenseUpgradeDialog.xib */; };
+		4CEC286B1F46DBC50070D178 /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2533431F44390C0003A3F4 /* TDCLicenseUpgradeEligibilitySheet.xib */; };
 		4CEFCB881D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
 		4CEFCB891D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
 		4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
@@ -5550,7 +5550,6 @@
 				4CF40EDA1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
 				4CBC76BC1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4CBC76AD1CC72B5100484A13 /* Accessibility.strings in Resources */,
-				4C25334D1F4439180003A3F4 /* TDCLicenseUpgradeDialog.xib in Resources */,
 				4C0BA53B1990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C0BA53C1990798800857343 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4C0BA53D1990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
@@ -5569,9 +5568,7 @@
 				4CBC76B31CC72B5100484A13 /* IRC.strings in Resources */,
 				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4CF40F3E1AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib in Resources */,
-				4C25334C1F4439180003A3F4 /* TDCLicenseUpgradeActivateSheet.xib in Resources */,
 				4CCFA6761ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
-				4C25334E1F4439180003A3F4 /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */,
 				4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CBC76D11CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */,
 				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
@@ -5714,6 +5711,7 @@
 				4C7A21971979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229281978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4CCD93FF1CA7291300335381 /* JavaScript in Resources */,
+				4CEC28611F46DBB20070D178 /* TDCLicenseUpgradeActivateSheet.xib in Resources */,
 				4CCDC6A01EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */,
 				4C0A90121D54D24300B64244 /* TDCBuddyListDialog.xib in Resources */,
 				4CB229661978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
@@ -5767,6 +5765,7 @@
 				4C0D460F1EC2B11E00256D58 /* TDCServerEndpointListSheet.strings in Resources */,
 				4CCFA6741ABCF36A0083620F /* TPWTB_General@2x.png in Resources */,
 				4C7766441978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
+				4CEC286A1F46DBBF0070D178 /* TDCLicenseUpgradeDialog.xib in Resources */,
 				4CBC76CA1CC72B5100484A13 /* TDCChannelBanListSheet.strings in Resources */,
 				4CF40F441AC1A59500A26BE0 /* TDCServerChangeNicknameSheet.xib in Resources */,
 				4CCFA68C1ABCF36A0083620F /* TPWTB_Notifications@2x.png in Resources */,
@@ -5785,6 +5784,7 @@
 				4C46F44F1943A654004CA8BA /* encryptionLockIconDark.tif in Resources */,
 				4C52379515C18F6700414852 /* Styles in Resources */,
 				4CF40F2C1AC1A59500A26BE0 /* TDCChannelPropertiesSheet.xib in Resources */,
+				4CEC286B1F46DBC50070D178 /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */,
 				4CB229361978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
 				4CF40ED01AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4CB229241978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
