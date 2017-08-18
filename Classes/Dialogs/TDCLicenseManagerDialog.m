@@ -614,9 +614,11 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 - (void)upgradeActivateSheetActivateLicense:(TDCLicenseUpgradeActivateSheet *)sender
 {
+	NSString *licenseKey = sender.licenseKey;
+
 	[sender endSheet];
 
-	[self attemptToActivateLicenseKey:sender.licenseKey];
+	[self attemptToActivateLicenseKey:licenseKey];
 }
 
 - (void)upgradeActivateSheetPurchaseUpgrade:(TDCLicenseUpgradeActivateSheet *)sender
