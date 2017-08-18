@@ -84,6 +84,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 #define _rendererConversationTrackerAttribute	(1 << 17)
 #define _rendererKeywordHighlightAttribute		(1 << 18)
 #define _rendererStrikethroughFormatAttribute	(1 << 19)
+#define _rendererMonospaceFormatAttribute		(1 << 20)
 
 #define _foregroundColorMask	(0x0F)
 #define _backgroundColorMask	(0xF0)
@@ -92,6 +93,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 									_rendererBoldFormatAttribute |				\
 									_rendererUnderlineFormatAttribute |			\
 									_rendererItalicFormatAttribute |			\
+									_rendererMonospaceFormatAttribute |			\
 									_rendererStrikethroughFormatAttribute |		\
 									_rendererForegroundColorAttribute |			\
 									_rendererBackgroundColorAttribute			\
@@ -247,6 +249,16 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 						currentEffect &= ~_rendererItalicFormatAttribute;
 					} else {
 						currentEffect |= _rendererItalicFormatAttribute;
+					}
+
+					continue;
+				}
+				case IRCTextFormatterMonospaceEffectCharacter:
+				{
+					if (currentEffect & _rendererMonospaceFormatAttribute) {
+						currentEffect &= ~_rendererMonospaceFormatAttribute;
+					} else {
+						currentEffect |= _rendererMonospaceFormatAttribute;
 					}
 
 					continue;
@@ -655,6 +667,10 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 	if (attributes & _effectMask) {
 		NSFont *boldItalicFont = defaultFont;
 
+		if (attributes & _rendererMonospaceFormatAttribute) {
+			boldItalicFont = [RZFontManager() convertFont:boldItalicFont toFamily:@"Menlo"];
+		}
+
 		if (attributes & _rendererBoldFormatAttribute) {
 			boldItalicFont = [RZFontManager() convertFont:boldItalicFont toHaveTrait:NSBoldFontMask];
 
@@ -829,6 +845,10 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 		if (attributes & _rendererItalicFormatAttribute) {
 			templateTokens[@"fragmentIsItalicized"] = @(YES);
+		}
+
+		if (attributes & _rendererMonospaceFormatAttribute) {
+			templateTokens[@"fragmentIsMonospace"] = @(YES);
 		}
 
 		if (attributes & _rendererStrikethroughFormatAttribute) {

@@ -55,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSAttributedString *attributedStringValue;
 
+- (void)resetFontInRange:(NSRange)range;
 - (void)resetFontColorInRange:(NSRange)range;
 
 - (void)resetTypeSetterAttributes;

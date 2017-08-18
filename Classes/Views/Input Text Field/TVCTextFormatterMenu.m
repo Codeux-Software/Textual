@@ -115,6 +115,20 @@ NS_ASSUME_NONNULL_BEGIN
 			
 			return YES;
 		}
+		case 95009:
+		{
+			BOOL monospaceText = self.textIsMonospace;
+
+			item.state = monospaceText;
+
+			if (monospaceText) {
+				item.action = @selector(removeMonospaceCharFromTextBox:);
+			} else {
+				item.action = @selector(insertMonospaceCharIntoTextBox:);
+			}
+
+			return YES;
+		}
 		case 95008:
 		{
 			BOOL struckthroughText = self.textIsStruckthrough;
@@ -172,6 +186,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self propertyIsSet:IRCTextFormatterItalicEffect];
 }
 
+- (BOOL)textIsMonospace
+{
+	return [self propertyIsSet:IRCTextFormatterMonospaceEffect];
+}
+
 - (BOOL)textIsStruckthrough
 {
 	return [self propertyIsSet:IRCTextFormatterStrikethroughEffect];
@@ -209,6 +228,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (formatterEffect == IRCTextFormatterForegroundColorEffect && value == nil) {
 		[self.textField resetFontColorInRange:limitRange];
+	}
+
+	if (formatterEffect == IRCTextFormatterMonospaceEffect && value == nil) {
+		[self.textField resetFontInRange:limitRange];
 	}
 }
 
@@ -265,6 +288,13 @@ NS_ASSUME_NONNULL_BEGIN
 	NSRange selectedTextRange = self.textField.selectedRange;
 
 	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:@(YES) inRange:selectedTextRange];
+}
+
+- (void)insertMonospaceCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = self.textField.selectedRange;
+
+	[self applyEffectToTextBox:IRCTextFormatterMonospaceEffect withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertStrikethroughCharIntoTextBox:(id)sender
@@ -361,6 +391,13 @@ NS_ASSUME_NONNULL_BEGIN
 	NSRange selectedTextRange = self.textField.selectedRange;
 
 	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:nil inRange:selectedTextRange];
+}
+
+- (void)removeMonospaceCharFromTextBox:(id)sender
+{
+	NSRange selectedTextRange = self.textField.selectedRange;
+
+	[self applyEffectToTextBox:IRCTextFormatterMonospaceEffect withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeStrikethroughCharFromTextBox:(id)sender

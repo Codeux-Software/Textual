@@ -364,6 +364,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 			case IRCTextFormatterBoldEffectCharacter:
 			case IRCTextFormatterItalicEffectCharacter:
 			case IRCTextFormatterItalicEffectCharacterOld:
+			case IRCTextFormatterMonospaceEffectCharacter:
 			case IRCTextFormatterStrikethroughEffectCharacter:
 			case IRCTextFormatterUnderlineEffectCharacter:
 			case IRCTextFormatterTerminatingCharacter:

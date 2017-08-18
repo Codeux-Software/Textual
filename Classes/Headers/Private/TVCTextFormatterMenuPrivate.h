@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) BOOL textIsBold;
 @property (readonly) BOOL textIsItalicized;
+@property (readonly) BOOL textIsMonospace;
 @property (readonly) BOOL textIsStruckthrough;
 @property (readonly) BOOL textIsUnderlined;
 @property (readonly) BOOL textHasForegroundColor;
@@ -55,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
 - (IBAction)insertItalicCharIntoTextBox:(id)sender;
+- (IBAction)insertMonospaceCharIntoTextBox:(id)sender;
 - (IBAction)insertStrikethroughCharIntoTextBox:(id)sender;
 - (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
 - (IBAction)insertForegroundColorCharIntoTextBox:(id)sender;
@@ -62,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)removeBoldCharFromTextBox:(id)sender;
 - (IBAction)removeItalicCharFromTextBox:(id)sender;
+- (IBAction)removeMonospaceCharFromTextBox:(id)sender;
 - (IBAction)removeStrikethroughCharFromTextBox:(id)sender;
 - (IBAction)removeUnderlineCharFromTextBox:(id)sender;
 - (IBAction)removeForegroundColorCharFromTextBox:(id)sender;

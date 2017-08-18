@@ -704,9 +704,63 @@
                             <action selector="insertItalicCharIntoTextBox:" target="j7v-mc-UwU" id="ywY-c0-vnI"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Srikethrough" tag="95008" id="IRX-kV-qMN">
+                    <menuItem title="Monospace" tag="95009" id="IRX-kV-qMN" userLabel="Monospace">
                         <attributedString key="attributedTitle">
-                            <fragment content="Srikethrough">
+                            <fragment content="Monospace">
+                                <attributes>
+                                    <font key="NSFont" size="13" name="Menlo-Regular"/>
+                                    <font key="NSOriginalFont" size="13" name="Menlo-Regular"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
+                                        <tabStops>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="insertMonospaceCharIntoTextBox:" target="j7v-mc-UwU" id="MlM-MK-kaM"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Strikethrough" tag="95008" id="eHi-3i-hdN">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Strikethrough">
                                 <attributes>
                                     <font key="NSFont" metaFont="system"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
@@ -755,7 +809,7 @@
                         </attributedString>
                         <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
-                            <action selector="insertStrikethroughCharIntoTextBox:" target="j7v-mc-UwU" id="Gvu-Mp-2ma"/>
+                            <action selector="insertStrikethroughCharIntoTextBox:" target="j7v-mc-UwU" id="PnJ-g6-Soe"/>
                         </connections>
                     </menuItem>
                     <menuItem title="Underline" tag="95003" id="WEO-6i-cGf">
