@@ -75,71 +75,51 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 	}
 	
 	/* Convert calander units to a text rep */
-	NSMutableArray<NSString *> *orderStrings = [NSMutableArray array];
+	NSMutableArray<NSNumber *> *units = [NSMutableArray arrayWithCapacity:6];
 	
 	if (orderMatrix & NSCalendarUnitYear) {
-		[orderStrings addObject:@"year"];
+		[units addObject:@(NSCalendarUnitYear)];
 	}
 	
 	if (orderMatrix & NSCalendarUnitMonth) {
-		[orderStrings addObject:@"month"];
+		[units addObject:@(NSCalendarUnitMonth)];
 	}
 	
 	if (orderMatrix & NSCalendarUnitDay) {
-		[orderStrings addObject:@"day"];
+		[units addObject:@(NSCalendarUnitDay)];
 	}
 	
 	if (orderMatrix & NSCalendarUnitHour) {
-		[orderStrings addObject:@"hour"];
+		[units addObject:@(NSCalendarUnitHour)];
 	}
 	
 	if (orderMatrix & NSCalendarUnitMinute) {
-		[orderStrings addObject:@"minute"];
+		[units addObject:@(NSCalendarUnitMinute)];
 	}
 	
 	if (orderMatrix & NSCalendarUnitSecond) {
-		[orderStrings addObject:@"second"];
+		[units addObject:@(NSCalendarUnitSecond)];
 	}
 	
-	/* Build compare information. */
+	/* Build compare information */
 	NSCalendar *systemCalendar = [NSCalendar currentCalendar];
 	
 	NSDate *date1 = [NSDate date];
 
 	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:(-(dateInterval + 1))];
 	
-	/* Perform comparison. */
+	/* Perform comparison */
 	NSDateComponents *breakdownInfo = [systemCalendar components:orderMatrix fromDate:date1 toDate:date2 options:0];
 	
 	if (breakdownInfo == nil) {
 		return nil;
 	}
 
-	NSMutableString *finalResult = nil;
+	NSMutableString *returnResult = nil;
 
-	for (NSString *unit in orderStrings) {
-		/* For each entry in the orderMatrix, we call that selector name on the
-		 comparison result to retreive whatever information it contains. */
-		/* NSDateComponents has a -valueForComponent: method, but that doesn't 
-		 support Mountain Lion */
-		SEL unitSelector = NSSelectorFromString(unit);
+	for (NSNumber *unit in units) {
+		NSInteger unitValue = [breakdownInfo valueForComponent:unit.unsignedIntegerValue];
 
-		NSMethodSignature *unitSelectorSignature =
-		[[NSDateComponents class] instanceMethodSignatureForSelector:unitSelector];
-
-		NSInvocation *invocation =
-		[NSInvocation invocationWithMethodSignature:unitSelectorSignature];
-
-		invocation.target = breakdownInfo;
-
-		invocation.selector = unitSelector;
-
-		[invocation invoke];
-
-		NSInteger unitValue = 0;
-
-		[invocation getReturnValue:&unitValue];
-		
 		/* If results isn't zero, we show it */
 		if (unitValue == 0) {
 			continue;
@@ -162,24 +142,23 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 			return [NSString stringWithFormat:@"%ld %@", unitValue, TXTLS(languageKey)];
 		}
 
-		if (finalResult == nil) {
-			finalResult = [NSMutableString string];
+		if (returnResult == nil) {
+			returnResult = [NSMutableString string];
 		}
 
-		[finalResult appendFormat:@"%ld %@, ", unitValue, TXTLS(languageKey)];
+		if (unit == units.lastObject) {
+			[returnResult appendFormat:@"%ld %@", unitValue, TXTLS(languageKey)];
+		} else {
+			[returnResult appendFormat:@"%ld %@, ", unitValue, TXTLS(languageKey)];
+		}
 	}
 	
-	if (finalResult.length > 0) {
-		/* Delete the end ", " */
-		NSRange deleteRange = NSMakeRange((finalResult.length - 2), 2);
-		
-		[finalResult deleteCharactersInRange:deleteRange];
-
-		return [finalResult copy];
+	if (returnResult.length > 0) {
+		return [returnResult copy];
 	}
 
 	/* Return "0 seconds" when there are no results. */
-	return [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][second]")];
+	return [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][128]")];
 }
 
 NSString * _Nullable TXFormatDateLongStyle(id dateObject, BOOL relativeOutput)

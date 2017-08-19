@@ -68,19 +68,19 @@
 "BasicLanguage[1021]" = "%@";
 "BasicLanguage[1022]" = "%@";
 
-"BasicLanguage[1023][day]" = "days";
-"BasicLanguage[1023][hour]" = "hours";
-"BasicLanguage[1023][minute]" = "minutes";
-"BasicLanguage[1023][month]" = "months";
-"BasicLanguage[1023][second]" = "seconds";
-"BasicLanguage[1023][year]" = "years";
+"BasicLanguage[1023][128]" = "seconds";
+"BasicLanguage[1023][64]" = "minutes";
+"BasicLanguage[1023][32]" = "hours";
+"BasicLanguage[1023][16]" = "days";
+"BasicLanguage[1023][8]" = "months";
+"BasicLanguage[1023][4]" = "years";
 
-"BasicLanguage[1024][day]" = "day";
-"BasicLanguage[1024][hour]" = "hour";
-"BasicLanguage[1024][minute]" = "minute";
-"BasicLanguage[1024][month]" = "month";
-"BasicLanguage[1024][second]" = "second";
-"BasicLanguage[1024][year]" = "year";
+"BasicLanguage[1024][128]" = "second";
+"BasicLanguage[1024][64]" = "minute";
+"BasicLanguage[1024][32]" = "hour";
+"BasicLanguage[1024][16]" = "day";
+"BasicLanguage[1024][8]" = "month";
+"BasicLanguage[1024][4]" = "year";
 
 "BasicLanguage[1025]" = "%@ ago";
 
