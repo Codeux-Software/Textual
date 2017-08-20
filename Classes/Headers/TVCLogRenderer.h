@@ -65,6 +65,7 @@ TEXTUAL_EXTERN NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsA
 @interface TVCLogRenderer : NSObject
 + (NSString *)escapeString:(NSString *)string;
 
++ (NSColor *)mapColorCodeNumber:(NSNumber *)colorCode;
 + (NSColor *)mapColorCode:(NSUInteger)colorCode;
 
 + (nullable NSString *)renderTemplate:(NSString *)templateName;
