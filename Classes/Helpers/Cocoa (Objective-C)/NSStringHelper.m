@@ -371,7 +371,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 			{
 				break;
 			}
-			case IRCTextFormatterColorEffectCharacter:
+			case IRCTextFormatterColorAsDigitEffectCharacter:
 			{
 				i += [self colorCodesStartingAt:i foregroundColor:NULL backgroundColor:NULL];
 

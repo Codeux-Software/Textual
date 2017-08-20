@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _formattingMenuForegroundColorDisabledTag		95004
 #define _formattingMenuBackgroundColorDisabledTag		95006
 #define _formattingMenuRainbowColorMenuItemTag			299
+#define _formattingMenuHexColorMenuItemTag				230
 
 @interface TVCTextViewIRCFormattingMenu ()
 @property (readonly, nullable) TVCTextViewWithIRCFormatter *textField;
