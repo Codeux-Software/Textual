@@ -91,9 +91,10 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 - (NSArray<NSString *> *)base64EncodingWithLineLength:(NSUInteger)lineLength;
 
-- (NSUInteger)colorCodesStartingAt:(NSUInteger)rangeStart
-				   foregroundColor:(NSUInteger *)foregroundColor
-				   backgroundColor:(NSUInteger *)backgroundColor;
+- (NSUInteger)colorComponentsOfCharacter:(UniChar)character
+							  startingAt:(NSUInteger)rangeStart
+						 foregroundColor:(id _Nullable * _Nullable)foregroundColor
+						 backgroundColor:(id _Nullable * _Nullable)backgroundColor;
 
 - (nullable NSString *)padNicknameWithCharacter:(UniChar)padCharacter maximumLength:(NSUInteger)maximumLength;
 
