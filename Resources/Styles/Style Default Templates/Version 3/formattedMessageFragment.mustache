@@ -6,7 +6,25 @@
 {{#fragmentTextColorClosed}}
 </span>
 {{/fragmentTextColorClosed}}
+
+{{#fragmentTextColorOpened}}
+<span class="effect"
+	{{#fragmentForegroundColorIsSet}}
+		color-number="{{fragmentForegroundColor}}"
+	{{/fragmentForegroundColorIsSet}}
+
+	{{#fragmentBackgroundColorIsSet}}
+		bgcolor-number="{{fragmentBackgroundColor}}"
+	{{/fragmentBackgroundColorIsSet}}
+>
+{{/fragmentTextColorOpened}}
+{{#fragmentIsBoldOpened}}<b>{{/fragmentIsBoldOpened}}
+{{#fragmentIsItalicizedOpened}}<i>{{/fragmentIsItalicizedOpened}}
+{{#fragmentIsMonospaceOpened}}<tt>{{/fragmentIsMonospaceOpened}}
+{{#fragmentIsStruckthroughOpened}}<del>{{/fragmentIsStruckthroughOpened}}
+{{#fragmentIsUnderlinedOpened}}<u>{{/fragmentIsUnderlinedOpened}}
 {{#inlineNicknameMatchFound}}
+
 <span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" mode="{{inlineNicknameUserModeSymbol}}"
 	{{#nicknameColorHashingIsStyleBased}}
 		{{#nicknameColorStyleOverride}}
@@ -18,25 +36,8 @@
 		{{/ isEmpty(inlineNicknameColorStyle) }}
 	{{^nicknameColorHashingIsStyleBased}}
 		colornumber="{{inlineNicknameColorNumber}}"
-	{{/nicknameColorHashingIsStyleBased}}>
+	{{/nicknameColorHashingIsStyleBased}}>{{inlineNicknameUserModeSymbol}}
 {{/inlineNicknameMatchFound}}
-{{#fragmentTextColorOpened}}
-<span class="effect"
-	{{#fragmentForegroundColorIsSet}}
-	color-number="{{fragmentForegroundColor}}"
-	{{/fragmentForegroundColorIsSet}}
-
-	{{#fragmentBackgroundColorIsSet}}
-		bgcolor-number="{{fragmentBackgroundColor}}" 
-	{{/fragmentBackgroundColorIsSet}}
->
-{{/fragmentTextColorOpened}}
-{{#fragmentIsBoldOpened}}<b>{{/fragmentIsBoldOpened}}
-{{#fragmentIsItalicizedOpened}}<i>{{/fragmentIsItalicizedOpened}}
-{{#fragmentIsMonospaceOpened}}<tt>{{/fragmentIsMonospaceOpened}}
-{{#fragmentIsStruckthroughOpened}}<del>{{/fragmentIsStruckthroughOpened}}
-{{#fragmentIsUnderlinedOpened}}<u>{{/fragmentIsUnderlinedOpened}}
-{{#inlineNicknameMatchFound}}{{inlineNicknameUserModeSymbol}}{{/inlineNicknameMatchFound}}
 {{{messageFragment}}}
 {{#inlineNicknameMatchFound}}
 </span>
