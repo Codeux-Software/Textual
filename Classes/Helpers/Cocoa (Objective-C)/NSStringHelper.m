@@ -372,8 +372,9 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 				break;
 			}
 			case IRCTextFormatterColorAsDigitEffectCharacter:
+			case IRCTextFormatterColorAsHexEffectCharacter:
 			{
-				i += [self colorCodesStartingAt:i foregroundColor:NULL backgroundColor:NULL];
+				i += [self colorComponentsOfCharacter:character startingAt:i foregroundColor:NULL backgroundColor:NULL];
 
 				break;
 			}
@@ -389,7 +390,103 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	return [NSString stringWithCharacters:outputBuffer length:currentPosition];
 }
 
-- (NSUInteger)colorCodesStartingAt:(NSUInteger)rangeStart foregroundColor:(NSUInteger *)foregroundColor backgroundColor:(NSUInteger *)backgroundColor
+- (NSUInteger)colorComponentsOfCharacter:(UniChar)character startingAt:(NSUInteger)rangeStart foregroundColor:(id _Nullable * _Nullable)foregroundColor backgroundColor:(id _Nullable * _Nullable)backgroundColor
+{
+	if (character == IRCTextFormatterColorAsDigitEffectCharacter) {
+		return [self colorAsDigitStartingAt:rangeStart foregroundColor:foregroundColor backgroundColor:backgroundColor];
+	} else if (character == IRCTextFormatterColorAsHexEffectCharacter) {
+		return [self colorAsHexStartingAt:rangeStart foregroundColor:foregroundColor backgroundColor:backgroundColor];
+	}
+
+	return 0;
+}
+
+- (NSUInteger)colorAsHexStartingAt:(NSUInteger)rangeStart foregroundColor:(NSColor * _Nullable * _Nullable)foregroundColor backgroundColor:(NSColor * _Nullable * _Nullable)backgroundColor
+{
+	NSUInteger selfLength = self.length;
+
+	NSParameterAssert(rangeStart < selfLength);
+
+	NSUInteger currentPosition = rangeStart;
+
+	NSString *m_foregroundColor = nil;
+	NSString *m_backgroundColor = nil;
+
+	BOOL commanEaten = NO;
+
+	// ========================================== //
+
+	/* Control character */
+	currentPosition++;
+
+	// ========================================== //
+
+	/* Foreground hex color */
+	if ((currentPosition + 6) > selfLength) {
+		goto return_method;
+	}
+
+	m_foregroundColor = [self substringWithRange:NSMakeRange(currentPosition, 6)];
+
+	if ([m_foregroundColor onlyContainsCharacters:@"abcdefABCDEF0123456789"]) {
+		currentPosition += 6; // Eat foreground color
+	} else {
+		m_foregroundColor = nil;
+
+		goto return_method;
+	}
+
+	// ========================================== //
+
+	/* Comma */
+	if (currentPosition >= selfLength) {
+		goto return_method;
+	}
+
+	UniChar a = [self characterAtIndex:currentPosition];
+
+	if (a == ',') {
+		commanEaten = YES;
+
+		currentPosition++; // Eat comma
+	} else {
+		goto return_method;
+	}
+
+	// ========================================== //
+
+	/* Background hex color */
+	if ((currentPosition + 6) > selfLength) {
+		goto return_method;
+	}
+
+	m_backgroundColor = [self substringWithRange:NSMakeRange(currentPosition, 6)];
+
+	if ([m_backgroundColor onlyContainsCharacters:@"abcdefABCDEF0123456789"]) {
+		currentPosition += 6; // Eat background color
+	} else {
+		m_backgroundColor = nil;
+	}
+
+	// ========================================== //
+
+return_method:
+	if (m_backgroundColor == nil && commanEaten) {
+		currentPosition -= 1;
+	}
+
+	if ( foregroundColor && m_foregroundColor != nil) {
+		*foregroundColor = [NSColor colorWithHexadecimalValue:m_foregroundColor.uppercaseString];
+	}
+
+	if ( backgroundColor && m_backgroundColor != nil) {
+		*backgroundColor = [NSColor colorWithHexadecimalValue:m_backgroundColor.uppercaseString];
+	}
+
+	return (currentPosition - rangeStart);
+}
+
+- (NSUInteger)colorAsDigitStartingAt:(NSUInteger)rangeStart foregroundColor:(NSNumber * _Nullable * _Nullable)foregroundColor backgroundColor:(NSNumber * _Nullable * _Nullable)backgroundColor
 {
 	NSUInteger selfLength = self.length;
 
@@ -400,13 +497,21 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	NSUInteger m_foregoundColor = NSNotFound;
 	NSUInteger m_backgroundColor = NSNotFound;
 
+	BOOL commanEaten = NO;
+
 	// ========================================== //
 
-	if ((currentPosition + 1) >= selfLength) {
+	/* Control character */
+	currentPosition++;
+
+	// ========================================== //
+
+	/* Foreground color first color number */
+	if (currentPosition >= selfLength) {
 		goto return_method;
 	}
 
-	UniChar a = [self characterAtIndex:(currentPosition + 1)];
+	UniChar a = [self characterAtIndex:currentPosition];
 
 	if (CS_StringIsBase10Numeric(a) == NO) {
 		goto return_method;
@@ -414,70 +519,65 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	m_foregoundColor = (a - '0');
 
-	currentPosition++;
+	currentPosition++; // Eat first color number
 
 	// ========================================== //
 
-	if ((currentPosition + 1) >= selfLength) {
+	/* Foreground color second color number */
+	if (currentPosition >= selfLength) {
 		goto return_method;
 	}
 
-	UniChar b = [self characterAtIndex:(currentPosition + 1)];
+	UniChar b = [self characterAtIndex:currentPosition];
 
-	if (CS_StringIsBase10Numeric(b) == NO && b != ',' ) {
-		goto return_method;
-	}
-
-	currentPosition++;
-
-	// ========================================== //
-
-	if (b != ',') { // Eat up comma if /b/ is a number
+	if (CS_StringIsBase10Numeric(b)) {
 		m_foregoundColor = (m_foregoundColor * 10 + b - '0');
 
-		if ((currentPosition + 1) >= selfLength) {
-			goto return_method;
-		}
-
-		UniChar c = [self characterAtIndex:(currentPosition + 1)];
-
-		if (c != ',') {
-			goto return_method;
-		}
-
-		currentPosition++;
+		currentPosition++; // Eat second color number
 	}
 
 	// ========================================== //
 
-	/* Minus index by 1 to allow trailing comma to appear
-	 in the string incase a user configured a foreground
-	 color without background but still had a comma. */
-	if ((currentPosition + 1) >= selfLength) {
-		currentPosition--;
-
+	/* Comma */
+	if (currentPosition >= selfLength) {
 		goto return_method;
 	}
 
-	UniChar d = [self characterAtIndex:(currentPosition + 1)];
+	UniChar c = [self characterAtIndex:currentPosition];
+
+	if (c == ',') {
+		commanEaten = YES;
+
+		currentPosition++; // Eat comma
+	} else {
+		goto return_method;
+	}
+
+	// ========================================== //
+
+	/* Background color first color number */
+	if (currentPosition >= selfLength) {
+		goto return_method;
+	}
+
+	UniChar d = [self characterAtIndex:currentPosition];
 
 	if (CS_StringIsBase10Numeric(d) == NO) {
-		currentPosition--;
-
 		goto return_method;
 	}
 
 	m_backgroundColor = (d - '0');
 
-	currentPosition++;
+	currentPosition++; // Eat first color number
 
 	// ========================================== //
 
-	if ((currentPosition + 1) >= selfLength) {
+	/* Background color second color number */
+	if (currentPosition >= selfLength) {
 		goto return_method;
 	}
 
-	UniChar e = [self characterAtIndex:(currentPosition + 1)];
+	UniChar e = [self characterAtIndex:currentPosition];
 
 	if (CS_StringIsBase10Numeric(e) == NO) {
 		goto return_method;
@@ -485,17 +585,21 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	m_backgroundColor = (m_backgroundColor * 10 + e - '0');
 
-	currentPosition++;
+	currentPosition++; // Eate second color number
 
 	// ========================================== //
 
 return_method:
-	if ( foregroundColor) {
-		*foregroundColor = m_foregoundColor;
+	if (m_backgroundColor == NSNotFound && commanEaten) {
+		currentPosition -= 1;
 	}
 
-	if ( backgroundColor) {
-		*backgroundColor = m_backgroundColor;
+	if ( foregroundColor && m_foregoundColor != NSNotFound) {
+		*foregroundColor = @(m_foregoundColor % 16);
+	}
+
+	if ( backgroundColor && m_backgroundColor != NSNotFound) {
+		*backgroundColor = @(m_backgroundColor % 16);
 	}
 
 	return (currentPosition - rangeStart);

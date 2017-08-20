@@ -9,13 +9,25 @@
 
 {{#fragmentTextColorOpened}}
 <span class="effect"
-	{{#fragmentForegroundColorIsSet}}
-		color-number="{{fragmentForegroundColor}}"
-	{{/fragmentForegroundColorIsSet}}
+	{{#fragmentTextColorUsesStyleTag}}
+		style="
+			{{#fragmentForegroundColorIsSet}}
+				color: {{fragmentForegroundColor}};
+			{{/fragmentForegroundColorIsSet}}
 
-	{{#fragmentBackgroundColorIsSet}}
-		bgcolor-number="{{fragmentBackgroundColor}}"
-	{{/fragmentBackgroundColorIsSet}}
+			{{#fragmentBackgroundColorIsSet}}
+				background-color: {{fragmentBackgroundColor}};
+			{{/fragmentBackgroundColorIsSet}}
+		"
+	{{^fragmentTextColorUsesStyleTag}}
+		{{#fragmentForegroundColorIsSet}}
+			color-number="{{fragmentForegroundColor}}"
+		{{/fragmentForegroundColorIsSet}}
+
+		{{#fragmentBackgroundColorIsSet}}
+			bgcolor-number="{{fragmentBackgroundColor}}"
+		{{/fragmentBackgroundColorIsSet}}
+	{{/fragmentTextColorUsesStyleTag}}
 >
 {{/fragmentTextColorOpened}}
 {{#fragmentIsBoldOpened}}<b>{{/fragmentIsBoldOpened}}

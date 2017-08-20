@@ -128,41 +128,33 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 					continue;
 				}
 				case IRCTextFormatterColorAsDigitEffectCharacter:
+				case IRCTextFormatterColorAsHexEffectCharacter:
 				{
-					NSUInteger foregoundColor = NSNotFound;
-					NSUInteger backgroundColor = NSNotFound;
+					id foregroundColor = nil;
+					id backgroundColor = nil;
 
 					NSUInteger colorOffset = [bodyWithAttributes.string
-											  colorCodesStartingAt:characterPosition
-												  foregroundColor:&foregoundColor
-												  backgroundColor:&backgroundColor];
+											  colorComponentsOfCharacter:character
+															  startingAt:characterPosition
+													     foregroundColor:&foregroundColor
+													     backgroundColor:&backgroundColor];
 
-					if (foregoundColor != NSNotFound) {
-						foregoundColor %= 16;
-					}
-
-					if (backgroundColor != NSNotFound) {
-						backgroundColor %= 16;
-					}
-
-					if (foregoundColor != NSNotFound) {
-						[bodyWithAttributes addAttribute:TVCLogRendererFormattingForegroundColorAttribute value:@(foregoundColor) startingAt:characterPosition];
+					if (foregroundColor != nil) {
+						[bodyWithAttributes addAttribute:TVCLogRendererFormattingForegroundColorAttribute value:foregroundColor startingAt:characterPosition];
 					} else if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingForegroundColorAttribute atIndex:characterPosition]) {
 						[bodyWithAttributes removeAttribute:TVCLogRendererFormattingForegroundColorAttribute startingAt:characterPosition];
 					}
 
-					if (backgroundColor != NSNotFound) {
-						[bodyWithAttributes addAttribute:TVCLogRendererFormattingBackgroundColorAttribute value:@(backgroundColor) startingAt:characterPosition];
+					if (backgroundColor != nil) {
+						[bodyWithAttributes addAttribute:TVCLogRendererFormattingBackgroundColorAttribute value:backgroundColor startingAt:characterPosition];
 					} else if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingBackgroundColorAttribute atIndex:characterPosition]) {
 						/* We only strip the background color if there is no longer a foreground color. A end character. */
-						if (foregoundColor == NSNotFound) {
+						if (foregroundColor == nil) {
 							[bodyWithAttributes removeAttribute:TVCLogRendererFormattingBackgroundColorAttribute startingAt:characterPosition];
 						}
 					}
 
 					i += colorOffset; // No need to process numbers we are removing
-
-					colorOffset += 1; // Add one for control character
 
 					[bodyWithAttributes deleteCharactersInRange:NSMakeRange(characterPosition, colorOffset)];
 
@@ -653,9 +645,9 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingForegroundColorAttribute]) {
-		NSNumber *foregroundColor = attributesIn[TVCLogRendererFormattingForegroundColorAttribute];
+		id foregroundColor = attributesIn[TVCLogRendererFormattingForegroundColorAttribute];
 
-		[attributesOut setObject:[TVCLogRenderer mapColorCodeNumber:foregroundColor] forKey:NSForegroundColorAttributeName];
+		[attributesOut setObject:[TVCLogRenderer mapColor:foregroundColor] forKey:NSForegroundColorAttributeName];
 
 		[attributesOut setObject:foregroundColor forKey:IRCTextFormatterForegroundColorAttributeName];
 	} else {
@@ -665,9 +657,9 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingBackgroundColorAttribute]) {
-		NSNumber *backgroundColor = attributesIn[TVCLogRendererFormattingBackgroundColorAttribute];
+		id backgroundColor = attributesIn[TVCLogRendererFormattingBackgroundColorAttribute];
 
-		[attributesOut setObject:[TVCLogRenderer mapColorCodeNumber:backgroundColor] forKey:NSBackgroundColorAttributeName];
+		[attributesOut setObject:[TVCLogRenderer mapColor:backgroundColor] forKey:NSBackgroundColorAttributeName];
 
 		[attributesOut setObject:backgroundColor forKey:IRCTextFormatterBackgroundColorAttributeName];
 	}
@@ -808,20 +800,20 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	// --- //
 
-	NSNumber *foregroundColorNew = stringAttributes[TVCLogRendererFormattingForegroundColorAttribute];
-	NSNumber *backgroundColorNew = stringAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
+	id foregroundColorNew = stringAttributes[TVCLogRendererFormattingForegroundColorAttribute];
+	id backgroundColorNew = stringAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
 
 	BOOL setNewColors = YES;
 
 	if ([self->_renderedBodyOpenAttributes containsKey:TVCLogRendererFormattingForegroundColorAttribute] ||
 		[self->_renderedBodyOpenAttributes containsKey:TVCLogRendererFormattingBackgroundColorAttribute])
 	{
-		NSNumber *foregroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingForegroundColorAttribute];
-		NSNumber *backgroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
+		id foregroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingForegroundColorAttribute];
+		id backgroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
 
 		/* There is no need to open a new HTML segment if the color hasn't changed. */
-		if ([foregroundColorOld isEqual:foregroundColorNew] &&
-			[backgroundColorOld isEqual:backgroundColorNew])
+		if (NSObjectsAreEqual(foregroundColorNew, foregroundColorOld) &&
+			NSObjectsAreEqual(backgroundColorNew, backgroundColorOld))
 		{
 			setNewColors = NO;
 		} else {
@@ -832,20 +824,30 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	if (setNewColors && foregroundColorNew != nil) {
 		[self->_renderedBodyOpenAttributes setObject:foregroundColorNew forKey:TVCLogRendererFormattingForegroundColorAttribute];
 
-		templateTokens[@"fragmentTextColorIsSet"] = @(YES); // backwards compatibility
+		BOOL usesStyleTag = NO;
+
 		templateTokens[@"fragmentTextColorOpened"] = @(YES);
-		templateTokens[@"ragmentTextColor"] = foregroundColorNew; // backwards compatibility
-		templateTokens[@"fragmentForegroundColor"] = foregroundColorNew;
+		templateTokens[@"fragmentForegroundColor"] = [TVCLogRenderer stringValueForColor:foregroundColorNew usesStyleTag:&usesStyleTag];
 		templateTokens[@"fragmentForegroundColorIsSet"] = @(YES);
+		templateTokens[@"fragmentTextColorUsesStyleTag"] = @(usesStyleTag);
+
+		// backwards compatibility
+		templateTokens[@"fragmentTextColorIsSet"] = @(YES);
+		templateTokens[@"ragmentTextColor"] = templateTokens[@"fragmentForegroundColor"];
 	}
 
 	if (setNewColors && backgroundColorNew != nil) {
 		[self->_renderedBodyOpenAttributes setObject:backgroundColorNew forKey:TVCLogRendererFormattingBackgroundColorAttribute];
 
-		templateTokens[@"fragmentTextColorIsSet"] = @(YES); // backwards compatibility
+		BOOL usesStyleTag = NO;
+
 		templateTokens[@"fragmentTextColorOpened"] = @(YES);
-		templateTokens[@"fragmentBackgroundColor"] = backgroundColorNew;
+		templateTokens[@"fragmentBackgroundColor"] = [TVCLogRenderer stringValueForColor:backgroundColorNew usesStyleTag:&usesStyleTag];
 		templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
+		templateTokens[@"fragmentTextColorUsesStyleTag"] = @(usesStyleTag);
+
+		// backwards compatibility
+		templateTokens[@"fragmentTextColorIsSet"] = @(YES);
 	}
 
 	// --- //
@@ -1062,11 +1064,38 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	return [TVCLogRenderer escapeStringSimple:stringEscaped];
 }
 
-+ (NSColor *)mapColorCodeNumber:(NSNumber *)colorCode
++ (nullable NSString *)stringValueForColor:(id)color usesStyleTag:(BOOL *)usesStyleTag
 {
-	NSParameterAssert(colorCode != nil);
+	NSParameterAssert(color != nil);
 
-	return [TVCLogRenderer mapColorCode:colorCode.unsignedIntegerValue];
+	if ([color isKindOfClass:[NSColor class]])
+	{
+		*usesStyleTag = YES;
+
+		return [color hexadecimalValue];
+	}
+	else if ([color isKindOfClass:[NSNumber class]])
+	{
+		return [color stringValue];
+	}
+
+	return nil;
+}
+
++ (nullable NSColor *)mapColor:(id)color
+{
+	NSParameterAssert(color != nil);
+
+	if ([color isKindOfClass:[NSColor class]])
+	{
+		return color;
+	}
+	else if ([color isKindOfClass:[NSNumber class]])
+	{
+		return [TVCLogRenderer mapColorCode:[color unsignedIntegerValue]];
+	}
+
+	return nil;
 }
 
 + (NSColor *)mapColorCode:(NSUInteger)colorCode
