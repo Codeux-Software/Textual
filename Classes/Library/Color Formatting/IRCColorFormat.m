@@ -50,6 +50,41 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 #pragma mark -
 #pragma mark Text Truncation
 
++ (void)IRCColorComponentsInAttributes:(NSDictionary<NSString *, id> *)attributes
+					  controlCharacter:(UniChar *)controlCharacter
+					   foregroundColor:(NSString **)foregroundColor
+					   backgroundColor:(NSString **)backgroundColor
+{
+	NSParameterAssert(attributes != nil);
+
+	/* Color hex */
+	id foregroundColorValue = attributes[IRCTextFormatterForegroundColorAttributeName];
+	id backgroundColorValue = attributes[IRCTextFormatterBackgroundColorAttributeName];
+
+	if ([foregroundColorValue isKindOfClass:[NSColor class]]) {
+		*controlCharacter = IRCTextFormatterColorAsHexEffectCharacter;
+
+		*foregroundColor = [[foregroundColorValue hexadecimalValue] substringFromIndex:1]; // Remove leading #
+
+		if ([backgroundColorValue isKindOfClass:[NSColor class]]) {
+			*backgroundColor = [[backgroundColorValue hexadecimalValue] substringFromIndex:1]; // Remove leading #
+		}
+
+		return;
+	}
+
+	/* Color digits */
+	if ([foregroundColorValue isKindOfClass:[NSNumber class]]) {
+		*controlCharacter = IRCTextFormatterColorAsDigitEffectCharacter;
+
+		*foregroundColor = [foregroundColorValue integerStringValueWithLeadingZero];
+
+		if ([backgroundColorValue isKindOfClass:[NSNumber class]]) {
+			*backgroundColor = [backgroundColorValue integerStringValueWithLeadingZero];
+		}
+	}
+}
+
 + (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)textToFormat inChannel:(IRCChannel *)channel onClient:(IRCClient *)client withLineType:(TVCLogLineType)lineType
 {
 	NSParameterAssert(textToFormat != nil);
@@ -158,22 +193,15 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 									 longestEffectiveRange:&effectiveRange
 												   inRange:limitRange];
 
-		id foregroundColorObj = attributes[IRCTextFormatterForegroundColorAttributeName];
-		id backgroundColorObj = attributes[IRCTextFormatterBackgroundColorAttributeName];
+		UniChar colorControlCharacter = 0;
 
-		NSInteger foregroundColor = (-1);
-		NSInteger backgroundColor = (-1);
+		NSString *foregroundColor = nil;
+		NSString *backgroundColor = nil;
 
-		if (foregroundColorObj && [foregroundColorObj isKindOfClass:[NSNumber class]]) {
-			foregroundColor = [foregroundColorObj integerValue];
-		}
-
-		if (backgroundColorObj && [backgroundColorObj isKindOfClass:[NSNumber class]]) {
-			backgroundColor = [backgroundColorObj integerValue];
-		}
-
-		BOOL hasForegroundColor = (foregroundColor >= 0 && foregroundColor <= 15);
-		BOOL hasBackgroundColor = (backgroundColor >= 0 && backgroundColor <= 15);
+		[NSAttributedString IRCColorComponentsInAttributes:attributes
+										  controlCharacter:&colorControlCharacter
+										   foregroundColor:&foregroundColor
+										   backgroundColor:&backgroundColor];
 
 		BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
 		BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
@@ -206,13 +234,13 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			stopCharacterCount += 1; // control character
 		}
 
-		if (hasForegroundColor) {
-			startCharacterCount += 3; // control character plus two digits
+		if (foregroundColor != nil) {
+			startCharacterCount += (1 + foregroundColor.length); // control character plus value
 			stopCharacterCount += 1; // control character
 		}
 
-		if (hasBackgroundColor) {
-			startCharacterCount += 3; // comma plus two digits
+		if (backgroundColor != nil) {
+			startCharacterCount += (1 + backgroundColor.length); // comma character plus value
 		}
 
 		NSUInteger formattingCharacterCount = (startCharacterCount + stopCharacterCount);
@@ -277,11 +305,11 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
 		}
 
-		if (hasForegroundColor) {
-			[result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundColorObj integerStringValueWithLeadingZero]];
+		if (foregroundColor != nil) {
+			[result appendFormat:@"%c%@", colorControlCharacter, foregroundColor];
 
-			if (hasBackgroundColor) {
-				[result appendFormat:@",%@", [backgroundColorObj integerStringValueWithLeadingZero]];
+			if (backgroundColor != nil) {
+				[result appendFormat:@",%@", backgroundColor];
 			}
 		}
 
@@ -351,8 +379,8 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			[result appendString:character];
 		}
 
-		if (hasForegroundColor) {
-			[result appendFormat:@"%c", IRCTextFormatterColorEffectCharacter];
+		if (foregroundColor != nil) {
+			[result appendFormat:@"%c", colorControlCharacter];
 		}
 
 		if (textIsBold) {
@@ -426,22 +454,15 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 							 options:0
 						  usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
 	 {
-		 id foregroundColorObj = attributes[IRCTextFormatterForegroundColorAttributeName];
-		 id backgroundColorObj = attributes[IRCTextFormatterBackgroundColorAttributeName];
+		 UniChar colorControlCharacter = 0;
 
-		 NSInteger foregroundColor = (-1);
-		 NSInteger backgroundColor = (-1);
+		 NSString *foregroundColor = nil;
+		 NSString *backgroundColor = nil;
 
-		 if (foregroundColorObj && [foregroundColorObj isKindOfClass:[NSNumber class]]) {
-			 foregroundColor = [foregroundColorObj integerValue];
-		 }
-
-		 if (backgroundColorObj && [backgroundColorObj isKindOfClass:[NSNumber class]]) {
-			 backgroundColor = [backgroundColorObj integerValue];
-		 }
-
-		 BOOL hasForegroundColor = (foregroundColor >= 0 && foregroundColor <= 15);
-		 BOOL hasBackgroundColor = (backgroundColor >= 0 && backgroundColor <= 15);
+		 [NSAttributedString IRCColorComponentsInAttributes:attributes
+										   controlCharacter:&colorControlCharacter
+											foregroundColor:&foregroundColor
+											backgroundColor:&backgroundColor];
 
 		 BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
 		 BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
@@ -469,18 +490,18 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 [result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
 		 }
 
-		 if (hasForegroundColor) {
-			 [result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundColorObj integerStringValueWithLeadingZero]];
+		 if (foregroundColor != nil) {
+			 [result appendFormat:@"%c%@", colorControlCharacter, foregroundColor];
 
-			 if (hasBackgroundColor) {
-				 [result appendFormat:@",%@", [backgroundColorObj integerStringValueWithLeadingZero]];
+			 if (backgroundColor != nil) {
+				 [result appendFormat:@",%@", backgroundColor];
 			 }
 		 }
 
 		 [result appendString:[realBody substringWithRange:effectiveRange]];
 
-		 if (hasForegroundColor) {
-			 [result appendFormat:@"%c", IRCTextFormatterColorEffectCharacter];
+		 if (foregroundColor != nil) {
+			 [result appendFormat:@"%c", colorControlCharacter];
 		 }
 
 		 if (textIsBold) {
@@ -583,37 +604,55 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 }
 			 case IRCTextFormatterForegroundColorEffect:
 			 {
-				 id foregroundColorObj = attributes[IRCTextFormatterForegroundColorAttributeName];
+				 id foregroundColor = attributes[IRCTextFormatterForegroundColorAttributeName];
 
-				 if (foregroundColorObj == nil || [foregroundColorObj isKindOfClass:[NSNumber class]] == NO) {
+				 if (foregroundColor == nil) {
 					 return;
 				 }
 
-				 NSInteger colorCode = [foregroundColorObj integerValue];
+				 if ([foregroundColor isKindOfClass:[NSNumber class]])
+				 {
+					 NSInteger colorCode = [foregroundColor integerValue];
 
-				 if (colorCode >= 0 && colorCode <= 15) {
-					 returnValue = YES;
-
-					 *stop = YES;
+					 if (colorCode < 0 && colorCode > 15) {
+						 return;
+					 }
 				 }
+				 else if ([foregroundColor isKindOfClass:[NSColor class]] == NO)
+				 {
+					 return;
+				 }
+
+				 returnValue = YES;
+
+				 *stop = YES;
 
 				 break;
 			 }
 			 case IRCTextFormatterBackgroundColorEffect:
 			 {
-				 id backgroundColorObj = attributes[IRCTextFormatterBackgroundColorAttributeName];
+				 id backgroundColor = attributes[IRCTextFormatterBackgroundColorAttributeName];
 
-				 if (backgroundColorObj == nil || [backgroundColorObj isKindOfClass:[NSNumber class]] == NO) {
+				 if (backgroundColor == nil) {
 					 return;
 				 }
 
-				 NSInteger colorCode = [backgroundColorObj integerValue];
+				 if ([backgroundColor isKindOfClass:[NSNumber class]])
+				 {
+					 NSInteger colorCode = [backgroundColor integerValue];
 
-				 if (colorCode >= 0 && colorCode <= 15) {
-					 returnValue = YES;
-					 
-					 *stop = YES;
+					 if (colorCode < 0 && colorCode > 15) {
+						 return;
+					 }
 				 }
+				 else if ([backgroundColor isKindOfClass:[NSColor class]] == NO)
+				 {
+					 return;
+				 }
+
+				 returnValue = YES;
+
+				 *stop = YES;
 
 				 break;
 			 }
@@ -701,32 +740,50 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 }
 			 case IRCTextFormatterForegroundColorEffect:
 			 {
-				 if (value == nil || [value isKindOfClass:[NSNumber class]] == NO) {
+				 if (value == nil) {
 					 break;
 				 }
 
-				 NSInteger colorCode = [value integerValue];
+				 if ([value isKindOfClass:[NSNumber class]])
+				 {
+					 NSInteger colorCode = [value integerValue];
 
-				 if (colorCode >= 0 && colorCode <= 15) {
-					 [self addAttribute:IRCTextFormatterForegroundColorAttributeName value:@(colorCode) range:effectiveRange];
+					 if (colorCode >= 0 && colorCode <= 15) {
+						 [self addAttribute:IRCTextFormatterForegroundColorAttributeName value:@(colorCode) range:effectiveRange];
 
-					 [self addAttribute:NSForegroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:effectiveRange];
+						 [self addAttribute:NSForegroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:effectiveRange];
+					 }
+				 }
+				 else if ([value isKindOfClass:[NSColor class]])
+				 {
+					 [self addAttribute:IRCTextFormatterForegroundColorAttributeName value:value range:effectiveRange];
+
+					 [self addAttribute:NSForegroundColorAttributeName value:value range:effectiveRange];
 				 }
 
 				 break;
 			 }
 			 case IRCTextFormatterBackgroundColorEffect:
 			 {
-				 if (value == nil || [value isKindOfClass:[NSNumber class]] == NO) {
+				 if (value == nil) {
 					 break;
 				 }
 
-				 NSInteger colorCode = [value integerValue];
+				 if ([value isKindOfClass:[NSNumber class]])
+				 {
+					 NSInteger colorCode = [value integerValue];
 
-				 if (colorCode >= 0 && colorCode <= 15) {
-					 [self addAttribute:IRCTextFormatterBackgroundColorAttributeName value:@(colorCode) range:effectiveRange];
+					 if (colorCode >= 0 && colorCode <= 15) {
+						 [self addAttribute:IRCTextFormatterBackgroundColorAttributeName value:@(colorCode) range:effectiveRange];
 
-					 [self addAttribute:NSBackgroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:effectiveRange];
+						 [self addAttribute:NSBackgroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:effectiveRange];
+					 }
+				 }
+				 else if ([value isKindOfClass:[NSColor class]])
+				 {
+					 [self addAttribute:IRCTextFormatterBackgroundColorAttributeName value:value range:effectiveRange];
+
+					 [self addAttribute:NSBackgroundColorAttributeName value:value range:effectiveRange];
 				 }
 
 				 break;
@@ -816,9 +873,9 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 case IRCTextFormatterBackgroundColorEffect:
 			 {
 				 [self removeAttribute:NSBackgroundColorAttributeName range:effectiveRange];
-				 
+
 				 [self removeAttribute:IRCTextFormatterBackgroundColorAttributeName range:effectiveRange];
-				 
+
 				 break;
 			 }
 		 }
