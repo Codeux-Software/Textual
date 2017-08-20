@@ -1,3 +1,11 @@
+{{#fragmentIsBoldClosed}}</b>{{/fragmentIsBoldClosed}}
+{{#fragmentIsItalicizedClosed}}</i>{{/fragmentIsItalicizedClosed}}
+{{#fragmentIsMonospaceClosed}}</tt>{{/fragmentIsMonospaceClosed}}
+{{#fragmentIsStruckthroughClosed}}</del>{{/fragmentIsStruckthroughClosed}}
+{{#fragmentIsUnderlinedClosed}}</u>{{/fragmentIsUnderlinedClosed}}
+{{#fragmentTextColorClosed}}
+</span>
+{{/fragmentTextColorClosed}}
 {{#inlineNicknameMatchFound}}
 <span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" mode="{{inlineNicknameUserModeSymbol}}"
 	{{#nicknameColorHashingIsStyleBased}}
@@ -12,30 +20,24 @@
 		colornumber="{{inlineNicknameColorNumber}}"
 	{{/nicknameColorHashingIsStyleBased}}>
 {{/inlineNicknameMatchFound}}
-{{#fragmentTextColorIsSet}}
+{{#fragmentTextColorOpened}}
 <span class="effect"
-	color-number="{{fragmentTextColor}}" 
+	{{#fragmentForegroundColorIsSet}}
+	color-number="{{fragmentForegroundColor}}"
+	{{/fragmentForegroundColorIsSet}}
 
 	{{#fragmentBackgroundColorIsSet}}
 		bgcolor-number="{{fragmentBackgroundColor}}" 
 	{{/fragmentBackgroundColorIsSet}}
 >
-{{/fragmentTextColorIsSet}}
-{{#fragmentIsBold}}<b>{{/fragmentIsBold}}
-{{#fragmentIsItalicized}}<i>{{/fragmentIsItalicized}}
-{{#fragmentIsMonospace}}<tt>{{/fragmentIsMonospace}}
-{{#fragmentIsStruckthrough}}<del>{{/fragmentIsStruckthrough}}
-{{#fragmentIsUnderlined}}<u>{{/fragmentIsUnderlined}}
+{{/fragmentTextColorOpened}}
+{{#fragmentIsBoldOpened}}<b>{{/fragmentIsBoldOpened}}
+{{#fragmentIsItalicizedOpened}}<i>{{/fragmentIsItalicizedOpened}}
+{{#fragmentIsMonospaceOpened}}<tt>{{/fragmentIsMonospaceOpened}}
+{{#fragmentIsStruckthroughOpened}}<del>{{/fragmentIsStruckthroughOpened}}
+{{#fragmentIsUnderlinedOpened}}<u>{{/fragmentIsUnderlinedOpened}}
 {{#inlineNicknameMatchFound}}{{inlineNicknameUserModeSymbol}}{{/inlineNicknameMatchFound}}
 {{{messageFragment}}}
-{{#fragmentIsBold}}</b>{{/fragmentIsBold}}
-{{#fragmentIsItalicized}}</i>{{/fragmentIsItalicized}}
-{{#fragmentIsMonospace}}</tt>{{/fragmentIsMonospace}}
-{{#fragmentIsStruckthrough}}</del>{{/fragmentIsStruckthrough}}
-{{#fragmentIsUnderlined}}</u>{{/fragmentIsUnderlined}}
-{{#fragmentTextColorIsSet}}
-</span>
-{{/fragmentTextColorIsSet}}
 {{#inlineNicknameMatchFound}}
 </span>
 {{/inlineNicknameMatchFound}}
