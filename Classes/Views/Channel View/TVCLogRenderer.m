@@ -804,7 +804,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	processToggleEffectsAttribute(TVCLogRendererFormattingItalicTextAttribute, @"fragmentIsItalicized");
 	processToggleEffectsAttribute(TVCLogRendererFormattingMonospaceTextAttribute, @"fragmentIsMonospace");
 	processToggleEffectsAttribute(TVCLogRendererFormattingStrikethroughTextAttribute, @"fragmentIsStruckthrough");
-	processToggleEffectsAttribute(TVCLogRendererFormattingUnderlineTextAttribute, @"fragmentIsUnderline");
+	processToggleEffectsAttribute(TVCLogRendererFormattingUnderlineTextAttribute, @"fragmentIsUnderlined");
 
 	// --- //
 
