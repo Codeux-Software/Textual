@@ -287,9 +287,19 @@ NS_ASSUME_NONNULL_BEGIN
 	WKNavigationType action = navigationAction.navigationType;
 
 	if (action == WKNavigationTypeLinkActivated) {
-		decisionHandler(WKNavigationActionPolicyCancel);
-
 		NSURL *actionURL = navigationAction.request.URL;
+
+		if (actionURL.isFileURL) {
+			if ([actionURL.path hasPrefix:themeController().temporaryPath] &&
+				[actionURL.fragment isEqualToString:@"most_recent_anchor"])
+			{
+				decisionHandler(WKNavigationActionPolicyAllow);
+
+				return;
+			}
+		}
+
+		decisionHandler(WKNavigationActionPolicyCancel);
 
 		[self openWebpage:actionURL];
 	} else {
