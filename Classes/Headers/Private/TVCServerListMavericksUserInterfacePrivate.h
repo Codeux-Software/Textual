@@ -111,6 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CGFloat messageCountBadgeMinimumWidth;
 @property (readonly) CGFloat messageCountBadgePadding;
 @property (readonly) CGFloat messageCountBadgeRightMargin;
+@property (readonly) CGFloat messageCountBadgeTextCenterYOffset;
 @end
 
 @interface TVCServerListMavericksLightUserInterface : TVCServerListMavericksUserInterface
