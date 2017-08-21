@@ -1,4 +1,4 @@
-{{! When this is a new fragment, but not the end of the body,
+{{! When this is a new fragment, but not the last fragment,
 then we use the following *ClosedAtStart tags to close any
 formatting that may be open for the previous fragment. }}
 {{#fragmentIsBoldClosedAtStart}}</b>{{/fragmentIsBoldClosedAtStart}}
@@ -38,8 +38,8 @@ formatting that may be open for the previous fragment. }}
 {{#fragmentIsMonospaceOpened}}<tt>{{/fragmentIsMonospaceOpened}}
 {{#fragmentIsStruckthroughOpened}}<del>{{/fragmentIsStruckthroughOpened}}
 {{#fragmentIsUnderlinedOpened}}<u>{{/fragmentIsUnderlinedOpened}}
-{{#inlineNicknameMatchFound}}
 
+{{#inlineNicknameMatchFound}}
 <span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" mode="{{inlineNicknameUserModeSymbol}}"
 	{{#nicknameColorHashingIsStyleBased}}
 		{{#nicknameColorStyleOverride}}
