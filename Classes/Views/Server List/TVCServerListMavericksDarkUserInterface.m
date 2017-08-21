@@ -119,6 +119,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return 3.0;
 }
 
+- (CGFloat)messageCountBadgeTextCenterYOffset
+{
+	return 0.0;
+}
+
 - (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
