@@ -667,7 +667,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	return [attributesOut copy];
 }
 
-- (nullable NSString *)renderStringAsHTML:(NSString *)string withAttributes:(NSDictionary<NSString *, id> *)stringAttributes inRange:(NSRange)attributesRange isLastFragment:(BOOL)isLastFragment
+- (nullable NSString *)renderStringAsHTML:(NSString *)string withAttributes:(NSDictionary<NSString *, id> *)stringAttributes inRange:(NSRange)attributesRange isFirstFragment:(BOOL)isFirstFragment isLastFragment:(BOOL)isLastFragment
 {
 	NSParameterAssert(string != nil);
 	NSParameterAssert(stringAttributes != nil);
@@ -809,26 +809,33 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	id foregroundColorNew = stringAttributes[TVCLogRendererFormattingForegroundColorAttribute];
 	id backgroundColorNew = stringAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
 
+	id foregroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingForegroundColorAttribute];
+	id backgroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
+
 	BOOL setNewColors = YES;
 
-	if ([self->_renderedBodyOpenAttributes containsKey:TVCLogRendererFormattingForegroundColorAttribute] ||
-		[self->_renderedBodyOpenAttributes containsKey:TVCLogRendererFormattingBackgroundColorAttribute])
+	if (foregroundColorOld || backgroundColorOld)
 	{
-		id foregroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingForegroundColorAttribute];
-		id backgroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
-
 		/* There is no need to open a new HTML segment if the color hasn't changed. */
 		if (NSObjectsAreEqual(foregroundColorNew, foregroundColorOld) &&
 			NSObjectsAreEqual(backgroundColorNew, backgroundColorOld))
 		{
 			setNewColors = NO;
 		} else {
-			templateTokens[@"fragmentTextColorClosedAtStart"] = @(YES);
+			templateTokens[@"fragmentTextColorClosedAtStart"] = @(isFirstFragment == NO);
 			templateTokens[@"fragmentTextColorClosedAtEnd"] = @(isLastFragment);
+		}
+
+		if (foregroundColorOld && foregroundColorNew == nil) {
+			[self->_renderedBodyOpenAttributes removeObjectForKey:TVCLogRendererFormattingForegroundColorAttribute];
+		}
+
+		if (backgroundColorOld && backgroundColorNew == nil) {
+			[self->_renderedBodyOpenAttributes removeObjectForKey:TVCLogRendererFormattingBackgroundColorAttribute];
 		}
 	}
 
-	if (setNewColors && foregroundColorNew != nil) {
+	if (setNewColors && foregroundColorNew) {
 		[self->_renderedBodyOpenAttributes setObject:foregroundColorNew forKey:TVCLogRendererFormattingForegroundColorAttribute];
 
 		BOOL usesStyleTag = NO;
@@ -840,10 +847,10 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 		// backwards compatibility
 		templateTokens[@"fragmentTextColorIsSet"] = @(YES);
-		templateTokens[@"ragmentTextColor"] = templateTokens[@"fragmentForegroundColor"];
+		templateTokens[@"fragmentTextColor"] = templateTokens[@"fragmentForegroundColor"];
 	}
 
-	if (setNewColors && backgroundColorNew != nil) {
+	if (setNewColors && backgroundColorNew) {
 		[self->_renderedBodyOpenAttributes setObject:backgroundColorNew forKey:TVCLogRendererFormattingBackgroundColorAttribute];
 
 		BOOL usesStyleTag = NO;
@@ -893,9 +900,14 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	 enumerateAttributesInRange:NSMakeRange(0, stringLength)
 					    options:0
 					 usingBlock:^(NSDictionary<NSAttributedStringKey, id> *attributes, NSRange range, BOOL *stop) {
+		 BOOL isFirstFragment = (range.location == 0);
 		 BOOL isLastFragment = ((range.location + range.length) == stringLength);
 
-		 NSString *html = [self renderStringAsHTML:string withAttributes:attributes inRange:range isLastFragment:isLastFragment];
+		 NSString *html = [self renderStringAsHTML:string
+									withAttributes:attributes
+										   inRange:range
+								   isFirstFragment:isFirstFragment
+									isLastFragment:isLastFragment];
 
 		 if (html) {
 			 [finalResult appendString:html];
