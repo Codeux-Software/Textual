@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _formattingMenuForegroundColorDisabledTag		95004
 #define _formattingMenuBackgroundColorDisabledTag		95006
 #define _formattingMenuRainbowColorMenuItemTag			299
-#define _formattingMenuHexColorMenuItemTag				230
+#define _formattingMenuHexColorMenuItemTag				300
 
 @interface TVCTextViewIRCFormattingMenu ()
 @property (readonly, nullable) TVCTextViewWithIRCFormatter *textField;
@@ -319,6 +319,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return;
 	}
+	else if ([sender tag] == _formattingMenuHexColorMenuItemTag)
+	{
+		NSColorPanel *colorPanel = [NSColorPanel sharedColorPanel];
+
+		[colorPanel setTarget:self];
+		[colorPanel setAction:@selector(foregroundColorPanelColorChanged:)];
+		[colorPanel setAlphaValue:1.0];
+		[colorPanel setColor:self.textField.preferredFontColor];
+
+		[colorPanel orderFront:nil];
+	}
 
 	NSRange selectedTextRange = self.textField.selectedRange;
 
@@ -327,10 +338,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
 {
-	if ([sender tag] == _formattingMenuRainbowColorMenuItemTag) {
+	if ([sender tag] == _formattingMenuRainbowColorMenuItemTag)
+	{
 		[self insertRainbowColorCharInfoTextBox:sender asForegroundColor:NO];
 
 		return;
+	}
+	else if ([sender tag] == _formattingMenuHexColorMenuItemTag)
+	{
+		NSColorPanel *colorPanel = [NSColorPanel sharedColorPanel];
+
+		[colorPanel setTarget:self];
+		[colorPanel setAction:@selector(backgroundColorPanelColorChanged:)];
+		[colorPanel setAlphaValue:1.0];
+		[colorPanel setColor:[NSColor whiteColor]];
+
+		[colorPanel orderFront:nil];
 	}
 
 	NSRange selectedTextRange = self.textField.selectedRange;
@@ -375,6 +398,20 @@ NS_ASSUME_NONNULL_BEGIN
 	[mutableStringCopy endEditing];
 
 	[self applyAttributedStringToTextBox:mutableStringCopy inRange:selectedTextRange];
+}
+
+- (void)foregroundColorPanelColorChanged:(NSColorPanel *)sender
+{
+	NSRange selectedTextRange = self.textField.selectedRange;
+
+	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:sender.color inRange:selectedTextRange];
+}
+
+- (void)backgroundColorPanelColorChanged:(NSColorPanel *)sender
+{
+	NSRange selectedTextRange = self.textField.selectedRange;
+
+	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:sender.color inRange:selectedTextRange];
 }
 
 #pragma mark -
