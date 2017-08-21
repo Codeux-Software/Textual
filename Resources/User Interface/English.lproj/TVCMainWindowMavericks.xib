@@ -742,6 +742,14 @@
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="PiS-1p-E5q"/>
                                     </connections>
                                 </menuItem>
+                                <menuItem isSeparatorItem="YES" tag="99" id="k75-zU-JVc"/>
+                                <menuItem title="Other…" tag="300" id="GEV-Z4-tSL" userLabel="Other…">
+                                    <attributedString key="attributedTitle"/>
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="acx-w6-oFN"/>
+                                    </connections>
+                                </menuItem>
                             </items>
                         </menu>
                     </menuItem>
@@ -1184,6 +1192,14 @@
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="XOt-xw-lR0"/>
+                                    </connections>
+                                </menuItem>
+                                <menuItem isSeparatorItem="YES" tag="99" id="a8y-xA-EBC"/>
+                                <menuItem title="Other…" tag="300" id="dk7-P9-EBs" userLabel="Other…">
+                                    <attributedString key="attributedTitle"/>
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="iEe-2H-NQl"/>
                                     </connections>
                                 </menuItem>
                             </items>
