@@ -41,6 +41,10 @@
 /*                                                    */
 /* ************************************************** */
 
+Textual.documentBodyElementReference = null;
+Textual.topicBarElementReference = null;
+Textual.historicMessagesElementReference = null;
+
 /* Loading screen */
 Textual.loadingScreenElement = function()
 {
@@ -85,7 +89,11 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Topic bar */
 Textual.topicBarElement = function()
 {
-	return document.getElementById("topic_bar");
+	if (Textual.topicBarElementReference === null) {
+		Textual.topicBarElementReference = document.getElementById("topic_bar");
+	}
+
+	return Textual.topicBarElementReference;
 };
 
 Textual.topicBarValue = function(asText)
@@ -160,7 +168,11 @@ Textual.historyIndicatorRemove = function()
 /* Document body */
 Textual.documentBodyElement = function()
 {
-	return document.getElementById("body_home");
+	if (Textual.documentBodyElementReference === null) {
+		Textual.documentBodyElementReference = document.getElementById("body_home");
+	}
+	
+	return Textual.documentBodyElementReference;
 };
 
 Textual.documentBodyAppend = function(templateHTML)
@@ -176,7 +188,7 @@ Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
 
 	var elementToAppendTo = null;
 
-	var historicMessagesDiv = document.getElementById("historic_messages");
+	var historicMessagesDiv = Textual.historicMessagesElement();
 
 	if (historicMessagesDiv) {
 		elementToAppendTo = historicMessagesDiv;
@@ -278,7 +290,11 @@ Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents)
 /* History */
 Textual.historicMessagesElement = function()
 {
-	return document.getElementById("historic_messages");
+	if (Textual.historicMessagesElementReference === null) {
+		Textual.historicMessagesElementReference = document.getElementById("historic_messages");
+	}
+	
+	return Textual.historicMessagesElementReference;
 }
 
 Textual.setHistoricMessagesLoaded = function(isLoaded)
