@@ -667,7 +667,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	return [attributesOut copy];
 }
 
-- (nullable NSString *)renderStringAsHTML:(NSString *)string withAttributes:(NSDictionary<NSString *, id> *)stringAttributes inRange:(NSRange)attributesRange
+- (nullable NSString *)renderStringAsHTML:(NSString *)string withAttributes:(NSDictionary<NSString *, id> *)stringAttributes inRange:(NSRange)attributesRange isLastFragment:(BOOL)isLastFragment
 {
 	NSParameterAssert(string != nil);
 	NSParameterAssert(stringAttributes != nil);
@@ -777,17 +777,23 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 			if ([self->_renderedBodyOpenAttributes boolForKey:effectAttribute] == NO) {
 				[self->_renderedBodyOpenAttributes setBool:YES forKey:effectAttribute];
 
-				effectTokenName = [NSString stringWithFormat:@"%@Opened", effectTokenName];
+				NSString *openedTokenName = [NSString stringWithFormat:@"%@Opened", effectTokenName];
 
-				templateTokens[effectTokenName] = @(YES);
+				templateTokens[openedTokenName] = @(YES);
+			}
+
+			if (isLastFragment) {
+				NSString *closedTokenName = [NSString stringWithFormat:@"%@ClosedAtEnd", effectTokenName];
+
+				templateTokens[closedTokenName] = @(YES);
 			}
 		} else {
 			if ([self->_renderedBodyOpenAttributes boolForKey:effectAttribute]) {
 				[self->_renderedBodyOpenAttributes removeObjectForKey:effectAttribute];
 
-				effectTokenName = [NSString stringWithFormat:@"%@Closed", effectTokenName];
+				NSString *closedTokenName = [NSString stringWithFormat:@"%@ClosedAtStart", effectTokenName];
 
-				templateTokens[effectTokenName] = @(YES);
+				templateTokens[closedTokenName] = @(YES);
 			}
 		}
 	};
@@ -817,7 +823,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 		{
 			setNewColors = NO;
 		} else {
-			templateTokens[@"fragmentTextColorClosed"] = @(YES);
+			templateTokens[@"fragmentTextColorClosedAtStart"] = @(YES);
+			templateTokens[@"fragmentTextColorClosedAtEnd"] = @(isLastFragment);
 		}
 	}
 
@@ -880,11 +887,15 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	NSString *string = self->_bodyWithAttributes.string;
 
+	NSUInteger stringLength = string.length;
+
 	[self->_bodyWithAttributes
-	 enumerateAttributesInRange:NSMakeRange(0, string.length)
+	 enumerateAttributesInRange:NSMakeRange(0, stringLength)
 					    options:0
 					 usingBlock:^(NSDictionary<NSAttributedStringKey, id> *attributes, NSRange range, BOOL *stop) {
-		 NSString *html = [self renderStringAsHTML:string withAttributes:attributes inRange:range];
+		 BOOL isLastFragment = ((range.location + range.length) == stringLength);
+
+		 NSString *html = [self renderStringAsHTML:string withAttributes:attributes inRange:range isLastFragment:isLastFragment];
 
 		 if (html) {
 			 [finalResult appendString:html];
