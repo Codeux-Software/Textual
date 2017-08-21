@@ -1,11 +1,14 @@
-{{#fragmentIsBoldClosed}}</b>{{/fragmentIsBoldClosed}}
-{{#fragmentIsItalicizedClosed}}</i>{{/fragmentIsItalicizedClosed}}
-{{#fragmentIsMonospaceClosed}}</tt>{{/fragmentIsMonospaceClosed}}
-{{#fragmentIsStruckthroughClosed}}</del>{{/fragmentIsStruckthroughClosed}}
-{{#fragmentIsUnderlinedClosed}}</u>{{/fragmentIsUnderlinedClosed}}
-{{#fragmentTextColorClosed}}
+{{! When this is a new fragment, but not the end of the body,
+then we use the following *ClosedAtStart tags to close any
+formatting that may be open for the previous fragment. }}
+{{#fragmentIsBoldClosedAtStart}}</b>{{/fragmentIsBoldClosedAtStart}}
+{{#fragmentIsItalicizedClosedAtStart}}</i>{{/fragmentIsItalicizedClosedAtStart}}
+{{#fragmentIsMonospaceClosedAtStart}}</tt>{{/fragmentIsMonospaceClosedAtStart}}
+{{#fragmentIsStruckthroughClosedAtStart}}</del>{{/fragmentIsStruckthroughClosedAtStart}}
+{{#fragmentIsUnderlinedClosedAtStart}}</u>{{/fragmentIsUnderlinedClosedAtStart}}
+{{#fragmentTextColorClosedAtStart}}
 </span>
-{{/fragmentTextColorClosed}}
+{{/fragmentTextColorClosedAtStart}}
 
 {{#fragmentTextColorOpened}}
 <span class="effect"
@@ -54,3 +57,13 @@
 {{#inlineNicknameMatchFound}}
 </span>
 {{/inlineNicknameMatchFound}}
+
+{{! When this is the end of the last fragment, we terminate all }}
+{{#fragmentIsBoldClosedAtEnd}}</b>{{/fragmentIsBoldClosedAtEnd}}
+{{#fragmentIsItalicizedClosedAtEnd}}</i>{{/fragmentIsItalicizedClosedAtEnd}}
+{{#fragmentIsMonospaceClosedAtEnd}}</tt>{{/fragmentIsMonospaceClosedAtEnd}}
+{{#fragmentIsStruckthroughClosedAtEnd}}</del>{{/fragmentIsStruckthroughClosedAtEnd}}
+{{#fragmentIsUnderlinedClosedAtEnd}}</u>{{/fragmentIsUnderlinedClosedAtEnd}}
+{{#fragmentTextColorClosedAtEnd}}
+</span>
+{{/fragmentTextColorClosedAtEnd}}
