@@ -154,7 +154,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 						}
 					}
 
-					i += colorOffset; // No need to process numbers we are removing
+					i += (colorOffset - 1); // For loop will increase this by one so we minus by one
 
 					[bodyWithAttributes deleteCharactersInRange:NSMakeRange(characterPosition, colorOffset)];
 
