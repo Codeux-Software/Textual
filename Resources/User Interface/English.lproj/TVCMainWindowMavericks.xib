@@ -1211,7 +1211,7 @@
                 </connections>
             </menu>
         </menuItem>
-        <window title="Textual" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Yum-Vp-Zoi" userLabel="Window" customClass="TVCMainWindow">
+        <window title="Textual 7" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Yum-Vp-Zoi" userLabel="Window" customClass="TVCMainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="455" y="163" width="800" height="477"/>
@@ -1864,8 +1864,8 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="oLJ-9e-Jtc"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kq0-5d-sEo">
-                    <rect key="frame" x="114" y="112" width="255" height="36"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="Ufb-Xe-N0L">
+                    <rect key="frame" x="102" y="112" width="278" height="36"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to Textual 7" id="Ufb-Xe-N0L">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1910,8 +1910,8 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="244"/>
             <subviews>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zJy-aD-GWq">
-                    <rect key="frame" x="73" y="38" width="255" height="36"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="F83-QX-Ifv">
+                    <rect key="frame" x="61" y="38" width="278" height="36"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual 7" id="F83-QX-Ifv">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1956,23 +1956,23 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="393"/>
             <subviews>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aC6-pa-oS9">
-                    <rect key="frame" x="36" y="195" width="409" height="36"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your trial of Textual has expired!" id="plu-S8-Umu">
+                    <rect key="frame" x="24" y="195" width="432" height="36"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your trial of Textual 7 has expired!" id="plu-S8-Umu">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-Wg-mnW">
-                    <rect key="frame" x="71" y="136" width="339" height="51"/>
+                    <rect key="frame" x="48" y="136" width="384" height="51"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="335" id="KlT-n4-loZ"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="380" id="KlT-n4-loZ"/>
                     </constraints>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="OkG-Uf-DGo">
                         <font key="font" metaFont="system"/>
-                        <string key="title">Thank you for trying Textual for the past 30 days. 
+                        <string key="title">Thank you for trying Textual 7 for the past 30 days. 
 
-To continue using Textual, you will need to purchase it.</string>
+To continue using Textual 7, you will need to purchase it.</string>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2001,8 +2001,8 @@ To continue using Textual, you will need to purchase it.</string>
                     </constraints>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKc-si-bgQ">
-                    <rect key="frame" x="144" y="53" width="192" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual?" id="yHC-IC-42Y">
+                    <rect key="frame" x="139" y="53" width="203" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual 7?" id="yHC-IC-42Y">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

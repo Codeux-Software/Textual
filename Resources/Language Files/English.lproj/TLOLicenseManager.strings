@@ -54,11 +54,11 @@
 "TLOLicenseManager[1005][1]" = "Successfully queued e-mail for %@";
 "TLOLicenseManager[1005][2]" = "An e-mail which contains your license key will be delivered to %@ within the next few minutes.";
 
-"TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual!";
+"TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual 7!";
 "TLOLicenseManager[1006][2]" = "All limitations have been lifted.";
 
 "TLOLicenseManager[1007][1]" = "Are you sure you want to deactivate this copy of Textual?";
-"TLOLicenseManager[1007][2]" = "All limitations that apply to the trial version of Textual will immediately take effect once deactivated.";
+"TLOLicenseManager[1007][2]" = "All limitations that apply to the trial version of Textual 7 will immediately take effect once deactivated.";
 
 "TLOLicenseManager[1008]" = "Select a copy of Textual downloaded from the Mac App Store to receive a license key.";
 
@@ -80,10 +80,10 @@
 "TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit";
 "TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times within a twenty-four (24) hour period. Please try again at a later time.";
 
-"TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
-"TLOLicenseManager[1016]" = "Your trial of Textual has expired.";
+"TLOLicenseManager[1015]" = "Your trial of Textual 7 will expire in %@";
+"TLOLicenseManager[1016]" = "Your trial of Textual 7 has expired.";
 
-"TLOLicenseManager[1017][2]" = "Please purchase Textual to prevent disruption to your chat experience.";
+"TLOLicenseManager[1017][2]" = "Please purchase Textual 7 to prevent disruption to your chat experience.";
 "TLOLicenseManager[1017][3]" = "More Info";
 
 "TLOLicenseManager[1018][1]" = "The following error was returned while processing request:";

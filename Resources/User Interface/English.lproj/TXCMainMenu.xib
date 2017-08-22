@@ -15,10 +15,10 @@
         <userDefaultsController id="TlT-Ik-3QP" customClass="TPCPreferencesUserDefaultsController"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
-                <menuItem title="Textual" tag="1" id="56">
-                    <menu key="submenu" title="Textual" systemMenu="apple" id="57">
+                <menuItem title="Textual 7" tag="1" id="56">
+                    <menu key="submenu" title="Textual 7" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About Textual" tag="100" id="58">
+                            <menuItem title="About Textual 7" tag="100" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showAboutWindow:" target="267" id="2575"/>
@@ -57,7 +57,7 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide Textual" tag="105" keyEquivalent="h" id="134">
+                            <menuItem title="Hide Textual 7" tag="105" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-2" id="152"/>
                                 </connections>
@@ -76,7 +76,7 @@
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit Textual &amp; IRC" tag="108" keyEquivalent="q" id="136">
+                            <menuItem title="Quit Textual 7" tag="108" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="terminate:" target="-2" id="139"/>
                                 </connections>
@@ -1050,7 +1050,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-1192" y="-891"/>
+            <point key="canvasLocation" x="-1248" y="-1083"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>

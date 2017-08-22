@@ -7240,7 +7240,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
-				PRODUCT_NAME = Textual;
+				PRODUCT_NAME = "Textual 7";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				WRAPPER_EXTENSION = app;
