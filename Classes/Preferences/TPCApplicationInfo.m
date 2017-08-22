@@ -46,6 +46,19 @@ NS_ASSUME_NONNULL_BEGIN
 	return TXBundleBuildProductName;
 }
 
++ (NSString *)applicationNameWithoutVersion
+{
+	NSString *applicationName = TXBundleBuildProductName;
+
+	NSInteger spacePosition = [applicationName stringPosition:NSStringWhitespacePlaceholder];
+
+	if (spacePosition > 0) {
+		return [applicationName substringToIndex:spacePosition];
+	} else {
+		return applicationName;
+	}
+}
+
 + (NSString *)applicationVersion
 {
 	return TXBundleBuildVersion;

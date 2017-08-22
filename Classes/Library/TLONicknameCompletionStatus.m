@@ -283,7 +283,7 @@ ClassWithDesignatedInitializerInitMethod
 		addNickname(@"ChanServ", NO);
 		addNickname(@"MemoServ", NO);
 
-		addNickname([TPCApplicationInfo applicationName], NO);
+		addNickname([TPCApplicationInfo applicationNameWithoutVersion], NO);
 
 		/* Complete network name. */
 		NSString *networkName = client.supportInfo.networkName;

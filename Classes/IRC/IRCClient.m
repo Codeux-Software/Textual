@@ -3801,7 +3801,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandMyversionIndex: // Command: MYVERSION
 		{
-			NSString *applicationName = [TPCApplicationInfo applicationName];
+			NSString *applicationName = [TPCApplicationInfo applicationNameWithoutVersion];
 			NSString *versionLong = [TPCApplicationInfo applicationVersion];
 			NSString *versionShort = [TPCApplicationInfo applicationVersionShort];
 			NSString *buildScheme = [TPCApplicationInfo applicationBuildScheme];
@@ -3856,7 +3856,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			notification.deliveryDate = [NSDate date];
 
-			notification.title = [TPCApplicationInfo applicationName];
+			notification.title = [TPCApplicationInfo applicationNameWithoutVersion];
 
 			notification.informativeText = stringInString;
 
@@ -6322,7 +6322,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return;
 		}
 
-		NSString *applicationName = [TPCApplicationInfo applicationName];
+		NSString *applicationName = [TPCApplicationInfo applicationNameWithoutVersion];
 		NSString *versionShort = [TPCApplicationInfo applicationVersionShort];
 
 		NSString *text = TXTLS(@"IRC[1026]", applicationName, versionShort);
