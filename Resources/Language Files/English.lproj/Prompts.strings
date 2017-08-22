@@ -103,7 +103,7 @@
 "Prompts[1113][2]" = "Would you like to open the installer?";
 "Prompts[1113][3]" = "Open Installer";
 
-"Prompts[1114][1]" = "You have clicked on a link that will open the application “%@.”";
+"Prompts[1114][1]" = "You have clicked on a link that will open the application “%@”";
 "Prompts[1114][2]" = "Are you sure you want to open “%@” with this application?";
 
 "Prompts[1115][1]" = "Preferences may become corrupted if you have more than one copy of Textual open";
