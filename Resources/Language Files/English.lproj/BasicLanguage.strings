@@ -50,7 +50,7 @@
 "BasicLanguage[1008]" = "Close Window";
 "BasicLanguage[1009]" = "Disconnect from %@";
 "BasicLanguage[1010]" = "Leave Channel";
-"BasicLanguage[1011]" = "Quit Textual & IRC";
+"BasicLanguage[1011]" = "Quit Textual 7";
 
 "BasicLanguage[1012]" = "Delete Channel";
 "BasicLanguage[1013]" = "Close Query";

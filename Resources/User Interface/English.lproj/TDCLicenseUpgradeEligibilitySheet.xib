@@ -128,7 +128,7 @@ Gw
                             <font key="font" metaFont="system"/>
                             <string key="title">Congratulations, you are eligible for a discount.
 
-Click the “Purchase Upgrade” button to purchase the upgrade.
+Click the “Purchase Upgrade” button to view the price of the upgrade and to purchase it.
 
 When your order is finished being processed, click the “Activate Textual“ button to continue.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

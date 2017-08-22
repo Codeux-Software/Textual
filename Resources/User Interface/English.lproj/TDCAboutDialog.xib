@@ -32,8 +32,8 @@
                         <accessibility description="Logo Image"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="80" y="90" width="59" height="18"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Textual" id="6">
+                        <rect key="frame" x="74" y="90" width="70" height="18"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Textual 7" id="6">
                             <font key="font" metaFont="systemBold" size="14"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

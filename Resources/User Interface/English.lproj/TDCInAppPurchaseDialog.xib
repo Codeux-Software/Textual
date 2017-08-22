@@ -25,7 +25,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Unlock Textual" allowsToolTipsWhenApplicationIsInactive="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="71U-wg-DxX">
+        <window title="Unlock Textual 7" allowsToolTipsWhenApplicationIsInactive="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="71U-wg-DxX">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="283" y="305" width="500" height="350"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
@@ -42,7 +42,7 @@
             <rect key="frame" x="0.0" y="0.0" width="500" height="504"/>
             <subviews>
                 <imageView horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rwI-t0-XSd">
-                    <rect key="frame" x="89" y="378" width="64" height="64"/>
+                    <rect key="frame" x="72" y="378" width="64" height="64"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="8iW-Ji-Sx0"/>
                         <constraint firstAttribute="width" constant="64" id="m0R-0P-Wtg"/>
@@ -50,8 +50,8 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIconYosemite" id="hRg-kh-cvz"/>
                 </imageView>
                 <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRS-k4-RUx">
-                    <rect key="frame" x="159" y="385" width="254" height="49"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Unlock Textual" id="0YG-Yx-M4Z">
+                    <rect key="frame" x="142" y="385" width="288" height="49"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Unlock Textual 7" id="0YG-Yx-M4Z">
                         <font key="font" size="40" name="HelveticaNeue-Light"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -390,8 +390,8 @@
                     <rect key="frame" x="43" y="46" width="414" height="178"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jEZ-Dy-gT8">
-                            <rect key="frame" x="17" y="134" width="379" height="24"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Thank you for your purchase of Textual!" id="xeb-Kf-7p1">
+                            <rect key="frame" x="9" y="134" width="395" height="24"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Thank you for your purchase of Textual 7!" id="xeb-Kf-7p1">
                                 <font key="font" metaFont="systemBold" size="20"/>
                                 <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

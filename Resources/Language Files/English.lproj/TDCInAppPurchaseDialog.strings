@@ -83,12 +83,12 @@
 "TDCInAppPurchaseDialog[0013][1]" = "Please select an item to unlock";
 "TDCInAppPurchaseDialog[0013][2]" = "";
 
-"TDCInAppPurchaseDialog[0014][1]" = "Please unlock the Standard Edition of Textual to use this feature";
+"TDCInAppPurchaseDialog[0014][1]" = "Please unlock the Standard Edition of Textual 7 to use this feature";
 "TDCInAppPurchaseDialog[0014][2]" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
 "TDCInAppPurchaseDialog[0014][3]" = "Unlock";
 "TDCInAppPurchaseDialog[0014][4]" = "Restore Purchase";
 
-"TDCInAppPurchaseDialog[0015][1]" = "Your trial of Textual has expired. You can continue to use the app for free, but some features have been limited or outright disabled. Please unlock Standard Edition to lift these limitations.";
+"TDCInAppPurchaseDialog[0015][1]" = "Your trial of Textual 7 has expired. You can continue to use the app for free, but some features have been limited or outright disabled. Please unlock Standard Edition to lift these limitations.";
 "TDCInAppPurchaseDialog[0015][2]" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
 "TDCInAppPurchaseDialog[0015][3]" = "Unlock";
 "TDCInAppPurchaseDialog[0015][4]" = "Restore Purchase";
@@ -96,8 +96,8 @@
 "TDCInAppPurchaseDialog[0016][1]" = "Thank you for your purchase of Textual!";
 "TDCInAppPurchaseDialog[0016][2]" = "All limitations have been lifted.";
 
-"TDCInAppPurchaseDialog[0017]" = "Your trial of Textual will expire in %@";
-"TDCInAppPurchaseDialog[0018]" = "Your trial of Textual has expired.";
+"TDCInAppPurchaseDialog[0017]" = "Your trial of Textual 7 will expire in %@";
+"TDCInAppPurchaseDialog[0018]" = "Your trial of Textual 7 has expired.";
 
 "TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app purchases could not be downloaded";
 "TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";

@@ -173,8 +173,8 @@
 "IRC[1122]" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
 
 /* Software trial (Mac App Store) */
-"IRC[1125]" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual, or simply reconnect.";
-"IRC[1126]" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual. <a href='#' onclick='app.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
+"IRC[1125]" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
+"IRC[1126]" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='app.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
 
 /* Specific IRC related, app-specific errors */
 "IRC[1121]" = "\002Error:\002 Messages cannot be sent to this window.";
