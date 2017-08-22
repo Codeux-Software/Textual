@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSUInteger)applicationRunCount;
 
 + (NSString *)applicationName;
++ (NSString *)applicationNameWithoutVersion;
 
 + (NSString *)applicationVersion;
 + (NSString *)applicationVersionShort;

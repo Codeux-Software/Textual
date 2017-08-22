@@ -327,7 +327,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 - (NSString *)applicationNameForGrowl
 {
-	return [TPCApplicationInfo applicationName];
+	return [TPCApplicationInfo applicationNameWithoutVersion];
 }
 
 - (NSDictionary<NSString *, NSArray<NSString *> *> *)registrationDictionaryForGrowl
