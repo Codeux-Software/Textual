@@ -1518,7 +1518,7 @@ NS_ASSUME_NONNULL_BEGIN
 		serverMutable = [server mutableCopy];
 	}
 
-	if (sender == self.serverAddressComboBox) {
+	{
 		NSString *serverAddress = self.serverAddressComboBox.value;
 
 		IRCNetwork *serverAddressNetwork = [self.networkList networkNamed:serverAddress];
@@ -1528,15 +1528,13 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			serverMutable.serverAddress = serverAddress.lowercaseString;
 		}
-	} else if (sender == self.serverPortTextField) {
-		serverMutable.serverPort = self.serverPortTextField.integerValue;
-	} else if (sender == self.prefersSecuredConnectionCheck) {
-		serverMutable.prefersSecuredConnection = (self.prefersSecuredConnectionCheck.state == NSOnState);
-	} else if (sender == self.serverPasswordTextField) {
-		serverMutable.serverPassword = self.serverPasswordTextField.trimmedStringValue;
-	} else {
-		NSAssert(NO, @"Bad 'sender'");
 	}
+
+	serverMutable.serverPort = self.serverPortTextField.integerValue;
+
+	serverMutable.prefersSecuredConnection = (self.prefersSecuredConnectionCheck.state == NSOnState);
+
+	serverMutable.serverPassword = self.serverPasswordTextField.trimmedStringValue;
 
 	server = [serverMutable copy];
 
