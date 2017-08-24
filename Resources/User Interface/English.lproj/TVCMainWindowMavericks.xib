@@ -1281,7 +1281,7 @@
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="48" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
