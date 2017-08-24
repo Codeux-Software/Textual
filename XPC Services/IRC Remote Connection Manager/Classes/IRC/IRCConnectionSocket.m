@@ -311,7 +311,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
 
-	if (self.config.connectionPrefersModernCiphers) {
+	if (self.config.cipherSuites != GCDAsyncSocketCipherSuiteNonePreferred) {
 		settings[GCDAsyncSocketSSLCipherSuites] =
 		[GCDAsyncSocket cipherListOfVersion:self.config.cipherSuites
 				   includeDeprecatedCiphers:self.config.connectionPrefersModernCiphersOnly];

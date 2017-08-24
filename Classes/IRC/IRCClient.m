@@ -10598,7 +10598,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	socketConfig.connectionPrefersIPv4 = preferIPv4;
 
-	socketConfig.connectionPrefersModernCiphers = self.config.connectionPrefersModernCiphers;
+	socketConfig.cipherSuites = self.config.cipherSuites;
+
 	socketConfig.connectionPrefersSecuredConnection = connectionPrefersSecuredConnection;
 	socketConfig.connectionShouldValidateCertificateChain = self.config.validateServerCertificateChain;
 
@@ -10624,7 +10625,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	// TODO: Make this configurable outside of command line
 	socketConfig.connectionPrefersModernCiphersOnly = [RZUserDefaults() boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
-	socketConfig.cipherSuites = [RZUserDefaults() unsignedIntegerForKey:@"GCDAsyncSocket Cipher List Version"];
 
 	self.socket = [[IRCConnection alloc] initWithConfig:socketConfig onClient:self];
 

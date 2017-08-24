@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL autoSleepModeDisconnect;
 @property (readonly) BOOL autojoinWaitsForNickServ;
 @property (readonly) BOOL connectionPrefersIPv4;
-@property (readonly) BOOL connectionPrefersModernCiphers;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (readonly) BOOL excludedFromCloudSyncing;
@@ -99,6 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSString *proxyPassword;
 @property (readonly, copy, nullable) NSString *proxyPasswordFromKeychain;
 @property (readonly, copy, nullable) NSString *proxyUsername;
+@property (readonly) GCDAsyncSocketCipherSuiteVersion cipherSuites;
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages NS_DESIGNATED_INITIALIZER;
@@ -118,6 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSString *serverAddress TEXTUAL_DEPRECATED("Access property through -serverList");
 @property (readonly, copy, nullable) NSString *serverPassword TEXTUAL_DEPRECATED("Access property through -serverList");
 @property (readonly, copy, nullable) NSString *serverPasswordFromKeychain TEXTUAL_DEPRECATED("Access property through -serverList");
+@property (readonly) BOOL connectionPrefersModernCiphers TEXTUAL_DEPRECATED("Use -cipherSuites instead");
 @end
 
 #pragma mark -
@@ -129,7 +130,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL autoSleepModeDisconnect;
 @property (nonatomic, assign, readwrite) BOOL autojoinWaitsForNickServ;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4;
-@property (nonatomic, assign, readwrite) BOOL connectionPrefersModernCiphers;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign, readwrite) BOOL excludedFromCloudSyncing;
@@ -174,6 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyAddress;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyPassword;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyUsername;
+@property (nonatomic, assign, readwrite) GCDAsyncSocketCipherSuiteVersion cipherSuites;
 
 /* Deprecated */
 /* Trying to set one of the following properties will throw an exception. */
@@ -181,6 +182,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) uint16_t serverPort TEXTUAL_DEPRECATED("Modify property using -serverList instead");
 @property (nonatomic, copy, readwrite, nullable) NSString *serverAddress TEXTUAL_DEPRECATED("Modify property using -serverList instead");
 @property (nonatomic, copy, readwrite, nullable) NSString *serverPassword TEXTUAL_DEPRECATED("Modify property using -serverList instead");
+@property (nonatomic, assign, readwrite) BOOL connectionPrefersModernCiphers TEXTUAL_DEPRECATED("Use -cipherSuites instead");
 @end
 
 NS_ASSUME_NONNULL_END

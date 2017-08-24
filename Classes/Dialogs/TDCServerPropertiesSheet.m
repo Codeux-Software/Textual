@@ -87,7 +87,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA1FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA2FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *connectionPrefersIPv4Check;
-@property (nonatomic, weak) IBOutlet NSButton *connectionPrefersModernCiphersCheck;
 @property (nonatomic, weak) IBOutlet NSButton *deleteAddressBookEntryButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteHighlightButton;
@@ -102,11 +101,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *prefersSecuredConnectionCheck;
 @property (nonatomic, weak) IBOutlet NSButton *setInvisibleModeOnConnectCheck;
 @property (nonatomic, weak) IBOutlet NSButton *validateServerCertificateChainCheck;
+@property (nonatomic, weak) IBOutlet NSButton *viewListOfPreferredCipherSuitesButton;
 @property (nonatomic, weak) IBOutlet NSButton *zncIgnoreConfiguredAutojoinCheck;
 @property (nonatomic, weak) IBOutlet NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, weak) IBOutlet NSImageView *erroneousInputErrorImageView;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *fallbackEncodingButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *primaryEncodingButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *preferredCipherSuitesButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *proxyTypeButton;
 @property (nonatomic, weak) IBOutlet NSSlider *floodControlDelayTimerSlider;
 @property (nonatomic, weak) IBOutlet NSSlider *floodControlMessageCountSlider;
@@ -184,6 +185,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onClientCertificateFingerprintSHA2CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintSHA1CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintMD5CopyRequested:(id)sender;
+
+- (IBAction)preferredCipherSuitesChanged:(id)sender;
+- (IBAction)preferredCipherSuitesViewList:(id)sender;
 @end
 
 #pragma clang diagnostic push
@@ -730,7 +734,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.validateServerCertificateChainCheck.state = self.config.validateServerCertificateChain;
 
-	self.connectionPrefersModernCiphersCheck.state = self.config.connectionPrefersModernCiphers;
+	[self.preferredCipherSuitesButton selectItemWithTag:self.config.cipherSuites];
 
 	/* Identity */
 	if (self.config.nickname.length > 0) {
@@ -854,6 +858,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self updateHighlightsPage];
 	[self updateIdentityPage];
 
+	[self preferredCipherSuitesChanged:nil];
+
 	[self proxyTypeChanged:nil];
 }
 
@@ -884,7 +890,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.config.validateServerCertificateChain = (self.validateServerCertificateChainCheck.state == NSOnState);
 
-	self.config.connectionPrefersModernCiphers = (self.connectionPrefersModernCiphersCheck.state == NSOnState);
+	self.config.cipherSuites = self.preferredCipherSuitesButton.selectedTag;
 
 	/* Identity */
 	self.config.nickname = self.nicknameTextField.value;
@@ -1155,6 +1161,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)serverAddressChanged:(id)sender
 {
 	[self updateConnectionPage];
+}
+
+- (void)preferredCipherSuitesChanged:(id)sender
+{
+	NSInteger cipherSuites = self.preferredCipherSuitesButton.selectedTag;
+
+	self.viewListOfPreferredCipherSuitesButton.enabled =
+	(cipherSuites != GCDAsyncSocketCipherSuiteNonePreferred);
+}
+
+- (void)preferredCipherSuitesViewList:(id)sender
+{
+	NSInteger cipherSuites = self.preferredCipherSuitesButton.selectedTag;
+
+	NSArray *cipherSuitesDescriptions = [GCDAsyncSocket descriptionsForCipherListVersion:cipherSuites];
+
+	NSString *cipherSuitesDescription = [cipherSuitesDescriptions componentsJoinedByString:NSStringNewlinePlaceholder];
+
+	NSString *cipherSuitesTitle = self.preferredCipherSuitesButton.titleOfSelectedItem;
+
+	[TLOPopupPrompts sheetWindowWithWindow:self.sheet
+									  body:TXTLS(@"TDCServerPropertiesSheet[1010][2]", cipherSuitesDescription)
+									 title:TXTLS(@"TDCServerPropertiesSheet[1010][1]", cipherSuitesTitle)
+							 defaultButton:TXTLS(@"Prompts[0005]")
+						   alternateButton:nil
+							   otherButton:nil];
 }
 
 - (void)proxyTypeChanged:(id)sender

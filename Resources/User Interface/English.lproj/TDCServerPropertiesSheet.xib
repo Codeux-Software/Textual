@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13189.4"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +36,6 @@
                 <outlet property="connectCommandsField" destination="2310" id="2Ht-9D-ef5"/>
                 <outlet property="connectionNameTextField" destination="1539" id="f2G-5T-09V"/>
                 <outlet property="connectionPrefersIPv4Check" destination="2530" id="HQX-yt-KqL"/>
-                <outlet property="connectionPrefersModernCiphersCheck" destination="VLy-2l-FGP" id="D8g-jX-Usc"/>
                 <outlet property="contentViewAddressBook" destination="1817" id="d5R-wV-sv5"/>
                 <outlet property="contentViewAutojoin" destination="1738" id="GdW-S9-Mmc"/>
                 <outlet property="contentViewClientCertificate" destination="Ti4-Q4-cYX" id="dRg-gZ-hNm"/>
@@ -77,6 +76,7 @@
                 <outlet property="okButton" destination="1455" id="1464"/>
                 <outlet property="performDisconnectOnPongTimerCheck" destination="2536" id="rFn-Dj-NOb"/>
                 <outlet property="pongTimerCheck" destination="2531" id="2541"/>
+                <outlet property="preferredCipherSuitesButton" destination="xo6-bb-4qn" id="nt3-Ps-mHp"/>
                 <outlet property="prefersSecuredConnectionCheck" destination="1545" id="yZI-S9-E8V"/>
                 <outlet property="primaryEncodingButton" destination="1684" id="2276"/>
                 <outlet property="proxyAddressTextField" destination="1901" id="RIc-hP-gu6"/>
@@ -94,6 +94,7 @@
                 <outlet property="sleepModeQuitMessageTextField" destination="2294" id="2t1-Uk-WKU"/>
                 <outlet property="usernameTextField" destination="1597" id="cJp-Y2-VLI"/>
                 <outlet property="validateServerCertificateChainCheck" destination="7Re-Oa-iNx" id="8ll-Xe-9Sy"/>
+                <outlet property="viewListOfPreferredCipherSuitesButton" destination="BoR-WW-sT2" id="iUd-E9-N2y"/>
                 <outlet property="zncIgnoreConfiguredAutojoinCheck" destination="75N-79-v1S" id="thL-o4-SqJ"/>
                 <outlet property="zncIgnorePlaybackNotificationsCheck" destination="2580" id="2583"/>
             </connections>
@@ -1703,7 +1704,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
@@ -1974,13 +1975,6 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="VLy-2l-FGP">
-                    <rect key="frame" x="33" y="85" width="234" height="18"/>
-                    <buttonCell key="cell" type="check" title="Prefer Textual's list of cipher suites" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="PVf-DV-Q7i">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
                     <rect key="frame" x="33" y="181" width="338" height="18"/>
                     <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
@@ -1995,18 +1989,59 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="46W-2g-sYj">
+                    <rect key="frame" x="33" y="83" width="88" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cipher suites:" id="Qfh-rz-IdC">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xo6-bb-4qn">
+                    <rect key="frame" x="125" y="77" width="250" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Default list of cipher suites" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mVB-Hg-Fuc" id="xlI-w6-ABl">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="nRK-8Z-6Pd">
+                            <items>
+                                <menuItem title="Default list of cipher suites" id="mVB-Hg-Fuc"/>
+                                <menuItem title="Version 7.0.0 list of cipher suites" tag="2" id="rag-NS-0Qi"/>
+                                <menuItem title="Version 5.2.7 list of cipher suites" tag="1" id="DrH-DE-jbQ"/>
+                                <menuItem title="Do not prefer specific cipher suites" tag="100" id="TY8-cf-i4B"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="preferredCipherSuitesChanged:" target="-2" id="9Dg-uU-k8K"/>
+                    </connections>
+                </popUpButton>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BoR-WW-sT2">
+                    <rect key="frame" x="374" y="73" width="95" height="32"/>
+                    <buttonCell key="cell" type="push" title="View List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LuK-ZI-qT9">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferredCipherSuitesViewList:" target="-2" id="UQs-lq-m95"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="7Re-Oa-iNx" firstAttribute="top" secondItem="w5K-aH-URS" secondAttribute="bottom" constant="14" id="1te-Bt-Za4"/>
+                <constraint firstItem="BoR-WW-sT2" firstAttribute="leading" secondItem="xo6-bb-4qn" secondAttribute="trailing" constant="8" id="2F2-UY-sVm"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="top" secondItem="2536" secondAttribute="bottom" constant="6" symbolic="YES" id="6Ix-p9-Rd7"/>
+                <constraint firstItem="46W-2g-sYj" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="15" id="7dL-Xs-QZN"/>
                 <constraint firstItem="2536" firstAttribute="leading" secondItem="w5K-aH-URS" secondAttribute="leading" id="EA6-QO-79Q"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="leading" secondItem="7Re-Oa-iNx" secondAttribute="leading" id="KVr-tH-94d"/>
-                <constraint firstItem="7Re-Oa-iNx" firstAttribute="leading" secondItem="VLy-2l-FGP" secondAttribute="leading" id="Q1u-bQ-oPe"/>
+                <constraint firstItem="46W-2g-sYj" firstAttribute="leading" secondItem="7Re-Oa-iNx" secondAttribute="leading" id="KXq-hn-kwr"/>
+                <constraint firstItem="BoR-WW-sT2" firstAttribute="baseline" secondItem="xo6-bb-4qn" secondAttribute="baseline" id="TBZ-CP-co8"/>
                 <constraint firstItem="2536" firstAttribute="top" secondItem="2531" secondAttribute="bottom" constant="6" symbolic="YES" id="V1d-cP-qJf"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BoR-WW-sT2" secondAttribute="trailing" constant="20" id="ZmU-Gk-p56"/>
                 <constraint firstItem="2531" firstAttribute="leading" secondItem="2536" secondAttribute="leading" id="cGt-cj-hzU"/>
+                <constraint firstItem="xo6-bb-4qn" firstAttribute="baseline" secondItem="46W-2g-sYj" secondAttribute="baseline" id="cYh-AE-mUc"/>
+                <constraint firstItem="xo6-bb-4qn" firstAttribute="leading" secondItem="46W-2g-sYj" secondAttribute="trailing" constant="8" id="d6Q-qc-hXF"/>
                 <constraint firstItem="2530" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="35" id="f8b-Hh-PW6"/>
                 <constraint firstItem="2530" firstAttribute="leading" secondItem="2531" secondAttribute="leading" id="fbV-dI-oEE"/>
-                <constraint firstItem="VLy-2l-FGP" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="14" id="oeQ-C4-kD7"/>
                 <constraint firstItem="2531" firstAttribute="top" secondItem="2530" secondAttribute="bottom" constant="14" id="w1S-6W-u5R"/>
                 <constraint firstItem="2530" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="82" id="w64-4H-lvT"/>
             </constraints>

@@ -84,7 +84,6 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	if ((self = [super init])) {
 		self->_connectionPrefersIPv4 = [aDecoder decodeBoolForKey:@"connectionPrefersIPv4"];
-		self->_connectionPrefersModernCiphers = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphers"];
 		self->_connectionPrefersModernCiphersOnly = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphersOnly"];
 		self->_connectionPrefersSecuredConnection = [aDecoder decodeBoolForKey:@"connectionPrefersSecuredConnection"];
 		self->_connectionShouldValidateCertificateChain = [aDecoder decodeBoolForKey:@"connectionShouldValidateCertificateChain"];
@@ -113,7 +112,6 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 	[aCoder encodeBool:self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
-	[aCoder encodeBool:self->_connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
 	[aCoder encodeBool:self->_connectionPrefersModernCiphersOnly forKey:@"connectionPrefersModernCiphersOnly"];
 	[aCoder encodeBool:self->_connectionPrefersSecuredConnection forKey:@"connectionPrefersSecuredConnection"];
 	[aCoder encodeBool:self->_connectionShouldValidateCertificateChain forKey:@"connectionShouldValidateCertificateChain"];
@@ -142,7 +140,6 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	IRCConnectionConfig *object = [[IRCConnectionConfig allocWithZone:zone] init];
 
 	object->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
-	object->_connectionPrefersModernCiphers = self->_connectionPrefersModernCiphers;
 	object->_connectionPrefersModernCiphersOnly = self->_connectionPrefersModernCiphersOnly;
 	object->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
 	object->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
@@ -168,7 +165,6 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	IRCConnectionConfigMutable *object = [[IRCConnectionConfigMutable allocWithZone:zone] init];
 
 	((IRCConnectionConfig *)object)->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
-	((IRCConnectionConfig *)object)->_connectionPrefersModernCiphers = self->_connectionPrefersModernCiphers;
 	((IRCConnectionConfig *)object)->_connectionPrefersModernCiphersOnly = self->_connectionPrefersModernCiphersOnly;
 	((IRCConnectionConfig *)object)->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
 	((IRCConnectionConfig *)object)->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
@@ -201,7 +197,6 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 @implementation IRCConnectionConfigMutable
 
 @dynamic connectionPrefersIPv4;
-@dynamic connectionPrefersModernCiphers;
 @dynamic connectionPrefersModernCiphersOnly;
 @dynamic connectionPrefersSecuredConnection;
 @dynamic connectionShouldValidateCertificateChain;
@@ -228,13 +223,6 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	if (self->_connectionPrefersIPv4 != connectionPrefersIPv4) {
 		self->_connectionPrefersIPv4 = connectionPrefersIPv4;
-	}
-}
-
-- (void)setConnectionPrefersModernCiphers:(BOOL)connectionPrefersModernCiphers
-{
-	if (self->_connectionPrefersModernCiphers != connectionPrefersModernCiphers) {
-		self->_connectionPrefersModernCiphers = connectionPrefersModernCiphers;
 	}
 }
 

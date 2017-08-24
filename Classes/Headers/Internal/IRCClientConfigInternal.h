@@ -45,7 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _autoSleepModeDisconnect;
 	BOOL _autojoinWaitsForNickServ;
 	BOOL _connectionPrefersIPv4;
-	BOOL _connectionPrefersModernCiphers;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	BOOL _excludedFromCloudSyncing;
@@ -93,6 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger _floodControlMaximumMessages;
 	uint16_t _proxyPort;
 	uint16_t _serverPort;
+	GCDAsyncSocketCipherSuiteVersion _cipherSuites;
 
 @private
 	BOOL _objectInitialized;

@@ -88,8 +88,6 @@
 	<true/>
 	<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
 	<true/>
-	<key>GCDAsyncSocket Cipher List Version</key>
-	<integer>0</integer>
 	<key>IRCopDefaultLocalizaiton -&gt; G:Line Reason</key>
 	<string>35d Your behavior is not conducive to the desired environment.</string>
 	<key>IRCopDefaultLocalizaiton -&gt; Kill Reason</key>
