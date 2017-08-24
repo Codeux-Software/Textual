@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, GCDAsyncSocketCipherSuiteVersion) {
 + (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite;
 + (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite;
 
++ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version;
 + (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version
 					includeDeprecatedCiphers:(BOOL)includeDepecatedCiphers;
 @end
