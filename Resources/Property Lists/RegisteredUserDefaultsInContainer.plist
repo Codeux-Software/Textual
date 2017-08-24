@@ -90,10 +90,6 @@
 	<true/>
 	<key>GCDAsyncSocket Cipher List Version</key>
 	<integer>0</integer>
-	<key>HockeySDK -&gt; Collect Anonymous Statistics</key>
-	<false/>
-	<key>HockeySDK -&gt; Collect Anonymous Statistics Permission Asked</key>
-	<false/>
 	<key>IRCopDefaultLocalizaiton -&gt; G:Line Reason</key>
 	<string>35d Your behavior is not conducive to the desired environment.</string>
 	<key>IRCopDefaultLocalizaiton -&gt; Kill Reason</key>
