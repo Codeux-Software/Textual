@@ -65,9 +65,9 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 TEXTUAL_IGNORE_DEPRECATION_END
 
 	defaults[@"cachedLastServerTimeCapabilityReceivedAtTimestamp"] = @(0);
+	defaults[@"cipherSuites"] = @(GCDAsyncSocketCipherSuiteDefaultVersion);
 	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[1004]");
 	defaults[@"connectionPrefersIPv4"] = @(NO);
-	defaults[@"connectionPrefersModernCiphers"] = @(YES);
 	defaults[@"excludedFromCloudSyncing"] = @(NO);
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
 	defaults[@"floodControlDelayTimerInterval"] = @(IRCConnectionConfigFloodControlDefaultDelayInterval);
@@ -301,7 +301,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[defaultsMutable assignBoolTo:&self->_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
 	[defaultsMutable assignBoolTo:&self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
-	[defaultsMutable assignBoolTo:&self->_connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[defaultsMutable assignBoolTo:&self->_excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
@@ -337,6 +336,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[defaultsMutable assignStringTo:&self->_username forKey:@"username"];
 
+	[defaultsMutable assignUnsignedIntegerTo:&self->_cipherSuites forKey:@"cipherSuites"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_fallbackEncoding forKey:@"fallbackEncoding"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_floodControlDelayTimerInterval forKey:@"floodControlDelayTimerInterval"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_floodControlMaximumMessages forKey:@"floodControlMaximumMessages"];
@@ -485,6 +485,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self->_proxyPassword = [proxyPassword copy];
 
 		[self writeProxyPasswordToKeychain];
+	}
+
+	/* Cipher suites */
+	if (defaultsMutable[@"cipherSuites"] == nil) {
+		NSNumber *connectionPrefersModernCiphers = defaultsMutable[@"connectionPrefersModernCiphers"];
+
+		if (connectionPrefersModernCiphers && connectionPrefersModernCiphers.boolValue == NO) {
+			self->_cipherSuites = GCDAsyncSocketCipherSuiteNonePreferred;
+		}
 	}
 
 	/* Migrate servers */
@@ -735,7 +744,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[dic setBool:self.autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
 	[dic setBool:self.connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
-	[dic setBool:self.connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
@@ -755,6 +763,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.zncIgnorePlaybackNotifications forKey:@"zncIgnorePlaybackNotifications"];
 	[dic setBool:self.zncIgnoreUserNotifications forKey:@"zncIgnoreUserNotifications"];
 
+	[dic setUnsignedInteger:self.cipherSuites forKey:@"cipherSuites"];
 	[dic setUnsignedInteger:self.fallbackEncoding forKey:@"fallbackEncoding"];
 	[dic setUnsignedInteger:self.floodControlDelayTimerInterval forKey:@"floodControlDelayTimerInterval"];
 	[dic setUnsignedInteger:self.floodControlMaximumMessages forKey:@"floodControlMaximumMessages"];
@@ -778,6 +787,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 with earlier versions of Textual */
 TEXTUAL_IGNORE_DEPRECATION_BEGIN
 	[dic maybeSetObject:self.serverAddress forKey:@"serverAddress"];
+
+	[dic setBool:self.connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
 
 	[dic setBool:self.prefersSecuredConnection forKey:@"prefersSecuredConnection"];
 
@@ -1053,6 +1064,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	return server.serverPasswordFromKeychain;
 }
 
+- (BOOL)connectionPrefersModernCiphers
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return (self.cipherSuites != GCDAsyncSocketCipherSuiteNonePreferred);
+}
+
 @end
 
 #pragma mark -
@@ -1066,6 +1084,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 @dynamic autojoinWaitsForNickServ;
 @dynamic awayNickname;
 @dynamic channelList;
+@dynamic cipherSuites;
 @dynamic connectionName;
 @dynamic connectionPrefersIPv4;
 @dynamic connectionPrefersModernCiphers;
@@ -1161,9 +1180,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)setConnectionPrefersModernCiphers:(BOOL)connectionPrefersModernCiphers
 {
-	if (self->_connectionPrefersModernCiphers != connectionPrefersModernCiphers) {
-		self->_connectionPrefersModernCiphers = connectionPrefersModernCiphers;
-	}
+	TEXTUAL_DEPRECATED_WARNING
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -1498,6 +1515,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)setServerPort:(uint16_t)serverPort
 {
 	TEXTUAL_DEPRECATED_ASSERT
+}
+
+- (void)setCipherSuites:(GCDAsyncSocketCipherSuiteVersion)cipherSuites
+{
+	if (self->_cipherSuites != cipherSuites) {
+		self->_cipherSuites = cipherSuites;
+	}
 }
 
 @end

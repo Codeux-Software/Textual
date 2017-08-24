@@ -348,6 +348,27 @@ static const char * _Nonnull kMacNames[] = {
 	return protocolString;
 }
 
++ (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version
+{
+	NSArray *cipherSuites = [GCDAsyncSocket cipherListOfVersion:version];
+
+	return [GCDAsyncSocket descriptionsForCipherSuites:cipherSuites];
+}
+
++ (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites
+{
+	NSParameterAssert(cipherSuites != nil);
+
+	NSMutableArray<NSString *> *descriptions = [NSMutableArray arrayWithCapacity:cipherSuites.count];
+
+	for (NSNumber *cipherSuite in cipherSuites) {
+		[descriptions addObject:
+		 [GCDAsyncSocket descriptionForCipherSuite:cipherSuite.intValue]];
+	}
+
+	return [descriptions copy];
+}
+
 + (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite
 {
 	for (unsigned long pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
@@ -407,6 +428,10 @@ static const char * _Nonnull kMacNames[] = {
 + (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version
 {
 	switch (version) {
+		case GCDAsyncSocketCipherSuiteNonePreferred:
+		{
+			return @[];
+		}
 		case GCDAsyncSocketCipherSuite2015Version:
 		{
 			/* The following list of ciphers, which is ordered from most important

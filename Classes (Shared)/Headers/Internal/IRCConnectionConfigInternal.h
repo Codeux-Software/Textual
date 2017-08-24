@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 @protected
 	BOOL _connectionPrefersIPv4;
-	BOOL _connectionPrefersModernCiphers;
 	BOOL _connectionPrefersModernCiphersOnly;
 	BOOL _connectionPrefersSecuredConnection;
 	BOOL _connectionShouldValidateCertificateChain;

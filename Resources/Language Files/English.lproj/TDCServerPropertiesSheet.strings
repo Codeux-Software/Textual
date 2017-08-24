@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1010 */
+/* Next unusued key: 1011 */
 
 /* Server properties Address Book entry types */
 "TDCServerPropertiesSheet[1000]" = "User Ignore";
@@ -88,3 +88,7 @@
 
 "TDCServerPropertiesSheet[1009][1]" = "Choose An Identity";
 "TDCServerPropertiesSheet[1009][2]" = "Select a certificate to send when you connect securely.";
+
+/* Cipher suites */
+"TDCServerPropertiesSheet[1010][1]" = "The “%@” includes the following cipher suites:";
+"TDCServerPropertiesSheet[1010][2]" = "%@\n\nThese cipher suites are ordered by preference with the most preferred at the top.";
