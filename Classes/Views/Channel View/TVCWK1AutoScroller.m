@@ -90,10 +90,45 @@ static CGFloat _scrollTopUserConstant = 25.0;
 								   name:NSViewBoundsDidChangeNotification
 								 object:documentView.enclosingScrollView.contentView];
 
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(preferencesChanged:)
+								   name:TPCPreferencesUserDefaultsDidChangeNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(preferredScrollerStyleChanged:)
+								   name:NSPreferredScrollerStyleDidChangeNotification
+								 object:nil];
+
+	[self changeScrollerStyle];
+
 	self->_scrollLastPosition1 = 0.0;
 	self->_scrollLastPosition2 = 0.0;
 
 	self->_isScrolledByUser = NO;
+}
+
+- (void)changeScrollerStyle
+{
+	WebFrameView *frameView = self.frameView;
+
+	NSView *documentView = frameView.documentView;
+
+	if ([TPCPreferences themeChannelViewUsesCustomScrollers]) {
+		documentView.enclosingScrollView.scrollerStyle = NSScrollerStyleOverlay;
+	} else {
+		documentView.enclosingScrollView.scrollerStyle = [NSScroller preferredScrollerStyle];
+	}
+}
+
+- (void)preferencesChanged:(NSNotification *)notification
+{
+	[self changeScrollerStyle];
+}
+
+- (void)preferredScrollerStyleChanged:(NSNotification *)notification
+{
+	[self changeScrollerStyle];
 }
 
 - (BOOL)viewingBottom
