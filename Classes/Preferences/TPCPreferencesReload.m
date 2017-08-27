@@ -89,7 +89,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[keys containsObject:@"DisplayEventInLogView -> Inline Media"] ||
 		[keys containsObject:@"DisplayEventInLogView -> Join, Part, Quit"] ||
 		[keys containsObject:@"NicknameColorHashingComputesRGBValue"] ||
-		[keys containsObject:@"ScrollbackMaximumLineCount"] ||
 		[keys containsObject:@"Theme -> Nickname Format"] ||
 		[keys containsObject:@"Theme -> Timestamp Format"] ||
 		[keys containsObject:@"Theme -> Channel Font Preference Enabled"] ||
@@ -186,6 +185,11 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Developer mode */
 	if ([keys containsObject:@"TextualDeveloperEnvironment"]) {
 		reloadAction |= TPCPreferencesReloadIRCCommandCacheAction;
+	}
+
+	/* Scrollback limit */
+	if ([keys containsObject:@"ScrollbackMaximumLineCount"]) {
+		reloadAction |= TPCPreferencesReloadScrollbackLimitAction;
 	}
 
 	/* After this is all complete; we call -preferencesChanged just to take 
@@ -356,6 +360,11 @@ NS_ASSUME_NONNULL_BEGIN
 				[c reopenLogFileIfNeeded];
 			}
 		}
+	}
+
+	/* Scrollback limit */
+	if ((reloadAction & TPCPreferencesReloadScrollbackLimitAction) == TPCPreferencesReloadScrollbackLimitAction) {
+		[TVCLogControllerHistoricLogSharedInstance() resetMaximumLineCount];
 	}
 
 	/* World controller preferences changed call */

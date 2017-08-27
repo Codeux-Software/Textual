@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveData; // asynchronous operation
 
+- (void)resetMaximumLineCount;
+
 @property (readonly) BOOL isSaving;
 
 - (void)forgetChannel:(IRCChannel *)channel;
