@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self openDatabase];
 
-	[self setupTimers];
+	[self resetMaximumLineCount];
 }
 
 - (void)invalidateProcess
@@ -218,9 +218,9 @@ NS_ASSUME_NONNULL_BEGIN
 	self.processLoaded = NO;
 }
 
-- (void)setupTimers
+- (void)resetMaximumLineCount
 {
-	NSUInteger maximumLineCount = MIN([TPCPreferences scrollbackLimit], [TPCPreferences scrollbackHistoryLimit]);
+	NSUInteger maximumLineCount = [TPCPreferences scrollbackLimit];
 
 	[[self remoteObjectProxy] setMaximumLineCount:maximumLineCount];
 }

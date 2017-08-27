@@ -143,6 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedInputHistoryScheme:(id)sender;
 - (IBAction)onChangedMainInputTextViewFontSize:(id)sender; // changed
 - (IBAction)onChangedMainWindowSegmentedController:(id)sender;
+- (IBAction)onChangedScrollbackLimit:(id)sender;
 - (IBAction)onChangedServerListUnreadBadgeColor:(id)sender;
 - (IBAction)onChangedSidebarColorInversion:(id)sender;
 - (IBAction)onChangedTheme:(id)sender;
@@ -1368,6 +1369,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedServerListUnreadBadgeColor:(id)sender
 {
 	[TPCPreferences performReloadAction:TPCPreferencesReloadServerListUnreadBadgesAction];
+}
+
+- (void)onChangedScrollbackLimit:(id)sender
+{
+	[TPCPreferences performReloadAction:TPCPreferencesReloadScrollbackLimitAction];
 }
 
 - (void)onOpenPathToCloudFolder:(id)sender
