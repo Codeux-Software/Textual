@@ -59,9 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL reloadingHistory;
 @property (nonatomic, assign) BOOL reloadingTheme;
 @property (nonatomic, assign) BOOL historyLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
-@property (nonatomic, assign) NSUInteger maximumLineCount;
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
@@ -130,8 +128,6 @@ ClassWithDesignatedInitializerInitMethod
 #endif
 
 	self.highlightedLineNumbers	= [NSMutableArray new];
-
-	self.maximumLineCount = [TPCPreferences scrollbackLimit];
 }
 
 - (void)prepareForTermination:(BOOL)isTerminatingApplication
@@ -160,15 +156,6 @@ ClassWithDesignatedInitializerInitMethod
 - (void)prepareForPermanentDestruction
 {
 	[self prepareForTermination:NO];
-}
-
-- (void)preferencesChanged
-{
-	if (self.terminating) {
-		return;
-	}
-
-	self.maximumLineCount = [TPCPreferences scrollbackLimit];
 }
 
 - (void)dealloc
@@ -264,15 +251,6 @@ ClassWithDesignatedInitializerInitMethod
 
 #pragma mark -
 #pragma mark Properties
-
-- (void)setMaximumLineCount:(NSUInteger)maximumLineCount
-{
-	if (self->_maximumLineCount != maximumLineCount) {
-		self->_maximumLineCount = maximumLineCount;
-
-		[self limitNumberOfLinesIfNeeded];
-	}
-}
 
 - (NSString *)uniqueIdentifier
 {
@@ -789,73 +767,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
-#pragma mark -
-#pragma mark Manage Scrollback Size
-
-- (NSUInteger)numberOfLines
-{
-	return self.activeLineCount;
-}
-
-- (void)limitNumberOfLines
-{
-	if (self.loaded == NO || self.terminating) {
-		return;
-	}
-
-	self.needsLimitNumberOfLines = NO;
-
-	NSInteger n = (self.activeLineCount - self.maximumLineCount);
-
-	if (n <= 0 || self.activeLineCount <= 0) {
-		return;
-	}
-
-	self.activeLineCount -= n;
-
-	if (self.activeLineCount < 0) {
-		self.activeLineCount = 0;
-	}
-
-	[self.backingView arrayByEvaluatingFunction:@"Textual.reduceNumberOfLines"
-								withArguments:@[@(n)]
-							completionHandler:^(NSArray *result) {
-								if (result == nil) {
-									return;
-								}
-
-								@synchronized(self.highlightedLineNumbers) {
-									[self.highlightedLineNumbers removeObjectsInArray:result];
-								}
-							}];
-}
-
-- (void)limitNumberOfLinesIfNeeded
-{
-	if (self.loaded == NO || self.terminating) {
-		return;
-	}
-
-	if (self.maximumLineCount > 0 && self.activeLineCount > self.maximumLineCount) {
-		[self setNeedsLimitNumberOfLines];
-	}
-}
-
-- (void)setNeedsLimitNumberOfLines
-{
-	if (self.loaded == NO || self.terminating) {
-		return;
-	}
-
-	if (self.needsLimitNumberOfLines) {
-		return;
-	}
-
-	self.needsLimitNumberOfLines = YES;
-
-	[self limitNumberOfLines];
-}
-
 - (void)clearWithReset:(BOOL)clearWithReset
 {
 	if (self.terminating) {
@@ -877,8 +788,6 @@ ClassWithDesignatedInitializerInitMethod
 	self.lastVisitedHighlight = nil;
 
 	self.loaded = NO;
-
-	self.needsLimitNumberOfLines = NO;
 
 	self.reloadingHistory = NO;
 
@@ -974,12 +883,6 @@ ClassWithDesignatedInitializerInitMethod
 
 			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 				[THOPluginDispatcher didPostNewMessage:resultInfo[@"pluginConcreteObject"] forViewController:self];
-			}
-
-			/* Only cut lines if our number is divisible by 50. This makes it so every
-			 line is not using resources. */
-			if ((self.activeLineCount % 50) == 0) {
-				[self limitNumberOfLinesIfNeeded];
 			}
 
 			/* Begin processing inline images */
