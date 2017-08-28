@@ -57,6 +57,18 @@ NS_ASSUME_NONNULL_BEGIN
 				 fetchLimit:(NSUInteger)fetchLimit
 				limitToDate:(nullable NSDate *)limitToDate
 		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
+
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+	 beforeUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
+
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+	  afterUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END
