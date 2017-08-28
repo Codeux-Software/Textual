@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) IRCClient *associatedClient;
 @property (readonly, nullable) IRCChannel *associatedChannel;
 @property (nonatomic, copy, nullable) NSArray *arguments;
+@property (nonatomic, copy, nullable) void (^completionBlock)(id _Nullable returnValue);
 @end
 
 @implementation TVCLogScriptEventSink
@@ -272,18 +273,24 @@ ClassWithDesignatedInitializerInitMethod
 
 	context.arguments = values;
 
-	if (promiseIndex <= (-1)) {
-		(void)objc_msgSend(self, selector, context);
-	} else {
-		id returnValue = objc_msgSend(self, selector, context);
+	void (^completionBlock)(id) = nil;
 
-		if (returnValue == nil) {
-			returnValue = [NSNull null];
-		}
+	if (promiseIndex >= 0) {
+		__weak typeof(intWebView) intWebViewWeak = intWebView;
 
-		[intWebView evaluateFunction:@"appInternal.promiseKept"
-					   withArguments:@[@(promiseIndex), returnValue]];
+		completionBlock = ^(id _Nullable returnValue) {
+			if (returnValue == nil) {
+				returnValue = [NSNull null];
+			}
+
+			[intWebViewWeak evaluateFunction:@"appInternal.promiseKept"
+							   withArguments:@[@(promiseIndex), returnValue]];
+		};
 	}
+
+	context.completionBlock = completionBlock;
+
+	(void)objc_msgSend(self, selector, context);
 }
 
 - (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView
@@ -542,19 +549,19 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Private Implementation
 
-- (id)_channelIsJoined:(TVCLogScriptEventSinkContext *)context
+- (void)_channelIsJoined:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.associatedChannel.isActive);
+	context.completionBlock( @(context.associatedChannel.isActive) );
 }
 
-- (id)_channelMemberCount:(TVCLogScriptEventSinkContext *)context
+- (void)_channelMemberCount:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.associatedChannel.numberOfMembers);
+	context.completionBlock( @(context.associatedChannel.numberOfMembers) );
 }
 
-- (id)_channelName:(TVCLogScriptEventSinkContext *)context
+- (void)_channelName:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedChannel.name;
+	context.completionBlock( context.associatedChannel.name );
 }
 
 - (void)_channelNameDoubleClicked:(TVCLogScriptEventSinkContext *)context
@@ -567,7 +574,7 @@ ClassWithDesignatedInitializerInitMethod
 	[context.webViewPolicy displayContextMenuInWebView:context.webView];
 }
 
-- (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
+- (void)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
 {
 	if ([TPCPreferences copyOnSelect]) {
 		NSString *selection = context.webView.selection;
@@ -575,26 +582,26 @@ ClassWithDesignatedInitializerInitMethod
 		if (selection) {
 			RZPasteboard().stringContent = selection;
 
-			return @(YES);
+			context.completionBlock( @(YES) );
 		}
 	}
 
-	return @(NO);
+	context.completionBlock( @(NO) );
 }
 
-- (id)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
+- (void)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.viewController.inlineMediaEnabledForView);
+	context.completionBlock( @(context.viewController.inlineMediaEnabledForView) );
 }
 
-- (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
+- (void)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.userHostmask;
+	context.completionBlock( context.associatedClient.userHostmask );
 }
 
-- (id)_localUserNickname:(TVCLogScriptEventSinkContext *)context
+- (void)_localUserNickname:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.userNickname;
+	context.completionBlock( context.associatedClient.userNickname );
 }
 
 - (void)_logToConsole:(TVCLogScriptEventSinkContext *)context
@@ -606,12 +613,12 @@ ClassWithDesignatedInitializerInitMethod
 	LogToConsoleInfo("JavaScript: %{public}@", message);
 }
 
-- (id)_networkName:(TVCLogScriptEventSinkContext *)context
+- (void)_networkName:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.networkName;
+	context.completionBlock( context.associatedClient.networkName );
 }
 
-- (id)_nicknameColorStyleHash:(TVCLogScriptEventSinkContext *)context
+- (void)_nicknameColorStyleHash:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 
@@ -627,7 +634,7 @@ ClassWithDesignatedInitializerInitMethod
 		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
 	}
 
-	return [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum];
+	context.completionBlock( [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum] );
 }
 
 - (void)_nicknameDoubleClicked:(TVCLogScriptEventSinkContext *)context
@@ -653,7 +660,7 @@ ClassWithDesignatedInitializerInitMethod
 	[context.associatedClient printDebugInformationToConsole:message];
 }
 
-- (nullable id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
+- (void)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 
@@ -669,13 +676,17 @@ ClassWithDesignatedInitializerInitMethod
 
 		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
 
-		return nil;
+		context.completionBlock(nil);
+
+		return;
 	} else if (strcmp(methodSignature.methodReturnType, @encode(void)) == 0) {
 		NSString *errorMessage = [NSString stringWithFormat:@"Method named '%@' does not return a value", methodName];
 
 		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
 
-		return nil;
+		context.completionBlock(nil);
+
+		return;
 	}
 
 	NSInvocation *invocation =
@@ -691,7 +702,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[invocation getReturnValue:&returnValue];
 
-	return [NSValue valueWithPrimitive:returnValue withType:methodSignature.methodReturnType];
+	context.completionBlock( [NSValue valueWithPrimitive:returnValue withType:methodSignature.methodReturnType] );
 }
 
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
@@ -717,19 +728,19 @@ ClassWithDesignatedInitializerInitMethod
 	[THOPluginDispatcher didReceiveJavaScriptPayload:payloadObject fromViewController:context.viewController];
 }
 
-- (id)_serverAddress:(TVCLogScriptEventSinkContext *)context
+- (void)_serverAddress:(TVCLogScriptEventSinkContext *)context
 {
-	return context.associatedClient.serverAddress;
+	context.completionBlock( context.associatedClient.serverAddress );
 }
 
-- (id)_serverChannelCount:(TVCLogScriptEventSinkContext *)context
+- (void)_serverChannelCount:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.associatedClient.channelCount);
+	context.completionBlock( @(context.associatedClient.channelCount) );
 }
 
-- (id)_serverIsConnected:(TVCLogScriptEventSinkContext *)context
+- (void)_serverIsConnected:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.associatedClient.isLoggedIn);
+	context.completionBlock( @(context.associatedClient.isLoggedIn) );
 }
 
 - (void)_setChannelName:(TVCLogScriptEventSinkContext *)context
@@ -779,12 +790,12 @@ ClassWithDesignatedInitializerInitMethod
 }
 #endif
 
-- (id)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
+- (void)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
 {
-	return @([TPCPreferences invertSidebarColors]);
+	context.completionBlock( @([TPCPreferences invertSidebarColors]) );
 }
 
-- (id)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context
+- (void)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 
@@ -798,10 +809,10 @@ ClassWithDesignatedInitializerInitMethod
 		[self _throwJavaScriptException:errorValue inWebView:context.webView];
 	}
 
-	return result;
+	context.completionBlock( result );
 }
 
-- (id)_styleSettingsSetValue:(TVCLogScriptEventSinkContext *)context
+- (void)_styleSettingsSetValue:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 
@@ -821,7 +832,7 @@ ClassWithDesignatedInitializerInitMethod
 		[worldController() evaluateFunctionOnAllViews:@"Textual.styleSettingDidChange" arguments:@[keyName]];
 	}
 
-	return @(result);
+	context.completionBlock( @(result) );
 }
 
 - (void)_topicBarDoubleClicked:(TVCLogScriptEventSinkContext *)context
