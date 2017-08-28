@@ -450,6 +450,24 @@ ClassWithDesignatedInitializerInitMethod
 			}];
 }
 
+- (void)renderTemplate:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_renderTemplate:)
+	  minimumArgumentCount:1
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else if (argumentIndex == 1) {
+					return ([argument isKindOfClass:[NSNull class]] ||
+							[argument isKindOfClass:[NSDictionary class]]);
+				}
+
+				return NO;
+			}];
+}
+
 - (void)sendPluginPayload:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -749,6 +767,27 @@ ClassWithDesignatedInitializerInitMethod
 										 maximumNumberOfLines:maximumNumberOfLines
 											  completionBlock:renderCompletionBlock];
 	}
+}
+
+- (void)_renderTemplate:(TVCLogScriptEventSinkContext *)context
+{
+	NSArray *arguments = context.arguments;
+
+	NSString *templateName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if (templateName.length == 0) {
+		[self _throwJavaScriptException:@"Length of template name is 0" inWebView:context.webView];
+
+		context.completionBlock(nil);
+
+		return;
+	}
+
+	NSDictionary *templateAttributes = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
+
+	NSString *renderedTemplate = [TVCLogRenderer renderTemplate:templateName attributes:templateAttributes];
+
+	context.completionBlock( renderedTemplate );
 }
 
 - (void)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context

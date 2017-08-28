@@ -451,3 +451,17 @@ app.renderMessagesAfter = function(lineNumber, maximumNumberOfLines, callbackFun
 		TextualScriptSink.renderMessagesAfter(dataValue);
 	}
 };
+
+app.renderTemplate = function(templateName, templateAttributes, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [templateName, templateAttributes]};
+
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.renderTemplate.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderTemplate(dataValue);
+	}
+};
+
