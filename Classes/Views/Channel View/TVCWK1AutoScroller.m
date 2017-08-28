@@ -123,6 +123,12 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 - (void)preferencesChanged:(NSNotification *)notification
 {
+	NSString *changedKey = notification.userInfo[@"changedKey"];
+
+	if ([changedKey isEqualToString:@"WebViewDoNotUsesCustomScrollers"] == NO) {
+		return;
+	}
+
 	[self changeScrollerStyle];
 }
 
