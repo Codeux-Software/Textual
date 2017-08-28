@@ -68,6 +68,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 		if (self->_objectInitializedAsCopy == NO) {
 			[self populateDefaultsPostflight];
+
+			[self populateDefaultUniqueIdentifier];
 		}
 
 		self->_objectInitialized = YES;
@@ -85,11 +87,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
-- (instancetype)initWithXPCObject:(TVCLogLineXPC *)xpcObject
++ (TVCLogLine *)logLineFromXPCObject:(TVCLogLineXPC *)xpcObject
 {
 	NSParameterAssert(xpcObject != nil);
 
-	return [NSKeyedUnarchiver unarchiveObjectWithData:xpcObject.data];
+	/* In earlier versions of the historic log database, the unique identifier was
+	 not stored in the archived data of the log line. We need a unique identifier now,
+	 which the database automatically creates if none is present, but it does it without
+	 unarchiving the data because the process does not have this class. It therefore just
+	 attaches the unique identifier to the XPC object. We can then write it out here. */
+	/* We check if the object's unique identifier is nil before setting the database's
+	 value because the value may have already been unarchived if it is present. */
+	TVCLogLine *object = [NSKeyedUnarchiver unarchiveObjectWithData:xpcObject.data];
+
+	if (object->_uniqueIdentifier == nil) {
+		object->_uniqueIdentifier = [xpcObject.uniqueIdentifier copy];
+	} else {
+		[object populateDefaultUniqueIdentifier];
+	}
+
+	return object;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -145,7 +162,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	SetVariableIfNil(self->_command, TVCLogLineDefaultCommandValue)
 	SetVariableIfNil(self->_messageBody, NSStringEmptyPlaceholder)
 	SetVariableIfNil(self->_receivedAt, [NSDate date])
-	SetVariableIfNil(self->_uniqueIdentifier, [TVCLogLine newUniqueIdentifier])
 
 	if (self->_lineType == TVCLogLineActionNoHighlightType) {
 		self->_lineType = TVCLogLineActionType;
@@ -156,6 +172,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 		self->_highlightKeywords = nil;
 	}
+}
+
+- (void)populateDefaultUniqueIdentifier
+{
+	self->_uniqueIdentifier = [TVCLogLine newUniqueIdentifier];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder

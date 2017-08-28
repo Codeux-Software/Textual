@@ -35,16 +35,17 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CoreData/CoreData.h>
+@implementation HLSHistoricLogLineEntityMigration
 
-#import <CocoaExtensions/CocoaExtensions.h>
+- (NSString *)newLogLineUniqueIdentifier
+{
+	NSString *printIdentifier = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
 
-#import "TVCLogLineXPCPrivate.h"
+	return [printIdentifier substringFromIndex:19]; // Example: 9C60-0050E4C00067
+}
 
-#import "HLSHistoricLogProtocol.h"
-#import "HLSHistoricLogLineEntityMigrationPrivate.h"
-#import "HLSHistoricLogViewContextPrivate.h"
-#import "HLSHistoricLogProcessMainPrivate.h"
-#import "HSLHistoricLogProcessDelegatePrivate.h"
+@end
+
+NS_ASSUME_NONNULL_END
