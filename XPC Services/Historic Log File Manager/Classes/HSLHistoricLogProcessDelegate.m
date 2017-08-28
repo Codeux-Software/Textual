@@ -47,6 +47,16 @@ NS_ASSUME_NONNULL_BEGIN
 					  forSelector:@selector(fetchEntriesForView:fetchLimit:limitToDate:withCompletionBlock:)
 					argumentIndex:0
 						  ofReply:YES];
+	
+	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+					  forSelector:@selector(fetchEntriesForView:beforeUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
+					argumentIndex:0
+						  ofReply:YES];
+	
+	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+					  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
+					argumentIndex:0
+						  ofReply:YES];
 
 	newConnection.exportedInterface = exportedInterface;
 
