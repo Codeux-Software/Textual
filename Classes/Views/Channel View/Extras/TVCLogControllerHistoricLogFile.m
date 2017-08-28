@@ -149,9 +149,19 @@ NS_ASSUME_NONNULL_BEGIN
 	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
 
 	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
-					  forSelector:@selector(fetchEntriesForView:fetchLimit:limitToDate:withCompletionBlock:)
-					argumentIndex:0
-						  ofReply:YES];
+						  forSelector:@selector(fetchEntriesForView:fetchLimit:limitToDate:withCompletionBlock:)
+						argumentIndex:0
+							  ofReply:YES];
+
+	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+						  forSelector:@selector(fetchEntriesForView:beforeUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
+						argumentIndex:0
+							  ofReply:YES];
+
+	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+						  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
+						argumentIndex:0
+							  ofReply:YES];
 
 	serviceConnection.remoteObjectInterface = remoteObjectInterface;
 
