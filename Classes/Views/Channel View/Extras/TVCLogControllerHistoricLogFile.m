@@ -274,7 +274,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableArray *logLines = [NSMutableArray arrayWithCapacity:xpcObjects.count];
 
 	for (TVCLogLineXPC *xpcObject in xpcObjects) {
-		TVCLogLine *logLine = [[TVCLogLine alloc] initWithXPCObject:xpcObject];
+		TVCLogLine *logLine = [TVCLogLine logLineFromXPCObject:xpcObject];
 
 		if (logLine == nil) {
 			LogToConsoleError("Failed to initalize object %@. Corrupt data?",

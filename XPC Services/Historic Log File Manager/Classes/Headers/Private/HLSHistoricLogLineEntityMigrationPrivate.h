@@ -35,16 +35,9 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CoreData/CoreData.h>
+@interface HLSHistoricLogLineEntityMigration : NSEntityMigrationPolicy
+@end
 
-#import <CocoaExtensions/CocoaExtensions.h>
-
-#import "TVCLogLineXPCPrivate.h"
-
-#import "HLSHistoricLogProtocol.h"
-#import "HLSHistoricLogLineEntityMigrationPrivate.h"
-#import "HLSHistoricLogViewContextPrivate.h"
-#import "HLSHistoricLogProcessMainPrivate.h"
-#import "HSLHistoricLogProcessDelegatePrivate.h"
+NS_ASSUME_NONNULL_END

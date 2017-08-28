@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)renderedBodyForTranscriptLog;
 - (NSString *)renderedBodyForTranscriptLogInChannel:(nullable IRCChannel *)channel;
 
-- (instancetype)initWithXPCObject:(TVCLogLineXPC *)xpcObject;
++ (TVCLogLine *)logLineFromXPCObject:(TVCLogLineXPC *)xpcObject;
 - (TVCLogLineXPC *)xpcObjectForTreeItem:(IRCTreeItem *)treeItem;
 @end
 
