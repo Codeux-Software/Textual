@@ -131,6 +131,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	self->_lineType = [aDecoder decodeIntegerForKey:@"lineType"];
 	self->_memberType = [aDecoder decodeIntegerForKey:@"memberType"];
 
+	self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
+
 	if (self->_objectInitializedAsCopy == NO) {
 		[self computeNicknameColorStyle];
 	}
@@ -172,6 +174,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	[aCoder encodeInteger:self.lineType forKey:@"lineType"];
 	[aCoder encodeInteger:self.memberType forKey:@"memberType"];
+
+	[aCoder encodeObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 }
 
 + (BOOL)supportsSecureCoding
@@ -179,16 +183,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	return YES;
 }
 
-- (TVCLogLineXPC *)xpcObjectForChannel:(IRCChannel *)channel
+- (TVCLogLineXPC *)xpcObjectForTreeItem:(IRCTreeItem *)treeItem
 {
-	NSParameterAssert(channel != nil);
+	NSParameterAssert(treeItem != nil);
 
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
 
 	TVCLogLineXPC *xpcObject =
-	[[TVCLogLineXPC alloc] initWithLogLineData:data inChannel:channel.uniqueIdentifier];
+	[[TVCLogLineXPC alloc] initWithLogLineData:data
+							  uniqueIdentifier:self.uniqueIdentifier
+								viewIdentifier:treeItem.uniqueIdentifier];
 
-	return xpcObject;
+	 return xpcObject;
 }
 
 + (NSString *)newUniqueIdentifier

@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCLogControllerHistoricLogFile : NSObject
 + (TVCLogControllerHistoricLogFile *)sharedInstance;
 
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel;
+- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine forItem:(IRCTreeItem *)item;
 
 - (void)saveData; // asynchronous operation
 
@@ -50,13 +50,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) BOOL isSaving;
 
-- (void)forgetChannel:(IRCChannel *)channel;
-- (void)resetDataForChannel:(IRCChannel *)channel; // synchronous operation
+- (void)forgetItem:(IRCTreeItem *)item;
+- (void)resetDataForItem:(IRCTreeItem *)item;
 
-- (void)fetchEntriesForChannel:(IRCChannel *)channell
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END
