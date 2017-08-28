@@ -944,7 +944,7 @@ ClassWithDesignatedInitializerInitMethod
 	_enqueueBlock(printBlock)
 }
 
-- (nullable NSString *)renderLogLine:(TVCLogLine *)logLine resultInfo:(NSDictionary<NSString *, id> **)resultInfo
+- (nullable NSString *)renderLogLine:(TVCLogLine *)logLine resultInfo:(NSDictionary<NSString *, id> ** _Nullable)resultInfo
 {
 	NSParameterAssert(logLine != nil);
 
@@ -982,7 +982,11 @@ ClassWithDesignatedInitializerInitMethod
 		return nil;
 	}
 
-	NSMutableDictionary<NSString *, id> *resultInfoTemp = [rendererResults mutableCopy];
+	NSMutableDictionary<NSString *, id> *resultInfoTemp = nil;
+
+	if (resultInfo) {
+		resultInfoTemp = [rendererResults mutableCopy];
+	}
 
 	BOOL highlighted = [rendererResults boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
@@ -1014,7 +1018,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSMutableArray<NSString *> *inlineImagesProcessed = [NSMutableArray array];
 
 		// Array of images whoes content will be loaded to ensure they are actually images
-		NSMutableDictionary<NSString *, NSString *> *inlineImagesToValidate = [NSMutableDictionary dictionary];
+		NSMutableDictionary<NSString *, NSString *> *inlineImagesToValidate = nil;
 
 		for (AHHyperlinkScannerResult *link in linksInBody) {
 			NSString *imageUrl = [TVCImageURLParser imageURLFromBase:link.stringValue];
@@ -1036,14 +1040,22 @@ ClassWithDesignatedInitializerInitMethod
 
 			[inlineImagesProcessed addObject:imageUrl];
 
-			inlineImagesToValidate[link.uniqueIdentifier] = imageUrl;
+			if (resultInfoTemp) {
+				if (inlineImagesToValidate == nil) {
+					inlineImagesToValidate = [NSMutableDictionary dictionary];
+				}
+
+				inlineImagesToValidate[link.uniqueIdentifier] = imageUrl;
+			}
 		}
 
 		templateAttributes[@"inlineMediaArray"]	= inlineImageAttributes;
 		
 		templateAttributes[@"inlineMediaAvailable"] = @(inlineImagesProcessed.count > 0);
 
-		resultInfoTemp[@"InlineImagesToValidate"] = inlineImagesToValidate;
+		if (resultInfoTemp) {
+			resultInfoTemp[@"InlineImagesToValidate"] = inlineImagesToValidate;
+		}
 	}
 
 	// ---- //
@@ -1142,28 +1154,30 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ************************************************************************** /
 
-	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
-		 THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject =
-		[THOPluginDidPostNewMessageConcreteObject new];
+	if (resultInfoTemp) {
+		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
+			 THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject =
+			[THOPluginDidPostNewMessageConcreteObject new];
 
-		pluginConcreteObject.keywordMatchFound = highlighted;
+			pluginConcreteObject.keywordMatchFound = highlighted;
 
-		pluginConcreteObject.lineType = lineType;
-		pluginConcreteObject.memberType = logLine.memberType;
+			pluginConcreteObject.lineType = lineType;
+			pluginConcreteObject.memberType = logLine.memberType;
 
-		pluginConcreteObject.senderNickname = logLine.nickname;
+			pluginConcreteObject.senderNickname = logLine.nickname;
 
-		pluginConcreteObject.receivedAt = logLine.receivedAt;
+			pluginConcreteObject.receivedAt = logLine.receivedAt;
 
-		pluginConcreteObject.lineNumber = logLine.uniqueIdentifier;
+			pluginConcreteObject.lineNumber = logLine.uniqueIdentifier;
 
-		pluginConcreteObject.messageContents = rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute];
+			pluginConcreteObject.messageContents = rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute];
 
-		pluginConcreteObject.listOfHyperlinks = linksInBody;
+			pluginConcreteObject.listOfHyperlinks = linksInBody;
 
-		pluginConcreteObject.listOfUsers = rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute];
+			pluginConcreteObject.listOfUsers = rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute];
 
-		resultInfoTemp[@"pluginConcreteObject"] = pluginConcreteObject;
+			resultInfoTemp[@"pluginConcreteObject"] = pluginConcreteObject;
+		}
 	}
 
 	// ************************************************************************** /
