@@ -260,7 +260,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 				/* 1 is subtracted so we can still return fetchLimit
 				 while accounting for the fact that firstEntryId is
 				 not a value we are interested in. */
-				lowestEntryId = (firstEntryId - 1 - fetchLimit);
+				lowestEntryId = (firstEntryId - fetchLimit);
 
 				highestEntryId = (firstEntryId - 1);
 
@@ -270,7 +270,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 			{
 				lowestEntryId = (firstEntryId + 1);
 
-				highestEntryId = (firstEntryId + 1 + fetchLimit);
+				highestEntryId = (firstEntryId + fetchLimit);
 
 				break;
 			}
