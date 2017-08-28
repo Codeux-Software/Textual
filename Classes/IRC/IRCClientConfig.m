@@ -504,8 +504,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(dic != nil);
 
-	ObjectIsAlreadyInitializedAssert
-
 	/* Check whether this object has already been migrated. */
 	if (self->_migratedToServerListV1Layout != NO) {
 		LogToConsoleDebug("Migration cancelled at check 1");
