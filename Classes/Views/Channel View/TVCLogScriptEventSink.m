@@ -405,6 +405,40 @@ ClassWithDesignatedInitializerInitMethod
 			}];
 }
 
+- (void)renderMessagesBefore:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_renderMessagesBefore:)
+	  minimumArgumentCount:2
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else if (argumentIndex == 1) {
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+
+				return NO;
+			}];
+}
+
+- (void)renderMessagesAfter:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_renderMessagesAfter:)
+	  minimumArgumentCount:2
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else if (argumentIndex == 1) {
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+
+				return NO;
+			}];
+}
+
 - (void)retrievePreferencesWithMethodName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -658,6 +692,63 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	[context.associatedClient printDebugInformationToConsole:message];
+}
+
+- (void)_renderMessagesBefore:(TVCLogScriptEventSinkContext *)context
+{
+	[self _renderMessagesAfter:NO context:context];
+}
+
+- (void)_renderMessagesAfter:(TVCLogScriptEventSinkContext *)context
+{
+	[self _renderMessagesAfter:YES context:context];
+}
+
+- (void)_renderMessagesAfter:(BOOL)after context:(TVCLogScriptEventSinkContext *)context
+{
+	void (^contextCompletionBlock)(id _Nullable) = context.completionBlock;
+
+	NSArray *arguments = context.arguments;
+
+	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if ([lineNumber hasPrefix:@"line-"]) {
+		lineNumber = [lineNumber substringFromIndex:5];
+	}
+
+	if (lineNumber.length == 0) {
+		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
+	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] integerValue];
+
+	if (maximumNumberOfLines <= 0) {
+		NSString *errorMessage = [NSString stringWithFormat:@"Maximum number of lines must be equal to 1 or greater. Given value: '%ld'", maximumNumberOfLines];
+
+		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
+	void (^renderCompletionBlock)(NSString *) = ^(NSString *html) {
+		contextCompletionBlock(html);
+	};
+
+	if (after == NO) {
+		[context.viewController renderLogLinesBeforeLineNumber:lineNumber
+										  maximumNumberOfLines:maximumNumberOfLines
+											   completionBlock:renderCompletionBlock];
+	} else {
+		[context.viewController renderLogLinesAfterLineNumber:lineNumber
+										 maximumNumberOfLines:maximumNumberOfLines
+											  completionBlock:renderCompletionBlock];
+	}
 }
 
 - (void)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context

@@ -425,3 +425,29 @@ app.showInAppPurchaseWindow = function()
 		TextualScriptSink.showInAppPurchaseWindow();
 	}
 };
+
+app.renderMessagesBefore = function(lineNumber, maximumNumberOfLines, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, maximumNumberOfLines]};
+
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessagesBefore.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessagesBefore(dataValue);
+	}
+};
+
+app.renderMessagesAfter = function(lineNumber, maximumNumberOfLines, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, maximumNumberOfLines]};
+
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessagesAfter.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessagesAfter(dataValue);
+	}
+};
