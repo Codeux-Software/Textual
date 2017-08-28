@@ -255,40 +255,89 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Public API 
+#pragma mark Public API
+
+- (NSArray<TVCLogLine *> *)_logLinesFromXPCObjects:(NSArray<TVCLogLineXPC *> *)xpcObjects
+{
+	NSParameterAssert(xpcObjects != nil);
+
+	NSMutableArray *logLines = [NSMutableArray arrayWithCapacity:xpcObjects.count];
+
+	for (TVCLogLineXPC *xpcObject in xpcObjects) {
+		TVCLogLine *logLine = [[TVCLogLine alloc] initWithXPCObject:xpcObject];
+
+		if (logLine == nil) {
+			LogToConsoleError("Failed to initalize object %@. Corrupt data?",
+							  xpcObject.description);
+
+			continue;
+		}
+
+		[logLines addObject:logLine];
+	}
+
+	return [logLines copy];
+}
 
 - (void)fetchEntriesForItem:(IRCTreeItem *)item
 				  fetchLimit:(NSUInteger)fetchLimit
 				 limitToDate:(nullable NSDate *)limitToDate
 		 withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
 {
-	void (^privateCompletionBlock)(NSArray *) = ^(NSArray<TVCLogLineXPC *> *entries) {
-		@autoreleasepool {
-			NSMutableArray *logLines = [NSMutableArray arrayWithCapacity:entries.count];
-
-			for (TVCLogLineXPC *entry in entries) {
-				TVCLogLine *logLine = [[TVCLogLine alloc] initWithXPCObject:entry];
-
-				if (logLine == nil) {
-					LogToConsoleError("Failed to initalize object %@. Corrupt data?",
-						  entry.description);
-
-					continue;
-				}
-
-				[logLines addObject:logLine];
-			}
-
-			completionBlock([logLines copy]);
-		}
-	};
-
 	[self warmProcessIfNeeded];
+
+	__weak typeof(self) weakSelf = self;
 
 	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
 									   fetchLimit:fetchLimit
 									  limitToDate:limitToDate
-							  withCompletionBlock:privateCompletionBlock];
+							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
+								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
+
+								  completionBlock(logLines);
+							  }];
+}
+
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+	 beforeUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
+{
+	[self warmProcessIfNeeded];
+
+	__weak typeof(self) weakSelf = self;
+
+	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
+						   beforeUniqueIdentifier:uniqueId
+									   fetchLimit:fetchLimit
+									  limitToDate:limitToDate
+							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
+								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
+
+								  completionBlock(logLines);
+							  }];
+}
+
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+	  afterUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
+{
+	[self warmProcessIfNeeded];
+
+	__weak typeof(self) weakSelf = self;
+
+	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
+						   afterUniqueIdentifier:uniqueId
+									   fetchLimit:fetchLimit
+									  limitToDate:limitToDate
+							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
+								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
+
+								  completionBlock(logLines);
+							  }];
 }
 
 - (void)saveData
