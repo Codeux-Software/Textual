@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#warning TODO: Views do not properly load when restored by selection on launch
+
 @class TVCMainWindowChannelViewSubviewOverlayView;
 
 @interface TVCMainWindowChannelViewSubview : NSView
