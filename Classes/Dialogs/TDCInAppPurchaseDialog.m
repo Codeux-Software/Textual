@@ -529,7 +529,7 @@ enum {
 		if (success == NO) {
 			LogToConsoleDebug("Finished processing transactions with only failures");
 
-			if (windowIsVisible == NO) {
+			if (windowIsVisible) {
 				[self _updateSelectedPane];
 			}
 
@@ -538,7 +538,7 @@ enum {
 
 		LogToConsoleDebug("Finished processing transactions");
 
-		if (windowIsVisible == NO) {
+		if (windowIsVisible) {
 			[self showThankYouAfterProductPurchase];
 
 			[self _updateSelectedPane];
