@@ -54,6 +54,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
+- (void)renderLogLinesBeforeLineNumber:(NSString *)lineNumber
+				  maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
+					   completionBlock:(void (^)(NSString * _Nullable html))completionBlock;
+
+- (void)renderLogLinesAfterLineNumber:(NSString *)lineNumber
+				 maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
+					  completionBlock:(void (^)(NSString * _Nullable html))completionBlock;
+
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;
 - (void)logViewWebViewKeyDown:(NSEvent *)e;

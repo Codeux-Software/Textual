@@ -827,6 +827,80 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark History
+
+- (void)renderLogLinesBeforeLineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+{
+	[self _renderLogLinesAfter:NO lineNumber:lineNumber maximumNumberOfLines:maximumNumberOfLines completionBlock:completionBlock];
+}
+
+- (void)renderLogLinesAfterLineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+{
+	[self _renderLogLinesAfter:YES lineNumber:lineNumber maximumNumberOfLines:maximumNumberOfLines completionBlock:completionBlock];
+}
+
+- (void)_renderLogLinesAfter:(BOOL)after lineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+{
+	NSParameterAssert(lineNumber != nil);
+	NSParameterAssert(maximumNumberOfLines > 0);
+	NSParameterAssert(completionBlock != nil);
+
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
+		void (^historicLogCompletionBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *entries) {
+			if ([operation isCancelled]) {
+				return;
+			}
+
+			if (entries.count == 0) {
+				completionBlock(nil);
+			} else {
+				[self _renderLogLinesAfterLineNumberPostFlight:entries completionBlock:completionBlock];
+			}
+		};
+
+		if (after == NO) {
+			[TVCLogControllerHistoricLogSharedInstance()
+			 fetchEntriesForItem:self.associatedItem
+		  beforeUniqueIdentifier:lineNumber
+					  fetchLimit:maximumNumberOfLines
+					 limitToDate:nil
+			 withCompletionBlock:historicLogCompletionBlock];
+		} else {
+			[TVCLogControllerHistoricLogSharedInstance()
+			 fetchEntriesForItem:self.associatedItem
+		   afterUniqueIdentifier:lineNumber
+					  fetchLimit:maximumNumberOfLines
+					 limitToDate:nil
+			 withCompletionBlock:historicLogCompletionBlock];
+		}
+	};
+
+	_enqueueBlockStandalone(operationBlock)
+}
+
+- (void)_renderLogLinesAfterLineNumberPostFlight:(NSArray<TVCLogLine *> *)logLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+{
+	NSParameterAssert(logLines != nil);
+	NSParameterAssert(completionBlock != nil);
+
+	NSMutableString *patchedAppend = [NSMutableString string];
+
+	for (TVCLogLine *logLine in logLines) {
+		NSString *html = [self renderLogLine:logLine resultInfo:NULL];
+
+		if (html == nil) {
+			LogToConsoleError("Failed to render log line %{public}@", logLine.description);
+
+			continue;
+		}
+
+		[patchedAppend appendString:html];
+	}
+
+	completionBlock([patchedAppend copy]);
+}
+
+#pragma mark -
 #pragma mark Print
 
 - (void)print:(TVCLogLine *)logLine
