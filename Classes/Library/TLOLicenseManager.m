@@ -446,6 +446,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 	}
 
 	/* Perform signature verification */
+#warning TODO: Investigate who is to blame for this crashing with emojis
 	CFTypeRef cfVerifyResult = SecTransformExecute(verifyFunction, NULL);
 
 	CFRelease(verifyFunction);
