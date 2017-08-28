@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation HLSHistoricLogChannelContext
+@implementation HLSHistoricLogViewContext
 @end
 
 NS_ASSUME_NONNULL_END

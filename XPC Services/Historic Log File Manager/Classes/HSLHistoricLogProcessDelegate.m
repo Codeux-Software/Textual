@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
 
 	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
-					  forSelector:@selector(fetchEntriesForChannel:fetchLimit:limitToDate:withCompletionBlock:)
+					  forSelector:@selector(fetchEntriesForView:fetchLimit:limitToDate:withCompletionBlock:)
 					argumentIndex:0
 						  ofReply:YES];
 

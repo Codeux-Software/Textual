@@ -37,6 +37,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
+{
+	HLSHistoricLogReturnEntriesBeforeUniqueIdentifierType,
+	HLSHistoricLogReturnEntriesAfterUniqueIdentifierType
+};
+
 @interface HLSHistoricLogProcessMain ()
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -44,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, copy) NSString *savePath;
 /* contextObjects is mutable. It should only be accessed in a queue. Use the global context's queue. */
-@property (nonatomic, strong) NSMutableDictionary<NSString *, HLSHistoricLogChannelContext *> *contextObjects;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, HLSHistoricLogViewContext *> *contextObjects;
 @property (nonatomic, assign) NSUInteger maximumLineCount;
 @property (nonatomic, strong) dispatch_source_t saveTimer;
 @end
@@ -55,199 +61,337 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if ((self = [super init])) {
 		[self prepareInitialState];
-		
+
 		return self;
 	}
-	
+
 	return nil;
 }
 
 - (void)prepareInitialState
 {
 	self.contextObjects = [NSMutableDictionary dictionary];
-	
+
 	self.maximumLineCount = 100;
 }
 
 - (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(BOOL))completionBlock
 {
 	NSParameterAssert(path != nil);
-	
+
 	LogToConsoleInfo("Opening database at path: %@", path);
-	
+
 	self.savePath = path;
-	
+
 	BOOL success = [self _createBaseModel];
-	
+
 	if (completionBlock) {
 		completionBlock(success);
 	}
-	
+
 	if (success == NO) {
 		return;
 	}
-	
+
 	[self _rescheduleSave];
 }
 
 - (void)setMaximumLineCount:(NSUInteger)maximumLineCount
 {
 	NSParameterAssert(maximumLineCount > 0);
-	
+
 	if (self->_maximumLineCount != maximumLineCount) {
 		self->_maximumLineCount = maximumLineCount;
 	}
 }
 
-- (NSFetchRequest *)_fetchRequestForChannel:(NSString *)channelId
-								 fetchLimit:(NSUInteger)fetchLimit
-								limitToDate:(nullable NSDate *)limitToDate
-								 resultType:(NSFetchRequestResultType)resultType
+- (NSFetchRequest *)_fetchRequestForView:(NSString *)viewId
+							  fetchLimit:(NSUInteger)fetchLimit
+							 limitToDate:(nullable NSDate *)limitToDate
+							  resultType:(NSFetchRequestResultType)resultType
 {
-	NSParameterAssert(channelId != nil);
-	
+	return [self _fetchRequestForView:viewId
+						   fetchLimit:fetchLimit
+				lowestEntryIdentifier:0
+			   highestEntryIdentifier:NSIntegerMax
+						  limitToDate:limitToDate
+						   resultType:resultType];
+}
+
+- (NSFetchRequest *)_fetchRequestForView:(NSString *)viewId
+							  fetchLimit:(NSUInteger)fetchLimit
+				   lowestEntryIdentifier:(NSUInteger)lowestEntryIdentifier
+				  highestEntryIdentifier:(NSUInteger)highestEntryIdentifier
+							 limitToDate:(nullable NSDate *)limitToDate
+							  resultType:(NSFetchRequestResultType)resultType
+{
+	NSParameterAssert(viewId != nil);
+
 	if (limitToDate == nil) {
 		limitToDate = [NSDate distantFuture];
 	}
-	
+
 	NSDictionary *substitutionVariables = @{
-		@"channel_id" : channelId,
+		@"view_id" : viewId,
+		@"entry_id_lowest" : @(lowestEntryIdentifier),
+		@"entry_id_highest" : @(highestEntryIdentifier),
 		@"creation_date" : @([limitToDate timeIntervalSince1970])
 	};
-	
+
 	NSFetchRequest *fetchRequest =
-	[self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
+	[self.managedObjectModel fetchRequestFromTemplateWithName:@"GenericConditional"
 										substitutionVariables:substitutionVariables];
-	
+
 	if (fetchLimit > 0) {
 		fetchRequest.fetchLimit = fetchLimit;
 	}
-	
+
 	fetchRequest.resultType = resultType;
-	
+
 	return fetchRequest;
 }
 
-- (void)forgetChannel:(NSString *)channelId
+- (void)forgetView:(NSString *)viewId
 {
-	NSParameterAssert(channelId != nil);
+	NSParameterAssert(viewId != nil);
 
-	LogToConsoleDebug("Forgetting channel: %@", channelId);
+	LogToConsoleDebug("Forgetting view: %@", viewId);
 
-	HLSHistoricLogChannelContext *channelContext = [self contextForChannel:channelId];
-	
-	[channelContext performBlockAndWait:^{
-		[channelContext reset];
+	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
 
-		[self cancelResizeInChannelContext:channelContext];
-		
-		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelContext.hls_channelId
-														  fetchLimit:0
-														 limitToDate:nil
-														  resultType:NSManagedObjectResultType];
-		
-		[self _deleteDataInChannelContext:channelContext withFetchRequest:fetchRequest performOnQueue:NO];
+	[viewContext performBlockAndWait:^{
+		[viewContext reset];
+
+		[self cancelResizeInViewContext:viewContext];
+
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:0
+													  limitToDate:nil
+													   resultType:NSManagedObjectResultType];
+
+		[self _deleteDataInViewContext:viewContext withFetchRequest:fetchRequest performOnQueue:NO];
 	}];
-	
+
 	NSManagedObjectContext *parentContext = self.managedObjectContext;
-	
+
 	[parentContext performBlockAndWait:^{
-		[self.contextObjects removeObjectForKey:channelId];
+		[self.contextObjects removeObjectForKey:viewId];
 	}];
 }
 
-- (void)resetDataForChannel:(NSString *)channelId
+- (void)resetDataForView:(NSString *)viewId
 {
-	NSParameterAssert(channelId != nil);
+	NSParameterAssert(viewId != nil);
 
-	LogToConsoleDebug("Resetting the contents of channel: %@", channelId);
-	
-	HLSHistoricLogChannelContext *channelContext = [self contextForChannel:channelId];
-	
-	[channelContext performBlockAndWait:^{
-        [channelContext reset];
+	LogToConsoleDebug("Resetting the contents of view: %@", viewId);
 
-		[self cancelResizeInChannelContext:channelContext];
-		
-		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelContext.hls_channelId
-														  fetchLimit:0
-														 limitToDate:nil
-														  resultType:NSManagedObjectResultType];
-		
-		[self _deleteDataInChannelContext:channelContext withFetchRequest:fetchRequest performOnQueue:NO];
+	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
+
+	[viewContext performBlockAndWait:^{
+		[viewContext reset];
+
+		[self cancelResizeInViewContext:viewContext];
+
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:0
+													  limitToDate:nil
+													   resultType:NSManagedObjectResultType];
+
+		[self _deleteDataInViewContext:viewContext withFetchRequest:fetchRequest performOnQueue:NO];
 	}];
 }
 
-- (void)fetchEntriesForChannel:(NSString *)channelId
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
+- (void)fetchEntriesForView:(NSString *)viewId
+	 beforeUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
 {
-	NSParameterAssert(channelId != nil);
+	return [self fetchEntriesForView:viewId
+				withUniqueIdentifier:uniqueId
+						   fetchType:HLSHistoricLogReturnEntriesBeforeUniqueIdentifierType
+						  fetchLimit:fetchLimit
+						 limitToDate:limitToDate
+				 withCompletionBlock:completionBlock];
+}
+
+- (void)fetchEntriesForView:(NSString *)viewId
+	  afterUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
+{
+	return [self fetchEntriesForView:viewId
+				withUniqueIdentifier:uniqueId
+						   fetchType:HLSHistoricLogReturnEntriesAfterUniqueIdentifierType
+						  fetchLimit:fetchLimit
+						 limitToDate:limitToDate
+				 withCompletionBlock:completionBlock];
+}
+
+- (void)fetchEntriesForView:(NSString *)viewId
+	   withUniqueIdentifier:(NSString *)uniqueId
+				  fetchType:(HLSHistoricLogUniqueIdentifierFetchType)fetchType
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
+{
+	NSParameterAssert(viewId != nil);
+	NSParameterAssert(uniqueId != nil);
 	NSParameterAssert(completionBlock != nil);
-	
-	HLSHistoricLogChannelContext *channelContext = [self contextForChannel:channelId];
-	
-	[channelContext performBlockAndWait:^{
-		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelContext.hls_channelId
-														  fetchLimit:fetchLimit
-														 limitToDate:limitToDate
-														  resultType:NSManagedObjectResultType];
-		
-		fetchRequest.includesPropertyValues = YES;
-		
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES]];
-		
+	NSParameterAssert(fetchLimit > 0);
+
+	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
+
+	[viewContext performBlockAndWait:^{
+		/* Unique identifiers are strings. We find what is the the entry identifier
+		 for this string. The entry identifier is an integer. We can then subtract
+		 or add the fetch limit to that to get the entries we are interested in. */
+		NSUInteger firstEntryId = [self _identifierInViewContext:viewContext
+											 forUniqueIdentifier:uniqueId
+												  performOnQueue:NO];
+
+		NSInteger lowestEntryId = 0;
+		NSInteger highestEntryId = 0;
+
+		switch (fetchType) {
+			case HLSHistoricLogReturnEntriesBeforeUniqueIdentifierType:
+			{
+				/* 1 is subtracted so we can still return fetchLimit
+				 while accounting for the fact that firstEntryId is
+				 not a value we are interested in. */
+				lowestEntryId = (firstEntryId - 1 - fetchLimit);
+
+				highestEntryId = (firstEntryId - 1);
+
+				break;
+			}
+			case HLSHistoricLogReturnEntriesAfterUniqueIdentifierType:
+			{
+				lowestEntryId = (firstEntryId + 1);
+
+				highestEntryId = (firstEntryId + 1 + fetchLimit);
+
+				break;
+			}
+			default:
+			{
+				NSAssert(NO, @"Bad 'fetchType' value");
+
+				break;
+			}
+		}
+
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:fetchLimit
+											lowestEntryIdentifier:lowestEntryId
+										   highestEntryIdentifier:highestEntryId
+													  limitToDate:limitToDate
+													   resultType:NSManagedObjectResultType];
+
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
+
 		NSError *fetchRequestError = nil;
-		
-		NSArray<NSManagedObject *> *fetchedObjects = [channelContext executeFetchRequest:fetchRequest error:&fetchRequestError];
-		
+
+		NSArray<NSManagedObject *> *fetchedObjects = [viewContext executeFetchRequest:fetchRequest error:&fetchRequestError];
+
 		if (fetchedObjects == nil) {
 			LogToConsoleError("Error occurred fetching objects: %@",
-				  fetchRequestError.localizedDescription);
-			
+							  fetchRequestError.localizedDescription);
+
 			return;
 		}
-		
-		LogToConsoleDebug("%ld results fetched for channel %@",
-			  fetchedObjects.count, channelId);
-		
+
+		LogToConsoleDebug("%ld results fetched for view %@",
+						  fetchedObjects.count, viewId);
+
 		@autoreleasepool {
-			NSMutableArray<TVCLogLineXPC *> *fetchedEntries = [NSMutableArray arrayWithCapacity:fetchedObjects.count];
-			
-			for (NSManagedObject *fetchedObject in fetchedObjects) {
-				TVCLogLineXPC *fetchedEntry = [[TVCLogLineXPC alloc] initWithManagedObject:fetchedObject];
-				
-				[fetchedEntries addObject:fetchedEntry];
-			}
-			
+			NSArray<TVCLogLineXPC *> *fetchedEntries = [self _logLineXPCObjectsFromManagedObjects:fetchedObjects];
+
 			completionBlock([fetchedEntries copy]);
 		}
 	}];
 }
 
+- (void)fetchEntriesForView:(NSString *)viewId
+				 fetchLimit:(NSUInteger)fetchLimit
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
+{
+	NSParameterAssert(viewId != nil);
+	NSParameterAssert(completionBlock != nil);
+
+	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
+
+	[viewContext performBlockAndWait:^{
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:fetchLimit
+													  limitToDate:limitToDate
+													   resultType:NSManagedObjectResultType];
+
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
+
+		NSError *fetchRequestError = nil;
+
+		NSArray<NSManagedObject *> *fetchedObjects = [viewContext executeFetchRequest:fetchRequest error:&fetchRequestError];
+
+		if (fetchedObjects == nil) {
+			LogToConsoleError("Error occurred fetching objects: %@",
+							  fetchRequestError.localizedDescription);
+
+			return;
+		}
+
+		LogToConsoleDebug("%ld results fetched for view %@",
+						  fetchedObjects.count, viewId);
+
+		@autoreleasepool {
+			NSArray<TVCLogLineXPC *> *fetchedEntries = [self _logLineXPCObjectsFromManagedObjects:fetchedObjects];
+
+			completionBlock([fetchedEntries copy]);
+		}
+	}];
+}
+
+- (NSArray<TVCLogLineXPC *> *)_logLineXPCObjectsFromManagedObjects:(NSArray<NSManagedObject *> *)managedObjects
+{
+	NSParameterAssert(managedObjects != nil);
+
+	NSMutableArray<TVCLogLineXPC *> *xpcObjects = [NSMutableArray arrayWithCapacity:managedObjects.count];
+
+	for (NSManagedObject *managedObject in managedObjects) {
+		TVCLogLineXPC *xpcObject = [[TVCLogLineXPC alloc] initWithManagedObject:managedObject];
+
+		[xpcObjects addObject:xpcObject];
+	}
+
+	return [xpcObjects copy];
+}
+
 - (void)writeLogLine:(TVCLogLineXPC *)logLine
 {
 	NSParameterAssert(logLine != nil);
-	
-	HLSHistoricLogChannelContext *channelContext = [self contextForChannel:logLine.channelId];
-	
-	[channelContext performBlockAndWait:^{
-		NSEntityDescription *entity = [NSEntityDescription entityForName:@"LogLine" inManagedObjectContext:channelContext];
-		
-		NSManagedObject *newEntry = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:channelContext];
-		
-		NSUInteger newestIdentifier = [self _incrementNewestIdentifierInChannelContext:channelContext];
-		
-		[newEntry setValue:@(newestIdentifier) forKey:@"id"];
-		
-		[newEntry setValue:logLine.channelId forKey:@"channelId"];
-		
-		[newEntry setValue:logLine.creationDate forKey:@"creationDate"];
-		
-		[newEntry setValue:logLine.data forKey:@"data"];
-		
-		[self scheduleResizeInChannelContext:channelContext];
+
+	HLSHistoricLogViewContext *viewContext = [self contextForView:logLine.viewIdentifier];
+
+	[viewContext performBlockAndWait:^{
+		NSEntityDescription *entity = [NSEntityDescription entityForName:@"LogLine2" inManagedObjectContext:viewContext];
+
+		NSManagedObject *newEntry = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:viewContext];
+
+		NSUInteger newestIdentifier = [self _incrementNewestIdentifierInViewContext:viewContext];
+
+		[newEntry setValue:@(newestIdentifier) forKey:@"entryIdentifier"];
+
+		[newEntry setValue:@([[NSDate date] timeIntervalSince1970]) forKey:@"entryCreationDate"];
+
+		[newEntry setValue:logLine.viewIdentifier forKey:@"logLineViewIdentifier"];
+
+		[newEntry setValue:logLine.data forKey:@"logLineData"];
+
+		[newEntry setValue:logLine.uniqueIdentifier forKey:@"logLineUniqueIdentifier"];
+
+		[self scheduleResizeInViewContext:viewContext];
 	}];
 }
 
@@ -259,66 +403,66 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)_createBaseModelWithRecursion:(NSUInteger)recursionDepth
 {
 	NSURL *modelPath = [[NSBundle mainBundle] URLForResource:@"HistoricLogFileStorageModel" withExtension:@"momd"];
-	
+
 	NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelPath];
-	
+
 	NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
-	
+
 	NSDictionary *pragmaOptions = @{
 		@"synchronous" : @"FULL",
 		@"journal_mode" : @"DELETE"
 	};
-	
+
 	NSDictionary *persistentStoreOptions = @{
-											 NSMigratePersistentStoresAutomaticallyOption : @(YES),
-											 NSInferMappingModelAutomaticallyOption : @(YES),
-											 NSSQLitePragmasOption : pragmaOptions
-											 };
-	
+		NSMigratePersistentStoresAutomaticallyOption : @(YES),
+		NSInferMappingModelAutomaticallyOption : @(YES),
+		NSSQLitePragmasOption : pragmaOptions
+	};
+
 	NSURL *persistentStorePath = [NSURL fileURLWithPath:self.savePath];
-	
+
 	NSError *addPersistentStoreError = nil;
-	
+
 	NSPersistentStore *persistentStore =
 	[persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
 											 configuration:nil
 													   URL:persistentStorePath
 												   options:persistentStoreOptions
 													 error:&addPersistentStoreError];
-	
+
 	if (persistentStore == nil)
 	{
 		LogToConsoleError("Error Creating Persistent Store: %@",
-			  addPersistentStoreError.localizedDescription);
-		
+						  addPersistentStoreError.localizedDescription);
+
 		if (recursionDepth == 0) {
 			LogToConsoleInfo("Attempting to create a new persistent store");
-			
+
 			/* If we failed to load our store, we create a brand new one at a new path
 			 incase the old one is corrupted. We also erase the old database to not allow
 			 the file to just hang on the OS. */
 			[self resetDatabase]; // Destroy any data that may exist
-			
+
 			return [self _createBaseModelWithRecursion:1];
 		}
-		
+
 		return NO;
 	}
 	else
 	{
 		NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-		
+
 		managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
-		
+
 		managedObjectContext.retainsRegisteredObjects = YES;
-		
+
 		managedObjectContext.undoManager = nil;
-		
+
 		self.managedObjectContext = managedObjectContext;
 		self.managedObjectModel = managedObjectModel;
-		
+
 		self.persistentStoreCoordinator = persistentStoreCoordinator;
-		
+
 		return YES;
 	}
 }
@@ -326,7 +470,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetDatabase
 {
 	NSString *path = self.savePath;
-	
+
 	[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 	[[NSFileManager defaultManager] removeItemAtPath:[path stringByAppendingString:@"-shm"] error:NULL];
 	[[NSFileManager defaultManager] removeItemAtPath:[path stringByAppendingString:@"-wal"] error:NULL];
@@ -337,35 +481,35 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.saveTimer) {
 		XRCancelScheduledBlock(self.saveTimer);
 	}
-	
+
 	static NSTimeInterval saveTimerInterval = (60 * 2); // 2 minutes
-	
+
 	dispatch_source_t saveTimer =
 	XRScheduleBlockOnQueue(dispatch_get_main_queue(), ^{
 		[self saveDataWithCompletionBlock:nil];
 	}, saveTimerInterval, YES);
-	
+
 	XRResumeScheduledBlock(saveTimer);
-	
+
 	self.saveTimer = saveTimer;
 }
 
 - (void)_quickSaveContext:(NSManagedObjectContext *)context
 {
 	NSParameterAssert(context != nil);
-	
+
 	if ([context hasChanges] == NO) {
 		return;
 	}
-	
+
 	NSError *saveError = nil;
-	
+
 	if ([context save:&saveError] == NO) {
 		LogToConsoleError("Failed to perform save: %@",
-			  saveError.localizedDescription);
+						  saveError.localizedDescription);
 	}
-    
-    [context reset];
+
+	[context reset];
 }
 
 - (void)saveDataWithCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(void))completionBlock
@@ -375,24 +519,24 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		return;
 	}
-	
+
 	NSManagedObjectContext *context = self.managedObjectContext;
-	
+
 	[context performBlock:^{
 		LogToConsoleDebug("Performing save");
-		
+
 		[self _rescheduleSave];
-		
-		[self.contextObjects enumerateKeysAndObjectsUsingBlock:^(NSString *channelId, HLSHistoricLogChannelContext *channelContext, BOOL *stop) {
-            [context performBlockAndWait:^{
-                [self _quickSaveContext:channelContext];
-            }];
+
+		[self.contextObjects enumerateKeysAndObjectsUsingBlock:^(NSString *viewId, HLSHistoricLogViewContext *viewContext, BOOL *stop) {
+			[context performBlockAndWait:^{
+				[self _quickSaveContext:viewContext];
+			}];
 		}];
-		
+
 		[self _quickSaveContext:context];
-		
+
 		self.isPerformingSave = NO;
-		
+
 		if (completionBlock) {
 			completionBlock();
 		}
@@ -400,113 +544,113 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Channel Resize Logic
+#pragma mark View Resize Logic
 
-- (void)cancelResizeInChannelContext:(HLSHistoricLogChannelContext *)channelContext
+- (void)cancelResizeInViewContext:(HLSHistoricLogViewContext *)viewContext
 {
-	NSParameterAssert(channelContext != nil);
-	
-	if (channelContext.hls_resizeTimer == nil) {
+	NSParameterAssert(viewContext != nil);
+
+	if (viewContext.hls_resizeTimer == nil) {
 		return;
 	}
-	
-	XRCancelScheduledBlock(channelContext.hls_resizeTimer);
-	
-	channelContext.hls_resizeTimer = nil;
+
+	XRCancelScheduledBlock(viewContext.hls_resizeTimer);
+
+	viewContext.hls_resizeTimer = nil;
 }
 
-- (void)scheduleResizeInChannelContext:(HLSHistoricLogChannelContext *)channelContext
+- (void)scheduleResizeInViewContext:(HLSHistoricLogViewContext *)viewContext
 {
-	NSParameterAssert(channelContext != nil);
-	
-	if (channelContext.hls_resizeTimer != nil) {
+	NSParameterAssert(viewContext != nil);
+
+	if (viewContext.hls_resizeTimer != nil) {
 		return;
 	}
-	
-	if (channelContext.hls_totalLineCount < self.maximumLineCount) {
+
+	if (viewContext.hls_totalLineCount < self.maximumLineCount) {
 		return;
 	}
-	
-	NSString *channelId = channelContext.hls_channelId;
-	
+
+	NSString *viewId = viewContext.hls_viewId;
+
 	NSTimeInterval resizeTimerInterval = (NSTimeInterval)arc4random_uniform(60 * 30); // Somewhere in 30 minutes
-	
+
 	dispatch_source_t resizeTimer =
 	XRScheduleBlockOnQueue(dispatch_get_main_queue(), ^{
-		[self resizeChannel:channelId];
+		[self resizeView:viewId];
 	}, resizeTimerInterval, NO);
-	
+
 	XRResumeScheduledBlock(resizeTimer);
-	
-	channelContext.hls_resizeTimer = resizeTimer;
-	
+
+	viewContext.hls_resizeTimer = resizeTimer;
+
 	LogToConsoleDebug("Scheduled to resize %@ in %f seconds",
-		  channelId, resizeTimerInterval);
+					  viewId, resizeTimerInterval);
 }
 
-- (void)resizeChannel:(NSString *)channelId
+- (void)resizeView:(NSString *)viewId
 {
-	NSParameterAssert(channelId != nil);
-	
-	HLSHistoricLogChannelContext *channelContext = [self contextForChannel:channelId];
-	
-	[channelContext performBlock:^{
-		[self _resizeChannelContext:channelContext];
+	NSParameterAssert(viewId != nil);
+
+	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
+
+	[viewContext performBlock:^{
+		[self _resizeViewContext:viewContext];
 	}];
 }
 
-- (void)_resizeChannelContext:(HLSHistoricLogChannelContext *)channelContext
+- (void)_resizeViewContext:(HLSHistoricLogViewContext *)viewContext
 {
-	NSParameterAssert(channelContext != nil);
-	
-	LogToConsoleDebug("Resizing channel %@", channelContext.hls_channelId);
-	
-	channelContext.hls_resizeTimer = nil;
-	
-	NSString *channelId = channelContext.hls_channelId;
-	
-	NSInteger lowestIdentifier = (channelContext.hls_newestIdentifier - self.maximumLineCount);
-	
+	NSParameterAssert(viewContext != nil);
+
+	LogToConsoleDebug("Resizing view %@", viewContext.hls_viewId);
+
+	viewContext.hls_resizeTimer = nil;
+
+	NSString *viewId = viewContext.hls_viewId;
+
+	NSInteger lowestIdentifier = (viewContext.hls_newestIdentifier - self.maximumLineCount);
+
 	NSDictionary *substitutionVariables = @{
-		@"channel_id" : channelId,
-		@"lowest_id" : @(lowestIdentifier)
+		@"view_id" : viewId,
+		@"entry_id_lowest" : @(lowestIdentifier)
 	};
-	
+
 	NSFetchRequest *fetchRequest =
-	[self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequestTruncate"
+	[self.managedObjectModel fetchRequestFromTemplateWithName:@"Truncate"
 										substitutionVariables:substitutionVariables];
-	
+
 	NSUInteger rowsDeleted =
-	[self _deleteDataInChannelContext:channelContext withFetchRequest:fetchRequest performOnQueue:NO];
-	
-	channelContext.hls_totalLineCount -= rowsDeleted;
+	[self _deleteDataInViewContext:viewContext withFetchRequest:fetchRequest performOnQueue:NO];
+
+	viewContext.hls_totalLineCount -= rowsDeleted;
 }
 
 #pragma mark -
 #pragma mark Batch Delete Logic
 
-- (NSUInteger)_deleteDataInChannelContext:(HLSHistoricLogChannelContext *)channelContext withFetchRequest:(NSFetchRequest *)fetchRequest performOnQueue:(BOOL)performOnQueue
+- (NSUInteger)_deleteDataInViewContext:(HLSHistoricLogViewContext *)viewContext withFetchRequest:(NSFetchRequest *)fetchRequest performOnQueue:(BOOL)performOnQueue
 {
 	NSParameterAssert(fetchRequest != nil);
-	
+
 	__block NSUInteger rowsDeleted = 0;
-	
+
 	dispatch_block_t blockToPerform = ^{
 		if (XRRunningOnOSXElCapitanOrLater()) {
-			rowsDeleted = [self __deleteDataForFetchRequestUsingBatch:fetchRequest inContext:channelContext];
+			rowsDeleted = [self __deleteDataForFetchRequestUsingBatch:fetchRequest inContext:viewContext];
 		} else {
-			rowsDeleted = [self __deleteDataForFetchRequestUsingEnumeration:fetchRequest inContext:channelContext];
+			rowsDeleted = [self __deleteDataForFetchRequestUsingEnumeration:fetchRequest inContext:viewContext];
 		}
 	};
-	
+
 	if (performOnQueue) {
-		[channelContext performBlockAndWait:blockToPerform];
+		[viewContext performBlockAndWait:blockToPerform];
 	} else {
 		blockToPerform();
 	}
-	
-	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, channelContext.hls_channelId);
-	
+
+	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, viewContext.hls_viewId);
+
 	return rowsDeleted;
 }
 
@@ -514,33 +658,33 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(fetchRequest != nil);
 	NSParameterAssert(context != nil);
-	
+
 	NSBatchDeleteRequest *batchDeleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
-	
+
 	batchDeleteRequest.resultType = NSBatchDeleteResultTypeObjectIDs;
-	
+
 	NSError *batchDeleteError = nil;
-	
+
 	NSBatchDeleteResult *batchDeleteResult =
 	[context executeRequest:batchDeleteRequest error:&batchDeleteError];
-	
+
 	if (batchDeleteResult == nil) {
 		LogToConsoleError("Failed to perform batch delete: %@",
 						  batchDeleteError.localizedDescription);
-		
+
 		return 0;
 	}
-	
+
 	NSArray<NSManagedObjectID *> *rowsDeleted = batchDeleteResult.result;
-	
+
 	NSUInteger rowsDeletedCount = rowsDeleted.count;
-	
+
 	if (rowsDeletedCount > 0) {
 		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : rowsDeleted} intoContexts:@[context]];
-		
+
 		[self _quickSaveContext:context];
 	}
-	
+
 	return rowsDeletedCount;
 }
 
@@ -548,171 +692,242 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(fetchRequest != nil);
 	NSParameterAssert(context != nil);
-	
+
 	NSError *fetchRequestError = nil;
-	
+
 	NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&fetchRequestError];
-	
+
 	if (fetchedObjects == nil) {
 		LogToConsoleError("Error occurred fetching objects: %@",
-			  fetchRequestError.localizedDescription);
-		
+						  fetchRequestError.localizedDescription);
+
 		return 0;
 	}
-	
+
 	for (NSManagedObject *object in fetchedObjects) {
 		[context deleteObject:object];
 	}
-	
+
 	NSUInteger rowsDeletedCount = fetchedObjects.count;
-	
+
 	if (rowsDeletedCount > 0) {
 		[self _quickSaveContext:context];
 	}
-	
+
 	return rowsDeletedCount;
 }
 
 #pragma mark -
 #pragma mark Identifier Cache Management
 
-- (HLSHistoricLogChannelContext *)contextForChannel:(NSString *)channelId
+- (HLSHistoricLogViewContext *)contextForView:(NSString *)viewId
 {
-	NSParameterAssert(channelId != nil);
-	
+	NSParameterAssert(viewId != nil);
+
 	@synchronized(self.contextObjects) {
 		/* Returned cached object or create new */
-		HLSHistoricLogChannelContext *channelContext = [self.contextObjects objectForKey:channelId];
-		
-		if (channelContext != nil) {
-			return channelContext;
+		HLSHistoricLogViewContext *viewContext = [self.contextObjects objectForKey:viewId];
+
+		if (viewContext != nil) {
+			return viewContext;
 		}
-		
+
 		NSManagedObjectContext *parentObjectContext = self.managedObjectContext;
-		
-		channelContext = [[HLSHistoricLogChannelContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-		
+
+		viewContext = [[HLSHistoricLogViewContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+
 		/* Properties specific to NSManagedObjectContext */
-		channelContext.parentContext = parentObjectContext;
-		
-		channelContext.retainsRegisteredObjects = YES;
-		
-		channelContext.undoManager = nil;
-		
-		/* Properties specific to HLSHistoricLogChannelContext */
-		channelContext.hls_channelId = channelId;
-		
-		channelContext.hls_totalLineCount = [self _lineCountInChannelContextFromDatabase:channelContext performOnQueue:YES];
-		
-		channelContext.hls_newestIdentifier = [self _newestIdentifierInChannelContextFromDatabase:channelContext performOnQueue:YES];
-		
+		viewContext.parentContext = parentObjectContext;
+
+		viewContext.retainsRegisteredObjects = YES;
+
+		viewContext.undoManager = nil;
+
+		/* Properties specific to HLSHistoricLogViewContext */
+		viewContext.hls_viewId = viewId;
+
+		viewContext.hls_totalLineCount = [self _lineCountInViewContextFromDatabase:viewContext performOnQueue:YES];
+
+		viewContext.hls_newestIdentifier = [self _newestIdentifierInViewContextFromDatabase:viewContext performOnQueue:YES];
+
 		/* Log information for debugging */
 		LogToConsoleDebug("Context created for %@ - Line count: %ld, Newest identifier: %ld",
-						  channelContext.hls_channelId,
-						  channelContext.hls_totalLineCount,
-						  channelContext.hls_newestIdentifier);
-		
+						  viewContext.hls_viewId,
+						  viewContext.hls_totalLineCount,
+						  viewContext.hls_newestIdentifier);
+
 		/* Cache new object and return it */
 		[parentObjectContext performBlockAndWait:^{
-			[self.contextObjects setObject:channelContext forKey:channelId];
+			[self.contextObjects setObject:viewContext forKey:viewId];
 		}];
-		
-		return channelContext;
+
+		return viewContext;
 	}
 }
 
-- (NSUInteger)_incrementNewestIdentifierInChannelContext:(HLSHistoricLogChannelContext *)channelContext
+- (NSUInteger)_incrementNewestIdentifierInViewContext:(HLSHistoricLogViewContext *)viewContext
 {
-	NSParameterAssert(channelContext != nil);
-	
-	channelContext.hls_totalLineCount += 1;
-	
-	channelContext.hls_newestIdentifier += 1;
-	
-	return channelContext.hls_newestIdentifier;
+	NSParameterAssert(viewContext != nil);
+
+	viewContext.hls_totalLineCount += 1;
+
+	viewContext.hls_newestIdentifier += 1;
+
+	return viewContext.hls_newestIdentifier;
 }
 
-- (NSUInteger)_newestIdentifierInChannelContext:(HLSHistoricLogChannelContext *)channelContext
+- (NSUInteger)_newestIdentifierInViewContext:(HLSHistoricLogViewContext *)viewContext
 {
-	NSParameterAssert(channelContext != nil);
-	
-	return channelContext.hls_newestIdentifier;
+	NSParameterAssert(viewContext != nil);
+
+	return viewContext.hls_newestIdentifier;
 }
 
-- (NSUInteger)_newestIdentifierInChannelContextFromDatabase:(HLSHistoricLogChannelContext *)channelContext performOnQueue:(BOOL)performOnQueue
+- (NSUInteger)_newestIdentifierInViewContextFromDatabase:(HLSHistoricLogViewContext *)viewContext performOnQueue:(BOOL)performOnQueue
 {
-	NSParameterAssert(channelContext != nil);
-	
+	NSParameterAssert(viewContext != nil);
+
 	__block NSUInteger newestIdentifier = 0;
-	
+
 	dispatch_block_t blockToPerform = ^{
-		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelContext.hls_channelId
-														  fetchLimit:1
-														 limitToDate:nil
-														  resultType:NSManagedObjectResultType];
-		
-		fetchRequest.includesPropertyValues = YES;
-		
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO]];
-		
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:1
+													  limitToDate:nil
+													   resultType:NSManagedObjectResultType];
+
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:NO]];
+
 		NSError *fetchRequestError = nil;
-		
-		NSArray<NSManagedObject *> *fetchedObjects = [channelContext executeFetchRequest:fetchRequest error:&fetchRequestError];
-		
+
+		NSArray<NSManagedObject *> *fetchedObjects = [viewContext executeFetchRequest:fetchRequest error:&fetchRequestError];
+
 		if (fetchedObjects == nil) {
 			NSAssert1(NO, @"Error occurred fetching objects: %@",
-				  fetchRequestError.localizedDescription);
+					  fetchRequestError.localizedDescription);
 		}
-		
+
 		NSManagedObject *fetchedObject = fetchedObjects.firstObject;
-		
+
 		if (fetchedObject == nil) {
 			return;
 		}
-		
-		NSNumber *newestIdentifierObject = [fetchedObject valueForKey:@"id"];
-		
+
+		NSNumber *newestIdentifierObject = [fetchedObject valueForKey:@"entryIdentifier"];
+
 		newestIdentifier = newestIdentifierObject.unsignedIntegerValue;
 	};
-	
+
 	if (performOnQueue) {
-		[channelContext performBlockAndWait:blockToPerform];
+		[viewContext performBlockAndWait:blockToPerform];
 	} else {
 		blockToPerform();
 	}
-	
+
 	return newestIdentifier;
 }
 
-- (NSUInteger)_lineCountInChannelContextFromDatabase:(HLSHistoricLogChannelContext *)channelContext performOnQueue:(BOOL)performOnQueue
+- (NSUInteger)_lineCountInViewContextFromDatabase:(HLSHistoricLogViewContext *)viewContext performOnQueue:(BOOL)performOnQueue
 {
-	NSParameterAssert(channelContext != nil);
-	
+	NSParameterAssert(viewContext != nil);
+
 	__block NSUInteger lineCount = 0;
-	
+
 	dispatch_block_t blockToPerform = ^{
-		NSFetchRequest *fetchRequest = [self _fetchRequestForChannel:channelContext.hls_channelId
-														  fetchLimit:0
-														 limitToDate:nil
-														  resultType:NSCountResultType];
-		
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:0
+													  limitToDate:nil
+													   resultType:NSCountResultType];
+
 		NSError *fetchRequestError = nil;
-		
-		lineCount = [channelContext countForFetchRequest:fetchRequest error:&fetchRequestError];
-		
+
+		lineCount = [viewContext countForFetchRequest:fetchRequest error:&fetchRequestError];
+
 		if (lineCount == NSNotFound) {
 			NSAssert1(NO, @"Error occurred fetching objects: %@",
-				  fetchRequestError.localizedDescription);
+					  fetchRequestError.localizedDescription);
 		}
 	};
-	
+
 	if (performOnQueue) {
-		[channelContext performBlockAndWait:blockToPerform];
+		[viewContext performBlockAndWait:blockToPerform];
 	} else {
 		blockToPerform();
 	}
-	
+
 	return lineCount;
+}
+
+/* Given a logLineUniqueIdentifier, figure out which entryIdentifier is associated with it. */
+- (NSUInteger)_identifierInViewContext:(HLSHistoricLogViewContext *)viewContext forUniqueIdentifier:(NSString *)uniqueIdentifier performOnQueue:(BOOL)performOnQueue
+{
+	static NSCache<NSString *, NSNumber *> *_cachedIdentifiers = nil;
+
+	if (_cachedIdentifiers == nil) {
+		_cachedIdentifiers = [NSCache new];
+		_cachedIdentifiers.countLimit = 100;
+	}
+
+	NSNumber *cachedIdentifier = [_cachedIdentifiers objectForKey:uniqueIdentifier];
+
+	if (cachedIdentifier) {
+		return cachedIdentifier.unsignedIntegerValue;
+	}
+
+	NSUInteger identifier = [self _identifierInViewContextFromDatabase:viewContext
+												   forUniqueIdentifier:uniqueIdentifier
+														performOnQueue:performOnQueue];
+
+	[_cachedIdentifiers setObject:@(identifier) forKey:uniqueIdentifier];
+
+	return identifier;
+}
+
+- (NSUInteger)_identifierInViewContextFromDatabase:(HLSHistoricLogViewContext *)viewContext forUniqueIdentifier:(NSString *)uniqueIdentifier performOnQueue:(BOOL)performOnQueue
+{
+	NSParameterAssert(viewContext != nil);
+	NSParameterAssert(uniqueIdentifier != nil);
+
+	__block NSUInteger identifier = 0;
+
+	dispatch_block_t blockToPerform = ^{
+		NSString *viewId = viewContext.hls_viewId;
+
+		NSDictionary *substitutionVariables = @{
+			@"view_id" : viewId,
+			@"unique_id" : uniqueIdentifier
+		};
+
+		NSFetchRequest *fetchRequest =
+		[self.managedObjectModel fetchRequestFromTemplateWithName:@"UniqueIdToEntryId"
+											substitutionVariables:substitutionVariables];
+
+		NSError *fetchRequestError = nil;
+
+		NSArray<NSManagedObject *> *fetchedObjects = [viewContext executeFetchRequest:fetchRequest error:&fetchRequestError];
+
+		if (fetchedObjects == nil) {
+			NSAssert1(NO, @"Error occurred fetching objects: %@",
+					  fetchRequestError.localizedDescription);
+		}
+
+		NSManagedObject *fetchedObject = fetchedObjects.firstObject;
+
+		if (fetchedObject == nil) {
+			return;
+		}
+
+		NSNumber *identifierObject = [fetchedObject valueForKey:@"entryIdentifier"];
+
+		identifier = identifierObject.unsignedIntegerValue;
+	};
+
+	if (performOnQueue) {
+		[viewContext performBlockAndWait:blockToPerform];
+	} else {
+		blockToPerform();
+	}
+
+	return identifier;
 }
 
 @end

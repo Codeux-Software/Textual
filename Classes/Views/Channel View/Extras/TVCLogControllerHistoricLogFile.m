@@ -149,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
 
 	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
-					  forSelector:@selector(fetchEntriesForChannel:fetchLimit:limitToDate:withCompletionBlock:)
+					  forSelector:@selector(fetchEntriesForView:fetchLimit:limitToDate:withCompletionBlock:)
 					argumentIndex:0
 						  ofReply:YES];
 
@@ -257,10 +257,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Public API 
 
-- (void)fetchEntriesForChannel:(IRCChannel *)channel
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+				  fetchLimit:(NSUInteger)fetchLimit
+				 limitToDate:(nullable NSDate *)limitToDate
+		 withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
 {
 	void (^privateCompletionBlock)(NSArray *) = ^(NSArray<TVCLogLineXPC *> *entries) {
 		@autoreleasepool {
@@ -285,10 +285,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self warmProcessIfNeeded];
 
-	[[self remoteObjectProxy] fetchEntriesForChannel:channel.uniqueIdentifier
-										  fetchLimit:fetchLimit
-										 limitToDate:limitToDate
-								 withCompletionBlock:privateCompletionBlock];
+	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
+									   fetchLimit:fetchLimit
+									  limitToDate:limitToDate
+							  withCompletionBlock:privateCompletionBlock];
 }
 
 - (void)saveData
@@ -318,25 +318,25 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)forgetChannel:(IRCChannel *)channel
+- (void)forgetItem:(IRCTreeItem *)item
 {
 	[self warmProcessIfNeeded];
 	
-	[[self remoteObjectProxy] forgetChannel:channel.uniqueIdentifier];
+	[[self remoteObjectProxy] forgetView:item.uniqueIdentifier];
 }
 
-- (void)resetDataForChannel:(IRCChannel *)channel
+- (void)resetDataForItem:(IRCTreeItem *)item
 {
 	[self warmProcessIfNeeded];
 
-	[[self remoteObjectProxy] resetDataForChannel:channel.uniqueIdentifier];
+	[[self remoteObjectProxy] resetDataForView:item.uniqueIdentifier];
 }
 
-- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine inChannel:(IRCChannel *)channel
+- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine forItem:(IRCTreeItem *)item
 {
 	[self warmProcessIfNeeded];
 
-	TVCLogLineXPC *newEntry = [logLine xpcObjectForChannel:channel];
+	TVCLogLineXPC *newEntry = [logLine xpcObjectForTreeItem:item];
 
 	[[self remoteObjectProxy] writeLogLine:newEntry];
 }

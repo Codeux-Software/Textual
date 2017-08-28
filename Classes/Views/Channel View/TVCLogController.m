@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
+@property (weak, readonly) IRCTreeItem *associatedItem;
 @property (nonatomic, weak, readwrite) IRCClient *associatedClient;
 @property (nonatomic, weak, readwrite) IRCChannel *associatedChannel;
 @property (nonatomic, weak, readwrite) TVCMainWindow *attachedWindow;
@@ -213,7 +214,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 	
-	[TVCLogControllerHistoricLogSharedInstance() forgetChannel:self.associatedChannel];
+	[TVCLogControllerHistoricLogSharedInstance() forgetItem:self.associatedItem];
 }
 	
 - (void)historicLogResetChannel
@@ -225,7 +226,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	[TVCLogControllerHistoricLogSharedInstance() resetDataForChannel:self.associatedChannel];
+	[TVCLogControllerHistoricLogSharedInstance() resetDataForItem:self.associatedItem];
 }
 
 - (void)closeHistoricLog
@@ -252,13 +253,18 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Properties
 
-- (NSString *)uniqueIdentifier
+- (nullable IRCTreeItem *)associatedItem
 {
 	if (self.associatedChannel) {
-		return self.associatedChannel.uniqueIdentifier;
+		return self.associatedChannel;
 	} else {
-		return self.associatedClient.uniqueIdentifier;
+		return self.associatedClient;
 	}
+}
+
+- (NSString *)uniqueIdentifier
+{
+	return self.associatedItem.uniqueIdentifier;
 }
 
 - (NSURL *)baseURL
@@ -346,7 +352,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(html != nil);
 
-	[self _evaluateFunction:@"Textual.documentBodyAppend" withArguments:@[html]];
+	[self _evaluateFunction:@"Textual.messageBufferElementAppend" withArguments:@[html]];
 }
 
 #pragma mark -
@@ -568,10 +574,10 @@ ClassWithDesignatedInitializerInitMethod
 		NSDate *limitToDate = [NSDate dateWithTimeIntervalSince1970:self.viewLoadedTimestamp];
 
 		[TVCLogControllerHistoricLogSharedInstance()
-		 fetchEntriesForChannel:self.associatedChannel
-					 fetchLimit:0
-					limitToDate:limitToDate
-			withCompletionBlock:^(NSArray<TVCLogLine *> *objects) {
+		 fetchEntriesForItem:self.associatedItem
+				  fetchLimit:0
+				 limitToDate:limitToDate
+		 withCompletionBlock:^(NSArray<TVCLogLine *> *objects) {
 				if ([operation isCancelled]) {
 					return;
 				}
@@ -904,7 +910,7 @@ ClassWithDesignatedInitializerInitMethod
 			 in the view as well as playback on restart, but the added
 			 security can be seen as a bonus. */
 			if (channel != nil && self.encrypted == NO) {
-				[TVCLogControllerHistoricLogSharedInstance() writeNewEntryWithLogLine:logLine inChannel:channel];
+				[TVCLogControllerHistoricLogSharedInstance() writeNewEntryWithLogLine:logLine forItem:self.associatedItem];
 			}
 
 			/* Redraw view if needed */

@@ -48,13 +48,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveDataWithCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(void))completionBlock;
 
-- (void)forgetChannel:(NSString *)channelId;
-- (void)resetDataForChannel:(NSString *)channelId;
+- (void)forgetView:(NSString *)viewId;
+- (void)resetDataForView:(NSString *)viewId;
 
-- (void)fetchEntriesForChannel:(NSString *)channelId
-					fetchLimit:(NSUInteger)fetchLimit
-				   limitToDate:(nullable NSDate *)limitToDate
-		   withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
+- (void)fetchEntriesForView:(NSString *)viewId
+				 fetchLimit:(NSUInteger)fetchLimit // optional (0 == no limit)
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
+
+- (void)fetchEntriesForView:(NSString *)viewId
+	 beforeUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit // required (> 0)
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
+
+- (void)fetchEntriesForView:(NSString *)viewId
+	  afterUniqueIdentifier:(NSString *)uniqueId
+				 fetchLimit:(NSUInteger)fetchLimit // required (> 0)
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
 
 - (void)setMaximumLineCount:(NSUInteger)maximumLineCount;
 @end
