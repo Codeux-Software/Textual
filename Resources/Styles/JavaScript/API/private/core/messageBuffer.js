@@ -202,6 +202,8 @@ MessageBuffer.loadMessagesWithLine = function(after, line)
 	var loadMessagesLogic = (function() {
 		var postflightCallback = (function(renderedMessages) {
 			MessageBuffer.loadMessagesWithLinePostflight(after, line, renderedMessages);
+
+			MessageBuffer.removeLoadingIndicator(line);
 		});
 
 		var lineNumber = MessageBuffer.lineNumberContents(line.id);
@@ -220,10 +222,120 @@ MessageBuffer.loadMessagesWithLine = function(after, line)
 /* Postflight for loading old messages */
 MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMessages)
 {
-	console.log(renderedMessages);
+	/* Perform logging and exit if we have nothing. */
+	var renderedMessagesCount = renderedMessages.length;
+
+	console.log("Request to load messages for " + line + " returned " + renderedMessagesCount + " results");
+		
+	if (renderedMessagesCount === 0) {
+		return;
+	}
+
+	/* Which buffer the line appears in will determine how we proceed. */
+	/* We allow old messages to be loaded before the main buffer has 
+	been completely filled up. If the line is in the main buffer, 
+	then we have to take into account the max size of the main buffer
+	and slide any messages that do not fit into it into the replay buffer. */
+	/* We only allow this logic to proceed if after === false. 
+	There is no case in which we should be loading messages before 
+	a line that is in the main buffer. */
+	var mainBuffer = MessageBuffer.mainBufferElement();
 	
-	/* Hide loading indicator */
-	MessageBuffer.removeLoadingIndicator(line);
+	var lineInMainBuffer = (line.parentNode === mainBuffer);
+
+	if (lineInMainBuffer) {
+		if (after) {
+			throw "Cannot load old messages for line that appears in the main buffer";
+		}
+		
+		var spaceRemainingInMainBuffer = (MessageBuffer.mainBufferMaximumCount - MessageBuffer.mainBufferCurrentCount);
+	} else {
+		var spaceRemainingInMainBuffer = 0;
+	}
+
+	/* Create an array which will house every line number that was loaded. 
+	The style needs this information so it can perform whatever action. */
+	var lineNumbers = new Array();
+	
+	/* Create an array which will house every segment of HTML to append. */
+	var html = new Array();
+	
+	/* Process result */
+	for (var i = 0; i < renderedMessagesCount; i++) {
+		var renderedMessage = renderedMessages[i];
+		
+		lineNumbers.push(renderedMessage.lineNumber);
+		
+		html.push(renderedMessage.html);
+	}
+	
+	/* Depending on whether after === false or not, which segment of the
+	html array will apply to which buffer will vary. Here we divide the
+	arrays up into two. One for each buffer. */
+	var mainBufferHtml = null;
+	var replayBufferHtml = null;
+			
+	if (after === false) {
+		/* The html will be added before the line which means the html 
+		has to be processed with special logic. We have to work backwards
+		because the bottom of the array will be added to the main buffer
+		and the remainder to the replay buffer. */
+		if (spaceRemainingInMainBuffer > 0) {
+			mainBufferHtml = html.splice((renderedMessagesCount - spaceRemainingInMainBuffer), spaceRemainingInMainBuffer);
+			replayBufferHtml = html.splice(0, (renderedMessagesCount - spaceRemainingInMainBuffer));
+		}
+	}
+	
+	/* Fill in the replay buffer HTML if it was not spliced. */
+	if (replayBufferHtml === null) {
+		replayBufferHtml = html;
+	}
+		
+	/* Append to main buffer */
+	if (mainBufferHtml !== null) {
+		var mainBufferHtmlString = mainBufferHtml.join("");
+		
+		/* As defined by the above logic, mainBufferHtml shold only ever be 
+		non-null when we have messages to add to the top of the main buffer. */
+		line.insertAdjacentHTML('beforebegin', mainBufferHtmlString);
+		
+		/* Increment count */
+		MessageBuffer.mainBufferCurrentCount += mainBufferHtml.length;
+	}
+	
+	/* Append to replay buffer */
+	if (replayBufferHtml.length > 0) {
+		var replayBufferHtmlString = replayBufferHtml.join("");
+
+		if (after === false) {
+			if (lineInMainBuffer) {
+				/* When the line is in the main buffer and we have items to add to 
+				the replay buffer, we obviously can't append to the line itself. 
+				We instead append to the bottom of the replay buffer itself. */
+				var replayBuffer = MessageBuffer.replayBufferElement();
+				
+				replayBuffer.insertAdjacentHTML('beforeend', replayBufferHtmlString);
+			} else {
+				/* Append above line */
+				line.insertAdjacentHTML('beforebegin', replayBufferHtmlString);
+			}
+		} else {
+			/* Append below line */
+			line.insertAdjacentHTML('afterend', replayBufferHtmlString);
+		}
+		
+		/* Increment count */
+		MessageBuffer.replayBufferCurrentCount += replayBufferHtml.length;
+	}
+	
+	/* Post line numbers so style can do something with them. */
+	Textual.newMessagePostedToViewInt(lineNumbers);
+	
+	/* Flush arrays */
+	lineNumbers = null;
+	html = null;
+	mainBufferHtml = null;
+	replayBufferHtml = null;
 };
 
 /* Message buffer loading indicator */
