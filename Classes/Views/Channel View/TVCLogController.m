@@ -1304,6 +1304,8 @@ ClassWithDesignatedInitializerInitMethod
 	
 	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResourcesFolderPath];
 
+	templateTokens[@"applicationTemplatesPath"] = themeSettings().applicationTemplateRepositoryPath;
+
 	templateTokens[@"cacheToken"] = themeController().cacheToken;
 
     templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
