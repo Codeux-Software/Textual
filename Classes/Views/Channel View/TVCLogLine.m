@@ -102,7 +102,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	if (object->_uniqueIdentifier == nil) {
 		object->_uniqueIdentifier = [xpcObject.uniqueIdentifier copy];
-	} else {
+	}
+
+	if (object->_uniqueIdentifier == nil) {
 		[object populateDefaultUniqueIdentifier];
 	}
 
