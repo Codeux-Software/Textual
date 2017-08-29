@@ -243,6 +243,45 @@ div[id=mark] {
 	transition: none;
 }
 
+/* Message buffer loading animation */
+
+.messsage_buffer_loading_indicator {
+	text-align: center;
+	height: 42px;
+}
+
+.messsage_buffer_loading_indicator span {
+	font-family: Optima !important;
+	font-size: 35px;
+	font-weight: 600;
+	letter-spacing: 5px;
+	line-height: 43px;
+	color: #b6b6b6;
+	-webkit-animation: ellipsis-period 1.5s infinite;
+	animation: ellipsis-period 1.5s infinite;
+}
+
+.messsage_buffer_loading_indicator span:nth-child(1) {
+	-webkit-animation-delay: 0.0s;
+	animation-delay: 0.0s;
+}
+
+.messsage_buffer_loading_indicator span:nth-child(2) {
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.messsage_buffer_loading_indicator span:nth-child(3) {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+@keyframes ellipsis-period {
+	0% { opacity: 0.2; }
+	20% { opacity: 1.0; }
+	100% { opacity: 0.2; }
+}
+
 /* NOTICE/CTCP/WALLOPS */
 
 body div.line[ltype*=ctcp],
