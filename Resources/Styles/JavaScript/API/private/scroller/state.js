@@ -54,6 +54,9 @@ TextualScroller.scrollLastPosition2 = 0;
 
 TextualScroller.currentScrollTopValue = 0;
 
+TextualScroller.scrollHeightCurrentValue = 0;
+TextualScroller.scrollHeightPreviousValue = 0;
+
 TextualScroller.isScrolledByUser = false;
 
 TextualScroller.userScrolledUpwards = false;
@@ -61,8 +64,12 @@ TextualScroller.userScrolledUpwards = false;
 /* Any changes made to this logic should be reflected in TVCWK1AutoScroller.m */
 TextualScroller.documentScrolledCallback = function()
 {
-	/* The maximum distance that can be scrolled */
+	/* Height of scrollabe area */
 	var scrollHeight = TextualScroller.scrollHeight();
+
+	TextualScroller.scrollHeightPreviousValue = TextualScroller.scrollHeightCurrentValue;
+
+	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 
 	/* The current position scrolled to */
 	var scrollPosition = window.scrollY;

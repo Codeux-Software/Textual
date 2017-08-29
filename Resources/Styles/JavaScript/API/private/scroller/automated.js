@@ -47,8 +47,8 @@
 
 TextualScroller.scrollHeightTimerActive = false;
 
-TextualScroller.scrollHeightCurrentValue = 0;
-TextualScroller.scrollHeightPreviousValue = 0;
+TextualScroller.automaticScrollHeightCurrentValue = 0;
+TextualScroller.automaticScrollHeightPreviousValue = 0;
 
 TextualScroller.scrollerAnchorLinkReference = null;
 
@@ -116,7 +116,7 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 		return;
 	}
 
-	var scrollHeightPrevious = TextualScroller.scrollHeightCurrentValue;
+	var scrollHeightPrevious = TextualScroller.automaticScrollHeightCurrentValue;
 
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
@@ -131,9 +131,9 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	}
 
 	/* Make a copy of the previous scroll height and save the new */
-	TextualScroller.scrollHeightPreviousValue = scrollHeightPrevious;
+	TextualScroller.automaticScrollHeightPreviousValue = scrollHeightPrevious;
 
-	TextualScroller.scrollHeightCurrentValue = scrollHeight;
+	TextualScroller.automaticScrollHeightCurrentValue = scrollHeight;
 
 	/* Scroll to new value */
 	if (TextualScroller.scrollerAnchorLinkReference === null) {
