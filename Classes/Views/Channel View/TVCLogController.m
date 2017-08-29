@@ -829,17 +829,17 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark History
 
-- (void)renderLogLinesBeforeLineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+- (void)renderLogLinesBeforeLineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock
 {
 	[self _renderLogLinesAfter:NO lineNumber:lineNumber maximumNumberOfLines:maximumNumberOfLines completionBlock:completionBlock];
 }
 
-- (void)renderLogLinesAfterLineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+- (void)renderLogLinesAfterLineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock
 {
 	[self _renderLogLinesAfter:YES lineNumber:lineNumber maximumNumberOfLines:maximumNumberOfLines completionBlock:completionBlock];
 }
 
-- (void)_renderLogLinesAfter:(BOOL)after lineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+- (void)_renderLogLinesAfter:(BOOL)after lineNumber:(NSString *)lineNumber maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock
 {
 	NSParameterAssert(lineNumber != nil);
 	NSParameterAssert(maximumNumberOfLines > 0);
@@ -851,11 +851,7 @@ ClassWithDesignatedInitializerInitMethod
 				return;
 			}
 
-			if (entries.count == 0) {
-				completionBlock(nil);
-			} else {
-				[self _renderLogLinesAfterLineNumberPostFlight:entries completionBlock:completionBlock];
-			}
+			[self _renderLogLinesAfterLineNumberPostFlight:entries completionBlock:completionBlock];
 		};
 
 		if (after == NO) {
@@ -878,12 +874,12 @@ ClassWithDesignatedInitializerInitMethod
 	_enqueueBlockStandalone(operationBlock)
 }
 
-- (void)_renderLogLinesAfterLineNumberPostFlight:(NSArray<TVCLogLine *> *)logLines completionBlock:(void (^)(NSString * _Nullable html))completionBlock
+- (void)_renderLogLinesAfterLineNumberPostFlight:(NSArray<TVCLogLine *> *)logLines completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock
 {
 	NSParameterAssert(logLines != nil);
 	NSParameterAssert(completionBlock != nil);
 
-	NSMutableString *patchedAppend = [NSMutableString string];
+	NSMutableArray<NSDictionary<NSString *, id> *> *renderedLogLines = [NSMutableArray arrayWithCapacity:logLines.count];
 
 	for (TVCLogLine *logLine in logLines) {
 		NSString *html = [self renderLogLine:logLine resultInfo:NULL];
@@ -894,10 +890,15 @@ ClassWithDesignatedInitializerInitMethod
 			continue;
 		}
 
-		[patchedAppend appendString:html];
+		NSString *lineNumber = logLine.uniqueIdentifier;
+
+		[renderedLogLines addObject:@{
+			@"lineNumber" : lineNumber,
+			@"html" : html
+	    }];
 	}
 
-	completionBlock([patchedAppend copy]);
+	completionBlock([renderedLogLines copy]);
 }
 
 #pragma mark -
