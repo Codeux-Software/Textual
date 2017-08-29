@@ -54,7 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) double indentationOffset;
 @property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 @property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
-@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
+@property (nonatomic, strong) GRMustacheTemplateRepository *applicationTemplateRepository;
+@property (nonatomic, assign) NSUInteger templateEngineVersion;
 @end
 
 @implementation TPCThemeSettings
@@ -143,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (loadError && (loadError.code == GRMustacheErrorCodeTemplateNotFound || loadError.code == 260)) {
 		loadError = nil;
 
-		template = [self.appTemplateRepository templateNamed:templateName error:&loadError];
+		template = [self.applicationTemplateRepository templateNamed:templateName error:&loadError];
 	}
 
 	if (loadError) {
@@ -250,17 +251,24 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Load Settings
 
-- (void)loadApplicationTemplateRespository:(NSUInteger)version
+- (NSString *)applicationTemplateRepositoryPath
 {
-	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %lu/", version];
+	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %lu/", self.templateEngineVersion];
 
 	NSString *templatesPath = [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
 
+	return templatesPath;
+}
+
+- (void)loadApplicationTemplateRespository
+{
+	NSString *templatesPath = self.applicationTemplateRepositoryPath;
+
 	NSURL *templatesPathURL = [NSURL fileURLWithPath:templatesPath isDirectory:YES];
 
-	self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesPathURL];
+	self.applicationTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesPathURL];
 
-	NSAssert((self.appTemplateRepository != nil),
+	NSAssert((self.applicationTemplateRepository != nil),
 		@"Default template repository not found");
 }
 
@@ -373,7 +381,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Fall back to the default repository */
-	[self loadApplicationTemplateRespository:templateEngineVersion];
+	self.templateEngineVersion = templateEngineVersion;
+
+	[self loadApplicationTemplateRespository];
 
 	/* Inform our defaults controller about a few overrides. */
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 

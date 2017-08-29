@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reloadWithPath:(NSString *)path;
 
 - (NSString *)templateNameWithLineType:(TVCLogLineType)type;
+
+@property (readonly, copy) NSString *applicationTemplateRepositoryPath;
 @end
 
 NS_ASSUME_NONNULL_END
