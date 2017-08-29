@@ -48,6 +48,7 @@ Textual.initializeCore = function(resourcesPath)
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/documentBody.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/events.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/inlineMedia.js");
+	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/messageBuffer.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scroll.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scroller/state.js");
