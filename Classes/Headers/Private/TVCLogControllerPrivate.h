@@ -56,11 +56,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)renderLogLinesBeforeLineNumber:(NSString *)lineNumber
 				  maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
-					   completionBlock:(void (^)(NSString * _Nullable html))completionBlock;
+					   completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock;
 
 - (void)renderLogLinesAfterLineNumber:(NSString *)lineNumber
 				 maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
-					  completionBlock:(void (^)(NSString * _Nullable html))completionBlock;
+					  completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock;
 
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;

@@ -754,8 +754,8 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	void (^renderCompletionBlock)(NSString *) = ^(NSString *html) {
-		contextCompletionBlock(html);
+	void (^renderCompletionBlock)(NSArray *) = ^(NSArray<NSDictionary<NSString *, id> *> *renderedLogLines) {
+		contextCompletionBlock(renderedLogLines);
 	};
 
 	if (after == NO) {
