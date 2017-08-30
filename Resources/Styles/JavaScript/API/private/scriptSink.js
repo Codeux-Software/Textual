@@ -452,11 +452,11 @@ app.renderMessagesAfter = function(lineNumber, maximumNumberOfLines, callbackFun
 	}
 };
 
-app.renderMessagesInRange = function(lineNumberAfter, lineNumberBefore, callbackFunction)
+app.renderMessagesInRange = function(lineNumberAfter, lineNumberBefore, maximumNumberOfLines, callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);
 
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumberAfter, lineNumberBefore]};
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumberAfter, lineNumberBefore, maximumNumberOfLines]};
 
 	if (appInternal.isWebKit2()) {
 		window.webkit.messageHandlers.renderMessagesInRange.postMessage(dataValue);

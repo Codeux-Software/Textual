@@ -73,6 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchEntriesForItem:(IRCTreeItem *)item
 	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
 	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+				 fetchLimit:(NSUInteger)fetchLimit
 		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;
 @end
 

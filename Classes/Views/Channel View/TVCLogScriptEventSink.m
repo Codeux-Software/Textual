@@ -444,9 +444,17 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData
 				 inWebView:webView
 			   forSelector:@selector(_renderMessagesInRange:)
-	  minimumArgumentCount:2
+	  minimumArgumentCount:3
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
-				return [argument isKindOfClass:[NSString class]];
+				if (argumentIndex == 0 ||
+					argumentIndex == 1)
+				{
+					return [argument isKindOfClass:[NSString class]];
+				} else if (argumentIndex == 2) {
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+
+				return NO;
 			}];
 }
 
@@ -805,12 +813,23 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] integerValue];
+
+	if (maximumNumberOfLines < 0) {
+		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 0 or greater" inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
 	void (^renderCompletionBlock)(NSArray *) = ^(NSArray<NSDictionary<NSString *, id> *> *renderedLogLines) {
 		contextCompletionBlock(renderedLogLines);
 	};
 
 	[context.viewController renderLogLinesAfterLineNumber:lineNumberAfter
 										 beforeLineNumber:lineNumberBefore
+									 maximumNumberOfLines:maximumNumberOfLines
 										  completionBlock:renderCompletionBlock];
 }
 

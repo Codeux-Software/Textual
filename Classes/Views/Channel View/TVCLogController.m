@@ -874,7 +874,7 @@ ClassWithDesignatedInitializerInitMethod
 	_enqueueBlockStandalone(operationBlock)
 }
 
-- (void)renderLogLinesAfterLineNumber:(NSString *)lineNumberAfter beforeLineNumber:(NSString *)lineNumberBefore completionBlock:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nonnull))completionBlock
+- (void)renderLogLinesAfterLineNumber:(NSString *)lineNumberAfter beforeLineNumber:(NSString *)lineNumberBefore maximumNumberOfLines:(NSUInteger)maximumNumberOfLines completionBlock:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nonnull))completionBlock
 {
 	NSParameterAssert(lineNumberAfter != nil);
 	NSParameterAssert(lineNumberBefore != nil);
@@ -893,6 +893,7 @@ ClassWithDesignatedInitializerInitMethod
 			 fetchEntriesForItem:self.associatedItem
 		   afterUniqueIdentifier:lineNumberAfter
 		  beforeUniqueIdentifier:lineNumberBefore
+					  fetchLimit:maximumNumberOfLines
 			 withCompletionBlock:historicLogCompletionBlock];
 	};
 

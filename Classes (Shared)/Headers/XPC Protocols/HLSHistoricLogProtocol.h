@@ -71,6 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchEntriesForView:(NSString *)viewId
 	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
 	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+				 fetchLimit:(NSUInteger)fetchLimit // optional (0 == no limit)
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
 
 - (void)setMaximumLineCount:(NSUInteger)maximumLineCount;

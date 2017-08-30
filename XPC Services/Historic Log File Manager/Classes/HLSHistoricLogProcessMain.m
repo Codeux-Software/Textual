@@ -233,9 +233,9 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 - (void)fetchEntriesForView:(NSString *)viewId
 	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
 	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+				 fetchLimit:(NSUInteger)fetchLimit
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
 {
-
 	NSParameterAssert(viewId != nil);
 	NSParameterAssert(uniqueIdAfter != nil);
 	NSParameterAssert(uniqueIdBefore != nil);
@@ -256,7 +256,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSInteger highestEntryId = (secondEntryId - 1);
 
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
-													   fetchLimit:0 // no limit
+													   fetchLimit:fetchLimit
 											lowestEntryIdentifier:lowestEntryId
 										   highestEntryIdentifier:highestEntryId
 													  limitToDate:nil

@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 						  ofReply:YES];
 
 	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
-					  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:beforeUniqueIdentifier:withCompletionBlock:)
+					  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:beforeUniqueIdentifier:fetchLimit:withCompletionBlock:)
 					argumentIndex:0
 						  ofReply:YES];
 
