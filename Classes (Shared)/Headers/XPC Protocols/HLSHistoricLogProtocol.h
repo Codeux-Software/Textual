@@ -68,6 +68,11 @@ NS_ASSUME_NONNULL_BEGIN
 				limitToDate:(nullable NSDate *)limitToDate
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
 
+- (void)fetchEntriesForView:(NSString *)viewId
+	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
+	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
+
 - (void)setMaximumLineCount:(NSUInteger)maximumLineCount;
 @end
 

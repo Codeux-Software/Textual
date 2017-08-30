@@ -452,6 +452,19 @@ app.renderMessagesAfter = function(lineNumber, maximumNumberOfLines, callbackFun
 	}
 };
 
+app.renderMessagesInRange = function(lineNumberAfter, lineNumberBefore, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumberAfter, lineNumberBefore]};
+
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessagesInRange.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessagesInRange(dataValue);
+	}
+};
+
 app.renderTemplate = function(templateName, templateAttributes, callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);

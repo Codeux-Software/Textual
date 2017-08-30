@@ -439,6 +439,17 @@ ClassWithDesignatedInitializerInitMethod
 			}];
 }
 
+- (void)renderMessagesInRange:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_renderMessagesInRange:)
+	  minimumArgumentCount:2
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
+			}];
+}
+
 - (void)retrievePreferencesWithMethodName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -745,9 +756,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] integerValue];
 
 	if (maximumNumberOfLines <= 0) {
-		NSString *errorMessage = [NSString stringWithFormat:@"Maximum number of lines must be equal to 1 or greater. Given value: '%ld'", maximumNumberOfLines];
-
-		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
+		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 1 or greater" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -767,6 +776,42 @@ ClassWithDesignatedInitializerInitMethod
 										 maximumNumberOfLines:maximumNumberOfLines
 											  completionBlock:renderCompletionBlock];
 	}
+}
+
+- (void)_renderMessagesInRange:(TVCLogScriptEventSinkContext *)context
+{
+	void (^contextCompletionBlock)(id _Nullable) = context.completionBlock;
+
+	NSArray *arguments = context.arguments;
+
+	NSString *lineNumberAfter = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+	NSString *lineNumberBefore = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
+
+	if ([lineNumberAfter hasPrefix:@"line-"]) {
+		lineNumberAfter = [lineNumberAfter substringFromIndex:5];
+	}
+
+	if ([lineNumberBefore hasPrefix:@"line-"]) {
+		lineNumberBefore = [lineNumberBefore substringFromIndex:5];
+	}
+
+	if (lineNumberAfter.length == 0 ||
+		lineNumberBefore.length == 0)
+	{
+		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
+	void (^renderCompletionBlock)(NSArray *) = ^(NSArray<NSDictionary<NSString *, id> *> *renderedLogLines) {
+		contextCompletionBlock(renderedLogLines);
+	};
+
+	[context.viewController renderLogLinesAfterLineNumber:lineNumberAfter
+										 beforeLineNumber:lineNumberBefore
+										  completionBlock:renderCompletionBlock];
 }
 
 - (void)_renderTemplate:(TVCLogScriptEventSinkContext *)context
