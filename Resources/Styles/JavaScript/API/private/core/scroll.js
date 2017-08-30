@@ -44,7 +44,7 @@
 /* Scrolling */
 Textual.documentScrolledCallback = function(scrolledUpward)
 {
-	
+	MessageBuffer.documentScrolledCallback(scrolledUpward);
 };
 
 Textual.documentScrolledUpwardCallback = function()
