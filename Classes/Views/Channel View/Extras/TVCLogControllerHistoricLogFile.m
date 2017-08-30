@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 							  ofReply:YES];
 
 	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
-						  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:beforeUniqueIdentifier:withCompletionBlock:)
+						  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:beforeUniqueIdentifier:fetchLimit:withCompletionBlock:)
 						argumentIndex:0
 							  ofReply:YES];
 
@@ -358,6 +358,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchEntriesForItem:(IRCTreeItem *)item
 	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
 	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+				 fetchLimit:(NSUInteger)fetchLimit
 		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
 {
 	[self warmProcessIfNeeded];
@@ -367,6 +368,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
 							afterUniqueIdentifier:uniqueIdAfter
 						   beforeUniqueIdentifier:uniqueIdBefore
+									   fetchLimit:fetchLimit
 							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
 								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
 

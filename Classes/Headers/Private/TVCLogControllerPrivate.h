@@ -64,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)renderLogLinesAfterLineNumber:(NSString *)lineNumberAfter
 					 beforeLineNumber:(NSString *)lineNumberBefore
+				 maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
 					  completionBlock:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nonnull))completionBlock;
 
 - (void)logViewWebViewClosedUnexpectedly;
