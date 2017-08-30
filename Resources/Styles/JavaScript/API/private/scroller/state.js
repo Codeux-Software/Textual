@@ -169,5 +169,10 @@ TextualScroller.isScrolledToTop = function()
 	return (TextualScroller.scrollLastPosition1 <= 0);
 };
 
+TextualScroller.lastScrollerPosition = function()
+{
+	return TextualScroller.scrollLastPosition1;
+};
+
 /* Bind to events */
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
