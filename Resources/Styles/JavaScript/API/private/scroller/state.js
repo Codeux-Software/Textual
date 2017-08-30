@@ -61,6 +61,8 @@ TextualScroller.isScrolledByUser = false;
 
 TextualScroller.userScrolledUpwards = false;
 
+TextualScroller.restoreScrollHeight = 0;
+
 /* Any changes made to this logic should be reflected in TVCWK1AutoScroller.m */
 TextualScroller.documentScrolledCallback = function()
 {
@@ -140,6 +142,27 @@ TextualScroller.documentScrolledCallback = function()
 	}
 
 	TextualScroller.userScrolledUpwards = scrolledUpwards;
+};
+
+/* Function scrolls back to last position relative to height difference */
+TextualScroller.saveScrollHeightForRestore = function()
+{
+	/* document.body.scrollHeight is recorded instead of TextualScroller.scrollHeight()
+	because the latter subtracts offsetHeight which we need for accurate value. */
+	TextualScroller.restoreScrollHeight = document.body.scrollHeight;
+};
+
+TextualScroller.restoreScrollPosition = function()
+{
+	var scrollHeightDifference = (document.body.scrollHeight - TextualScroller.restoreScrollHeight);
+	
+	if (scrollHeightDifference === 0) {
+		return;
+	}
+
+	window.scrollTo(0, (TextualScroller.scrollPositionCurrentValue + scrollHeightDifference));
+	
+	TextualScroller.restoreScrollHeight = 0;
 };
 
 /* Function returns the scroll height accounting for offset height */
