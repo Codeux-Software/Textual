@@ -229,6 +229,63 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 				 withCompletionBlock:completionBlock];
 }
 
+/* This method is used to get a list of lines between two unique identifiers. */
+- (void)fetchEntriesForView:(NSString *)viewId
+	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
+	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
+{
+
+	NSParameterAssert(viewId != nil);
+	NSParameterAssert(uniqueIdAfter != nil);
+	NSParameterAssert(uniqueIdBefore != nil);
+
+	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
+
+	[viewContext performBlockAndWait:^{
+		NSUInteger firstEntryId = [self _identifierInViewContext:viewContext
+											 forUniqueIdentifier:uniqueIdAfter
+												  performOnQueue:NO];
+
+		NSUInteger secondEntryId = [self _identifierInViewContext:viewContext
+											  forUniqueIdentifier:uniqueIdBefore
+												   performOnQueue:NO];
+
+		/* We are getting the lines inbetween these two lines which means we substract self. */
+		NSInteger lowestEntryId = (firstEntryId + 1);
+		NSInteger highestEntryId = (secondEntryId - 1);
+
+		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+													   fetchLimit:0 // no limit
+											lowestEntryIdentifier:lowestEntryId
+										   highestEntryIdentifier:highestEntryId
+													  limitToDate:nil
+													   resultType:NSManagedObjectResultType];
+
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
+
+		NSError *fetchRequestError = nil;
+
+		NSArray<NSManagedObject *> *fetchedObjects = [viewContext executeFetchRequest:fetchRequest error:&fetchRequestError];
+
+		if (fetchedObjects == nil) {
+			LogToConsoleError("Error occurred fetching objects: %@",
+							  fetchRequestError.localizedDescription);
+
+			return;
+		}
+
+		LogToConsoleDebug("%ld results fetched for view %@",
+						  fetchedObjects.count, viewId);
+
+		@autoreleasepool {
+			NSArray<TVCLogLineXPC *> *fetchedEntries = [self _logLineXPCObjectsFromManagedObjects:fetchedObjects];
+
+			completionBlock([fetchedEntries copy]);
+		}
+	}];
+}
+
 - (void)fetchEntriesForView:(NSString *)viewId
 	   withUniqueIdentifier:(NSString *)uniqueId
 				  fetchType:(HLSHistoricLogUniqueIdentifierFetchType)fetchType

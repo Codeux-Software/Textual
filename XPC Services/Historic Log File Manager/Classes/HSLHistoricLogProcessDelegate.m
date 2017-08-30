@@ -58,6 +58,11 @@ NS_ASSUME_NONNULL_BEGIN
 					argumentIndex:0
 						  ofReply:YES];
 
+	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+					  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:beforeUniqueIdentifier:withCompletionBlock:)
+					argumentIndex:0
+						  ofReply:YES];
+
 	newConnection.exportedInterface = exportedInterface;
 
 	HLSHistoricLogProcessMain *exportedObject = [HLSHistoricLogProcessMain new];

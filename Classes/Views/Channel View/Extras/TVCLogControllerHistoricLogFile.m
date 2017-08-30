@@ -163,6 +163,11 @@ NS_ASSUME_NONNULL_BEGIN
 						argumentIndex:0
 							  ofReply:YES];
 
+	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+						  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:beforeUniqueIdentifier:withCompletionBlock:)
+						argumentIndex:0
+							  ofReply:YES];
+
 	serviceConnection.remoteObjectInterface = remoteObjectInterface;
 
 	serviceConnection.interruptionHandler = ^{
@@ -343,6 +348,25 @@ NS_ASSUME_NONNULL_BEGIN
 						   afterUniqueIdentifier:uniqueId
 									   fetchLimit:fetchLimit
 									  limitToDate:limitToDate
+							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
+								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
+
+								  completionBlock(logLines);
+							  }];
+}
+
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+	  afterUniqueIdentifier:(NSString *)uniqueIdAfter
+	 beforeUniqueIdentifier:(NSString *)uniqueIdBefore
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
+{
+	[self warmProcessIfNeeded];
+
+	__weak typeof(self) weakSelf = self;
+
+	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
+							afterUniqueIdentifier:uniqueIdAfter
+						   beforeUniqueIdentifier:uniqueIdBefore
 							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
 								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
 
