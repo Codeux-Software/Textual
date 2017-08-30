@@ -55,19 +55,53 @@ MessageBuffer.mainBufferCurrentCount = 0;
 
 /* When old messages are NOT being loaded, this 
 is the number of elements we want to keep. */
-MessageBuffer.replayBufferCountSoftLimit = 500;
+MessageBuffer.replayBufferCountSoftLimit = 200; // 200
 
 /* When old messages are being loaded, this 
 is the number of elements we want to keep. */
-MessageBuffer.replayBufferCountHardLimit = 3000;
+MessageBuffer.replayBufferCountHardLimit = 1000; // 1000
 
 /* The number of elements to keep in the main buffer. */
-MessageBuffer.mainBufferMaximumCount = 500;
+MessageBuffer.mainBufferMaximumCount = 100; // 100
 
 /* The number of lines to fetch when loading old messages.
 When old lines are fetched, the number of lines returned 
 are also removed from the relevant buffer. */
-MessageBuffer.loadMessagesBatchSize = 500;
+MessageBuffer.loadMessagesBatchSize = 100; // 100
+
+/* MessageBuffer.loadMessages() sets the following properties
+when it performs an action. These proeprties are not used for
+anything other than state tracking. If false, new messages are
+loaded, else the event is ignored. */
+/* The user can scroll downward while messages are still being
+loaded from scrolling upward. Therefore, we use a separate 
+property to keep track of each type of load. */ 
+MessageBuffer.loadingMessagesBeforeLine = false;
+MessageBuffer.loadingMessagesAfterLine = false;
+
+/* Set to true once we have loaded all old messages. */
+MessageBuffer.replayBufferTopIsComplete = false;
+
+/* Set to false when messages have been removed from the 
+bottom of the replay buffer. When false, the main buffer 
+is also set to hidden so that when the user scrolls down,
+the bottom is that of the replay buffer, making it replay
+removed messages until all are restored. */
+MessageBuffer.replayBufferBottomIsComplete = true;
+
+/* Messages aren't removed from the bottom of the bottom of
+the replay buffer until it exceeds its hard limit. When 
+messages are removed from the bottom, we calculate how 
+far down we want the user to scroll before we begin 
+populating the bottom of the buffer again and removing
+messages from the top instead. */
+/* This property is calculated dynamically. */
+MessageBuffer.replayBufferBottomScrollThreshold = 0;
+
+/* This property, which is static, defines the number of 
+lines from the bottom of the the replay buffer that the user 
+must scroll within to define the threshold above. */
+MessageBuffer.replayBufferBottomScrollThresholdStart = 100;
 
 /* Cache */
 MessageBuffer.mainBufferElementReference = null;
@@ -90,6 +124,17 @@ MessageBuffer.lineNumberContents = function(lineNumber)
 	}
 	
 	return lineNumber.substr(5);
+};
+
+MessageBuffer.firstLineInBuffer = function(buffer)
+{
+	/* Note: speed this up if we begin using this function more often. */
+	return buffer.querySelector("*[id^='line-']:first-child");
+};
+
+MessageBuffer.lastLineInBuffer = function(buffer)
+{
+	return buffer.querySelector("*[id^='line-']:last-child");
 };
 
 /* Main message buffer */
@@ -115,6 +160,17 @@ MessageBuffer.mainBufferElementAppend = function(templateHTML)
 	}
 };
 
+MessageBuffer.mainBufferToggleVisiblity = function()
+{
+	var mainBuffer = MessageBuffer.mainBufferElement();
+	
+	if (MessageBuffer.replayBufferBottomIsComplete) {
+		MessageBuffer.style.display = "";
+	} else {
+		MessageBuffer.style.display = "none";
+	}
+};
+
 /* Replay message buffer */
 MessageBuffer.replayBufferElement = function()
 {
@@ -137,25 +193,64 @@ MessageBuffer.shiftMessageIntoReplayBuffer = function()
 	/* firstChild might not be a message. It could be a mark or other
 	style defined container. It doesn't really matter. Just shift
 	whatever to the post buffer. */
-	replayBufferElement.appendChild(mainBuffer.firstChild);
+	replayBuffer.appendChild(mainBuffer.firstChild);
 	
 	MessageBuffer.replayBufferCurrentCount += 1;
 
-	if (MessageBuffer.replayBufferCurrentCount > MessageBuffer.replayBufferCountSoftLimit) {
+	if (MessageBuffer.replayBufferCountSoftLimitPaused() === false &&
+		MessageBuffer.replayBufferCurrentCount > MessageBuffer.replayBufferCountSoftLimit) 
+	{
 		replayBuffer.firstChild.remove();
+
+		/* We removed from the top of the replay buffer which means
+		we need to invalidate state. */
+		MessageBuffer.replayBufferTopIsComplete = false;
 	}
 };
 
 /* This function picks the best line to load old messages next to. */
 /* When user is scrolling upwards, messages are removed from the
 bottom of the replay buffer, and new messages are added to the top
-of it. Therefore, when after == false, we use the first child 
+of it. Therefore, when after === false, we use the first child 
 as the line we want to append to. */
 /* The opposite happens when the user is scrolling downward. 
 We remove from the top and add to the bottom which means we
 use the last child. */
 MessageBuffer.loadMessages = function(after)
 {
+	/* MessageBuffer.loadMessages() is only called during scroll events by
+	the user. We keep track of a request is already active then so that we
+	do not keep sending them out while the user waits for one to finish. */
+	if (after === false) 
+	{
+		if (MessageBuffer.loadingMessagesBeforeLine) {
+			console.log("Cancelled request to load messages above line because another request is active");
+			
+			return;
+		}
+		
+		if (MessageBuffer.replayBufferTopIsComplete) {
+			console.log("Cancelled request to load messages because there is nothing new to load");
+			
+			return;
+		}
+	} 
+	else // after === false
+	{
+		if (MessageBuffer.loadingMessagesAfterLine) {
+			console.log("Cancelled request to load messages below line because another request is active");
+			
+			return;
+		}
+		
+		if (MessageBuffer.replayBufferBottomIsComplete) {
+			console.log("Cancelled request to load messages because there is nothing new to load");
+			
+			return;
+		}
+	}
+
+	/* Context */	
 	var line = null;
 
 	/* We first look at the replay buffer because 
@@ -163,15 +258,17 @@ MessageBuffer.loadMessages = function(after)
 	var replayBuffer = MessageBuffer.replayBufferElement();
 	
 	if (after === false) {
-		line = replayBuffer.firstChild;
+		line = MessageBuffer.firstLineInBuffer(replayBuffer);
 	} else {
-		line = replayBuffer.lastChild;
+		line = MessageBuffer.lastLineInBuffer(replayBuffer);
 	}
 	
 	/* If no line was retrieved from the replay buffer, then we
 	get one from the main buffer. We check both buffers because
 	when we populate messages on launch, we only populate so
 	much, but this gives user the option to reveal more. */
+	var lineInMainBuffer = false;
+
 	if (line === null) {
 		/* It does not make sense to add after if we have no
 		message in the replay buffer. */
@@ -182,26 +279,50 @@ MessageBuffer.loadMessages = function(after)
 		/* Retrieve the first line of the main buffer. */
 		var mainBuffer = MessageBuffer.mainBufferElement();
 
-		line = mainBuffer.firstChild;
+		line = MessageBuffer.firstLineInBuffer(mainBuffer);
+		
+		lineInMainBuffer = true;
 	}
 	
 	/* There is nothing in either buffer. */
 	if (line === null) {
+		console.log("No line to load from");
+
 		return;	
 	}
-	
+
 	/* Load messages */
-	MessageBuffer.loadMessagesWithLine(after, line);
+	console.log("Loading messages");
+		
+	if (after === false) {
+		MessageBuffer.loadingMessagesBeforeLine = true;
+	} else {
+		MessageBuffer.loadingMessagesAfterLine = true;
+	}
+
+	MessageBuffer.loadMessagesWithPayload(
+		{
+			"after" : after,
+			"line" : line,
+			"lineInMainBuffer" : lineInMainBuffer,
+			"resultOfLoadMessages" : true
+		}	
+	);
 };
 
 /* Given a line we want to load old messages next to, we do so. */
-MessageBuffer.loadMessagesWithLine = function(after, line)
+MessageBuffer.loadMessagesWithPayload = function(requestPayload)
 {
+	var after = requestPayload.after;
+	var line = requestPayload.line;
+
 	/* Define logic that will be performed when 
 	are are ready to load the messages. */
 	var loadMessagesLogic = (function() {
 		var postflightCallback = (function(renderedMessages) {
-			MessageBuffer.loadMessagesWithLinePostflight(after, line, renderedMessages);
+			requestPayload.renderedMessages = renderedMessages;
+
+			MessageBuffer.loadMessagesWithLinePostflight(requestPayload);
 
 			MessageBuffer.removeLoadingIndicator(line);
 		});
@@ -209,9 +330,28 @@ MessageBuffer.loadMessagesWithLine = function(after, line)
 		var lineNumber = MessageBuffer.lineNumberContents(line.id);
 
 		if (after === false) {
-			app.renderMessagesBefore(lineNumber, MessageBuffer.loadMessagesBatchSize, postflightCallback);
+			app.renderMessagesBefore(
+				lineNumber, 
+				MessageBuffer.loadMessagesBatchSize, 
+				postflightCallback
+			);
 		} else {
-			app.renderMessagesAfter(lineNumber, MessageBuffer.loadMessagesBatchSize, postflightCallback);
+			/* When we are rendering after, we render a range between the given line
+			and the first child in the main buffer. */
+			/* Logic defined by the message buffers do not allow us to render after 
+			for a line thats in the main buffer. Only those that are in the replay
+			buffer. We therefore have to fill in the gap between the two. */
+			var mainBuffer = MessageBuffer.mainBufferElement();
+			var mainBufferFirstLine = MessageBuffer.firstLineInBuffer(mainBuffer);
+
+			var lineNumberEnd = MessageBuffer.lineNumberContents(mainBufferFirstLine.id);
+
+			app.renderedMessagesInRange(
+				lineNumber, 
+				lineNumberEnd, 
+				MessageBuffer.loadMessagesBatchSize, 
+				postflightCallback
+			);
 		}
 	});
 	
@@ -220,14 +360,47 @@ MessageBuffer.loadMessagesWithLine = function(after, line)
 };
 
 /* Postflight for loading old messages */
-MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMessages)
+MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 {
+	/* Payload state */
+	var after = requestPayload.after;
+	var line = requestPayload.line;
+	var lineInMainBuffer = requestPayload.lineInMainBuffer;
+	var renderedMessages = requestPayload.renderedMessages;
+	var resultOfLoadMessages = requestPayload.resultOfLoadMessages;
+	
+	/* Function that is used in multiple places to flush status. */
+	var statusCallback = (function() {
+		/* If the number of results is less than our batch size,
+		then we can probably make a best guess that we have loaded
+		all the old messages that are available. */
+		if (renderedMessagesCount < MessageBuffer.loadMessagesBatchSize) {
+			if (after === false) {
+				MessageBuffer.replayBufferTopIsComplete = true;
+			} else {
+				MessageBuffer.replayBufferBottomIsComplete = true;
+			
+				MessageBuffer.mainBufferToggleVisiblity();
+			}
+		}
+		
+		if (resultOfLoadMessages) {
+			if (after === false) {
+				MessageBuffer.loadingMessagesBeforeLine = false;
+			} else {
+				MessageBuffer.loadingMessagesAfterLine = false;
+			}
+		}
+	});
+	
 	/* Perform logging and exit if we have nothing. */
 	var renderedMessagesCount = renderedMessages.length;
 
-	console.log("Request to load messages for " + line + " returned " + renderedMessagesCount + " results");
+	console.log("Request to load messages for " + line.id + " returned " + renderedMessagesCount + " results");
 		
 	if (renderedMessagesCount === 0) {
+		statusCallback();
+		
 		return;
 	}
 
@@ -239,10 +412,6 @@ MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMes
 	/* We only allow this logic to proceed if after === false. 
 	There is no case in which we should be loading messages before 
 	a line that is in the main buffer. */
-	var mainBuffer = MessageBuffer.mainBufferElement();
-	
-	var lineInMainBuffer = (line.parentNode === mainBuffer);
-
 	if (lineInMainBuffer) {
 		if (after) {
 			throw "Cannot load old messages for line that appears in the main buffer";
@@ -290,16 +459,23 @@ MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMes
 	if (replayBufferHtml === null) {
 		replayBufferHtml = html;
 	}
-		
+	
+	/* Appending HTML above line will cause the view to appear 
+	scrolled for the user so we save the position for restore. */
+	if (after === false) {
+		TextualScroller.saveScrollHeightForRestore();
+	}
+
 	/* Append to main buffer */
 	if (mainBufferHtml !== null) {
+		console.log("Appending HTML");
+
 		var mainBufferHtmlString = mainBufferHtml.join("");
 		
 		/* As defined by the above logic, mainBufferHtml shold only ever be 
 		non-null when we have messages to add to the top of the main buffer. */
 		line.insertAdjacentHTML('beforebegin', mainBufferHtmlString);
-		
-		/* Increment count */
+
 		MessageBuffer.mainBufferCurrentCount += mainBufferHtml.length;
 	}
 	
@@ -308,6 +484,8 @@ MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMes
 		var replayBufferHtmlString = replayBufferHtml.join("");
 
 		if (after === false) {
+			console.log("Appending HTML");
+
 			if (lineInMainBuffer) {
 				/* When the line is in the main buffer and we have items to add to 
 				the replay buffer, we obviously can't append to the line itself. 
@@ -316,21 +494,26 @@ MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMes
 				
 				replayBuffer.insertAdjacentHTML('beforeend', replayBufferHtmlString);
 			} else {
-				/* Append above line */
 				line.insertAdjacentHTML('beforebegin', replayBufferHtmlString);
 			}
 		} else {
-			/* Append below line */
 			line.insertAdjacentHTML('afterend', replayBufferHtmlString);
 		}
-		
-		/* Increment count */
+
 		MessageBuffer.replayBufferCurrentCount += replayBufferHtml.length;
+	}
+	
+	/* Restore scroll position */
+	if (after === false) {
+		TextualScroller.restoreScrollPosition();
 	}
 	
 	/* Post line numbers so style can do something with them. */
 	Textual.newMessagePostedToViewInt(lineNumbers);
-	
+
+	/* Flush state */
+	statusCallback();
+
 	/* Flush arrays */
 	lineNumbers = null;
 	html = null;
@@ -341,6 +524,9 @@ MessageBuffer.loadMessagesWithLinePostflight = function(after, line, renderedMes
 /* Message buffer loading indicator */
 MessageBuffer.addLoadingIndicator = function(after, toLine, callbackFunction)
 {
+	callbackFunction();
+
+/*
 	app.renderTemplate(
 		"messageBufferLoadingIndicator", 
 
@@ -358,6 +544,7 @@ MessageBuffer.addLoadingIndicator = function(after, toLine, callbackFunction)
 			callbackFunction();
 		})
 	);
+*/
 };
 
 MessageBuffer.removeLoadingIndicator = function(fromLine)
@@ -369,4 +556,50 @@ MessageBuffer.removeLoadingIndicator = function(fromLine)
 	if (loadingIndicator) {
 		loadingIndicator.remove();
 	}
+};
+
+/* Buffer size */
+MessageBuffer.replayBufferCountSoftLimitPaused = function()
+{
+	return TextualScroller.isScrolledByUser;
+};
+
+MessageBuffer.resizeBuffers = function()
+{
+	
+};
+
+/* Scrolling */
+MessageBuffer.documentScrolledCallback = function(scrolledUpward)
+{
+	if (scrolledUpward && TextualScroller.isScrolledToTop()) {
+		MessageBuffer.loadMessages(false);
+	}
+};
+
+MessageBuffer.recalculateReplayBufferBottomThreshold = function()
+{
+	var replayBuffer = MessageBuffer.replayBufferElement();
+	
+	var elements = replayBuffer.childNodes;
+	
+	var thresholdElementIndex = (elements.length - MessageBuffer.replayBufferBottomScrollThresholdStart);
+	var thresholdElement = elements[thresholdElementIndex];
+	var thresholdElementRect = thresholdElement.getBoundingClientRect();
+	
+	/* The amount of scrolling that has been done of the viewport area 
+	(or any other scrollable element) is taken into account when computing 
+	the bounding rectangle. This means that the rectangle's boundary edges 
+	(top, left, bottom, and right) change their values every time the 
+	scrolling position changes (because their values are relative to the 
+	viewport and not absolute). If you need the bounding rectangle relative 
+	to the top-left corner of the document, just add the current scrolling 
+	position to the top and left properties (these can be obtained using 
+	window.scrollX and window.scrollY) to get a bounding rectangle which 
+	is independent from the current scrolling position. */
+	var threshold = (thresholdElementRect.top + TextualScroller.scrollPositionCurrentValue);
+	
+	MessageBuffer.replayBufferBottomScrollThreshold = threshold;
+	
+	console.log("Replay buffer bottom scroll threshold set to position " + threshold + " with element " + thresholdElement.id);
 };
