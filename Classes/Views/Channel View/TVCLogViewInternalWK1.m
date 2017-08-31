@@ -278,6 +278,11 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	self.autoScroller = [[TVCWK1AutoScroller alloc] initWitFrameView:frameView];
 }
 
+- (void)setAutomaticScrollingEnabled:(BOOL)automaticScrollingEnabled
+{
+	self.autoScroller.automaticScrollingEnabled = automaticScrollingEnabled;
+}
+
 #pragma mark -
 #pragma mark Web View Delegate
 

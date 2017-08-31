@@ -536,6 +536,17 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverIsConnected:)];
 }
 
+- (void)setAutomaticScrollingEnabled:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_setAutomaticScrollingEnabled:)
+	  minimumArgumentCount:1
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSNumber class]]);
+			}];
+}
+
 - (void)setChannelName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -997,6 +1008,15 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_serverIsConnected:(TVCLogScriptEventSinkContext *)context
 {
 	context.completionBlock( @(context.associatedClient.isLoggedIn) );
+}
+
+- (void)_setAutomaticScrollingEnabled:(TVCLogScriptEventSinkContext *)context
+{
+	NSArray *arguments = context.arguments;
+
+	BOOL enabled = [[TVCLogScriptEventSink objectValueToCommon:arguments[0]] boolValue];
+
+	[context.webView setAutomaticScrollingEnabled:enabled];
 }
 
 - (void)_setChannelName:(TVCLogScriptEventSinkContext *)context

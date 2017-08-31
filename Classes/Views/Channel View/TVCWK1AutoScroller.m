@@ -39,10 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCWK1AutoScroller ()
 {
-	CGFloat _scrollLastPosition1;
-	CGFloat _scrollLastPosition2;
-	CGFloat _currentScrollTopValue;
-	BOOL _isScrolledByUser;
+	CGFloat _scrollPositionCurrentValue;
+	CGFloat _scrollPositionPreviousValue;
+	CGFloat _scrolledAboveBottomThreshold;
+	BOOL _scrolledAboveBottom;
 /*	NSRect _lastFrame; */
 }
 
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation TVCWK1AutoScroller
 
 /* Maximum distance user can scroll up before automatic scrolling is disabled. */
-static CGFloat _scrollTopUserConstant = 25.0;
+static CGFloat _scrolledAboveBottomMinimum = 25.0;
 
 - (instancetype)initWitFrameView:(WebFrameView *)frameView;
 {
@@ -102,10 +102,12 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 	[self changeScrollerStyle];
 
-	self->_scrollLastPosition1 = 0.0;
-	self->_scrollLastPosition2 = 0.0;
+	self->_automaticScrollingEnabled = YES;
 
-	self->_isScrolledByUser = NO;
+	self->_scrollPositionCurrentValue = 0.0;
+	self->_scrollPositionPreviousValue = 0.0;
+
+	self->_scrolledAboveBottom = NO;
 }
 
 - (void)changeScrollerStyle
@@ -139,7 +141,7 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 - (BOOL)viewingBottom
 {
-	return (self->_isScrolledByUser == NO);
+	return (self->_scrolledAboveBottom == NO);
 }
 
 - (void)saveScrollerPosition
@@ -149,7 +151,7 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 - (void)restoreScrollerPosition
 {
-	if (self->_isScrolledByUser) {
+	if (self->_scrolledAboveBottom) {
 		return;
 	}
 
@@ -164,7 +166,7 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 	visibleRect.origin.y = (aView.frame.size.height - visibleRect.size.height);
 
-	self->_currentScrollTopValue = visibleRect.origin.y;
+	self->_scrolledAboveBottomThreshold = visibleRect.origin.y;
 	
 	[aView scrollRectToVisible:visibleRect];
 }
@@ -237,51 +239,51 @@ static CGFloat _scrollTopUserConstant = 25.0;
 
 	/* 	Record the last two known scrollY values. These properties are compared
 		to determine if the user is scrolling upwards or downwards. */
-	self->_scrollLastPosition2 = self->_scrollLastPosition1;
+	self->_scrollPositionPreviousValue = self->_scrollPositionCurrentValue;
 
-	self->_scrollLastPosition1 = scrollPosition;
+	self->_scrollPositionCurrentValue = scrollPosition;
 
 	/* 	If the current scroll top value exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
-	if (self->_currentScrollTopValue > scrollHeight) {
-		self->_currentScrollTopValue = scrollHeight;
+	if (self->_scrolledAboveBottomThreshold > scrollHeight) {
+		self->_scrolledAboveBottomThreshold = scrollHeight;
 
-		if (self->_currentScrollTopValue < 0) {
-			self->_currentScrollTopValue = 0;
+		if (self->_scrolledAboveBottomThreshold < 0) {
+			self->_scrolledAboveBottomThreshold = 0;
 		}
 	}
 
-	if (self->_isScrolledByUser) {
+	if (self->_scrolledAboveBottom) {
 		/* Check whether the user has scrolled back to the bottom */
-		CGFloat scrollTop = (scrollHeight - self->_scrollLastPosition1);
+		CGFloat scrollTop = (scrollHeight - self->_scrollPositionCurrentValue);
 
-		if (scrollTop < _scrollTopUserConstant) {
+		if (scrollTop < _scrolledAboveBottomMinimum) {
 			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
 
-			self->_isScrolledByUser = NO;
+			self->_scrolledAboveBottom = NO;
 
-			self->_currentScrollTopValue = self->_scrollLastPosition1;
+			self->_scrolledAboveBottomThreshold = self->_scrollPositionCurrentValue;
 		}
 	}
 	else
 	{
 		/* 	Check if the user is scrolling upwards. If they are, then check if they have went
 			above the threshold that defines whether its a user initated event or not. */
-		if (self->_scrollLastPosition1 < self->_scrollLastPosition2) {
-			CGFloat scrollTop = (self->_currentScrollTopValue - self->_scrollLastPosition1);
+		if (self->_scrollPositionCurrentValue < self->_scrollPositionPreviousValue) {
+			CGFloat scrollTop = (self->_scrolledAboveBottomThreshold - self->_scrollPositionCurrentValue);
 
-			if (scrollTop > _scrollTopUserConstant) {
+			if (scrollTop > _scrolledAboveBottomMinimum) {
 				LogToConsoleDebug("User scrolled above threshold. Disabled auto scroll.");
 
-				self->_isScrolledByUser = YES;
+				self->_scrolledAboveBottom = YES;
 			}
 		}
 
 		/* 	If the user is scrolling downward and passes last threshold location, then
 			move the location further downward. */
-		if (self->_scrollLastPosition1 > self->_currentScrollTopValue) {
-			self->_currentScrollTopValue = self->_scrollLastPosition1;
+		if (self->_scrollPositionCurrentValue > self->_scrolledAboveBottomThreshold) {
+			self->_scrolledAboveBottomThreshold = self->_scrollPositionCurrentValue;
 		}
 	}
 	
@@ -291,7 +293,7 @@ static CGFloat _scrollTopUserConstant = 25.0;
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
 	/* Never scroll if user scrolled up */
-	if (self->_isScrolledByUser) {
+	if (self->_automaticScrollingEnabled == NO || self->_scrolledAboveBottom) {
 		return;
 	}
 

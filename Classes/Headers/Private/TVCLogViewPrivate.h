@@ -76,6 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveScrollerPosition;
 - (void)restoreScrollerPosition;
+
+- (void)setAutomaticScrollingEnabled:(BOOL)automaticScrollingEnabled;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
