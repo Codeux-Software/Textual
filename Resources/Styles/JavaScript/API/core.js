@@ -58,7 +58,7 @@ var Textual = {};
 */
 Textual.viewInitiated 					= function(viewType, serverHash, channelHash, channelName) {};
 
-Textual.newMessagePostedToView 			= function(lineNumber) {};
+Textual.newMessagePostedToView 			= function(lineNumber, fromBuffer) {};
 
 Textual.historyIndicatorAddedToView			= function() {};
 Textual.historyIndicatorRemovedFromView 	= function() {};

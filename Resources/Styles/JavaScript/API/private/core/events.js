@@ -128,15 +128,15 @@ Textual.viewFinishedLoadingHistoryInt = function()
 	Textual.viewFinishedLoadingHistory();
 };
 
-Textual.newMessagePostedToViewInt = function(lineNumber)
+Textual.newMessagePostedToViewInt = function(lineNumber, fromBuffer)
 {
 	/* Allow lineNumber to be an array of line numbers or a single line number. */
 	if (Array.isArray(lineNumber)) {
 		for (var i = 0; i < lineNumber.length; i++) {
-			Textual.newMessagePostedToView(lineNumber[i]);
+			Textual.newMessagePostedToView(lineNumber[i], fromBuffer);
 		}
 	} else {
-		Textual.newMessagePostedToView(lineNumber);
+		Textual.newMessagePostedToView(lineNumber, fromBuffer);
 	}
 };
 

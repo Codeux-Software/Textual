@@ -497,7 +497,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self appendHistoricMessageFragment:patchedAppend isReload:isReload];
 
-	[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
+	[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers, @(NO)]];
 
 	/* Inform plugins of new content */
 	for (THOPluginDidPostNewMessageConcreteObject *pluginObject in pluginObjects) {
@@ -1010,7 +1010,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self appendToDocumentBody:html];
 
-			[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber]];
+			[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber, @(NO)]];
 
 			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 				[THOPluginDispatcher didPostNewMessage:resultInfo[@"pluginConcreteObject"] forViewController:self];
