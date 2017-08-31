@@ -260,7 +260,7 @@ Textual.handleEvent = function (event) {
   }
 };
 
-Textual.newMessagePostedToView = function (line) {
+Textual.newMessagePostedToView = function (line, fromBuffer) {
   'use strict';
   var message = document.getElementById('line-' + line);
   var clone, elem, getEmbeddedImages, i, mode, messageText, sender, topic;
@@ -301,8 +301,11 @@ Textual.newMessagePostedToView = function (line) {
     // Copy the message into the hidden history
     clone = message.cloneNode(true);
     clone.removeAttribute('id');
-    rs.history.appendChild(clone);
 
+    if (fromBuffer === false) {
+      rs.history.appendChild(clone);
+    }
+   
     // Colorize it as well
     if (sender.getAttribute('coloroverride') !== 'true') {
       new NickColorGenerator(clone); // colorized the nick
