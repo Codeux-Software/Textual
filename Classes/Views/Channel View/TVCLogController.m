@@ -352,7 +352,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(html != nil);
 
-	[self _evaluateFunction:@"MessageBuffer.mainBufferElementAppend" withArguments:@[html]];
+	[self _evaluateFunction:@"MessageBuffer.bufferElementAppend" withArguments:@[html]];
 }
 
 #pragma mark -
