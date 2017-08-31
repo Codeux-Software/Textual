@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL applicationIsTerminating;
 @property (nonatomic, assign, readwrite) BOOL applicationIsChangingActiveState;
 @property (readonly) BOOL isSafeToPerformApplicationTermination;
+@property (nonatomic, assign, readwrite) BOOL terminateHistoricLogSaveFinished;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
 @property (nonatomic, assign) NSUInteger applicationLaunchRemainder;
@@ -440,7 +441,8 @@ NS_ASSUME_NONNULL_BEGIN
 		self.terminatingClientCount == 0 &&
 
 		/* Core Data is saving */
-		TVCLogControllerHistoricLogSharedInstance().isSaving == NO
+		TVCLogControllerHistoricLogSharedInstance().isSaving == NO &&
+			self.terminateHistoricLogSaveFinished
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		&&
@@ -513,6 +515,8 @@ NS_ASSUME_NONNULL_BEGIN
              changes they want to historic log. */
             if (self.terminatingClientCount == 0) {
                 [TVCLogControllerHistoricLogSharedInstance() prepareForApplicationTermination];
+
+				self.terminateHistoricLogSaveFinished = YES;
             }
             
             /* Sleep a little bit so we aren't looping a lot. */
