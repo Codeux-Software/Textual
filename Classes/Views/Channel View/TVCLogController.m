@@ -415,7 +415,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)mark
 {
 	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
-		[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:nil];
+		NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
+
+		[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 	};
 
 	_enqueueBlock(operationBlock);

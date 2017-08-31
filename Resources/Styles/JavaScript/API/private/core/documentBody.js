@@ -145,22 +145,13 @@ Textual.topicBarDoubleClicked = function()
 };
 
 /* History indicator */
-Textual.historyIndicatorAdd = function()
+Textual.historyIndicatorAdd = function(templateHTML)
 {
-	app.renderTemplate(
-		"historyIndicator",
-		null,
-		
-		(function(html) {
-			Textual.historyIndicatorRemove();
+	Textual.historyIndicatorRemove();
 
-			var buffer = MessageBuffer.bufferElement();
+	MessageBuffer.bufferElementAppend(templateHTML);
 
-			buffer.insertAdjacentHTML("beforeend", html);
-
-			Textual.historyIndicatorAddedToView();
-		})
-	);
+	Textual.historyIndicatorAddedToView();
 };
 
 Textual.historyIndicatorRemove = function()
