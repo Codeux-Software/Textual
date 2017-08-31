@@ -144,6 +144,13 @@ TextualScroller.documentScrolledCallback = function()
 	TextualScroller.userScrolledUpwards = scrolledUpwards;
 };
 
+/* Function returns how far we are scrolled as a percentage */
+TextualScroller.percentScrolled = function()
+{
+	return ((TextualScroller.scrollPositionCurrentValue / 
+			 TextualScroller.scrollHeightCurrentValue) * 100.0);
+}
+
 /* Function scrolls back to last position relative to height difference */
 TextualScroller.saveScrollHeightForRestore = function()
 {
