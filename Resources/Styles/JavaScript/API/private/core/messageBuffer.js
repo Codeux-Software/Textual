@@ -512,6 +512,10 @@ MessageBuffer.addLoadingIndicator = function(after, toLine, callbackFunction)
 {
 	callbackFunction();
 
+/* The loading indicator was disabled after it was made because it served no
+purpose when the buffer logic was created. Buffer loads fast enough. 
+The loader indicator would flash on the screen for less a second. 
+The code for it is kept around incase it can be repurposed in the future. */
 /*
 	app.renderTemplate(
 		"messageBufferLoadingIndicator", 
@@ -535,6 +539,7 @@ MessageBuffer.addLoadingIndicator = function(after, toLine, callbackFunction)
 
 MessageBuffer.removeLoadingIndicator = function(fromLine)
 {
+/*
 	var lineNumber = MessageBuffer.lineNumberContents(fromLine.id);
 
 	var loadingIndicator = document.getElementById("mb_loading-" + lineNumber);
@@ -542,6 +547,7 @@ MessageBuffer.removeLoadingIndicator = function(fromLine)
 	if (loadingIndicator) {
 		loadingIndicator.remove();
 	}
+*/
 };
 
 /* Buffer size */
