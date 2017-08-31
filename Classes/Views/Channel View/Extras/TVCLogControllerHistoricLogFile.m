@@ -154,6 +154,11 @@ NS_ASSUME_NONNULL_BEGIN
 							  ofReply:YES];
 
 	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
+						  forSelector:@selector(fetchEntriesForView:withUniqueIdentifier:beforeFetchLimit:afterFetchLimit:limitToDate:withCompletionBlock:)
+						argumentIndex:0
+							  ofReply:YES];
+
+	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
 						  forSelector:@selector(fetchEntriesForView:beforeUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
 						argumentIndex:0
 							  ofReply:YES];
@@ -305,6 +310,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
 									   fetchLimit:fetchLimit
+									  limitToDate:limitToDate
+							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
+								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];
+
+								  completionBlock(logLines);
+							  }];
+}
+
+- (void)fetchEntriesForItem:(IRCTreeItem *)item
+	   withUniqueIdentifier:(NSString *)uniqueId
+		   beforeFetchLimit:(NSUInteger)fetchLimitBefore
+			afterFetchLimit:(NSUInteger)fetchLimitAfter
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
+{
+	[self warmProcessIfNeeded];
+
+	__weak typeof(self) weakSelf = self;
+
+	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
+							 withUniqueIdentifier:uniqueId
+								 beforeFetchLimit:fetchLimitBefore
+								  afterFetchLimit:fetchLimitAfter
 									  limitToDate:limitToDate
 							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {
 								  NSArray *logLines = [weakSelf _logLinesFromXPCObjects:entries];

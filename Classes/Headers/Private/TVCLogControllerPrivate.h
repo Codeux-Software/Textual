@@ -54,6 +54,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
+- (void)renderLogLineAtLineNumber:(NSString *)lineNumber
+			  numberOfLinesBefore:(NSUInteger)numberOfLinesBefore
+			   numberOfLinesAfter:(NSUInteger)numberOfLinesAfter
+				  completionBlock:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nonnull))completionBlock;
+
 - (void)renderLogLinesBeforeLineNumber:(NSString *)lineNumber
 				  maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
 					   completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock;

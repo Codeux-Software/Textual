@@ -57,6 +57,13 @@ NS_ASSUME_NONNULL_BEGIN
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
 
 - (void)fetchEntriesForView:(NSString *)viewId
+	   withUniqueIdentifier:(NSString *)uniqueId
+		   beforeFetchLimit:(NSUInteger)fetchLimitBefore // optional (0 == only uniqueId)
+			afterFetchLimit:(NSUInteger)fetchLimitAfter // optional (0 == only uniqueId)
+				limitToDate:(nullable NSDate *)limitToDate
+		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
+
+- (void)fetchEntriesForView:(NSString *)viewId
 	 beforeUniqueIdentifier:(NSString *)uniqueId
 				 fetchLimit:(NSUInteger)fetchLimit // required (> 0)
 				limitToDate:(nullable NSDate *)limitToDate
