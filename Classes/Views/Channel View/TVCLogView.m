@@ -302,6 +302,13 @@ ClassWithDesignatedInitializerInitMethod
 	});
 }
 
+- (void)setAutomaticScrollingEnabled:(BOOL)automaticScrollingEnabled
+{
+//	XRPerformBlockAsynchronouslyOnMainQueue(^{
+	[(id)self.webView setAutomaticScrollingEnabled:automaticScrollingEnabled];
+//	});
+}
+
 @end
 
 #pragma mark -

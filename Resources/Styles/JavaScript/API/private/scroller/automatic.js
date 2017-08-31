@@ -42,7 +42,7 @@
 /* ************************************************** */
 
 /* ************************************************** */
-/*                 Automatic Scroller                 */
+/*                  State Tracking                    */
 /* ************************************************** */
 
 TextualScroller.scrollHeightTimerActive = false;
@@ -52,7 +52,12 @@ TextualScroller.automaticScrollHeightPreviousValue = 0;
 
 TextualScroller.scrollerAnchorLinkReference = null;
 
-/* Core functions */
+TextualScroller.automaticScrollingEnabled = false;
+
+/* ************************************************** */
+/*                     Visibility                     */
+/* ************************************************** */
+
 TextualScroller.documentVisbilityChangedCallback = function()
 {
 	var documentHidden = false;
@@ -75,7 +80,10 @@ TextualScroller.documentResizedCallback = function()
 	TextualScroller.performAutoScrollInt(true);
 };
 
-/* Perform automatic scrolling */
+/* ************************************************** */
+/*                 Automatic Scroller                 */
+/* ************************************************** */
+
 TextualScroller.performAutoScroll = function()
 {
 	var performAutoScrollFunction = (function() {
@@ -100,6 +108,16 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 		skipScrollHeightCheck = false;
 	}
 
+	/* Do not perform scrolling if the user is believed to have scrolled */
+	if (TextualScroller.scrolledAboveBottom) {
+		return;
+	}
+	
+	/* Do not perform scrolling if it is disabled */
+	if (TextualScroller.automaticScrollingEnabled) {
+		return;
+	}
+
 	/* Do not perform scrolling if we are performing live resize */
 	/* 	Stop auto scroll before height is recorded so that once live resize is completed,
 		scrolling will notice the new height of the view and use that. */
@@ -117,11 +135,6 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	}
 
 	var scrollHeightPrevious = TextualScroller.automaticScrollHeightCurrentValue;
-
-	/* Do not perform scrolling if the user is believed to have scrolled */
-	if (TextualScroller.isScrolledByUser) {
-		return;
-	}
 
 	/* Perform comparison test for scroll height */
 	if (skipScrollHeightCheck === false) {
@@ -143,7 +156,18 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	TextualScroller.scrollerAnchorLinkReference.click();
 };
 
-/* Functions that can be used to toggle automatic scrolling */
+/* This function sets a flag that tells the scroller not to do anything,
+regardless of whether it is visible or not. Visbility will control whether
+the timer itself is activate, not this function. */
+TextualScroller.setAutomaticScrollingEnabled = function(enabled)
+{
+	TextualScroller.automaticScrollingEnabled = enabled;
+};
+
+/* ************************************************** */
+/*                        Timer                       */
+/* ************************************************** */
+
 TextualScroller.enableScrollingTimerInt = function()
 {
 	TextualScroller.scrollHeightTimerActive = true;
@@ -176,7 +200,10 @@ TextualScroller.disableScrollingTimer = function()
 	}
 };
 
-/* Bind to events */
+/* ************************************************** */
+/*                      Events                        */
+/* ************************************************** */
+
 window.addEventListener("resize", TextualScroller.documentResizedCallback, false);
 
 if (typeof document.hidden !== "undefined") {

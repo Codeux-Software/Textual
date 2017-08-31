@@ -435,6 +435,11 @@ create_normal_pool:
 	;
 }
 
+- (void)setAutomaticScrollingEnabled:(BOOL)automaticScrollingEnabled
+{
+	;
+}
+
 #pragma mark -
 #pragma mark Web View Delegate
 

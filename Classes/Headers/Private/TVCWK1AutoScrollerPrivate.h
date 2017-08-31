@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCWK1AutoScroller : NSObject
 @property (readonly) BOOL canScroll;
 @property (readonly) BOOL viewingBottom;
+@property (nonatomic, assign) BOOL automaticScrollingEnabled;
 
 - (instancetype)initWitFrameView:(WebFrameView *)frameView;
 
