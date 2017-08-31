@@ -89,20 +89,6 @@ the bottom is that of the replay buffer, making it replay
 removed messages until all are restored. */
 MessageBuffer.replayBufferBottomIsComplete = true;
 
-/* Messages aren't removed from the bottom of the bottom of
-the replay buffer until it exceeds its hard limit. When 
-messages are removed from the bottom, we calculate how 
-far down we want the user to scroll before we begin 
-populating the bottom of the buffer again and removing
-messages from the top instead. */
-/* This property is calculated dynamically. */
-MessageBuffer.replayBufferBottomScrollThreshold = 0;
-
-/* This property, which is static, defines the number of 
-lines from the bottom of the the replay buffer that the user 
-must scroll within to define the threshold above. */
-MessageBuffer.replayBufferBottomScrollThresholdStart = 100;
-
 /* Cache */
 MessageBuffer.mainBufferElementReference = null;
 MessageBuffer.replayBufferElementReference = null;
@@ -575,31 +561,4 @@ MessageBuffer.documentScrolledCallback = function(scrolledUpward)
 	if (scrolledUpward && TextualScroller.isScrolledToTop()) {
 		MessageBuffer.loadMessages(false);
 	}
-};
-
-MessageBuffer.recalculateReplayBufferBottomThreshold = function()
-{
-	var replayBuffer = MessageBuffer.replayBufferElement();
-	
-	var elements = replayBuffer.childNodes;
-	
-	var thresholdElementIndex = (elements.length - MessageBuffer.replayBufferBottomScrollThresholdStart);
-	var thresholdElement = elements[thresholdElementIndex];
-	var thresholdElementRect = thresholdElement.getBoundingClientRect();
-	
-	/* The amount of scrolling that has been done of the viewport area 
-	(or any other scrollable element) is taken into account when computing 
-	the bounding rectangle. This means that the rectangle's boundary edges 
-	(top, left, bottom, and right) change their values every time the 
-	scrolling position changes (because their values are relative to the 
-	viewport and not absolute). If you need the bounding rectangle relative 
-	to the top-left corner of the document, just add the current scrolling 
-	position to the top and left properties (these can be obtained using 
-	window.scrollX and window.scrollY) to get a bounding rectangle which 
-	is independent from the current scrolling position. */
-	var threshold = (thresholdElementRect.top + TextualScroller.scrollPositionCurrentValue);
-	
-	MessageBuffer.replayBufferBottomScrollThreshold = threshold;
-	
-	console.log("Replay buffer bottom scroll threshold set to position " + threshold + " with element " + thresholdElement.id);
 };
