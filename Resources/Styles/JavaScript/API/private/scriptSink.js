@@ -103,6 +103,15 @@ app.finishedLayingOutView = function()
 	}
 };
 
+app.setAutomaticScrollingEnabled = function(enabled)
+{
+	if (appInternal.isWebKit2()) {
+		TextualScroller.setAutomaticScrollingEnabled(enabled);
+	} else {
+		TextualScriptSink.setAutomaticScrollingEnabled(enabled);
+	}
+};
+
 app.setURLAddress = function(object)
 {
 	if (appInternal.isWebKit2()) {
@@ -490,4 +499,3 @@ app.renderTemplate = function(templateName, templateAttributes, callbackFunction
 		TextualScriptSink.renderTemplate(dataValue);
 	}
 };
-
