@@ -10503,6 +10503,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	/* Check if system is sleeping. */
+	if ([XRSystemInformation systemIsSleeping]) {
+		LogToConsole("Refusing to connect because system is sleeping");
+
+		return;
+	}
+
 	/* Do we have somewhere to connect to? */
 	NSArray *servers = self.config.serverList;
 
