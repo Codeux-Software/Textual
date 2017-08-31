@@ -898,6 +898,32 @@ ClassWithDesignatedInitializerInitMethod
 	_enqueueBlockStandalone(operationBlock)
 }
 
+- (void)renderLogLineAtLineNumber:(NSString *)lineNumber numberOfLinesBefore:(NSUInteger)numberOfLinesBefore numberOfLinesAfter:(NSUInteger)numberOfLinesAfter completionBlock:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nonnull))completionBlock
+{
+	NSParameterAssert(lineNumber != nil);
+	NSParameterAssert(completionBlock != nil);
+
+	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
+		void (^historicLogCompletionBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *entries) {
+			if ([operation isCancelled]) {
+				return;
+			}
+
+			[self _renderLogLinesAfterLineNumberPostFlight:entries completionBlock:completionBlock];
+		};
+
+		[TVCLogControllerHistoricLogSharedInstance()
+			 fetchEntriesForItem:self.associatedItem
+		    withUniqueIdentifier:lineNumber
+			    beforeFetchLimit:numberOfLinesBefore
+			     afterFetchLimit:numberOfLinesAfter
+					 limitToDate:nil
+			 withCompletionBlock:historicLogCompletionBlock];
+	};
+
+	_enqueueBlockStandalone(operationBlock)
+}
+
 - (void)_renderLogLinesAfterLineNumberPostFlight:(NSArray<TVCLogLine *> *)logLines completionBlock:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completionBlock
 {
 	NSParameterAssert(logLines != nil);

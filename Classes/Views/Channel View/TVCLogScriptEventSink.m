@@ -458,6 +458,25 @@ ClassWithDesignatedInitializerInitMethod
 			}];
 }
 
+- (void)renderMessageWithSiblings:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_renderMessageWithSiblings:)
+	  minimumArgumentCount:3
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else if (argumentIndex == 1 ||
+						   argumentIndex == 2)
+				{
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+
+				return NO;
+			}];
+}
+
 - (void)retrievePreferencesWithMethodName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -831,6 +850,49 @@ ClassWithDesignatedInitializerInitMethod
 										 beforeLineNumber:lineNumberBefore
 									 maximumNumberOfLines:maximumNumberOfLines
 										  completionBlock:renderCompletionBlock];
+}
+
+- (void)_renderMessageWithSiblings:(TVCLogScriptEventSinkContext *)context
+{
+	void (^contextCompletionBlock)(id _Nullable) = context.completionBlock;
+
+	NSArray *arguments = context.arguments;
+
+	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if ([lineNumber hasPrefix:@"line-"]) {
+		lineNumber = [lineNumber substringFromIndex:5];
+	}
+
+	if (lineNumber.length == 0) {
+		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
+	NSInteger numberOfLinesBefore = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] integerValue];
+	NSInteger numberOfLinesAfter = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] integerValue];
+
+	if (numberOfLinesBefore < 0 ||
+		numberOfLinesAfter < 0)
+	{
+		[self _throwJavaScriptException:@"Number of lines must be equal to 0 or greater" inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
+	void (^renderCompletionBlock)(NSArray *) = ^(NSArray<NSDictionary<NSString *, id> *> *renderedLogLines) {
+		contextCompletionBlock(renderedLogLines);
+	};
+
+	[context.viewController renderLogLineAtLineNumber:lineNumber
+								  numberOfLinesBefore:numberOfLinesBefore
+								   numberOfLinesAfter:numberOfLinesAfter
+									  completionBlock:renderCompletionBlock];
 }
 
 - (void)_renderTemplate:(TVCLogScriptEventSinkContext *)context
