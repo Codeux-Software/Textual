@@ -147,20 +147,20 @@ Textual.topicBarDoubleClicked = function()
 /* History indicator */
 Textual.historyIndicatorAdd = function()
 {
-	Textual.historyIndicatorRemove();
-
 	app.renderTemplate(
 		"historyIndicator",
 		null,
 		
 		(function(html) {
+			Textual.historyIndicatorRemove();
+
 			var mainBuffer = MessageBuffer.mainBufferElement();
 
 			mainBuffer.insertAdjacentHTML("beforeend", html);
+
+			Textual.historyIndicatorAddedToView();
 		})
 	);
-
-	Textual.historyIndicatorAddedToView();
 };
 
 Textual.historyIndicatorRemove = function()
