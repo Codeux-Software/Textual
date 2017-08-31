@@ -154,7 +154,7 @@ Textual.historyIndicatorAdd = function()
 		(function(html) {
 			Textual.historyIndicatorRemove();
 
-			var buffer = MessageBuffer.mainBufferElement();
+			var buffer = MessageBuffer.bufferElement();
 
 			buffer.insertAdjacentHTML("beforeend", html);
 
