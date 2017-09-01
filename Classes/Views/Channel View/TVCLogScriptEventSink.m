@@ -145,6 +145,31 @@ ClassWithDesignatedInitializerInitMethod
 	return object;
 }
 
++ (NSString *)standardizeLineNumber:(NSString *)lineNumber
+{
+	NSParameterAssert(lineNumber != nil);
+
+	if ([lineNumber hasPrefix:@"line-"]) {
+		return [lineNumber substringFromIndex:5];
+	}
+
+	return lineNumber;
+}
+
++ (NSArray<NSString *> *)standardizeLineNumbers:(NSArray<NSString *> *)lineNumbers
+{
+	NSParameterAssert(lineNumbers != nil);
+
+	NSMutableArray<NSString *> *lineNumbersOut = [NSMutableArray arrayWithCapacity:lineNumbers.count];
+
+	for (NSString *lineNumber in lineNumbers) {
+		[lineNumbersOut addObject:
+		 [TVCLogScriptEventSink standardizeLineNumber:lineNumber]];
+	}
+
+	return [lineNumbersOut copy];
+}
+
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
 	NSString *handlerName = message.name;
@@ -765,15 +790,7 @@ ClassWithDesignatedInitializerInitMethod
 		lineNumbersUncut = @[lineNumbersUncut];
 	}
 
-	NSMutableArray *lineNumbers = [NSMutableArray arrayWithCapacity:[lineNumbersUncut count]];
-
-	for (__strong NSString *lineNumber in lineNumbersUncut) {
-		if ([lineNumber hasPrefix:@"line-"]) {
-			lineNumber = [lineNumber substringFromIndex:5];
-		}
-
-		[lineNumbers addObject:lineNumber];
-	}
+	NSArray *lineNumbers = [TVCLogScriptEventSink standardizeLineNumbers:lineNumbersUncut];
 
 	[context.viewController notifyLinesAddedToWebView:[lineNumbers copy]];
 }
@@ -814,9 +831,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	if ([lineNumber hasPrefix:@"line-"]) {
-		lineNumber = [lineNumber substringFromIndex:5];
-	}
+	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
 		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
@@ -860,13 +875,8 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *lineNumberAfter = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 	NSString *lineNumberBefore = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
-	if ([lineNumberAfter hasPrefix:@"line-"]) {
-		lineNumberAfter = [lineNumberAfter substringFromIndex:5];
-	}
-
-	if ([lineNumberBefore hasPrefix:@"line-"]) {
-		lineNumberBefore = [lineNumberBefore substringFromIndex:5];
-	}
+	lineNumberAfter = [TVCLogScriptEventSink standardizeLineNumber:lineNumberAfter];
+	lineNumberBefore = [TVCLogScriptEventSink standardizeLineNumber:lineNumberBefore];
 
 	if (lineNumberAfter.length == 0 ||
 		lineNumberBefore.length == 0)
@@ -906,9 +916,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	if ([lineNumber hasPrefix:@"line-"]) {
-		lineNumber = [lineNumber substringFromIndex:5];
-	}
+	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
 		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
