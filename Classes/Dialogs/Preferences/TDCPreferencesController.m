@@ -38,8 +38,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _scrollbackLinesMin			100
-#define _scrollbackLinesMax			15000
+#define _scrollbackSaveLinesMin		100
+#define _scrollbackSaveLinesMax		50000
+#define _scrollbackVisibleLinesMin	100
+#define _scrollbackVisibleLinesMax	15000
 #define _inlineImageWidthMax		2000
 #define _inlineImageWidthMin		40
 #define _inlineImageHeightMax		6000
@@ -143,7 +145,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedInputHistoryScheme:(id)sender;
 - (IBAction)onChangedMainInputTextViewFontSize:(id)sender; // changed
 - (IBAction)onChangedMainWindowSegmentedController:(id)sender;
-- (IBAction)onChangedScrollbackLimit:(id)sender;
+- (IBAction)onChangedScrollbackSaveLimit:(id)sender;
+- (IBAction)onChangedScrollbackVisibleLimit:(id)sender;
 - (IBAction)onChangedServerListUnreadBadgeColor:(id)sender;
 - (IBAction)onChangedSidebarColorInversion:(id)sender;
 - (IBAction)onChangedTheme:(id)sender;
@@ -451,14 +454,24 @@ NS_ASSUME_NONNULL_BEGIN
 	return scriptsInstalled.stringArrayControllerObjects;
 }
 
-- (NSString *)scrollbackLimit
+- (NSString *)scrollbackSaveLimit
 {
-	return _unsignedIntegerString([TPCPreferences scrollbackLimit]);
+	return _unsignedIntegerString([TPCPreferences scrollbackSaveLimit]);
 }
 
 - (void)setScrollbackLimit:(NSString *)value
 {
-	[TPCPreferences setScrollbackLimit:value.integerValue];
+	[TPCPreferences setScrollbackSaveLimit:value.integerValue];
+}
+
+- (NSString *)scrollbackVisibleLimit
+{
+	return _unsignedIntegerString([TPCPreferences scrollbackVisibleLimit]);
+}
+
+- (void)setScrollbackVisibleLimit:(NSString *)value
+{
+	[TPCPreferences setScrollbackVisibleLimit:value.integerValue];
 }
 
 - (NSString *)completionSuffix
@@ -707,13 +720,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)validateValue:(inout id *)value forKey:(NSString *)key error:(out NSError **)outError
 {
-	if ([key isEqualToString:@"scrollbackLimit"]) {
+	if ([key isEqualToString:@"scrollbackSaveLimit"]) {
 		NSInteger valueInteger = [*value integerValue];
 
-		if (valueInteger < _scrollbackLinesMin) {
-			*value = _unsignedIntegerString(_scrollbackLinesMin);
-		} else if (valueInteger > _scrollbackLinesMax) {
-			*value = _unsignedIntegerString(_scrollbackLinesMax);
+		if (valueInteger < _scrollbackSaveLinesMin) {
+			*value = _unsignedIntegerString(_scrollbackSaveLinesMin);
+		} else if (valueInteger > _scrollbackSaveLinesMax) {
+			*value = _unsignedIntegerString(_scrollbackSaveLinesMax);
+		}
+	} else if ([key isEqualToString:@"scrollbackVisibleLimit"]) {
+		NSInteger valueInteger = [*value integerValue];
+
+		if (valueInteger < _scrollbackVisibleLinesMin) {
+			*value = _unsignedIntegerString(_scrollbackVisibleLinesMin);
+		} else if (valueInteger > _scrollbackVisibleLinesMax) {
+			*value = _unsignedIntegerString(_scrollbackVisibleLinesMax);
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger valueInteger = [*value integerValue];
@@ -1371,9 +1392,14 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences performReloadAction:TPCPreferencesReloadServerListUnreadBadgesAction];
 }
 
-- (void)onChangedScrollbackLimit:(id)sender
+- (void)onChangedScrollbackSaveLimit:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadScrollbackLimitAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadScrollbackSaveLimitAction];
+}
+
+- (void)onChangedScrollbackVisibleLimit:(id)sender
+{
+	[TPCPreferences performReloadAction:TPCPreferencesReloadScrollbackVisibleLimitAction];
 }
 
 - (void)onOpenPathToCloudFolder:(id)sender

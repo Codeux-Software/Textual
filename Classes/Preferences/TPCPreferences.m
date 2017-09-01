@@ -824,19 +824,24 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark Max Log Lines
 
-+ (NSUInteger)scrollbackHistoryLimit
++ (NSUInteger)scrollbackSaveLimit
 {
-	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumHistoryCount"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumSavedLineCount"];
 }
 
-+ (NSUInteger)scrollbackLimit
++ (void)setScrollbackSaveLimit:(NSUInteger)scrollbackSaveLimit
 {
-	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumLineCount"];
+	[RZUserDefaults() setUnsignedInteger:scrollbackSaveLimit forKey:@"ScrollbackMaximumSavedLineCount"];
 }
 
-+ (void)setScrollbackLimit:(NSUInteger)value
++ (NSUInteger)scrollbackVisibleLimit
 {
-	[RZUserDefaults() setUnsignedInteger:value forKey:@"ScrollbackMaximumLineCount"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumVisibleLineCount"];
+}
+
++ (void)setScrollbackVisibleLimit:(NSUInteger)scrollbackVisibleLimit
+{
+	[RZUserDefaults() setUnsignedInteger:scrollbackVisibleLimit forKey:@"ScrollbackMaximumVisibleLineCount"];
 }
 
 #pragma mark -

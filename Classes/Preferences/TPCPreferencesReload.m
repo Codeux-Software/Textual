@@ -188,8 +188,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Scrollback limit */
-	if ([keys containsObject:@"ScrollbackMaximumLineCount"]) {
-		reloadAction |= TPCPreferencesReloadScrollbackLimitAction;
+	if ([keys containsObject:@"ScrollbackMaximumSavedLineCount"]) {
+		reloadAction |= TPCPreferencesReloadScrollbackSaveLimitAction;
+	}
+
+	if ([keys containsObject:@"ScrollbackMaximumVisibleLineCount"]) {
+		reloadAction |= TPCPreferencesReloadScrollbackVisibleLimitAction;
 	}
 
 	/* After this is all complete; we call -preferencesChanged just to take 
@@ -363,8 +367,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Scrollback limit */
-	if ((reloadAction & TPCPreferencesReloadScrollbackLimitAction) == TPCPreferencesReloadScrollbackLimitAction) {
+	if ((reloadAction & TPCPreferencesReloadScrollbackSaveLimitAction) == TPCPreferencesReloadScrollbackSaveLimitAction) {
 		[TVCLogControllerHistoricLogSharedInstance() resetMaximumLineCount];
+	}
+
+	if ((reloadAction & TPCPreferencesReloadScrollbackVisibleLimitAction) == TPCPreferencesReloadScrollbackSaveLimitAction) {
+#warning TODO: Implement
 	}
 
 	/* World controller preferences changed call */

@@ -240,7 +240,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetMaximumLineCount
 {
-	NSUInteger maximumLineCount = [TPCPreferences scrollbackLimit];
+	NSUInteger maximumLineCount = [TPCPreferences scrollbackSaveLimit];
 
 	[[self remoteObjectProxy] setMaximumLineCount:maximumLineCount];
 }
