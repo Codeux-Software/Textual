@@ -59,7 +59,7 @@ var Textual = {};
 Textual.viewInitiated 					= function(viewType, serverHash, channelHash, channelName) {};
 
 Textual.messageAddedToView 				= function(lineNumber, fromBuffer) {};
-Textual.messageRemovedFromView 			= function(lineNumber);
+Textual.messageRemovedFromView 			= function(lineNumber) {};
 
 Textual.historyIndicatorAddedToView			= function() {};
 Textual.historyIndicatorRemovedFromView 	= function() {};
