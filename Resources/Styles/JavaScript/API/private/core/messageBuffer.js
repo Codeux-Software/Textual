@@ -427,7 +427,7 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		
 		/* Appending HTML will cause the view to appear scrolled 
 		for the user so we save the position for restore. */
-		TextualScroller.saveFirstScrollHeightForRestore();
+		TextualScroller.saveRestorationFirstDataPoint();
 		
 		/* Append HTML */
 		var htmlString = html.join("");
@@ -456,7 +456,7 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		/* Before we enforce size limit, we record the height with the appended
 		HTML to allow scroller to learn proper amount to scroll. Without recording
 		the height here, it wont change once we enforce size limit. */
-		TextualScroller.saveSecondScrollHeightForRestore();
+		TextualScroller.saveRestorationSecondDataPoint();
 		
 		/* Enforce size limit. This function expects the count to already be 
 		incremented which is why we call it AFTER the append. */
