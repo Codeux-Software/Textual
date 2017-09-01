@@ -294,8 +294,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)preferencesChanged
 {
-	[self.viewController preferencesChanged];
-
 	if ([TPCPreferences displayPublicMessageCountOnDockBadge] == NO) {
 		if (self.isChannel) {
 			self.dockUnreadCount = 0;
