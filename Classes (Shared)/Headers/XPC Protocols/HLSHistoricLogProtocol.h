@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetDataForView:(NSString *)viewId;
 
 - (void)fetchEntriesForView:(NSString *)viewId
+				  ascending:(BOOL)ascending
 				 fetchLimit:(NSUInteger)fetchLimit // optional (0 == no limit)
 				limitToDate:(nullable NSDate *)limitToDate
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;

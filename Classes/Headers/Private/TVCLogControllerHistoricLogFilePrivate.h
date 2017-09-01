@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetDataForItem:(IRCTreeItem *)item;
 
 - (void)fetchEntriesForItem:(IRCTreeItem *)item
+				  ascending:(BOOL)ascending
 				 fetchLimit:(NSUInteger)fetchLimit
 				limitToDate:(nullable NSDate *)limitToDate
 		withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock;

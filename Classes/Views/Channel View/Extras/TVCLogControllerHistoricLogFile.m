@@ -149,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
 
 	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
-						  forSelector:@selector(fetchEntriesForView:fetchLimit:limitToDate:withCompletionBlock:)
+						  forSelector:@selector(fetchEntriesForView:ascending:fetchLimit:limitToDate:withCompletionBlock:)
 						argumentIndex:0
 							  ofReply:YES];
 
@@ -300,6 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)fetchEntriesForItem:(IRCTreeItem *)item
+				  ascending:(BOOL)ascending
 				  fetchLimit:(NSUInteger)fetchLimit
 				 limitToDate:(nullable NSDate *)limitToDate
 		 withCompletionBlock:(void (^)(NSArray<TVCLogLine *> *entries))completionBlock
@@ -309,6 +310,7 @@ NS_ASSUME_NONNULL_BEGIN
 	__weak typeof(self) weakSelf = self;
 
 	[[self remoteObjectProxy] fetchEntriesForView:item.uniqueIdentifier
+										ascending:ascending
 									   fetchLimit:fetchLimit
 									  limitToDate:limitToDate
 							  withCompletionBlock:^(NSArray<TVCLogLineXPC *> *entries) {

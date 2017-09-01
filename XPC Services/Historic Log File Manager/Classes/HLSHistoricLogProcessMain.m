@@ -423,6 +423,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 }
 
 - (void)fetchEntriesForView:(NSString *)viewId
+				  ascending:(BOOL)ascending
 				 fetchLimit:(NSUInteger)fetchLimit
 				limitToDate:(nullable NSDate *)limitToDate
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock
@@ -438,7 +439,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 													  limitToDate:limitToDate
 													   resultType:NSManagedObjectResultType];
 
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
+		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:ascending]];
 
 		NSError *fetchRequestError = nil;
 
