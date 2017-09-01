@@ -262,9 +262,9 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 
 		if (elementId && elementId.indexOf("line-") === 0) {
 			lineNumbers.push(elementId);
-
-			numberRemoved += 1;
 		}
+
+		numberRemoved += 1;
 	} while (numberRemoved < numberToRemove);
 	
 	if (fromTop) {
