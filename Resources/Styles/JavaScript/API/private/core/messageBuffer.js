@@ -128,7 +128,7 @@ MessageBuffer.bufferElement = function()
 	return MessageBuffer.bufferElementReference;
 };
 
-MessageBuffer.bufferElementAppend = function(html)
+MessageBuffer.bufferElementAppend = function(html, lineNumbers)
 {
 	/* Do not append to bottom if bottom does not reflect
 	the most recent state of the buffer. */
@@ -143,6 +143,8 @@ MessageBuffer.bufferElementAppend = function(html)
 	MessageBuffer.bufferCurrentSize += 1;
 
 	MessageBuffer.resizeBufferIfNeeded(1);
+	
+	Textual.newMessagePostedToViewInt(lineNumbers);
 };
 
 /* ************************************************** */
