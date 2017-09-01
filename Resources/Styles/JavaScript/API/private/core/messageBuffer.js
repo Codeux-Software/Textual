@@ -146,7 +146,9 @@ MessageBuffer.bufferElementAppend = function(html, lineNumbers)
 
 	MessageBuffer.resizeBufferIfNeeded(1);
 	
-	Textual.newMessagePostedToViewInt(lineNumbers);
+	if (lineNumbers) {
+		Textual.newMessagePostedToViewInt(lineNumbers);
+	}
 };
 
 /* ************************************************** */
