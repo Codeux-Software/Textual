@@ -499,3 +499,12 @@ app.renderTemplate = function(templateName, templateAttributes, callbackFunction
 		TextualScriptSink.renderTemplate(dataValue);
 	}
 };
+
+app.notifyLinesAddedToWebView = function(lineNumbers)
+{
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.notifyLinesAddedToWebView.postMessage(lineNumbers);
+	} else {
+		TextualScriptSink.notifyLinesAddedToWebView(lineNumbers);
+	}
+};
