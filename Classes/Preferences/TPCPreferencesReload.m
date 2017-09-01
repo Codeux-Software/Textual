@@ -372,7 +372,13 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ((reloadAction & TPCPreferencesReloadScrollbackVisibleLimitAction) == TPCPreferencesReloadScrollbackSaveLimitAction) {
-#warning TODO: Implement
+		for (IRCClient *u in worldController().clientList) {
+			[u.viewController changeScrollbackLimit];
+
+			for (IRCChannel *c in u.channelList) {
+				[c.viewController changeScrollbackLimit];
+			}
+		}
 	}
 
 	/* World controller preferences changed call */

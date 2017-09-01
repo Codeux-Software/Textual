@@ -54,11 +54,13 @@ MessageBuffer.bufferCurrentSize = 0;
 
 /* When old messages are NOT being loaded, this 
 is the number of elements we want to keep. */
-MessageBuffer.bufferSizeSoftLimit = 200;
+MessageBuffer.bufferSizeSoftLimitDefault = 200;
+MessageBuffer.bufferSizeSoftLimit = MessageBuffer.bufferSizeSoftLimitDefault;
 
 /* When old messages are being loaded, this 
 is the number of elements we want to keep. */
-MessageBuffer.bufferSizeHardLimit = 1000;
+MessageBuffer.bufferSizeHardLimitDefault = 1000;
+MessageBuffer.bufferSizeHardLimit = MessageBuffer.bufferSizeHardLimitDefault;
 
 /* The number of lines to fetch when loading old messages.
 When old lines are fetched, the number of lines returned 
@@ -150,6 +152,18 @@ MessageBuffer.bufferElementAppend = function(html, lineNumbers)
 /* ************************************************** */
 /*               Buffer Size Management               */
 /* ************************************************** */
+
+/* Allow user to set a custom buffer limit */
+MessageBuffer.setBufferLimit = function(limit)
+{
+	if (limit < 100 || limit > 50000) {
+		MessageBuffer.bufferSizeSoftLimit = MessageBuffer.bufferSizeSoftLimitDefault;
+		MessageBuffer.bufferSizeHardLimit = MessageBuffer.bufferSizeHardLimitDefault;
+	} else {
+		MessageBuffer.bufferSizeSoftLimitDefault = limit;
+		MessageBuffer.bufferSizeHardLimitDefault = limit;
+	}
+};
 
 /* Determine whether buffer should be resized depending on status. */
 MessageBuffer.resizeBufferIfNeeded = function(numberAdded)
