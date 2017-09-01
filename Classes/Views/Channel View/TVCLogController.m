@@ -685,7 +685,7 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Plugins
 
-- (void)notifyLinesAddedToWebView:(NSArray<NSString *> *)lineNumbers
+- (void)notifyLinesAddedToView:(NSArray<NSString *> *)lineNumbers
 {
 	NSParameterAssert(lineNumbers != nil);
 
@@ -700,6 +700,17 @@ ClassWithDesignatedInitializerInitMethod
 	for (NSString *lineNumber in lineNumbers) {
 		[THOPluginDispatcher dequeueDidPostNewMessageWithLineNumber:lineNumber forViewController:self];
 	}
+}
+
+- (void)notifyLinesRemovedFromView:(NSArray<NSString *> *)lineNumbers
+{
+	NSParameterAssert(lineNumbers != nil);
+
+	if (self.loaded == NO || self.terminating) {
+		return;
+	}
+
+#warning TODO: Implement
 }
 
 #pragma mark -

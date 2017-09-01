@@ -138,18 +138,46 @@ Textual.viewFinishedLoadingHistoryInt = function()
 	Textual.viewFinishedLoadingHistory();
 };
 
-Textual.newMessagePostedToViewInt = function(lineNumber, fromBuffer)
+Textual.messageAddedToViewInt = function(lineNumber, fromBuffer)
+{
+	var oldCallbackExists = (typeof Textual.newMessagePostedToView === "function");
+	
+	if (oldCallbackExists) {
+		console.warn("Textual.newMessagePostedToView() is deprecated. Use Textual.messageAddedToView() instead.");
+	}
+	
+	/* Allow lineNumber to be an array of line numbers or a single line number. */
+	if (Array.isArray(lineNumber)) {
+		for (var i = 0; i < lineNumber.length; i++) {
+			if (oldCallbackExists) {
+				Textual.newMessagePostedToView(lineNumber[i], fromBuffer);
+			} else {
+				Textual.messageAddedToView(lineNumber[i], fromBuffer);
+			}
+		}
+	} else {
+		if (oldCallbackExists) {
+			Textual.newMessagePostedToView(lineNumber, fromBuffer);
+		} else {
+			Textual.messageAddedToView(lineNumber, fromBuffer);
+		}
+	}
+
+	app.notifyLinesAddedToView(lineNumber);
+};
+
+Textual.messageRemovedFromViewInt = function(lineNumber)
 {
 	/* Allow lineNumber to be an array of line numbers or a single line number. */
 	if (Array.isArray(lineNumber)) {
 		for (var i = 0; i < lineNumber.length; i++) {
-			Textual.newMessagePostedToView(lineNumber[i], fromBuffer);
+			Textual.messageRemovedFromView(lineNumber[i]);
 		}
 	} else {
-		Textual.newMessagePostedToView(lineNumber, fromBuffer);
+		Textual.messageRemovedFromView(lineNumber);
 	}
 
-	app.notifyLinesAddedToWebView(lineNumber);
+	app.notifyLinesRemovedFromView(lineNumber);
 };
 
 /* Events */

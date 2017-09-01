@@ -147,7 +147,7 @@ MessageBuffer.bufferElementAppend = function(html, lineNumbers)
 	MessageBuffer.resizeBufferIfNeeded(1);
 	
 	if (lineNumbers) {
-		Textual.newMessagePostedToViewInt(lineNumbers);
+		Textual.messageAddedToViewInt(lineNumbers);
 	}
 };
 
@@ -495,7 +495,7 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		TextualScroller.restoreScrollPosition();
 		
 		/* Post line numbers so style can do something with them. */
-		Textual.newMessagePostedToViewInt(lineNumbers, true);
+		Textual.messageAddedToViewInt(lineNumbers, true);
 	} // renderedMessagesCount > 0
 	
 	/* Flush state */

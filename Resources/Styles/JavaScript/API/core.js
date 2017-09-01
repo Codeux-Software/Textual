@@ -58,7 +58,8 @@ var Textual = {};
 */
 Textual.viewInitiated 					= function(viewType, serverHash, channelHash, channelName) {};
 
-Textual.newMessagePostedToView 			= function(lineNumber, fromBuffer) {};
+Textual.messageAddedToView 				= function(lineNumber, fromBuffer) {};
+Textual.messageRemovedFromView 			= function(lineNumber);
 
 Textual.historyIndicatorAddedToView			= function() {};
 Textual.historyIndicatorRemovedFromView 	= function() {};
@@ -187,8 +188,8 @@ Textual.handleEvent                            = function(eventToken) {};
 
 // app.logToConsole(<input>)		- Log a message to the OS X system-wide console.
 
-/*	The app.printDebugInformation* calls documented below also call newMessagePostedToView() which means calling
-	them from within newMessagePostedToView() will create an infinite loop. If needed inside newMessagePostedToView(),
+/*	The app.printDebugInformation* calls documented below also call messageAddedToView() which means calling
+	them from within messageAddedToView() will create an infinite loop. If needed inside messageAddedToView(),
 	then check the line type of the new message and do not respond to line types with the value "debug" */
 
 // app.printDebugInformationToConsole(message)		— Show a debug message to the user in the server console.
