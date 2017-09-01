@@ -43,7 +43,6 @@
 
 Textual.documentBodyElementReference = null;
 Textual.topicBarElementReference = null;
-Textual.historicMessagesElementReference = null;
 
 /* Loading screen */
 Textual.loadingScreenElement = function()
@@ -194,59 +193,20 @@ Textual.documentHTML = function()
 };
 
 /* History */
-Textual.historicMessagesElement = function()
-{
-	if (Textual.historicMessagesElementReference === null) {
-		Textual.historicMessagesElementReference = document.getElementById("historic_messages");
-	}
-	
-	return Textual.historicMessagesElementReference;
-}
-
 Textual.documentBodyAppendHistoric = function(templateHTML, lineNumbers, isReload)
 {
-	var historicMessages = Textual.historicMessagesElement();
-
 	var atBottom = TextualScroller.isScrolledToBottom();
 
 	if (atBottom === false) {
 		TextualScroller.saveRestorationFirstDataPoint();
 	}
 
-	historicMessages.insertAdjacentHTML("afterbegin", templateHTML);
+	MessageBuffer.bufferElementPrepend(templateHTML);
 
 	if (atBottom === false) {
 		TextualScroller.saveRestorationSecondDataPoint();
 
 		TextualScroller.restoreScrollPosition();
-	}
-	
-	Textual.messageAddedToViewInt(lineNumbers);
-};
-
-Textual.setHistoricMessagesLoaded = function(isLoaded)
-{
-	var historicMessages = Textual.historicMessagesElement();
-
-	if (historicMessages) {
-		if (isLoaded) {
-			historicMessages.classList.add("loaded");
-		} else {
-			historicMessages.classList.remove("loaded");
-		}
-	}
-};
-
-Textual.setHistoricMessagesTransitionEnabled = function(enableTransition)
-{
-	var historicMessages = Textual.historicMessagesElement();
-
-	if (historicMessages) {
-		if (enableTransition) {
-			historicMessages.classList.remove("notransition");
-		} else {
-			historicMessages.classList.add("notransition");
-		}
 	}
 };
 

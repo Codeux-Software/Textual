@@ -109,12 +109,12 @@ MessageBuffer.lineNumberContents = function(lineNumber)
 MessageBuffer.firstLineInBuffer = function(buffer)
 {
 	/* Note: speed this up if we begin using this function more often. */
-	return buffer.querySelector("*[id^='line-']:first-child");
+	return buffer.querySelector("div.line[id^='line-']:first-child");
 };
 
 MessageBuffer.lastLineInBuffer = function(buffer)
 {
-	return buffer.querySelector("*[id^='line-']:last-child");
+	return buffer.querySelector("div.line[id^='line-']:last-child");
 };
 
 /* ************************************************** */
@@ -130,7 +130,17 @@ MessageBuffer.bufferElement = function()
 	return MessageBuffer.bufferElementReference;
 };
 
+MessageBuffer.bufferElementPrepend = function(html, lineNumbers)
+{
+	MessageBuffer.bufferElementInsert("afterbegin", html, lineNumbers)
+};
+
 MessageBuffer.bufferElementAppend = function(html, lineNumbers)
+{
+	MessageBuffer.bufferElementInsert("beforeend", html, lineNumbers);
+};
+	
+MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers)
 {
 	/* Do not append to bottom if bottom does not reflect
 	the most recent state of the buffer. */
@@ -140,11 +150,17 @@ MessageBuffer.bufferElementAppend = function(html, lineNumbers)
 	
 	var buffer = MessageBuffer.bufferElement();
 
-	buffer.insertAdjacentHTML("beforeend", html);
+	buffer.insertAdjacentHTML(placement, html);
 	
-	MessageBuffer.bufferCurrentSize += 1;
+	var lineNumbersCount = 1;
+	
+	if (lineNumbers) {
+		lineNumbersCount = lineNumbers.length;
+	}
+	
+	MessageBuffer.bufferCurrentSize += lineNumbersCount;
 
-	MessageBuffer.resizeBufferIfNeeded(1);
+	MessageBuffer.resizeBufferIfNeeded(lineNumbersCount);
 	
 	if (lineNumbers) {
 		Textual.messageAddedToViewInt(lineNumbers);
@@ -236,10 +252,16 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 			element = buffer.lastChild;
 		}
 		
+		if (element === null) {
+			break;
+		}
+		
+		var elementId = element.id;
+		
 		element.remove();
 
-		if (element.id && element.id.indexOf("line-") === 0) {
-			lineNumbers.push(element.id);
+		if (elementId && elementId.indexOf("line-") === 0) {
+			lineNumbers.push(elementId);
 
 			numberRemoved += 1;
 		}
@@ -320,6 +342,12 @@ MessageBuffer.loadMessages = function(before)
 	do not keep sending them out while the user waits for one to finish. */
 	if (before) 
 	{
+		if (Textual.finishedLoadingHistory === false) {
+			console.log("Cancelled request to load messages above line because history isn't loaded");
+			
+			return;
+		}
+		
 		if (MessageBuffer.loadingMessagesBeforeLine) {
 			console.log("Cancelled request to load messages above line because another request is active");
 			

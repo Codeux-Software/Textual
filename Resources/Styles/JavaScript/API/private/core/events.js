@@ -43,6 +43,8 @@
 
 Textual.viewBodyDidLoadIntAnimationFrame = null;
 
+Textual.finishedLoadingHistory = false;
+
 /* State management */
 Textual.notifyDidBecomeVisible = function()
 {
@@ -52,8 +54,6 @@ Textual.notifyDidBecomeVisible = function()
 Textual.notifyDidBecomeHidden = function()
 {
 	Textual.clearSelection();
-
-	Textual.setHistoricMessagesTransitionEnabled(false);
 };
 
 Textual.notifySelectionChanged = function(isSelected)
@@ -133,7 +133,7 @@ Textual.viewFinishedLoadingInt = function(configuration)
 
 Textual.viewFinishedLoadingHistoryInt = function()
 {
-	Textual.setHistoricMessagesLoaded(true);
+	Textual.finishedLoadingHistory = true;
 
 	Textual.viewFinishedLoadingHistory();
 };

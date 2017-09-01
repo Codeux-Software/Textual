@@ -72,9 +72,9 @@
 		{{/isUtilityView}}
 
 		dir="{{textDirectionToken}}">
-			{{! The elements "body_home," "historic_messages," "message_buffer,"
-			"loading_screen," "topic_bar," and "mark" must always remain the same
-			id= as these elements are used internally by Textual. }}
+			{{! The elements "body_home," "message_buffer," "loading_screen,"
+			"topic_bar," and "mark" must always remain the same id= as these
+			elements are used internally by Textual. }}
 
 			<div id="loading_screen">View is Loading…</div>
 
@@ -84,14 +84,6 @@
 
 			<div id="body_home">
 				<div id="message_buffer">
-					<div id="historic_messages"
-
-					{{#isReloadingStyle}}
-					isreload="true"
-					{{^isReloadingStyle}}
-					isreload="false"
-					{{/isReloadingStyle}} ></div>
-
 				</div>
 			</div>
 

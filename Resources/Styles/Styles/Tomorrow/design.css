@@ -215,44 +215,6 @@ a:hover {
 
 /* @end */
 
-/* @group Separating History */
-
-div[id=mark] {
-	clear: both;
-	position: relative;
-	z-index: 295;
-	margin-top: -1px;
-	border-bottom: 1px dashed;
-	border-color: #C82829; /* Tomorrow: Red */
-	-webkit-transition: 0.2s linear;
-}
-
-#historic_messages {
-	transition: opacity 0.8s ease-in-out;
-	opacity: 0;
-	height: 0;
-	margin: 0;
-	padding: 0;
-}
-
-#historic_messages.loaded {
-	height: auto;
-}
-
-#historic_messages[isreload="false"].loaded {
-	opacity: 0.6;
-}
-
-#historic_messages[isreload="true"].loaded {
-	opacity: 1.0;
-}
-
-#historic_messages.notransition {
-	transition: none;
-}
-
-/* @end */
-
 /* @group Message buffer loading animation */
 
 .messsage_buffer_loading_indicator {
