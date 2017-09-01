@@ -348,11 +348,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self.backingView evaluateFunction:function withArguments:arguments];
 }
 
-- (void)appendToDocumentBody:(NSString *)html
+- (void)appendToDocumentBody:(NSString *)html withLineNumbers:(NSArray<NSString *> *)lineNumbers
 {
 	NSParameterAssert(html != nil);
 
-	[self _evaluateFunction:@"MessageBuffer.bufferElementAppend" withArguments:@[html]];
+	[self _evaluateFunction:@"MessageBuffer.bufferElementAppend" withArguments:@[html, lineNumbers]];
 }
 
 #pragma mark -
@@ -1010,9 +1010,7 @@ ClassWithDesignatedInitializerInitMethod
 				[client cacheHighlightInChannel:channel withLogLine:logLine];
 			}
 
-			[self appendToDocumentBody:html];
-
-			[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber, @(NO)]];
+			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
 
 			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 				[THOPluginDispatcher didPostNewMessage:resultInfo[@"pluginConcreteObject"] forViewController:self];
