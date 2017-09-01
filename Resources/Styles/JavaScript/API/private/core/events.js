@@ -88,8 +88,14 @@ Textual.viewBodyDidLoadIntTimed = function()
 	Textual.viewBodyDidLoad();
 };
 
-Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingTheme, textSizeMultiplier)
+Textual.viewFinishedLoadingInt = function(configuration)
 {
+	var isSelected = configuration.selected;
+	var isVisible = configuration.visible;
+	var isReloadingTheme = configuration.reloadingTheme;
+	var textSizeMultiplier = configuration.textSizeMultiplier;
+	var scrollbackLimit = configuration.scrollbackLimit;
+	
 	if (isVisible) {
 		Textual.notifyDidBecomeVisible();
 	
@@ -119,6 +125,10 @@ Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingThem
 	}
 	
 	Textual.changeTextSizeMultiplier(textSizeMultiplier);
+	
+	if (scrollbackLimit !== 0) { // 0 = use default
+		MessageBuffer.setBufferLimit(scrollbackLimit);
+	}
 };
 
 Textual.viewFinishedLoadingHistoryInt = function()

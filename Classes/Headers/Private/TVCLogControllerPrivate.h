@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyDidBecomeVisible;
 - (void)notifySelectionChanged;
 
+- (void)changeScrollbackLimit;
+
 - (void)clearBackingView;
 
 - (void)reloadTheme;

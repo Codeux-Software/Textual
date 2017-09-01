@@ -675,6 +675,13 @@ ClassWithDesignatedInitializerInitMethod
 	[self _evaluateFunction:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
 
+- (void)changeScrollbackLimit
+{
+	NSUInteger scrollbackLimit = [TPCPreferences scrollbackVisibleLimit];
+
+	[self _evaluateFunction:@"MessageBuffer.setBufferLimit" withArguments:@[@(scrollbackLimit)]];
+}
+
 #pragma mark -
 #pragma mark Manage Highlights
 
@@ -1463,11 +1470,19 @@ ClassWithDesignatedInitializerInitMethod
 
 	double textSizeMultiplier = self.attachedWindow.textSizeMultiplier;
 
+	NSUInteger scrollbackLimit = [TPCPreferences scrollbackVisibleLimit];
+
 	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
-			  withArguments:@[@(self.selected),
-							  @(self.visible),
-							  @(self.reloadingTheme),
-							  @(textSizeMultiplier)]];
+			  withArguments:
+	 @[
+		  @{
+			  @"selected" : @(self.selected),
+			  @"visible" : @(self.visible),
+			  @"reloadingTheme" : @(self.reloadingTheme), // TODO: Fix this always being false
+			  @"textSizeMultiplier" : @(textSizeMultiplier),
+			  @"scrollbackLimit" : @(scrollbackLimit)
+		  }
+	  ]];
 
 	[self setInitialTopic];
 
