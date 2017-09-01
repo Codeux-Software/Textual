@@ -572,6 +572,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		[TVCLogControllerHistoricLogSharedInstance()
 		 fetchEntriesForItem:self.associatedItem
+				   ascending:NO
 				  fetchLimit:100
 				 limitToDate:limitToDate
 		 withCompletionBlock:^(NSArray<TVCLogLine *> *objects) {
@@ -579,7 +580,7 @@ ClassWithDesignatedInitializerInitMethod
 					return;
 				}
 
-				reloadBlock(objects);
+				reloadBlock(objects.reverseObjectEnumerator.allObjects);
 		 }];
 	};
 
