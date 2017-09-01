@@ -572,7 +572,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		[TVCLogControllerHistoricLogSharedInstance()
 		 fetchEntriesForItem:self.associatedItem
-				  fetchLimit:0
+				  fetchLimit:100
 				 limitToDate:limitToDate
 		 withCompletionBlock:^(NSArray<TVCLogLine *> *objects) {
 				if ([operation isCancelled]) {

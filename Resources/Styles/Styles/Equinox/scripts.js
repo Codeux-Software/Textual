@@ -204,20 +204,6 @@ function dateChange(e) {
     }
   };
 
-  // First, let's get the last line posted
-  var lastline = e.previousSibling;
-
-  if (lastline) {
-    // And if it's a mark or a previous date entry, let's remove it, we can use css + selectors for marks that follow
-    deleteLastlineDate(lastline);
-
-    // If the last line is the historic_messages div and its last child or previous sibling is a date, remove that too
-    if (lastline.id === 'historic_messages') {
-      deleteLastlineDate(lastline.lastChild);
-      deleteLastlineDate(lastline.previousSibling);
-    }
-  }
-
   // Create the date element: <div class="date"><hr /><span>...</span><hr /></div>
   var div = document.createElement('div');
   var span = document.createElement('span');

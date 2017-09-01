@@ -260,32 +260,6 @@ body[dir=ltr] div[ltype=action] .sender:before {
 
 }
 
-/* Historic / Log readback */
-
-#historic_messages {
-	transition: opacity 0.8s ease-in;
-	opacity: 0;
-	height: 0;
-	margin: 0;
-	padding: 0;
-}
-
-#historic_messages.loaded {
-	height: auto;
-}
-
-#historic_messages[isreload="false"].loaded {
-	opacity: 0.6;
-}
-
-#historic_messages[isreload="true"].loaded {
-	opacity: 1.0;
-}
-
-#historic_messages.notransition {
-	transition: none;
-}
-
 /* Message buffer loading animation */
 
 .messsage_buffer_loading_indicator {
@@ -679,7 +653,7 @@ body div.date > span {
   margin: 0 1em;
 }
 
-body div.date + div#mark, body div.date + div#historic_messages + div#mark {
+body div.date + div#mark {
   display: none;
 }
 
