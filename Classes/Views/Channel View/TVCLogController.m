@@ -436,11 +436,11 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Reload Scrollback
 
-- (void)appendHistoricMessageFragment:(NSString *)html isReload:(BOOL)isReload
+- (void)appendHistoricMessageFragment:(NSString *)html withLineNumbers:(NSArray<NSString *> *)lineNumbers isReload:(BOOL)isReload
 {
 	NSParameterAssert(html != nil);
 
-	[self _evaluateFunction:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
+	[self _evaluateFunction:@"Textual.documentBodyAppendHistoric" withArguments:@[html, lineNumbers, @(isReload)]];
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -497,9 +497,7 @@ ClassWithDesignatedInitializerInitMethod
 	/* Render the result in WebKit */
 	self.activeLineCount += lineNumbers.count;
 
-	[self appendHistoricMessageFragment:patchedAppend isReload:isReload];
-
-	[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers, @(NO)]];
+	[self appendHistoricMessageFragment:patchedAppend withLineNumbers:lineNumbers isReload:isReload];
 
 	/* Inform plugins of new content */
 	for (THOPluginDidPostNewMessageConcreteObject *pluginObject in pluginObjects) {
@@ -534,9 +532,8 @@ ClassWithDesignatedInitializerInitMethod
 		/* 1 */ self.encrypted ||
 		/* 2 */ (firstTimeLoadingHistory &&
 				 [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
-		/* 3 */  self.associatedChannel == nil ||
-		/* 4 */  self.associatedChannel.isUtility ||
-		/* 5 */ (firstTimeLoadingHistory &&
+		/* 3 */  self.associatedChannel.isUtility ||
+		/* 4 */ (firstTimeLoadingHistory &&
 				 self.associatedChannel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
