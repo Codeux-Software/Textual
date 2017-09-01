@@ -83,8 +83,10 @@ TextualScroller.documentScrolledCallback = function()
 	/* The current position scrolled to */
 	var scrollPosition = window.scrollY;
 
-	if (scrollPosition > scrollHeight) {
-		return;
+	if (scrollPosition < 0 ||
+		scrollPosition > scrollHeight) 
+	{
+		return; // Ignore elastic scrolling
 	}
 	
 	var scrolledUpwards = false;
@@ -163,17 +165,20 @@ TextualScroller.percentScrolled = function()
 /*               Position Restore                     */
 /* ************************************************** */
 
+TextualScroller.restoreScrolledUpwards = false;
 TextualScroller.restoreScrollHeightFirstValue = 0;
 TextualScroller.restoreScrollHeightSecondValue = 0;
 
-TextualScroller.saveFirstScrollHeightForRestore = function()
+TextualScroller.saveRestorationFirstDataPoint = function()
 {
+	TextualScroller.restoreScrolledUpwards = TextualScroller.scrolledUpwards;
+
 	/* document.body.scrollHeight is recorded instead of TextualScroller.scrollHeight()
 	because the latter subtracts offsetHeight which we need for accurate value. */
 	TextualScroller.restoreScrollHeightFirstValue = document.body.scrollHeight;
 };
 
-TextualScroller.saveSecondScrollHeightForRestore = function()
+TextualScroller.saveRestorationSecondDataPoint = function()
 {
 	TextualScroller.restoreScrollHeightSecondValue = document.body.scrollHeight;
 };
@@ -196,6 +201,8 @@ TextualScroller.restoreScrollPosition = function(reversed)
 	if (scrollTo < 0) {
 		scrollTo = 0;
 	}
+	
+	console.log("Going to scroll to " + scrollTo);
 	
 	window.scrollTo(0, scrollTo);
 
