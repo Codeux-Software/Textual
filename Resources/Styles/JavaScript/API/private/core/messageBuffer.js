@@ -130,6 +130,12 @@ MessageBuffer.bufferElement = function()
 
 MessageBuffer.bufferElementAppend = function(html)
 {
+	/* Do not append to bottom if bottom does not reflect
+	the most recent state of the buffer. */
+	if (MessageBuffer.bufferBottomIsComplete === false) {
+		return;
+	}
+	
 	var buffer = MessageBuffer.bufferElement();
 
 	buffer.insertAdjacentHTML("beforeend", html);
@@ -451,6 +457,9 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 			MessageBuffer.bufferBottomIsComplete = true;
 		}
 	}
+	
+	/* Toggle automatic scrolling */
+	MessageBuffer.toggleAutomaticScrolling();
 
 	if (renderedMessagesCount > 0) {
 		/* Before we enforce size limit, we record the height with the appended
@@ -546,6 +555,15 @@ MessageBuffer.documentScrolledCallback = function(scrolledUpward)
 		MessageBuffer.loadMessages(false);
 
 		MessageBuffer.scheduleHardLimitResize();
+	}
+};
+
+MessageBuffer.toggleAutomaticScrolling = function()
+{
+	if (MessageBuffer.bufferBottomIsComplete) {
+		app.setAutomaticScrollingEnabled(true);
+	} else {
+		app.setAutomaticScrollingEnabled(false);
 	}
 };
 
