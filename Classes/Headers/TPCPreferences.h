@@ -253,8 +253,8 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (BOOL)themeChannelViewUsesCustomScrollers;
 
-+ (NSUInteger)scrollbackHistoryLimit;
-+ (NSUInteger)scrollbackLimit;
++ (NSUInteger)scrollbackSaveLimit;
++ (NSUInteger)scrollbackVisibleLimit;
 
 + (BOOL)soundIsMuted;
 

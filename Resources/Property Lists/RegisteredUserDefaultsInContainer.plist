@@ -212,10 +212,10 @@
 	<false/>
 	<key>SetAwayOnScreenSleep</key>
 	<false/>
-	<key>ScrollbackMaximumLineCount</key>
-	<integer>500</integer>
-	<key>ScrollbackMaximumHistoryCount</key>
-	<integer>1000</integer>
+	<key>ScrollbackMaximumSavedLineCount</key>
+	<real>15000</real>
+	<key>ScrollbackMaximumVisibleLineCount</key>
+	<real>1000</real>
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
 	<false/>
 	<key>SwipeMinimumLength</key>
