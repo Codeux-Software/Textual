@@ -4853,6 +4853,14 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         </binding>
                     </connections>
                 </comboBox>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cl9-DF-vFp">
+                    <rect key="frame" x="303" y="71" width="109" height="14"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0 = use default limit" id="wMl-wz-NsN">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="p75-KN-Sms" firstAttribute="top" secondItem="wM2-5T-Kcv" secondAttribute="bottom" constant="14" id="10a-Je-p7S"/>
@@ -4868,6 +4876,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                 <constraint firstAttribute="bottom" secondItem="V0L-wf-MX5" secondAttribute="bottom" constant="30" id="Oor-Kp-Ze7"/>
                 <constraint firstItem="Xl2-g8-NiZ" firstAttribute="leading" secondItem="p75-KN-Sms" secondAttribute="leading" id="Qp3-Qb-aat"/>
                 <constraint firstItem="Fkh-ub-y9J" firstAttribute="top" secondItem="Xl2-g8-NiZ" secondAttribute="bottom" constant="20" id="RCg-7q-H6X"/>
+                <constraint firstItem="Cl9-DF-vFp" firstAttribute="centerY" secondItem="Fkh-ub-y9J" secondAttribute="centerY" id="RmK-RY-5cv"/>
                 <constraint firstItem="p75-KN-Sms" firstAttribute="leading" secondItem="wM2-5T-Kcv" secondAttribute="leading" id="UF1-Q0-8FM"/>
                 <constraint firstItem="79l-Tb-xQY" firstAttribute="leading" secondItem="Fkh-ub-y9J" secondAttribute="trailing" constant="8" id="ULO-1B-Sqr"/>
                 <constraint firstItem="wM2-5T-Kcv" firstAttribute="leading" secondItem="adq-18-C3D" secondAttribute="leading" id="anE-DT-eZY"/>
@@ -4875,6 +4884,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                 <constraint firstItem="wM2-5T-Kcv" firstAttribute="top" secondItem="r5x-9F-a6i" secondAttribute="bottom" constant="14" id="cfg-XI-taa"/>
                 <constraint firstItem="Fkh-ub-y9J" firstAttribute="leading" secondItem="Xl2-g8-NiZ" secondAttribute="leading" id="dtc-uf-WLt"/>
                 <constraint firstItem="adq-18-C3D" firstAttribute="top" secondItem="2Bh-Ce-CLv" secondAttribute="bottom" constant="14" id="jKQ-s0-2rL"/>
+                <constraint firstItem="Cl9-DF-vFp" firstAttribute="leading" secondItem="79l-Tb-xQY" secondAttribute="trailing" constant="12" id="jXU-RG-1fY"/>
                 <constraint firstItem="1Zi-eb-Hc6" firstAttribute="top" secondItem="dAH-Sl-d77" secondAttribute="top" constant="30" id="lPM-zW-p6o"/>
                 <constraint firstItem="Xl2-g8-NiZ" firstAttribute="top" secondItem="p75-KN-Sms" secondAttribute="bottom" constant="14" id="ml1-ww-Bam"/>
                 <constraint firstItem="1g9-Qk-YQN" firstAttribute="leading" secondItem="dAH-Sl-d77" secondAttribute="leading" constant="40" id="wuN-qQ-Fu2"/>

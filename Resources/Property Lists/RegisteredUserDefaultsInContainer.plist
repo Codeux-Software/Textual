@@ -215,7 +215,7 @@
 	<key>ScrollbackMaximumSavedLineCount</key>
 	<real>15000</real>
 	<key>ScrollbackMaximumVisibleLineCount</key>
-	<real>1000</real>
+	<integer>0</integer>
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
 	<false/>
 	<key>SwipeMinimumLength</key>

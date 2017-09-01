@@ -731,7 +731,7 @@ NS_ASSUME_NONNULL_BEGIN
 	} else if ([key isEqualToString:@"scrollbackVisibleLimit"]) {
 		NSInteger valueInteger = [*value integerValue];
 
-		if (valueInteger < _scrollbackVisibleLinesMin) {
+		if (valueInteger < _scrollbackVisibleLinesMin && valueInteger != 0) {
 			*value = _unsignedIntegerString(_scrollbackVisibleLinesMin);
 		} else if (valueInteger > _scrollbackVisibleLinesMax) {
 			*value = _unsignedIntegerString(_scrollbackVisibleLinesMax);
