@@ -707,7 +707,9 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-#warning TODO: Implement
+	@synchronized(self.highlightedLineNumbers) {
+		[self.highlightedLineNumbers removeObjectsInArray:lineNumbers];
+	}
 }
 
 #pragma mark -
