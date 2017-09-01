@@ -960,8 +960,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSMutableArray<NSDictionary<NSString *, id> *> *renderedLogLines = [NSMutableArray arrayWithCapacity:logLines.count];
 
+	NSMutableArray<THOPluginDidPostNewMessageConcreteObject *> *pluginObjects = nil;
+
 	for (TVCLogLine *logLine in logLines) {
-		NSString *html = [self renderLogLine:logLine resultInfo:NULL];
+		/* Render result info HTML */
+		NSDictionary<NSString *, id> *resultInfo = nil;
+
+		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html == nil) {
 			LogToConsoleError("Failed to render log line %{public}@", logLine.description);
@@ -969,14 +974,34 @@ ClassWithDesignatedInitializerInitMethod
 			continue;
 		}
 
+		/* Record information about rendering */
 		NSString *lineNumber = logLine.uniqueIdentifier;
 
 		[renderedLogLines addObject:@{
 			@"lineNumber" : lineNumber,
 			@"html" : html
 	    }];
+
+		/* Add reference to plugin concrete object */
+		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
+
+		if (pluginObject) {
+			if (pluginObjects == nil) {
+				pluginObjects = [NSMutableArray array];
+			}
+
+			[pluginObjects addObject:pluginObject];
+		}
 	}
 
+	/* Inform plugins of new content */
+	for (THOPluginDidPostNewMessageConcreteObject *pluginObject in pluginObjects) {
+		pluginObject.isProcessedInBulk = YES;
+
+		[THOPluginDispatcher enqueueDidPostNewMessage:pluginObject];
+	}
+
+	/* Finish */
 	completionBlock([renderedLogLines copy]);
 }
 
