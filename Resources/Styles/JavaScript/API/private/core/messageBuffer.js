@@ -220,6 +220,8 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 
 		return;
 	}
+	
+	var lineNumbers = new Array();
 
 	var buffer = MessageBuffer.bufferElement();
 
@@ -237,6 +239,8 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 		element.remove();
 
 		if (element.id && element.id.indexOf("line-") === 0) {
+			lineNumbers.push(element.id);
+
 			numberRemoved += 1;
 		}
 	} while (numberRemoved < numberToRemove);
@@ -248,6 +252,8 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 	}
 	
 	MessageBuffer.bufferCurrentSize -= numberToRemove;
+	
+	Textual.messageRemovedFromViewInt(lineNumbers);
 	
 	console.log("Removed " + numberToRemove + " lines from buffer");
 };
