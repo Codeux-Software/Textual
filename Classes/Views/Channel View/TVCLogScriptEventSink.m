@@ -383,6 +383,18 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_nicknameDoubleClicked:)];
 }
 
+- (void)notifyLinesAddedToWebView:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_notifyLinesAddedToWebView:)
+	  minimumArgumentCount:1
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSArray class]] ||
+						[argument isKindOfClass:[NSString class]]);
+			}];
+}
+
 - (void)printDebugInformation:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -741,6 +753,29 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_nicknameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
 	[context.webViewPolicy nicknameDoubleClicked];
+}
+
+- (void)_notifyLinesAddedToWebView:(TVCLogScriptEventSinkContext *)context
+{
+	NSArray *arguments = context.arguments;
+
+	id lineNumbersUncut = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if ([lineNumbersUncut isKindOfClass:[NSString class]]) {
+		lineNumbersUncut = @[lineNumbersUncut];
+	}
+
+	NSMutableArray *lineNumbers = [NSMutableArray arrayWithCapacity:[lineNumbersUncut count]];
+
+	for (__strong NSString *lineNumber in lineNumbersUncut) {
+		if ([lineNumber hasPrefix:@"line-"]) {
+			lineNumber = [lineNumber substringFromIndex:5];
+		}
+
+		[lineNumbers addObject:lineNumber];
+	}
+
+	[context.viewController notifyLinesAddedToWebView:[lineNumbers copy]];
 }
 
 - (void)_printDebugInformation:(TVCLogScriptEventSinkContext *)context

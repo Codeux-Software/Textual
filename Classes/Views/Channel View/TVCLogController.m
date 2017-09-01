@@ -505,7 +505,7 @@ ClassWithDesignatedInitializerInitMethod
 	for (THOPluginDidPostNewMessageConcreteObject *pluginObject in pluginObjects) {
 		pluginObject.isProcessedInBulk = YES;
 
-		[THOPluginDispatcher didPostNewMessage:pluginObject forViewController:self];
+		[THOPluginDispatcher enqueueDidPostNewMessage:pluginObject];
 	}
 }
 
@@ -680,6 +680,26 @@ ClassWithDesignatedInitializerInitMethod
 	NSUInteger scrollbackLimit = [TPCPreferences scrollbackVisibleLimit];
 
 	[self _evaluateFunction:@"MessageBuffer.setBufferLimit" withArguments:@[@(scrollbackLimit)]];
+}
+
+#pragma mark -
+#pragma mark Plugins
+
+- (void)notifyLinesAddedToWebView:(NSArray<NSString *> *)lineNumbers
+{
+	NSParameterAssert(lineNumbers != nil);
+
+	if (self.loaded == NO || self.terminating) {
+		return;
+	}
+
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent] == NO) {
+		return;
+	}
+
+	for (NSString *lineNumber in lineNumbers) {
+		[THOPluginDispatcher dequeueDidPostNewMessageWithLineNumber:lineNumber forViewController:self];
+	}
 }
 
 #pragma mark -
@@ -1000,6 +1020,8 @@ ClassWithDesignatedInitializerInitMethod
 		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
 
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
+
+		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
 		
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			if (self.terminating) {
@@ -1017,11 +1039,11 @@ ClassWithDesignatedInitializerInitMethod
 				[client cacheHighlightInChannel:channel withLogLine:logLine];
 			}
 
-			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
-
-			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
-				[THOPluginDispatcher didPostNewMessage:resultInfo[@"pluginConcreteObject"] forViewController:self];
+			if (pluginObject) {
+				[THOPluginDispatcher enqueueDidPostNewMessage:resultInfo[@"pluginConcreteObject"]];
 			}
+
+			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
 
 			/* Begin processing inline images */
 			/* We go through the inline image list here and pass to the loader now so that

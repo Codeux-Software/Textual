@@ -148,6 +148,8 @@ Textual.newMessagePostedToViewInt = function(lineNumber, fromBuffer)
 	} else {
 		Textual.newMessagePostedToView(lineNumber, fromBuffer);
 	}
+
+	app.notifyLinesAddedToWebView(lineNumber);
 };
 
 /* Events */

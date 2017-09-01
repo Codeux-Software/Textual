@@ -352,10 +352,36 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	});
 }
 
-+ (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)viewController
++ (NSCache<NSString *, THOPluginDidPostNewMessageConcreteObject *> *)didPostNewMessageObjectCache
+{
+	static NSCache *queue = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		queue = [NSCache new];
+	});
+
+	return queue;
+}
+
++ (void)enqueueDidPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject
 {
 	NSParameterAssert(messageObject != nil);
+
+	[[self didPostNewMessageObjectCache] setObject:messageObject forKey:messageObject.lineNumber];
+}
+
++ (void)dequeueDidPostNewMessageWithLineNumber:(NSString *)messageLineNumber forViewController:(TVCLogController *)viewController
+{
+	NSParameterAssert(messageLineNumber != nil);
 	NSParameterAssert(viewController != nil);
+
+	THOPluginDidPostNewMessageConcreteObject *messageObject = [[self didPostNewMessageObjectCache] objectForKey:messageLineNumber];
+
+	if (messageObject == nil) {
+		return;
+	}
 
 	XRPerformBlockAsynchronouslyOnQueue([THOPluginDispatcher dispatchQueue], ^{
 		NSDictionary *messageDictionary = nil;
