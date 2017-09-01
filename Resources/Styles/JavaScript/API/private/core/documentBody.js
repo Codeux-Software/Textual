@@ -203,25 +203,25 @@ Textual.historicMessagesElement = function()
 	return Textual.historicMessagesElementReference;
 }
 
-Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
+Textual.documentBodyAppendHistoric = function(templateHTML, lineNumbers, isReload)
 {
-	var documentBody = Textual.documentBodyElement();
+	var historicMessages = Textual.historicMessagesElement();
 
-	var elementToAppendTo = null;
+	var atBottom = TextualScroller.isScrolledToBottom();
 
-	var historicMessagesDiv = Textual.historicMessagesElement();
-
-	if (historicMessagesDiv) {
-		elementToAppendTo = historicMessagesDiv;
+	if (atBottom === false) {
+		TextualScroller.saveRestorationFirstDataPoint();
 	}
 
-	if (elementToAppendTo === null) {
-		elementToAppendTo = documentBody;
+	historicMessages.insertAdjacentHTML("afterbegin", templateHTML);
+
+	if (atBottom === false) {
+		TextualScroller.saveRestorationSecondDataPoint();
+
+		TextualScroller.restoreScrollPosition();
 	}
-
-	elementToAppendTo.insertAdjacentHTML("afterbegin", templateHTML);
-
-	TextualScroller.adjustScrollerPosition = true;
+	
+	Textual.messageAddedToViewInt(lineNumbers);
 };
 
 Textual.setHistoricMessagesLoaded = function(isLoaded)
