@@ -715,8 +715,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)preferencesChanged
 {
-	[self.viewController preferencesChanged];
-
 	for (IRCChannel *c in self.channelList) {
 		[c preferencesChanged];
 	}
