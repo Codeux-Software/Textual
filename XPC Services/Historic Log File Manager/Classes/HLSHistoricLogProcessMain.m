@@ -501,6 +501,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 		[newEntry setValue:logLine.uniqueIdentifier forKey:@"logLineUniqueIdentifier"];
 
+		[newEntry setValue:@(logLine.sessionIdentifier) forKey:@"sessionIdentifier"];
+
 		[self scheduleResizeInViewContext:viewContext];
 	}];
 }

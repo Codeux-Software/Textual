@@ -41,10 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSData *data;
 @property (copy, readonly) NSString *uniqueIdentifier;
 @property (copy, readonly) NSString *viewIdentifier;
+@property (readonly) NSUInteger sessionIdentifier;
 
 - (instancetype)initWithLogLineData:(NSData *)data
 				   uniqueIdentifier:(NSString *)uniqueIdentifier
-					 viewIdentifier:(NSString *)viewIdentifier;
+					 viewIdentifier:(NSString *)viewIdentifier
+				  sessionIdentifier:(NSUInteger)sessionIdentifier;
 
 - (instancetype)initWithManagedObject:(NSManagedObject *)managedObject;
 @end

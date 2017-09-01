@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_nicknameColorStyle;
 	TVCLogLineMemberType _memberType;
 	TVCLogLineType _lineType;
+	NSUInteger _sessionIdentifier;
 
 @private
 	NSString *_uniqueIdentifier;

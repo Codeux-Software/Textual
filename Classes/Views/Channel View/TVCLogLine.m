@@ -70,6 +70,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 			[self populateDefaultsPostflight];
 
 			[self populateDefaultUniqueIdentifier];
+			[self populateDefaultSessionIdentifier];
 		}
 
 		self->_objectInitialized = YES;
@@ -107,6 +108,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	if (object->_uniqueIdentifier == nil) {
 		[object populateDefaultUniqueIdentifier];
 	}
+
+	/* We do not populate a default session identifier here so that we know that
+	 if it is missing, it was from database before that attribute existed. */
 
 	return object;
 }
@@ -152,6 +156,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
 
+	self->_sessionIdentifier = [aDecoder decodeIntegerForKey:@"sessionIdentifier"];
+
 	if (self->_objectInitializedAsCopy == NO) {
 		[self computeNicknameColorStyle];
 	}
@@ -181,6 +187,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	self->_uniqueIdentifier = [TVCLogLine newUniqueIdentifier];
 }
 
+- (void)populateDefaultSessionIdentifier
+{
+	self->_sessionIdentifier = [TVCLogLine currentSessionIdentifier];
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 	[aCoder encodeObject:self.command forKey:@"command"];
@@ -199,6 +210,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	[aCoder encodeInteger:self.memberType forKey:@"memberType"];
 
 	[aCoder encodeObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
+
+	[aCoder encodeInteger:self.sessionIdentifier forKey:@"sessionIdentifier"];
 }
 
 + (BOOL)supportsSecureCoding
@@ -215,7 +228,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	TVCLogLineXPC *xpcObject =
 	[[TVCLogLineXPC alloc] initWithLogLineData:data
 							  uniqueIdentifier:self.uniqueIdentifier
-								viewIdentifier:treeItem.uniqueIdentifier];
+								viewIdentifier:treeItem.uniqueIdentifier
+							 sessionIdentifier:self.sessionIdentifier];
 
 	 return xpcObject;
 }
@@ -225,6 +239,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	NSString *printIdentifier = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
 
 	return [printIdentifier substringFromIndex:19]; // Example: 9C60-0050E4C00067
+}
+
++ (NSUInteger)currentSessionIdentifier
+{
+	static NSUInteger sessionIdentifier = 0;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		sessionIdentifier = TXRandomNumber(999999);
+	});
+
+	return sessionIdentifier;
+}
+
+- (BOOL)fromCurrentSession
+{
+	return (self.sessionIdentifier == [TVCLogLine currentSessionIdentifier]);
 }
 
 + (nullable NSString *)stringForLineType:(TVCLogLineType)type
@@ -419,6 +451,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	object->_lineType = self->_lineType;
 	object->_memberType = self->_memberType;
+
+	object->_sessionIdentifier = self->_sessionIdentifier;
 
 	return [object init];
 }
