@@ -260,7 +260,7 @@ Textual.handleEvent = function (event) {
   }
 };
 
-Textual.newMessagePostedToView = function (line, fromBuffer) {
+Textual.messageAddedToView = function (line, fromBuffer) {
   'use strict';
   var message = document.getElementById('line-' + line);
   var clone, elem, getEmbeddedImages, i, mode, messageText, sender, topic;

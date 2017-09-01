@@ -500,11 +500,20 @@ app.renderTemplate = function(templateName, templateAttributes, callbackFunction
 	}
 };
 
-app.notifyLinesAddedToWebView = function(lineNumbers)
+app.notifyLinesAddedToView = function(lineNumbers)
 {
 	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.notifyLinesAddedToWebView.postMessage(lineNumbers);
+		window.webkit.messageHandlers.notifyLinesAddedToView.postMessage(lineNumbers);
 	} else {
-		TextualScriptSink.notifyLinesAddedToWebView(lineNumbers);
+		TextualScriptSink.notifyLinesAddedToView(lineNumbers);
+	}
+};
+
+app.notifyLinesRemovedFromView = function(lineNumbers)
+{
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.notifyLinesRemovedFromView.postMessage(lineNumbers);
+	} else {
+		TextualScriptSink.notifyLinesRemovedFromView(lineNumbers);
 	}
 };

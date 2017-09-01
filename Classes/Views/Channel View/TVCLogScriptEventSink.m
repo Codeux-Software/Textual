@@ -408,11 +408,23 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_nicknameDoubleClicked:)];
 }
 
-- (void)notifyLinesAddedToWebView:(id)inputData inWebView:(id)webView
+- (void)notifyLinesAddedToView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
 				 inWebView:webView
-			   forSelector:@selector(_notifyLinesAddedToWebView:)
+			   forSelector:@selector(_notifyLinesAddedToView:)
+	  minimumArgumentCount:1
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSArray class]] ||
+						[argument isKindOfClass:[NSString class]]);
+			}];
+}
+
+- (void)notifyLinesRemovedFromView:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_notifyLinesRemovedFromView:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSArray class]] ||
@@ -780,7 +792,17 @@ ClassWithDesignatedInitializerInitMethod
 	[context.webViewPolicy nicknameDoubleClicked];
 }
 
-- (void)_notifyLinesAddedToWebView:(TVCLogScriptEventSinkContext *)context
+- (void)_notifyLinesAddedToView:(TVCLogScriptEventSinkContext *)context
+{
+	[self _notifyLinesAdded:YES context:context];
+}
+
+- (void)_notifyLinesRemovedFromView:(TVCLogScriptEventSinkContext *)context
+{
+	[self _notifyLinesAdded:NO context:context];
+}
+
+- (void)_notifyLinesAdded:(BOOL)added context:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 
@@ -792,7 +814,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSArray *lineNumbers = [TVCLogScriptEventSink standardizeLineNumbers:lineNumbersUncut];
 
-	[context.viewController notifyLinesAddedToWebView:[lineNumbers copy]];
+	if (added) {
+		[context.viewController notifyLinesAddedToView:[lineNumbers copy]];
+	} else {
+		[context.viewController notifyLinesRemovedFromView:[lineNumbers copy]];
+	}
 }
 
 - (void)_printDebugInformation:(TVCLogScriptEventSinkContext *)context

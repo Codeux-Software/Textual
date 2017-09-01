@@ -74,7 +74,8 @@ NS_ASSUME_NONNULL_BEGIN
 				 maximumNumberOfLines:(NSUInteger)maximumNumberOfLines
 					  completionBlock:(void (^)(NSArray<NSDictionary<NSString *,id> *> * _Nonnull))completionBlock;
 
-- (void)notifyLinesAddedToWebView:(NSArray<NSString *> *)lineNumbers;
+- (void)notifyLinesAddedToView:(NSArray<NSString *> *)lineNumbers;
+- (void)notifyLinesRemovedFromView:(NSArray<NSString *> *)lineNumbers;
 
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;
