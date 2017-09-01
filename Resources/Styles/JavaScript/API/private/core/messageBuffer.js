@@ -275,8 +275,10 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 	
 	MessageBuffer.bufferCurrentSize -= numberToRemove;
 	
-	Textual.messageRemovedFromViewInt(lineNumbers);
-	
+	if (lineNumbers.length > 0) {
+		Textual.messageRemovedFromViewInt(lineNumbers);
+	}
+
 	console.log("Removed " + numberToRemove + " lines from buffer");
 };
 
