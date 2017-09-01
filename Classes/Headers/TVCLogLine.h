@@ -97,6 +97,7 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (readonly, copy, nullable) NSArray<NSString *> *highlightKeywords;
 @property (readonly, copy, nullable) NSArray<NSString *> *excludeKeywords;
 @property (readonly, copy, nullable) NSDictionary<NSString *, id> *rendererAttributes;
+@property (readonly) NSUInteger sessionIdentifier;
 
 - (nullable instancetype)initWithData:(NSData *)data;
 

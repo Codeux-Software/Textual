@@ -46,11 +46,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSData *data;
 @property (nonatomic, copy, readwrite) NSString *uniqueIdentifier;
 @property (nonatomic, copy, readwrite) NSString *viewIdentifier;
+@property (nonatomic, assign, readwrite) NSUInteger sessionIdentifier;
 @end
 
 @implementation TVCLogLineXPC
 
-- (instancetype)initWithLogLineData:(NSData *)data uniqueIdentifier:(NSString *)uniqueIdentifier viewIdentifier:(NSString *)viewIdentifier
+- (instancetype)initWithLogLineData:(NSData *)data uniqueIdentifier:(NSString *)uniqueIdentifier viewIdentifier:(NSString *)viewIdentifier sessionIdentifier:(NSUInteger)sessionIdentifier
 {
 	NSParameterAssert(data != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
@@ -60,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.data = data;
 		self.uniqueIdentifier = uniqueIdentifier;
 		self.viewIdentifier = viewIdentifier;
+		self.sessionIdentifier = sessionIdentifier;
 
 		return self;
 	}
@@ -75,6 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.data = [managedObject valueForKey:@"logLineData"];
 		self.uniqueIdentifier = [managedObject valueForKey:@"logLineUniqueIdentifier"];
 		self.viewIdentifier = [managedObject valueForKey:@"logLineViewIdentifier"];
+		self.sessionIdentifier = [[managedObject valueForKey:@"sessionIdentifier"] integerValue];
 
 		return self;
 	}
@@ -90,6 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self->_data = [aDecoder decodeObjectOfClass:[NSData class] forKey:@"data"];
 		self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
 		self->_viewIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"viewIdentifier"];
+		self->_sessionIdentifier = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:@"sessionIdentifier"] integerValue];
 
 		return self;
 	}
@@ -102,6 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[aCoder encodeObject:self.data forKey:@"data"];
 	[aCoder encodeObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[aCoder encodeObject:self.viewIdentifier forKey:@"viewIdentifier"];
+	[aCoder encodeObject:@(self.sessionIdentifier) forKey:@"sessionIdentifier"];
 }
 
 + (BOOL)supportsSecureCoding
