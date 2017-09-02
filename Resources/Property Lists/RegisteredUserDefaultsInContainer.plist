@@ -20,6 +20,8 @@
 	<false/>
 	<key>AutomaticallyAddScrollbackMarker</key>
 	<true/>
+	<key>AutomaticallyDisconnectForSleepMode</key>
+	<true/>
 	<key>AutomaticallyDetectHighlightSpam</key>
 	<true/>
 	<key>AutomaticallyFilterUnicodeTextSpam</key>
