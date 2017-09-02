@@ -480,7 +480,11 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		for (var i = 0; i < renderedMessagesCount; i++) {
 			var renderedMessage = renderedMessages[i];
 			
-			lineNumbers.push(renderedMessage.lineNumber);
+			var lineNumber = renderedMessage.lineNumber;
+			
+			if (lineNumber) {
+				lineNumbers.push(renderedMessage.lineNumber);
+			}
 			
 			html.push(renderedMessage.html);
 		}

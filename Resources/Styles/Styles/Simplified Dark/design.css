@@ -256,6 +256,33 @@ div[id=mark] {
 	100% { opacity: 0.2; }
 }
 
+/* Message buffer session indicator */
+
+.messsage_buffer_session_indicator {
+	display: flex;
+	display: -webkit-flex;
+	padding: 0.5em 0;
+}
+
+.messsage_buffer_session_indicator > hr {
+	background: #606060;
+	border: 0;
+	height: 1px;
+	margin-top: 0.6em;
+	flex: 1;
+	-webkit-flex: 1;
+}
+
+.messsage_buffer_session_indicator > span {
+	font-style: oblique;
+	margin: 0 1em;
+	color: #d8d8d8;
+}
+
+.messsage_buffer_session_indicator + div[id=mark] {
+	display: none;
+}
+
 /* NOTICE/CTCP/WALLOPS */
 
 body div.line[ltype*=ctcp],

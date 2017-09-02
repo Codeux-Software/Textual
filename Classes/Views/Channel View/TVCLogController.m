@@ -61,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
+@property (nonatomic, copy, nullable) NSString *previousSessionYoungestLineNumber;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
 @property (weak, readonly) IRCTreeItem *associatedItem;
@@ -473,6 +474,13 @@ ClassWithDesignatedInitializerInitMethod
 
 		[lineNumbers addObject:lineNumber];
 
+		/* Add "Current Session" message */
+		if ([lineNumber isEqualToString:self.previousSessionYoungestLineNumber]) {
+			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"IRC[1127]")];
+
+			[patchedAppend appendString:html];
+		}
+
 		/* Add reference to plugin concrete object */
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
 
@@ -555,6 +563,10 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingHistory = YES;
 
 	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *objects) {
+		if (firstTimeLoadingHistory) {
+			self.previousSessionYoungestLineNumber = objects.lastObject.uniqueIdentifier;
+		}
+
 		[self reloadOldLines:objects isReload:(firstTimeLoadingHistory == NO)];
 
 		self.reloadingHistory = NO;
@@ -614,6 +626,17 @@ ClassWithDesignatedInitializerInitMethod
 	[self clearWithReset:NO];
 
 	self.reloadingTheme = NO;
+}
+
+- (NSString *)messageBufferSessionIndicatorWithMessage:(NSString *)message
+{
+	NSParameterAssert(message != nil);
+
+	NSDictionary *templateAttributes = @{
+		@"message" : message
+	};
+
+	return [TVCLogRenderer renderTemplate:@"messageBufferSessionIndicator" attributes:templateAttributes];
 }
 
 #pragma mark -
@@ -992,6 +1015,15 @@ ClassWithDesignatedInitializerInitMethod
 			@"lineNumber" : lineNumber,
 			@"html" : html
 	    }];
+
+		/* Add "Current Session" message */
+		if ([lineNumber isEqualToString:self.previousSessionYoungestLineNumber]) {
+			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"IRC[1127]")];
+
+			[renderedLogLines addObject:@{
+				  @"html" : html
+		    }];
+		}
 
 		/* Add reference to plugin concrete object */
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];

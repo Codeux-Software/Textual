@@ -217,6 +217,20 @@ html[systemversion^="10.9"] .inlineImageCell .closeButton {
 
 /* @end */
 
+/* @group Separating History */
+
+div[id=mark] {
+	clear: both;
+	position: relative;
+	z-index: 295;
+	margin-top: -1px;
+	border-bottom: 1px dashed;
+	border-color: #F2777A; /* Tomorrow Night Eighties: Red */
+	-webkit-transition: 0.2s linear;
+}
+
+/* @end */
+
 /* @group Message buffer loading animation */
 
 .messsage_buffer_loading_indicator {
@@ -254,6 +268,35 @@ html[systemversion^="10.9"] .inlineImageCell .closeButton {
 	0% { opacity: 0.2; }
 	20% { opacity: 1.0; }
 	100% { opacity: 0.2; }
+}
+
+/* @end */
+
+/* @group Message buffer session indicator */
+
+.messsage_buffer_session_indicator {
+	display: flex;
+	display: -webkit-flex;
+	padding: 0.5em 0;
+}
+
+.messsage_buffer_session_indicator > hr {
+	background: #444;
+	border: 0;
+	height: 1px;
+	margin-top: 0.6em;
+	flex: 1;
+	-webkit-flex: 1;
+}
+
+.messsage_buffer_session_indicator > span {
+	font-style: oblique;
+	margin: 0 1em;
+	color: #919191;
+}
+
+.messsage_buffer_session_indicator + div[id=mark] {
+	display: none;
 }
 
 /* @end */
