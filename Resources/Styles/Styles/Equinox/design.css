@@ -241,7 +241,6 @@ body img {
   height: 25px;
 }
 
-
 /* Remember Line */
 div[id=mark] {
   position: relative;
@@ -257,11 +256,9 @@ body[dir=ltr] div[ltype=action] .sender:before {
   font-weight: bold;
   font-size: 80% !important;
   content: "●";
-
 }
 
 /* Message buffer loading animation */
-
 .messsage_buffer_loading_indicator {
 	text-align: center;
 	height: 42px;
@@ -299,8 +296,32 @@ body[dir=ltr] div[ltype=action] .sender:before {
 	100% { opacity: 0.2; }
 }
 
-/* NOTICE/CTCP/WALLOPS */
+/* Message buffer session indicator */
+.messsage_buffer_session_indicator {
+	display: flex;
+	display: -webkit-flex;
+	padding: .5em 0;
+}
 
+.messsage_buffer_session_indicator > hr {
+	background: #444;
+	border: 0;
+	height: 1px;
+	margin-top: 0.6em;
+	flex: 1;
+	-webkit-flex: 1;
+}
+
+.messsage_buffer_session_indicator > span {
+	font-style: oblique;
+	margin: 0 1em;
+}
+
+.messsage_buffer_session_indicator + div[id=mark] {
+	display: none;
+}
+
+/* NOTICE/CTCP/WALLOPS */
 body div.line[ltype=ctcp],
 body div.line[ltype=notice],
 body div.line[ltype=wallops] {
