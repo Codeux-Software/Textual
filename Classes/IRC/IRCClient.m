@@ -6502,7 +6502,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[channel addMember:member checkForDuplicates:YES];
 	}
 
-	if (isPrintOnlyMessage && myself == NO) {
+	if (isPrintOnlyMessage == NO && myself == NO) {
 		IRCChannel *senderQuery = [self findChannel:sender];
 		
 		if (senderQuery && senderQuery.isActive == NO) {
