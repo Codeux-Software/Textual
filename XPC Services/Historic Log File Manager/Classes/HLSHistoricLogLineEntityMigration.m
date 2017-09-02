@@ -46,6 +46,19 @@ NS_ASSUME_NONNULL_BEGIN
 	return [printIdentifier substringFromIndex:19]; // Example: 9C60-0050E4C00067
 }
 
+- (NSNumber *)newSessionIdentifier
+{
+	static NSUInteger sessionIdentifier = 0;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		sessionIdentifier = arc4random_uniform(999999);
+	});
+
+	return @(sessionIdentifier);
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

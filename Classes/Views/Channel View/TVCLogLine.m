@@ -109,8 +109,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		[object populateDefaultUniqueIdentifier];
 	}
 
-	/* We do not populate a default session identifier here so that we know that
-	 if it is missing, it was from database before that attribute existed. */
+	if (object->_sessionIdentifier == 0) {
+		object->_sessionIdentifier = xpcObject.sessionIdentifier;
+	}
 
 	return object;
 }

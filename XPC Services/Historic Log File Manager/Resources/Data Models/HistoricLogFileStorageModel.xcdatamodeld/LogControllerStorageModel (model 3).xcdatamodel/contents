@@ -6,7 +6,7 @@
         <attribute name="logLineData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="logLineUniqueIdentifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="logLineViewIdentifier" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sessionIdentifier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="sessionIdentifier" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <fetchRequest name="GenericAll" entity="LogLine2" fetchBatchSize="100" includePropertyValues="YES" includesPendingChanges="YES" returnObjectsAsFaults="YES"/>
     <fetchRequest name="GenericConditional" entity="LogLine2" predicateString="logLineViewIdentifier == $view_id AND entryIdentifier &gt;= $entry_id_lowest AND entryIdentifier &lt;= $entry_id_highest AND entryCreationDate &lt; $creation_date" fetchBatchSize="100" includesPendingChanges="YES" returnObjectsAsFaults="YES" resultType="1"/>
