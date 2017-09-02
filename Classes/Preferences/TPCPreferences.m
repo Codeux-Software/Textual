@@ -139,6 +139,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"SetAwayOnScreenSleep"];
 }
 
++ (BOOL)disconnectOnSleep
+{
+	return [RZUserDefaults() boolForKey:@"AutomaticallyDisconnectForSleepMode"];
+}
+
 + (BOOL)disableSidebarTranslucency
 {
 	return [RZUserDefaults() boolForKey:@"DisableSidebarTranslucency"];

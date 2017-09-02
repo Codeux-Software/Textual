@@ -248,12 +248,12 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 - (void)prepareForSleep
 {
-	for (IRCClient *u in self.clientList) {
-		if (u.isLoggedIn == NO) {
-			continue;
-		}
+	if ([TPCPreferences disconnectOnSleep] == NO) {
+		return;
+	}
 
-		if (u.config.autoSleepModeDisconnect == NO) {
+	for (IRCClient *u in self.clientList) {
+		if (u.isConnected == NO) {
 			continue;
 		}
 

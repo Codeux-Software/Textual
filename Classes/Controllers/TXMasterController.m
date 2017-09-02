@@ -579,25 +579,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)computerScreenWillSleep:(NSNotification *)note
 {
+	LogToConsole("Preparing for screen sleep");
+
 	[self.world prepareForScreenSleep];
 }
 
 - (void)computerScreenDidWake:(NSNotification *)note
 {
+	LogToConsole("Waking from screen sleep");
+
 	[self.world wakeFomScreenSleep];
 }
 
 - (void)computerWillSleep:(NSNotification *)note
 {
+	LogToConsole("Preparing for sleep");
+
 	[self.world prepareForSleep];
 
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
 	[[TXSharedApplication sharedSpeechSynthesizer] clearQueue];
+
+	[[TXSharedApplication sharedNetworkReachabilityNotifier] stopNotifier];
 }
 
 - (void)computerDidWakeUp:(NSNotification *)note
 {
+	LogToConsole("Waking from sleep");
+
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:NO];
+
+	[[TXSharedApplication sharedNetworkReachabilityNotifier] startNotifier];
 
 	[self.world autoConnectAfterWakeup:YES];
 }

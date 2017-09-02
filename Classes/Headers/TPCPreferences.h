@@ -172,6 +172,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)displayPublicMessageCountOnDockBadge;
 
 + (BOOL)setAwayOnScreenSleep;
++ (BOOL)disconnectOnSleep;
 
 + (BOOL)autoAddScrollbackMark;
 + (BOOL)showInlineImages;
