@@ -247,6 +247,12 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 											 forUniqueIdentifier:uniqueId
 												  performOnQueue:NO];
 
+		if (firstEntryId == NSNotFound) {
+			completionBlock(@[]);
+
+			return;
+		}
+
 		NSInteger lowestEntryId = (firstEntryId - fetchLimitBefore);
 		NSInteger highestEntryId = (firstEntryId + fetchLimitAfter);
 
@@ -302,6 +308,14 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSUInteger secondEntryId = [self _identifierInViewContext:viewContext
 											  forUniqueIdentifier:uniqueIdBefore
 												   performOnQueue:NO];
+
+		if (firstEntryId == NSNotFound ||
+			secondEntryId == NSNotFound)
+		{
+			completionBlock(@[]);
+
+			return;
+		}
 
 		/* We are getting the lines inbetween these two lines which means we substract self. */
 		NSInteger lowestEntryId = (firstEntryId + 1);
@@ -359,6 +373,12 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSUInteger firstEntryId = [self _identifierInViewContext:viewContext
 											 forUniqueIdentifier:uniqueId
 												  performOnQueue:NO];
+
+		if (firstEntryId == NSNotFound) {
+			completionBlock(@[]);
+
+			return;
+		}
 
 		NSInteger lowestEntryId = 0;
 		NSInteger highestEntryId = 0;
@@ -984,7 +1004,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	NSParameterAssert(viewContext != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
 
-	__block NSUInteger identifier = 0;
+	__block NSUInteger identifier = NSNotFound;
 
 	dispatch_block_t blockToPerform = ^{
 		NSString *viewId = viewContext.hls_viewId;
