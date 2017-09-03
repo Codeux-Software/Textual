@@ -408,6 +408,23 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_nicknameDoubleClicked:)];
 }
 
+- (void)notifyJumpToLineCallback:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_notifyJumpToLineCallback:)
+	  minimumArgumentCount:2
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else if (argumentIndex == 1) {
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+
+				return NO;
+			}];
+}
+
 - (void)notifyLinesAddedToView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -790,6 +807,29 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_nicknameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
 	[context.webViewPolicy nicknameDoubleClicked];
+}
+
+- (void)_notifyJumpToLineCallback:(TVCLogScriptEventSinkContext *)context
+{
+	void (^contextCompletionBlock)(id _Nullable) = context.completionBlock;
+
+	NSArray *arguments = context.arguments;
+
+	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
+
+	if (lineNumber.length == 0) {
+		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+
+		contextCompletionBlock(nil);
+
+		return;
+	}
+
+	BOOL successful = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] boolValue];
+
+	[context.viewController notifyJumpToLine:lineNumber successful:successful];
 }
 
 - (void)_notifyLinesAddedToView:(TVCLogScriptEventSinkContext *)context

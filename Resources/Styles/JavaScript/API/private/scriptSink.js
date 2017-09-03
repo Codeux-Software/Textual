@@ -500,6 +500,17 @@ app.renderTemplate = function(templateName, templateAttributes, callbackFunction
 	}
 };
 
+app.notifyJumpToLineCallback = function(lineNumber, successful)
+{
+	var dataValue = {"values" : [lineNumber, successful]};
+
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.notifyJumpToLineCallback.postMessage(dataValue);
+	} else {
+		TextualScriptSink.notifyJumpToLineCallback(dataValue);
+	}
+};
+
 app.notifyLinesAddedToView = function(lineNumbers)
 {
 	if (appInternal.isWebKit2()) {
