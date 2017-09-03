@@ -219,3 +219,22 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier)
 		document.body.style.fontSize = ((sizeMultiplier * 100.0) + "%");
 	}
 }
+
+/* Line numbers */
+Textual.lineNumberStandardize = function(lineNumber)
+{
+	if (lineNumber.indexOf("line-") !== 0) {
+		lineNumber = ("line-" + lineNumber);
+	}
+	
+	return lineNumber;
+};
+
+Textual.lineNumberContents = function(lineNumber)
+{
+	if (lineNumber.indexOf("line-") !== 0) {
+		return lineNumber;
+	}
+	
+	return lineNumber.substr(5);
+};
