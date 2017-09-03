@@ -37,8 +37,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#warning TODO: Views do not properly load when restored by selection on launch
-
 @class TVCMainWindowChannelViewSubviewOverlayView;
 
 @interface TVCMainWindowChannelViewSubview : NSView
@@ -463,6 +461,8 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 - (void)addOverlayView
 {
 	if (self.overlayVisible) {
+		[self.overlayView setNeedsDisplay:YES];
+
 		return;
 	}
 
