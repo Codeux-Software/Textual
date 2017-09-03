@@ -459,7 +459,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return _unsignedIntegerString([TPCPreferences scrollbackSaveLimit]);
 }
 
-- (void)setScrollbackLimit:(NSString *)value
+- (void)setScrollbackSaveLimit:(NSString *)value
 {
 	[TPCPreferences setScrollbackSaveLimit:value.integerValue];
 }
