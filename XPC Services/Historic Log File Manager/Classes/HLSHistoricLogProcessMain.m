@@ -972,24 +972,9 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 /* Given a logLineUniqueIdentifier, figure out which entryIdentifier is associated with it. */
 - (NSUInteger)_identifierInViewContext:(HLSHistoricLogViewContext *)viewContext forUniqueIdentifier:(NSString *)uniqueIdentifier performOnQueue:(BOOL)performOnQueue
 {
-	static NSCache<NSString *, NSNumber *> *_cachedIdentifiers = nil;
-
-	if (_cachedIdentifiers == nil) {
-		_cachedIdentifiers = [NSCache new];
-		_cachedIdentifiers.countLimit = 100;
-	}
-
-	NSNumber *cachedIdentifier = [_cachedIdentifiers objectForKey:uniqueIdentifier];
-
-	if (cachedIdentifier) {
-		return cachedIdentifier.unsignedIntegerValue;
-	}
-
 	NSUInteger identifier = [self _identifierInViewContextFromDatabase:viewContext
 												   forUniqueIdentifier:uniqueIdentifier
 														performOnQueue:performOnQueue];
-
-	[_cachedIdentifiers setObject:@(identifier) forKey:uniqueIdentifier];
 
 	return identifier;
 }
