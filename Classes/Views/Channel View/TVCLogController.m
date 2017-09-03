@@ -1020,7 +1020,8 @@ ClassWithDesignatedInitializerInitMethod
 
 		[renderedLogLines addObject:@{
 			@"lineNumber" : lineNumber,
-			@"html" : html
+			@"html" : html,
+			@"timestamp" : @(logLine.receivedAt.timeIntervalSince1970)
 	    }];
 
 		/* Add "Current Session" message */
