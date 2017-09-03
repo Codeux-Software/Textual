@@ -393,7 +393,7 @@ MessageBuffer.loadMessages = function(before)
 			"line" : line,
 			"lineNumberContents" : lineNumberContents,
 			"lineNumberStandardized" : lineNumberStandardized,
-			"resultOfJumpToLine" : false
+			"resultOfLoadMessages" : true
 		}	
 	);
 };
