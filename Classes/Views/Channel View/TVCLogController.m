@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
 @property (nonatomic, copy, nullable) NSString *previousSessionYoungestLineNumber;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
+@property (nonatomic, strong) NSCache *jumpToLineCallbacks;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
 @property (weak, readonly) IRCTreeItem *associatedItem;
 @property (nonatomic, weak, readwrite) IRCClient *associatedClient;
@@ -130,6 +131,8 @@ ClassWithDesignatedInitializerInitMethod
 #endif
 
 	self.highlightedLineNumbers	= [NSMutableArray new];
+
+	self.jumpToLineCallbacks = [NSCache new];
 }
 
 - (void)prepareForTermination:(BOOL)isTerminatingApplication
@@ -652,9 +655,13 @@ ClassWithDesignatedInitializerInitMethod
 #warning TODO: Fix jumping to line before switching to view not working correctly \
 	because the WebKit1 auto scroller does not detect frame changes when view is hidden. 
 
-	[self.backingView booleanByEvaluatingFunction:@"Textual.scrollToLine"
-									withArguments:@[lineNumber]
-								completionHandler:completionHandler];
+	/* Jumping to line chains callback functinos which may take time to load.
+	 We do not want invoke the completion handler until we know for certain
+	 whether the line was jumped to. We therefore change the completion
+	 handler and call it from a bridged function when we are finished. */
+	[self.jumpToLineCallbacks setObject:completionHandler forKey:lineNumber];
+
+	[self.backingView evaluateFunction:@"Textual.jumpToLine" withArguments:@[lineNumber]];
 }
 
 - (void)notifyDidBecomeVisible /* When the view is switched to */
@@ -703,6 +710,23 @@ ClassWithDesignatedInitializerInitMethod
 
 #pragma mark -
 #pragma mark Plugins
+
+- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful
+{
+	NSParameterAssert(lineNumber != nil);
+
+	void (^callbackHandler)(BOOL) = [self.jumpToLineCallbacks objectForKey:lineNumber];
+
+	if (callbackHandler == nil) {
+		return;
+	}
+
+	/* Remove callback handler first incase the callback handler
+	 tries to jump to same line number again for some reason. */
+	[self.jumpToLineCallbacks removeObjectForKey:lineNumber];
+
+	callbackHandler(successful);
+}
 
 - (void)notifyLinesAddedToView:(NSArray<NSString *> *)lineNumbers
 {

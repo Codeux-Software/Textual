@@ -84,7 +84,7 @@ Textual.scrollToTopOfView = function(fireNotification)
 	}
 };
 
-Textual.scrollToLine = function(lineNumber)
+Textual.scrollToLine = function(lineNumber, callbackFunction)
 {
 	var lineNumberStandardized = Textual.lineNumberStandardize(lineNumber);
 	var lineNumberContents = Textual.lineNumberContents(lineNumber);
@@ -92,10 +92,21 @@ Textual.scrollToLine = function(lineNumber)
 	if (Textual.scrollToElement(lineNumberStandardized)) {
 		Textual.viewPositionMovedToLine(lineNumberContents);
 
-		return true;
+		callbackFunction(true);
 	}
 	
-	return false;
+	callbackFunction(false);
+};
+
+Textual.jumpToLine = function(lineNumber)
+{
+	Textual.scrollToLine(
+		lineNumber, 
+		
+		(function(success) {
+			app.notifyJumpToLineCallback(lineNumber, success);
+		})
+	);
 };
 
 Textual.scrollToElement = function(elementName)

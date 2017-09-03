@@ -95,6 +95,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"nicknameDoubleClicked"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"notifyLinesAddedToView"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"notifyLinesRemovedFromView"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"notifyJumpToLineCallback"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"printDebugInformation"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"printDebugInformationToConsole"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"renderMessagesBefore"];
