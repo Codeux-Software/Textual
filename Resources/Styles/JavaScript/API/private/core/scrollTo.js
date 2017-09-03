@@ -86,13 +86,16 @@ Textual.scrollToTopOfView = function(fireNotification)
 
 Textual.scrollToLine = function(lineNumber)
 {
-	if (Textual.scrollToElement("line-" + lineNumber)) {
-		Textual.viewPositionMovedToLine(lineNumber);
+	var lineNumberStandardized = Textual.lineNumberStandardize(lineNumber);
+	var lineNumberContents = Textual.lineNumberContents(lineNumber);
+
+	if (Textual.scrollToElement(lineNumberStandardized)) {
+		Textual.viewPositionMovedToLine(lineNumberContents);
 
 		return true;
-	} else {
-		return false;
 	}
+	
+	return false;
 };
 
 Textual.scrollToElement = function(elementName)
@@ -103,9 +106,9 @@ Textual.scrollToElement = function(elementName)
 		element.scrollIntoViewIfNeeded(true);
 
 		return true;
-	} else {
-		return false;
 	}
+	
+	return false;
 };
 
 Textual.scrollToHistoryIndicator = function()

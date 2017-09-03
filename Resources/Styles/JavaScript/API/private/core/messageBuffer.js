@@ -88,24 +88,6 @@ MessageBuffer.bufferElementReference = null;
 /*                  Line Management                   */
 /* ************************************************** */
 
-MessageBuffer.lineNumberStandardize = function(lineNumber)
-{
-	if (lineNumber.indexOf("line-") !== 0) {
-		lineNumber = ("line-" + lineNumber);
-	}
-	
-	return lineNumber;
-};
-
-MessageBuffer.lineNumberContents = function(lineNumber)
-{
-	if (lineNumber.indexOf("line-") !== 0) {
-		return lineNumber;
-	}
-	
-	return lineNumber.substr(5);
-};
-
 MessageBuffer.firstLineInBuffer = function(buffer)
 {
 	/* Note: speed this up if we begin using this function more often. */
@@ -341,7 +323,7 @@ MessageBuffer.loadMessages = function(before)
 {
 	/* MessageBuffer.loadMessages() is only called during scroll events by
 	the user. We keep track of a request is already active then so that we
-	do not keep sending them out while the user waits for one to finish. */
+	do not keep sending them out while the user waits for one to finish. *
 	if (before) 
 	{
 		if (Textual.finishedLoadingHistory === false) {
@@ -402,11 +384,16 @@ MessageBuffer.loadMessages = function(before)
 		MessageBuffer.loadingMessagesAfterLine = true;
 	}
 
+	var lineNumberStandardized = Textual.lineNumberStandardize(line.id);
+	var lineNumberContents = Textual.lineNumberContents(line.id);
+
 	MessageBuffer.loadMessagesWithPayload(
 		{
 			"before" : before,
 			"line" : line,
-			"resultOfLoadMessages" : true
+			"lineNumberContents" : lineNumberContents,
+			"lineNumberStandardized" : lineNumberStandardized,
+			"resultOfJumpToLine" : false
 		}	
 	);
 };
@@ -416,6 +403,7 @@ MessageBuffer.loadMessagesWithPayload = function(requestPayload)
 {
 	var before = requestPayload.before;
 	var line = requestPayload.line;
+	var lineNumberContents = requestPayload.lineNumberContents;
 
 	/* Define logic that will be performed when 
 	are are ready to load the messages. */
@@ -428,19 +416,17 @@ MessageBuffer.loadMessagesWithPayload = function(requestPayload)
 			MessageBuffer.removeLoadingIndicator(line);
 		});
 
-		var lineNumber = MessageBuffer.lineNumberContents(line.id);
-
-		console.log("Loading messages before (" + before  + ") line " + lineNumber);
+		console.log("Loading messages before (" + before  + ") line " + lineNumberContents);
 		
 		if (before) {
 			app.renderMessagesBefore(
-				lineNumber, 
+				lineNumberContents, 
 				MessageBuffer.loadMessagesBatchSize, 
 				postflightCallback
 			);
 		} else {
 			app.renderMessagesAfter(
-				lineNumber, 
+				lineNumberContents, 
 				MessageBuffer.loadMessagesBatchSize, 
 				postflightCallback
 			);
@@ -565,7 +551,7 @@ The code for it is kept around incase it can be repurposed in the future. */
 		"messageBufferLoadingIndicator", 
 
 		{
-			"lineNumber" : MessageBuffer.lineNumberContents(toLine.id)
+			"lineNumber" : Textual.lineNumberContents(toLine.id)
 		},
 		
 		(function (html) {
@@ -584,7 +570,7 @@ The code for it is kept around incase it can be repurposed in the future. */
 MessageBuffer.removeLoadingIndicator = function(fromLine)
 {
 /*
-	var lineNumber = MessageBuffer.lineNumberContents(fromLine.id);
+	var lineNumber = Textual.lineNumberContents(fromLine.id);
 
 	var loadingIndicator = document.getElementById("mb_loading-" + lineNumber);
 	
