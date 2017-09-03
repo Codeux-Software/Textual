@@ -503,8 +503,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* Render the result in WebKit */
-	self.activeLineCount += lineNumbers.count;
-
 	[self appendHistoricMessageFragment:patchedAppend withLineNumbers:lineNumbers isReload:isReload];
 
 	/* Inform plugins of new content */
@@ -714,6 +712,8 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+	self.activeLineCount += lineNumbers.count;
+
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent] == NO) {
 		return;
 	}
@@ -731,6 +731,8 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+	self.activeLineCount -= lineNumbers.count;
+
 	@synchronized(self.highlightedLineNumbers) {
 		[self.highlightedLineNumbers removeObjectsInArray:lineNumbers];
 	}
@@ -738,6 +740,11 @@ ClassWithDesignatedInitializerInitMethod
 
 #pragma mark -
 #pragma mark Manage Highlights
+
+- (NSUInteger)numberOfLines
+{
+	return self.activeLineCount;
+}
 
 - (BOOL)highlightAvailable:(BOOL)previous
 {
@@ -1078,8 +1085,6 @@ ClassWithDesignatedInitializerInitMethod
 
 			return;
 		}
-
-		self.activeLineCount += 1;
 
 		NSString *lineNumber = logLine.uniqueIdentifier;
 
