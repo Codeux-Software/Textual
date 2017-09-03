@@ -1175,7 +1175,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSInteger cipherSuites = self.preferredCipherSuitesButton.selectedTag;
 
-	NSArray *cipherSuitesDescriptions = [GCDAsyncSocket descriptionsForCipherListVersion:cipherSuites];
+	NSArray *cipherSuitesDescriptions = [GCDAsyncSocket descriptionsForCipherListVersion:cipherSuites withProtocol:YES];
 
 	NSString *cipherSuitesDescription = [cipherSuitesDescriptions componentsJoinedByString:NSStringNewlinePlaceholder];
 

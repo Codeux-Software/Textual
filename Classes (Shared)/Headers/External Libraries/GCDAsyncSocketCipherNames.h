@@ -12,11 +12,17 @@ typedef NS_ENUM(NSUInteger, GCDAsyncSocketCipherSuiteVersion) {
 
 @interface GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
 + (nullable NSString *)descriptionForProtocolVersion:(SSLProtocol)protocolVersion;
+
 + (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite;
++ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite withProtocol:(BOOL)appendProtocol;
+
 + (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite;
 
 + (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version;
++ (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version withProtocol:(BOOL)appendProtocol;
+
 + (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites;
++ (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites withProtocol:(BOOL)appendProtocol;
 
 + (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version;
 + (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version

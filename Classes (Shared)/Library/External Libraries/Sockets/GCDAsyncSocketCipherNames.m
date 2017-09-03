@@ -58,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 static const int kAEADMACValue = 7;
 
+static const int kTLS13KeyExchangeValue = 31;
+
 typedef struct {
 	uint16 cipher_suite, encoded;
 } CipherSuite;
@@ -241,55 +243,57 @@ static const CipherSuite kCipherSuites[] = {
 };
 
 static const char * _Nonnull kKeyExchangeNames[] = {
-	"NULL",
-	"RSA",
-	"RSA-EXPORT",
-	"DH-DSS-EXPORT",
-	"DH-DSS",
-	"DH-RSA-EXPORT",
-	"DH-RSA",
-	"DHE-DSS-EXPORT",
-	"DHE-DSS",
-	"DHE-RSA-EXPORT",
-	"DHE-RSA",
-	"DH-anon-EXPORT",
-	"DH-anon",
-	"ECDH-ECDSA",
-	"ECDHE-ECDSA",
-	"ECDH-RSA",
-	"ECDHE-RSA",
-	"ECDH-anon",
-	"CECPQ1_RSA",
-	"CECPQ1_ECDSA"
+	"NULL",            // 0
+	"RSA",             // 1
+	"RSA_EXPORT",      // 2
+	"DH_DSS_EXPORT",   // 3
+	"DH_DSS",          // 4
+	"DH_RSA_EXPORT",   // 5
+	"DH_RSA",          // 6
+	"DHE_DSS_EXPORT",  // 7
+	"DHE_DSS",         // 8
+	"DHE_RSA_EXPORT",  // 9
+	"DHE_RSA",         // 10
+	"DH_anon_EXPORT",  // 11
+	"DH_anon",         // 12
+	"ECDH_ECDSA",      // 13
+	"ECDHE_ECDSA",     // 14
+	"ECDH_RSA",        // 15
+	"ECDHE_RSA",       // 16
+	"ECDH_anon",       // 17
+	"CECPQ1_RSA",      // 18
+	"CECPQ1_ECDSA",    // 19
+	// 31 is reserved to indicate a TLS 1.3 AEAD-only suite.
 };
 
 static const char * _Nonnull kCipherNames[] = {
-	"NULL",
-	"RC4-40",
-	"RC4-128",
-	"RC2-CBC-40",
-	"IDEA-CBC",
-	"DES40-CBC",
-	"DES-CBC",
-	"3DES-EDE-CBC",
-	"AES-128-CBC",
-	"AES-256-CBC",
-	"CAMELLIA-128-CBC",
-	"CAMELLIA-256-CBC",
-	"SEED-CBC",
-	"AES-128-GCM",
-	"AES-256-GCM",
-	"CAMELLIA-128-GCM",
-	"CAMELLIA-256-GCM",
-	"CHACHA20-POLY1305",
+	"NULL",  // 0
+	"RC4_40",  // 1
+	"RC4_128",  // 2
+	"RC2_CBC_40",  // 3
+	"IDEA_CBC",  // 4
+	"DES40_CBC",  // 5
+	"DES_CBC",  // 6
+	"3DES_EDE_CBC",  // 7
+	"AES_128_CBC",  // 8
+	"AES_256_CBC",  // 9
+	"CAMELLIA_128_CBC",  // 10
+	"CAMELLIA_256_CBC",  // 11
+	"SEED_CBC",  // 12
+	"AES_128_GCM",  // 13
+	"AES_256_GCM",  // 14
+	"CAMELLIA_128_GCM",  // 15
+	"CAMELLIA_256_GCM",  // 16
+	"CHACHA20_POLY1305",  // 17
 };
 
 static const char * _Nonnull kMacNames[] = {
-	"NULL",
-	"MD5",
-	"SHA1",
-	"SHA256",
-	"SHA384",
+	"NULL",  // 0
+	"MD5",  // 1
+	"SHA1",  // 2
+	"SHA256",  // 3
+	"SHA384",  // 4
+	// 7 is reserved to indicate an AEAD cipher suite.
 };
 
 @implementation GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
@@ -350,12 +354,22 @@ static const char * _Nonnull kMacNames[] = {
 
 + (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version
 {
+	return [self descriptionsForCipherListVersion:version withProtocol:NO];
+}
+
++ (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version withProtocol:(BOOL)appendProtocol
+{
 	NSArray *cipherSuites = [GCDAsyncSocket cipherListOfVersion:version];
 
-	return [GCDAsyncSocket descriptionsForCipherSuites:cipherSuites];
+	return [GCDAsyncSocket descriptionsForCipherSuites:cipherSuites withProtocol:appendProtocol];
 }
 
 + (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites
+{
+	return [self descriptionsForCipherSuites:cipherSuites withProtocol:NO];
+}
+
++ (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites withProtocol:(BOOL)appendProtocol
 {
 	NSParameterAssert(cipherSuites != nil);
 
@@ -363,13 +377,18 @@ static const char * _Nonnull kMacNames[] = {
 
 	for (NSNumber *cipherSuite in cipherSuites) {
 		[descriptions addObject:
-		 [GCDAsyncSocket descriptionForCipherSuite:cipherSuite.intValue]];
+		 [GCDAsyncSocket descriptionForCipherSuite:cipherSuite.intValue withProtocol:appendProtocol]];
 	}
 
 	return [descriptions copy];
 }
 
 + (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite
+{
+	return [self descriptionForCipherSuite:cipherSuite withProtocol:NO];
+}
+
++ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite withProtocol:(BOOL)appendProtocol
 {
 	for (unsigned long pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
 		CipherSuite cs = kCipherSuites[pos];
@@ -382,20 +401,26 @@ static const char * _Nonnull kMacNames[] = {
 
 #define _append(store, index)	[resultString appendString:@(store[index])];
 
-		_append(kKeyExchangeNames, (cs.encoded >> 8))
+		NSInteger keyExchangeNameIndex = (cs.encoded >> 8);
 
-		[resultString appendString:@"-"];
+		if (keyExchangeNameIndex != kTLS13KeyExchangeValue) {
+			_append(kKeyExchangeNames, keyExchangeNameIndex);
+
+			[resultString appendString:@"-"];
+		}
 
 		_append(kCipherNames, ((cs.encoded >> 3) & 0x1f));
 
-		NSInteger macIndex = (cs.encoded & 0x7);
+		NSInteger macNameIndex = (cs.encoded & 0x7);
 
-		if (macIndex == kAEADMACValue) {
-			;
-		} else {
+		if (macNameIndex != kAEADMACValue) {
 			[resultString appendString:@"-"];
 
-			_append(kMacNames, macIndex);
+			_append(kMacNames, macNameIndex);
+		}
+
+		if (appendProtocol && keyExchangeNameIndex == kTLS13KeyExchangeValue) {
+			[resultString appendString:@" (TLS 1.3)"];
 		}
 
 #undef _append
