@@ -28,8 +28,6 @@ body {
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
-	-webkit-transform: translateZ(0);
-	transform: translateZ(0);
 }
 
 body[viewtype="channel"] #body_home {
