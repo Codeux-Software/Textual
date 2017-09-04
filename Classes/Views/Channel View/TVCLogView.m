@@ -274,6 +274,20 @@ ClassWithDesignatedInitializerInitMethod
 	[self.webViewBacking findString:searchString movingForward:movingForward];
 }
 
+- (void)enableOffScreenUpdates
+{
+//	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[(id)self.webView enableOffScreenUpdates];
+//	});
+}
+
+- (void)disableOffScreenUpdates
+{
+//	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[(id)self.webView disableOffScreenUpdates];
+//	});
+}
+
 - (void)redrawViewIfNeeded
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{

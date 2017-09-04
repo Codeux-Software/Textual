@@ -418,6 +418,16 @@ create_normal_pool:
 #pragma mark -
 #pragma mark Scroll View
 
+- (void)enableOffScreenUpdates
+{
+	;
+}
+
+- (void)disableOffScreenUpdates
+{
+	;
+}
+
 - (void)redrawViewIfNeeded
 {
 	;

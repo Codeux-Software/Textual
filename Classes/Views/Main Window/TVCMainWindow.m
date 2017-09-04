@@ -384,7 +384,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)windowDidDeminiaturize:(NSNotification *)notification
 {
-	[self reloadViewControllerDrawings];
+//	[self reloadViewControllerDrawings];
 }
 
 - (void)windowDidChangeScreen:(NSNotification *)notification
@@ -427,7 +427,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[self reloadSubviewDrawings];
 
-	[self reloadViewControllerDrawings];
+//	[self reloadViewControllerDrawings];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
