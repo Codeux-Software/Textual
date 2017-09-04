@@ -235,6 +235,16 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 #pragma mark -
 #pragma mark Scroll View
 
+- (void)enableOffScreenUpdates
+{
+	self.shouldUpdateWhileOffscreen = YES;
+}
+
+- (void)disableOffScreenUpdates
+{
+	self.shouldUpdateWhileOffscreen = NO;
+}
+
 - (void)redrawViewIfNeeded
 {
 	/* The WebView is layer backed which means it is not redrawn unless it is told to do so.

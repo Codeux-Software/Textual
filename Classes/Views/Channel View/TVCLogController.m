@@ -672,6 +672,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self.backingView restoreScrollerPosition];
 
+	[self.backingView enableOffScreenUpdates];
+
 	[self.backingView redrawViewIfNeeded];
 }
 
@@ -685,6 +687,8 @@ ClassWithDesignatedInitializerInitMethod
 	[self _evaluateFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
 
 	[self.backingView saveScrollerPosition];
+
+	[self.backingView disableOffScreenUpdates];
 }
 
 - (void)notifyViewFinishedLoadingHistory

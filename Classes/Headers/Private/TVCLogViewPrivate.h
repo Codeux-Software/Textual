@@ -77,6 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)saveScrollerPosition;
 - (void)restoreScrollerPosition;
 
+- (void)enableOffScreenUpdates;
+- (void)disableOffScreenUpdates;
+
 - (void)setAutomaticScrollingEnabled:(BOOL)automaticScrollingEnabled;
 @end
 
