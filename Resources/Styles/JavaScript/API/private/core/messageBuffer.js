@@ -142,7 +142,7 @@ MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers)
 	
 	MessageBuffer.bufferCurrentSize += lineNumbersCount;
 
-	MessageBuffer.resizeBufferIfNeeded(lineNumbersCount);
+	MessageBuffer.resizeBufferIfNeeded();
 	
 	if (lineNumbers) {
 		Textual.messageAddedToViewInt(lineNumbers);
@@ -166,7 +166,7 @@ MessageBuffer.setBufferLimit = function(limit)
 };
 
 /* Determine whether buffer should be resized depending on status. */
-MessageBuffer.resizeBufferIfNeeded = function(numberAdded)
+MessageBuffer.resizeBufferIfNeeded = function()
 {
 	/* We remove lines under the conditions:
 	1. Size limit must be exceeded. 
@@ -178,7 +178,7 @@ MessageBuffer.resizeBufferIfNeeded = function(numberAdded)
 
 	/* Enforce soft limit for #2 */
 	if (MessageBuffer.scrolledToBottomOfBuffer()) {
-		MessageBuffer.enforceSoftLimit(numberAdded, true);
+		MessageBuffer.enforceSoftLimit(true);
 		
 		return;
 	}
@@ -188,27 +188,29 @@ MessageBuffer.resizeBufferIfNeeded = function(numberAdded)
 
 	var removeFromTop = (scrollPercent > 50.0);
 	
-	MessageBuffer.enforceHardLimit(numberAdded, removeFromTop);
+	MessageBuffer.enforceHardLimit(removeFromTop);
 };
 
 /* Given number of lines added: enforce limit and remove from top or bottom. */
-MessageBuffer.enforceSoftLimit = function(numberAdded, fromTop)
+MessageBuffer.enforceSoftLimit = function(fromTop)
 {
-	MessageBuffer.enforceLimit(numberAdded, MessageBuffer.bufferSizeSoftLimit, fromTop);
+	MessageBuffer.enforceLimit(MessageBuffer.bufferSizeSoftLimit, fromTop);
 };
 
-MessageBuffer.enforceHardLimit = function(numberAdded, fromTop)
+MessageBuffer.enforceHardLimit = function(fromTop)
 {
-	MessageBuffer.enforceLimit(numberAdded, MessageBuffer.bufferSizeHardLimit, fromTop);
+	MessageBuffer.enforceLimit(MessageBuffer.bufferSizeHardLimit, fromTop);
 };
 
-MessageBuffer.enforceLimit = function(numberAdded, limit, fromTop)
+MessageBuffer.enforceLimit = function(limit, fromTop)
 {
-	if (MessageBuffer.bufferCurrentSize <= limit) {
+	var numberToRemove = (MessageBuffer.bufferCurrentSize - limit);
+
+	if (numberToRemove <= 0) {
 		return;	
 	}
 
-	MessageBuffer.resizeBuffer(numberAdded, fromTop);
+	MessageBuffer.resizeBuffer(numberToRemove, fromTop);
 };
 
 MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
@@ -323,7 +325,7 @@ MessageBuffer.loadMessages = function(before)
 {
 	/* MessageBuffer.loadMessages() is only called during scroll events by
 	the user. We keep track of a request is already active then so that we
-	do not keep sending them out while the user waits for one to finish. *
+	do not keep sending them out while the user waits for one to finish. */
 	if (before) 
 	{
 		if (Textual.finishedLoadingHistory === false) {
@@ -515,7 +517,7 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		incremented which is why we call it AFTER the append. */
 		/* Value of before is reversed because we want to remove from the
 		opposite of where we added. */
-		MessageBuffer.enforceHardLimit(renderedMessagesCount, !before);
+		MessageBuffer.enforceHardLimit(!before);
 		
 		/* Restore scroll position */
 		TextualScroller.restoreScrollPosition();
