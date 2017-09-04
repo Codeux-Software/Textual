@@ -245,46 +245,46 @@ static const CipherSuite kCipherSuites[] = {
 static const char * _Nonnull kKeyExchangeNames[] = {
 	"NULL",            // 0
 	"RSA",             // 1
-	"RSA_EXPORT",      // 2
-	"DH_DSS_EXPORT",   // 3
-	"DH_DSS",          // 4
-	"DH_RSA_EXPORT",   // 5
-	"DH_RSA",          // 6
-	"DHE_DSS_EXPORT",  // 7
-	"DHE_DSS",         // 8
-	"DHE_RSA_EXPORT",  // 9
-	"DHE_RSA",         // 10
-	"DH_anon_EXPORT",  // 11
-	"DH_anon",         // 12
-	"ECDH_ECDSA",      // 13
-	"ECDHE_ECDSA",     // 14
-	"ECDH_RSA",        // 15
-	"ECDHE_RSA",       // 16
-	"ECDH_anon",       // 17
-	"CECPQ1_RSA",      // 18
-	"CECPQ1_ECDSA",    // 19
+	"RSA-EXPORT",      // 2
+	"DH-DSS-EXPORT",   // 3
+	"DH-DSS",          // 4
+	"DH-RSA-EXPORT",   // 5
+	"DH-RSA",          // 6
+	"DHE-DSS-EXPORT",  // 7
+	"DHE-DSS",         // 8
+	"DHE-RSA-EXPORT",  // 9
+	"DHE-RSA",         // 10
+	"DH-anon-EXPORT",  // 11
+	"DH-anon",         // 12
+	"ECDH-ECDSA",      // 13
+	"ECDHE-ECDSA",     // 14
+	"ECDH-RSA",        // 15
+	"ECDHE-RSA",       // 16
+	"ECDH-anon",       // 17
+	"CECPQ1-RSA",      // 18
+	"CECPQ1-ECDSA",    // 19
 	// 31 is reserved to indicate a TLS 1.3 AEAD-only suite.
 };
 
 static const char * _Nonnull kCipherNames[] = {
 	"NULL",  // 0
-	"RC4_40",  // 1
-	"RC4_128",  // 2
-	"RC2_CBC_40",  // 3
-	"IDEA_CBC",  // 4
-	"DES40_CBC",  // 5
-	"DES_CBC",  // 6
-	"3DES_EDE_CBC",  // 7
-	"AES_128_CBC",  // 8
-	"AES_256_CBC",  // 9
-	"CAMELLIA_128_CBC",  // 10
-	"CAMELLIA_256_CBC",  // 11
-	"SEED_CBC",  // 12
-	"AES_128_GCM",  // 13
-	"AES_256_GCM",  // 14
-	"CAMELLIA_128_GCM",  // 15
-	"CAMELLIA_256_GCM",  // 16
-	"CHACHA20_POLY1305",  // 17
+	"RC4-40",  // 1
+	"RC4-128",  // 2
+	"RC2-CBC-40",  // 3
+	"IDEA-CBC",  // 4
+	"DES40-CBC",  // 5
+	"DES-CBC",  // 6
+	"3DES-EDE-CBC",  // 7
+	"AES-128-CBC",  // 8
+	"AES-256-CBC",  // 9
+	"CAMELLIA-128-CBC",  // 10
+	"CAMELLIA-256-CBC",  // 11
+	"SEED-CBC",  // 12
+	"AES-128-GCM",  // 13
+	"AES-256-GCM",  // 14
+	"CAMELLIA-128-GCM",  // 15
+	"CAMELLIA-256-GCM",  // 16
+	"CHACHA20-POLY1305",  // 17
 };
 
 static const char * _Nonnull kMacNames[] = {
