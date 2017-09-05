@@ -259,14 +259,14 @@ div.line.selectedUser[highlight="false"] {
 
 /* Message buffer loading animation */
 
-.messsage_buffer_loading_indicator {
+.message_buffer_loading_indicator {
 	text-align: center;
 	height: 42px;
 	position: relative;
 	z-index: 200;
 }
 
-.messsage_buffer_loading_indicator span {
+.message_buffer_loading_indicator span {
 	font-family: Optima !important;
 	font-size: 35px;
 	font-weight: 600;
@@ -277,17 +277,17 @@ div.line.selectedUser[highlight="false"] {
 	animation: ellipsis-period 1.5s infinite;
 }
 
-.messsage_buffer_loading_indicator span:nth-child(1) {
+.message_buffer_loading_indicator span:nth-child(1) {
 	-webkit-animation-delay: 0.0s;
 	animation-delay: 0.0s;
 }
 
-.messsage_buffer_loading_indicator span:nth-child(2) {
+.message_buffer_loading_indicator span:nth-child(2) {
 	-webkit-animation-delay: 0.1s;
 	animation-delay: 0.1s;
 }
 
-.messsage_buffer_loading_indicator span:nth-child(3) {
+.message_buffer_loading_indicator span:nth-child(3) {
 	-webkit-animation-delay: 0.2s;
 	animation-delay: 0.2s;
 }
@@ -300,13 +300,13 @@ div.line.selectedUser[highlight="false"] {
 
 /* Message buffer session indicator */
 
-.messsage_buffer_session_indicator {
+.message_buffer_session_indicator {
 	display: flex;
 	display: -webkit-flex;
 	padding: 0.5em 0;
 }
 
-.messsage_buffer_session_indicator > hr {
+.message_buffer_session_indicator > hr {
 	background: #444;
 	border: 0;
 	height: 1px;
@@ -315,13 +315,13 @@ div.line.selectedUser[highlight="false"] {
 	-webkit-flex: 1;
 }
 
-.messsage_buffer_session_indicator > span {
+.message_buffer_session_indicator > span {
 	font-style: oblique;
 	margin: 0 1em;
 	color: #919191;
 }
 
-.messsage_buffer_session_indicator + #mark {
+.message_buffer_session_indicator + #mark {
 	display: none;
 }
 
