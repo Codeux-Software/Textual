@@ -246,7 +246,7 @@ NS_ASSUME_NONNULL_BEGIN
 		CFRelease(certificateRef);
 	}
 
-	SecPolicyRef policyRef = SecPolicyCreateSSL(FALSE, (__bridge CFStringRef)policyName);
+	SecPolicyRef policyRef = SecPolicyCreateSSL(TRUE, (__bridge CFStringRef)policyName);
 
 	SecTrustRef trustRef;
 	OSStatus trustRefStatus = SecTrustCreateWithCertificates(certificatesMutableRef, policyRef, &trustRef);
