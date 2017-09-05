@@ -659,7 +659,9 @@ ClassWithDesignatedInitializerInitMethod
 	 We do not want invoke the completion handler until we know for certain
 	 whether the line was jumped to. We therefore change the completion
 	 handler and call it from a bridged function when we are finished. */
-	[self.jumpToLineCallbacks setObject:completionHandler forKey:lineNumber];
+	if (completionHandler) {
+		[self.jumpToLineCallbacks setObject:completionHandler forKey:lineNumber];
+	}
 
 	[self.backingView evaluateFunction:@"Textual.jumpToLine" withArguments:@[lineNumber]];
 }
