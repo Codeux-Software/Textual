@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AccessIRC</key>
+	<dict>
+		<key>serverAddress</key>
+		<string>irc.accessirc.net</string>
+		<key>serverPort</key>
+		<real>6697</real>
+		<key>prefersSecuredConnection</key>
+		<true/>
+	</dict>
 	<key>AlphaChat</key>
 	<dict>
 		<key>serverAddress</key>
