@@ -201,7 +201,7 @@ Textual.documentBodyAppendHistoric = function(templateHTML, lineNumbers, isReloa
 		TextualScroller.saveRestorationFirstDataPoint();
 	}
 
-	MessageBuffer.bufferElementPrepend(templateHTML);
+	MessageBuffer.bufferElementPrepend(templateHTML, lineNumbers);
 
 	if (atBottom === false) {
 		TextualScroller.saveRestorationSecondDataPoint();
