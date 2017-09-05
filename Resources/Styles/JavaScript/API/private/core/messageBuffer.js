@@ -134,17 +134,11 @@ MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers)
 
 	buffer.insertAdjacentHTML(placement, html);
 	
-	var lineNumbersCount = 1;
-	
 	if (lineNumbers) {
-		lineNumbersCount = lineNumbers.length;
-	}
+		MessageBuffer.bufferCurrentSize += lineNumbers.length;
 	
-	MessageBuffer.bufferCurrentSize += lineNumbersCount;
-
-	MessageBuffer.resizeBufferIfNeeded();
+		MessageBuffer.resizeBufferIfNeeded();
 	
-	if (lineNumbers) {
 		Textual.messageAddedToViewInt(lineNumbers);
 	}
 };
