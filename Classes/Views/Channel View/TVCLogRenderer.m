@@ -1042,7 +1042,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 + (nullable NSString *)renderTemplateNamed:(NSString *)templateName
 {
-	return [TVCLogRenderer renderTemplate:templateName attributes:nil];
+	return [TVCLogRenderer renderTemplateNamed:templateName attributes:nil];
 }
 
 + (nullable NSString *)renderTemplateNamed:(NSString *)templateName attributes:(nullable NSDictionary<NSString *, id> *)templateTokens
