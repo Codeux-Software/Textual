@@ -1031,7 +1031,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSDictionary *templateAttributes = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
-	NSString *renderedTemplate = [TVCLogRenderer renderTemplate:templateName attributes:templateAttributes];
+	NSString *renderedTemplate = [TVCLogRenderer renderTemplateNamed:templateName attributes:templateAttributes];
 
 	context.completionBlock( renderedTemplate );
 }

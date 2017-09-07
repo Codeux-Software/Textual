@@ -699,13 +699,13 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 		templateTokens[@"anchorTitle"] = [TVCLogRenderer escapeString:fragment];
 
-		html = [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
+		html = [TVCLogRenderer renderTemplateNamed:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
 	else if ([stringAttributes containsKey:TVCLogRendererFormattingChannelNameAttribute])
 	{
 		templateTokens[@"channelName"] = [TVCLogRenderer escapeString:fragment];
 
-		html = [TVCLogRenderer renderTemplate:@"renderedChannelNameLinkResource" attributes:templateTokens];
+		html = [TVCLogRenderer renderTemplateNamed:@"renderedChannelNameLinkResource" attributes:templateTokens];
 	}
 	else if ([stringAttributes containsKey:TVCLogRendererFormattingConversationTrackingAttribute])
 	{
@@ -883,7 +883,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	templateTokens[@"messageFragment"] = html;
 
-	return [TVCLogRenderer renderTemplate:@"formattedMessageFragment" attributes:templateTokens];
+	return [TVCLogRenderer renderTemplateNamed:@"formattedMessageFragment" attributes:templateTokens];
 }
 
 #pragma mark -
@@ -1040,12 +1040,12 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 #pragma mark -
 
-+ (nullable NSString *)renderTemplate:(NSString *)templateName
++ (nullable NSString *)renderTemplateNamed:(NSString *)templateName
 {
 	return [TVCLogRenderer renderTemplate:templateName attributes:nil];
 }
 
-+ (nullable NSString *)renderTemplate:(NSString *)templateName attributes:(nullable NSDictionary<NSString *, id> *)templateToken
++ (nullable NSString *)renderTemplateNamed:(NSString *)templateName attributes:(nullable NSDictionary<NSString *, id> *)templateTokens
 {
 	NSParameterAssert(templateName != nil);
 
@@ -1055,7 +1055,19 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 		return nil;
 	}
 
-	NSString *templateRender = [template renderObject:templateToken error:NULL];
+	return [self renderTemplate:template attributes:templateTokens];
+}
+
++ (nullable NSString *)renderTemplate:(GRMustacheTemplate *)template
+{
+	return [self renderTemplate:template attributes:nil];
+}
+
++ (nullable NSString *)renderTemplate:(GRMustacheTemplate *)template attributes:(nullable NSDictionary<NSString *, id> *)templateTokens
+{
+	NSParameterAssert(template != nil);
+
+	NSString *templateRender = [template renderObject:templateTokens error:NULL];
 
 	if (templateRender == nil) {
 		return nil;

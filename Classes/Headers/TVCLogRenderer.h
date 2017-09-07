@@ -68,8 +68,11 @@ TEXTUAL_EXTERN NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsA
 + (nullable NSColor *)mapColor:(id)color;
 + (NSColor *)mapColorCode:(NSUInteger)colorCode;
 
-+ (nullable NSString *)renderTemplate:(NSString *)templateName;
-+ (nullable NSString *)renderTemplate:(NSString *)templateName attributes:(nullable NSDictionary<NSString *, id> *)templateToken;
++ (nullable NSString *)renderTemplateNamed:(NSString *)templateName;
++ (nullable NSString *)renderTemplateNamed:(NSString *)templateName attributes:(nullable NSDictionary<NSString *, id> *)templateTokens;
+
++ (nullable NSString *)renderTemplate:(GRMustacheTemplate *)template;
++ (nullable NSString *)renderTemplate:(GRMustacheTemplate *)template attributes:(nullable NSDictionary<NSString *, id> *)templateTokens;
 
 + (NSAttributedString *)renderBodyAsAttributedString:(NSString *)body withAttributes:(NSDictionary<NSString *, id> *)inputDictionary;
 
