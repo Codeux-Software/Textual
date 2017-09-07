@@ -40,8 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TPCThemeSettings ()
 - (void)reloadWithPath:(NSString *)path;
 
-- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
-
 @property (readonly, copy) NSString *applicationTemplateRepositoryPath;
 @end
 

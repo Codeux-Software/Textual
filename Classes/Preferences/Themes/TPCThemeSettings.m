@@ -117,23 +117,47 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Template Handle
 
-- (NSString *)templateNameWithLineType:(TVCLogLineType)type
+- (NSDictionary<NSString *, NSString *> *)templateLineTypes
 {
-	NSParameterAssert(type != TVCLogLineUndefinedType);
+	static NSDictionary<NSString *, NSString *> *cachedValue = nil;
 
-	NSString *typeString = [TVCLogLine stringForLineType:type];
+	static dispatch_once_t onceToken;
 
-	return [@"Line Types/" stringByAppendingString:typeString];
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		[TPCResourceManager loadContentsOfPropertyListInResources:@"TemplateLineTypes"];
+	});
+
+	return cachedValue;
 }
 
 - (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
 {
-	NSString *templateName = [self templateNameWithLineType:type];
+	NSString *typeString = [TVCLogLine stringForLineType:type];
 
-	return [self templateWithName:templateName];
+	NSString *templateName = [@"Line Types/" stringByAppendingString:typeString];
+
+	GRMustacheTemplate *template = [self _templateWithName:templateName logErrors:NO];
+
+	if (template == nil) {
+		templateName = [[self templateLineTypes] objectForKey:typeString];
+
+		if (templateName == nil) {
+			return nil;
+		}
+
+		template = [self _templateWithName:templateName logErrors:YES];
+	}
+
+	return template;
 }
 
 - (nullable GRMustacheTemplate *)templateWithName:(NSString *)templateName
+{
+	return [self _templateWithName:templateName logErrors:YES];
+}
+
+- (nullable GRMustacheTemplate *)_templateWithName:(NSString *)templateName logErrors:(BOOL)logErrors
 {
 	NSParameterAssert(templateName != nil);
 
@@ -147,7 +171,7 @@ NS_ASSUME_NONNULL_BEGIN
 		template = [self.applicationTemplateRepository templateNamed:templateName error:&loadError];
 	}
 
-	if (loadError) {
+	if (loadError && logErrors) {
 		LogToConsoleError("Failed to load template '%{public}@' with error: '%{public}@'",
 			  templateName, loadError.localizedDescription);
 		LogToConsoleCurrentStackTrace
