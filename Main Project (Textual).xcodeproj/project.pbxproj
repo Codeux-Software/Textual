@@ -1641,6 +1641,9 @@
 		4CDDF24E1D1B1D0C0095D031 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CE424981F60C3F900CAB5B3 /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE4248F1F60C3F500CAB5B3 /* TemplateLineTypes.plist */; };
+		4CE424991F60C3FA00CAB5B3 /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE4248F1F60C3F500CAB5B3 /* TemplateLineTypes.plist */; };
+		4CE4249A1F60C3FA00CAB5B3 /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE4248F1F60C3F500CAB5B3 /* TemplateLineTypes.plist */; };
 		4CE474371D2F3CE400909766 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE474361D2F3CE400909766 /* IRCClientConfigInternal.h */; };
 		4CE474381D2F3CE400909766 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE474361D2F3CE400909766 /* IRCClientConfigInternal.h */; };
 		4CE474391D2F3CE400909766 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE474361D2F3CE400909766 /* IRCClientConfigInternal.h */; };
@@ -2712,6 +2715,7 @@
 		4CDBF7271EC11CAA00F846A6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCServerEndpointListSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSViewHelper.h; path = Classes/Headers/NSViewHelper.h; sourceTree = "<group>"; };
 		4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaults.h; path = Classes/Headers/TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
+		4CE4248F1F60C3F500CAB5B3 /* TemplateLineTypes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = TemplateLineTypes.plist; path = "Resources/Property Lists/TemplateLineTypes.plist"; sourceTree = "<group>"; };
 		4CE474361D2F3CE400909766 /* IRCClientConfigInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientConfigInternal.h; path = Classes/Headers/Internal/IRCClientConfigInternal.h; sourceTree = "<group>"; };
 		4CE4743F1D2F3D0100909766 /* IRCClientConfigPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientConfigPrivate.h; path = Classes/Headers/Private/IRCClientConfigPrivate.h; sourceTree = "<group>"; };
 		4CE474401D2F3D0100909766 /* IRCClientPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientPrivate.h; path = Classes/Headers/Private/IRCClientPrivate.h; sourceTree = "<group>"; };
@@ -3169,6 +3173,7 @@
 				4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */,
 				4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */,
 				4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */,
+				4CE4248F1F60C3F500CAB5B3 /* TemplateLineTypes.plist */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -5481,6 +5486,7 @@
 				4C0BA5091990798800857343 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4CF40F561AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
 				4C0BA50A1990798800857343 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
+				4CE4249A1F60C3FA00CAB5B3 /* TemplateLineTypes.plist in Resources */,
 				4C0BA50C1990798800857343 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
 				4CBC76CB1CC72B5100484A13 /* TDCChannelInviteSheet.strings in Resources */,
 				4CF621D41C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
@@ -5637,6 +5643,7 @@
 				4CAC9D7B1F2B076100AD5F12 /* Textual-Extras.pkg in Resources */,
 				4CCFA6681ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F341AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
+				4CE424981F60C3F900CAB5B3 /* TemplateLineTypes.plist in Resources */,
 				4CB229261978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
 				4C46F4791943A654004CA8BA /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CC164B01943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */,
@@ -5931,6 +5938,7 @@
 				4C25334A1F4439180003A3F4 /* TDCLicenseUpgradeDialog.xib in Resources */,
 				4CBC76DB1CC72B5100484A13 /* TVCMainWindow.strings in Resources */,
 				4C46F4601943A654004CA8BA /* FormattingColor_12.png in Resources */,
+				4CE424991F60C3FA00CAB5B3 /* TemplateLineTypes.plist in Resources */,
 				4CCFA6871ABCF36A0083620F /* TPWTB_Notifications.png in Resources */,
 				4C7A21941979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */,
 				4C0D460E1EC2B11E00256D58 /* TDCServerEndpointListSheet.strings in Resources */,
