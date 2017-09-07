@@ -419,7 +419,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)mark
 {
 	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
-		NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
+		NSString *markTemplate = [TVCLogRenderer renderTemplateNamed:@"historyIndicator"];
 
 		[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 	};
@@ -637,7 +637,7 @@ ClassWithDesignatedInitializerInitMethod
 		@"message" : message
 	};
 
-	return [TVCLogRenderer renderTemplate:@"messageBufferSessionIndicator" attributes:templateAttributes];
+	return [TVCLogRenderer renderTemplateNamed:@"messageBufferSessionIndicator" attributes:templateAttributes];
 }
 
 #pragma mark -
@@ -1393,7 +1393,7 @@ ClassWithDesignatedInitializerInitMethod
 		templateAttributes[@"isEncrypted"] = @(YES);
 
 		templateAttributes[@"encryptedMessageLockTemplate"] =
-		[TVCLogRenderer renderTemplate:@"encryptedMessageLock" attributes:pathAttributes];
+		[TVCLogRenderer renderTemplateNamed:@"encryptedMessageLock" attributes:pathAttributes];
 	}
 
 	// ---- //
@@ -1446,9 +1446,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ************************************************************************** /
 
-	NSString *templateName = [themeSettings() templateNameWithLineType:lineType];
+	GRMustacheTemplate *template = [themeSettings() templateWithLineType:lineType];
 
-	NSString *html = [TVCLogRenderer renderTemplate:templateName attributes:templateAttributes];
+	NSString *html = [TVCLogRenderer renderTemplate:template attributes:templateAttributes];
 
 	return html;
 }
@@ -1521,7 +1521,7 @@ ClassWithDesignatedInitializerInitMethod
 		templateTokens[@"textDirectionToken"] = @"ltr";
 	}
 
-	return [TVCLogRenderer renderTemplate:@"baseLayout" attributes:templateTokens];
+	return [TVCLogRenderer renderTemplateNamed:@"baseLayout" attributes:templateTokens];
 }
 
 - (NSMutableDictionary<NSString *, id> *)generateOverrideStyle
