@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_batchToken;
 	NSString *_command;
 	NSUInteger _commandNumeric;
+	IRCMessageBatchMessage *_parentBatchMessage;
 
 @private
 	BOOL _objectInitialized;

@@ -2208,7 +2208,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
-		return (self.zncBouncerIsPlayingBackHistory == NO);
+		NSString *batchType = message.parentBatchMessage.batchType;
+
+		return (NSObjectsAreEqual(batchType, @"znc.in/playback") == NO);
 	}
 
 	return (message.isHistoric == NO);
@@ -5300,7 +5302,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(message != nil);
 
-	dispatch_async(dispatch_get_main_queue(), ^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self _processIncomingMessage:message];
 	});
 }
@@ -7399,6 +7401,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #pragma mark -
 #pragma mark BATCH Command
+
+- (id)queuedBatchMessageWithToken:(NSString *)batchToken
+{
+	return [self.batchMessages queuedEntryWithBatchToken:batchToken];
+}
 
 - (BOOL)filterBatchCommandIncomingData:(IRCMessage *)m
 {
