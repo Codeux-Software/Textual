@@ -38,6 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCMessage ()
+@property (readonly, strong, nullable) IRCMessageBatchMessage *parentBatchMessage;
+
 - (void)markAsNotHistoric;
 @end
 

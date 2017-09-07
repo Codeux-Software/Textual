@@ -118,6 +118,8 @@ enum {
 - (nullable IRCChannel *)findChannelOrCreate:(NSString *)withName isUtility:(BOOL)isUtility;
 
 - (nullable NSString *)formatNotificationToSpeak:(TLOSpokenNotification *)notification;
+
+- (id)queuedBatchMessageWithToken:(NSString *)batchToken;
 @end
 
 NS_ASSUME_NONNULL_END

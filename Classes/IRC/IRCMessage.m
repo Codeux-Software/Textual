@@ -378,6 +378,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		if ([batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters]) {
 			self->_batchToken = [batchToken copy];
+
+			self->_parentBatchMessage = [client queuedBatchMessageWithToken:batchToken];
 		}
 	}
 }
