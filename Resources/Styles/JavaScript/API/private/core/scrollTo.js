@@ -84,26 +84,21 @@ Textual.scrollToTopOfView = function(fireNotification)
 	}
 };
 
-Textual.scrollToLine = function(lineNumber, callbackFunction)
+Textual.scrollToLine = function(lineNumber)
 {
-	var lineNumberStandardized = Textual.lineNumberStandardize(lineNumber);
-	var lineNumberContents = Textual.lineNumberContents(lineNumber);
-
-	if (Textual.scrollToElement(lineNumberStandardized)) {
-		Textual.viewPositionMovedToLine(lineNumberContents);
-
-		callbackFunction(true);
-	}
-	
-	callbackFunction(false);
+	Textual.jumpToLine(lineNumber);
 };
 
 Textual.jumpToLine = function(lineNumber)
 {
-	Textual.scrollToLine(
+	MessageBuffer.jumpToLine(
 		lineNumber, 
 		
 		(function(success) {
+			if (success) {
+				Textual.viewPositionMovedToLine(lineNumber);
+			}
+
 			app.notifyJumpToLineCallback(lineNumber, success);
 		})
 	);
