@@ -2126,7 +2126,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* For all other connects, then playback timestamp regardless of logging. */
 	NSString *command = nil;
 
-	if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDisk])) && self.lastMessageServerTime > 0) {
+	if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && self.config.zncOnlyPlaybackLatest)) && self.lastMessageServerTime > 0) {
 		command = [NSString stringWithFormat:@"play * %.0f", self.lastMessageServerTime];
 	} else {
 		command = @"play * 0";

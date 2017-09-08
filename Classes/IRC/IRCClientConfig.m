@@ -103,6 +103,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"zncIgnoreConfiguredAutojoin"] = @(NO);
 	defaults[@"zncIgnorePlaybackNotifications"] = @(YES);
 	defaults[@"zncIgnoreUserNotifications"] = @(NO);
+	defaults[@"zncOnlyPlaybackLatest"] = @(YES);
 
 	self->_defaults = [defaults copy];
 }
@@ -321,6 +322,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_zncIgnoreConfiguredAutojoin forKey:@"zncIgnoreConfiguredAutojoin"];
 	[defaultsMutable assignBoolTo:&self->_zncIgnorePlaybackNotifications forKey:@"zncIgnorePlaybackNotifications"];
 	[defaultsMutable assignBoolTo:&self->_zncIgnoreUserNotifications forKey:@"zncIgnoreUserNotifications"];
+	[defaultsMutable assignBoolTo:&self->_zncOnlyPlaybackLatest forKey:@"zncOnlyPlaybackLatest"];
 
 	[defaultsMutable assignDoubleTo:&self->_lastMessageServerTime forKey:@"cachedLastServerTimeCapabilityReceivedAtTimestamp"];
 	[defaultsMutable assignObjectTo:&self->_identityClientSideCertificate forKey:@"identityClientSideCertificate"];
@@ -494,6 +496,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (connectionPrefersModernCiphers && connectionPrefersModernCiphers.boolValue == NO) {
 			self->_cipherSuites = GCDAsyncSocketCipherSuiteNonePreferred;
 		}
+	}
+
+	/* ZNC */
+	/* Back before this option existed, the logging option was used to determine
+	 whether Textual played back only the latest with the playback module. */
+	if (dic[@"zncOnlyPlaybackLatest"] == nil) {
+		self->_zncOnlyPlaybackLatest = [TPCPreferences logToDisk];
 	}
 
 	/* Migrate servers */
@@ -760,6 +769,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.zncIgnoreConfiguredAutojoin forKey:@"zncIgnoreConfiguredAutojoin"];
 	[dic setBool:self.zncIgnorePlaybackNotifications forKey:@"zncIgnorePlaybackNotifications"];
 	[dic setBool:self.zncIgnoreUserNotifications forKey:@"zncIgnoreUserNotifications"];
+	[dic setBool:self.zncOnlyPlaybackLatest forKey:@"zncOnlyPlaybackLatest"];
 
 	[dic setUnsignedInteger:self.cipherSuites forKey:@"cipherSuites"];
 	[dic setUnsignedInteger:self.fallbackEncoding forKey:@"fallbackEncoding"];
@@ -1130,6 +1140,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 @dynamic zncIgnoreConfiguredAutojoin;
 @dynamic zncIgnorePlaybackNotifications;
 @dynamic zncIgnoreUserNotifications;
+@dynamic zncOnlyPlaybackLatest;
 
 + (BOOL)isMutable
 {
@@ -1290,6 +1301,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	if (self->_zncIgnoreUserNotifications != zncIgnoreUserNotifications) {
 		self->_zncIgnoreUserNotifications = zncIgnoreUserNotifications;
+	}
+}
+
+- (void)setZncOnlyPlaybackLatest:(BOOL)zncOnlyPlaybackLatest
+{
+	if (self->_zncOnlyPlaybackLatest != zncOnlyPlaybackLatest) {
+		self->_zncOnlyPlaybackLatest = zncOnlyPlaybackLatest;
 	}
 }
 

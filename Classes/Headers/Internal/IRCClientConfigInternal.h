@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _zncIgnoreConfiguredAutojoin;
 	BOOL _zncIgnorePlaybackNotifications;
 	BOOL _zncIgnoreUserNotifications;
+	BOOL _zncOnlyPlaybackLatest;
 	IRCConnectionSocketProxyType _proxyType;
 	NSArray<IRCAddressBookEntry *> *_ignoreList;
 	NSArray<IRCChannelConfig *> *_channelList;
