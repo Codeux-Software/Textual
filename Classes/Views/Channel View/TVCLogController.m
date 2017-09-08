@@ -762,6 +762,17 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	self.activeLineCount -= lineNumbers.count;
+}
+
+- (void)notifyHistoricLogWillDeleteLines:(NSArray<NSString *> *)lineNumbers
+{
+	NSParameterAssert(lineNumbers != nil);
+
+	/* It is possible for this method to be invoked before loaded is YES
+	 such as when performing a clear. */
+	if (/* self.loaded == NO || */ self.terminating) {
+		return;
+	}
 
 	@synchronized(self.highlightedLineNumbers) {
 		[self.highlightedLineNumbers removeObjectsInArray:lineNumbers];

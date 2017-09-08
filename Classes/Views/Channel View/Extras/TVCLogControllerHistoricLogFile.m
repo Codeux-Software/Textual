@@ -462,6 +462,21 @@ NS_ASSUME_NONNULL_BEGIN
 	[[self remoteObjectProxy] writeLogLine:newEntry];
 }
 
+#pragma mark -
+#pragma mark Private API (Client)
+
+- (void)willDeleteUniqueIdentifiers:(NSArray<NSString *> *)uniqueIdentifiers
+							 inView:(NSString *)viewId
+{
+	IRCTreeItem *item = [worldController() findItemWithId:viewId];
+
+	if (item == nil) {
+		return;
+	}
+
+	[item.viewController notifyHistoricLogWillDeleteLines:uniqueIdentifiers];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
