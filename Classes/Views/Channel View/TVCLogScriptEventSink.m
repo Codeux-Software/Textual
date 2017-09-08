@@ -268,7 +268,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Perform validation if needed */
 	if (minimumArgumentCount > 0 && values.count < minimumArgumentCount) {
-		[self _throwJavaScriptException:@"Minimum number of arguments condition not met" inWebView:intWebView];
+		[self _throwJavaScriptException:@"Minimum number of arguments (%ld) condition not met" inWebView:intWebView, minimumArgumentCount];
 
 		return;
 	}
@@ -318,14 +318,50 @@ ClassWithDesignatedInitializerInitMethod
 	(void)objc_msgSend(self, selector, context);
 }
 
-- (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView
+- (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView, ...
 {
-	[webView evaluateFunction:@"console.log" withArguments:@[message]];
+	va_list arguments;
+	va_start(arguments, webView);
+
+	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
+
+	va_end(arguments);
+
+	[webView evaluateFunction:@"console.log" withArguments:@[messageFormatted]];
 }
 
-- (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView
+- (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView, ...
 {
-	[webView evaluateFunction:@"console.error" withArguments:@[message]];
+	message = [message stringByAppendingFormat:@" — Caller: %@",
+			   [self _callerNameForJavaScriptException]];
+
+	va_list arguments;
+	va_start(arguments, webView);
+
+	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
+
+	va_end(arguments);
+
+	[webView evaluateFunction:@"console.error" withArguments:@[messageFormatted]];
+}
+
+- (NSString *)_callerNameForJavaScriptException
+{
+	NSArray *stackSymbols = [NSThread callStackSymbols];
+
+	// 0 = _callerNameForJavaScriptException
+	// 1 = _throwJavaScriptException:inWebView:
+	NSUInteger callerIndex = 2;
+
+	NSString *caller = stackSymbols[callerIndex];
+
+	while ([caller contains:@" processInputData:"]) {
+		callerIndex += 1;
+
+		caller = stackSymbols[callerIndex];
+	}
+
+	return caller.callStackSymbolMethodName;
 }
 
 #pragma mark -
@@ -820,7 +856,7 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"notifyJumpToLineCallback: Length of line number is 0" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -900,7 +936,7 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderMessages: Length of line number is 0" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -910,7 +946,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] integerValue];
 
 	if (maximumNumberOfLines <= 0) {
-		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 1 or greater" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderMessages: Maximum number of lines must be equal to 1 or greater" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -947,7 +983,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (lineNumberAfter.length == 0 ||
 		lineNumberBefore.length == 0)
 	{
-		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderMessagesInRange: Length of line number is 0" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -957,7 +993,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] integerValue];
 
 	if (maximumNumberOfLines < 0) {
-		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 0 or greater" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderMessagesInRange: Maximum number of lines must be equal to 0 or greater" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -985,7 +1021,7 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderMessageWithSiblings: Length of line number is 0" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -998,7 +1034,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (numberOfLinesBefore < 0 ||
 		numberOfLinesAfter < 0)
 	{
-		[self _throwJavaScriptException:@"Number of lines must be equal to 0 or greater" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderMessageWithSiblings: Number of lines must be equal to 0 or greater" inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1022,7 +1058,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *templateName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	if (templateName.length == 0) {
-		[self _throwJavaScriptException:@"Length of template name is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"renderTemplate: Length of template name is 0" inWebView:context.webView];
 
 		context.completionBlock(nil);
 
@@ -1048,17 +1084,13 @@ ClassWithDesignatedInitializerInitMethod
 	[TPCPreferences methodSignatureForSelector:methodSelector];
 
 	if (methodSignature == nil) {
-		NSString *errorMessage = [NSString stringWithFormat:@"Unknown method named: '%@'", methodName];
-
-		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
+		[self _throwJavaScriptException:@"retrievePreferencesWithMethodName: Unknown method named: '%@'" inWebView:context.webView, methodName];
 
 		context.completionBlock(nil);
 
 		return;
 	} else if (strcmp(methodSignature.methodReturnType, @encode(void)) == 0) {
-		NSString *errorMessage = [NSString stringWithFormat:@"Method named '%@' does not return a value", methodName];
-
-		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
+		[self _throwJavaScriptException:@"retrievePreferencesWithMethodName: Method named '%@' does not return a value" inWebView:context.webView, methodName];
 
 		context.completionBlock(nil);
 
@@ -1084,7 +1116,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
 {
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
-		[self _throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads" inWebView:context.webView];
+		[self _throwJavaScriptException:@"sendPluginPayload: There are no plugins loaded that support JavaScritp payloads" inWebView:context.webView];
 
 		return;
 	}
