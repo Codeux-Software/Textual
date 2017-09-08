@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 };
 
 @interface HLSHistoricLogProcessMain ()
+@property (nonatomic, strong) NSXPCConnection *serviceConnection;
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
@@ -57,9 +58,13 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 @implementation HLSHistoricLogProcessMain
 
-- (instancetype)init
+- (instancetype)initWithConnection:(NSXPCConnection *)connection
 {
+	NSParameterAssert(connection != nil);
+
 	if ((self = [super init])) {
+		self.serviceConnection = connection;
+
 		[self prepareInitialState];
 
 		return self;
@@ -110,7 +115,9 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 							 limitToDate:(nullable NSDate *)limitToDate
 							  resultType:(NSFetchRequestResultType)resultType
 {
+
 	return [self _fetchRequestForView:viewId
+							ascending:YES
 						   fetchLimit:fetchLimit
 				lowestEntryIdentifier:0
 			   highestEntryIdentifier:NSIntegerMax
@@ -119,6 +126,22 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 }
 
 - (NSFetchRequest *)_fetchRequestForView:(NSString *)viewId
+							   ascending:(BOOL)ascending
+							  fetchLimit:(NSUInteger)fetchLimit
+							 limitToDate:(nullable NSDate *)limitToDate
+							  resultType:(NSFetchRequestResultType)resultType
+{
+	return [self _fetchRequestForView:viewId
+							ascending:ascending
+						   fetchLimit:fetchLimit
+				lowestEntryIdentifier:0
+			   highestEntryIdentifier:NSIntegerMax
+						  limitToDate:limitToDate
+						   resultType:resultType];
+}
+
+- (NSFetchRequest *)_fetchRequestForView:(NSString *)viewId
+							   ascending:(BOOL)ascending
 							  fetchLimit:(NSUInteger)fetchLimit
 				   lowestEntryIdentifier:(NSUInteger)lowestEntryIdentifier
 				  highestEntryIdentifier:(NSUInteger)highestEntryIdentifier
@@ -127,9 +150,9 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 {
 	NSParameterAssert(viewId != nil);
 
-	if (limitToDate == nil) {
+	//if (limitToDate == nil) {
 		limitToDate = [NSDate distantFuture];
-	}
+	//}
 
 	NSDictionary *substitutionVariables = @{
 		@"view_id" : viewId,
@@ -148,6 +171,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 	fetchRequest.resultType = resultType;
 
+	fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:ascending]];
+
 	return fetchRequest;
 }
 
@@ -160,8 +185,6 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
 
 	[viewContext performBlockAndWait:^{
-		[viewContext reset];
-
 		[self cancelResizeInViewContext:viewContext];
 
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
@@ -170,6 +193,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 													   resultType:NSManagedObjectResultType];
 
 		[self _deleteDataInViewContext:viewContext withFetchRequest:fetchRequest performOnQueue:NO];
+
+		[viewContext reset];
 	}];
 
 	NSManagedObjectContext *parentContext = self.managedObjectContext;
@@ -188,8 +213,6 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	HLSHistoricLogViewContext *viewContext = [self contextForView:viewId];
 
 	[viewContext performBlockAndWait:^{
-		[viewContext reset];
-
 		[self cancelResizeInViewContext:viewContext];
 
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
@@ -198,6 +221,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 													   resultType:NSManagedObjectResultType];
 
 		[self _deleteDataInViewContext:viewContext withFetchRequest:fetchRequest performOnQueue:NO];
+
+		[viewContext reset];
 	}];
 }
 
@@ -257,13 +282,12 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSInteger highestEntryId = (firstEntryId + fetchLimitAfter);
 
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+														ascending:YES
 													   fetchLimit:0
 											lowestEntryIdentifier:lowestEntryId
 										   highestEntryIdentifier:highestEntryId
 													  limitToDate:limitToDate
 													   resultType:NSManagedObjectResultType];
-
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
 
 		NSError *fetchRequestError = nil;
 
@@ -322,13 +346,12 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSInteger highestEntryId = (secondEntryId - 1);
 
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+														ascending:YES
 													   fetchLimit:fetchLimit
 											lowestEntryIdentifier:lowestEntryId
 										   highestEntryIdentifier:highestEntryId
 													  limitToDate:nil
 													   resultType:NSManagedObjectResultType];
-
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
 
 		NSError *fetchRequestError = nil;
 
@@ -412,13 +435,12 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		}
 
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+														ascending:YES
 													   fetchLimit:fetchLimit
 											lowestEntryIdentifier:lowestEntryId
 										   highestEntryIdentifier:highestEntryId
 													  limitToDate:limitToDate
 													   resultType:NSManagedObjectResultType];
-
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:YES]];
 
 		NSError *fetchRequestError = nil;
 
@@ -455,11 +477,10 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 	[viewContext performBlockAndWait:^{
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+														ascending:ascending
 													   fetchLimit:fetchLimit
 													  limitToDate:limitToDate
 													   resultType:NSManagedObjectResultType];
-
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:ascending]];
 
 		NSError *fetchRequestError = nil;
 
@@ -763,16 +784,20 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 - (NSUInteger)_deleteDataInViewContext:(HLSHistoricLogViewContext *)viewContext withFetchRequest:(NSFetchRequest *)fetchRequest performOnQueue:(BOOL)performOnQueue
 {
+	NSParameterAssert(viewContext != nil);
 	NSParameterAssert(fetchRequest != nil);
 
 	__block NSUInteger rowsDeleted = 0;
 
 	dispatch_block_t blockToPerform = ^{
-		if (XRRunningOnOSXElCapitanOrLater()) {
-			rowsDeleted = [self __deleteDataForFetchRequestUsingBatch:fetchRequest inContext:viewContext];
-		} else {
-			rowsDeleted = [self __deleteDataForFetchRequestUsingEnumeration:fetchRequest inContext:viewContext];
-		}
+		/* Batch delete is not used at the time of this commit because we want the value
+		 of a specific property from each managed object before deleting, which old school
+		 delete allows us to obtain at the same time we perform delete. */
+//		if (XRRunningOnOSXElCapitanOrLater()) {
+//			rowsDeleted = [self __deleteDataForFetchRequestUsingBatch:fetchRequest inViewContext:viewContext];
+//		} else {
+			rowsDeleted = [self __deleteDataForFetchRequestUsingEnumeration:fetchRequest inViewContext:viewContext];
+//		}
 	};
 
 	if (performOnQueue) {
@@ -786,10 +811,11 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	return rowsDeleted;
 }
 
-- (NSUInteger)__deleteDataForFetchRequestUsingBatch:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context
+/*
+- (NSUInteger)__deleteDataForFetchRequestUsingBatch:(NSFetchRequest *)fetchRequest inViewContext:(HLSHistoricLogViewContext *)viewContext
 {
 	NSParameterAssert(fetchRequest != nil);
-	NSParameterAssert(context != nil);
+	NSParameterAssert(viewContext != nil);
 
 	NSBatchDeleteRequest *batchDeleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
 
@@ -798,7 +824,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	NSError *batchDeleteError = nil;
 
 	NSBatchDeleteResult *batchDeleteResult =
-	[context executeRequest:batchDeleteRequest error:&batchDeleteError];
+	[viewContext executeRequest:batchDeleteRequest error:&batchDeleteError];
 
 	if (batchDeleteResult == nil) {
 		LogToConsoleError("Failed to perform batch delete: %@",
@@ -812,22 +838,23 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	NSUInteger rowsDeletedCount = rowsDeleted.count;
 
 	if (rowsDeletedCount > 0) {
-		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : rowsDeleted} intoContexts:@[context]];
+		[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey : rowsDeleted} intoContexts:@[viewContext]];
 
-		[self _quickSaveContext:context];
+		[self _quickSaveContext:viewContext];
 	}
 
 	return rowsDeletedCount;
 }
+*/
 
-- (NSUInteger)__deleteDataForFetchRequestUsingEnumeration:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context
+- (NSUInteger)__deleteDataForFetchRequestUsingEnumeration:(NSFetchRequest *)fetchRequest inViewContext:(HLSHistoricLogViewContext *)viewContext
 {
 	NSParameterAssert(fetchRequest != nil);
-	NSParameterAssert(context != nil);
+	NSParameterAssert(viewContext != nil);
 
 	NSError *fetchRequestError = nil;
 
-	NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&fetchRequestError];
+	NSArray *fetchedObjects = [viewContext executeFetchRequest:fetchRequest error:&fetchRequestError];
 
 	if (fetchedObjects == nil) {
 		LogToConsoleError("Error occurred fetching objects: %@",
@@ -836,17 +863,42 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		return 0;
 	}
 
+	if (fetchedObjects.count == 0) {
+		return 0;
+	}
+
+	NSMutableArray<NSString *> *uniqueIdentifiers = [NSMutableArray arrayWithCapacity:fetchedObjects.count];
+
 	for (NSManagedObject *object in fetchedObjects) {
-		[context deleteObject:object];
+		/* Record unique identifier */
+		NSString *uniqueIdentifier = [object valueForKey:@"logLineUniqueIdentifier"];
+
+		if (uniqueIdentifier) {
+			[uniqueIdentifiers addObject:uniqueIdentifier];
+		}
+
+		/* Delete object */
+		[viewContext deleteObject:object];
 	}
 
-	NSUInteger rowsDeletedCount = fetchedObjects.count;
+	[self _quickSaveContext:viewContext];
 
-	if (rowsDeletedCount > 0) {
-		[self _quickSaveContext:context];
-	}
+	[self __notifyClientOfDeletedUniqueIdentifiers:[uniqueIdentifiers copy]
+									 inViewContext:viewContext];
 
-	return rowsDeletedCount;
+	return fetchedObjects.count;
+}
+
+/* Notify XPC client of intent to delete these unique identifiers. */
+/* Deletes can happen based on a timer, without the client asking for it,
+ which means we need a way to inform it of the delete. */
+- (void)__notifyClientOfDeletedUniqueIdentifiers:(NSArray<NSString *> *)uniqueIdentifiers inViewContext:(HLSHistoricLogViewContext *)viewContext
+{
+	NSParameterAssert(uniqueIdentifiers != nil);
+	NSParameterAssert(viewContext != nil);
+
+	[[self remoteObjectProxy] willDeleteUniqueIdentifiers:uniqueIdentifiers
+												   inView:viewContext.hls_viewId];
 }
 
 #pragma mark -
@@ -923,11 +975,10 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 	dispatch_block_t blockToPerform = ^{
 		NSFetchRequest *fetchRequest = [self _fetchRequestForView:viewContext.hls_viewId
+														ascending:NO
 													   fetchLimit:1
 													  limitToDate:nil
 													   resultType:NSManagedObjectResultType];
-
-		fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:NO]];
 
 		NSError *fetchRequestError = nil;
 
@@ -1045,6 +1096,14 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	}
 
 	return identifier;
+}
+
+#pragma mark -
+#pragma mark XPC Connection
+
+- (id <HLSHistoricLogClientProtocol>)remoteObjectProxy
+{
+	return self.serviceConnection.remoteObjectProxy;
 }
 
 @end

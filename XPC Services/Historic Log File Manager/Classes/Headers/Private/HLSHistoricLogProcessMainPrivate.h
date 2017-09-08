@@ -37,7 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HLSHistoricLogProcessMain : NSObject <HLSHistoricLogProtocol>
+@interface HLSHistoricLogProcessMain : NSObject <HLSHistoricLogServerProtocol>
+- (instancetype)initWithConnection:(NSXPCConnection *)connection;
 @end
 
 NS_ASSUME_NONNULL_END
