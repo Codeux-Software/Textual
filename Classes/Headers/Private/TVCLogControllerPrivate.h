@@ -79,6 +79,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful;
 
+- (void)notifyHistoricLogWillDeleteLines:(NSArray<NSString *> *)lineNumbers;
+
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;
 - (void)logViewWebViewKeyDown:(NSEvent *)e;
