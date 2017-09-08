@@ -41,7 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TVCLogLineXPC;
 
-@protocol HLSHistoricLogProtocol
+#pragma mark -
+#pragma mark Server Protocol
+
+@protocol HLSHistoricLogServerProtocol
 - (void)openDatabaseAtPath:(NSString *)path withCompletionBlock:(void (NS_NOESCAPE ^ _Nullable)(BOOL success))completionBlock;
 
 - (void)writeLogLine:(TVCLogLineXPC *)logLine;
@@ -83,6 +86,14 @@ NS_ASSUME_NONNULL_BEGIN
 		withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<TVCLogLineXPC *> *entries))completionBlock;
 
 - (void)setMaximumLineCount:(NSUInteger)maximumLineCount;
+@end
+
+#pragma mark -
+#pragma mark Client Protocol
+
+@protocol HLSHistoricLogClientProtocol
+- (void)willDeleteUniqueIdentifiers:(NSArray<NSString *> *)uniqueIdentifiers
+							 inView:(NSString *)viewId;
 @end
 
 NS_ASSUME_NONNULL_END

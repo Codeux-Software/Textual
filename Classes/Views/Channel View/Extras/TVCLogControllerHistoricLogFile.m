@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSXPCConnection *serviceConnection = [[NSXPCConnection alloc] initWithServiceName:@"com.codeux.app-utilities.Textual-HistoricLogFileManager"];
 
-	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
+	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogServerProtocol)];
 
 	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
 						  forSelector:@selector(fetchEntriesForView:ascending:fetchLimit:limitToDate:withCompletionBlock:)
@@ -174,6 +174,12 @@ NS_ASSUME_NONNULL_BEGIN
 							  ofReply:YES];
 
 	serviceConnection.remoteObjectInterface = remoteObjectInterface;
+
+	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogClientProtocol)];
+
+	serviceConnection.exportedInterface = exportedInterface;
+
+	serviceConnection.exportedObject = self;
 
 	serviceConnection.interruptionHandler = ^{
 		[self interuptionHandler];
@@ -255,12 +261,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Private API
 
-- (id <HLSHistoricLogProtocol>)remoteObjectProxy
+- (id <HLSHistoricLogServerProtocol>)remoteObjectProxy
 {
 	return [self remoteObjectProxyWithErrorHandler:nil];
 }
 
-- (id <HLSHistoricLogProtocol>)remoteObjectProxyWithErrorHandler:(void (^ _Nullable)(NSError *error))handler
+- (id <HLSHistoricLogServerProtocol>)remoteObjectProxyWithErrorHandler:(void (^ _Nullable)(NSError *error))handler
 {
 	return [self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError *error) {
 		self.lastServiceConnectionError = error;

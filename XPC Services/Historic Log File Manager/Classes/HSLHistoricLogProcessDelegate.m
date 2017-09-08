@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
 {
-	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogProtocol)];
+	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogServerProtocol)];
 
 	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
 					  forSelector:@selector(fetchEntriesForView:ascending:fetchLimit:limitToDate:withCompletionBlock:)
@@ -70,7 +70,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	newConnection.exportedInterface = exportedInterface;
 
-	HLSHistoricLogProcessMain *exportedObject = [HLSHistoricLogProcessMain new];
+	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(HLSHistoricLogClientProtocol)];
+
+	newConnection.remoteObjectInterface = remoteObjectInterface;
+
+	HLSHistoricLogProcessMain *exportedObject = [[HLSHistoricLogProcessMain alloc] initWithConnection:newConnection];
 
 	newConnection.exportedObject = exportedObject;
 
