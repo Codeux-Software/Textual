@@ -70,6 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL zncIgnoreConfiguredAutojoin;
 @property (readonly) BOOL zncIgnorePlaybackNotifications;
 @property (readonly) BOOL zncIgnoreUserNotifications;
+@property (readonly) BOOL zncOnlyPlaybackLatest;
 @property (readonly) IRCConnectionSocketProxyType proxyType;
 @property (readonly) NSStringEncoding fallbackEncoding;
 @property (readonly) NSStringEncoding primaryEncoding;
@@ -149,6 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL zncIgnoreConfiguredAutojoin;
 @property (nonatomic, assign, readwrite) BOOL zncIgnorePlaybackNotifications;
 @property (nonatomic, assign, readwrite) BOOL zncIgnoreUserNotifications;
+@property (nonatomic, assign, readwrite) BOOL zncOnlyPlaybackLatest;
 @property (nonatomic, assign, readwrite) IRCConnectionSocketProxyType proxyType;
 @property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding;
 @property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding;

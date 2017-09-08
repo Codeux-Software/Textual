@@ -104,6 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *viewListOfPreferredCipherSuitesButton;
 @property (nonatomic, weak) IBOutlet NSButton *zncIgnoreConfiguredAutojoinCheck;
 @property (nonatomic, weak) IBOutlet NSButton *zncIgnorePlaybackNotificationsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *zncOnlyPlaybackLatestCheck;
 @property (nonatomic, weak) IBOutlet NSImageView *erroneousInputErrorImageView;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *fallbackEncodingButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *primaryEncodingButton;
@@ -723,6 +724,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* ZNC Bouncer */
 	self.zncIgnoreConfiguredAutojoinCheck.state = self.config.zncIgnoreConfiguredAutojoin;
 	self.zncIgnorePlaybackNotificationsCheck.state = self.config.zncIgnorePlaybackNotifications;
+	self.zncOnlyPlaybackLatestCheck.state = self.config.zncOnlyPlaybackLatest;
 
 	/* Network Socket */
 	self.connectionPrefersIPv4Check.state = self.config.connectionPrefersIPv4;
@@ -879,6 +881,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* ZNC Bouncer */
 	self.config.zncIgnoreConfiguredAutojoin = (self.zncIgnoreConfiguredAutojoinCheck.state == NSOnState);
 	self.config.zncIgnorePlaybackNotifications = (self.zncIgnorePlaybackNotificationsCheck.state == NSOnState);
+	self.config.zncOnlyPlaybackLatest = (self.zncOnlyPlaybackLatestCheck.state == NSOnState);
 	
 	/* Network Socket */
 	self.config.connectionPrefersIPv4 = (self.connectionPrefersIPv4Check.state == NSOnState);
