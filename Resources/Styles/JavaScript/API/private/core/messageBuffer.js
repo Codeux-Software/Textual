@@ -74,14 +74,20 @@ loaded, else the event is ignored. */
 /* The user can scroll downward while messages are still being
 loaded from scrolling upward. Therefore, we use a separate 
 property to keep track of each type of load. */ 
-MessageBuffer.loadingMessagesBeforeLine = false;
-MessageBuffer.loadingMessagesAfterLine = false;
+MessageBuffer.loadingMessagesBeforeLineDuringScroll = false;
+MessageBuffer.loadingMessagesAfterLineDuringScroll = false;
 
 /* Set to true once we have loaded all old messages. */
 MessageBuffer.bufferTopIsComplete = false;
 MessageBuffer.bufferBottomIsComplete = true;
 
+/* MessageBuffer.jumpToLine() sets the following property
+when it performs an action. */
+MessageBuffer.loadingMessagesDuringJump = false;
+
 /* Cache */
+MessageBuffer.automaticScrollingEnabled = true;
+
 MessageBuffer.bufferElementReference = null;
 
 /* ************************************************** */
@@ -220,30 +226,51 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 	var buffer = MessageBuffer.bufferElement();
 
 	var numberRemoved = 0;
-	
-	do {
-		var element = null;
 
-		if (fromTop) {
-			element = buffer.firstChild;
+	/* To avoid an infinite loop by never having a 
+	firstChild or lastChild that is a line, we use
+	siblings and break when there are none left. */
+	var currentElement = null;
+	var nextElement = null;
+
+	do {
+		if (currentElement === null) {
+			if (fromTop) {
+				currentElement = buffer.firstChild;
+			} else {
+				currentElement = buffer.lastChild;
+			}
 		} else {
-			element = buffer.lastChild;
+			currentElement = nextElement;
 		}
 		
-		if (element === null) {
+		if (currentElement === null) {
 			break;
 		}
-		
-		var elementId = element.id;
-		
-		element.remove();
 
-		if (elementId && elementId.indexOf("line-") === 0) {
-			lineNumbers.push(elementId);
+		if (fromTop) {
+			nextElement = currentElement.nextElementSibling;
+		} else {
+			nextElement = currentElement.previousElementSibling;
 		}
 
-		numberRemoved += 1;
-	} while (numberRemoved < numberToRemove);
+		var elementId = currentElement.id;
+		
+		if (elementId && elementId.indexOf("line-") === 0) {
+			/* We wait until the next line element before 
+			exiting loop so that we can remove markers or
+			anything related to lines that were removed. */
+			if (numberRemoved >= numberToRemove) {
+				break;
+			}
+
+			lineNumbers.push(elementId);
+
+			numberRemoved += 1;
+		}
+		
+		currentElement.remove();
+	} while (true); // lol, I know.
 	
 	if (fromTop) {
 		MessageBuffer.bufferTopIsComplete = false;	
@@ -251,9 +278,11 @@ MessageBuffer.resizeBuffer = function(numberToRemove, fromTop)
 		MessageBuffer.bufferBottomIsComplete = false;		
 	}
 	
-	MessageBuffer.bufferCurrentSize -= numberToRemove;
+	var lineNumbersCount = lineNumbers.length;
+
+	if (lineNumbersCount > 0) {
+		MessageBuffer.bufferCurrentSize -= lineNumbersCount;
 	
-	if (lineNumbers.length > 0) {
 		Textual.messageRemovedFromViewInt(lineNumbers);
 	}
 
@@ -280,9 +309,14 @@ MessageBuffer.scheduleHardLimitResize = function()
 	if (MessageBuffer.bufferHardLimitResizeTimer !== null) {
 		return;
 	}
+	
+	/* Do not create timer if we are scrolling programmatically */
+	if (MessageBuffer.loadingMessagesDuringJump) {
+		return;
+	}
 
 	/* No need to create timer if we haven't exceeded hard limit. */
-	if (MessageBuffer.bufferCurrentSize <= MessageBuffer.bufferSizeSoftdLimit) {
+	if (MessageBuffer.bufferCurrentSize <= MessageBuffer.bufferSizeSoftLimit) {
 		return;
 	}
 
@@ -315,11 +349,17 @@ MessageBuffer.scheduleHardLimitResize = function()
 /* ************************************************** */
 
 /* This function picks the best line to load old messages next to. */
-MessageBuffer.loadMessages = function(before)
+MessageBuffer.loadMessagesDuringScroll = function(before)
 {
 	/* MessageBuffer.loadMessages() is only called during scroll events by
 	the user. We keep track of a request is already active then so that we
 	do not keep sending them out while the user waits for one to finish. */
+	if (MessageBuffer.loadingMessagesDuringJump) {
+		console.log("Cancelled request to load messages because another request is active");
+		
+		return;	
+	}
+
 	if (before) 
 	{
 		if (Textual.finishedLoadingHistory === false) {
@@ -328,7 +368,7 @@ MessageBuffer.loadMessages = function(before)
 			return;
 		}
 		
-		if (MessageBuffer.loadingMessagesBeforeLine) {
+		if (MessageBuffer.loadingMessagesBeforeLineDuringScroll) {
 			console.log("Cancelled request to load messages above line because another request is active");
 			
 			return;
@@ -342,7 +382,7 @@ MessageBuffer.loadMessages = function(before)
 	} 
 	else // before
 	{
-		if (MessageBuffer.loadingMessagesAfterLine) {
+		if (MessageBuffer.loadingMessagesAfterLineDuringScroll) {
 			console.log("Cancelled request to load messages below line because another request is active");
 			
 			return;
@@ -375,27 +415,24 @@ MessageBuffer.loadMessages = function(before)
 
 	/* Load messages */
 	if (before) {
-		MessageBuffer.loadingMessagesBeforeLine = true;
+		MessageBuffer.loadingMessagesBeforeLineDuringScroll = true;
 	} else {
-		MessageBuffer.loadingMessagesAfterLine = true;
+		MessageBuffer.loadingMessagesAfterLineDuringScroll = true;
 	}
 
-	var lineNumberStandardized = Textual.lineNumberStandardize(line.id);
 	var lineNumberContents = Textual.lineNumberContents(line.id);
 
-	MessageBuffer.loadMessagesWithPayload(
+	MessageBuffer.loadMessagesDuringScrollWithPayload(
 		{
 			"before" : before,
 			"line" : line,
-			"lineNumberContents" : lineNumberContents,
-			"lineNumberStandardized" : lineNumberStandardized,
-			"resultOfLoadMessages" : true
+			"lineNumberContents" : lineNumberContents
 		}	
 	);
 };
 
 /* Given a line we want to load old messages next to, we do so. */
-MessageBuffer.loadMessagesWithPayload = function(requestPayload)
+MessageBuffer.loadMessagesDuringScrollWithPayload = function(requestPayload)
 {
 	var before = requestPayload.before;
 	var line = requestPayload.line;
@@ -407,7 +444,7 @@ MessageBuffer.loadMessagesWithPayload = function(requestPayload)
 		var postflightCallback = (function(renderedMessages) {
 			requestPayload.renderedMessages = renderedMessages;
 
-			MessageBuffer.loadMessagesWithLinePostflight(requestPayload);
+			MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight(requestPayload);
 
 			MessageBuffer.removeLoadingIndicator(line);
 		});
@@ -434,13 +471,12 @@ MessageBuffer.loadMessagesWithPayload = function(requestPayload)
 };
 
 /* Postflight for loading old messages */
-MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
+MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestPayload)
 {
 	/* Payload state */
 	var before = requestPayload.before;
 	var line = requestPayload.line;
 	var renderedMessages = requestPayload.renderedMessages;
-	var resultOfLoadMessages = requestPayload.resultOfLoadMessages;
 
 	var lineNumbers = null;
 	var html = null;
@@ -498,9 +534,6 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		}
 	}
 	
-	/* Toggle automatic scrolling */
-	MessageBuffer.toggleAutomaticScrolling();
-
 	if (renderedMessagesCount > 0) {
 		/* Before we enforce size limit, we record the height with the appended
 		HTML to allow scroller to learn proper amount to scroll. Without recording
@@ -520,14 +553,156 @@ MessageBuffer.loadMessagesWithLinePostflight = function(requestPayload)
 		Textual.messageAddedToViewInt(lineNumbers, true);
 	} // renderedMessagesCount > 0
 	
+	/* Toggle automatic scrolling */
+	/* Call after resize so that it has latest state of bottom. */
+	MessageBuffer.toggleAutomaticScrolling();
+
 	/* Flush state */
-	if (resultOfLoadMessages) {
-		if (before) {
-			MessageBuffer.loadingMessagesBeforeLine = false;
-		} else {
-			MessageBuffer.loadingMessagesAfterLine = false;
-		}
+	if (before) {
+		MessageBuffer.loadingMessagesBeforeLineDuringScroll = false;
+	} else {
+		MessageBuffer.loadingMessagesAfterLineDuringScroll = false;
 	}
+};
+
+MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction)
+{
+	/* Safety checks */
+	if (MessageBuffer.loadingMessagesDuringJump) {
+		console.log("Cancelled request to load messages because another request is active");
+		
+		return;	
+	}
+
+	if (Textual.finishedLoadingHistory === false) {
+		console.log("Cancelled request to load messages because history isn't loaded");
+		
+		return;
+	}
+	
+	if (MessageBuffer.loadingMessagesBeforeLineDuringScroll ||
+		MessageBuffer.loadingMessagesAfterLineDuringScroll) 
+	{
+		console.log("Cancelled request to load messages because another request is active");
+		
+		return;
+	}
+	
+	if (MessageBuffer.bufferTopIsComplete &&
+		MessageBuffer.bufferBottomIsComplete) 
+	{
+		console.log("Cancelled request to load messages because there is nothing new to load");
+		
+		return;
+	}
+	
+	/* This function may be called without scrolling which means we
+	should cancel the resize timer. */
+	MessageBuffer.cancelHardLimitResize();
+
+	/* The line does not exist in the buffer, which means we have to 
+	load it. When we load the message, we also load X number of messages
+	above it and X number of messages below it. */
+	/* When jumping, we do not use the message buffer loading indicator
+	because the user does not require a visual indicator. */
+	MessageBuffer.loadingMessagesDuringJump = true;
+
+	var lineNumberContents = Textual.lineNumberContents(lineNumber);
+
+	var requestPayload = {
+		"lineNumberContents" : lineNumberContents,
+		"lineNumberStandardized" : lineNumber,
+		"callbackFunction" : callbackFunction
+	};
+	
+	console.log("Loading line " + lineNumberContents);
+
+	app.renderMessageWithSiblings(
+		lineNumberContents,
+
+		MessageBuffer.loadMessagesBatchSize, // load X above
+		MessageBuffer.loadMessagesBatchSize, // laod X below
+
+		(function(renderedMessages) {
+			requestPayload.renderedMessages = renderedMessages;
+			
+			MessageBuffer.loadMessagesWithJumpPostflight(requestPayload);
+		})
+	);
+};
+
+MessageBuffer.loadMessagesWithJumpPostflight = function(requestPayload)
+{
+	/* Payload state */
+	var callbackFunction = requestPayload.callbackFunction;
+	var lineNumberContents = requestPayload.lineNumberContents;
+	var lineNumberStandardized = requestPayload.lineNumberStandardized;
+	var renderedMessages = requestPayload.renderedMessages;
+
+	var lineNumbers = null;
+	var html = null;
+
+	/* Perform logging */
+	var renderedMessagesCount = renderedMessages.length;
+
+	console.log("Request to load messages for " + lineNumberContents + " returned " + renderedMessagesCount + " results");
+
+	if (renderedMessagesCount > 0) {
+		/* Array which will house every line number that was loaded. 
+		The style needs this information so it can perform whatever action. */
+		lineNumbers = new Array();
+		
+		/* Array which will house every segment of HTML to append. */
+		html = new Array();
+		
+		/* Process result */
+		for (var i = 0; i < renderedMessagesCount; i++) {
+			var renderedMessage = renderedMessages[i];
+			
+			var lineNumber = renderedMessage.lineNumber;
+			
+			if (lineNumber) {
+				lineNumbers.push(renderedMessage.lineNumber);
+			}
+			
+			html.push(renderedMessage.html);
+		}
+	
+		/* When we jump to a line that is not visible, we replace 
+		the entire buffer with the rendered messages. This avoids 
+		the hassle of having to navigate the DOM merging lines. 
+		This may change in the future based on user feedback,
+		but for now this is acceptable. */
+
+		/* Append HTML */
+		var htmlString = html.join("");
+		
+		var buffer = MessageBuffer.bufferElement();
+
+		buffer.insertAdjacentHTML('afterbegin', htmlString);
+
+		/* Resize the buffer by removing messages from the bottom
+		so that the only lines that remain are those appended. */
+		MessageBuffer.resizeBuffer(MessageBuffer.bufferCurrentSize, false);
+		
+		/* Update buffer size to include appended lines. */
+		MessageBuffer.bufferCurrentSize += html.length;
+		
+		/* Post line numbers so style can do something with them. */
+		Textual.messageAddedToViewInt(lineNumbers, true);
+
+		/* Toggle automatic scrolling */
+		/* Call after resize so that it has latest state of bottom. */
+		MessageBuffer.toggleAutomaticScrolling();
+	} // renderedMessagesCount > 0
+
+	/* Try jumping to line and inform callback of result. */
+	callbackFunction( 
+		Textual.scrollToElement(lineNumberStandardized) 
+	);
+
+	/* Flush state */
+	MessageBuffer.loadingMessagesDuringJump = false;
 };
 
 /* ************************************************** */
@@ -585,29 +760,55 @@ MessageBuffer.documentScrolledCallback = function(scrolledUpward)
 {
 	if (scrolledUpward) {
 		if (TextualScroller.isScrolledToTop()) {
-			MessageBuffer.loadMessages(true);
+			MessageBuffer.loadMessagesDuringScroll(true);
 		}
 		
 		MessageBuffer.cancelHardLimitResize();
 	}
 	
 	if (scrolledUpward === false && TextualScroller.isScrolledToBottom()) {
-		MessageBuffer.loadMessages(false);
+		MessageBuffer.loadMessagesDuringScroll(false);
 
 		MessageBuffer.scheduleHardLimitResize();
 	}
 };
 
-MessageBuffer.toggleAutomaticScrolling = function()
+MessageBuffer.toggleAutomaticScrollingOn = function(turnOn)
 {
-	if (MessageBuffer.bufferBottomIsComplete) {
+	if (MessageBuffer.automaticScrollingEnabled !== turnOn) {
+		MessageBuffer.automaticScrollingEnabled = turnOn;
+	} else {
+		return;
+	}
+	
+	if (turnOn) {
 		app.setAutomaticScrollingEnabled(true);
 	} else {
 		app.setAutomaticScrollingEnabled(false);
 	}
 };
+	
+MessageBuffer.toggleAutomaticScrolling = function()
+{
+	MessageBuffer.toggleAutomaticScrollingOn(
+		MessageBuffer.bufferBottomIsComplete
+	);
+};
 
 MessageBuffer.scrolledToBottomOfBuffer = function()
 {
 	return (TextualScroller.scrolledAboveBottom === false);
+};
+
+MessageBuffer.jumpToLine = function(lineNumber, callbackFunction)
+{
+	var lineNumberStandardized = Textual.lineNumberStandardize(lineNumber);
+	
+	if (Textual.scrollToElement(lineNumberStandardized)) {
+		callbackFunction(true);
+		
+		return;
+	}
+	
+	MessageBuffer.loadMessagesWithJump(lineNumber, callbackFunction);
 };
