@@ -202,6 +202,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[self populateDefaultsPreflight];
 		}
 
+		self->_objectIsNew = (dic.count == 0);
+
 		[self populateDictionaryValue:dic
 				ignorePrivateMessages:ignorePrivateMessages
 						applyDefaults:YES
@@ -413,6 +415,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self->_serverList = [serverListOut copy];
 
 	/* Load legacy keys (if they exist) */
+	if (self->_objectIsNew) {
+		self->_migratedToServerListV1Layout = YES;
+
+		return;
+	}
+
 	/* If legacy keys were assigned before new keys, then a transition would not occur properly. */
 	/* Since the new keys will read from -defaults if they are not present in /dic/, then those
 	 would override legacy keys when performing a first pass. */
@@ -490,8 +498,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Cipher suites */
-	if (defaultsMutable[@"cipherSuites"] == nil) {
-		NSNumber *connectionPrefersModernCiphers = defaultsMutable[@"connectionPrefersModernCiphers"];
+	if (dic[@"cipherSuites"] == nil) {
+		NSNumber *connectionPrefersModernCiphers = dic[@"connectionPrefersModernCiphers"];
 
 		if (connectionPrefersModernCiphers && connectionPrefersModernCiphers.boolValue == NO) {
 			self->_cipherSuites = GCDAsyncSocketCipherSuiteNonePreferred;
@@ -514,7 +522,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(dic != nil);
 
 	/* Check whether this object has already been migrated. */
-	if (self->_migratedToServerListV1Layout != NO) {
+	if (self->_migratedToServerListV1Layout) {
 		LogToConsoleDebug("Migration cancelled at check 1");
 
 		return;
@@ -529,7 +537,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 but the local status of this migration is unknown. */
 	id migratedToServerListV1Layout = [dic objectForKey:@"migratedToServerListV1Layout"];
 
-	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue] != NO) {
+	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue]) {
 		LogToConsoleDebug("Migration cancelled at check 2");
 
 		return;
@@ -584,7 +592,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self->_serverList = @[[server copy]];
 
-	self->_migratedToServerListV1Layout = YES;
 	self->_migratedServerPasswordPendingDestroy = YES;
 }
 
@@ -644,9 +651,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	config->_defaults = self->_defaults;
 
-	config->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
-	config->_migratedServerPasswordPendingDestroy = self->_migratedServerPasswordPendingDestroy;
-
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }
 
@@ -665,9 +669,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	((IRCClientConfig *)config)->_serverList = self->_serverList;
 
 	((IRCClientConfig *)config)->_defaults = [self->_defaults copyWithZone:zone];
-
-	((IRCClientConfig *)config)->_migratedToServerListV1Layout = self->_migratedToServerListV1Layout;
-	((IRCClientConfig *)config)->_migratedServerPasswordPendingDestroy = self->_migratedServerPasswordPendingDestroy;
 
 	return [config initWithDictionary:self.dictionaryValueForCopyOperation ignorePrivateMessages:NO];
 }

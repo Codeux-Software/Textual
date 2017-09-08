@@ -98,6 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 @private
 	BOOL _objectInitialized;
 	BOOL _objectInitializedAsCopy;
+	BOOL _objectIsNew;
 	BOOL _migratedToServerListV1Layout;
 	BOOL _migratedServerPasswordPendingDestroy;
 	NSString *_uniqueIdentifier;
