@@ -118,8 +118,8 @@ ClassWithDesignatedInitializerInitMethod
 	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheet:onOk:)]) {
 		NSString *formattedTopic = self.topicValueTextField.stringValueWithIRCFormatting;
 
-		NSString *topicWithoutNewlines = [formattedTopic stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
-																				   withString:NSStringWhitespacePlaceholder];
+		NSString *topicWithoutNewlines = [formattedTopic stringByReplacingOccurrencesOfString:@"\n"
+																				   withString:@" "];
 
 		[self.delegate channelModifyTopicSheet:self onOk:topicWithoutNewlines];
 	}

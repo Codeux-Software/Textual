@@ -98,7 +98,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNil(self->_serverAddress, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_serverAddress, @"")
 
 	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 }

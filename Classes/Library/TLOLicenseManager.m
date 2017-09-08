@@ -373,7 +373,7 @@ NSString *TLOLicenseManagerStringValueForObject(id object)
 		}
 	}
 	
-	return NSStringEmptyPlaceholder;
+	return @"";
 }
 
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString *, id> *licenseDictionary)

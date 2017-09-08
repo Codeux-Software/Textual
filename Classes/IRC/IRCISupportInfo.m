@@ -471,7 +471,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(channel != nil);
 
 	if (channel.length < 2) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	NSArray *channelNamePrefixes = self.channelNamePrefixes;
@@ -490,7 +490,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	}
 
-	return NSStringEmptyPlaceholder;
+	return @"";
 }
 
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol

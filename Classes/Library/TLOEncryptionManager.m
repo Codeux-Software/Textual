@@ -126,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([RZFileManager() fileExistsAtPath:path] == NO) {
 		NSError *writeError = nil;
 
-		if ([NSStringEmptyPlaceholder writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&writeError] == NO) {
+		if ([@"" writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&writeError] == NO) {
 			LogToConsoleError("Failed to create base file for encryption component at path: %@",
 				  writeError.localizedDescription);
 		}
@@ -584,7 +584,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger numberOfMatches = [boundryRegex numberOfMatchesInString:message options:0 range:message.range];
 
 	if (numberOfMatches == 1) {
-		NSArray *messageComponents = [message componentsSeparatedByString:NSStringNewlinePlaceholder];
+		NSArray *messageComponents = [message componentsSeparatedByString:@"\n"];
 
 		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"OffTheRecord[1010]")];
 	}

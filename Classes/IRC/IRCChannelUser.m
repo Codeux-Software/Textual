@@ -76,7 +76,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNil(self->_modes, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_modes, @"")
 }
 
 - (void)changeUserToUser:(IRCUser *)user
@@ -119,7 +119,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return mark;
 	}
 
-	return NSStringEmptyPlaceholder;
+	return @"";
 }
 
 - (NSUInteger)channelRank

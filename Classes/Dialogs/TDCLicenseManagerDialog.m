@@ -406,7 +406,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
 		if (operationSuccessful) {
-			weakSelf.unregisteredViewLicenseKeyTextField.stringValue = NSStringEmptyPlaceholder;
+			weakSelf.unregisteredViewLicenseKeyTextField.stringValue = @"";
 
 			[weakSelf toggleTrialTimer];
 

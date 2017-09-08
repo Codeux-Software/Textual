@@ -186,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[stringToCopy appendString:entryItem.description];
 
 		if (index != selectedRows.lastIndex) {
-			[stringToCopy appendString:NSStringNewlinePlaceholder];
+			[stringToCopy appendString:@"\n"];
 		}
 	}];
 

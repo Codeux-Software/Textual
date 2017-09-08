@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNil(self->_channelName, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_channelName, @"")
 
 	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 

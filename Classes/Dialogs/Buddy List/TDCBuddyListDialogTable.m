@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCBuddyListDialogEntry *objectValue = self.objectValue;
 
 	if (objectValue == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	return objectValue.nickname;
@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCBuddyListDialogEntry *objectValue = self.objectValue;
 
 	if (objectValue == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	return objectValue.client.networkNameAlt;

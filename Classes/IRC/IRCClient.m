@@ -1014,8 +1014,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[listOfChanges addObject:modeSetCombined];
 
-			[modeSetString setString:NSStringEmptyPlaceholder];
-			[modeParamString setString:NSStringEmptyPlaceholder];
+			[modeSetString setString:@""];
+			[modeParamString setString:@""];
 		}
 	}
 
@@ -4250,7 +4250,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (stringIn.length == 0) {
 				if (lineType == TVCLogLineActionType) {
 					[stringIn replaceCharactersInRange:NSMakeRange(0, 0)
-											withString:NSStringWhitespacePlaceholder];
+											withString:@" "];
 				} else {
 					break;
 				}
@@ -4486,7 +4486,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	TVCLogLineMutable *topLine = [TVCLogLineMutable new];
 
-	topLine.messageBody = NSStringWhitespacePlaceholder;
+	topLine.messageBody = @" ";
 
 	[self writeToLogLineToLogFile:topLine];
 
@@ -4502,7 +4502,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	TVCLogLineMutable *bottomLine = [TVCLogLineMutable new];
 
-	bottomLine.messageBody = NSStringWhitespacePlaceholder;
+	bottomLine.messageBody = @" ";
 
 	[self writeToLogLineToLogFile:bottomLine];
 
@@ -4553,7 +4553,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		format = [TPCPreferences themeNicknameFormatDefault];
 	}
 
-	NSString *modeSymbol = NSStringEmptyPlaceholder;
+	NSString *modeSymbol = @"";
 
 	if (channel.isChannel) {
 		IRCChannelUser *member = [channel findMember:nickname];
@@ -4599,7 +4599,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		if (outputValue) {
 			if (paddingWidth < 0 && ABS(paddingWidth) > outputValue.length) {
-				NSString *paddedString = [NSStringEmptyPlaceholder stringByPaddingToLength:(ABS(paddingWidth) - outputValue.length) withString:NSStringWhitespacePlaceholder startingAtIndex:0];
+				NSString *paddedString = [@"" stringByPaddingToLength:(ABS(paddingWidth) - outputValue.length) withString:@" " startingAtIndex:0];
 
 				[buffer appendString:paddedString];
 			}
@@ -4607,7 +4607,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[buffer appendString:outputValue];
 
 			if (paddingWidth > 0 && paddingWidth > outputValue.length) {
-				NSString *paddedString = [NSStringEmptyPlaceholder stringByPaddingToLength:(paddingWidth - outputValue.length) withString:NSStringWhitespacePlaceholder startingAtIndex:0];
+				NSString *paddedString = [@"" stringByPaddingToLength:(paddingWidth - outputValue.length) withString:@" " startingAtIndex:0];
 
 				[buffer appendString:paddedString];
 			}
@@ -5662,7 +5662,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (lineType == TVCLogLineActionType ||
 			lineType == TVCLogLineActionNoHighlightType)
 		{
-			text = NSStringWhitespacePlaceholder;
+			text = @" ";
 		} else {
 			return;
 		}
@@ -6043,7 +6043,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Forward entry messages to the channel they are associated with. */
 	/* Format we are going for: -ChanServ- [#channelname] blah blah... */
-	NSInteger spacePosition = [textIn stringPosition:NSStringWhitespacePlaceholder];
+	NSInteger spacePosition = [textIn stringPosition:@" "];
 
 	if ([textIn hasPrefix:@"["] == NO || spacePosition < 4) {
 		return;
@@ -8913,7 +8913,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			/* Parameter 7 includes the hop count and real name because it begins with a :
 			 Therefore, we cut after the first space to get the real, real name value. */
-			NSInteger realNameFirstSpace = [realName stringPosition:NSStringWhitespacePlaceholder];
+			NSInteger realNameFirstSpace = [realName stringPosition:@" "];
 
 			if (realNameFirstSpace > 0 && realNameFirstSpace < realName.length) {
 				realName = [realName substringAfterIndex:realNameFirstSpace];
@@ -10396,7 +10396,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (targetChannel) {
 		[taskArguments addObject:targetChannel];
 	} else {
-		[taskArguments addObject:NSStringEmptyPlaceholder];
+		[taskArguments addObject:@""];
 	}
 
 	NSArray *inputStringComponents = [inputString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -11132,7 +11132,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)sendModes:(nullable NSString *)modeSymbols withParameters:(nullable NSArray<NSString *> *)parameters inChannelNamed:(NSString *)channel
 {
-	NSString *parametersString = [parameters componentsJoinedByString:NSStringWhitespacePlaceholder];
+	NSString *parametersString = [parameters componentsJoinedByString:@" "];
 
 	[self sendModes:modeSymbols withParametersString:parametersString inChannelNamed:channel];
 }
@@ -11267,7 +11267,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	NSString *nicknamesString = [nicknames componentsJoinedByString:NSStringWhitespacePlaceholder];
+	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
 
 	[self sendIsonForNicknamesString:nicknamesString];
 }
@@ -11731,7 +11731,7 @@ present_error:
 
 	NSString *filenameEscaped = filename.safeFilename;
 
-	if ([filenameEscaped contains:NSStringWhitespacePlaceholder] == NO) {
+	if ([filenameEscaped contains:@" "] == NO) {
 		return filenameEscaped;
 	}
 

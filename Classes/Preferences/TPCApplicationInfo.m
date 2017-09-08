@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *applicationName = TXBundleBuildProductName;
 
-	NSInteger spacePosition = [applicationName stringPosition:NSStringWhitespacePlaceholder];
+	NSInteger spacePosition = [applicationName stringPosition:@" "];
 
 	if (spacePosition > 0) {
 		return [applicationName substringToIndex:spacePosition];

@@ -379,7 +379,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (text == nil) {
-		text = NSStringEmptyPlaceholder;
+		text = @"";
 	}
 
 	/* Perform action */
@@ -391,14 +391,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	#define _maybeReplaceValue(key, value)	\
 		if (value == nil) {		\
-			filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:NSStringEmptyPlaceholder];	\
+			filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:@""];	\
 		} else {	\
 			filterAction = [filterAction stringByReplacingOccurrencesOfString:(key) withString:(value)];	\
 		}
 
 	#define _maybeReplaceParam(paramIndex, paramIndexString)		\
 		if (paramIndex >= paramsCount) {	\
-			filterAction = [filterAction stringByReplacingOccurrencesOfString:@paramIndexString withString:NSStringEmptyPlaceholder];		\
+			filterAction = [filterAction stringByReplacingOccurrencesOfString:@paramIndexString withString:@""];		\
 		} else {	\
 			filterAction = [filterAction stringByReplacingOccurrencesOfString:@paramIndexString withString:params[paramIndex]];		\
 		}

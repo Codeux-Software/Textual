@@ -79,7 +79,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNil(self->_modeSymbol, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_modeSymbol, @"")
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone

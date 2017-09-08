@@ -492,7 +492,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		(void)[RZWorkspace() selectFile:fileTransfer.filePath inFileViewerRootedAtPath:NSStringEmptyPlaceholder];
+		(void)[RZWorkspace() selectFile:fileTransfer.filePath inFileViewerRootedAtPath:@""];
 	}];
 }
 

@@ -744,7 +744,7 @@ enum {
 
 	[self.progressViewIndicator stopAnimation:nil];
 
-	self.progressViewTextField.stringValue = NSStringEmptyPlaceholder;
+	self.progressViewTextField.stringValue = @"";
 }
 
 - (void)setWindowIsAllowedToClose:(BOOL)windowIsAllowedToClose

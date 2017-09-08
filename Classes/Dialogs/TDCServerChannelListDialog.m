@@ -121,7 +121,7 @@ ClassWithDesignatedInitializerInitMethod
 	newEntry.channelMemberCount = @(count);
 
 	if (topic == nil) {
-		newEntry.channelTopicUnformatted = NSStringEmptyPlaceholder;
+		newEntry.channelTopicUnformatted = @"";
 
 		newEntry.channelTopicFormatted = [NSAttributedString attributedString];
 	} else {

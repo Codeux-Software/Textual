@@ -392,7 +392,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateTokenFieldStringValues
 {
-	NSCharacterSet *emptyCharacterSet = [NSCharacterSet characterSetWithCharactersInString:NSStringEmptyPlaceholder];
+	NSCharacterSet *emptyCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
 
 	self.filterActionTokenField.tokenizingCharacterSet = emptyCharacterSet;
 
@@ -418,7 +418,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)tokenField:(NSTokenField *)tokenField writeRepresentedObjects:(NSArray *)objects toPasteboard:(NSPasteboard *)pboard
 {
-	NSString *stringContent = [objects componentsJoinedByString:NSStringEmptyPlaceholder];
+	NSString *stringContent = [objects componentsJoinedByString:@""];
 
 	pboard.stringContent = stringContent;
 
@@ -487,7 +487,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)stringValueForTokenField:(NSTokenField *)tokenField
 {
-	return [tokenField.objectValue componentsJoinedByString:NSStringEmptyPlaceholder];
+	return [tokenField.objectValue componentsJoinedByString:@""];
 }
 
 - (void)setTokens:(NSString *)tokens inTokenField:(NSTokenField *)tokenField

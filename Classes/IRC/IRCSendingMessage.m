@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 			break;
 		}
 
-		[builtString appendString:NSStringWhitespacePlaceholder];
+		[builtString appendString:@" "];
 
 		if (colonIndexBase == NSNotFound) {
 			// Guess where the colon (:) should go.
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 			// is in the formoat "PRIVMSG #channel :long message" — The message
 			// will have spaces part of it, so we inform the server.
 			
-			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:NSStringWhitespacePlaceholder])) {
+			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:@" "])) {
 				[builtString appendString:@":"];
 			}
 		} else {

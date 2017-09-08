@@ -122,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[resultString appendString:member.user.nickname];
 
-		[resultString appendString:NSStringWhitespacePlaceholder];
+		[resultString appendString:@" "];
 	}
 
 	[client printDebugInformation:[resultString copy] inChannel:channel];

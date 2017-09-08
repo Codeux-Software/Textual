@@ -138,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		urlPath = [urlPath
 			stringByReplacingOccurrencesOfString:@"\\:(large|medium|orig|small|thumb)$"
-									  withString:NSStringEmptyPlaceholder
+									  withString:@""
 										 options:NSRegularExpressionSearch
 										   range:urlPath.range];
 
