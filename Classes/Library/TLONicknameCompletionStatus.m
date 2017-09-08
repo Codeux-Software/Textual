@@ -431,7 +431,7 @@ ClassWithDesignatedInitializerInitMethod
 				BOOL doNotAppendWhitespace = [TPCPreferences tabCompletionDoNotAppendWhitespace];
 
 				if (doNotAppendWhitespace == NO) {
-					newCompletionSuffix = NSStringWhitespacePlaceholder;
+					newCompletionSuffix = @" ";
 				}
 			} else {
 				newCompletionSuffix = userCompletionSuffix;
@@ -441,7 +441,7 @@ ClassWithDesignatedInitializerInitMethod
 	else
 	{
 		if (whitespaceAlreadyInPosition == NO) {
-			newCompletionSuffix = NSStringWhitespacePlaceholder;
+			newCompletionSuffix = @" ";
 		}
 	}
 
@@ -574,7 +574,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.rangeOfSearchPattern = NSMakeRange(searchPatternStartingPoint, searchPatternLength);
 
 	if (searchPatternLength == 0) {
-		self.cachedSearchPattern = NSStringEmptyPlaceholder;
+		self.cachedSearchPattern = @"";
 	} else {
 		self.cachedSearchPattern = [self.currentTextViewStringValue substringWithRange:self.rangeOfSearchPattern];
 	}
@@ -703,7 +703,7 @@ complete_operation:
 	self.rangeOfCompletionSuffix = completionSuffixRange;
 
 	if (self.rangeOfCompletionSuffix.length == 0) {
-		self.cachedCompletionSuffix = NSStringEmptyPlaceholder;
+		self.cachedCompletionSuffix = @"";
 	} else {
 		self.cachedCompletionSuffix = [self.currentTextViewStringValue substringWithRange:self.rangeOfCompletionSuffix];
 	}

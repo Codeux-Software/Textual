@@ -335,7 +335,7 @@ NS_ASSUME_NONNULL_BEGIN
 		TPI_ChatFilter *filter = [[TPI_ChatFilter alloc] initWithContentsOfURL:pathURL];
 
 		if (filter == nil) {
-			(void)[TLOPopupPrompts dialogWindowWithMessage:NSStringEmptyPlaceholder
+			(void)[TLOPopupPrompts dialogWindowWithMessage:@""
 													 title:TPILocalizedString(@"TPI_ChatFilterExtension[0007][1]")
 											 defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0007][2]")
 										   alternateButton:nil];

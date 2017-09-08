@@ -83,7 +83,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)populateDefaultsPostflight
 {
-	SetVariableIfNil(self->_command, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_command, @"")
 	SetVariableIfNil(self->_messageTags, @{})
 	SetVariableIfNil(self->_params, @[])
 	SetVariableIfNil(self->_receivedAt, [NSDate date])
@@ -101,7 +101,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return self.params[index];
 	}
 
-	return NSStringEmptyPlaceholder;
+	return @"";
 }
 
 - (NSString *)sequence
@@ -125,7 +125,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSString *param = params[i];
 		
 		if (i != index) {
-			[sequence appendString:NSStringWhitespacePlaceholder];
+			[sequence appendString:@" "];
 		}
 		
 		[sequence appendString:param];

@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCServerMutable *objectValue = self.objectValue;
 
 	if (objectValue == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	return objectValue.serverAddress;
@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCServerMutable *objectValue = self.objectValue;
 
 	if (objectValue == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	return [NSString stringWithUnsignedShort:objectValue.serverPort];
@@ -170,13 +170,13 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCServerMutable *objectValue = self.objectValue;
 
 	if (objectValue == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	NSString *serverPassword = objectValue.serverPassword;
 
 	if (serverPassword == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	return serverPassword;

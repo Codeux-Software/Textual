@@ -142,7 +142,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (lastHistoryItem) {
 		textView.attributedStringValue = lastHistoryItem;
 	} else {
-		textView.stringValue = NSStringEmptyPlaceholder;
+		textView.stringValue = @"";
 	}
 }
 

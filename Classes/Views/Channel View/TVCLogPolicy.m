@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMenuItem *noActionMenuItem =
 			[[NSMenuItem alloc] initWithTitle:TXTLS(@"BasicLanguage[1026]")
 									   action:nil
-								keyEquivalent:NSStringEmptyPlaceholder];
+								keyEquivalent:@""];
 
 			[menuItems addObject:noActionMenuItem];
 		} else {

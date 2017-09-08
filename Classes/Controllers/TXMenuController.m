@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	self.currentSearchPhrase = NSStringEmptyPlaceholder;
+	self.currentSearchPhrase = @"";
 
 	if ([TPCPreferences soundIsMuted]) {
 		self.muteNotificationsSoundsDockMenuItem.state = NSOnState;
@@ -2417,7 +2417,7 @@ NS_ASSUME_NONNULL_BEGIN
 		UniChar previousCharacter = [textView.stringValue characterAtIndex:(selectedRange.location - 1)];
         
 		if (previousCharacter != ' ') {
-			[stringToInsert appendString:NSStringWhitespacePlaceholder];
+			[stringToInsert appendString:@" "];
 		}
 	}
 
@@ -2795,7 +2795,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self deselectMembers:sender];
 
-	NSString *nicknamesString = [nicknames componentsJoinedByString:NSStringWhitespacePlaceholder];
+	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
 
 	NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, nicknamesString];
 

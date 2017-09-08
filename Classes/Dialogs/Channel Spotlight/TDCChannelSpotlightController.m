@@ -159,7 +159,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *searchString = self.searchField.stringValue;
 
 	if (searchString.length == 0) {
-		self.noResultsLabel.stringValue = NSStringEmptyPlaceholder;
+		self.noResultsLabel.stringValue = @"";
 
 		self.noResultsLabelLeadingConstraint.constant = 0.0;
 
@@ -178,7 +178,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	self.noResultsLabel.stringValue = NSStringEmptyPlaceholder;
+	self.noResultsLabel.stringValue = @"";
 
 	self.noResultsLabelLeadingConstraint.constant = 0.0;
 

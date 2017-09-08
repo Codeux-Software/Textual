@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onAddChannel:(id)sender
 {
-	[self.channelList addObject:NSStringEmptyPlaceholder];
+	[self.channelList addObject:@""];
 	
 	[self.channelTable reloadData];
 	

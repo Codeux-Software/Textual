@@ -206,7 +206,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ([RZFileManager() fileExistsAtPath:path] == NO) {
 		NSError *writeFileError = nil;
 
-		if ([NSStringEmptyPlaceholder writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
+		if ([@"" writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
 			LogToConsoleError("Error Creating File: %{public}@",
 				  writeFileError.localizedDescription);
 

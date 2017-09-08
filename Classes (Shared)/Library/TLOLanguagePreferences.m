@@ -116,7 +116,7 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 	NSParameterAssert(bundle != nil);
 	NSParameterAssert(table != nil);
 
-	NSString *localValue = [bundle localizedStringForKey:key value:NSStringEmptyPlaceholder table:table];
+	NSString *localValue = [bundle localizedStringForKey:key value:@"" table:table];
 
 	if (arguments == NULL) {
 		return localValue;

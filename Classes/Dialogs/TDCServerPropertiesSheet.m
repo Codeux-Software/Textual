@@ -745,7 +745,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.awayNicknameTextField.stringValue = self.config.awayNickname;
 
-	NSString *alternateNicknamesString = [self.config.alternateNicknames componentsJoinedByString:NSStringWhitespacePlaceholder];
+	NSString *alternateNicknamesString = [self.config.alternateNicknames componentsJoinedByString:@" "];
 
 	self.alternateNicknamesTextField.stringValue = alternateNicknamesString;
 
@@ -790,7 +790,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.proxyPasswordTextField.stringValue = self.config.proxyPassword;
 
 	/* Connect Commands */
-	NSString *loginCommandsString = [self.config.loginCommands componentsJoinedByString:NSStringNewlinePlaceholder];
+	NSString *loginCommandsString = [self.config.loginCommands componentsJoinedByString:@"\n"];
 	
 	self.connectCommandsField.string = loginCommandsString;
 
@@ -817,13 +817,13 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCServer *server = self.serverList.firstObject;
 
 	if (server == nil) {
-		self.serverAddressComboBox.stringValue = NSStringEmptyPlaceholder;
+		self.serverAddressComboBox.stringValue = @"";
 
 		self.serverPortTextField.integerValue = IRCConnectionDefaultServerPort;
 
 		self.prefersSecuredConnectionCheck.state = NSOffState;
 
-		self.serverPasswordTextField.stringValue = NSStringEmptyPlaceholder;
+		self.serverPasswordTextField.stringValue = @"";
 
 		return;
 	}
@@ -1048,7 +1048,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.erroneousInputErrorImageView.hidden = YES;
 		self.erroneousInputErrorTextField.hidden = YES;
 
-		self.erroneousInputErrorTextField.stringValue = NSStringEmptyPlaceholder;
+		self.erroneousInputErrorTextField.stringValue = @"";
 	}
 }
 
@@ -1177,7 +1177,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSArray *cipherSuitesDescriptions = [GCDAsyncSocket descriptionsForCipherListVersion:cipherSuites withProtocol:YES];
 
-	NSString *cipherSuitesDescription = [cipherSuitesDescriptions componentsJoinedByString:NSStringNewlinePlaceholder];
+	NSString *cipherSuitesDescription = [cipherSuitesDescriptions componentsJoinedByString:@"\n"];
 
 	NSString *cipherSuitesTitle = self.preferredCipherSuitesButton.titleOfSelectedItem;
 
@@ -1927,7 +1927,7 @@ NS_ASSUME_NONNULL_BEGIN
 				return secretKeyValue;
 			}
 
-			return NSStringEmptyPlaceholder;
+			return @"";
 		}
 		else if ([columnId isEqualToString:@"join"])
 		{

@@ -58,7 +58,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 - (void)populateDefaultsPostflight
 {
 	if (self->_serverAddress == nil) {
-		self->_serverAddress = NSStringEmptyPlaceholder;
+		self->_serverAddress = @"";
 	}
 
 	if (self->_proxyPort == 0) {

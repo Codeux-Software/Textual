@@ -205,7 +205,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[TPI_SP_SysInfo formattedDiskSize:topProcess.processMemoryUse])];
 	}
 
-	[resultString appendString:NSStringNewlinePlaceholder];
+	[resultString appendString:@"\n"];
 
 	TXUnsignedLongLong totalMemoryUse = 0;
 
@@ -346,8 +346,8 @@ NS_ASSUME_NONNULL_BEGIN
 		NSUInteger _cpu_count_p	= [TPI_SP_SysInfo processorPhysicalCoreCount];
 		NSUInteger _cpu_count_v	= [TPI_SP_SysInfo processorVirtualCoreCount];
 
-		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSStringWhitespacePlaceholder];
-		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSStringWhitespacePlaceholder];
+		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:@" "];
+		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:@" "];
 
 		_cpu_model = _cpu_model.trim;
 
@@ -614,7 +614,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (cleanResult) {
 			NSString *modelString = [NSString stringWithData:(__bridge NSData *)(CFDataRef)model encoding:NSASCIIStringEncoding];
 
-			modelString = [modelString stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
+			modelString = [modelString stringByReplacingOccurrencesOfString:@"\0" withString:@""];
 
 			[gpuModels addObject:modelString];
 		}

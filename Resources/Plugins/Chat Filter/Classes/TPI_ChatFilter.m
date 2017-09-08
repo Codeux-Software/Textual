@@ -69,12 +69,12 @@ NS_ASSUME_NONNULL_BEGIN
 	SetVariableIfNil(self->_filterLimitedToClientsIDs, @[])
 	SetVariableIfNil(self->_filterEventsNumerics, @[])
 
-	SetVariableIfNil(self->_filterAction, NSStringEmptyPlaceholder)
-	SetVariableIfNil(self->_filterForwardToDestination, NSStringEmptyPlaceholder)
-	SetVariableIfNil(self->_filterMatch, NSStringEmptyPlaceholder)
-	SetVariableIfNil(self->_filterNotes, NSStringEmptyPlaceholder)
-	SetVariableIfNil(self->_filterSenderMatch, NSStringEmptyPlaceholder)
-	SetVariableIfNil(self->_filterTitle, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_filterAction, @"")
+	SetVariableIfNil(self->_filterForwardToDestination, @"")
+	SetVariableIfNil(self->_filterMatch, @"")
+	SetVariableIfNil(self->_filterNotes, @"")
+	SetVariableIfNil(self->_filterSenderMatch, @"")
+	SetVariableIfNil(self->_filterTitle, @"")
 
 	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 }

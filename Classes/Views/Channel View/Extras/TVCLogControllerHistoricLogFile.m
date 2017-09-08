@@ -219,7 +219,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *lastErrorMessage = self.lastServiceConnectionError.localizedDescription;
 
 	if (lastErrorMessage == nil) {
-		lastErrorMessage = NSStringEmptyPlaceholder;
+		lastErrorMessage = @"";
 	} else {
 		lastErrorMessage = TXTLS(@"Prompts[1137][2]", lastErrorMessage);
 	}

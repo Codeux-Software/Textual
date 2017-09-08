@@ -378,7 +378,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (instancetype)initWithClient:(IRCClient *)client
 {
-	return [self initWithNickname:NSStringEmptyPlaceholder onClient:client];
+	return [self initWithNickname:@"" onClient:client];
 }
 
 - (BOOL)isMutable

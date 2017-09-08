@@ -76,8 +76,8 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 {
 	ObjectIsAlreadyInitializedAssert
 
-	SetVariableIfNil(self->_hostmask, NSStringEmptyPlaceholder)
-	SetVariableIfNil(self->_hostmaskRegularExpression, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_hostmask, @"")
+	SetVariableIfNil(self->_hostmaskRegularExpression, @"")
 
 	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 }
@@ -90,7 +90,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 + (instancetype)newIgnoreEntryForHostmask:(nullable NSString *)hostmask
 {
 	if (hostmask == nil) {
-		hostmask = NSStringEmptyPlaceholder;
+		hostmask = @"";
 	}
 
 	NSDictionary *dic = @{

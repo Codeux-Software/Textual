@@ -719,7 +719,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 			NSString *nickname = member.user.nickname;
 
 			if (nickname.length > 1) {
-				NSString *modeSymbol = NSStringEmptyPlaceholder;
+				NSString *modeSymbol = @"";
 
 				if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
 					NSString *modeSymbolTemp = member.mark;
@@ -868,12 +868,12 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	/* Escape spaces that are prefix and suffix characters */
 	if (escapeBody) {
-		if ([html hasPrefix:NSStringWhitespacePlaceholder]) {
+		if ([html hasPrefix:@" "]) {
 			html = [html stringByReplacingCharactersInRange:NSMakeRange(0, 1)
 												 withString:@"&nbsp;"];
 		}
 
-		if ([html hasSuffix:NSStringWhitespacePlaceholder]) {
+		if ([html hasSuffix:@" "]) {
 			html = [html stringByReplacingCharactersInRange:NSMakeRange((html.length - 1), 1)
 												 withString:@"&nbsp;"];
 		}
@@ -952,7 +952,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	NSParameterAssert(inputDictionary != nil);
 
 	if (body.length == 0) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	TVCLogLineType lineType = [inputDictionary unsignedIntegerForKey:TVCLogRendererConfigurationLineTypeAttribute];
@@ -1093,7 +1093,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	NSString *stringEscaped = string.gtm_stringByEscapingForHTML;
 
 	if (stringEscaped == nil) {
-		stringEscaped = NSStringEmptyPlaceholder;
+		stringEscaped = @"";
 	}
 
 	return [TVCLogRenderer escapeStringSimple:stringEscaped];

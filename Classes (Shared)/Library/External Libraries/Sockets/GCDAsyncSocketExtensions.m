@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Request the heading for the formatted error message. */
 		NSString *headingFormat =
 		[[NSBundle mainBundle] localizedStringForKey:@"heading"
-											   value:NSStringEmptyPlaceholder
+											   value:@""
 											   table:@"SecureTransportErrorCodes"];
 
 		/* Request the reason for the formatting error message. */
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		NSString *localizedError =
 		[[NSBundle mainBundle] localizedStringForKey:lookupKey
-											   value:NSStringEmptyPlaceholder
+											   value:@""
 											   table:@"SecureTransportErrorCodes"];
 
 		/* Maybe format the error message. */

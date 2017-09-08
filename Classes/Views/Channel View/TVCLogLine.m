@@ -169,7 +169,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	SetVariableIfNil(self->_command, TVCLogLineDefaultCommandValue)
-	SetVariableIfNil(self->_messageBody, NSStringEmptyPlaceholder)
+	SetVariableIfNil(self->_messageBody, @"")
 	SetVariableIfNil(self->_receivedAt, [NSDate date])
 
 	if (self->_lineType == TVCLogLineActionNoHighlightType) {
@@ -374,7 +374,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	if (timeFormatted) {
 		[s appendString:timeFormatted];
-		[s appendString:NSStringWhitespacePlaceholder];
+		[s appendString:@" "];
 	}
 
 	NSString *nicknameFormatted = nil;
@@ -389,7 +389,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	if (nicknameFormatted) {
 		[s appendString:nicknameFormatted];
-		[s appendString:NSStringWhitespacePlaceholder];
+		[s appendString:@" "];
 	}
 
 	[s appendString:self.messageBody];

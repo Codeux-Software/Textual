@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCChannelSpotlightSearchResult *searchResult = self.objectValue;
 
 	if (searchResult == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	TDCChannelSpotlightController *controller = searchResult.controller;
@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (searchResultIndex > 9) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	NSUInteger keyboardShortcutIndex = (searchResultIndex + 1);
@@ -189,7 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCChannelSpotlightSearchResult *searchResult = self.objectValue;
 
 	if (searchResult == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	NSUInteger nicknameHighlightCount = searchResult.channel.nicknameHighlightCount;

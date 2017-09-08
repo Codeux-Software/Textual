@@ -195,31 +195,31 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableArray *notifications = [NSMutableArray array];
 
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationAddressBookMatchType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationConnectType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationDisconnectType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationHighlightType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationInviteType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationKickType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationChannelMessageType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationChannelNoticeType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationNewPrivateMessageType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationPrivateMessageType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationPrivateNoticeType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationUserJoinedType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationUserPartedType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationUserDisconnectedType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferReceiveRequestedType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferSendSuccessfulType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferReceiveSuccessfulType]];
-	[notifications addObject:NSStringWhitespacePlaceholder];
+	[notifications addObject:@" "];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferSendFailedType]];
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferReceiveFailedType]];
 
@@ -1028,25 +1028,25 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([TPCPreferences themeNicknameFormatPreferenceUserConfigurable] == NO) {
 		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][1]")];
 
-		[forcedValuesMutable appendString:NSStringNewlinePlaceholder];
+		[forcedValuesMutable appendString:@"\n"];
 	}
 
 	if ([TPCPreferences themeTimestampFormatPreferenceUserConfigurable] == NO) {
 		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][2]")];
 
-		[forcedValuesMutable appendString:NSStringNewlinePlaceholder];
+		[forcedValuesMutable appendString:@"\n"];
 	}
 
 	if ([TPCPreferences themeChannelViewFontPreferenceUserConfigurable] == NO) {
 		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][4]")];
 
-		[forcedValuesMutable appendString:NSStringNewlinePlaceholder];
+		[forcedValuesMutable appendString:@"\n"];
 	}
 
 	if ([TPCPreferences invertSidebarColorsPreferenceUserConfigurable] == NO) {
 		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][3]")];
 
-		[forcedValuesMutable appendString:NSStringNewlinePlaceholder];
+		[forcedValuesMutable appendString:@"\n"];
 	}
 
 	NSString *forcedValues = forcedValuesMutable.trim;

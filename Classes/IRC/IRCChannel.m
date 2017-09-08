@@ -938,7 +938,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 		}
 
-		NSString *newMemberModes = [newModeSymbols componentsJoinedByString:NSStringEmptyPlaceholder];
+		NSString *newMemberModes = [newModeSymbols componentsJoinedByString:@""];
 
 		memberMutable.modes = newMemberModes;
 	}

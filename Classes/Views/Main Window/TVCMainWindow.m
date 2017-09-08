@@ -1973,7 +1973,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 		[self.titlebarAccessoryViewLockButton positionImageOverContent];
 
-		self.titlebarAccessoryViewLockButton.title = NSStringEmptyPlaceholder;
+		self.titlebarAccessoryViewLockButton.title = @"";
 
 		if (u.isSecured) {
 			[self.titlebarAccessoryViewLockButton setIconAsLocked];
