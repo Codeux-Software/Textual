@@ -810,5 +810,5 @@ MessageBuffer.jumpToLine = function(lineNumber, callbackFunction)
 		return;
 	}
 	
-	MessageBuffer.loadMessagesWithJump(lineNumber, callbackFunction);
+	MessageBuffer.loadMessagesWithJump(lineNumberStandardized, callbackFunction);
 };
