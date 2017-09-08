@@ -794,31 +794,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	@synchronized(self.highlightedLineNumbers) {
-		if (self.highlightedLineNumbers.count == 0) {
-			return NO;
-		}
-
-		NSUInteger lastHighlightIndex = NSNotFound;
-
-		if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
-			lastHighlightIndex = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
-		}
-
-		if (previous == NO) {
-			if (lastHighlightIndex == (self.highlightedLineNumbers.count - 1)) {
-				return NO;
-			} else {
-				return YES;
-			}
-		} else {
-			if (lastHighlightIndex == 0) {
-				return NO;
-			} else {
-				return YES;
-			}
-		}
-
-		return NO;
+		return (self.highlightedLineNumbers.count > 0);
 	}
 }
 
@@ -837,10 +813,8 @@ ClassWithDesignatedInitializerInitMethod
 			NSUInteger hli_ci = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
 
 			if (hli_ci == (self.highlightedLineNumbers.count - 1)) {
-				// Return method since the last highlight we
-				// visited was the end of array. Nothing ahead.
-
-				return;
+				/* Circle around back to the beginning of the list. */
+				self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 			} else {
 				self.lastVisitedHighlight = self.highlightedLineNumbers[(hli_ci + 1)];
 			}
@@ -867,10 +841,8 @@ ClassWithDesignatedInitializerInitMethod
 			NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
 
 			if (hli_ci == 0) {
-				// Return method since the last highlight we
-				// visited was the start of array. Nothing ahead.
-
-				return;
+				/* Circle around back to the end of the list. */
+				self.lastVisitedHighlight = self.highlightedLineNumbers[(self.highlightedLineNumbers.count - 1)];
 			} else {
 				self.lastVisitedHighlight = self.highlightedLineNumbers[(hli_ci - 1)];
 			}
