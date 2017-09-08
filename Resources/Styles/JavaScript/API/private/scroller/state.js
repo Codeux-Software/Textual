@@ -165,9 +165,9 @@ TextualScroller.percentScrolled = function()
 /*               Position Restore                     */
 /* ************************************************** */
 
-TextualScroller.restoreScrolledUpwards = false;
-TextualScroller.restoreScrollHeightFirstValue = 0;
-TextualScroller.restoreScrollHeightSecondValue = 0;
+TextualScroller.restoreScrolledUpwards = undefined;
+TextualScroller.restoreScrollHeightFirstValue = undefined;
+TextualScroller.restoreScrollHeightSecondValue = undefined;
 
 TextualScroller.saveRestorationFirstDataPoint = function()
 {
@@ -206,8 +206,10 @@ TextualScroller.restoreScrollPosition = function(reversed)
 	
 	window.scrollTo(0, scrollTo);
 
-	TextualScroller.restoreScrollHeightFirstValue = 0;
-	TextualScroller.restoreScrollHeightSecondValue = 0;
+	TextualScroller.restoreScrollHeightFirstValue = undefined;
+	TextualScroller.restoreScrollHeightSecondValue = undefined;
+	
+	TextualScroller.restoreScrolledUpwards = undefined;
 };
 
 /* ************************************************** */
