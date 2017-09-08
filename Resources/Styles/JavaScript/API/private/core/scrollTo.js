@@ -109,8 +109,14 @@ Textual.scrollToElement = function(elementName)
 	var element = document.getElementById(elementName);
 
 	if (element) {
-		element.scrollIntoViewIfNeeded(true);
-
+		var elementRect = element.getBoundingClientRect();
+		var elementTop = (elementRect.top + window.scrollY);
+		var elementCenter = (elementTop - (window.innerHeight / 2));
+	
+		console.log("Scrolling to " + elementCenter);
+	
+		window.scrollTo(0, elementCenter);
+	
 		return true;
 	}
 	
