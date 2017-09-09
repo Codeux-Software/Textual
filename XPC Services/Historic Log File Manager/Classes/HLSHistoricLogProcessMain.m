@@ -150,9 +150,9 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 {
 	NSParameterAssert(viewId != nil);
 
-	//if (limitToDate == nil) {
+	if (limitToDate == nil) {
 		limitToDate = [NSDate distantFuture];
-	//}
+	}
 
 	NSDictionary *substitutionVariables = @{
 		@"view_id" : viewId,
