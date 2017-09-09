@@ -281,7 +281,7 @@
 	<key>UserListDoubleClickAction</key>
 	<integer>200</integer>
 	<key>UsesWebKit2WhenAvailable</key>
-	<false/>
+	<true/>
 	<key>WebViewDoNotUsesCustomScrollers</key>
 	<false/>
 	<key>WebViewPreviewLinks</key>
