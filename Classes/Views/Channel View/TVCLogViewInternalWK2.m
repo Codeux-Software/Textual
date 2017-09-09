@@ -70,7 +70,18 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 
 		_sharedWebViewConfiguration.processPool = _sharedProcessPool;
 
-		[_sharedWebViewConfiguration.preferences setValue:@(YES) forKey:@"developerExtrasEnabled"];
+		BOOL runningOnSierra = TEXTUAL_RUNNING_ON(10.12, Sierra);
+
+		if (runningOnSierra) {
+			_sharedWebViewConfiguration._allowUniversalAccessFromFileURLs = YES;
+		}
+
+		if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
+			WKPreferences *preferences = _sharedWebViewConfiguration.preferences;
+
+			preferences._allowFileAccessFromFileURLs = YES;
+			preferences._developerExtrasEnabled = YES;
+		}
 
 		_sharedWebViewScriptSink = [[TVCLogScriptEventSink alloc] initWithWebView:nil];
 
@@ -81,7 +92,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelName"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
 
-		if (TEXTUAL_RUNNING_ON(10.12, Sierra) == NO) {
+		if (runningOnSierra == NO) {
 			[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"displayContextMenu"];
 		}
 

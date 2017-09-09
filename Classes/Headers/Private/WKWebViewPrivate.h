@@ -39,3 +39,12 @@ void WKInspectorShow(WKInspectorRef inspectorRef);
 
 @interface NSView (WKViewSwizzle)
 @end
+
+@interface WKPreferences ()
+@property (nonatomic, setter=_setAllowFileAccessFromFileURLs:) BOOL _allowFileAccessFromFileURLs; // 10.11
+@property (nonatomic, setter=_setDeveloperExtrasEnabled:) BOOL _developerExtrasEnabled; // 10.11
+@end
+
+@interface WKWebViewConfiguration ()
+@property (nonatomic, setter=_setAllowUniversalAccessFromFileURLs:) BOOL _allowUniversalAccessFromFileURLs; // 10.12
+@end
