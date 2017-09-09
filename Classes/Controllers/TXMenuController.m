@@ -1366,7 +1366,15 @@ NS_ASSUME_NONNULL_BEGIN
 	TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
 	if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
-		[[NSApp keyWindow] performClose:sender];
+		NSWindow *windowToClose = [NSApp keyWindow];
+
+		if (windowToClose == nil) {
+			windowToClose = [NSApp mainWindow];
+		}
+
+		if (windowToClose) {
+			[windowToClose performClose:sender];
+		}
 
 		return;
 	}
