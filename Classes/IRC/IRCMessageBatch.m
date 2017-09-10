@@ -52,11 +52,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)queuedEntries
 {
 	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return @{};
+		}
+
 		return [self.internalBatchEntries copy];
 	}
 }
 
-- (void)clearQueue
+- (void)dequeueEntries
 {
 	@synchronized(self.internalBatchEntries) {
 		if (self.internalBatchEntries == nil) {
@@ -71,21 +75,26 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(entry != nil);
 
-	if ([entry isKindOfClass:[IRCMessageBatchMessage class]]) {
-		[self dequeueEntryWithBatchToken:[entry batchToken]];
-	} else if ([entry isKindOfClass:[NSString class]]) {
-		[self dequeueEntryWithBatchToken:entry];
-	}
-}
-
-- (void)dequeueEntryWithBatchToken:(NSString *)batchToken
-{
-	NSParameterAssert(batchToken != nil);
-
 	@synchronized(self.internalBatchEntries) {
 		if (self.internalBatchEntries == nil) {
 			return;
 		}
+
+		NSString *batchToken = nil;
+
+		if ([entry isKindOfClass:[IRCMessageBatchMessage class]]) {
+			batchToken = [entry batchToken];
+		} else if ([entry isKindOfClass:[NSString class]]) {
+			batchToken = entry;
+
+			entry = self.internalBatchEntries[batchToken];
+		}
+
+		if (entry == nil) {
+			return;
+		}
+
+		[entry dequeueEntries];
 
 		[self.internalBatchEntries removeObjectForKey:batchToken];
 	}
@@ -132,7 +141,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)queuedEntries
 {
 	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return @[];
+		}
+
 		return [self.internalBatchEntries copy];
+	}
+}
+
+- (void)dequeueEntries
+{
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return;
+		}
+
+		[self.internalBatchEntries removeAllObjects];
 	}
 }
 
@@ -152,6 +176,25 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		[self.internalBatchEntries addObject:entry];
+	}
+}
+
+- (void)dequeueEntry:(id)entry
+{
+	NSParameterAssert(entry != nil);
+
+	if ([entry isKindOfClass:[IRCMessage class]] == NO &&
+		[entry isKindOfClass:[IRCMessageBatchMessage class]] == NO)
+	{
+		return;
+	}
+
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return;
+		}
+
+		[self.internalBatchEntries removeObject:entry];
 	}
 }
 
