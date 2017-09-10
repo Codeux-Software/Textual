@@ -4905,7 +4905,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	// Some properties are purposely excluded from this method
 	// because their state must be kept or they are reset elsewhere
 
-	[self.batchMessages clearQueue];
+	[self.batchMessages dequeueEntries];
 
 	self.connectDelay = 0;
 

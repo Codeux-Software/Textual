@@ -44,13 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSDictionary *queuedEntries;
 
 - (void)queueEntry:(id)entry;
-
 - (void)dequeueEntry:(id)entry;
-- (void)dequeueEntryWithBatchToken:(NSString *)batchToken;
+- (void)dequeueEntries;
 
 - (id)queuedEntryWithBatchToken:(NSString *)batchToken;
-
-- (void)clearQueue;
 @end
 
 /* IRCMessageBatchMessage represents a single BATCH event based
@@ -64,6 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IRCMessageBatchMessage *parentBatchMessage;
 
 - (void)queueEntry:(id)entry;
+- (void)dequeueEntry:(id)entry;
+- (void)dequeueEntries;
 @end
 
 NS_ASSUME_NONNULL_END
