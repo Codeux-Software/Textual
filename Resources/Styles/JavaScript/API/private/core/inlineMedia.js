@@ -66,47 +66,86 @@ Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
 	to the internals of Textual itself to determine whether to cancel the request. */
 	if (Textual.hasLiveResize()) {
 		if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
-			Textual.toggleInlineImageReally(object);
+			Textual.toggleInlineImageVisibility(object);
 		}
 	} else {
-		Textual.toggleInlineImageReally(object);
+		Textual.toggleInlineImageVisibility(object);
 	}
 
 	return false;
 };
 
-Textual.toggleInlineImageReally = function(object)
+Textual.toggleInlineImageVisibility = function(object)
 {
 	if (object.indexOf("inlineImage-") !== 0) {
 		object = ("inlineImage-" + object);
 	}
 
-	var imageNode = document.getElementById(object);
+	var imageContainer = document.getElementById(object);
 
-	if (imageNode.style.display === "none") {
-		imageNode.style.display = "";
-	} else {
-		imageNode.style.display = "none";
+	/* If the image is not hidden, then we make it so and finish. */
+	var hidden = (imageContainer.style.display === "none");
+	
+	if (hidden === false) {
+		imageContainer.style.display = "none";
+		
+		Textual.didToggleInlineImageToHiddenInt(imageContainer, imageElement);
+		
+		return;
 	}
+	
+	/* If the image is not already loaded, then we observe 
+	changes to that so that we only reveal once it is. */
+	var imageElement = imageContainer.querySelector("a .image");
 
-	if (imageNode.style.display === "none") {
-		Textual.didToggleInlineImageToHidden(imageNode);
+	var complete = imageElement.complete;
+	
+	if (complete === false) {
+		if (imageContainer.hasAttribute("wants-reveal")) {
+			return;
+		}
+	}
+	
+	var completeCallback = (function() {
+		/* It is important that we reveal the inline image immediately
+		after preparing the scroller for mutation. If we do not, then 
+		the mutation will be swallowed without changing the height. */
+		imageContainer.style.display = "";
+		
+		imageContainer.removeAttribute("wants-reveal");
+		
+		Textual.didToggleInlineImageToVisibleInt(imageContainer, imageElement);
+	});
+	
+	if (complete === false) {
+		imageContainer.setAttribute("wants-reveal", "true");
+
+		imageElement.addEventListener("load", { handleEvent: completeCallback }, false);
 	} else {
-		Textual.didToggleInlineImageToVisible(imageNode);
+		completeCallback();
 	}
 };
 
-Textual.didToggleInlineImageToHidden = function(imageElement)
+Textual.didToggleInlineImageToHidden = function(imageContainer)
 {
 	/* Do something here? */
 };
 
-Textual.didToggleInlineImageToVisible = function(imageElement)
+Textual.didToggleInlineImageToHiddenInt = function(imageContainer, imageElement)
 {
-	/* Start monitoring events for this image. */
-	if (Textual.hasLiveResize()) {
-		var realImageElement = imageElement.querySelector("a .image");
+	Textual.didToggleInlineImageToHidden(imageContainer);
+};
 
-		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
+Textual.didToggleInlineImageToVisible = function(imageContainer)
+{
+	/* Do something here? */
+};
+
+Textual.didToggleInlineImageToVisibleInt = function(imageContainer, imageElement)
+{
+	if (Textual.hasLiveResize()) {
+		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	}
+
+	Textual.didToggleInlineImageToVisible(imageContainer);
 };
