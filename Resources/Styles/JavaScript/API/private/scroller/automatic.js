@@ -88,9 +88,9 @@ TextualScroller.performAutomaticScroll = function() /* PUBLIC */
 	}
 	
 	var performAutomaticScroll = (function() {
-		_TextualScroller.performAutomaticScroll();
-		
 		_TextualScroller.performAutomaticScrollTimeout = null;
+		
+		_TextualScroller.performAutomaticScroll();
 	});
 	
 	_TextualScroller.performAutomaticScrollTimeout = 
