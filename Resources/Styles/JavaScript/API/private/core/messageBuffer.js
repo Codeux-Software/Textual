@@ -135,7 +135,7 @@ MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers)
 	if (MessageBuffer.bufferBottomIsComplete === false) {
 		return;
 	}
-	
+
 	var buffer = MessageBuffer.bufferElement();
 
 	buffer.insertAdjacentHTML(placement, html);
@@ -506,11 +506,7 @@ MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestPa
 			
 			html.push(renderedMessage.html);
 		}
-		
-		/* Appending HTML will cause the view to appear scrolled 
-		for the user so we save the position for restore. */
-		TextualScroller.saveRestorationFirstDataPoint();
-		
+
 		/* Append HTML */
 		var htmlString = html.join("");
 
@@ -535,22 +531,21 @@ MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestPa
 	}
 	
 	if (renderedMessagesCount > 0) {
-		/* Before we enforce size limit, we record the height with the appended
-		HTML to allow scroller to learn proper amount to scroll. Without recording
-		the height here, it wont change once we enforce size limit. */
-		TextualScroller.saveRestorationSecondDataPoint();
-		
 		/* Enforce size limit. This function expects the count to already be 
 		incremented which is why we call it AFTER the append. */
 		/* Value of before is reversed because we want to remove from the
 		opposite of where we added. */
 		MessageBuffer.enforceHardLimit(!before);
-		
-		/* Restore scroll position */
-		TextualScroller.restoreScrollPosition();
-		
+
 		/* Post line numbers so style can do something with them. */
 		Textual.messageAddedToViewInt(lineNumbers, true);
+		
+		/* Scroll line into view */
+		if (before) {
+			line.scrollIntoView(true);
+		} else {
+			line.scrollIntoView(false);
+		}
 	} // renderedMessagesCount > 0
 	
 	/* Toggle automatic scrolling */
@@ -797,7 +792,7 @@ MessageBuffer.toggleAutomaticScrolling = function()
 
 MessageBuffer.scrolledToBottomOfBuffer = function()
 {
-	return (TextualScroller.scrolledAboveBottom === false);
+	return TextualScroller.isScrolledToBottom();
 };
 
 MessageBuffer.jumpToLine = function(lineNumber, callbackFunction)

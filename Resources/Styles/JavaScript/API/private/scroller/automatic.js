@@ -42,21 +42,10 @@
 /* ************************************************** */
 
 /* ************************************************** */
-/*                  State Tracking                    */
-/* ************************************************** */
-
-TextualScroller.scrollHeightTimerActive = false;
-
-TextualScroller.automaticScrollHeightCurrentValue = 0;
-TextualScroller.automaticScrollHeightPreviousValue = 0;
-
-TextualScroller.scrollerAnchorLinkReference = null;
-
-TextualScroller.automaticScrollingEnabled = false;
-
-/* ************************************************** */
 /*                     Visibility                     */
 /* ************************************************** */
+
+TextualScroller.documentIsVisible = false;
 
 TextualScroller.documentVisbilityChangedCallback = function()
 {
@@ -69,91 +58,69 @@ TextualScroller.documentVisbilityChangedCallback = function()
 	}
 
 	if (documentHidden) {
-		TextualScroller.disableScrollingTimerInt();
+		TextualScroller.documentIsVisible = false;
 	} else {
-		TextualScroller.enableScrollingTimerInt();
+		TextualScroller.documentIsVisible = true;
 	}
 };
 
 TextualScroller.documentResizedCallback = function()
 {
-	TextualScroller.performAutoScrollInt(true);
+	TextualScroller.performAutomaticScroll();
 };
 
 /* ************************************************** */
 /*                 Automatic Scroller                 */
 /* ************************************************** */
 
-TextualScroller.performAutoScroll = function()
+TextualScroller.automaticScrollingEnabled = true;
+
+TextualScroller.performAutomaticScrollTimeout = null;
+
+TextualScroller.performAutomaticScroll = function()
 {
-	var performAutoScrollFunction = (function() {
-		TextualScroller.performAutoScrollInt(false);
-
-		if (TextualScroller.scrollHeightTimerActive) {
-			 TextualScroller.performAutoScroll();
-		}
-	});
-
-//	if (typeof window.requestAnimationFrame === "undefined") {
-	setTimeout(performAutoScrollFunction, 50);
-//	} else {
-//		requestAnimationFrame(performAutoScrollFunction);
-//	}
-};
-
-TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
-{
-	/* Set default value of argument */
-	if (typeof skipScrollHeightCheck === "undefined") {
-		skipScrollHeightCheck = false;
+	if (TextualScroller.performAutomaticScrollTimeout) {
+		return;
 	}
+	
+	var performAutomaticScroll = (function() {
+		TextualScroller.performAutomaticScrollInt();
+		
+		TextualScroller.performAutomaticScrollTimeout = null;
+	});
+	
+	TextualScroller.performAutomaticScrollTimeout = 
+	setTimeout(performAutomaticScroll, 0);
+}
 
-	/* Do not perform scrolling if the user is believed to have scrolled */
+TextualScroller.performAutomaticScrollInt = function()
+{	
+	/* Do not perform automatic scroll if is disabled. */
+	if (TextualScroller.automaticScrollingEnabled === false) {
+		return;
+	}
+	
+	/* Do not perform automatic scroll if the document is not visible. */
+	if (TextualScroller.documentIsVisible === false) {
+		return;
+	}
+	
+	/* Do not perform automatic scroll if we weren't at bottom. */
 	if (TextualScroller.scrolledAboveBottom) {
 		return;
 	}
 	
-	/* Do not perform scrolling if it is disabled */
-	if (TextualScroller.automaticScrollingEnabled) {
-		return;
-	}
-
-	/* Do not perform scrolling if we are performing live resize */
-	/* 	Stop auto scroll before height is recorded so that once live resize is completed,
-		scrolling will notice the new height of the view and use that. */
+	/* Do not perform scrolling if we are performing live resize. */
+	/* Stop auto scroll before height is recorded so that once live resize is completed,
+	scrolling will notice the new height of the view and use that. */
 	if (Textual.hasLiveResize()) {
 		if (InlineImageLiveResize.dragElement) {
 			return;
 		}
 	}
 
-	/* 	Retrieve the current scroll height and return if it is zero */
-	var scrollHeight = TextualScroller.scrollHeight();
-
-	if (scrollHeight === 0) {
-		return;
-	}
-
-	var scrollHeightPrevious = TextualScroller.automaticScrollHeightCurrentValue;
-
-	/* Perform comparison test for scroll height */
-	if (skipScrollHeightCheck === false) {
-		if (scrollHeight === scrollHeightPrevious) {
-			return;
-		}
-	}
-
-	/* Make a copy of the previous scroll height and save the new */
-	TextualScroller.automaticScrollHeightPreviousValue = scrollHeightPrevious;
-
-	TextualScroller.automaticScrollHeightCurrentValue = scrollHeight;
-
-	/* Scroll to new value */
-	if (TextualScroller.scrollerAnchorLinkReference === null) {
-		TextualScroller.scrollerAnchorLinkReference = document.getElementById("most_recent_anchor");
-	}
-
-	TextualScroller.scrollerAnchorLinkReference.click();
+	/* Scroll to bottom */
+	TextualScroller.scrollToBottom();
 };
 
 /* This function sets a flag that tells the scroller not to do anything,
@@ -165,39 +132,33 @@ TextualScroller.setAutomaticScrollingEnabled = function(enabled)
 };
 
 /* ************************************************** */
-/*                        Timer                       */
+/*                 Mutation Observer                  */
 /* ************************************************** */
 
-TextualScroller.enableScrollingTimerInt = function()
-{
-	TextualScroller.scrollHeightTimerActive = true;
+TextualScroller.mutationObserver = null;
 
-	TextualScroller.performAutoScroll();
+TextualScroller.mutationObserverCallback = function(mutations)
+{
+	TextualScroller.performAutomaticScroll();
 };
 
-TextualScroller.disableScrollingTimerInt = function()
+TextualScroller.createMutationObserver = function()
 {
-	TextualScroller.scrollHeightTimerActive = false;
-};
+	var buffer = MessageBuffer.bufferElement();
+	
+	var observer = new MutationObserver(TextualScroller.mutationObserverCallback);
+	
+	observer.observe(
+		buffer, 
 
-/* 	TextualScroller.enableScrollingTimer and TextualScroller.disableScrollingTimer
-	are called by corePrivate.js when a view is switched to and switched away.
-	The timer is only managed here when document.hidden is not available. When
-	document.hidden is available, it is better to rely on state changes to it,
-	as it allows us to disable timer not only when the view is switched away,
-	but when its host window is occluded. */
-TextualScroller.enableScrollingTimer = function()
-{
-	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
-		TextualScroller.enableScrollingTimerInt();
-	}
-};
+		{
+			childList: true,
+			attributes: true,
+			subtree: true
+		}
+	);
 
-TextualScroller.disableScrollingTimer = function()
-{
-	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
-		TextualScroller.disableScrollingTimerInt();
-	}
+	TextualScroller.mutationObserver = observer;
 };
 
 /* ************************************************** */

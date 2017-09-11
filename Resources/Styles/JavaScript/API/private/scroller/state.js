@@ -47,12 +47,12 @@ var TextualScroller = {};
 /*                   State Tracking                   */
 /* ************************************************** */
 
-/* Minimum distance from bottom to be scrolled upwards 
+/* Minimum distance from bottom to be scrolled upwards
 before TextualScroller.scrolledAboveBottom is true. */
 TextualScroller.scrolledAboveBottomMinimum = 25;
 
 /* Position at which TextualScroller.scrolledAboveBottom
-became true so once we scroll past it, going downward, 
+became true so once we scroll past it, going downward,
 we can set the value back to false. */
 TextualScroller.scrolledAboveBottomThreshold = 0;
 
@@ -70,20 +70,21 @@ TextualScroller.scrollPositionPreviousValue = 0;
 TextualScroller.scrollHeightCurrentValue = 0;
 TextualScroller.scrollHeightPreviousValue = 0;
 
-/* Any changes made to this logic should be reflected in TVCWK1AutoScroller.m */
 TextualScroller.documentScrolledCallback = function()
 {
 	/* Height of scrollabe area */
-	var scrollHeight = TextualScroller.scrollHeight();
+	var scrollHeight = document.body.scrollHeight;
 
 	TextualScroller.scrollHeightPreviousValue = TextualScroller.scrollHeightCurrentValue;
 
 	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 
 	/* The current position scrolled to */
-	var scrollPosition = window.scrollY;
+	var clientHeight = document.body.clientHeight;
 
-	if (scrollPosition < 0 ||
+	var scrollPosition = (document.body.scrollTop + clientHeight);
+
+	if (scrollPosition < clientHeight ||
 		scrollPosition > scrollHeight) 
 	{
 		return; // Ignore elastic scrolling
@@ -115,11 +116,14 @@ TextualScroller.documentScrolledCallback = function()
 		if (scrollTop < TextualScroller.scrolledAboveBottomMinimum) {
 			TextualScroller.scrolledAboveBottom = false;
 
-			TextualScroller.scrolledAboveBottomThreshold = TextualScroller.scrollPositionCurrentValue;
+			TextualScroller.scrolledAboveBottomThreshold = 
+			TextualScroller.scrollPositionCurrentValue;
 		}
 
 		/* Check whether user is scrolling upwards. */
-		if (TextualScroller.scrollPositionCurrentValue < TextualScroller.scrollPositionPreviousValue) {
+		if (TextualScroller.scrollPositionCurrentValue < 
+			TextualScroller.scrollPositionPreviousValue) 
+		{
 			scrolledUpwards = true;
 		}
 	}
@@ -127,8 +131,11 @@ TextualScroller.documentScrolledCallback = function()
 	{
 		/* 	Check if the user is scrolling upwards. If they are, then check if they have went
 			above the threshold that defines whether its a user initated event or not. */
-		if (TextualScroller.scrollPositionCurrentValue < TextualScroller.scrollPositionPreviousValue) {
-			var scrollTop = (TextualScroller.scrolledAboveBottomThreshold - TextualScroller.scrollPositionCurrentValue);
+		if (TextualScroller.scrollPositionCurrentValue < 
+			TextualScroller.scrollPositionPreviousValue) 
+		{
+			var scrollTop = (TextualScroller.scrolledAboveBottomThreshold - 
+							 TextualScroller.scrollPositionCurrentValue);
 
 			if (scrollTop > TextualScroller.scrolledAboveBottomMinimum) {
 				TextualScroller.scrolledAboveBottom = true;
@@ -139,8 +146,11 @@ TextualScroller.documentScrolledCallback = function()
 
 		/* 	If the user is scrolling downward and passes last threshold location, then
 			move the location further downward. */
-		if (TextualScroller.scrollPositionCurrentValue > TextualScroller.scrolledAboveBottomThreshold) {
-			TextualScroller.scrolledAboveBottomThreshold = TextualScroller.scrollPositionCurrentValue;
+		if (TextualScroller.scrollPositionCurrentValue > 
+			TextualScroller.scrolledAboveBottomThreshold) 
+		{
+			TextualScroller.scrolledAboveBottomThreshold = 
+			TextualScroller.scrollPositionCurrentValue;
 		}
 	}
 	
@@ -154,13 +164,6 @@ TextualScroller.documentScrolledCallback = function()
 	TextualScroller.scrolledUpwards = scrolledUpwards;
 };
 
-/* Function returns how far we are scrolled as a percentage */
-TextualScroller.percentScrolled = function()
-{
-	return ((TextualScroller.scrollPositionCurrentValue / 
-			 TextualScroller.scrollHeightCurrentValue) * 100.0);
-}
-
 /* ************************************************** */
 /*               Position Restore                     */
 /* ************************************************** */
@@ -173,8 +176,6 @@ TextualScroller.saveRestorationFirstDataPoint = function()
 {
 	TextualScroller.restoreScrolledUpwards = TextualScroller.scrolledUpwards;
 
-	/* document.body.scrollHeight is recorded instead of TextualScroller.scrollHeight()
-	because the latter subtracts offsetHeight which we need for accurate value. */
 	TextualScroller.restoreScrollHeightFirstValue = document.body.scrollHeight;
 };
 
@@ -192,19 +193,17 @@ TextualScroller.restoreScrollPosition = function(reversed)
 		return;
 	}
 	
-	if (TextualScroller.scrolledUpwards === false) {
-		var scrollTo = (TextualScroller.scrollPositionCurrentValue - scrollHeightDifference);
+	if (TextualScroller.restoreScrolledUpwards === false) {
+		var scrollTo = (document.body.scrollHeight - scrollHeightDifference);
 	} else {
-		var scrollTo = (TextualScroller.scrollPositionCurrentValue + scrollHeightDifference);
+		var scrollTo = (document.body.scrollHeight + scrollHeightDifference);
 	}
-	
+
 	if (scrollTo < 0) {
 		scrollTo = 0;
 	}
-	
-	console.log("Going to scroll to " + scrollTo);
-	
-	window.scrollTo(0, scrollTo);
+
+	document.body.scrollTop = scrollTo;
 
 	TextualScroller.restoreScrollHeightFirstValue = undefined;
 	TextualScroller.restoreScrollHeightSecondValue = undefined;
@@ -212,39 +211,56 @@ TextualScroller.restoreScrollPosition = function(reversed)
 	TextualScroller.restoreScrolledUpwards = undefined;
 };
 
-/* ************************************************** */
-/*               Scroller Informatio                  */
-/* ************************************************** */
-
-TextualScroller.scrollHeight = function()
+/* Element prototypes */
+Element.prototype.percentScrolled = function()
 {
-	/* This function is called very early so add catch */
-	if (document.body === null) {
-		return 0;
-	}
+	return (((this.scrollTop + this.clientHeight) / this.scrollHeight) * 100.0);
+}
 
-	var offsetHeight = document.body.offsetHeight;
-
-	/*	offsetHeight /should/ never be zero but it can be at times
-		when this function is called and the tree has not been fully
-		rendered. In that case, we return zero instead of bad math. */
-	if (offsetHeight === 0) {
-		return 0;
-	}
-
-	var scrollHeight = document.body.scrollHeight;
-
-	return (scrollHeight - offsetHeight);
+Element.prototype.isScrolledToTop = function()
+{
+	return (this.scrollTop <= 0);
 };
+
+Element.prototype.scrollToTop = function()
+{
+	this.scrollTop = 0;
+};
+
+Element.prototype.isScrolledToBottom = function()
+{
+	return ((this.scrollTop + this.clientHeight) >= this.scrollHeight);
+};
+
+Element.prototype.scrollToBottom = function()
+{
+	this.scrollTop = this.scrollHeight;	
+};
+
+/* Element prototype proxy */
+TextualScroller.percentScrolled = function()
+{
+	return document.body.percentScrolled();
+}
 
 TextualScroller.isScrolledToTop = function()
 {
-	return (TextualScroller.scrollPositionCurrentValue <= 0);
+	return document.body.isScrolledToTop();
+};
+
+TextualScroller.scrollToTop = function()
+{
+	document.body.scrollToTop();
 };
 
 TextualScroller.isScrolledToBottom = function()
 {
-	return (TextualScroller.scrollPositionCurrentValue === TextualScroller.scrollHeightCurrentValue);
+	return document.body.isScrolledToBottom();
+};
+
+TextualScroller.scrollToBottom = function()
+{
+	document.body.scrollToBottom();	
 };
 
 /* Bind to events */

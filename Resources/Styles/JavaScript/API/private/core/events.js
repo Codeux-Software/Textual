@@ -95,6 +95,10 @@ Textual.viewFinishedLoadingInt = function(configuration)
 	var isReloadingTheme = configuration.reloadingTheme;
 	var textSizeMultiplier = configuration.textSizeMultiplier;
 	var scrollbackLimit = configuration.scrollbackLimit;
+
+	if (typeof TextualScroller.createMutationObserver === "function") {
+		TextualScroller.createMutationObserver();
+	}
 	
 	if (isVisible) {
 		Textual.notifyDidBecomeVisible();
