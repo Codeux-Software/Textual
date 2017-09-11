@@ -210,7 +210,10 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		return;
 	}
 
-	[self.socketConnection readDataToData:[GCDAsyncSocket LFData] withTimeout:(-1) tag:0];
+	[self.socketConnection readDataToData:[GCDAsyncSocket LFData]
+							  withTimeout:(-1)
+								maxLength:(1000 * 1000 * 100) // 100 megabytes
+									  tag:0];
 }
 
 #pragma mark -
