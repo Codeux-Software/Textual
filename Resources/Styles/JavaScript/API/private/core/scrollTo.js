@@ -77,7 +77,7 @@ Textual.jumpToLine = function(lineNumber) /* PUBLIC */
 				Textual.viewPositionMovedToLine(lineNumber);
 			}
 
-			app.notifyJumpToLineCallback(lineNumber, success);
+			appPrivate.notifyJumpToLineCallback(lineNumber, success);
 		})
 	);
 };
