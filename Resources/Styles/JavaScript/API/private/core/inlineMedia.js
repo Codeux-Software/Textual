@@ -91,7 +91,7 @@ _Textual.toggleInlineImageVisibility = function(object)
 	if (hidden === false) {
 		imageContainer.style.display = "none";
 		
-		_Textual.didToggleInlineImageToHiddenInt(imageContainer, imageElement);
+		_Textual.didToggleInlineImageToHidden(imageContainer, imageElement);
 		
 		return;
 	}
@@ -116,7 +116,7 @@ _Textual.toggleInlineImageVisibility = function(object)
 		
 		imageContainer.removeAttribute("wants-reveal");
 		
-		_Textual.didToggleInlineImageToVisibleInt(imageContainer, imageElement);
+		_Textual.didToggleInlineImageToVisible(imageContainer, imageElement);
 	});
 	
 	if (complete === false) {
