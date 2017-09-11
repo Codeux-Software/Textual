@@ -61,6 +61,8 @@ TextualScroller.documentVisbilityChangedCallback = function()
 		TextualScroller.documentIsVisible = false;
 	} else {
 		TextualScroller.documentIsVisible = true;
+
+		TextualScroller.performAutomaticScroll();
 	}
 };
 
