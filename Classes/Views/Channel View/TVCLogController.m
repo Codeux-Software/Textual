@@ -1438,7 +1438,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)isSafeToPresentImageWithId:(NSString *)uniqueId
 {
-	[self _evaluateFunction:@"Textual.toggleInlineImageReally" withArguments:@[uniqueId]];
+	[self _evaluateFunction:@"Textual.toggleInlineImageVisibility" withArguments:@[uniqueId]];
 }
 
 - (void)isNotSafeToPresentImageWithId:(NSString *)uniqueId
