@@ -35,52 +35,51 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
 /*                                                    */
 /* ************************************************** */
 
-/* Internal state */
-Textual.nicknameDoubleClickTimer = null;
-
 /* Selection */
-Textual.clearSelection = function()
+Textual.currentSelection = function() /* PUBLIC */
+{
+	return window.getSelection().toString();
+};
+
+Textual.clearSelection = function() /* PUBLIC */
 {
 	window.getSelection().empty();
 };
 
-Textual.clearSelectionAndPreventDefault = function()
+_Textual.clearSelectionAndPreventDefault = function() /* PRIVATE */
 {
 	Textual.clearSelection();
 
 	event.preventDefault();
 };
 
-Textual.currentSelection = function()
-{
-	return window.getSelection().toString();
-};
-
-Textual.recordSelection = function()
+_Textual.recordSelection = function() /* PRIVATE */
 {
 	var selectedText = Textual.currentSelection();
 
-	app.setSelection(selectedText);
+	appPrivate.setSelection(selectedText);
 };
 
-Textual.selectionChangedCallback = function()
+_Textual.selectionChangedCallback = function() /* PRIVATE */
 {
-	Textual.recordSelection();
+	_Textual.recordSelection();
 };
 
-Textual.copySelectionOnMouseUpEvent = function()
+_Textual.copySelectionOnMouseUpEvent = function() /* PRIVATE */
 {
 	if (window.event.metaKey || window.event.altKey) {
 		return;
 	}
 
-	app.copySelectionWhenPermitted(
+	appPrivate.copySelectionWhenPermitted(
 	   function(returnValue) {
 			if (returnValue) {
 				Textual.clearSelection();
@@ -90,9 +89,9 @@ Textual.copySelectionOnMouseUpEvent = function()
 };
 
 /* Contextual menu management */
-Textual.usesCustomMenuConstructor = function()
+_Textual.usesCustomMenuConstructor = function() /* PRIVATE */
 {
-	if (appInternal.isWebKit2() === false) {
+	if (app.isWebKit2() === false) {
 		return false;
 	}
 	
@@ -106,147 +105,149 @@ Textual.usesCustomMenuConstructor = function()
 	}
 };
 
-Textual.openGenericContextualMenu = function()
+_Textual.openGenericContextualMenu = function() /* PRIVATE */
 {
 	/* Do not block if target element already has a callback. */
 	if (event.target.oncontextmenu !== null) {
 		return;
 	}
 
-	if (Textual.usesCustomMenuConstructor()) {
+	if (_Textual.usesCustomMenuConstructor()) {
 		event.preventDefault();
 		
-		Textual.recordSelection();
+		_Textual.recordSelection();
 
-		app.displayContextMenu();
+		appPrivate.displayContextMenu();
 	}
 };
 
-Textual.openChannelNameContextualMenu = function()
+Textual.openChannelNameContextualMenu = function() /* PUBLIC */
 {
-	Textual.setPolicyChannelName();
+	_Textual.setPolicyChannelName();
 
-	if (Textual.usesCustomMenuConstructor()) {
-		Textual.clearSelectionAndPreventDefault();
+	if (_Textual.usesCustomMenuConstructor()) {
+		_Textual.clearSelectionAndPreventDefault();
 
-		app.displayContextMenu();
+		appPrivate.displayContextMenu();
 	}
 };
 
-Textual.openURLManagementContextualMenu = function()
+Textual.openURLManagementContextualMenu = function() /* PUBLIC */
 {
-	Textual.setPolicyURLAddress();
+	_Textual.setPolicyURLAddress();
 
-	if (Textual.usesCustomMenuConstructor()) {
-		Textual.clearSelectionAndPreventDefault();
+	if (_Textual.usesCustomMenuConstructor()) {
+		_Textual.clearSelectionAndPreventDefault();
 
-		app.displayContextMenu();
+		appPrivate.displayContextMenu();
 	}
 };
 
-Textual.openStandardNicknameContextualMenu = function()
+Textual.openStandardNicknameContextualMenu = function() /* PUBLIC */
 {
-	Textual.setPolicyStandardNickname();
+	_Textual.setPolicyStandardNickname();
 
-	if (Textual.usesCustomMenuConstructor()) {
-		Textual.clearSelectionAndPreventDefault();
+	if (_Textual.usesCustomMenuConstructor()) {
+		_Textual.clearSelectionAndPreventDefault();
 
-		app.displayContextMenu();
+		appPrivate.displayContextMenu();
 	}
 };
 
-Textual.openInlineNicknameContextualMenu = function()
+Textual.openInlineNicknameContextualMenu = function() /* PUBLIC */
 {
-	Textual.setPolicyInlineNickname();
+	_Textual.setPolicyInlineNickname();
 
-	if (Textual.usesCustomMenuConstructor()) {
-		Textual.clearSelectionAndPreventDefault();
+	if (_Textual.usesCustomMenuConstructor()) {
+		_Textual.clearSelectionAndPreventDefault();
 
-		app.displayContextMenu();
+		appPrivate.displayContextMenu();
 	}
 };
 
-Textual.setPolicyStandardNickname = function()
+_Textual.setPolicyStandardNickname = function() /* PRIVATE */
 {
 	var userNickname = event.target.getAttribute("nickname");
 
-	app.setNickname(userNickname);
+	appPrivate.setNickname(userNickname);
 };
 
-Textual.setPolicyInlineNickname = function()
+_Textual.setPolicyInlineNickname = function() /* PRIVATE */
 {
 	var userNickname = event.target.textContent;
 
 	var userMode = event.target.getAttribute("mode");
 
 	if (userMode && userMode.length > 0 && userNickname.indexOf(userMode) === 0) {
-		app.setNickname(userNickname.substring(1));
+		appPrivate.setNickname(userNickname.substring(1));
 	} else {
-		app.setNickname(userNickname);
+		appPrivate.setNickname(userNickname);
 	}
 };
 
-Textual.setPolicyURLAddress = function()
+_Textual.setPolicyURLAddress = function() /* PRIVATE */
 {
-	app.setURLAddress(event.target.getAttribute("href"));
+	appPrivate.setURLAddress(event.target.getAttribute("href"));
 };
 
-Textual.setPolicyChannelName = function()
+_Textual.setPolicyChannelName = function() /* PRIVATE */
 {
-	app.setChannelName(event.target.textContent);
+	appPrivate.setChannelName(event.target.textContent);
 };
 
 /* Double click actions */
-Textual.nicknameMaybeWasDoubleClicked = function(e)
-{
-	if (Textual.nicknameDoubleClickTimer) {
-		clearTimeout(Textual.nicknameDoubleClickTimer);
+Textual._nicknameDoubleClickTimer = null;
 
-		Textual.nicknameDoubleClickTimer = null;
+Textual.nicknameMaybeWasDoubleClicked = function(e) /* PUBLIC */
+{
+	if (Textual._nicknameDoubleClickTimer) {
+		clearTimeout(Textual._nicknameDoubleClickTimer);
+
+		Textual._nicknameDoubleClickTimer = null;
 
 		Textual.nicknameDoubleClicked(e);
 	} else {
-		Textual.nicknameDoubleClickTimer = setTimeout(function() {
-			Textual.nicknameDoubleClickTimer = null;
+		Textual._nicknameDoubleClickTimer = setTimeout(function() {
+			Textual._nicknameDoubleClickTimer = null;
 
 			Textual.nicknameSingleClicked(e);
 		}, 250);
 	}
 };
 
-Textual.nicknameSingleClicked = function(e)
+Textual.nicknameSingleClicked = function(e) /* PUBLIC */
 {
 	// API does not handle this action by default...
 };
 
-Textual.channelNameDoubleClicked = function()
+Textual.channelNameDoubleClicked = function() /* PUBLIC */
 {
-	Textual.clearSelectionAndPreventDefault();
+	_Textual.clearSelectionAndPreventDefault();
 
-	Textual.setPolicyChannelName();
+	_Textual.setPolicyChannelName();
 
-	app.channelNameDoubleClicked();
+	appPrivate.channelNameDoubleClicked();
 };
 
-Textual.nicknameDoubleClicked = function()
+Textual.nicknameDoubleClicked = function() /* PUBLIC */
 {
-	Textual.clearSelectionAndPreventDefault();
+	_Textual.clearSelectionAndPreventDefault();
 
-	Textual.setPolicyStandardNickname();
+	_Textual.setPolicyStandardNickname();
 
-	app.nicknameDoubleClicked();
+	appPrivate.nicknameDoubleClicked();
 };
 
-Textual.inlineNicknameDoubleClicked = function()
+Textual.inlineNicknameDoubleClicked = function() /* PUBLIC */
 {
-	Textual.clearSelectionAndPreventDefault();
+	_Textual.clearSelectionAndPreventDefault();
 
-	Textual.setPolicyInlineNickname();
+	_Textual.setPolicyInlineNickname();
 
-	app.nicknameDoubleClicked();
+	appPrivate.nicknameDoubleClicked();
 };
 
 /* Bind to events */
-document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
+document.addEventListener("contextmenu", _Textual.openGenericContextualMenu, false);
 
-document.addEventListener("selectionchange", Textual.selectionChangedCallback, false);
+document.addEventListener("selectionchange", _Textual.selectionChangedCallback, false);

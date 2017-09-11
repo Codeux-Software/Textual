@@ -35,35 +35,45 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
 /*                                                    */
 /* ************************************************** */
 
-Textual.viewBodyDidLoadIntAnimationFrame = null;
-
-Textual.finishedLoadingHistory = false;
+Textual.finishedLoadingView = false; /* PUBLIC */
+Textual.finishedLoadingHistory = false; /* PUBLIC */
 
 /* State management */
-Textual.notifyDidBecomeVisible = function()
+_Textual.notifyDidBecomeVisible = function() /* PRIVATE */
 {
 	Textual.clearSelection();
 };
 
-Textual.notifyDidBecomeHidden = function()
+_Textual.notifyDidBecomeHidden = function() /* PRIVATE */
 {
 	Textual.clearSelection();
 };
 
-Textual.notifySelectionChanged = function(isSelected)
+_Textual.notifySelectionChanged = function(isSelected) /* PRIVATE */
 {
 	Textual.setTopicBarVisible(isSelected);
 
 	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
 };
 
-Textual.viewBodyDidLoadInt = function()
+Textual.viewBodyDidLoadInt = function() /* PRIVATE */
+{
+	console.warn("Textual.viewBodyDidLoadInt() is deprecated. Use _Textual.viewBodyDidLoad() instead.");
+	
+	_Textual.viewBodyDidLoad();	
+};
+
+_Textual._viewBodyDidLoadAnimationFrame = null; /* PRIVATE */
+
+_Textual.viewBodyDidLoad = function() /* PRIVATE */
 {
 	/* On styles with a dark background, a white flash occurs because there is a very
 	 small delay between the view being created and the background process laying out
@@ -71,24 +81,26 @@ Textual.viewBodyDidLoadInt = function()
 	 the background color of the style. We then request an animation frame that calls
 	 app.finishedLayingOutView), instructing Textual that it can destroy the overlay view. */
 
-	if (appInternal.isWebKit2()) {
-		Textual.viewBodyDidLoadIntAnimationFrame =
+	if (app.isWebKit2()) {
+		_Textual._viewBodyDidLoadAnimationFrame =
 		window.requestAnimationFrame(function() {
-			Textual.viewBodyDidLoadIntTimed();
+			_Textual._viewBodyDidLoad();
 		});
 	} else {
-		Textual.viewBodyDidLoadIntTimed();
+		_Textual._viewBodyDidLoad();
 	}
 };
 
-Textual.viewBodyDidLoadIntTimed = function()
+_Textual._viewBodyDidLoad = function() /* PRIVATE */
 {
-	app.finishedLayingOutView();
+	_Textual._viewBodyDidLoadAnimationFrame = null;
+
+	appPrivate.finishedLayingOutView();
 
 	Textual.viewBodyDidLoad();
 };
 
-Textual.viewFinishedLoadingInt = function(configuration)
+_Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 {
 	var isSelected = configuration.selected;
 	var isVisible = configuration.visible;
@@ -96,17 +108,17 @@ Textual.viewFinishedLoadingInt = function(configuration)
 	var textSizeMultiplier = configuration.textSizeMultiplier;
 	var scrollbackLimit = configuration.scrollbackLimit;
 
-	if (typeof TextualScroller.createMutationObserver === "function") {
-		TextualScroller.createMutationObserver();
+	if (typeof _TextualScroller.createMutationObserver === "function") {
+		_TextualScroller.createMutationObserver();
 	}
 	
 	if (isVisible) {
-		Textual.notifyDidBecomeVisible();
+		_Textual.notifyDidBecomeVisible();
 	
 		if (isSelected) {
-			Textual.notifySelectionChanged(true);
+			_Textual.notifySelectionChanged(true);
 		} else {
-			Textual.notifySelectionChanged(false);
+			_Textual.notifySelectionChanged(false);
 		}
 	}
 	
@@ -119,30 +131,28 @@ Textual.viewFinishedLoadingInt = function(configuration)
 	/* If this view is not visible to the user, then cancel the animation
 	 frame set by Textual.viewBodyDidLoadInt() because there is no use for it. */
 	if (isVisible === false && isSelected === false) {
-		if (Textual.viewBodyDidLoadIntAnimationFrame !== null) {
-			window.cancelAnimationFrame(Textual.viewBodyDidLoadIntAnimationFrame);
+		if (_Textual._viewBodyDidLoadAnimationFrame) {
+			window.cancelAnimationFrame(_Textual._viewBodyDidLoadAnimationFrame);
 
-			Textual.viewBodyDidLoadIntAnimationFrame = null;
-
-			Textual.viewBodyDidLoadIntTimed();
+			_Textual._viewBodyDidLoad();
 		}
 	}
 	
 	Textual.changeTextSizeMultiplier(textSizeMultiplier);
 	
 	if (scrollbackLimit !== 0) { // 0 = use default
-		MessageBuffer.setBufferLimit(scrollbackLimit);
+		_MessageBuffer.setBufferLimit(scrollbackLimit);
 	}
 };
 
-Textual.viewFinishedLoadingHistoryInt = function()
+_Textual.viewFinishedLoadingHistory = function() /* PRIVATE */
 {
 	Textual.finishedLoadingHistory = true;
 
 	Textual.viewFinishedLoadingHistory();
 };
 
-Textual.messageAddedToViewInt = function(lineNumber, fromBuffer)
+_Textual.messageAddedToView = function(lineNumber, fromBuffer) /* PRIVATE */
 {
 	var oldCallbackExists = (typeof Textual.newMessagePostedToView === "function");
 	
@@ -167,10 +177,10 @@ Textual.messageAddedToViewInt = function(lineNumber, fromBuffer)
 		}
 	}
 
-	app.notifyLinesAddedToView(lineNumber);
+	appPrivate.notifyLinesAddedToView(lineNumber);
 };
 
-Textual.messageRemovedFromViewInt = function(lineNumber)
+_Textual.messageRemovedFromView = function(lineNumber) /* PRIVATE */
 {
 	/* Allow lineNumber to be an array of line numbers or a single line number. */
 	if (Array.isArray(lineNumber)) {
@@ -181,14 +191,14 @@ Textual.messageRemovedFromViewInt = function(lineNumber)
 		Textual.messageRemovedFromView(lineNumber);
 	}
 
-	app.notifyLinesRemovedFromView(lineNumber);
+	appPrivate.notifyLinesRemovedFromView(lineNumber);
 };
 
 /* Events */
-Textual.mouseUpEventCallback = function()
+_Textual.mouseUpEventCallback = function() /* PRIVATE */
 {
-	Textual.copySelectionOnMouseUpEvent();
+	_Textual.copySelectionOnMouseUpEvent();
 };
 
 /* Bind to events */
-document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);
+document.addEventListener("mouseup", _Textual.mouseUpEventCallback, false);

@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
@@ -45,9 +47,9 @@
 /*                     Visibility                     */
 /* ************************************************** */
 
-TextualScroller.documentIsVisible = false;
+TextualScroller.documentIsVisible = false; /* PUBLIC */
 
-TextualScroller.documentVisbilityChangedCallback = function()
+_TextualScroller.documentVisbilityChangedCallback = function() /* PRIVATE */
 {
 	var documentHidden = false;
 
@@ -66,7 +68,7 @@ TextualScroller.documentVisbilityChangedCallback = function()
 	}
 };
 
-TextualScroller.documentResizedCallback = function()
+_TextualScroller.documentResizedCallback = function() /* PRIVATE */
 {
 	TextualScroller.performAutomaticScroll();
 };
@@ -75,27 +77,27 @@ TextualScroller.documentResizedCallback = function()
 /*                 Automatic Scroller                 */
 /* ************************************************** */
 
-TextualScroller.automaticScrollingEnabled = true;
+TextualScroller.automaticScrollingEnabled = true; /* PRIVATE */
 
-TextualScroller.performAutomaticScrollTimeout = null;
+_TextualScroller.performAutomaticScrollTimeout = null; /* PRIVATE */
 
-TextualScroller.performAutomaticScroll = function()
+TextualScroller.performAutomaticScroll = function() /* PUBLIC */
 {
-	if (TextualScroller.performAutomaticScrollTimeout) {
+	if (_TextualScroller.performAutomaticScrollTimeout) {
 		return;
 	}
 	
 	var performAutomaticScroll = (function() {
-		TextualScroller.performAutomaticScrollInt();
+		_TextualScroller.performAutomaticScroll();
 		
-		TextualScroller.performAutomaticScrollTimeout = null;
+		_TextualScroller.performAutomaticScrollTimeout = null;
 	});
 	
-	TextualScroller.performAutomaticScrollTimeout = 
+	_TextualScroller.performAutomaticScrollTimeout = 
 	setTimeout(performAutomaticScroll, 0);
 }
 
-TextualScroller.performAutomaticScrollInt = function()
+_TextualScroller.performAutomaticScroll = function() /* PRIVATE */
 {	
 	/* Do not perform automatic scroll if is disabled. */
 	if (TextualScroller.automaticScrollingEnabled === false) {
@@ -128,7 +130,7 @@ TextualScroller.performAutomaticScrollInt = function()
 /* This function sets a flag that tells the scroller not to do anything,
 regardless of whether it is visible or not. Visbility will control whether
 the timer itself is activate, not this function. */
-TextualScroller.setAutomaticScrollingEnabled = function(enabled)
+TextualScroller.setAutomaticScrollingEnabled = function(enabled) /* PUBLIC */
 {
 	TextualScroller.automaticScrollingEnabled = enabled;
 };
@@ -137,18 +139,18 @@ TextualScroller.setAutomaticScrollingEnabled = function(enabled)
 /*                 Mutation Observer                  */
 /* ************************************************** */
 
-TextualScroller.mutationObserver = null;
+_TextualScroller.mutationObserver = null; /* PRIVATE */
 
-TextualScroller.mutationObserverCallback = function(mutations)
+_TextualScroller.mutationObserverCallback = function(mutations) /* PRIVATE */
 {
 	TextualScroller.performAutomaticScroll();
 };
 
-TextualScroller.createMutationObserver = function()
+_TextualScroller.createMutationObserver = function() /* PRIVATE */
 {
 	var buffer = MessageBuffer.bufferElement();
 	
-	var observer = new MutationObserver(TextualScroller.mutationObserverCallback);
+	var observer = new MutationObserver(_TextualScroller.mutationObserverCallback);
 	
 	observer.observe(
 		buffer, 
@@ -160,20 +162,20 @@ TextualScroller.createMutationObserver = function()
 		}
 	);
 
-	TextualScroller.mutationObserver = observer;
+	_TextualScroller.mutationObserver = observer;
 };
 
 /* ************************************************** */
 /*                      Events                        */
 /* ************************************************** */
 
-window.addEventListener("resize", TextualScroller.documentResizedCallback, false);
+window.addEventListener("resize", _TextualScroller.documentResizedCallback, false);
 
 if (typeof document.hidden !== "undefined") {
-	document.addEventListener("visibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
+	document.addEventListener("visibilitychange", _TextualScroller.documentVisbilityChangedCallback, false);
 } else if (typeof document.webkitHidden !== "undefined") {
-	document.addEventListener("webkitvisibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
+	document.addEventListener("webkitvisibilitychange", _TextualScroller.documentVisbilityChangedCallback, false);
 }
 
 /* Populate initial visiblity state and maybe create timer */
-TextualScroller.documentVisbilityChangedCallback();
+_TextualScroller.documentVisbilityChangedCallback();

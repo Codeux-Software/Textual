@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
@@ -42,6 +44,7 @@
 /* ************************************************** */
 
 var TextualScroller = {};
+var _TextualScroller = {};
 
 /* ************************************************** */
 /*                   State Tracking                   */
@@ -49,28 +52,28 @@ var TextualScroller = {};
 
 /* Minimum distance from bottom to be scrolled upwards
 before TextualScroller.scrolledAboveBottom is true. */
-TextualScroller.scrolledAboveBottomMinimum = 25;
+_TextualScroller.scrolledAboveBottomMinimum = 25; /* PRIVATE */
 
 /* Position at which TextualScroller.scrolledAboveBottom
 became true so once we scroll past it, going downward,
 we can set the value back to false. */
-TextualScroller.scrolledAboveBottomThreshold = 0;
+_TextualScroller.scrolledAboveBottomThreshold = 0; /* PRIVATE */
 
 /* Whether or not we are scrolled above the bottom. */
-TextualScroller.scrolledAboveBottom = false;
+TextualScroller.scrolledAboveBottom = false; /* PUBLIC */
 
 /* Set to true when scrolled upwards. */
-TextualScroller.scrolledUpwards = false;
+TextualScroller.scrolledUpwards = false; /* PUBLIC */
 
 /* Cached scroll position */
-TextualScroller.scrollPositionCurrentValue = 0;
-TextualScroller.scrollPositionPreviousValue = 0;
+TextualScroller.scrollPositionCurrentValue = 0; /* PUBLIC */
+TextualScroller.scrollPositionPreviousValue = 0; /* PUBLIC */
 
 /* Cached scroll height */
-TextualScroller.scrollHeightCurrentValue = 0;
-TextualScroller.scrollHeightPreviousValue = 0;
+TextualScroller.scrollHeightCurrentValue = 0; /* PUBLIC */
+TextualScroller.scrollHeightPreviousValue = 0; /* PUBLIC */
 
-TextualScroller.documentScrolledCallback = function()
+_TextualScroller.documentScrolledCallback = function() /* PRIVATE */
 {
 	/* Height of scrollabe area */
 	var scrollHeight = document.body.scrollHeight;
@@ -101,11 +104,11 @@ TextualScroller.documentScrolledCallback = function()
 	/* 	If the current threshold exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
-	if (TextualScroller.scrolledAboveBottomThreshold > scrollHeight) {
-		TextualScroller.scrolledAboveBottomThreshold = scrollHeight;
+	if (_TextualScroller.scrolledAboveBottomThreshold > scrollHeight) {
+		_TextualScroller.scrolledAboveBottomThreshold = scrollHeight;
 
-		if (TextualScroller.scrolledAboveBottomThreshold < 0) {
-			TextualScroller.scrolledAboveBottomThreshold = 0;
+		if (_TextualScroller.scrolledAboveBottomThreshold < 0) {
+			_TextualScroller.scrolledAboveBottomThreshold = 0;
 		}
 	}
 
@@ -113,10 +116,10 @@ TextualScroller.documentScrolledCallback = function()
 		/* Check whether the user has scrolled back to the bottom. */
 		var scrollTop = (scrollHeight - TextualScroller.scrollPositionCurrentValue);
 
-		if (scrollTop < TextualScroller.scrolledAboveBottomMinimum) {
+		if (scrollTop < _TextualScroller.scrolledAboveBottomMinimum) {
 			TextualScroller.scrolledAboveBottom = false;
 
-			TextualScroller.scrolledAboveBottomThreshold = 
+			_TextualScroller.scrolledAboveBottomThreshold = 
 			TextualScroller.scrollPositionCurrentValue;
 		}
 
@@ -134,10 +137,10 @@ TextualScroller.documentScrolledCallback = function()
 		if (TextualScroller.scrollPositionCurrentValue < 
 			TextualScroller.scrollPositionPreviousValue) 
 		{
-			var scrollTop = (TextualScroller.scrolledAboveBottomThreshold - 
+			var scrollTop = (_TextualScroller.scrolledAboveBottomThreshold - 
 							 TextualScroller.scrollPositionCurrentValue);
 
-			if (scrollTop > TextualScroller.scrolledAboveBottomMinimum) {
+			if (scrollTop > _TextualScroller.scrolledAboveBottomMinimum) {
 				TextualScroller.scrolledAboveBottom = true;
 			}
 
@@ -147,9 +150,9 @@ TextualScroller.documentScrolledCallback = function()
 		/* 	If the user is scrolling downward and passes last threshold location, then
 			move the location further downward. */
 		if (TextualScroller.scrollPositionCurrentValue > 
-			TextualScroller.scrolledAboveBottomThreshold) 
+			_TextualScroller.scrolledAboveBottomThreshold) 
 		{
-			TextualScroller.scrolledAboveBottomThreshold = 
+			_TextualScroller.scrolledAboveBottomThreshold = 
 			TextualScroller.scrollPositionCurrentValue;
 		}
 	}
@@ -168,32 +171,32 @@ TextualScroller.documentScrolledCallback = function()
 /*               Position Restore                     */
 /* ************************************************** */
 
-TextualScroller.restoreScrolledUpwards = undefined;
-TextualScroller.restoreScrollHeightFirstValue = undefined;
-TextualScroller.restoreScrollHeightSecondValue = undefined;
+_TextualScroller.restoreScrolledUpwards = undefined; /* PRIVATE */
+_TextualScroller.restoreScrollHeightFirstValue = undefined; /* PRIVATE */
+_TextualScroller.restoreScrollHeightSecondValue = undefined; /* PRIVATE */
 
-TextualScroller.saveRestorationFirstDataPoint = function()
+TextualScroller.saveRestorationFirstDataPoint = function() /* PUBLIC */
 {
-	TextualScroller.restoreScrolledUpwards = TextualScroller.scrolledUpwards;
+	_TextualScroller.restoreScrolledUpwards = TextualScroller.scrolledUpwards;
 
-	TextualScroller.restoreScrollHeightFirstValue = document.body.scrollHeight;
+	_TextualScroller.restoreScrollHeightFirstValue = document.body.scrollHeight;
 };
 
-TextualScroller.saveRestorationSecondDataPoint = function()
+TextualScroller.saveRestorationSecondDataPoint = function() /* PUBLIC */
 {
-	TextualScroller.restoreScrollHeightSecondValue = document.body.scrollHeight;
+	_TextualScroller.restoreScrollHeightSecondValue = document.body.scrollHeight;
 };
 
-TextualScroller.restoreScrollPosition = function(reversed)
+TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 {
-	var scrollHeightDifference = (TextualScroller.restoreScrollHeightSecondValue - 
-								  TextualScroller.restoreScrollHeightFirstValue);
+	var scrollHeightDifference = (_TextualScroller.restoreScrollHeightSecondValue - 
+								  _TextualScroller.restoreScrollHeightFirstValue);
 	
 	if (scrollHeightDifference === 0) {
 		return;
 	}
 	
-	if (TextualScroller.restoreScrolledUpwards === false) {
+	if (_TextualScroller.restoreScrolledUpwards === false) {
 		var scrollTo = (document.body.scrollHeight - scrollHeightDifference);
 	} else {
 		var scrollTo = (document.body.scrollHeight + scrollHeightDifference);
@@ -205,63 +208,77 @@ TextualScroller.restoreScrollPosition = function(reversed)
 
 	document.body.scrollTop = scrollTo;
 
-	TextualScroller.restoreScrollHeightFirstValue = undefined;
-	TextualScroller.restoreScrollHeightSecondValue = undefined;
+	_TextualScroller.restoreScrollHeightFirstValue = undefined;
+	_TextualScroller.restoreScrollHeightSecondValue = undefined;
 	
-	TextualScroller.restoreScrolledUpwards = undefined;
+	_TextualScroller.restoreScrolledUpwards = undefined;
 };
 
 /* Element prototypes */
-Element.prototype.percentScrolled = function()
+Element.prototype.scrollToCenter = function() /* PUBLIC */
+{
+	var elementRect = this.getBoundingClientRect();
+	var elementTop = (elementRect.top + window.scrollY);
+	var elementCenter = (elementTop - (window.innerHeight / 2));
+
+	window.scrollTo(0, elementCenter);
+};
+
+Element.prototype.percentScrolled = function() /* PUBLIC */
 {
 	return (((this.scrollTop + this.clientHeight) / this.scrollHeight) * 100.0);
 }
 
-Element.prototype.isScrolledToTop = function()
+Element.prototype.isScrolledToTop = function() /* PUBLIC */
 {
 	return (this.scrollTop <= 0);
 };
 
-Element.prototype.scrollToTop = function()
+Element.prototype.scrollToTop = function() /* PUBLIC */
 {
 	this.scrollTop = 0;
 };
 
-Element.prototype.isScrolledToBottom = function()
+Element.prototype.isScrolledToBottom = function() /* PUBLIC */
 {
 	return ((this.scrollTop + this.clientHeight) >= this.scrollHeight);
 };
 
-Element.prototype.scrollToBottom = function()
+Element.prototype.scrollToBottom = function() /* PUBLIC */
 {
 	this.scrollTop = this.scrollHeight;	
 };
 
 /* Element prototype proxy */
-TextualScroller.percentScrolled = function()
+TextualScroller.scrollElementToCenter = function(element) /* PUBLIC */
+{
+	element.scrollToCenter();
+};
+
+TextualScroller.percentScrolled = function() /* PUBLIC */
 {
 	return document.body.percentScrolled();
-}
+};
 
-TextualScroller.isScrolledToTop = function()
+TextualScroller.isScrolledToTop = function() /* PUBLIC */
 {
 	return document.body.isScrolledToTop();
 };
 
-TextualScroller.scrollToTop = function()
+TextualScroller.scrollToTop = function() /* PUBLIC */
 {
 	document.body.scrollToTop();
 };
 
-TextualScroller.isScrolledToBottom = function()
+TextualScroller.isScrolledToBottom = function() /* PUBLIC */
 {
 	return document.body.isScrolledToBottom();
 };
 
-TextualScroller.scrollToBottom = function()
+TextualScroller.scrollToBottom = function() /* PUBLIC */
 {
 	document.body.scrollToBottom();	
 };
 
 /* Bind to events */
-document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
+document.addEventListener("scroll", _TextualScroller.documentScrolledCallback, false);

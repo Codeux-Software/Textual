@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
@@ -66,16 +68,16 @@ Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
 	to the internals of Textual itself to determine whether to cancel the request. */
 	if (Textual.hasLiveResize()) {
 		if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
-			Textual.toggleInlineImageVisibility(object);
+			_Textual.toggleInlineImageVisibility(object);
 		}
 	} else {
-		Textual.toggleInlineImageVisibility(object);
+		_Textual.toggleInlineImageVisibility(object);
 	}
 
 	return false;
 };
 
-Textual.toggleInlineImageVisibility = function(object)
+_Textual.toggleInlineImageVisibility = function(object)
 {
 	if (object.indexOf("inlineImage-") !== 0) {
 		object = ("inlineImage-" + object);
@@ -89,7 +91,7 @@ Textual.toggleInlineImageVisibility = function(object)
 	if (hidden === false) {
 		imageContainer.style.display = "none";
 		
-		Textual.didToggleInlineImageToHiddenInt(imageContainer, imageElement);
+		_Textual.didToggleInlineImageToHiddenInt(imageContainer, imageElement);
 		
 		return;
 	}
@@ -114,7 +116,7 @@ Textual.toggleInlineImageVisibility = function(object)
 		
 		imageContainer.removeAttribute("wants-reveal");
 		
-		Textual.didToggleInlineImageToVisibleInt(imageContainer, imageElement);
+		_Textual.didToggleInlineImageToVisibleInt(imageContainer, imageElement);
 	});
 	
 	if (complete === false) {
@@ -126,26 +128,26 @@ Textual.toggleInlineImageVisibility = function(object)
 	}
 };
 
-Textual.didToggleInlineImageToHidden = function(imageContainer)
-{
-	/* Do something here? */
-};
-
-Textual.didToggleInlineImageToHiddenInt = function(imageContainer, imageElement)
+_Textual.didToggleInlineImageToHidden = function(imageContainer, imageElement)
 {
 	Textual.didToggleInlineImageToHidden(imageContainer);
 };
 
-Textual.didToggleInlineImageToVisible = function(imageContainer)
-{
-	/* Do something here? */
-};
-
-Textual.didToggleInlineImageToVisibleInt = function(imageContainer, imageElement)
+_Textual.didToggleInlineImageToVisible = function(imageContainer, imageElement)
 {
 	if (Textual.hasLiveResize()) {
 		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	}
 
 	Textual.didToggleInlineImageToVisible(imageContainer);
+};
+
+Textual.didToggleInlineImageToHidden = function(imageContainer)
+{
+	/* Do something here? */
+};
+
+Textual.didToggleInlineImageToVisible = function(imageContainer)
+{
+	/* Do something here? */
 };

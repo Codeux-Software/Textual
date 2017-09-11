@@ -35,29 +35,28 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
 /*                                                    */
 /* ************************************************** */
 
-Textual.documentBodyElementReference = null;
-Textual.topicBarElementReference = null;
-
 /* Loading screen */
-Textual.loadingScreenElement = function()
+Textual.loadingScreenElement = function() /* PUBLIC */
 {
 	return document.getElementById("loading_screen");
 };
 
-Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
+Textual.fadeInLoadingScreen = function(bodyOp, topicOp) /* PUBLIC */
 {
 	console.warn("Deprecated function. Use Textual.fadeOutLoadingScreen() instead.");
 
 	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
 };
 
-Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
+Textual.fadeOutLoadingScreen = function(bodyOp, topicOp) /* PUBLIC */
 {
 	var documentBody = Textual.documentBodyElement();
 
@@ -86,16 +85,18 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 };
 
 /* Topic bar */
-Textual.topicBarElement = function()
+Textual._topicBarElementReference = null; /* PRIVATE */
+
+Textual.topicBarElement = function() /* PUBLIC */
 {
-	if (Textual.topicBarElementReference === null) {
-		Textual.topicBarElementReference = document.getElementById("topic_bar");
+	if (Textual._topicBarElementReference === null) {
+		Textual._topicBarElementReference = document.getElementById("topic_bar");
 	}
 
-	return Textual.topicBarElementReference;
+	return Textual._topicBarElementReference;
 };
 
-Textual.topicBarValue = function(asText)
+Textual.topicBarValue = function(asText) /* PUBLIC */
 {
 	var topicBar = Textual.topicBarElement();
 
@@ -105,12 +106,12 @@ Textual.topicBarValue = function(asText)
 		} else {
 			return topicBar.innerHTML;
 		}
-	} else {
-		return null;
 	}
+		
+	return null;
 };
 
-Textual.setTopicBarValue = function(topicValue, topicValueHTML)
+Textual.setTopicBarValue = function(topicValue, topicValueHTML) /* PUBLIC */
 {
 	var topicBar = Textual.topicBarElement();
 
@@ -120,12 +121,12 @@ Textual.setTopicBarValue = function(topicValue, topicValueHTML)
 		Textual.topicBarValueChanged(topicValue);
 
 		return true;
-	} else {
-		return false;
 	}
+	
+	return false;
 };
 
-Textual.setTopicBarVisible = function(isVisible)
+Textual.setTopicBarVisible = function(isVisible) /* PUBLIC */
 {
 	var topicBar = Textual.topicBarElement();
 
@@ -138,43 +139,45 @@ Textual.setTopicBarVisible = function(isVisible)
 	}
 };
 
-Textual.topicBarDoubleClicked = function()
+Textual.topicBarDoubleClicked = function() /* PUBLIC */
 {
-	app.topicBarDoubleClicked();
+	appPrivate.topicBarDoubleClicked();
 };
 
 /* History indicator */
-Textual.historyIndicatorAdd = function(templateHTML)
+_Textual.historyIndicatorAdd = function(templateHTML) /* PRIVATE */
 {
-	Textual.historyIndicatorRemove();
+	_Textual.historyIndicatorRemove();
 
 	MessageBuffer.bufferElementAppend(templateHTML);
 
 	Textual.historyIndicatorAddedToView();
 };
 
-Textual.historyIndicatorRemove = function()
+_Textual.historyIndicatorRemove = function() /* PRIVATE */
 {
 	var e = document.getElementById("mark");
 
 	if (e) {
-		e.parentNode.removeChild(e);
+		e.remove();
 
 		Textual.historyIndicatorRemovedFromView();
 	}
 };
 
 /* Document body */
-Textual.documentBodyElement = function()
+Textual._documentBodyElementReference = null; /* PRIVATE */
+
+Textual.documentBodyElement = function() /* PUBLIC */
 {
-	if (Textual.documentBodyElementReference === null) {
-		Textual.documentBodyElementReference = document.getElementById("body_home");
+	if (Textual._documentBodyElementReference === null) {
+		Textual._documentBodyElementReference = document.getElementById("body_home");
 	}
 	
-	return Textual.documentBodyElementReference;
+	return Textual._documentBodyElementReference;
 };
 
-Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents)
+Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents) /* PUBLIC */
 {
 	var documentBody = Textual.documentBodyElement();
 
@@ -187,13 +190,13 @@ Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents)
 	}
 };
 
-Textual.documentHTML = function()
+Textual.documentHTML = function() /* PUBLIC */
 {
 	return document.documentElement.innerHTML;
 };
 
 /* History */
-Textual.documentBodyAppendHistoric = function(templateHTML, lineNumbers, isReload)
+_Textual.documentBodyAppendHistoric = function(templateHTML, lineNumbers, isReload) /* PRIVATE */
 {
 	var atBottom = TextualScroller.isScrolledToBottom();
 
@@ -211,7 +214,7 @@ Textual.documentBodyAppendHistoric = function(templateHTML, lineNumbers, isReloa
 };
 
 /* Text */
-Textual.changeTextSizeMultiplier = function(sizeMultiplier)
+Textual.changeTextSizeMultiplier = function(sizeMultiplier) /* PUBLIC */
 {
 	if (sizeMultiplier === 1.0) {
 		document.body.style.fontSize = "";
@@ -221,7 +224,7 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier)
 }
 
 /* Line numbers */
-Textual.lineNumberStandardize = function(lineNumber)
+Textual.lineNumberStandardize = function(lineNumber) /* PUBLIC */
 {
 	if (lineNumber.indexOf("line-") !== 0) {
 		lineNumber = ("line-" + lineNumber);
@@ -230,7 +233,7 @@ Textual.lineNumberStandardize = function(lineNumber)
 	return lineNumber;
 };
 
-Textual.lineNumberContents = function(lineNumber)
+Textual.lineNumberContents = function(lineNumber) /* PUBLIC */
 {
 	if (lineNumber.indexOf("line-") !== 0) {
 		return lineNumber;

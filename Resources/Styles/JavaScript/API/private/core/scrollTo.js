@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
@@ -42,26 +44,30 @@
 /* ************************************************** */
 
 /* Scrolling */
-Textual.scrollToBottomOfView = function(fireNotification)
+Textual.scrollToBottomOfView = function(fireNotification) /* PUBLIC */
 {
 	document.body.scrollToBottom();
 	
-	Textual.viewPositionMovedToBottom();
+	if (fireNotification) {
+		Textual.viewPositionMovedToBottom();
+	}
 };
 
-Textual.scrollToTopOfView = function(fireNotification)
+Textual.scrollToTopOfView = function(fireNotification) /* PUBLIC */
 {
 	document.body.scrollToTop();
 
-	Textual.viewPositionMovedToTop();
+	if (fireNotification) {
+		Textual.viewPositionMovedToTop();
+	}
 };
 
-Textual.scrollToLine = function(lineNumber)
+Textual.scrollToLine = function(lineNumber) /* PUBLIC */
 {
 	Textual.jumpToLine(lineNumber);
 };
 
-Textual.jumpToLine = function(lineNumber)
+Textual.jumpToLine = function(lineNumber) /* PUBLIC */
 {
 	MessageBuffer.jumpToLine(
 		lineNumber, 
@@ -76,18 +82,12 @@ Textual.jumpToLine = function(lineNumber)
 	);
 };
 
-Textual.scrollToElement = function(elementName)
+Textual.scrollToElement = function(elementName) /* PUBLIC */
 {
 	var element = document.getElementById(elementName);
 
 	if (element) {
-		var elementRect = element.getBoundingClientRect();
-		var elementTop = (elementRect.top + window.scrollY);
-		var elementCenter = (elementTop - (window.innerHeight / 2));
-	
-		console.log("Scrolling to " + elementCenter);
-	
-		window.scrollTo(0, elementCenter);
+		TextualScroller.scrollElementToCenter(element);
 	
 		return true;
 	}
@@ -95,7 +95,7 @@ Textual.scrollToElement = function(elementName)
 	return false;
 };
 
-Textual.scrollToHistoryIndicator = function()
+Textual.scrollToHistoryIndicator = function() /* PUBLIC */
 {
 	if (Textual.scrollToElement("mark")) {
 		Textual.viewPositionModToHistoryIndicator();
