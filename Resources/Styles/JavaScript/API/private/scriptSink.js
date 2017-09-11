@@ -35,6 +35,8 @@
 
  *********************************************************************** */ 
 
+"use strict";
+
 /* ************************************************** */
 /*                                                    */
 /* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
@@ -43,6 +45,11 @@
 
 var app = {};
 var appInternal = {};
+var appPrivate = {};
+
+/* ************************************************** */
+/*                   Internal                         */
+/* ************************************************** */
 
 appInternal.promiseIndex = 1;
 appInternal.promisedCallbacks = {}
@@ -85,93 +92,222 @@ appInternal.isValidCallbackFunction = function(callbackFunction)
 	}
 };
 
-appInternal.isWebKit2 = function()
-{
-	if (window.webkit && typeof window.webkit.messageHandlers !== "undefined") {
-		return true;
-	} else {
-		return false;
-	}
-};
+/* ************************************************** */
+/*                   Private                          */
+/* ************************************************** */
 
-app.finishedLayingOutView = function()
+appPrivate.finishedLayingOutView = function()
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.finishedLayingOutView.postMessage(null);
 	} else {
 		TextualScriptSink.finishedLayingOutView();
 	}
 };
 
-app.setAutomaticScrollingEnabled = function(enabled)
+appPrivate.setAutomaticScrollingEnabled = function(enabled)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		TextualScroller.setAutomaticScrollingEnabled(enabled);
 	} else {
 		TextualScriptSink.setAutomaticScrollingEnabled(enabled);
 	}
 };
 
-app.setURLAddress = function(object)
+appPrivate.setURLAddress = function(object)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.setURLAddress.postMessage(object);
 	} else {
 		TextualScriptSink.setURLAddress(object);
 	}
 };
 
-app.setSelection = function(object)
+appPrivate.setSelection = function(object)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.setSelection.postMessage(object);
 	} else {
 		TextualScriptSink.setSelection(object);
 	}
 };
 
-app.setChannelName = function(object)
+appPrivate.setChannelName = function(object)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.setChannelName.postMessage(object);
 	} else {
 		TextualScriptSink.setChannelName(object);
 	}
 };
 
-app.setNickname = function(object)
+appPrivate.setNickname = function(object)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.setNickname.postMessage(object);
 	} else {
 		TextualScriptSink.setNickname(object);
 	}
 };
 
-app.channelNameDoubleClicked = function()
+appPrivate.channelNameDoubleClicked = function()
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.channelNameDoubleClicked.postMessage(null);
 	} else {
 		TextualScriptSink.channelNameDoubleClicked();
 	}
 };
 
-app.nicknameDoubleClicked = function()
+appPrivate.nicknameDoubleClicked = function()
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.nicknameDoubleClicked.postMessage(null);
 	} else {
 		TextualScriptSink.nicknameDoubleClicked();
 	}
 };
 
-app.topicBarDoubleClicked = function()
+appPrivate.topicBarDoubleClicked = function()
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.topicBarDoubleClicked.postMessage(null);
 	} else {
 		TextualScriptSink.topicBarDoubleClicked();
+	}
+};
+
+appPrivate.copySelectionWhenPermitted = function(callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.copySelectionWhenPermitted.postMessage(dataValue);
+	} else {
+		TextualScriptSink.copySelectionWhenPermitted(dataValue);
+	}
+};
+
+appPrivate.displayContextMenu = function()
+{
+	window.webkit.messageHandlers.displayContextMenu.postMessage(null);
+};
+
+appPrivate.showInAppPurchaseWindow = function()
+{
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.showInAppPurchaseWindow.postMessage(null);
+	} else {
+		TextualScriptSink.showInAppPurchaseWindow();
+	}
+};
+
+appPrivate.renderMessagesBefore = function(lineNumber, maximumNumberOfLines, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, maximumNumberOfLines]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessagesBefore.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessagesBefore(dataValue);
+	}
+};
+
+appPrivate.renderMessagesAfter = function(lineNumber, maximumNumberOfLines, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, maximumNumberOfLines]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessagesAfter.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessagesAfter(dataValue);
+	}
+};
+
+appPrivate.renderMessagesInRange = function(lineNumberAfter, lineNumberBefore, maximumNumberOfLines, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumberAfter, lineNumberBefore, maximumNumberOfLines]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessagesInRange.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessagesInRange(dataValue);
+	}
+};
+
+appPrivate.renderMessageWithSiblings = function(lineNumber, numberOfLinesBefore, numberOfLinesAfter, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, numberOfLinesBefore, numberOfLinesAfter]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.renderMessageWithSiblings.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderMessageWithSiblings(dataValue);
+	}
+};
+
+appPrivate.renderTemplate = function(templateName, templateAttributes, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [templateName, templateAttributes]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.renderTemplate.postMessage(dataValue);
+	} else {
+		TextualScriptSink.renderTemplate(dataValue);
+	}
+};
+
+appPrivate.notifyJumpToLineCallback = function(lineNumber, successful)
+{
+	var dataValue = {"values" : [lineNumber, successful]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.notifyJumpToLineCallback.postMessage(dataValue);
+	} else {
+		TextualScriptSink.notifyJumpToLineCallback(dataValue);
+	}
+};
+
+appPrivate.notifyLinesAddedToView = function(lineNumbers)
+{
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.notifyLinesAddedToView.postMessage(lineNumbers);
+	} else {
+		TextualScriptSink.notifyLinesAddedToView(lineNumbers);
+	}
+};
+
+appPrivate.notifyLinesRemovedFromView = function(lineNumbers)
+{
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.notifyLinesRemovedFromView.postMessage(lineNumbers);
+	} else {
+		TextualScriptSink.notifyLinesRemovedFromView(lineNumbers);
+	}
+};
+
+/* ************************************************** */
+/*                   Public                           */
+/* ************************************************** */
+
+app.isWebKit2 = function()
+{
+	if (window.webkit && typeof window.webkit.messageHandlers !== "undefined") {
+		return true;
+	} else {
+		return false;
 	}
 };
 
@@ -181,7 +317,7 @@ app.channelMemberCount = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.channelMemberCount.postMessage(dataValue);
 	} else {
 		TextualScriptSink.channelMemberCount(dataValue);
@@ -194,7 +330,7 @@ app.serverChannelCount = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.serverChannelCount.postMessage(dataValue);
 	} else {
 		TextualScriptSink.serverChannelCount(dataValue);
@@ -207,7 +343,7 @@ app.serverIsConnected = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.serverIsConnected.postMessage(dataValue);
 	} else {
 		TextualScriptSink.serverIsConnected(dataValue);
@@ -220,7 +356,7 @@ app.channelIsJoined = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.channelIsJoined.postMessage(dataValue);
 	} else {
 		TextualScriptSink.channelIsJoined(dataValue);
@@ -233,7 +369,7 @@ app.channelName = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.channelName.postMessage(dataValue);
 	} else {
 		TextualScriptSink.channelName(dataValue);
@@ -246,7 +382,7 @@ app.serverAddress = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.serverAddress.postMessage(dataValue);
 	} else {
 		TextualScriptSink.serverAddress(dataValue);
@@ -259,7 +395,7 @@ app.networkName = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.networkName.postMessage(dataValue);
 	} else {
 		TextualScriptSink.networkName(dataValue);
@@ -272,7 +408,7 @@ app.localUserNickname = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.localUserNickname.postMessage(dataValue);
 	} else {
 		TextualScriptSink.localUserNickname(dataValue);
@@ -285,7 +421,7 @@ app.localUserHostmask = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.localUserHostmask.postMessage(dataValue);
 	} else {
 		TextualScriptSink.localUserHostmask(dataValue);
@@ -294,7 +430,7 @@ app.localUserHostmask = function(callbackFunction)
 
 app.logToConsole = function(message)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.logToConsole.postMessage(message);
 	} else {
 		TextualScriptSink.logToConsole(message);
@@ -303,7 +439,7 @@ app.logToConsole = function(message)
 
 app.printDebugInformationToConsole = function(message)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.printDebugInformationToConsole.postMessage(message);
 	} else {
 		TextualScriptSink.printDebugInformationToConsole(message);
@@ -312,23 +448,10 @@ app.printDebugInformationToConsole = function(message)
 
 app.printDebugInformation = function(message)
 {
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.printDebugInformation.postMessage(message);
 	} else {
 		TextualScriptSink.printDebugInformation(message);
-	}
-};
-
-app.sidebarInversionIsEnabled = function()
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(dataValue);
-	} else {
-		TextualScriptSink.sidebarInversionIsEnabled(dataValue);
 	}
 };
 
@@ -338,10 +461,23 @@ app.inlineMediaEnabledForView = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.inlineMediaEnabledForView.postMessage(dataValue);
 	} else {
 		TextualScriptSink.inlineMediaEnabledForView(dataValue);
+	}
+};
+
+app.sidebarInversionIsEnabled = function()
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(dataValue);
+	} else {
+		TextualScriptSink.sidebarInversionIsEnabled(dataValue);
 	}
 };
 
@@ -351,10 +487,21 @@ app.nicknameColorStyleHash = function(nickname, nicknameColorStyle, callbackFunc
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [nickname, nicknameColorStyle]};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.nicknameColorStyleHash.postMessage(dataValue);
 	} else {
 		TextualScriptSink.nicknameColorStyleHash(dataValue);
+	}
+};
+
+app.sendPluginPayload = function(payloadLabel, payloadContent)
+{
+	var dataValue = {"values" : [payloadLabel, payloadContent]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.sendPluginPayload.postMessage(dataValue);
+	} else {
+		TextualScriptSink.sendPluginPayload(dataValue);
 	}
 };
 
@@ -364,7 +511,7 @@ app.styleSettingsRetrieveValue = function(key, callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [key]};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.styleSettingsRetrieveValue.postMessage(dataValue);
 	} else {
 		TextualScriptSink.styleSettingsRetrieveValue(dataValue);
@@ -377,7 +524,7 @@ app.styleSettingsSetValue = function(key, value, callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [key, value]};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.styleSettingsSetValue.postMessage(dataValue);
 	} else {
 		TextualScriptSink.styleSettingsSetValue(dataValue);
@@ -390,141 +537,9 @@ app.retrievePreferencesWithMethodName = function(name, callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [name]};
 
-	if (appInternal.isWebKit2()) {
+	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.retrievePreferencesWithMethodName.postMessage(dataValue);
 	} else {
 		TextualScriptSink.retrievePreferencesWithMethodName(dataValue);
-	}
-};
-
-app.copySelectionWhenPermitted = function(callbackFunction)
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.copySelectionWhenPermitted.postMessage(dataValue);
-	} else {
-		TextualScriptSink.copySelectionWhenPermitted(dataValue);
-	}
-};
-
-app.displayContextMenu = function()
-{
-	window.webkit.messageHandlers.displayContextMenu.postMessage(null);
-};
-
-app.sendPluginPayload = function(payloadLabel, payloadContent)
-{
-	var dataValue = {"values" : [payloadLabel, payloadContent]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.sendPluginPayload.postMessage(dataValue);
-	} else {
-		TextualScriptSink.sendPluginPayload(dataValue);
-	}
-};
-
-app.showInAppPurchaseWindow = function()
-{
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.showInAppPurchaseWindow.postMessage(null);
-	} else {
-		TextualScriptSink.showInAppPurchaseWindow();
-	}
-};
-
-app.renderMessagesBefore = function(lineNumber, maximumNumberOfLines, callbackFunction)
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, maximumNumberOfLines]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.renderMessagesBefore.postMessage(dataValue);
-	} else {
-		TextualScriptSink.renderMessagesBefore(dataValue);
-	}
-};
-
-app.renderMessagesAfter = function(lineNumber, maximumNumberOfLines, callbackFunction)
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, maximumNumberOfLines]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.renderMessagesAfter.postMessage(dataValue);
-	} else {
-		TextualScriptSink.renderMessagesAfter(dataValue);
-	}
-};
-
-app.renderMessagesInRange = function(lineNumberAfter, lineNumberBefore, maximumNumberOfLines, callbackFunction)
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumberAfter, lineNumberBefore, maximumNumberOfLines]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.renderMessagesInRange.postMessage(dataValue);
-	} else {
-		TextualScriptSink.renderMessagesInRange(dataValue);
-	}
-};
-
-app.renderMessageWithSiblings = function(lineNumber, numberOfLinesBefore, numberOfLinesAfter, callbackFunction)
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [lineNumber, numberOfLinesBefore, numberOfLinesAfter]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.renderMessageWithSiblings.postMessage(dataValue);
-	} else {
-		TextualScriptSink.renderMessageWithSiblings(dataValue);
-	}
-};
-
-app.renderTemplate = function(templateName, templateAttributes, callbackFunction)
-{
-	var promiseIndex = appInternal.makePromise(callbackFunction);
-
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [templateName, templateAttributes]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.renderTemplate.postMessage(dataValue);
-	} else {
-		TextualScriptSink.renderTemplate(dataValue);
-	}
-};
-
-app.notifyJumpToLineCallback = function(lineNumber, successful)
-{
-	var dataValue = {"values" : [lineNumber, successful]};
-
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.notifyJumpToLineCallback.postMessage(dataValue);
-	} else {
-		TextualScriptSink.notifyJumpToLineCallback(dataValue);
-	}
-};
-
-app.notifyLinesAddedToView = function(lineNumbers)
-{
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.notifyLinesAddedToView.postMessage(lineNumbers);
-	} else {
-		TextualScriptSink.notifyLinesAddedToView(lineNumbers);
-	}
-};
-
-app.notifyLinesRemovedFromView = function(lineNumbers)
-{
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.notifyLinesRemovedFromView.postMessage(lineNumbers);
-	} else {
-		TextualScriptSink.notifyLinesRemovedFromView(lineNumbers);
 	}
 };

@@ -421,7 +421,7 @@ ClassWithDesignatedInitializerInitMethod
 	TVCLogControllerPrintingBlock operationBlock = ^(id operation) {
 		NSString *markTemplate = [TVCLogRenderer renderTemplateNamed:@"historyIndicator"];
 
-		[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
+		[self _evaluateFunction:@"_Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 	};
 
 	_enqueueBlock(operationBlock);
@@ -429,7 +429,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)unmark
 {
-	[self _evaluateFunction:@"Textual.historyIndicatorRemove" withArguments:nil];
+	[self _evaluateFunction:@"_Textual.historyIndicatorRemove" withArguments:nil];
 }
 
 - (void)goToMark
@@ -444,7 +444,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(html != nil);
 
-	[self _evaluateFunction:@"Textual.documentBodyAppendHistoric" withArguments:@[html, lineNumbers, @(isReload)]];
+	[self _evaluateFunction:@"_Textual.documentBodyAppendHistoric" withArguments:@[html, lineNumbers, @(isReload)]];
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -668,7 +668,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)notifyDidBecomeVisible /* When the view is switched to */
 {
-	[self _evaluateFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
+	[self _evaluateFunction:@"_Textual.notifyDidBecomeVisible" withArguments:nil];
 
 	[self maybeReloadHistory];
 
@@ -681,12 +681,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)notifySelectionChanged
 {
-	[self _evaluateFunction:@"Textual.notifySelectionChanged" withArguments:@[@(self.selected)]];
+	[self _evaluateFunction:@"_Textual.notifySelectionChanged" withArguments:@[@(self.selected)]];
 }
 
 - (void)notifyDidBecomeHidden
 {
-	[self _evaluateFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
+	[self _evaluateFunction:@"_Textual.notifyDidBecomeHidden" withArguments:nil];
 
 	[self.backingView saveScrollerPosition];
 
@@ -695,7 +695,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)notifyViewFinishedLoadingHistory
 {
-	[self _evaluateFunction:@"Textual.viewFinishedLoadingHistoryInt" withArguments:nil];
+	[self _evaluateFunction:@"_Textual.viewFinishedLoadingHistory" withArguments:nil];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -711,7 +711,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSUInteger scrollbackLimit = [TPCPreferences scrollbackVisibleLimit];
 
-	[self _evaluateFunction:@"MessageBuffer.setBufferLimit" withArguments:@[@(scrollbackLimit)]];
+	[self _evaluateFunction:@"_MessageBuffer.setBufferLimit" withArguments:@[@(scrollbackLimit)]];
 }
 
 #pragma mark -
@@ -1438,7 +1438,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)isSafeToPresentImageWithId:(NSString *)uniqueId
 {
-	[self _evaluateFunction:@"Textual.toggleInlineImageVisibility" withArguments:@[uniqueId]];
+	[self _evaluateFunction:@"_Textual.toggleInlineImageVisibility" withArguments:@[uniqueId]];
 }
 
 - (void)isNotSafeToPresentImageWithId:(NSString *)uniqueId
@@ -1581,7 +1581,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSUInteger scrollbackLimit = [TPCPreferences scrollbackVisibleLimit];
 
-	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
+	[self _evaluateFunction:@"_Textual.viewFinishedLoading"
 			  withArguments:
 	 @[
 		  @{
