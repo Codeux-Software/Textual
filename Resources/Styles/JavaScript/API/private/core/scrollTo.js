@@ -44,44 +44,16 @@
 /* Scrolling */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
-	var documentBody = Textual.documentBodyElement();
-
-	if (documentBody === null) {
-		return;
-	}
-
-	var lastChild = documentBody.lastChild;
-
-	if (typeof lastChild.scrollIntoView === "function") {
-		lastChild.scrollIntoView(false);
-
-		if (fireNotification === false) {
-			return;
-		}
-		
-		Textual.viewPositionMovedToBottom();
-	}
+	document.body.scrollToBottom();
+	
+	Textual.viewPositionMovedToBottom();
 };
 
 Textual.scrollToTopOfView = function(fireNotification)
 {
-	var documentBody = Textual.documentBodyElement();
+	document.body.scrollToTop();
 
-	if (documentBody === null) {
-		return;
-	}
-
-	var firstChild = documentBody.firstChild;
-
-	if (typeof firstChild.scrollIntoView === "function") {
-		firstChild.scrollIntoView(true);
-
-		if (fireNotification === false) {
-			return;
-		}
-		
-		Textual.viewPositionMovedToTop();
-	}
+	Textual.viewPositionMovedToTop();
 };
 
 Textual.scrollToLine = function(lineNumber)
