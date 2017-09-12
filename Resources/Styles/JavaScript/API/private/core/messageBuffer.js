@@ -216,9 +216,7 @@ _MessageBuffer.enforceLimit = function(limit, fromTop) /* PRIVATE */
 _MessageBuffer.resizeBuffer = function(numberToRemove, fromTop) /* PRIVATE */
 {
 	if (numberToRemove <= 0) {
-		console.error("Silly number to remove");
-
-		return;
+		throw "Silly number to remove";
 	}
 	
 	var lineNumbers = new Array();
