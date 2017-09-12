@@ -769,7 +769,7 @@ _MessageBuffer.toggleAutomaticScrollingOn = function(turnOn) /* PRIVATE */
 	
 _MessageBuffer.toggleAutomaticScrolling = function() /* PRIVATE */
 {
-	_MessageBuffer.toggleAutomaticScrollingOn(_MessageBuffer.scrolledToBottomOfBuffer());
+	_MessageBuffer.toggleAutomaticScrollingOn(_MessageBuffer._bufferBottomIsComplete);
 };
 
 _MessageBuffer.scrolledToBottomOfBuffer = function() /* PRIVATE */
