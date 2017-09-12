@@ -269,6 +269,10 @@ TextualScroller.isScrolledToBottom = function() /* PUBLIC */
 	if (_TextualScroller._performScrollTimeout) {
 		return true;
 	}
+	
+	if (!TextualScroller.userScrolled) {
+		return true;
+	}
 
 	return document.body.isScrolledToBottom();
 };
