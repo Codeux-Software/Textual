@@ -73,7 +73,7 @@ TextualScroller.scrollPositionPreviousValue = 0; /* PUBLIC */
 TextualScroller.scrollHeightCurrentValue = 0; /* PUBLIC */
 TextualScroller.scrollHeightPreviousValue = 0; /* PUBLIC */
 
-_TextualScroller.documentScrolledCallback = function() /* PRIVATE */
+_TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 {
 	/* Height of scrollabe area */
 	var scrollHeight = document.body.scrollHeight;
