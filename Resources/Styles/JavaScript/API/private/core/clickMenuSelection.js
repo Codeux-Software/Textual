@@ -68,7 +68,7 @@ _Textual.recordSelection = function() /* PRIVATE */
 	appPrivate.setSelection(selectedText);
 };
 
-_Textual.selectionChangedCallback = function() /* PRIVATE */
+_Textual._selectionChangedCallback = function() /* PRIVATE */
 {
 	_Textual.recordSelection();
 };
@@ -105,7 +105,7 @@ _Textual.usesCustomMenuConstructor = function() /* PRIVATE */
 	}
 };
 
-_Textual.openGenericContextualMenu = function() /* PRIVATE */
+_Textual._openGenericContextualMenu = function() /* PRIVATE */
 {
 	/* Do not block if target element already has a callback. */
 	if (event.target.oncontextmenu !== null) {
@@ -248,6 +248,6 @@ Textual.inlineNicknameDoubleClicked = function() /* PUBLIC */
 };
 
 /* Bind to events */
-document.addEventListener("contextmenu", _Textual.openGenericContextualMenu, false);
+document.addEventListener("contextmenu", _Textual._openGenericContextualMenu, false);
 
-document.addEventListener("selectionchange", _Textual.selectionChangedCallback, false);
+document.addEventListener("selectionchange", _Textual._selectionChangedCallback, false);

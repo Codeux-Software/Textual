@@ -89,6 +89,8 @@ _Textual.toggleInlineImageVisibility = function(object)
 	var hidden = (imageContainer.style.display === "none");
 	
 	if (hidden === false) {
+		imageContainer.prepareForMutation();
+
 		imageContainer.style.display = "none";
 		
 		_Textual.didToggleInlineImageToHidden(imageContainer, imageElement);
@@ -112,6 +114,8 @@ _Textual.toggleInlineImageVisibility = function(object)
 		/* It is important that we reveal the inline image immediately
 		after preparing the scroller for mutation. If we do not, then 
 		the mutation will be swallowed without changing the height. */
+		imageContainer.prepareForMutation();
+
 		imageContainer.style.display = "";
 		
 		imageContainer.removeAttribute("wants-reveal");

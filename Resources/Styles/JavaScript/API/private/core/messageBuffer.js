@@ -53,40 +53,40 @@ var _MessageBuffer = {};
 /* The number of elements in the buffer. 
 This count only includes lines (messages). Not other
 items that the style may insert into the buffer. */
-_MessageBuffer.bufferCurrentSize = 0; /* PRIVATE */
+_MessageBuffer._bufferCurrentSize = 0; /* PRIVATE */
 
 /* When old messages are NOT being loaded, this 
 is the number of elements we want to keep. */
-_MessageBuffer.bufferSizeSoftLimitDefault = 200; /* PRIVATE */
-_MessageBuffer.bufferSizeSoftLimit = _MessageBuffer.bufferSizeSoftLimitDefault; /* PRIVATE */
+_MessageBuffer._bufferSizeSoftLimitDefault = 200; /* PRIVATE */
+_MessageBuffer._bufferSizeSoftLimit = _MessageBuffer._bufferSizeSoftLimitDefault; /* PRIVATE */
 
 /* When old messages are being loaded, this 
 is the number of elements we want to keep. */
-_MessageBuffer.bufferSizeHardLimitDefault = 1000; /* PRIVATE */
-_MessageBuffer.bufferSizeHardLimit = _MessageBuffer.bufferSizeHardLimitDefault; /* PRIVATE */
+_MessageBuffer._bufferSizeHardLimitDefault = 1000; /* PRIVATE */
+_MessageBuffer._bufferSizeHardLimit = _MessageBuffer._bufferSizeHardLimitDefault; /* PRIVATE */
 
 /* The number of lines to fetch when loading old messages.
 When old lines are fetched, the number of lines returned 
 are also removed from the relevant buffer. */
-_MessageBuffer.loadMessagesBatchSize = 200; /* PRIVATE */
+_MessageBuffer._loadMessagesBatchSize = 200; /* PRIVATE */
 
-/* _MessageBuffer.loadMessages() sets the following properties
+/* _MessageBuffer._loadMessages() sets the following properties
 when it performs an action. These proeprties are not used for
 anything other than state tracking. If false, new messages are
 loaded, else the event is ignored. */
 /* The user can scroll downward while messages are still being
 loaded from scrolling upward. Therefore, we use a separate 
 property to keep track of each type of load. */ 
-_MessageBuffer.loadingMessagesBeforeLineDuringScroll = false; /* PRIVATE */
-_MessageBuffer.loadingMessagesAfterLineDuringScroll = false; /* PRIVATE */
+_MessageBuffer._loadingMessagesBeforeLineDuringScroll = false; /* PRIVATE */
+_MessageBuffer._loadingMessagesAfterLineDuringScroll = false; /* PRIVATE */
 
 /* Set to true once we have loaded all old messages. */
-_MessageBuffer.bufferTopIsComplete = false; /* PRIVATE */
-_MessageBuffer.bufferBottomIsComplete = true; /* PRIVATE */
+_MessageBuffer._bufferTopIsComplete = false; /* PRIVATE */
+_MessageBuffer._bufferBottomIsComplete = true; /* PRIVATE */
 
-/* _MessageBuffer.jumpToLine() sets the following property
+/* _MessageBuffer._jumpToLine() sets the following property
 when it performs an action. */
-_MessageBuffer.loadingMessagesDuringJump = false; /* PRIVATE */
+_MessageBuffer._loadingMessagesDuringJump = false; /* PRIVATE */
 
 /* ************************************************** */
 /*                  Line Management                   */
@@ -132,16 +132,18 @@ _MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers) /* P
 {
 	/* Do not append to bottom if bottom does not reflect
 	the most recent state of the buffer. */
-	if (_MessageBuffer.bufferBottomIsComplete === false) {
+	if (_MessageBuffer._bufferBottomIsComplete === false) {
 		return;
 	}
 
 	var buffer = MessageBuffer.bufferElement();
+	
+	buffer.prepareForMutation();
 
 	buffer.insertAdjacentHTML(placement, html);
 	
 	if (lineNumbers) {
-		_MessageBuffer.bufferCurrentSize += lineNumbers.length;
+		_MessageBuffer._bufferCurrentSize += lineNumbers.length;
 	
 		_MessageBuffer.resizeBufferIfNeeded();
 	
@@ -157,11 +159,11 @@ _MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers) /* P
 _MessageBuffer.setBufferLimit = function(limit) /* PRIVATE */
 {
 	if (limit < 100 || limit > 50000) {
-		_MessageBuffer.bufferSizeSoftLimit = _MessageBuffer.bufferSizeSoftLimitDefault;
-		_MessageBuffer.bufferSizeHardLimit = _MessageBuffer.bufferSizeHardLimitDefault;
+		_MessageBuffer._bufferSizeSoftLimit = _MessageBuffer._bufferSizeSoftLimitDefault;
+		_MessageBuffer._bufferSizeHardLimit = _MessageBuffer._bufferSizeHardLimitDefault;
 	} else {
-		_MessageBuffer.bufferSizeSoftLimitDefault = limit;
-		_MessageBuffer.bufferSizeHardLimitDefault = limit;
+		_MessageBuffer._bufferSizeSoftLimitDefault = limit;
+		_MessageBuffer._bufferSizeHardLimitDefault = limit;
 	}
 };
 
@@ -194,17 +196,17 @@ _MessageBuffer.resizeBufferIfNeeded = function() /* PRIVATE */
 /* Given number of lines added: enforce limit and remove from top or bottom. */
 _MessageBuffer.enforceSoftLimit = function(fromTop) /* PRIVATE */
 {
-	_MessageBuffer.enforceLimit(_MessageBuffer.bufferSizeSoftLimit, fromTop);
+	_MessageBuffer.enforceLimit(_MessageBuffer._bufferSizeSoftLimit, fromTop);
 };
 
 _MessageBuffer.enforceHardLimit = function(fromTop) /* PRIVATE */
 {
-	_MessageBuffer.enforceLimit(_MessageBuffer.bufferSizeHardLimit, fromTop);
+	_MessageBuffer.enforceLimit(_MessageBuffer._bufferSizeHardLimit, fromTop);
 };
 
 _MessageBuffer.enforceLimit = function(limit, fromTop) /* PRIVATE */
 {
-	var numberToRemove = (_MessageBuffer.bufferCurrentSize - limit);
+	var numberToRemove = (_MessageBuffer._bufferCurrentSize - limit);
 
 	if (numberToRemove <= 0) {
 		return;	
@@ -222,6 +224,8 @@ _MessageBuffer.resizeBuffer = function(numberToRemove, fromTop) /* PRIVATE */
 	var lineNumbers = new Array();
 
 	var buffer = MessageBuffer.bufferElement();
+
+	buffer.prepareForMutation();
 
 	var numberRemoved = 0;
 
@@ -269,52 +273,52 @@ _MessageBuffer.resizeBuffer = function(numberToRemove, fromTop) /* PRIVATE */
 		
 		currentElement.remove();
 	} while (true); // lol, I know.
-	
+
 	if (fromTop) {
-		_MessageBuffer.bufferTopIsComplete = false;	
+		_MessageBuffer._bufferTopIsComplete = false;	
 	} else {
-		_MessageBuffer.bufferBottomIsComplete = false;		
+		_MessageBuffer._bufferBottomIsComplete = false;		
 	}
 	
 	var lineNumbersCount = lineNumbers.length;
 
 	if (lineNumbersCount > 0) {
-		_MessageBuffer.bufferCurrentSize -= lineNumbersCount;
+		_MessageBuffer._bufferCurrentSize -= lineNumbersCount;
 	
 		_Textual.messageRemovedFromView(lineNumbers);
 	}
 
-	console.log("Removed " + numberToRemove + " lines from buffer");
+	console.log("Removed " + lineNumbersCount + " lines from buffer");
 };
 
 /* Timer set once user scrolls back to the bottom. */
 /* Timer is used in case user scrolls back up shortly after. */
-_MessageBuffer.bufferHardLimitResizeTimer = null; /* PRIVATE */
+_MessageBuffer._bufferHardLimitResizeTimer = null; /* PRIVATE */
 
 _MessageBuffer.cancelHardLimitResize = function() /* PRIVATE */
 {
-	if (_MessageBuffer.bufferHardLimitResizeTimer === null) {
+	if (_MessageBuffer._bufferHardLimitResizeTimer === null) {
 		return;
 	}
 	
-	clearTimeout(_MessageBuffer.bufferHardLimitResizeTimer);
+	clearTimeout(_MessageBuffer._bufferHardLimitResizeTimer);
 	
-	_MessageBuffer.bufferHardLimitResizeTimer = null;
+	_MessageBuffer._bufferHardLimitResizeTimer = null;
 };
 
 _MessageBuffer.scheduleHardLimitResize = function() /* PRIVATE */
 {
-	if (_MessageBuffer.bufferHardLimitResizeTimer !== null) {
+	if (_MessageBuffer._bufferHardLimitResizeTimer !== null) {
 		return;
 	}
 	
 	/* Do not create timer if we are scrolling programmatically */
-	if (_MessageBuffer.loadingMessagesDuringJump) {
+	if (_MessageBuffer._loadingMessagesDuringJump) {
 		return;
 	}
 
 	/* No need to create timer if we haven't exceeded hard limit. */
-	if (_MessageBuffer.bufferCurrentSize <= _MessageBuffer.bufferSizeSoftLimit) {
+	if (_MessageBuffer._bufferCurrentSize <= _MessageBuffer._bufferSizeSoftLimit) {
 		return;
 	}
 
@@ -324,11 +328,11 @@ _MessageBuffer.scheduleHardLimitResize = function() /* PRIVATE */
 	}
 	
 	/* Create timer */
-	_MessageBuffer.bufferHardLimitResizeTimer =
+	_MessageBuffer._bufferHardLimitResizeTimer =
 	setTimeout(function() {
 		console.log("Buffer hard limit resize timer fired");
 	
-		var numberToRemove = (_MessageBuffer.bufferCurrentSize - _MessageBuffer.bufferSizeSoftLimit);
+		var numberToRemove = (_MessageBuffer._bufferCurrentSize - _MessageBuffer._bufferSizeSoftLimit);
 		
 		if (numberToRemove <= 0) {
 			return;
@@ -336,7 +340,7 @@ _MessageBuffer.scheduleHardLimitResize = function() /* PRIVATE */
 		
 		_MessageBuffer.resizeBuffer(numberToRemove, true);
 		
-		_MessageBuffer.bufferHardLimitResizeTimer = null;
+		_MessageBuffer._bufferHardLimitResizeTimer = null;
 	}, 5000);
 	
 	console.log("Buffer hard limit resize timer started");
@@ -349,10 +353,10 @@ _MessageBuffer.scheduleHardLimitResize = function() /* PRIVATE */
 /* This function picks the best line to load old messages next to. */
 _MessageBuffer.loadMessagesDuringScroll = function(before) /* PRIVATE */
 {
-	/* _MessageBuffer.loadMessages() is only called during scroll events by
+	/* _MessageBuffer._loadMessages() is only called during scroll events by
 	the user. We keep track of a request is already active then so that we
 	do not keep sending them out while the user waits for one to finish. */
-	if (_MessageBuffer.loadingMessagesDuringJump) {
+	if (_MessageBuffer._loadingMessagesDuringJump) {
 		console.log("Cancelled request to load messages because another request is active");
 		
 		return;	
@@ -366,13 +370,13 @@ _MessageBuffer.loadMessagesDuringScroll = function(before) /* PRIVATE */
 			return;
 		}
 		
-		if (_MessageBuffer.loadingMessagesBeforeLineDuringScroll) {
+		if (_MessageBuffer._loadingMessagesBeforeLineDuringScroll) {
 			console.log("Cancelled request to load messages above line because another request is active");
 			
 			return;
 		}
 		
-		if (_MessageBuffer.bufferTopIsComplete) {
+		if (_MessageBuffer._bufferTopIsComplete) {
 			console.log("Cancelled request to load messages because there is nothing new to load");
 			
 			return;
@@ -380,13 +384,13 @@ _MessageBuffer.loadMessagesDuringScroll = function(before) /* PRIVATE */
 	} 
 	else // before
 	{
-		if (_MessageBuffer.loadingMessagesAfterLineDuringScroll) {
+		if (_MessageBuffer._loadingMessagesAfterLineDuringScroll) {
 			console.log("Cancelled request to load messages below line because another request is active");
 			
 			return;
 		}
 		
-		if (_MessageBuffer.bufferBottomIsComplete) {
+		if (_MessageBuffer._bufferBottomIsComplete) {
 			console.log("Cancelled request to load messages because there is nothing new to load");
 			
 			return;
@@ -413,9 +417,9 @@ _MessageBuffer.loadMessagesDuringScroll = function(before) /* PRIVATE */
 
 	/* Load messages */
 	if (before) {
-		_MessageBuffer.loadingMessagesBeforeLineDuringScroll = true;
+		_MessageBuffer._loadingMessagesBeforeLineDuringScroll = true;
 	} else {
-		_MessageBuffer.loadingMessagesAfterLineDuringScroll = true;
+		_MessageBuffer._loadingMessagesAfterLineDuringScroll = true;
 	}
 
 	var lineNumberContents = Textual.lineNumberContents(line.id);
@@ -452,13 +456,13 @@ _MessageBuffer.loadMessagesDuringScrollWithPayload = function(requestPayload) /*
 		if (before) {
 			appPrivate.renderMessagesBefore(
 				lineNumberContents, 
-				_MessageBuffer.loadMessagesBatchSize, 
+				_MessageBuffer._loadMessagesBatchSize, 
 				postflightCallback
 			);
 		} else {
 			appPrivate.renderMessagesAfter(
 				lineNumberContents, 
-				_MessageBuffer.loadMessagesBatchSize, 
+				_MessageBuffer._loadMessagesBatchSize, 
 				postflightCallback
 			);
 		}
@@ -509,22 +513,24 @@ _MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestP
 		var htmlString = html.join("");
 
 		if (before) {
+			line.prepareForMutation();
+		
 			line.insertAdjacentHTML('beforebegin', htmlString);
 		} else {
 			line.insertAdjacentHTML('afterend', htmlString);
 		}
 
-		_MessageBuffer.bufferCurrentSize += html.length;
+		_MessageBuffer._bufferCurrentSize += html.length;
 	} // renderedMessagesCount > 0
 	
 	/* If the number of results is less than our batch size,
 	then we can probably make a best guess that we have loaded
 	all the old messages that are available. */
-	if (renderedMessagesCount < _MessageBuffer.loadMessagesBatchSize) {
+	if (renderedMessagesCount < _MessageBuffer._loadMessagesBatchSize) {
 		if (before) {
-			_MessageBuffer.bufferTopIsComplete = true;
+			_MessageBuffer._bufferTopIsComplete = true;
 		} else {
-			_MessageBuffer.bufferBottomIsComplete = true;
+			_MessageBuffer._bufferBottomIsComplete = true;
 		}
 	}
 	
@@ -552,16 +558,16 @@ _MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestP
 
 	/* Flush state */
 	if (before) {
-		_MessageBuffer.loadingMessagesBeforeLineDuringScroll = false;
+		_MessageBuffer._loadingMessagesBeforeLineDuringScroll = false;
 	} else {
-		_MessageBuffer.loadingMessagesAfterLineDuringScroll = false;
+		_MessageBuffer._loadingMessagesAfterLineDuringScroll = false;
 	}
 };
 
 _MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction) /* PRIVATE */
 {
 	/* Safety checks */
-	if (_MessageBuffer.loadingMessagesDuringJump) {
+	if (_MessageBuffer._loadingMessagesDuringJump) {
 		console.log("Cancelled request to load messages because another request is active");
 		
 		return;	
@@ -573,16 +579,16 @@ _MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction) /* 
 		return;
 	}
 	
-	if (_MessageBuffer.loadingMessagesBeforeLineDuringScroll ||
-		_MessageBuffer.loadingMessagesAfterLineDuringScroll) 
+	if (_MessageBuffer._loadingMessagesBeforeLineDuringScroll ||
+		_MessageBuffer._loadingMessagesAfterLineDuringScroll) 
 	{
 		console.log("Cancelled request to load messages because another request is active");
 		
 		return;
 	}
 	
-	if (_MessageBuffer.bufferTopIsComplete &&
-		_MessageBuffer.bufferBottomIsComplete) 
+	if (_MessageBuffer._bufferTopIsComplete &&
+		_MessageBuffer._bufferBottomIsComplete) 
 	{
 		console.log("Cancelled request to load messages because there is nothing new to load");
 		
@@ -598,7 +604,7 @@ _MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction) /* 
 	above it and X number of messages below it. */
 	/* When jumping, we do not use the message buffer loading indicator
 	because the user does not require a visual indicator. */
-	_MessageBuffer.loadingMessagesDuringJump = true;
+	_MessageBuffer._loadingMessagesDuringJump = true;
 
 	var lineNumberContents = Textual.lineNumberContents(lineNumber);
 
@@ -613,8 +619,8 @@ _MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction) /* 
 	appPrivate.renderMessageWithSiblings(
 		lineNumberContents,
 
-		_MessageBuffer.loadMessagesBatchSize, // load X above
-		_MessageBuffer.loadMessagesBatchSize, // laod X below
+		_MessageBuffer._loadMessagesBatchSize, // load X above
+		_MessageBuffer._loadMessagesBatchSize, // laod X below
 
 		(function(renderedMessages) {
 			requestPayload.renderedMessages = renderedMessages;
@@ -671,15 +677,15 @@ _MessageBuffer.loadMessagesWithJumpPostflight = function(requestPayload) /* PRIV
 		var htmlString = html.join("");
 		
 		var buffer = MessageBuffer.bufferElement();
-
+	
 		buffer.insertAdjacentHTML('afterbegin', htmlString);
 
 		/* Resize the buffer by removing messages from the bottom
 		so that the only lines that remain are those appended. */
-		_MessageBuffer.resizeBuffer(_MessageBuffer.bufferCurrentSize, false);
+		_MessageBuffer.resizeBuffer(_MessageBuffer._bufferCurrentSize, false);
 		
 		/* Update buffer size to include appended lines. */
-		_MessageBuffer.bufferCurrentSize += html.length;
+		_MessageBuffer._bufferCurrentSize += html.length;
 		
 		/* Post line numbers so style can do something with them. */
 		_Textual.messageAddedToView(lineNumbers, true);
@@ -695,7 +701,7 @@ _MessageBuffer.loadMessagesWithJumpPostflight = function(requestPayload) /* PRIV
 	);
 
 	/* Flush state */
-	_MessageBuffer.loadingMessagesDuringJump = false;
+	_MessageBuffer._loadingMessagesDuringJump = false;
 };
 
 /* ************************************************** */
@@ -717,7 +723,7 @@ _MessageBuffer.removeLoadingIndicator = function(fromLine) /* PRIVATE */
 /* ************************************************** */
 
 /* Scrolling */
-_MessageBuffer.documentScrolledCallback = function(scrolledUpward) /* PRIVATE */
+_MessageBuffer._documentScrolledCallback = function(scrolledUpward) /* PRIVATE */
 {
 	if (scrolledUpward) {
 		if (TextualScroller.isScrolledToTop()) {
@@ -734,22 +740,22 @@ _MessageBuffer.documentScrolledCallback = function(scrolledUpward) /* PRIVATE */
 	}
 };
 
-_MessageBuffer.documentScrolledUpwardCallback = function() /* PRIVATE */
+_MessageBuffer._documentScrolledUpwardCallback = function() /* PRIVATE */
 {
-	_MessageBuffer.documentScrolledCallback(true);	
+	_MessageBuffer._documentScrolledCallback(true);	
 };
 
-_MessageBuffer.documentScrolledDownwardCallback = function() /* PRIVATE */
+_MessageBuffer._documentScrolledDownwardCallback = function() /* PRIVATE */
 {
-	_MessageBuffer.documentScrolledCallback(false);	
+	_MessageBuffer._documentScrolledCallback(false);	
 };
 
-_MessageBuffer.automaticScrollingEnabled = true; /* PRIVATE */
+_MessageBuffer._automaticScrollingEnabled = true; /* PRIVATE */
 
 _MessageBuffer.toggleAutomaticScrollingOn = function(turnOn) /* PRIVATE */
 {
-	if (_MessageBuffer.automaticScrollingEnabled !== turnOn) {
-		_MessageBuffer.automaticScrollingEnabled = turnOn;
+	if (_MessageBuffer._automaticScrollingEnabled !== turnOn) {
+		_MessageBuffer._automaticScrollingEnabled = turnOn;
 	} else {
 		return;
 	}
@@ -763,12 +769,13 @@ _MessageBuffer.toggleAutomaticScrollingOn = function(turnOn) /* PRIVATE */
 	
 _MessageBuffer.toggleAutomaticScrolling = function() /* PRIVATE */
 {
-	_MessageBuffer.toggleAutomaticScrollingOn(_MessageBuffer.bufferBottomIsComplete);
+	_MessageBuffer.toggleAutomaticScrollingOn(_MessageBuffer.scrolledToBottomOfBuffer());
 };
 
 _MessageBuffer.scrolledToBottomOfBuffer = function() /* PRIVATE */
 {
-	return TextualScroller.isScrolledToBottom();
+	return (_MessageBuffer._bufferBottomIsComplete &&
+			TextualScroller.isScrolledToBottom());
 };
 
 MessageBuffer.jumpToLine = function(lineNumber, callbackFunction) /* PUBLIC */
@@ -785,5 +792,5 @@ MessageBuffer.jumpToLine = function(lineNumber, callbackFunction) /* PUBLIC */
 };
 
 /* Bind to events */
-document.addEventListener("scrolledUpward", _MessageBuffer.documentScrolledUpwardCallback, false);
-document.addEventListener("scrolledDownward", _MessageBuffer.documentScrolledDownwardCallback, false);
+document.addEventListener("scrolledUpward", _MessageBuffer._documentScrolledUpwardCallback, false);
+document.addEventListener("scrolledDownward", _MessageBuffer._documentScrolledDownwardCallback, false);

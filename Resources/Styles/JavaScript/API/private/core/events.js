@@ -108,9 +108,7 @@ _Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 	var textSizeMultiplier = configuration.textSizeMultiplier;
 	var scrollbackLimit = configuration.scrollbackLimit;
 
-	if (typeof _TextualScroller.createMutationObserver === "function") {
-		_TextualScroller.createMutationObserver();
-	}
+	_TextualScroller.createMutationObserver();
 	
 	if (isVisible) {
 		_Textual.notifyDidBecomeVisible();
@@ -195,10 +193,10 @@ _Textual.messageRemovedFromView = function(lineNumber) /* PRIVATE */
 };
 
 /* Events */
-_Textual.mouseUpEventCallback = function() /* PRIVATE */
+_Textual._mouseUpEventCallback = function() /* PRIVATE */
 {
 	_Textual.copySelectionOnMouseUpEvent();
 };
 
 /* Bind to events */
-document.addEventListener("mouseup", _Textual.mouseUpEventCallback, false);
+document.addEventListener("mouseup", _Textual._mouseUpEventCallback, false);

@@ -51,16 +51,16 @@ var _TextualScroller = {};
 /* ************************************************** */
 
 /* Minimum distance from bottom to be scrolled upwards
-before TextualScroller.scrolledAboveBottom is true. */
-_TextualScroller.scrolledAboveBottomMinimum = 25; /* PRIVATE */
+before TextualScroller.userScrolled is true. */
+_TextualScroller.userScrolledMinimum = 25; /* PRIVATE */
 
-/* Position at which TextualScroller.scrolledAboveBottom
+/* Position at which TextualScroller.userScrolled
 became true so once we scroll past it, going downward,
 we can set the value back to false. */
-_TextualScroller.scrolledAboveBottomThreshold = 0; /* PRIVATE */
+_TextualScroller.userScrolledThreshold = 0; /* PRIVATE */
 
 /* Whether or not we are scrolled above the bottom. */
-TextualScroller.scrolledAboveBottom = false; /* PUBLIC */
+TextualScroller.userScrolled = false; /* PUBLIC */
 
 /* Set to true when scrolled upwards. */
 TextualScroller.scrolledUpwards = false; /* PUBLIC */
@@ -85,118 +85,103 @@ _TextualScroller.documentScrolledCallback = function() /* PRIVATE */
 	/* The current position scrolled to */
 	var clientHeight = document.body.clientHeight;
 
-	var scrollPosition = (document.body.scrollTop + clientHeight);
+	var scrollPositionCurrent = (document.body.scrollTop + clientHeight);
 
-	if (scrollPosition < clientHeight ||
-		scrollPosition > scrollHeight) 
+	if (scrollPositionCurrent < clientHeight ||
+		scrollPositionCurrent > scrollHeight) 
 	{
 		return; // Ignore elastic scrolling
 	}
 	
-	var scrolledUpwards = false;
+	var scrollPositionPrevious = TextualScroller.scrollPositionCurrentValue;
 
-	/* 	Record the last two known scrollY values. These properties are compared
-		to determine if the user is scrolling upwards or downwards. */
-	TextualScroller.scrollPositionPreviousValue = TextualScroller.scrollPositionCurrentValue;
+	TextualScroller.scrollPositionPreviousValue = scrollPositionPrevious;
 
-	TextualScroller.scrollPositionCurrentValue = scrollPosition;
+	TextualScroller.scrollPositionCurrentValue = scrollPositionCurrent;
+	
+	/* Scrolled upwards? */
+	var scrolledUpwards = (scrollPositionCurrent < scrollPositionPrevious);
 
+	TextualScroller.scrolledUpwards = scrolledUpwards;
+	
 	/* 	If the current threshold exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
-	if (_TextualScroller.scrolledAboveBottomThreshold > scrollHeight) {
-		_TextualScroller.scrolledAboveBottomThreshold = scrollHeight;
+	if (_TextualScroller.userScrolledThreshold > scrollHeight) {
+		_TextualScroller.userScrolledThreshold = scrollHeight;
 
-		if (_TextualScroller.scrolledAboveBottomThreshold < 0) {
-			_TextualScroller.scrolledAboveBottomThreshold = 0;
+		if (_TextualScroller.userScrolledThreshold < 0) {
+			_TextualScroller.userScrolledThreshold = 0;
 		}
 	}
 
-	if (TextualScroller.scrolledAboveBottom) {
+	if (TextualScroller.userScrolled) {
 		/* Check whether the user has scrolled back to the bottom. */
-		var scrollTop = (scrollHeight - TextualScroller.scrollPositionCurrentValue);
+		var scrollOffset = (scrollHeight - scrollPositionCurrent);
 
-		if (scrollTop < _TextualScroller.scrolledAboveBottomMinimum) {
-			TextualScroller.scrolledAboveBottom = false;
+		if (scrollOffset < _TextualScroller.userScrolledMinimum) {
+			TextualScroller.userScrolled = false;
 
-			_TextualScroller.scrolledAboveBottomThreshold = 
-			TextualScroller.scrollPositionCurrentValue;
-		}
-
-		/* Check whether user is scrolling upwards. */
-		if (TextualScroller.scrollPositionCurrentValue < 
-			TextualScroller.scrollPositionPreviousValue) 
-		{
-			scrolledUpwards = true;
+			_TextualScroller.userScrolledThreshold = scrollPositionCurrent;
 		}
 	}
 	else
 	{
-		/* 	Check if the user is scrolling upwards. If they are, then check if they have went
-			above the threshold that defines whether its a user initated event or not. */
-		if (TextualScroller.scrollPositionCurrentValue < 
-			TextualScroller.scrollPositionPreviousValue) 
-		{
-			var scrollTop = (_TextualScroller.scrolledAboveBottomThreshold - 
-							 TextualScroller.scrollPositionCurrentValue);
+		if (scrolledUpwards) {
+			/* 	Check if the user is scrolling upwards. If they are, then check if they have went
+				above the threshold that defines whether its a user initated event or not. */
+			var scrollOffset = (_TextualScroller.userScrolledThreshold - scrollPositionCurrent);
 
-			if (scrollTop > _TextualScroller.scrolledAboveBottomMinimum) {
-				TextualScroller.scrolledAboveBottom = true;
+			if (scrollOffset > _TextualScroller.userScrolledMinimum) {
+				TextualScroller.userScrolled = true;
 			}
-
-			scrolledUpwards = true;
-		}
-
-		/* 	If the user is scrolling downward and passes last threshold location, then
-			move the location further downward. */
-		if (TextualScroller.scrollPositionCurrentValue > 
-			_TextualScroller.scrolledAboveBottomThreshold) 
-		{
-			_TextualScroller.scrolledAboveBottomThreshold = 
-			TextualScroller.scrollPositionCurrentValue;
+		} else {
+			/* 	If the user is scrolling downward and passes last threshold location, then
+				move the location further downward. */
+			if (scrollPositionCurrent > _TextualScroller.userScrolledThreshold) {
+				_TextualScroller.userScrolledThreshold = scrollPositionCurrent;
+			}
 		}
 	}
 	
-	/* Record direction we are scrolling */
+	/* Post custom scroll event */
 	if (scrolledUpwards) {
 		document.dispatchEvent(new Event('scrolledUpward'));
 	} else {
 		document.dispatchEvent(new Event('scrolledDownward'));
 	}
-
-	TextualScroller.scrolledUpwards = scrolledUpwards;
 };
 
 /* ************************************************** */
 /*               Position Restore                     */
 /* ************************************************** */
 
-_TextualScroller.restoreScrolledUpwards = undefined; /* PRIVATE */
-_TextualScroller.restoreScrollHeightFirstValue = undefined; /* PRIVATE */
-_TextualScroller.restoreScrollHeightSecondValue = undefined; /* PRIVATE */
+_TextualScroller._restoreScrolledUpwards = undefined; /* PRIVATE */
+_TextualScroller._restoreScrollHeightFirstValue = undefined; /* PRIVATE */
+_TextualScroller._restoreScrollHeightSecondValue = undefined; /* PRIVATE */
 
 TextualScroller.saveRestorationFirstDataPoint = function() /* PUBLIC */
 {
-	_TextualScroller.restoreScrolledUpwards = TextualScroller.scrolledUpwards;
+	_TextualScroller._restoreScrolledUpwards = TextualScroller.scrolledUpwards;
 
-	_TextualScroller.restoreScrollHeightFirstValue = document.body.scrollHeight;
+	_TextualScroller._restoreScrollHeightFirstValue = document.body.scrollHeight;
 };
 
 TextualScroller.saveRestorationSecondDataPoint = function() /* PUBLIC */
 {
-	_TextualScroller.restoreScrollHeightSecondValue = document.body.scrollHeight;
+	_TextualScroller._restoreScrollHeightSecondValue = document.body.scrollHeight;
 };
 
 TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 {
-	var scrollHeightDifference = (_TextualScroller.restoreScrollHeightSecondValue - 
-								  _TextualScroller.restoreScrollHeightFirstValue);
+	var scrollHeightDifference = (_TextualScroller._restoreScrollHeightSecondValue - 
+								  _TextualScroller._restoreScrollHeightFirstValue);
 	
 	if (scrollHeightDifference === 0) {
 		return;
 	}
 	
-	if (_TextualScroller.restoreScrolledUpwards === false) {
+	if (_TextualScroller._restoreScrolledUpwards === false) {
 		var scrollTo = (document.body.scrollHeight - scrollHeightDifference);
 	} else {
 		var scrollTo = (document.body.scrollHeight + scrollHeightDifference);
@@ -208,11 +193,18 @@ TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 
 	document.body.scrollTop = scrollTo;
 
-	_TextualScroller.restoreScrollHeightFirstValue = undefined;
-	_TextualScroller.restoreScrollHeightSecondValue = undefined;
+	_TextualScroller._restoreScrollHeightFirstValue = undefined;
+	_TextualScroller._restoreScrollHeightSecondValue = undefined;
 	
-	_TextualScroller.restoreScrolledUpwards = undefined;
+	_TextualScroller._restoreScrolledUpwards = undefined;
 };
+
+TextualScroller.restoreScrolledToBottom = function() /* PUBLIC */
+{
+	if (TextualScroller.userScrolled === false) {
+		TextualScroller.scrollToBottom();
+	}
+}
 
 /* Element prototypes */
 Element.prototype.scrollToCenter = function() /* PUBLIC */
@@ -272,6 +264,12 @@ TextualScroller.scrollToTop = function() /* PUBLIC */
 
 TextualScroller.isScrolledToBottom = function() /* PUBLIC */
 {
+	/* If a timer is set to scroll to the bottom already,
+	then we lie about our current position. */
+	if (_TextualScroller._performScrollTimeout) {
+		return true;
+	}
+
 	return document.body.isScrolledToBottom();
 };
 
@@ -281,4 +279,4 @@ TextualScroller.scrollToBottom = function() /* PUBLIC */
 };
 
 /* Bind to events */
-document.addEventListener("scroll", _TextualScroller.documentScrolledCallback, false);
+document.addEventListener("scroll", _TextualScroller._documentScrolledCallback, false);
