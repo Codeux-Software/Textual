@@ -468,7 +468,7 @@ app.inlineMediaEnabledForView = function(callbackFunction)
 	}
 };
 
-app.sidebarInversionIsEnabled = function()
+app.sidebarInversionIsEnabled = function(callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);
 
