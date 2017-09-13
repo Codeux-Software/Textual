@@ -52,12 +52,12 @@ var _TextualScroller = {};
 
 /* Minimum distance from bottom to be scrolled upwards
 before TextualScroller.userScrolled is true. */
-_TextualScroller.userScrolledMinimum = 25; /* PRIVATE */
+_TextualScroller._userScrolledMinimum = 25; /* PRIVATE */
 
 /* Position at which TextualScroller.userScrolled
 became true so once we scroll past it, going downward,
 we can set the value back to false. */
-_TextualScroller.userScrolledThreshold = 0; /* PRIVATE */
+_TextualScroller._userScrolledThreshold = 0; /* PRIVATE */
 
 /* Whether or not we are scrolled above the bottom. */
 TextualScroller.userScrolled = false; /* PUBLIC */
@@ -107,11 +107,11 @@ _TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 	/* 	If the current threshold exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
-	if (_TextualScroller.userScrolledThreshold > scrollHeight) {
-		_TextualScroller.userScrolledThreshold = scrollHeight;
+	if (_TextualScroller._userScrolledThreshold > scrollHeight) {
+		_TextualScroller._userScrolledThreshold = scrollHeight;
 
-		if (_TextualScroller.userScrolledThreshold < 0) {
-			_TextualScroller.userScrolledThreshold = 0;
+		if (_TextualScroller._userScrolledThreshold < 0) {
+			_TextualScroller._userScrolledThreshold = 0;
 		}
 	}
 
@@ -119,10 +119,10 @@ _TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 		/* Check whether the user has scrolled back to the bottom. */
 		var scrollOffset = (scrollHeight - scrollPositionCurrent);
 
-		if (scrollOffset < _TextualScroller.userScrolledMinimum) {
+		if (scrollOffset < _TextualScroller._userScrolledMinimum) {
 			TextualScroller.userScrolled = false;
 
-			_TextualScroller.userScrolledThreshold = scrollPositionCurrent;
+			_TextualScroller._userScrolledThreshold = scrollPositionCurrent;
 		}
 	}
 	else
@@ -130,16 +130,16 @@ _TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 		if (scrolledUpwards) {
 			/* 	Check if the user is scrolling upwards. If they are, then check if they have went
 				above the threshold that defines whether its a user initated event or not. */
-			var scrollOffset = (_TextualScroller.userScrolledThreshold - scrollPositionCurrent);
+			var scrollOffset = (_TextualScroller._userScrolledThreshold - scrollPositionCurrent);
 
-			if (scrollOffset > _TextualScroller.userScrolledMinimum) {
+			if (scrollOffset > _TextualScroller._userScrolledMinimum) {
 				TextualScroller.userScrolled = true;
 			}
 		} else {
 			/* 	If the user is scrolling downward and passes last threshold location, then
 				move the location further downward. */
-			if (scrollPositionCurrent > _TextualScroller.userScrolledThreshold) {
-				_TextualScroller.userScrolledThreshold = scrollPositionCurrent;
+			if (scrollPositionCurrent > _TextualScroller._userScrolledThreshold) {
+				_TextualScroller._userScrolledThreshold = scrollPositionCurrent;
 			}
 		}
 	}
