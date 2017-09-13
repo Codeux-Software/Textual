@@ -181,10 +181,12 @@ TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 		return;
 	}
 	
+	var scrollTo = 0;
+	
 	if (_TextualScroller._restoreScrolledUpwards === false) {
-		var scrollTo = (document.body.scrollHeight - scrollHeightDifference);
+		scrollTo = (document.body.scrollHeight - scrollHeightDifference);
 	} else {
-		var scrollTo = (document.body.scrollHeight + scrollHeightDifference);
+		scrollTo = (document.body.scrollHeight + scrollHeightDifference);
 	}
 
 	if (scrollTo < 0) {
@@ -204,7 +206,7 @@ TextualScroller.restoreScrolledToBottom = function() /* PUBLIC */
 	if (TextualScroller.userScrolled === false) {
 		TextualScroller.scrollToBottom();
 	}
-}
+};
 
 /* Element prototypes */
 Element.prototype.scrollToCenter = function() /* PUBLIC */
@@ -219,7 +221,7 @@ Element.prototype.scrollToCenter = function() /* PUBLIC */
 Element.prototype.percentScrolled = function() /* PUBLIC */
 {
 	return (((this.scrollTop + this.clientHeight) / this.scrollHeight) * 100.0);
-}
+};
 
 Element.prototype.isScrolledToTop = function() /* PUBLIC */
 {

@@ -221,7 +221,7 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier) /* PUBLIC */
 	} else {
 		document.body.style.fontSize = ((sizeMultiplier * 100.0) + "%");
 	}
-}
+};
 
 /* Line numbers */
 Textual.lineNumberStandardize = function(lineNumber) /* PUBLIC */

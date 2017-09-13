@@ -120,7 +120,7 @@ MessageBuffer.bufferElement = function() /* PUBLIC */
 
 MessageBuffer.bufferElementPrepend = function(html, lineNumbers) /* PUBLIC */
 {
-	_MessageBuffer.bufferElementInsert("afterbegin", html, lineNumbers)
+	_MessageBuffer.bufferElementInsert("afterbegin", html, lineNumbers);
 };
 
 MessageBuffer.bufferElementAppend = function(html, lineNumbers) /* PUBLIC */
