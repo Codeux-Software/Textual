@@ -52,6 +52,9 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 @property (readonly, weak) IRCClient *associatedClient;
 @property (readonly, weak) IRCChannel *associatedChannel;
 @property (readonly, weak) TVCMainWindow *attachedWindow;
+@property (readonly, copy, nullable) NSString *newestLineNumberFromPreviousSession;
+@property (readonly, copy, nullable) NSString *oldestLineNumber;
+@property (readonly, copy, nullable) NSString *newestLineNumber;
 
 - (void)nextHighlight;
 - (void)previousHighlight;
@@ -62,6 +65,9 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 
 - (void)moveToTop;
 - (void)moveToBottom;
+
+- (void)jumpToCurrentSession;
+- (void)jumpToPresent;
 
 - (void)jumpToLine:(NSString *)lineNumber;
 - (void)jumpToLine:(NSString *)lineNumber completionHandler:(void (^ _Nullable)(BOOL result))completionHandler;

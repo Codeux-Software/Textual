@@ -61,7 +61,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, copy, nullable) NSString *lastVisitedHighlight;
-@property (nonatomic, copy, nullable) NSString *previousSessionYoungestLineNumber;
+@property (nonatomic, copy, nullable, readwrite) NSString *newestLineNumberFromPreviousSession;
+@property (nonatomic, copy, nullable, readwrite) NSString *oldestLineNumber;
+@property (nonatomic, copy, nullable, readwrite) NSString *newestLineNumber;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong) NSCache *jumpToLineCallbacks;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
@@ -478,7 +480,7 @@ ClassWithDesignatedInitializerInitMethod
 		[lineNumbers addObject:lineNumber];
 
 		/* Add "Current Session" message */
-		if ([lineNumber isEqualToString:self.previousSessionYoungestLineNumber]) {
+		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
 			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"IRC[1127]")];
 
 			[patchedAppend appendString:html];
@@ -564,8 +566,10 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingHistory = YES;
 
 	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *objects) {
+		NSString *newestLineNumber = objects.lastObject.uniqueIdentifier;
+
 		if (firstTimeLoadingHistory) {
-			self.previousSessionYoungestLineNumber = objects.lastObject.uniqueIdentifier;
+			self.newestLineNumberFromPreviousSession = newestLineNumber;
 		}
 
 		[self reloadOldLines:objects isReload:(firstTimeLoadingHistory == NO)];
@@ -642,6 +646,36 @@ ClassWithDesignatedInitializerInitMethod
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)jumpToCurrentSession
+{
+	NSString *lineNumber = self.newestLineNumberFromPreviousSession;
+
+	if (lineNumber == nil) {
+		lineNumber = self.oldestLineNumber;
+	}
+
+	if (lineNumber == nil) {
+		return;
+	}
+
+	[self jumpToLine:lineNumber];
+}
+
+- (void)jumpToPresent
+{
+	NSString *lineNumber = self.newestLineNumber;
+
+	if (lineNumber == nil) {
+		lineNumber = self.newestLineNumberFromPreviousSession;
+	}
+
+	if (lineNumber == nil) {
+		return;
+	}
+
+	[self jumpToLine:lineNumber];
+}
 
 - (void)jumpToLine:(NSString *)lineNumber
 {
@@ -874,6 +908,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.lastVisitedHighlight = nil;
 
+	self.oldestLineNumber = nil;
+	self.newestLineNumber = nil;
+
 	self.loaded = NO;
 
 	self.reloadingHistory = NO;
@@ -1038,7 +1075,7 @@ ClassWithDesignatedInitializerInitMethod
 	    }];
 
 		/* Add "Current Session" message */
-		if ([lineNumber isEqualToString:self.previousSessionYoungestLineNumber]) {
+		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
 			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"IRC[1127]")];
 
 			[renderedLogLines addObject:@{
@@ -1114,6 +1151,12 @@ ClassWithDesignatedInitializerInitMethod
 			if (self.terminating) {
 				return;
 			}
+
+			if (self.oldestLineNumber == nil) {
+				self.oldestLineNumber = lineNumber;
+			}
+
+			self.newestLineNumber = lineNumber;
 
 			IRCClient *client = self.associatedClient;
 			IRCChannel *channel = self.associatedChannel;
