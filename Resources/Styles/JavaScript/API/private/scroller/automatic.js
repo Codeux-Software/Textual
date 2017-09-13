@@ -90,6 +90,17 @@ _TextualScroller.performScrollPreflight = function() /* PRIVATE */
 	TextualScroller.isScrolledToBottom();
 };
 
+_TextualScroller.performScrollCancel = function() /* PRIVATE */
+{
+	if (_TextualScroller._performScrollTimeout) {
+		clearTimeout(_TextualScroller._performScrollTimeout);
+		
+		_TextualScroller._performScrollTimeout = null;
+	}
+	
+	_TextualScroller._performScrollNextPass = undefined;
+};
+
 TextualScroller.performScroll = function() /* PUBLIC */
 {
 	/* Do nothing if we are already planning to scroll. */
@@ -155,9 +166,19 @@ Element.prototype.prepareForMutation = function() /* PUBLIC */
 	_TextualScroller.prepareForMutation();
 };
 
+Element.prototype.cancelMutation = function() /* PUBLIC */
+{
+	_TextualScroller.cancelMutation();
+};
+
 _TextualScroller.prepareForMutation = function()
 {
 	_TextualScroller.performScrollPreflight();
+};
+
+_TextualScroller.cancelMutation = function()
+{
+	_TextualScroller.performScrollCancel();
 };
 
 /* ************************************************** */
