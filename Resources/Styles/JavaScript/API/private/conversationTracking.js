@@ -101,7 +101,7 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 			ConversationTracking.toggleSelectionStatusForSenderElement(senderElement);
 		}
 	}
-}
+};
 
 ConversationTracking.toggleSelectionStatusForSenderElement = function(senderElement)
 {

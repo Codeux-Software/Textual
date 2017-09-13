@@ -52,7 +52,7 @@ var appPrivate = {};
 /* ************************************************** */
 
 appInternal.promiseIndex = 1;
-appInternal.promisedCallbacks = {}
+appInternal.promisedCallbacks = {};
 
 appInternal.promiseKept = function(promiseIndex, returnValue)
 {
