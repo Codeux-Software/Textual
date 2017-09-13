@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TVCLogController *viewController;
 @property (readonly) IRCClient *associatedClient;
 @property (readonly, nullable) IRCChannel *associatedChannel;
+@property (nonatomic, copy) NSString *caller;
 @property (nonatomic, copy, nullable) NSArray *arguments;
 @property (nonatomic, copy, nullable) void (^completionBlock)(id _Nullable returnValue);
 @end
@@ -79,8 +80,8 @@ ClassWithDesignatedInitializerInitMethod
 		selector == @selector(associatedChannel) ||
 		selector == @selector(objectValueToCommon:) ||
 		selector == @selector(userContentController:didReceiveScriptMessage:) ||
-		selector == @selector(processInputData:inWebView:forSelector:) ||
-		selector == @selector(processInputData:inWebView:forSelector:minimumArgumentCount:withValidation:))
+		selector == @selector(processInputData:inWebView:withSelector:) ||
+		selector == @selector(processInputData:inWebView:withSelector:minimumArgumentCount:withValidation:))
 	{
 		return YES;
 	}
@@ -187,14 +188,23 @@ ClassWithDesignatedInitializerInitMethod
 	(void)objc_msgSend(self, handlerSelector, message.body, message.webView);
 }
 
-- (void)processInputData:(id)inputData inWebView:(id)webView forSelector:(SEL)selector
+- (void)processInputData:(id)inputData
+			   forCaller:(NSString *)caller
+			   inWebView:(id)webView
+			withSelector:(SEL)selector
 {
-	[self processInputData:inputData inWebView:webView forSelector:selector minimumArgumentCount:0 withValidation:nil];
+	[self processInputData:inputData
+				 forCaller:caller
+				 inWebView:webView
+			  withSelector:selector
+	  minimumArgumentCount:0
+			withValidation:nil];
 }
 
 - (void)processInputData:(id)inputData
+			   forCaller:(NSString *)caller
 			   inWebView:(id)webView
-			 forSelector:(SEL)selector
+			withSelector:(SEL)selector
    minimumArgumentCount:(NSUInteger)minimumArgumentCount
 		  withValidation:(BOOL (NS_NOESCAPE ^ _Nullable)(NSUInteger argumentIndex, id argument))validateArgumentBlock
 {
@@ -224,7 +234,9 @@ ClassWithDesignatedInitializerInitMethod
 
 		if (promiseIndexObj) {
 			if ([promiseIndexObj isKindOfClass:[NSNumber class]] == NO) {
-				[self _throwJavaScriptException:@"'promiseIndex' must be a number" inWebView:intWebView];
+				[self _throwJavaScriptException:@"'promiseIndex' must be a number"
+									  forCaller:caller
+									  inWebView:intWebView];
 
 				return;
 			}
@@ -237,7 +249,9 @@ ClassWithDesignatedInitializerInitMethod
 			id valuesObj = [inputData valueForKey:@"values"];
 
 			if (valuesObj == nil || [valuesObj isKindOfClass:[NSArray class]] == NO) {
-				[self _throwJavaScriptException:@"'values' must be an array" inWebView:intWebView];
+				[self _throwJavaScriptException:@"'values' must be an array"
+									  forCaller:caller
+									  inWebView:intWebView];
 
 				return;
 			} else {
@@ -268,7 +282,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Perform validation if needed */
 	if (minimumArgumentCount > 0 && values.count < minimumArgumentCount) {
-		[self _throwJavaScriptException:@"Minimum number of arguments (%ld) condition not met" inWebView:intWebView, minimumArgumentCount];
+		[self _throwJavaScriptException:@"Minimum number of arguments (%ld) condition not met"
+							  forCaller:caller
+							  inWebView:intWebView, minimumArgumentCount];
 
 		return;
 	}
@@ -285,7 +301,9 @@ ClassWithDesignatedInitializerInitMethod
 		}];
 
 		if (validationPassed == NO) {
-			[self _throwJavaScriptException:@"Invalid argument type(s)" inWebView:intWebView];
+			[self _throwJavaScriptException:@"Invalid argument type(s)"
+								  forCaller:caller
+								  inWebView:intWebView];
 
 			return;
 		}
@@ -295,6 +313,8 @@ ClassWithDesignatedInitializerInitMethod
 	TVCLogScriptEventSinkContext *context = [TVCLogScriptEventSinkContext new];
 
 	context.webView = intWebView;
+
+	context.caller = caller;
 
 	context.arguments = values;
 
@@ -332,36 +352,39 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView, ...
 {
-	message = [message stringByAppendingFormat:@" — Caller: %@",
-			   [self _callerNameForJavaScriptException]];
-
 	va_list arguments;
 	va_start(arguments, webView);
 
-	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
+	[self _throwJavaScriptException:message
+						  forCaller:nil
+						  inWebView:webView
+					  withArguments:arguments];
 
 	va_end(arguments);
-
-	[webView evaluateFunction:@"console.error" withArguments:@[messageFormatted]];
 }
 
-- (NSString *)_callerNameForJavaScriptException
+- (void)_throwJavaScriptException:(NSString *)message forCaller:(nullable NSString *)caller inWebView:(TVCLogView *)webView, ...
 {
-	NSArray *stackSymbols = [NSThread callStackSymbols];
+	va_list arguments;
+	va_start(arguments, webView);
 
-	// 0 = _callerNameForJavaScriptException
-	// 1 = _throwJavaScriptException:inWebView:
-	NSUInteger callerIndex = 2;
+	[self _throwJavaScriptException:message
+						  forCaller:caller
+						  inWebView:webView
+					  withArguments:arguments];
 
-	NSString *caller = stackSymbols[callerIndex];
+	va_end(arguments);
+}
 
-	while ([caller contains:@" processInputData:"]) {
-		callerIndex += 1;
+- (void)_throwJavaScriptException:(NSString *)message forCaller:(nullable NSString *)caller inWebView:(TVCLogView *)webView withArguments:(va_list)arguments
+{
+	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
 
-		caller = stackSymbols[callerIndex];
+	if (caller) {
+		messageFormatted = [NSString stringWithFormat:@"Bridged function %@ returned error: %@", caller, messageFormatted];
 	}
 
-	return caller.callStackSymbolMethodName;
+	[webView evaluateFunction:@"console.error" withArguments:@[messageFormatted]];
 }
 
 #pragma mark -
@@ -369,54 +392,82 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)channelIsJoined:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelIsJoined:)];
+	[self processInputData:inputData
+				 forCaller:@"app.channelIsJoined()"
+				 inWebView:webView
+			  withSelector:@selector(_channelIsJoined:)];
 }
 
 - (void)channelMemberCount:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelMemberCount:)];
+	[self processInputData:inputData
+				 forCaller:@"app.channelMemberCount()"
+				 inWebView:webView
+			  withSelector:@selector(_channelMemberCount:)];
 }
 
 - (void)channelName:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelName:)];
+	[self processInputData:inputData
+				 forCaller:@"app.channelName()"
+				 inWebView:webView
+			  withSelector:@selector(_channelName:)];
 }
 
 - (void)channelNameDoubleClicked:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelNameDoubleClicked:)];
+	[self processInputData:inputData
+				 forCaller:@"app.channelNameDoubleClicked()"
+				 inWebView:webView
+			  withSelector:@selector(_channelNameDoubleClicked:)];
 }
 
 - (void)displayContextMenu:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_displayContextMenu:)];
+	[self processInputData:inputData
+				 forCaller:@"app.displayContextMenu()"
+				 inWebView:webView
+			  withSelector:@selector(_displayContextMenu:)];
 }
 
 - (void)copySelectionWhenPermitted:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_copySelectionWhenPermitted:)];
+	[self processInputData:inputData
+				 forCaller:@"app.copySelectionWhenPermitted()"
+				 inWebView:webView
+			  withSelector:@selector(_copySelectionWhenPermitted:)];
 }
 
 - (void)inlineMediaEnabledForView:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineMediaEnabledForView:)];
+	[self processInputData:inputData
+				 forCaller:@"app.inlineMediaEnabledForView()"
+				 inWebView:webView
+			  withSelector:@selector(_inlineMediaEnabledForView:)];
 }
 
 - (void)localUserHostmask:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_localUserHostmask:)];
+	[self processInputData:inputData
+				 forCaller:@"app.localUserHostmask()"
+				 inWebView:webView
+			  withSelector:@selector(_localUserHostmask:)];
 }
 
 - (void)localUserNickname:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_localUserNickname:)];
+	[self processInputData:inputData
+				 forCaller:@"app.localUserNickname()"
+				 inWebView:webView
+			  withSelector:@selector(_localUserNickname:)];
 }
 
 - (void)logToConsole:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.logToConsole()"
 				 inWebView:webView
-			   forSelector:@selector(_logToConsole:)
+			  withSelector:@selector(_logToConsole:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
@@ -425,14 +476,18 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)networkName:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_networkName:)];
+	[self processInputData:inputData
+				 forCaller:@"app.networkName()"
+				 inWebView:webView
+			  withSelector:@selector(_networkName:)];
 }
 
 - (void)nicknameColorStyleHash:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.nicknameColorStyleHash()"
 				 inWebView:webView
-			   forSelector:@selector(_nicknameColorStyleHash:)
+			  withSelector:@selector(_nicknameColorStyleHash:)
 	  minimumArgumentCount:2
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
@@ -441,14 +496,18 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)nicknameDoubleClicked:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_nicknameDoubleClicked:)];
+	[self processInputData:inputData
+				 forCaller:@"app.nicknameDoubleClicked()"
+				 inWebView:webView
+			  withSelector:@selector(_nicknameDoubleClicked:)];
 }
 
 - (void)notifyJumpToLineCallback:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.notifyJumpToLineCallback()"
 				 inWebView:webView
-			   forSelector:@selector(_notifyJumpToLineCallback:)
+			  withSelector:@selector(_notifyJumpToLineCallback:)
 	  minimumArgumentCount:2
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -464,8 +523,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyLinesAddedToView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.notifyLinesAddedToView()"
 				 inWebView:webView
-			   forSelector:@selector(_notifyLinesAddedToView:)
+			  withSelector:@selector(_notifyLinesAddedToView:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSArray class]] ||
@@ -476,8 +536,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyLinesRemovedFromView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.notifyLinesRemovedFromView()"
 				 inWebView:webView
-			   forSelector:@selector(_notifyLinesRemovedFromView:)
+			  withSelector:@selector(_notifyLinesRemovedFromView:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSArray class]] ||
@@ -488,8 +549,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)printDebugInformation:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.printDebugInformation()"
 				 inWebView:webView
-			   forSelector:@selector(_printDebugInformation:)
+			  withSelector:@selector(_printDebugInformation:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
@@ -499,8 +561,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)printDebugInformationToConsole:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.printDebugInformationToConsole()"
 				 inWebView:webView
-			   forSelector:@selector(_printDebugInformationToConsole:)
+			  withSelector:@selector(_printDebugInformationToConsole:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
@@ -510,8 +573,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)renderMessagesBefore:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.renderMessagesBefore()"
 				 inWebView:webView
-			   forSelector:@selector(_renderMessagesBefore:)
+			  withSelector:@selector(_renderMessagesBefore:)
 	  minimumArgumentCount:2
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -527,8 +591,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)renderMessagesAfter:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.renderMessagesAfter()"
 				 inWebView:webView
-			   forSelector:@selector(_renderMessagesAfter:)
+			  withSelector:@selector(_renderMessagesAfter:)
 	  minimumArgumentCount:2
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -544,8 +609,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)renderMessagesInRange:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.renderMessagesInRange()"
 				 inWebView:webView
-			   forSelector:@selector(_renderMessagesInRange:)
+			  withSelector:@selector(_renderMessagesInRange:)
 	  minimumArgumentCount:3
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0 ||
@@ -563,8 +629,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)renderMessageWithSiblings:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.renderMessageWithSiblings()"
 				 inWebView:webView
-			   forSelector:@selector(_renderMessageWithSiblings:)
+			  withSelector:@selector(_renderMessageWithSiblings:)
 	  minimumArgumentCount:3
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -582,8 +649,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)retrievePreferencesWithMethodName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.retrievePreferencesWithMethodName()"
 				 inWebView:webView
-			   forSelector:@selector(_retrievePreferencesWithMethodName:)
+			  withSelector:@selector(_retrievePreferencesWithMethodName:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
@@ -593,8 +661,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)renderTemplate:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.renderTemplate()"
 				 inWebView:webView
-			   forSelector:@selector(_renderTemplate:)
+			  withSelector:@selector(_renderTemplate:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -611,8 +680,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)sendPluginPayload:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.sendPluginPayload()"
 				 inWebView:webView
-			   forSelector:@selector(_sendPluginPayload:)
+			  withSelector:@selector(_sendPluginPayload:)
 	  minimumArgumentCount:2
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -625,24 +695,34 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)serverAddress:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverAddress:)];
+	[self processInputData:inputData
+				 forCaller:@"app.serverAddress()"
+				 inWebView:webView
+			  withSelector:@selector(_serverAddress:)];
 }
 
 - (void)serverChannelCount:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverChannelCount:)];
+	[self processInputData:inputData
+				 forCaller:@"app.serverChannelCount()"
+				 inWebView:webView
+			  withSelector:@selector(_serverChannelCount:)];
 }
 
 - (void)serverIsConnected:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverIsConnected:)];
+	[self processInputData:inputData
+				 forCaller:@"app.serverIsConnected()"
+				 inWebView:webView
+			  withSelector:@selector(_serverIsConnected:)];
 }
 
 - (void)setAutomaticScrollingEnabled:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.setAutomaticScrollingEnabled()"
 				 inWebView:webView
-			   forSelector:@selector(_setAutomaticScrollingEnabled:)
+			  withSelector:@selector(_setAutomaticScrollingEnabled:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNumber class]]);
@@ -652,8 +732,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)setChannelName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.setChannelName()"
 				 inWebView:webView
-			   forSelector:@selector(_setChannelName:)
+			  withSelector:@selector(_setChannelName:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
@@ -664,8 +745,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)setNickname:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.setNickname()"
 				 inWebView:webView
-			   forSelector:@selector(_setNickname:)
+			  withSelector:@selector(_setNickname:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
@@ -676,8 +758,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)setSelection:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.setSelection()"
 				 inWebView:webView
-			   forSelector:@selector(_setSelection:)
+			  withSelector:@selector(_setSelection:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
@@ -688,8 +771,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)setURLAddress:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.setURLAddress()"
 				 inWebView:webView
-			   forSelector:@selector(_setURLAddress:)
+			  withSelector:@selector(_setURLAddress:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
@@ -700,20 +784,27 @@ ClassWithDesignatedInitializerInitMethod
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 - (void)showInAppPurchaseWindow:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_showInAppPurchaseWindow:)];
+	[self processInputData:inputData
+				 forCaller:@"app.showInAppPurchaseWindow()"
+				 inWebView:webView
+			  withSelector:@selector(_showInAppPurchaseWindow:)];
 }
 #endif
 
 - (void)sidebarInversionIsEnabled:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_sidebarInversionIsEnabled:)];
+	[self processInputData:inputData
+				 forCaller:@"app.sidebarInversionIsEnabled()"
+				 inWebView:webView
+			  withSelector:@selector(_sidebarInversionIsEnabled:)];
 }
 
 - (void)styleSettingsRetrieveValue:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.styleSettingsRetrieveValue()"
 				 inWebView:webView
-			   forSelector:@selector(_styleSettingsRetrieveValue:)
+			  withSelector:@selector(_styleSettingsRetrieveValue:)
 	  minimumArgumentCount:1
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
@@ -723,8 +814,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)styleSettingsSetValue:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
+				 forCaller:@"app.styleSettingsSetValue()"
 				 inWebView:webView
-			   forSelector:@selector(_styleSettingsSetValue:)
+			  withSelector:@selector(_styleSettingsSetValue:)
 	  minimumArgumentCount:2
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
@@ -741,12 +833,18 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)topicBarDoubleClicked:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_topicBarDoubleClicked:)];
+	[self processInputData:inputData
+				 forCaller:@"app.topicBarDoubleClicked()"
+				 inWebView:webView
+			  withSelector:@selector(_topicBarDoubleClicked:)];
 }
 
 - (void)finishedLayingOutView:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_finishedLayingOutView:)];
+	[self processInputData:inputData
+				 forCaller:@"app.finishedLayingOutView()"
+				 inWebView:webView
+			  withSelector:@selector(_finishedLayingOutView:)];
 }
 
 #pragma mark -
@@ -856,7 +954,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"notifyJumpToLineCallback: Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Length of line number is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -936,7 +1036,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"renderMessages: Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Length of line number is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -946,7 +1048,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] integerValue];
 
 	if (maximumNumberOfLines <= 0) {
-		[self _throwJavaScriptException:@"renderMessages: Maximum number of lines must be equal to 1 or greater" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 1 or greater"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -983,7 +1087,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (lineNumberAfter.length == 0 ||
 		lineNumberBefore.length == 0)
 	{
-		[self _throwJavaScriptException:@"renderMessagesInRange: Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Length of line number is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -993,7 +1099,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] integerValue];
 
 	if (maximumNumberOfLines < 0) {
-		[self _throwJavaScriptException:@"renderMessagesInRange: Maximum number of lines must be equal to 0 or greater" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 0 or greater"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1021,7 +1129,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"renderMessageWithSiblings: Length of line number is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Length of line number is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1034,7 +1144,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (numberOfLinesBefore < 0 ||
 		numberOfLinesAfter < 0)
 	{
-		[self _throwJavaScriptException:@"renderMessageWithSiblings: Number of lines must be equal to 0 or greater" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Number of lines must be equal to 0 or greater"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1058,7 +1170,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *templateName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	if (templateName.length == 0) {
-		[self _throwJavaScriptException:@"renderTemplate: Length of template name is 0" inWebView:context.webView];
+		[self _throwJavaScriptException:@"Length of template name is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		context.completionBlock(nil);
 
@@ -1084,13 +1198,17 @@ ClassWithDesignatedInitializerInitMethod
 	[TPCPreferences methodSignatureForSelector:methodSelector];
 
 	if (methodSignature == nil) {
-		[self _throwJavaScriptException:@"retrievePreferencesWithMethodName: Unknown method named: '%@'" inWebView:context.webView, methodName];
+		[self _throwJavaScriptException:@"Unknown method named: '%@'"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		context.completionBlock(nil);
 
 		return;
 	} else if (strcmp(methodSignature.methodReturnType, @encode(void)) == 0) {
-		[self _throwJavaScriptException:@"retrievePreferencesWithMethodName: Method named '%@' does not return a value" inWebView:context.webView, methodName];
+		[self _throwJavaScriptException:@"Method named '%@' does not return a value"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		context.completionBlock(nil);
 
@@ -1116,7 +1234,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
 {
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
-		[self _throwJavaScriptException:@"sendPluginPayload: There are no plugins loaded that support JavaScritp payloads" inWebView:context.webView];
+		[self _throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 
 		return;
 	}
@@ -1223,7 +1343,9 @@ ClassWithDesignatedInitializerInitMethod
 	id result = [themeSettings() styleSettingsRetrieveValueForKey:keyName error:&errorValue];
 
 	if (errorValue) {
-		[self _throwJavaScriptException:errorValue inWebView:context.webView];
+		[self _throwJavaScriptException:errorValue
+							  forCaller:context.caller
+							  inWebView:context.webView];
 	}
 
 	context.completionBlock( result );
@@ -1242,7 +1364,9 @@ ClassWithDesignatedInitializerInitMethod
 	BOOL result = [themeSettings() styleSettingsSetValue:keyValue forKey:keyName error:&errorValue];
 
 	if (errorValue) {
-		[self _throwJavaScriptException:errorValue inWebView:context.webView];
+		[self _throwJavaScriptException:errorValue
+							  forCaller:context.caller
+							  inWebView:context.webView];
 	}
 
 	if (result) {
