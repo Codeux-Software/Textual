@@ -613,7 +613,7 @@ _MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction) /* 
 		"lineNumberStandardized" : lineNumber,
 		"callbackFunction" : callbackFunction
 	};
-	
+
 	console.log("Loading line " + lineNumberContents);
 
 	appPrivate.renderMessageWithSiblings(
@@ -683,7 +683,11 @@ _MessageBuffer.loadMessagesWithJumpPostflight = function(requestPayload) /* PRIV
 		/* Resize the buffer by removing messages from the bottom
 		so that the only lines that remain are those appended. */
 		_MessageBuffer.resizeBuffer(_MessageBuffer._bufferCurrentSize, false);
-		
+
+		/* Cancel any mutations already queued so that we don't scroll. */
+		/* Place after resizeBuffer() because that triggers a mutation. */
+		buffer.cancelMutation();
+
 		/* Update buffer size to include appended lines. */
 		_MessageBuffer._bufferCurrentSize += html.length;
 		
