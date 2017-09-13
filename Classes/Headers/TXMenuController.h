@@ -149,6 +149,8 @@ NS_ASSUME_NONNULL_BEGIN
 	716: "Previous Highlight"
 	717: "Channel List…"
 	718: "Search channels…"
+	719: "Jump to Current Session"
+	720: "Jump to Present"
 
 	800: "Minimize"
 	801: "Zoom"
@@ -341,6 +343,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)decreaseLogFontSize:(id)sender;
 - (IBAction)increaseLogFontSize:(id)sender;
+
+- (IBAction)jumpToCurrentSession:(id)sender;
+- (IBAction)jumpToPresent:(id)sender;
 
 - (IBAction)gotoScrollbackMarker:(id)sender;
 - (IBAction)markScrollback:(id)sender;

@@ -1646,6 +1646,28 @@ NS_ASSUME_NONNULL_BEGIN
 	[viewController goToMark];
 }
 
+- (void)jumpToCurrentSession:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController jumpToCurrentSession];
+}
+
+- (void)jumpToPresent:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController jumpToPresent];
+}
+
 - (void)clearScrollback:(id)sender
 {
 	IRCClient *u = self.selectedClient;
