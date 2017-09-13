@@ -39,10 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCWK1AutoScroller ()
 {
+	CGFloat _scrollHeightCurrentValue;
+	CGFloat _scrollHeightPreviousValue;
 	CGFloat _scrollPositionCurrentValue;
 	CGFloat _scrollPositionPreviousValue;
-	CGFloat _scrolledAboveBottomThreshold;
-	BOOL _scrolledAboveBottom;
+	BOOL _userScrolled;
+	BOOL _scrolledUpwards;
 /*	NSRect _lastFrame; */
 }
 
@@ -52,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation TVCWK1AutoScroller
 
 /* Maximum distance user can scroll up before automatic scrolling is disabled. */
-static CGFloat _scrolledAboveBottomMinimum = 25.0;
+static CGFloat _userScrolledMinimum = 25.0;
 
 - (instancetype)initWitFrameView:(WebFrameView *)frameView;
 {
@@ -107,7 +109,7 @@ static CGFloat _scrolledAboveBottomMinimum = 25.0;
 	self->_scrollPositionCurrentValue = 0.0;
 	self->_scrollPositionPreviousValue = 0.0;
 
-	self->_scrolledAboveBottom = NO;
+	self->_userScrolled = NO;
 }
 
 - (void)changeScrollerStyle
@@ -141,7 +143,7 @@ static CGFloat _scrolledAboveBottomMinimum = 25.0;
 
 - (BOOL)viewingBottom
 {
-	return (self->_scrolledAboveBottom == NO);
+	return (self->_userScrolled == NO);
 }
 
 - (void)saveScrollerPosition
@@ -151,7 +153,7 @@ static CGFloat _scrolledAboveBottomMinimum = 25.0;
 
 - (void)restoreScrollerPosition
 {
-	if (self->_scrolledAboveBottom) {
+	if (self->_userScrolled) {
 		return;
 	}
 
@@ -166,8 +168,6 @@ static CGFloat _scrolledAboveBottomMinimum = 25.0;
 
 	visibleRect.origin.y = (aView.frame.size.height - visibleRect.size.height);
 
-	self->_scrolledAboveBottomThreshold = visibleRect.origin.y;
-	
 	[aView scrollRectToVisible:visibleRect];
 }
 
@@ -227,63 +227,57 @@ static CGFloat _scrolledAboveBottomMinimum = 25.0;
 	NSRect visibleRect = documentView.visibleRect;
 
 	/* The maximum scrollPosition can equal. The bottom */
-	CGFloat scrollHeight = (documentView.frame.size.height - visibleRect.size.height);
+	CGFloat scrollHeightCurrent = (documentView.frame.size.height - visibleRect.size.height);
+
+	CGFloat scrollHeightPrevious = self->_scrollHeightPreviousValue;
 
 	/* The current position. When at bottom, will == scrollHeight */
-	CGFloat scrollPosition = visibleRect.origin.y;
+	CGFloat scrollPositionCurrent = visibleRect.origin.y;
 
-	/* Ignore events that are related to elastic scrolling. */
-	if (scrollPosition > scrollHeight) {
+	CGFloat scrollPositionPrevious = self->_scrollPositionPreviousValue;
+
+	/* If nothing changed, we ignore the event.
+	 It is possible to receive a scroll event but nothing changes
+	 because we ignore elastic scrolling. User can reach bottom,
+	 elsastic scroll, then bounce back. We get notification for
+	 both times we reach bottom, but values do not change. */
+	if (scrollHeightPrevious == scrollHeightCurrent &&
+		scrollPositionPrevious == scrollPositionCurrent)
+	{
 		return;
 	}
 
-	/* 	Record the last two known scrollY values. These properties are compared
-		to determine if the user is scrolling upwards or downwards. */
-	self->_scrollPositionPreviousValue = self->_scrollPositionCurrentValue;
+	/* Even if user is elastic scrolling, we want to record
+	 the latest scroll height values. */
+	self->_scrollHeightPreviousValue = scrollHeightPrevious;
+	self->_scrollHeightCurrentValue = scrollHeightCurrent;
 
-	self->_scrollPositionCurrentValue = scrollPosition;
-
-	/* 	If the current scroll top value exceeds the view height, then it means
-		that some lines were probably removed to enforce size limit. */
-	/* 	Reset the value to be the absolute bottom when this occurs. */
-	if (self->_scrolledAboveBottomThreshold > scrollHeight) {
-		self->_scrolledAboveBottomThreshold = scrollHeight;
-
-		if (self->_scrolledAboveBottomThreshold < 0) {
-			self->_scrolledAboveBottomThreshold = 0;
-		}
-	}
-
-	if (self->_scrolledAboveBottom) {
-		/* Check whether the user has scrolled back to the bottom */
-		CGFloat scrollTop = (scrollHeight - self->_scrollPositionCurrentValue);
-
-		if (scrollTop < _scrolledAboveBottomMinimum) {
-			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
-
-			self->_scrolledAboveBottom = NO;
-
-			self->_scrolledAboveBottomThreshold = self->_scrollPositionCurrentValue;
-		}
-	}
-	else
+	/* Ignore elastic scrolling */
+	if (scrollPositionCurrent < 0 ||
+		scrollPositionCurrent > scrollHeightCurrent)
 	{
-		/* 	Check if the user is scrolling upwards. If they are, then check if they have went
-			above the threshold that defines whether its a user initated event or not. */
-		if (self->_scrollPositionCurrentValue < self->_scrollPositionPreviousValue) {
-			CGFloat scrollTop = (self->_scrolledAboveBottomThreshold - self->_scrollPositionCurrentValue);
+		return;
+	}
 
-			if (scrollTop > _scrolledAboveBottomMinimum) {
-				LogToConsoleDebug("User scrolled above threshold. Disabled auto scroll.");
+	/* Only record scroll position changes if we weren't elastic scrolling. */
+	self->_scrollPositionPreviousValue = scrollPositionPrevious;
+	self->_scrollPositionCurrentValue = scrollPositionCurrent;
 
-				self->_scrolledAboveBottom = YES;
-			}
-		}
+	/* Scrolled upwards? */
+	BOOL scrolledUpwards = (scrollPositionCurrent < scrollPositionPrevious);
 
-		/* 	If the user is scrolling downward and passes last threshold location, then
-			move the location further downward. */
-		if (self->_scrollPositionCurrentValue > self->_scrolledAboveBottomThreshold) {
-			self->_scrolledAboveBottomThreshold = self->_scrollPositionCurrentValue;
+	self->_scrolledUpwards = scrolledUpwards;
+
+	/* User scrolled above bottom? */
+	BOOL userScrolled = ((scrollHeightCurrent - scrollPositionCurrent) > _userScrolledMinimum);
+
+	if (self->_userScrolled != userScrolled) {
+		self->_userScrolled = userScrolled;
+
+		if (userScrolled) {
+			LogToConsoleDebug("User scrolled above threshold. Disabled auto scroll.");
+		} else {
+			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
 		}
 	}
 	
@@ -293,7 +287,7 @@ static CGFloat _scrolledAboveBottomMinimum = 25.0;
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
 {
 	/* Never scroll if user scrolled up */
-	if (self->_automaticScrollingEnabled == NO || self->_scrolledAboveBottom) {
+	if (self->_automaticScrollingEnabled == NO || self->_userScrolled) {
 		return;
 	}
 
