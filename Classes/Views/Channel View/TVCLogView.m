@@ -527,9 +527,9 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *objectString = [self compileJavaScriptGenericArgument:object];
 
 		if (currentIndex == lastIndex) {
-			[compiledScript appendFormat:@"\"%@\" : %@", keyString, objectString];
+			[compiledScript appendFormat:@"\"%@\":%@", keyString, objectString];
 		} else {
-			[compiledScript appendFormat:@"\"%@\" : %@, ", keyString, objectString];
+			[compiledScript appendFormat:@"\"%@\":%@, ", keyString, objectString];
 		}
 
 		currentIndex += 1;
@@ -556,7 +556,7 @@ ClassWithDesignatedInitializerInitMethod
 		if (index == lastIndex) {
 			[compiledScript appendString:objectString];
 		} else {
-			[compiledScript appendFormat:@"%@, ", objectString];
+			[compiledScript appendFormat:@"%@,", objectString];
 		}
 	}];
 
@@ -611,31 +611,24 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSMutableString *compiledScript = [NSMutableString string];
 
-	NSUInteger argumentCount = 0;
-
-	if ( arguments) {
-		argumentCount = arguments.count;
-
-		[arguments enumerateObjectsUsingBlock:^(id object, NSUInteger objectIndex, BOOL *stop)
-		 {
-			 NSString *objectString = [self compileJavaScriptGenericArgument:object];
-
-			 [compiledScript appendFormat:@"var _argument_%ld_ = %@;\n", objectIndex, objectString];
-		 }];
-	}
-
 	[compiledScript appendFormat:@"%@(", function];
 
-	for (NSUInteger i = 0; i < argumentCount; i++) {
-		if (i == (argumentCount - 1)) {
-			[compiledScript appendFormat:@"_argument_%ld_", i];
-		} else {
-			[compiledScript appendFormat:@"_argument_%ld_, ", i];
+	if ( arguments) {
+		NSUInteger argumentCount = arguments.count;
+
+		for (NSUInteger i = 0; i < argumentCount; i++) {
+			NSString *argument = [self compileJavaScriptGenericArgument:arguments[i]];
+
+			[compiledScript appendString:argument];
+
+			if (i < (argumentCount - 1)) {
+				[compiledScript appendString:@","];
+			}
 		}
 	}
 
 	[compiledScript appendString:@");\n"];
-	
+
 	return [compiledScript copy];
 }
 
