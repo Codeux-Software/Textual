@@ -541,6 +541,10 @@ _MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestP
 		opposite of where we added. */
 		_MessageBuffer.enforceHardLimit(!before);
 
+		/* Cancel any mutations already queued so that we don't scroll. */
+		/* Place after resizeBuffer() because that triggers a mutation. */
+		line.cancelMutation();
+
 		/* Post line numbers so style can do something with them. */
 		_Textual.messageAddedToView(lineNumbers, true);
 		
