@@ -208,6 +208,27 @@ Element.prototype.scrollToTop = function() /* PUBLIC */
 	this.scrollTop = 0;
 };
 
+Element.prototype.scrollIntoViewAlignTop = function(accountForOffset) /* PUBLIC */
+{
+	/* scrollIntoView() does not account for the offset top 
+	when aligning to the top which means we have to here. */
+	if (!accountForOffset) {
+		this.scrollIntoView(true);
+	}
+	
+	var offsetTop = this.offsetTopTotal();
+
+	var elementRect = this.getBoundingClientRect();
+	var elementTop = (elementRect.top + window.scrollY - offsetTop);
+
+	window.scrollTo(0, elementTop);
+};
+
+Element.prototype.scrollIntoViewAlignBottom = function() /* PUBLIC */
+{
+	this.scrollIntoView(false);
+};
+
 Element.prototype.isScrolledToBottom = function() /* PUBLIC */
 {
 	return ((this.scrollTop + this.clientHeight) >= this.scrollHeight);
@@ -216,6 +237,28 @@ Element.prototype.isScrolledToBottom = function() /* PUBLIC */
 Element.prototype.scrollToBottom = function() /* PUBLIC */
 {
 	this.scrollTop = this.scrollHeight;	
+};
+
+Element.prototype.offsetTopTotal = function() /* PUBLIC */
+{
+	var offsetParent = this.offsetParent;
+	
+	if (offsetParent === null) {
+		return 0;
+	}
+	
+	var offsetTopTotal = 0;
+	var offsetTopLast = 0;
+
+	do {
+		offsetTopLast = offsetParent.offsetTop;
+		
+		if (offsetTopLast) {
+			offsetTopTotal += offsetTopLast;
+		}
+	} while (offsetParent = offsetParent.offsetParent);
+	
+	return offsetTopTotal;	
 };
 
 /* Element prototype proxy */
