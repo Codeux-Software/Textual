@@ -66,6 +66,11 @@ Element.prototype.prepareForMutation = function() /* PUBLIC */
 	
 };
 
+Element.prototype.cancelMutation = function() /* PUBLIC */
+{
+
+};
+
 _TextualScroller.createMutationObserver = function() /* PRIVATE */
 {
 
