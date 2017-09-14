@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 			entry = self.internalBatchEntries[batchToken];
 		}
 
-		if (entry == nil) {
+		if (batchToken == nil) {
 			return;
 		}
 
