@@ -254,6 +254,8 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *cipherDescription = [GCDAsyncSocket descriptionForCipherSuite:cipherSuites];
 
 		if (protocolDescription == nil || cipherDescription == nil) {
+			CFRelease(trustRef);
+
 			return;
 		}
 
