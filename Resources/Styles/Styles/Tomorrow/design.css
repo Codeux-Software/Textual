@@ -29,14 +29,13 @@ body {
 	bottom: 0;
 	width: 100%;
 	z-index: 100;
-	max-height: 99.99%;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
 }
 
 body[viewtype="channel"] #body_home {
-	max-height: 96.5%;
+	max-height: calc(100% - 1.7em); /* height minus topic */
 }
 
 .line {
