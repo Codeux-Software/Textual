@@ -46,7 +46,7 @@
 /* Scrolling */
 Textual.scrollToBottomOfView = function(fireNotification) /* PUBLIC */
 {
-	document.body.scrollToBottom();
+	TextualScroller.scrollToBottom();
 	
 	if (fireNotification) {
 		Textual.viewPositionMovedToBottom();
@@ -55,7 +55,7 @@ Textual.scrollToBottomOfView = function(fireNotification) /* PUBLIC */
 
 Textual.scrollToTopOfView = function(fireNotification) /* PUBLIC */
 {
-	document.body.scrollToTop();
+	TextualScroller.scrollToTop();
 
 	if (fireNotification) {
 		Textual.viewPositionMovedToTop();
