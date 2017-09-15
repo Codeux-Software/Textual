@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) TXUnsignedLongLong bandwidthIn;
 @property (nonatomic, assign, readwrite) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, assign) BOOL isImportingConfiguration;
+@property (nonatomic, copy, readwrite) NSArray<IRCClient *> *clientList;
 
 - (void)setupConfiguration;
 
