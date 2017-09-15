@@ -241,13 +241,14 @@ Element.prototype.scrollToBottom = function() /* PUBLIC */
 
 Element.prototype.offsetTopTotal = function() /* PUBLIC */
 {
+	var offsetTopTotal = this.offsetTop;
+
 	var offsetParent = this.offsetParent;
 	
 	if (offsetParent === null) {
-		return 0;
+		return offsetTopTotal;
 	}
-	
-	var offsetTopTotal = 0;
+
 	var offsetTopLast = 0;
 
 	do {
