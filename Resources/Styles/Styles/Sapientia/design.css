@@ -13,7 +13,6 @@ body {
  	z-index: 100;
 	font-size: 15pt;
 	overflow: hidden;
-	overflow-y: auto;
 	background-color: #242323;
 	font-family: "HelveticaNeue";
 }
@@ -23,6 +22,7 @@ body {
 	right: 0;
 	bottom: 0;
 	width: 100%;
+	overflow-y: auto;
 	z-index: 100;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
