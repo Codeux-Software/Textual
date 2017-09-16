@@ -14,7 +14,6 @@ body {
  	z-index: 100;
 	font-size: 11px;
 	overflow: hidden;
-	overflow-y: auto;
 	background-color: #272822;
 	font-family: "Lucida Grande";
 }
@@ -25,6 +24,7 @@ body {
 	bottom: 0;
 	opacity: 0;
 	width: 100%;
+	overflow-y: auto;
 	z-index: 100;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
