@@ -94,13 +94,16 @@ _MessageBuffer._loadingMessagesDuringJump = false; /* PRIVATE */
 
 MessageBuffer.firstLineInBuffer = function(buffer) /* PUBLIC */
 {
-	/* Note: speed this up if we begin using this function more often. */
-	return buffer.querySelector("div.line[id^='line-']:first-child");
+	var lines = buffer.querySelectorAll("div.line[id^='line-']");
+	
+	return lines[0];
 };
 
 MessageBuffer.lastLineInBuffer = function(buffer) /* PUBLIC */
 {
-	return buffer.querySelector("div.line[id^='line-']:last-child");
+	var lines = buffer.querySelectorAll("div.line[id^='line-']");
+	
+	return lines[(lines.length - 1)];
 };
 
 /* ************************************************** */
