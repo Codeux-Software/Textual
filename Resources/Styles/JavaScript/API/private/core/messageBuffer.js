@@ -550,7 +550,7 @@ _MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestP
 		
 		/* Scroll line into view */
 		if (before) {
-			line.scrollIntoViewAlignTop(true);
+			line.scrollIntoViewAlignTop();
 		} else {
 			line.scrollIntoViewAlignBottom();
 		}
