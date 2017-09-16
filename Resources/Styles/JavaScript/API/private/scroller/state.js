@@ -50,6 +50,9 @@ var _TextualScroller = {};
 /*                   State Tracking                   */
 /* ************************************************** */
 
+/* Element to scroll */
+_TextualScroller._scrolledElement = null;
+
 /* Minimum distance from bottom to be scrolled upwards
 before TextualScroller.userScrolled is true. */
 _TextualScroller._userScrolledMinimum = 25; /* PRIVATE */
@@ -70,15 +73,17 @@ TextualScroller.scrollHeightPreviousValue = 0; /* PUBLIC */
 
 _TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 {
+	var scrolledElement = _TextualScroller._scrolledElement;
+
 	/* Height of scrollabe area */
 	var scrollHeightPrevious = TextualScroller.scrollHeightCurrentValue;
 
-	var scrollHeightCurrent = document.body.scrollHeight;
+	var scrollHeightCurrent = scrolledElement.scrollHeight;
 
 	/* The current position scrolled to */
-	var clientHeight = document.body.clientHeight;
+	var clientHeight = scrolledElement.clientHeight;
 
-	var scrollPositionCurrent = (document.body.scrollTop + clientHeight);
+	var scrollPositionCurrent = (scrolledElement.scrollTop + clientHeight);
 	
 	var scrollPositionPrevious = TextualScroller.scrollPositionCurrentValue;
 
@@ -137,14 +142,18 @@ _TextualScroller._restoreScrollHeightSecondValue = undefined; /* PRIVATE */
 
 TextualScroller.saveRestorationFirstDataPoint = function() /* PUBLIC */
 {
-	_TextualScroller._restoreScrolledUpwards = TextualScroller.scrolledUpwards;
+	var scrolledElement = _TextualScroller._scrolledElement;
 
-	_TextualScroller._restoreScrollHeightFirstValue = document.body.scrollHeight;
+	_TextualScroller._restoreScrollHeightFirstValue = scrolledElement.scrollHeight;
+
+	_TextualScroller._restoreScrolledUpwards = TextualScroller.scrolledUpwards;
 };
 
 TextualScroller.saveRestorationSecondDataPoint = function() /* PUBLIC */
 {
-	_TextualScroller._restoreScrollHeightSecondValue = document.body.scrollHeight;
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	_TextualScroller._restoreScrollHeightSecondValue = scrolledElement.scrollHeight;
 };
 
 TextualScroller.restoreScrollPosition = function() /* PUBLIC */
@@ -155,20 +164,22 @@ TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 	if (scrollHeightDifference === 0) {
 		return;
 	}
+
+	var scrolledElement = _TextualScroller._scrolledElement;
 	
 	var scrollTo = 0;
 	
 	if (_TextualScroller._restoreScrolledUpwards === false) {
-		scrollTo = (document.body.scrollHeight - scrollHeightDifference);
+		scrollTo = (scrolledElement.scrollHeight - scrollHeightDifference);
 	} else {
-		scrollTo = (document.body.scrollHeight + scrollHeightDifference);
+		scrollTo = (scrolledElement.scrollHeight + scrollHeightDifference);
 	}
 
 	if (scrollTo < 0) {
 		scrollTo = 0;
 	}
 
-	document.body.scrollTop = scrollTo;
+	scrolledElement.scrollTop = scrollTo;
 
 	_TextualScroller._restoreScrollHeightFirstValue = undefined;
 	_TextualScroller._restoreScrollHeightSecondValue = undefined;
@@ -183,14 +194,25 @@ TextualScroller.restoreScrolledToBottom = function() /* PUBLIC */
 	}
 };
 
-/* Element prototypes */
-Element.prototype.scrollToCenter = function() /* PUBLIC */
-{
-	var elementRect = this.getBoundingClientRect();
-	var elementTop = (elementRect.top + window.scrollY);
-	var elementCenter = (elementTop - (window.innerHeight / 2));
+/* ************************************************** */
+/*              Element Prototypes                    */
+/* ************************************************** */
 
-	window.scrollTo(0, elementCenter);
+Element.prototype.scrollCenterIn = function(parentElement) /* PUBLIC */
+{
+	if (this === parentElement) {
+		throw "Can't scroll self into center";
+	}
+
+	var parentElementRect = parentElement.getBoundingClientRect();
+	var parentElementHeight = parentElementRect.height;
+	var parentElementTop = parentElement.scrollTop;
+
+	var elementRect = this.getBoundingClientRect();
+	var elementTop = (elementRect.top + parentElementTop);
+	var elementCenter = (elementTop - (parentElementHeight / 2));
+
+	return elementCenter;
 };
 
 Element.prototype.percentScrolled = function() /* PUBLIC */
@@ -208,20 +230,9 @@ Element.prototype.scrollToTop = function() /* PUBLIC */
 	this.scrollTop = 0;
 };
 
-Element.prototype.scrollIntoViewAlignTop = function(accountForOffset) /* PUBLIC */
+Element.prototype.scrollIntoViewAlignTop = function() /* PUBLIC */
 {
-	/* scrollIntoView() does not account for the offset top 
-	when aligning to the top which means we have to here. */
-	if (!accountForOffset) {
-		this.scrollIntoView(true);
-	}
-	
-	var offsetTop = this.offsetTopTotal();
-
-	var elementRect = this.getBoundingClientRect();
-	var elementTop = (elementRect.top + window.scrollY - offsetTop);
-
-	window.scrollTo(0, elementTop);
+	this.scrollIntoView(true);
 };
 
 Element.prototype.scrollIntoViewAlignBottom = function() /* PUBLIC */
@@ -239,47 +250,38 @@ Element.prototype.scrollToBottom = function() /* PUBLIC */
 	this.scrollTop = this.scrollHeight;	
 };
 
-Element.prototype.offsetTopTotal = function() /* PUBLIC */
-{
-	var offsetParent = this.offsetParent;
-	
-	if (offsetParent === null) {
-		return 0;
-	}
-	
-	var offsetTopTotal = 0;
-	var offsetTopLast = 0;
+/* ************************************************** */
+/*              Element Prototype Proxies             */
+/* ************************************************** */
 
-	do {
-		offsetTopLast = offsetParent.offsetTop;
-		
-		if (offsetTopLast) {
-			offsetTopTotal += offsetTopLast;
-		}
-	} while (offsetParent = offsetParent.offsetParent);
-	
-	return offsetTopTotal;	
-};
-
-/* Element prototype proxy */
 TextualScroller.scrollElementToCenter = function(element) /* PUBLIC */
 {
-	element.scrollToCenter();
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	var scrollCenter = element.scrollCenterIn(scrolledElement);
+	
+	scrolledElement.scrollTop = scrollCenter;
 };
 
 TextualScroller.percentScrolled = function() /* PUBLIC */
 {
-	return document.body.percentScrolled();
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	return scrolledElement.percentScrolled();
 };
 
 TextualScroller.isScrolledToTop = function() /* PUBLIC */
 {
-	return document.body.isScrolledToTop();
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	return scrolledElement.isScrolledToTop();
 };
 
 TextualScroller.scrollToTop = function() /* PUBLIC */
 {
-	document.body.scrollToTop();
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	scrolledElement.scrollToTop();
 };
 
 TextualScroller.isScrolledToBottom = function() /* PUBLIC */
@@ -294,13 +296,77 @@ TextualScroller.isScrolledToBottom = function() /* PUBLIC */
 		return true;
 	}
 
-	return document.body.isScrolledToBottom();
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	return scrolledElement.isScrolledToBottom();
 };
 
 TextualScroller.scrollToBottom = function() /* PUBLIC */
 {
-	document.body.scrollToBottom();	
+	var scrolledElement = _TextualScroller._scrolledElement;
+
+	scrolledElement.scrollToBottom();	
 };
 
-/* Bind to events */
-document.addEventListener("scroll", _TextualScroller._documentScrolledCallback, false);
+/* ************************************************** */
+/*                     Events                         */
+/* ************************************************** */
+
+/* This function is public interface which styles are 
+allowed to override which we should add extra sanity. */
+TextualScroller.bindToElement = function(newElement) /* PUBLIC */
+{
+	if (!newElement ||
+		!newElement.nodeType ||
+		 newElement.nodeType !== Node.ELEMENT_NODE) 
+	{
+		throw "Argument is not an element";
+	}
+
+	var oldElement = _TextualScroller._scrolledElement;
+
+	if (oldElement) {
+		if (oldElement !== document.body) {
+			oldElement.removeEventListener("scroll", _TextualScroller._documentScrolledCallback);
+		} else {
+			window.removeEventListener("scroll", _TextualScroller._documentScrolledCallback);
+		}
+	}
+
+	if (newElement !== document.body) {
+		newElement.addEventListener("scroll", _TextualScroller._documentScrolledCallback, false);
+	} else {
+		window.addEventListener("scroll", _TextualScroller._documentScrolledCallback, false);
+	}
+
+	_TextualScroller._scrolledElement = newElement;
+};
+
+_TextualScroller.bindToBestElement = function()
+{
+	var bindToElement = (function(element) {
+		if (window.getComputedStyle(element).overflowY === "hidden") {
+			return false;
+		}
+		
+		TextualScroller.bindToElement(element);
+		
+		return true;
+	});
+	
+	if (bindToElement(document.body)) {
+		console.log("Binding to document body");
+		
+		return;
+	} else if (bindToElement(Textual.documentBodyElement())) {
+		console.log("Binding to #body_home");
+		
+		return;
+	} else if (bindToElement(MessageBuffer.bufferElement())) {
+		console.log("Binding to #message_buffer");
+		
+		return;
+	}
+	
+	console.error("No element to bind to. Manually call TextualScroller.bindToElement()");
+};

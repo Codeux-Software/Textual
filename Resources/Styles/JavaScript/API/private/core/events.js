@@ -75,6 +75,9 @@ _Textual._viewBodyDidLoadAnimationFrame = null; /* PRIVATE */
 
 _Textual.viewBodyDidLoad = function() /* PRIVATE */
 {
+	/* Wait until element is available before binding to it. */
+	_TextualScroller.bindToBestElement();
+
 	/* On styles with a dark background, a white flash occurs because there is a very
 	 small delay between the view being created and the background process laying out
 	 its contents. To work around this, Textual presents an overlay view that matches
