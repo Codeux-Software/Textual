@@ -242,7 +242,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 
-	if ([TPCPreferences invertSidebarColors]) {
+	if (themeSettings().underlyingWindowColorIsDark) {
 		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 	} else {
 		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];

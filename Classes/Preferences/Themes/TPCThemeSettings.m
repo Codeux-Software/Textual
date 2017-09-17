@@ -273,6 +273,32 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
+#pragma mark Getters
+
+- (BOOL)underlyingWindowColorIsDark
+{
+	NSColor *windowColor = self.underlyingWindowColor;
+
+	if (windowColor == nil) {
+		return NO;
+	}
+
+	@try {
+		CGFloat brightness = windowColor.brightnessComponent;
+
+		if (brightness < 0.5) {
+			return YES;
+		}
+	}
+	@catch (NSException *exception) {
+		LogToConsoleError("Caught exception: %@", exception.reason);
+		LogToConsoleCurrentStackTrace
+	}
+
+	return NO;
+}
+
+#pragma mark -
 #pragma mark Load Settings
 
 - (NSString *)applicationTemplateRepositoryPath
