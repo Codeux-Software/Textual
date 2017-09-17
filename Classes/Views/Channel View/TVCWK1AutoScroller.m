@@ -92,53 +92,12 @@ static CGFloat _userScrolledMinimum = 25.0;
 								   name:NSViewBoundsDidChangeNotification
 								 object:documentView.enclosingScrollView.contentView];
 
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(preferencesChanged:)
-								   name:TPCPreferencesUserDefaultsDidChangeNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(preferredScrollerStyleChanged:)
-								   name:NSPreferredScrollerStyleDidChangeNotification
-								 object:nil];
-
-	[self changeScrollerStyle];
-
 	self->_automaticScrollingEnabled = YES;
 
 	self->_scrollPositionCurrentValue = 0.0;
 	self->_scrollPositionPreviousValue = 0.0;
 
 	self->_userScrolled = NO;
-}
-
-- (void)changeScrollerStyle
-{
-	WebFrameView *frameView = self.frameView;
-
-	NSView *documentView = frameView.documentView;
-
-	if ([TPCPreferences themeChannelViewUsesCustomScrollers]) {
-		documentView.enclosingScrollView.scrollerStyle = NSScrollerStyleOverlay;
-	} else {
-		documentView.enclosingScrollView.scrollerStyle = [NSScroller preferredScrollerStyle];
-	}
-}
-
-- (void)preferencesChanged:(NSNotification *)notification
-{
-	NSString *changedKey = notification.userInfo[@"changedKey"];
-
-	if ([changedKey isEqualToString:@"WebViewDoNotUsesCustomScrollers"] == NO) {
-		return;
-	}
-
-	[self changeScrollerStyle];
-}
-
-- (void)preferredScrollerStyleChanged:(NSNotification *)notification
-{
-	[self changeScrollerStyle];
 }
 
 - (BOOL)viewingBottom

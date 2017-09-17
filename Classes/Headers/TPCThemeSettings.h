@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 @property (readonly, copy, nullable) NSString *settingsKeyValueStoreName;
 @property (readonly, copy, nullable) NSColor *channelViewOverlayColor;
 @property (readonly, copy, nullable) NSColor *underlyingWindowColor;
+@property (readonly) BOOL underlyingWindowColorIsDark;
 @property (readonly) double indentationOffset;
 @property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 
