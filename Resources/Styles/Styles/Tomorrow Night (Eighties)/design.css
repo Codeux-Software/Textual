@@ -27,6 +27,7 @@ body {
 	right: 0;
 	bottom: 0;
 	width: 100%;
+	max-height: 100%;
 	/* overflow: none is added here, even though it is already
 	 declared by body {} because on OS X Mavericks, there is a
 	 weird quirk that causes the horizontal slider to appear
