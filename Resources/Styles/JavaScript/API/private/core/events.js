@@ -165,14 +165,14 @@ _Textual.messageAddedToView = function(lineNumber, fromBuffer) /* PRIVATE */
 	if (Array.isArray(lineNumber)) {
 		for (var i = 0; i < lineNumber.length; i++) {
 			if (oldCallbackExists) {
-				Textual.newMessagePostedToView(lineNumber[i], fromBuffer);
+				Textual.newMessagePostedToView(lineNumber[i]);
 			} else {
 				Textual.messageAddedToView(lineNumber[i], fromBuffer);
 			}
 		}
 	} else {
 		if (oldCallbackExists) {
-			Textual.newMessagePostedToView(lineNumber, fromBuffer);
+			Textual.newMessagePostedToView(lineNumber);
 		} else {
 			Textual.messageAddedToView(lineNumber, fromBuffer);
 		}
