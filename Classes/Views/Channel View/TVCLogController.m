@@ -214,24 +214,12 @@ ClassWithDesignatedInitializerInitMethod
 - (void)historicLogForgetChannel
 {
 	/* Delete any trace of the channel, including context */
-	IRCChannel *channel = self.associatedChannel;
-	
-	if (channel == nil) {
-		return;
-	}
-	
 	[TVCLogControllerHistoricLogSharedInstance() forgetItem:self.associatedItem];
 }
 	
 - (void)historicLogResetChannel
 {
 	/* Delete log for channel but keep context */
-	IRCChannel *channel = self.associatedChannel;
-
-	if (channel == nil) {
-		return;
-	}
-
 	[TVCLogControllerHistoricLogSharedInstance() resetDataForItem:self.associatedItem];
 }
 
@@ -1193,7 +1181,7 @@ ClassWithDesignatedInitializerInitMethod
 			/* Doing it this way does break the ability to reload chatter
 			 in the view as well as playback on restart, but the added
 			 security can be seen as a bonus. */
-			if (channel != nil && self.encrypted == NO) {
+			if (self.encrypted == NO) {
 				[TVCLogControllerHistoricLogSharedInstance() writeNewEntryWithLogLine:logLine forItem:self.associatedItem];
 			}
 
