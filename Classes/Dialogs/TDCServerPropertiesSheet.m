@@ -149,6 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSArray<IRCChannelConfig *> *channelList;
 @property (readonly, copy) NSArray<IRCHighlightMatchCondition *> *highlightList;
 @property (readonly, copy) NSArray<IRCServer *> *serverList;
+@property (nonatomic, assign) BOOL populatingPrimaryServer;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign) BOOL requestRemovalFromCloudOnClose;
@@ -830,6 +831,8 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	self.populatingPrimaryServer = YES;
+
 	NSString *serverAddress = server.serverAddress;
 
 	if (serverAddress) {
@@ -847,6 +850,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.prefersSecuredConnectionCheck.state = server.prefersSecuredConnection;
 
 	self.serverPasswordTextField.stringValue = server.serverPassword;
+
+	self.populatingPrimaryServer = NO;
 }
 
 - (void)loadConfigPostflight
@@ -1542,6 +1547,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rebuildMutableServerEndpointList:(id)sender
 {
 	NSParameterAssert(sender != nil);
+
+	if (self.populatingPrimaryServer) {
+		return;
+	}
 
 	IRCServer *server = self.serverList.firstObject;
 
