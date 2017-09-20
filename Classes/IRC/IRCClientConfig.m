@@ -40,6 +40,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define IRCClientConfigDictionaryVersionLatest		704
+
 #define IRCClientConfigFloodControlDefaultDelayIntervalLimited		2
 #define IRCClientConfigFloodControlDefaultMessageCountLimited		2 // freenode gets a special case 'cause they are strict about flood control
 
@@ -296,6 +298,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Load the newest set of keys. */
+	[defaultsMutable assignUnsignedIntegerTo:&self->_dictionaryVersion forKey:@"dictionaryVersion"];
+
 	[defaultsMutable assignArrayTo:&self->_alternateNicknames forKey:@"alternateNicknames"];
 	[defaultsMutable assignArrayTo:&self->_loginCommands forKey:@"onConnectCommands"];
 
@@ -415,9 +419,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self->_serverList = [serverListOut copy];
 
 	/* Load legacy keys (if they exist) */
-	if (self->_objectIsNew) {
-		self->_migratedToServerListV1Layout = YES;
-
+	if (self->_dictionaryVersion == IRCClientConfigDictionaryVersionLatest) {
 		return;
 	}
 
@@ -498,6 +500,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Cipher suites */
+	/* The dictionary excludes defaults which means we need to be cautious
+	 about reading the value of dic when performing migration. */
 	if (dic[@"cipherSuites"] == nil) {
 		NSNumber *connectionPrefersModernCiphers = dic[@"connectionPrefersModernCiphers"];
 
@@ -506,40 +510,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	/* ZNC */
-	/* Back before this option existed, the logging option was used to determine
-	 whether Textual played back only the latest with the playback module. */
-	if (dic[@"zncOnlyPlaybackLatest"] == nil) {
-		self->_zncOnlyPlaybackLatest = [TPCPreferences logToDisk];
-	}
-
 	/* Migrate servers */
-	[self migrateDictionaryToServerListV1Layout:defaultsMutable];
+	[self _migrateDictionaryToServerListV1Layout:defaultsMutable];
+
+	/* Assign version */
+	self->_dictionaryVersion = IRCClientConfigDictionaryVersionLatest;
 }
 
-- (void)migrateDictionaryToServerListV1Layout:(NSDictionary *)dic
+- (void)_migrateDictionaryToServerListV1Layout:(NSDictionary *)dic
 {
 	NSParameterAssert(dic != nil);
 
-	/* Check whether this object has already been migrated. */
-	if (self->_migratedToServerListV1Layout) {
-		LogToConsoleDebug("Migration cancelled at check 1");
-
-		return;
-	}
-
-	/* This local variable is declarated regardless of results because
-	 we ever only want to do this migration one time, even if it fails
-	 for some reason. */
-	self->_migratedToServerListV1Layout = YES;
-
-	/* Check whether this object has already been migrated,
-	 but the local status of this migration is unknown. */
+	/* This key is no longer assigned. We still check it so that
+	 clients that did not set dictionaryVersion but did set this
+	 key wont trigger migration again. */
 	id migratedToServerListV1Layout = [dic objectForKey:@"migratedToServerListV1Layout"];
 
 	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue]) {
-		LogToConsoleDebug("Migration cancelled at check 2");
-
 		return;
 	}
 
@@ -548,8 +535,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 for backwards compatibility which means once we imported them and have
 	 at least one server, then importing again will not help. */
 	if (self.serverList.count > 0) {
-		LogToConsoleDebug("Migration cancelled at check 3");
-
 		return;
 	}
 
@@ -732,6 +717,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
+	[dic setUnsignedInteger:self->_dictionaryVersion forKey:@"dictionaryVersion"];
+
 	[dic maybeSetObject:self.alternateNicknames forKey:@"alternateNicknames"];
 	[dic maybeSetObject:self.awayNickname forKey:@"awayNickname"];
 	[dic maybeSetObject:self.connectionName forKey:@"connectionName"];
@@ -744,8 +731,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic maybeSetObject:self.sleepModeLeavingComment forKey:@"sleepModeLeavingComment"];
 	[dic maybeSetObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[dic maybeSetObject:self.username forKey:@"username"];
-
-	[dic setBool:self->_migratedToServerListV1Layout forKey:@"migratedToServerListV1Layout"];
 
 	[dic setBool:self.autoConnect forKey:@"autoConnect"];
 	[dic setBool:self.autoReconnect forKey:@"autoReconnect"];
