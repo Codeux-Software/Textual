@@ -105,9 +105,27 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 
 ConversationTracking.toggleSelectionStatusForSenderElement = function(senderElement)
 {
-	var parentElement = ConversationTracking.getParentElementAtLevel(senderElement, 4);
+	var testElement = (function(element) {
+		if (element.id && 
+			element.id.indexOf("line") === 0 &&
+			element.classList &&
+			element.classList.contains("line")) 
+		{
+			return true;
+		}
+		
+		return false;
+	});
+	
+	var currentElement = senderElement;
+	
+	while (currentElement = currentElement.parentNode) {
+		if (testElement(currentElement)) {
+			break;
+		}
+	}
 
-	parentElement.classList.toggle("selectedUser");
+	currentElement.classList.toggle("selectedUser");
 };
 
 /* Helper functions */
@@ -118,16 +136,4 @@ ConversationTracking.isNicknameTracked = function(nickname)
 	} else {
 		return false;
 	}
-};
-
-ConversationTracking.getParentElementAtLevel = function(currentElement, level) 
-{
-	/* Nothing about this is pretty */
-	var parentElement = currentElement;
-	
-	for (var i = 0; i < level; i++) {
-		parentElement = parentElement.parentNode;
-	}
-	
-	return parentElement;
 };
