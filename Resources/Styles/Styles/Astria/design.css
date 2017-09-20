@@ -5,6 +5,7 @@
 	padding: 0;
 	font-size: 100%;
 	word-wrap: break-word;
+	word-break: break-word;
 }
 
 body {
@@ -79,18 +80,14 @@ body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
 
 #loading_screen {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -11px;
-	margin-left: -150px;
+	top: 45%;
+	left: calc(50% - (320px / 2)); /* half of width + padding */
 	width: 300px;
-	height: 21px;
 	font-size: 18px;
 	background: #181818;
 	border: 1px solid #333333;
 	border-radius: 5px;
-	padding: 5px;
-	padding-left: 10px;
+	padding: 5px 10px;
 	opacity: 1; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
 }
