@@ -99,8 +99,8 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _objectInitialized;
 	BOOL _objectInitializedAsCopy;
 	BOOL _objectIsNew;
-	BOOL _migratedToServerListV1Layout;
 	BOOL _migratedServerPasswordPendingDestroy;
+	NSUInteger _dictionaryVersion;
 	NSString *_uniqueIdentifier;
 	NSDictionary *_defaults;
 }
