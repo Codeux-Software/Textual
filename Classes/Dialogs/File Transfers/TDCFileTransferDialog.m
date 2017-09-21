@@ -400,6 +400,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startTransferOfFile:(id)sender
 {
+	NSString *savePath = self.downloadDestinationURLPrivate.path;
+
 	NSMutableArray<TDCFileTransferDialogTransferController *> *fileTransfersPending = [NSMutableArray array];
 
 	/* Open all file transfers who are senders or have a path */
@@ -414,6 +416,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (fileTransfer.isSender || fileTransfer.path != nil) {
 			[fileTransfer open];
+
+			return;
+		} else if (fileTransfer.path == nil && savePath != nil) {
+			[fileTransfer openWithPath:savePath];
 
 			return;
 		}
