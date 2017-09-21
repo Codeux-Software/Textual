@@ -237,6 +237,10 @@ enum {
 {
 	NSParameterAssert(window != nil);
 
+	if (TLOAppStoreTextualIsRegistered()) {
+		return;
+	}
+
 	/* Is the trial even expired? */
 	if (TLOAppStoreIsTrialExpired() == NO) {
 		return;
