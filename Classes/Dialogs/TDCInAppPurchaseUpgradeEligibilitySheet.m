@@ -75,8 +75,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startSheet
 {
-	LogToConsoleCurrentStackTrace
 	LogToConsoleError("This method does nothing. Use -checkEligibility instead.");
+	LogToConsoleCurrentStackTrace
 }
 
 - (void)endSheet
