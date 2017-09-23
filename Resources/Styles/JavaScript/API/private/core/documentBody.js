@@ -177,19 +177,6 @@ Textual.documentBodyElement = function() /* PUBLIC */
 	return Textual._documentBodyElementReference;
 };
 
-Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents) /* PUBLIC */
-{
-	var documentBody = Textual.documentBodyElement();
-
-	if (documentBody) {
-		if (enablePointerEvents) {
-			documentBody.style.pointerEvents = "";
-		} else {
-			documentBody.style.pointerEvents = "none";
-		}
-	}
-};
-
 Textual.documentHTML = function() /* PUBLIC */
 {
 	return document.documentElement.innerHTML;

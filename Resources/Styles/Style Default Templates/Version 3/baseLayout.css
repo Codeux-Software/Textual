@@ -59,3 +59,12 @@ tt {
 .effect[bgcolor-number='13'] { background-color: #ff00ff; }
 .effect[bgcolor-number='14'] { background-color: #888888; }
 .effect[bgcolor-number='15'] { background-color: #cccccc; }
+
+/* Selection */
+html[selected="false"] {
+	pointer-events: none;
+}
+
+html[selected="false"] #topic_bar {
+	display: none;
+}

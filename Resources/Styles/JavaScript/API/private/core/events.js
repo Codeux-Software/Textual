@@ -50,18 +50,34 @@ Textual.finishedLoadingHistory = false; /* PUBLIC */
 _Textual.notifyDidBecomeVisible = function() /* PRIVATE */
 {
 	Textual.clearSelection();
+	
+	document.documentElement.setAttribute("visible", "true");
 };
 
 _Textual.notifyDidBecomeHidden = function() /* PRIVATE */
 {
 	Textual.clearSelection();
+	
+	document.documentElement.setAttribute("visible", "false");
 };
 
 _Textual.notifySelectionChanged = function(isSelected) /* PRIVATE */
 {
-	Textual.setTopicBarVisible(isSelected);
+	/* Changing this attribute may change the height of the body 
+	because of the disappearance and reappearance of the topic.
+	It is easiest for us to keep a record of where we were before
+	changing this attribute, then scroll to that. */
+	var scrolledToBottom = TextualScroller.isScrolledToBottom();
 
-	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
+	if (isSelected) {
+		document.documentElement.setAttribute("selected", "true");
+	} else {
+		document.documentElement.setAttribute("selected", "false");
+	}
+	
+	if (scrolledToBottom) {
+		TextualScroller.scrollToBottom();
+	}
 };
 
 Textual.viewBodyDidLoadInt = function() /* PRIVATE */
@@ -121,6 +137,8 @@ _Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 		} else {
 			_Textual.notifySelectionChanged(false);
 		}
+	} else {
+		_Textual.notifyDidBecomeHidden();
 	}
 	
 	if (isReloadingTheme) {
