@@ -38,7 +38,10 @@ body {
 	-webkit-transition: opacity 0.8s linear;
 }
 
-body[viewtype="channel"] #body_home {
+/* Only factor in height of topic bar when selected == true
+ because that is only time the topic is displayed according
+ to the logic defined by baseLayout.css */
+html[selected="true"] body[viewtype="channel"] #body_home {
 	max-height: calc(100% - 2.4em); /* height minus topic */
 }
 
