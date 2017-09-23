@@ -196,6 +196,11 @@ NS_ASSUME_NONNULL_BEGIN
 		reloadAction |= TPCPreferencesReloadScrollbackVisibleLimitAction;
 	}
 
+	/* Channel view arrangement */
+	if ([keys containsObject:@"ChannelViewArrangement"]) {
+		reloadAction |= TPCPreferencesReloadChannelViewArrangementAction;
+	}
+
 	/* After this is all complete; we call -preferencesChanged just to take 
 	 care of everything else that does not need specific reloads. */
 	reloadAction |= TPCPreferencesReloadPreferencesChangedAction;
@@ -379,6 +384,11 @@ NS_ASSUME_NONNULL_BEGIN
 				[c.viewController changeScrollbackLimit];
 			}
 		}
+	}
+
+	/* Channel view arrangement */
+	if ((reloadAction & TPCPreferencesReloadChannelViewArrangementAction) == TPCPreferencesReloadChannelViewArrangementAction) {
+		[mainWindow() updateChannelViewArrangement];
 	}
 
 	/* World controller preferences changed call */

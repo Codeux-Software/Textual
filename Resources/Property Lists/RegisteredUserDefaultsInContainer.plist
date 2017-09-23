@@ -32,6 +32,8 @@
 	<true/>
 	<key>ChannelOperatorDefaultLocalization -&gt; Kick Reason</key>
 	<string>Your behavior is not conducive to the desired environment.</string>
+	<key>ChannelViewArrangement</key>
+	<integer>0</integer>
 	<key>CommandReturnSendsMessageAsAction</key>
 	<true/>
 	<key>ConfirmApplicationQuit</key>

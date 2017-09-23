@@ -87,6 +87,7 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
 - (void)updateAlphaValueToReflectPreferences;
 
 - (void)updateChannelViewBoxContentViewSelection;
+- (void)updateChannelViewArrangement;
 
 - (void)updateBackgroundColor;
 

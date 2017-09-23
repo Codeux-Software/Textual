@@ -344,6 +344,13 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	return dividerColor;
 }
 
+- (void)updateArrangement
+{
+	TXChannelViewArrangement arrangement = [TPCPreferences channelViewArrangement];
+
+	self.vertical = (arrangement == TXChannelViewArrangedVertically);
+}
+
 @end
 
 #pragma mark -

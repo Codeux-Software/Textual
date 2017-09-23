@@ -39,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowChannelView : NSSplitView
 - (void)populateSubviews;
+
+- (void)updateArrangement;
 @end
 
 NS_ASSUME_NONNULL_END

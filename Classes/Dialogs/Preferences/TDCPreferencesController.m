@@ -136,6 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onAddHighlightKeyword:(id)sender; // changed
 - (IBAction)onChangedCheckForUpdates:(id)sender;
 - (IBAction)onChangedCheckForBetaUpdates:(id)sender;
+- (IBAction)onChangedChannelViewArrangement:(id)sender;
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 - (IBAction)onChangedDisableNicknameColorHashing:(id)sender;
@@ -1353,6 +1354,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self onChangedThemeSelectionReloadComplete:notification];
 	}
+}
+
+- (void)onChangedChannelViewArrangement:(id)sender
+{
+	[TPCPreferences performReloadAction:TPCPreferencesReloadChannelViewArrangementAction];
 }
 
 - (void)onChangedMainWindowSegmentedController:(id)sender

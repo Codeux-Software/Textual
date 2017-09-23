@@ -105,6 +105,11 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 	TXFileTransferIPAddressManualDetectionMethod			= 2,
 };
 
+typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
+	TXChannelViewArrangedHorizontally		= 0,
+	TXChannelViewArrangedVertically 		= 1
+};
+
 @interface TPCPreferences : NSObject
 + (BOOL)appNapEnabled;
 
@@ -256,6 +261,8 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (NSUInteger)scrollbackSaveLimit;
 + (NSUInteger)scrollbackVisibleLimit;
+
++ (TXChannelViewArrangement)channelViewArrangement;
 
 + (BOOL)soundIsMuted;
 
