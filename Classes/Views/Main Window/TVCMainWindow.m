@@ -143,6 +143,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[self addAccessoryViewsToTitlebar];
 
+	[self updateChannelViewArrangement];
+
 	[themeController() prepareInitialState];
 	
 	[menuController() prepareInitialState];
@@ -1533,6 +1535,11 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem
 {
 	[self selectItemInSelectedItems:selectedItem refreshChannelView:NO];
+}
+
+- (void)updateChannelViewArrangement
+{
+	[self.channelView updateArrangement];
 }
 
 - (void)updateChannelViewBoxContentViewSelection

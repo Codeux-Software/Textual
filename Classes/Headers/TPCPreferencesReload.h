@@ -67,6 +67,7 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
 	TPCPreferencesReloadLogTranscriptsAction						= 1 << 21,
 	TPCPreferencesReloadScrollbackSaveLimitAction					= 1 << 22,
 	TPCPreferencesReloadScrollbackVisibleLimitAction				= 1 << 22,
+	TPCPreferencesReloadChannelViewArrangementAction				= 1 << 23
 };
 
 @interface TPCPreferences (TPCPreferencesReload)

@@ -701,6 +701,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);
 }
 
++ (TXChannelViewArrangement)channelViewArrangement
+{
+	return [RZUserDefaults() unsignedIntegerForKey:@"ChannelViewArrangement"];
+}
+
 #pragma mark -
 #pragma mark Completion Suffix
 
