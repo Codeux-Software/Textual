@@ -209,7 +209,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	}
 
 	/* Size views */
-	[self positionDividersProportionally];
+	[self adjustSubviews];
 }
 
 - (void)selectionChangeTo:(NSUInteger)itemIndex
@@ -261,66 +261,9 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	return overlayView;
 }
 
-- (void)positionDividersProportionally
-{
-	NSUInteger subviewCount = self.subviews.count;
-
-	if (subviewCount < 2) {
-		return;
-	}
-
-	NSRect splitViewFrame = self.frame;
-
-	CGFloat dividerThickness = self.dividerThickness;
-
-	CGFloat subviewHeight = ((splitViewFrame.size.height / subviewCount) -
-							  (dividerThickness * (subviewCount - 1)));
-
-	self.isMovingDividers = YES;
-
-	for (NSInteger i = (subviewCount - 1); i >= 0; i--) {
-		CGFloat currentPosition = (subviewHeight * (i + 1));
-
-		[self setPosition:currentPosition ofDividerAtIndex:i];
-	}
-
-	self.isMovingDividers = NO;
-}
-
-- (CGFloat)splitView:(NSSplitView *)splitView constrainSplitPosition:(CGFloat)proposedPosition ofSubviewAt:(NSInteger)dividerIndex
-{
-#define _minimumPosition		22.0
-
-	if (self.isMovingDividers) {
-		return proposedPosition;
-	}
-
-	if (dividerIndex > 0) {
-		NSArray *subviews = self.subviews;
-
-		NSView *upperView = subviews[(dividerIndex - 1)];
-
-		NSRect upperViewFrame = upperView.frame;
-
-		CGFloat minimumPosition = (NSMaxY(upperViewFrame) + self.dividerThickness + _minimumPosition);
-
-		if (proposedPosition < minimumPosition) {
-			proposedPosition = minimumPosition;
-		}
-	}
-
-	if (proposedPosition < _minimumPosition) {
-		return _minimumPosition;
-	}
-
-	return proposedPosition;
-
-#undef _minimumPosition
-}
-
 - (NSLayoutPriority)holdingPriorityForSubviewAtIndex:(NSInteger)subviewIndex
 {
-	return 1.0;
+	return 350.0;
 }
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
@@ -436,13 +379,13 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	}
 
 	[self addConstraints:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView(>=30)]-0-|"
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(webView)]];
 
 	[self addConstraints:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView(>=22)]-0-|"
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView(>=30)]-0-|"
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(webView)]];
