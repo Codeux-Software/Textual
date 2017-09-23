@@ -134,7 +134,7 @@
 "Prompts[1124][3]" = "Choose File";
 
 "Prompts[1125][1]" = "Save";
-"Prompts[1125][2]" = "To install this script, save it insode the folder:\n[home folder] \U279C Library \U279C Application Scripts \U279C %@\n\nIf this folder does not exist, then create it.";
+"Prompts[1125][2]" = "To install this script, save it inside the folder:\n[home folder] \U279C Library \U279C Application Scripts \U279C %@\n\nCreate this folder if it does not exist.";
 
 "Prompts[1126][1]" = "A script cannot be saved here";
 "Prompts[1126][2]" = "";
