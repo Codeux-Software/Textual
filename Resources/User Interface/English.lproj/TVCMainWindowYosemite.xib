@@ -359,9 +359,9 @@
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="XJm-Dd-FjI"/>
                         </constraints>
                         <holdingPriorities>
-                            <real value="335"/>
-                            <real value="250"/>
-                            <real value="335"/>
+                            <real value="355"/>
+                            <real value="350"/>
+                            <real value="355"/>
                         </holdingPriorities>
                         <connections>
                             <outlet property="memberListWidthConstraint" destination="FXS-Qi-nKW" id="ekw-qf-s0w"/>
