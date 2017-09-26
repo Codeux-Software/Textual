@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 @interface TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
-+ (void)migrateKeyValuesAwayFromGroupContainer;
++ (void)migrateKeyValues;
 @end
 #endif
 

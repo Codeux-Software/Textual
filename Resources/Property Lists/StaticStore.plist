@@ -5,20 +5,12 @@
 	<key>TPCPreferencesUserDefaults Paths to Migrate</key>
 	<array>
 		<dict>
-			<key>createSourceIfMissing</key>
-			<false/>
-			<key>hideOriginalOnMigration</key>
-			<false/>
-			<key>lockSource</key>
-			<false/>
-			<key>replaceSource</key>
-			<false/>
-			<key>destinationPath</key>
-			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
+			<key>buildScheme</key>
+			<string>devid</string>
 			<key>sourcePath</key>
-			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
-			<key>pathType</key>
-			<string>file-propertyList</string>
+			<string>group:8482Q6EPL6.com.codeux.irc.textual</string>
+			<key>identifier</key>
+			<string>8f014f5a-b079-4574-b856-c4f893c99145</string>
 		</dict>
 	</array>
 	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
