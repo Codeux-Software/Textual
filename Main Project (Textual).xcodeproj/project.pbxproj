@@ -773,7 +773,6 @@
 		4C7B03001D12105D00295E82 /* TPCPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57E158E99520026668C /* TPCPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03031D12105D00295E82 /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03041D12105D00295E82 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03051D12105D00295E82 /* TPCPreferencesUserDefaultsMigrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03061D12105D00295E82 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03071D12105D00295E82 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57F158E99520026668C /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03081D12105D00295E82 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57D158E99520026668C /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -786,7 +785,6 @@
 		4C7B030F1D12106300295E82 /* TPCPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57E158E99520026668C /* TPCPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03121D12106300295E82 /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03131D12106300295E82 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03141D12106300295E82 /* TPCPreferencesUserDefaultsMigrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03151D12106300295E82 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03161D12106300295E82 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57F158E99520026668C /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03171D12106300295E82 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57D158E99520026668C /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -801,7 +799,6 @@
 		4C7B03201D12107500295E82 /* TPCPreferencesCloudSyncExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03211D12107500295E82 /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03221D12107500295E82 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03231D12107500295E82 /* TPCPreferencesUserDefaultsMigrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03241D12107500295E82 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03251D12107500295E82 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57F158E99520026668C /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03261D12107500295E82 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57D158E99520026668C /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2702,7 +2699,6 @@
 		4CCFA6541ABCF36A0083620F /* TPWTB_Style.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TPWTB_Style.png; path = Resources/Images/Preferences/TPWTB_Style.png; sourceTree = "<group>"; };
 		4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TPWTB_Style@2x.png"; path = "Resources/Images/Preferences/TPWTB_Style@2x.png"; sourceTree = "<group>"; };
 		4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaultsMigrate.m; path = Classes/Preferences/TPCPreferencesUserDefaultsMigrate.m; sourceTree = "<group>"; };
-		4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaultsMigrate.h; path = Classes/Headers/TPCPreferencesUserDefaultsMigrate.h; sourceTree = "<group>"; };
 		4CD1C4C41D1F18A50034F6A1 /* TXMasterControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXMasterControllerPrivate.h; path = Classes/Headers/Private/TXMasterControllerPrivate.h; sourceTree = "<group>"; };
 		4CD1C4C51D1F18A50034F6A1 /* TXWindowControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXWindowControllerPrivate.h; path = Classes/Headers/Private/TXWindowControllerPrivate.h; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Classes/Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
@@ -3933,7 +3929,6 @@
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
 				4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */,
 				4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */,
-				4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
 				4C8AF57D158E99520026668C /* TPCThemeSettings.h */,
@@ -4483,7 +4478,6 @@
 				4CEA29C01D2091F200AADC69 /* IRCColorFormatPrivate.h in Headers */,
 				4C7B03221D12107500295E82 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C7B49071D131A2A008D7926 /* TVCLogPolicyPrivate.h in Headers */,
-				4C7B03231D12107500295E82 /* TPCPreferencesUserDefaultsMigrate.h in Headers */,
 				4C056F171D1D89A100D85CEA /* TVCMemberListCellPrivate.h in Headers */,
 				4C7B03241D12107500295E82 /* TPCResourceManager.h in Headers */,
 				4C7B03251D12107500295E82 /* TPCThemeController.h in Headers */,
@@ -4737,7 +4731,6 @@
 				4CE474381D2F3CE400909766 /* IRCClientConfigInternal.h in Headers */,
 				4C7B03041D12105D00295E82 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C6CCF061D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h in Headers */,
-				4C7B03051D12105D00295E82 /* TPCPreferencesUserDefaultsMigrate.h in Headers */,
 				4C7B03061D12105D00295E82 /* TPCResourceManager.h in Headers */,
 				4C5B42311D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */,
 				4CE474451D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
@@ -4998,7 +4991,6 @@
 				4CE474391D2F3CE400909766 /* IRCClientConfigInternal.h in Headers */,
 				4C7B03131D12106300295E82 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C6CCF071D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h in Headers */,
-				4C7B03141D12106300295E82 /* TPCPreferencesUserDefaultsMigrate.h in Headers */,
 				4C5B42321D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */,
 				4C7B03151D12106300295E82 /* TPCResourceManager.h in Headers */,
 				4CE474461D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
