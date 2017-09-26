@@ -35,181 +35,131 @@
 
  *********************************************************************** */
 
+#import "BuildConfig.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 @implementation TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
 
-+ (void)migrateKeyValuesAwayFromGroupContainer
++ (void)migrateKeyValues
 {
-#define _defaultsKey	@"TPCPreferences -> Migration -> Preference Files"
+#define _defaultsKeyPrefix	@"TPCPreferences -> Migration -> "
 
-	if ([RZUserDefaults() boolForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380"]) {
-		[RZUserDefaults() removeObjectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380"];
-
-		[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+	/* Do not perform migration for specific identifiers when we
+	 had done so in the past using the old style defaults key. */
+	if ([RZUserDefaults() boolForKey:@"TPCPreferences -> Migration -> Preference Files"]) {
+		[RZUserDefaults() setBool:YES forKey:(_defaultsKeyPrefix "8f014f5a-b079-4574-b856-c4f893c99145")];
 	}
 
-	if ([RZUserDefaults() boolForKey:_defaultsKey]) {
-		return;
-	}
-
+	/* Perform migration */
 	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 	NSArray<NSDictionary *> *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
 
+	if (pathsToMigrate == nil) {
+		[self presentMigrationFailedErrorMessage];
+
+		return;
+	}
+
 	for (NSDictionary *pathToMigrate in pathsToMigrate) {
 		@autoreleasepool {
-			NSString *pathToMigrateFrom = [pathToMigrate[@"sourcePath"] stringByExpandingTildeInPath];
+			/* Do not continue if we are on the wrong build scheme. */
+			NSString *buildScheme = pathToMigrate[@"buildScheme"];
 
-			NSString *pathToMigrateTo = [pathToMigrate[@"destinationPath"] stringByExpandingTildeInPath];
+			if ([buildScheme isEqualToString:TXBundleBuildScheme] == NO) {
+				continue;
+			}
 
-			BOOL repalceSource = [pathToMigrate boolForKey:@"replaceSource"];
+			/* Do not continue if this path has already been migrated. */
+			NSString *identifier = pathToMigrate[@"identifier"];
 
-			BOOL lockSource = [pathToMigrate boolForKey:@"lockSource"];
+			NSString *defaultsKey = [_defaultsKeyPrefix stringByAppendingString:identifier];
 
-			BOOL hideSource = [pathToMigrate boolForKey:@"hideSource"];
+			if ([RZUserDefaults() boolForKey:defaultsKey]) {
+				continue;
+			}
 
-			BOOL createSourceIfMissing = [pathToMigrate boolForKey:@"createSourceIfMissing"];
+			/* Perform migration */
+			NSURL *pathToMigrateFrom = [self expandPath:pathToMigrate[@"sourcePath"]];
 
-			[TPCPreferencesUserDefaults migrateFileFromPath:pathToMigrateFrom
-													 toPath:pathToMigrateTo
-									  createSourceIfMissing:createSourceIfMissing
-												 hideSource:hideSource
-												 lockSource:lockSource
-											  replaceSource:repalceSource];
+			if (pathToMigrateFrom == nil) {
+				[self presentMigrationFailedErrorMessage];
+
+				continue;
+			}
+
+			BOOL success =
+			[self migrateFileFromPath:pathToMigrateFrom];
+
+			if (success == NO) {
+				[self presentMigrationFailedErrorMessage];
+
+				continue;
+			}
+
+			[RZUserDefaults() setBool:YES forKey:defaultsKey];
 		}
 	}
 
-	[RZUserDefaults() setObject:@(YES) forKey:_defaultsKey postNotification:NO];
-
-#undef _defaultsKey
+#undef _defaultsKeyPrefix
 }
 
-+ (BOOL)createBackupOfPath:(NSString *)sourcePath
++ (nullable NSURL *)expandPath:(NSString *)path
 {
-	NSParameterAssert(sourcePath != nil);
+	if ([path hasPrefix:@"~"])
+	{
+		path = [path stringByExpandingTildeInPath];
+	}
+	else if ([path hasPrefix:@"group:"])
+	{
+		NSString *identifier = [path substringFromIndex:6];
 
-	NSString *sourcePathWithoutExtension = sourcePath.stringByDeletingPathExtension;
+		NSURL *pathURL = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:identifier];
 
-	NSString *sourcePathExtension = sourcePath.pathExtension;
+		if (pathURL == nil) {
+			return nil;
+		}
 
-	NSString *sourcePathBackupPath =
-	[NSString stringWithFormat:@"%@-backup.%@", sourcePathWithoutExtension, sourcePathExtension];
+		NSString *pathSuffix = [NSString stringWithFormat:@"Library/Preferences/%@.plist", identifier];
 
-	return
-	[RZFileManager() replaceItemAtPath:sourcePathBackupPath
-						withItemAtPath:sourcePath
-					 moveToDestination:NO
-				moveDestinationToTrash:NO];
+		return [pathURL URLByAppendingPathComponent:pathSuffix];
+	}
+
+	return [NSURL URLWithString:path];
 }
 
-+ (void)migrateFileFromPath:(NSString *)sourcePath
-					 toPath:(NSString *)destinationPath
-	  createSourceIfMissing:(BOOL)createSourceIfMissing
-				 hideSource:(BOOL)hideSource
-				 lockSource:(BOOL)lockSource
-			  replaceSource:(BOOL)replaceSource
++ (BOOL)migrateFileFromPath:(NSURL *)sourceURL
 {
-	NSParameterAssert(sourcePath != nil);
-	NSParameterAssert(destinationPath != nil);
+	NSParameterAssert(sourceURL != nil);
 
 	/* Exit if the source migration path does not exist */
-	BOOL sourcePathExists = [RZFileManager() fileExistsAtPath:sourcePath];
-
-	if (sourcePathExists == NO && createSourceIfMissing == NO) {
-		return;
+	if ([RZFileManager() fileExistsAtPath:sourceURL.path] == NO) {
+		return YES; // return success
 	}
 
 	/* Retrieve values from property list */
-	NSDictionary<NSString *, id> *preferencesToMigrate = nil;
+	NSDictionary<NSString *, id> *preferencesToMigrate = [NSDictionary dictionaryWithContentsOfURL:sourceURL];
 
-	if (sourcePathExists) {
-		/* Create a backup of the source */
-		if (replaceSource) {
-			if ([TPCPreferencesUserDefaults createBackupOfPath:sourcePath] == NO) {
-				LogToConsoleError("Failed to create backup of source path: '%{public}@'", sourcePath);
-
-				return;
-			}
-		}
-
-		/* Retrieve values from property list. */
-		preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourcePath];
-
-		/* We delete the existing group container preferences file and
-		 replace it with a symbolic link. Doing this way ensures that the
-		 new path (non-sandboxed path) can be accessed by the Mac App Store
-		 version so that they are wrote to at the same path. */
-		if (replaceSource) {
-			NSError *removeSourcePathError = nil;
-
-			if ([RZFileManager() removeItemAtPath:sourcePath error:&removeSourcePathError] == NO) {
-				LogToConsoleError("Failed to erase source path: '%{public}@' - '%{public}@'",
-					  sourcePath, removeSourcePathError.localizedDescription);
-
-				return;
-			}
-		}
-	}
-
-	/* We do not return if the creation of the symbolic link fails.
-	 If it fails, we still write the keys in memory so that we can at
-	 least have the user preferences on disk somewhere, they just wont
-	 be read by the Mac App Store without symbolic link. */
-	if (replaceSource || sourcePathExists == NO) {
-		if (sourcePathExists == NO && createSourceIfMissing) {
-			NSString *sourcePathLeading = sourcePath.stringByDeletingLastPathComponent;
-
-			NSError *createSourcePathLeadingError = nil;
-
-			if ([RZFileManager() fileExistsAtPath:sourcePathLeading] == NO) {
-				if ([RZFileManager() createDirectoryAtPath:sourcePathLeading withIntermediateDirectories:YES attributes:nil error:&createSourcePathLeadingError] == NO) {
-					LogToConsoleError("Failed to create source path: '%{public}@' - '%{public}@'",
-						sourcePathLeading, createSourcePathLeadingError.localizedDescription);
-
-					return;
-				}
-			}
-		}
-
-		NSError *createSymbolicLinkError = nil;
-
-		if ([RZFileManager() createSymbolicLinkAtPath:sourcePath withDestinationPath:destinationPath error:&createSymbolicLinkError] == NO) {
-			LogToConsoleError("Failed to create symbolic link to destination path: '%{public}@' -> '%{public}@' - %{public}@",
-				 sourcePath, destinationPath, createSymbolicLinkError.localizedDescription);
-		}
-
-		/* Modify source attributes */
-		NSURL *sourcePathURL = [NSURL fileURLWithPath:sourcePath isDirectory:NO];
-
-		if (hideSource) {
-			NSError *modifySourcePathAttributesError = nil;
-
-			if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
-				LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
-					sourcePathURL.absoluteString, modifySourcePathAttributesError.localizedDescription);
-			}
-		}
-
-		if (lockSource) {
-			NSError *modifySourcePathAttributesError = nil;
-
-			if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
-				LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
-					sourcePathURL.absoluteString, modifySourcePathAttributesError.localizedDescription);
-			}
-		}
-	}
-
-	/* Begin migrating group container values */
 	if (preferencesToMigrate == nil) {
-		return;
+		return NO;
 	}
 
+	/* Perform migration */
 	[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(NSString *key, id object, BOOL *stop) {
 		[RZUserDefaults() setObject:object forKey:key postNotification:NO];
 	}];
+
+	return YES;
+}
+
++ (void)presentMigrationFailedErrorMessage
+{
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1138][1]")
+									   title:TXTLS(@"Prompts[1138][2]")
+							   defaultButton:TXTLS(@"Prompts[0005]")
+							 alternateButton:nil];
 }
 
 @end

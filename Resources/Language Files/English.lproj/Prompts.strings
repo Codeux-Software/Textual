@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1138 */
+/* Next unusued key: 1139 */
 
 "Prompts[0001]" = "Yes";
 "Prompts[0002]" = "No";
@@ -167,3 +167,6 @@
 
 "Prompts[1137][1]" = "The process responsible for managing historic logs is not working correctly. Please report this problem to support@codeux.com";
 "Prompts[1137][2]" = "Last known error message: %@";
+
+"Prompts[1138][1]" = "Your preferences could not be migrated. They have NOT been lost. Textual does not have access to them.";
+"Prompts[1138][2]" = "Please report this problem to support@codeux.com";
