@@ -109,7 +109,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	int processIdentifier = [TPCApplicationInfo applicationProcessID];
 
-	NSString *sourcePath = [TPCPathInfo applicationTemporaryFolderPath];
+	NSString *sourcePath = [TPCPathInfo applicationTemporary];
 
 	NSString *endPath = [NSString stringWithFormat:@"/Cached-Style-Resources-%i/", processIdentifier];
 
@@ -196,7 +196,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		fileLocation = TPCThemeControllerStorageCloudLocation;
 
-		filePath = [[TPCPathInfo cloudCustomThemeFolderPath] stringByAppendingPathComponent:fileName];
+		filePath = [[TPCPathInfo cloudCustomThemes] stringByAppendingPathComponent:fileName];
 #endif
 
 	}
@@ -204,13 +204,13 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	{
 		fileLocation = TPCThemeControllerStorageCustomLocation;
 
-		filePath = [[TPCPathInfo customThemeFolderPath] stringByAppendingPathComponent:fileName];
+		filePath = [[TPCPathInfo customThemes] stringByAppendingPathComponent:fileName];
 	}
 	else
 	{
 		fileLocation = TPCThemeControllerStorageBundleLocation;
 
-		filePath = [[TPCPathInfo bundledThemeFolderPath] stringByAppendingPathComponent:fileName];
+		filePath = [[TPCPathInfo bundledThemes] stringByAppendingPathComponent:fileName];
 	}
 
 	if (filePath == nil) {
@@ -597,11 +597,11 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	
 	/* File paths are ordered by priority. Top-most will be most important. */
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	checkPath([TPCPathInfo cloudCustomThemeFolderPath], TPCThemeControllerCloudThemeNameCompletePrefix);
+	checkPath([TPCPathInfo cloudCustomThemes], TPCThemeControllerCloudThemeNameCompletePrefix);
 #endif
 	
-	checkPath([TPCPathInfo customThemeFolderPath], TPCThemeControllerCustomThemeNameCompletePrefix);
-	checkPath([TPCPathInfo bundledThemeFolderPath], TPCThemeControllerBundledThemeNameCompletePrefix);
+	checkPath([TPCPathInfo customThemes], TPCThemeControllerCustomThemeNameCompletePrefix);
+	checkPath([TPCPathInfo bundledThemes], TPCThemeControllerBundledThemeNameCompletePrefix);
 
 	return [themeList copy];
 }
@@ -738,11 +738,11 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (sharedCloudManager().ubiquitousContainerIsAvailable) {
-		pathsToWatch = @[[TPCPathInfo customThemeFolderPath], [TPCPathInfo cloudCustomThemeFolderPath]];
+		pathsToWatch = @[[TPCPathInfo customThemes], [TPCPathInfo cloudCustomThemes]];
 	} else {
 #endif
 
-		pathsToWatch = @[[TPCPathInfo customThemeFolderPath]];
+		pathsToWatch = @[[TPCPathInfo customThemes]];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	}
@@ -852,7 +852,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	{
 		/* When copying to iCloud, we copy the style to a temporary folder then 
 		 have OS X handle the transfer of said folder to iCloud on our behalf. */
-		if ([RZFileManager() fileExistsAtPath:destinationURL.path]) {
+		if ([RZFileManager() fileExistsAtURL:destinationURL]) {
 			NSError *trashItemError = nil;
 
 			if ([RZFileManager() trashItemAtURL:destinationURL resultingItemURL:NULL error:&trashItemError]) {
@@ -866,11 +866,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		}
 
 		/* Copy to temporary location */
-		NSString *fakeDestinationPathLeading = [TPCPathInfo applicationTemporaryFolderPath];
-
-		NSString *fakeDestinationPath = [fakeDestinationPathLeading stringByAppendingPathComponent:[NSString stringWithUUID]];
-		
-		NSURL *fakeDestinationURL = [NSURL fileURLWithPath:fakeDestinationPath];
+		NSURL *fakeDestinationURL = [[TPCPathInfo applicationTemporaryURL] URLByAppendingPathComponent:[NSString stringWithUUID]];
 
 		NSError *copyFileError = nil;
 
@@ -923,7 +919,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 	if (self.destinationLocation == TPCThemeControllerStorageCustomLocation)
 	{
-		destinationPath = [TPCPathInfo customThemeFolderPath];
+		destinationPath = [TPCPathInfo customThemes];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	}
@@ -935,9 +931,9 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		if (sharedCloudManager().ubiquitousContainerIsAvailable == NO) {
 			self.destinationLocation = TPCThemeControllerStorageCustomLocation;
 
-			destinationPath = [TPCPathInfo customThemeFolderPath];
+			destinationPath = [TPCPathInfo customThemes];
 		} else {
-			destinationPath = [TPCPathInfo cloudCustomThemeFolderPath];
+			destinationPath = [TPCPathInfo cloudCustomThemes];
 		}
 #endif
 

@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSOpenPanel *d = [NSOpenPanel openPanel];
 
-	NSURL *applicationsPath = [TPCPathInfo systemApplicationFolderURL];
+	NSURL *applicationsPath = [TPCPathInfo systemApplicationsURL];
 
 	if (applicationsPath) {
 		d.directoryURL = applicationsPath;
@@ -262,7 +262,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	if ([RZFileManager() fileExistsAtPath:receiptFileURL.path] == NO) {
+	if ([RZFileManager() fileExistsAtURL:receiptFileURL] == NO) {
 		return nil;
 	}
 
@@ -318,7 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-	if ([RZFileManager() fileExistsAtPath:receiptFileURL.path] == NO) {
+	if ([RZFileManager() fileExistsAtURL:receiptFileURL] == NO) {
 		return NO;
 	}
 

@@ -136,7 +136,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSURL *fileURL = [NSURL URLFromPasteboard:[sender draggingPasteboard]];
 
 	if (fileURL) {
-		NSString *filename = fileURL.relativePath;
+		NSString *filename = fileURL.path;
 
 		[self.viewController logViewWebViewRecievedDropWithFile:filename];
 	}

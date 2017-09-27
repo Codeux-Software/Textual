@@ -795,9 +795,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError
 {
-	NSString *cloudPath = [[TPCPathInfo userHomeFolderPath] stringByAppendingPathComponent:@"/Library/Mobile Documents/"];
+	NSString *cloudPath = [[TPCPathInfo userHome] stringByAppendingPathComponent:@"/Library/Mobile Documents/"];
 
-	if ([url.relativePath hasPrefix:cloudPath]) {
+	if ([url.path hasPrefix:cloudPath]) {
 		if (outError) {
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
@@ -1411,13 +1411,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onOpenPathToCloudFolder:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[TPCPathInfo openApplicationUbiquitousContainerPath];
+	[TPCPathInfo openApplicationUbiquitousContainer];
 #endif
 }
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPathInGroupContainer]];
+	[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
 }
 
 - (void)onManageICloudButtonClicked:(id)sender
@@ -1470,7 +1470,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSError *deleteThemesError = nil;
 
-	if ([RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&deleteThemesError] == NO) {
+	if ([RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemes] error:&deleteThemesError] == NO) {
 		LogToConsoleError("Delete Error: %{public}@",
 			  deleteThemesError.localizedDescription);
 	}

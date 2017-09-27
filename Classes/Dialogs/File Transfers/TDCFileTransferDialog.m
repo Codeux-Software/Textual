@@ -221,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
 		if (savePath == nil) {
-			savePath = [TPCPathInfo userDownloadsFolderPath];
+			savePath = [TPCPathInfo userDownloads];
 		}
 
 		[controller openWithPath:savePath];
@@ -434,10 +434,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSOpenPanel *openDialog = [NSOpenPanel openPanel];
-	
-	NSURL *downloadsFolderURL = [NSURL fileURLWithPath:[TPCPathInfo userDownloadsFolderPath]];
-	
-	openDialog.directoryURL = downloadsFolderURL;
+
+	openDialog.directoryURL = [TPCPathInfo userDownloadsURL];
 
 	openDialog.allowsMultipleSelection = NO;
 	openDialog.canChooseDirectories = YES;

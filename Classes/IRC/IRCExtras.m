@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 	else if ([action isEqualToString:@"custom-style-folder"] ||
 			 [action isEqualToString:@"custom-styles-folder"])
 	{
-		[RZWorkspace() openFile:[TPCPathInfo customThemeFolderPath]];
+		[RZWorkspace() openFile:[TPCPathInfo customThemes]];
 	}
 	else if ([action isEqualToString:@"newsletter"])
 	{
@@ -99,8 +99,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"diagnostic-reports-folder"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo userDiagnosticReportsFolderPath]];
-		(void)[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReportsFolderPath]];
+		(void)[RZWorkspace() openFile:[TPCPathInfo userDiagnosticReports]];
+		(void)[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReports]];
 	}
 	else if ([action isEqualToString:@"support-channel"])
 	{
@@ -114,14 +114,14 @@ NS_ASSUME_NONNULL_BEGIN
 			 [action isEqualToString:@"icloud-styles-folder"])
 	{
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		[TPCPathInfo openCloudCustomThemeFolderPath];
+		[TPCPathInfo openCloudCustomThemes];
 #endif
 	}
 	else if ([action isEqualToString:@"custom-scripts-folder"] ||
 			 [action isEqualToString:@"unsupervised-script-folder"] ||
 			 [action isEqualToString:@"unsupervised-scripts-folder"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo customScriptsFolderPath]];
+		(void)[RZWorkspace() openFile:[TPCPathInfo customScripts]];
 	}
 	else if ([action isEqualToString:@"knowledge-base"])
 	{
@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"application-support-folder"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPathInGroupContainer]];
+		(void)[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
 	}
 }
 

@@ -103,15 +103,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSURL *)lastGenLicenseFilePath
 {
-	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInLocalContainer];
+	NSURL *sourceURL = [TPCPathInfo applicationSupportURL];
 
-	if (sourcePath == nil) {
+	if (sourceURL == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Textual_User_License.plist"];
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Textual_User_License.plist"];
 
-	return [NSURL fileURLWithPath:basePath isDirectory:NO];
+	return baseURL;
 }
 
 + (nullable NSData *)lastGenLicenseFileContents
@@ -124,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	if ([RZFileManager() fileExistsAtPath:licenseFilePath.path] == NO) {
+	if ([RZFileManager() fileExistsAtURL:licenseFilePath] == NO) {
 		return nil;
 	}
 

@@ -3076,7 +3076,7 @@ NS_ASSUME_NONNULL_BEGIN
 {	
 	NSURL *path = [TPCPathInfo transcriptFolderURL];
 	
-	if ([RZFileManager() fileExistsAtPath:path.path]) {
+	if ([RZFileManager() fileExistsAtURL:path]) {
 		(void)[RZWorkspace() openURL:path];
 
 		return;
@@ -3099,7 +3099,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	NSURL *path = c.logFilePath;
 	
-	if ([RZFileManager() fileExistsAtPath:path.path]) {
+	if ([RZFileManager() fileExistsAtURL:path]) {
 		(void)[RZWorkspace() openURL:path];
 
 		return;

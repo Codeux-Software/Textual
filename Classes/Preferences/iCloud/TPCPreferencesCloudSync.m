@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
-@property (nonatomic, copy, nullable) NSURL *ubiquitousContainerURL;
+@property (nonatomic, copy, nullable, readwrite) NSURL *ubiquitousContainerURL;
 @property (nonatomic, strong) NSMutableArray<NSString *> *keysToSync;
 @property (nonatomic, strong) NSMutableArray<NSString *> *keysToRemove;
 @property (nonatomic, copy) NSArray<NSString *> *remoteKeysBeingSynced;

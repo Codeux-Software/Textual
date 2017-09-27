@@ -305,7 +305,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %lu/", self.templateEngineVersion];
 
-	NSString *templatesPath = [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
+	NSString *templatesPath = [[TPCPathInfo applicationResources] stringByAppendingPathComponent:filename];
 
 	return templatesPath;
 }

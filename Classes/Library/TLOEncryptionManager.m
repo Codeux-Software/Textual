@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)pathToStoreEncryptionSecrets
 {
-	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
+	NSString *sourcePath = [TPCPathInfo groupContainerApplicationSupport];
 
 	if (sourcePath == nil) {
 		return nil;
@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Encryption Components/"];
 
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	[TPCPathInfo _createDirectoryAtPath:basePath];
 
 	return basePath;
 }

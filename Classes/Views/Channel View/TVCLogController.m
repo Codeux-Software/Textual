@@ -1270,7 +1270,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	pathAttributes[@"activeStyleAbsolutePath"] = self.baseURL.path;
 	
-	pathAttributes[@"applicationResourcePath"] = [TPCPathInfo applicationResourcesFolderPath];
+	pathAttributes[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	NSMutableDictionary<NSString *, id> *templateAttributes = [pathAttributes mutableCopy];
 
@@ -1499,7 +1499,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateTokens[@"activeStyleAbsolutePath"] = self.baseURL.path;
 	
-	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResourcesFolderPath];
+	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	templateTokens[@"applicationTemplatesPath"] = themeSettings().applicationTemplateRepositoryPath;
 

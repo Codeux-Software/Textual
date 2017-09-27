@@ -444,7 +444,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		NSString *savePath = fileTransfer.path;
 
 		if (savePath == nil) {
-			savePath = [TPCPathInfo userDownloadsFolderPath];
+			savePath = [TPCPathInfo userDownloads];
 		}
 
 		[fileTransfer openWithPath:savePath];
