@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TPCPreferencesCloudSync : NSObject
 - (nullable id)valueForKey:(NSString *)key;
 
+@property (readonly, copy, nullable) NSURL *ubiquitousContainerURL;
 @property (readonly, copy, nullable) NSString *ubiquitousContainerPath;
 
 @property (readonly) BOOL ubiquitousContainerIsAvailable;

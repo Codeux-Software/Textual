@@ -10303,7 +10303,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Is it AppleScript? */
 	if ([path hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
-		BOOL isBuiltinScript = [path hasPrefix:[TPCPathInfo applicationResourcesFolderPath]];
+		BOOL isBuiltinScript = [path hasPrefix:[TPCPathInfo applicationResources]];
 
 		/* /////////////////////////////////////////////////////// */
 		/* Event Descriptor */

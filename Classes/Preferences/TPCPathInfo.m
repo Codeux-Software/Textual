@@ -47,91 +47,197 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPathInfo
 
-+ (void)_createDirectoryOrOutputError:(NSString *)path
-{
-	NSParameterAssert(path != nil);
+#pragma mark -
+#pragma mark Utilities
 
-	if ([RZFileManager() fileExistsAtPath:path]) {
++ (void)_createDirectoryAtPath:(NSString *)directoryPath
+{
+	NSParameterAssert(directoryPath != nil);
+
+	if ([RZFileManager() fileExistsAtPath:directoryPath]) {
 		return;
 	}
 
 	NSError *createDirectoryError = nil;
 
-	if ([RZFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
+	if ([RZFileManager() createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
 		LogToConsoleError("Failed to create directory at path: '%{public}@' - %{public}@",
-			  path, createDirectoryError.localizedDescription);
+			directoryPath.description, createDirectoryError.localizedDescription);
 	}
 }
 
-+ (NSString *)applicationBundlePath
++ (void)_createDirectoryAtURL:(NSURL *)directoryURL
+{
+	NSParameterAssert(directoryURL != nil);
+
+	if ([RZFileManager() fileExistsAtURL:directoryURL]) {
+		return;
+	}
+
+	NSError *createDirectoryError = nil;
+
+	if ([RZFileManager() createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
+		LogToConsoleError("Failed to create directory at path: '%{public}@' - %{public}@",
+			directoryURL.description, createDirectoryError.localizedDescription);
+	}
+}
+
+#pragma mark -
+#pragma mark Application Specific
+
++ (NSString *)applicationBundle
 {
 	return RZMainBundle().bundlePath;
 }
 
-+ (nullable NSString *)applicationCachesFolderPath
++ (NSURL *)applicationBundleURL
+{
+	return RZMainBundle().bundleURL;
+}
+
++ (NSString *)applicationResources
+{
+	return RZMainBundle().resourcePath;
+}
+
++ (NSURL *)applicationResourcesURL
+{
+	return RZMainBundle().resourceURL;
+}
+
++ (nullable NSString *)applicationCaches
 {
 	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	
+
 	if (pathArray.count == 0) {
 		return nil;
 	}
 
 	NSString *endPath = [NSString stringWithFormat:@"/%@/", TXBundleBuildProductIdentifier];
-	
+
 	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:endPath];
 
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
-	
+	[self _createDirectoryAtPath:basePath];
+
 	return basePath;
 }
 
-+ (nullable NSString *)applicationCachesFolderInsideGroupContainerPath
++ (nullable NSURL *)applicationCachesURL
 {
-	NSString *sourcePath = [TPCPathInfo applicationGroupContainerPath];
+	NSString *sourcePath = self.applicationCaches;
 
 	if (sourcePath == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Library/Caches/"];
-
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
-
-	return basePath;
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
 }
 
-+ (nullable NSString *)applicationGroupContainerPath
++ (nullable NSString *)groupContainer
 {
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+	NSURL *sourceURL = self.groupContainerURL;
 
-	NSURL *basePath = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
-
-	if (basePath == nil) {
+	if (sourceURL == nil) {
 		return nil;
 	}
 
-	return basePath.relativePath;
+	return sourceURL.path;
+}
 
-#else
++ (nullable NSURL *)groupContainerURL
+{
+	NSURL *baseURL = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
 
-	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+	if (baseURL == nil) {
+		return nil;
+	}
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
+	[self _createDirectoryAtURL:baseURL];
+#endif
+
+	return baseURL;
+}
+
++ (nullable NSString *)groupContainerApplicationCaches
+{
+	NSURL *sourceURL = self.groupContainerApplicationCachesURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	return sourceURL.path;
+}
+
++ (nullable NSURL *)groupContainerApplicationCachesURL
+{
+	NSURL *sourceURL = self.groupContainerURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Library/Caches/"];
+
+	[self _createDirectoryAtURL:baseURL];
+
+	return baseURL;
+}
+
++ (nullable NSString *)applicationSupport
+{
+	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 
 	if (pathArray.count == 0) {
 		return nil;
 	}
 
-	NSString *endPath = [NSString stringWithFormat:@"/Group Containers/%@/", TXBundleBuildGroupContainerIdentifier];
+	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:@"/Textual/"];
 
-	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:endPath];
-
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	[self _createDirectoryAtPath:basePath];
 
 	return basePath;
-
-#endif
 }
 
-+ (nullable NSString *)applicationLogsFolderPath
++ (nullable NSURL *)applicationSupportURL
+{
+	NSString *sourcePath = self.applicationSupport;
+
+	if (sourcePath == nil) {
+		return nil;
+	}
+
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
+}
+
++ (nullable NSString *)groupContainerApplicationSupport
+{
+	NSURL *sourceURL = self.groupContainerApplicationSupportURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	return sourceURL.path;
+}
+
++ (nullable NSURL *)groupContainerApplicationSupportURL
+{
+	NSURL *sourceURL = self.groupContainerURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Library/Application Support/Textual/"];
+
+	[self _createDirectoryAtURL:baseURL];
+
+	return baseURL;
+}
+
++ (nullable NSString *)applicationLogs
 {
 	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
 
@@ -143,17 +249,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:endPath];
 
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	[self _createDirectoryAtPath:basePath];
 
 	return basePath;
 }
 
-+ (NSString *)applicationResourcesFolderPath
++ (nullable NSURL *)applicationLogsURL
 {
-	return RZMainBundle().resourcePath;
+	NSString *sourcePath = self.applicationLogs;
+
+	if (sourcePath == nil) {
+		return nil;
+	}
+
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
 }
 
-+ (NSString *)applicationTemporaryFolderPath
++ (NSString *)applicationTemporary
 {
 	NSString *sourcePath = NSTemporaryDirectory();
 
@@ -161,84 +273,79 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *basePath = [sourcePath stringByAppendingPathComponent:endPath];
 
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	[self _createDirectoryAtPath:basePath];
 
 	return basePath;
 }
 
-+ (nullable NSString *)applicationSupportFolderPathInGroupContainer
++ (NSURL *)applicationTemporaryURL
 {
-	NSString *sourcePath = [TPCPathInfo applicationGroupContainerPath];
+	return [NSURL fileURLWithPath:self.applicationTemporary isDirectory:YES];
+}
 
-	if (sourcePath == nil) {
++ (NSString *)bundledExtensions
+{
+	return self.bundledExtensionsURL.path;
+}
+
++ (NSURL *)bundledExtensionsURL
+{
+	NSURL *baseURL = self.applicationResourcesURL;
+
+	return [baseURL URLByAppendingPathComponent:@"/Extensions/"];
+}
+
++ (NSString *)bundledScripts
+{
+	return self.bundledScriptsURL.path;
+}
+
++ (NSURL *)bundledScriptsURL
+{
+	NSURL *baseURL = self.applicationResourcesURL;
+
+	return [baseURL URLByAppendingPathComponent:@"/Scripts/"];
+}
+
++ (NSString *)bundledThemes
+{
+	return self.bundledThemesURL.path;
+}
+
++ (NSURL *)bundledThemesURL
+{
+	NSURL *baseURL = self.applicationResourcesURL;
+
+	return [baseURL URLByAppendingPathComponent:@"/Styles/"];
+}
+
++ (nullable NSString *)customExtensions
+{
+	NSURL *sourceURL = self.customExtensionsURL;
+
+	if (sourceURL == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Library/Application Support/Textual/"];
-		
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
-		
-	return basePath;
+	return sourceURL.path;
 }
 
-+ (nullable NSString *)applicationSupportFolderPathInLocalContainer
++ (nullable NSURL *)customExtensionsURL
 {
-	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+	NSURL *sourceURL = self.groupContainerApplicationSupportURL;
 
-	if (pathArray.count == 0) {
+	if (sourceURL == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:@"/Textual/"];
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Extensions/"];
 
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	[self _createDirectoryAtURL:baseURL];
 
-	return basePath;
+	return baseURL;
 }
 
-+ (NSString *)systemDiagnosticReportsFolderPath
-{
-	return @"/Library/Logs/DiagnosticReports";
-}
-
-+ (NSString *)userDiagnosticReportsFolderPath
-{
-	NSString *sourcePath = [TPCPathInfo userHomeFolderPath];
-
-	return [sourcePath stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
-}
-
-+ (nullable NSString *)customExtensionFolderPath
-{
-	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
-
-	if (sourcePath == nil) {
-		return nil;
-	}
-
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Extensions/"];
-
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
-
-	return basePath;
-}
-
-+ (nullable NSString *)customThemeFolderPath
-{
-	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
-
-	if (sourcePath == nil) {
-		return nil;
-	}
-
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Styles/"];
-
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
-
-	return basePath;
-}
-
-+ (nullable NSString *)customScriptsFolderPath
++ (nullable NSString *)customScripts
 {
 	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
 
@@ -249,48 +356,56 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *basePath = pathArray.firstObject;
 
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	[self _createDirectoryAtPath:basePath];
 #endif
-	
+
 	return basePath;
 }
 
-+ (nullable NSString *)customScriptsFolderPathLeading
++ (nullable NSURL *)customScriptsURL
 {
-	NSString *sourcePath = [TPCPathInfo customScriptsFolderPath];
+	NSString *sourcePath = self.customScripts;
 
 	if (sourcePath == nil) {
 		return nil;
 	}
 
-	return sourcePath.stringByDeletingLastPathComponent;
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
 }
 
-+ (NSString *)bundledExtensionFolderPath
++ (nullable NSString *)customThemes
 {
-	NSString *sourcePath = [TPCPathInfo applicationResourcesFolderPath];
+	NSURL *sourceURL = self.customThemesURL;
 
-	return [sourcePath stringByAppendingPathComponent:@"/Extensions/"];
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	return sourceURL.path;
 }
 
-+ (NSString *)bundledScriptFolderPath
++ (nullable NSURL *)customThemesURL
 {
-	NSString *sourcePath = [TPCPathInfo applicationResourcesFolderPath];
+	NSURL *sourceURL = self.groupContainerApplicationSupportURL;
 
-	return [sourcePath stringByAppendingPathComponent:@"/Scripts/"];
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Styles/"];
+
+	[self _createDirectoryAtURL:baseURL];
+
+	return baseURL;
 }
 
-+ (NSString *)bundledThemeFolderPath
-{
-	NSString *sourcePath = [TPCPathInfo applicationResourcesFolderPath];
+#pragma mark -
+#pragma mark System Specific
 
-	return [sourcePath stringByAppendingPathComponent:@"/Styles/"];
-}
-
-+ (nullable NSString *)userDownloadsFolderPath
++ (nullable NSString *)systemApplications
 {
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
-	
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
+
 	if (searchArray.count == 0) {
 		return nil;
 	}
@@ -298,7 +413,101 @@ NS_ASSUME_NONNULL_BEGIN
 	return searchArray.firstObject;
 }
 
-+ (nullable NSString *)userPreferencesFolderPath
++ (nullable NSURL *)systemApplicationsURL
+{
+	NSString *sourcePath = self.systemApplications;
+
+	if (sourcePath == nil) {
+		return nil;
+	}
+
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
+}
+
++ (NSString *)systemDiagnosticReports
+{
+	return @"/Library/Logs/DiagnosticReports";
+}
+
++ (NSURL *)systemDiagnosticReportsURL
+{
+	return [NSURL fileURLWithPath:self.systemDiagnosticReports isDirectory:YES];
+}
+
+#pragma mark -
+#pragma mark User Specific
+
++ (nullable NSString *)userApplicationScripts
+{
+	NSURL *sourceURL = self.userApplicationScriptsURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	return sourceURL.path;
+}
+
++ (nullable NSURL *)userApplicationScriptsURL
+{
+	NSURL *sourceURL = self.customScriptsURL;
+
+	return [sourceURL URLByDeletingLastPathComponent];
+}
+
++ (NSString *)userDiagnosticReports
+{
+	return self.userDiagnosticReportsURL.path;
+}
+
++ (NSURL *)userDiagnosticReportsURL
+{
+	NSURL *sourceURL = self.userHomeURL;
+
+	return [sourceURL URLByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
+}
+
++ (nullable NSString *)userDownloads
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
+
+	if (searchArray.count == 0) {
+		return nil;
+	}
+
+	return searchArray.firstObject;
+}
+
++ (nullable NSURL *)userDownloadsURL
+{
+	NSString *sourcePath = self.userDownloads;
+
+	if (sourcePath == nil) {
+		return nil;
+	}
+
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
+}
+
++ (NSString *)userHome
+{
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+	uid_t userId = getuid();
+
+	struct passwd *pw = getpwuid(userId);
+
+	return @(pw->pw_dir);
+#else
+	return NSHomeDirectory();
+#endif
+}
+
++ (NSURL *)userHomeURL
+{
+	return [NSURL fileURLWithPath:self.userHome isDirectory:YES];
+}
+
++ (nullable NSString *)userPreferences
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
 
@@ -309,66 +518,59 @@ NS_ASSUME_NONNULL_BEGIN
 	return [searchArray.firstObject stringByAppendingPathComponent:@"/Preferences/"];
 }
 
-+ (NSString *)userHomeFolderPath
++ (nullable NSURL *)userPreferencesURL
 {
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-	uid_t userId = getuid();
-
-	struct passwd *pw = getpwuid(userId);
-	
-	return @(pw->pw_dir);
-#else
-	return NSHomeDirectory();
-#endif
-}
-
-+ (nullable NSString *)systemApplicationFolderPath
-{
-	NSURL *folderURL = [self systemApplicationFolderURL];
-	
-	if (folderURL == nil) {
-		return nil;
-	}
-	
-	return folderURL.path;
-}
-
-+ (nullable NSURL *)systemApplicationFolderURL
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
-	
-	if (searchArray.count == 0) {
-		return nil;
-	}
-	
-	return [NSURL fileURLWithPath:searchArray[0] isDirectory:YES];
-}
-
-@end
-
-#pragma mark -
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-@implementation TPCPathInfo (TPCPathInfoCloudExtension)
-
-+ (nullable NSString *)applicationUbiquitousContainerPath
-{
-	return sharedCloudManager().ubiquitousContainerPath;
-}
-
-+ (nullable NSString *)cloudCustomThemeFolderPath
-{
-	NSString *sourcePath = [TPCPathInfo applicationUbiquitousContainerPath];
+	NSString *sourcePath = self.userPreferences;
 
 	if (sourcePath == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Documents/Styles/"];
+	return [NSURL fileURLWithPath:sourcePath isDirectory:YES];
+}
 
-	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+@end
 
-	return basePath;
+#pragma mark -
+#pragma mark iCloud
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+@implementation TPCPathInfo (TPCPathInfoCloudExtension)
+
++ (nullable NSString *)applicationUbiquitousContainer
+{
+	return sharedCloudManager().ubiquitousContainerPath;
+}
+
++ (nullable NSURL *)applicationUbiquitousContainerURL
+{
+	return sharedCloudManager().ubiquitousContainerURL;
+}
+
++ (nullable NSString *)cloudCustomThemes
+{
+	NSURL *sourceURL = self.cloudCustomThemesURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	return sourceURL.path;
+}
+
++ (nullable NSURL *)cloudCustomThemesURL
+{
+	NSURL *sourceURL = self.applicationUbiquitousContainerURL;
+
+	if (sourceURL == nil) {
+		return nil;
+	}
+
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Styles/"];
+
+	[self _createDirectoryAtURL:baseURL];
+
+	return baseURL;
 }
 
 + (void)_openCloudPathOrErrorIfUnavailable:(NSString *)path
@@ -389,24 +591,25 @@ NS_ASSUME_NONNULL_BEGIN
 	(void)[RZWorkspace() openFile:path];
 }
 
-+ (void)openApplicationUbiquitousContainerPath
++ (void)openApplicationUbiquitousContainer
 {
-	NSString *sourcePath = [TPCPathInfo applicationUbiquitousContainerPath];
+	NSString *sourcePath = self.applicationUbiquitousContainer;
 
-	[TPCPathInfo _openCloudPathOrErrorIfUnavailable:sourcePath];
+	[self _openCloudPathOrErrorIfUnavailable:sourcePath];
 }
 
-+ (void)openCloudCustomThemeFolderPath
++ (void)openCloudCustomThemes
 {
-	NSString *sourcePath = [TPCPathInfo cloudCustomThemeFolderPath];
+	NSString *sourcePath = self.cloudCustomThemes;
 
-	[TPCPathInfo _openCloudPathOrErrorIfUnavailable:sourcePath];
+	[self _openCloudPathOrErrorIfUnavailable:sourcePath];
 }
 
 @end
 #endif
 
 #pragma mark -
+#pragma mark Transcript URL
 
 @implementation TPCPathInfo (TPCPathInfoTranscriptFolderExtension)
 
@@ -489,6 +692,174 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	if ([_transcriptFolderURL startAccessingSecurityScopedResource] == NO) {
 		LogToConsoleError("Failed to access bookmark");
 	}
+}
+
+@end
+
+#pragma mark -
+#pragma mark Deprecated
+
+@implementation TPCPathInfo (TPCPathInfoDeprecated)
+
++ (NSString *)applicationBundlePath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.applicationBundle;
+}
+
++ (nullable NSString *)applicationCachesFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.applicationCaches;
+}
+
++ (nullable NSString *)applicationCachesFolderInsideGroupContainerPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.groupContainerApplicationCaches;
+}
+
++ (nullable NSString *)applicationGroupContainerPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.groupContainer;
+}
+
++ (nullable NSString *)applicationLogsFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.applicationLogs;
+}
+
++ (NSString *)applicationResourcesFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.applicationResources;
+}
+
++ (NSString *)applicationTemporaryFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.applicationTemporary;
+}
+
++ (nullable NSString *)applicationSupportFolderPathInGroupContainer
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.groupContainerApplicationSupport;
+}
+
++ (nullable NSString *)applicationSupportFolderPathInLocalContainer
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.applicationSupport;
+}
+
++ (nullable NSString *)systemApplicationFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.systemApplications;
+}
+
++ (nullable NSURL *)systemApplicationFolderURL
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.systemApplicationsURL;
+}
+
++ (NSString *)systemDiagnosticReportsFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.systemDiagnosticReports;
+}
+
++ (NSString *)userDiagnosticReportsFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.userDiagnosticReports;
+}
+
++ (nullable NSString *)customExtensionFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.customExtensions;
+}
+
++ (nullable NSString *)customScriptsFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.customScripts;
+}
+
++ (nullable NSString *)customScriptsFolderPathLeading
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.userApplicationScripts;
+}
+
++ (nullable NSString *)customThemeFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.customThemes;
+}
+
++ (NSString *)bundledExtensionFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.bundledExtensions;
+}
+
++ (NSString *)bundledScriptFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.bundledScripts;
+}
+
++ (NSString *)bundledThemeFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.bundledThemes;
+}
+
++ (nullable NSString *)userDownloadsFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.userDownloads;
+}
+
++ (NSString *)userHomeFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.userHome;
+}
+
++ (nullable NSString *)userPreferencesFolderPath
+{
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.userPreferences;
 }
 
 @end

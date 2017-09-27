@@ -77,8 +77,8 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	NSArray *pathsToLoad =
 	[RZFileManager() buildPathArray:
-		[TPCPathInfo customExtensionFolderPath],
-		[TPCPathInfo bundledExtensionFolderPath],
+		[TPCPathInfo customExtensions],
+		[TPCPathInfo bundledExtensions],
 		nil];
 
 	for (NSString *path in pathsToLoad) {
@@ -214,8 +214,8 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	NSArray *scriptPaths =
 	[RZFileManager() buildPathArray:
-		[TPCPathInfo customScriptsFolderPath],
-		[TPCPathInfo bundledScriptFolderPath],
+		[TPCPathInfo customScripts],
+		[TPCPathInfo bundledScripts],
 		nil];
 
 	id returnValue = nil;

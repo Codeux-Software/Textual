@@ -40,45 +40,126 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPathInfo : NSObject
-+ (NSString *)applicationBundlePath;
-+ (nullable NSString *)applicationCachesFolderPath;
-+ (nullable NSString *)applicationCachesFolderInsideGroupContainerPath;
-+ (nullable NSString *)applicationGroupContainerPath;
-+ (nullable NSString *)applicationLogsFolderPath;
-+ (NSString *)applicationResourcesFolderPath;
-+ (NSString *)applicationTemporaryFolderPath;
+#pragma mark -
+#pragma mark Application Specific
 
-+ (nullable NSString *)applicationSupportFolderPathInGroupContainer;
-+ (nullable NSString *)applicationSupportFolderPathInLocalContainer;
+@property (readonly, class) NSString *applicationBundle;
+@property (readonly, class) NSURL *applicationBundleURL;
 
-+ (nullable NSString *)systemApplicationFolderPath;
-+ (nullable NSURL *)systemApplicationFolderURL;
+@property (readonly, class) NSString *applicationResources;
+@property (readonly, class) NSURL *applicationResourcesURL;
 
-+ (NSString *)systemDiagnosticReportsFolderPath;
-+ (NSString *)userDiagnosticReportsFolderPath;
+@property (readonly, class, nullable) NSString *applicationCaches;
+@property (readonly, class, nullable) NSURL *applicationCachesURL;
 
-+ (nullable NSString *)customExtensionFolderPath;
-+ (nullable NSString *)customScriptsFolderPath;
-+ (nullable NSString *)customScriptsFolderPathLeading;
-+ (nullable NSString *)customThemeFolderPath;
+@property (readonly, class, nullable) NSString *groupContainer;
+@property (readonly, class, nullable) NSURL *groupContainerURL;
 
-+ (NSString *)bundledExtensionFolderPath;
-+ (NSString *)bundledScriptFolderPath;
-+ (NSString *)bundledThemeFolderPath;
+@property (readonly, class, nullable) NSString *groupContainerApplicationCaches;
+@property (readonly, class, nullable) NSURL *groupContainerApplicationCachesURL;
 
-+ (nullable NSString *)userDownloadsFolderPath;
-+ (NSString *)userHomeFolderPath;
-+ (nullable NSString *)userPreferencesFolderPath;
+@property (readonly, class, nullable) NSString *applicationSupport;
+@property (readonly, class, nullable) NSURL *applicationSupportURL;
+
+@property (readonly, class, nullable) NSString *groupContainerApplicationSupport;
+@property (readonly, class, nullable) NSURL *groupContainerApplicationSupportURL;
+
+@property (readonly, class, nullable) NSString *applicationLogs;
+@property (readonly, class, nullable) NSURL *applicationLogsURL;
+
+@property (readonly, class) NSString *applicationTemporary;
+@property (readonly, class) NSURL *applicationTemporaryURL;
+
+@property (readonly, class) NSString *bundledExtensions;
+@property (readonly, class) NSURL *bundledExtensionsURL;
+
+@property (readonly, class) NSString *bundledScripts;
+@property (readonly, class) NSURL *bundledScriptsURL;
+
+@property (readonly, class) NSString *bundledThemes;
+@property (readonly, class) NSURL *bundledThemesURL;
+
+@property (readonly, class, nullable) NSString *customExtensions;
+@property (readonly, class, nullable) NSURL *customExtensionsURL;
+
+@property (readonly, class, nullable) NSString *customScripts;
+@property (readonly, class, nullable) NSURL *customScriptsURL;
+
+@property (readonly, class, nullable) NSString *customThemes;
+@property (readonly, class, nullable) NSURL *customThemesURL;
+
+#pragma mark -
+#pragma mark System Specific
+
+@property (readonly, class, nullable) NSString *systemApplications;
+@property (readonly, class, nullable) NSURL *systemApplicationsURL;
+
+@property (readonly, class) NSString *systemDiagnosticReports;
+@property (readonly, class) NSURL *systemDiagnosticReportsURL;
+
+#pragma mark -
+#pragma mark User Specific
+
+@property (readonly, class, nullable) NSString *userApplicationScripts;
+@property (readonly, class, nullable) NSURL *userApplicationScriptsURL;
+
+@property (readonly, class) NSString *userDiagnosticReports;
+@property (readonly, class) NSURL *userDiagnosticReportsURL;
+
+@property (readonly, class, nullable) NSString *userDownloads;
+@property (readonly, class, nullable) NSURL *userDownloadsURL;
+
+@property (readonly, class) NSString *userHome;
+@property (readonly, class) NSURL *userHomeURL;
+
+@property (readonly, class, nullable) NSString *userPreferences;
+@property (readonly, class, nullable) NSURL *userPreferencesURL;
 @end
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @interface TPCPathInfo (TPCPathInfoCloudExtension)
-+ (nullable NSString *)applicationUbiquitousContainerPath;
-+ (void)openApplicationUbiquitousContainerPath;
+@property (readonly, class, nullable) NSString *applicationUbiquitousContainer;
+@property (readonly, class, nullable) NSURL *applicationUbiquitousContainerURL;
 
-+ (nullable NSString *)cloudCustomThemeFolderPath;
-+ (void)openCloudCustomThemeFolderPath;
++ (void)openApplicationUbiquitousContainer;
+
+@property (readonly, class, nullable) NSString *cloudCustomThemes;
+@property (readonly, class, nullable) NSURL *cloudCustomThemesURL;
+
++ (void)openCloudCustomThemes;
 @end
 #endif
+
+@interface TPCPathInfo (TPCPathInfoDeprecated)
++ (NSString *)applicationBundlePath TEXTUAL_DEPRECATED("Use +applicationBundle instead");
++ (nullable NSString *)applicationCachesFolderPath TEXTUAL_DEPRECATED("Use +applicationCaches instead");
++ (nullable NSString *)applicationCachesFolderInsideGroupContainerPath TEXTUAL_DEPRECATED("Use +groupContainerApplicationCaches instead");
++ (nullable NSString *)applicationGroupContainerPath TEXTUAL_DEPRECATED("Use +groupContainer instead");
++ (nullable NSString *)applicationLogsFolderPath TEXTUAL_DEPRECATED("Use +applicationLogs instead");
++ (NSString *)applicationResourcesFolderPath TEXTUAL_DEPRECATED("Use +applicationResources instead");
++ (NSString *)applicationTemporaryFolderPath TEXTUAL_DEPRECATED("Use +applicationTemporary instead");
+
++ (nullable NSString *)applicationSupportFolderPathInGroupContainer TEXTUAL_DEPRECATED("Use +groupContainerApplicationSupport instead");
++ (nullable NSString *)applicationSupportFolderPathInLocalContainer TEXTUAL_DEPRECATED("Use +applicationSupport instead");
+
++ (nullable NSString *)systemApplicationFolderPath TEXTUAL_DEPRECATED("Use +systemApplications instead");
++ (nullable NSURL *)systemApplicationFolderURL TEXTUAL_DEPRECATED("Use +systemApplicationsURL instead");
+
++ (NSString *)systemDiagnosticReportsFolderPath TEXTUAL_DEPRECATED("Use +systemDiagnosticReports instead");
++ (NSString *)userDiagnosticReportsFolderPath TEXTUAL_DEPRECATED("Use +userDiagnosticReports instead");
+
++ (nullable NSString *)customExtensionFolderPath TEXTUAL_DEPRECATED("Use +customExtensions instead");
++ (nullable NSString *)customScriptsFolderPath TEXTUAL_DEPRECATED("Use +customScripts instead");
++ (nullable NSString *)customScriptsFolderPathLeading TEXTUAL_DEPRECATED("Use +userApplicationScripts instead");
++ (nullable NSString *)customThemeFolderPath TEXTUAL_DEPRECATED("Use +customThemes instead");
+
++ (NSString *)bundledExtensionFolderPath TEXTUAL_DEPRECATED("Use +bundledExtensions instead");
++ (NSString *)bundledScriptFolderPath TEXTUAL_DEPRECATED("Use +bundledScripts instead");
++ (NSString *)bundledThemeFolderPath TEXTUAL_DEPRECATED("Use +bundledThemes instead");
+
++ (nullable NSString *)userDownloadsFolderPath TEXTUAL_DEPRECATED("Use +userDownloads instead");
++ (NSString *)userHomeFolderPath TEXTUAL_DEPRECATED("Use +userHome instead");
++ (nullable NSString *)userPreferencesFolderPath TEXTUAL_DEPRECATED("Use +userPreferences instead");
+@end
 
 NS_ASSUME_NONNULL_END

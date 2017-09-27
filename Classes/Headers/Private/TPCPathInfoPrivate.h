@@ -38,7 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPathInfo ()
-+ (void)_createDirectoryOrOutputError:(NSString *)path;
++ (void)_createDirectoryAtPath:(NSString *)directoryPath;
++ (void)_createDirectoryAtURL:(NSURL *)directoryURL;
 @end
 
 @interface TPCPathInfo (TPCPathInfoTranscriptFolderExtension)

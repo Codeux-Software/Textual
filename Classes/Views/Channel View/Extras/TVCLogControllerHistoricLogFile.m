@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return [self databaseSavePath];
 	}
 
-	NSString *sourcePath = [TPCPathInfo applicationCachesFolderInsideGroupContainerPath];
+	NSString *sourcePath = [TPCPathInfo groupContainerApplicationCaches];
 
 	return [sourcePath stringByAppendingPathComponent:filename];
 }

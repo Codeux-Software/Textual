@@ -48,28 +48,15 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 + (void)copyResourcesToApplicationSupportFolder
 {
 	/* Add a system link for the unsupervised scripts folder if it exists. */
-	NSString *sourcePath = [TPCPathInfo customScriptsFolderPath];
+	NSString *sourcePath = [TPCPathInfo customScripts];
 
-	NSString *destinationPath = [[TPCPathInfo applicationSupportFolderPathInGroupContainer] stringByAppendingPathComponent:@"/Custom Scripts/"];
+	NSString *destinationPath = [[TPCPathInfo groupContainerApplicationSupport] stringByAppendingPathComponent:@"/Custom Scripts/"];
 	
 	if ([RZFileManager() fileExistsAtPath:sourcePath] &&
 		[RZFileManager() fileExistsAtPath:destinationPath] == NO)
 	{
 		[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL];
 	}
-	
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	/* Add a system link for the iCloud folder if the iCloud folder exists. */
-	if (sharedCloudManager().ubiquitousContainerIsAvailable) {
-		destinationPath = [[TPCPathInfo applicationSupportFolderPathInGroupContainer] stringByAppendingPathComponent:@"/iCloud Resources/"];
-		
-		sourcePath = sharedCloudManager().ubiquitousContainerPath;
-		
-		if ([RZFileManager() fileExistsAtPath:destinationPath] == NO) {
-			[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL];
-		}
-	}
-#endif
 }
 
 + (nullable NSDictionary<NSString *, id> *)loadContentsOfPropertyListInResources:(NSString *)name
@@ -128,9 +115,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		return;
 	}
 
-	NSString *newPath = [[TPCPathInfo customExtensionFolderPath] stringByAppendingPathComponent:filename];
+	NSURL *newPath = [[TPCPathInfo customExtensionsURL] URLByAppendingPathComponent:filename];
 
-	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
+	BOOL didImport = [self import:url into:newPath];
 
 	if (didImport) {
 		NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
@@ -147,9 +134,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError
 {
-	NSString *scriptsPath = [TPCPathInfo customScriptsFolderPath];
+	NSString *scriptsPath = [TPCPathInfo customScripts];
 
-	if ([url.relativePath hasPrefix:scriptsPath] == NO) {
+	if ([url.path hasPrefix:scriptsPath] == NO) {
 		if (outError) {
 			NSMutableDictionary<NSString *, id> *userInfo = [NSMutableDictionary dictionary];
 
@@ -162,9 +149,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		}
 
 		return NO;
-	} else {
-		return YES;
 	}
+
+	return YES;
 }
 
 - (void)performImportOfScriptFile:(NSURL *)url
@@ -184,18 +171,18 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	}
 
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
-	NSString *newPath = [[TPCPathInfo customScriptsFolderPath] stringByAppendingPathComponent:filename];
+	NSURL *newPath = [[TPCPathInfo customScriptsURL] URLByAppendingPathComponent:filename];
 
-	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
+	BOOL didImport = [self import:url into:newPath];
 
 	if (didImport) {
 		[self performImportOfScriptFilePostflight:filename];
 	}
 #else
-	NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo customScriptsFolderPath] isDirectory:YES];
+	NSURL *folderRep = [TPCPathInfo customScriptsURL];
 
-	if ([RZFileManager() fileExistsAtPath:folderRep.relativePath] == NO) {
-		folderRep = [NSURL fileURLWithPath:[TPCPathInfo customScriptsFolderPathLeading] isDirectory:YES];
+	if ([RZFileManager() fileExistsAtURL:folderRep] == NO) {
+		folderRep = [TPCPathInfo userApplicationScriptsURL];
 	}
 
 	NSString *bundleID = [TPCApplicationInfo applicationBundleIdentifier];

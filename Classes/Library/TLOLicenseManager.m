@@ -168,7 +168,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 	 one which will define when the trial period began. */
 	/* NSPropertyListSerialization is used by this function, in place of the built
 	 in NSData read & write methods, for better error reporting. */
-	if ([RZFileManager() fileExistsAtPath:trialInformationFilePath.path] == NO)
+	if ([RZFileManager() fileExistsAtURL:trialInformationFilePath] == NO)
 	{
 		NSDictionary *trialInformation = @{
 			@"trialPeriodStartDate" : [NSDate date]
@@ -263,15 +263,15 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 
 NSURL * _Nullable TLOLicenseManagerTrialModeInformationFilePath(void)
 {
-	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInLocalContainer];
+	NSURL *sourceURL = [TPCPathInfo applicationSupportURL];
 
-	if (sourcePath == nil) {
+	if (sourceURL == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Textual_Trial_Information_v2.plist"];
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Textual_Trial_Information_v2.plist"];
 
-	return [NSURL fileURLWithPath:basePath isDirectory:NO];
+	return baseURL;
 }
 
 #pragma mark -
@@ -470,15 +470,15 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 
 NSURL * _Nullable TLOLicenseManagerLicenseFilePath(void)
 {
-	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInLocalContainer];
+	NSURL *sourceURL = [TPCPathInfo applicationSupportURL];
 
-	if (sourcePath == nil) {
+	if (sourceURL == nil) {
 		return nil;
 	}
 
-	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Textual_User_License_v2.plist"];
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Textual_User_License_v2.plist"];
 
-	return [NSURL fileURLWithPath:basePath isDirectory:NO];
+	return baseURL;
 }
 
 BOOL TLOLicenseManagerDeleteLicenseFile(void)
