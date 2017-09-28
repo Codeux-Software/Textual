@@ -25,5 +25,9 @@
 		<string>com.apple.itunes</string>
 		<string>com.apple.safari</string>
 	</array>
+	<key>com.apple.security.temporary-exception.shared-preference.read-only</key>
+	<array>
+		<string>com.codeux.apps.textual</string>
+	</array>
 </dict>
 </plist>
