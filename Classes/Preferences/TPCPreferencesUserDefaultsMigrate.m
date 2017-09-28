@@ -39,10 +39,133 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 @implementation TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
 
-+ (void)migrateKeyValues
+#pragma mark -
+#pragma mark Repair Preferences
+
++ (void)repairPreferences
+{
+	[self _repairOldStyleSymbolicLink];
+}
+
+/* Textual 5 would create a symoblic link from the App Store preferences file path
+ to the standalone preferences file path. This was done so if you began using App Store
+ verison, the symbolic link would allow the app to access preferences already set.
+ This is no longer done but the symbolic link still exists for a lot of users.
+ This logic replaces the symbolic link with a copy of the file its linked against. */
++ (void)_repairOldStyleSymbolicLink
+{
+	/* Locate preferences file */
+	NSURL *preferencesFile = [self expandPath:@"group:8482Q6EPL6.com.codeux.irc.textual"];
+
+	if (preferencesFile == nil) {
+		LogToConsoleDebug("-expandPath returned nil value");
+
+		return;
+	}
+
+	if ([RZFileManager() fileExistsAtURL:preferencesFile] == NO) {
+		LogToConsoleDebug("Preferences file does not exist");
+
+		return;
+	}
+
+	/* Lock getter */
+	NSNumber *isLocked;
+
+	{
+		NSError *isLockedError;
+
+		if ([preferencesFile getResourceValue:&isLocked forKey:NSURLIsUserImmutableKey error:&isLockedError] == NO) {
+			LogToConsoleError("Failed to determine whether preferences file is locked: %@",
+				 isLockedError.localizedDescription);
+
+			return;
+		}
+	}
+
+	/* Lock setter */
+	if (isLocked.boolValue) {
+		NSError *removeLockError;
+
+		if ([preferencesFile setResourceValue:@(NO) forKey:NSURLIsUserImmutableKey error:&removeLockError] == NO) {
+			LogToConsoleError("Failed to remove lock from preferences file: %@",
+				  removeLockError.localizedDescription);
+
+			return;
+		}
+	}
+
+	/* Smbolic link getter */
+	NSNumber *isSymbolicLink;
+
+	{
+		NSError *isSymbolicLinkError;
+
+		if ([preferencesFile getResourceValue:&isSymbolicLink forKey:NSURLIsSymbolicLinkKey error:&isSymbolicLinkError] == NO) {
+			LogToConsoleError("Failed to determine whether preferences file is symbolic link: %@",
+				  isSymbolicLinkError.localizedDescription);
+
+			return;
+		}
+	}
+
+	/* Symbolic link check */
+	if (isSymbolicLink.boolValue == NO) {
+		LogToConsoleDebug("Preferences file does not require repair");
+
+		return;
+	}
+
+	/* Copy linked file to temporary location */
+	NSURL *preferencesFileTemp = [preferencesFile URLByAppendingPathExtension:@"backup"];
+
+	NSURL *preferencesFileResolved = [preferencesFile URLByResolvingSymlinksInPath];
+
+	{
+		NSError *copyError;
+
+		if ([RZFileManager() copyItemAtURL:preferencesFileResolved toURL:preferencesFileTemp error:&copyError] == NO) {
+			LogToConsoleError("Failed to copy resolved preferences file to temporary location: %@",
+				  copyError.localizedDescription);
+
+			return;
+		}
+
+	}
+
+	/* Delete symbolic link */
+	{
+		NSError *deleteError;
+
+		if ([RZFileManager() removeItemAtURL:preferencesFile error:&deleteError] == NO) {
+			LogToConsoleError("Failed to delete symbolic link: %@",
+				  deleteError.localizedDescription);
+
+			return;
+		}
+	}
+
+	/* Copy temporary file to correct location */
+	{
+		NSError *moveError;
+
+		if ([RZFileManager() copyItemAtURL:preferencesFileTemp toURL:preferencesFile error:&moveError] == NO) {
+			LogToConsoleError("Failed to copy temporary preferences file to new location: %@",
+				  moveError.localizedDescription);
+
+			return;
+		}
+	}
+
+	LogToConsoleDebug("Finished repairing preferences");
+}
+
+#pragma mark -
+#pragma mark Migrate Preferences
+
++ (void)migratePreferences
 {
 #define _defaultsKeyPrefix	@"TPCPreferences -> Migration -> "
 
@@ -154,6 +277,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Messages
+
 + (void)presentMigrationFailedErrorMessage
 {
 	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1138][1]")
@@ -163,6 +289,5 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @end
-#endif
 
 NS_ASSUME_NONNULL_END

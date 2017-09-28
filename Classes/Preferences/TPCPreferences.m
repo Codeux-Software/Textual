@@ -1373,8 +1373,10 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	// ====================================================== //
 
+	[TPCPreferencesUserDefaults repairPreferences];
+
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
-	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
+	[TPCPreferencesUserDefaults migratePreferences];
 #endif
 
 	[TPCPreferences _migratePreferencesToVersion602];

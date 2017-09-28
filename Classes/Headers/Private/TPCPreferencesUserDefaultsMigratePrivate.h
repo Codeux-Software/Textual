@@ -37,10 +37,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 @interface TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
-+ (void)migrateKeyValues;
++ (void)repairPreferences;
++ (void)migratePreferences;
 @end
-#endif
 
 NS_ASSUME_NONNULL_END
