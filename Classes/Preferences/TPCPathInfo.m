@@ -566,7 +566,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Styles/"];
+	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Documents/Styles/"];
 
 	[self _createDirectoryAtURL:baseURL];
 
