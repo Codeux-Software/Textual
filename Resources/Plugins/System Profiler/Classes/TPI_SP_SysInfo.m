@@ -92,36 +92,22 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *themeName = themeController().name;
 	
 	TPCThemeControllerStorageLocation storageLocation = themeController().storageLocation;
-	
+
+	NSString *storageLocationLabel = nil;
+
     if (storageLocation == TPCThemeControllerStorageBundleLocation) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1033]", themeName)];
+		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1036]");
     } else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1034]", themeName)];
+		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1037]");
     } else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1035]", themeName)];
+		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1038]");
 	}
 
-	if ([TPCPreferences invertSidebarColors] == NO) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1036]")];
-	} else {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1037]")];
-	}
-
-	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1039]")];
-	} else {
-		[resultString appendString:TPILocalizedString(@"BasicLanguage[1038]")];
-	}
-
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
-		if ([TXUserInterface systemWideDarkModeEnabledOnYosemite]) {
-			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]", [XRSystemInformation systemOperatingSystemName])];
-		} else {
-			[resultString appendString:TPILocalizedString(@"BasicLanguage[1050]", [XRSystemInformation systemOperatingSystemName])];
-		}
-	}
-
-	return [resultString copy];
+	return TPILocalizedString(@"BasicLanguage[1033]",
+			  themeName,
+			  storageLocationLabel,
+			  StringFromBOOL([TPCPreferences invertSidebarColors]),
+			  StringFromBOOL([TPCPreferences webKit2Enabled]));
 }
 
 + (NSString *)applicationAndSystemUptime
