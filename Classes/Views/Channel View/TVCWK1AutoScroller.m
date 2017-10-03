@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (nonatomic, weak) WebFrameView *frameView;
+@property (readonly) NSView *documentView;
 @end
 
 @implementation TVCWK1AutoScroller
