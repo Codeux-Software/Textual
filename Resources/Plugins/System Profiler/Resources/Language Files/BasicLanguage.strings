@@ -74,15 +74,10 @@
 "BasicLanguage[1028]" = "Error: Unable to locate any network statistics.";
 
 /* /style/ command. */
-"BasicLanguage[1033]" = "\002Current Style:\002 %@ — \002Environment:\002 ";
-"BasicLanguage[1034]" = "\002Current Style:\002 %@ (Custom) — \002Environment:\002 ";
-"BasicLanguage[1035]" = "\002Current Style:\002 %@ (iCloud) — \002Environment:\002 ";
-"BasicLanguage[1036]" = "Light mode in Textual, ";
-"BasicLanguage[1037]" = "Dark mode in Textual, ";
-"BasicLanguage[1038]" = "system wide aqua";
-"BasicLanguage[1039]" = "system wide graphite";
-"BasicLanguage[1050]" = ", and light mode on %@";
-"BasicLanguage[1051]" = ", and dark mode on %@";
+"BasicLanguage[1033]" = "\002Current Style:\002 %1$@ (%2$@) \002•\002 \002Inverted sidebars:\002 %3$@ \002•\002 \002WebKit2\002: %4$@";
+"BasicLanguage[1036]" = "Bundled";
+"BasicLanguage[1037]" = "Custom";
+"BasicLanguage[1038]" = "Custom - iCloud";
 
 /* /screens/ command. */
 "BasicLanguage[1041]" = "\002Display Resolution:\002 #%1$ld: %2$@";
