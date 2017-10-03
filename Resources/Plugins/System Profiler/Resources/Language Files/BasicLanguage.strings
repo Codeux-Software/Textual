@@ -84,7 +84,7 @@
 "BasicLanguage[1042]" = "; #%1$ld: %2$@";
 
 /* Misc., one line commands. */
-"BasicLanguage[1045]" = "System Uptime: %1$@ - Textual Uptime: %2$@";
+"BasicLanguage[1045]" = "System Uptime: %1$@ \002•\002 Textual Uptime: %2$@";
 "BasicLanguage[1046]" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
 "BasicLanguage[1047]" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
-"BasicLanguage[1049]" = "Textual has sent \002%1$@\002 commands since startup with a total of \002%2$@\002 commands received. The last command received on this connection occurred %3$@ ago. This all equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
+"BasicLanguage[1049]" = "Textual has sent \002%1$@\002 commands since startup with a total of \002%2$@\002 commands received. The last command received on this connection occurred %3$@ ago. This equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
