@@ -269,9 +269,9 @@ appPrivate.renderTemplate = function(templateName, templateAttributes, callbackF
 	}
 };
 
-appPrivate.notifyJumpToLineCallback = function(lineNumber, successful)
+appPrivate.notifyJumpToLineCallback = function(lineNumber, successful, scrolledToBottom)
 {
-	var dataValue = {"values" : [lineNumber, successful]};
+	var dataValue = {"values" : [lineNumber, successful, scrolledToBottom]};
 
 	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.notifyJumpToLineCallback.postMessage(dataValue);

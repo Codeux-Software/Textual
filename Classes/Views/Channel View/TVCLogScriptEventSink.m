@@ -512,7 +512,9 @@ ClassWithDesignatedInitializerInitMethod
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
 					return [argument isKindOfClass:[NSString class]];
-				} else if (argumentIndex == 1) {
+				} else if (argumentIndex == 1 ||
+						   argumentIndex == 2)
+				{
 					return [argument isKindOfClass:[NSNumber class]];
 				}
 
@@ -965,7 +967,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL successful = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] boolValue];
 
-	[context.viewController notifyJumpToLine:lineNumber successful:successful];
+	BOOL scrolledToBottom = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] boolValue];
+
+	[context.viewController notifyJumpToLine:lineNumber successful:successful scrolledToBottom:scrolledToBottom];
 }
 
 - (void)_notifyLinesAddedToView:(TVCLogScriptEventSinkContext *)context

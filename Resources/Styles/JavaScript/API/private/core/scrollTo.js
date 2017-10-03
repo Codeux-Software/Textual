@@ -73,11 +73,15 @@ Textual.jumpToLine = function(lineNumber) /* PUBLIC */
 		lineNumber, 
 		
 		(function(success) {
+			var scrolledToBottom = false;
+
 			if (success) {
+				scrolledToBottom = TextualScroller.isScrolledToBottom();
+
 				Textual.viewPositionMovedToLine(lineNumber);
 			}
 
-			appPrivate.notifyJumpToLineCallback(lineNumber, success);
+			appPrivate.notifyJumpToLineCallback(lineNumber, success, scrolledToBottom);
 		})
 	);
 };

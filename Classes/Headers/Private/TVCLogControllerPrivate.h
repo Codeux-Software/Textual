@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyLinesAddedToView:(NSArray<NSString *> *)lineNumbers;
 - (void)notifyLinesRemovedFromView:(NSArray<NSString *> *)lineNumbers;
 
-- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful;
+- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful scrolledToBottom:(BOOL)scrolledToBottom;
 
 - (void)notifyHistoricLogWillDeleteLines:(NSArray<NSString *> *)lineNumbers;
 
