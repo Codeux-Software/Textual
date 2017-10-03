@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 	CGFloat _scrollPositionPreviousValue;
 	BOOL _userScrolled;
 	BOOL _scrolledUpwards;
+	BOOL _restoreScrollerPosition;
 /*	NSRect _lastFrame; */
 }
 
@@ -98,6 +99,8 @@ static CGFloat _userScrolledMinimum = 25.0;
 	self->_scrollPositionPreviousValue = 0.0;
 
 	self->_userScrolled = NO;
+
+	self->_restoreScrollerPosition = YES;
 }
 
 - (NSView *)documentView
@@ -125,14 +128,26 @@ static CGFloat _userScrolledMinimum = 25.0;
 	return (scrollHeight == scrollPosition);
 }
 
+- (void)resetScrollerPosition
+{
+	[self resetScrollerPositionTo:NO];
+}
+
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
+{
+	self->_restoreScrollerPosition = scrolledToBottom;
+}
+
 - (void)saveScrollerPosition
 {
-	;
+	self->_restoreScrollerPosition = self.viewingBottom;
 }
 
 - (void)restoreScrollerPosition
 {
-	if (self->_userScrolled) {
+	if (self->_restoreScrollerPosition) {
+		self->_restoreScrollerPosition = NO;
+	} else {
 		return;
 	}
 

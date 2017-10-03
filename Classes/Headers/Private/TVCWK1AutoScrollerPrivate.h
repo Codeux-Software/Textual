@@ -46,6 +46,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)redrawFrame;
 
+/* -resetScrollerPosition does not actually move the scroller
+ to the bottom if passed a true value. It simply resets the
+ internal state so that when -restoreScrollerPosition is called,
+ it will automatically scroll to the bottom or not. */
+- (void)resetScrollerPosition;
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom;
 - (void)saveScrollerPosition;
 - (void)restoreScrollerPosition;
 @end

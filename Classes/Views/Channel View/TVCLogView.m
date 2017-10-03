@@ -302,6 +302,20 @@ ClassWithDesignatedInitializerInitMethod
 	});
 }
 
+- (void)resetScrollerPosition
+{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView resetScrollerPosition];
+	});
+}
+
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
+{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView resetScrollerPositionTo:scrolledToBottom];
+	});
+}
+
 - (void)saveScrollerPosition
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{

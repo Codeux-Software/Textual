@@ -674,9 +674,6 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(lineNumber != nil);
 
-#warning TODO: Fix jumping to line before switching to view not working correctly \
-	because the WebKit1 auto scroller does not detect frame changes when view is hidden. 
-
 	/* Jumping to line chains callback functinos which may take time to load.
 	 We do not want invoke the completion handler until we know for certain
 	 whether the line was jumped to. We therefore change the completion
@@ -742,6 +739,17 @@ ClassWithDesignatedInitializerInitMethod
 - (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful scrolledToBottom:(BOOL)scrolledToBottom
 {
 	NSParameterAssert(lineNumber != nil);
+
+	/* The Objective-C based automatic scroller relies on notifications of
+	 bounds and frame changes to know when a WebView scrolls. If the WebView
+	 is offscreen, then we have no way to know when a jump occurs because
+	 these notifications are not received. To workaround this, the JavaScript
+	 passes the scrolledToBottom argument. The Objective-C automatic scroller
+	 can then be passed this argument to know whether to perform automatic
+	 scrolling when the view becomes visible. */
+	if (successful) {
+		[self.backingView resetScrollerPositionTo:scrolledToBottom];
+	}
 
 	void (^callbackHandler)(BOOL) = [self.jumpToLineCallbacks objectForKey:lineNumber];
 
