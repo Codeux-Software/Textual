@@ -739,7 +739,7 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Plugins
 
-- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful
+- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful scrolledToBottom:(BOOL)scrolledToBottom
 {
 	NSParameterAssert(lineNumber != nil);
 
