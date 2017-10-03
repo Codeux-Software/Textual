@@ -100,9 +100,29 @@ static CGFloat _userScrolledMinimum = 25.0;
 	self->_userScrolled = NO;
 }
 
+- (NSView *)documentView
+{
+	return self.frameView.documentView;
+}
+
 - (BOOL)viewingBottom
 {
-	return (self->_userScrolled == NO);
+	if (self->_userScrolled == NO) {
+		return YES;
+	}
+
+	return [self viewIsScrolledToBottom:self.documentView];
+}
+
+- (BOOL)viewIsScrolledToBottom:(NSView *)aView
+{
+	NSRect visibleRect = aView.visibleRect;
+
+	CGFloat scrollHeight = (aView.frame.size.height - visibleRect.size.height);
+
+	CGFloat scrollPosition = visibleRect.origin.y;
+
+	return (scrollHeight == scrollPosition);
 }
 
 - (void)saveScrollerPosition
@@ -116,9 +136,7 @@ static CGFloat _userScrolledMinimum = 25.0;
 		return;
 	}
 
-	NSView *documentView = self.frameView.documentView;
-
-	[self scrollViewToBottom:documentView];
+	[self scrollViewToBottom:self.documentView];
 }
 
 - (void)scrollViewToBottom:(NSView *)aView
@@ -173,15 +191,13 @@ static CGFloat _userScrolledMinimum = 25.0;
 
 - (void)redrawFrame
 {
-	[self.frameView.documentView setNeedsLayout:YES];
+	[self.documentView setNeedsLayout:YES];
 }
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
 	/* Context */
-	WebFrameView *frameView = self.frameView;
-
-	NSView *documentView = frameView.documentView;
+	NSView *documentView = self.documentView;
 
 	NSRect visibleRect = documentView.visibleRect;
 
@@ -250,24 +266,7 @@ static CGFloat _userScrolledMinimum = 25.0;
 		return;
 	}
 
-	/* Perform automatic scrolling */
-	WebFrameView *frameView = self.frameView;
-
-	NSView *documentView = frameView.documentView;
-
-/*
-	if (aNotification.object == documentView) {
-		NSRect documentViewFrame = documentView.frame;
-
-		if (NSEqualRects(documentViewFrame, self->_lastFrame)) {
-			return;
-		}
-
-		self->_lastFrame = documentViewFrame;
-	} 
-*/
-
-	[self scrollViewToBottom:documentView];
+	[self scrollViewToBottom:self.documentView];
 }
 
 @end
