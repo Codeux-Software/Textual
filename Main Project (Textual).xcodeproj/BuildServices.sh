@@ -17,6 +17,14 @@ xcodebuild -target "Historic Log File Manager" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER=""
 
+cd "${PROJECT_DIR}/XPC Services/Inline Content Loader/"
+
+xcodebuild -target "Inline Content Loader" \
+ -configuration "${TEXTUAL_XPC_SERVICE_BUILD_SCHEME}" \
+ CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
+ DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
+ PROVISIONING_PROFILE_SPECIFIER=""
+
 cd "${PROJECT_DIR}/XPC Services/IRC Remote Connection Manager/"
 
 xcodebuild -target "IRC Remote Connection Manager" \
