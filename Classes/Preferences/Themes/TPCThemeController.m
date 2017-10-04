@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#warning TODO: Figure out why the dynamic buffer might make Equinox lose content.
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCThemeControllerCloudThemeNameBasicPrefix			= @"cloud";
