@@ -673,6 +673,9 @@
 		4C6CCF081D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */; };
 		4C6CCF091D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */; };
 		4C6CCF0A1D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */; };
+		4C6E2E731F859DCF0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C6E2E741F859DDB0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C6E2E751F859DE20093D8DC /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4C6EF2CB1F442ACE00A80A7B /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6EF2CA1F442AC800A80A7B /* OELReachability.h */; };
 		4C6EF2CC1F442ACE00A80A7B /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6EF2CA1F442AC800A80A7B /* OELReachability.h */; };
 		4C6EF2CD1F442ACF00A80A7B /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6EF2CA1F442AC800A80A7B /* OELReachability.h */; };
@@ -1914,6 +1917,13 @@
 			remoteGlobalIDString = 4C1406421F11942B00C73D53;
 			remoteInfo = "IRC Remote Connection Manager";
 		};
+		4C6E2E6C1F859D930093D8DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4C1406421F11942B00C73D53;
+			remoteInfo = "Inline Content Loader";
+		};
 		4C761B9E1E155BFF00A505B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */;
@@ -2034,6 +2044,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				4C761BA31E155C2800A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
+				4C6E2E731F859DCF0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */,
 				4CD98D6A1F12A6B700D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
@@ -2046,6 +2057,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				4C761BA51E155C4B00A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
+				4C6E2E741F859DDB0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */,
 				4CD98D6B1F12A6BC00D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
@@ -2058,6 +2070,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				4C761BA71E155C7500A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
+				4C6E2E751F859DE20093D8DC /* InlineContentLoader.xpc in Copy XPC Services */,
 				4CD98D6D1F12A6C500D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
@@ -2342,6 +2355,7 @@
 		4C6CCEFF1D29EF5700EADD8E /* TDCAddressBookSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCAddressBookSheetPrivate.h; path = Classes/Headers/Private/TDCAddressBookSheetPrivate.h; sourceTree = "<group>"; };
 		4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelPropertiesSheetPrivate.h; path = Classes/Headers/Private/TDCChannelPropertiesSheetPrivate.h; sourceTree = "<group>"; };
 		4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerPropertiesSheetPrivate.h; path = Classes/Headers/Private/TDCServerPropertiesSheetPrivate.h; sourceTree = "<group>"; };
+		4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Inline Content Loader.xcodeproj"; path = "XPC Services/Inline Content Loader/Inline Content Loader.xcodeproj"; sourceTree = "<group>"; };
 		4C6EF2CA1F442AC800A80A7B /* OELReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OELReachability.h; path = "Classes/Headers/External Libraries/OELReachability.h"; sourceTree = "<group>"; };
 		4C6EF2CE1F442B9300A80A7B /* TDCWindowBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCWindowBase.h; path = Classes/Headers/TDCWindowBase.h; sourceTree = "<group>"; };
 		4C6EF2D21F442CA200A80A7B /* IRCColorFormat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = IRCColorFormat.m; path = "Classes/Library/Color Formatting/IRCColorFormat.m"; sourceTree = "<group>"; };
@@ -3541,6 +3555,14 @@
 			name = Installers;
 			sourceTree = "<group>";
 		};
+		4C6E2E661F859D930093D8DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4C6EF2C91F4429FC00A80A7B /* Server Endpoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -3666,8 +3688,9 @@
 		4C761B921E155BD700A505B7 /* XPC Services */ = {
 			isa = PBXGroup;
 			children = (
-				4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */,
 				4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */,
+				4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */,
+				4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */,
 			);
 			name = "XPC Services";
 			sourceTree = "<group>";
@@ -5365,6 +5388,10 @@
 					ProjectRef = 4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */;
 				},
 				{
+					ProductGroup = 4C6E2E661F859D930093D8DC /* Products */;
+					ProjectRef = 4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */;
+				},
+				{
 					ProductGroup = 4C16D9D11F129EAA00711DE1 /* Products */;
 					ProjectRef = 4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */;
 				},
@@ -5402,6 +5429,13 @@
 			fileType = "wrapper.xpc-service";
 			path = RemoteConnectionManager.xpc;
 			remoteRef = 4C16D9D41F129EAA00711DE1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.xpc-service";
+			path = InlineContentLoader.xpc;
+			remoteRef = 4C6E2E6C1F859D930093D8DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */ = {
