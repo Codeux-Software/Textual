@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */; };
-		4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */; };
-		4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */; };
 		4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */; };
 		4C2C52D21F12ED5A009701E0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2C52D11F12ED5A009701E0 /* AppKit.framework */; };
 		4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */; };
@@ -422,9 +419,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */,
-				4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */,
-				4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */,
 				4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */,
 				4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */,
 			);
