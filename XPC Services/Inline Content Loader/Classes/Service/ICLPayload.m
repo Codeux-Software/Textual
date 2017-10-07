@@ -49,16 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
-		/* WebKit is able to translate a URL to punycode
-		 for us by giving it a pasteboard with the URL. */
-		NSURL *urlNormalized = url.URLUsingWebKitPasteboard;
-
-		if (urlNormalized == nil) {
-			return nil;
-		}
-
 		self->_url = [url copy];
-		self->_urlNormalized = [urlNormalized copy];
 
 		self->_uniqueIdentifier = [uniqueIdentifier copy];
 

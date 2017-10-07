@@ -50,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _objectInitialized;
 	BOOL _objectInitializedAsCopy;
 	NSURL *_url;
-	NSURL *_urlNormalized;
 	NSString *_uniqueIdentifier;
 }
 
