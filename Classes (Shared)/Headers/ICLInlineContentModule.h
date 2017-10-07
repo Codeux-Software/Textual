@@ -37,46 +37,41 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
+/* See description for self.completionBlock */
+typedef void (^ICLInlineContentModuleCompletionBlock)(NSError * _Nullable error);
 
-@interface ICLProcessMain ()
-@property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@end
+/**
+ * Modules are always a subclass, instead of a protocol, to give us
+ * greater flexibility when adding private components to the parent.
+ */
+@interface ICLInlineContentModule : NSObject
+/**
+ * Mutable copy of the payload this module has access to modify.
+ * This paylaod includes the address and the unique identifier.
+ */
+@property (readonly, strong) ICLPayloadMutable *payload;
 
-@implementation ICLProcessMain
+/**
+ * The completion block called when this module has finished performing
+ * whatever logic it contains.
+ *
+ * The error argument is optional.
+ *   If     nil, the action succeeded and the payload is processed.
+ *   If non-nil, the action failed and the error is processed.
+ */
+@property (readonly) ICLInlineContentModuleCompletionBlock completionBlock;
 
-ClassWithDesignatedInitializerInitMethod
+/**
+ * Module objects are not allowed to be allocated by a plugin.
+ */
+- (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithXPCConnection:(NSXPCConnection *)connection
-{
-	NSParameterAssert(connection != nil);
-
-	if ((self = [super init])) {
-		self.serviceConnection = connection;
-
-		return self;
-	}
-
-	return nil;
-}
-
-#pragma mark -
-#pragma mark XPC Interface
-
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(url != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
+/**
+ * Instructs the module to perform whatever logic it contains.
+ * Once finished, the module is then expected to call self.completionBlock()
+ * This method does not need to invoke super by default.
+ */
+- (void)performAction;
 @end
 
 NS_ASSUME_NONNULL_END

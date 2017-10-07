@@ -40,6 +40,11 @@
 #import <CocoaExtensions/CocoaExtensions.h>
 
 #import "NSObjectHelperPrivate.h"
+#import "ICLPayload.h"
+#import "ICLPayloadMutable.h"
+#import "ICLPayloadPrivate.h"
+#import "ICLInlineContentModule.h"
+#import "ICLInlineContentModulePrivate.h"
 #import "ICLInlineContentProtocol.h"
 #import "ICLProcessDelegatePrivate.h"
 #import "ICLProcessMainPrivate.h"

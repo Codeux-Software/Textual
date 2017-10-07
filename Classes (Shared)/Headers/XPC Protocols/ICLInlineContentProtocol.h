@@ -39,23 +39,32 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ICLPayload;
+
 #pragma mark -
 #pragma mark Server Protocol
 
-/* The server protocol is what the daemon responds to. */
 @protocol ICLInlineContentServerProtocol
 @required
 
+- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier;
+- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier;
 @end
 
 #pragma mark -
 #pragma mark Client Protocol
 
-/* The client protocol is what Textual (the client) implements
- so that the daemon can communicate state with it. */
+/* Error domain returned by the following protocol */
+COCOA_EXTENSIONS_EXTERN NSString * const ICLInlineContentErrorDomain;
+
 @protocol ICLInlineContentClientProtocol
 @required
 
+- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier
+			   suceededWithPayload:(ICLPayload *)payload;
+
+- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier
+				   failedWithError:(NSError *)error;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,6 +10,8 @@
 		4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */; };
 		4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */; };
 		4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */; };
+		4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8C21F89065700CD8193 /* ICLPayload.m */; };
+		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
 		4C8C73001F121EF000ED72DB /* ICLProcessDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */; };
@@ -28,6 +30,14 @@
 		4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C1CC8C21F89065700CD8193 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = "../../Classes (Shared)/Services/ICLPayload.m"; sourceTree = "<group>"; };
+		4C1CC8C31F89080700CD8193 /* ICLPayloadInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadInternal.h; path = "../../Classes (Shared)/Headers/Internal/ICLPayloadInternal.h"; sourceTree = "<group>"; };
+		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
+		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
+		4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "../../Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
+		4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadPrivate.h; path = Classes/Headers/Private/ICLPayloadPrivate.h; sourceTree = "<group>"; };
+		4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModulePrivate.h; path = Classes/Headers/Private/ICLInlineContentModulePrivate.h; sourceTree = "<group>"; };
+		4C7879F61F88EA710030AA84 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = Classes/Service/ICLPayload.m; sourceTree = "<group>"; };
 		4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4C8C72D51F1208F200ED72DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C8C72EC1F121EF000ED72DB /* ICLProcessMainPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLProcessMainPrivate.h; path = Classes/Headers/Private/ICLProcessMainPrivate.h; sourceTree = "<group>"; };
@@ -153,15 +163,36 @@
 			children = (
 				4C8C72621F1201A000ED72DB /* Headers */,
 				4C116B881F85998100BFFFF7 /* Helpers */,
+				4C1CC8C11F89065700CD8193 /* XPC Services */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		4C1CC8C11F89065700CD8193 /* XPC Services */ = {
+			isa = PBXGroup;
+			children = (
+				4C1CC8C21F89065700CD8193 /* ICLPayload.m */,
+			);
+			name = "XPC Services";
+			sourceTree = "<group>";
+		};
+		4C1CC8C41F89080A00CD8193 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				4C1CC8C31F89080700CD8193 /* ICLPayloadInternal.h */,
+			);
+			name = Internal;
 			sourceTree = "<group>";
 		};
 		4C8C72621F1201A000ED72DB /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				4C1CC8C41F89080A00CD8193 /* Internal */,
 				4C116B851F85993500BFFFF7 /* Private */,
 				4C8C72651F1201A000ED72DB /* XPC Protocols */,
+				4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */,
+				4C7879F01F88D8E10030AA84 /* ICLPayload.h */,
+				4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -210,6 +241,8 @@
 		4C8C72EB1F121EF000ED72DB /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */,
+				4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */,
 				4C8C72EE1F121EF000ED72DB /* ICLProcessDelegatePrivate.h */,
 				4C8C72EC1F121EF000ED72DB /* ICLProcessMainPrivate.h */,
 				4C8C72EF1F121EF000ED72DB /* ICLProcessPCHPrivate.h */,
@@ -220,6 +253,7 @@
 		4C8C72F71F121EF000ED72DB /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4C7879F61F88EA710030AA84 /* ICLPayload.m */,
 				4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */,
 				4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */,
 				4C8C72FA1F121EF000ED72DB /* main.m */,
@@ -298,7 +332,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
 				4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */,
+				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
 				4C8C73001F121EF000ED72DB /* ICLProcessDelegate.m in Sources */,
 			);
