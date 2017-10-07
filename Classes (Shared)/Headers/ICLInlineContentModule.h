@@ -94,6 +94,17 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  * The selector is performed on a new instance of the module which means
  * the selector returned must be one for an instance method.
  *
+ * The selector:
+ *   1. Does not return a value (void)
+ *   2. Does not take arguments
+ *
+ * Example:
+ *
+ * 		- (void)performAction
+ * 		{
+ *
+ * 		}
+ *
  * NULL is returned if this method is not implemented.
  */
 + (SEL)actionForURL:(NSURL *)url;
