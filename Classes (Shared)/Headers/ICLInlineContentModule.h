@@ -72,6 +72,11 @@ typedef void (^ICLInlineContentModuleCompletionBlock)(NSError * _Nullable error)
  * This method does not need to invoke super by default.
  */
 - (void)performAction;
+
+/**
+ * Return YES when this module has logic defined for the URL.
+ */
++ (BOOL)matchesURL:(NSURL *)url;
 @end
 
 NS_ASSUME_NONNULL_END
