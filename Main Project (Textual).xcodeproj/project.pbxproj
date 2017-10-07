@@ -6023,7 +6023,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildExtensions.txt\"\n";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\" | tee \"${PROJECT_DIR}/.tmp/Script-Logs/BuildExtensions.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C0BA6CA1990798800857343 /* Build Extensions */ = {
@@ -6038,7 +6038,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildExtensions.txt\"\n";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\" | tee \"${PROJECT_DIR}/.tmp/Script-Logs/BuildExtensions.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C761BAF1E155D7400A505B7 /* Build XPC Services */ = {
@@ -6053,7 +6053,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" | tee \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C761BB01E155DD900A505B7 /* Build XPC Services */ = {
@@ -6068,7 +6068,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" | tee \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 		};
 		4C761BB11E155E0000A505B7 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6082,7 +6082,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" > \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" | tee \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
