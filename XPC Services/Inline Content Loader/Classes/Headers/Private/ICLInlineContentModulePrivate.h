@@ -37,46 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
-
-@interface ICLProcessMain ()
-@property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@end
-
-@implementation ICLProcessMain
-
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithXPCConnection:(NSXPCConnection *)connection
-{
-	NSParameterAssert(connection != nil);
-
-	if ((self = [super init])) {
-		self.serviceConnection = connection;
-
-		return self;
-	}
-
-	return nil;
-}
-
-#pragma mark -
-#pragma mark XPC Interface
-
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(url != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
+@interface ICLInlineContentModule (ICLInlineContentModulePrivate)
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END

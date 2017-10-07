@@ -37,46 +37,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
-
-@interface ICLProcessMain ()
-@property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@end
-
-@implementation ICLProcessMain
-
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithXPCConnection:(NSXPCConnection *)connection
+@interface ICLPayload ()
 {
-	NSParameterAssert(connection != nil);
+@protected
+	NSUInteger _contentLength;
+	NSSize _contentSize;
+	NSArray<NSString *> *_cssResources;
+	NSArray<NSString *> *_jsResources;
+	NSString *_html;
 
-	if ((self = [super init])) {
-		self.serviceConnection = connection;
-
-		return self;
-	}
-
-	return nil;
+@private
+	BOOL _objectInitialized;
+	BOOL _objectInitializedAsCopy;
+	NSURL *_url;
+	NSURL *_urlNormalized;
+	NSString *_uniqueIdentifier;
 }
 
-#pragma mark -
-#pragma mark XPC Interface
+- (BOOL)isMutable;
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(url != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
+/* Declared here because it is accessed by private category */
+- (void)populateDefaultsPostflight;
 @end
 
 NS_ASSUME_NONNULL_END

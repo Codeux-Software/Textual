@@ -35,46 +35,39 @@
 
  *********************************************************************** */
 
+#import "ICLPayloadInternal.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
+@implementation ICLPayload (ICLPayloadPrivate)
 
-@interface ICLProcessMain ()
-@property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@end
-
-@implementation ICLProcessMain
-
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithXPCConnection:(NSXPCConnection *)connection
-{
-	NSParameterAssert(connection != nil);
-
-	if ((self = [super init])) {
-		self.serviceConnection = connection;
-
-		return self;
-	}
-
-	return nil;
-}
-
-#pragma mark -
-#pragma mark XPC Interface
-
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-}
-
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
+- (nullable instancetype)initWithURL:(NSURL *)url uniqueIdentifier:(NSString *)uniqueIdentifier
 {
 	NSParameterAssert(url != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
 
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		/* WebKit is able to translate a URL to punycode
+		 for us by giving it a pasteboard with the URL. */
+		NSURL *urlNormalized = url.URLUsingWebKitPasteboard;
+
+		if (urlNormalized == nil) {
+			return nil;
+		}
+
+		self->_url = [url copy];
+		self->_urlNormalized = [urlNormalized copy];
+
+		self->_uniqueIdentifier = [uniqueIdentifier copy];
+
+		[self populateDefaultsPostflight];
+
+		self->_objectInitialized = YES;
+	}
+
+	return nil;
 }
 
 @end

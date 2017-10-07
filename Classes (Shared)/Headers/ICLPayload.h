@@ -37,46 +37,60 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
-
-@interface ICLProcessMain ()
-@property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@end
-
-@implementation ICLProcessMain
-
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithXPCConnection:(NSXPCConnection *)connection
-{
-	NSParameterAssert(connection != nil);
-
-	if ((self = [super init])) {
-		self.serviceConnection = connection;
-
-		return self;
-	}
-
-	return nil;
-}
-
 #pragma mark -
-#pragma mark XPC Interface
+#pragma mark Immutable Object
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
+@interface ICLPayload : NSObject <NSCoding, NSSecureCoding, NSCopying, NSMutableCopying>
+/**
+ * Payload objects are not allowed to be allocated by a plugin.
+ * Each new instance of ICLContentLoaderModule is given a mutable payload.
+ * Modify that, then the loader will create an immutable copy when appropriate.
+ */
+- (instancetype)init NS_UNAVAILABLE;
 
-}
+/**
+ * @brief The value of the address argument supplied to the loader.
+ */
+@property (copy, readonly) NSURL *url;
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(url != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
+/**
+ * @brief The value of the address argument supplied to the loader, normalized.
+ *
+ * @discussion If the address is unicode, then this property is punycode.
+ */
+@property (copy, readonly) NSURL *urlNormalized;
 
-}
+/**
+ * @brief The value of the unique identifier argument supplied to the loader.
+ */
+@property (copy, readonly) NSString *uniqueIdentifier;
 
+/**
+ * @brief The length of the content. This value is optional.
+ */
+@property (readonly) NSUInteger contentLength;
+
+/**
+ * @brief The size of the content. This value is optional.
+ */
+@property (readonly) NSSize contentSize;
+
+/**
+ * @brief A collection of paths for .css files that need to be loaded to allow the
+ *  rendered HTML to appear correct.
+ */
+@property (copy, readonly, nullable) NSArray<NSString *> *cssResources;
+
+/**
+ * @brief A collection of paths for .js files that need to be loaded to allow the
+ *  rendered HTML to appear correct.
+ */
+@property (copy, readonly, nullable) NSArray<NSString *> *jsResources;
+
+/**
+ * @brief The rendered HTML to insert into the DOM
+ */
+@property (copy, readonly) NSString *html;
 @end
 
 NS_ASSUME_NONNULL_END

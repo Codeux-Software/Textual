@@ -37,46 +37,36 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
-
-@interface ICLProcessMain ()
-@property (nonatomic, strong) NSXPCConnection *serviceConnection;
-@end
-
-@implementation ICLProcessMain
-
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithXPCConnection:(NSXPCConnection *)connection
-{
-	NSParameterAssert(connection != nil);
-
-	if ((self = [super init])) {
-		self.serviceConnection = connection;
-
-		return self;
-	}
-
-	return nil;
-}
-
 #pragma mark -
-#pragma mark XPC Interface
+#pragma mark Mutable Object
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
+@interface ICLPayloadMutable : ICLPayload
+/**
+ * @brief The length of the content. This value is optional.
+ */
+@property (nonatomic, assign, readwrite) NSUInteger contentLength;
 
-}
+/**
+ * @brief The size of the content. This value is optional.
+ */
+@property (nonatomic, assign, readwrite) NSSize contentSize;
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(url != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
+/**
+ * @brief A collection of paths for .css files that need to be loaded to allow the
+ *  rendered HTML to appear correct.
+ */
+@property (nonatomic, copy, nullable, readwrite) NSArray<NSString *> *cssResources;
 
-}
+/**
+ * @brief A collection of paths for .js files that need to be loaded to allow the
+ *  rendered HTML to appear correct.
+ */
+@property (nonatomic, copy, nullable, readwrite) NSArray<NSString *> *jsResources;
 
+/**
+ * @brief The rendered HTML to insert into the DOM
+ */
+@property (nonatomic, copy, readwrite) NSString *html;
 @end
 
 NS_ASSUME_NONNULL_END
