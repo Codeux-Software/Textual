@@ -110,6 +110,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+	NSParameterAssert(aCoder != nil);
+
 	[aCoder encodeObject:self.data forKey:@"data"];
 	[aCoder encodeObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[aCoder encodeObject:self.viewIdentifier forKey:@"viewIdentifier"];
