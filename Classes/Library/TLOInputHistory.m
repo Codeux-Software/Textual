@@ -358,7 +358,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)bufferPositionIsInRange
 {
-	return (self.historyBufferPosition >= 0 && self.historyBufferPosition < self.historyBuffer.count);
+	return (self.historyBufferPosition >= 0 &&
+			self.historyBufferPosition < self.historyBuffer.count);
 }
 
 - (nullable NSAttributedString *)entryAtBufferPosition
@@ -373,11 +374,11 @@ ClassWithDesignatedInitializerInitMethod
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	TLOInputHistoryObject *newObject = [TLOInputHistoryObject new];
-	
-	newObject.historyBuffer = self.historyBuffer;
-	newObject.historyBufferPosition = self.historyBufferPosition;
-	
-	newObject.lastHistoryItem = self.lastHistoryItem;
+
+	[newObject->_historyBuffer addObjectsFromArray:self->_historyBuffer];
+
+	newObject->_historyBufferPosition = self->_historyBufferPosition;
+	newObject->_lastHistoryItem = self->_lastHistoryItem;
 	
 	return newObject;
 }
