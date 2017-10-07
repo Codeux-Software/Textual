@@ -37,8 +37,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ICLInlineContentModule;
+
 /* See description for self.completionBlock */
 typedef void (^ICLInlineContentModuleCompletionBlock)(NSError * _Nullable error);
+
+/* See description for -actionBlockForURL: */
+typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module);
 
 /**
  * Modules are always a subclass, instead of a protocol, to give us
@@ -66,17 +71,32 @@ typedef void (^ICLInlineContentModuleCompletionBlock)(NSError * _Nullable error)
  */
 - (instancetype)init NS_UNAVAILABLE;
 
-/**
- * Instructs the module to perform whatever logic it contains.
- * Once finished, the module is then expected to call self.completionBlock()
- * This method does not need to invoke super by default.
- */
-- (void)performAction;
+#pragma mark -
+#pragma mark Action
 
 /**
- * Return YES when this module has logic defined for the URL.
+ * Returns a block to perform if the module is interested in the URL.
+ *
+ * The block is passed one argument: a new instance of the module.
+ * The block can then use that to do stateful work, or it can
+ * disregard the argument and do whatever else it wants.
+ *
+ * The return value of -actionBlockForURL: is favored over -actionForURL:
+ * The latter is never called if -actionBlockForURL: returns a value.
+ *
+ * nil is returned if this method is not implemented.
  */
-+ (BOOL)matchesURL:(NSURL *)url;
++ (ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url;
+
+/**
+ * Returns a selector to perform if the module is interested in the URL.
+ *
+ * The selector is performed on a new instance of the module which means
+ * the selector returned must be one for an instance method.
+ *
+ * NULL is returned if this method is not implemented.
+ */
++ (SEL)actionForURL:(NSURL *)url;
 @end
 
 NS_ASSUME_NONNULL_END

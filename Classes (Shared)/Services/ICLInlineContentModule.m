@@ -41,14 +41,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
-- (void)performAction
++ (ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
-
+	return nil;
 }
 
-+ (BOOL)matchesURL:(NSURL *)url
++ (SEL)actionForURL:(NSURL *)url
 {
-	return NO;
+	return NULL;
 }
 
 @end
