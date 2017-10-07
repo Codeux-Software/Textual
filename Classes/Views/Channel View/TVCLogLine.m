@@ -118,6 +118,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
 {
+	NSParameterAssert(aDecoder != nil);
+
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
