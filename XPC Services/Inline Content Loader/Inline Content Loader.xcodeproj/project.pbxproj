@@ -18,6 +18,7 @@
 		4C8C73001F121EF000ED72DB /* ICLProcessDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */; };
 		4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */; };
 		4C8C73021F121EF000ED72DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72FA1F121EF000ED72DB /* main.m */; };
+		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLProcessDelegate.m; path = Classes/Service/ICLProcessDelegate.m; sourceTree = "<group>"; };
 		4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLProcessMain.m; path = Classes/Service/ICLProcessMain.m; sourceTree = "<group>"; };
 		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Service/main.m; sourceTree = "<group>"; };
+		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +258,7 @@
 		4C8C72F71F121EF000ED72DB /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */,
 				4C7879F61F88EA710030AA84 /* ICLPayload.m */,
 				4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */,
 				4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */,
@@ -337,6 +340,7 @@
 			files = (
 				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
+				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
 				4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */,
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
