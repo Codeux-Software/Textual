@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLPayload
 
+ClassWithDesignatedInitializerInitMethod
+
 - (instancetype)_init
 {
 	return [super init];
