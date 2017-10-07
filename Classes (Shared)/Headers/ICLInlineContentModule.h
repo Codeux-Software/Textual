@@ -86,7 +86,7 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  *
  * nil is returned if this method is not implemented.
  */
-+ (ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url;
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url;
 
 /**
  * Returns a selector to perform if the module is interested in the URL.

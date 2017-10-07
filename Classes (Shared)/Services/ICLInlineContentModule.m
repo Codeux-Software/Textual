@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
 	return nil;
 }
