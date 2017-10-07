@@ -121,7 +121,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
-		[self populateObjectWithCoder:aDecoder];
+		[self decodeWithCoder:aDecoder];
 
 		[self populateDefaultsPostflight];
 
@@ -133,7 +133,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	return nil;
 }
 
-- (void)populateObjectWithCoder:(NSCoder *)aDecoder
+- (void)decodeWithCoder:(NSCoder *)aDecoder
 {
 	NSParameterAssert(aDecoder != nil);
 

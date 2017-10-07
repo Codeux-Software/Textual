@@ -90,15 +90,22 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(aDecoder != nil);
 
 	if ((self = [super init])) {
-		self->_data = [aDecoder decodeObjectOfClass:[NSData class] forKey:@"data"];
-		self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
-		self->_viewIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"viewIdentifier"];
-		self->_sessionIdentifier = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:@"sessionIdentifier"] integerValue];
+		[self decodeWithCoder:aDecoder];
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder
+{
+	NSParameterAssert(aDecoder != nil);
+
+	self->_data = [aDecoder decodeObjectOfClass:[NSData class] forKey:@"data"];
+	self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
+	self->_viewIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"viewIdentifier"];
+	self->_sessionIdentifier = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:@"sessionIdentifier"] integerValue];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
