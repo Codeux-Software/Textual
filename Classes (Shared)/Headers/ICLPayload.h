@@ -54,13 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSURL *url;
 
 /**
- * @brief The value of the address argument supplied to the loader, normalized.
- *
- * @discussion If the address is unicode, then this property is punycode.
- */
-@property (copy, readonly) NSURL *urlNormalized;
-
-/**
  * @brief The value of the unique identifier argument supplied to the loader.
  */
 @property (copy, readonly) NSString *uniqueIdentifier;

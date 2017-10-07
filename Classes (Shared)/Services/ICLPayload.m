@@ -78,7 +78,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self->_html = [aDecoder decodeStringForKey:@"html"];
 
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
-	self->_urlNormalized = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"urlNormalized"];
 
 	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
 
@@ -96,7 +95,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[aCoder encodeObject:self->_html forKey:@"html"];
 
 	[aCoder encodeObject:self->_url forKey:@"url"];
-	[aCoder encodeObject:self->_urlNormalized forKey:@"urlNormalized"];
 
 	[aCoder encodeObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 }
@@ -119,7 +117,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSParameterAssert(self->_html != nil);
 	NSParameterAssert(self->_url != nil);
-	NSParameterAssert(self->_urlNormalized != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
 }
 
@@ -144,7 +141,6 @@ NS_ASSUME_NONNULL_BEGIN
 	object->_html = self->_html;
 
 	object->_url = self->_url;
-	object->_urlNormalized = self->_urlNormalized;
 
 	object->_uniqueIdentifier = self->_uniqueIdentifier;
 
