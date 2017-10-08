@@ -60,6 +60,16 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (nullable GRMustacheTemplate *)template
+{
+	return nil;
+}
+
+- (nullable NSArray<NSString *> *)styleResources
+{
+	return nil;
+}
+
 - (nullable NSArray<NSString *> *)scriptResources
 {
 	return nil;
