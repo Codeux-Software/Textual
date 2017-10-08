@@ -105,6 +105,8 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.serviceConnection != nil) {
 		return;
 	}
+	
+	LogToConsoleDebug("Warming process...");
 
 	[self warmProcess];
 }
