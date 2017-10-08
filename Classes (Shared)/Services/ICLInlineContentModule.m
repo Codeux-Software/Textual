@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#if __has_include("ICLInlineContentModuleInternal.h")
+#import "ICLInlineContentModuleInternal.h"
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLInlineContentModule
