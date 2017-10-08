@@ -613,6 +613,10 @@ ClassWithDesignatedInitializerInitMethod
 	{
 		return @"null";
 	}
+	else if ([object isKindOfClass:[NSURL class]])
+	{
+		return [object absoluteString];
+	}
 	else
 	{
 		return @"undefined";

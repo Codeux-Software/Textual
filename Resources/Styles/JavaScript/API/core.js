@@ -233,6 +233,7 @@ Textual.handleEvent                            = function(eventToken) {};
 		NSNumber		=>		number
 		NSDictionary	=>		object
 		NSString		=>		string
+		NSURL           =>      string
 
 	When the value of a setting is retrieved, null will be returned if key is not found.
  */
