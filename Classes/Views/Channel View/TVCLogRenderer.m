@@ -690,8 +690,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 			NSString *uniqueIdentifier = linksMapped[linkLocation];
 
 			if (uniqueIdentifier) {
-				templateTokens[@"anchorInlineImageAvailable"] = @(YES);
-				templateTokens[@"anchorInlineImageUniqueID"] = uniqueIdentifier;
+				templateTokens[@"anchorInlineMediaAvailable"] = @(YES);
+				templateTokens[@"anchorInlineMediaUniqueID"] = uniqueIdentifier;
 			}
 		}
 
