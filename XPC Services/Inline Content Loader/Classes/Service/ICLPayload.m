@@ -41,17 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLPayload (ICLPayloadPrivate)
 
-- (nullable instancetype)initWithURL:(NSURL *)url uniqueIdentifier:(NSString *)uniqueIdentifier
+- (nullable instancetype)initWithURL:(NSURL *)url uniqueIdentifier:(NSString *)uniqueIdentifier inView:(NSString *)viewIdentifier
 {
 	NSParameterAssert(url != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
+	NSParameterAssert(viewIdentifier != nil);
 
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
 		self->_url = [url copy];
-
 		self->_uniqueIdentifier = [uniqueIdentifier copy];
+		self->_viewIdentifier = [viewIdentifier copy];
 
 		[self populateDefaultsPostflight];
 

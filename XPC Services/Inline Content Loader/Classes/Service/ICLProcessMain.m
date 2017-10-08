@@ -79,7 +79,9 @@ ClassWithDesignatedInitializerInitMethod
 	return modules;
 }
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
+- (void)	processURL:(NSURL *)url
+withUniqueIdentifier:(NSString *)uniqueIdentifier
+			 inView:(NSString *)viewIdentifier
 {
 	NSParameterAssert(url != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
@@ -93,13 +95,16 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	for (Class module in [self modules]) {
-		if ([self _processURL:url withUniqueIdentifier:uniqueIdentifier usingModule:module]) {
+		if ([self _processURL:url withUniqueIdentifier:uniqueIdentifier inView:viewIdentifier usingModule:module]) {
 			return;
 		}
 	}
 }
 
-- (BOOL)_processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier usingModule:(Class)moduleClass
+- (BOOL)	_processURL:(NSURL *)url
+   withUniqueIdentifier:(NSString *)uniqueIdentifier
+			     inView:(NSString *)viewIdentifier
+		    usingModule:(Class)moduleClass
 {
 	NSParameterAssert(url != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
@@ -118,7 +123,9 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* The module has an action. Call it. */
-	ICLPayloadMutable *payload = [[ICLPayloadMutable alloc] initWithURL:url uniqueIdentifier:uniqueIdentifier];
+	ICLPayloadMutable *payload = [[ICLPayloadMutable alloc] initWithURL:url
+													   uniqueIdentifier:uniqueIdentifier
+																 inView:viewIdentifier];
 
 	ICLInlineContentModuleCompletionBlock completionBlock = ^(NSError * _Nullable error) {
 		ICLPayload *payloadCopy = [payload copy];
@@ -133,9 +140,13 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if (error) {
-			[[self remoteObjectProxy] processingUniqueIdentifier:payloadCopy.uniqueIdentifier failedWithError:error];
+			[[self remoteObjectProxy] processingUniqueIdentifier:payloadCopy.uniqueIdentifier
+														  inView:payloadCopy.viewIdentifier
+												 failedWithError:error];
 		} else {
-			[[self remoteObjectProxy] processingUniqueIdentifier:payloadCopy.uniqueIdentifier suceededWithPayload:payloadCopy];
+			[[self remoteObjectProxy] processingUniqueIdentifier:payloadCopy.uniqueIdentifier
+														  inView:payloadCopy.viewIdentifier
+											 suceededWithPayload:payloadCopy];
 		}
 	};
 
