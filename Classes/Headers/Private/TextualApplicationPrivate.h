@@ -45,26 +45,13 @@
 @class TXMenuControllerMainWindowProxy;
 @class TXWindowController;
 
+#import <GRMustache/GRMustache.h>
+
 #import "TextualApplication.h"
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
 #import "GCDAsyncSocketTrustPanel.h"
-#import "GRMustacheAvailabilityMacros.h"
-#import "GRMustache.h"
-#import "GRMustacheConfiguration.h"
-#import "GRMustacheContentType.h"
-#import "GRMustacheContext.h"
-#import "GRMustacheError.h"
-#import "GRMustacheFilter.h"
-#import "GRMustacheLocalizer.h"
-#import "GRMustacheRendering.h"
-#import "GRMustacheSafeKeyAccess.h"
-#import "GRMustacheTag.h"
-#import "GRMustacheTagDelegate.h"
-#import "GRMustacheTemplate.h"
-#import "GRMustacheTemplateRepository.h"
-#import "GRMustacheVersion.h"
 #import "GTMEncodeHTML.h"
 #import "OELReachability.h"
 #import "IRCAddressBookUserTrackingPrivate.h"
