@@ -49,22 +49,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 
 /**
- * @brief The value of the address argument supplied to the loader.
+ * The value of the address argument supplied to the loader.
  */
 @property (copy, readonly) NSURL *url;
 
 /**
- * @brief The value of the unique identifier argument supplied to the loader.
+ * The value of the unique identifier argument supplied to the loader.
  */
 @property (copy, readonly) NSString *uniqueIdentifier;
 
 /**
- * @brief The length of the content. This value is optional.
+ * The length of the content. This value is optional.
  */
 @property (readonly) NSUInteger contentLength;
 
 /**
- * @brief The size of the content. This value is optional.
+ * The size of the content. This value is optional.
  */
 @property (readonly) NSSize contentSize;
 
@@ -83,13 +83,26 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSArray<NSString *> *scriptResources;
 
 /**
- * The name of a JavaSript function that will be called for the purpose
- *  of inlining this payload.
+ * @brief Rendered HTML or an empty string
  *
+ * @discussion
+ * A module does not need to render the HTML through Objective-C.
+ * It can render it in JavaScript or by some other means.
+ *
+ * If a module renders HTML using Objective-C, then the final result
+ * can be assigned to this property. The value of this property is
+ * then passed inside the -entrypointPayload dictionary.
+ */
+@property (copy, readonly, nullable) NSString *html;
+
+/**
+ * @brief The name of a JavaSript function that will be called for the
+ * purpose of inlining this payload.
+ *
+ * @discussion
  * The entrypoint takes two arguments. The first is the value of the
- *  -entrypointPayload property defined below. The second is a callback
- *  function which the entrypoint is required to call after it has
- *  finished rendering the HTML to display.
+ * -entrypointPayload property defined below. The second is a callback
+ * function which the entrypoint is required to pass rendered HTML.
  *
  * Example:
  *
@@ -107,22 +120,29 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSString *entrypoint;
 
 /**
- * A payload that is passed as the second argument to the -entrypoint.
+ * @brief A dictionary that is passed as the first argument to -entrypoint.
  *
- * ICLPayload automatically sets "url" and "uniqueIdentifier" values
- * to this dictionary to mirror the values present in the payload.
- * You do not need to do this yourself.
+ * @discussion
+ * This dictionary is guaranteed to always contain the following keys: 
+ * 	1. "html" (string)
+ * 	2. "url" (string)
+ * 	3. "uniqueIdentifier" (string)
+ * The value of these keys mirror the payload's.
+ *
+ * ICLPayload will not allow you to override the value of these keys.
+ *
+ * ----------------------------------------------
  *
  * Types are translated as such:
  *
- * Objective-C          JavaScript
- * -----------          ----------
- * NSArray         =>   array
- * BOOL            =>   boolean
- * NSNumber        =>   number
- * NSDictionary    =>   object
- * NSString        =>   string
- * NSURL           =>   string
+ * 	Objective-C          JavaScript
+ * 	-----------          ----------
+ * 	NSArray         =>   array
+ * 	BOOL            =>   boolean
+ * 	NSNumber        =>   number
+ * 	NSDictionary    =>   object
+ * 	NSString        =>   string
+ * 	NSURL           =>   string
  *
  * Custom types cannot be passed.
  */

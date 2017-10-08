@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSSize _contentSize;
 	NSArray<NSString *> *_styleResources;
 	NSArray<NSString *> *_scriptResources;
+	NSString *_html;
     NSString *_entrypoint;
     NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
 

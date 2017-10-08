@@ -77,6 +77,8 @@ ClassWithDesignatedInitializerInitMethod
 	self->_styleResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"styleResources"];
 	self->_scriptResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"scriptResources"];
 
+	self->_html = [aDecoder decodeStringForKey:@"html"];
+	
 	self->_entrypoint = [aDecoder decodeStringForKey:@"entrypoint"];
 	self->_entrypointPayload = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"entrypointPayload"];
 
@@ -95,6 +97,8 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder maybeEncodeObject:self->_styleResources forKey:@"styleResources"];
 	[aCoder maybeEncodeObject:self->_scriptResources forKey:@"scriptResources"];
 
+	[aCoder encodeObject:self->_html forKey:@"html"];
+	
 	[aCoder encodeObject:self->_entrypoint forKey:@"entrypoint"];
 	[aCoder encodeObject:self->_entrypointPayload forKey:@"entrypoint"];
 
@@ -114,6 +118,8 @@ ClassWithDesignatedInitializerInitMethod
 	
 	self->_scriptResources = @[];
 
+	self->_html = @"";
+	
 	self->_entrypoint = @"";
 }
 
@@ -122,6 +128,7 @@ ClassWithDesignatedInitializerInitMethod
 	ObjectIsAlreadyInitializedAssert
 
 	NSParameterAssert(self->_scriptResources != nil);
+	NSParameterAssert(self->_html != nil);
 	NSParameterAssert(self->_entrypoint != nil);
 	NSParameterAssert(self->_url != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
@@ -144,6 +151,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	object->_styleResources = self->_styleResources;
 	object->_scriptResources = self->_scriptResources;
+	
+	object->_html = self->_html;
 
 	object->_entrypoint = self->_entrypoint;
 	object->_entrypointPayload = self->_entrypointPayload;
@@ -179,6 +188,7 @@ ClassWithDesignatedInitializerInitMethod
 - (NSDictionary<NSString *, id<NSCopying>> *)entrypointPayloadDefaultContext
 {
 	return @{
+		@"html" : self->_html,
 		@"url" : self->_url,
 		@"uniqueIdentifier" : self->_uniqueIdentifier
 	};
@@ -215,6 +225,7 @@ ClassWithDesignatedInitializerInitMethod
 @dynamic contentSize;
 @dynamic styleResources;
 @dynamic scriptResources;
+@dynamic html;
 @dynamic entrypoint;
 @dynamic entrypointPayload;
 
@@ -251,6 +262,14 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
+- (void)setHtml:(NSString *)html
+{
+	NSParameterAssert(html != nil);
+
+	if (self->_html != html) {
+		self->_html = html;
+	}
+}
 
 - (void)setEntrypoint:(NSString *)entrypoint
 {
