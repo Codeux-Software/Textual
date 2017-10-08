@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "ICLPayload.h"
+#import "ICLPayloadMutable.h"
+
 #import "ICLPayloadInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -74,8 +77,11 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentLength = [aDecoder decodeUnsignedIntegerForKey:@"contentLength"];
 	self->_contentSize = [aDecoder decodeSizeForKey:@"contentSize"];
 
-	self->_styleResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"styleResources"];
-	self->_scriptResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"scriptResources"];
+	self->_styleResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSString class]]]
+													 forKey:@"styleResources"];
+	
+	self->_scriptResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSString class]]]
+													  forKey:@"scriptResources"];
 
 	self->_html = [aDecoder decodeStringForKey:@"html"];
 	
@@ -100,7 +106,7 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder encodeObject:self->_html forKey:@"html"];
 	
 	[aCoder encodeObject:self->_entrypoint forKey:@"entrypoint"];
-	[aCoder encodeObject:self->_entrypointPayload forKey:@"entrypoint"];
+	[aCoder encodeObject:self->_entrypointPayload forKey:@"entrypointPayload"];
 
 	[aCoder encodeObject:self->_url forKey:@"url"];
 
@@ -115,12 +121,12 @@ ClassWithDesignatedInitializerInitMethod
 - (void)populateDefaultsPostflight
 {
 	self->_contentSize = NSZeroSize;
-	
-	self->_scriptResources = @[];
 
-	self->_html = @"";
-	
-	self->_entrypoint = @"";
+	SetVariableIfNil(self->_scriptResources, @[]);
+
+	SetVariableIfNil(self->_html, @"");
+
+	SetVariableIfNil(self->_entrypoint, @"");
 }
 
 - (void)initializedClassHealthCheck
