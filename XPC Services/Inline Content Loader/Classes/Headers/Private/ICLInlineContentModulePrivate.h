@@ -38,6 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLInlineContentModule (ICLInlineContentModulePrivate)
+@property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
+
 - (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock;
 @end
 
