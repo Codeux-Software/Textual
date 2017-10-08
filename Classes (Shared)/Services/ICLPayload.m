@@ -120,6 +120,36 @@ ClassWithDesignatedInitializerInitMethod
 	return YES;
 }
 
+- (NSDictionary<NSString *, id> *)javaScriptObject
+{
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+	[dic setUnsignedInteger:self->_contentLength forKey:@"contentLength"];
+
+	[dic setObject:@{
+		@"width" : @(self->_contentSize.width),
+		@"height" : @(self->_contentSize.height)
+	} forKey:@"contentSize"];
+
+	[dic maybeSetObject:self->_styleResources forKey:@"styleResources"];
+	[dic maybeSetObject:self->_scriptResources forKey:@"scriptResources"];
+
+	[dic setObject:self->_html forKey:@"html"];
+
+	[dic setObject:self->_entrypoint forKey:@"entrypoint"];
+
+	/* call self. instead of self->_ for entrypointPayload to allow
+	 the default values to be assigned to the exported object. */
+	[dic setObject:self.entrypointPayload forKey:@"entrypointPayload"];
+
+	[dic setObject:self->_url forKey:@"url"];
+
+	[dic setObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
+//	[dic setObject:self->_viewIdentifier forKey:@"viewIdentifier"];
+
+	return [dic copy];
+}
+
 - (void)populateDefaultsPostflight
 {
 	self->_contentSize = NSZeroSize;
