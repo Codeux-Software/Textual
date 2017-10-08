@@ -91,6 +91,7 @@ ClassWithDesignatedInitializerInitMethod
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
 
 	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
+	self->_viewIdentifier = [aDecoder decodeStringForKey:@"viewIdentifier"];
 
 	[self initializedClassHealthCheck];
 }
@@ -111,6 +112,7 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder encodeObject:self->_url forKey:@"url"];
 
 	[aCoder encodeObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
+	[aCoder encodeObject:self->_viewIdentifier forKey:@"viewIdentifier"];
 }
 
 + (BOOL)supportsSecureCoding
@@ -138,6 +140,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(self->_entrypoint != nil);
 	NSParameterAssert(self->_url != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
+	NSParameterAssert(self->_viewIdentifier != nil);
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone asMutable:(BOOL)copyAsMutable
@@ -166,6 +169,7 @@ ClassWithDesignatedInitializerInitMethod
 	object->_url = self->_url;
 
 	object->_uniqueIdentifier = self->_uniqueIdentifier;
+	object->_viewIdentifier = self->_viewIdentifier;
 
 	return [object _init];
 }

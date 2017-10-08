@@ -59,6 +59,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSString *uniqueIdentifier;
 
 /**
+ * The view responsible for this payload.
+ */
+@property (copy, readonly) NSString *viewIdentifier;
+
+/**
  * The length of the content. This value is optional.
  */
 @property (readonly) NSUInteger contentLength;

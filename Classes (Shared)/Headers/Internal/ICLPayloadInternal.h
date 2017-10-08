@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _objectInitializedAsCopy;
 	NSURL *_url;
 	NSString *_uniqueIdentifier;
+	NSString *_viewIdentifier;
 }
 
 - (BOOL)isMutable;
