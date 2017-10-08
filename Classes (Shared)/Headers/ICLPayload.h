@@ -152,6 +152,11 @@ NS_ASSUME_NONNULL_BEGIN
  * Custom types cannot be passed.
  */
 @property (copy, readonly) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
+
+/**
+ * Representation of the payload that is friendly for JavaScript.
+ */
+@property (copy, readonly) NSDictionary<NSString *, id> *javaScriptObject;
 @end
 
 NS_ASSUME_NONNULL_END
