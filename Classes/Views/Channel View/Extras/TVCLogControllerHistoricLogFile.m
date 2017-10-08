@@ -116,6 +116,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)invalidateProcess
 {
+	if (self.processLoading == NO && self.processLoaded == NO) {
+		return;
+	}
+
 	LogToConsoleDebug("Invaliating process...");
 
 	self.connectionInvalidatedVoluntarily = YES;
