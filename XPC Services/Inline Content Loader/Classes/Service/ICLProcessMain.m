@@ -121,7 +121,9 @@ ClassWithDesignatedInitializerInitMethod
 	ICLPayloadMutable *payload = [[ICLPayloadMutable alloc] initWithURL:url uniqueIdentifier:uniqueIdentifier];
 
 	ICLInlineContentModuleCompletionBlock completionBlock = ^(NSError * _Nullable error) {
-		if (payload.scriptResources.count == 0) {
+		ICLPayload *payloadCopy = [payload copy];
+
+		if (payloadCopy.scriptResources.count == 0) {
 			error =
 			[NSError errorWithDomain:ICLInlineContentErrorDomain
 								code:1001
@@ -131,9 +133,9 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if (error) {
-			[[self remoteObjectProxy] processingUniqueIdentifier:payload.uniqueIdentifier failedWithError:error];
+			[[self remoteObjectProxy] processingUniqueIdentifier:payloadCopy.uniqueIdentifier failedWithError:error];
 		} else {
-			[[self remoteObjectProxy] processingUniqueIdentifier:payload.uniqueIdentifier suceededWithPayload:payload];
+			[[self remoteObjectProxy] processingUniqueIdentifier:payloadCopy.uniqueIdentifier suceededWithPayload:payloadCopy];
 		}
 	};
 
