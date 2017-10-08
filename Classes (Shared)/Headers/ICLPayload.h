@@ -69,21 +69,46 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSSize contentSize;
 
 /**
- * @brief A collection of paths for .css files that need to be loaded to allow the
+ * A collection of paths for .css files that need to be loaded to allow the
  *  rendered HTML to appear correct.
  */
-@property (copy, readonly, nullable) NSArray<NSString *> *cssResources;
+@property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
 
 /**
- * @brief A collection of paths for .js files that need to be loaded to allow the
+ * A collection of paths for .js files that need to be loaded to allow the
  *  rendered HTML to appear correct.
+ *
+ * At least one file is required so that the entrypoint can be called.
  */
-@property (copy, readonly, nullable) NSArray<NSString *> *jsResources;
+@property (copy, readonly) NSArray<NSString *> *scriptResources;
 
 /**
- * @brief The rendered HTML to insert into the DOM
+ * The name of a JavaSript function that will be called for the purpose
+ *  of inlining this payload.
  */
-@property (copy, readonly) NSString *html;
+@property (copy, readonly) NSString *entrypoint;
+
+/**
+ * A payload that is passed as the first argument to the -scriptEntrypoint.
+ *
+ * ICLPayload automatically sets "url" and "uniqueIdentifier" values
+ * to this dictionary to mirror the values present in the payload.
+ * You do not need to do this yourself.
+ *
+ * Types are translated as such:
+ *
+ * Objective-C          JavaScript
+ * -----------          ----------
+ * NSArray         =>   array
+ * BOOL            =>   boolean
+ * NSNumber        =>   number
+ * NSDictionary    =>   object
+ * NSString        =>   string
+ * NSURL           =>   string
+ *
+ * Custom types cannot be passed.
+ */
+@property (copy, readonly) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
 @end
 
 NS_ASSUME_NONNULL_END

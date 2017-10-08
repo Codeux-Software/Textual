@@ -42,9 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
 	NSUInteger _contentLength;
 	NSSize _contentSize;
-	NSArray<NSString *> *_cssResources;
-	NSArray<NSString *> *_jsResources;
-	NSString *_html;
+	NSArray<NSString *> *_styleResources;
+	NSArray<NSString *> *_scriptResources;
+    NSString *_entrypoint;
+    NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
 
 @private
 	BOOL _objectInitialized;
