@@ -49,7 +49,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey = @"Theme 
 
 NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
-@implementation TPCPreferences
+@implementation TPCPreferences (TPCPreferencesLocal)
 
 #pragma mark -
 #pragma mark Default Identity
@@ -729,53 +729,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 + (BOOL)tabCompletionCutForwardToFirstWhitespace
 {
 	return [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
-}
-
-#pragma mark -
-#pragma mark Inline Image Size
-
-+ (TXUnsignedLongLong)inlineImagesMaxFilesize
-{
-	NSUInteger filesizeTag = [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumFilesize"];
-
-	switch (filesizeTag) {
-#define _dv(key, value)		case (key): { return (value); }
-
-		_dv(1, (TXUnsignedLongLong)1048576) // 1 MB
-		_dv(2, (TXUnsignedLongLong)2097152) // 2 MB
-		_dv(3, (TXUnsignedLongLong)3145728) // 3 MB
-		_dv(4, (TXUnsignedLongLong)4194304) // 4 MB
-		_dv(5, (TXUnsignedLongLong)5242880) // 5 MB
-		_dv(6, (TXUnsignedLongLong)10485760) // 10 MB
-		_dv(7, (TXUnsignedLongLong)15728640) // 15 MB
-		_dv(8, (TXUnsignedLongLong)20971520) // 20 MB
-		_dv(9, (TXUnsignedLongLong)52428800) // 50 MB
-		_dv(10, (TXUnsignedLongLong)104857600) // 100 MB
-
-#undef _dv
-	}
-
-	return (TXUnsignedLongLong)2097152; // 2 MB
-}
-
-+ (NSUInteger)inlineImagesMaxWidth
-{
-	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaScalingWidth"];
-}
-
-+ (NSUInteger)inlineImagesMaxHeight
-{
-	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumHeight"];
-}
-
-+ (void)setInlineImagesMaxWidth:(NSUInteger)value
-{
-	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaScalingWidth"];
-}
-
-+ (void)setInlineImagesMaxHeight:(NSUInteger)value
-{
-	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaMaximumHeight"];
 }
 
 #pragma mark -

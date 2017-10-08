@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCPreferences ()
+@interface TPCPreferences (TPCPreferencesLocalPrivate)
 + (void)initPreferences;
 
 + (void)setAppNapEnabled:(BOOL)appNapEnabled;

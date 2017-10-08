@@ -241,7 +241,7 @@
 	/* Preferences */
 	#import "TPCApplicationInfo.h"
 	#import "TPCPathInfo.h"
-	#import "TPCPreferences.h"
+	#import "TPCPreferencesLocal.h"
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	#import "TPCPreferencesCloudSync.h"
@@ -250,7 +250,7 @@
 
 	#import "TPCPreferencesImportExport.h"
 	#import "TPCPreferencesReload.h"
-	#import "TPCPreferencesUserDefaults.h"
+	#import "TPCPreferencesUserDefaultsLocal.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"

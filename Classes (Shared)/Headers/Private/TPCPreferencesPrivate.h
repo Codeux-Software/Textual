@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,33 +35,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
-#define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
-
-/* The user info dictionary of this notification contains the changed key. */
-TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
-
-/* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
- notifications for changed keys on a per-key basis so that the iCloud controller can
- know what keys change instead of having to sync every single key, every time that it
- performs an upstream sync. */
-@interface TPCPreferencesUserDefaults : NSUserDefaults
-+ (TPCPreferencesUserDefaults *)sharedUserDefaults;
-
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)defaultName;
-+ (BOOL)keyIsObsolete:(NSString *)defaultName;
-
-- (void)registerDefault:(id <NSCopying>)value forKey:(NSString *)defaultName;
-@end
-
-/* Trying to create a new instance of TPCPreferencesUserDefaultsController will
- return the value of +sharedUserDefaultsController */
-@interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
-+ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
+@interface TPCPreferences ()
++ (void)setInlineImagesMaxWidth:(NSUInteger)value;
++ (void)setInlineImagesMaxHeight:(NSUInteger)value;
 @end
 
 NS_ASSUME_NONNULL_END

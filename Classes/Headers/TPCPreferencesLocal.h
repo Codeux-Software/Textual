@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "TPCPreferences.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
@@ -110,7 +112,7 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 	TXChannelViewArrangedVertically 		= 1
 };
 
-@interface TPCPreferences : NSObject
+@interface TPCPreferences (TPCPreferencesLocal)
 + (BOOL)appNapEnabled;
 
 + (BOOL)developerModeEnabled;
@@ -227,11 +229,6 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 + (TXUserDoubleClickAction)userDoubleClickOption;
 
 + (TXHostmaskBanFormat)banFormat;
-
-+ (TXUnsignedLongLong)inlineImagesMaxFilesize;
-
-+ (NSUInteger)inlineImagesMaxWidth;
-+ (NSUInteger)inlineImagesMaxHeight;
 
 + (BOOL)webKit2Enabled;
 + (BOOL)webKit2ProcessPoolSizeLimited;
