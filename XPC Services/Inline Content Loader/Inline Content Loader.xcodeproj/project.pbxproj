@@ -16,6 +16,7 @@
 		4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */; };
 		4C8C73021F121EF000ED72DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72FA1F121EF000ED72DB /* main.m */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
+		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLProcessMain.m; path = Classes/Service/ICLProcessMain.m; sourceTree = "<group>"; };
 		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Service/main.m; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
+		4CE58BA91F8A5F8500493E7C /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */,
+				4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */,
 				4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */,
+				4CE58BA91F8A5F8500493E7C /* GRMustache.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
