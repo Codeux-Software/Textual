@@ -60,6 +60,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (nullable NSArray<NSString *> *)scriptResources
+{
+	return nil;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
