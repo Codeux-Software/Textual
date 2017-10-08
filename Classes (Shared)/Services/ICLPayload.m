@@ -74,10 +74,11 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentLength = [aDecoder decodeUnsignedIntegerForKey:@"contentLength"];
 	self->_contentSize = [aDecoder decodeSizeForKey:@"contentSize"];
 
-	self->_cssResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"cssResources"];
-	self->_jsResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"jsResources"];
+	self->_styleResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"styleResources"];
+	self->_scriptResources = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"scriptResources"];
 
-	self->_html = [aDecoder decodeStringForKey:@"html"];
+	self->_entrypoint = [aDecoder decodeStringForKey:@"entrypoint"];
+	self->_entrypointPayload = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"entrypointPayload"];
 
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
 
@@ -91,10 +92,11 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder encodeUnsignedInteger:self->_contentLength forKey:@"contentLength"];
 	[aCoder encodeSize:self->_contentSize forKey:@"contentSize"];
 
-	[aCoder maybeEncodeObject:self->_cssResources forKey:@"cssResources"];
-	[aCoder maybeEncodeObject:self->_jsResources forKey:@"jsResources"];
+	[aCoder maybeEncodeObject:self->_styleResources forKey:@"styleResources"];
+	[aCoder maybeEncodeObject:self->_scriptResources forKey:@"scriptResources"];
 
-	[aCoder encodeObject:self->_html forKey:@"html"];
+	[aCoder encodeObject:self->_entrypoint forKey:@"entrypoint"];
+	[aCoder encodeObject:self->_entrypointPayload forKey:@"entrypoint"];
 
 	[aCoder encodeObject:self->_url forKey:@"url"];
 
@@ -109,15 +111,18 @@ ClassWithDesignatedInitializerInitMethod
 - (void)populateDefaultsPostflight
 {
 	self->_contentSize = NSZeroSize;
+	
+	self->_scriptResources = @[];
 
-	self->_html = @"";
+	self->_entrypoint = @"";
 }
 
 - (void)initializedClassHealthCheck
 {
 	ObjectIsAlreadyInitializedAssert
 
-	NSParameterAssert(self->_html != nil);
+	NSParameterAssert(self->_scriptResources != nil);
+	NSParameterAssert(self->_entrypoint != nil);
 	NSParameterAssert(self->_url != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
 }
@@ -137,10 +142,11 @@ ClassWithDesignatedInitializerInitMethod
 	object->_contentLength = self->_contentLength;
 	object->_contentSize = self->_contentSize;
 
-	object->_cssResources = self->_cssResources;
-	object->_jsResources = self->_jsResources;
+	object->_styleResources = self->_styleResources;
+	object->_scriptResources = self->_scriptResources;
 
-	object->_html = self->_html;
+	object->_entrypoint = self->_entrypoint;
+	object->_entrypointPayload = self->_entrypointPayload;
 
 	object->_url = self->_url;
 
@@ -159,6 +165,41 @@ ClassWithDesignatedInitializerInitMethod
 	return [self copyWithZone:zone asMutable:YES];
 }
 
+- (NSDictionary<NSString *, id<NSCopying>> *)entrypointPayload
+{
+	NSDictionary *payload = self->_entrypointPayload;
+	
+	if (payload == nil) {
+		return [self entrypointPayloadDefaultContext];
+	}
+	
+	return payload;
+}
+
+- (NSDictionary<NSString *, id<NSCopying>> *)entrypointPayloadDefaultContext
+{
+	return @{
+		@"url" : self->_url,
+		@"uniqueIdentifier" : self->_uniqueIdentifier
+	};
+}
+
+- (void)entrypointPayloadSetContext
+{
+	/* Set context to payload that module sets. */
+	/* The values set in the context don't change so we
+	 are safe setting and forgetting. */
+	NSDictionary *payload = self->_entrypointPayload;
+	
+	if (payload == nil) {
+		return;
+	}
+	
+	NSDictionary *payloadToSet = [self entrypointPayloadDefaultContext];
+	
+	self->_entrypointPayload = [payload dictionaryByAddingEntries:payloadToSet];
+}
+
 - (BOOL)isMutable
 {
 	return NO;
@@ -172,9 +213,10 @@ ClassWithDesignatedInitializerInitMethod
 
 @dynamic contentLength;
 @dynamic contentSize;
-@dynamic cssResources;
-@dynamic jsResources;
-@dynamic html;
+@dynamic styleResources;
+@dynamic scriptResources;
+@dynamic entrypoint;
+@dynamic entrypointPayload;
 
 - (BOOL)isMutable
 {
@@ -193,27 +235,39 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentSize = contentSize;
 }
 
-- (void)setCssResources:(nullable NSArray<NSString *> *)cssResources
+- (void)setStyleResources:(nullable NSArray<NSString *> *)styleResources
 {
-	if (self->_cssResources != cssResources) {
-		self->_cssResources = [cssResources copy];
+	if (self->_styleResources != styleResources) {
+		self->_styleResources = styleResources;
 	}
 }
 
-- (void)setJsResources:(nullable NSArray<NSString *> *)jsResources
+- (void)setScriptResources:(NSArray<NSString *> *)scriptResources
 {
-	if (self->_jsResources != jsResources) {
-		self->_jsResources = [jsResources copy];
+	NSParameterAssert(scriptResources != nil);
+
+	if (self->_scriptResources != scriptResources) {
+		self->_scriptResources = scriptResources;
 	}
 }
 
-- (void)setHtml:(NSString *)html
-{
-	NSParameterAssert(html != nil);
 
-	if (self->_html != html) {
-		self->_html = html;
+- (void)setEntrypoint:(NSString *)entrypoint
+{
+    NSParameterAssert(entrypoint != nil);
+
+	if (self->_entrypoint != entrypoint) {
+		self->_entrypoint = entrypoint;
 	}
+}
+
+- (void)setEntrypointPayload:(nullable NSDictionary<NSString *, id<NSCopying>> *)entrypointPayload
+{
+    if (self->_entrypointPayload != entrypointPayload) {
+        self->_entrypointPayload = entrypointPayload;
+		
+		[self entrypointPayloadSetContext];
+    }
 }
 
 @end
