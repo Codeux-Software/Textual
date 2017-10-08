@@ -70,11 +70,29 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * The name of a JavaSript function that will be called for the purpose
  *  of inlining this payload.
+ *
+ * The entrypoint takes two arguments. The first is the value of the
+ *  -entrypointPayload property defined below. The second is a callback
+ *  function which the entrypoint is required to call after it has
+ *  finished rendering the HTML to display.
+ *
+ * Example:
+ *
+ * 	MyObject.entrypoint = function(payload, callbackFunction)
+ * 	{
+ * 		// Do work here...
+ *
+ * 		callbackFunction("some HTML to display");
+ * 	}
+ *
+ * The HTML can be set to "display: none" by default if it prefers.
+ * The callback function does not apply styling to the HTML.
+ * It only inserts it.
  */
 @property (nonatomic, copy, readwrite) NSString *entrypoint;
 
 /**
- * A payload that is passed as the first argument to the -scriptEntrypoint.
+ * A payload that is passed as the second argument to the -entrypoint.
  *
  * ICLPayload automatically sets "url" and "uniqueIdentifier" values
  * to this dictionary to mirror the values present in the payload.
