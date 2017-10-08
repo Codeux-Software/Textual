@@ -1135,8 +1135,6 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSString *lineNumber = logLine.uniqueIdentifier;
 
-		NSDictionary<NSString *, NSString *> *listOfInlineImages = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
-
 		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
 
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
@@ -1171,17 +1169,6 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
 
-			/* Begin processing inline images */
-			/* We go through the inline image list here and pass to the loader now so that
-			 we know the links have hit the webview before we even try loading them. */
-			[listOfInlineImages enumerateKeysAndObjectsUsingBlock:^(NSString *uniqueId, NSString *imageUrl, BOOL *stop) {
-				TVCImageURLoader *imageLoader = [TVCImageURLoader new];
-
-				imageLoader.delegate = (id)self;
-
-				[imageLoader assesURL:imageUrl withId:uniqueId];
-			}];
-			
 			/* Log this log line */
 			/* If the channel is encrypted, then we refuse to write to
 			 the actual historic log so there is no trace of the chatter
@@ -1281,62 +1268,6 @@ ClassWithDesignatedInitializerInitMethod
 	pathAttributes[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	NSMutableDictionary<NSString *, id> *templateAttributes = [pathAttributes mutableCopy];
-
-	// ************************************************************************** /
-
-	if (self.inlineMediaEnabledForView == NO ||
-		(lineType != TVCLogLinePrivateMessageType && lineType != TVCLogLineActionType))
-	{
-		templateAttributes[@"inlineMediaAvailable"] = @(NO);
-	}
-	else
-	{
-		// Array of attributes for template to render HTML for each image
-		NSMutableArray<NSDictionary *> *inlineImageAttributes = [NSMutableArray array];
-
-		// Array to keep track of images so that duplicates aren't processed
-		NSMutableArray<NSString *> *inlineImagesProcessed = [NSMutableArray array];
-
-		// Array of images whoes content will be loaded to ensure they are actually images
-		NSMutableDictionary<NSString *, NSString *> *inlineImagesToValidate = nil;
-
-		for (AHHyperlinkScannerResult *link in linksInBody) {
-			NSString *imageUrl = [TVCImageURLParser imageURLFromBase:link.stringValue];
-
-			if (imageUrl == nil) {
-				continue;
-			}
-
-			if ([inlineImagesProcessed containsObject:imageUrl]) {
-				continue;
-			}
-
-			[inlineImageAttributes addObject:@{
-				  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
-				  @"anchorInlineImageUniqueID"	: link.uniqueIdentifier,
-				  @"anchorLink"					: link.stringValue,
-				  @"imageURL"					: imageUrl,
-			}];
-
-			[inlineImagesProcessed addObject:imageUrl];
-
-			if (resultInfoTemp) {
-				if (inlineImagesToValidate == nil) {
-					inlineImagesToValidate = [NSMutableDictionary dictionary];
-				}
-
-				inlineImagesToValidate[link.uniqueIdentifier] = imageUrl;
-			}
-		}
-
-		templateAttributes[@"inlineMediaArray"]	= inlineImageAttributes;
-		
-		templateAttributes[@"inlineMediaAvailable"] = @(inlineImagesProcessed.count > 0);
-
-		if (resultInfoTemp) {
-			resultInfoTemp[@"InlineImagesToValidate"] = inlineImagesToValidate;
-		}
-	}
 
 	// ---- //
 
@@ -1473,16 +1404,6 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *html = [TVCLogRenderer renderTemplate:template attributes:templateAttributes];
 
 	return html;
-}
-
-- (void)isSafeToPresentImageWithId:(NSString *)uniqueId
-{
-	[self _evaluateFunction:@"_Textual.toggleInlineImageVisibility" withArguments:@[uniqueId]];
-}
-
-- (void)isNotSafeToPresentImageWithId:(NSString *)uniqueId
-{
-	;
 }
 
 #pragma mark -

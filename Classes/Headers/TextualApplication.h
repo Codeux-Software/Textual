@@ -111,7 +111,6 @@
 	@class TVCBasicTableView;
 	@class TVCChannelSelectionViewController;
 	@class TVCDockIcon;
-	@class TVCImageURLParser;
 	@class TVCInputPromptDialog;
 	@class TVCLogController;
 	@class TVCLogLine;
@@ -261,7 +260,6 @@
 	#import "TVCBasicTableView.h"
 	#import "TVCChannelSelectionViewController.h"
 	#import "TVCComboBoxWithValueValidation.h"
-	#import "TVCImageURLParser.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCLogController.h"
 	#import "TVCLogLine.h"

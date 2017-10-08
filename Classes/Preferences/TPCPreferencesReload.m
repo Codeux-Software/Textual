@@ -352,7 +352,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Inline media cache */
 	if ((reloadAction & TPCPreferencesReloadInlineMediaCacheAction) == TPCPreferencesReloadInlineMediaCacheAction) {
-		[TVCImageURLoader invalidateInternalCache];
+#warning TODO: Implement
 	}
 
 	/* Command index cache */

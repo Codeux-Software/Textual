@@ -53,7 +53,7 @@ Textual.hasLiveResize = function()
 	}
 };
 
-Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
+Textual.toggleInlineMedia = function(object, onlyPerformForShiftKey)
 {
 	/* We only want certain actions to happen for shift key. */
 	if (onlyPerformForShiftKey) {
@@ -62,96 +62,5 @@ Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
 		}
 	}
 
-	/* toggleInlineImage() is called when an onclick event is thrown on the associated
-	link anchor of an inline image. If the last mouse down event was related to a resize,
-	then we return false to stop link from opening. Else, we pass the event information
-	to the internals of Textual itself to determine whether to cancel the request. */
-	if (Textual.hasLiveResize()) {
-		if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
-			_Textual.toggleInlineImageVisibility(object);
-		}
-	} else {
-		_Textual.toggleInlineImageVisibility(object);
-	}
-
 	return false;
-};
-
-_Textual.toggleInlineImageVisibility = function(object)
-{
-	if (object.indexOf("inlineImage-") !== 0) {
-		object = ("inlineImage-" + object);
-	}
-
-	var imageContainer = document.getElementById(object);
-
-	/* If the image is not hidden, then we make it so and finish. */
-	var hidden = (imageContainer.style.display === "none");
-	
-	if (hidden === false) {
-		imageContainer.prepareForMutation();
-
-		imageContainer.style.display = "none";
-		
-		_Textual.didToggleInlineImageToHidden(imageContainer, imageElement);
-		
-		return;
-	}
-	
-	/* If the image is not already loaded, then we observe 
-	changes to that so that we only reveal once it is. */
-	var imageElement = imageContainer.querySelector("a .image");
-
-	var complete = imageElement.complete;
-	
-	if (complete === false) {
-		if (imageContainer.hasAttribute("wants-reveal")) {
-			return;
-		}
-	}
-	
-	var completeCallback = (function() {
-		/* It is important that we reveal the inline image immediately
-		after preparing the scroller for mutation. If we do not, then 
-		the mutation will be swallowed without changing the height. */
-		imageContainer.prepareForMutation();
-
-		imageContainer.style.display = "";
-		
-		imageContainer.removeAttribute("wants-reveal");
-		
-		_Textual.didToggleInlineImageToVisible(imageContainer, imageElement);
-	});
-	
-	if (complete === false) {
-		imageContainer.setAttribute("wants-reveal", "true");
-
-		imageElement.addEventListener("load", { handleEvent: completeCallback }, false);
-	} else {
-		completeCallback();
-	}
-};
-
-_Textual.didToggleInlineImageToHidden = function(imageContainer, imageElement)
-{
-	Textual.didToggleInlineImageToHidden(imageContainer);
-};
-
-_Textual.didToggleInlineImageToVisible = function(imageContainer, imageElement)
-{
-	if (Textual.hasLiveResize()) {
-		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
-	}
-
-	Textual.didToggleInlineImageToVisible(imageContainer);
-};
-
-Textual.didToggleInlineImageToHidden = function(imageContainer)
-{
-	/* Do something here? */
-};
-
-Textual.didToggleInlineImageToVisible = function(imageContainer)
-{
-	/* Do something here? */
 };
