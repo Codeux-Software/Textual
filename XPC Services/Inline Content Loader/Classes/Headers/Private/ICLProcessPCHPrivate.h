@@ -39,7 +39,15 @@
 
 #import <CocoaExtensions/CocoaExtensions.h>
 
+/* Shared */
+#import "StaticDefinitions.h"
 #import "NSObjectHelperPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPreferencesUserDefaultsPrivate.h"
+#import "TPCPreferences.h"
+#import "TPCPreferencesPrivate.h"
+
+/* Service */
 #import "ICLPayload.h"
 #import "ICLPayloadMutable.h"
 #import "ICLPayloadPrivate.h"

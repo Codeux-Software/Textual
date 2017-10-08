@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import <objc/runtime.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
@@ -63,11 +65,43 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark XPC Interface
 
+/* -modules returns an array of classes (not objects) */
+- (NSArray *)modules
+{
+	static NSArray *modules = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		modules = @[[ICMCommonImages class]];
+	});
+
+	return modules;
+}
+
 - (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
 {
 	NSParameterAssert(address != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
 
+	/* WebKit is able to translate an address to punycode
+	 for us by giving it a pasteboard with the URL. */
+	NSURL *url = address.URLUsingWebKitPasteboard;
+
+	if (url == nil) {
+		NSError *error =
+		[NSError errorWithDomain:ICLInlineContentErrorDomain
+							code:1000
+						userInfo:@{
+			 NSLocalizedDescriptionKey : @"Address could not be normalized"
+		}];
+
+		[[self remoteObjectProxy] processingUniqueIdentifier:uniqueIdentifier failedWithError:error];
+
+		return;
+	}
+
+	[self processURL:url withUniqueIdentifier:uniqueIdentifier];
 }
 
 - (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
@@ -75,6 +109,79 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(url != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
 
+	NSString *urlScheme = url.scheme;
+
+	if ([urlScheme isEqualToString:@"http"] == NO &&
+		[urlScheme isEqualToString:@"https"] == NO)
+	{
+		return;
+	}
+
+	for (Class module in [self modules]) {
+		if ([self _processURL:url withUniqueIdentifier:uniqueIdentifier usingModule:module]) {
+			return;
+		}
+	}
+}
+
+- (BOOL)_processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier usingModule:(Class)moduleClass
+{
+	NSParameterAssert(url != nil);
+	NSParameterAssert(uniqueIdentifier != nil);
+
+	/* Determine whether this module has an action for this URL. */
+	ICLInlineContentModuleActionBlock actionBlock = [moduleClass actionBlockForURL:url];
+
+	SEL action = NULL;
+
+	if (actionBlock == nil) {
+		action = [moduleClass actionForURL:url];
+	}
+
+	if (actionBlock == nil && (action == NULL /* || [moduleClass instancesRespondToSelector:action] == NO */)) {
+		return NO;
+	}
+
+	/* The module has an action. Call it. */
+	ICLPayloadMutable *payload = [[ICLPayloadMutable alloc] initWithURL:url uniqueIdentifier:uniqueIdentifier];
+
+	ICLInlineContentModuleCompletionBlock completionBlock = ^(NSError * _Nullable error) {
+		if (payload.scriptResources.count == 0) {
+			error =
+			[NSError errorWithDomain:ICLInlineContentErrorDomain
+								code:1001
+							userInfo:@{
+				NSLocalizedDescriptionKey : @"-[ICLPayload scriptResources] must contain at least one path"
+			}];
+		}
+
+		if (error) {
+			[[self remoteObjectProxy] processingUniqueIdentifier:payload.uniqueIdentifier failedWithError:error];
+		} else {
+			[[self remoteObjectProxy] processingUniqueIdentifier:payload.uniqueIdentifier suceededWithPayload:payload];
+		}
+	};
+
+	ICLInlineContentModule *module = [[moduleClass alloc] initWithPayload:payload completionBlock:completionBlock];
+
+	if (actionBlock) {
+		actionBlock(module);
+	} else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+		[module performSelector:action];
+#pragma clang diagnostic pop
+	}
+
+	return YES;
+}
+
+#pragma mark -
+#pragma mark XPC Connection
+
+- (id <ICLInlineContentClientProtocol>)remoteObjectProxy
+{
+	return self.serviceConnection.remoteObjectProxy;
 }
 
 @end
