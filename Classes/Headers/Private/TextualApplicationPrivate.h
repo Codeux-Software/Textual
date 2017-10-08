@@ -158,10 +158,11 @@
 #import "TPCPreferencesCloudSyncExtensionPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesImportExportPrivate.h"
-#import "TPCPreferencesPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesPrivate.h"  // shared
 #import "TPCPreferencesReloadPrivate.h"
 #import "TPCPreferencesUserDefaultsMigratePrivate.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
+#import "TPCPreferencesUserDefaultsPrivate.h" // shared
 #import "TPCResourceManagerPrivate.h"
 #import "TPCThemeControllerPrivate.h"
 #import "TPCThemeSettingsPrivate.h"
