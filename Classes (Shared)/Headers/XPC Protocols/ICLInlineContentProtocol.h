@@ -47,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ICLInlineContentServerProtocol
 @required
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier;
 - (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier;
 @end
 
@@ -60,11 +59,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const ICLInlineContentErrorDomain;
 @protocol ICLInlineContentClientProtocol
 @required
 
-- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier
-			   suceededWithPayload:(ICLPayload *)payload;
-
-- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier
-				   failedWithError:(NSError *)error;
+- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier suceededWithPayload:(ICLPayload *)payload;
+- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier failedWithError:(NSError *)error;
 @end
 
 NS_ASSUME_NONNULL_END

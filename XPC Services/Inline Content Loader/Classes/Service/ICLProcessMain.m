@@ -79,31 +79,6 @@ ClassWithDesignatedInitializerInitMethod
 	return modules;
 }
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier
-{
-	NSParameterAssert(address != nil);
-	NSParameterAssert(uniqueIdentifier != nil);
-
-	/* WebKit is able to translate an address to punycode
-	 for us by giving it a pasteboard with the URL. */
-	NSURL *url = address.URLUsingWebKitPasteboard;
-
-	if (url == nil) {
-		NSError *error =
-		[NSError errorWithDomain:ICLInlineContentErrorDomain
-							code:1000
-						userInfo:@{
-			 NSLocalizedDescriptionKey : @"Address could not be normalized"
-		}];
-
-		[[self remoteObjectProxy] processingUniqueIdentifier:uniqueIdentifier failedWithError:error];
-
-		return;
-	}
-
-	[self processURL:url withUniqueIdentifier:uniqueIdentifier];
-}
-
 - (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier
 {
 	NSParameterAssert(url != nil);
