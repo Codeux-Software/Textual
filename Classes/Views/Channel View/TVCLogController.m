@@ -810,6 +810,20 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark Inline Media
+
+- (void)processingInlineMediaForUniqueIdentifier:(NSString *)uniqueIdentifier suceededWithPayload:(ICLPayload *)payload
+{
+
+}
+
+- (void)processingInlineMediaForUniqueIdentifier:(NSString *)uniqueIdentifier failedWithError:(NSError *)error
+{
+	LogToConsoleError("Processing request for '%@' failed with error: %@",
+		uniqueIdentifier, error.localizedDescription);
+}
+
+#pragma mark -
 #pragma mark Manage Highlights
 
 - (NSUInteger)numberOfLines
@@ -1137,6 +1151,8 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
 
+		BOOL inlineMediaEnabled = [resultInfo boolForKey:@"inlineMediaEnabled"];
+		
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
@@ -1168,6 +1184,20 @@ ClassWithDesignatedInitializerInitMethod
 			}
 
 			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
+
+			/* Begin processing inline media */
+			/* We go through the inline media list here and pass to the loader now so
+			 that we know the links have hit the WebView before we even try loading them. */
+			if (inlineMediaEnabled) {
+				NSArray<AHHyperlinkScannerResult *> *listOfLinks = resultInfo[TVCLogRendererResultsListOfLinksInBodyAttribute];
+
+				[listOfLinks enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
+					[TVCLogControllerInlineMediaSharedInstance()
+							 processAddress:link.stringValue
+					   withUniqueIdentifier:link.uniqueIdentifier
+								    forItem:channel];
+				}];
+			}
 
 			/* Log this log line */
 			/* If the channel is encrypted, then we refuse to write to
@@ -1256,8 +1286,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	BOOL highlighted = [rendererResults boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
-
-	NSArray<AHHyperlinkScannerResult *> *linksInBody = rendererResults[TVCLogRendererResultsListOfLinksInBodyAttribute];
 
 	// ************************************************************************** /
 
@@ -1366,7 +1394,17 @@ ClassWithDesignatedInitializerInitMethod
 	// ************************************************************************** /
 
 	if (resultInfoTemp) {
+		if (self.inlineMediaEnabledForView == NO ||
+			(lineType != TVCLogLinePrivateMessageType && lineType != TVCLogLineActionType))
+		{
+			resultInfoTemp[@"inlineMediaEnabled"] = @(NO);
+		} else {
+			resultInfoTemp[@"inlineMediaEnabled"] = @(YES);
+		}
+		
 		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
+			NSArray<AHHyperlinkScannerResult *> *listOfLinks = rendererResults[TVCLogRendererResultsListOfLinksInBodyAttribute];
+
 			 THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject =
 			[THOPluginDidPostNewMessageConcreteObject new];
 
@@ -1383,7 +1421,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			pluginConcreteObject.messageContents = rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute];
 
-			pluginConcreteObject.listOfHyperlinks = linksInBody;
+			pluginConcreteObject.listOfHyperlinks = listOfLinks;
 
 			pluginConcreteObject.listOfUsers = rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute];
 

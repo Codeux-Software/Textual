@@ -49,6 +49,7 @@
 
 #import "TextualApplication.h"
 
+#import "ICLPayload.h"
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
 #import "GCDAsyncSocketTrustPanel.h"
@@ -159,6 +160,7 @@
 #import "TVCContentNavigationOutlineViewPrivate.h"
 #import "TVCDockIconPrivate.h"
 #import "TVCLogControllerHistoricLogFilePrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
 #import "TVCLogControllerOperationQueuePrivate.h"
 #import "TVCLogControllerPrivate.h"
 #import "TVCLogLinePrivate.h"
