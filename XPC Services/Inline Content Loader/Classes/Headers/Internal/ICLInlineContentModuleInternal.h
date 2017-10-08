@@ -35,43 +35,11 @@
 
  *********************************************************************** */
 
-#import "ICLInlineContentModuleInternal.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICLInlineContentModule (ICLInlineContentModulePrivate)
-
-- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock
-{
-	NSParameterAssert(payload != nil);
-	NSParameterAssert(completionBlock != nil);
-
-	if ((self = [super init])) {
-		self.payload = payload;
-
-		self.completionBlock = completionBlock;
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (nullable GRMustacheTemplate *)template
-{
-	return nil;
-}
-
-- (nullable NSArray<NSString *> *)styleResources
-{
-	return nil;
-}
-
-- (nullable NSArray<NSString *> *)scriptResources
-{
-	return nil;
-}
-
+@interface ICLInlineContentModule ()
+@property (nonatomic, strong, readwrite) ICLPayloadMutable *payload;
+@property (nonatomic, copy, readwrite) ICLInlineContentModuleCompletionBlock completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END
