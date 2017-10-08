@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */; };
-		4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */; };
-		4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */; };
 		4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8C21F89065700CD8193 /* ICLPayload.m */; };
 		4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8CF1F89165C00CD8193 /* ICLInlineContentModule.m */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
@@ -349,9 +346,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */,
-				4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */,
-				4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
