@@ -39,6 +39,8 @@
 
 #import <CocoaExtensions/CocoaExtensions.h>
 
+#import <GRMustache/GRMustache.h>
+
 /* Shared */
 #import "StaticDefinitions.h"
 #import "NSObjectHelperPrivate.h"

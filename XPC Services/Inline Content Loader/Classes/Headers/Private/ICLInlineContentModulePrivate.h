@@ -38,6 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLInlineContentModule (ICLInlineContentModulePrivate)
+@property (readonly, nullable) GRMustacheTemplate *template;
+@property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
 @property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
 
 - (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock;
