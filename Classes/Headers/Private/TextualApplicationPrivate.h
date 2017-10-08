@@ -158,7 +158,6 @@
 #import "TVCChannelSelectionViewControllerPrivate.h"
 #import "TVCContentNavigationOutlineViewPrivate.h"
 #import "TVCDockIconPrivate.h"
-#import "TVCImageURLoaderPrivate.h"
 #import "TVCLogControllerHistoricLogFilePrivate.h"
 #import "TVCLogControllerOperationQueuePrivate.h"
 #import "TVCLogControllerPrivate.h"

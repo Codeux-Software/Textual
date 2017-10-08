@@ -299,8 +299,6 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	for (IRCClient *u in self.clientList) {
 		[u preferencesChanged];
 	}
-
-	[TVCImageURLoader invalidateInternalCache];
 }
 
 - (void)setupMidnightTimer
