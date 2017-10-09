@@ -42,121 +42,148 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLPayload : NSObject <NSCoding, NSSecureCoding, NSCopying, NSMutableCopying>
 /**
- * Payload objects are not allowed to be allocated by a plugin.
- * Each new instance of ICLContentLoaderModule is given a mutable payload.
- * Modify that, then the loader will create an immutable copy when appropriate.
+ Payload objects are not allowed to be allocated by a plugin.
+ Each new instance of ICLContentLoaderModule is given a mutable payload.
+ Modify that, then the loader will create an immutable copy when appropriate.
  */
 - (instancetype)init NS_UNAVAILABLE;
 
 /**
- * The value of the address argument supplied to the loader.
+ The value of the address argument supplied to the loader.
  */
 @property (copy, readonly) NSURL *url;
 
 /**
- * The value of the unique identifier argument supplied to the loader.
+ The value of the unique identifier argument supplied to the loader.
  */
 @property (copy, readonly) NSString *uniqueIdentifier;
 
 /**
- * The view responsible for this payload.
+ The view responsible for this payload.
  */
 @property (copy, readonly) NSString *viewIdentifier;
 
 /**
- * The length of the content. This value is optional.
+ The line number associated with this payload.
+ */
+@property (copy, readonly) NSString *lineNumber;
+
+/**
+ The length of the content. This value is optional.
  */
 @property (readonly) NSUInteger contentLength;
 
 /**
- * The size of the content. This value is optional.
+ The size of the content. This value is optional.
  */
 @property (readonly) NSSize contentSize;
 
 /**
- * A collection of paths for .css files that need to be loaded to allow the
- *  rendered HTML to appear correct.
+ A collection of paths for .css files that need to be loaded to allow the
+ rendered HTML to appear correct.
  */
 @property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
 
 /**
- * A collection of paths for .js files that need to be loaded to allow the
- *  rendered HTML to appear correct.
- *
- * At least one file is required so that the entrypoint can be called.
+ A collection of paths for .js files that need to be loaded to allow the
+ rendered HTML to appear correct.
+
+ - Discussion:
+
+ At least one file is required so that the entrypoint can be called.
  */
 @property (copy, readonly) NSArray<NSString *> *scriptResources;
 
 /**
- * @brief Rendered HTML or an empty string
- *
- * @discussion
- * A module does not need to render the HTML through Objective-C.
- * It can render it in JavaScript or by some other means.
- *
- * If a module renders HTML using Objective-C, then the final result
- * can be assigned to this property. The value of this property is
- * then passed inside the -entrypointPayload dictionary.
+ Rendered HTML or an empty string
+
+ - Discussion:
+
+ A module does not need to render the HTML through Objective-C.
+ It can render it in JavaScript or by some other means.
+
+ If a module renders HTML using Objective-C, then the final result
+ can be assigned to this property.
  */
 @property (copy, readonly, nullable) NSString *html;
 
-/**
- * @brief The name of a JavaSript function that will be called for the
- * purpose of inlining this payload.
- *
- * @discussion
- * The entrypoint takes two arguments. The first is the value of the
- * -entrypointPayload property defined below. The second is a callback
- * function which the entrypoint is required to pass rendered HTML.
- *
- * Example:
- *
- * 	MyObject.entrypoint = function(payload, callbackFunction)
- * 	{
- * 		// Do work here...
- *
- * 		callbackFunction("some HTML to display");
- * 	}
- *
- * The HTML can be set to "display: none" by default if it prefers.
- * The callback function does not apply styling to the HTML.
- * It only inserts it.
- */
-@property (copy, readonly) NSString *entrypoint;
+#pragma mark -
+#pragma mark Advanced
 
 /**
- * @brief A dictionary that is passed as the first argument to -entrypoint.
- *
- * @discussion
- * This dictionary is guaranteed to always contain the following keys: 
- * 	1. "html" (string)
- * 	2. "url" (string)
- * 	3. "uniqueIdentifier" (string)
- * The value of these keys mirror the payload's.
- *
- * ICLPayload will not allow you to override the value of these keys.
- *
- * ----------------------------------------------
- *
- * Types are translated as such:
- *
- * 	Objective-C          JavaScript
- * 	-----------          ----------
- * 	NSArray         =>   array
- * 	BOOL            =>   boolean
- * 	NSNumber        =>   number
- * 	NSDictionary    =>   object
- * 	NSString        =>   string
- * 	NSURL           =>   string
- *
- * Custom types cannot be passed.
+ The name of a JavaSript function that can be called for the
+ purpose of inlining this payload.
+
+ - Function Arguments:
+
+ The entrypoint function takes two arguments:
+
+ 1. The value of the -entrypointPayload property defined below.
+ 2. A callback function which itself takes one argument:
+    The HTML that the entrypoint function wants to insert.
+
+ - Requirements:
+
+ • If the `html` property of this payload is empty:
+     1. An entrypoint function is REQUIRED.
+ • If the `html` property of this payload is NOT empty:
+     1. An entrypoint function is OPTIONAL.
+     2. If an entrypoint function is NOT set, then the value of
+        the `html` property is inserted without assitance.
+     3. If an entrypoin function is set, then the value of
+        the contents of the payload are passed to it without
+        inserting the value of the `html` property.
+        The entrypoint function can then decide to insert the
+        HTML when it wants by calling a callback function.
+
+ - Example:
+
+ ````
+    MyObject.entrypoint = function(payload, callbackFunction)
+    {
+        // Do work here...
+
+        callbackFunction("some HTML to display");
+    }
+ ````
+
+ */
+@property (copy, readonly, nullable) NSString *entrypoint;
+
+/**
+ A dictionary that is passed as the first argument to -entrypoint.
+
+ - Dictionary Contents:
+
+ This dictionary is guaranteed to always contain the following keys:
+
+  1. "html" (string)
+  2. "url" (string)
+  3. "lineNumber" (string)
+  4. "uniqueIdentifier" (string)
+
+ The value of these keys mirror the payload's.
+
+ ICLPayload will not allow you to override the value of these keys.
+
+ - Types:
+
+ Types are translated as such:
+
+ ````
+ Objective-C          JavaScript
+ -----------          ----------
+ NSArray         =>   array
+ BOOL            =>   boolean
+ NSNumber        =>   number
+ NSDictionary    =>   object
+ NSString        =>   string
+ NSURL           =>   string
+ ````
+
+ Custom types are treated as "undefined"
  */
 @property (copy, readonly) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
-
-/**
- * Representation of the payload that is friendly for JavaScript.
- */
-@property (copy, readonly) NSDictionary<NSString *, id> *javaScriptObject;
 @end
 
 NS_ASSUME_NONNULL_END

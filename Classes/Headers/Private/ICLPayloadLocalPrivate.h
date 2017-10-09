@@ -37,30 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICLPayload ()
-{
-@protected
-	NSUInteger _contentLength;
-	NSSize _contentSize;
-	NSArray<NSString *> *_styleResources;
-	NSArray<NSString *> *_scriptResources;
-	NSString *_html;
-    NSString *_entrypoint;
-    NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
-
-@private
-	BOOL _objectInitialized;
-	BOOL _objectInitializedAsCopy;
-	NSURL *_url;
-	NSString *_lineNumber;
-	NSString *_uniqueIdentifier;
-	NSString *_viewIdentifier;
-}
-
-- (BOOL)isMutable;
-
-/* Declared here because it is accessed by private category */
-- (void)populateDefaultsPostflight;
+@interface ICLPayload (ICLPayloadLocalPrivate)
+@property (copy, readonly) NSDictionary<NSString *, id> *javaScriptObject;
 @end
 
 NS_ASSUME_NONNULL_END
