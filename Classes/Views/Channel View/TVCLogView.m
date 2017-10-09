@@ -406,6 +406,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
 	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\r" withString:@"\\r"];
+	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"];
 
 	return escapedString;
 }
@@ -583,6 +585,11 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(object != nil);
 
+	if ([object isKindOfClass:[NSURL class]])
+	{
+		object = [object absoluteString];
+	}
+
 	if ([object isKindOfClass:[NSString class]])
 	{
 		NSString *objectEscaped = [TVCLogView escapeJavaScriptString:object];
@@ -612,10 +619,6 @@ ClassWithDesignatedInitializerInitMethod
 	else if ([object isKindOfClass:[NSNull class]])
 	{
 		return @"null";
-	}
-	else if ([object isKindOfClass:[NSURL class]])
-	{
-		return [object absoluteString];
 	}
 	else
 	{
