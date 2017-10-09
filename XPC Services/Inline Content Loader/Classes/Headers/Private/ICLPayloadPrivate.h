@@ -39,7 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLPayload (ICLPayloadPrivate)
 - (nullable instancetype)initWithURL:(NSURL *)url
-					uniqueIdentifier:(NSString *)uniqueIdentifier
+				withUniqueIdentifier:(NSString *)uniqueIdentifier
+						atLineNumber:(NSString *)lineNumber
 							  inView:(NSString *)viewIdentifier;
 @end
 

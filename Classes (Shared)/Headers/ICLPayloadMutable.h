@@ -43,94 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Mutable Object
 
 @interface ICLPayloadMutable : ICLPayload
-/**
- * @brief The length of the content. This value is optional.
- */
 @property (nonatomic, assign, readwrite) NSUInteger contentLength;
-
-/**
- * @brief The size of the content. This value is optional.
- */
 @property (nonatomic, assign, readwrite) NSSize contentSize;
-
-/**
- * A collection of paths for .css files that need to be loaded to allow the
- *  rendered HTML to appear correct.
- */
 @property (nonatomic, copy, nullable, readwrite) NSArray<NSString *> *styleResources;
-
-/**
- * A collection of paths for .js files that need to be loaded to allow the
- *  rendered HTML to appear correct.
- *
- * At least one file is required so that the entrypoint can be called.
- */
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *scriptResources;
-
-/**
- * @brief Rendered HTML or an empty string
- *
- * @discussion
- * A module does not need to render the HTML through Objective-C.
- * It can render it in JavaScript or by some other means.
- *
- * If a module renders HTML using Objective-C, then the final result
- * can be assigned to this property. The value of this property is
- * then passed inside the -entrypointPayload dictionary.
- */
 @property (nonatomic, copy, readwrite) NSString *html;
-
-/**
- * @brief The name of a JavaSript function that will be called for the
- * purpose of inlining this payload.
- *
- * @discussion
- * The entrypoint takes two arguments. The first is the value of the
- * -entrypointPayload property defined below. The second is a callback
- * function which the entrypoint is required to pass rendered HTML.
- *
- * Example:
- *
- * 	MyObject.entrypoint = function(payload, callbackFunction)
- * 	{
- * 		// Do work here...
- *
- * 		callbackFunction("some HTML to display");
- * 	}
- *
- * The HTML can be set to "display: none" by default if it prefers.
- * The callback function does not apply styling to the HTML.
- * It only inserts it.
- */
-@property (nonatomic, copy, readwrite) NSString *entrypoint;
-
-/**
- * @brief A dictionary that is passed as the first argument to -entrypoint.
- *
- * @discussion
- * This dictionary is guaranteed to always contain the following keys:
- * 	1. "html" (string)
- * 	2. "url" (string)
- * 	3. "uniqueIdentifier" (string)
- * The value of these keys mirror the payload's.
- *
- * ICLPayload will not allow you to override the value of these keys.
- *
- * ----------------------------------------------
- *
- * Types are translated as such:
- *
- * 	Objective-C          JavaScript
- * 	-----------          ----------
- * 	NSArray         =>   array
- * 	BOOL            =>   boolean
- * 	NSNumber        =>   number
- * 	NSDictionary    =>   object
- * 	NSString        =>   string
- * 	NSURL           =>   string
- *
- * Custom types cannot be passed.
- */
+@property (nonatomic, copy, nullable, readwrite) NSString *entrypoint;
 @property (nonatomic, copy, null_resettable, readwrite) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
 @end
 

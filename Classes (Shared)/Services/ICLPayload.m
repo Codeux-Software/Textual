@@ -90,6 +90,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
 
+	self->_lineNumber = [aDecoder decodeStringForKey:@"lineNumber"];
+	
 	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
 	self->_viewIdentifier = [aDecoder decodeStringForKey:@"viewIdentifier"];
 
@@ -106,10 +108,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	[aCoder encodeObject:self->_html forKey:@"html"];
 	
-	[aCoder encodeObject:self->_entrypoint forKey:@"entrypoint"];
-	[aCoder encodeObject:self->_entrypointPayload forKey:@"entrypointPayload"];
+	[aCoder maybeEncodeObject:self->_entrypoint forKey:@"entrypoint"];
+	[aCoder maybeEncodeObject:self->_entrypointPayload forKey:@"entrypointPayload"];
 
 	[aCoder encodeObject:self->_url forKey:@"url"];
+
+	[aCoder encodeObject:self->_lineNumber forKey:@"lineNumber"];
 
 	[aCoder encodeObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[aCoder encodeObject:self->_viewIdentifier forKey:@"viewIdentifier"];
@@ -120,36 +124,6 @@ ClassWithDesignatedInitializerInitMethod
 	return YES;
 }
 
-- (NSDictionary<NSString *, id> *)javaScriptObject
-{
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-	[dic setUnsignedInteger:self->_contentLength forKey:@"contentLength"];
-
-	[dic setObject:@{
-		@"width" : @(self->_contentSize.width),
-		@"height" : @(self->_contentSize.height)
-	} forKey:@"contentSize"];
-
-	[dic maybeSetObject:self->_styleResources forKey:@"styleResources"];
-	[dic maybeSetObject:self->_scriptResources forKey:@"scriptResources"];
-
-	[dic setObject:self->_html forKey:@"html"];
-
-	[dic setObject:self->_entrypoint forKey:@"entrypoint"];
-
-	/* call self. instead of self->_ for entrypointPayload to allow
-	 the default values to be assigned to the exported object. */
-	[dic setObject:self.entrypointPayload forKey:@"entrypointPayload"];
-
-	[dic setObject:self->_url forKey:@"url"];
-
-	[dic setObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
-//	[dic setObject:self->_viewIdentifier forKey:@"viewIdentifier"];
-
-	return [dic copy];
-}
-
 - (void)populateDefaultsPostflight
 {
 	self->_contentSize = NSZeroSize;
@@ -157,8 +131,6 @@ ClassWithDesignatedInitializerInitMethod
 	SetVariableIfNil(self->_scriptResources, @[]);
 
 	SetVariableIfNil(self->_html, @"");
-
-	SetVariableIfNil(self->_entrypoint, @"");
 }
 
 - (void)initializedClassHealthCheck
@@ -167,8 +139,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSParameterAssert(self->_scriptResources != nil);
 	NSParameterAssert(self->_html != nil);
-	NSParameterAssert(self->_entrypoint != nil);
 	NSParameterAssert(self->_url != nil);
+	NSParameterAssert(self->_lineNumber != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
 	NSParameterAssert(self->_viewIdentifier != nil);
 }
@@ -197,6 +169,8 @@ ClassWithDesignatedInitializerInitMethod
 	object->_entrypointPayload = self->_entrypointPayload;
 
 	object->_url = self->_url;
+
+	object->_lineNumber = self->_lineNumber;
 
 	object->_uniqueIdentifier = self->_uniqueIdentifier;
 	object->_viewIdentifier = self->_viewIdentifier;
@@ -230,6 +204,7 @@ ClassWithDesignatedInitializerInitMethod
 	return @{
 		@"html" : self->_html,
 		@"url" : self->_url,
+		@"lineNumber" : self->_lineNumber,
 		@"uniqueIdentifier" : self->_uniqueIdentifier
 	};
 }
@@ -311,10 +286,8 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
-- (void)setEntrypoint:(NSString *)entrypoint
+- (void)setEntrypoint:(nullable NSString *)entrypoint
 {
-    NSParameterAssert(entrypoint != nil);
-
 	if (self->_entrypoint != entrypoint) {
 		self->_entrypoint = entrypoint;
 	}

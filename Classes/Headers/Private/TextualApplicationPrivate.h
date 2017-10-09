@@ -50,6 +50,7 @@
 #import "TextualApplication.h"
 
 #import "ICLPayload.h"
+#import "ICLPayloadLocalPrivate.h"
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
 #import "GCDAsyncSocketTrustPanel.h"
