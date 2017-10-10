@@ -425,7 +425,7 @@ _MessageBuffer.loadMessagesDuringScroll = function(before) /* PRIVATE */
 		_MessageBuffer._loadingMessagesAfterLineDuringScroll = true;
 	}
 
-	var lineNumberContents = Textual.lineNumberContents(line.id);
+	var lineNumberContents = line.id.lineNumberContents();
 
 	_MessageBuffer.loadMessagesDuringScrollWithPayload(
 		{
@@ -613,7 +613,7 @@ _MessageBuffer.loadMessagesWithJump = function(lineNumber, callbackFunction) /* 
 	because the user does not require a visual indicator. */
 	_MessageBuffer._loadingMessagesDuringJump = true;
 
-	var lineNumberContents = Textual.lineNumberContents(lineNumber);
+	var lineNumberContents = lineNumber.lineNumberContents();
 
 	var requestPayload = {
 		"lineNumberContents" : lineNumberContents,
@@ -791,7 +791,7 @@ _MessageBuffer.scrolledToBottomOfBuffer = function() /* PRIVATE */
 
 MessageBuffer.jumpToLine = function(lineNumber, callbackFunction) /* PUBLIC */
 {
-	var lineNumberStandardized = Textual.lineNumberStandardize(lineNumber);
+	var lineNumberStandardized = lineNumber.standardizedLineNumber();
 	
 	if (Textual.scrollToElement(lineNumberStandardized)) {
 		callbackFunction(true);
