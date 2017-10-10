@@ -184,6 +184,10 @@
 		#define TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION 0
 	#endif
 
+	#ifndef TEXTUAL_BUILDING_XPC_SERVICE
+		#define TEXTUAL_BUILDING_XPC_SERVICE 0
+	#endif
+
 	/* IRC Controllers — Core */
 	#import "IRC.h"
 	#import "IRCAddressBook.h"

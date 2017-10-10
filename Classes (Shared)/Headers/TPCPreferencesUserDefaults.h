@@ -52,6 +52,8 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
 
 - (void)registerDefault:(id <NSCopying>)value forKey:(NSString *)defaultName;
+
+@property (copy, readonly) NSDictionary<NSString *, id> *registeredDefaults;
 @end
 
 NS_ASSUME_NONNULL_END
