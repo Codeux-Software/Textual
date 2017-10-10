@@ -211,20 +211,27 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier) /* PUBLIC */
 };
 
 /* Line numbers */
-Textual.lineNumberStandardize = function(lineNumber) /* PUBLIC */
+HTMLDocument.getElementByLineNumber = function(lineNumber)
 {
-	if (lineNumber.indexOf("line-") !== 0) {
-		lineNumber = ("line-" + lineNumber);
-	}
+	lineNumber = lineNumber.standardizedLineNumber();
 	
-	return lineNumber;
+	return document.getElementById(lineNumber);
 };
 
-Textual.lineNumberContents = function(lineNumber) /* PUBLIC */
+String.prototype.standardizedLineNumber = function() /* PUBLIC */
 {
-	if (lineNumber.indexOf("line-") !== 0) {
-		return lineNumber;
+	if (this.indexOf("line-") !== 0) {
+		return ("line-" + this);
 	}
 	
-	return lineNumber.substr(5);
+	return this;
+};
+
+String.prototype.lineNumberContents = function(lineNumber) /* PUBLIC */
+{
+	if (this.indexOf("line-") !== 0) {
+		return this;
+	}
+	
+	return this.substr(5);
 };
