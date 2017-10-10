@@ -135,13 +135,6 @@ _TextualScroller.performScroll = function() /* PRIVATE */
 	if (!TextualScroller.documentIsVisible) {
 		return;
 	}
-	
-	/* Do not perform scrolling if we are performing live resize. */
-	if (Textual.hasLiveResize()) {
-		if (InlineImageLiveResize.dragElement) {
-			return;
-		}
-	}
 
 	/* Scroll to bottom */
 	TextualScroller.scrollToBottom();
