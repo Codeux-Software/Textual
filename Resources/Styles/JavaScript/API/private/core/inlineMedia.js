@@ -43,24 +43,202 @@
 /*                                                    */
 /* ************************************************** */
 
-/* Inline media */
-Textual.hasLiveResize = function()
+var InlineMedia = {};
+var _InlineMedia = {};
+
+/* ************************************************** */
+/*              Document Prototypes                   */
+/* ************************************************** */
+
+HTMLDocument.prototype.getInlineMediaById = function(mediaId) /* PUBLIC */
 {
-	if (typeof InlineImageLiveResize !== 'undefined') {
-		return true;
-	} else {
-		return false;
+	if (mediaId.indexOf("inlineMedia-") !== 0) {
+		mediaId = ("inlineMedia-" + mediaId);
 	}
+	
+	return this.getElementById(mediaId);
 };
 
-Textual.toggleInlineMedia = function(object, onlyPerformForShiftKey)
+/* ************************************************** */
+/*                    Visibility                      */
+/* ************************************************** */
+
+/* .showOnClick(), .hideOnClick(), and .toggleOnClick() 
+ return a boolean to instruct the onclick event wether
+ we want the anchor to perform navigation. */
+InlineMedia.showOnClick = function(mediaId) /* PUBLIC */
 {
-	/* We only want certain actions to happen for shift key. */
-	if (onlyPerformForShiftKey) {
-		if (window.event.shiftKey === false) {
-			return true;
-		}
+	var element = document.getInlineMediaById(mediaId);
+	
+	if (!element) {
+		console.error("Failed to find inline media element that matches ID: " + mediaId);
+
+		return false;
+	}
+	
+	element.style.display = "";
+	
+	return false;
+};
+
+InlineMedia.hideOnClick = function(mediaId) /* PUBLIC */
+{
+	var element = document.getInlineMediaById(mediaId);
+	
+	if (!element) {
+		console.error("Failed to find inline media element that matches ID: " + mediaId);
+
+		return false;
+	}
+	
+	element.style.display = "none";
+	
+	return false;
+};
+
+InlineMedia.toggleOnClick = function(mediaId) /* PUBLIC */
+{
+	if (InlineMedia.isSafeToPerformToggle() === false) {
+		console.log("Cancelled toggling inline media because of isSafeToPerformToggle() condition.");
+		
+		return true;
+	}
+
+	var element = document.getInlineMediaById(mediaId);
+
+	if (!element) {
+		console.error("Failed to find inline media element that matches ID: " + mediaId);
+
+		return false;
+	}
+	
+	if (element.style.display === "none") {
+		element.style.display = "";
+	} else {
+		element.style.display = "none";
 	}
 
 	return false;
+};
+
+InlineMedia.isSafeToPerformToggle = function() /* PUBLIC */
+{
+	/* This logic is placed in a function to leave room for expansion. */
+
+	return (window.event.shiftKey === true);
+};
+
+/* ************************************************** */
+/*               Payload Processing                   */
+/* ************************************************** */
+
+_InlineMedia._loadedStyleResources = new Array(); /* PRIVATE */
+_InlineMedia._loadedScriptResources = new Array(); /* PRIVATE */
+
+_InlineMedia.processPayload = function(payload) /* PRIVATE */
+{
+	/* Load CSS resources */
+	var styleResources = payload.styleResources;
+
+	if (Array.isArray(styleResources)) {
+		for (var i = 0; i < styleResources.length; i++) {
+			var file = styleResources[i];
+			
+			if (_InlineMedia._loadedStyleResources.indexOf(file) < 0) {
+				_InlineMedia._loadedStyleResources.push(file);
+				
+				Textual.includeStyleResourceFile(file);
+			}
+		}
+	}
+
+	/* Load JavaScript resources */
+	var scriptResources = payload.scriptResources;
+
+	if (Array.isArray(scriptResources)) {
+		for (var i = 0; i < scriptResources.length; i++) {
+			var file = scriptResources[i];
+			
+			if (_InlineMedia._loadedScriptResources.indexOf(file) < 0) {
+				_InlineMedia._loadedScriptResources.push(file);
+				
+				Textual.includeScriptResourceFile(file);
+			}
+		}
+	}
+
+	/* Insert HTML */
+	var entrypoint = payload.entrypoint;
+	
+	if (typeof entrypoint === "string" && entrypoint.length > 0) {
+		_InlineMedia.processPayloadWithEntrypoint(payload);
+	} else {
+		_InlineMedia.processPayloadWithoutEntrypoint(payload);
+	}
+};
+
+_InlineMedia.processPayloadWithoutEntrypoint = function(payload) /* PRIVATE */
+{
+	Textual._insertPayload(payload.lineNumber, payload.html);
+};
+
+_InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
+{
+	var lineNumber = payload.lineNumber;
+
+	var insertHTML = (function(html) {
+		_InlineMedia.insertPayload(lineNumber, html);
+	});
+
+	var callToEntrypoint = (function(i) {
+		try {
+			var entrypoint = eval(payload.entrypoint);
+		} catch (error) {
+			
+		}
+
+		/* If the entrypoint exists as a function already, 
+		 then we call out to it and exit. */
+		if (typeof entrypoint === "function") {
+			entrypoint(payload.entrypointPayload, insertHTML);
+			
+			return;
+		}
+		
+		/* If the entrypoint does not exist as a function yet,
+		 then we loop this function several times until it is
+		 one (script resource is loading), or until we exhaust
+		 the tries we are willing to take. */
+		if (i === 20) { // 2 seconds
+			console.error("Failed to process payload because entrypoint is not a function.");
+			
+			return;
+		}
+		
+		setTimeout((function() {
+			callToEntrypoint(i + 1);
+		}), 100);
+	});
+	
+	callToEntrypoint(0);
+};
+
+_InlineMedia.insertPayload = function(lineNumber, html) /* PRIVATE */
+{
+	var line = document.getElementByLineNumber(lineNumber);
+	
+	if (!line) {
+		console.error("Failed to find line that matches ID: " + lineNumber);
+
+		return;
+	}
+
+	var mediaContainer = line.querySelector(".inlineMediaContainer");
+
+	if (mediaContainer) {
+		mediaContainer.insertAdjacentHTML("beforeend", html);
+	} else {
+		console.warning("The template for this style appears to be missing a span with the class" +
+						"'inlineMediaContainer' — please fix this to support inline media.");
+	}
 };
