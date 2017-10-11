@@ -306,7 +306,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (NSUInteger)lengthOfEncryptedMessageDirectedAt:(NSString *)messageTo thatFitsWithinBounds:(NSUInteger)maximumLength;
 
-- (BOOL)encryptionAllowedForNickname:(NSString *)nickname;
+- (BOOL)encryptionAllowedForTarget:(NSString *)target;
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;

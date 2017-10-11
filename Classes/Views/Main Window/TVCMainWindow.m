@@ -1955,7 +1955,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	IRCChannel *c = self.selectedChannel;
 
-	BOOL updateEncryption = (c.isPrivateMessage && [u encryptionAllowedForNickname:c.name]);
+	BOOL updateEncryption = (c.isPrivateMessage && [u encryptionAllowedForTarget:c.name]);
 
 	if (updateEncryption) {
 		self.titlebarAccessoryViewLockButton.action = @selector(titlebarAccessoryViewLockButtonClicked:);
