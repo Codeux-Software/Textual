@@ -114,6 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[serviceConnection resume];
 
 	self.serviceConnection = serviceConnection;
+
+	[self registerDefaults];
 }
 
 - (void)interuptionHandler
@@ -129,6 +131,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareForApplicationTermination
 {
 #warning TODO: Implement
+}
+
+- (void)registerDefaults
+{
+	/* We pass the registered defaults for the app to the XPC
+	 service because it accesses preferences within that domain. */
+	/* The registered defaults aren't changed after launch which
+	 means this is a one off deal, but we should use notifications
+	 if that ever changes in the future. */
+
+	NSDictionary *defaults = [RZUserDefaults() registeredDefaults];
+
+	[[self remoteObjectProxy] registerDefaults:defaults];
 }
 
 #pragma mark -

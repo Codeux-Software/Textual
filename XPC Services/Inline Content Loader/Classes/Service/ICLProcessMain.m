@@ -188,6 +188,11 @@ ClassWithDesignatedInitializerInitMethod
 	return YES;
 }
 
+- (void)registerDefaults:(NSDictionary<NSString *,id> *)registrationDictionary
+{
+	[RZUserDefaults() registerDefaults:registrationDictionary];
+}
+
 #pragma mark -
 #pragma mark XPC Connection
 
