@@ -239,7 +239,8 @@ ClassWithDesignatedInitializerInitMethod
 				LogToConsoleError("Failed to write temporary file: %{public}@", fileWriteError.localizedDescription);
 			}
 
-			[webView loadFileURL:filePath allowingReadAccessToURL:baseURL];
+			[webView loadFileURL:filePath
+		 allowingReadAccessToURL:[TPCPathInfo applicationTemporaryURL]];
 		} else {
 			[webView loadHTMLString:string baseURL:baseURL];
 		}
