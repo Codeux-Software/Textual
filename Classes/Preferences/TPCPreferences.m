@@ -1250,7 +1250,20 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 + (NSDictionary<NSString *, id> *)defaultPreferences
 {
-	return [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSRegistrationDomain];
+	/* Note added October 2017:
+
+	 I wrote this code a year ago and today (when the note was written),
+	 I took another look at it. 95% of defaults are registered with
+	 RZUserDefaults, not NSUserDefaults. So why has this code never
+	 created a problem?
+
+	 After performing more research, it turns out the registration domain
+	 is app wide. It doesn't care which instance of NSUserDefaults you
+	 set it on or read it from. It will be consistent app wide.
+
+	 This is nothing exciting. I documenting this more for my own sanity. */
+
+	return [RZUserDefaults() volatileDomainForName:NSRegistrationDomain];
 }
 
 + (void)registerDynamicDefaults
