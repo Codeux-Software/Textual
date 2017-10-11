@@ -72,6 +72,34 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (nullable NSString *)entrypoint
+{
+	return nil;
+}
+
+- (NSError *)genericValidationFailedError
+{
+	return [ICLInlineContentModule genericValidationFailedError];
+}
+
++ (NSError *)genericValidationFailedError
+{
+	static NSError *error = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		error =
+		[NSError errorWithDomain:ICLInlineContentErrorDomain
+							code:1003
+						userInfo:@{
+			NSLocalizedDescriptionKey : @"Validation failed"
+		}];
+	});
+
+	return error;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
