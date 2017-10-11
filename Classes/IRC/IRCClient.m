@@ -1405,14 +1405,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-- (BOOL)encryptionAllowedForNickname:(NSString *)nickname
+- (BOOL)encryptionAllowedForTarget:(NSString *)target
 {
-	return [self encryptionAllowedForNickname:nickname lenient:NO];
+	return [self encryptionAllowedForTarget:target lenient:NO];
 }
 
-- (BOOL)encryptionAllowedForNickname:(NSString *)nickname lenient:(BOOL)lenient
+- (BOOL)encryptionAllowedForTarget:(NSString *)target lenient:(BOOL)lenient
 {
-	NSParameterAssert(nickname != nil);
+	NSParameterAssert(target != nil);
 
 	/* Encryption is disabled */
 	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
@@ -1420,18 +1420,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* General rules */
-	if ([self stringIsChannelName:nickname]) { // Do not allow channel names
+	if ([self stringIsNickname:target] == NO) { // Do not allow channel names
 		return NO;
-	} else if ([self nicknameIsMyself:nickname] && lenient == NO) { // Do not allow the local user
+	} else if ([self nicknameIsMyself:target] && lenient == NO) { // Do not allow the local user
 		return NO;
-	} else if ([self nicknameIsZNCUser:nickname] && lenient == NO) { // Do not allow a ZNC private user
+	} else if ([self nicknameIsZNCUser:target] && lenient == NO) { // Do not allow a ZNC private user
 		return NO;
 	}
 
 	/* Build context information for lookup */
 	NSDictionary *exceptionRules = [self listOfNicknamesToDisallowEncryption];
 
-	NSString *lowercaseNickname = nickname.lowercaseString;
+	NSString *lowercaseNickname = target.lowercaseString;
 
 	/* Check network specific rules (such as "X" on UnderNet) */
 	NSString *networkName = self.supportInfo.networkName;
@@ -1470,7 +1470,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if (messageBody.length == 0 || [self encryptionAllowedForNickname:messageTo] == NO) {
+	if (messageBody.length == 0 || [self encryptionAllowedForTarget:messageTo] == NO) {
 #endif
 		if (encodingCallback) {
 			encodingCallback(messageBody, NO);
