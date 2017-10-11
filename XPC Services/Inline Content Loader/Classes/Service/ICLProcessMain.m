@@ -141,6 +141,18 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
+	/* Create cache */
+	/* Cache is used to hold a reference to module until completion block is called. */
+	static NSCache *moduleCache = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		moduleCache = [NSCache new];
+	});
+
+	NSString *cacheToken = [NSString stringWithUUID];
+
 	/* The module has an action. Call it. */
 	ICLInlineContentModuleCompletionBlock completionBlock = ^(NSError * _Nullable error) {
 		ICLPayload *payloadOut = [payloadIn copy];
@@ -172,9 +184,13 @@ ClassWithDesignatedInitializerInitMethod
 		} else {
 			[[self remoteObjectProxy] processingPayloadSucceeded:payloadOut];
 		}
+
+		[moduleCache removeObjectForKey:cacheToken];
 	};
 
 	ICLInlineContentModule *module = [[moduleClass alloc] initWithPayload:payloadIn completionBlock:completionBlock];
+
+	[moduleCache setObject:module forKey:cacheToken];
 
 	if (actionBlock) {
 		actionBlock(module);
