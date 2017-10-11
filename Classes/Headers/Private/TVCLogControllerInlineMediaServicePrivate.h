@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)processAddress:(NSString *)address
   withUniqueIdentifier:(NSString *)uniqueIdentifier
+		  atLineNumber:(NSString *)lineNumber
 			   forItem:(IRCTreeItem *)item;
 @end
 
