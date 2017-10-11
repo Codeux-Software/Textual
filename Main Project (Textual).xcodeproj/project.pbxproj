@@ -427,6 +427,9 @@
 		4C1EAB3A1F89F71D00A4E647 /* TPCPreferencesUserDefaultsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1EAB361F89F70E00A4E647 /* TPCPreferencesUserDefaultsPrivate.h */; };
 		4C1EAB3B1F89F71E00A4E647 /* TPCPreferencesUserDefaultsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1EAB361F89F70E00A4E647 /* TPCPreferencesUserDefaultsPrivate.h */; };
 		4C1EAB3C1F89F71F00A4E647 /* TPCPreferencesUserDefaultsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1EAB361F89F70E00A4E647 /* TPCPreferencesUserDefaultsPrivate.h */; };
+		4C1F0F411F8B82E60061662D /* ICLPayloadLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1F0F3F1F8B82D60061662D /* ICLPayloadLocal.m */; };
+		4C1F0F421F8B82E60061662D /* ICLPayloadLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1F0F3F1F8B82D60061662D /* ICLPayloadLocal.m */; };
+		4C1F0F431F8B82E70061662D /* ICLPayloadLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1F0F3F1F8B82D60061662D /* ICLPayloadLocal.m */; };
 		4C20653D1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
 		4C20653E1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
 		4C20653F1D47931C00D42CD2 /* TDCWindowBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */; };
@@ -2191,6 +2194,8 @@
 		4C1EAB2E1F89F6E700A4E647 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = "Classes (Shared)/Headers/TPCPreferences.h"; sourceTree = "<group>"; };
 		4C1EAB351F89F70E00A4E647 /* TPCPreferencesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesPrivate.h; path = "Classes (Shared)/Headers/Private/TPCPreferencesPrivate.h"; sourceTree = "<group>"; };
 		4C1EAB361F89F70E00A4E647 /* TPCPreferencesUserDefaultsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaultsPrivate.h; path = "Classes (Shared)/Headers/Private/TPCPreferencesUserDefaultsPrivate.h"; sourceTree = "<group>"; };
+		4C1F0F3F1F8B82D60061662D /* ICLPayloadLocal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayloadLocal.m; path = Classes/Services/ICLPayloadLocal.m; sourceTree = "<group>"; };
+		4C1F0F441F8B83170061662D /* ICLPayloadLocalPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadLocalPrivate.h; path = Classes/Headers/Private/ICLPayloadLocalPrivate.h; sourceTree = "<group>"; };
 		4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCWindowBase.m; path = Classes/Dialogs/TDCWindowBase.m; sourceTree = "<group>"; };
 		4C24DC751A93C9CE0098D1BE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "Frameworks/Static Libraries/Libraries/Sparkle.framework"; sourceTree = "<group>"; };
 		4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -3065,6 +3070,22 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
+		4C1F0F351F8B82980061662D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4C1F0F401F8B82DD0061662D /* Inline Content Loader */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		4C1F0F401F8B82DD0061662D /* Inline Content Loader */ = {
+			isa = PBXGroup;
+			children = (
+				4C1F0F3F1F8B82D60061662D /* ICLPayloadLocal.m */,
+			);
+			name = "Inline Content Loader";
+			sourceTree = "<group>";
+		};
 		4C211D3F15BF1F5E00E218DA /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -3102,6 +3123,7 @@
 				4C7B05021D1214D600295E82 /* Library */,
 				4C8AF5E7158E99520026668C /* Others */,
 				4C7409041CCDA344002F026F /* Preferences */,
+				4C1F0F351F8B82980061662D /* Services */,
 				4C6EF2DB1F442D5400A80A7B /* Shared */,
 				4C5C08FA1D177F1200EB6340 /* Views */,
 			);
@@ -3376,6 +3398,7 @@
 			isa = PBXGroup;
 			children = (
 				4C4A1AF31D122707004FBF12 /* External Libraries */,
+				4C1F0F441F8B83170061662D /* ICLPayloadLocalPrivate.h */,
 				4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */,
 				4CF642E31D2DC33700CB9165 /* IRCChannelConfigPrivate.h */,
 				4CB9E3CC1D2B199900ED395A /* IRCChannelModePrivate.h */,
@@ -6217,6 +6240,7 @@
 				4C645F601CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */,
 				4C0445BC16F1603C00EBB665 /* TLOSoundPlayer.m in Sources */,
 				4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */,
+				4C1F0F421F8B82E60061662D /* ICLPayloadLocal.m in Sources */,
 				4C12C37A1ED1812700E98CA4 /* TVCMemberListYosemiteDarkUserInterface.m in Sources */,
 				4CF40E631AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
 				4C6EF2D41F442CA900A80A7B /* IRCColorFormat.m in Sources */,
@@ -6308,6 +6332,7 @@
 				4C1EAB2B1F89F6CB00A4E647 /* TPCPreferencesUserDefaults.m in Sources */,
 				4CD0A2251CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */,
 				4C34F34D1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */,
+				4C1F0F411F8B82E60061662D /* ICLPayloadLocal.m in Sources */,
 				4C0BA6621990798800857343 /* GTMEncodeHTML.m in Sources */,
 				4CF40DF21AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E221AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
@@ -6590,6 +6615,7 @@
 				4C8C72AE1F12058000ED72DB /* GCDAsyncSocket.m in Sources */,
 				4C645F611CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */,
 				4C8AF6D0158E99520026668C /* TPCThemeSettings.m in Sources */,
+				4C1F0F431F8B82E70061662D /* ICLPayloadLocal.m in Sources */,
 				4C12C37B1ED1812700E98CA4 /* TVCMemberListYosemiteDarkUserInterface.m in Sources */,
 				4C6EF2D31F442CA800A80A7B /* IRCColorFormat.m in Sources */,
 				4CF40E641AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
