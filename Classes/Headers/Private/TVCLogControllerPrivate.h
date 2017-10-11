@@ -81,11 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyHistoricLogWillDeleteLines:(NSArray<NSString *> *)lineNumbers;
 
-- (void)processingInlineMediaForUniqueIdentifier:(NSString *)uniqueIdentifier
-							 suceededWithPayload:(ICLPayload *)payload;
-
-- (void)processingInlineMediaForUniqueIdentifier:(NSString *)uniqueIdentifier
-								 failedWithError:(NSError *)error;
+- (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload;
+- (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error;
 
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;

@@ -154,10 +154,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Public API
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier forItem:(IRCTreeItem *)item
+- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber forItem:(IRCTreeItem *)item
 {
 	NSParameterAssert(address != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
+	NSParameterAssert(lineNumber != nil);
 	NSParameterAssert(item != nil);
 	
 	/* WebKit is able to translate an address to punycode
@@ -165,71 +166,59 @@ NS_ASSUME_NONNULL_BEGIN
 	NSURL *url = address.URLUsingWebKitPasteboard;
 	
 	if (url == nil) {
-		NSError *error =
-		[NSError errorWithDomain:TXErrorDomain
-							code:15031
-						userInfo:@{
-			NSLocalizedDescriptionKey : @"Address could not be normalized"
-		}];
-		
-		[self _processingUniqueIdentifier:uniqueIdentifier
-								  forItem:item
-						  failedWithError:error];
+		LogToConsoleError("Address could not be normalized");
 		
 		return;
 	}
 	
-	[self processURL:url withUniqueIdentifier:uniqueIdentifier forItem:item];
+	[self processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber forItem:item];
 }
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier forItem:(IRCTreeItem *)item
+- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber forItem:(IRCTreeItem *)item
 {
+	NSParameterAssert(url != nil);
+	NSParameterAssert(uniqueIdentifier != nil);
+	NSParameterAssert(lineNumber != nil);
+	NSParameterAssert(item != nil);
+
 	[self warmProcessIfNeeded];
 	
-	[[self remoteObjectProxy] processURL:url withUniqueIdentifier:uniqueIdentifier inView:item.uniqueIdentifier];
+	[[self remoteObjectProxy] processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber inView:item.uniqueIdentifier];
 }
 
 #pragma mark -
 #pragma mark Private API (Client)
 
-- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier
-							inView:(NSString *)viewIdentifier
-			   suceededWithPayload:(ICLPayload *)payload
+- (void)processingPayloadSucceeded:(ICLPayload *)payload
 {
-	IRCTreeItem *item = [worldController() findItemWithId:viewIdentifier];
+	IRCTreeItem *item = [worldController() findItemWithId:payload.viewIdentifier];
 
 	if (item == nil) {
 		return;
 	}
 
-	[self _processingUniqueIdentifier:uniqueIdentifier forItem:item suceededWithPayload:payload];
+	[self _processingPayloadSucceeded:payload forItem:item];
 }
 
-- (void)_processingUniqueIdentifier:(NSString *)uniqueIdentifier
-							forItem:(IRCTreeItem *)item
-				suceededWithPayload:(ICLPayload *)payload
+- (void)processingPayload:(ICLPayload *)payload failedWithError:(NSError *)error
 {
-	[item.viewController processingInlineMediaForUniqueIdentifier:uniqueIdentifier suceededWithPayload:payload];
-}
-
-- (void)processingUniqueIdentifier:(NSString *)uniqueIdentifier
-							inView:(NSString *)viewIdentifier
-				   failedWithError:(NSError *)error
-{
-	IRCTreeItem *item = [worldController() findItemWithId:viewIdentifier];
+	IRCTreeItem *item = [worldController() findItemWithId:payload.viewIdentifier];
 
 	if (item == nil) {
 		return;
 	}
 
-	[self _processingUniqueIdentifier:uniqueIdentifier forItem:item failedWithError:error];
+	[self _processingPayload:payload forItem:item failedWithError:error];
 }
 
-- (void)_processingUniqueIdentifier:(NSString *)uniqueIdentifier
-							forItem:(IRCTreeItem *)item
-					failedWithError:(NSError *)error
+- (void)_processingPayloadSucceeded:(ICLPayload *)payload forItem:(IRCTreeItem *)item
 {
-	[item.viewController processingInlineMediaForUniqueIdentifier:uniqueIdentifier failedWithError:error];
+	[item.viewController processingInlineMediaPayloadSucceeded:payload];
+}
+
+- (void)_processingPayload:(ICLPayload *)payload forItem:(IRCTreeItem *)item failedWithError:(NSError *)error
+{
+	[item.viewController processingInlineMediaPayload:payload failedWithError:error];
 }
 
 @end

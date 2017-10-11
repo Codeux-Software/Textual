@@ -812,12 +812,12 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Inline Media
 
-- (void)processingInlineMediaForUniqueIdentifier:(NSString *)uniqueIdentifier suceededWithPayload:(ICLPayload *)payload
+- (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload
 {
 
+- (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error
 }
 
-- (void)processingInlineMediaForUniqueIdentifier:(NSString *)uniqueIdentifier failedWithError:(NSError *)error
 {
 	LogToConsoleError("Processing request for '%@' failed with error: %@",
 		uniqueIdentifier, error.localizedDescription);
