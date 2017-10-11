@@ -814,13 +814,39 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload
 {
-
-- (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error
+	[self _evaluateFunction:@"_InlineMedia.processPayload" withArguments:@[payload.javaScriptObject]];
 }
 
+- (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error
 {
-	LogToConsoleError("Processing request for '%@' failed with error: %@",
-		uniqueIdentifier, error.localizedDescription);
+	LogToConsoleError("Processing request for '%@' at '%@' failed with error: %@",
+		payload.uniqueIdentifier, payload.lineNumber, error.localizedDescription);
+}
+
+- (void)processInlineMedia:(NSArray<AHHyperlinkScannerResult *> *)mediaLinks atLineNumber:(NSString *)lineNumber
+{
+	NSParameterAssert(mediaLinks != nil);
+
+	/* Unique list */
+	NSMutableDictionary<NSString *, AHHyperlinkScannerResult *> *linksToProcess = [NSMutableDictionary dictionary];
+
+	for (AHHyperlinkScannerResult *link in mediaLinks) {
+		NSString *stringValue = link.stringValue;
+
+		if ([linksToProcess containsKey:stringValue] == NO) {
+			[linksToProcess setObject:link forKey:stringValue];
+		}
+	}
+
+	IRCTreeItem *associatedItem = self.associatedItem;
+
+	[linksToProcess enumerateKeysAndObjectsUsingBlock:^(NSString *key, AHHyperlinkScannerResult *link, BOOL *stop) {
+		[TVCLogControllerInlineMediaSharedInstance()
+				 processAddress:link.stringValue
+		   withUniqueIdentifier:link.uniqueIdentifier
+				   atLineNumber:lineNumber
+					    forItem:associatedItem];
+	}];
 }
 
 #pragma mark -
@@ -1151,7 +1177,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
 
-		BOOL inlineMediaEnabled = [resultInfo boolForKey:@"inlineMediaEnabled"];
+		BOOL processInlineMedia = [resultInfo boolForKey:@"processInlineMedia"];
 		
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
@@ -1185,18 +1211,15 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
 
+#warning TODO: Modify logic of inline media to only truly \
+	process images if the line is in fact on the WebView.
 			/* Begin processing inline media */
 			/* We go through the inline media list here and pass to the loader now so
 			 that we know the links have hit the WebView before we even try loading them. */
-			if (inlineMediaEnabled) {
+			if (processInlineMedia) {
 				NSArray<AHHyperlinkScannerResult *> *listOfLinks = resultInfo[TVCLogRendererResultsListOfLinksInBodyAttribute];
 
-				[listOfLinks enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
-					[TVCLogControllerInlineMediaSharedInstance()
-							 processAddress:link.stringValue
-					   withUniqueIdentifier:link.uniqueIdentifier
-								    forItem:channel];
-				}];
+				[self processInlineMedia:listOfLinks atLineNumber:lineNumber];
 			}
 
 			/* Log this log line */
@@ -1400,14 +1423,8 @@ ClassWithDesignatedInitializerInitMethod
 	// ************************************************************************** /
 
 	if (resultInfoTemp) {
-		if (self.inlineMediaEnabledForView == NO ||
-			(lineType != TVCLogLinePrivateMessageType && lineType != TVCLogLineActionType))
-		{
-			resultInfoTemp[@"inlineMediaEnabled"] = @(NO);
-		} else {
-			resultInfoTemp[@"inlineMediaEnabled"] = @(YES);
-		}
-		
+		resultInfoTemp[@"processInlineMedia"] = @(inlineMedia);
+
 		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 			NSArray<AHHyperlinkScannerResult *> *listOfLinks = rendererResults[TVCLogRendererResultsListOfLinksInBodyAttribute];
 
