@@ -211,7 +211,7 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier) /* PUBLIC */
 };
 
 /* Line numbers */
-HTMLDocument.getElementByLineNumber = function(lineNumber)
+HTMLDocument.prototype.getElementByLineNumber = function(lineNumber)
 {
 	lineNumber = lineNumber.standardizedLineNumber();
 	
