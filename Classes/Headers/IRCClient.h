@@ -309,7 +309,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (BOOL)encryptionAllowedForTarget:(NSString *)target;
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
-- (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
+- (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom target:(NSString *)target decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 
 @property (nonatomic, readonly, copy) NSString * _Nonnull encryptionAccountNameForLocalUser;
 - (NSString *)encryptionAccountNameForUser:(NSString *)nickname;

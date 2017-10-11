@@ -1493,31 +1493,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #endif
 }
 
-- (void)decryptMessage:(NSString *)messageBody referenceMessage:(IRCMessage *)referenceMessage decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
+- (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom target:(NSString *)target decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
 	NSParameterAssert(messageBody != nil);
-	NSParameterAssert(referenceMessage != nil);
-
-	if (referenceMessage.senderIsServer) {
-		if (decodingCallback) {
-			decodingCallback(messageBody, NO);
-		}
-
-		return;
-	}
-
-	[self decryptMessage:messageBody directedAt:referenceMessage.senderNickname decodingCallback:decodingCallback];
-}
-
-- (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
-{
-	NSParameterAssert(messageBody != nil);
-	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+	NSParameterAssert(target != nil);
 	NSParameterAssert(decodingCallback != nil);
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user */
-	if (messageBody.length == 0 || [TPCPreferences textEncryptionIsEnabled] == NO) {
+	if (messageBody.length == 0 || [self encryptionAllowedForTarget:target lenient:YES] == NO) {
 #endif
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
@@ -1529,7 +1514,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Continue with normal encryption operations */
 	[sharedEncryptionManager() decryptMessage:messageBody
-										 from:[self encryptionAccountNameForUser:messageTo]
+										 from:[self encryptionAccountNameForUser:messageFrom]
 										   to:[self encryptionAccountNameForLocalUser]
 							 decodingCallback:decodingCallback];
 #endif
@@ -5620,30 +5605,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		lineType = TVCLogLineNoticeType;
 	}
 
-#warning TODO: Fix OTR negotation opening a private message \
-	even if a user is ignored.
-
-	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
-		if (lineType == TVCLogLineActionType ||
-			lineType == TVCLogLinePrivateMessageType ||
-			lineType == TVCLogLineNoticeType)
-		{
-			[self receiveText:m lineType:lineType text:originalString wasEncrypted:wasEncrypted];
-		} else if (lineType == TVCLogLineCTCPQueryType) {
-			[self receiveCTCPQuery:m text:originalString wasEncrypted:wasEncrypted];
-		} else if (lineType == TVCLogLineCTCPReplyType) {
-			[self receiveCTCPReply:m text:originalString wasEncrypted:wasEncrypted];
-		}
-	};
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	[self decryptMessage:text referenceMessage:m decodingCallback:decryptionBlock];
-#else
-	decryptionBlock(text, NO);
-#endif
+	if (lineType == TVCLogLineActionType ||
+		lineType == TVCLogLinePrivateMessageType ||
+		lineType == TVCLogLineNoticeType)
+	{
+		[self receiveText:m lineType:lineType text:text];
+	} else if (lineType == TVCLogLineCTCPQueryType) {
+		[self receiveCTCPQuery:m text:text];
+	} else if (lineType == TVCLogLineCTCPReplyType) {
+		[self receiveCTCPReply:m text:text];
+	}
 }
 
-- (void)receiveText:(IRCMessage *)m lineType:(TVCLogLineType)lineType text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
+- (void)receiveText:(IRCMessage *)m lineType:(TVCLogLineType)lineType text:(NSString *)text
 {
 	NSParameterAssert(m != nil);
 
@@ -5709,32 +5683,53 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
+	/* Even though OTR doesn't allow channel decryption, we still wrap everything
+	 in a decryption block because Blowfish plugin may swizzle the logic.
+	 That plugin does support channel decryption. */
+	BOOL performDecryption = YES;
+
+	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = nil;
+
 	/* Public message (directed at channel) */
 	if ([self stringIsChannelName:target]) {
 		if (ignoreInfo.ignorePublicMessages) {
 			return;
 		}
 
-		[self _receiveText_Public:m lineType:lineType target:target text:text wasEncrypted:wasEncrypted];
-
-		return;
+		decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
+			[self _receiveText_Public:m lineType:lineType target:target text:originalString wasEncrypted:wasEncrypted];
+		};
 	}
 
 	/* Private message (from user) */
-	if (m.senderIsServer == NO) {
+	else if (m.senderIsServer == NO) {
 		if (ignoreInfo.ignorePrivateMessages) {
 			return;
 		}
 
-		[self _receiveText_Private:m lineType:lineType target:target text:text wasEncrypted:wasEncrypted];
-
-		return;
+		decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
+			[self _receiveText_Private:m lineType:lineType target:target text:originalString wasEncrypted:wasEncrypted];
+		};
 	}
 
 	/* Private message (from server) */
-	[self _receiveText_PrivateServer:m lineType:lineType target:target text:text wasEncrypted:wasEncrypted];
+	else {
+		/* It is not possible to hold an OTR conversation with a server. */
+		performDecryption = NO;
 
-	return;
+		decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
+			[self _receiveText_PrivateServer:m lineType:lineType target:target text:originalString wasEncrypted:wasEncrypted];
+		};
+	}
+
+	/* Perform decryption */
+	if (performDecryption) {
+		NSString *sender = m.senderNickname;
+
+		[self decryptMessage:text from:sender target:target decodingCallback:decryptionBlock];
+	} else {
+		decryptionBlock(text, NO);
+	}
 }
 
 - (void)_receiveText_Public:(IRCMessage *)m lineType:(TVCLogLineType)lineType target:(NSString *)target text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
@@ -6210,7 +6205,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)receiveCTCPQuery:(IRCMessage *)m text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
+- (void)receiveCTCPQuery:(IRCMessage *)m text:(NSString *)text
 {
 	NSParameterAssert(m != nil);
 	NSParameterAssert(text != nil);
@@ -6273,8 +6268,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		  inChannel:printTarget
 			 asType:TVCLogLineCTCPQueryType
 			command:m.command
-		 receivedAt:m.receivedAt
-		isEncrypted:wasEncrypted];
+		 receivedAt:m.receivedAt];
 	}
 
 	/* Respond to query with the value asked for */
@@ -6394,7 +6388,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.lagCheckLastCheck = 0;
 }
 
-- (void)receiveCTCPReply:(IRCMessage *)m text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
+- (void)receiveCTCPReply:(IRCMessage *)m text:(NSString *)text
 {
 	NSParameterAssert(m != nil);
 	NSParameterAssert(text != nil);
@@ -6440,8 +6434,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	  inChannel:printTarget
 		 asType:TVCLogLineCTCPReplyType
 		command:m.command
-	 receivedAt:m.receivedAt
-	isEncrypted:wasEncrypted];
+	 receivedAt:m.receivedAt];
 }
 
 - (void)receiveJoin:(IRCMessage *)m
