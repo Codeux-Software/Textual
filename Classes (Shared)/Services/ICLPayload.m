@@ -225,6 +225,11 @@ ClassWithDesignatedInitializerInitMethod
 	self->_entrypointPayload = [payload dictionaryByAddingEntries:payloadToSet];
 }
 
+- (NSString *)address
+{
+	return self->_url.absoluteString;
+}
+
 - (BOOL)isMutable
 {
 	return NO;

@@ -54,6 +54,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSURL *url;
 
 /**
+ String value of -url property.
+ */
+@property (copy, readonly) NSString *address;
+
+/**
  The value of the unique identifier argument supplied to the loader.
  */
 @property (copy, readonly) NSString *uniqueIdentifier;
