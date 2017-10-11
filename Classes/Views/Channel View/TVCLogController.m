@@ -1287,6 +1287,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL highlighted = [rendererResults boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
+	BOOL inlineMedia =
+		(self.inlineMediaEnabledForView &&
+		 (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType));
+
 	// ************************************************************************** /
 
 	NSMutableDictionary<NSString *, id> *pathAttributes = [NSMutableDictionary new];
@@ -1386,6 +1390,8 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	
 	// ---- //
+
+	templateAttributes[@"inlineMediaEnabled"] = @(inlineMedia);
 
 	templateAttributes[@"lineNumber"] = logLine.uniqueIdentifier;
 
