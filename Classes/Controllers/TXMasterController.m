@@ -471,6 +471,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
 
+	[TVCLogControllerInlineMediaSharedInstance() prepareForApplicationTermination];
+
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 	[[TXSharedApplication sharedInAppPurchaseDialog] prepareForApplicationTermination];
 #endif
