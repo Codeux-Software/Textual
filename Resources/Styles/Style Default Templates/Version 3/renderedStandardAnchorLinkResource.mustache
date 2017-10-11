@@ -1,1 +1,1 @@
-<a href="{{anchorLocation}}" class="url" oncontextmenu="Textual.openURLManagementContextualMenu()" {{#anchorInlineMediaAvailable}} onclick="return Textual.toggleInlineMedia('{{anchorInlineMediaUniqueID}}', true)" {{/anchorInlineMediaAvailable}} >{{{anchorTitle}}}</a>
+<a href="{{anchorLocation}}" class="url" oncontextmenu="Textual.openURLManagementContextualMenu()" {{#anchorInlineMediaAvailable}} onclick="return InlineMedia.toggleOnClick('{{anchorInlineMediaUniqueID}}')" inlineanchor="{{anchorInlineMediaUniqueID}}"" {{/anchorInlineMediaAvailable}} >{{{anchorTitle}}}</a>
