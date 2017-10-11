@@ -130,7 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareForApplicationTermination
 {
-#warning TODO: Implement
+	[self invalidateProcess];
 }
 
 - (void)registerDefaults
