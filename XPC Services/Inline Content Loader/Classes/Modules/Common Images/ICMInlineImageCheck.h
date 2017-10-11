@@ -35,30 +35,14 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+typedef void (^ICMInlineImageCheckCompletionBlock)(BOOL safeToLoad);
 
-#import <GRMustache/GRMustache.h>
+@interface ICMInlineImageCheck : NSObject
++ (void)invalidateInternalCache;
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+- (void)checkAddress:(NSString *)address completionBlock:(ICMInlineImageCheckCompletionBlock)completionBlock;
+@end
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineImageCheck.h"
-#import "ICMInlineImage.h"
+NS_ASSUME_NONNULL_END
