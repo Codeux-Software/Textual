@@ -32,7 +32,7 @@
 
 #import "TPIBlowfishEncryption.h"
 
-#import "TVCLogControllerPrivate.h"
+#import "TextualApplicationPrivate.h"
 
 #define TXExchangeRequestPrefix				@"DH1080_INIT "
 #define TXExchangeResponsePrefix			@"DH1080_FINISH "
