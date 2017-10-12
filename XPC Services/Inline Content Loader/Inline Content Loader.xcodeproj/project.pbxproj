@@ -402,7 +402,7 @@
 				TargetAttributes = {
 					4C1406411F11942B00C73D53 = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -477,15 +477,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoader.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8482Q6EPL6;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
 				PRODUCT_NAME = InlineContentLoader;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -493,15 +489,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoader.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8482Q6EPL6;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
 				PRODUCT_NAME = InlineContentLoader;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -517,15 +509,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoaderAppStore.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8482Q6EPL6;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
 				PRODUCT_NAME = InlineContentLoader;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = "Release (App Store)";
 		};
