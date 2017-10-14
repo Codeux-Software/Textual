@@ -1,3 +1,8 @@
+
+/* Inline media */
+
+@import "inlineMedia.css";
+
 /* Basic Body Structure - Sapientia 1.3 */
 
 * {
@@ -172,45 +177,6 @@ a:hover {
 #topic_bar a:hover {
 	color: #FF4500;
 	border-color: #FF4500;
-}
-
-/* Images */
-
-.inlineImageCell {
-	overflow: auto;
-	display: block;
-	margin-top: 15px;
-	margin-bottom: 12px;
-}
-
-.inlineImageCell .image {
-	display: inline-block;
-	float: left;
-	margin-right: 12px;
-	margin-left: 10px;
-	min-width: 40px;
-	max-width: 90%;
-}
-
-.inlineImageCell .closeButton {
-	cursor: pointer;
-	border-radius: 5px;
-	border: 2px solid #a1a1a1;
-	color: #a1a1a1;
-	display: inline-block;
-	line-height: 14px;
-	font-size: 15px;
-	font-family: "Helvetica Neue" !important;
-	text-indent: 7px;
-	width: 16px;
-	height: 16px;
-	float: left;
-	padding-right: 7px;
-	padding-left: 0px;
-}
-
-html[systemversion^="10.9"] .inlineImageCell .closeButton {
-	line-height: 13px;
 }
 
 /* Remember Line */
