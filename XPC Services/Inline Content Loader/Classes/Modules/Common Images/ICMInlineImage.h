@@ -39,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage : ICLInlineContentModule
 + (NSArray<NSString *> *)validImageContentTypes;
+
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address;
 @end
 
 NS_ASSUME_NONNULL_END
