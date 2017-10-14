@@ -92,7 +92,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		payload.entrypoint = self.entrypoint;
 
-		payload.styleResources = self.styleResources;
 		payload.scriptResources = self.scriptResources;
 	}
 
@@ -532,22 +531,6 @@ NS_ASSUME_NONNULL_BEGIN
 	});
 	
 	return template;
-}
-
-- (nullable NSArray<NSString *> *)styleResources
-{
-	static NSArray<NSString *> *styleResources = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		styleResources =
-		@[
-		  [RZMainBundle() pathForResource:@"ICMInlineImage" ofType:@"css" inDirectory:@"Components"]
-		];
-	});
-
-	return styleResources;
 }
 
 - (nullable NSArray<NSString *> *)scriptResources
