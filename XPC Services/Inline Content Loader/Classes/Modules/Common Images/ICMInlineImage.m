@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (ICLInlineContentModuleActionBlock)_actionBlockForFinalAddress:(NSString *)address
 {
 	return [^(ICLInlineContentModule *module) {
-		__weak ICMInlineImage *moduleTyped = module;
+		__weak ICMInlineImage *moduleTyped = (id)module;
 
 		moduleTyped.finalAddress = address;
 
