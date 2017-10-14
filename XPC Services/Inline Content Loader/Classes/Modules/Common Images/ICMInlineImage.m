@@ -109,10 +109,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	return [self _actionBlockForFinalAddress:address];
+	return [self actionBlockForFinalAddress:address];
 }
 
-+ (ICLInlineContentModuleActionBlock)_actionBlockForFinalAddress:(NSString *)address
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address
 {
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMInlineImage *moduleTyped = (id)module;
