@@ -284,13 +284,24 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 - (void)extrasInstallerCheckForUpdates
 {
 	/* Do not check for updates too often */
-	NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
+#define _defaultsKey 	@"THOPluginManager -> Extras Installer Last Check for Update Payload"
 
-	NSTimeInterval lastUpdateTime =
-	[RZUserDefaults() doubleForKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
+	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
-	if ((currentTime - lastUpdateTime) < _extrasInstallerExtensionUpdateCheckInterval) {
-		return;
+	NSString *applicationVersion = [TPCApplicationInfo applicationVersion];
+
+	NSDictionary<NSString *, id> *lastUpdatePayload = [RZUserDefaults() dictionaryForKey:_defaultsKey];
+
+	if (lastUpdatePayload) {
+		NSTimeInterval lastCheckTime = [lastUpdatePayload doubleForKey:@"lastCheck"];
+
+		NSString *lastVersion = [lastUpdatePayload stringForKey:@"lastVersion"];
+
+		if ((currentTime - lastCheckTime) < _extrasInstallerExtensionUpdateCheckInterval &&
+			[lastVersion isEqualToString:applicationVersion])
+		{
+			return;
+		}
 	}
 
 	/* Perform update check */
@@ -323,7 +334,12 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 	}
 
 	/* Record the last time updates were checked for */
-	[RZUserDefaults() setDouble:currentTime forKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
+	[RZUserDefaults() setObject:@{
+		  @"lastCheck" : @(currentTime),
+		  @"lastVersion" : applicationVersion
+	} forKey:_defaultsKey];
+
+#undef _defaultsKey
 }
 
 - (void)extrasInstallerInformUserAboutUpdateForBundle:(NSBundle *)bundle
