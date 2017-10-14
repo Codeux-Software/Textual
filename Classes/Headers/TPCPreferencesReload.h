@@ -62,7 +62,6 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
 	TPCPreferencesReloadSparkleFrameworkFeedURLAction				= 1 << 17,
 #endif
 
-	TPCPreferencesReloadInlineMediaCacheAction						= 1 << 18,
 	TPCPreferencesReloadIRCCommandCacheAction						= 1 << 19,
 	TPCPreferencesReloadLogTranscriptsAction						= 1 << 21,
 	TPCPreferencesReloadScrollbackSaveLimitAction					= 1 << 22,
