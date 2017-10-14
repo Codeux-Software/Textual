@@ -179,7 +179,7 @@ _InlineMedia.processPayload = function(payload) /* PRIVATE */
 
 _InlineMedia.processPayloadWithoutEntrypoint = function(payload) /* PRIVATE */
 {
-	Textual._insertPayload(payload.lineNumber, payload.html);
+	_InlineMedia.insertPayload(payload.lineNumber, payload.html);
 };
 
 _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
