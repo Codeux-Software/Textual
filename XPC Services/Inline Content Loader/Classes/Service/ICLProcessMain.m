@@ -160,12 +160,14 @@ ClassWithDesignatedInitializerInitMethod
 		/* If you are wondering why so much care has been put into these errors
 		 when we control the code, it's because there are plans to support plugins
 		 for modules in the future so future proofing it is best. */
-		if (payloadOut.scriptResources.count == 0) {
+		if (payloadOut.html.length == 0 &&
+			payloadOut.scriptResources.count == 0)
+		{
 			error =
 			[NSError errorWithDomain:ICLInlineContentErrorDomain
 								code:1001
 							userInfo:@{
-				NSLocalizedDescriptionKey : @"-[ICLPayload scriptResources] must contain at least one path"
+				NSLocalizedDescriptionKey : @"-[ICLPayload scriptResources] must contain at least one path if -[ICLPayload html] is empty"
 			}];
 		}
 		else if (payloadOut.html.length == 0 &&

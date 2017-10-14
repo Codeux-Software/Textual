@@ -137,7 +137,6 @@ ClassWithDesignatedInitializerInitMethod
 {
 	ObjectIsAlreadyInitializedAssert
 
-	NSParameterAssert(self->_scriptResources != nil);
 	NSParameterAssert(self->_html != nil);
 	NSParameterAssert(self->_url != nil);
 	NSParameterAssert(self->_lineNumber != nil);
@@ -273,10 +272,8 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
-- (void)setScriptResources:(NSArray<NSString *> *)scriptResources
+- (void)setScriptResources:(nullable NSArray<NSString *> *)scriptResources
 {
-	NSParameterAssert(scriptResources != nil);
-
 	if (self->_scriptResources != scriptResources) {
 		self->_scriptResources = scriptResources;
 	}

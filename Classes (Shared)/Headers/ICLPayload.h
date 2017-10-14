@@ -93,11 +93,8 @@ NS_ASSUME_NONNULL_BEGIN
  A collection of paths for .js files that need to be loaded to allow the
  rendered HTML to appear correct.
 
- - Discussion:
-
- At least one file is required so that the entrypoint can be called.
  */
-@property (copy, readonly) NSArray<NSString *> *scriptResources;
+@property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
 
 /**
  Rendered HTML or an empty string
