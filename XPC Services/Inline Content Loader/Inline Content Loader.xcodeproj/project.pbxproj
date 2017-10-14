@@ -63,7 +63,7 @@
 		4C1EAB181F89F40F00A4E647 /* TPCPreferencesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesPrivate.h; path = "../../Classes (Shared)/Headers/Private/TPCPreferencesPrivate.h"; sourceTree = "<group>"; };
 		4C1EAB191F89F41700A4E647 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = "../../Classes (Shared)/Headers/TPCPreferences.h"; sourceTree = "<group>"; };
 		4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TPCPreferences.m; path = "../../Classes (Shared)/Preferences/TPCPreferences.m"; sourceTree = "<group>"; };
-		4C1F0F691F8BD47A0061662D /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Classes/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
+		4C1F0F691F8BD47A0061662D /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
 		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
 		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
 		4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "../../Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
@@ -83,9 +83,9 @@
 		4C8C84381F8E5AE400062FFD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B951F8A36FB00493E7C /* ICMInlineImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICMInlineImage.m; sourceTree = "<group>"; };
-		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ICMInlineImage.js; sourceTree = "<group>"; };
+		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = "../../../Resources/Modules/Common Images/ICMInlineImage.js"; sourceTree = "<group>"; };
 		4CE58B971F8A36FB00493E7C /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICMInlineImage.h; sourceTree = "<group>"; };
-		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; path = ICMInlineImage.mustache; sourceTree = "<group>"; };
+		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = "../../../Resources/Modules/Common Images/ICMInlineImage.mustache"; sourceTree = "<group>"; };
 		4CE58BA91F8A5F8500493E7C /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = "<group>"; };
 		4CE58BC41F8A6F0900493E7C /* ICLInlineContentModuleInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModuleInternal.h; path = Classes/Headers/Internal/ICLInlineContentModuleInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
