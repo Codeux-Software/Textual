@@ -350,11 +350,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 #endif
 
-	/* Inline media cache */
-	if ((reloadAction & TPCPreferencesReloadInlineMediaCacheAction) == TPCPreferencesReloadInlineMediaCacheAction) {
-#warning TODO: Implement
-	}
-
 	/* Command index cache */
 	if ((reloadAction & TPCPreferencesReloadIRCCommandCacheAction) == TPCPreferencesReloadIRCCommandCacheAction) {
 		[IRCCommandIndex _invalidateCaches];
