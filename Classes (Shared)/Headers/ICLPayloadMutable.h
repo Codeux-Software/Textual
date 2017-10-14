@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) NSUInteger contentLength;
 @property (nonatomic, assign, readwrite) NSSize contentSize;
 @property (nonatomic, copy, nullable, readwrite) NSArray<NSString *> *styleResources;
-@property (nonatomic, copy, readwrite) NSArray<NSString *> *scriptResources;
+@property (nonatomic, copy, nullable, readwrite) NSArray<NSString *> *scriptResources;
 @property (nonatomic, copy, readwrite) NSString *html;
 @property (nonatomic, copy, nullable, readwrite) NSString *entrypoint;
 @property (nonatomic, copy, null_resettable, readwrite) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
