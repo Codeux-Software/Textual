@@ -11,7 +11,6 @@
 		4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8CF1F89165C00CD8193 /* ICLInlineContentModule.m */; };
 		4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */; };
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
-		4C1F0F6A1F8BD4850061662D /* InlineImageLiveResize.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C1F0F691F8BD47A0061662D /* InlineImageLiveResize.js */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
@@ -20,10 +19,12 @@
 		4C8C73021F121EF000ED72DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72FA1F121EF000ED72DB /* main.m */; };
 		4C8C84301F8E368B00062FFD /* ICMInlineImage.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */; };
 		4C8C84311F8E368B00062FFD /* ICMInlineImage.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */; };
-		4C8C84341F8E388A00062FFD /* ICMInlineImageCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C84331F8E388A00062FFD /* ICMInlineImageCheck.m */; };
 		4C8C84391F8E5AEC00062FFD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C84381F8E5AE400062FFD /* ImageIO.framework */; };
+		4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */; };
+		4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */; };
+		4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */; };
+		4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
-		4CE58B981F8A374500493E7C /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58B951F8A36FB00493E7C /* ICMInlineImage.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +64,6 @@
 		4C1EAB181F89F40F00A4E647 /* TPCPreferencesPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesPrivate.h; path = "../../Classes (Shared)/Headers/Private/TPCPreferencesPrivate.h"; sourceTree = "<group>"; };
 		4C1EAB191F89F41700A4E647 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = "../../Classes (Shared)/Headers/TPCPreferences.h"; sourceTree = "<group>"; };
 		4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TPCPreferences.m; path = "../../Classes (Shared)/Preferences/TPCPreferences.m"; sourceTree = "<group>"; };
-		4C1F0F691F8BD47A0061662D /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
 		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
 		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
 		4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "../../Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
@@ -78,14 +78,17 @@
 		4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLProcessDelegate.m; path = Classes/Service/ICLProcessDelegate.m; sourceTree = "<group>"; };
 		4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLProcessMain.m; path = Classes/Service/ICLProcessMain.m; sourceTree = "<group>"; };
 		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Service/main.m; sourceTree = "<group>"; };
-		4C8C84321F8E388A00062FFD /* ICMInlineImageCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICMInlineImageCheck.h; sourceTree = "<group>"; };
-		4C8C84331F8E388A00062FFD /* ICMInlineImageCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICMInlineImageCheck.m; sourceTree = "<group>"; };
 		4C8C84381F8E5AE400062FFD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
+		4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImage.h; path = "Classes/Modules/Root Classes/ICMInlineImage.h"; sourceTree = "<group>"; };
+		4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImage.m; path = "Classes/Modules/Root Classes/ICMInlineImage.m"; sourceTree = "<group>"; };
+		4C980FE21F92C4D700B116A4 /* ICMInlineImageCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImageCheck.h; path = "Classes/Modules/Root Classes/ICMInlineImageCheck.h"; sourceTree = "<group>"; };
+		4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImageCheck.m; path = "Classes/Modules/Root Classes/ICMInlineImageCheck.m"; sourceTree = "<group>"; };
+		4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMCommonInlineImages.m; path = "Classes/Modules/Common Images/ICMCommonInlineImages.m"; sourceTree = "<group>"; };
+		4C980FEB1F92C5EA00B116A4 /* ICMCommonInlineImages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMCommonInlineImages.h; path = "Classes/Modules/Common Images/ICMCommonInlineImages.h"; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
-		4CE58B951F8A36FB00493E7C /* ICMInlineImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICMInlineImage.m; sourceTree = "<group>"; };
-		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = "../../../Resources/Modules/Common Images/ICMInlineImage.js"; sourceTree = "<group>"; };
-		4CE58B971F8A36FB00493E7C /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICMInlineImage.h; sourceTree = "<group>"; };
-		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = "../../../Resources/Modules/Common Images/ICMInlineImage.mustache"; sourceTree = "<group>"; };
+		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
+		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
 		4CE58BA91F8A5F8500493E7C /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = "<group>"; };
 		4CE58BC41F8A6F0900493E7C /* ICLInlineContentModuleInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModuleInternal.h; path = Classes/Headers/Internal/ICLInlineContentModuleInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -332,15 +335,28 @@
 			children = (
 				4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */,
 				4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */,
+				4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		4C980FE91F92C4E900B116A4 /* Root Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */,
+				4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */,
+				4C980FE21F92C4D700B116A4 /* ICMInlineImageCheck.h */,
+				4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */,
+			);
+			name = "Root Classes";
 			sourceTree = "<group>";
 		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4C1F0F691F8BD47A0061662D /* InlineImageLiveResize.js */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
+				4C8C84351F8E58D100062FFD /* Resources */,
+				4C980FE91F92C4E900B116A4 /* Root Classes */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -348,14 +364,10 @@
 		4CE58B941F8A36FB00493E7C /* Common Images */ = {
 			isa = PBXGroup;
 			children = (
-				4C8C84351F8E58D100062FFD /* Resources */,
-				4C8C84321F8E388A00062FFD /* ICMInlineImageCheck.h */,
-				4C8C84331F8E388A00062FFD /* ICMInlineImageCheck.m */,
-				4CE58B971F8A36FB00493E7C /* ICMInlineImage.h */,
-				4CE58B951F8A36FB00493E7C /* ICMInlineImage.m */,
+				4C980FEB1F92C5EA00B116A4 /* ICMCommonInlineImages.h */,
+				4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */,
 			);
 			name = "Common Images";
-			path = "Classes/Modules/Common Images";
 			sourceTree = "<group>";
 		};
 		4CE58BC31F8A6EFF00493E7C /* Internal */ = {
@@ -398,7 +410,7 @@
 				TargetAttributes = {
 					4C1406411F11942B00C73D53 = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -425,7 +437,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C1F0F6A1F8BD4850061662D /* InlineImageLiveResize.js in Resources */,
+				4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,13 +450,14 @@
 			files = (
 				4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */,
 				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
+				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
 				4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */,
 				4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */,
-				4CE58B981F8A374500493E7C /* ICMInlineImage.m in Sources */,
+				4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */,
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
-				4C8C84341F8E388A00062FFD /* ICMInlineImageCheck.m in Sources */,
+				4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
 				4C8C73001F121EF000ED72DB /* ICLProcessDelegate.m in Sources */,
 			);

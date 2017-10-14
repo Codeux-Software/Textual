@@ -73,7 +73,7 @@ ClassWithDesignatedInitializerInitMethod
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		modules = @[[ICMInlineImage class]];
+		modules = @[[ICMCommonInlineImages class]];
 	});
 
 	return modules;
