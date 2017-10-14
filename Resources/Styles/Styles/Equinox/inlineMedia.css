@@ -1,0 +1,50 @@
+
+/* Images */
+
+body a img {
+  border: 0;
+}
+
+body video,
+body img {
+  display: block;
+}
+
+.inlineImageCell {
+  position: relative;
+  display: table;
+  overflow: auto;
+  width: auto;
+  height: auto;
+}
+
+.inlineImageCell > a {
+  display: inline-block;
+  border: none;
+}
+
+.inlineImageCell .image {
+  display: inline-block;
+  float: left;
+  margin: 15px 15px 12px 10px;
+  min-width: 100px;
+}
+
+.inlineImageCell .closeButton {
+  background: #000000;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  box-sizing: border-box;
+  font-size: 20px !important;
+  font-family: "Helvetica Neue" !important;
+  font-weight: 100 !important;
+  text-align: center;
+  line-height: 17px;
+  color: #f2f2f2;
+  border: 2px solid #f2f2f2;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+}

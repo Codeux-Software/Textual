@@ -3,6 +3,12 @@
  * https://github.com/chriskempson/base16
  */
 
+/* @group Inline media */
+
+@import "inlineMedia.css";
+
+/* @end */
+
 /* @group Basic Body Structure */
 
 * {
@@ -177,43 +183,6 @@ a:hover {
 #topic_bar:hover {
 	overflow: visible;
 	white-space: normal;
-}
-
-/* @end */
-
-/* @group Images */
-
-.inlineImageCell {
-	overflow: auto;
-	display: block;
-	margin-top: 5px;
-	margin-bottom: 2px;
-}
-
-.inlineImageCell .image {
-	display: inline-block;
-	float: left;
-	margin-right: 15px;
-	margin-left: 10px;
-	min-width: 40px;
-	max-width: 90%;
-}
-
-.inlineImageCell .closeButton {
-	cursor: pointer;
-	border-radius: 5px;
-	border: 2px solid #a1a1a1;
-	color: #a1a1a1;
-	display: inline-block;
-	line-height: 14px;
-	font-size: 15px;
-	font-family: "Helvetica Neue" !important;
-	text-indent: 7px;
-	width: 16px;
-	height: 16px;
-	float: left;
-	padding-right: 7px;
-	padding-left: 0px;
 }
 
 /* @end */
