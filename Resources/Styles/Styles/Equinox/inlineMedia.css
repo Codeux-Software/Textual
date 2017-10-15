@@ -10,7 +10,8 @@ body img {
   display: block;
 }
 
-.inlineImage {
+.inlineImage,
+.inlineVideo {
   position: relative;
   display: table;
   overflow: auto;
@@ -18,19 +19,24 @@ body img {
   height: auto;
 }
 
-.inlineImage > a {
+.inlineImage > a,
+.inlineVideo > a {
   display: inline-block;
   border: none;
 }
 
-.inlineImage .image {
+.inlineImage .image,
+.inlineVideo .video,
+.inlineYouTube .frame {
   display: inline-block;
   float: left;
   margin: 15px 15px 12px 10px;
   min-width: 100px;
 }
 
-.inlineImage .closeButton {
+.inlineImage .closeButton,
+.inlineVideo .closeButton,
+.inlineYouTube .closeButton {
   background: #000000;
   cursor: pointer;
   border-radius: 50%;
