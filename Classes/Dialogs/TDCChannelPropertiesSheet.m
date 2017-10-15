@@ -241,7 +241,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.ignoreGeneralEventMessagesCheck.state = self.config.ignoreGeneralEventMessages;
 	self.ignoreHighlightsCheck.state = self.config.ignoreHighlights;
 
-	if ([TPCPreferences showInlineImages]) {
+	if ([TPCPreferences showInlineMedia]) {
 		self.disableInlineImagesCheck.state = self.config.ignoreInlineMedia;
 	} else {
 		self.enableInlineImagesCheck.state = self.config.ignoreInlineMedia;
@@ -380,7 +380,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.config.ignoreGeneralEventMessages = self.ignoreGeneralEventMessagesCheck.state;
 	self.config.ignoreHighlights = self.ignoreHighlightsCheck.state;
 
-	if ([TPCPreferences showInlineImages]) {
+	if ([TPCPreferences showInlineMedia]) {
 		self.config.ignoreInlineMedia = self.disableInlineImagesCheck.state;
 	} else {
 		self.config.ignoreInlineMedia = self.enableInlineImagesCheck.state;

@@ -369,6 +369,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)showInlineImages
 {
+	return [TPCPreferences showInlineMedia];
+}
+
++ (BOOL)showInlineMedia
+{
 	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Inline Media"];
 }
 
