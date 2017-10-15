@@ -10,7 +10,7 @@ body img {
   display: block;
 }
 
-.inlineImageCell {
+.inlineImage {
   position: relative;
   display: table;
   overflow: auto;
@@ -18,19 +18,19 @@ body img {
   height: auto;
 }
 
-.inlineImageCell > a {
+.inlineImage > a {
   display: inline-block;
   border: none;
 }
 
-.inlineImageCell .image {
+.inlineImage .image {
   display: inline-block;
   float: left;
   margin: 15px 15px 12px 10px;
   min-width: 100px;
 }
 
-.inlineImageCell .closeButton {
+.inlineImage .closeButton {
   background: #000000;
   cursor: pointer;
   border-radius: 50%;

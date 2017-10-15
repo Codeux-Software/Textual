@@ -1,14 +1,12 @@
 
 /* @group Images */
 
-.inlineImageCell {
-	overflow: auto;
-	display: block;
-	margin-top: 5px;
-	margin-bottom: 2px;
+.inlineImage {
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
 }
 
-.inlineImageCell .image {
+.inlineImage .image {
 	display: inline-block;
 	float: left;
 	margin-right: 15px;
@@ -17,7 +15,7 @@
 	max-width: 90%;
 }
 
-.inlineImageCell .closeButton {
+.inlineImage .closeButton {
 	cursor: pointer;
 	border-radius: 5px;
 	border: 2px solid #a1a1a1;
