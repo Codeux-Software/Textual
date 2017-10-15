@@ -35,60 +35,43 @@
 
  *********************************************************************** */
 
-var _ICMInlineImage = {};
+var _ICMInlineImagePrototypeParent = InlineMediaPrototype;
 
-_ICMInlineImage.entrypoint = function(payload, callbackFunction) /* PRIVATE */
+var _ICMInlineImagePrototype = function() {  
+	_ICMInlineImagePrototypeParent.call(this);
+}
+
+_ICMInlineImagePrototype.prototype = Object.create(InlineMediaPrototype.prototype);
+_ICMInlineImagePrototype.prototype.constructor = _ICMInlineImagePrototype;
+_ICMInlineImagePrototype.prototype.superClass = _ICMInlineImagePrototypeParent.prototype;
+
+var _ICMInlineImage = new _ICMInlineImagePrototype();
+
+_ICMInlineImagePrototype.prototype.willShowElement = function(element, mediaId) /* PUBLIC */
 {
-	/* Insert HTML */
-	callbackFunction(payload.html);
-	
-	/* Replace onclick event for anchor link to point to custom .toggle() */
-	_ICMInlineImage.replaceOnclickEventForPayload(payload);
-
-	/* Wait until image has completely loaded before we toggle it's visbility. */
-	_ICMInlineImage.togglePayload(payload);
-};
-
-/* ICMInlineImage has its own implementation of .toggleOnClick() so that the 
-user isn't allowed to toggle the visiblity of an image until it finished loading. */
-_ICMInlineImage.replaceOnclickEventForPayload = function(payload) /* PRIVATE */
-{
-	var mediaId = payload.uniqueIdentifier;
-
-	var anchor = document.querySelector("a[inlineanchor=\"" + mediaId + "\"]");
-	
-	if (!anchor) {
-		console.error("Failed to find inline media anchor that matches ID: " + mediaId);
-
-		return;
+	/* Do not allow user to show the image if this attribute is set. */
+	if (element.hasAttribute("disabled")) {
+		return false;
 	}
-	
-	anchor.onclick = (function() {
-		return _ICMInlineImage.toggleOnClick(mediaId);
-	});
+
+	return this.superClass.willShowElement.call(this, element, mediaId);
 };
 
-/* ************************************************** */
-/*                    Visibility                      */
-/* ************************************************** */
-
-_ICMInlineImage.toggleOnClick = function(mediaId) /* PRIVATE */
+_ICMInlineImagePrototype.prototype.entrypoint = function(payload, insertHTMLCallback)
 {
-	if (InlineMedia.isSafeToPerformToggle() === false) {
-		return true;
-	}
+	/* Call super to insert the HTML for us. */
+	this.superClass.entrypoint.call(this, payload, insertHTMLCallback);
 	
-	_ICMInlineImage.toggle(mediaId);
-	
-	return false;
+	/* Show the image when finishes loading. */
+	this.showImageWhenLoadedWithPayload(payload);
 };
 
-_ICMInlineImage.togglePayload = function(payload) /* PRIVATE */
+_ICMInlineImagePrototype.prototype.showImageWhenLoadedWithPayload = function(payload)
 {
-	_ICMInlineImage.toggle(payload.uniqueIdentifier);
+	this.showImageWhenLoaded(payload.uniqueIdentifier);
 };
 
-_ICMInlineImage.toggle = function(mediaId) /* PRIVATE */
+_ICMInlineImagePrototype.prototype.showImageWhenLoaded = function(mediaId)
 {
 	var imageContainer = document.getInlineMediaById(mediaId);
 
@@ -98,48 +81,27 @@ _ICMInlineImage.toggle = function(mediaId) /* PRIVATE */
 		return;
 	}
 
-	/* If the image is not hidden, then we make it so and finish. */
-	var hidden = (imageContainer.style.display === "none");
-	
-	if (hidden === false) {
-		imageContainer.prepareForMutation();
-
-		imageContainer.style.display = "none";
-
-		return;
-	}
-
 	/* If the image is not already loaded, then we observe 
 	changes to that so that we only reveal once it is. */
 	var imageElement = imageContainer.querySelector("a .image");
 
-	var complete = imageElement.complete;
-	
-	if (complete === false) {
-		/* Do not perform logic more than once. */
-		if (imageContainer.hasAttribute("wants-reveal")) {
-			return;
-		}
-	}
-	
-	var completeCallback = (function() {
-		/* It is important that we reveal the inline image immediately
-		after preparing the scroller for mutation. If we do not, then 
-		the mutation will be swallowed without changing the height. */
-		imageContainer.prepareForMutation();
+	var imageComplete = imageElement.complete;
 
-		imageContainer.style.display = "";
-		
-		imageContainer.removeAttribute("wants-reveal");
+	var imageCompleteCallback = (function() {
+		imageContainer.removeAttribute("disabled");
 		
 		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
-	});
-	
-	if (complete === false) {
-		imageContainer.setAttribute("wants-reveal", "true");
+		
+		this.show(mediaId);
+	}).bind(this);
 
-		imageElement.addEventListener("load", { handleEvent: completeCallback }, false);
+	if (imageComplete) {
+		imageCompleteCallback();
 	} else {
-		completeCallback();
+		imageContainer.setAttribute("disabled", "true");
+
+		imageElement.addEventListener("load", { handleEvent: imageCompleteCallback }, false);
 	}
 };
+
+var _ICMInlineImage = new _ICMInlineImagePrototype();

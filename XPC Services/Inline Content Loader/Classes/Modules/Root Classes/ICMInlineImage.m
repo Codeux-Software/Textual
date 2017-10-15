@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)entrypoint
 {
-	return @"_ICMInlineImage.entrypoint";
+	return @"_ICMInlineImage";
 }
 
 + (NSArray<NSString *> *)validImageContentTypes
