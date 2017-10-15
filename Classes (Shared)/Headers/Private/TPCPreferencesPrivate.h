@@ -38,7 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPreferences ()
-+ (void)setInlineImagesMaxWidth:(NSUInteger)value;
++ (void)setInlineMediaMaxWidth:(NSUInteger)value;
 + (void)setInlineImagesMaxHeight:(NSUInteger)value;
 @end
 

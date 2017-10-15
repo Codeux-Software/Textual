@@ -487,7 +487,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)inlineImageMaxWidth
 {
-	return _unsignedIntegerString([TPCPreferences inlineImagesMaxWidth]);
+	return _unsignedIntegerString([TPCPreferences inlineMediaMaxWidth]);
 }
 
 - (NSString *)inlineImageMaxHeight
@@ -497,7 +497,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setInlineImageMaxWidth:(NSString *)value
 {
-	[TPCPreferences setInlineImagesMaxWidth:value.integerValue];
+	[TPCPreferences setInlineMediaMaxWidth:value.integerValue];
 }
 
 - (void)setInlineImageMaxHeight:(NSString *)value
