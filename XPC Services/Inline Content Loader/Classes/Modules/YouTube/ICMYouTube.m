@@ -61,7 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 	if (html) {
 		payload.html = html;
 
+		payload.entrypoint = self.entrypoint;
+
 		payload.styleResources = self.styleResources;
+		payload.scriptResources = self.scriptResources;
 	}
 
 	self.completionBlock(templateRenderError);
@@ -184,6 +187,27 @@ NS_ASSUME_NONNULL_BEGIN
 	});
 
 	return styleResources;
+}
+
+- (nullable NSArray<NSString *> *)scriptResources
+{
+	static NSArray<NSString *> *scriptResources = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		scriptResources =
+		@[
+		  [RZMainBundle() pathForResource:@"ICMYouTube" ofType:@"js" inDirectory:@"Components"]
+		];
+	});
+
+	return scriptResources;
+}
+
+- (nullable NSString *)entrypoint
+{
+	return @"_ICMYouTube.entrypoint";
 }
 
 @end
