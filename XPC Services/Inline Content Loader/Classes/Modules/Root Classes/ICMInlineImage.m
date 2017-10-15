@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 	@{
 		@"anchorLink" : payload.url.absoluteString,
 		@"imageURL" : self.finalAddress,
-		@"preferredMaximumWidth" : @([TPCPreferences inlineImagesMaxWidth]),
+		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier
 	};
 

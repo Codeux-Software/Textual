@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors;
 + (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable;
 
-+ (void)setInlineImagesMaxWidth:(NSUInteger)value;
++ (void)setInlineMediaMaxWidth:(NSUInteger)value;
 + (void)setInlineImagesMaxHeight:(NSUInteger)value;
 
 + (void)setThemeName:(NSString *)value;
