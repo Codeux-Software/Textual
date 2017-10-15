@@ -182,7 +182,8 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 + (BOOL)disconnectOnSleep;
 
 + (BOOL)autoAddScrollbackMark;
-+ (BOOL)showInlineImages;
++ (BOOL)showInlineImages TEXTUAL_DEPRECATED("Use -showInlineMedia instead");
++ (BOOL)showInlineMedia;
 + (BOOL)showJoinLeave;
 + (BOOL)displayServerMOTD;
 + (BOOL)rightToLeftFormatting;

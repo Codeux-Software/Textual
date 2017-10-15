@@ -1282,7 +1282,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedInlineMediaOption:(id)sender
 {
-	if ([TPCPreferences showInlineImages]) {
+	if ([TPCPreferences showInlineMedia]) {
 		[TDCPreferencesController showTorAnonymityNetworkInlineMediaWarning];
 	}
 
