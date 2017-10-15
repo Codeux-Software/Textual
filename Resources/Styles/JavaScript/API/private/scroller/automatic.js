@@ -154,14 +154,24 @@ TextualScroller.setAutomaticScrollingEnabled = function(enabled) /* PUBLIC */
 /*              Mutation Observer Helpers             */
 /* ************************************************** */
 
-Element.prototype.prepareForMutation = function() /* PUBLIC */
+HTMLDocument.prototype.prepareForMutation = function() /* PUBLIC */
 {
 	_TextualScroller.prepareForMutation();
 };
 
-Element.prototype.cancelMutation = function() /* PUBLIC */
+HTMLDocument.prototype.cancelForMutation = function() /* PUBLIC */
 {
 	_TextualScroller.cancelMutation();
+};
+
+Element.prototype.prepareForMutation = function() /* PUBLIC */
+{
+	document.prepareForMutation();
+};
+
+Element.prototype.cancelMutation = function() /* PUBLIC */
+{
+	document.cancelMutation();
 };
 
 _TextualScroller.prepareForMutation = function()

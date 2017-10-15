@@ -61,6 +61,16 @@ TextualScroller.setAutomaticScrollingEnabled = function(enabled) /* PUBLIC */
 /*                 Mutation Observer                  */
 /* ************************************************** */
 
+HTMLDocument.prototype.prepareForMutation = function() /* PUBLIC */
+{
+	
+};
+
+HTMLDocument.prototype.cancelForMutation = function() /* PUBLIC */
+{
+	
+};
+
 Element.prototype.prepareForMutation = function() /* PUBLIC */
 {
 	
