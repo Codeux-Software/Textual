@@ -283,6 +283,26 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSURL fileURLWithPath:self.applicationTemporary isDirectory:YES];
 }
 
++ (NSString *)applicationTemporaryProcessSpecific
+{
+	NSString *sourcePath = self.applicationTemporary;
+
+	int processIdentifier = [[NSProcessInfo processInfo] processIdentifier];
+
+	NSString *endPath = [NSString stringWithFormat:@"/tmp-%i", processIdentifier];
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:endPath];
+
+	[self _createDirectoryAtPath:basePath];
+
+	return basePath;
+}
+
++ (NSURL *)applicationTemporaryProcessSpecificURL
+{
+	return [NSURL fileURLWithPath:self.applicationTemporaryProcessSpecific isDirectory:YES];
+}
+
 + (NSString *)bundledExtensions
 {
 	return self.bundledExtensionsURL.path;
