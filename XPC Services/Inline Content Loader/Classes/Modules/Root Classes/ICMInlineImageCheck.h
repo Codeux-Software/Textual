@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^ICMInlineImageCheckCompletionBlock)(BOOL safeToLoad);
+typedef void (^ICMInlineImageCheckCompletionBlock)(BOOL safeToLoad, NSString * _Nullable imageOfType);
 
 @interface ICMInlineImageCheck : NSObject
 + (void)invalidateInternalCache;

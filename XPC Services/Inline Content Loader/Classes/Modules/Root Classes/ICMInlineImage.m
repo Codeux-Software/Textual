@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "ICMInlineImageCheck.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage ()
@@ -54,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.imageCheck = imageCheck;
 
 	[imageCheck checkAddress:self.finalAddress
-			 completionBlock:^(BOOL safeToLoad) {
+			 completionBlock:^(BOOL safeToLoad, NSString * _Nullable imageOfType) {
 			 if (safeToLoad) {
 				 [self _safeToLoadImage];
 			 } else {

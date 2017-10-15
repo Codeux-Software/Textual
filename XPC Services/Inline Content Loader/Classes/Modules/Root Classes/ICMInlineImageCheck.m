@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "ICMInlineImageCheck.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _imageLoaderMaxCacheSize			10
@@ -54,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL checkDimensions;
 @property (nonatomic, assign) NSUInteger maximumHeight;
 @property (nonatomic, assign) TXUnsignedLongLong maximumFilesize;
+@property (nonatomic, copy, nullable) NSString *imageType; // set by connection response
 @end
 
 @interface ICMInlineImageCheck ()
@@ -61,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) ICMInlineImageCheckState *state;
 @end
 
-static NSCache<NSString *, NSNumber *> *_internalCache = nil;
+static NSCache<NSString *, NSDictionary<NSString *, id> *> *_internalCache = nil;
 
 @implementation ICMInlineImageCheck
 
@@ -104,10 +107,14 @@ static NSCache<NSString *, NSNumber *> *_internalCache = nil;
 	/* Does this URL already have a cached response? */
 	NSString *cacheToken = address.md5;
 
-	NSNumber *cachedResponse = [_internalCache objectForKey:cacheToken];
+	NSDictionary<NSString *, id> *cachedResponse = [_internalCache objectForKey:cacheToken];
 
 	if (cachedResponse) {
-		completionBlock(cachedResponse.boolValue);
+		BOOL safeToLoad = [cachedResponse boolForKey:@"safeToLoad"];
+
+		NSString *imageOfType = [cachedResponse stringForKey:@"imageOfType"];
+
+		completionBlock(safeToLoad, imageOfType);
 
 		return;
 	}
@@ -156,9 +163,14 @@ static NSCache<NSString *, NSNumber *> *_internalCache = nil;
 #pragma mark -
 #pragma mark Utilities
 
-- (void)informDelegateWhetherImageIsSafe:(BOOL)isSafeToLoad
+- (void)informDelegateWhetherImageOfType:(nullable NSString *)imageOfType safeToLoad:(BOOL)safeToLoad
 {
-	self.state.completionBlock(isSafeToLoad);
+	NSMutableDictionary *cachedValue = [NSMutableDictionary dictionaryWithCapacity:2];
+	[cachedValue setBool:safeToLoad forKey:@"safeToLoad"];
+	[cachedValue maybeSetObject:imageOfType forKey:@"imageOfType"];
+	[_internalCache setObject:[cachedValue copy] forKey:self.state.cacheToken];
+
+	self.state.completionBlock(safeToLoad, imageOfType);
 }
 
 - (BOOL)headersAreValid
@@ -188,6 +200,8 @@ static NSCache<NSString *, NSNumber *> *_internalCache = nil;
 	if ([validContentTypes containsObject:contentType] == NO) {
 		return NO;
 	}
+
+	self.state.imageType = contentType;
 
 	return YES;
 }
@@ -242,15 +256,15 @@ static NSCache<NSString *, NSNumber *> *_internalCache = nil;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	BOOL isSafeToLoad = (self.request.response.statusCode == 200);
+	BOOL safeToLoad = (self.request.response.statusCode == 200);
 
 	if (self.state.checkDimensions) {
-		isSafeToLoad = (isSafeToLoad && [self imageIsValid]);
+		safeToLoad = (safeToLoad && [self imageIsValid]);
 	}
 
-	[_internalCache setObject:@(isSafeToLoad) forKey:self.state.cacheToken];
+	NSString *imageType = self.state.imageType;
 
-	[self informDelegateWhetherImageIsSafe:isSafeToLoad];
+	[self informDelegateWhetherImageOfType:imageType safeToLoad:safeToLoad];
 
 	[self cleanupConnectionRequest];
 }
