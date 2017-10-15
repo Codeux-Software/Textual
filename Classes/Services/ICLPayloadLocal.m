@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/ICLPayload-Resources/"];
 
+	[TPCPathInfo _createDirectoryAtPath:basePath];
+
 	return basePath;
 }
 
