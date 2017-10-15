@@ -133,12 +133,6 @@ InlineMediaPrototype.prototype.toggle = function(mediaId) /* PUBLIC */
 
 InlineMediaPrototype.prototype._setDisplay = function(mediaId, display) /* PRIVATE */
 {
-	if (InlineMedia.isSafeToPerformToggle() === false) {
-		console.log("Cancelled toggling inline media because of isSafeToPerformToggle() condition.");
-		
-		return true;
-	}
-
 	var element = document.getInlineMediaById(mediaId);
 
 	if (!element) {
