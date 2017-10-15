@@ -43,9 +43,6 @@
 /*                                                    */
 /* ************************************************** */
 
-var InlineMedia = {};
-var _InlineMedia = {};
-
 /* ************************************************** */
 /*              Document Prototypes                   */
 /* ************************************************** */
@@ -59,48 +56,82 @@ HTMLDocument.prototype.getInlineMediaById = function(mediaId) /* PUBLIC */
 	return this.getElementById(mediaId);
 };
 
-/* ************************************************** */
-/*                    Visibility                      */
-/* ************************************************** */
-
-/* .showOnClick(), .hideOnClick(), and .toggleOnClick() 
- return a boolean to instruct the onclick event wether
- we want the anchor to perform navigation. */
-InlineMedia.showOnClick = function(mediaId) /* PUBLIC */
+HTMLDocument.prototype.getInlineMediaAnchorById = function(mediaId) /* PUBLIC */
 {
-	var element = document.getInlineMediaById(mediaId);
-	
-	if (!element) {
-		console.error("Failed to find inline media element that matches ID: " + mediaId);
-
-		return false;
-	}
-
-	element.prepareForMutation();
-	
-	element.style.display = "";
-	
-	return false;
+	return document.body.querySelector("a[inlineanchor=\"" + mediaId + "\"]");
 };
 
-InlineMedia.hideOnClick = function(mediaId) /* PUBLIC */
-{
-	var element = document.getInlineMediaById(mediaId);
-	
-	if (!element) {
-		console.error("Failed to find inline media element that matches ID: " + mediaId);
+/* ************************************************** */
+/*                 Media Prototype                    */
+/* ************************************************** */
 
-		return false;
-	}
+var InlineMediaPrototype = function() {
 
-	element.prepareForMutation();
-	
-	element.style.display = "none";
-	
-	return false;
 };
 
-InlineMedia.toggleOnClick = function(mediaId) /* PUBLIC */
+InlineMediaPrototype.prototype._isSubclass = function()
+{
+	return (Object.getPrototypeOf(this) !== InlineMediaPrototype.prototype);
+};
+
+InlineMediaPrototype.prototype.showOnClick = function(mediaId) /* PUBLIC */
+{
+	this.show(mediaId);
+	
+	return false; // Do not perform navigation
+};
+
+InlineMediaPrototype.prototype.hideOnClick = function(mediaId) /* PUBLIC */
+{
+	this.hide(mediaId);
+	
+	return false; // Do not perform navigation
+};
+
+InlineMediaPrototype.prototype.toggleOnClick = function(mediaId) /* PUBLIC */
+{
+	if (this.isSafeToPerformToggle() === false) {
+		console.log("Cancelled toggling inline media because of isSafeToPerformToggle() condition.");
+		
+		return true; // Perform navigation
+	}
+	
+	this.toggle(mediaId);
+	
+	return false; // Do not perform navigation
+};
+
+InlineMediaPrototype.prototype.showPayload = function(payload) /* PUBLIC */
+{
+	this.show(payload.uniqueIdentifier);
+};
+ 
+InlineMediaPrototype.prototype.show = function(mediaId) /* PUBLIC */
+{
+	this._setDisplay(mediaId, "show");
+};
+
+InlineMediaPrototype.prototype.hidePayload = function(payload) /* PUBLIC */
+{
+	this.hide(payload.uniqueIdentifier);
+};
+
+InlineMediaPrototype.prototype.hide = function(mediaId) /* PUBLIC */
+{
+	this._setDisplay(mediaId, "hide");
+};
+
+InlineMediaPrototype.prototype.togglePayload = function(payload) /* PUBLIC */
+{
+	this.toggle(payload.uniqueIdentifier);
+};
+
+InlineMediaPrototype.prototype.toggle = function(mediaId) /* PUBLIC */
+{
+	this._setDisplay(mediaId, "toggle");
+};
+
+InlineMediaPrototype.prototype._setDisplay = function(mediaId, display) /* PRIVATE */
 {
 	if (InlineMedia.isSafeToPerformToggle() === false) {
 		console.log("Cancelled toggling inline media because of isSafeToPerformToggle() condition.");
@@ -115,28 +146,112 @@ InlineMedia.toggleOnClick = function(mediaId) /* PUBLIC */
 
 		return false;
 	}
-
-	element.prepareForMutation();
 	
-	if (element.style.display === "none") {
-		element.style.display = "";
+	var displayNone;
+	
+	if (display === "hide") {
+		displayNone = true;
+	} else if (display === "show") {
+		displayNone = false;
 	} else {
-		element.style.display = "none";
+		displayNone = (element.style.display !== "none");
 	}
+	
+	element.prepareForMutation();
 
-	return false;
+	if (displayNone) 
+	{
+		/* Hide element */
+		if (this.willHideElement(element, mediaId) === false) {
+			return;
+		}
+
+		element.style.display = "none";
+		
+		this.didHideElement(element, mediaId);
+	} 
+	else 
+	{
+		/* Show element */
+		if (this.willShowElement(element, mediaId) === false) {
+			return;
+		}
+		
+		element.style.display = "";
+		
+		this.didShowElement(element, mediaId);
+	}
 };
 
-InlineMedia.isSafeToPerformToggle = function() /* PUBLIC */
+InlineMediaPrototype.prototype.isSafeToPerformToggle = function() /* PUBLIC */
 {
 	/* This logic is placed in a function to leave room for expansion. */
 
 	return (window.event.shiftKey === true);
 };
 
+InlineMediaPrototype.prototype.willShowElement = function(element, mediaId) /* PUBLIC */
+{
+	return true;
+};
+
+InlineMediaPrototype.prototype.didShowElement = function(element, mediaId) /* PUBLIC */
+{
+
+};
+
+InlineMediaPrototype.prototype.willHideElement = function(element, mediaId) /* PUBLIC */
+{
+	return true;
+};
+
+InlineMediaPrototype.prototype.didHideElement = function(element, mediaId) /* PUBLIC */
+{
+
+};
+
+InlineMediaPrototype.prototype.replaceAnchorOnclickCallbackForPayload = function(payload) /* PUBLIC */
+{
+	this.replaceAnchorOnclickCallback(payload.uniqueIdentifier);
+};
+
+InlineMediaPrototype.prototype.replaceAnchorOnclickCallback = function(mediaId) /* PUBLIC */
+{
+	var anchor = document.getInlineMediaAnchorById(mediaId);
+	
+	if (!anchor) {
+		console.error("Failed to find inline media anchor that matches ID: " + mediaId);
+
+		return;
+	}
+	
+	anchor.onclick = (function() {
+		return this.toggleOnClick(mediaId);
+	}).bind(this);
+};
+
+InlineMediaPrototype.prototype.entrypoint = function(payload, insertHTMLCallback)
+{
+	document.prepareForMutation();
+	
+	insertHTMLCallback(payload.html);
+	
+	if (this._isSubclass()) {
+		this.replaceAnchorOnclickCallbackForPayload(payload);
+	}
+};
+
 /* ************************************************** */
-/*               Payload Processing                   */
+/*                Media Public Interface              */
 /* ************************************************** */
+
+var InlineMedia = Object.create(InlineMediaPrototype.prototype);
+
+/* ************************************************** */
+/*                Media Private Interface             */
+/* ************************************************** */
+
+var _InlineMedia = {};
 
 _InlineMedia._loadedStyleResources = new Array(); /* PRIVATE */
 _InlineMedia._loadedScriptResources = new Array(); /* PRIVATE */
@@ -206,15 +321,15 @@ _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
 
 	var callToEntrypoint = (function(i) {
 		try {
-			var entrypoint = eval(payload.entrypoint);
+			var entrypoint = window[payload.entrypoint];
 		} catch (error) {
 			
 		}
 
 		/* If the entrypoint exists as a function already, 
 		 then we call out to it and exit. */
-		if (typeof entrypoint === "function") {
-			entrypoint(payload.entrypointPayload, insertHTML);
+		if (typeof entrypoint === "object") {
+			entrypoint.entrypoint(payload.entrypointPayload, insertHTML);
 			
 			return;
 		}
@@ -224,7 +339,7 @@ _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
 		 one (script resource is loading), or until we exhaust
 		 the tries we are willing to take. */
 		if (i === 20) { // 2 seconds
-			console.error("Failed to process payload because entrypoint is not a function.");
+			console.error("Failed to process payload because entrypoint is not an object.");
 			
 			return;
 		}
