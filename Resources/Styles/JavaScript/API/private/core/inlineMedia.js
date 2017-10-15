@@ -75,6 +75,8 @@ InlineMedia.showOnClick = function(mediaId) /* PUBLIC */
 
 		return false;
 	}
+
+	element.prepareForMutation();
 	
 	element.style.display = "";
 	
@@ -90,6 +92,8 @@ InlineMedia.hideOnClick = function(mediaId) /* PUBLIC */
 
 		return false;
 	}
+
+	element.prepareForMutation();
 	
 	element.style.display = "none";
 	
@@ -111,6 +115,8 @@ InlineMedia.toggleOnClick = function(mediaId) /* PUBLIC */
 
 		return false;
 	}
+
+	element.prepareForMutation();
 	
 	if (element.style.display === "none") {
 		element.style.display = "";

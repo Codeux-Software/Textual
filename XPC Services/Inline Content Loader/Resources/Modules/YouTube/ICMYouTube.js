@@ -39,6 +39,9 @@ var _ICMYouTube = {};
 
 _ICMYouTube.entrypoint = function(payload, callbackFunction) /* PRIVATE */
 {
+	/* Prepare scroller */
+	document.body.prepareForMutation();
+	
 	/* Insert HTML */
 	callbackFunction(payload.html);
 	
@@ -89,6 +92,9 @@ _ICMYouTube.toggle = function(mediaId) /* PRIVATE */
 
 		return;
 	}
+	
+	/* Prepare for mutation */
+	videoContainer.prepareForMutation();
 	
 	/* Toggle video visible */
 	/* It is possible to play video here if it was paused when
