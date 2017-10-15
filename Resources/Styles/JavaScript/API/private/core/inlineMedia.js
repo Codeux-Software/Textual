@@ -179,16 +179,23 @@ _InlineMedia.processPayload = function(payload) /* PRIVATE */
 
 _InlineMedia.processPayloadWithoutEntrypoint = function(payload) /* PRIVATE */
 {
-	_InlineMedia.insertPayload(payload.lineNumber, payload.html, true);
+	_InlineMedia.insertPayload(
+		payload.lineNumber, 
+		payload.html,
+		payload.index, 
+		true
+	);
 };
 
 _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
 {
-	var lineNumber = payload.lineNumber;
-
 	var insertHTML = (function(html) {
 		/* The entrypoint is expeted to call prepareForMutation() for us. */
-		_InlineMedia.insertPayload(lineNumber, html, false);
+		_InlineMedia.insertPayload(
+			payload.lineNumber, 
+			html, 
+			payload.index,
+			false);
 	});
 
 	var callToEntrypoint = (function(i) {
@@ -224,7 +231,7 @@ _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
 	callToEntrypoint(0);
 };
 
-_InlineMedia.insertPayload = function(lineNumber, html, prepareForMutation) /* PRIVATE */
+_InlineMedia.insertPayload = function(lineNumber, html, index, prepareForMutation) /* PRIVATE */
 {
 	var line = document.getElementByLineNumber(lineNumber);
 	
@@ -236,13 +243,38 @@ _InlineMedia.insertPayload = function(lineNumber, html, prepareForMutation) /* P
 
 	var mediaContainer = line.querySelector(".inlineMediaContainer");
 
-	if (mediaContainer) {
+	if (mediaContainer) 
+	{
 		if (prepareForMutation) {
 			mediaContainer.prepareForMutation();
 		}
-
-		mediaContainer.insertAdjacentHTML("beforeend", html);
-	} else {
+		
+		/* Given index of this item, find item before that index
+		to insert the HTML at, or insert at end of container. */
+		if (index === 0) {
+			/* Insert at beginning */
+			mediaContainer.insertAdjacentHTML("afterbegin", html);
+		} else {
+			var childIndex = (index - 1);
+			var childNode = null;
+			var childNodes = mediaContainer.children;
+	
+			if (childNodes.length > childIndex) {
+				childNode = childNodes[childIndex];
+			}
+	
+			if (childNode) {
+				childNode.insertAdjacentHTML("afterend", html);
+				
+				return;
+			}
+		
+			/* Insert at end */
+			mediaContainer.insertAdjacentHTML("beforeend", html)
+		}
+	} 
+	else // mediaContainer
+	{
 		console.warning("The template for this style appears to be missing a span with the class" +
 						"'inlineMediaContainer' — please fix this to support inline media.");
 	}
