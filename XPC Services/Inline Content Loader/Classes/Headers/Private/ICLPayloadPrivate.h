@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithURL:(NSURL *)url
 				withUniqueIdentifier:(NSString *)uniqueIdentifier
 						atLineNumber:(NSString *)lineNumber
+							   index:(NSUInteger)index
 							  inView:(NSString *)viewIdentifier;
 @end
 

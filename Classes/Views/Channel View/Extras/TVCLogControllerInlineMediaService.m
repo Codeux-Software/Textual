@@ -169,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Public API
 
-- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber forItem:(IRCTreeItem *)item
+- (void)processAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index forItem:(IRCTreeItem *)item
 {
 	NSParameterAssert(address != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
@@ -186,10 +186,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	[self processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber forItem:item];
+	[self processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber index:index forItem:item];
 }
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber forItem:(IRCTreeItem *)item
+- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index forItem:(IRCTreeItem *)item
 {
 	NSParameterAssert(url != nil);
 	NSParameterAssert(uniqueIdentifier != nil);
@@ -198,7 +198,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self warmProcessIfNeeded];
 	
-	[[self remoteObjectProxy] processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber inView:item.uniqueIdentifier];
+	[[self remoteObjectProxy] processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber index:index inView:item.uniqueIdentifier];
 }
 
 #pragma mark -

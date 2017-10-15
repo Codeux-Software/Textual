@@ -840,11 +840,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	IRCTreeItem *associatedItem = self.associatedItem;
 
-	[linksToProcess enumerateKeysAndObjectsUsingBlock:^(NSString *key, AHHyperlinkScannerResult *link, BOOL *stop) {
+	[linksToProcess.allValues enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
 		[TVCLogControllerInlineMediaSharedInstance()
 				 processAddress:link.stringValue
 		   withUniqueIdentifier:link.uniqueIdentifier
 				   atLineNumber:lineNumber
+						  index:index
 					    forItem:associatedItem];
 	}];
 }

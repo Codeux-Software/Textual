@@ -95,6 +95,8 @@ ClassWithDesignatedInitializerInitMethod
 	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
 	self->_viewIdentifier = [aDecoder decodeStringForKey:@"viewIdentifier"];
 
+	self->_index = [aDecoder decodeUnsignedIntegerForKey:@"index"];
+
 	[self initializedClassHealthCheck];
 }
 
@@ -117,6 +119,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	[aCoder encodeObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[aCoder encodeObject:self->_viewIdentifier forKey:@"viewIdentifier"];
+
+	[aCoder encodeUnsignedInteger:self->_index forKey:@"index"];
 }
 
 + (BOOL)supportsSecureCoding
@@ -173,6 +177,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	object->_uniqueIdentifier = self->_uniqueIdentifier;
 	object->_viewIdentifier = self->_viewIdentifier;
+
+	object->_index = self->_index;
 
 	return [object _init];
 }

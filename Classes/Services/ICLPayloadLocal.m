@@ -126,6 +126,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[dic setObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 //	[dic setObject:self->_viewIdentifier forKey:@"viewIdentifier"];
 
+	[dic setUnsignedInteger:self->_index forKey:@"index"];
+
 	return [dic copy];
 }
 

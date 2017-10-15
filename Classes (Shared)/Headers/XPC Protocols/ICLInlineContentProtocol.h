@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ICLInlineContentServerProtocol
 @required
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber inView:(NSString *)viewIdentifier;
+- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index inView:(NSString *)viewIdentifier;
 
 - (void)processPayload:(ICLPayload *)payload;
 

@@ -74,6 +74,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSString *lineNumber;
 
 /**
+ Position of payload in relation to others with same line number.
+ */
+@property (readonly) NSUInteger index;
+
+/**
  The length of the content. This value is optional.
  */
 @property (readonly) NSUInteger contentLength;

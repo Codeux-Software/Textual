@@ -55,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_lineNumber;
 	NSString *_uniqueIdentifier;
 	NSString *_viewIdentifier;
+	NSUInteger _index;
 }
 
 - (BOOL)isMutable;
