@@ -35,33 +35,35 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+var _ICMInlineVideoPrototypeParent = InlineMediaPrototype;
 
-#import <CocoaExtensions/CocoaExtensions.h>
+var _ICMInlineVideoPrototype = function() {  
+	_ICMInlineVideoPrototypeParent.call(this);
+}
 
-#import <GRMustache/GRMustache.h>
+_ICMInlineVideoPrototype.prototype = Object.create(InlineMediaPrototype.prototype);  
+_ICMInlineVideoPrototype.prototype.constructor = _ICMInlineVideoPrototype; 
+_ICMInlineVideoPrototype.prototype.superClass = _ICMInlineVideoPrototypeParent.prototype;
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+_ICMInlineVideoPrototype.prototype.didHideElement = function(element, mediaId) /* PUBLIC */
+{
+	this.pauseVideoInContainer(element);
+};
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
+var _ICMInlineVideo = new _ICMInlineVideoPrototype();
 
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMYouTube.h"
+_ICMInlineVideo.dataLoadedCallback = function()
+{
+	/* Loading data can change the height of the video once 
+	we know what it truly will be. We therefore have to tell
+	the scroller to restore the scroll position. */
+
+	TextualScroller.restoreScrolledToBottom();
+};
+
+_ICMInlineVideo.pauseVideoInContainer = function(videoContainer)
+{
+	var video = videoContainer.getElementsByTagName("video")[0];
+	
+	video.pause();
+};

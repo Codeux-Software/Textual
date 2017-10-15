@@ -35,33 +35,16 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@interface ICMInlineVideo : ICLInlineContentModule
+@property (copy, readonly) NSString *finalAddress;
 
-#import <GRMustache/GRMustache.h>
++ (NSArray<NSString *> *)validVideoContentTypes;
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // autoplay = NO, showControls = YES, loop = NO, bypassVideoCheck = NO
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop; // bypassVideoCheck = NO
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck;
+@end
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMYouTube.h"
+NS_ASSUME_NONNULL_END

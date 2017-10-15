@@ -19,5 +19,10 @@
 		<key>ServiceType</key>
 		<string>Application</string>
 	</dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
