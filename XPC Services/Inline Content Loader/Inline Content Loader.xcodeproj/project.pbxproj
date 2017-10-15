@@ -24,6 +24,9 @@
 		4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */; };
 		4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */; };
 		4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */; };
+		4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FF41F92D43000B116A4 /* ICMYouTube.m */; };
+		4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */; };
+		4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF91F92DD2600B116A4 /* ICMYouTube.css */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -37,6 +40,8 @@
 			files = (
 				4C8C84301F8E368B00062FFD /* ICMInlineImage.js in CopyFiles */,
 				4C8C84311F8E368B00062FFD /* ICMInlineImage.mustache in CopyFiles */,
+				4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */,
+				4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +91,10 @@
 		4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImageCheck.m; path = "Classes/Modules/Root Classes/ICMInlineImageCheck.m"; sourceTree = "<group>"; };
 		4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMCommonInlineImages.m; path = "Classes/Modules/Common Images/ICMCommonInlineImages.m"; sourceTree = "<group>"; };
 		4C980FEB1F92C5EA00B116A4 /* ICMCommonInlineImages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMCommonInlineImages.h; path = "Classes/Modules/Common Images/ICMCommonInlineImages.h"; sourceTree = "<group>"; };
+		4C980FF41F92D43000B116A4 /* ICMYouTube.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMYouTube.m; path = Classes/Modules/YouTube/ICMYouTube.m; sourceTree = "<group>"; };
+		4C980FF51F92D43000B116A4 /* ICMYouTube.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMYouTube.h; path = Classes/Modules/YouTube/ICMYouTube.h; sourceTree = "<group>"; };
+		4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMYouTube.mustache; path = Resources/Modules/YouTube/ICMYouTube.mustache; sourceTree = "<group>"; };
+		4C980FF91F92DD2600B116A4 /* ICMYouTube.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMYouTube.css; path = Resources/Modules/YouTube/ICMYouTube.css; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -351,12 +360,32 @@
 			name = "Root Classes";
 			sourceTree = "<group>";
 		};
+		4C980FF31F92D43000B116A4 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				4C980FFA1F92DD2D00B116A4 /* Resources */,
+				4C980FF41F92D43000B116A4 /* ICMYouTube.m */,
+				4C980FF51F92D43000B116A4 /* ICMYouTube.h */,
+			);
+			name = YouTube;
+			sourceTree = "<group>";
+		};
+		4C980FFA1F92DD2D00B116A4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */,
+				4C980FF91F92DD2600B116A4 /* ICMYouTube.css */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C8C84351F8E58D100062FFD /* Resources */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
+				4C980FF31F92D43000B116A4 /* YouTube */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -450,6 +479,7 @@
 			files = (
 				4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */,
 				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
+				4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */,
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
