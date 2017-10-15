@@ -1,7 +1,9 @@
 
 /* Images */
 
-.inlineImage .image {
+.inlineImage .image,
+.inlineVideo .video,
+.inlineYouTube .frame {
 	display: inline-block;
 	float: left;
 	margin-right: 12px;
@@ -10,7 +12,9 @@
 	max-width: 90%;
 }
 
-.inlineImage .closeButton {
+.inlineImage .closeButton,
+.inlineVideo .closeButton,
+.inlineYouTube .closeButton {
 	cursor: pointer;
 	border-radius: 5px;
 	border: 2px solid #a1a1a1;
@@ -27,6 +31,8 @@
 	padding-left: 0px;
 }
 
-html[systemversion^="10.9"] .inlineImage .closeButton {
+html[systemversion^="10.9"] .inlineImage .closeButton,
+html[systemversion^="10.9"] .inlineVideo .closeButton,
+html[systemversion^="10.9"] .inlineYouTube .closeButton {
 	line-height: 13px;
 }
