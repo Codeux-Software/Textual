@@ -109,13 +109,11 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (NSString *)temporaryPath
 {
-	int processIdentifier = [TPCApplicationInfo applicationProcessID];
+	NSString *sourcePath = [TPCPathInfo applicationTemporaryProcessSpecific];
 
-	NSString *sourcePath = [TPCPathInfo applicationTemporary];
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Cached-Style-Resources/"];
 
-	NSString *endPath = [NSString stringWithFormat:@"/Cached-Style-Resources-%i/", processIdentifier];
-
-	return [sourcePath stringByAppendingPathComponent:endPath];
+	return basePath;
 }
 
 - (BOOL)usesTemporaryPath
