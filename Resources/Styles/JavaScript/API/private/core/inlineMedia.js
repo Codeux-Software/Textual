@@ -179,7 +179,7 @@ _InlineMedia.processPayload = function(payload) /* PRIVATE */
 
 _InlineMedia.processPayloadWithoutEntrypoint = function(payload) /* PRIVATE */
 {
-	_InlineMedia.insertPayload(payload.lineNumber, payload.html);
+	_InlineMedia.insertPayload(payload.lineNumber, payload.html, true);
 };
 
 _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
@@ -187,7 +187,8 @@ _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
 	var lineNumber = payload.lineNumber;
 
 	var insertHTML = (function(html) {
-		_InlineMedia.insertPayload(lineNumber, html);
+		/* The entrypoint is expeted to call prepareForMutation() for us. */
+		_InlineMedia.insertPayload(lineNumber, html, false);
 	});
 
 	var callToEntrypoint = (function(i) {
@@ -223,7 +224,7 @@ _InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
 	callToEntrypoint(0);
 };
 
-_InlineMedia.insertPayload = function(lineNumber, html) /* PRIVATE */
+_InlineMedia.insertPayload = function(lineNumber, html, prepareForMutation) /* PRIVATE */
 {
 	var line = document.getElementByLineNumber(lineNumber);
 	
@@ -236,6 +237,10 @@ _InlineMedia.insertPayload = function(lineNumber, html) /* PRIVATE */
 	var mediaContainer = line.querySelector(".inlineMediaContainer");
 
 	if (mediaContainer) {
+		if (prepareForMutation) {
+			mediaContainer.prepareForMutation();
+		}
+
 		mediaContainer.insertAdjacentHTML("beforeend", html);
 	} else {
 		console.warning("The template for this style appears to be missing a span with the class" +
