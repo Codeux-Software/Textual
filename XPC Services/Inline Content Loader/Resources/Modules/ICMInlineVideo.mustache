@@ -1,0 +1,23 @@
+
+<span class="inlineVideo" id="inlineMedia-{{uniqueIdentifier}}">
+	<span class="closeButton" href="#" onclick="_ICMInlineVideo.hideOnClick('{{uniqueIdentifier}}');">×</span>
+
+	<video
+
+{{#videoAutoplayEnabled}}
+		autoplay
+{{/videoAutoplayEnabled}}
+
+{{#videoControlsEnabled}}
+		controls
+{{/videoControlsEnabled}}
+
+{{#videoLoopEnabled}}
+		loop
+{{/videoLoopEnabled}}
+
+		src="{{videoURL}}"
+		class="video"
+		style="max-width: {{preferredMaximumWidth}}px;"
+		onloadeddata="_ICMInlineVideo.dataLoadedCallback()"></video>
+</span>

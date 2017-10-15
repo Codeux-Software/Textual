@@ -35,33 +35,37 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@implementation ICMCommonInlineVideos
 
-#import <GRMustache/GRMustache.h>
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
+{
+	NSString *address = [self _finalAddressForURL:url];
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+	if (address == nil) {
+		return nil;
+	}
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
+	return [self actionBlockForFinalAddress:address];
+}
 
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMYouTube.h"
++ (nullable NSString *)_finalAddressForURL:(NSURL *)url
+{
+	NSString *urlPath = url.path.percentEncodedURLPath;
+
+	if ([urlPath hasSuffixIgnoringCase:@".mp4"] ||
+		[urlPath hasSuffixIgnoringCase:@".mov"] ||
+		[urlPath hasSuffixIgnoringCase:@".m4v"] ||
+		[urlPath hasSuffixIgnoringCase:@".3gp"] ||
+		[urlPath hasSuffixIgnoringCase:@".3g2"])
+	{
+		return url.absoluteString;
+	}
+
+	return nil;
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
