@@ -156,8 +156,6 @@ InlineMediaPrototype.prototype._setDisplay = function(mediaId, display) /* PRIVA
 	} else {
 		displayNone = (element.style.display !== "none");
 	}
-	
-	element.prepareForMutation();
 
 	if (displayNone) 
 	{
@@ -192,6 +190,8 @@ InlineMediaPrototype.prototype.isSafeToPerformToggle = function() /* PUBLIC */
 
 InlineMediaPrototype.prototype.willShowElement = function(element, mediaId) /* PUBLIC */
 {
+	element.prepareForMutation();
+
 	return true;
 };
 
@@ -202,6 +202,8 @@ InlineMediaPrototype.prototype.didShowElement = function(element, mediaId) /* PU
 
 InlineMediaPrototype.prototype.willHideElement = function(element, mediaId) /* PUBLIC */
 {
+	element.prepareForMutation();
+
 	return true;
 };
 
