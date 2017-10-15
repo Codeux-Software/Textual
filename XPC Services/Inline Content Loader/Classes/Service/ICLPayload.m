@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithURL:(NSURL *)url
 				withUniqueIdentifier:(NSString *)uniqueIdentifier
 						atLineNumber:(NSString *)lineNumber
+							   index:(NSUInteger)index
 							  inView:(NSString *)viewIdentifier
 {
 	NSParameterAssert(url != nil);
@@ -56,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((self = [super init])) {
 		self->_url = [url copy];
 		self->_lineNumber = [lineNumber copy];
+		self->_index = index;
 		self->_uniqueIdentifier = [uniqueIdentifier copy];
 		self->_viewIdentifier = [viewIdentifier copy];
 
