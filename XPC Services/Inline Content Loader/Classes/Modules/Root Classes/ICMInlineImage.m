@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineImage
 
-- (void)_performAction
+- (void)_performImageCheck
 {
 	/* Before the image is allowed to be displayed, we check that
 	 it matches user preferences. These preferences include maximum
@@ -104,6 +104,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address
 {
+	return [self actionBlockForFinalAddress:address bypassImageCheck:NO];
+}
+
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck
+{
 	NSParameterAssert(address != nil);
 
 	return [^(ICLInlineContentModule *module) {
@@ -111,7 +116,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 		moduleTyped.finalAddress = address;
 
-		[moduleTyped _performAction];
+		if (bypassImageCheck == NO) {
+			[moduleTyped _performImageCheck];
+		} else {
+			[moduleTyped _safeToLoadImage];
+		}
 	} copy];
 }
 

@@ -42,7 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray<NSString *> *)validImageContentTypes;
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address;
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // bypassImageCheck = NO
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck;
 @end
 
 NS_ASSUME_NONNULL_END
