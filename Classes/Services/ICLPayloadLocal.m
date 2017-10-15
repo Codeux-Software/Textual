@@ -41,6 +41,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLPayload (ICLPayloadLocalPrivate)
 
+- (NSString *)_resourcesTemporaryLocation
+{
+	NSString *sourcePath = [TPCPathInfo applicationTemporaryProcessSpecific];
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/ICLPayload-Resources/"];
+
+	return basePath;
+}
+
 /* WebKit2 uses sandboxed processes. We copy the resources files to
  the application's temporary folder so that it can access them. */
 - (nullable NSArray<NSString *> *)_copyResourcesToTemporaryLocation:(nullable NSArray<NSString *> *)resources
@@ -49,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	NSString *basePath = [TPCPathInfo applicationTemporary];
+	NSString *basePath = [self _resourcesTemporaryLocation];
 
 	NSString *(^copyOperation)(NSString *) = ^NSString *(NSString *resourcePath)
 	{
