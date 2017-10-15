@@ -40,7 +40,7 @@ var _ICMYouTube = {};
 _ICMYouTube.entrypoint = function(payload, callbackFunction) /* PRIVATE */
 {
 	/* Prepare scroller */
-	document.body.prepareForMutation();
+	document.prepareForMutation();
 	
 	/* Insert HTML */
 	callbackFunction(payload.html);
