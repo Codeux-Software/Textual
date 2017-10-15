@@ -118,8 +118,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Advanced
 
 /**
- The name of a JavaSript function that can be called for the
- purpose of inlining this payload.
+ The name of a JavaSript object that a function named entrypoint()
+ is called on for the purpose of inlining this payload.
+
+ - Inheritance
+
+ Textual offers a prototype named InlineMediaPrototype that your
+ object can inherit from. This prototype already contains an
+ entrypoint() function which you can override.
 
  - Function Arguments:
 
