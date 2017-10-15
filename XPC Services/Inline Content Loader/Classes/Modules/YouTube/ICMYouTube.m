@@ -198,6 +198,7 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		scriptResources =
 		@[
+		  [RZMainBundle() pathForResource:@"ICMInlineVideo" ofType:@"js" inDirectory:@"Components"],
 		  [RZMainBundle() pathForResource:@"ICMYouTube" ofType:@"js" inDirectory:@"Components"]
 		];
 	});
@@ -207,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)entrypoint
 {
-	return @"_ICMYouTube.entrypoint";
+	return @"_ICMYouTube";
 }
 
 @end

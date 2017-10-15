@@ -34,81 +34,21 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+ 
+var _ICMYouTubePrototypeParent = _ICMInlineVideoPrototype;
+ 
+var _ICMYouTubePrototype = function() {  
+	_ICMYouTubePrototypeParent.call(this);
+}
 
-var _ICMYouTube = {};
+_ICMYouTubePrototype.prototype = Object.create(_ICMInlineVideoPrototype.prototype);  
+_ICMYouTubePrototype.prototype.constructor = _ICMYouTubePrototype;  
+_ICMYouTubePrototype.prototype.superClass = _ICMYouTubePrototypeParent.prototype;
 
-_ICMYouTube.entrypoint = function(payload, callbackFunction) /* PRIVATE */
+var _ICMYouTube = new _ICMYouTubePrototype();
+
+_ICMYouTube.pauseVideoInContainer = function(videoContainer)
 {
-	/* Prepare scroller */
-	document.prepareForMutation();
-	
-	/* Insert HTML */
-	callbackFunction(payload.html);
-	
-	/* Replace onclick event for anchor link to point to custom .toggle() */
-	_ICMYouTube.replaceOnclickEventForPayload(payload);
-};
-
-/* _ICMYouTube has its own implementation of .toggleOnClick() so that the 
-video can be automatically paused when hidden. */
-_ICMYouTube.replaceOnclickEventForPayload = function(payload) /* PRIVATE */
-{
-	var mediaId = payload.uniqueIdentifier;
-
-	var anchor = document.querySelector("a[inlineanchor=\"" + mediaId + "\"]");
-	
-	if (!anchor) {
-		console.error("Failed to find inline media anchor that matches ID: " + mediaId);
-
-		return;
-	}
-	
-	anchor.onclick = (function() {
-		return _ICMYouTube.toggleOnClick(mediaId);
-	});
-};
-
-/* ************************************************** */
-/*                    Visibility                      */
-/* ************************************************** */
-
-_ICMYouTube.toggleOnClick = function(mediaId) /* PRIVATE */
-{
-	if (InlineMedia.isSafeToPerformToggle() === false) {
-		return true;
-	}
-	
-	_ICMYouTube.toggle(mediaId);
-	
-	return false;
-};
-
-_ICMYouTube.toggle = function(mediaId) /* PRIVATE */
-{
-	var videoContainer = document.getInlineMediaById(mediaId);
-
-	if (!videoContainer) {
-		console.error("Failed to find inline media element that matches ID: " + mediaId);
-
-		return;
-	}
-	
-	/* Prepare for mutation */
-	videoContainer.prepareForMutation();
-	
-	/* Toggle video visible */
-	/* It is possible to play video here if it was paused when
-	hidden by the user, but that might catch the user off guard. */
-	if (videoContainer.style.display === "none") {
-		videoContainer.style.display = "";
-		
-		return;
-	}
-	
-	/* Toggle video hidden */
-	videoContainer.style.display = "none";
-	
-	/* Send message to iframe to pause video. */
 	var videoIframe = videoContainer.getElementsByTagName("iframe")[0].contentWindow;
 	
 	var postMessagePayload = {
