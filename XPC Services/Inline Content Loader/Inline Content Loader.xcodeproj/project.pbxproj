@@ -27,6 +27,7 @@
 		4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FF41F92D43000B116A4 /* ICMYouTube.m */; };
 		4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */; };
 		4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF91F92DD2600B116A4 /* ICMYouTube.css */; };
+		4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 			dstPath = Components;
 			dstSubfolderSpec = 7;
 			files = (
+				4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */,
 				4C8C84301F8E368B00062FFD /* ICMInlineImage.js in CopyFiles */,
 				4C8C84311F8E368B00062FFD /* ICMInlineImage.mustache in CopyFiles */,
 				4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */,
@@ -95,6 +97,7 @@
 		4C980FF51F92D43000B116A4 /* ICMYouTube.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMYouTube.h; path = Classes/Modules/YouTube/ICMYouTube.h; sourceTree = "<group>"; };
 		4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMYouTube.mustache; path = Resources/Modules/YouTube/ICMYouTube.mustache; sourceTree = "<group>"; };
 		4C980FF91F92DD2600B116A4 /* ICMYouTube.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMYouTube.css; path = Resources/Modules/YouTube/ICMYouTube.css; sourceTree = "<group>"; };
+		4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineImage.css; path = Resources/Modules/ICMInlineImage.css; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -342,6 +345,7 @@
 		4C8C84351F8E58D100062FFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */,
 				4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */,
 				4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */,
 				4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */,

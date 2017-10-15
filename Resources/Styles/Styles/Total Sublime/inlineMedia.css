@@ -1,14 +1,7 @@
 
 /* Images */
 
-.inlineImageCell {
-	overflow: auto;
-	display: block;
-	margin-top: 15px;
-	margin-bottom: 12px;
-}
-
-.inlineImageCell .image {
+.inlineImage .image {
 	display: inline-block;
 	float: left;
 	margin-right: 12px;
@@ -17,7 +10,7 @@
 	max-width: 90%;
 }
 
-.inlineImageCell .closeButton {
+.inlineImage .closeButton {
 	cursor: pointer;
 	border-radius: 5px;
 	border: 2px solid #a1a1a1;
@@ -34,6 +27,6 @@
 	padding-left: 0px;
 }
 
-html[systemversion^="10.9"] .inlineImageCell .closeButton {
+html[systemversion^="10.9"] .inlineImage .closeButton {
 	line-height: 13px;
 }
