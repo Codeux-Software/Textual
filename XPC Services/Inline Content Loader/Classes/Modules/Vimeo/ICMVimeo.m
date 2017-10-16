@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	NSString *videoIdentifier = [urlPath substringFromIndex:1];
+	NSString *videoIdentifier = [videoIdentifier trimCharacters:@"/"];
 
 	if (videoIdentifier.isNumericOnly == NO) {
 		return nil;
