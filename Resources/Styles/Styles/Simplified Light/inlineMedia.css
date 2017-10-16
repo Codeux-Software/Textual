@@ -2,6 +2,7 @@
 /* Images */
 .inlineImage .image,
 .inlineVideo .video,
+.inlineVimeo .frame,
 .inlineYouTube .frame {
 	display: inline-block;
 	float: left;
@@ -13,6 +14,7 @@
 
 .inlineImage .closeButton,
 .inlineVideo .closeButton,
+.inlineVimeo .closeButton,
 .inlineYouTube .closeButton {
 	cursor: pointer;
 	border-radius: 5px;
@@ -32,6 +34,7 @@
 
 html[systemversion^="10.9"] .inlineImage .closeButton,
 html[systemversion^="10.9"] .inlineVideo .closeButton,
+html[systemversion^="10.9"] .inlineVimeo .closeButton,
 html[systemversion^="10.9"] .inlineYouTube .closeButton {
 	line-height: 13px;
 }

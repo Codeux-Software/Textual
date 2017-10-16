@@ -73,7 +73,8 @@ ClassWithDesignatedInitializerInitMethod
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		modules = @[[ICMYouTube class],
+		modules = @[[ICMVimeo class],
+					[ICMYouTube class],
 					[ICMCommonInlineVideos class],
 					[ICMCommonInlineImages class]];
 	});
