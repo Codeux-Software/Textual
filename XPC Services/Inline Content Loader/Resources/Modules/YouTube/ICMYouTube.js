@@ -47,6 +47,11 @@ _ICMYouTubePrototype.prototype.superClass = _ICMYouTubePrototypeParent.prototype
 
 var _ICMYouTube = new _ICMYouTubePrototype();
 
+_ICMYouTube.autoplayVideoInContainer = function(videoContainer)
+{
+	
+};
+
 _ICMYouTube.pauseVideoInContainer = function(videoContainer)
 {
 	var videoIframe = videoContainer.getElementsByTagName("iframe")[0].contentWindow;

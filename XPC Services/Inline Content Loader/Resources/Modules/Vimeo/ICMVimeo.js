@@ -47,6 +47,11 @@ _ICMVimeoPrototype.prototype.superClass = _ICMVimeoPrototypeParent.prototype;
 
 var _ICMVimeo = new _ICMVimeoPrototype();
 
+_ICMVimeo.autoplayVideoInContainer = function(videoContainer)
+{
+	
+};
+
 _ICMVimeo.pauseVideoInContainer = function(videoContainer)
 {
 	var videoIframe = videoContainer.getElementsByTagName("iframe")[0].contentWindow;
