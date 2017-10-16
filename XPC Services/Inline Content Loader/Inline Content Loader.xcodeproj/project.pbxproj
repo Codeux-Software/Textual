@@ -11,8 +11,11 @@
 		4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8CF1F89165C00CD8193 /* ICLInlineContentModule.m */; };
 		4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */; };
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
-		4C576D171F93C20700FD581F /* ICMInlineVideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C576D161F93C20700FD581F /* ICMInlineVideo.js */; };
 		4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D161F93C20700FD581F /* ICMInlineVideo.js */; };
+		4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D1A1F943F0D00FD581F /* ICMVimeo.m */; };
+		4C576D211F9442C500FD581F /* ICMVimeo.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1E1F943F2B00FD581F /* ICMVimeo.css */; };
+		4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1D1F943F2B00FD581F /* ICMVimeo.js */; };
+		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
@@ -53,6 +56,9 @@
 				4C9810131F93BC5D00B116A4 /* ICMInlineVideo.css in CopyFiles */,
 				4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */,
 				4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */,
+				4C576D211F9442C500FD581F /* ICMVimeo.css in CopyFiles */,
+				4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */,
+				4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */,
 				4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */,
 				4C9810001F939F4800B116A4 /* ICMYouTube.js in CopyFiles */,
 				4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */,
@@ -84,6 +90,11 @@
 		4C1EAB191F89F41700A4E647 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = "../../Classes (Shared)/Headers/TPCPreferences.h"; sourceTree = "<group>"; };
 		4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TPCPreferences.m; path = "../../Classes (Shared)/Preferences/TPCPreferences.m"; sourceTree = "<group>"; };
 		4C576D161F93C20700FD581F /* ICMInlineVideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineVideo.js; path = Resources/Modules/ICMInlineVideo.js; sourceTree = "<group>"; };
+		4C576D1A1F943F0D00FD581F /* ICMVimeo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMVimeo.m; path = Classes/Modules/Vimeo/ICMVimeo.m; sourceTree = "<group>"; };
+		4C576D1B1F943F0D00FD581F /* ICMVimeo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMVimeo.h; path = Classes/Modules/Vimeo/ICMVimeo.h; sourceTree = "<group>"; };
+		4C576D1D1F943F2B00FD581F /* ICMVimeo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMVimeo.js; path = Resources/Modules/Vimeo/ICMVimeo.js; sourceTree = "<group>"; };
+		4C576D1E1F943F2B00FD581F /* ICMVimeo.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMVimeo.css; path = Resources/Modules/Vimeo/ICMVimeo.css; sourceTree = "<group>"; };
+		4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
 		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
 		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
 		4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "../../Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
@@ -280,6 +291,26 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
+		4C576D191F943EFE00FD581F /* Vimeo */ = {
+			isa = PBXGroup;
+			children = (
+				4C576D1C1F943F1B00FD581F /* Resources */,
+				4C576D1B1F943F0D00FD581F /* ICMVimeo.h */,
+				4C576D1A1F943F0D00FD581F /* ICMVimeo.m */,
+			);
+			name = Vimeo;
+			sourceTree = "<group>";
+		};
+		4C576D1C1F943F1B00FD581F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C576D1E1F943F2B00FD581F /* ICMVimeo.css */,
+				4C576D1D1F943F2B00FD581F /* ICMVimeo.js */,
+				4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		4C8C72621F1201A000ED72DB /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +492,7 @@
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C8C84351F8E58D100062FFD /* Resources */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
+				4C576D191F943EFE00FD581F /* Vimeo */,
 				4C980FF31F92D43000B116A4 /* YouTube */,
 			);
 			name = Modules;
@@ -543,7 +575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */,
-				4C576D171F93C20700FD581F /* ICMInlineVideo.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,6 +591,7 @@
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
+				4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */,
 				4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */,
 				4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */,
 				4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */,

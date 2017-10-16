@@ -34,35 +34,26 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+ 
+var _ICMVimeoPrototypeParent = _ICMInlineVideoPrototype;
+ 
+var _ICMVimeoPrototype = function() {
+	_ICMVimeoPrototypeParent.call(this);
+}
 
-#import <Foundation/Foundation.h>
+_ICMVimeoPrototype.prototype = Object.create(_ICMInlineVideoPrototype.prototype);
+_ICMVimeoPrototype.prototype.constructor = _ICMVimeoPrototype;
+_ICMVimeoPrototype.prototype.superClass = _ICMVimeoPrototypeParent.prototype;
 
-#import <CocoaExtensions/CocoaExtensions.h>
+var _ICMVimeo = new _ICMVimeoPrototype();
 
-#import <GRMustache/GRMustache.h>
+_ICMVimeo.pauseVideoInContainer = function(videoContainer)
+{
+	var videoIframe = videoContainer.getElementsByTagName("iframe")[0].contentWindow;
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+	var postMessagePayload = {
+		"method" : "pause"
+	};
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMVimeo.h"
-#import "ICMYouTube.h"
+	videoIframe.postMessage(JSON.stringify(postMessagePayload), "*");
+};
