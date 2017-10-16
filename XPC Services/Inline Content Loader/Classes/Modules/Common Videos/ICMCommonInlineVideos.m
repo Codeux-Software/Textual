@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMCommonInlineVideos
+@interface ICMCommonInlineVideos ()
 @property (readonly, copy, class) NSArray<NSString *> *validFileExtensions;
 @end
 
