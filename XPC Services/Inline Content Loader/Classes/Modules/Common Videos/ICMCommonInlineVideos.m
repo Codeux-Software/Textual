@@ -37,6 +37,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface ICMCommonInlineVideos
+@property (readonly, class) NSArray<NSString *> *validFileExtensions;
+@end
+
 @implementation ICMCommonInlineVideos
 
 + (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
@@ -54,16 +58,37 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if ([urlPath hasSuffixIgnoringCase:@".mp4"] ||
-		[urlPath hasSuffixIgnoringCase:@".mov"] ||
-		[urlPath hasSuffixIgnoringCase:@".m4v"] ||
-		[urlPath hasSuffixIgnoringCase:@".3gp"] ||
-		[urlPath hasSuffixIgnoringCase:@".3g2"])
-	{
-		return url.absoluteString;
+	if (urlPath.length == 0) {
+		return nil;
 	}
 
-	return nil;
+	urlPath = [urlPath substringFromIndex:1];
+
+	NSString *fileExtension = urlPath.pathExtension;
+
+	if ([self.validFileExtensions containsObject:fileExtension] == NO) {
+		return nil;
+	}
+
+	return url.absoluteString;
+}
+
++ (NSArray<NSString *> *)validFileExtensions
+{
+	static NSArray<NSString *> *cachedValue = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		@[@"mp4",
+		  @"mov",
+		  @"m4v",
+		  @"3gp",
+		  @"3g2"];
+	});
+
+	return cachedValue;
 }
 
 @end
