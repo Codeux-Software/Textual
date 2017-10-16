@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ICMInlineImage : ICLInlineContentModule
 @property (copy, readonly) NSString *finalAddress;
 
-+ (NSArray<NSString *> *)validImageContentTypes;
+@property (readonly, copy, class) NSArray<NSString *> *validImageContentTypes;
 
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // bypassImageCheck = NO
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck;

@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ICMInlineVideo : ICLInlineContentModule
 @property (copy, readonly) NSString *finalAddress;
 
-+ (NSArray<NSString *> *)validVideoContentTypes;
+@property (readonly, copy, class) NSArray<NSString *> *validVideoContentTypes;
 
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // autoplay = NO, showControls = YES, loop = NO, bypassVideoCheck = NO
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop; // bypassVideoCheck = NO
