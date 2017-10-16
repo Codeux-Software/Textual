@@ -16,6 +16,7 @@
 		4C576D211F9442C500FD581F /* ICMVimeo.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1E1F943F2B00FD581F /* ICMVimeo.css */; };
 		4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1D1F943F2B00FD581F /* ICMVimeo.js */; };
 		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
+		4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D261F94465F00FD581F /* ICMImgurGifv.m */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
@@ -95,6 +96,8 @@
 		4C576D1D1F943F2B00FD581F /* ICMVimeo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMVimeo.js; path = Resources/Modules/Vimeo/ICMVimeo.js; sourceTree = "<group>"; };
 		4C576D1E1F943F2B00FD581F /* ICMVimeo.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMVimeo.css; path = Resources/Modules/Vimeo/ICMVimeo.css; sourceTree = "<group>"; };
 		4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
+		4C576D251F94465E00FD581F /* ICMImgurGifv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMImgurGifv.h; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.h"; sourceTree = "<group>"; };
+		4C576D261F94465F00FD581F /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
 		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
 		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
 		4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "../../Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
@@ -311,6 +314,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		4C576D241F94461D00FD581F /* Imgur .gifv */ = {
+			isa = PBXGroup;
+			children = (
+				4C576D251F94465E00FD581F /* ICMImgurGifv.h */,
+				4C576D261F94465F00FD581F /* ICMImgurGifv.m */,
+			);
+			name = "Imgur .gifv";
+			sourceTree = "<group>";
+		};
 		4C8C72621F1201A000ED72DB /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +500,7 @@
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C8C84351F8E58D100062FFD /* Resources */,
@@ -589,6 +602,7 @@
 				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
 				4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */,
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
+				4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
 				4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */,
