@@ -37,6 +37,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface ICMCommonInlineImages
+@property (readonly, class) NSArray<NSString *> *validFileExtensions;
+@end
+
 @implementation ICMCommonInlineImages
 
 + (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
@@ -52,24 +56,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)_finalAddressForURL:(NSURL *)url
 {
-	NSString *urlScheme = url.scheme;
 	NSString *urlHost = url.host.lowercaseString;
 	NSString *urlPath = url.path.percentEncodedURLPath;
-	NSString *urlQuery = url.query.percentEncodedURLQuery;
+	NSString *urlPathExtension = urlPath.pathExtension;
 
-	BOOL hasFileExtension = NO;
+	BOOL hasFileExtension = [self.validFileExtensions containsObject:urlPathExtension];
 
-	if ([urlPath hasSuffixIgnoringCase:@".jpg"] || [urlQuery hasSuffixIgnoringCase:@".jpg"] ||
-		[urlPath hasSuffixIgnoringCase:@".jpeg"] || [urlQuery hasSuffixIgnoringCase:@".jpeg"] ||
-		[urlPath hasSuffixIgnoringCase:@".png"] || [urlQuery hasSuffixIgnoringCase:@".png"] ||
-		[urlPath hasSuffixIgnoringCase:@".gif"] || [urlQuery hasSuffixIgnoringCase:@".gif"] ||
-		[urlPath hasSuffixIgnoringCase:@".tif"] || [urlQuery hasSuffixIgnoringCase:@".tif"] ||
-		[urlPath hasSuffixIgnoringCase:@".tiff"] || [urlQuery hasSuffixIgnoringCase:@".tiff"] ||
-		[urlPath hasSuffixIgnoringCase:@".svg"] || [urlQuery hasSuffixIgnoringCase:@".svg"] ||
-		[urlPath hasSuffixIgnoringCase:@".bmp"] || [urlQuery hasSuffixIgnoringCase:@".bmp"])
-	{
-		hasFileExtension = YES;
-
+	if (hasFileExtension) {
 		if ([urlHost hasSuffix:@"wikipedia.org"]) {
 			/* Wikipedia URLs end with a file extension but tend to be a web page.
 			 There was no easy way hotlink these images at the time this exception
@@ -82,6 +75,9 @@ NS_ASSUME_NONNULL_BEGIN
 			return url.absoluteString;
 		}
 	}
+
+	NSString *urlScheme = url.scheme;
+	NSString *urlQuery = url.query.percentEncodedURLQuery;
 
 	NSString *urlPathCombined = urlPath;
 
@@ -401,6 +397,27 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return nil;
+}
+
++ (NSArray<NSString *> *)validFileExtensions
+{
+	static NSArray<NSString *> *cachedValue = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		@[@"jpg",
+		  @"jpeg",
+		  @"png",
+		  @"gif",
+		  @"tif",
+		  @"tiff",
+		  @"svg",
+		  @"bmp"];
+	});
+
+	return cachedValue;
 }
 
 @end
