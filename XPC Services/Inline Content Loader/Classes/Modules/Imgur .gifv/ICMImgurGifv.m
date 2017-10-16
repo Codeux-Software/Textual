@@ -35,35 +35,73 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@interface ICMImgurGifv ()
+@property (readonly, class) NSArray<NSString *> *validFileExtensions;
+@end
 
-#import <GRMustache/GRMustache.h>
+@implementation ICMImgurGifv
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
+{
+	NSString *address = [self _finalAddressForURL:url];
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
+	if (address == nil) {
+		return nil;
+	}
 
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMImgurGifv.h"
-#import "ICMVimeo.h"
-#import "ICMYouTube.h"
+	return [self actionBlockForFinalAddress:address autoplay:YES showControls:NO loop:YES];
+}
+
++ (nullable NSString *)_finalAddressForURL:(NSURL *)url
+{
+	NSString *urlHost = url.host.lowercaseString;
+
+	if ([urlHost isEqualToString:@"i.imgur.com"] == NO) {
+		return nil;
+	}
+
+	NSString *urlPath = url.path.percentEncodedURLPath;
+
+	if (urlPath.length == 0) {
+		return nil;
+	}
+
+	urlPath = [urlPath substringFromIndex:1];
+
+	NSString *fileExtension = urlPath.pathExtension;
+
+	if ([self.validFileExtensions containsObject:fileExtension] == NO) {
+		return nil;
+	}
+
+	NSString *videoIdentifier = urlPath.stringByDeletingPathExtension;
+
+	if (videoIdentifier.isAlphabeticNumericOnly == NO) {
+		return nil;
+	}
+
+	return [NSString stringWithFormat:@"https://i.imgur.com/%@.mp4", videoIdentifier];
+}
+
++ (NSArray<NSString *> *)validFileExtensions
+{
+	static NSArray<NSString *> *cachedValue = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		@[@"mp4",
+		  @"gif",
+		  @"gifv",
+		  @"webp"];
+	});
+
+	return cachedValue;
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
