@@ -159,7 +159,7 @@ HTMLDocument.prototype.prepareForMutation = function() /* PUBLIC */
 	_TextualScroller.prepareForMutation();
 };
 
-HTMLDocument.prototype.cancelForMutation = function() /* PUBLIC */
+HTMLDocument.prototype.cancelMutation = function() /* PUBLIC */
 {
 	_TextualScroller.cancelMutation();
 };

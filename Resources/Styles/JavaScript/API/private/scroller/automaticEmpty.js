@@ -66,7 +66,7 @@ HTMLDocument.prototype.prepareForMutation = function() /* PUBLIC */
 	
 };
 
-HTMLDocument.prototype.cancelForMutation = function() /* PUBLIC */
+HTMLDocument.prototype.cancelMutation = function() /* PUBLIC */
 {
 	
 };
