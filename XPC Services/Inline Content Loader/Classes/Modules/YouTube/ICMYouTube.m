@@ -186,22 +186,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return template;
 }
 
-- (nullable NSArray<NSString *> *)styleResources
-{
-	static NSArray<NSString *> *styleResources = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		styleResources =
-		@[
-		  [RZMainBundle() pathForResource:@"ICMYouTube" ofType:@"css" inDirectory:@"Components"]
-		];
-	});
-
-	return styleResources;
-}
-
 - (nullable NSArray<NSString *> *)scriptResources
 {
 	static NSArray<NSString *> *scriptResources = nil;
@@ -210,10 +194,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	dispatch_once(&onceToken, ^{
 		scriptResources =
+		[[super scriptResources] arrayByAddingObjectsFromArray:
 		@[
-		  [RZMainBundle() pathForResource:@"ICMInlineVideo" ofType:@"js" inDirectory:@"Components"],
 		  [RZMainBundle() pathForResource:@"ICMYouTube" ofType:@"js" inDirectory:@"Components"]
-		];
+		]];
 	});
 
 	return scriptResources;

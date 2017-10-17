@@ -79,6 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *templateAttributes =
 	@{
 		@"anchorLink" : payload.url.absoluteString,
+		@"classAttribute" : self.classAttribute,
 		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier,
 		@"videoAutoplayEnabled" : @(self.videoAutoplayEnabled),

@@ -112,6 +112,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return cachedValue;
 }
 
+- (NSString *)classAttribute
+{
+	return @"inlineImgurGifv";
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
