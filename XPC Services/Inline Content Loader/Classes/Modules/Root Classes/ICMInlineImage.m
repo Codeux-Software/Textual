@@ -57,6 +57,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSAssert((self.finalAddress == nil), @"Module already initialized");
 
+	/* If we do not force a scheme,
+	 then file:// is used by WebKit. */
+	if ([address hasPrefix:@"//"]) {
+		address = [@"https:" stringByAppendingString:address];
+	}
+
 	self.finalAddress = address;
 
 	if (bypassImageCheck == NO) {
