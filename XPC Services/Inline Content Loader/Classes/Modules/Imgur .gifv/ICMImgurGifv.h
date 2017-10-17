@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMImgurGifv : ICMInlineVideo
+@interface ICMImgurGifv : ICMInlineGifVideo
 @end
 
 NS_ASSUME_NONNULL_END

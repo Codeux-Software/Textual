@@ -57,15 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		NSString *address = object;
-
-		/* If we do not force a scheme,
-		 then file:// is used by WebKit. */
-		if ([address hasPrefix:@"//"]) {
-			address = [@"https:" stringByAppendingString:address];
-		}
-
-		[self performActionForFinalAddress:address];
+		[self performActionForFinalAddress:object];
 	}];
 }
 

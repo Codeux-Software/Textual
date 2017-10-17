@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	return [self actionBlockForFinalAddress:address autoplay:YES showControls:NO loop:YES];
+	return [self actionBlockForFinalAddress:address];
 }
 
 + (nullable NSString *)_finalAddressForURL:(NSURL *)url
