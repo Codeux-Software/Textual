@@ -83,7 +83,7 @@ _ICMInlineImagePrototype.prototype.showImageWhenLoaded = function(mediaId)
 
 	/* If the image is not already loaded, then we observe 
 	changes to that so that we only reveal once it is. */
-	var imageElement = imageContainer.querySelector("a .image");
+	var imageElement = imageContainer.querySelector("a .content");
 
 	var imageComplete = imageElement.complete;
 
