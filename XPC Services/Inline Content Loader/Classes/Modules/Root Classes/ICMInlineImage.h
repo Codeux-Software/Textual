@@ -37,7 +37,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMInlineImage : ICLInlineContentModule
+/* ICMInlineImageFoundation does nothing.
+ It exists for internal use. */
+@interface ICMInlineImageFoundation : ICLInlineContentModule
+@end
+
+/* Proper class to sublcass if that is your thing. */
+@interface ICMInlineImage : ICMInlineImageFoundation
 @property (copy, readonly) NSString *finalAddress;
 
 @property (readonly, copy, class) NSArray<NSString *> *validImageContentTypes;

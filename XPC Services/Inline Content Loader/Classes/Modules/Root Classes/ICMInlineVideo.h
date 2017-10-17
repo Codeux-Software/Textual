@@ -37,7 +37,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMInlineVideo : ICLInlineContentModule
+/* ICMInlineVideoFoundation does nothing.
+ It exists for internal use. */
+@interface ICMInlineVideoFoundation : ICLInlineContentModule
+@end
+
+/* Proper class to sublcass if that is your thing. */
+@interface ICMInlineVideo : ICMInlineVideoFoundation
 @property (copy, readonly) NSString *finalAddress;
 
 @property (readonly, copy, class) NSArray<NSString *> *validVideoContentTypes;

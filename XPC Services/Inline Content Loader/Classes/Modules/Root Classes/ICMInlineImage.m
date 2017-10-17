@@ -159,6 +159,32 @@ NS_ASSUME_NONNULL_BEGIN
 	return template;
 }
 
++ (NSArray<NSString *> *)validImageContentTypes
+{
+	static NSArray<NSString *> *cachedValue = nil;
+	
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		@[@"image/gif",
+		  @"image/jpeg",
+		  @"image/png",
+		  @"image/svg+xml",
+		  @"image/tiff",
+		  @"image/x-ms-bmp"];
+	});
+	
+	return cachedValue;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Foundation
+
+@implementation ICMInlineImageFoundation
+
 - (nullable NSArray<NSString *> *)styleResources
 {
 	static NSArray<NSString *> *styleResources = nil;
@@ -178,9 +204,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSArray<NSString *> *)scriptResources
 {
 	static NSArray<NSString *> *scriptResources = nil;
-	
+
 	static dispatch_once_t onceToken;
-	
+
 	dispatch_once(&onceToken, ^{
 		scriptResources =
 		@[
@@ -188,32 +214,13 @@ NS_ASSUME_NONNULL_BEGIN
 		  [RZMainBundle() pathForResource:@"ICMInlineImage" ofType:@"js" inDirectory:@"Components"]
 		];
 	});
-	
+
 	return scriptResources;
 }
 
 - (nullable NSString *)entrypoint
 {
 	return @"_ICMInlineImage";
-}
-
-+ (NSArray<NSString *> *)validImageContentTypes
-{
-	static NSArray<NSString *> *cachedValue = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		cachedValue =
-		@[@"image/gif",
-		  @"image/jpeg",
-		  @"image/png",
-		  @"image/svg+xml",
-		  @"image/tiff",
-		  @"image/x-ms-bmp"];
-	});
-	
-	return cachedValue;
 }
 
 @end

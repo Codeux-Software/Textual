@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMYouTube : ICLInlineContentModule
+@interface ICMYouTube : ICMInlineVideoFoundation
 @end
 
 NS_ASSUME_NONNULL_END
