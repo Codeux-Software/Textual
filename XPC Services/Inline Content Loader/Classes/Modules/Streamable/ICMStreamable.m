@@ -35,38 +35,99 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@implementation ICMStreamable
 
-#import <GRMustache/GRMustache.h>
+- (void)_performActionForVideo:(NSString *)videoIdentifier
+{
+	NSParameterAssert(videoIdentifier != nil);
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+	NSString *addressToRequest = [@"https://api.streamable.com/videos/" stringByAppendingString:videoIdentifier];
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
+	[self requestJSONObject:@"url"
+					 ofType:[NSString class]
+				inHierarchy:@[@"files", @"mp4"]
+				fromAddress:addressToRequest
+			completionBlock:^(id object)
+	{
+		if (object == nil) {
+			[self notifyUnsafeToLoadVideo];
 
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+			return;
+		}
 
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMImgurGifv.h"
-#import "ICMStreamable.h"
-#import "ICMVimeo.h"
-#import "ICMYouTube.h"
+		NSString *address = object;
+
+		/* If we do not force a scheme,
+		 then file:// is used by WebKit. */
+		if ([address hasPrefix:@"//"]) {
+			address = [@"https:" stringByAppendingString:address];
+		}
+
+		[self performActionForFinalAddress:address];
+	}];
+}
+
+#pragma mark -
+#pragma mark Action Block
+
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
+{
+	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
+
+	if (videoIdentifier == nil) {
+		return nil;
+	}
+
+	return [self _actionBlockForVideo:videoIdentifier];
+}
+
++ (ICLInlineContentModuleActionBlock)_actionBlockForVideo:(NSString *)videoIdentifier
+{
+	NSParameterAssert(videoIdentifier != nil);
+
+	return [^(ICLInlineContentModule *module) {
+		__weak ICMStreamable *moduleTyped = (id)module;
+
+		[moduleTyped _performActionForVideo:videoIdentifier];
+	} copy];
+}
+
++ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
+{
+	NSString *urlPath = url.path.percentEncodedURLPath;
+
+	if (urlPath.length == 0) {
+		return nil;
+	}
+
+	NSString *videoIdentifier = [urlPath trimCharacters:@"/"];
+
+	if (videoIdentifier.isAlphabeticNumericOnly == NO) {
+		return nil;
+	}
+
+	return videoIdentifier;
+}
+
++ (nullable NSArray<NSString *> *)domains
+{
+	static NSArray<NSString *> *domains = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		domains =
+		@[
+		  @"streamable.com",
+		  @"www.streamable.com"
+		];
+	});
+
+	return domains;
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -41,6 +41,7 @@
 		4C9CAC631F958658006887B7 /* ICMDailymotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CAC621F9585B8006887B7 /* ICMDailymotion.m */; };
 		4C9CAC691F959582006887B7 /* ICMDailymotion.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C9CAC651F958B70006887B7 /* ICMDailymotion.js */; };
 		4C9CAC6A1F959585006887B7 /* ICMDailymotion.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C9CAC641F958B70006887B7 /* ICMDailymotion.mustache */; };
+		4C9CAC6E1F967F71006887B7 /* ICMStreamable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CAC6C1F967F3E006887B7 /* ICMStreamable.m */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -137,6 +138,8 @@
 		4C9CAC621F9585B8006887B7 /* ICMDailymotion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMDailymotion.m; path = Classes/Modules/Dailymotion/ICMDailymotion.m; sourceTree = "<group>"; };
 		4C9CAC641F958B70006887B7 /* ICMDailymotion.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMDailymotion.mustache; path = Resources/Modules/Dailymotion/ICMDailymotion.mustache; sourceTree = "<group>"; };
 		4C9CAC651F958B70006887B7 /* ICMDailymotion.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMDailymotion.js; path = Resources/Modules/Dailymotion/ICMDailymotion.js; sourceTree = "<group>"; };
+		4C9CAC6B1F967F3E006887B7 /* ICMStreamable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMStreamable.h; path = Classes/Modules/Streamable/ICMStreamable.h; sourceTree = "<group>"; };
+		4C9CAC6C1F967F3E006887B7 /* ICMStreamable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMStreamable.m; path = Classes/Modules/Streamable/ICMStreamable.m; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -517,6 +520,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		4C9CAC6D1F967F41006887B7 /* Streamable */ = {
+			isa = PBXGroup;
+			children = (
+				4C9CAC6B1F967F3E006887B7 /* ICMStreamable.h */,
+				4C9CAC6C1F967F3E006887B7 /* ICMStreamable.m */,
+			);
+			name = Streamable;
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,6 +538,7 @@
 				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4C8C84351F8E58D100062FFD /* Resources */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
+				4C9CAC6D1F967F41006887B7 /* Streamable */,
 				4C576D191F943EFE00FD581F /* Vimeo */,
 				4C980FF31F92D43000B116A4 /* YouTube */,
 			);
@@ -622,6 +635,7 @@
 				4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */,
 				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
 				4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */,
+				4C9CAC6E1F967F71006887B7 /* ICMStreamable.m in Sources */,
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
