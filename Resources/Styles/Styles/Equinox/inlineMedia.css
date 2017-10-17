@@ -25,10 +25,9 @@ body img {
   border: none;
 }
 
-.inlineImage .image,
-.inlineVideo .video,
-.inlineVimeo .frame,
-.inlineYouTube .frame {
+.inlineImage .content,
+.inlineVideo .content,
+.inlineVideoService .content {
   display: inline-block;
   float: left;
   margin: 15px 15px 12px 10px;
@@ -37,8 +36,7 @@ body img {
 
 .inlineImage .closeButton,
 .inlineVideo .closeButton,
-.inlineVimeo .closeButton,
-.inlineYouTube .closeButton {
+.inlineVideoService .closeButton {
   background: #000000;
   cursor: pointer;
   border-radius: 50%;

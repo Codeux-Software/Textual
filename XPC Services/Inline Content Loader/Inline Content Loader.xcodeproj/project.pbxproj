@@ -13,7 +13,6 @@
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
 		4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D161F93C20700FD581F /* ICMInlineVideo.js */; };
 		4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D1A1F943F0D00FD581F /* ICMVimeo.m */; };
-		4C576D211F9442C500FD581F /* ICMVimeo.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1E1F943F2B00FD581F /* ICMVimeo.css */; };
 		4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1D1F943F2B00FD581F /* ICMVimeo.js */; };
 		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
 		4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D261F94465F00FD581F /* ICMImgurGifv.m */; };
@@ -32,7 +31,6 @@
 		4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */; };
 		4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FF41F92D43000B116A4 /* ICMYouTube.m */; };
 		4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */; };
-		4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF91F92DD2600B116A4 /* ICMYouTube.css */; };
 		4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */; };
 		4C9810001F939F4800B116A4 /* ICMYouTube.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FFE1F939ADF00B116A4 /* ICMYouTube.js */; };
 		4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */; };
@@ -57,10 +55,8 @@
 				4C9810131F93BC5D00B116A4 /* ICMInlineVideo.css in CopyFiles */,
 				4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */,
 				4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */,
-				4C576D211F9442C500FD581F /* ICMVimeo.css in CopyFiles */,
 				4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */,
 				4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */,
-				4C980FFB1F92DDA300B116A4 /* ICMYouTube.css in CopyFiles */,
 				4C9810001F939F4800B116A4 /* ICMYouTube.js in CopyFiles */,
 				4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */,
 			);
@@ -94,7 +90,6 @@
 		4C576D1A1F943F0D00FD581F /* ICMVimeo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMVimeo.m; path = Classes/Modules/Vimeo/ICMVimeo.m; sourceTree = "<group>"; };
 		4C576D1B1F943F0D00FD581F /* ICMVimeo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMVimeo.h; path = Classes/Modules/Vimeo/ICMVimeo.h; sourceTree = "<group>"; };
 		4C576D1D1F943F2B00FD581F /* ICMVimeo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMVimeo.js; path = Resources/Modules/Vimeo/ICMVimeo.js; sourceTree = "<group>"; };
-		4C576D1E1F943F2B00FD581F /* ICMVimeo.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMVimeo.css; path = Resources/Modules/Vimeo/ICMVimeo.css; sourceTree = "<group>"; };
 		4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
 		4C576D251F94465E00FD581F /* ICMImgurGifv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMImgurGifv.h; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.h"; sourceTree = "<group>"; };
 		4C576D261F94465F00FD581F /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
@@ -123,7 +118,6 @@
 		4C980FF41F92D43000B116A4 /* ICMYouTube.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMYouTube.m; path = Classes/Modules/YouTube/ICMYouTube.m; sourceTree = "<group>"; };
 		4C980FF51F92D43000B116A4 /* ICMYouTube.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMYouTube.h; path = Classes/Modules/YouTube/ICMYouTube.h; sourceTree = "<group>"; };
 		4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMYouTube.mustache; path = Resources/Modules/YouTube/ICMYouTube.mustache; sourceTree = "<group>"; };
-		4C980FF91F92DD2600B116A4 /* ICMYouTube.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMYouTube.css; path = Resources/Modules/YouTube/ICMYouTube.css; sourceTree = "<group>"; };
 		4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineImage.css; path = Resources/Modules/ICMInlineImage.css; sourceTree = "<group>"; };
 		4C980FFE1F939ADF00B116A4 /* ICMYouTube.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMYouTube.js; path = Resources/Modules/YouTube/ICMYouTube.js; sourceTree = "<group>"; };
 		4C9810011F93ABE700B116A4 /* ICMInlineVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineVideo.h; path = "Classes/Modules/Root Classes/ICMInlineVideo.h"; sourceTree = "<group>"; };
@@ -307,7 +301,6 @@
 		4C576D1C1F943F1B00FD581F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4C576D1E1F943F2B00FD581F /* ICMVimeo.css */,
 				4C576D1D1F943F2B00FD581F /* ICMVimeo.js */,
 				4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */,
 			);
@@ -439,7 +432,6 @@
 			isa = PBXGroup;
 			children = (
 				4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */,
-				4C980FF91F92DD2600B116A4 /* ICMYouTube.css */,
 				4C980FFE1F939ADF00B116A4 /* ICMYouTube.js */,
 			);
 			name = Resources;
@@ -500,9 +492,9 @@
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
+				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4C8C84351F8E58D100062FFD /* Resources */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
 				4C576D191F943EFE00FD581F /* Vimeo */,

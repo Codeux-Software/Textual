@@ -77,6 +77,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (NSString *)classAttribute
+{
+	return @"";
+}
+
 - (NSError *)genericValidationFailedError
 {
 	return [ICLInlineContentModule genericValidationFailedError];

@@ -3,15 +3,14 @@
 
 .inlineImage,
 .inlineVideo,
-.inlineYouTube {
+.inlineVideoService {
 	margin-top: 8px !important;
 	margin-bottom: 8px !important;
 }
 
-.inlineImage .image,
-.inlineVideo .video,
-.inlineVimeo .frame,
-.inlineYouTube .frame {
+.inlineImage .content,
+.inlineVideo .content,
+.inlineVideoService .content {
 	display: inline-block;
 	float: left;
 	margin-right: 15px;
@@ -22,8 +21,7 @@
 
 .inlineImage .closeButton,
 .inlineVideo .closeButton,
-.inlineVimeo .closeButton,
-.inlineYouTube .closeButton {
+.inlineVideoService .closeButton {
 	cursor: pointer;
 	border-radius: 5px;
 	border: 2px solid #a1a1a1;
@@ -42,8 +40,7 @@
 
 html[systemversion^="10.9"] .inlineImage .closeButton,
 html[systemversion^="10.9"] .inlineVideo .closeButton,
-html[systemversion^="10.9"] .inlineVimeo .closeButton,
-html[systemversion^="10.9"] .inlineYouTube .closeButton {
+html[systemversion^="10.9"] .inlineVideoService .closeButton {
 	line-height: 13px;
 }
 

@@ -1,5 +1,5 @@
 
-<span class="inlineVideo" id="inlineMedia-{{uniqueIdentifier}}">
+<span class="inlineVideo {{classAttribute}}" id="inlineMedia-{{uniqueIdentifier}}">
 	<span class="closeButton" href="#" onclick="_ICMInlineVideo.hideOnClick('{{uniqueIdentifier}}');">×</span>
 
 	<video
@@ -17,7 +17,7 @@
 {{/videoLoopEnabled}}
 
 		src="{{videoURL}}"
-		class="video"
+		class="content"
 		style="max-width: {{preferredMaximumWidth}}px;"
 		onloadeddata="_ICMInlineVideo.dataLoadedCallback()"></video>
 </span>

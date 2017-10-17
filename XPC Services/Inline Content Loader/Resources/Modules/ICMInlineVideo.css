@@ -1,5 +1,6 @@
 
-.inlineVideo {
+.inlineVideo,
+.inlineVideoService {
 	overflow: auto;
 	display: block;
 	margin-top: 12px;
