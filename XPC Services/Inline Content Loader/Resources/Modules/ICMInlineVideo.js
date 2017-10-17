@@ -57,6 +57,17 @@ _ICMInlineVideoPrototype.prototype.didHideElement = function(element, mediaId) /
 
 var _ICMInlineVideo = new _ICMInlineVideoPrototype();
 
+_ICMInlineVideo.metadataLoadedCallback = function()
+{
+	var video = event.target;
+
+	var startTime = parseInt(video.getAttribute("start"));
+	
+	if (startTime > 0) {
+		video.currentTime = startTime;
+	}
+};
+
 _ICMInlineVideo.dataLoadedCallback = function()
 {
 	/* Loading data can change the height of the video once 

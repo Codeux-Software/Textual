@@ -42,34 +42,28 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ICMInlineVideo ()
 @property (nonatomic, strong, nullable) ICMInlineVideoCheck *videoCheck;
 @property (nonatomic, copy, nullable) NSString *finalAddress;
-@property (nonatomic, assign) BOOL videoAutoplayEnabled;
-@property (nonatomic, assign) BOOL videoControlsEnabled;
-@property (nonatomic, assign) BOOL videoLoopEnabled;
 @end
 
 @implementation ICMInlineVideo
 
 - (void)performActionForFinalAddress:(NSString *)address
 {
-	[self performActionForFinalAddress:address autoplay:NO showControls:YES loop:NO bypassVideoCheck:NO];
+	[self performActionForFinalAddress:address bypassVideoCheck:NO];
 }
 
-- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop
-{
-	[self performActionForFinalAddress:address autoplay:autoplay showControls:showControls loop:loop bypassVideoCheck:NO];
-}
-
-- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck
+- (void)performActionForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
 {
 	NSParameterAssert(address != nil);
 
 	NSAssert((self.finalAddress == nil), @"Module already initialized");
 
-	self.finalAddress = address;
+	/* If we do not force a scheme,
+	 then file:// is used by WebKit. */
+	if ([address hasPrefix:@"//"]) {
+		address = [@"https:" stringByAppendingString:address];
+	}
 
-	self.videoAutoplayEnabled = autoplay;
-	self.videoControlsEnabled = showControls;
-	self.videoLoopEnabled = loop;
+	self.finalAddress = address;
 
 	if (bypassVideoCheck == NO) {
 		[self _performVideoCheck];
@@ -114,6 +108,8 @@ NS_ASSUME_NONNULL_BEGIN
 		@"videoAutoplayEnabled" : @(self.videoAutoplayEnabled),
 		@"videoControlsEnabled" : @(self.videoControlsEnabled),
 		@"videoLoopEnabled" : @(self.videoLoopEnabled),
+		@"videoMuteEnabled" : @(self.videoMuteEnabled),
+		@"videoStartTime" : @(self.videoStartTime),
 		@"videoURL" : self.finalAddress
 	};
 
@@ -144,22 +140,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address
 {
-	return [self actionBlockForFinalAddress:address autoplay:NO showControls:YES loop:NO bypassVideoCheck:NO];
+	return [self actionBlockForFinalAddress:address bypassVideoCheck:NO];
 }
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop
-{
-	return [self actionBlockForFinalAddress:address autoplay:autoplay showControls:showControls loop:loop bypassVideoCheck:NO];
-}
-
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
 {
 	NSParameterAssert(address != nil);
 
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMInlineVideo *moduleTyped = (id)module;
 
-		[moduleTyped performActionForFinalAddress:address autoplay:autoplay showControls:showControls loop:loop bypassVideoCheck:bypassVideoCheck];
+		[moduleTyped performActionForFinalAddress:address bypassVideoCheck:bypassVideoCheck];
 	} copy];
 }
 
@@ -216,6 +207,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineVideoFoundation
 
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock
+{
+	if ((self = [super initWithPayload:payload completionBlock:completionBlock])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.videoControlsEnabled = YES;
+}
+
 - (nullable NSArray<NSString *> *)styleResources
 {
 	static NSArray<NSString *> *styleResources = nil;
@@ -251,6 +258,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)entrypoint
 {
 	return @"_ICMInlineVideo";
+}
+
+@end
+
+#pragma mark -
+#pragma mark Gif Video
+
+@implementation ICMInlineGifVideo
+
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock
+{
+	if ((self = [super initWithPayload:payload completionBlock:completionBlock])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.videoAutoplayEnabled = YES;
+	self.videoControlsEnabled = NO;
+	self.videoLoopEnabled = YES;
+	self.videoMuteEnabled = YES;
 }
 
 @end

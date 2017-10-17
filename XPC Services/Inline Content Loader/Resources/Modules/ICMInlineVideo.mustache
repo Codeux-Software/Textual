@@ -16,8 +16,14 @@
 		loop
 {{/videoLoopEnabled}}
 
+{{#videoMuteEnabled}}
+		muted
+{{/videoMuteEnabled}}
+
+		start="{{videoStartTime}}"
 		src="{{videoURL}}"
 		class="content"
 		style="max-width: {{preferredMaximumWidth}}px;"
+		onloadedmetadata="_ICMInlineVideo.metadataLoadedCallback()"
 		onloadeddata="_ICMInlineVideo.dataLoadedCallback()"></video>
 </span>

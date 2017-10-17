@@ -40,21 +40,32 @@ NS_ASSUME_NONNULL_BEGIN
 /* ICMInlineVideoFoundation does nothing.
  It exists for internal use. */
 @interface ICMInlineVideoFoundation : ICLInlineContentModule
+@property (nonatomic, assign) BOOL videoAutoplayEnabled; // default = NO
+@property (nonatomic, assign) BOOL videoControlsEnabled; // default = YES
+@property (nonatomic, assign) BOOL videoLoopEnabled; // default = NO
+@property (nonatomic, assign) BOOL videoMuteEnabled; // default = NO
+@property (nonatomic, assign) NSTimeInterval videoStartTime; // default = 0
 @end
 
 /* Proper class to sublcass if that is your thing. */
 @interface ICMInlineVideo : ICMInlineVideoFoundation
 @property (readonly, copy, class) NSArray<NSString *> *validVideoContentTypes;
 
-- (void)performActionForFinalAddress:(NSString *)address; // autoplay = NO, showControls = YES, loop = NO, bypassVideoCheck = NO
-- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop; // bypassVideoCheck = NO
-- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck;
+- (void)performActionForFinalAddress:(NSString *)address; // bypassVideoCheck = NO
+- (void)performActionForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // autoplay = NO, showControls = YES, loop = NO, bypassVideoCheck = NO
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop; // bypassVideoCheck = NO
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck;
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // bypassVideoCheck = NO
++ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
 
 - (void)notifyUnsafeToLoadVideo;
+@end
+
+/* Subclass that can be used for videos that should be trated as such:
+ videoAutoplayEnabled = YES,
+ videoControlsEnabled = NO,
+ videoLoopEnabled = YES,
+ videoMuteEnabled = YES */
+@interface ICMInlineGifVideo : ICMInlineVideo
 @end
 
 NS_ASSUME_NONNULL_END
