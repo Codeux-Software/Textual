@@ -75,6 +75,7 @@ ClassWithDesignatedInitializerInitMethod
 	dispatch_once(&onceToken, ^{
 		modules = @[[ICMDailymotion class],
 					[ICMImgurGifv class],
+					[ICMStreamable class],
 					[ICMVimeo class],
 					[ICMYouTube class],
 					[ICMCommonInlineVideos class],
