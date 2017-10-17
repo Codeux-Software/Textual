@@ -34,38 +34,27 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+ 
+var _ICMDailymotionPrototypeParent = _ICMInlineVideoPrototype;
+ 
+var _ICMDailymotionPrototype = function() {
+	_ICMDailymotionPrototypeParent.call(this);
+}
 
-#import <Foundation/Foundation.h>
+_ICMDailymotionPrototype.prototype = Object.create(_ICMInlineVideoPrototype.prototype);
+_ICMDailymotionPrototype.prototype.constructor = _ICMDailymotionPrototype;
+_ICMDailymotionPrototype.prototype.superClass = _ICMDailymotionPrototypeParent.prototype;
 
-#import <CocoaExtensions/CocoaExtensions.h>
+var _ICMDailymotion = new _ICMDailymotionPrototype();
 
-#import <GRMustache/GRMustache.h>
+_ICMDailymotion.autoplayVideoInContainer = function(videoContainer)
+{
+	
+};
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+_ICMDailymotion.pauseVideoInContainer = function(videoContainer)
+{
+	var videoIframe = videoContainer.getElementsByTagName("iframe")[0].contentWindow;
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMImgurGifv.h"
-#import "ICMVimeo.h"
-#import "ICMYouTube.h"
+	videoIframe.postMessage("pause", "*");
+};
