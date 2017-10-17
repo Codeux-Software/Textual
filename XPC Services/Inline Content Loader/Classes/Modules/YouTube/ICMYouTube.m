@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *videoIdentifier = nil;
 
-	NSString *urlHost = url.host.lowercaseString;
+	NSString *urlHost = url.host;
 
 	if ([urlHost isEqualToString:@"youtu.be"])
 	{
@@ -128,12 +128,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		videoIdentifier = queryItems[@"v"];
 	}
-	else
-	{
-		/* Host is of one we are not interested in. */
-
-		return nil;
-	}
 
 	if (videoIdentifier.length < 11) {
 		return nil;
@@ -144,6 +138,24 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return videoIdentifier;
+}
+
++ (nullable NSArray<NSString *> *)domains
+{
+	static NSArray<NSString *> *domains = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		domains =
+		@[
+		  @"youtube.com",
+		  @"www.youtube.com",
+		  @"youtu.be"
+		];
+	});
+
+	return domains;
 }
 
 #pragma mark -

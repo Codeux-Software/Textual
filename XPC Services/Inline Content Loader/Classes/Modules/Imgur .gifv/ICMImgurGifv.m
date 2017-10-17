@@ -56,19 +56,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)_finalAddressForURL:(NSURL *)url
 {
-	NSString *urlHost = url.host.lowercaseString;
-
-	if ([urlHost isEqualToString:@"i.imgur.com"] == NO) {
-		return nil;
-	}
-
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
 	if (urlPath.length == 0) {
 		return nil;
 	}
 
-	urlPath = [urlPath substringFromIndex:1];
+	urlPath = [urlPath substringFromIndex:1]; // "/"
 
 	NSString *fileExtension = urlPath.pathExtension;
 
@@ -83,6 +77,22 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return [NSString stringWithFormat:@"https://i.imgur.com/%@.mp4", videoIdentifier];
+}
+
++ (nullable NSArray<NSString *> *)domains
+{
+	static NSArray<NSString *> *domains = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		domains =
+		@[
+		  @"i.imgur.com"
+		];
+	});
+
+	return domains;
 }
 
 + (NSArray<NSString *> *)validFileExtensions
