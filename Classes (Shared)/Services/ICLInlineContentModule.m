@@ -45,6 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
++ (nullable NSArray<NSString *> *)domains
+{
+	return nil;
+}
+
 + (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
 	return nil;

@@ -134,6 +134,12 @@ ClassWithDesignatedInitializerInitMethod
 	/* Determine whether this module has an action for this URL. */
 	NSURL *url = payloadIn.url;
 
+	NSArray<NSString *> *matchedDomains = [moduleClass domains];
+
+	if (matchedDomains && [matchedDomains containsObject:url.host] == NO) {
+		return NO;
+	}
+
 	ICLInlineContentModuleActionBlock actionBlock = [moduleClass actionBlockForURL:url];
 
 	SEL action = NULL;

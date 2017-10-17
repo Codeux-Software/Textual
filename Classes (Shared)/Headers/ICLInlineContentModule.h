@@ -74,6 +74,18 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 - (instancetype)init NS_UNAVAILABLE;
 
 #pragma mark -
+#pragma mark Rules
+
+/**
+ An optional array of domains that the module is specific to.
+
+ If this array is non-nil and the domain does not appear in the
+ array, then the module is skipped over. One of the action methods
+ defined below is never called.
+ */
+@property (readonly, copy, nullable, class) NSArray<NSString *> *domains;
+
+#pragma mark -
 #pragma mark Action
 
 /**
