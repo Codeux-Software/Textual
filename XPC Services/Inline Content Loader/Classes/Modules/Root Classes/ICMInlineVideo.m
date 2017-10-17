@@ -41,13 +41,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineVideo ()
 @property (nonatomic, strong, nullable) ICMInlineVideoCheck *videoCheck;
-@property (nonatomic, copy, readwrite) NSString *finalAddress;
+@property (nonatomic, copy, nullable) NSString *finalAddress;
 @property (nonatomic, assign) BOOL videoAutoplayEnabled;
 @property (nonatomic, assign) BOOL videoControlsEnabled;
 @property (nonatomic, assign) BOOL videoLoopEnabled;
 @end
 
 @implementation ICMInlineVideo
+
+- (void)performActionForFinalAddress:(NSString *)address
+{
+	[self performActionForFinalAddress:address autoplay:NO showControls:YES loop:NO bypassVideoCheck:NO];
+}
+
+- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop
+{
+	[self performActionForFinalAddress:address autoplay:autoplay showControls:showControls loop:loop bypassVideoCheck:NO];
+}
+
+- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck
+{
+	NSParameterAssert(address != nil);
+
+	NSAssert((self.finalAddress == nil), @"Module already initialized");
+
+	self.finalAddress = address;
+
+	self.videoAutoplayEnabled = autoplay;
+	self.videoControlsEnabled = showControls;
+	self.videoLoopEnabled = loop;
+
+	if (bypassVideoCheck == NO) {
+		[self _performVideoCheck];
+	} else {
+		[self _safeToLoadVideo];
+	}
+}
 
 - (void)_performVideoCheck
 {
@@ -58,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[videoCheck checkAddress:self.finalAddress
 			 completionBlock:^(BOOL safeToLoad, NSString * _Nullable videoOfType) {
 			 if (safeToLoad) {
-				 [self _safeToLoadVideoOfType:videoOfType];
+				 [self _safeToLoadVideo];
 			 } else {
 				 [self _unsafeToLoadVideo];
 			 }
@@ -69,10 +98,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_unsafeToLoadVideo
 {
-	self.completionBlock(self.genericValidationFailedError);
+	[self notifyUnsafeToLoadVideo];
 }
 
-- (void)_safeToLoadVideoOfType:(NSString *)videoType
+- (void)_safeToLoadVideo
 {
 	ICLPayloadMutable *payload = self.payload;
 
@@ -85,7 +114,6 @@ NS_ASSUME_NONNULL_BEGIN
 		@"videoAutoplayEnabled" : @(self.videoAutoplayEnabled),
 		@"videoControlsEnabled" : @(self.videoControlsEnabled),
 		@"videoLoopEnabled" : @(self.videoLoopEnabled),
-		@"videoType" : videoType,
 		@"videoURL" : self.finalAddress
 	};
 
@@ -104,6 +132,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	self.completionBlock(templateRenderError);
+}
+
+- (void)notifyUnsafeToLoadVideo
+{
+	self.completionBlock(self.genericValidationFailedError);
 }
 
 #pragma mark -
@@ -126,19 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMInlineVideo *moduleTyped = (id)module;
 
-		moduleTyped.finalAddress = address;
-
-		moduleTyped.videoAutoplayEnabled = autoplay;
-		moduleTyped.videoControlsEnabled = showControls;
-		moduleTyped.videoLoopEnabled = loop;
-
-		if (bypassVideoCheck == NO) {
-			[moduleTyped _performVideoCheck];
-		} else {
-			/* Without performing check, we have no idea what the type of
-			 video it is. We use our best guess of the most popular type. */
-			[moduleTyped _safeToLoadVideoOfType:@"video/mp4"];
-		}
+		[moduleTyped performActionForFinalAddress:address autoplay:autoplay showControls:showControls loop:loop bypassVideoCheck:bypassVideoCheck];
 	} copy];
 }
 

@@ -44,13 +44,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Proper class to sublcass if that is your thing. */
 @interface ICMInlineVideo : ICMInlineVideoFoundation
-@property (copy, readonly) NSString *finalAddress;
-
 @property (readonly, copy, class) NSArray<NSString *> *validVideoContentTypes;
+
+- (void)performActionForFinalAddress:(NSString *)address; // autoplay = NO, showControls = YES, loop = NO, bypassVideoCheck = NO
+- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop; // bypassVideoCheck = NO
+- (void)performActionForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck;
 
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // autoplay = NO, showControls = YES, loop = NO, bypassVideoCheck = NO
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop; // bypassVideoCheck = NO
 + (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address autoplay:(BOOL)autoplay showControls:(BOOL)showControls loop:(BOOL)loop bypassVideoCheck:(BOOL)bypassVideoCheck;
+
+- (void)notifyUnsafeToLoadVideo;
 @end
 
 NS_ASSUME_NONNULL_END

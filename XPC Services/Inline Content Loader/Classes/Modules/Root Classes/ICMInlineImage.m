@@ -41,10 +41,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage ()
 @property (nonatomic, strong, nullable) ICMInlineImageCheck *imageCheck;
-@property (nonatomic, copy, readwrite) NSString *finalAddress;
+@property (nonatomic, copy, nullable) NSString *finalAddress;
 @end
 
 @implementation ICMInlineImage
+
+- (void)performActionForFinalAddress:(NSString *)address
+{
+	[self performActionForFinalAddress:address bypassImageCheck:NO];
+}
+
+- (void)performActionForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck
+{
+	NSParameterAssert(address != nil);
+
+	NSAssert((self.finalAddress == nil), @"Module already initialized");
+
+	self.finalAddress = address;
+
+	if (bypassImageCheck == NO) {
+		[self _performImageCheck];
+	} else {
+		[self _safeToLoadImage];
+	}
+}
 
 - (void)_performImageCheck
 {
@@ -69,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_unsafeToLoadImage
 {
-	self.completionBlock(self.genericValidationFailedError);
+	[self _unsafeToLoadImage];
 }
 
 - (void)_safeToLoadImage
@@ -102,6 +122,11 @@ NS_ASSUME_NONNULL_BEGIN
 	self.completionBlock(templateRenderError);
 }
 
+- (void)notifyUnsafeToLoadImage
+{
+	self.completionBlock(self.genericValidationFailedError);
+}
+
 #pragma mark -
 #pragma mark Action Block
 
@@ -117,13 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMInlineImage *moduleTyped = (id)module;
 
-		moduleTyped.finalAddress = address;
-
-		if (bypassImageCheck == NO) {
-			[moduleTyped _performImageCheck];
-		} else {
-			[moduleTyped _safeToLoadImage];
-		}
+		[moduleTyped performActionForFinalAddress:address bypassImageCheck:NO];
 	} copy];
 }
 

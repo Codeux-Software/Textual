@@ -37,20 +37,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMVimeo ()
-@property (nonatomic, copy) NSString *videoIdentifier;
-@end
-
 @implementation ICMVimeo
 
-- (void)_performAction
+- (void)_performActionForVideo:(NSString *)videoIdentifier
 {
+	NSParameterAssert(videoIdentifier != nil);
+
 	ICLPayloadMutable *payload = self.payload;
 
 	NSDictionary *templateAttributes =
 	@{
 	  @"uniqueIdentifier" : payload.uniqueIdentifier,
-	  @"videoIdentifier" : self.videoIdentifier
+	  @"videoIdentifier" : videoIdentifier
 	};
 
 	NSError *templateRenderError = nil;
@@ -91,9 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMVimeo *moduleTyped = (id)module;
 
-		moduleTyped.videoIdentifier = videoIdentifier;
-
-		[moduleTyped _performAction];
+		[moduleTyped _performActionForVideo:videoIdentifier];
 	} copy];
 }
 
