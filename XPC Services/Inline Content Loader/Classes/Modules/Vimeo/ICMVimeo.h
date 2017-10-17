@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMVimeo : ICLInlineContentModule
+@interface ICMVimeo : ICMInlineVideoFoundation
 @end
 
 NS_ASSUME_NONNULL_END

@@ -170,6 +170,31 @@ NS_ASSUME_NONNULL_BEGIN
 	return template;
 }
 
++ (NSArray<NSString *> *)validVideoContentTypes
+{
+	static NSArray<NSString *> *cachedValue = nil;
+	
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		@[@"video/3gpp",
+		  @"video/3gpp2",
+		  @"video/mp4",
+		  @"video/quicktime",
+		  @"video/x-m4v"];
+	});
+	
+	return cachedValue;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Foundation
+
+@implementation ICMInlineVideoFoundation
+
 - (nullable NSArray<NSString *> *)styleResources
 {
 	static NSArray<NSString *> *styleResources = nil;
@@ -205,24 +230,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)entrypoint
 {
 	return @"_ICMInlineVideo";
-}
-
-+ (NSArray<NSString *> *)validVideoContentTypes
-{
-	static NSArray<NSString *> *cachedValue = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		cachedValue =
-		@[@"video/3gpp",
-		  @"video/3gpp2",
-		  @"video/mp4",
-		  @"video/quicktime",
-		  @"video/x-m4v"];
-	});
-	
-	return cachedValue;
 }
 
 @end
