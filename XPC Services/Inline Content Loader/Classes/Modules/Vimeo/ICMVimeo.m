@@ -99,14 +99,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
 {
-	NSString *urlHost = url.host.lowercaseString;
-
-	if ([urlHost isEqualToString:@"vimeo.com"] == NO &&
-		[urlHost isEqualToString:@"www.vimeo.com"] == NO)
-	{
-		return nil;
-	}
-
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
 	if (urlPath.length == 0) {
@@ -120,6 +112,23 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return videoIdentifier;
+}
+
++ (nullable NSArray<NSString *> *)domains
+{
+	static NSArray<NSString *> *domains = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		domains =
+		@[
+		  @"vimeo.com",
+		  @"www.vimeo.com"
+		];
+	});
+
+	return domains;
 }
 
 #pragma mark -

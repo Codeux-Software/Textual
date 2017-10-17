@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)_finalAddressForURL:(NSURL *)url
 {
-	NSString *urlHost = url.host.lowercaseString;
+	NSString *urlHost = url.host;
 	NSString *urlPath = url.path.percentEncodedURLPath;
 	NSString *urlPathExtension = urlPath.pathExtension;
 
