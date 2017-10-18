@@ -46,6 +46,7 @@
 		4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D30E1F97CDB4006714D6 /* ICMPornhub.m */; };
 		4CA5D3141F97D05B006714D6 /* ICMPornhub.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3121F97CF54006714D6 /* ICMPornhub.js */; };
 		4CA5D3151F97D05B006714D6 /* ICMPornhub.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3131F97CF54006714D6 /* ICMPornhub.mustache */; };
+		4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3161F97D3ED006714D6 /* ICMXkcd.m */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -152,6 +153,8 @@
 		4CA5D30F1F97CDB4006714D6 /* ICMPornhub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMPornhub.h; path = Classes/Modules/Pornhub/ICMPornhub.h; sourceTree = "<group>"; };
 		4CA5D3121F97CF54006714D6 /* ICMPornhub.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMPornhub.js; path = Resources/Modules/Pornhub/ICMPornhub.js; sourceTree = "<group>"; };
 		4CA5D3131F97CF54006714D6 /* ICMPornhub.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMPornhub.mustache; path = Resources/Modules/Pornhub/ICMPornhub.mustache; sourceTree = "<group>"; };
+		4CA5D3161F97D3ED006714D6 /* ICMXkcd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMXkcd.m; path = Classes/Modules/xkcd/ICMXkcd.m; sourceTree = "<group>"; };
+		4CA5D3171F97D3ED006714D6 /* ICMXkcd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMXkcd.h; path = Classes/Modules/xkcd/ICMXkcd.h; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -569,9 +572,19 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		4CA5D3181F97D3F0006714D6 /* xkcd */ = {
+			isa = PBXGroup;
+			children = (
+				4CA5D3171F97D3ED006714D6 /* ICMXkcd.h */,
+				4CA5D3161F97D3ED006714D6 /* ICMXkcd.m */,
+			);
+			name = xkcd;
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4CA5D3181F97D3F0006714D6 /* xkcd */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C9CAC601F9585B8006887B7 /* Dailymotion */,
@@ -689,6 +702,7 @@
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
 				4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */,
 				4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */,
+				4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */,
 				4C9810081F93AE4B00B116A4 /* ICMInlineVideoCheck.m in Sources */,
 				4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */,
 				4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */,
