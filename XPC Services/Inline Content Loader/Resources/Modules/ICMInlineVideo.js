@@ -61,10 +61,18 @@ _ICMInlineVideo.metadataLoadedCallback = function()
 {
 	var video = event.target;
 
-	var startTime = parseInt(video.getAttribute("start"));
+	/* Video start time */
+	var startTime = parseFloat(video.getAttribute("start"));
 	
-	if (startTime > 0) {
+	if (startTime > 0.0) {
 		video.currentTime = startTime;
+	}
+	
+	/* Video playback speed (rate) */
+	var playbackSpeed = parseFloat(video.getAttribute("speed"));
+	
+	if (playbackSpeed !== 1.0) {
+		video.playbackRate = playbackSpeed;
 	}
 };
 
