@@ -99,6 +99,14 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	ICLPayloadMutable *payload = self.payload;
 
+	double playbackSpeed = self.videoPlaybackSpeed;
+
+	if (playbackSpeed < 0.125) {
+		playbackSpeed = 0.125;
+	} else if (playbackSpeed > 8.0) {
+		playbackSpeed = 8.0;
+	}
+
 	NSDictionary *templateAttributes =
 	@{
 		@"anchorLink" : payload.url.absoluteString,
@@ -109,6 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 		@"videoControlsEnabled" : @(self.videoControlsEnabled),
 		@"videoLoopEnabled" : @(self.videoLoopEnabled),
 		@"videoMuteEnabled" : @(self.videoMuteEnabled),
+		@"videoPlaybackSpeed" : @(playbackSpeed),
 		@"videoStartTime" : @(self.videoStartTime),
 		@"videoURL" : self.finalAddress
 	};
@@ -221,6 +230,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	self.videoControlsEnabled = YES;
+
+	self.videoPlaybackSpeed = 1.0;
 }
 
 - (nullable NSArray<NSString *> *)styleResources
