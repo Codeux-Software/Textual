@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	double playbackSpeed = self.videoPlaybackSpeed;
 
-	if (playbackSpeed < 0.125 || playbackSpeed > 8.0) {
+	if (playbackSpeed < 0.125 || playbackSpeed > 6.0) {
 		playbackSpeed = 1.0;
 	}
 
