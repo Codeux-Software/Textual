@@ -291,6 +291,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+	[super prepareInitialState];
+
 	self.videoAutoplayEnabled = YES;
 	self.videoControlsEnabled = NO;
 	self.videoLoopEnabled = YES;
