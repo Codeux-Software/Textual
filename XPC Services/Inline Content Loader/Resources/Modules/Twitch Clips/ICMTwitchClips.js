@@ -34,43 +34,25 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+ 
+var _ICMTwitchClipsPrototypeParent = _ICMInlineVideoPrototype;
+ 
+var _ICMTwitchClipsPrototype = function() {  
+	_ICMTwitchClipsPrototypeParent.call(this);
+}
 
-#import <Foundation/Foundation.h>
+_ICMTwitchClipsPrototype.prototype = Object.create(_ICMInlineVideoPrototype.prototype);  
+_ICMTwitchClipsPrototype.prototype.constructor = _ICMTwitchClipsPrototype;  
+_ICMTwitchClipsPrototype.prototype.superClass = _ICMTwitchClipsPrototypeParent.prototype;
 
-#import <CocoaExtensions/CocoaExtensions.h>
+var _ICMTwitchClips = new _ICMTwitchClipsPrototype();
 
-#import <GRMustache/GRMustache.h>
+_ICMTwitchClips.autoplayVideoInContainer = function(videoContainer)
+{
+	
+};
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
-
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTwitchClips.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+_ICMTwitchClips.pauseVideoInContainer = function(videoContainer)
+{
+	console.log("There is no known way to pause Twitch videos");
+};
