@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL videoLoopEnabled; // default = NO
 @property (nonatomic, assign) BOOL videoMuteEnabled; // default = NO
 @property (nonatomic, assign) NSTimeInterval videoStartTime; // default = 0
-@property (nonatomic, assign) double videoPlaybackSpeed; // default = 1.0 | >= 0.125 and <= 8.0
+@property (nonatomic, assign) double videoPlaybackSpeed; // default = 1.0 | >= 0.125 and <= 6.0
 @end
 
 /* Proper class to sublcass if that is your thing. */
