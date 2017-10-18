@@ -79,6 +79,7 @@ ClassWithDesignatedInitializerInitMethod
 					[ICMPornhub class],
 					[ICMStreamable class],
 					[ICMVimeo class],
+					[ICMXkcd class],
 					[ICMYouTube class],
 					[ICMCommonInlineVideos class],
 					[ICMCommonInlineImages class]];

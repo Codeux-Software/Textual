@@ -35,41 +35,91 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@implementation ICMXkcd
 
-#import <GRMustache/GRMustache.h>
+- (void)_performActionForComic:(NSString *)comicIdentifier
+{
+	NSParameterAssert(comicIdentifier != nil);
+	
+	NSString *addressToRequest = [NSString stringWithFormat:@"https://xkcd.com/%@/info.0.json", comicIdentifier];
+	
+	[self requestJSONObject:@"img"
+					 ofType:[NSString class]
+				inHierarchy:nil
+				fromAddress:addressToRequest
+			completionBlock:^(id object)
+	 {
+		 if (object == nil) {
+			 [self notifyUnsafeToLoadImage];
+			 
+			 return;
+		 }
+		 
+		 [self performActionForFinalAddress:object];
+	 }];
+}
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+#pragma mark -
+#pragma mark Action Block
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+	
+	NSString *comicIdentifier = [self _comicIdentifierForURL:url];
+	
+	if (comicIdentifier == nil) {
+		return nil;
+	}
+	
+	return [^(ICLInlineContentModule *module) {
+		__weak ICMXkcd *moduleTyped = (id)module;
+		
+		[moduleTyped _performActionForComic:comicIdentifier];
+	} copy];
+}
 
-/* Modules */
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
++ (nullable NSString *)_comicIdentifierForURL:(NSURL *)url
+{
+	NSString *urlPath = url.path.percentEncodedURLPath;
 
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+	if (urlPath.length == 0) {
+		return nil;
+	}
+
+	NSString *comicIdentifier = [urlPath trimCharacters:@"/"];
+	
+	if (comicIdentifier.isNumericOnly == NO) {
+		return nil;
+	}
+
+	return comicIdentifier;
+}
+
++ (nullable NSArray<NSString *> *)domains
+{
+	static NSArray<NSString *> *domains = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		domains =
+		@[
+		  @"xkcd.com",
+		  @"www.xkcd.com"
+		];
+	});
+
+	return domains;
+}
+
+- (NSString *)classAttribute
+{
+	return @"inlineXkcd";
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
