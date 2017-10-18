@@ -73,18 +73,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
+	NSParameterAssert(url != nil);
+
 	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
 
 	if (videoIdentifier == nil) {
 		return nil;
 	}
-
-	return [self _actionBlockForVideo:videoIdentifier];
-}
-
-+ (ICLInlineContentModuleActionBlock)_actionBlockForVideo:(NSString *)videoIdentifier
-{
-	NSParameterAssert(videoIdentifier != nil);
 
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMVimeo *moduleTyped = (id)module;
