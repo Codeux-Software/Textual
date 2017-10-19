@@ -7314,7 +7314,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	if (batchToken.length < 4 && [batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters] == NO) {
+	if ([batchToken onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9UnderscoreDash]] == NO) {
 		LogToConsoleError("Cannot process BATCH command because the batch token contains illegal characters");
 
 		return;
