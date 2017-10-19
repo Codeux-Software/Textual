@@ -79,6 +79,7 @@ ClassWithDesignatedInitializerInitMethod
 					[ICMPornhub class],
 					[ICMStreamable class],
 					[ICMTwitchClips class],
+					[ICMTwitchLive class],
 					[ICMVimeo class],
 					[ICMXkcd class],
 					[ICMYouTube class],

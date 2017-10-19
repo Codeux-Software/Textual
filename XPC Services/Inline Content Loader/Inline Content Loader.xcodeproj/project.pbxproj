@@ -50,6 +50,9 @@
 		4CA5D31D1F97D75E006714D6 /* ICMTwitchClips.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D31B1F97D73D006714D6 /* ICMTwitchClips.m */; };
 		4CA5D3211F97D79D006714D6 /* ICMTwitchClips.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3201F97D791006714D6 /* ICMTwitchClips.js */; };
 		4CA5D3221F97D79F006714D6 /* ICMTwitchClips.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D31F1F97D791006714D6 /* ICMTwitchClips.mustache */; };
+		4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */; };
+		4CA5D3281F98275B006714D6 /* ICMTwitchLive.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3231F9810AE006714D6 /* ICMTwitchLive.js */; };
+		4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +76,8 @@
 				4CA5D3151F97D05B006714D6 /* ICMPornhub.mustache in CopyFiles */,
 				4CA5D3211F97D79D006714D6 /* ICMTwitchClips.js in CopyFiles */,
 				4CA5D3221F97D79F006714D6 /* ICMTwitchClips.mustache in CopyFiles */,
+				4CA5D3281F98275B006714D6 /* ICMTwitchLive.js in CopyFiles */,
+				4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */,
 				4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */,
 				4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */,
 				4C9810001F939F4800B116A4 /* ICMYouTube.js in CopyFiles */,
@@ -164,6 +169,10 @@
 		4CA5D31C1F97D73D006714D6 /* ICMTwitchClips.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTwitchClips.h; path = "Classes/Modules/Twitch Clips/ICMTwitchClips.h"; sourceTree = "<group>"; };
 		4CA5D31F1F97D791006714D6 /* ICMTwitchClips.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMTwitchClips.mustache; path = "Resources/Modules/Twitch Clips/ICMTwitchClips.mustache"; sourceTree = "<group>"; };
 		4CA5D3201F97D791006714D6 /* ICMTwitchClips.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTwitchClips.js; path = "Resources/Modules/Twitch Clips/ICMTwitchClips.js"; sourceTree = "<group>"; };
+		4CA5D3231F9810AE006714D6 /* ICMTwitchLive.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTwitchLive.js; path = "Resources/Modules/Twitch Live/ICMTwitchLive.js"; sourceTree = "<group>"; };
+		4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMTwitchLive.mustache; path = "Resources/Modules/Twitch Live/ICMTwitchLive.mustache"; sourceTree = "<group>"; };
+		4CA5D3251F9810D1006714D6 /* ICMTwitchLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTwitchLive.h; path = "Classes/Modules/Twitch Live/ICMTwitchLive.h"; sourceTree = "<group>"; };
+		4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTwitchLive.m; path = "Classes/Modules/Twitch Live/ICMTwitchLive.m"; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -609,10 +618,28 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		4CA5D32A1F982764006714D6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4CA5D3231F9810AE006714D6 /* ICMTwitchLive.js */,
+				4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4CA5D32B1F98277C006714D6 /* Twitch Live */ = {
+			isa = PBXGroup;
+			children = (
+				4CA5D32A1F982764006714D6 /* Resources */,
+				4CA5D3251F9810D1006714D6 /* ICMTwitchLive.h */,
+				4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */,
+			);
+			name = "Twitch Live";
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4CA5D31A1F97D733006714D6 /* Twitch Clips */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C9CAC601F9585B8006887B7 /* Dailymotion */,
@@ -622,6 +649,8 @@
 				4C8C84351F8E58D100062FFD /* Resources */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
 				4C9CAC6D1F967F41006887B7 /* Streamable */,
+				4CA5D31A1F97D733006714D6 /* Twitch Clips */,
+				4CA5D32B1F98277C006714D6 /* Twitch Live */,
 				4C576D191F943EFE00FD581F /* Vimeo */,
 				4CA5D3181F97D3F0006714D6 /* xkcd */,
 				4C980FF31F92D43000B116A4 /* YouTube */,
@@ -735,6 +764,7 @@
 				4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */,
 				4C9810081F93AE4B00B116A4 /* ICMInlineVideoCheck.m in Sources */,
 				4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */,
+				4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */,
 				4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
 				4C9CAC751F96A2D7006887B7 /* ICMGfycat.m in Sources */,
