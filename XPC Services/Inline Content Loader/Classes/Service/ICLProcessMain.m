@@ -65,6 +65,8 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark XPC Interface
 
+#warning TODO: Create NSCache of -domains values matched to classes
+
 /* -modules returns an array of classes (not objects) */
 - (NSArray *)modules
 {
