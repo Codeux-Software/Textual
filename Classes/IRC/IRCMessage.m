@@ -359,7 +359,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (dateString) {
 			NSDate *dateObject = nil;
 
-			if ([dateString onlyContainsCharacters:@"0123456789."]) {
+			if ([dateString onlyContainsCharactersFromCharacterSet:[NSCharacterSet ZeroToNineDecimalCharacetSet]]) {
 				dateObject = [NSDate dateWithTimeIntervalSince1970:dateString.doubleValue];
 			} else {
 				dateObject = [TXSharedISOStandardDateFormatter() dateFromString:dateString];
@@ -376,7 +376,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
 		NSString *batchToken = extensionsOut[@"batch"];
 
-		if ([batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters]) {
+		if ([batchToken onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9UnderscoreDash]]) {
 			self->_batchToken = [batchToken copy];
 
 			self->_parentBatchMessage = [client queuedBatchMessageWithToken:batchToken];

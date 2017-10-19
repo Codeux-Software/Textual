@@ -53,8 +53,8 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		return YES;
 	}
 
-	return [self onlyContainsCharacters:
-		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"];
+	return [self onlyContainsCharactersFromCharacterSet:
+			[NSCharacterSet Ato9UnderscoreDashPeriod]];
 }
 
 - (BOOL)isValidInternetPort
@@ -429,7 +429,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	m_foregroundColor = [self substringWithRange:NSMakeRange(currentPosition, 6)];
 
-	if ([m_foregroundColor onlyContainsCharacters:@"abcdefABCDEF0123456789"]) {
+	if ([m_foregroundColor onlyContainsCharactersFromCharacterSet:[NSCharacterSet hexadecimalCharacterSet]]) {
 		currentPosition += 6; // Eat foreground color
 	} else {
 		m_foregroundColor = nil;
@@ -463,7 +463,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	m_backgroundColor = [self substringWithRange:NSMakeRange(currentPosition, 6)];
 
-	if ([m_backgroundColor onlyContainsCharacters:@"abcdefABCDEF0123456789"]) {
+	if ([m_backgroundColor onlyContainsCharactersFromCharacterSet:[NSCharacterSet hexadecimalCharacterSet]]) {
 		currentPosition += 6; // Eat background color
 	} else {
 		m_backgroundColor = nil;

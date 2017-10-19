@@ -107,7 +107,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *videoIdentifier = urlPath;
 	
-	if ([videoIdentifier onlyContainsCharacters:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_/"] == NO) {
+	if ([videoIdentifier onlyContainsCharactersFromCharacterSet:
+		 [NSCharacterSet Ato9UnderscoreDashForwardSlash]] == NO)
+	{
 		return nil;
 	}
 
