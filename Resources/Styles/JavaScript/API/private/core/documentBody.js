@@ -229,9 +229,54 @@ String.prototype.standardizedLineNumber = function() /* PUBLIC */
 
 String.prototype.lineNumberContents = function(lineNumber) /* PUBLIC */
 {
-	if (this.indexOf("line-") !== 0) {
-		return this;
+	if (this.indexOf("line-") === 0) {
+		return this.substr(5);
 	}
 	
-	return this.substr(5);
+	return this;
+};
+
+/* Given an element, find which .line element contains it. */
+Element.prototype.lineContainer = function()
+{
+	var testElement = (function(element) {
+		if (element.id && 
+			element.id.indexOf("line-") === 0 &&
+			element.classList &&
+			element.classList.contains("line")) 
+		{
+			return element;
+		}
+		
+		return null;
+	});
+
+	var line = null; /* default value */
+
+	/* Test this element and all its parents */
+	var currentElement = this;
+
+	do {
+		line = testElement(currentElement);
+		
+		if (line) {
+			break;
+		}
+	} while (currentElement = currentElement.parentElement);
+
+	/* Returns the line container or null */
+	return line;
+};
+
+Element.prototype.lineNumberContents = function()
+{
+	var line = this.lineContainer();
+	
+	if (!line) {
+		return null;
+	}
+	
+	var lineNumber = line.id;
+	
+	return lineNumber.lineNumberContents();
 };
