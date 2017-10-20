@@ -105,27 +105,9 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 
 ConversationTracking.toggleSelectionStatusForSenderElement = function(senderElement)
 {
-	var testElement = (function(element) {
-		if (element.id && 
-			element.id.indexOf("line") === 0 &&
-			element.classList &&
-			element.classList.contains("line")) 
-		{
-			return true;
-		}
-		
-		return false;
-	});
-	
-	var currentElement = senderElement;
-	
-	while (currentElement = currentElement.parentNode) {
-		if (testElement(currentElement)) {
-			break;
-		}
-	}
+	var line = senderElement.lineContainer();
 
-	currentElement.classList.toggle("selectedUser");
+	line.classList.toggle("selectedUser");
 };
 
 /* Helper functions */
