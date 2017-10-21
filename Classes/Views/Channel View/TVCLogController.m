@@ -814,6 +814,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload
 {
+	[self _evaluateFunction:@"_InlineMediaLoader.processPayload" withArguments:@[payload.javaScriptObject]];
 }
 
 - (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error

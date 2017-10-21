@@ -47,14 +47,14 @@ _ICMInlineImagePrototype.prototype.superClass = _ICMInlineImagePrototypeParent.p
 
 var _ICMInlineImage = new _ICMInlineImagePrototype();
 
-_ICMInlineImagePrototype.prototype.willShowElement = function(element, mediaId) /* PUBLIC */
+_ICMInlineImagePrototype.prototype.willShowMedia = function(mediaId, mediaElement) /* PUBLIC */
 {
 	/* Do not allow user to show the image if this attribute is set. */
-	if (element.hasAttribute("disabled")) {
+	if (mediaElement.hasAttribute("disabled")) {
 		return false;
 	}
 
-	return this.superClass.willShowElement.call(this, element, mediaId);
+	return this.superClass.willShowMedia.call(this, mediaId, mediaElement);
 };
 
 _ICMInlineImagePrototype.prototype.entrypoint = function(payload, insertHTMLCallback)

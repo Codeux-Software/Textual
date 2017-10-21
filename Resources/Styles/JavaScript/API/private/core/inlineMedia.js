@@ -52,13 +52,13 @@ HTMLDocument.prototype.getInlineMediaById = function(mediaId) /* PUBLIC */
 	if (mediaId.indexOf("inlineMedia-") !== 0) {
 		mediaId = ("inlineMedia-" + mediaId);
 	}
-	
+
 	return this.getElementById(mediaId);
 };
 
 HTMLDocument.prototype.getInlineMediaAnchorById = function(mediaId) /* PUBLIC */
 {
-	return document.body.querySelector("a[inlineanchor=\"" + mediaId + "\"]");
+	return document.body.querySelector("a[ilm-anchor=\"" + mediaId + "\"]");
 };
 
 /* ************************************************** */
@@ -77,14 +77,14 @@ InlineMediaPrototype.prototype._isSubclass = function()
 InlineMediaPrototype.prototype.showOnClick = function(mediaId) /* PUBLIC */
 {
 	this.show(mediaId);
-	
+
 	return false; // Do not perform navigation
 };
 
 InlineMediaPrototype.prototype.hideOnClick = function(mediaId) /* PUBLIC */
 {
 	this.hide(mediaId);
-	
+
 	return false; // Do not perform navigation
 };
 
@@ -92,86 +92,132 @@ InlineMediaPrototype.prototype.toggleOnClick = function(mediaId) /* PUBLIC */
 {
 	if (this.isSafeToPerformToggle() === false) {
 		console.log("Cancelled toggling inline media because of isSafeToPerformToggle() condition.");
-		
+
 		return true; // Perform navigation
 	}
-	
+
 	this.toggle(mediaId);
-	
+
 	return false; // Do not perform navigation
 };
 
-InlineMediaPrototype.prototype.showPayload = function(payload) /* PUBLIC */
-{
-	this.show(payload.uniqueIdentifier);
-};
- 
 InlineMediaPrototype.prototype.show = function(mediaId) /* PUBLIC */
 {
-	this._setDisplay(mediaId, "show");
-};
-
-InlineMediaPrototype.prototype.hidePayload = function(payload) /* PUBLIC */
-{
-	this.hide(payload.uniqueIdentifier);
+	this.changeVisiblity(mediaId, "show");
 };
 
 InlineMediaPrototype.prototype.hide = function(mediaId) /* PUBLIC */
 {
-	this._setDisplay(mediaId, "hide");
-};
-
-InlineMediaPrototype.prototype.togglePayload = function(payload) /* PUBLIC */
-{
-	this.toggle(payload.uniqueIdentifier);
+	this.changeVisiblity(mediaId, "hide");
 };
 
 InlineMediaPrototype.prototype.toggle = function(mediaId) /* PUBLIC */
 {
-	this._setDisplay(mediaId, "toggle");
+	this.changeVisiblity(mediaId, "toggle");
 };
 
-InlineMediaPrototype.prototype._setDisplay = function(mediaId, display) /* PRIVATE */
+InlineMediaPrototype.prototype.changeVisiblity = function(mediaId, display) /* PRIVATE */
 {
-	var element = document.getInlineMediaById(mediaId);
+	var mediaElement = document.getInlineMediaById(mediaId);
 
-	if (!element) {
-		console.error("Failed to find inline media element that matches ID: " + mediaId);
-
-		return false;
-	}
-	
+	/* Determine whether we will hide the media or show it */
 	var displayNone;
-	
+
 	if (display === "hide") {
 		displayNone = true;
 	} else if (display === "show") {
 		displayNone = false;
+	} else if (display === "toggle") {
+		displayNone = (	mediaElement && 
+						mediaElement.style.display !== "none");
 	} else {
-		displayNone = (element.style.display !== "none");
+		throw "Invalid 'display' value";
 	}
+
+	/* ********************************************* */
+
+	/* The logic for each type of action is defined below as a
+	self contained function. This makes it easier to maintain. */
+
+	/* Remove media */
+	var _changeVisiblityByRemoving = (function()
+	{
+		if (this.willRemoveMedia(mediaId, mediaElement) === false) {
+			return;
+		}
+
+		mediaElement.remove();
+
+		this.didRemoveMedia(mediaId);
+	}).bind(this);
+
+	/* Show media */
+	var _changeVisiblityByDisplaying = (function()
+	{
+		if (this.willShowMedia(mediaId, mediaElement) === false) {
+			return;
+		}
+
+		mediaElement.style.display = "";
+
+		this.didShowMedia(mediaId, mediaElement);
+	}).bind(this);
+
+	/* Load media */
+	var _changeVisiblityByLoading = (function()
+	{
+		var anchor = document.getInlineMediaAnchorById(mediaId);
+
+		if (!anchor) {
+			console.error("Failed to find inline media anchor that matches ID: " + mediaId);
+
+			return;
+		}
+
+		if (anchor.hasAttribute("ilm-loading") === false) {
+			anchor.setAttribute("ilm-loading", "true");
+		} else {
+			return;
+		}
+
+		if (this.willLoadMedia(mediaId) === false) {
+			return;
+		}
+
+		var address = anchor.href;
+
+		var lineNumber = anchor.lineNumberContents();
+
+		var index = parseInt(anchor.getAttribute("ilm-index"));
+
+		appPrivate.loadInlineMedia(address, mediaId, lineNumber, index);
+	}).bind(this);
+
+	/* ********************************************* */
 
 	if (displayNone) 
 	{
-		/* Hide element */
-		if (this.willHideElement(element, mediaId) === false) {
-			return;
-		}
+		/* When hiding media, we remove it completely from the DOM. 
+		The onclick event for toggling media will always exist in
+		the anchor which means the user can shift click that to load 
+		the media again if they so choose. */
 
-		element.style.display = "none";
-		
-		this.didHideElement(element, mediaId);
+		_changeVisiblityByRemoving();
+	} 
+	else if (mediaElement)
+	{
+		/* If the media already exists, then we have nothing
+		to do here other than set the display property. */
+
+		_changeVisiblityByDisplaying();
 	} 
 	else 
 	{
-		/* Show element */
-		if (this.willShowElement(element, mediaId) === false) {
-			return;
-		}
-		
-		element.style.display = "";
-		
-		this.didShowElement(element, mediaId);
+		/* We aren't hiding the media and the media does not 
+		already exist in the DOM, which means we need to fire
+		off a request to load it. */
+
+		_changeVisiblityByLoading();
 	}
 };
 
@@ -182,59 +228,79 @@ InlineMediaPrototype.prototype.isSafeToPerformToggle = function() /* PUBLIC */
 	return (window.event.shiftKey === true);
 };
 
-InlineMediaPrototype.prototype.willShowElement = function(element, mediaId) /* PUBLIC */
+InlineMediaPrototype.prototype.willLoadMedia = function(mediaId) /* PUBLIC */
 {
-	element.prepareForMutation();
-
 	return true;
 };
 
-InlineMediaPrototype.prototype.didShowElement = function(element, mediaId) /* PUBLIC */
+InlineMediaPrototype.prototype.didLoadMedia = function(mediaId, mediaElement)
 {
 
 };
 
-InlineMediaPrototype.prototype.willHideElement = function(element, mediaId) /* PUBLIC */
+InlineMediaPrototype.prototype.didLoadMediaWithPayload = function(payload) /* PUBLIC */
 {
-	element.prepareForMutation();
+	var mediaId = payload.uniqueIdentifier;
 
-	return true;
+	this._didLoadMediaModifyAnchor(mediaId, payload.index);
+
+	var mediaElement = document.getInlineMediaById(mediaId);
+
+	this.didLoadMedia(mediaId, mediaElement);
 };
 
-InlineMediaPrototype.prototype.didHideElement = function(element, mediaId) /* PUBLIC */
-{
-
-};
-
-InlineMediaPrototype.prototype.replaceAnchorOnclickCallbackForPayload = function(payload) /* PUBLIC */
-{
-	this.replaceAnchorOnclickCallback(payload.uniqueIdentifier);
-};
-
-InlineMediaPrototype.prototype.replaceAnchorOnclickCallback = function(mediaId) /* PUBLIC */
+InlineMediaPrototype.prototype._didLoadMediaModifyAnchor = function(mediaId, mediaIndex) /* PUBLIC */
 {
 	var anchor = document.getInlineMediaAnchorById(mediaId);
-	
+
 	if (!anchor) {
 		console.error("Failed to find inline media anchor that matches ID: " + mediaId);
 
 		return;
 	}
-	
-	anchor.onclick = (function() {
-		return this.toggleOnClick(mediaId);
-	}).bind(this);
+
+	/* Modify attributes */
+	anchor.removeAttribute("ilm-loading");
+
+	anchor.setAttribute("ilm-index", mediaIndex);
+
+	/* Replace onclick event with one for current class */
+	if (this._isSubclass()) {
+		anchor.onclick = (function() {
+			return this.toggleOnClick(mediaId);
+		}).bind(this);
+	}
+};
+
+InlineMediaPrototype.prototype.willShowMedia = function(mediaId, mediaElement) /* PUBLIC */
+{
+	mediaElement.prepareForMutation();
+
+	return true;
+};
+
+InlineMediaPrototype.prototype.didShowMedia = function(mediaId, mediaElement) /* PUBLIC */
+{
+
+};
+
+InlineMediaPrototype.prototype.willRemoveMedia = function(mediaId, mediaElement) /* PUBLIC */
+{
+	mediaElement.prepareForMutation();
+
+	return true;
+};
+
+InlineMediaPrototype.prototype.didRemoveMedia = function(mediaId) /* PUBLIC */
+{
+
 };
 
 InlineMediaPrototype.prototype.entrypoint = function(payload, insertHTMLCallback)
 {
 	document.prepareForMutation();
-	
+
 	insertHTMLCallback(payload.html);
-	
-	if (this._isSubclass()) {
-		this.replaceAnchorOnclickCallbackForPayload(payload);
-	}
 };
 
 /* ************************************************** */
@@ -247,12 +313,12 @@ var InlineMedia = Object.create(InlineMediaPrototype.prototype);
 /*                Media Private Interface             */
 /* ************************************************** */
 
-var _InlineMedia = {};
+var _InlineMediaLoader = {};
 
-_InlineMedia._loadedStyleResources = new Array(); /* PRIVATE */
-_InlineMedia._loadedScriptResources = new Array(); /* PRIVATE */
+_InlineMediaLoader._loadedStyleResources = new Array(); /* PRIVATE */
+_InlineMediaLoader._loadedScriptResources = new Array(); /* PRIVATE */
 
-_InlineMedia.processPayload = function(payload) /* PRIVATE */
+_InlineMediaLoader.processPayload = function(payload) /* PRIVATE */
 {
 	/* Load CSS resources */
 	var styleResources = payload.styleResources;
@@ -260,10 +326,10 @@ _InlineMedia.processPayload = function(payload) /* PRIVATE */
 	if (Array.isArray(styleResources)) {
 		for (var i = 0; i < styleResources.length; i++) {
 			var file = styleResources[i];
-			
-			if (_InlineMedia._loadedStyleResources.indexOf(file) < 0) {
-				_InlineMedia._loadedStyleResources.push(file);
-				
+
+			if (_InlineMediaLoader._loadedStyleResources.indexOf(file) < 0) {
+				_InlineMediaLoader._loadedStyleResources.push(file);
+
 				Textual.includeStyleResourceFile(file);
 			}
 		}
@@ -275,10 +341,10 @@ _InlineMedia.processPayload = function(payload) /* PRIVATE */
 	if (Array.isArray(scriptResources)) {
 		for (var i = 0; i < scriptResources.length; i++) {
 			var file = scriptResources[i];
-			
-			if (_InlineMedia._loadedScriptResources.indexOf(file) < 0) {
-				_InlineMedia._loadedScriptResources.push(file);
-				
+
+			if (_InlineMediaLoader._loadedScriptResources.indexOf(file) < 0) {
+				_InlineMediaLoader._loadedScriptResources.push(file);
+
 				Textual.includeScriptResourceFile(file);
 			}
 		}
@@ -286,72 +352,87 @@ _InlineMedia.processPayload = function(payload) /* PRIVATE */
 
 	/* Insert HTML */
 	var entrypoint = payload.entrypoint;
-	
-	if (typeof entrypoint === "string" && entrypoint.length > 0) {
-		_InlineMedia.processPayloadWithEntrypoint(payload);
+
+	if (typeof entrypoint === "string" && 
+		entrypoint.length > 0 &&
+		entrypoint !== "InlineMedia") /* Don't allow module to use this */
+	{
+		_InlineMediaLoader.ppStep2WithEntrypoint(payload);
 	} else {
-		_InlineMedia.processPayloadWithoutEntrypoint(payload);
+		_InlineMediaLoader.ppStep2WithoutEntrypoint(payload);
 	}
 };
 
-_InlineMedia.processPayloadWithoutEntrypoint = function(payload) /* PRIVATE */
+_InlineMediaLoader.ppStep2WithoutEntrypoint = function(payload) /* PRIVATE */
 {
-	_InlineMedia.insertPayload(
-		payload.lineNumber, 
-		payload.html,
-		payload.index, 
-		true
-	);
+	_InlineMediaLoader.ppStep3(InlineMedia, payload, null);
 };
 
-_InlineMedia.processPayloadWithEntrypoint = function(payload) /* PRIVATE */
+_InlineMediaLoader.ppStep2WithEntrypoint = function(payload) /* PRIVATE */
 {
-	var insertHTML = (function(html) {
-		/* The entrypoint is expeted to call prepareForMutation() for us. */
-		_InlineMedia.insertPayload(
-			payload.lineNumber, 
-			html, 
-			payload.index,
-			false);
-	});
-
 	var callToEntrypoint = (function(i) {
 		try {
 			var entrypoint = window[payload.entrypoint];
 		} catch (error) {
-			
+
 		}
 
-		/* If the entrypoint exists as a function already, 
+		/* If the entrypoint exists as an object already, 
 		 then we call out to it and exit. */
 		if (typeof entrypoint === "object") {
-			entrypoint.entrypoint(payload.entrypointPayload, insertHTML);
-			
+			entrypoint.entrypoint(
+				payload.entrypointPayload, 
+
+				(function(html) {
+					_InlineMediaLoader.ppStep3(entrypoint, payload, html);
+				})
+			);
+
 			return;
 		}
-		
-		/* If the entrypoint does not exist as a function yet,
+
+		/* If the entrypoint does not exist as an object yet,
 		 then we loop this function several times until it is
 		 one (script resource is loading), or until we exhaust
 		 the tries we are willing to take. */
 		if (i === 20) { // 2 seconds
 			console.error("Failed to process payload because entrypoint is not an object.");
-			
+
 			return;
 		}
-		
+
 		setTimeout((function() {
 			callToEntrypoint(i + 1);
-		}), 100);
+		}), 100); // ms
 	});
-	
+
 	callToEntrypoint(0);
 };
 
-_InlineMedia.insertPayload = function(lineNumber, html, index, prepareForMutation) /* PRIVATE */
+_InlineMediaLoader.ppStep3 = function(entrypoint, payload, html) /* PRIVATE */
 {
+	/* The entrypoint function for subclasses is expected
+	to call prepareForMutation() when it thinks is best.
+	When the entrypoint is InlineMedia, the entrypoint 
+	function is never called. We therefore call it here
+	when that is the entrypoint. */
+	if (entrypoint === InlineMedia) {
+		document.prepareForMutation();
+	}
+
+	/* Insert HTML */
+	_InlineMediaLoader.insertPayload(payload, html);
+
+	/* Inform delegate */
+	entrypoint.didLoadMediaWithPayload(payload);
+};
+
+_InlineMediaLoader.insertPayload = function(payload, html) /* PRIVATE */
+{
+	var lineNumber = payload.lineNumber;
+
 	var line = document.getElementByLineNumber(lineNumber);
-	
+
 	if (!line) {
 		console.error("Failed to find line that matches ID: " + lineNumber);
 
@@ -360,39 +441,47 @@ _InlineMedia.insertPayload = function(lineNumber, html, index, prepareForMutatio
 
 	var mediaContainer = line.querySelector(".inlineMediaContainer");
 
-	if (mediaContainer) 
-	{
-		if (prepareForMutation) {
-			mediaContainer.prepareForMutation();
-		}
-		
-		/* Given index of this item, find item before that index
-		to insert the HTML at, or insert at end of container. */
-		if (index === 0) {
-			/* Insert at beginning */
-			mediaContainer.insertAdjacentHTML("afterbegin", html);
-		} else {
-			var childIndex = (index - 1);
-			var childNode = null;
-			var childNodes = mediaContainer.children;
-	
-			if (childNodes.length > childIndex) {
-				childNode = childNodes[childIndex];
-			}
-	
-			if (childNode) {
-				childNode.insertAdjacentHTML("afterend", html);
-				
-				return;
-			}
-		
-			/* Insert at end */
-			mediaContainer.insertAdjacentHTML("beforeend", html)
-		}
-	} 
-	else // mediaContainer
-	{
+	if (!mediaContainer) {
 		console.warning("The template for this style appears to be missing a span with the class" +
 						"'inlineMediaContainer' — please fix this to support inline media.");
+
+		return;
+	}
+
+	/* Validate HTML */
+	if (html === null) {
+		html = payload.html;
+	}
+
+	if (html.length === 0) {
+		console.error("HTML is empty");
+
+		return;
+	}
+
+	/* Given index of this item, find item before that index
+	to insert the HTML at, or insert at end of container. */
+	var index = payload.index;
+
+	if (index === 0) {
+		/* Insert at beginning */
+		mediaContainer.insertAdjacentHTML("afterbegin", html);
+	} else {
+		var childIndex = (index - 1);
+		var childNode = null;
+		var childNodes = mediaContainer.children;
+
+		if (childNodes.length > childIndex) {
+			childNode = childNodes[childIndex];
+		}
+
+		if (childNode) {
+			childNode.insertAdjacentHTML("afterend", html);
+
+			return;
+		}
+
+		/* Insert at end */
+		mediaContainer.insertAdjacentHTML("beforeend", html);
 	}
 };
