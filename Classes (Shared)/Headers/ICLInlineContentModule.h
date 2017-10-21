@@ -86,6 +86,16 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 @property (readonly, copy, nullable, class) NSArray<NSString *> *domains;
 
 #pragma mark -
+#pragma mark Payload Helpers
+
+/* If a non-nil value is returned for any of these properties,
+ then that value is inserted into the payload. */
+/* See ICLPayload.h for a description of each property. */
+@property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
+@property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
+@property (copy, readonly, nullable) NSString *entrypoint;
+
+#pragma mark -
 #pragma mark Action
 
 /**

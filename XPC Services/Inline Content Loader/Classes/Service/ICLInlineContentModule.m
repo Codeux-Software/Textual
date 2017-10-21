@@ -62,24 +62,30 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
-- (nullable NSArray<NSString *> *)styleResources
-{
-	return nil;
-}
-
-- (nullable NSArray<NSString *> *)scriptResources
-{
-	return nil;
-}
-
-- (nullable NSString *)entrypoint
-{
-	return nil;
-}
-
 - (NSString *)classAttribute
 {
 	return @"";
+}
+
+- (void)mergePropertiesIntoPayload
+{
+	NSArray *scriptResources = self.scriptResources;
+
+	if (scriptResources) {
+		self.payload.scriptResources = scriptResources;
+	}
+
+	NSArray *styleResources = self.styleResources;
+
+	if (styleResources) {
+		self.payload.styleResources = styleResources;
+	}
+
+	NSString *entrypoint = self.entrypoint;
+
+	if (entrypoint) {
+		self.payload.entrypoint = entrypoint;
+	}
 }
 
 - (NSError *)genericValidationFailedError
