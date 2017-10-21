@@ -438,6 +438,7 @@
 		4C980FE91F92C4E900B116A4 /* Root Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4C8C84351F8E58D100062FFD /* Resources */,
 				4C9810091F93B59000B116A4 /* Image */,
 				4C98100A1F93B59900B116A4 /* Video */,
 			);
@@ -622,7 +623,6 @@
 				4C9CAC741F96A2AB006887B7 /* Gfycat */,
 				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4CA5D30D1F97CDA4006714D6 /* Pornhub */,
-				4C8C84351F8E58D100062FFD /* Resources */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
 				4C9CAC6D1F967F41006887B7 /* Streamable */,
 				4CA5D31A1F97D733006714D6 /* Twitch Clips */,
