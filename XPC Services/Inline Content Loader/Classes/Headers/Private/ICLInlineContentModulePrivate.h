@@ -39,10 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLInlineContentModule (ICLInlineContentModulePrivate)
 @property (readonly, nullable) GRMustacheTemplate *template;
-@property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
-@property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
-@property (copy, readonly, nullable) NSString *entrypoint;
 @property (copy, readonly) NSString *classAttribute;
+
+- (void)mergePropertiesIntoPayload;
 
 /* The generic validation error is a static error that the service
  recognizes as a sign that the URL in the payload shouldn't be displayed,

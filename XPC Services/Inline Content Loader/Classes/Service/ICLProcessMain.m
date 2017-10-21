@@ -214,6 +214,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	[moduleCache setObject:module forKey:cacheToken];
 
+	[module mergePropertiesIntoPayload];
+
 	if (actionBlock) {
 		actionBlock(module);
 	} else {

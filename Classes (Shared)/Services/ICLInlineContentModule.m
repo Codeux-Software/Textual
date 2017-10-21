@@ -60,6 +60,21 @@ ClassWithDesignatedInitializerInitMethod
 	return NULL;
 }
 
+- (nullable NSArray<NSString *> *)styleResources
+{
+	return nil;
+}
+
+- (nullable NSArray<NSString *> *)scriptResources
+{
+	return nil;
+}
+
+- (nullable NSString *)entrypoint
+{
+	return nil;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

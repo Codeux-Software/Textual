@@ -55,12 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *html = [self.template renderObject:templateAttributes error:&templateRenderError];
 
-	/* We only want to assign to the payload if we have success (HTML) */
-	if (html) {
-		payload.html = html;
-
-		payload.styleResources = self.styleResources;
-	}
+	payload.html = html;
 
 	self.completionBlock(templateRenderError);
 }
