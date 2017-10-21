@@ -1311,6 +1311,14 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *payloadLabel = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
+	if (payloadLabel.length == 0) {
+		[self _throwJavaScriptException:@"Length of payload label is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
 	id payloadContents = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
 	THOPluginWebViewJavaScriptPayloadConcreteObject *payloadObject =
