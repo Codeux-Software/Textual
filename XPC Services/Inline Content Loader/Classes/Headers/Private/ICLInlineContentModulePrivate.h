@@ -39,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLInlineContentModule (ICLInlineContentModulePrivate)
 @property (readonly, nullable) GRMustacheTemplate *template;
-@property (copy, readonly) NSString *classAttribute;
 
 - (void)mergePropertiesIntoPayload;
 
