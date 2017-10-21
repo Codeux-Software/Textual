@@ -828,18 +828,24 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(mediaLinks != nil);
 	NSParameterAssert(lineNumber != nil);
 
-	/* Unique list */
-	NSMutableDictionary<NSString *, AHHyperlinkScannerResult *> *linksToProcess = [NSMutableDictionary dictionary];
-
-	for (AHHyperlinkScannerResult *link in mediaLinks) {
-		NSString *stringValue = link.stringValue;
-
-		if ([linksToProcess containsKey:stringValue] == NO) {
-			[linksToProcess setObject:link forKey:stringValue];
-		}
+	if (mediaLinks.count == 0) {
+		return;
 	}
 
-	[linksToProcess.allValues enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
+	/* Unique list */
+	NSMutableArray<NSString *> *linksMatched = [NSMutableArray array];
+
+	NSMutableArray<AHHyperlinkScannerResult *> *linksToProcess = [NSMutableArray array];
+
+	for (AHHyperlinkScannerResult *link in mediaLinks) {
+		if ([linksMatched containsObject:link.stringValue]) {
+			continue;
+		}
+
+		[linksToProcess addObject:link];
+	}
+
+	[linksToProcess enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
 		[self processInlineMediaAtAddress:link.stringValue
 					 withUniqueIdentifier:link.uniqueIdentifier
 							 atLineNumber:lineNumber
