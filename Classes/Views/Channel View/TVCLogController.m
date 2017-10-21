@@ -814,7 +814,6 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload
 {
-	[self _evaluateFunction:@"_InlineMedia.processPayload" withArguments:@[payload.javaScriptObject]];
 }
 
 - (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error
@@ -826,6 +825,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)processInlineMedia:(NSArray<AHHyperlinkScannerResult *> *)mediaLinks atLineNumber:(NSString *)lineNumber
 {
 	NSParameterAssert(mediaLinks != nil);
+	NSParameterAssert(lineNumber != nil);
 
 	/* Unique list */
 	NSMutableDictionary<NSString *, AHHyperlinkScannerResult *> *linksToProcess = [NSMutableDictionary dictionary];
@@ -838,16 +838,28 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	}
 
+	[linksToProcess.allValues enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
+		[self processInlineMediaAtAddress:link.stringValue
+					 withUniqueIdentifier:link.uniqueIdentifier
+							 atLineNumber:lineNumber
+									index:index];
+	}];
+}
+
+- (void)processInlineMediaAtAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index
+{
+	NSParameterAssert(address != nil);
+	NSParameterAssert(uniqueIdentifier != nil);
+	NSParameterAssert(lineNumber != nil);
+
 	IRCTreeItem *associatedItem = self.associatedItem;
 
-	[linksToProcess.allValues enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
-		[TVCLogControllerInlineMediaSharedInstance()
-				 processAddress:link.stringValue
-		   withUniqueIdentifier:link.uniqueIdentifier
-				   atLineNumber:lineNumber
-						  index:index
-					    forItem:associatedItem];
-	}];
+	[TVCLogControllerInlineMediaSharedInstance()
+			 processAddress:address
+	   withUniqueIdentifier:uniqueIdentifier
+			   atLineNumber:lineNumber
+					  index:index
+				    forItem:associatedItem];
 }
 
 #pragma mark -

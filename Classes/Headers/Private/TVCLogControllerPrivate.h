@@ -81,6 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyHistoricLogWillDeleteLines:(NSArray<NSString *> *)lineNumbers;
 
+- (void)processInlineMediaAtAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index;
+
 - (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload;
 - (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error;
 

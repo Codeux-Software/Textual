@@ -446,6 +446,22 @@ ClassWithDesignatedInitializerInitMethod
 			  withSelector:@selector(_inlineMediaEnabledForView:)];
 }
 
+- (void)loadInlineMedia:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 forCaller:@"app.loadInlineMedia()"
+				 inWebView:webView
+			  withSelector:@selector(_loadInlineMedia:)
+	  minimumArgumentCount:4
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex <= 2) {
+					return [argument isKindOfClass:[NSString class]];
+				} else {
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+			}];
+}
+
 - (void)localUserHostmask:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -895,6 +911,52 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
 	context.completionBlock( @(context.viewController.inlineMediaEnabledForView) );
+}
+
+- (void)_loadInlineMedia:(TVCLogScriptEventSinkContext *)context
+{
+#warning TODO: Add index argument
+
+	NSArray *arguments = context.arguments;
+
+	NSString *address = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if (address.length == 0) {
+		[self _throwJavaScriptException:@"Length of address is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	NSString *uniqueIdentifier = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
+
+	if (uniqueIdentifier.length == 0) {
+		[self _throwJavaScriptException:@"Length of unique identifier is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[2]];
+
+	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
+
+	if (lineNumber.length == 0) {
+		[self _throwJavaScriptException:@"Length of line number is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	NSNumber *index = [TVCLogScriptEventSink objectValueToCommon:arguments[3]];
+
+	[context.viewController processInlineMediaAtAddress:address
+								   withUniqueIdentifier:uniqueIdentifier
+										   atLineNumber:lineNumber
+												  index:index.unsignedIntegerValue];
 }
 
 - (void)_localUserHostmask:(TVCLogScriptEventSinkContext *)context

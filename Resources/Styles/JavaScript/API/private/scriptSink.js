@@ -298,6 +298,17 @@ appPrivate.notifyLinesRemovedFromView = function(lineNumbers)
 	}
 };
 
+appPrivate.loadInlineMedia = function(address, uniqueIdentifier, lineNumber, index)
+{
+	var dataValue = {"values" : [address, uniqueIdentifier, lineNumber, index]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.loadInlineMedia.postMessage(dataValue);
+	} else {
+		TextualScriptSink.loadInlineMedia(dataValue);
+	}
+};
+
 /* ************************************************** */
 /*                   Public                           */
 /* ************************************************** */
