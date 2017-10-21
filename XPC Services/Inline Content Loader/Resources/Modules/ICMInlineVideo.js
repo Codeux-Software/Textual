@@ -45,16 +45,6 @@ _ICMInlineVideoPrototype.prototype = Object.create(InlineMediaPrototype.prototyp
 _ICMInlineVideoPrototype.prototype.constructor = _ICMInlineVideoPrototype; 
 _ICMInlineVideoPrototype.prototype.superClass = _ICMInlineVideoPrototypeParent.prototype;
 
-_ICMInlineVideoPrototype.prototype.didShowElement = function(element, mediaId) /* PUBLIC */
-{
-	this.autoplayVideoInContainer(element);
-};
-
-_ICMInlineVideoPrototype.prototype.didHideElement = function(element, mediaId) /* PUBLIC */
-{
-	this.pauseVideoInContainer(element);
-};
-
 var _ICMInlineVideo = new _ICMInlineVideoPrototype();
 
 _ICMInlineVideo.metadataLoadedCallback = function()
@@ -83,22 +73,4 @@ _ICMInlineVideo.dataLoadedCallback = function()
 	the scroller to restore the scroll position. */
 
 	TextualScroller.restoreScrolledToBottom();
-};
-
-_ICMInlineVideo.autoplayVideoInContainer = function(videoContainer)
-{
-	var video = videoContainer.getElementsByTagName("video")[0];
-	
-	if (video.autoplay && video.paused) {
-		video.play();
-	}
-};
-
-_ICMInlineVideo.pauseVideoInContainer = function(videoContainer)
-{
-	var video = videoContainer.getElementsByTagName("video")[0];
-
-	if (!video.paused) {
-		video.pause();
-	}
 };

@@ -13,7 +13,6 @@
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
 		4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D161F93C20700FD581F /* ICMInlineVideo.js */; };
 		4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D1A1F943F0D00FD581F /* ICMVimeo.m */; };
-		4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1D1F943F2B00FD581F /* ICMVimeo.js */; };
 		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
 		4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D261F94465F00FD581F /* ICMImgurGifv.m */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
@@ -32,26 +31,21 @@
 		4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FF41F92D43000B116A4 /* ICMYouTube.m */; };
 		4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */; };
 		4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */; };
-		4C9810001F939F4800B116A4 /* ICMYouTube.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FFE1F939ADF00B116A4 /* ICMYouTube.js */; };
 		4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */; };
 		4C9810081F93AE4B00B116A4 /* ICMInlineVideoCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810071F93AE4B00B116A4 /* ICMInlineVideoCheck.m */; };
 		4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810101F93BA8100B116A4 /* ICMCommonInlineVideos.m */; };
 		4C9810131F93BC5D00B116A4 /* ICMInlineVideo.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */; };
 		4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */; };
 		4C9CAC631F958658006887B7 /* ICMDailymotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CAC621F9585B8006887B7 /* ICMDailymotion.m */; };
-		4C9CAC691F959582006887B7 /* ICMDailymotion.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C9CAC651F958B70006887B7 /* ICMDailymotion.js */; };
 		4C9CAC6A1F959585006887B7 /* ICMDailymotion.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C9CAC641F958B70006887B7 /* ICMDailymotion.mustache */; };
 		4C9CAC6E1F967F71006887B7 /* ICMStreamable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CAC6C1F967F3E006887B7 /* ICMStreamable.m */; };
 		4C9CAC751F96A2D7006887B7 /* ICMGfycat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9CAC731F96A2A6006887B7 /* ICMGfycat.m */; };
 		4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D30E1F97CDB4006714D6 /* ICMPornhub.m */; };
-		4CA5D3141F97D05B006714D6 /* ICMPornhub.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3121F97CF54006714D6 /* ICMPornhub.js */; };
 		4CA5D3151F97D05B006714D6 /* ICMPornhub.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3131F97CF54006714D6 /* ICMPornhub.mustache */; };
 		4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3161F97D3ED006714D6 /* ICMXkcd.m */; };
 		4CA5D31D1F97D75E006714D6 /* ICMTwitchClips.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D31B1F97D73D006714D6 /* ICMTwitchClips.m */; };
-		4CA5D3211F97D79D006714D6 /* ICMTwitchClips.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3201F97D791006714D6 /* ICMTwitchClips.js */; };
 		4CA5D3221F97D79F006714D6 /* ICMTwitchClips.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D31F1F97D791006714D6 /* ICMTwitchClips.mustache */; };
 		4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */; };
-		4CA5D3281F98275B006714D6 /* ICMTwitchLive.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3231F9810AE006714D6 /* ICMTwitchLive.js */; };
 		4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
@@ -64,7 +58,6 @@
 			dstPath = Components;
 			dstSubfolderSpec = 7;
 			files = (
-				4C9CAC691F959582006887B7 /* ICMDailymotion.js in CopyFiles */,
 				4C9CAC6A1F959585006887B7 /* ICMDailymotion.mustache in CopyFiles */,
 				4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */,
 				4C8C84301F8E368B00062FFD /* ICMInlineImage.js in CopyFiles */,
@@ -72,15 +65,10 @@
 				4C9810131F93BC5D00B116A4 /* ICMInlineVideo.css in CopyFiles */,
 				4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */,
 				4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */,
-				4CA5D3141F97D05B006714D6 /* ICMPornhub.js in CopyFiles */,
 				4CA5D3151F97D05B006714D6 /* ICMPornhub.mustache in CopyFiles */,
-				4CA5D3211F97D79D006714D6 /* ICMTwitchClips.js in CopyFiles */,
 				4CA5D3221F97D79F006714D6 /* ICMTwitchClips.mustache in CopyFiles */,
-				4CA5D3281F98275B006714D6 /* ICMTwitchLive.js in CopyFiles */,
 				4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */,
-				4C576D221F9442C800FD581F /* ICMVimeo.js in CopyFiles */,
 				4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */,
-				4C9810001F939F4800B116A4 /* ICMYouTube.js in CopyFiles */,
 				4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,7 +100,6 @@
 		4C576D161F93C20700FD581F /* ICMInlineVideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineVideo.js; path = Resources/Modules/ICMInlineVideo.js; sourceTree = "<group>"; };
 		4C576D1A1F943F0D00FD581F /* ICMVimeo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMVimeo.m; path = Classes/Modules/Vimeo/ICMVimeo.m; sourceTree = "<group>"; };
 		4C576D1B1F943F0D00FD581F /* ICMVimeo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMVimeo.h; path = Classes/Modules/Vimeo/ICMVimeo.h; sourceTree = "<group>"; };
-		4C576D1D1F943F2B00FD581F /* ICMVimeo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMVimeo.js; path = Resources/Modules/Vimeo/ICMVimeo.js; sourceTree = "<group>"; };
 		4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
 		4C576D251F94465E00FD581F /* ICMImgurGifv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMImgurGifv.h; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.h"; sourceTree = "<group>"; };
 		4C576D261F94465F00FD581F /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
@@ -142,7 +129,6 @@
 		4C980FF51F92D43000B116A4 /* ICMYouTube.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMYouTube.h; path = Classes/Modules/YouTube/ICMYouTube.h; sourceTree = "<group>"; };
 		4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMYouTube.mustache; path = Resources/Modules/YouTube/ICMYouTube.mustache; sourceTree = "<group>"; };
 		4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineImage.css; path = Resources/Modules/ICMInlineImage.css; sourceTree = "<group>"; };
-		4C980FFE1F939ADF00B116A4 /* ICMYouTube.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMYouTube.js; path = Resources/Modules/YouTube/ICMYouTube.js; sourceTree = "<group>"; };
 		4C9810011F93ABE700B116A4 /* ICMInlineVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineVideo.h; path = "Classes/Modules/Root Classes/ICMInlineVideo.h"; sourceTree = "<group>"; };
 		4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineVideo.m; path = "Classes/Modules/Root Classes/ICMInlineVideo.m"; sourceTree = "<group>"; };
 		4C9810061F93AE4B00B116A4 /* ICMInlineVideoCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineVideoCheck.h; path = "Classes/Modules/Root Classes/ICMInlineVideoCheck.h"; sourceTree = "<group>"; };
@@ -154,22 +140,18 @@
 		4C9CAC611F9585B8006887B7 /* ICMDailymotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMDailymotion.h; path = Classes/Modules/Dailymotion/ICMDailymotion.h; sourceTree = "<group>"; };
 		4C9CAC621F9585B8006887B7 /* ICMDailymotion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMDailymotion.m; path = Classes/Modules/Dailymotion/ICMDailymotion.m; sourceTree = "<group>"; };
 		4C9CAC641F958B70006887B7 /* ICMDailymotion.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMDailymotion.mustache; path = Resources/Modules/Dailymotion/ICMDailymotion.mustache; sourceTree = "<group>"; };
-		4C9CAC651F958B70006887B7 /* ICMDailymotion.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMDailymotion.js; path = Resources/Modules/Dailymotion/ICMDailymotion.js; sourceTree = "<group>"; };
 		4C9CAC6B1F967F3E006887B7 /* ICMStreamable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMStreamable.h; path = Classes/Modules/Streamable/ICMStreamable.h; sourceTree = "<group>"; };
 		4C9CAC6C1F967F3E006887B7 /* ICMStreamable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMStreamable.m; path = Classes/Modules/Streamable/ICMStreamable.m; sourceTree = "<group>"; };
 		4C9CAC721F96A2A5006887B7 /* ICMGfycat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMGfycat.h; path = Classes/Modules/Gfycat/ICMGfycat.h; sourceTree = "<group>"; };
 		4C9CAC731F96A2A6006887B7 /* ICMGfycat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMGfycat.m; path = Classes/Modules/Gfycat/ICMGfycat.m; sourceTree = "<group>"; };
 		4CA5D30E1F97CDB4006714D6 /* ICMPornhub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMPornhub.m; path = Classes/Modules/Pornhub/ICMPornhub.m; sourceTree = "<group>"; };
 		4CA5D30F1F97CDB4006714D6 /* ICMPornhub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMPornhub.h; path = Classes/Modules/Pornhub/ICMPornhub.h; sourceTree = "<group>"; };
-		4CA5D3121F97CF54006714D6 /* ICMPornhub.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMPornhub.js; path = Resources/Modules/Pornhub/ICMPornhub.js; sourceTree = "<group>"; };
 		4CA5D3131F97CF54006714D6 /* ICMPornhub.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMPornhub.mustache; path = Resources/Modules/Pornhub/ICMPornhub.mustache; sourceTree = "<group>"; };
 		4CA5D3161F97D3ED006714D6 /* ICMXkcd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMXkcd.m; path = Classes/Modules/xkcd/ICMXkcd.m; sourceTree = "<group>"; };
 		4CA5D3171F97D3ED006714D6 /* ICMXkcd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMXkcd.h; path = Classes/Modules/xkcd/ICMXkcd.h; sourceTree = "<group>"; };
 		4CA5D31B1F97D73D006714D6 /* ICMTwitchClips.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTwitchClips.m; path = "Classes/Modules/Twitch Clips/ICMTwitchClips.m"; sourceTree = "<group>"; };
 		4CA5D31C1F97D73D006714D6 /* ICMTwitchClips.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTwitchClips.h; path = "Classes/Modules/Twitch Clips/ICMTwitchClips.h"; sourceTree = "<group>"; };
 		4CA5D31F1F97D791006714D6 /* ICMTwitchClips.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMTwitchClips.mustache; path = "Resources/Modules/Twitch Clips/ICMTwitchClips.mustache"; sourceTree = "<group>"; };
-		4CA5D3201F97D791006714D6 /* ICMTwitchClips.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTwitchClips.js; path = "Resources/Modules/Twitch Clips/ICMTwitchClips.js"; sourceTree = "<group>"; };
-		4CA5D3231F9810AE006714D6 /* ICMTwitchLive.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTwitchLive.js; path = "Resources/Modules/Twitch Live/ICMTwitchLive.js"; sourceTree = "<group>"; };
 		4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMTwitchLive.mustache; path = "Resources/Modules/Twitch Live/ICMTwitchLive.mustache"; sourceTree = "<group>"; };
 		4CA5D3251F9810D1006714D6 /* ICMTwitchLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTwitchLive.h; path = "Classes/Modules/Twitch Live/ICMTwitchLive.h"; sourceTree = "<group>"; };
 		4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTwitchLive.m; path = "Classes/Modules/Twitch Live/ICMTwitchLive.m"; sourceTree = "<group>"; };
@@ -346,7 +328,6 @@
 		4C576D1C1F943F1B00FD581F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4C576D1D1F943F2B00FD581F /* ICMVimeo.js */,
 				4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */,
 			);
 			name = Resources;
@@ -477,7 +458,6 @@
 			isa = PBXGroup;
 			children = (
 				4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */,
-				4C980FFE1F939ADF00B116A4 /* ICMYouTube.js */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -547,7 +527,6 @@
 		4C9CAC681F958B73006887B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4C9CAC651F958B70006887B7 /* ICMDailymotion.js */,
 				4C9CAC641F958B70006887B7 /* ICMDailymotion.mustache */,
 			);
 			name = Resources;
@@ -584,7 +563,6 @@
 		4CA5D3111F97CF2F006714D6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CA5D3121F97CF54006714D6 /* ICMPornhub.js */,
 				4CA5D3131F97CF54006714D6 /* ICMPornhub.mustache */,
 			);
 			name = Resources;
@@ -612,7 +590,6 @@
 		4CA5D31E1F97D76D006714D6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CA5D3201F97D791006714D6 /* ICMTwitchClips.js */,
 				4CA5D31F1F97D791006714D6 /* ICMTwitchClips.mustache */,
 			);
 			name = Resources;
@@ -621,7 +598,6 @@
 		4CA5D32A1F982764006714D6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CA5D3231F9810AE006714D6 /* ICMTwitchLive.js */,
 				4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */,
 			);
 			name = Resources;
