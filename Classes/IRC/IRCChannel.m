@@ -82,7 +82,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self prepareInitialState];
 	}
-	
+
 	return self;
 }
 
@@ -383,10 +383,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.channelJoinTime = 0;
 
 	self.modeInfo = nil;
-	
+
 	self.status = toStatus;
 
-    self.topic = nil;
+	self.topic = nil;
 
 	[self clearMembers];
 
@@ -405,7 +405,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[client postEventToViewController:@"channelJoined" forChannel:self];
 
 		self.modeInfo = [[IRCChannelMode alloc] initWithChannel:self];
-    }
+	}
 
 	if (self.isPrivateMessage) {
 		IRCUser *user1 = [self.associatedClient findUserOrCreate:self.name];
@@ -431,10 +431,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.statusChangedByAction = YES;
 
 	[self resetStatus:IRCChannelStatusParted];
-  
+
 	if (self.isChannel) {
 		[self.associatedClient postEventToViewController:@"channelParted" forChannel:self];
-    }
+	}
 }
 
 - (void)prepareForPermanentDestruction
@@ -442,9 +442,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.statusChangedByAction = YES;
 
 	[self resetStatus:IRCChannelStatusTerminated];
-	
+
 	[self closeLogFile];
-	
+
 	[self.config destroySecretKeyKeychainItem];
 
 	NSArray *openWindows = [windowController()
@@ -460,7 +460,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[[mainWindow() inputHistoryManager] destroy:self];
-	
+
 	[self.viewController prepareForPermanentDestruction];
 }
 
@@ -469,9 +469,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.statusChangedByAction = YES;
 
 	[self resetStatus:IRCChannelStatusTerminated];
-	
+
 	[self closeLogFile];
-	
+
 	if (self.isPrivateMessage) {
 		[self.config destroySecretKeyKeychainItem];
 	}
@@ -538,7 +538,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(logLine != nil);
 
 	[self.viewController print:logLine completionBlock:completionBlock];
-	
+
 	[self writeToLogLineToLogFile:logLine];
 }
 
@@ -650,7 +650,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(member != nil);
 
 	NSInteger rowIndex = [mainWindowMemberList() rowForItem:member];
-	
+
 	if (rowIndex >= 0) {
 		[mainWindowMemberList() removeItemFromListAtIndex:rowIndex];
 	}
@@ -990,7 +990,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[IRCChannel accessMemberListUsingBlock:^{
 		memberCount = self.memberListStandardSortedContainer.count;
 	}];
-	
+
 	return memberCount;
 }
 
@@ -1115,7 +1115,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[IRCChannel accessMemberListUsingBlock:^{
 		member = self.memberListStandardSortedContainer[index];
 	}];
-	
+
 	return member;
 }
 
@@ -1176,7 +1176,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
 	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
+
 	return [userInterfaceObjects cellRowHeight];
 }
 

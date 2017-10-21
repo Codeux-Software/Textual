@@ -285,17 +285,17 @@ div.line[ltype="notice"] .sender {
 
 div.line[ltype="privmsg"]:not(.selectedUser),
 div.line[ltype="action"]:not(.selectedUser) {
-    transition-property: border-top, border-bottom, background-color;
+	transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 }
 
 div.line[ltype="privmsg"] .time:not(.selectedUser),
 div.line[ltype="action"] .time:not(.selectedUser) {
-    transition: color 0.5s;
+	transition: color 0.5s;
 }
 
 div.line.selectedUser[highlight="false"] .time {
-    transition: color 0.5s ease-in;
+	transition: color 0.5s ease-in;
 	color: #aaa;
 }
 
@@ -304,7 +304,7 @@ div.line.selectedUser[ltype="privmsg"][mtype="myself"] .time {
 }
 
 div.line.selectedUser[highlight="false"] {
-    transition-property: border-top, border-bottom, background-color;
+	transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 
   	z-index: 190;

@@ -715,7 +715,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 		[client removeChannel:channel];
 
 		[mainWindow() adjustSelection];
-		
+
 		[menuController() populateNavgiationChannelList];
 	}
 }

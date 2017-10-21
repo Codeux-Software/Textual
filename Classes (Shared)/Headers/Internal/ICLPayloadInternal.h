@@ -45,8 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSArray<NSString *> *_styleResources;
 	NSArray<NSString *> *_scriptResources;
 	NSString *_html;
-    NSString *_entrypoint;
-    NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
+	NSString *_entrypoint;
+	NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
 
 @private
 	BOOL _objectInitialized;

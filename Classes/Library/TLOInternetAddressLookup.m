@@ -64,7 +64,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(delegate != nil);
 
 	ObjectIsAlreadyInitializedAssert
-	
+
 	if ((self = [super init])) {
 		self.IPv4AddressIsValid = YES;
 		self.IPv6AddressIsValid = YES;

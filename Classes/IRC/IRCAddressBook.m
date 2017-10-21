@@ -107,7 +107,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
-	
+
 	return object;
 }
 
@@ -119,7 +119,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
-	
+
 	return object;
 }
 

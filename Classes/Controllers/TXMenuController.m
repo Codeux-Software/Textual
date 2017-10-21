@@ -586,17 +586,17 @@ NS_ASSUME_NONNULL_BEGIN
 		case 501: // "Disconnect"
 		{
 			BOOL condition = (_clientIsConnected || u.isConnecting);
-			
+
 			menuItem.hidden = (condition == NO);
-			
+
 			return condition;
 		}
 		case 502: // "Cancel Reconnect"
 		{
 			BOOL condition = u.isReconnecting;
-			
+
 			menuItem.hidden = (condition == NO);
-			
+
 			return condition;
 		}
 		case 503: // "Change Nickname…"
@@ -652,7 +652,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (_isChannel) {
 				menuItem.title = TXTLS(@"BasicLanguage[1012]");
-				
+
 				return YES;
 			} else if (_isQuery) {
 				menuItem.title = TXTLS(@"BasicLanguage[1013]");
@@ -685,7 +685,7 @@ NS_ASSUME_NONNULL_BEGIN
 					channelCount++;
 				}
 			}
-			
+
 			return (channelCount > 0);
 		}
 		case 203: // "Close Window"
@@ -713,7 +713,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 					if (_isChannel) {
 						menuItem.title = TXTLS(@"BasicLanguage[1010]");
-						
+
 						if (_channelIsntActive) {
 							return NO;
 						}
@@ -722,23 +722,23 @@ NS_ASSUME_NONNULL_BEGIN
 					} else if (_isUtility) {
 						menuItem.title = TXTLS(@"BasicLanguage[1007]");
 					}
-					
+
 					break;
 				}
 				case TXCommandWKeyDisconnectAction:
 				{
 					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.networkNameAlt);
-					
+
 					if (_clientIsntConnected) {
 						return NO;
 					}
-					
+
 					break;
 				}
 				case TXCommandWKeyTerminateAction:
 				{
 					menuItem.title = TXTLS(@"BasicLanguage[1011]");
-					
+
 					break;
 				}
 				default:
@@ -757,15 +757,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return [TPCPreferences logHighlights];
 		}
-        case 961: // Developer Mode
-        {
+		case 961: // Developer Mode
+		{
 			if ([TPCPreferences developerModeEnabled]) {
-                menuItem.state = NSOnState;
-            } else {  
-                menuItem.state = NSOffState;
-            }
-            
-            return YES;
+				menuItem.state = NSOnState;
+			} else {  
+				menuItem.state = NSOffState;
+			}
+
+			return YES;
 		}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -884,12 +884,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _userControlsMenuAllModesGivenMenuTag		1506
 #define _userControlsMenuAllModesTakenMenuTag		1510
-			
+
 #define _userControlsMenuGiveModeOMenuTag			1503
 #define _userControlsMenuGiveModeHMenuTag			1504
 #define _userControlsMenuGiveModeVMenuTag			1505
 #define _userControlsMenuGiveModeSeparatorTag		1529
-			
+
 #define _userControlsMenuTakeModeOMenuTag			1507
 #define _userControlsMenuTakeModeHMenuTag			1508
 #define _userControlsMenuTakeModeVMenuTag			1509
@@ -943,7 +943,7 @@ NS_ASSUME_NONNULL_BEGIN
 					_ui(_userControlsMenuGiveModeHMenuTag,  UserHasModeH)
 					_ui(_userControlsMenuTakeModeHMenuTag, (UserHasModeH == NO))
 				}
-				
+
 				BOOL hideTakeSepItem = (UserHasModeO == NO  || UserHasModeH == NO  || UserHasModeV == NO);
 				BOOL hideGiveSepItem = (UserHasModeO || UserHasModeH || UserHasModeV);
 
@@ -969,12 +969,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #undef _userControlsMenuAllModesTakenMenuTag
 #undef _userControlsMenuAllModesGivenMenuTag
-			
+
 #undef _userControlsMenuGiveModeOMenuTag
 #undef _userControlsMenuGiveModeHMenuTag
 #undef _userControlsMenuGiveModeVMenuTag
 #undef _userControlsMenuGiveModeSeparatorTag
-			
+
 #undef _userControlsMenuTakeModeOMenuTag
 #undef _userControlsMenuTakeModeHMenuTag
 #undef _userControlsMenuTakeModeVMenuTag
@@ -1183,7 +1183,7 @@ NS_ASSUME_NONNULL_BEGIN
 				if (keyboardIndex == 10) {
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
-				
+
 				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
 														 target:self
 														 action:@selector(navigateToChannelInNavigationList:)
@@ -1200,7 +1200,7 @@ NS_ASSUME_NONNULL_BEGIN
 			channelCount += 1;
 		}
 	}
-	
+
 #undef _channelNavigationMenuEntryMenuTag
 }
 
@@ -1242,13 +1242,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Return a specific nickname for WebView events */
 	NSString *pointedNickname = nil;
-	
+
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		pointedNickname = ((NSMenuItem *)sender).userInfo;
 	} else {
 		pointedNickname = self.pointedNickname;
 	}
-	
+
 	if (pointedNickname) {
 		if (returnStrings) {
 			return @[pointedNickname];
@@ -1289,7 +1289,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return; // Nothing to deselect when our sender used userInfo
 		}
 	}
-	
+
 	if (self.pointedNickname) {
 		self.pointedNickname = nil;
 
@@ -1402,7 +1402,7 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				[worldController() destroyChannel:c];
 			}
-			
+
 			break;
 		}
 		case TXCommandWKeyDisconnectAction:
@@ -1410,15 +1410,15 @@ NS_ASSUME_NONNULL_BEGIN
 			if (_clientIsntConnected) {
 				return;
 			}
-			
+
 			[u quit];
-			
+
 			break;
 		}
 		case TXCommandWKeyTerminateAction:
 		{
 			[NSApp terminate:nil];
-			
+
 			break;
 		}
 		default:
@@ -1452,12 +1452,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showPreferencesWindowWithSelection:(TDCPreferencesControllerNavigationSelection)selection
 {
 	_popWindowViewIfExists(@"TDCPreferencesController");
-	
+
 	TDCPreferencesController *controller =
 	[TDCPreferencesController new];
-	
+
 	controller.delegate = (id)self;
-	
+
 	[controller show:selection];
 
 	[windowController() addWindowToWindowList:controller];
@@ -1534,7 +1534,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showAcknowledgements:(id)sender
 {
 	NSString *AcknowledgementsPath = [RZMainBundle() pathForResource:@"Acknowledgements" ofType:@"pdf" inDirectory:@"Documentation"];
-	
+
 	(void)[RZWorkspace() openFile:AcknowledgementsPath];
 }
 
@@ -1711,7 +1711,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClient || _clientIsConnected || u.isQuitting) {
 		return;
 	}
-	
+
 	[u connect:IRCClientConnectNormalMode preferIPv4:NO bypassProxy:NO];
 
 	[mainWindow() expandClient:u];
@@ -1750,7 +1750,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClient || _clientIsntConnected || u.isQuitting) {
 		return;
 	}
-	
+
 	[u quit];
 }
 
@@ -1761,7 +1761,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClient) {
 		return;
 	}
-	
+
 	[u cancelReconnect];
 }
 
@@ -1773,7 +1773,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = self.selectedClient;
-	
+
 	if (_noClient || _clientIsntLoggedIn) {
 		return;
 	}
@@ -1797,7 +1797,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClient || _clientIsntLoggedIn) {
 		return;
 	}
-	
+
 	[u changeNickname:nickname];
 }
 
@@ -1812,11 +1812,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showServerChannelList:(id)sender
 {
 	IRCClient *u = self.selectedClient;
-	
+
 	if (_noClient || _clientIsntLoggedIn) {
 		return;
 	}
-	
+
 	[u createChannelListDialog];
 
 	[u requestChannelList];
@@ -1825,7 +1825,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addServer:(id)sender
 {
 	[windowController() popMainWindowSheetIfExists];
-	
+
 	TDCServerPropertiesSheet *sheet =
 	[[TDCServerPropertiesSheet alloc] initWithClient:nil];
 
@@ -1841,17 +1841,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)duplicateServer:(id)sender
 {
 	IRCClient *u = self.selectedClient;
-	
+
 	if (_noClient) {
 		return;
 	}
 
 	IRCClientConfigMutable *config = [u.config uniqueCopyMutable];
-	
+
 	config.connectionName = [config.connectionName stringByAppendingString:@"_"];
-	
+
 	IRCClient *newClient = [worldController() createClientWithConfig:config reload:YES];
-	
+
 	if (newClient.config.sidebarItemExpanded) { // Only expand new client if old was expanded already.
 		[mainWindow() expandClient:newClient];
 	}
@@ -1862,7 +1862,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteServer:(id)sender
 {
 	IRCClient *u = self.selectedClient;
-	
+
 	if (_noClient || _clientIsConnected) {
 		return;
 	}
@@ -1918,7 +1918,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(client != nil);
 
 	[windowController() popMainWindowSheetIfExists];
-	
+
 	TDCServerPropertiesSheet *sheet = [[TDCServerPropertiesSheet alloc] initWithClient:client];
 
 	sheet.delegate = self;
@@ -1960,9 +1960,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (sameEncoding == NO) {
 		[mainWindow() reloadTheme];
 	}
-	
+
 	[mainWindow() reloadTreeGroup:u];
-	
+
 	[worldController() save];
 }
 
@@ -1991,7 +1991,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	u.inUserInvokedJoinRequest = YES;
-	
+
 	[u joinChannel:c];
 }
 
@@ -1999,11 +1999,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
-	
+
 	if (_noClientOrChannel || (_isChannel && (_clientIsntLoggedIn || _channelIsntActive))) {
 		return;
 	}
-	
+
 	if (_isChannel) {
 		[u partChannel:c];
 
@@ -2019,16 +2019,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showServerHighlightList:(id)sender
 {
 	[windowController() popMainWindowSheetIfExists];
-	
+
 	IRCClient *u = self.selectedClient;
-	
+
 	if (_noClient) {
 		return;
 	}
-	
+
 	TDCServerHighlightListSheet *sheet =
 	[[TDCServerHighlightListSheet alloc] initWithClient:u];
-	
+
 	sheet.delegate = (id)self;
 
 	sheet.window = mainWindow();
@@ -2132,14 +2132,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
-	
+
 	if (_noClientOrChannel || _isChannel == NO) {
 		return;
 	}
-	
+
 	TDCChannelModifyModesSheet *sheet =
 	[[TDCChannelModifyModesSheet alloc] initWithChannel:c];
-	
+
 	sheet.delegate = (id)self;
 
 	sheet.window = mainWindow();
@@ -2157,7 +2157,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	NSString *changeString = [c.modeInfo getChangeCommand:modes];
 
 	if (changeString.length == 0) {
@@ -2216,13 +2216,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addChannel:(id)sender
 {
 	[windowController() popMainWindowSheetIfExists];
-	
+
 	IRCClient *u = self.selectedClient;
-	
+
 	if (_noClient) {
 		return;
 	}
-	
+
 	TDCChannelPropertiesSheet *sheet =
 	[[TDCChannelPropertiesSheet alloc] initWithClient:u];
 
@@ -2238,7 +2238,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteChannel:(id)sender
 {
 	IRCChannel *c = self.selectedChannel;
-	
+
 	if (_noChannel) {
 		return;
 	}
@@ -2250,12 +2250,12 @@ NS_ASSUME_NONNULL_BEGIN
 											   alternateButton:TXTLS(@"Prompts[0002]")
 												suppressionKey:@"delete_channel"
 											   suppressionText:nil];
-		
+
 		if (result == NO) {
 			return;
 		}
 	}
-	
+
 	[worldController() destroyChannel:c];
 
 	[worldController() save];
@@ -2274,7 +2274,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _isChannel == NO) {
 		return;
 	}
-	
+
 	TDCChannelPropertiesSheet *sheet =
 	[[TDCChannelPropertiesSheet alloc] initWithChannel:c];
 
@@ -2306,7 +2306,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[c updateConfig:config];
-	
+
 	[worldController() save];
 }
 
@@ -2397,7 +2397,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
-	
+
 	if (action == TXUserDoubleClickWhoisAction) {
 		[self whoisSelectedMembers:sender];
 	} else if (action == TXUserDoubleClickPrivateMessageAction) {
@@ -2424,7 +2424,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
-    
+
 	if (_noClientOrChannel) {
 		return;
 	}
@@ -2438,14 +2438,14 @@ NS_ASSUME_NONNULL_BEGIN
 	[self deselectMembers:sender];
 
 	TVCMainWindowTextView *textView = mainWindowTextField();
-    
+
 	NSRange selectedRange = textView.selectedRange;
 
 	NSMutableString *stringToInsert = [NSMutableString string];
-    
+
 	if (selectedRange.location > 0) {
 		UniChar previousCharacter = [textView.stringValue characterAtIndex:(selectedRange.location - 1)];
-        
+
 		if (previousCharacter != ' ') {
 			[stringToInsert appendString:@" "];
 		}
@@ -2457,9 +2457,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *completionSuffix = [TPCPreferences tabCompletionSuffix];
 
-    if (completionSuffix != nil) {
+	if (completionSuffix != nil) {
 		[stringToInsert appendString:completionSuffix];
-    }
+	}
 
 	[textView replaceCharactersInRange:selectedRange withString:stringToInsert];
 
@@ -2500,7 +2500,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		IRCChannel *query = [u findChannelOrCreate:nickname isPrivateMessage:YES];
-		
+
 		[mainWindow() select:query];
 	}
 
@@ -2530,7 +2530,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self deselectMembers:sender];
 
 	NSMutableArray<NSString *> *channels = [NSMutableArray array];
-	
+
 	for (IRCChannel *e in u.channelList) {
 		if (c != e && e.isChannel) {
 			[channels addObject:e.name];
@@ -2543,7 +2543,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TDCChannelInviteSheet *sheet =
 	[[TDCChannelInviteSheet alloc] initWithNicknames:nicknames onClient:u];
-	
+
 	sheet.delegate = (id)self;
 
 	sheet.window = mainWindow();
@@ -2578,15 +2578,15 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
-	
+
 	if (_noClientOrChannel) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		[u sendCTCPPing:nickname];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2618,7 +2618,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_time") text:nil];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2634,7 +2634,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_version") text:nil];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2650,7 +2650,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_userinfo") text:nil];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2666,7 +2666,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_clientinfo") text:nil];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2686,7 +2686,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(sender != nil);
 
 	NSString *pointedChannelName = nil;
-	
+
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
 		pointedChannelName = ((NSMenuItem *)sender).userInfo;
 	} else if ([sender isKindOfClass:[NSString class]]) {
@@ -2698,7 +2698,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (pointedChannelName == nil) {
 		return;
 	}
-	
+
 	IRCClient *u = self.selectedClient;
 
 	if (_noClient || _clientIsntLoggedIn) {
@@ -2706,7 +2706,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	u.inUserInvokedJoinRequest = YES;
-	
+
 	[u joinUnlistedChannel:pointedChannelName];
 }
 
@@ -2734,12 +2734,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showWelcomeSheet:(id)sender
 {
 	[windowController() popMainWindowSheetIfExists];
-	
+
 	TDCWelcomeSheet *sheet =
 	[[TDCWelcomeSheet alloc] initWithWindow:mainWindow()];
-	
+
 	sheet.delegate = (id)self;
-	
+
 	[sheet start];
 
 	[windowController() addWindowToWindowList:sheet];
@@ -2748,9 +2748,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOk:(IRCClientConfig *)config
 {
 	IRCClient *u = [worldController() createClientWithConfig:config reload:YES];
-	
+
 	[mainWindow() expandClient:u];
-	
+
 	[worldController() save];
 
 	[u connect];
@@ -2769,7 +2769,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showAboutWindow:(id)sender
 {
 	_popWindowViewIfExists(@"TDCAboutDialog");
-	
+
 	TDCAboutDialog *dialog = [TDCAboutDialog new];
 
 	dialog.delegate = (id)self;
@@ -2870,11 +2870,11 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		[u kick:nickname inChannel:c];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2886,13 +2886,13 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		NSString *command = [NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("ban"), nickname];
 
 		[u sendCommand:command completeTarget:YES target:c.name];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2904,13 +2904,13 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kickban"), nickname, [TPCPreferences defaultKickMessage]];
 
 		[u sendCommand:command completeTarget:YES target:c.name];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2922,13 +2922,13 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kill"), nickname, [TPCPreferences IRCopDefaultKillMessage]];
 
 		[u sendCommand:command];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2940,9 +2940,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-        if ([nickname isEqualIgnoringCase:u.userNickname]) {
+		if ([nickname isEqualIgnoringCase:u.userNickname]) {
 			[u printDebugInformation:TXTLS(@"IRC[1004]", u.serverAddress) inChannel:c];
 
 			continue;
@@ -2951,8 +2951,8 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), nickname, [TPCPreferences IRCopDefaultGlineMessage]];
 
 		[u sendCommand:command];
-    }
-	
+	}
+
 	[self deselectMembers:sender];
 }
 
@@ -2964,13 +2964,13 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn) {
 		return;
 	}
-	
+
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("shun"), nickname, [TPCPreferences IRCopDefaultShunMessage]];
 
 		[u sendCommand:command];
 	}
-	
+
 	[self deselectMembers:sender];
 }
 
@@ -2998,20 +2998,20 @@ NS_ASSUME_NONNULL_BEGIN
 	openPanel.canChooseFiles = YES;
 	openPanel.canCreateDirectories = NO;
 	openPanel.resolvesAliases = YES;
-	
+
 	[openPanel beginSheetModalForWindow:mainWindow() completionHandler:^(NSInteger returnCode) {
 		if (returnCode != NSModalResponseOK) {
 			return;
 		}
 
 		[self.fileTransferController.fileTransferTable beginUpdates];
-		
+
 		for (NSString *nickname in nicknames) {
 			for (NSURL *path in openPanel.URLs) {
 				(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:path.path autoOpen:YES];
 			}
 		}
-		
+
 		[self.fileTransferController.fileTransferTable endUpdates];
 	}];
 }
@@ -3036,9 +3036,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
 		return;
 	}
-	
+
 	IRCChannelUser *member = [mainWindowMemberList() itemAtRow:row];
-	
+
 	[self memberSendDroppedFiles:files to:member.user.nickname];
 }
 
@@ -3075,7 +3075,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)openLogLocation:(id)sender
 {	
 	NSURL *path = [TPCPathInfo transcriptFolderURL];
-	
+
 	if ([RZFileManager() fileExistsAtURL:path]) {
 		(void)[RZWorkspace() openURL:path];
 
@@ -3096,9 +3096,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel) {
 		return;
 	}
-	
+
 	NSURL *path = c.logFilePath;
-	
+
 	if ([RZFileManager() fileExistsAtURL:path]) {
 		(void)[RZWorkspace() openURL:path];
 
@@ -3125,7 +3125,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
-	
+
 	if (_noClientOrChannel || _clientIsntLoggedIn) {
 		return;
 	}
@@ -3176,7 +3176,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	[u createChannelBanListSheet];
 
 	[u sendModes:@"+b" withParameters:nil inChannel:c];
@@ -3190,7 +3190,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	[u createChannelBanExceptionListSheet];
 
 	[u sendModes:@"+e" withParameters:nil inChannel:c];
@@ -3204,7 +3204,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	[u createChannelInviteExceptionListSheet];
 
 	[u sendModes:@"+I" withParameters:nil inChannel:c];
@@ -3243,9 +3243,9 @@ NS_ASSUME_NONNULL_BEGIN
 	   @(943) : @"https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb",
 	   @(944) : @"https://help.codeux.com/textual/DCC-File-Transfer-Information.kb"
 	};
-	
+
 	NSString *link = _helpMenuLinks[@([sender tag])];
-	
+
 	[TLOpenLink openWithString:link inBackground:NO];
 }
 
@@ -3298,7 +3298,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	for (IRCClient *u in worldController().clientList) {
 		NSMutableArray *channelList = [u.channelList mutableCopy];
-		
+
 		[channelList sortUsingComparator:^NSComparisonResult(IRCChannel *channel1, IRCChannel *channel2) {
 			if (channel1.isChannel && channel2.isChannel == NO) {
 				return NSOrderedAscending;
@@ -3306,19 +3306,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSString *name1 = channel1.name.lowercaseString;
 			NSString *name2 = channel2.name.lowercaseString;
-			
+
 			return [name1 compare:name2];
 		}];
 
 		if (NSObjectsAreEqual(u.channelList, channelList)) {
 			continue;
 		}
-		
+
 		u.channelList = channelList;
 
 		[u reloadServerListItems];
 	}
-	
+
 	[worldController() save];
 }
 
@@ -3348,9 +3348,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	NSString *modeSymbol = nil;
-	
+
 	if ([sender tag] == _toggleChannelModerationModeOffTag) {
 		modeSymbol = @"-m";
 	} else {
@@ -3365,16 +3365,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)toggleChannelInviteMode:(id)sender
 {
 #define _toggleChannelInviteStatusModeOffTag		614
-	
+
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
 	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
 		return;
 	}
-	
+
 	NSString *modeSymbol = nil;
-	
+
 	if ([sender tag] == _toggleChannelInviteStatusModeOffTag) {
 		modeSymbol = @"-i";
 	} else {
@@ -3418,7 +3418,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onPreviousHighlight:(id)sender
 {
 	TVCLogController *viewController = self.selectedViewController;
-	
+
 	if (viewController) {
 		[viewController previousHighlight];
 	}
@@ -3528,7 +3528,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state
 {
 	[TPCPreferences setSoundIsMuted:(state == NSOnState)];
-	
+
 	self.muteNotificationsSoundsDockMenuItem.state = state;
 
 	self.muteNotificationsSoundsFileMenuItem.state = state;
@@ -3536,11 +3536,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)toggleMuteOnNotificationSounds:(id)sender
 {
-    if ([TPCPreferences soundIsMuted]) {
+	if ([TPCPreferences soundIsMuted]) {
 		[self toggleMuteOnNotificationSoundsShortcut:NSOffState];
-    } else {
+	} else {
 		[self toggleMuteOnNotificationSoundsShortcut:NSOnState];
-    }
+	}
 }
 
 - (void)toggleMuteOnNotifications:(id)sender
@@ -3573,7 +3573,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)toggleMainWindowAppearance:(id)sender
 {
 	[TPCPreferences setInvertSidebarColors:([TPCPreferences invertSidebarColors] == NO)];
-	
+
 	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
 }
 

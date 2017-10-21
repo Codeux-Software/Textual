@@ -92,7 +92,6 @@ NS_ASSUME_NONNULL_BEGIN
 		return panel;
 	}
 
-
 	/* Retain the trust so that it is not released from underneath us. */
 	CFRetain(trustRef);
 

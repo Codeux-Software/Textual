@@ -136,8 +136,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 					NSUInteger colorOffset = [bodyWithAttributes.string
 											  colorComponentsOfCharacter:character
 															  startingAt:characterPosition
-													     foregroundColor:&foregroundColor
-													     backgroundColor:&backgroundColor];
+														 foregroundColor:&foregroundColor
+														 backgroundColor:&backgroundColor];
 
 					if (foregroundColor != nil) {
 						[bodyWithAttributes addAttribute:TVCLogRendererFormattingForegroundColorAttribute value:foregroundColor startingAt:characterPosition];
@@ -898,7 +898,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	[self->_bodyWithAttributes
 	 enumerateAttributesInRange:NSMakeRange(0, stringLength)
-					    options:0
+						options:0
 					 usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange range, BOOL *stop) {
 		 BOOL isFirstFragment = (range.location == 0);
 		 BOOL isLastFragment = ((range.location + range.length) == stringLength);
@@ -925,8 +925,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	[self->_bodyWithAttributes
 		 enumerateAttributesInRange:NSMakeRange(0, string.length)
-						    options:0
-					     usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange range, BOOL *stop) {
+							options:0
+						 usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange range, BOOL *stop) {
 			 NSDictionary *attributesToAdd = [self appKitAttributesFromRendererAttributes:attributes];
 
 			 [finalResult addAttributes:attributesToAdd range:range];

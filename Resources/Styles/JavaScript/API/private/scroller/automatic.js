@@ -94,10 +94,10 @@ _TextualScroller.performScrollCancel = function() /* PRIVATE */
 {
 	if (_TextualScroller._performScrollTimeout) {
 		clearTimeout(_TextualScroller._performScrollTimeout);
-		
+
 		_TextualScroller._performScrollTimeout = null;
 	}
-	
+
 	_TextualScroller._performScrollNextPass = undefined;
 };
 
@@ -130,7 +130,7 @@ _TextualScroller.performScroll = function() /* PRIVATE */
 	if (!TextualScroller.automaticScrollingEnabled) {
 		return;
 	}
-	
+
 	/* Do not perform automatic scroll if the document is not visible. */
 	if (!TextualScroller.documentIsVisible) {
 		return;
@@ -198,9 +198,9 @@ _TextualScroller._mutationObserverCallback = function(mutations) /* PRIVATE */
 _TextualScroller.createMutationObserver = function() /* PRIVATE */
 {
 	var buffer = MessageBuffer.bufferElement();
-	
+
 	var observer = new MutationObserver(_TextualScroller._mutationObserverCallback);
-	
+
 	observer.observe(
 		buffer, 
 

@@ -64,18 +64,18 @@ ConversationTracking.nicknameSingleClickEventCallback = function(senderElement)
 	}
 
 	/* Gather basic information */
-    var documentBody = Textual.documentBodyElement();
+	var documentBody = Textual.documentBodyElement();
 
-    var plainTextLines = documentBody.querySelectorAll('div[ltype="privmsg"], div[ltype="action"]');
+	var plainTextLines = documentBody.querySelectorAll('div[ltype="privmsg"], div[ltype="action"]');
 
 	/* Update all elements of the DOM matching conditions */
-    for (var i = 0; i < plainTextLines.length; i++) {
-        var lineSender = plainTextLines[i].querySelector(".sender");
+	for (var i = 0; i < plainTextLines.length; i++) {
+		var lineSender = plainTextLines[i].querySelector(".sender");
 
-        if (lineSender && lineSender.getAttribute("nickname") === nickname) {
+		if (lineSender && lineSender.getAttribute("nickname") === nickname) {
 			ConversationTracking.toggleSelectionStatusForSenderElement(lineSender);
-        }
-    }
+		}
+	}
 };
 
 ConversationTracking.updateNicknameWithNewMessage = function(lineElement)

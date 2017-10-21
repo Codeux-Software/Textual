@@ -7,7 +7,6 @@ of Chris Kempson.
 For more information, see: 
 https://github.com/FroZnShiva/Textual-Style-Tomorrow_Night_Eighties
 
-
 Simplified Light original copyright:
 
 This style is a modified and stripped down version of 

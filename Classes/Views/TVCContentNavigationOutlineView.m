@@ -180,9 +180,9 @@ NS_ASSUME_NONNULL_BEGIN
 	self.lastSelectionWeakRef = navigationItem;
 
 	[self presentView:navigationItem[@"view"]];
-	
+
 	id firstResponder = navigationItem[@"firstResponder"];
-	
+
 	if (firstResponder) {
 		[self.window makeFirstResponder:firstResponder];
 	}

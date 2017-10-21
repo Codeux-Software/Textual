@@ -291,7 +291,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
     if (fromBuffer === false) {
       rs.history.appendChild(clone);
     }
-   
+
     // Colorize it as well
     if (sender.getAttribute('coloroverride') !== 'true') {
       new NickColorGenerator(clone); // colorized the nick
@@ -399,7 +399,7 @@ Textual.nicknameSingleClicked = function (e) {
 Textual.viewBodyDidLoad = function () {
   'use strict';
   Textual.fadeOutLoadingScreen(1.00, 0.95);
-  
+
   /* Disable date changes on OS X Mountain Lion because WebKit does not have some of
      the features that this feature depends on (e.g. -webkit-flex) */
   if (document.documentElement.getAttribute("systemversion").indexOf("10.8.") === 0) {

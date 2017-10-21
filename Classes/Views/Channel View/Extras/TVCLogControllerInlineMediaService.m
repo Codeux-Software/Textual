@@ -175,17 +175,17 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(uniqueIdentifier != nil);
 	NSParameterAssert(lineNumber != nil);
 	NSParameterAssert(item != nil);
-	
+
 	/* WebKit is able to translate an address to punycode
 	 for us by giving it a pasteboard with the URL. */
 	NSURL *url = address.URLUsingWebKitPasteboard;
-	
+
 	if (url == nil) {
 		LogToConsoleError("Address could not be normalized");
-		
+
 		return;
 	}
-	
+
 	[self processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber index:index forItem:item];
 }
 
@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(item != nil);
 
 	[self warmProcessIfNeeded];
-	
+
 	[[self remoteObjectProxy] processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber index:index inView:item.uniqueIdentifier];
 }
 

@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _toolbarItemIndexLogLocation				108007
 #define _toolbarItemIndexDefaultIdentity			108008
 #define _toolbarItemIndexDefualtIRCopMessages		108009
-#define _toolbarItemIndexOffRecordMessaging		    108010
+#define _toolbarItemIndexOffRecordMessaging			108010
 #define _toolbarItemIndexHiddenPreferences			108011 // unused
 
 #define _addonsToolbarInstalledAddonsMenuItemIndex		109000
@@ -116,7 +116,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHiddenPreferences;
-
 
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *shareDataBetweenDevicesView;
@@ -384,7 +383,6 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		_de(_toolbarItemIndexOffRecordMessaging, self.contentViewOffRecordMessaging, _toolbarItemIndexAdvanced)
 #endif
-
 
 		_de(_addonsToolbarInstalledAddonsMenuItemIndex, self.contentViewInstalledAddons, _toolbarItemIndexAddons)
 
@@ -755,33 +753,33 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeStart"]) {
 		NSInteger valueInteger = [*value integerValue];
-		
+
 		NSUInteger valueRangeEnd = [TPCPreferences fileTransferPortRangeEnd];
-		
+
 		if (valueInteger < _fileTransferPortRangeMin) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMin);
 		} else if (_fileTransferPortRangeMax < valueInteger) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMax);
 		}
-		
+
 		valueInteger = [*value integerValue];
-		
+
 		if (valueInteger > valueRangeEnd) {
 			*value = _unsignedIntegerString(valueRangeEnd);
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeEnd"]) {
 		NSInteger valueInteger = [*value integerValue];
-		
+
 		NSUInteger valueRangeStart = [TPCPreferences fileTransferPortRangeStart];
-		
+
 		if (valueInteger < _fileTransferPortRangeMin) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMin);
 		} else if (_fileTransferPortRangeMax < valueInteger) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMax);
 		}
-		
+
 		valueInteger = [*value integerValue];
-		
+
 		if (valueInteger < valueRangeStart) {
 			*value = _unsignedIntegerString(valueRangeStart);
 		}
@@ -821,18 +819,18 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCFileTransferDialog *transferController = [TXSharedApplication sharedFileTransferDialog];
 
 	NSURL *path = transferController.downloadDestinationURL;
-	
+
 	NSMenuItem *item = [self.fileTransferDownloadDestinationButton itemAtIndex:0];
-	
+
 	if (path == nil) {
 		item.image = nil;
-		
+
 		item.title = TXTLS(@"TDCPreferencesController[1003]");
 	} else {
 		NSImage *icon = [RZWorkspace() iconForFile:path.path];
 
 		item.image = icon;
-		
+
 		icon.size = NSMakeSize(16, 16);
 
 		item.title = path.lastPathComponent;
@@ -853,32 +851,32 @@ NS_ASSUME_NONNULL_BEGIN
 		d.canChooseFiles = NO;
 		d.canCreateDirectories = YES;
 		d.resolvesAliases = YES;
-		
+
 		d.prompt = TXTLS(@"Prompts[0006]");
-		
+
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
-			
+
 			if (returnCode != NSModalResponseOK) {
 				return;
 			}
 
 			NSURL *path = d.URLs[0];
-			
+
 			NSError *bookmarkError = nil;
-			
+
 			NSData *bookmark = [path bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
 							  includingResourceValuesForKeys:nil
 											   relativeToURL:nil
 													   error:&bookmarkError];
-			
+
 			if (bookmark == nil) {
 				LogToConsoleError("Error creating bookmark for URL (%{public}@): %{public}@",
 				  path, bookmarkError.localizedDescription);
 			}
 
 			[transferController setDownloadDestinationURL:bookmark];
-			
+
 			[self updateFileTransferDownloadDestinationFolder];
 		}];
 	}
@@ -928,7 +926,7 @@ NS_ASSUME_NONNULL_BEGIN
 		d.canChooseFiles = NO;
 		d.canCreateDirectories = YES;
 		d.resolvesAliases = YES;
-		
+
 		d.prompt = TXTLS(@"Prompts[0006]");
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
@@ -1006,11 +1004,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	 TPCThemeControllerStorageLocation expectedStorageLocation =
 	[TPCThemeController expectedStorageLocationOfThemeWithName:selectedItem.userInfo];
-	
+
 	NSString *newTheme = [TPCThemeController buildFilename:newThemeName forStorageLocation:expectedStorageLocation];
-	
+
 	NSString *currentTheme = [TPCPreferences themeName];
-	
+
 	if ([currentTheme isEqual:newTheme]) {
 		return;
 	}
@@ -1076,9 +1074,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSFont *currentFont = [TPCPreferences themeChannelViewFont];
 
 	[RZFontManager() setSelectedFont:currentFont isMultiple:NO];
-	
+
 	[RZFontManager() orderFrontFontPanel:self];
-	
+
 	RZFontManager().action = @selector(onChangedChannelViewFont:);
 }
 
@@ -1321,7 +1319,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
 #endif
-	
+
 	[self onChangedServerListUnreadBadgeColor:sender];
 }
 
@@ -1379,7 +1377,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onFileTransferIPAddressDetectionMethodChanged:(id)sender
 {
 	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
-	
+
 	self.fileTransferManuallyEnteredIPAddressTextField.enabled = (detectionMethod == TXFileTransferIPAddressManualDetectionMethod);
 }
 
@@ -1434,7 +1432,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[sharedCloudManager() resetDataToSync];
 	} else {
 		[RZUbiquitousKeyValueStore() synchronize];
-		
+
 		[sharedCloudManager() syncEverythingNextSync];
 
 		[sharedCloudManager() synchronizeFromCloud];
@@ -1508,7 +1506,7 @@ NS_ASSUME_NONNULL_BEGIN
 			copyingToCloud = YES;
 		}
 #endif
-		
+
 		if (copyingToCloud) {
 			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openOnCopy:YES];
 		} else {
@@ -1519,7 +1517,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onOpenPathToTheme:(id)sender
 {
-    if (themeController().bundledTheme) {
+	if (themeController().bundledTheme) {
 		[TLOPopupPrompts sheetWindowWithWindow:NSApp.keyWindow
 										  body:TXTLS(@"TDCPreferencesController[1007][2]")
 										 title:TXTLS(@"TDCPreferencesController[1007][1]")
@@ -1529,10 +1527,10 @@ NS_ASSUME_NONNULL_BEGIN
 							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 								   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
 							   }];
-		
+
 		return;
-    }
-		
+	}
+
 	[self openPathToTheme];
 }
 

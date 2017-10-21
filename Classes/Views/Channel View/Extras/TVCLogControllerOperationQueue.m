@@ -214,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 5   Foundation                           0x00007fffa410d79b -[__NSOperationInternal dealloc] + 177
 	 6   Foundation                           0x00007fffa410d664 -[NSOperation dealloc] + 58
 	 7   CoreFoundation                       0x00007fffa27e237e common_removeAllObjects + 254
-	 
+
 	 ... repeated for a total of 512 hops before crashing. */
 	NSOperation *operationDependency = operation.dependencies.firstObject;
 

@@ -52,7 +52,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	if ((self = [super init])) {
 		self.eventType = aEventType;
-		
+
 		return self;
 	}
 

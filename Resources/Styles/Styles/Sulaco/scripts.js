@@ -8,19 +8,19 @@ Sulaco = {
 	{
 		var previousLine = Sulaco.getPreviousLine(line);
 		var previousSender = Sulaco.getSenderNickname(previousLine);
-	
+
 		var sender = Sulaco.getSenderNickname(line);
-	
+
 		if (sender === null || previousSender === null) {
 			return;
 		}
-	
+
 		if (sender === previousSender &&
 			Sulaco.getLineType(line) === 'privmsg' &&
 			Sulaco.getLineType(previousLine) === 'privmsg')
 		{
 			line.classList.add('coalesced');
-	
+
 			Sulaco.getSenderElement(line).innerHTML = '';
 		}
 	},

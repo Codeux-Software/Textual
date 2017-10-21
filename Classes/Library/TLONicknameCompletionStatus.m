@@ -744,13 +744,13 @@ complete_operation:
 - (void)clear
 {
 	[self clearCache];
-	
+
 	self.currentTextViewStringValue = nil;
-	
+
 	self.rangeOfTextSelection = NSEmptyRange();
-	
+
 	self.selectionRangeAfterLastCompletion = NSEmptyRange();
-	
+
 	self.completionIsMovingForward = NO;
 }
 

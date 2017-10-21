@@ -335,7 +335,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	if (NSObjectIsEmpty(format)) {
 		format = [TPCPreferences themeTimestampFormatDefault];
 	}
-	
+
 	NSString *time = TXFormattedTimestamp(self.receivedAt, format);
 
 	return time;

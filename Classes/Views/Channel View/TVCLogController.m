@@ -216,7 +216,7 @@ ClassWithDesignatedInitializerInitMethod
 	/* Delete any trace of the channel, including context */
 	[TVCLogControllerHistoricLogSharedInstance() forgetItem:self.associatedItem];
 }
-	
+
 - (void)historicLogResetChannel
 {
 	/* Delete log for channel but keep context */
@@ -274,7 +274,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (TVCLogControllerPrintingOperationQueue *)printingQueue
 {
-    return [TXSharedApplication sharedPrintingQueue];
+	return [TXSharedApplication sharedPrintingQueue];
 }
 
 - (BOOL)inlineMediaEnabledForView
@@ -860,7 +860,7 @@ ClassWithDesignatedInitializerInitMethod
 	   withUniqueIdentifier:uniqueIdentifier
 			   atLineNumber:lineNumber
 					  index:index
-				    forItem:associatedItem];
+					forItem:associatedItem];
 }
 
 #pragma mark -
@@ -887,7 +887,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.loaded == NO || self.terminating) {
 		return;
 	}
-	
+
 	@synchronized(self.highlightedLineNumbers) {
 		if (self.highlightedLineNumbers.count == 0) {
 			return;
@@ -949,11 +949,11 @@ ClassWithDesignatedInitializerInitMethod
 	if (clearWithReset) {
 		[self historicLogResetChannel];
 	}
-	
+
 	@synchronized(self.highlightedLineNumbers) {
 		[self.highlightedLineNumbers removeAllObjects];
 	}
-	
+
 	self.activeLineCount = 0;
 
 	self.lastVisitedHighlight = nil;
@@ -1084,9 +1084,9 @@ ClassWithDesignatedInitializerInitMethod
 
 		[TVCLogControllerHistoricLogSharedInstance()
 			 fetchEntriesForItem:self.associatedItem
-		    withUniqueIdentifier:lineNumber
-			    beforeFetchLimit:numberOfLinesBefore
-			     afterFetchLimit:numberOfLinesAfter
+			withUniqueIdentifier:lineNumber
+				beforeFetchLimit:numberOfLinesBefore
+				 afterFetchLimit:numberOfLinesAfter
 					 limitToDate:nil
 			 withCompletionBlock:historicLogCompletionBlock];
 	};
@@ -1122,7 +1122,7 @@ ClassWithDesignatedInitializerInitMethod
 			@"lineNumber" : lineNumber,
 			@"html" : html,
 			@"timestamp" : @(logLine.receivedAt.timeIntervalSince1970)
-	    }];
+		}];
 
 		/* Add "Current Session" message */
 		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
@@ -1130,7 +1130,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[renderedLogLines addObject:@{
 				  @"html" : html
-		    }];
+			}];
 		}
 
 		/* Add reference to plugin concrete object */
@@ -1178,7 +1178,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	TVCLogControllerPrintingBlock printBlock = ^(id operation) {
 		NSDictionary<NSString *, id> *resultInfo = nil;
-		
+
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html == nil) {
@@ -1192,11 +1192,11 @@ ClassWithDesignatedInitializerInitMethod
 		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
 
 		BOOL processInlineMedia = [resultInfo boolForKey:@"processInlineMedia"];
-		
+
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
-		
+
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			if (self.terminating) {
 				return;
@@ -1298,7 +1298,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[rendererAttributes maybeSetObject:logLine.excludeKeywords forKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 	[rendererAttributes maybeSetObject:logLine.highlightKeywords forKey:TVCLogRendererConfigurationHighlightKeywordsAttribute];
-	
+
 	[rendererAttributes setBool:renderLinks forKey:TVCLogRendererConfigurationRenderLinksAttribute];
 
 	[rendererAttributes setUnsignedInteger:logLine.lineType forKey:TVCLogRendererConfigurationLineTypeAttribute];
@@ -1333,7 +1333,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSMutableDictionary<NSString *, id> *pathAttributes = [NSMutableDictionary new];
 
 	pathAttributes[@"activeStyleAbsolutePath"] = self.baseURL.path;
-	
+
 	pathAttributes[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	NSMutableDictionary<NSString *, id> *templateAttributes = [pathAttributes mutableCopy];
@@ -1356,7 +1356,7 @@ ClassWithDesignatedInitializerInitMethod
 		templateAttributes[@"isNicknameAvailable"] = @(NO);
 	} else {
 		templateAttributes[@"isNicknameAvailable"] = @(YES);
-		
+
 		templateAttributes[@"nicknameColorNumber"] = logLine.nicknameColorStyle;
 		templateAttributes[@"nicknameColorStyle"] = logLine.nicknameColorStyle;
 
@@ -1365,9 +1365,9 @@ ClassWithDesignatedInitializerInitMethod
 		templateAttributes[@"nicknameColorHashingEnabled"] = @([TPCPreferences disableNicknameColorHashing] == NO);
 
 		templateAttributes[@"nicknameColorHashingIsStyleBased"] = @(themeSettings().nicknameColorStyle != TPCThemeSettingsNicknameColorLegacyStyle);
-		
+
 		templateAttributes[@"formattedNickname"] = nickname.trim;
-		
+
 		templateAttributes[@"nickname"]	= logLine.nickname;
 		templateAttributes[@"nicknameType"]	= logLine.memberTypeString;
 	}
@@ -1421,11 +1421,11 @@ ClassWithDesignatedInitializerInitMethod
 	// ---- //
 
 	NSString *serverName = self.associatedClient.networkNameAlt;
-	
+
 	if (serverName) {
 		templateAttributes[@"configuredServerName"] = serverName;
 	}
-	
+
 	// ---- //
 
 	templateAttributes[@"inlineMediaEnabled"] = @(inlineMedia);
@@ -1502,14 +1502,14 @@ ClassWithDesignatedInitializerInitMethod
 	NSMutableDictionary *templateTokens = [self generateOverrideStyle];
 
 	templateTokens[@"activeStyleAbsolutePath"] = self.baseURL.path;
-	
+
 	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	templateTokens[@"applicationTemplatesPath"] = themeSettings().applicationTemplateRepositoryPath;
 
 	templateTokens[@"cacheToken"] = themeController().cacheToken;
 
-    templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
+	templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
 
 	templateTokens[@"isReloadingStyle"] = @(self.reloadingTheme);
 
@@ -1523,11 +1523,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (self.associatedChannel) {
 		templateTokens[@"isChannelView"] = @(self.associatedChannel.isChannel);
-        templateTokens[@"isPrivateMessageView"] = @(self.associatedChannel.isPrivateMessage);
+		templateTokens[@"isPrivateMessageView"] = @(self.associatedChannel.isPrivateMessage);
 		templateTokens[@"isUtilityView"] = @(self.associatedChannel.isUtility);
 
 		templateTokens[@"channelName"] = self.associatedChannel.name;
-		
+
 		templateTokens[@"viewTypeToken"] = self.associatedChannel.channelTypeString;
 	} else {
 		templateTokens[@"viewTypeToken"] = @"server";
@@ -1565,9 +1565,9 @@ ClassWithDesignatedInitializerInitMethod
 		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
-		
+
 		NSString *timeFormat = themeSettings().themeTimestampFormat;
-		
+
 		if (timeFormat == nil) {
 			timeFormat = [TPCPreferences themeTimestampFormat];
 		}

@@ -106,7 +106,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		[self.delegate serverChangeNicknameSheet:self didInputNickname:newNickname];
 	}
-	
+
 	[super ok:sender];
 }
 

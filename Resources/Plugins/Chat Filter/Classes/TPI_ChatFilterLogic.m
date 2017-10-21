@@ -462,7 +462,7 @@ NS_ASSUME_NONNULL_BEGIN
 			inChannel:filterActionReportQuery
 			   asType:TVCLogLinePrivateMessageType
 			  command:IRCPrivateCommandIndex("privmsg")];
-		
+
 		[client setUnreadStateForChannel:filterActionReportQuery];
 	}
 }

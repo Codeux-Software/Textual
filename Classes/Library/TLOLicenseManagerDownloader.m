@@ -124,7 +124,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 	NSDictionary *contextInfo = @{
 		@"receiptData" : receiptData,
 		@"licenseOwnerMacAddress" : macAddress
-    };
+	};
 
 	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType
 								context:contextInfo];

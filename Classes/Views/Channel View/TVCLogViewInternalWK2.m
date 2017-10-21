@@ -124,7 +124,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setNickname"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setSelection"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setURLAddress"];
-		
+
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"showInAppPurchaseWindow"];
 #endif

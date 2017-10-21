@@ -79,19 +79,19 @@ ClassWithDesignatedInitializerInitMethod
 
 	self->_styleResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSString class]]]
 													 forKey:@"styleResources"];
-	
+
 	self->_scriptResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSString class]]]
 													  forKey:@"scriptResources"];
 
 	self->_html = [aDecoder decodeStringForKey:@"html"];
-	
+
 	self->_entrypoint = [aDecoder decodeStringForKey:@"entrypoint"];
 	self->_entrypointPayload = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"entrypointPayload"];
 
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
 
 	self->_lineNumber = [aDecoder decodeStringForKey:@"lineNumber"];
-	
+
 	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
 	self->_viewIdentifier = [aDecoder decodeStringForKey:@"viewIdentifier"];
 
@@ -109,7 +109,7 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder maybeEncodeObject:self->_scriptResources forKey:@"scriptResources"];
 
 	[aCoder encodeObject:self->_html forKey:@"html"];
-	
+
 	[aCoder maybeEncodeObject:self->_entrypoint forKey:@"entrypoint"];
 	[aCoder maybeEncodeObject:self->_entrypointPayload forKey:@"entrypointPayload"];
 
@@ -165,7 +165,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	object->_styleResources = self->_styleResources;
 	object->_scriptResources = self->_scriptResources;
-	
+
 	object->_html = self->_html;
 
 	object->_entrypoint = self->_entrypoint;
@@ -196,11 +196,11 @@ ClassWithDesignatedInitializerInitMethod
 - (NSDictionary<NSString *, id<NSCopying>> *)entrypointPayload
 {
 	NSDictionary *payload = self->_entrypointPayload;
-	
+
 	if (payload == nil) {
 		return [self entrypointPayloadDefaultContext];
 	}
-	
+
 	return payload;
 }
 
@@ -220,13 +220,13 @@ ClassWithDesignatedInitializerInitMethod
 	/* The values set in the context don't change so we
 	 are safe setting and forgetting. */
 	NSDictionary *payload = self->_entrypointPayload;
-	
+
 	if (payload == nil) {
 		return;
 	}
-	
+
 	NSDictionary *payloadToSet = [self entrypointPayloadDefaultContext];
-	
+
 	self->_entrypointPayload = [payload dictionaryByAddingEntries:payloadToSet];
 }
 
@@ -303,11 +303,11 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)setEntrypointPayload:(nullable NSDictionary<NSString *, id<NSCopying>> *)entrypointPayload
 {
-    if (self->_entrypointPayload != entrypointPayload) {
-        self->_entrypointPayload = entrypointPayload;
-		
+	if (self->_entrypointPayload != entrypointPayload) {
+		self->_entrypointPayload = entrypointPayload;
+
 		[self entrypointPayloadSetContext];
-    }
+	}
 }
 
 @end

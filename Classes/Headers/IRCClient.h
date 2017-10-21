@@ -322,12 +322,12 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 // referenceMessage and command cannot be nil together (this throws exceptions)
 - (void)		print:(NSString *)messageBody
 				   by:(nullable NSString *)nickname
-		    inChannel:(nullable IRCChannel *)channel
+			inChannel:(nullable IRCChannel *)channel
 			   asType:(TVCLogLineType)lineType
 			  command:(nullable NSString *)command
 		   receivedAt:(NSDate *)receivedAt
 		  isEncrypted:(BOOL)isEncrypted
-	    escapeMessage:(BOOL)escapeMessage
+		escapeMessage:(BOOL)escapeMessage
 	 referenceMessage:(nullable IRCMessage *)referenceMessage
 	  completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 

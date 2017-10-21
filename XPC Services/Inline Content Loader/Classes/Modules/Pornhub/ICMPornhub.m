@@ -93,12 +93,12 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-    NSString *urlQuery = url.query.percentEncodedURLQuery;
-    
-    NSDictionary *queryItems = urlQuery.URLQueryItems;
-    
-    NSString *videoIdentifier = queryItems[@"viewkey"];
-    
+	NSString *urlQuery = url.query.percentEncodedURLQuery;
+
+	NSDictionary *queryItems = urlQuery.URLQueryItems;
+
+	NSString *videoIdentifier = queryItems[@"viewkey"];
+
 	if (videoIdentifier.isAlphabeticNumericOnly == NO) {
 		return nil;
 	}
@@ -115,10 +115,10 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-          @"pornhub.com",
-          @"www.pornhub.com",
-          @"pornhubpremium.com",
-          @"www.pornhubpremium.com"
+		  @"pornhub.com",
+		  @"www.pornhub.com",
+		  @"pornhubpremium.com",
+		  @"www.pornhubpremium.com"
 		];
 	});
 

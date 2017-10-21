@@ -102,7 +102,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *matchChannelId = self.config.matchChannelId;
 
 	NSUInteger channelCount = 0;
-	
+
 	for (IRCChannelConfig *channel in self.channelList) {
 		NSString *channelName = channel.channelName;
 
@@ -145,7 +145,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[self.delegate highlightEntrySheet:self onOk:[self.config copy]];
-	
+
 	[super ok:sender];
 }
 

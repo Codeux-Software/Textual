@@ -67,7 +67,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		self.config = config;
 	}
-	
+
 	return self;
 }
 
@@ -105,7 +105,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.serviceConnection != nil) {
 		return;
 	}
-	
+
 	LogToConsoleDebug("Warming process...");
 
 	[self warmProcess];
@@ -197,9 +197,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	[[self remoteObjectProxy] openWithConfig:self.config];
 
-    if ([TPCPreferences appNapEnabled] == NO) {
-        [[self remoteObjectProxy] disableAppNap];
-    }
+	if ([TPCPreferences appNapEnabled] == NO) {
+		[[self remoteObjectProxy] disableAppNap];
+	}
 
 	[[self remoteObjectProxy] disableSuddenTermination];
 }

@@ -63,17 +63,17 @@ TextualScroller.setAutomaticScrollingEnabled = function(enabled) /* PUBLIC */
 
 HTMLDocument.prototype.prepareForMutation = function() /* PUBLIC */
 {
-	
+
 };
 
 HTMLDocument.prototype.cancelMutation = function() /* PUBLIC */
 {
-	
+
 };
 
 Element.prototype.prepareForMutation = function() /* PUBLIC */
 {
-	
+
 };
 
 Element.prototype.cancelMutation = function() /* PUBLIC */

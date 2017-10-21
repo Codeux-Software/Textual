@@ -271,7 +271,7 @@ static CGFloat _userScrolledMinimum = 25.0;
 			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
 		}
 	}
-	
+
 	[self redrawFrameIfNeeded];
 }
 

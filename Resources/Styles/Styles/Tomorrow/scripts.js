@@ -7,7 +7,7 @@ Textual.viewBodyDidLoad = function()
 
 Textual.messageAddedToView = function(line, fromBuffer)
 {
-    var element = document.getElementById("line-" + line);
+	var element = document.getElementById("line-" + line);
 
 	ConversationTracking.updateNicknameWithNewMessage(element);
 }

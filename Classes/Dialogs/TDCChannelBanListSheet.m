@@ -79,8 +79,8 @@ ClassWithDesignatedInitializerInitMethod
 		[self prepareInitialState];
 
 		return self;
-    }
-    
+	}
+
 	return nil;
 }
 

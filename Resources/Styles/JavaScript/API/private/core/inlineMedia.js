@@ -203,14 +203,14 @@ InlineMediaPrototype.prototype.changeVisiblity = function(mediaId, display) /* P
 		the media again if they so choose. */
 
 		_changeVisiblityByRemoving();
-	} 
+	}
 	else if (mediaElement)
 	{
 		/* If the media already exists, then we have nothing
 		to do here other than set the display property. */
 
 		_changeVisiblityByDisplaying();
-	} 
+	}
 	else 
 	{
 		/* We aren't hiding the media and the media does not 

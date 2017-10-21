@@ -128,14 +128,14 @@ ClassWithDesignatedInitializerInitMethod
 {
 	if ([key isEqualToString:@"channelUserLimitMode"]) {
 		NSInteger valueInteger = [*value integerValue];
-		
+
 		if (valueInteger < 0) {
 			*value = [NSString stringWithInteger:0];
 		} else if (valueInteger > 99999) {
 			*value = [NSString stringWithInteger:99999];
 		}
 	}
-	
+
 	return YES;
 }
 
@@ -149,7 +149,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)onChangeCheck:(id)sender
 {
 	[self updateTextFields];
-	
+
 	if (self.sCheck.state == NSOnState &&
 		self.pCheck.state == NSOnState)
 	{
@@ -171,10 +171,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self.modes changeMode:@"n"
 				 modeIsSet:(self.nCheck.state == NSOnState)];
-	
+
 	[self.modes changeMode:@"p"
 				 modeIsSet:(self.pCheck.state == NSOnState)];
-	
+
 	[self.modes changeMode:@"s"
 				 modeIsSet:(self.sCheck.state == NSOnState)];
 
@@ -188,11 +188,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self.modes changeMode:@"l"
 				 modeIsSet:(self.lCheck.state == NSOnState)
 			 modeParameter:self.lText.stringValue];
-	
+
 	if ([self.delegate respondsToSelector:@selector(channelModifyModesSheet:onOk:)]) {
 		[self.delegate channelModifyModesSheet:self onOk:self.modes];
 	}
-	
+
 	[super ok:nil];
 }
 

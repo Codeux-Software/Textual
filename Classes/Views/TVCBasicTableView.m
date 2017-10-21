@@ -77,13 +77,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rightMouseDown:(NSEvent *)e
 {
 	NSInteger rowBeneathMouse = self.rowBeneathMouse;
-	
+
 	if (rowBeneathMouse >= 0) {
 		if ([self.selectedRowIndexes containsIndex:rowBeneathMouse] == NO) {
 			[self selectItemAtIndex:rowBeneathMouse];
 		}
 	}
-	
+
 	[super rightMouseDown:e];
 }
 

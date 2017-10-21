@@ -107,7 +107,7 @@ Textual.topicBarValue = function(asText) /* PUBLIC */
 			return topicBar.innerHTML;
 		}
 	}
-		
+
 	return null;
 };
 
@@ -122,7 +122,7 @@ Textual.setTopicBarValue = function(topicValue, topicValueHTML) /* PUBLIC */
 
 		return true;
 	}
-	
+
 	return false;
 };
 
@@ -173,7 +173,7 @@ Textual.documentBodyElement = function() /* PUBLIC */
 	if (Textual._documentBodyElementReference === null) {
 		Textual._documentBodyElementReference = document.getElementById("body_home");
 	}
-	
+
 	return Textual._documentBodyElementReference;
 };
 
@@ -214,7 +214,7 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier) /* PUBLIC */
 HTMLDocument.prototype.getElementByLineNumber = function(lineNumber)
 {
 	lineNumber = lineNumber.standardizedLineNumber();
-	
+
 	return document.getElementById(lineNumber);
 };
 
@@ -223,7 +223,7 @@ String.prototype.standardizedLineNumber = function() /* PUBLIC */
 	if (this.indexOf("line-") !== 0) {
 		return ("line-" + this);
 	}
-	
+
 	return this;
 };
 
@@ -232,7 +232,7 @@ String.prototype.lineNumberContents = function(lineNumber) /* PUBLIC */
 	if (this.indexOf("line-") === 0) {
 		return this.substr(5);
 	}
-	
+
 	return this;
 };
 
@@ -247,7 +247,7 @@ Element.prototype.lineContainer = function()
 		{
 			return element;
 		}
-		
+
 		return null;
 	});
 
@@ -258,7 +258,7 @@ Element.prototype.lineContainer = function()
 
 	do {
 		line = testElement(currentElement);
-		
+
 		if (line) {
 			break;
 		}
@@ -271,12 +271,12 @@ Element.prototype.lineContainer = function()
 Element.prototype.lineNumberContents = function()
 {
 	var line = this.lineContainer();
-	
+
 	if (!line) {
 		return null;
 	}
-	
+
 	var lineNumber = line.id;
-	
+
 	return lineNumber.lineNumberContents();
 };

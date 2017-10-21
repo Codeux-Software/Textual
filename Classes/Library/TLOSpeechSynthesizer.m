@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 	@synchronized(self.itemsToBeSpoken) {
 		[self.itemsToBeSpoken addObject:object];
 	}
-	
+
 	if (self.isSpeaking == NO) {
 		[self speakNextItem];
 	}

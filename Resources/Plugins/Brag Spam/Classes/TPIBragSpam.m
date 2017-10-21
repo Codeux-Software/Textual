@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (selectedChannel == nil) {
 			return;
 		}
-		
+
 		NSUInteger operCount = 0;
 		NSUInteger channelOpCount = 0;
 		NSUInteger channelHalfopCount = 0;
@@ -72,29 +72,29 @@ NS_ASSUME_NONNULL_BEGIN
 		NSUInteger channelCount = 0;
 		NSUInteger networkCount = 0;
 		NSUInteger powerOverCount = 0;
-		
+
 		for (IRCClient *client in worldController().clientList) {
 			if (client.isConnected == NO) {
 				continue;
 			}
-			
+
 			networkCount++;
 
 			IRCUser *localUser = client.myself;
-			
+
 			if (client.userIsIRCop || localUser.isIRCop) {
 				operCount++;
 			}
-			
+
 			NSMutableArray<NSString *> *trackedUsers = [NSMutableArray new];
-			
+
 			for (IRCChannel *channel in client.channelList) {
 				if (channel.isActive == NO || channel.isChannel == NO) {
 					continue;
 				}
 
 				channelCount += 1;
-				
+
 				IRCChannelUser *myself = [channel findMember:client.userNickname];
 
 				IRCUserRank myRanks = myself.ranks;
@@ -112,12 +112,12 @@ NS_ASSUME_NONNULL_BEGIN
 				} else if (IHaveModeV) {
 					channelVoiceCount++;
 				}
-				
+
 				for (IRCChannelUser *member in channel.memberList) {
 					if ([member isEqual:myself]) {
 						continue;
 					}
-				
+
 					BOOL addUser = NO;
 
 					IRCUserRank userRanks = member.ranks;
@@ -136,9 +136,9 @@ NS_ASSUME_NONNULL_BEGIN
 					} else if (IHaveModeO && UserHasModeQ == NO && UserHasModeA == NO && UserHasModeO == NO) {
 						addUser = YES;
 					} else if (IHaveModeH && UserHasModeQ == NO && UserHasModeA == NO && UserHasModeO == NO && UserHasModeH == NO) {
-						addUser = YES;	
+						addUser = YES;
 					}
-					
+
 					if (addUser) {
 						if ([trackedUsers containsObject:member.user.nickname] == NO) {
 							[trackedUsers addObject:member.user.nickname];
@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
 					}
 				}
 			}
-			
+
 		}
 
 		NSMutableString *resultString = [NSMutableString string];
@@ -173,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)subscribedUserInputCommands
 {
 	return @[@"brag"];
-}	
+}
 
 @end
 

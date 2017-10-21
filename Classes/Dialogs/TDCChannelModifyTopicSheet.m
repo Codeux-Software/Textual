@@ -123,7 +123,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		[self.delegate channelModifyTopicSheet:self onOk:topicWithoutNewlines];
 	}
-	
+
 	[super ok:nil];
 }
 

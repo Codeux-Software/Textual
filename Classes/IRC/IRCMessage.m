@@ -123,14 +123,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	for (NSUInteger i = index; i < paramsCount; i++) {
 		NSString *param = params[i];
-		
+
 		if (i != index) {
 			[sequence appendString:@" "];
 		}
-		
+
 		[sequence appendString:param];
 	}
-	
+
 	return [sequence copy];
 }
 

@@ -833,7 +833,7 @@ NS_ASSUME_NONNULL_BEGIN
 		   @"%_Parameter_8_%"
 		];
 	}
-	
+
 	return tokens;
 }
 
@@ -864,7 +864,7 @@ NS_ASSUME_NONNULL_BEGIN
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][09]")
 		];
 	}
-	
+
 	return tokens;
 }
 

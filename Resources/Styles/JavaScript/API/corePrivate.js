@@ -56,7 +56,7 @@ Textual.initializeCore = function(resourcesPath)
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/messageBuffer.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scroller/state.js");
-	
+
 	/* Only load auto scroller if we believe this is WebKit2 */
 	if (window.webkit && typeof window.webkit.messageHandlers === "undefined") {
 		Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scroller/automaticEmpty.js");

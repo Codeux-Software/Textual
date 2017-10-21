@@ -55,7 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.movable = NO;
 
-
 #ifdef TXSystemIsOSXSierraOrLater
 	self.styleMask = (self.styleMask | NSWindowStyleMaskFullSizeContentView);
 #else

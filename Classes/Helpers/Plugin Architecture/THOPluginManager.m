@@ -574,7 +574,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	dispatch_once(&onceToken, ^{
 		NSMutableArray<NSString *> *allCommands = [NSMutableArray array];
-		
+
 		for (THOPluginItem *plugin in self.loadedPlugins) {
 			if ([plugin supportsFeature:THOPluginItemSupportsSubscribedServerInputCommands] == NO) {
 				continue;
@@ -603,7 +603,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	dispatch_once(&onceToken, ^{
 		NSMutableArray<THOPluginItem *> *allExtensions = [NSMutableArray array];
-		
+
 		for (THOPluginItem *plugin in self.loadedPlugins) {
 			if ([plugin supportsFeature:THOPluginItemSupportsPreferencePane] == NO) {
 				continue;

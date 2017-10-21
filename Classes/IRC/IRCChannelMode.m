@@ -172,7 +172,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSMutableString *modeParamString = [NSMutableString string];
 
 	NSDictionary *modes = self.modes.modes;
-	
+
 	NSArray *modesSorted = modes.sortedDictionaryKeys;
 
 	for (NSString *modeSymbol in modesSorted) {
