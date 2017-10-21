@@ -58,11 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 	/* We only want to assign to the payload if we have success (HTML) */
 	if (html) {
 		payload.html = html;
-		
-		payload.entrypoint = self.entrypoint;
-		
+
 		payload.styleResources = self.styleResources;
-		payload.scriptResources = self.scriptResources;
 	}
 	
 	self.completionBlock(templateRenderError);
@@ -159,28 +156,6 @@ NS_ASSUME_NONNULL_BEGIN
 	});
 	
 	return template;
-}
-
-- (nullable NSArray<NSString *> *)scriptResources
-{
-	static NSArray<NSString *> *scriptResources = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		scriptResources =
-		[[super scriptResources] arrayByAddingObjectsFromArray:
-		 @[
-		   [RZMainBundle() pathForResource:@"ICMTwitchClips" ofType:@"js" inDirectory:@"Components"]
-		 ]];
-	});
-	
-	return scriptResources;
-}
-
-- (nullable NSString *)entrypoint
-{
-	return @"_ICMTwitchClips";
 }
 
 @end
