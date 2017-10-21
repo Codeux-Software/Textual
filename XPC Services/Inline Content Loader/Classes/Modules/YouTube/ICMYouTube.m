@@ -104,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 		videoIdentifier = [urlPath substringFromIndex:1];
 	}
 	else if ([urlHost isEqualToString:@"youtube.com"] ||
-			 [urlHost isEqualToString:@"www.youtube.com"])
+			 [urlHost hasSuffix:@".youtube.com"])
 	{
 		NSString *urlPath = url.path.percentEncodedURLPath;
 
@@ -141,6 +141,7 @@ NS_ASSUME_NONNULL_BEGIN
 		@[
 		  @"youtube.com",
 		  @"www.youtube.com",
+		  @"m.youtube.com",
 		  @"youtu.be"
 		];
 	});
