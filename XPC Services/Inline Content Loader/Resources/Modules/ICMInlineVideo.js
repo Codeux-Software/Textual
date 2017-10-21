@@ -41,8 +41,8 @@ var _ICMInlineVideoPrototype = function() {
 	_ICMInlineVideoPrototypeParent.call(this);
 }
 
-_ICMInlineVideoPrototype.prototype = Object.create(InlineMediaPrototype.prototype);  
-_ICMInlineVideoPrototype.prototype.constructor = _ICMInlineVideoPrototype; 
+_ICMInlineVideoPrototype.prototype = Object.create(InlineMediaPrototype.prototype);
+_ICMInlineVideoPrototype.prototype.constructor = _ICMInlineVideoPrototype;
 _ICMInlineVideoPrototype.prototype.superClass = _ICMInlineVideoPrototypeParent.prototype;
 
 var _ICMInlineVideo = new _ICMInlineVideoPrototype();
@@ -53,14 +53,14 @@ _ICMInlineVideo.metadataLoadedCallback = function()
 
 	/* Video start time */
 	var startTime = parseFloat(video.getAttribute("start"));
-	
+
 	if (startTime > 0.0) {
 		video.currentTime = startTime;
 	}
-	
+
 	/* Video playback speed (rate) */
 	var playbackSpeed = parseFloat(video.getAttribute("speed"));
-	
+
 	if (playbackSpeed !== 1.0) {
 		video.playbackRate = playbackSpeed;
 	}

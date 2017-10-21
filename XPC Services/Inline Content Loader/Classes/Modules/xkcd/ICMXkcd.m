@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_performActionForComic:(NSString *)comicIdentifier
 {
 	NSParameterAssert(comicIdentifier != nil);
-	
+
 	NSString *addressToRequest = [NSString stringWithFormat:@"https://xkcd.com/%@/info.0.json", comicIdentifier];
-	
+
 	[self requestJSONObject:@"img"
 					 ofType:[NSString class]
 				inHierarchy:nil
@@ -53,10 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 	 {
 		 if (object == nil) {
 			 [self notifyUnsafeToLoadImage];
-			 
+
 			 return;
 		 }
-		 
+
 		 [self performActionForFinalAddress:object];
 	 }];
 }
@@ -67,16 +67,16 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
-	
+
 	NSString *comicIdentifier = [self _comicIdentifierForURL:url];
-	
+
 	if (comicIdentifier == nil) {
 		return nil;
 	}
-	
+
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMXkcd *moduleTyped = (id)module;
-		
+
 		[moduleTyped _performActionForComic:comicIdentifier];
 	} copy];
 }
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSString *comicIdentifier = [urlPath trimCharacters:@"/"];
-	
+
 	if (comicIdentifier.isNumericOnly == NO) {
 		return nil;
 	}

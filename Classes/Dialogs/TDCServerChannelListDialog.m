@@ -73,7 +73,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ((self = [super init])) {
 		self.client = client;
 		self.clientId = client.uniqueIdentifier;
-		
+
 		[self prepareInitialState];
 
 		return self;
@@ -265,7 +265,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.channelListTable.delegate = nil;
 
 	[self.window saveWindowStateForClass:self.class];
-	
+
 	if ([self.delegate respondsToSelector:@selector(serverChannelDialogWillClose:)]) {
 		[self.delegate serverChannelDialogWillClose:self];
 	}

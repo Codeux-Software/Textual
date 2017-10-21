@@ -524,7 +524,7 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 [result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
 		 }
 	 }];
-	
+
 	return result;
 }
 

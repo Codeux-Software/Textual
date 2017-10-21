@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[self populateDefaultsPostflight];
 
 		self->_objectInitialized = YES;
-		
+
 		return self;
 	}
 

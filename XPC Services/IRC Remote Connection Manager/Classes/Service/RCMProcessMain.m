@@ -121,12 +121,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)enableAppNap
 {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(NO)}];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(NO)}];
 }
 
 - (void)disableAppNap
 {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(YES)}];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSAppSleepDisabled" : @(YES)}];
 }
 
 - (void)enableSuddenTermination

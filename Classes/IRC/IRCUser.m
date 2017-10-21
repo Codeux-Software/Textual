@@ -172,7 +172,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return [NSString stringWithFormat:@"%@!%@@%@", nickname, username, address];
 		}
 	}
-	
+
 	return nil;
 }
 

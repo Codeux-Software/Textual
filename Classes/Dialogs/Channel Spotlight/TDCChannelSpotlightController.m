@@ -331,7 +331,7 @@ ClassWithDesignatedInitializerInitMethod
 			return [self handlePageUpDownEvent:event];
 		}
 	}
-	
+
 	return event;
 }
 
@@ -359,7 +359,6 @@ ClassWithDesignatedInitializerInitMethod
 			return nil;
 		}
 	}
-
 
 	[self.searchResultsTable keyDown:event];
 

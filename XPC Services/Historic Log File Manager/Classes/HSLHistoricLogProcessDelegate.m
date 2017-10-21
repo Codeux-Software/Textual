@@ -52,12 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 					  forSelector:@selector(fetchEntriesForView:withUniqueIdentifier:beforeFetchLimit:afterFetchLimit:limitToDate:withCompletionBlock:)
 					argumentIndex:0
 						  ofReply:YES];
-	
+
 	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
 					  forSelector:@selector(fetchEntriesForView:beforeUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
 					argumentIndex:0
 						  ofReply:YES];
-	
+
 	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [TVCLogLineXPC class], nil]
 					  forSelector:@selector(fetchEntriesForView:afterUniqueIdentifier:fetchLimit:limitToDate:withCompletionBlock:)
 					argumentIndex:0

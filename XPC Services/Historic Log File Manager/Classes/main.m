@@ -44,13 +44,13 @@ int main(int argc, const char *argv[])
 {
 	HSLHistoricLogProcessDelegate *delegate = [HSLHistoricLogProcessDelegate new];
 
-    NSXPCListener *listener = [NSXPCListener serviceListener];
+	NSXPCListener *listener = [NSXPCListener serviceListener];
 
 	listener.delegate = delegate;
 
-    [listener resume];
+	[listener resume];
 
-    return 0;
+	return 0;
 }
 
 #pragma clang diagnostic pop

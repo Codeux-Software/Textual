@@ -94,7 +94,7 @@ _Textual.usesCustomMenuConstructor = function() /* PRIVATE */
 	if (app.isWebKit2() === false) {
 		return false;
 	}
-	
+
 	/* macOS Sierra has an Objective-C API to modify the menus in 
 	WebKit2 which isn't too difficult to use which means we only
 	need a custom menu constructor on WebKit2 + OS X El Capitan. */
@@ -114,7 +114,7 @@ _Textual._openGenericContextualMenu = function() /* PRIVATE */
 
 	if (_Textual.usesCustomMenuConstructor()) {
 		event.preventDefault();
-		
+
 		_Textual.recordSelection();
 
 		appPrivate.displayContextMenu();

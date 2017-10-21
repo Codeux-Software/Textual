@@ -40,7 +40,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define TPCThemeSettingsDisabledIndentationOffset     -99
+#define TPCThemeSettingsDisabledIndentationOffset	 -99
 
 #define TPCThemeSettingsLatestTemplateEngineVersion		3
 

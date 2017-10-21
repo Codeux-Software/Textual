@@ -88,7 +88,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:modeSymbol rank:rank];
-		
+
 	return [self.cachedUserMarkBadges objectForKey:key];
 }
 
@@ -100,9 +100,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.cachedUserMarkBadges == nil) {
 		self.cachedUserMarkBadges = [NSCache new];
 	}
-	
+
 	NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:modeSymbol rank:rank];
-	
+
 	[self.cachedUserMarkBadges setObject:badgeImage forKey:key];
 }
 
@@ -156,7 +156,7 @@ ClassWithDesignatedInitializerInitMethod
 + (NSColor *)userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
 {
 	NSColor *defaultColor = [RZUserDefaults() colorForKey:defaultsKey];
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		return [defaultColor colorWithAlphaComponent:0.7];
 	} else {
@@ -205,20 +205,20 @@ ClassWithDesignatedInitializerInitMethod
 	/* The following is specialized drawing for the normal source list
 	 background when inside a backed layer view. */
 	NSColor *backgroundColor = nil;
-	
+
 	if (self.mainWindow.isActiveForDrawing) {
 		backgroundColor = [self.memberList.userInterfaceObjects memberListBackgroundColorForActiveWindow];
 	} else {
 		backgroundColor = [self.memberList.userInterfaceObjects memberListBackgroundColorForInactiveWindow];
 	}
-	
+
 	if ( backgroundColor) {
 		[backgroundColor set];
-		
+
 		NSRectFill(self.bounds);
 	} else {
 		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
-		
+
 		[backgroundGradient drawInRect:self.bounds angle:270.0];
 	}
 }

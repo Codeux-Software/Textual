@@ -365,7 +365,7 @@ body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
 
 /* Nickname Colors */
 .text .sender[mtype="myself"] { 
-	color: #ff8c00; 
+	color: #ff8c00;
 }
 
 .sender[mtype="normal"][colornumber="0"],

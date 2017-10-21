@@ -65,9 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
 			@"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES),
 			@"System Profiler Extension -> Request Model Information from Apple" : @(NO),
 		};
-		
+
 		[RZUserDefaults() registerDefaults:defaults];
-		
+
 		[TPIBundleFromClass() loadNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
 
 		[self maybeRequestModelIDFromApple];
@@ -143,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 						  messageString:(NSString *)messageString
 {
 	IRCChannel *channel = mainWindow().selectedChannel;
-	
+
 	if (channel == nil) {
 		return;
 	}

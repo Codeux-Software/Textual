@@ -669,9 +669,9 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	}
 
 	BOOL resolvedBookmarkIsStale = YES;
-	
+
 	NSError *resolvedBookmarkError = nil;
-	
+
 	NSURL *resolvedBookmark =
 	[NSURL URLByResolvingBookmarkData:bookmark
 							  options:NSURLBookmarkResolutionWithSecurityScope
@@ -708,7 +708,7 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	}
 
 	_transcriptFolderURL = resolvedBookmark;
-		
+
 	if ([_transcriptFolderURL startAccessingSecurityScopedResource] == NO) {
 		LogToConsoleError("Failed to access bookmark");
 	}

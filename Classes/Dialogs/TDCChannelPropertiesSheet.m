@@ -385,11 +385,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	} else {
 		self.config.ignoreInlineMedia = self.enableInlineImagesCheck.state;
 	}
-	
+
 	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheet:onOk:)]) {
 		[self.delegate channelPropertiesSheet:self onOk:[self.config copy]];
 	}
-	
+
 	[super ok:nil];
 }
 

@@ -90,16 +90,16 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableString *resultString = [NSMutableString string];
 
 	NSString *themeName = themeController().name;
-	
+
 	TPCThemeControllerStorageLocation storageLocation = themeController().storageLocation;
 
 	NSString *storageLocationLabel = nil;
 
-    if (storageLocation == TPCThemeControllerStorageBundleLocation) {
+	if (storageLocation == TPCThemeControllerStorageBundleLocation) {
 		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1036]");
-    } else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
+	} else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
 		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1037]");
-    } else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
+	} else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
 		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1038]");
 	}
 
@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)applicationAndSystemUptime
 {
 	NSUInteger dateFormat = (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond);
-	
+
 	NSString *systemUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], NO, dateFormat);
 	NSString *textualUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo applicationUptime], NO, dateFormat);
 
@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *client = mainWindow().selectedClient;
 
 	NSTimeInterval lastMessage = [NSDate timeIntervalSinceNow:client.lastMessageReceived];
-	
+
 	return TPILocalizedString(@"BasicLanguage[1049]",
 			  TXFormattedNumber(worldController().messagesSent),
 			  TXFormattedNumber(worldController().messagesReceived),
@@ -380,9 +380,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (showScreenResolution) {
 		NSScreen *mainScreen = RZMainScreen();
 
-        [resultString appendString:
-         TPILocalizedString(@"BasicLanguage[1009]",
-            mainScreen.screenResolutionString)];
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1009]",
+			mainScreen.screenResolutionString)];
 	}
 
 	if (showOperatingSystem) {
@@ -493,7 +493,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (ifa_list) {
-	    freeifaddrs(ifa_list);
+		freeifaddrs(ifa_list);
 	}
 
 	if (resultString.length == 0) {
@@ -538,7 +538,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (diskInfo == nil) {
 		return nil;
 	}
-	
+
 	TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
 
 	return [self formattedDiskSize:totalSpace];
@@ -546,11 +546,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)formattedGraphicsCardInformation
 {
-    CFMutableDictionaryRef pciDevices = IOServiceMatching("IOPCIDevice");
+	CFMutableDictionaryRef pciDevices = IOServiceMatching("IOPCIDevice");
 
-    io_iterator_t entryIterator;
+	io_iterator_t entryIterator;
 
-    if (IOServiceGetMatchingServices(kIOMasterPortDefault, pciDevices, &entryIterator) != kIOReturnSuccess) {
+	if (IOServiceGetMatchingServices(kIOMasterPortDefault, pciDevices, &entryIterator) != kIOReturnSuccess) {
 		return nil;
 	}
 
@@ -619,7 +619,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[1014]", gpuModel)];
 		}
 	}];
-	
+
 	return [resultString copy];
 }
 
@@ -629,13 +629,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSTimeInterval)systemUptime
 {
 	struct timeval bootTime;
-	
+
 	size_t bootTimeSize = sizeof(bootTime);
-	
+
 	if (sysctlbyname("kern.boottime", &bootTime, &bootTimeSize, NULL, 0) != 0) {
 		bootTime.tv_sec = 0;
 	}
-	
+
 	return [NSDate timeIntervalSinceNow:bootTime.tv_sec];
 }
 
@@ -647,9 +647,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)processor
 {
 	char buffer[256];
-	
+
 	size_t bufferSize = sizeof(buffer);
-	
+
 	if (sysctlbyname("machdep.cpu.brand_string", buffer, &bufferSize, NULL, 0) != 0) {
 		return nil;
 	}
@@ -662,9 +662,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)modelIdentifier
 {
 	char buffer[256];
-	
+
 	size_t bufferSize = sizeof(buffer);
-	
+
 	if (sysctlbyname("hw.model", buffer, &bufferSize, NULL, 0) != 0) {
 		return nil;
 	}
@@ -703,9 +703,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)processorClockSpeed
 {
 	u_int64_t clockSpeed = 0L;
-	
+
 	size_t clockSpeedSize = sizeof(clockSpeed);
-	
+
 	if (sysctlbyname("hw.cpufrequency", &clockSpeed, &clockSpeedSize, NULL, 0) != 0) {
 		return nil;
 	}
@@ -716,7 +716,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (TXUnsignedLongLong)freeMemorySize
 {
 	vm_size_t page_size;
-	
+
 	host_page_size(mach_host_self(), &page_size);
 
 	vm_statistics_data_t host_info_out;
@@ -733,12 +733,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (TXUnsignedLongLong)totalMemorySize
 {
 	uint64_t memoryTotal = 0L;
-	
+
 	size_t memoryTotalSize = sizeof(memoryTotal);
-	
+
 	if (sysctlbyname("hw.memsize", &memoryTotal, &memoryTotalSize, NULL, 0) != 0) {
 		return 0;
-	} 
+	}
 
 	return (memoryTotal / _systemMemoryDivisor);
 }

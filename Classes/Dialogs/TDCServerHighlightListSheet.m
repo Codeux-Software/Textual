@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start
 {
-    [self startSheet];
+	[self startSheet];
 }
 
 - (void)addEntry:(id)newEntry
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSTableView *tableView = self.highlightListTable;
 
 	NSSize cellViewSpacing = tableView.intercellSpacing;
-	
+
 	NSTableCellView *cellView = [tableView viewAtColumn:1 row:row makeIfNecessary:NO];
 
 	NSRect textFieldFrame = cellView.textField.frame;

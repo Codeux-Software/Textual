@@ -148,7 +148,7 @@ TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(NSString *productI
 	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]) {
 		return TLOAppStoreIAPUpgradeFromV6FreeProduct;
 	}
-	
+
 	return TLOAppStoreIAPUnknownProduct;
 }
 

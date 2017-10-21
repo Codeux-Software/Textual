@@ -64,7 +64,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		[self prepareInitialState];
 	}
-	
+
 	return self;
 }
 
@@ -115,33 +115,33 @@ ClassWithDesignatedInitializerInitMethod
 {
 	LogToConsoleDebug("Closing connection %@...", self.uniqueIdentifier);
 
-    if (self.isConnecting == NO && self.isConnected == NO) {
+	if (self.isConnecting == NO && self.isConnected == NO) {
 		LogToConsoleError("Not connected");
-    }
+	}
 
-    self.isDisconnecting = YES;
+	self.isDisconnecting = YES;
 
 	self.isFloodControlEnforced = NO;
 
 	[self clearSendQueue];
 
 	[self stopFloodControlTimer];
-	
+
 	[self closeSocket];
 }
 
 - (void)disconnectTeardown
 {
-    /* Method invoked when a disconnect occurs. */
-    self.isDisconnecting = YES;
+	/* Method invoked when a disconnect occurs. */
+	self.isDisconnecting = YES;
 
-    self.isFloodControlEnforced = NO;
+	self.isFloodControlEnforced = NO;
 
-    [self clearSendQueue];
+	[self clearSendQueue];
 
-    [self stopFloodControlTimer];
+	[self stopFloodControlTimer];
 
-    [self destroyWorkerDispatchQueue];
+	[self destroyWorkerDispatchQueue];
 }
 
 #pragma mark -
@@ -166,14 +166,14 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[self sendNextLine];
-	
+
 	return YES;
 }
 
 - (void)sendNextLine
 {
 	NSData *line = [self nextEntryInSendQueue];
-    
+
 	if (line == nil) {
 		return;
 	}
@@ -192,11 +192,11 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(data != nil);
 
-    if (self.isConnecting == NO && self.isConnected == NO) {
-        LogToConsoleError("Cannot send data while disconnected");
+	if (self.isConnecting == NO && self.isConnected == NO) {
+		LogToConsoleError("Cannot send data while disconnected");
 
-        return;
-    }
+		return;
+	}
 
 	if (bypassQueue) {
 		[self _sendData:data removeFromQueue:NO];
@@ -221,7 +221,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self tcpClientWillSendData:data];
 }
-
 
 - (NSUInteger)sendQueueCount
 {
@@ -273,7 +272,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.floodControlCurrentMessageCount = 0;
 
-    self.isSending = NO;
+	self.isSending = NO;
 }
 
 #pragma mark -
@@ -348,7 +347,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError
 {
-    [self disconnectTeardown];
+	[self disconnectTeardown];
 
 	[[self remoteObjectProxy] ircConnectionDidDisconnectWithError:disconnectError];
 }
@@ -373,7 +372,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.isSending = NO;
 
 	[[self remoteObjectProxy] ircConnectionDidSendData];
-	
+
 	(void)[self tryToSend];
 }
 

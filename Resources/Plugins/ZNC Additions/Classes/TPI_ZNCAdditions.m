@@ -149,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 			 [commandString isEqualIgnoringCase:@"ATTACH"])
 	{
 		messageString = messageString.trim;
-		
+
 		IRCChannel *matchedChannel = nil;
 
 		if ([client stringIsChannelName:messageString]) {
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			matchedChannel = mainWindow().selectedChannel;
 		}
-		
+
 		if (matchedChannel == nil) {
 			return;
 		}
@@ -165,12 +165,12 @@ NS_ASSUME_NONNULL_BEGIN
 		BOOL isAttachEvent = [commandString isEqualIgnoringCase:@"ATTACH"];
 
 		matchedChannel.autoJoin = isAttachEvent;
-		
+
 		if (isAttachEvent) {
 			[client joinUnlistedChannel:matchedChannel.name];
 		} else {
 			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, matchedChannel.name]];
-		
+
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", matchedChannel.name) inChannel:matchedChannel];
 		}
 	}
@@ -200,7 +200,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		return nil; // Ignore this event
 	}
-	
+
 	return input;
 }
 
@@ -213,7 +213,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableString *stringIn = [paramsMutable[1] mutableCopy];
 
 	NSString *hostmask = stringIn.token;
-	
+
 	if (hostmask.length == 0) {
 		return input; // Return original; bad input
 	}
@@ -223,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *nicknameInt = nil;
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
-	
+
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
 		if (NSObjectsAreEqual(nicknameInt, client.userNickname)) {
 			return nil; // Do not post these events for self
@@ -248,17 +248,17 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([stringIn hasPrefix:@"is now known as "]) {
 		/* Begin nickname change */
 		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"is now known as ").length)];
-		
+
 		NSString *newNickname = stringIn.token;
 
 		if (newNickname.length == 0) {
 			return input;
 		}
-		
+
 		inputMutable.command = IRCPrivateCommandIndex("nick");
 
 		[paramsMutable removeObjectAtIndex:1];
-		
+
 		[paramsMutable addObject:newNickname];
 		/* End nickname change */
 	}
@@ -266,7 +266,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		/* Begin channel join */
 		inputMutable.command = IRCPrivateCommandIndex("join");
-		
+
 		[paramsMutable removeObjectAtIndex:1];
 		/* End channel join */
 	}
@@ -284,7 +284,7 @@ NS_ASSUME_NONNULL_BEGIN
 		inputMutable.command = IRCPrivateCommandIndex("mode");
 
 		[paramsMutable removeObjectAtIndex:1];
-		
+
 		[paramsMutable addObject:modeChanges];
 
 		[paramsMutable addObject:stringIn];
@@ -296,11 +296,11 @@ NS_ASSUME_NONNULL_BEGIN
 		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"quit with message: [").length)];	// Remove leading
 
 		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];				// Remove trailing
-		
+
 		inputMutable.command = IRCPrivateCommandIndex("quit");
-		
+
 		[paramsMutable removeObjectAtIndex:1];
-		
+
 		[paramsMutable addObject:stringIn];
 		/* End quit message */
 	}
@@ -310,11 +310,11 @@ NS_ASSUME_NONNULL_BEGIN
 		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"parted with message: [").length)];		// Remove leading
 
 		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];					// Remove trailing
-		
+
 		inputMutable.command = IRCPrivateCommandIndex("part");
-		
+
 		[paramsMutable removeObjectAtIndex:1];
-		
+
 		[paramsMutable addObject:stringIn];
 		/* End part message */
 	}
@@ -324,19 +324,19 @@ NS_ASSUME_NONNULL_BEGIN
 		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"kicked ").length)];		// Remove leading
 
 		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];	// Remove trailing
-		
+
 		NSString *kickedNickname = stringIn.token;
-		
+
 		if (kickedNickname.length == 0 || [stringIn hasPrefix:@"Reason: ["] == NO) {
 			return input;
 		}
-		
+
 		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"Reason: [").length)];
 
 		inputMutable.command = IRCPrivateCommandIndex("kick");
-		
+
 		[paramsMutable removeObjectAtIndex:1];
-		
+
 		[paramsMutable addObject:kickedNickname];
 
 		[paramsMutable addObject:stringIn];
@@ -346,18 +346,18 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		/* Begin topic change */
 		/* We get the latest topic on join so we tell Textual to ignore this line. */
-		
+
 		return nil;
 		/* End topic change */
 	}
 
 	/* Return modified input */
 	inputMutable.isPrintOnlyMessage = YES;
-	
+
 	inputMutable.params = paramsMutable;
 
 	inputMutable.sender = senderMutable;
-	
+
 	return inputMutable;
 }
 
@@ -376,9 +376,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	IRCPrefix *senderInfo = input.sender;
-	
+
 	NSString *sender = senderInfo.nickname;
-	
+
 	if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"buffextras"])) {
 		return [self interceptBufferExtrasZNCModule:input forClient:client];
 	} else if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"playback"])) {
@@ -402,7 +402,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-        [channel deactivate];
+		[channel deactivate];
 	}
 
 	[mainWindow() reloadTreeGroup:client];

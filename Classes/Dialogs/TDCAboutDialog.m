@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)windowWillClose:(NSNotification *)note
 {
 	[self.window saveWindowStateForClass:self.class];
-	
+
 	if ([self.delegate respondsToSelector:@selector(aboutDialogWillClose:)]) {
 		[self.delegate aboutDialogWillClose:self];
 	}

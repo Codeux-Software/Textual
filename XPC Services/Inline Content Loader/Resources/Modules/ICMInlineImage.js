@@ -61,7 +61,7 @@ _ICMInlineImagePrototype.prototype.entrypoint = function(payload, insertHTMLCall
 {
 	/* Call super to insert the HTML for us. */
 	this.superClass.entrypoint.call(this, payload, insertHTMLCallback);
-	
+
 	/* Show the image when finishes loading. */
 	this.showImageWhenLoadedWithPayload(payload);
 };
@@ -89,9 +89,9 @@ _ICMInlineImagePrototype.prototype.showImageWhenLoaded = function(mediaId)
 
 	var imageCompleteCallback = (function() {
 		imageContainer.removeAttribute("disabled");
-		
+
 		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
-		
+
 		this.show(mediaId);
 	}).bind(this);
 

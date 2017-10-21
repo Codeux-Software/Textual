@@ -508,7 +508,6 @@ body[dir=ltr] div[ltype=join] .message:before {
   margin-right: 5px;
 }
 
-
 body[dir=ltr] div[ltype=kick] .message:before,
 body[dir=ltr] div[ltype=part] .message:before,
 body[dir=ltr] div[ltype=quit] .message:before {
@@ -564,7 +563,6 @@ body .f {  /* fade out */
   -webkit-transition: color .75s;
   color: rgb(22, 22, 22) !important;
 }
-
 
 /* SELECTED USER MESSAGES */
 

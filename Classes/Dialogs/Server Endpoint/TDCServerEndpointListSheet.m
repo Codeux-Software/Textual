@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (IRCServer *server in serverList) {
 		[self.entryTableController addObject:[server mutableCopy]];
 	}
-	
+
 	[self startSheet];
 }
 
@@ -206,7 +206,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[self.delegate serverEndpointListSheetWillClose:self];
 	}
 }
-
 
 @end
 

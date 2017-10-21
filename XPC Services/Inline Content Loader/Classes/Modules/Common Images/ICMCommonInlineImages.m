@@ -107,9 +107,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 		urlPath = [urlPath
 				   stringByReplacingOccurrencesOfString:@"\\:(large|medium|orig|small|thumb)$"
-										     withString:@""
-											    options:NSRegularExpressionSearch
-											      range:urlPath.range];
+											 withString:@""
+												options:NSRegularExpressionSearch
+												  range:urlPath.range];
 
 		return [NSString stringWithFormat:@"https://pbs.twimg.com/%@:orig", urlPath];
 	}

@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
 {
-    return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
+	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
 + (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode

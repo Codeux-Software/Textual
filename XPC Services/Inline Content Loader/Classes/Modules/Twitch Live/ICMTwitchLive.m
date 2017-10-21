@@ -50,35 +50,35 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 {
 	NSParameterAssert(contentIdentifier != nil);
 	NSParameterAssert(contentType != ICMTwitchLiveUnknownType);
-	
+
 	NSString *contentArgument = nil;
-	
+
 	if (contentType == ICMTwitchLiveChannelType) {
 		contentArgument = @"channel";
 	} else if (contentType == ICMTwitchLiveVideoType) {
 		contentArgument = @"video";
 	}
-	
+
 	ICLPayloadMutable *payload = self.payload;
-	
+
 	NSDictionary *templateAttributes =
 	@{
 	  @"uniqueIdentifier" : payload.uniqueIdentifier,
 	  @"contentIdentifier" : contentIdentifier,
 	  @"contentArgument" : contentArgument
 	};
-	
+
 	NSError *templateRenderError = nil;
-	
+
 	NSString *html = [self.template renderObject:templateAttributes error:&templateRenderError];
-	
+
 	/* We only want to assign to the payload if we have success (HTML) */
 	if (html) {
 		payload.html = html;
 
 		payload.styleResources = self.styleResources;
 	}
-	
+
 	self.completionBlock(templateRenderError);
 }
 
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 	NSParameterAssert(url != nil);
 
 	ICMTwitchLiveContentType contentType = ICMTwitchLiveUnknownType;
-	
+
 	NSString *contentIdentifier = [self _contentIdentifierForURL:url type:&contentType];
 
 	if (contentIdentifier == nil) {
@@ -113,7 +113,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 	if (urlPath.length == 0) {
 		return nil;
 	}
-	
+
 	urlPath = [urlPath substringFromIndex:1]; // "/"
 
 	/* These exceptions cover all domains */
@@ -128,32 +128,32 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 	/* Match videos */
 	if ([urlPath hasPrefix:@"videos/"]) {
 		urlPath = [urlPath substringFromIndex:7];
-		
+
 		NSString *contentIdentifier = [urlPath trimCharacters:@"/"];
-		
+
 		if (contentIdentifier.isNumericOnly == NO) {
 			return nil;
 		}
-		
+
 		*contentTypeIn = ICMTwitchLiveVideoType;
-		
+
 		return contentIdentifier;
 	}
-	
+
 	/* Consider any other match a channel */
 	{
 		NSString *contentIdentifier = [urlPath trimCharacters:@"/"];
-		
+
 		if (contentIdentifier.length < 4 ||
 			contentIdentifier.length > 25)
 		{
 			return nil;
 		}
-		
+
 		if ([contentIdentifier onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9Underscore]] == NO) {
 			return nil;
 		}
-		
+
 		*contentTypeIn = ICMTwitchLiveChannelType;
 
 		return contentIdentifier;
@@ -184,25 +184,25 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 - (nullable GRMustacheTemplate *)template
 {
 	static GRMustacheTemplate *template = nil;
-	
+
 	static dispatch_once_t onceToken;
-	
+
 	dispatch_once(&onceToken, ^{
 		NSString *templatePath =
 		[RZMainBundle() pathForResource:@"ICMTwitchLive" ofType:@"mustache" inDirectory:@"Components"];
-		
+
 		/* This module isn't designed to handle GRMustacheTemplate ever returning a
 		 nil value, but if it ever happens, we log error to better understand why. */
 		NSError *templateLoadError;
-		
+
 		template = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&templateLoadError];
-		
+
 		if (template == nil) {
 			LogToConsoleError("Failed to load template '%@': %@",
 				templatePath, templateLoadError.localizedDescription);
 		}
 	});
-	
+
 	return template;
 }
 

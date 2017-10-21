@@ -221,7 +221,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	NSString *character1 = [self stringCharacterAtIndex:0];
 	NSString *character2 = [self stringCharacterAtIndex:1];
-		
+
 	/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
 	BOOL isPartyline = ([character1 isEqualToString:@"~"] && [character2 isEqualToString:@"#"]);
 
@@ -237,10 +237,10 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	UniChar c = [self characterAtIndex:0];
 
 	return (c == '#' ||
-		    c == '&' ||
-		    c == '+' ||
-		    c == '!' ||
-		    c == '~' ||
+			c == '&' ||
+			c == '+' ||
+			c == '!' ||
+			c == '~' ||
 			c == '?');
 }
 

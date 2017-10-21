@@ -565,10 +565,10 @@ enum {
 
 		return;
 	}
-    
-    if (self.performingRestore) {
-        self.performingRestore = NO;
-    }
+
+	if (self.performingRestore) {
+		self.performingRestore = NO;
+	}
 
 	[self updateSelectedPane];
 }
@@ -621,7 +621,7 @@ enum {
 
 	NSDictionary *userInfo = @{
 		@"productIdentifiers" : [productIdentifiers copy]
-    };
+	};
 
 	[RZNotificationCenter() postNotificationName:notification
 										  object:self
@@ -657,14 +657,14 @@ enum {
 
 		return;
 	}
-	
+
 	[self _addTrialToProductsTableContents];
 
 	[self.productsTableController addObject:
 	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier]];
-	
+
 	TDCInAppPurchaseProductsTableEntry *discountEntry = [self productsTableUpgradeEligibilityEntry];
-	
+
 	if (discountEntry != nil) {
 		[self.productsTableController addObject:discountEntry];
 	}
@@ -899,7 +899,7 @@ enum {
 	NSTableView *tableView = self.productsTable;
 
 	NSSize cellViewSpacing = tableView.intercellSpacing;
-	
+
 	TDCInAppPurchaseProductsTableCellView *cellView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
 
 	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
@@ -936,19 +936,19 @@ enum {
 	{
 		return nil;
 	}
-	
+
 	/* Create entry */
 	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
-	
+
 	tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
-	
+
 	tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][1]");
 	tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0003][2]");
 	tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][3]");
 
 	tableEntry.target = self;
 	tableEntry.action = @selector(checkUpgradeEligibility:);
-	
+
 	return tableEntry;
 }
 
@@ -957,7 +957,7 @@ enum {
 	NSParameterAssert(product != nil);
 
 	NSString *productIdentifier = product.productIdentifier;
-	
+
 	TLOAppStoreIAPProduct productType = TLOAppStoreProductFromProductIdentifier(productIdentifier);
 
 	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
@@ -974,7 +974,7 @@ enum {
 		case TLOAppStoreIAPFreeTrialProduct:
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
-			
+
 			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
 			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0001][2]");
 			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][3]");
@@ -984,26 +984,26 @@ enum {
 		case TLOAppStoreIAPStandardEditionProduct:
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
-			
+
 			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
 			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0002][2]");
 			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][3]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6Product:
 		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
-			
+
 			SKProduct *standardEdition = self.products[TLOAppStoreIAPStandardEditionProductIdentifier];
-			
+
 			if (standardEdition == nil) {
 				NSAssert(NO, @"The 'Standard Edition' product is missing");
 			}
-			
+
 			tableEntry.productPriceDiscounted = standardEdition.price;
-			
+
 			if (productType == TLOAppStoreIAPUpgradeFromV6Product)
 			{
 				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
@@ -1055,30 +1055,30 @@ enum {
 	TLOAppStoreIAPProduct productType = TLOAppStoreProductFromProductIdentifier(productIdentifier);
 
 	NSString *productTitle = nil;
-	
+
 	switch (productType) {
 		case TLOAppStoreIAPFreeTrialProduct:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPStandardEditionProduct:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6Product:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][1]");
-			
+
 			break;
 		}
 		default:
@@ -1086,7 +1086,7 @@ enum {
 			break;
 		}
 	}
-	
+
 	return productTitle;
 }
 
@@ -1343,8 +1343,8 @@ enum {
 		TLOAppStoreIAPStandardEditionProductIdentifier,
 		TLOAppStoreIAPUpgradeFromV6ProductIdentifier,
 		TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier
-      ]
-    ];
+	  ]
+	];
 
 	SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
 

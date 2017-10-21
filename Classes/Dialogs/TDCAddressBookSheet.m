@@ -192,7 +192,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ([self.delegate respondsToSelector:@selector(addressBookSheet:onOk:)]) {
 		[self.delegate addressBookSheet:self onOk:[self.config copy]];
 	}
-	
+
 	[super ok:nil];
 }
 

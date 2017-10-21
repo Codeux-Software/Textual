@@ -427,7 +427,7 @@ static const char * _Nonnull kMacNames[] = {
 
 		return resultString;
 	}
-	
+
 	return @"Unknown";
 }
 

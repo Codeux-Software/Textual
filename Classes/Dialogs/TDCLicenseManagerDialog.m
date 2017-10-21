@@ -186,7 +186,6 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
 
-
 #pragma mark -
 #pragma mark Trial Timer
 

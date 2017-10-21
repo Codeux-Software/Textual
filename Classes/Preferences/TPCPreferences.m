@@ -424,7 +424,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSUInteger)trackUserAwayStatusMaximumChannelSize
 {
-    return [RZUserDefaults() unsignedIntegerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
 }
 
 + (TXTabKeyAction)tabKeyAction
@@ -550,7 +550,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSParameterAssert(value != nil);
 
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameDefaultsKey];
-	
+
 	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 }
 
@@ -580,7 +580,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSParameterAssert(value != nil);
 
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeFontNameDefaultsKey];
-	
+
 	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 }
 
@@ -938,7 +938,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 		return NO;
 	}
 
-    return [RZUserDefaults() boolForKey:eventKey];
+	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event

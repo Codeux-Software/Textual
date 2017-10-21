@@ -177,7 +177,7 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 						 alternateButton:buttonAlternate
 							 otherButton:otherButton
 						  suppressionKey:suppressKey
-					     suppressionText:suppressText
+						 suppressionText:suppressText
 						 completionBlock:completionBlock
 						   accessoryView:nil];
 }

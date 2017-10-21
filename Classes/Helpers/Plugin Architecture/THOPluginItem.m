@@ -156,7 +156,7 @@ NS_ASSUME_NONNULL_BEGIN
 			supportedFeatures |= THOPluginItemSupportsSubscribedServerInputCommands;
 		}
 	}
-	
+
 	/* Check whether plugin supports certain evnets so we do not have
 	 to ask if it responds to the selector every time we call it. */
 
@@ -166,7 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		supportedFeatures |= THOPluginItemSupportsNewMessagePostedEvent;
 	}
-	
+
 	if ([primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)]) {
 		supportedFeatures |= THOPluginItemSupportsWillRenderMessageEvent;
 	}
@@ -174,17 +174,17 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([primaryClass respondsToSelector:@selector(didReceiveJavaScriptPayload:fromViewController:)]) {
 		supportedFeatures |= THOPluginItemSupportsWebViewJavaScriptPayloads;
 	}
-	
+
 	/* Inline media */
 	if ([primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
 		supportedFeatures |= THOPluginItemSupportsInlineMediaManipulation;
 	}
-	
+
 	/* Data interception */
 	if ([primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
 		supportedFeatures |= THOPluginItemSupportsServerInputDataInterception;
 	}
-	
+
 	if ([primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
 		supportedFeatures |= THOPluginItemSupportsUserInputDataInterception;
 	}
@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.supportedFeatures = supportedFeatures;
 
 	self.primaryClass = primaryClass;
-	
+
 	return YES;
 }
 

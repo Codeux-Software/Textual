@@ -226,12 +226,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (index > 4) {
 				*stop = YES;
-				
+
 				return;
 			}
 
 			BOOL isLastObject = ((index + 1) == dataSectionsCount);
-			
+
 			if (isLastObject && [section isEqualIgnoringCase:@"needssl"]) {
 				connectSecurely = YES;
 
@@ -239,11 +239,11 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			NSString *sectionCopy = section;
-			
+
 			if ([sectionCopy hasPrefix:@"#"] == NO) {
 				sectionCopy = [@"#" stringByAppendingString:sectionCopy];
 			}
-			
+
 			[channelList appendString:sectionCopy];
 			[channelList appendString:@","];
 		}];
@@ -272,7 +272,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[IRCExtras createConnectionToServer:serverInfo channelList:channelList connectWhenCreated:connectWhenCreated mergeConnectionIfPossible:NO selectFirstChannelAdded:NO];
 }
-	
+
 + (void)createConnectionToServer:(NSString *)serverInfo
 					 channelList:(nullable NSString *)channelList
 			  connectWhenCreated:(BOOL)connectWhenCreated
@@ -288,7 +288,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *serverPassword = nil;
 
-    BOOL connectSecurely = NO;
+	BOOL connectSecurely = NO;
 
 	/* Begin parsing */
 	NSMutableString *serverInfoMutable = [serverInfo mutableCopy];
@@ -300,16 +300,16 @@ NS_ASSUME_NONNULL_BEGIN
 	 section of our string. */
 	NSString *tempStore = serverInfoMutable.token;
 
-    /* Secure Socket Layer? */
-    if ([tempStore isEqualIgnoringCase:@"-SSL"] ||
+	/* Secure Socket Layer? */
+	if ([tempStore isEqualIgnoringCase:@"-SSL"] ||
 		[tempStore isEqualIgnoringCase:@"-TLS"])
 	{
-        connectSecurely = YES;
+		connectSecurely = YES;
 
 		/* If the SSL define was our first token, we
 		 go to our next token. */
-        tempStore = serverInfoMutable.token;
-    }
+		tempStore = serverInfoMutable.token;
+	}
 
 	/* Server Address */
 	NSInteger openingBracketPosition = ([tempStore stringPosition:@"["] + 1);
@@ -318,7 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL hasOpeningBracket = (openingBracketPosition == 1 && openingBracketPosition < closingBracketPosition);
 	BOOL hasClosingBracket = (closingBracketPosition > 0 && openingBracketPosition < closingBracketPosition);
 
-    if (hasOpeningBracket && hasClosingBracket) {
+	if (hasOpeningBracket && hasClosingBracket) {
 		NSRange serverAddressRange = NSMakeRange(openingBracketPosition, (closingBracketPosition - openingBracketPosition));
 
 		NSString *tempServerAddress = [tempStore substringWithRange:serverAddressRange];
@@ -332,7 +332,7 @@ NS_ASSUME_NONNULL_BEGIN
 		serverAddress = tempServerAddress;
 
 		tempStore = [tempStore substringAfterIndex:closingBracketPosition];
-    } else if (hasOpeningBracket == NO && hasClosingBracket == NO) {
+	} else if (hasOpeningBracket == NO && hasClosingBracket == NO) {
 		/* Our server address did not contain brackets. Does it
 		 contain a colon (:) which means a port is included? */
 		NSInteger colonPosition = [tempStore stringPosition:@":"];
@@ -365,7 +365,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	serverAddress = serverAddress.lowercaseString;
 
-    /* Server Port */
+	/* Server Port */
 	NSString *tempServerPort = nil;
 
 	if ([tempStore hasPrefix:@":"]) {
@@ -390,16 +390,16 @@ NS_ASSUME_NONNULL_BEGIN
 		serverPort = tempServerPort.integerValue;
 	}
 
-    /* Server Password */
+	/* Server Password */
 	/* If our base is still not empty after taking out the token for the
 	 server address and port, then we are going to treat that as the server
 	 password. Anything after this token will be ignored completely. */
-    if (serverInfoMutable.length > 0) {
-        tempStore = serverInfoMutable.token;
-        
-        serverPassword = tempStore;
+	if (serverInfoMutable.length > 0) {
+		tempStore = serverInfoMutable.token;
+
+		serverPassword = tempStore;
 	}
-	
+
 	/* Convert channel list string into array of configurations */
 	NSMutableArray<NSString *> *channelListArray = nil;
 

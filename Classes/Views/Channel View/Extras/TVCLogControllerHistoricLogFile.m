@@ -446,7 +446,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)forgetItem:(IRCTreeItem *)item
 {
 	[self warmProcessIfNeeded];
-	
+
 	[[self remoteObjectProxy] forgetView:item.uniqueIdentifier];
 }
 

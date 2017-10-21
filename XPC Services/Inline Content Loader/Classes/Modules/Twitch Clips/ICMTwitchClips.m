@@ -42,26 +42,26 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_performActionForVideo:(NSString *)videoIdentifier
 {
 	NSParameterAssert(videoIdentifier != nil);
-	
+
 	ICLPayloadMutable *payload = self.payload;
-	
+
 	NSDictionary *templateAttributes =
 	@{
 	  @"uniqueIdentifier" : payload.uniqueIdentifier,
 	  @"videoIdentifier" : videoIdentifier
 	};
-	
+
 	NSError *templateRenderError = nil;
-	
+
 	NSString *html = [self.template renderObject:templateAttributes error:&templateRenderError];
-	
+
 	/* We only want to assign to the payload if we have success (HTML) */
 	if (html) {
 		payload.html = html;
 
 		payload.styleResources = self.styleResources;
 	}
-	
+
 	self.completionBlock(templateRenderError);
 }
 
@@ -92,9 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (urlPath.length == 0) {
 		return nil;
 	}
-	
+
 	urlPath = [urlPath substringFromIndex:1]; // "/"
-	
+
 	// old: /username/NameOfClip
 	// new: /NameOfClip
 	//      /NameOfClip/edit
@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSString *videoIdentifier = urlPath;
-	
+
 	if ([videoIdentifier onlyContainsCharactersFromCharacterSet:
 		 [NSCharacterSet Ato9UnderscoreDashForwardSlash]] == NO)
 	{
@@ -129,32 +129,31 @@ NS_ASSUME_NONNULL_BEGIN
 	return domains;
 }
 
-
 #pragma mark -
 #pragma mark Utilities
 
 - (nullable GRMustacheTemplate *)template
 {
 	static GRMustacheTemplate *template = nil;
-	
+
 	static dispatch_once_t onceToken;
-	
+
 	dispatch_once(&onceToken, ^{
 		NSString *templatePath =
 		[RZMainBundle() pathForResource:@"ICMTwitchClips" ofType:@"mustache" inDirectory:@"Components"];
-		
+
 		/* This module isn't designed to handle GRMustacheTemplate ever returning a
 		 nil value, but if it ever happens, we log error to better understand why. */
 		NSError *templateLoadError;
-		
+
 		template = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&templateLoadError];
-		
+
 		if (template == nil) {
 			LogToConsoleError("Failed to load template '%@': %@",
 				templatePath, templateLoadError.localizedDescription);
 		}
 	});
-	
+
 	return template;
 }
 

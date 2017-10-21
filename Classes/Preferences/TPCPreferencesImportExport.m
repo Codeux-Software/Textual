@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Import data */
 	[TPCPreferencesImportExport importContentsOfDictionary:propertyList reloadPreferences:NO];
-	
+
 	/* Do not push the loading screen right away. Add a little delay to give everything
 	 a chance to settle down before presenting the changes to the user. */
 	[TPCPreferencesImportExport performSelectorInCommonModes:@selector(importPostflightCleanup:) withObject:propertyList.allKeys afterDelay:2.0];
@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([object isKindOfClass:[NSString class]] == NO) {
 			return;
 		}
-		
+
 		[TPCPreferences setThemeNameWithExistenceCheck:object];
 	}
 	else if ([key isEqual:TPCPreferencesThemeFontNameDefaultsKey])
@@ -169,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([object isKindOfClass:[NSString class]] == NO) {
 			return;
 		}
-		
+
 		[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:object];
 	}
 	else if ([key isEqual:IRCWorldClientListDefaultsKey])
@@ -224,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 #endif
-		
+
 	if (client) {
 		if (isImportedFromCloud) {
 			[client updateConfigFromTheCloud:clientConfig];

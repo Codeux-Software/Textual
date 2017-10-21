@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(string != nil);
 
 	AHHyperlinkScanner *scanner = [AHHyperlinkScanner new];
-	
+
 	NSArray *result = [scanner matchesForString:string];
-	
+
 	scanner = nil;
-	
+
 	return result;
 }
 

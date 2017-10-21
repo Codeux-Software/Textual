@@ -169,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)playAlertSound:(NSString *)name
 {
 	NSParameterAssert(name != nil);
-	
+
 	if ([name isEqualToString:TXNoAlertSoundPreferenceValue]) {
 		return;
 	}
@@ -181,7 +181,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	SystemSoundID soundID = [TLOSoundPlayer alertSoundNamed:name];
-	
+
 	if (soundID) {
 		AudioServicesPlayAlertSound(soundID);
 

@@ -224,7 +224,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 		return filePath;
 	}
-	
+
 	return nil;
 }
 
@@ -232,9 +232,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	/* Try to find a theme by the stored name */
 	NSString *themeName = [TPCPreferences themeName];
-	
+
 	TPCThemeControllerStorageLocation storageLocation = TPCThemeControllerStorageUnknownLocation;
-	
+
 	NSString *themePath = [TPCThemeController pathOfThemeWithName:themeName storageLocation:&storageLocation];
 
 	NSAssert1((storageLocation != TPCThemeControllerStorageUnknownLocation),
@@ -251,7 +251,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	[self.customSettings reloadWithPath:themePath];
 
 	[self createTemporaryCopyOfTheme];
-	
+
 	[self maybePresentCompatibilityWarningDialog];
 }
 
@@ -328,7 +328,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		LogToConsoleInfo("Reloading theme because it failed validation");
 
 		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
-		
+
 		return YES;
 	} else {
 		return NO;
@@ -355,18 +355,18 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	NSString *suggestedFontName = nil;
 	NSString *suggestedThemeName = nil;
-	
+
 	BOOL validationResult = [self performValidationForTheme:themeName suggestedFont:&suggestedFontName suggestedTheme:&suggestedThemeName];
 
 	if (validationResult == NO) {
 		if (suggestedFontName) {
 			[TPCPreferences setThemeChannelViewFontName:suggestedFontName];
 		}
-		
+
 		if (suggestedThemeName) {
 			[TPCPreferences setThemeName:suggestedThemeName];
 		}
-		
+
 		return YES;
 	} else {
 		return NO;
@@ -388,13 +388,13 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		if ( suggestedFontName) {
 			*suggestedFontName = [TPCPreferences themeChannelViewFontNameDefault];
 		}
-		
+
 		keyChanged = YES;
 	}
-	
+
 	/* Validate theme */
 	NSString *themeName = [TPCThemeController extractThemeName:validatedTheme];
-	
+
 	NSString *themeSource = [TPCThemeController extractThemeSource:validatedTheme];
 
 	LogToConsoleInfo("Performing validation on theme named '%{public}@' with source type of '%{public}@'", themeName, themeSource);
@@ -406,7 +406,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		if ([TPCThemeController themeExists:validatedTheme] == NO) {
 			if ( suggestedThemeName) {
 				*suggestedThemeName = [TPCPreferences themeNameDefault];
-				
+
 				keyChanged = YES;
 			}
 		}
@@ -418,7 +418,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		NSString *cloudTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCloudLocation];
-		
+
 		if ([TPCThemeController themeExists:cloudTheme]) {
 			/* If the theme exists in the cloud, then we go to that. */
 			if ( suggestedThemeName) {
@@ -437,14 +437,14 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 					/* Use a bundled theme with the same name if available. */
 					if ( suggestedThemeName) {
 						*suggestedThemeName = bundledTheme;
-						
+
 						keyChanged = YES;
 					}
 				} else {
 					/* Revert back to the default theme if no recovery is possible. */
 					if ( suggestedThemeName) {
 						*suggestedThemeName = [TPCPreferences themeNameDefault];
-						
+
 						keyChanged = YES;
 					}
 				}
@@ -463,26 +463,26 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 			NSString *customTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCustomLocation];
 
 			NSString *bundledTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageBundleLocation];
-			
+
 			if ([TPCThemeController themeExists:customTheme]) {
 				/* Use a custom theme with the same name if available. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = customTheme;
-					
+
 					keyChanged = YES;
 				}
 			} else if ([TPCThemeController themeExists:bundledTheme]) {
 				/* Use a bundled theme with the same name if available. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = bundledTheme;
-					
+
 					keyChanged = YES;
 				}
 			} else {
 				/* Revert back to the default theme if no recovery is possible. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = [TPCPreferences themeNameDefault];
-					
+
 					keyChanged = YES;
 				}
 			}
@@ -520,7 +520,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 			break;
 		}
 	}
-	
+
 	return nil;
 }
 
@@ -533,7 +533,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		[source hasPrefix:TPCThemeControllerBundledThemeNameCompletePrefix] == NO)
 	{
 		return nil;
-    }
+	}
 
 	NSInteger colonIndex = [source stringPosition:@":"];
 
@@ -549,7 +549,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		[source hasPrefix:TPCThemeControllerBundledThemeNameCompletePrefix] == NO)
 	{
 		return nil;
-    }
+	}
 
 	NSInteger colonIndex = [source stringPosition:@":"];
 
@@ -579,7 +579,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		PointerIsEmptyAssert(storagePath)
 
 		NSArray *files = [RZFileManager() contentsOfDirectoryAtPath:storagePath error:NULL];
-			
+
 		for (NSString *file in files) {
 			if ([themeList containsKey:file]) {
 				continue;
@@ -594,12 +594,12 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 			themeList[file] = storageType;
 		}
 	};
-	
+
 	/* File paths are ordered by priority. Top-most will be most important. */
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	checkPath([TPCPathInfo cloudCustomThemes], TPCThemeControllerCloudThemeNameCompletePrefix);
 #endif
-	
+
 	checkPath([TPCPathInfo customThemes], TPCThemeControllerCustomThemeNameCompletePrefix);
 	checkPath([TPCPathInfo bundledThemes], TPCThemeControllerBundledThemeNameCompletePrefix);
 
@@ -618,13 +618,13 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 		BOOL activeThemeContentsWereDeleted = NO;
 		BOOL activeThemeContentsWereModified = NO;
-		
+
 		BOOL postDidChangeNotification = NO;
 
 		NSString *themePath = themeController.path;
 
 #define _themeFilePath(s)					[themePath stringByAppendingPathComponent:(s)]
-	
+
 #define _updateConditionForPath(s)			if ([path isEqualToString:_themeFilePath((s))]) {						\
 												if ([RZFileManager() fileExistsAtPath:path] == NO) {				\
 													activeThemeContentsWereDeleted = YES;							\
@@ -634,12 +634,12 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 																													\
 												continue;															\
 											}
-		
+
 		NSArray *transformedPaths = (__bridge NSArray *)(eventPaths);
 
 		for (NSUInteger i = 0; i < numEvents; i++) {
 			FSEventStreamEventFlags flags = eventFlags[i];
-			
+
 			NSString *path = transformedPaths[i];
 
 			/* Update status of any monitored files */
@@ -659,7 +659,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 				_updateConditionForPath(@"design.css")
 				_updateConditionForPath(@"scripts.js")
 				_updateConditionForPath(@"Data/Settings/styleSettings.plist")
-				
+
 				/* Check status for generic files. */
 				NSString *fileExtension = path.pathExtension;
 
@@ -667,11 +667,11 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 					[fileExtension isEqualToString:@"css"])
 				{
 					activeThemeContentsWereModified = YES;
-					
+
 					continue; // Only thing we care about here...
 				}
 			}
-			
+
 			/* Update status of inset stuff */
 			if (flags & kFSEventStreamEventFlagItemIsDir) {
 				BOOL pathIsThemeRoot = [path isEqualToString:themePath];
@@ -686,7 +686,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 				postDidChangeNotification = pathIsThemeRoot;
 			}
 		}
-	
+
 		if (activeThemeContentsWereDeleted)
 		{
 			LogToConsoleInfo("The contents of the configured theme was deleted. Validation and reload will now occur.");
@@ -749,7 +749,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 #endif
 
 	CFArrayRef pathsToWatchRef = (__bridge CFArrayRef)(pathsToWatch);
-	
+
 	CFAbsoluteTime latency = 5.0;
 
 	FSEventStreamContext context;
@@ -758,13 +758,13 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	context.retain = NULL;
 	context.release = NULL;
 	context.copyDescription = NULL;
- 
+
 	FSEventStreamRef stream = FSEventStreamCreate(NULL, &activeThemePathMonitorCallback, &context, pathsToWatchRef, kFSEventStreamEventIdSinceNow, latency, (kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagUseCFTypes));
-	
+
 	FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 
 	FSEventStreamStart(stream);
-	
+
 	self.eventStreamRef = stream;
 }
 
@@ -797,7 +797,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 	copyOperation.openThemeWhenCopied = openOnCopy;
 	copyOperation.reloadThemeWhenCopied = reloadOnCopy;
-	
+
 	[copyOperation beginOperation];
 
 	self.currentCopyOperation = copyOperation;
@@ -824,7 +824,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	self.progressIndicator = progressIndicator;
 
 	[self.progressIndicator start];
-	
+
 	/* All work is done in a background thread. */
 	/* Once started, the operation cannot be cancelled. It will occur
 	 then it will either call -cancelOperation itself on failure or wait
@@ -886,7 +886,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 			_cancelOperationAndReturn
 		}
-		
+
 		/* Once the operation is completed, we can try to delete the temporary folder. */
 		/* As the folder is only a temporary one, we don't care if this process errors out. */
 		(void)[RZFileManager() removeItemAtURL:fakeDestinationURL error:NULL];
@@ -973,16 +973,16 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	if (self.openThemeWhenCopied) {
 		(void)[RZWorkspace() openFile:self.pathBeingCopiedTo];
 	}
-	
+
 	/* Maybe reload new theme */
 	if (self.reloadThemeWhenCopied) {
 		NSString *newThemeName = [TPCThemeController buildFilename:self.themeName forStorageLocation:self.destinationLocation];
-		
+
 		[TPCPreferences setThemeName:newThemeName];
 
 		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
 	}
-	
+
 	/* Close progress indicator */
 	[self invalidateOperation];
 }
@@ -991,7 +991,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	[self.progressIndicator stop];
 	 self.progressIndicator = nil;
-	
+
 	[self.themeController copyActiveThemeOperationCompleted];
 }
 
