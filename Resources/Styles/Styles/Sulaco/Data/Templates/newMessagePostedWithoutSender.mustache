@@ -1,22 +1,23 @@
 
-<div 	ltype="{{lineType}}" 
+<div
+	data-command="{{command}}"
+	data-line-type="{{lineType}}"
 
 {{^isRemoteMessage}}
-		mtype="{{nicknameType}}"
+	data-member-type="{{nicknameType}}"
 {{/isRemoteMessage}}
 
-		command="{{command}}"
-		class="line {{lineClassAttributeRepresentation}}" 
-		id="line-{{lineNumber}}"
-		timestamp="{{timestamp}}">
+	data-timestamp="{{timestamp}}"
+	class="line {{lineClassAttribute}}"
+	id="line-{{lineNumber}}">
 
 	<span class="sender"></span>
 
-	<span class="message" ltype="{{lineType}}">{{{formattedMessage}}}</span>
+	<span class="message">{{{formattedMessage}}}</span>
 
 	<span class="time"
 
 	{{^ isEmpty(localizedTimestamp) }}
-		title="{{localizedTimestamp}}"
+	title="{{localizedTimestamp}}"
 	{{/ isEmpty(localizedTimestamp) }}>{{formattedTimestamp}} </span>
 </div>

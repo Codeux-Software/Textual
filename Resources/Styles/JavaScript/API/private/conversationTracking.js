@@ -52,7 +52,7 @@ ConversationTracking.trackedNicknames = [];
 ConversationTracking.nicknameSingleClickEventCallback = function(senderElement)
 {
 	/* This is called when .sender is clicked */
-	var nickname = senderElement.getAttribute("nickname");
+	var nickname = senderElement.dataset.nickname;
 
 	/* Toggle status for nickname */
 	var trackingIndex = ConversationTracking.trackedNicknames.indexOf(nickname);
@@ -66,13 +66,13 @@ ConversationTracking.nicknameSingleClickEventCallback = function(senderElement)
 	/* Gather basic information */
 	var documentBody = Textual.documentBodyElement();
 
-	var plainTextLines = documentBody.querySelectorAll('div[ltype="privmsg"], div[ltype="action"]');
+	var plainTextLines = documentBody.querySelectorAll('div[data-line-type="privmsg"], div[data-line-type="action"]');
 
 	/* Update all elements of the DOM matching conditions */
 	for (var i = 0; i < plainTextLines.length; i++) {
 		var lineSender = plainTextLines[i].querySelector(".sender");
 
-		if (lineSender && lineSender.getAttribute("nickname") === nickname) {
+		if (lineSender && lineSender.dataset.nickname === nickname) {
 			ConversationTracking.toggleSelectionStatusForSenderElement(lineSender);
 		}
 	}
@@ -80,7 +80,7 @@ ConversationTracking.nicknameSingleClickEventCallback = function(senderElement)
 
 ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 {
-	var elementType = lineElement.getAttribute("ltype");
+	var elementType = lineElement.dataset.lineType;
 
 	/* We only want to target plain text messages */
 	if (elementType === "privmsg" ||
@@ -91,7 +91,7 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 
 		if (senderElement) {
 			/* Is this a tracked nickname? */
-			var nickname = senderElement.getAttribute("nickname");
+			var nickname = senderElement.dataset.nickname;
 
 			if (ConversationTracking.isNicknameTracked(nickname) === false) {
 				return;

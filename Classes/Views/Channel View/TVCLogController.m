@@ -1395,14 +1395,14 @@ ClassWithDesignatedInitializerInitMethod
 		classAttribute = @"event";
 	}
 
-	templateAttributes[@"lineClassAttributeRepresentation"] = classAttribute;
+	templateAttributes[@"lineClassAttribute"] = classAttribute;
 
 	// ---- //
 
 	if (highlighted) {
-		templateAttributes[@"highlightAttributeRepresentation"] = @"true";
+		templateAttributes[@"highlightAttribute"] = @"true";
 	} else {
-		templateAttributes[@"highlightAttributeRepresentation"] = @"false";
+		templateAttributes[@"highlightAttribute"] = @"false";
 	}
 
 	// ---- //
@@ -1543,6 +1543,12 @@ ClassWithDesignatedInitializerInitMethod
 		templateTokens[@"textDirectionToken"] = @"rtl";
 	} else {
 		templateTokens[@"textDirectionToken"] = @"ltr";
+	}
+
+	if ([themeSettings() underlyingWindowColorIsDark]) {
+		templateTokens[@"appearanceToken"] = @"dark";
+	} else {
+		templateTokens[@"appearanceToken"] = @"light";
 	}
 
 	return [TVCLogRenderer renderTemplateNamed:@"baseLayout" attributes:templateTokens];

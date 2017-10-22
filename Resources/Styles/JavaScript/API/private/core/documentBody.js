@@ -46,14 +46,7 @@
 /* Loading screen */
 Textual.loadingScreenElement = function() /* PUBLIC */
 {
-	return document.getElementById("loading_screen");
-};
-
-Textual.fadeInLoadingScreen = function(bodyOp, topicOp) /* PUBLIC */
-{
-	console.warn("Deprecated function. Use Textual.fadeOutLoadingScreen() instead.");
-
-	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
+	return document.getElementById("loadingScreen");
 };
 
 Textual.fadeOutLoadingScreen = function(bodyOp, topicOp) /* PUBLIC */
@@ -90,7 +83,7 @@ Textual._topicBarElementReference = null; /* PRIVATE */
 Textual.topicBarElement = function() /* PUBLIC */
 {
 	if (Textual._topicBarElementReference === null) {
-		Textual._topicBarElementReference = document.getElementById("topic_bar");
+		Textual._topicBarElementReference = document.getElementById("topicBar");
 	}
 
 	return Textual._topicBarElementReference;
@@ -171,7 +164,7 @@ Textual._documentBodyElementReference = null; /* PRIVATE */
 Textual.documentBodyElement = function() /* PUBLIC */
 {
 	if (Textual._documentBodyElementReference === null) {
-		Textual._documentBodyElementReference = document.getElementById("body_home");
+		Textual._documentBodyElementReference = document.getElementById("body");
 	}
 
 	return Textual._documentBodyElementReference;

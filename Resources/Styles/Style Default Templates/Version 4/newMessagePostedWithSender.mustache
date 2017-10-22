@@ -1,19 +1,22 @@
 
-<div 	ltype="{{lineType}}" 
+<div
+	class="line {{lineClassAttribute}}"
+	id="line-{{lineNumber}}"
 
-{{^isRemoteMessage}}
-		mtype="{{nicknameType}}"
-{{/isRemoteMessage}}
+	data-command="{{command}}"
 
 {{#isEncrypted}}
-		encrypted="true"
+	data-encrypted="true"
 {{/isEncrypted}}
 
-		command="{{command}}"
-		highlight="{{highlightAttributeRepresentation}}" 
-		class="line {{lineClassAttributeRepresentation}}" 
-		id="line-{{lineNumber}}"
-		timestamp="{{timestamp}}">
+	data-highlight="{{highlightAttribute}}"
+	data-line-type="{{lineType}}"
+
+{{^isRemoteMessage}}
+	data-member-type="{{nicknameType}}"
+{{/isRemoteMessage}}
+
+	data-timestamp="{{timestamp}}">
 
 	<p>
 		<span class="time"
@@ -26,24 +29,25 @@
 	{{{encryptedMessageLockTemplate}}}
 {{/isEncrypted}}
 
-		<span class="message" ltype="{{lineType}}">
+		<span class="message">
 			<span class="senderContainer">
 				<span class="sender"
 					onclick="Textual.nicknameMaybeWasDoubleClicked(this)"
 					oncontextmenu="Textual.openStandardNicknameContextualMenu()"
-					mtype="{{nicknameType}}"
-					nickname="{{nickname}}"
+					data-member-type="{{nicknameType}}"
+					data-nickname="{{nickname}}"
+
 					{{#nicknameColorHashingEnabled}}
 						{{#nicknameColorHashingIsStyleBased}}
 							{{#nicknameColorStyleOverride}}
-								coloroverride="true"
+								data-override-color="true"
 							{{/nicknameColorStyleOverride}}
 
 							{{^ isEmpty(nicknameColorStyle) }}
 							style="color: {{nicknameColorStyle}};"
 							{{/ isEmpty(nicknameColorStyle) }}
 						{{^nicknameColorHashingIsStyleBased}}
-							colornumber="{{nicknameColorNumber}}"
+							data-color-number="{{nicknameColorNumber}}"
 						{{/nicknameColorHashingIsStyleBased}}
 					{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
 			</span>

@@ -58,7 +58,7 @@ HTMLDocument.prototype.getInlineMediaById = function(mediaId) /* PUBLIC */
 
 HTMLDocument.prototype.getInlineMediaAnchorById = function(mediaId) /* PUBLIC */
 {
-	return document.body.querySelector("a[ilm-anchor=\"" + mediaId + "\"]");
+	return document.body.querySelector("a[data-ilm-anchor=\"" + mediaId + "\"]");
 };
 
 /* ************************************************** */
@@ -174,8 +174,8 @@ InlineMediaPrototype.prototype.changeVisiblity = function(mediaId, display) /* P
 			return;
 		}
 
-		if (anchor.hasAttribute("ilm-loading") === false) {
-			anchor.setAttribute("ilm-loading", "true");
+		if (!anchor.dataset.ilmLoading) {
+			anchor.dataset.ilmLoading = "true";
 		} else {
 			return;
 		}
@@ -260,7 +260,7 @@ InlineMediaPrototype.prototype._didLoadMediaModifyAnchor = function(mediaId) /* 
 	}
 
 	/* Modify attributes */
-	anchor.removeAttribute("ilm-loading");
+	delete anchor.dataset.ilmLoading;
 
 	/* Replace onclick event with one for current class */
 	if (this._isSubclass()) {

@@ -24,11 +24,11 @@ formatting that may be open for the previous fragment. }}
 		"
 	{{^fragmentTextColorUsesStyleTag}}
 		{{#fragmentForegroundColorIsSet}}
-			color-number="{{fragmentForegroundColor}}"
+			data-foreground-color="{{fragmentForegroundColor}}"
 		{{/fragmentForegroundColorIsSet}}
 
 		{{#fragmentBackgroundColorIsSet}}
-			bgcolor-number="{{fragmentBackgroundColor}}"
+			data-background-color="{{fragmentBackgroundColor}}"
 		{{/fragmentBackgroundColorIsSet}}
 	{{/fragmentTextColorUsesStyleTag}}
 >
@@ -40,17 +40,17 @@ formatting that may be open for the previous fragment. }}
 {{#fragmentIsUnderlinedOpened}}<u>{{/fragmentIsUnderlinedOpened}}
 
 {{#inlineNicknameMatchFound}}
-<span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" mode="{{inlineNicknameUserModeSymbol}}"
+<span class="inlineSender" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" data-mode="{{inlineNicknameUserModeSymbol}}"
 	{{#nicknameColorHashingIsStyleBased}}
 		{{#nicknameColorStyleOverride}}
-			coloroverride="true"
+			data-override-color="true"
 		{{/nicknameColorStyleOverride}}
 
 		{{^ isEmpty(inlineNicknameColorStyle) }}
-		style="color: {{inlineNicknameColorStyle}};"
+			style="color: {{inlineNicknameColorStyle}};"
 		{{/ isEmpty(inlineNicknameColorStyle) }}
 	{{^nicknameColorHashingIsStyleBased}}
-		colornumber="{{inlineNicknameColorNumber}}"
+		data-foreground-color="{{inlineNicknameColorNumber}}"
 	{{/nicknameColorHashingIsStyleBased}}>{{inlineNicknameUserModeSymbol}}
 {{/inlineNicknameMatchFound}}
 {{{messageFragment}}}

@@ -37,8 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _templateEngineVersionMaximum			3
-#define _templateEngineVersionMinimum			3
+#define _templateEngineVersionMaximum			4
+#define _templateEngineVersionMinimum			4
 
 @interface TPCThemeSettings ()
 @property (nonatomic, assign, readwrite) BOOL invertSidebarColors;

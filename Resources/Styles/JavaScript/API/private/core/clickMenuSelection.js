@@ -167,7 +167,7 @@ Textual.openInlineNicknameContextualMenu = function() /* PUBLIC */
 
 _Textual.setPolicyStandardNickname = function() /* PRIVATE */
 {
-	var userNickname = event.target.getAttribute("nickname");
+	var userNickname = event.target.dataset.nickname;
 
 	appPrivate.setNickname(userNickname);
 };
@@ -176,7 +176,7 @@ _Textual.setPolicyInlineNickname = function() /* PRIVATE */
 {
 	var userNickname = event.target.textContent;
 
-	var userMode = event.target.getAttribute("mode");
+	var userMode = event.target.dataset.mode;
 
 	if (userMode && userMode.length > 0 && userNickname.indexOf(userMode) === 0) {
 		appPrivate.setNickname(userNickname.substring(1));
