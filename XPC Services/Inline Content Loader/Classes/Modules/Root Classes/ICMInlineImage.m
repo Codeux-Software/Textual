@@ -147,33 +147,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Utilities
 
-- (nullable GRMustacheTemplate *)template
+- (nullable NSURL *)templateURL
 {
-	static GRMustacheTemplate *template = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		/* So you may wonder why the subfolder is named "Components" when these
-		 are referred to as "Modules" — well it turns out Apple doesn't like the
-		 latter. When that was used as a folder name, it would not appear in the
-		 Resources folder of the service when copied to the main app. */
-		NSString *templatePath =
-		[RZMainBundle() pathForResource:@"ICMInlineImage" ofType:@"mustache" inDirectory:@"Components"];
-
-		/* This module isn't designed to handle GRMustacheTemplate ever returning a
-		 nil value, but if it ever happens, we log error to better understand why. */
-		NSError *templateLoadError;
-
-		template = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&templateLoadError];
-
-		if (template == nil) {
-			LogToConsoleError("Failed to load template '%@': %@",
-				templatePath, templateLoadError.localizedDescription);
-		}
-	});
-
-	return template;
+	return [RZMainBundle() URLForResource:@"ICMInlineImage" withExtension:@"mustache" subdirectory:@"Components"];
 }
 
 + (NSArray<NSString *> *)validImageContentTypes

@@ -68,6 +68,7 @@
 #import "ICMDailymotion.h"
 #import "ICMGfycat.h"
 #import "ICMImgurGifv.h"
+#import "ICMLiveLeak.h"
 #import "ICMPornhub.h"
 #import "ICMStreamable.h"
 #import "ICMTwitchClips.h"

@@ -38,6 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLInlineContentModule (ICLInlineContentModulePrivate)
+@property (readonly, nullable) NSURL *templateURL;
 @property (readonly, nullable) GRMustacheTemplate *template;
 
 - (void)mergePropertiesIntoPayload;

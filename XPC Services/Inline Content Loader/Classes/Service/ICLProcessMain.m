@@ -78,6 +78,7 @@ ClassWithDesignatedInitializerInitMethod
 		modules = @[[ICMDailymotion class],
 					[ICMGfycat class],
 					[ICMImgurGifv class],
+					[ICMLiveleak class],
 					[ICMPornhub class],
 					[ICMStreamable class],
 					[ICMTwitchClips class],

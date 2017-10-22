@@ -57,9 +57,29 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
-- (nullable GRMustacheTemplate *)template
+- (nullable NSURL *)templateURL
 {
 	return nil;
+}
+
+- (nullable GRMustacheTemplate *)template
+{
+	NSURL *templateURL = self.templateURL;
+
+	if (templateURL == nil || templateURL.isFileURL == NO) {
+		return nil;
+	}
+
+	NSError *templateLoadError;
+
+	GRMustacheTemplate *template = [GRMustacheTemplate templateFromContentsOfURL:templateURL error:&templateLoadError];
+
+	if (template == nil) {
+		LogToConsoleError("Failed to load template '%@': %@",
+			  templatePath, templateLoadError.localizedDescription);
+	}
+
+	return template;
 }
 
 - (NSString *)classAttribute

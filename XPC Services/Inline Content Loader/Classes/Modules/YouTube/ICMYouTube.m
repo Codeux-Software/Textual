@@ -147,29 +147,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Utilities
 
-- (nullable GRMustacheTemplate *)template
+- (nullable NSURL *)templateURL
 {
-	static GRMustacheTemplate *template = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		NSString *templatePath =
-		[RZMainBundle() pathForResource:@"ICMYouTube" ofType:@"mustache" inDirectory:@"Components"];
-
-		/* This module isn't designed to handle GRMustacheTemplate ever returning a
-		 nil value, but if it ever happens, we log error to better understand why. */
-		NSError *templateLoadError;
-
-		template = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&templateLoadError];
-
-		if (template == nil) {
-			LogToConsoleError("Failed to load template '%@': %@",
-				templatePath, templateLoadError.localizedDescription);
-		}
-	});
-
-	return template;
+	return [RZMainBundle() URLForResource:@"ICMYouTube" withExtension:@"mustache" subdirectory:@"Components"];
 }
 
 @end
