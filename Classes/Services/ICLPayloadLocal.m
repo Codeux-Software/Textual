@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* WebKit2 uses sandboxed processes. We copy the resources files to
  the application's temporary folder so that it can access them. */
-- (nullable NSArray<NSString *> *)_copyResourcesToTemporaryLocation:(nullable NSArray<NSString *> *)resources
+- (nullable NSArray<NSString *> *)_copyResourcesToTemporaryLocation:(nullable NSArray<NSURL *> *)resources
 {
 	if (resources == nil) {
 		return nil;
@@ -62,8 +62,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *basePath = [self _resourcesTemporaryLocation];
 
-	NSString *(^copyOperation)(NSString *) = ^NSString *(NSString *resourcePath)
+	NSString *(^copyOperation)(NSURL *) = ^NSString *(NSURL *resourceURL)
 	{
+		if (resourceURL.isFileURL == NO) {
+			return resourceURL.absoluteString;
+		}
+
+		NSString *resourcePath = resourceURL.relativePath;
+
 		NSString *filename =
 		[NSString stringWithFormat:@"%@.%@",
 		 resourcePath.md5,
@@ -90,11 +96,11 @@ NS_ASSUME_NONNULL_BEGIN
 		return destinationPath;
 	};
 
-	NSMutableArray *temporaryResources = [NSMutableArray arrayWithCapacity:resources.count];
+	NSMutableArray<NSString *> *temporaryResources = [NSMutableArray arrayWithCapacity:resources.count];
 
-	for (NSString *resourcePath in resources) {
+	for (NSURL *resourceURL in resources) {
 		@autoreleasepool {
-			[temporaryResources addObject:copyOperation(resourcePath)];
+			[temporaryResources addObject:copyOperation(resourceURL)];
 		}
 	}
 

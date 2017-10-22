@@ -60,12 +60,12 @@ ClassWithDesignatedInitializerInitMethod
 	return NULL;
 }
 
-- (nullable NSArray<NSString *> *)styleResources
+- (nullable NSArray<NSURL *> *)styleResources
 {
 	return nil;
 }
 
-- (nullable NSArray<NSString *> *)scriptResources
+- (nullable NSArray<NSURL *> *)scriptResources
 {
 	return nil;
 }

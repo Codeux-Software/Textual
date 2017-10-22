@@ -202,33 +202,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineImageFoundation
 
-- (nullable NSArray<NSString *> *)styleResources
+- (nullable NSArray<NSURL *> *)styleResources
 {
-	static NSArray<NSString *> *styleResources = nil;
+	static NSArray<NSURL *> *styleResources = nil;
 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
 		styleResources =
 		@[
-		  [RZMainBundle() pathForResource:@"ICMInlineImage" ofType:@"css" inDirectory:@"Components"]
+		  [RZMainBundle() URLForResource:@"ICMInlineImage" withExtension:@"css" subdirectory:@"Components"]
 		];
 	});
 
 	return styleResources;
 }
 
-- (nullable NSArray<NSString *> *)scriptResources
+- (nullable NSArray<NSURL *> *)scriptResources
 {
-	static NSArray<NSString *> *scriptResources = nil;
+	static NSArray<NSURL *> *scriptResources = nil;
 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
 		scriptResources =
 		@[
-		  [RZMainBundle() pathForResource:@"InlineImageLiveResize" ofType:@"js"],
-		  [RZMainBundle() pathForResource:@"ICMInlineImage" ofType:@"js" inDirectory:@"Components"]
+		  [RZMainBundle() URLForResource:@"InlineImageLiveResize" withExtension:@"js"],
+		  [RZMainBundle() URLForResource:@"ICMInlineImage" withExtension:@"js" subdirectory:@"Components"]
 		];
 	});
 

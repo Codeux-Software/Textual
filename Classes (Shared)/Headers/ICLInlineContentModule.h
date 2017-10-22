@@ -91,8 +91,8 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 /* If a non-nil value is returned for any of these properties,
  then that value is inserted into the payload. */
 /* See ICLPayload.h for a description of each property. */
-@property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
-@property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
+@property (copy, readonly, nullable) NSArray<NSURL *> *styleResources;
+@property (copy, readonly, nullable) NSArray<NSURL *> *scriptResources;
 @property (copy, readonly, nullable) NSString *entrypoint;
 
 #pragma mark -

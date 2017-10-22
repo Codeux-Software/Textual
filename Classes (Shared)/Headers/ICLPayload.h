@@ -92,14 +92,14 @@ NS_ASSUME_NONNULL_BEGIN
  A collection of paths for .css files that need to be loaded to allow the
  rendered HTML to appear correct.
  */
-@property (copy, readonly, nullable) NSArray<NSString *> *styleResources;
+@property (copy, readonly, nullable) NSArray<NSURL *> *styleResources;
 
 /**
  A collection of paths for .js files that need to be loaded to allow the
  rendered HTML to appear correct.
 
  */
-@property (copy, readonly, nullable) NSArray<NSString *> *scriptResources;
+@property (copy, readonly, nullable) NSArray<NSURL *> *scriptResources;
 
 /**
  Rendered HTML or an empty string
