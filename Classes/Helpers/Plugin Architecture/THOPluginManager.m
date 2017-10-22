@@ -491,7 +491,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	_ef(THOPluginItemSupportsDidReceiveCommandEvent)
 	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
-	_ef(THOPluginItemSupportsInlineMediaManipulation)
+//	_ef(THOPluginItemSupportsInlineMediaManipulation)
 	_ef(THOPluginItemSupportsNewMessagePostedEvent)
 	_ef(THOPluginItemSupportsOutputSuppressionRules)
 	_ef(THOPluginItemSupportsPreferencePane)

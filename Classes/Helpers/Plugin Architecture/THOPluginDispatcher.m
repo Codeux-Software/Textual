@@ -217,46 +217,6 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	return returnValue;
 }
 
-+ (nullable NSString *)processInlineMediaContentURL:(NSString *)resource
-{
-	NSParameterAssert(resource != nil);
-
-	NSString *returnValue = nil;
-
-	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
-	{
-		if ([plugin supportsFeature:THOPluginItemSupportsInlineMediaManipulation] == NO) {
-			continue;
-		}
-
-		NSString *returnedValue = [plugin.primaryClass processInlineMediaContentURL:resource];
-
-		if (NSObjectIsEmpty(returnedValue)) {
-			continue;
-		} else if (NSObjectsAreEqual(returnedValue, returnValue)) {
-			continue;
-		}
-
-		NSURL *returnedValueURL = [NSURL URLWithString:returnedValue];
-
-		if ( returnedValueURL == nil ||
-			returnedValueURL.scheme == nil ||
-			returnedValueURL.host == nil ||
-			returnedValueURL.path == nil)
-		{
-			LogToConsoleDebug("Value '%{public}@' returned which is not a URL", returnedValue);
-
-			continue;
-		}
-
-		returnValue = [returnedValue copy];
-
-		break;
-	}
-
-	return returnValue;
-}
-
 + (void)userInputCommandInvokedOnClient:(IRCClient *)client commandString:(NSString *)commandString messageString:(NSString *)messageString
 {
 	NSParameterAssert(client != nil);
