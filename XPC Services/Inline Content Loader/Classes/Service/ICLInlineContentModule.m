@@ -82,11 +82,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return template;
 }
 
-- (NSString *)classAttribute
-{
-	return @"";
-}
-
 - (void)mergePropertiesIntoPayload
 {
 	NSArray *scriptResources = self.scriptResources;

@@ -216,6 +216,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return @"_ICMInlineImage";
 }
 
+- (NSString *)classAttribute
+{
+	return @"";
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
