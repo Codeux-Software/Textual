@@ -175,11 +175,6 @@ NS_ASSUME_NONNULL_BEGIN
 		supportedFeatures |= THOPluginItemSupportsWebViewJavaScriptPayloads;
 	}
 
-	/* Inline media */
-	if ([primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
-		supportedFeatures |= THOPluginItemSupportsInlineMediaManipulation;
-	}
-
 	/* Data interception */
 	if ([primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
 		supportedFeatures |= THOPluginItemSupportsServerInputDataInterception;

@@ -237,25 +237,6 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 					 memberType:(TVCLogLineMemberType)memberType;
 
 #pragma mark -
-
-/**
- * @brief Given a URL, returns the same URL or another that can be shown as an 
- *  image inline with chat.
- *
- * @discussion Considerations:
- *
- * 1. The return value must be a valid URL for an image file if non-`nil`
- * 2. Textual uses the first non-`nil`, valid URL returned by any plugin. It does not chain
- *  the responses similar to other methods defined by the `THOPluginProtocol` protocol.
- *
- * @param resource A URL that was detected in a message being rendered.
- *
- * @return A URL that can be shown as an inline image in relation to resource or `nil`
- *  if there is no interest in the URL.
- */
-- (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
-
-#pragma mark -
 #pragma mark Subscribed Events
 
 /** @name Subscribed Events */
@@ -367,6 +348,8 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 
 #pragma mark -
 #pragma mark Deprecated
+
+- (nullable NSString *)processInlineMediaContentURL:(NSString *)resource TEXTUAL_DEPRECATED("There is currently no alternative to this method. It is no longer called.");
 
 - (void)didReceiveServerInputOnClient:(IRCClient *)client
 	                senderInformation:(NSDictionary<NSString *, id> *)senderDict
