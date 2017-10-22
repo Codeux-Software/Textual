@@ -27,7 +27,8 @@ body img {
 
 .inlineImage .content,
 .inlineVideo .content,
-.inlineVideoService .content {
+.inlineVideoService .content,
+.inlineHTML .content {
   display: inline-block;
   float: left;
   margin: 15px 15px 12px 10px;
@@ -36,7 +37,8 @@ body img {
 
 .inlineImage .closeButton,
 .inlineVideo .closeButton,
-.inlineVideoService .closeButton {
+.inlineVideoService .closeButton,
+.inlineHTML .closeButton {
   background: #000000;
   cursor: pointer;
   border-radius: 50%;
