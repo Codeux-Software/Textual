@@ -915,8 +915,6 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_loadInlineMedia:(TVCLogScriptEventSinkContext *)context
 {
-#warning TODO: Add index argument
-
 	NSArray *arguments = context.arguments;
 
 	NSString *address = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
