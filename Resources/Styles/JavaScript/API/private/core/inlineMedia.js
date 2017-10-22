@@ -399,7 +399,7 @@ _InlineMediaLoader.ppStep2WithEntrypoint = function(payload) /* PRIVATE */
 
 		/* If the entrypoint exists as an object already, 
 		 then we call out to it and exit. */
-		if (typeof entrypoint === "object") {
+		if (entrypoint && typeof entrypoint === "object") {
 			entrypoint.entrypoint(
 				payload.entrypointPayload, 
 
@@ -415,7 +415,7 @@ _InlineMediaLoader.ppStep2WithEntrypoint = function(payload) /* PRIVATE */
 		 then we loop this function several times until it is
 		 one (script resource is loading), or until we exhaust
 		 the tries we are willing to take. */
-		if (i === 20) { // 2 seconds
+		if (i === 100) { // 10 seconds
 			console.error("Failed to process payload because entrypoint is not an object.");
 
 			return;
