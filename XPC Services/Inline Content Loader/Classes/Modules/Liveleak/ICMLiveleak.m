@@ -130,6 +130,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZMainBundle() URLForResource:@"ICMLiveleak" withExtension:@"mustache" subdirectory:@"Components"];
 }
 
++ (BOOL)contentNotSafeForWork
+{
+	return YES;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
