@@ -65,6 +65,16 @@ _ICMTweetPrototype.prototype.superClass = _ICMTweetPrototypeParent.prototype;
 
 _ICMTweetPrototype.prototype.didLoadMedia = function(mediaId, mediaElement)
 {
+	/* We do not have enough context in the module itself to set 
+	the appearance of it, but we do once we reach the entrypoint. */
+	var themeAppearance = document.body.dataset.appearance;
+
+	if (themeAppearance === "dark") {
+		var tweet = mediaElement.querySelector("blockquote.twitter-tweet");
+
+		tweet.dataset.theme = "dark";
+	}
+
 	twttr.widgets.load(mediaElement);
 };
 
