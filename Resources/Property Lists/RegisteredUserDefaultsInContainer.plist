@@ -98,6 +98,12 @@
 	<string>Your behavior is not conducive to the desired environment.</string>
 	<key>IRCopDefaultLocalizaiton -&gt; Shun Reason</key>
 	<string>1d Shunned.</string>
+	<key>InlineMediaLimitToBasics</key>
+	<false/>
+	<key>InlineMediaLimitNaughtyContent</key>
+	<true/>
+	<key>InlineMediaLimitUnsafeContent</key>
+	<true/>
 	<key>InlineMediaMaximumFilesize</key>
 	<integer>2</integer>
 	<key>InlineMediaMaximumHeight</key>

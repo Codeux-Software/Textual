@@ -45,6 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSUInteger)inlineMediaMaxWidth;
 + (NSUInteger)inlineMediaMaxHeight;
+
++ (BOOL)inlineMediaLimitToBasics; // images & videos
++ (BOOL)inlineMediaLimitNaughtyContent; // No NSFW
++ (BOOL)inlineMediaLimitUnsafeContent; // No content that injects HTML
 @end
 
 NS_ASSUME_NONNULL_END
