@@ -94,6 +94,8 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 + (nullable NSString *)extractThemeName:(NSString *)source;
 
 + (TPCThemeControllerStorageLocation)expectedStorageLocationOfThemeWithName:(NSString *)themeName;
+
++ (nullable NSString *)descriptionForStorageLocation:(TPCThemeControllerStorageLocation)storageLocation;
 @end
 
 NS_ASSUME_NONNULL_END

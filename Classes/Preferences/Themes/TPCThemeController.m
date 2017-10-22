@@ -529,6 +529,30 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return nil;
 }
 
++ (nullable NSString *)descriptionForStorageLocation:(TPCThemeControllerStorageLocation)storageLocation
+{
+	switch (storageLocation) {
+		case TPCThemeControllerStorageBundleLocation:
+		{
+			return TXTLS(@"BasicLanguage[1030]");
+		}
+		case TPCThemeControllerStorageCustomLocation:
+		{
+			return TXTLS(@"BasicLanguage[1031]");
+		}
+		case TPCThemeControllerStorageCloudLocation:
+		{
+			return TXTLS(@"BasicLanguage[1032]");
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	return nil;
+}
+
 + (nullable NSString *)extractThemeSource:(NSString *)source
 {
 	NSParameterAssert(source != nil);
