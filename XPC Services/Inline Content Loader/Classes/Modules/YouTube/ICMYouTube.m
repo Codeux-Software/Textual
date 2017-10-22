@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		NSString *urlPath = url.path.percentEncodedURLPath;
 
-		if ([urlPath hasPrefix:@"/watch"] == NO) {
+		if ([urlPath isEqualToString:@"/watch"] == NO) {
 			return nil;
 		}
 
