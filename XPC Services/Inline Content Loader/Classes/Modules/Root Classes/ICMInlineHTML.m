@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *templateAttributes =
 	@{
+		@"classAttribute" : self.classAttribute,
 		@"unescapedHTML" : unescapedHTML,
 		@"uniqueIdentifier" : payload.uniqueIdentifier
 	};
