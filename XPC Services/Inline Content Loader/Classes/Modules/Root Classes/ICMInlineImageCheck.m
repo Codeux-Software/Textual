@@ -137,7 +137,7 @@ static NSCache<NSString *, NSDictionary<NSString *, id> *> *_internalCache = nil
 
 	/* This is stored in a local variable so that a user changing something during a
 	 load in progess, it does not mess up any of the already existing requests. */
-	self.state.maximumHeight = [TPCPreferences inlineImagesMaxHeight];
+	self.state.maximumHeight = [TPCPreferences inlineMediaMaxHeight];
 	self.state.maximumFilesize = [TPCPreferences inlineImagesMaxFilesize];
 
 	BOOL checkDimensions = (self.state.maximumHeight > 0);
