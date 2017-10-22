@@ -75,12 +75,12 @@ ClassWithDesignatedInitializerInitMethod
 	return nil;
 }
 
-- (BOOL)contentUntrusted
++ (BOOL)contentUntrusted
 {
 	return NO;
 }
 
-- (BOOL)contentNotSafeForWork
++ (BOOL)contentNotSafeForWork
 {
 	return NO;
 }

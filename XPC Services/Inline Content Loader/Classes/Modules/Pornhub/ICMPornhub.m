@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZMainBundle() URLForResource:@"ICMPornhub" withExtension:@"mustache" subdirectory:@"Components"];
 }
 
-- (BOOL)contentNotSafeForWork
++ (BOOL)contentNotSafeForWork
 {
 	return YES;
 }

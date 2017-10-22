@@ -141,12 +141,12 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  is not trusted such as HTML downloaded from some website.
  Other untrusted resources include remote resources.
  */
-@property (readonly) BOOL contentUntrusted;
+@property (readonly, class) BOOL contentUntrusted;
 
 /**
  Whether module may load content that is not safe for work.
  */
-@property (readonly) BOOL contentNotSafeForWork;
+@property (readonly, class) BOOL contentNotSafeForWork;
 @end
 
 NS_ASSUME_NONNULL_END
