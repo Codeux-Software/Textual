@@ -79,10 +79,10 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 - (BOOL)validateThemeAndRelaodIfNecessary;
 
 /* Calls for all themes */
++ (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock;
+
 /* A theme is considered existent if the designated design.css file and scripts.js for
  it exists. Otherwise, the theme is considered nonexistent even if the folder exists. */
-+ (NSDictionary<NSString *, NSString *> *)dictionaryOfAllThemes;
-
 + (BOOL)themeExists:(NSString *)themeName;
 
 + (nullable NSString *)pathOfThemeWithName:(NSString *)themeName;

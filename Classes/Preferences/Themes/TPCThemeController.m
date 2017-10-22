@@ -576,39 +576,80 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 }
 
-+ (NSDictionary<NSString *, NSString *> *)dictionaryOfAllThemes
++ (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock
 {
-	NSMutableDictionary<NSString *, NSString *> *themeList = [NSMutableDictionary dictionary];
+	NSParameterAssert(enumerationBlock != nil);
 
-	void (^checkPath)(NSString *, NSString *) = ^(NSString * _Nullable storagePath, NSString *storageType) {
-		PointerIsEmptyAssert(storagePath)
+	/* First create a dictionary whoes key is the storage location and
+	 value is list of themes at it. */
+	NSArray *(^checkPath)(NSString *) = ^NSArray *(NSString * _Nullable storagePath) {
+		if (storagePath == nil) {
+			return @[];
+		}
 
 		NSArray *files = [RZFileManager() contentsOfDirectoryAtPath:storagePath error:NULL];
 
-		for (NSString *file in files) {
-			if ([themeList containsKey:file]) {
-				continue;
-			}
+		NSMutableArray<NSString *> *themes = [NSMutableArray arrayWithCapacity:files.count];
 
+		for (NSString *file in files) {
 			NSString *filePath = [storagePath stringByAppendingPathComponent:file];
 
 			if ([TPCThemeController themeAtPathIsValid:filePath] == NO) {
 				continue;
 			}
 
-			themeList[file] = storageType;
+			[themes addObject:file];
 		}
+
+		return themes;
 	};
 
-	/* File paths are ordered by priority. Top-most will be most important. */
+	NSMutableDictionary<NSNumber *, NSArray<NSString *> *> *themesMappedByLocation = [NSMutableDictionary dictionary];
+
+	[themesMappedByLocation setObject:checkPath([TPCPathInfo bundledThemes]) forKey:@(TPCThemeControllerStorageBundleLocation)];
+	[themesMappedByLocation setObject:checkPath([TPCPathInfo customThemes]) forKey:@(TPCThemeControllerStorageCustomLocation)];
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	checkPath([TPCPathInfo cloudCustomThemes], TPCThemeControllerCloudThemeNameCompletePrefix);
+	[themesMappedToLocation setObject:checkPath([TPCPathInfo cloudCustomThemes]) forKey:@(TPCThemeControllerStorageCloudLocation)];
 #endif
 
-	checkPath([TPCPathInfo customThemes], TPCThemeControllerCustomThemeNameCompletePrefix);
-	checkPath([TPCPathInfo bundledThemes], TPCThemeControllerBundledThemeNameCompletePrefix);
+	/* Next translate result into a dictionary whoes key is the name of the
+	 theme and value is all storage locations that contain it. */
+	NSMutableDictionary<NSString *, NSMutableArray<NSNumber *> *> *themesMappedByName = [NSMutableDictionary dictionary];
 
-	return [themeList copy];
+	[themesMappedByLocation enumerateKeysAndObjectsUsingBlock:^(NSNumber *storageLocation, NSArray<NSString *> *themes, BOOL *stop) {
+		[themes enumerateObjectsUsingBlock:^(NSString *theme, NSUInteger index, BOOL *stop) {
+			NSMutableArray<NSNumber *> *mappedLocations = themesMappedByName[theme];
+
+			if (mappedLocations == nil) {
+				mappedLocations = [NSMutableArray array];
+
+				[themesMappedByName setObject:mappedLocations forKey:theme];
+			}
+
+			[mappedLocations addObject:storageLocation];
+		}];
+	}];
+
+	/* Create sorted list of themes */
+	NSArray *sortedThemes = themesMappedByName.sortedDictionaryKeys;
+
+	/* Perform enumeration */
+	BOOL stopEnumeration = NO;
+
+	for (NSString *themeName in sortedThemes) {
+		NSArray *themeLocations = themesMappedByName[themeName];
+
+		BOOL multipleVaraints = (themeLocations.count > 1);
+
+		for (NSNumber *themeLocation in themeLocations) {
+			enumerationBlock(themeName, themeLocation.unsignedIntegerValue, multipleVaraints, &stopEnumeration);
+
+			if (stopEnumeration) {
+				break;
+			}
+		} // for themeLocation
+	} // for themeName
 }
 
 void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
