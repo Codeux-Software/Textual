@@ -224,32 +224,32 @@ NS_ASSUME_NONNULL_BEGIN
 	self.videoPlaybackSpeed = 1.0;
 }
 
-- (nullable NSArray<NSString *> *)styleResources
+- (nullable NSArray<NSURL *> *)styleResources
 {
-	static NSArray<NSString *> *styleResources = nil;
+	static NSArray<NSURL *> *styleResources = nil;
 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
 		styleResources =
 		@[
-		  [RZMainBundle() pathForResource:@"ICMInlineVideo" ofType:@"css" inDirectory:@"Components"]
+		  [RZMainBundle() URLForResource:@"ICMInlineVideo" withExtension:@"css" subdirectory:@"Components"]
 		];
 	});
 
 	return styleResources;
 }
 
-- (nullable NSArray<NSString *> *)scriptResources
+- (nullable NSArray<NSURL *> *)scriptResources
 {
-	static NSArray<NSString *> *scriptResources = nil;
+	static NSArray<NSURL *> *scriptResources = nil;
 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
 		scriptResources =
 		@[
-		  [RZMainBundle() pathForResource:@"ICMInlineVideo" ofType:@"js" inDirectory:@"Components"]
+		  [RZMainBundle() URLForResource:@"ICMInlineVideo" withExtension:@"js" subdirectory:@"Components"]
 		];
 	});
 

@@ -77,10 +77,10 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentLength = [aDecoder decodeUnsignedIntegerForKey:@"contentLength"];
 	self->_contentSize = [aDecoder decodeSizeForKey:@"contentSize"];
 
-	self->_styleResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSString class]]]
+	self->_styleResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSURL class]]]
 													 forKey:@"styleResources"];
 
-	self->_scriptResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSString class]]]
+	self->_scriptResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSURL class]]]
 													  forKey:@"scriptResources"];
 
 	self->_html = [aDecoder decodeStringForKey:@"html"];
@@ -271,14 +271,14 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentSize = contentSize;
 }
 
-- (void)setStyleResources:(nullable NSArray<NSString *> *)styleResources
+- (void)setStyleResources:(nullable NSArray<NSURL *> *)styleResources
 {
 	if (self->_styleResources != styleResources) {
 		self->_styleResources = styleResources;
 	}
 }
 
-- (void)setScriptResources:(nullable NSArray<NSString *> *)scriptResources
+- (void)setScriptResources:(nullable NSArray<NSURL *> *)scriptResources
 {
 	if (self->_scriptResources != scriptResources) {
 		self->_scriptResources = scriptResources;

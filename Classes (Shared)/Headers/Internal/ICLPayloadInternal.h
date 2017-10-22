@@ -42,8 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
 	NSUInteger _contentLength;
 	NSSize _contentSize;
-	NSArray<NSString *> *_styleResources;
-	NSArray<NSString *> *_scriptResources;
+	NSArray<NSURL *> *_styleResources;
+	NSArray<NSURL *> *_scriptResources;
 	NSString *_html;
 	NSString *_entrypoint;
 	NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
