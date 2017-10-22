@@ -142,6 +142,13 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(payloadIn != nil);
 
+	/* Do not allow unsafe content */
+	if ([moduleClass contentNotSafeForWork] && [TPCPreferences inlineMediaLimitNaughtyContent]) {
+		return NO;
+	} else if ([moduleClass contentUntrusted] && [TPCPreferences inlineMediaLimitUnsafeContent]) {
+		return NO;
+	}
+
 	/* Determine whether this module has an action for this URL. */
 	NSURL *url = payloadIn.url;
 
