@@ -314,12 +314,17 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	NSString *suppressionKey = [NSString stringWithFormat:
 					@"incompatible_theme_dialog_%lu", themeNameHash];
 
-	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1118][2]")
-											 title:TXTLS(@"Prompts[1118][1]", self.name)
-									 defaultButton:TXTLS(@"Prompts[0005]")
-								   alternateButton:nil
-									suppressionKey:suppressionKey
-								   suppressionText:nil];
+	BOOL openPreferneces =
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1118][2]")
+									   title:TXTLS(@"Prompts[1118][1]", self.name)
+							   defaultButton:TXTLS(@"Prompts[1118][3]")
+							 alternateButton:TXTLS(@"Prompts[0005]")
+							  suppressionKey:suppressionKey
+							 suppressionText:nil];
+
+	if (openPreferneces) {
+		[menuController() showStylePreferences:nil];
+	}
 }
 
 - (BOOL)validateThemeAndRelaodIfNecessary

@@ -1444,6 +1444,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[self showPreferencesWindowWithSelection:TDCPreferencesControllerDefaultNavigationSelection];
 }
 
+- (void)showStylePreferences:(id)sender
+{
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerStyleNavigationSelection];
+}
+
 - (void)showHiddenPreferences:(id)sender
 {
 	[self showPreferencesWindowWithSelection:TDCPreferencesControllerHiddenPreferencesNavigationSelection];

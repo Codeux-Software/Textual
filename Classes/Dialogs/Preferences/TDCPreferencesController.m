@@ -301,6 +301,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)show:(TDCPreferencesControllerNavigationSelection)selection
 {
 	switch (selection) {
+		case TDCPreferencesControllerStyleNavigationSelection:
+		{
+			[self _showPane:self.contentViewStyle selectedItem:_toolbarItemIndexStyle];
+
+			break;
+		}
 		case TDCPreferencesControllerHiddenPreferencesNavigationSelection:
 		{
 			[self _showPane:self.contentViewHiddenPreferences selectedItem:_toolbarItemIndexAdvanced];
