@@ -35,46 +35,50 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+window.twttr = (function() { /* cancer */
+	var t = window.twttr;
 
-#import <CocoaExtensions/CocoaExtensions.h>
+	if (t) {
+		return t;
+	}
 
-#import <GRMustache/GRMustache.h>
+	t = {};
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+	t._e = [];
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
+	t.ready = function(f) {
+		t._e.push(f);
+	};
 
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+	return t;
+}());
 
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTweet.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+var _ICMTweetPrototypeParent = _ICMInlineHTMLPrototype;
+
+var _ICMTweetPrototype = function() {
+	_ICMTweetPrototypeParent.call(this);
+}
+
+_ICMTweetPrototype.prototype = Object.create(_ICMInlineHTMLPrototype.prototype);
+_ICMTweetPrototype.prototype.constructor = _ICMTweetPrototype;
+_ICMTweetPrototype.prototype.superClass = _ICMTweetPrototypeParent.prototype;
+
+_ICMTweetPrototype.prototype.didLoadMedia = function(mediaId, mediaElement)
+{
+	twttr.widgets.load(mediaElement);
+};
+
+_ICMTweetPrototype.prototype.tweetRendered = function(event)
+{
+	TextualScroller.restoreScrolledToBottom();
+};
+
+var _ICMTweet = null;
+
+twttr.ready(
+	function(twttr) {
+		_ICMTweet = new _ICMTweetPrototype();
+
+		twttr.events.bind("rendered", _ICMTweet.tweetRendered);
+	}
+);

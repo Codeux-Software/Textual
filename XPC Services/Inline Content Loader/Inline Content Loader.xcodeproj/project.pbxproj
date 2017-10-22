@@ -53,6 +53,8 @@
 		4CB3B61A1F9C3E9B0004502A /* ICMInlineHTML.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */; };
 		4CB3B61B1F9C3E9B0004502A /* ICMInlineHTML.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */; };
 		4CB3B61C1F9C3E9B0004502A /* ICMInlineHTML.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */; };
+		4CB3B6291F9C54120004502A /* ICMTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3B6281F9C53FD0004502A /* ICMTweet.m */; };
+		4CB3B62B1F9C541C0004502A /* ICMTweet.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6261F9C53220004502A /* ICMTweet.js */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -76,6 +78,7 @@
 				4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */,
 				4CB3B60A1F9C2CAA0004502A /* ICMLiveleak.mustache in CopyFiles */,
 				4CA5D3151F97D05B006714D6 /* ICMPornhub.mustache in CopyFiles */,
+				4CB3B62B1F9C541C0004502A /* ICMTweet.js in CopyFiles */,
 				4CA5D3221F97D79F006714D6 /* ICMTwitchClips.mustache in CopyFiles */,
 				4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */,
 				4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */,
@@ -173,6 +176,9 @@
 		4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineHTML.js; path = Resources/Modules/ICMInlineHTML.js; sourceTree = "<group>"; };
 		4CB3B6171F9C3D240004502A /* ICMInlineHTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineHTML.m; path = "Classes/Modules/Root Classes/ICMInlineHTML.m"; sourceTree = "<group>"; };
 		4CB3B6181F9C3D240004502A /* ICMInlineHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineHTML.h; path = "Classes/Modules/Root Classes/ICMInlineHTML.h"; sourceTree = "<group>"; };
+		4CB3B6261F9C53220004502A /* ICMTweet.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTweet.js; path = Resources/Modules/Twitter/ICMTweet.js; sourceTree = "<group>"; };
+		4CB3B6271F9C53FD0004502A /* ICMTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTweet.h; path = Classes/Modules/Twitter/ICMTweet.h; sourceTree = "<group>"; };
+		4CB3B6281F9C53FD0004502A /* ICMTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTweet.m; path = Classes/Modules/Twitter/ICMTweet.m; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -663,6 +669,24 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		4CB3B62C1F9C55110004502A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4CB3B6261F9C53220004502A /* ICMTweet.js */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4CB3B62D1F9C56580004502A /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				4CB3B62C1F9C55110004502A /* Resources */,
+				4CB3B6271F9C53FD0004502A /* ICMTweet.h */,
+				4CB3B6281F9C53FD0004502A /* ICMTweet.m */,
+			);
+			name = Twitter;
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -677,6 +701,7 @@
 				4C9CAC6D1F967F41006887B7 /* Streamable */,
 				4CA5D31A1F97D733006714D6 /* Twitch Clips */,
 				4CA5D32B1F98277C006714D6 /* Twitch Live */,
+				4CB3B62D1F9C56580004502A /* Twitter */,
 				4C576D191F943EFE00FD581F /* Vimeo */,
 				4CA5D3181F97D3F0006714D6 /* xkcd */,
 				4C980FF31F92D43000B116A4 /* YouTube */,
@@ -782,6 +807,7 @@
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
 				4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */,
 				4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */,
+				4CB3B6291F9C54120004502A /* ICMTweet.m in Sources */,
 				4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */,
 				4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */,
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
