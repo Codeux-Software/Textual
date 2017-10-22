@@ -81,6 +81,7 @@ ClassWithDesignatedInitializerInitMethod
 					[ICMLiveleak class],
 					[ICMPornhub class],
 					[ICMStreamable class],
+					[ICMTweet class],
 					[ICMTwitchClips class],
 					[ICMTwitchLive class],
 					[ICMVimeo class],

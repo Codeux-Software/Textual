@@ -35,46 +35,9 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@interface ICMTweet : ICMInlineHTML
+@end
 
-#import <GRMustache/GRMustache.h>
-
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
-
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTweet.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+NS_ASSUME_NONNULL_END
