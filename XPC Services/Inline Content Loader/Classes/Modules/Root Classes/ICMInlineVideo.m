@@ -156,11 +156,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Utilities
 
-- (nullable NSURL *)templateURL
-{
-	return [RZMainBundle() URLForResource:@"ICMInlineVideo" withExtension:@"mustache" subdirectory:@"Components"];
-}
-
 + (NSArray<NSString *> *)validVideoContentTypes
 {
 	static NSArray<NSString *> *cachedValue = nil;
@@ -202,6 +197,11 @@ NS_ASSUME_NONNULL_BEGIN
 	self.videoControlsEnabled = YES;
 
 	self.videoPlaybackSpeed = 1.0;
+}
+
+- (nullable NSURL *)templateURL
+{
+	return [RZMainBundle() URLForResource:@"ICMInlineVideo" withExtension:@"mustache" subdirectory:@"Components"];
 }
 
 - (nullable NSArray<NSURL *> *)styleResources
