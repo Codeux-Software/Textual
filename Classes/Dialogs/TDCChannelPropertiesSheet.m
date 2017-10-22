@@ -47,8 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isNewConfiguration;
 @property (nonatomic, copy) NSArray *navigationTree;
 @property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
-@property (nonatomic, weak) IBOutlet NSButton *disableInlineImagesCheck;
-@property (nonatomic, weak) IBOutlet NSButton *enableInlineImagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *disableInlineMediaCheck;
+@property (nonatomic, weak) IBOutlet NSButton *enableInlineMediaCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pushNotificationsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *showTreeBadgeCountCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreHighlightsCheck;
@@ -242,9 +242,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.ignoreHighlightsCheck.state = self.config.ignoreHighlights;
 
 	if ([TPCPreferences showInlineMedia]) {
-		self.disableInlineImagesCheck.state = self.config.ignoreInlineMedia;
+		self.disableInlineMediaCheck.state = self.config.ignoreInlineMedia;
 	} else {
-		self.enableInlineImagesCheck.state = self.config.ignoreInlineMedia;
+		self.enableInlineMediaCheck.state = self.config.ignoreInlineMedia;
 	}
 
 	[self updateNavigationEnabledState];
@@ -340,7 +340,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)onInlineMediaCheckChanged:(id)sender
 {
-	if (self.enableInlineImagesCheck.state != NSOnState) {
+	if (self.enableInlineMediaCheck.state != NSOnState) {
 		return;
 	}
 
@@ -381,9 +381,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.config.ignoreHighlights = self.ignoreHighlightsCheck.state;
 
 	if ([TPCPreferences showInlineMedia]) {
-		self.config.ignoreInlineMedia = self.disableInlineImagesCheck.state;
+		self.config.ignoreInlineMedia = self.disableInlineMediaCheck.state;
 	} else {
-		self.config.ignoreInlineMedia = self.enableInlineImagesCheck.state;
+		self.config.ignoreInlineMedia = self.enableInlineMediaCheck.state;
 	}
 
 	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheet:onOk:)]) {

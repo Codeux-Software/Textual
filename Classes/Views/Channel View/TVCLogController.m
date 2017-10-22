@@ -283,10 +283,10 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
-	/* If global showInlineMedia is YES, then the value of ignoreInlineImages is designed to
+	/* If global showInlineMedia is YES, then the value of ignoreInlineMedia is designed to
 	 be as it is named. Disable them for specific channels. However if showInlineMedia is NO
-	 on a global scale, then ignoreInlineImages actually enables them for specific channels. */
-	return (([TPCPreferences showInlineMedia]			&& self.associatedChannel.config.ignoreInlineMedia == NO) ||
+	 on a global scale, then ignoreInlineMedia actually enables them for specific channels. */
+	return (([TPCPreferences showInlineMedia]		&& self.associatedChannel.config.ignoreInlineMedia == NO) ||
 			([TPCPreferences showInlineMedia] == NO	&& self.associatedChannel.config.ignoreInlineMedia));
 }
 

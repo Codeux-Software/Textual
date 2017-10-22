@@ -42,10 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 #define _scrollbackSaveLinesMax		50000
 #define _scrollbackVisibleLinesMin	100
 #define _scrollbackVisibleLinesMax	15000
-#define _inlineImageWidthMax		2000
-#define _inlineImageWidthMin		40
-#define _inlineImageHeightMax		6000
-#define _inlineImageHeightMin		0
+#define _inlineMediaWidthMax		2000
+#define _inlineMediaWidthMin		40
+#define _inlineMediaHeightMax		6000
+#define _inlineMediaHeightMin		0
 
 #define _fileTransferPortRangeMin			1024
 #define _fileTransferPortRangeMax			TXMaximumTCPPort
@@ -489,22 +489,22 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences setTabCompletionSuffix:value];
 }
 
-- (NSString *)inlineImageMaxWidth
+- (NSString *)inlineMediaMaxWidth
 {
 	return _unsignedIntegerString([TPCPreferences inlineMediaMaxWidth]);
 }
 
-- (NSString *)inlineImageMaxHeight
+- (NSString *)inlineMediaMaxHeight
 {
 	return _unsignedIntegerString([TPCPreferences inlineMediaMaxHeight]);
 }
 
-- (void)setInlineImageMaxWidth:(NSString *)value
+- (void)setInlineMediaMaxWidth:(NSString *)value
 {
 	[TPCPreferences setInlineMediaMaxWidth:value.integerValue];
 }
 
-- (void)setInlineImageMaxHeight:(NSString *)value
+- (void)setInlineMediaMaxHeight:(NSString *)value
 {
 	[TPCPreferences setInlineMediaMaxHeight:value.integerValue];
 }
@@ -741,21 +741,21 @@ NS_ASSUME_NONNULL_BEGIN
 		} else if (valueInteger > _scrollbackVisibleLinesMax) {
 			*value = _unsignedIntegerString(_scrollbackVisibleLinesMax);
 		}
-	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
+	} else if ([key isEqualToString:@"inlineMediaMaxWidth"]) {
 		NSInteger valueInteger = [*value integerValue];
 
-		if (valueInteger < _inlineImageWidthMin) {
-			*value = _unsignedIntegerString(_inlineImageWidthMin);
-		} else if (_inlineImageWidthMax < valueInteger) {
-			*value = _unsignedIntegerString(_inlineImageWidthMax);
+		if (valueInteger < _inlineMediaWidthMin) {
+			*value = _unsignedIntegerString(_inlineMediaWidthMin);
+		} else if (_inlineMediaWidthMax < valueInteger) {
+			*value = _unsignedIntegerString(_inlineMediaWidthMax);
 		}
-	} else if ([key isEqualToString:@"inlineImageMaxHeight"]) {
+	} else if ([key isEqualToString:@"inlineMediaMaxHeight"]) {
 		NSInteger valueInteger = [*value integerValue];
 
-		if (valueInteger < _inlineImageHeightMin) {
-			*value = _unsignedIntegerString(_inlineImageHeightMin);
-		} else if (_inlineImageHeightMax < valueInteger) {
-			*value = _unsignedIntegerString(_inlineImageHeightMax);
+		if (valueInteger < _inlineMediaHeightMin) {
+			*value = _unsignedIntegerString(_inlineMediaHeightMin);
+		} else if (_inlineMediaHeightMax < valueInteger) {
+			*value = _unsignedIntegerString(_inlineMediaHeightMax);
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeStart"]) {
 		NSInteger valueInteger = [*value integerValue];
