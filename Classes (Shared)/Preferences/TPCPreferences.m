@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaScalingWidth"];
 }
 
-+ (NSUInteger)inlineImagesMaxHeight
++ (NSUInteger)inlineMediaMaxHeight
 {
 	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumHeight"];
 }
@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaScalingWidth"];
 }
 
-+ (void)setInlineImagesMaxHeight:(NSUInteger)value
++ (void)setInlineMediaMaxHeight:(NSUInteger)value
 {
 	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaMaximumHeight"];
 }
