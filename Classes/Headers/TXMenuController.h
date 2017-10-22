@@ -423,6 +423,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)showServerHighlightList:(id)sender;
 - (IBAction)showServerPropertiesSheet:(id)sender;
 - (IBAction)showSetVhostPrompt:(id)sender;
+- (IBAction)showStylePreferences:(id)sender;
 - (IBAction)showWelcomeSheet:(id)sender;
 
 - (IBAction)sortChannelListNames:(id)sender;
