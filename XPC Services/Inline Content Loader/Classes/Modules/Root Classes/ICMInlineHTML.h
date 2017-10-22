@@ -35,45 +35,21 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+/* ICMInlineHTMLFoundation does nothing.
+ It exists for internal use. */
+@interface ICMInlineHTMLFoundation : ICLInlineContentModule
+@property (copy, readonly) NSString *classAttribute;
+@end
 
-#import <GRMustache/GRMustache.h>
+/* Proper class to sublcass if that is your thing. */
+@interface ICMInlineHTML : ICMInlineHTMLFoundation
+- (void)performActionForHTML:(NSString *)unescapedHTML;
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
++ (ICLInlineContentModuleActionBlock)actionBlockForHTML:(NSString *)unescapedHTML;
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
+- (void)notifyUnableToPresentHTML;
+@end
 
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+NS_ASSUME_NONNULL_END

@@ -49,6 +49,10 @@
 		4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */; };
 		4CB3B60A1F9C2CAA0004502A /* ICMLiveleak.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6091F9C2C8A0004502A /* ICMLiveleak.mustache */; };
 		4CB3B60B1F9C2CB00004502A /* ICMLiveleak.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3B6061F9C2C580004502A /* ICMLiveleak.m */; };
+		4CB3B6191F9C3D260004502A /* ICMInlineHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3B6171F9C3D240004502A /* ICMInlineHTML.m */; };
+		4CB3B61A1F9C3E9B0004502A /* ICMInlineHTML.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */; };
+		4CB3B61B1F9C3E9B0004502A /* ICMInlineHTML.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */; };
+		4CB3B61C1F9C3E9B0004502A /* ICMInlineHTML.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +65,9 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4C9CAC6A1F959585006887B7 /* ICMDailymotion.mustache in CopyFiles */,
+				4CB3B61A1F9C3E9B0004502A /* ICMInlineHTML.css in CopyFiles */,
+				4CB3B61B1F9C3E9B0004502A /* ICMInlineHTML.js in CopyFiles */,
+				4CB3B61C1F9C3E9B0004502A /* ICMInlineHTML.mustache in CopyFiles */,
 				4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */,
 				4C8C84301F8E368B00062FFD /* ICMInlineImage.js in CopyFiles */,
 				4C8C84311F8E368B00062FFD /* ICMInlineImage.mustache in CopyFiles */,
@@ -161,6 +168,11 @@
 		4CB3B6051F9C2C570004502A /* ICMLiveleak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMLiveleak.h; path = Classes/Modules/Liveleak/ICMLiveleak.h; sourceTree = "<group>"; };
 		4CB3B6061F9C2C580004502A /* ICMLiveleak.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMLiveleak.m; path = Classes/Modules/Liveleak/ICMLiveleak.m; sourceTree = "<group>"; };
 		4CB3B6091F9C2C8A0004502A /* ICMLiveleak.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMLiveleak.mustache; path = Resources/Modules/Liveleak/ICMLiveleak.mustache; sourceTree = "<group>"; };
+		4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineHTML.mustache; path = Resources/Modules/ICMInlineHTML.mustache; sourceTree = "<group>"; };
+		4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineHTML.css; path = Resources/Modules/ICMInlineHTML.css; sourceTree = "<group>"; };
+		4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineHTML.js; path = Resources/Modules/ICMInlineHTML.js; sourceTree = "<group>"; };
+		4CB3B6171F9C3D240004502A /* ICMInlineHTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineHTML.m; path = "Classes/Modules/Root Classes/ICMInlineHTML.m"; sourceTree = "<group>"; };
+		4CB3B6181F9C3D240004502A /* ICMInlineHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineHTML.h; path = "Classes/Modules/Root Classes/ICMInlineHTML.h"; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
@@ -435,6 +447,7 @@
 		4C8C84351F8E58D100062FFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4CB3B6131F9C3C2B0004502A /* HTML */,
 				4C98100D1F93B5CF00B116A4 /* Image */,
 				4C98100E1F93B5D600B116A4 /* Video */,
 			);
@@ -445,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8C84351F8E58D100062FFD /* Resources */,
+				4CB3B6121F9C3C1F0004502A /* HTML */,
 				4C9810091F93B59000B116A4 /* Image */,
 				4C98100A1F93B59900B116A4 /* Video */,
 			);
@@ -638,6 +652,25 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		4CB3B6121F9C3C1F0004502A /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				4CB3B6181F9C3D240004502A /* ICMInlineHTML.h */,
+				4CB3B6171F9C3D240004502A /* ICMInlineHTML.m */,
+			);
+			name = HTML;
+			sourceTree = "<group>";
+		};
+		4CB3B6131F9C3C2B0004502A /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */,
+				4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */,
+				4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */,
+			);
+			name = HTML;
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,6 +794,7 @@
 				4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */,
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
 				4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */,
+				4CB3B6191F9C3D260004502A /* ICMInlineHTML.m in Sources */,
 				4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */,
 				4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */,
 				4C9810081F93AE4B00B116A4 /* ICMInlineVideoCheck.m in Sources */,

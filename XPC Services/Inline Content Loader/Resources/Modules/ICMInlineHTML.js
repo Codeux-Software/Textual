@@ -35,45 +35,14 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+var _ICMInlineHTMLPrototypeParent = InlineMediaPrototype;
 
-#import <CocoaExtensions/CocoaExtensions.h>
+var _ICMInlineHTMLPrototype = function() {
+	_ICMInlineHTMLPrototypeParent.call(this);
+}
 
-#import <GRMustache/GRMustache.h>
+_ICMInlineHTMLPrototype.prototype = Object.create(InlineMediaPrototype.prototype);
+_ICMInlineHTMLPrototype.prototype.constructor = _ICMInlineHTMLPrototype;
+_ICMInlineHTMLPrototype.prototype.superClass = _ICMInlineHTMLPrototypeParent.prototype;
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
-
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+var _ICMInlineHTML = new _ICMInlineHTMLPrototype();

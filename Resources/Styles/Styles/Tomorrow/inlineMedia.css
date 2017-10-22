@@ -10,7 +10,8 @@
 
 .inlineImage .content,
 .inlineVideo .content,
-.inlineVideoService .content {
+.inlineVideoService .content,
+.inlineHTML .content {
 	display: inline-block;
 	float: left;
 	margin-right: 15px;
@@ -21,7 +22,8 @@
 
 .inlineImage .closeButton,
 .inlineVideo .closeButton,
-.inlineVideoService .closeButton {
+.inlineVideoService .closeButton,
+.inlineHTML .closeButton {
 	cursor: pointer;
 	border-radius: 5px;
 	border: 2px solid #a1a1a1;
@@ -40,7 +42,8 @@
 
 html[systemversion^="10.9"] .inlineImage .closeButton,
 html[systemversion^="10.9"] .inlineVideo .closeButton,
-html[systemversion^="10.9"] .inlineVideoService .closeButton {
+html[systemversion^="10.9"] .inlineVideoService .closeButton,
+html[systemversion^="10.9"] .inlineHTML .closeButton {
 	line-height: 13px;
 }
 
