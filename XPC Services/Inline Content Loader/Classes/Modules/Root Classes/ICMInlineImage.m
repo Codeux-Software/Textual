@@ -147,11 +147,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Utilities
 
-- (nullable NSURL *)templateURL
-{
-	return [RZMainBundle() URLForResource:@"ICMInlineImage" withExtension:@"mustache" subdirectory:@"Components"];
-}
-
 + (NSArray<NSString *> *)validImageContentTypes
 {
 	static NSArray<NSString *> *cachedValue = nil;
@@ -177,6 +172,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Foundation
 
 @implementation ICMInlineImageFoundation
+
+- (nullable NSURL *)templateURL
+{
+	return [RZMainBundle() URLForResource:@"ICMInlineImage" withExtension:@"mustache" subdirectory:@"Components"];
+}
 
 - (nullable NSArray<NSURL *> *)styleResources
 {
