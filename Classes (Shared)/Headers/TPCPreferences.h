@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (TXUnsignedLongLong)inlineImagesMaxFilesize;
 
 + (NSUInteger)inlineMediaMaxWidth;
-+ (NSUInteger)inlineImagesMaxHeight;
++ (NSUInteger)inlineMediaMaxHeight;
 @end
 
 NS_ASSUME_NONNULL_END

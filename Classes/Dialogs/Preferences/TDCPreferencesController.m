@@ -496,7 +496,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)inlineImageMaxHeight
 {
-	return _unsignedIntegerString([TPCPreferences inlineImagesMaxHeight]);
+	return _unsignedIntegerString([TPCPreferences inlineMediaMaxHeight]);
 }
 
 - (void)setInlineImageMaxWidth:(NSString *)value
@@ -506,7 +506,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setInlineImageMaxHeight:(NSString *)value
 {
-	[TPCPreferences setInlineImagesMaxHeight:value.integerValue];
+	[TPCPreferences setInlineMediaMaxHeight:value.integerValue];
 }
 
 - (NSString *)themeChannelViewFontName
