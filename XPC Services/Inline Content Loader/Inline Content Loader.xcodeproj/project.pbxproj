@@ -444,20 +444,9 @@
 			name = Service;
 			sourceTree = "<group>";
 		};
-		4C8C84351F8E58D100062FFD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4CB3B6131F9C3C2B0004502A /* HTML */,
-				4C98100D1F93B5CF00B116A4 /* Image */,
-				4C98100E1F93B5D600B116A4 /* Video */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		4C980FE91F92C4E900B116A4 /* Root Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4C8C84351F8E58D100062FFD /* Resources */,
 				4CB3B6121F9C3C1F0004502A /* HTML */,
 				4C9810091F93B59000B116A4 /* Image */,
 				4C98100A1F93B59900B116A4 /* Video */,
@@ -486,6 +475,7 @@
 		4C9810091F93B59000B116A4 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4CB3B61E1F9C42B70004502A /* Resources */,
 				4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */,
 				4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */,
 				4C980FE21F92C4D700B116A4 /* ICMInlineImageCheck.h */,
@@ -497,31 +487,11 @@
 		4C98100A1F93B59900B116A4 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				4CB3B61F1F9C42BA0004502A /* Resources */,
 				4C9810011F93ABE700B116A4 /* ICMInlineVideo.h */,
 				4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */,
 				4C9810061F93AE4B00B116A4 /* ICMInlineVideoCheck.h */,
 				4C9810071F93AE4B00B116A4 /* ICMInlineVideoCheck.m */,
-			);
-			name = Video;
-			sourceTree = "<group>";
-		};
-		4C98100D1F93B5CF00B116A4 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */,
-				4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */,
-				4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */,
-				4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */,
-			);
-			name = Image;
-			sourceTree = "<group>";
-		};
-		4C98100E1F93B5D600B116A4 /* Video */ = {
-			isa = PBXGroup;
-			children = (
-				4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */,
-				4C576D161F93C20700FD581F /* ICMInlineVideo.js */,
-				4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -655,20 +625,42 @@
 		4CB3B6121F9C3C1F0004502A /* HTML */ = {
 			isa = PBXGroup;
 			children = (
+				4CB3B61D1F9C42B30004502A /* Resources */,
 				4CB3B6181F9C3D240004502A /* ICMInlineHTML.h */,
 				4CB3B6171F9C3D240004502A /* ICMInlineHTML.m */,
 			);
 			name = HTML;
 			sourceTree = "<group>";
 		};
-		4CB3B6131F9C3C2B0004502A /* HTML */ = {
+		4CB3B61D1F9C42B30004502A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */,
 				4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */,
 				4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */,
 			);
-			name = HTML;
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4CB3B61E1F9C42B70004502A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */,
+				4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */,
+				4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */,
+				4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4CB3B61F1F9C42BA0004502A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */,
+				4C576D161F93C20700FD581F /* ICMInlineVideo.js */,
+				4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
