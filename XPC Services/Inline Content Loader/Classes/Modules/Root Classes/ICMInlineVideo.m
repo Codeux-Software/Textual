@@ -241,6 +241,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return @"_ICMInlineVideo";
 }
 
+- (NSString *)classAttribute
+{
+	return @"";
+}
+
 @end
 
 #pragma mark -
