@@ -87,6 +87,21 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaMaximumHeight"];
 }
 
++ (BOOL)inlineMediaLimitToBasics
+{
+	return [RZUserDefaults() boolForKey:@"InlineMediaLimitToBasics"];
+}
+
++ (BOOL)inlineMediaLimitNaughtyContent
+{
+	return [RZUserDefaults() boolForKey:@"InlineMediaLimitNaughtyContent"];
+}
+
++ (BOOL)inlineMediaLimitUnsafeContent
+{
+	return [RZUserDefaults() boolForKey:@"InlineMediaLimitUnsafeContent"];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
