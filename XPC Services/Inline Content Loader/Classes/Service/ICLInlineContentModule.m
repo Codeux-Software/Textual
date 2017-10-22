@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (template == nil) {
 		LogToConsoleError("Failed to load template '%@': %@",
-			  templatePath, templateLoadError.localizedDescription);
+			  templateURL, templateLoadError.localizedDescription);
 	}
 
 	return template;
