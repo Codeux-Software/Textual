@@ -128,6 +128,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return @"_ICMInlineHTML";
 }
 
+- (BOOL)contentUntrusted
+{
+	return YES;
+}
+
 - (NSString *)classAttribute
 {
 	return @"";

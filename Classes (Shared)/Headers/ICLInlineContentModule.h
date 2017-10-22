@@ -132,6 +132,21 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  * NULL is returned if this method is not implemented.
  */
 + (SEL)actionForURL:(NSURL *)url;
+
+#pragma mark -
+#pragma mark Context
+
+/**
+ Whether the module may add content into the DOM which
+ is not trusted such as HTML downloaded from some website.
+ Other untrusted resources include remote resources.
+ */
+@property (readonly) BOOL contentUntrusted;
+
+/**
+ Whether module may load content that is not safe for work.
+ */
+@property (readonly) BOOL contentNotSafeForWork;
 @end
 
 NS_ASSUME_NONNULL_END
