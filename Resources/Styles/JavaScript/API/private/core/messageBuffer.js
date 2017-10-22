@@ -115,7 +115,7 @@ _MessageBuffer._bufferElementReference = null; /* PRIVATE */
 MessageBuffer.bufferElement = function() /* PUBLIC */
 {
 	if (_MessageBuffer._bufferElementReference === null) {
-		_MessageBuffer._bufferElementReference = document.getElementById("message_buffer");
+		_MessageBuffer._bufferElementReference = document.getElementById("messageBuffer");
 	}
 
 	return _MessageBuffer._bufferElementReference;

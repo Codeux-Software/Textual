@@ -52,14 +52,14 @@ _ICMInlineVideo.metadataLoadedCallback = function()
 	var video = event.target;
 
 	/* Video start time */
-	var startTime = parseFloat(video.getAttribute("start"));
+	var startTime = parseFloat(video.dataset.start);
 
 	if (startTime > 0.0) {
 		video.currentTime = startTime;
 	}
 
 	/* Video playback speed (rate) */
-	var playbackSpeed = parseFloat(video.getAttribute("speed"));
+	var playbackSpeed = parseFloat(video.dataset.speed);
 
 	if (playbackSpeed !== 1.0) {
 		video.playbackRate = playbackSpeed;

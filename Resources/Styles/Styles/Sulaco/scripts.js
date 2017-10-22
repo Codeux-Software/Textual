@@ -41,7 +41,7 @@ Sulaco = {
 
 	getLineType: function (line)
 	{
-		return ((line) ? line.getAttribute('ltype') : null);
+		return ((line) ? line.dataset.lineType : null);
 	},
 
 	getMessage: function (line)
@@ -58,7 +58,7 @@ Sulaco = {
 	{
 		var sender = Sulaco.getSenderElement(line);
 
-		return ((sender) ? sender.getAttribute('nickname') : null);
+		return ((sender) ? sender.dataset.nickname : null);
 	}
 };
 

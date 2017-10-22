@@ -50,7 +50,7 @@ var _ICMInlineImage = new _ICMInlineImagePrototype();
 _ICMInlineImagePrototype.prototype.willShowMedia = function(mediaId, mediaElement) /* PUBLIC */
 {
 	/* Do not allow user to show the image if this attribute is set. */
-	if (mediaElement.hasAttribute("disabled")) {
+	if (mediaElement.dataset.disabled === "true") {
 		return false;
 	}
 
@@ -88,7 +88,7 @@ _ICMInlineImagePrototype.prototype.showImageWhenLoaded = function(mediaId)
 	var imageComplete = imageElement.complete;
 
 	var imageCompleteCallback = (function() {
-		imageContainer.removeAttribute("disabled");
+		delete imageContainer.dataset.disabled;
 
 		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 
@@ -98,7 +98,7 @@ _ICMInlineImagePrototype.prototype.showImageWhenLoaded = function(mediaId)
 	if (imageComplete) {
 		imageCompleteCallback();
 	} else {
-		imageContainer.setAttribute("disabled", "true");
+		imageContainer.dataset.disabled = "true";
 
 		imageElement.addEventListener("load", { handleEvent: imageCompleteCallback }, false);
 	}

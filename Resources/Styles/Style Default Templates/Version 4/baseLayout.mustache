@@ -1,21 +1,4 @@
-<html viewtype="{{viewTypeToken}}"
-
-		{{#isChannelView}}
-			channelname="{{channelName}}" 
-		{{/isChannelView}}
-
-		{{#isPrivateMessageView}}
-			channelname="{{channelName}}"
-		{{/isPrivateMessageView}}
-
-		{{#isUtilityView}}
-			channelname="{{channelName}}"
-		{{/isUtilityView}}
-
-		{{! The operating system version declaration allows CSS selectors to target specific versions. }}
-		systemversion="{{operatingSystemVersion}}"
-
-		dir="{{textDirectionToken}}">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset={{userConfiguredTextEncoding}}">
 
@@ -39,51 +22,58 @@
 			}
 
 			{{#nicknameIndentationAvailable}}
-				body div#body_home p {
+				div.line p {
 					margin-left: {{predefinedTimestampWidth}}px;
 					text-indent: -{{predefinedTimestampWidth}}px;
 				}
 
-				body .time {
+				dive.line .time {
 					width: {{predefinedTimestampWidth}}px;
 				}
 			{{/nicknameIndentationAvailable}}
 		</style>
 	</head>
 
-	<body viewtype="{{viewTypeToken}}"
+	<body
+
+		dir="{{textDirectionToken}}"
 
 		onload="_Textual.viewBodyDidLoad()"
 
-		{{#usesCustomScrollers}}
-			customscroller="true"
-		{{/usesCustomScrollers}}
+		data-appearance="{{appearanceToken}}"
 
-		{{#isChannelView}}
-			channelname="{{channelName}}"
-		{{/isChannelView}}
+{{#usesCustomScrollers}}
+		data-custom-scroller="true"
+{{/usesCustomScrollers}}
 
-		{{#isPrivateMessageView}}
-			channelname="{{channelName}}"
-		{{/isPrivateMessageView}}
+		{{! The operating system version declaration allows CSS selectors to target specific versions. }}
+		data-system-version="{{operatingSystemVersion}}"
 
-		{{#isUtilityView}}
-			channelname="{{channelName}}"
-		{{/isUtilityView}}
+{{#isChannelView}}
+		data-view-name="{{channelName}}"
+{{/isChannelView}}
 
-		dir="{{textDirectionToken}}">
-			{{! The elements "body_home," "message_buffer," "loading_screen,"
-			"topic_bar," and "mark" must always remain the same id= as these
+{{#isPrivateMessageView}}
+		data-view-name="{{channelName}}"
+{{/isPrivateMessageView}}
+
+{{#isUtilityView}}
+		data-view-name="{{channelName}}"
+{{/isUtilityView}}
+
+		data-view-type="{{viewTypeToken}}">
+			{{! The elements "body," "messageBuffer," "loadingScreen,"
+			"topicBar," and "mark" must always remain the same id= as these
 			elements are used internally by Textual. }}
 
-			<div id="loading_screen">View is Loading…</div>
+			<div id="loadingScreen">View is Loading…</div>
 
 			{{#isChannelView}}
-				<div id="topic_bar" ondblclick="Textual.topicBarDoubleClicked()">(No Topic)</div>
+				<div id="topicBar" ondblclick="Textual.topicBarDoubleClicked()">(No Topic)</div>
 			{{/isChannelView}}
 
-			<div id="body_home">
-				<div id="message_buffer">
+			<div id="body">
+				<div id="messageBuffer">
 				</div>
 			</div>
 	</body>
