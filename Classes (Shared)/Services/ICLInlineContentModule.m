@@ -75,6 +75,16 @@ ClassWithDesignatedInitializerInitMethod
 	return nil;
 }
 
+- (BOOL)contentUntrusted
+{
+	return NO;
+}
+
+- (BOOL)contentNotSafeForWork
+{
+	return NO;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
