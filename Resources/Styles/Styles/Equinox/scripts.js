@@ -50,7 +50,9 @@ var NickColorGenerator = (function () {
 
     // Start alternative nick colouring procedure
     var selectNick = message.querySelector('.sender');
-    delete selectNick.dataset.colorNumber;
+    if (selectNick.dataset.colorNumber) {
+      delete selectNick.dataset.colorNumber;
+    }
 
     inlineNicks = message.querySelectorAll('.inlineSender');
 
@@ -66,7 +68,9 @@ var NickColorGenerator = (function () {
 
     var self = this;
     for (i = 0; i < inlineNicks.length; i++) {
-      delete inlineNicks[i].dataset.colorNumber;
+	  if (inlineNicks[i].dataset.colorNumber) {
+        delete inlineNicks[i].dataset.colorNumber;
+      }
       nick = inlineNicks[i].textContent;
       if (inlineNicks[i].dataset.mode.length > 0) {
         nick = nick.replace(inlineNicks[i].dataset.mode, '');
