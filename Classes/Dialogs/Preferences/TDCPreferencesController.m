@@ -985,33 +985,49 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self.themeSelectionButton removeAllItems];
 
-	NSDictionary *themes = [TPCThemeController dictionaryOfAllThemes];
+	NSString *currentThemeName = themeController().name;
 
-	NSArray *themeNamesSorted = themes.sortedDictionaryKeys;
+	TPCThemeControllerStorageLocation currentStorageLocation = themeController().storageLocation;
 
-	for (NSString *themeName in themeNamesSorted) {
-		NSString *themeSource = themes[themeName];
+	[TPCThemeController enumerateAvailableThemesWithBlock:^(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop) {
+		NSString *displayName = themeName;
 
-		NSMenuItem *item = [NSMenuItem menuItemWithTitle:themeName target:nil action:nil];
+		if (multipleVaraints) {
+			displayName = [NSString stringWithFormat:@"%@ — (%@)",
+				themeName, [TPCThemeController descriptionForStorageLocation:storageLocation]];
+		}
 
-		item.userInfo = themeSource;
+		NSMenuItem *item = [NSMenuItem menuItemWithTitle:displayName target:nil action:nil];
+
+		item.representedObject =
+		@{
+		  @"themeName" : themeName,
+		  @"storageLocation" : @(storageLocation)
+		};
+
+		if ([currentThemeName isEqualToString:themeName] &&
+			currentStorageLocation == storageLocation)
+		{
+			item.tag = 100; // Tag for item to select
+		}
 
 		[self.themeSelectionButton.menu addItem:item];
-	}
+	}];
 
-	[self.themeSelectionButton selectItemWithTitle:themeController().name];
+	[self.themeSelectionButton selectItemWithTag:100];
 }
 
 - (void)onChangedThemeSelection:(id)sender
 {
 	NSMenuItem *selectedItem = self.themeSelectionButton.selectedItem;
 
-	NSString *newThemeName = selectedItem.title;
+	NSDictionary *context = selectedItem.representedObject;
 
-	 TPCThemeControllerStorageLocation expectedStorageLocation =
-	[TPCThemeController expectedStorageLocationOfThemeWithName:selectedItem.userInfo];
+	NSString *newThemeName = context[@"themeName"];
 
-	NSString *newTheme = [TPCThemeController buildFilename:newThemeName forStorageLocation:expectedStorageLocation];
+	TPCThemeControllerStorageLocation newStorageLocation = [context unsignedIntegerForKey:@"storageLocation"];
+
+	NSString *newTheme = [TPCThemeController buildFilename:newThemeName forStorageLocation:newStorageLocation];
 
 	NSString *currentTheme = [TPCPreferences themeName];
 
