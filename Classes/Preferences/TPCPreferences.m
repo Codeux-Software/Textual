@@ -231,16 +231,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
 }
 
-+ (BOOL)nicknameColorHashingComputesRGBValue
-{
-	return [RZUserDefaults() boolForKey:@"NicknameColorHashingComputesRGBValue"];
-}
-
-+ (void)setNicknameColorHashingComputesRGBValue:(BOOL)nicknameColorHashingComputesRGBValue
-{
-	[RZUserDefaults() setBool:nicknameColorHashingComputesRGBValue forKey:@"NicknameColorHashingComputesRGBValue"];
-}
-
 + (BOOL)conversationTrackingIncludesUserModeSymbol
 {
 	return [RZUserDefaults() boolForKey:@"ConversationTrackingIncludesUserModeSymbol"];

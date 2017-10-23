@@ -3942,18 +3942,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				return;
 			}
 
-			if ([TPCPreferences nicknameColorHashingComputesRGBValue] == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1109]")];
-
-				return;
-			}
-
-			if ([themeSettings() nicknameColorStyle] == TPCThemeSettingsNicknameColorLegacyStyle) {
-				[self printDebugInformation:TXTLS(@"IRC[1111]")];
-
-				return;
-			}
-
 			NSString *nickname = stringIn.lowercaseGetToken;
 
 			if ([self stringIsNickname:nickname] == NO) {

@@ -41,17 +41,13 @@ formatting that may be open for the previous fragment. }}
 
 {{#inlineNicknameMatchFound}}
 <span class="inlineSender" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" data-mode="{{inlineNicknameUserModeSymbol}}"
-	{{#nicknameColorHashingIsStyleBased}}
-		{{#nicknameColorStyleOverride}}
-			data-override-color="true"
-		{{/nicknameColorStyleOverride}}
+	{{#nicknameColorStyleOverride}}
+		data-override-color="true"
+	{{/nicknameColorStyleOverride}}
 
-		{{^ isEmpty(inlineNicknameColorStyle) }}
-			style="color: {{inlineNicknameColorStyle}};"
-		{{/ isEmpty(inlineNicknameColorStyle) }}
-	{{^nicknameColorHashingIsStyleBased}}
-		data-color-number="{{inlineNicknameColorNumber}}"
-	{{/nicknameColorHashingIsStyleBased}}>{{inlineNicknameUserModeSymbol}}
+	{{^ isEmpty(inlineNicknameColorStyle) }}
+		style="color: {{inlineNicknameColorStyle}};"
+	{{/ isEmpty(inlineNicknameColorStyle) }}>{{inlineNicknameUserModeSymbol}}
 {{/inlineNicknameMatchFound}}
 {{{messageFragment}}}
 {{#inlineNicknameMatchFound}}

@@ -132,8 +132,6 @@
 	<true/>
 	<key>MainWindowTransparencyLevel</key>
 	<real>1</real>
-	<key>NicknameColorHashingComputesRGBValue</key>
-	<false/>
 	<key>NicknameHighlightMatchingType</key>
 	<integer>1</integer>
 	<key>NotificationType -&gt; Address Book Match -&gt; Enabled</key>

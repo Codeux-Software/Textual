@@ -173,7 +173,6 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 + (TXNoticeSendLocationType)locationToSendNotices;
 
 + (BOOL)disableNicknameColorHashing;
-+ (BOOL)nicknameColorHashingComputesRGBValue;
 
 + (BOOL)displayDockBadge;
 + (BOOL)displayPublicMessageCountOnDockBadge;

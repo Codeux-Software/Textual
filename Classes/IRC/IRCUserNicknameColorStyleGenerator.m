@@ -40,8 +40,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _colorNumberMaximum			30
-
 #define _overridesDefaultsKey		@"Nickname Color Style Overrides"
 
 @implementation IRCUserNicknameColorStyleGenerator
@@ -84,14 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(stringHash != nil);
 
-	if (colorStyle == TPCThemeSettingsNicknameColorLegacyStyle)
-	{
-		NSInteger stringHash64 = stringHash.integerValue;
-
-		return [NSString stringWithInteger:(stringHash64 % _colorNumberMaximum)];
-	}
-	else if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-			 colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
 	{
 		/* Define base pair */
 		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);

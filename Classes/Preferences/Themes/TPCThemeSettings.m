@@ -390,14 +390,16 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Nickname color style */
 		id nicknameColorStyle = [styleSettings objectForKey:@"Nickname Color Style"];
 
-		BOOL computeRGBValue = [TPCPreferences nicknameColorHashingComputesRGBValue];
-
-		if (computeRGBValue && NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
+		if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
-		} else if (computeRGBValue && NSObjectsAreEqual(nicknameColorStyle, @"HSL-dark")) {
+		} else if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-dark")) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
 		} else {
-			self.nicknameColorStyle = TPCThemeSettingsNicknameColorLegacyStyle;
+			if (self.underlyingWindowColorIsDark == NO) {
+				self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
+			} else {
+				self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+			}
 		}
 
 		/* Get style template version */
