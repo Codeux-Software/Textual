@@ -93,15 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TPCThemeControllerStorageLocation storageLocation = themeController().storageLocation;
 
-	NSString *storageLocationLabel = nil;
-
-	if (storageLocation == TPCThemeControllerStorageBundleLocation) {
-		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1036]");
-	} else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
-		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1037]");
-	} else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
-		storageLocationLabel = TPILocalizedString(@"BasicLanguage[1038]");
-	}
+	NSString *storageLocationLabel = [TPCThemeController descriptionForStorageLocation:storageLocation];
 
 	return TPILocalizedString(@"BasicLanguage[1033]",
 			  themeName,

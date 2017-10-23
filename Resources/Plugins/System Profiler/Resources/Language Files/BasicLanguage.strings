@@ -74,10 +74,7 @@
 "BasicLanguage[1028]" = "Error: Unable to locate any network statistics.";
 
 /* /style/ command. */
-"BasicLanguage[1033]" = "\002Current Style:\002 %1$@ (%2$@) \002•\002 \002Inverted sidebars:\002 %3$@ \002•\002 \002WebKit2\002: %4$@";
-"BasicLanguage[1036]" = "Bundled";
-"BasicLanguage[1037]" = "Custom";
-"BasicLanguage[1038]" = "Custom - iCloud";
+"BasicLanguage[1033]" = "\002Current Style:\002 %1$@ – (%2$@) \002•\002 \002Inverted sidebars:\002 %3$@ \002•\002 \002WebKit2\002: %4$@";
 
 /* /screens/ command. */
 "BasicLanguage[1041]" = "\002Display Resolution:\002 #%1$ld: %2$@";
