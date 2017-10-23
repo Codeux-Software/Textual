@@ -601,20 +601,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences setAppNapEnabled:appNapEnabled];
 }
 
-- (BOOL)enableNewNicknameColorSystem
-{
-	if ([TPCPreferences disableNicknameColorHashing]) {
-		return NO;
-	}
-
-	return [TPCPreferences nicknameColorHashingComputesRGBValue];
-}
-
-- (void)setEnableNewNicknameColorSystem:(BOOL)enableNewNicknameColorSystem
-{
-	[TPCPreferences setNicknameColorHashingComputesRGBValue:enableNewNicknameColorSystem];
-}
-
 - (BOOL)onlySpeakEventsForSelection
 {
 	return [TPCPreferences onlySpeakEventsForSelection];
@@ -1185,9 +1171,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedDisableNicknameColorHashing:(id)sender
 {
 	[self onChangedTheme:nil];
-
-	[self willChangeValueForKey:@"enableNewNicknameColorSystem"];
-	[self didChangeValueForKey:@"enableNewNicknameColorSystem"];
 }
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1

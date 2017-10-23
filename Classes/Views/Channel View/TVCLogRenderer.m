@@ -739,10 +739,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 				templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 
-				templateTokens[@"inlineNicknameColorNumber"] = nicknameColorStyle;
 				templateTokens[@"inlineNicknameColorStyle"] = nicknameColorStyle;
-
-				templateTokens[@"nicknameColorHashingIsStyleBased"] = @(themeSettings().nicknameColorStyle != TPCThemeSettingsNicknameColorLegacyStyle);
 
 				templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 			}

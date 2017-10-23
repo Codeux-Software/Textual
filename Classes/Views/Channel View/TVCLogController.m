@@ -1363,14 +1363,10 @@ ClassWithDesignatedInitializerInitMethod
 	} else {
 		templateAttributes[@"isNicknameAvailable"] = @(YES);
 
-		templateAttributes[@"nicknameColorNumber"] = logLine.nicknameColorStyle;
 		templateAttributes[@"nicknameColorStyle"] = logLine.nicknameColorStyle;
-
 		templateAttributes[@"nicknameColorStyleOverride"] = @(logLine.nicknameColorStyleOverride);
 
 		templateAttributes[@"nicknameColorHashingEnabled"] = @([TPCPreferences disableNicknameColorHashing] == NO);
-
-		templateAttributes[@"nicknameColorHashingIsStyleBased"] = @(themeSettings().nicknameColorStyle != TPCThemeSettingsNicknameColorLegacyStyle);
 
 		templateAttributes[@"formattedNickname"] = nickname.trim;
 

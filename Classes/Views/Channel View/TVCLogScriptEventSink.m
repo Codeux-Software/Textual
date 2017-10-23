@@ -989,12 +989,16 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *colorStyle = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
-	TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
+	TPCThemeSettingsNicknameColorStyle colorStyleEnum;
 
 	if ([colorStyle isEqualToString:@"HSL-dark"]) {
 		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueDarkStyle;
 	} else if ([colorStyle isEqualToString:@"HSL-light"]) {
 		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
+	} else {
+		[self _throwJavaScriptException:@"Invalid style"
+							  forCaller:context.caller
+							  inWebView:context.webView];
 	}
 
 	context.completionBlock( [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum] );
