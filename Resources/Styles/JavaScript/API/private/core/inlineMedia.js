@@ -260,7 +260,9 @@ InlineMediaPrototype.prototype._didLoadMediaModifyAnchor = function(mediaId) /* 
 	}
 
 	/* Modify attributes */
-	delete anchor.dataset.ilmLoading;
+	if (anchor.dataset.ilmLoading) {
+		delete anchor.dataset.ilmLoading;
+	}
 
 	/* Replace onclick event with one for current class */
 	if (this._isSubclass()) {
