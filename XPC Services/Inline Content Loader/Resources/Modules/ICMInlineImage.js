@@ -88,7 +88,9 @@ _ICMInlineImagePrototype.prototype.showImageWhenLoaded = function(mediaId)
 	var imageComplete = imageElement.complete;
 
 	var imageCompleteCallback = (function() {
-		delete imageContainer.dataset.disabled;
+		if (imageContainer.dataset.disabled) {
+			delete imageContainer.dataset.disabled;
+		}
 
 		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 
