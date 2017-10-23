@@ -68,7 +68,7 @@ var NickColorGenerator = (function () {
 
     var self = this;
     for (i = 0; i < inlineNicks.length; i++) {
-	  if (inlineNicks[i].dataset.colorNumber) {
+      if (inlineNicks[i].dataset.colorNumber) {
         delete inlineNicks[i].dataset.colorNumber;
       }
       nick = inlineNicks[i].textContent;
