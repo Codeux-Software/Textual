@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)_initAfterCopy
 {
 	ObjectIsAlreadyInitializedAssert
@@ -94,6 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	return nil;
 }
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder
 {
