@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The length of the content. This value is optional.
  */
-@property (readonly) NSUInteger contentLength;
+@property (readonly) unsigned long long contentLength;
 
 /**
  The size of the content. This value is optional.
@@ -197,6 +197,19 @@ NS_ASSUME_NONNULL_BEGIN
  Custom types are treated as "undefined"
  */
 @property (copy, readonly) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
+@end
+
+#pragma mark -
+#pragma mark Mutable Object
+
+@interface ICLPayloadMutable : ICLPayload
+@property (nonatomic, assign, readwrite) unsigned long long contentLength;
+@property (nonatomic, assign, readwrite) NSSize contentSize;
+@property (nonatomic, copy, nullable, readwrite) NSArray<NSURL *> *styleResources;
+@property (nonatomic, copy, nullable, readwrite) NSArray<NSURL *> *scriptResources;
+@property (nonatomic, copy, readwrite) NSString *html;
+@property (nonatomic, copy, nullable, readwrite) NSString *entrypoint;
+@property (nonatomic, copy, null_resettable, readwrite) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
 @end
 
 NS_ASSUME_NONNULL_END

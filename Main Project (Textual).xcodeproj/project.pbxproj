@@ -1635,9 +1635,6 @@
 		4CE58BC01F8A640A00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
 		4CE58BC11F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
 		4CE58BC21F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
-		4CE58BC91F8A73A800493E7C /* ICLPayloadMutable.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BC81F8A73A300493E7C /* ICLPayloadMutable.h */; };
-		4CE58BCA1F8A73A900493E7C /* ICLPayloadMutable.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BC81F8A73A300493E7C /* ICLPayloadMutable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CE58BCB1F8A73A900493E7C /* ICLPayloadMutable.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BC81F8A73A300493E7C /* ICLPayloadMutable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE58BCC1F8A73EF00493E7C /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BC61F8A738100493E7C /* ICLPayload.m */; };
 		4CE58BCD1F8A73F000493E7C /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BC61F8A738100493E7C /* ICLPayload.m */; };
 		4CE58BCE1F8A73F000493E7C /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BC61F8A738100493E7C /* ICLPayload.m */; };
@@ -2711,7 +2708,6 @@
 		4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/ICLInlineContentProtocol.h"; sourceTree = "<group>"; };
 		4CE58BC61F8A738100493E7C /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICLPayload.m; sourceTree = "<group>"; };
 		4CE58BC71F8A738100493E7C /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICLInlineContentModule.m; sourceTree = "<group>"; };
-		4CE58BC81F8A73A300493E7C /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
 		4CE58BD01F8A743100493E7C /* ICLPayloadInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadInternal.h; path = "Classes (Shared)/Headers/Internal/ICLPayloadInternal.h"; sourceTree = "<group>"; };
 		4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOFileLoggerPrivate.h; path = Classes/Headers/Private/TLOFileLoggerPrivate.h; sourceTree = SOURCE_ROOT; };
 		4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLONicknameCompletionStatusPrivate.h; path = Classes/Headers/Private/TLONicknameCompletionStatusPrivate.h; sourceTree = "<group>"; };
@@ -3722,7 +3718,6 @@
 				4C8C72B51F1205B600ED72DB /* XPC Protocols */,
 				4CE58BB41F8A63E000493E7C /* ICLInlineContentModule.h */,
 				4CE58BB51F8A63E000493E7C /* ICLPayload.h */,
-				4CE58BC81F8A73A300493E7C /* ICLPayloadMutable.h */,
 				4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */,
 				4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */,
 				4C2C52C61F12E209009701E0 /* TLOLanguagePreferences.h */,
@@ -4680,7 +4675,6 @@
 				4C76CC931D1DC6ED005CDDA9 /* TVCMainWindowTextViewYosemiteUserInteracePrivate.h in Headers */,
 				4C7B03A51D1210A100295E82 /* TXSharedApplication.h in Headers */,
 				4C7B490D1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
-				4CE58BC91F8A73A800493E7C /* ICLPayloadMutable.h in Headers */,
 				4C1EAB3A1F89F71D00A4E647 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
 				4C7B03A61D1210A100295E82 /* TXUserInterface.h in Headers */,
 				4C8C72BF1F1205C300ED72DB /* TVCLogLineXPCPrivate.h in Headers */,
@@ -4877,7 +4871,6 @@
 				4CE58BC11F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */,
 				4C7B04091D1210A800295E82 /* TVCMainWindow.h in Headers */,
 				4CCDC6BD1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */,
-				4CE58BCA1F8A73A900493E7C /* ICLPayloadMutable.h in Headers */,
 				4CCD4CA81D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C2D6ACB1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4CE58BBA1F8A63E800493E7C /* ICLPayload.h in Headers */,
@@ -5125,7 +5118,6 @@
 				4CE58BC21F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */,
 				4C7B048A1D1210B000295E82 /* TVCMainWindow.h in Headers */,
 				4CCDC6BE1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h in Headers */,
-				4CE58BCB1F8A73A900493E7C /* ICLPayloadMutable.h in Headers */,
 				4CCD4CA91D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4CE58BBD1F8A63E800493E7C /* ICLPayload.h in Headers */,

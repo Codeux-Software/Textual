@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ICLPayload ()
 {
 @protected
-	NSUInteger _contentLength;
+	unsigned long long _contentLength;
 	NSSize _contentSize;
 	NSArray<NSURL *> *_styleResources;
 	NSArray<NSURL *> *_scriptResources;
