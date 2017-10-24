@@ -28,13 +28,15 @@
 		data-member-type="{{nicknameType}}"
 		data-nickname="{{nickname}}"
 
-		{{#nicknameColorStyleOverride}}
-		data-override-color="true"
-		{{/nicknameColorStyleOverride}}
+		{{#nicknameColorHashingEnabled}}
+			{{#nicknameColorStyleOverride}}
+			data-override-color="true"
+			{{/nicknameColorStyleOverride}}
 
-		{{^ isEmpty(nicknameColorStyle) }}
-		style="color: {{nicknameColorStyle}};"
-		{{/ isEmpty(nicknameColorStyle) }}>{{formattedNickname}}</span>
+			{{^ isEmpty(nicknameColorStyle) }}
+			style="color: {{nicknameColorStyle}};"
+			{{/ isEmpty(nicknameColorStyle) }}
+		{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
 
 	<span class="message">{{{formattedMessage}}}
 
