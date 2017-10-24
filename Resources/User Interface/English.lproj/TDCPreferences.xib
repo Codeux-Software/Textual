@@ -3980,12 +3980,6 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onChangedInlineMediaOption:" target="-2" id="uow-r6-BoF"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="RvP-GF-xFj">
-                                                <dictionary key="options">
-                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                </dictionary>
-                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitToBasics" id="DFd-Yo-c2Z"/>
                                         </connections>
                                     </button>
@@ -4007,12 +4001,6 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onChangedInlineMediaOption:" target="-2" id="Byq-Fd-bRA"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="wAj-zg-DYa">
-                                                <dictionary key="options">
-                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                </dictionary>
-                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitNaughtyContent" id="DEm-zO-VOn"/>
                                         </connections>
                                     </button>
@@ -4034,12 +4022,6 @@ You should therefore not rely solely on this preference.</string>
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onChangedInlineMediaOption:" target="-2" id="sXc-8x-fTN"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.reloadingTheme" id="ndu-ph-wI0">
-                                                <dictionary key="options">
-                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                </dictionary>
-                                            </binding>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitUnsafeContent" id="1es-t1-amJ"/>
                                         </connections>
                                     </button>
