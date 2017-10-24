@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLMediaAssessment
 
+ClassWithDesignatedInitializerInitMethod
+
 - (instancetype)initWithURL:(NSURL *)url asType:(ICLMediaType)type
 {
 	NSParameterAssert(url != nil);
