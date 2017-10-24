@@ -52,8 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Proper class to sublcass if that is your thing. */
 @interface ICMInlineVideo : ICMInlineVideoFoundation
-@property (readonly, copy, class) NSArray<NSString *> *validVideoContentTypes;
-
 - (void)performActionForFinalAddress:(NSString *)address; // bypassVideoCheck = NO
 - (void)performActionForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
 

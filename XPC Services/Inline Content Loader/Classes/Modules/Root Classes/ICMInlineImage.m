@@ -35,12 +35,10 @@
 
  *********************************************************************** */
 
-#import "ICMInlineImageCheck.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage ()
-@property (nonatomic, strong, nullable) ICMInlineImageCheck *imageCheck;
+@property (nonatomic, strong, nullable) ICLMediaAssessor *imageCheck;
 @property (nonatomic, copy, nullable) NSString *finalAddress;
 @end
 
@@ -74,28 +72,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_performImageCheck
 {
-	/* Before the image is allowed to be displayed, we check that
-	 it matches user preferences. These preferences include maximum
-	 filesize and maximum height. */
-	ICMInlineImageCheck *imageCheck = [ICMInlineImageCheck new];
+	ICLMediaAssessor *imageCheck =
+	[ICLMediaAssessor assessorForAddress:self.finalAddress
+								withType:ICLMediaTypeImage
+						 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
+							 BOOL safeToLoad = (error == nil);
+
+							 if (safeToLoad) {
+								 [self _safeToLoadImage];
+							 } else {
+								 [self _unsafeToLoadImage];
+							 }
+
+							 self.imageCheck = nil;
+						 }];
 
 	self.imageCheck = imageCheck;
 
-	[imageCheck checkAddress:self.finalAddress
-			 completionBlock:^(BOOL safeToLoad, NSString * _Nullable imageOfType) {
-			 if (safeToLoad) {
-				 [self _safeToLoadImage];
-			 } else {
-				 [self _unsafeToLoadImage];
-			 }
-
-			 self.imageCheck = nil;
-		 }];
+	[imageCheck resume];
 }
 
 - (void)_unsafeToLoadImage
 {
-	[self _unsafeToLoadImage];
+	[self notifyUnsafeToLoadImage];
 }
 
 - (void)_safeToLoadImage
@@ -161,6 +160,24 @@ NS_ASSUME_NONNULL_BEGIN
 		  @"image/svg+xml",
 		  @"image/tiff",
 		  @"image/x-ms-bmp"];
+	});
+
+	return cachedValue;
+}
+
++ (NSArray<NSString *> *)validVideoContentTypes
+{
+	static NSArray<NSString *> *cachedValue = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		cachedValue =
+		@[@"video/3gpp",
+		  @"video/3gpp2",
+		  @"video/mp4",
+		  @"video/quicktime",
+		  @"video/x-m4v"];
 	});
 
 	return cachedValue;

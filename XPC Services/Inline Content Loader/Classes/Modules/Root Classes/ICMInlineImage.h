@@ -45,8 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Proper class to sublcass if that is your thing. */
 @interface ICMInlineImage : ICMInlineImageFoundation
-@property (readonly, copy, class) NSArray<NSString *> *validImageContentTypes;
-
 - (void)performActionForFinalAddress:(NSString *)address; // bypassImageCheck = NO
 - (void)performActionForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck;
 
