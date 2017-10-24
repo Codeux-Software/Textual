@@ -173,6 +173,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineImageFoundation
 
++ (BOOL)contentImageOrVideo
+{
+	return YES;
+}
+
 - (nullable NSURL *)templateURL
 {
 	return [RZMainBundle() URLForResource:@"ICMInlineImage" withExtension:@"mustache" subdirectory:@"Components"];

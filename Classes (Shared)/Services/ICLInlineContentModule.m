@@ -75,6 +75,11 @@ ClassWithDesignatedInitializerInitMethod
 	return nil;
 }
 
++ (BOOL)contentImageOrVideo
+{
+	return NO;
+}
+
 + (BOOL)contentUntrusted
 {
 	return NO;

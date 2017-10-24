@@ -199,6 +199,11 @@ NS_ASSUME_NONNULL_BEGIN
 	self.videoPlaybackSpeed = 1.0;
 }
 
++ (BOOL)contentImageOrVideo
+{
+	return YES;
+}
+
 - (nullable NSURL *)templateURL
 {
 	return [RZMainBundle() URLForResource:@"ICMInlineVideo" withExtension:@"mustache" subdirectory:@"Components"];
