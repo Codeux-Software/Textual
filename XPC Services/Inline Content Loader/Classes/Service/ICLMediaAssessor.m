@@ -307,9 +307,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* Read in content type */
-	NSDictionary *headerFields = response.allHeaderFields;
-
-	NSString *contentType = [headerFields objectForKey:@"Content-Type"];
+	NSString *contentType = response.MIMEType;
 
 	if (contentType.length > 128) {
 		*error = [self _errorWithDescription:@"Content-Type header is improperly formatted" code:1001];
@@ -318,7 +316,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* Read in content length */
-	long long contentLength = [headerFields longLongForKey:@"Content-Length"];
+	long long contentLength = response.expectedContentLength;
 
 	if (contentLength <= 0) {
 		*error = [self _errorWithDescription:@"Content-Length header is improperly formatted" code:1002];
