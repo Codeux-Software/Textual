@@ -43,6 +43,8 @@ NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
 
 @interface ICLProcessMain ()
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
+@property (readonly, copy) NSArray<Class> *moduleClasses;
+@property (readonly, copy) NSDictionary<NSString *, NSArray<Class> *> *modules;
 @end
 
 @implementation ICLProcessMain
@@ -65,30 +67,82 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark XPC Interface
 
-#warning TODO: Create NSCache of -domains values matched to classes
-
-/* -modules returns an array of classes (not objects) */
-- (NSArray *)modules
+/* List of module classes that are automatically mapped */
+- (NSArray<Class> *)moduleClasses
 {
-	static NSArray *modules = nil;
+	return
+	@[
+		[ICMDailymotion class],
+		[ICMGfycat class],
+		[ICMImgurGifv class],
+		[ICMLiveleak class],
+		[ICMPornhub class],
+		[ICMStreamable class],
+		[ICMTweet class],
+		[ICMTwitchClips class],
+		[ICMTwitchLive class],
+		[ICMVimeo class],
+		[ICMXkcd class],
+		[ICMYouTube class],
+		[ICMCommonInlineVideos class],
+		[ICMCommonInlineImages class]
+	  ];
+}
+
+/* Returns a dictionary with the key equal to the domain a module
+ maps to and the value a list of modules that map to that domain. */
+/* If a module does not map to a specific domain, then those can be
+ accessed by the wildcard key "*" */
+- (NSDictionary<NSString *, NSArray<Class> *> *)modules
+{
+	static NSDictionary<NSString *, NSArray<Class> *> *modules = nil;
 
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		modules = @[[ICMDailymotion class],
-					[ICMGfycat class],
-					[ICMImgurGifv class],
-					[ICMLiveleak class],
-					[ICMPornhub class],
-					[ICMStreamable class],
-					[ICMTweet class],
-					[ICMTwitchClips class],
-					[ICMTwitchLive class],
-					[ICMVimeo class],
-					[ICMXkcd class],
-					[ICMYouTube class],
-					[ICMCommonInlineVideos class],
-					[ICMCommonInlineImages class]];
+		/* Add new modules to this array */
+		NSArray *moduleClasses = self.moduleClasses;
+
+		/* Mapping logic */
+		NSMutableDictionary<NSString *, NSMutableArray<Class> *> *modulesOut = [NSMutableDictionary dictionary];
+
+		void (^mapModuleDomain)(Class, NSString *) = ^(Class moduleClass, NSString *moduleDomain) {
+			NSMutableArray *mappedDomains = modulesOut[moduleDomain];
+
+			if (mappedDomains == nil) {
+				mappedDomains = [NSMutableArray array];
+
+				[modulesOut setObject:mappedDomains forKey:moduleDomain];
+			}
+
+			[mappedDomains addObject:moduleClass];
+		};
+
+		void (^mapModuleDomains)(Class, NSArray *) = ^(Class moduleClass, NSArray<NSString *> * _Nullable moduleDomains) {
+			/* If the module does not map to a specific domain,
+			 then map it to a wildcard for all other classes. */
+			if (moduleDomains == nil || moduleDomains.count == 0) {
+				mapModuleDomain(moduleClass, @"*");
+
+				return;
+			}
+
+			/* Map domains */
+			for (NSString *moduleDomain in moduleDomains) {
+				mapModuleDomain(moduleClass, moduleDomain);
+			}
+		};
+
+		for (Class moduleClass in moduleClasses) {
+			NSArray *moduleDomains = [moduleClass domains];
+
+			mapModuleDomains(moduleClass, moduleDomains);
+		}
+
+		/* Replace mutable arrays with immutable copies */
+		[modulesOut performSelectorOnObjectValueAndReplace:@selector(copy)];
+
+		modules = [modulesOut copy];
 	});
 
 	return modules;
@@ -131,11 +185,29 @@ ClassWithDesignatedInitializerInitMethod
 		payloadIn = (id)payload;
 	}
 
-	for (Class module in [self modules]) {
-		if ([self _processPayload:payloadIn usingModule:module]) {
-			return;
+	BOOL (^processModulesWithDomain)(NSString *) = ^BOOL (NSString *domain) {
+		NSParameterAssert(domain != nil);
+
+		NSArray *modules = [self.modules objectForKey:domain];
+
+		for (Class module in modules) {
+			if ([self _processPayload:payloadIn usingModule:module]) {
+				return YES;
+			}
 		}
+
+		return NO;
+	};
+
+	NSString *urlHost = payloadIn.url.host;
+
+	if (processModulesWithDomain(urlHost)) {
+		return;
 	}
+
+	/* If no module accepted responsiblity for the urlHost,
+	 then we try modules that do not map to a specific domain. */
+	(void)processModulesWithDomain(@"*");
 }
 
 - (BOOL)_processPayload:(ICLPayloadMutable *)payloadIn usingModule:(Class)moduleClass
@@ -153,12 +225,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Determine whether this module has an action for this URL. */
 	NSURL *url = payloadIn.url;
-
-	NSArray<NSString *> *matchedDomains = [moduleClass domains];
-
-	if (matchedDomains && [matchedDomains containsObject:url.host] == NO) {
-		return NO;
-	}
 
 	ICLInlineContentModuleActionBlock actionBlock = [moduleClass actionBlockForURL:url];
 
