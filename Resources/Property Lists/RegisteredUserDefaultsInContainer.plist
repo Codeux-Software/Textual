@@ -99,7 +99,7 @@
 	<key>IRCopDefaultLocalizaiton -&gt; Shun Reason</key>
 	<string>1d Shunned.</string>
 	<key>InlineMediaCheckEverything</key>
-	<true/>
+	<false/>
 	<key>InlineMediaLimitToBasics</key>
 	<false/>
 	<key>InlineMediaLimitNaughtyContent</key>
