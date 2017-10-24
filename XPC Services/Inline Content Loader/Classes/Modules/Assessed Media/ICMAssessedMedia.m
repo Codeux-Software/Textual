@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 						 BOOL safeToLoad = (error == nil);
 
 						 if (safeToLoad) {
-							 [self _safeToLoadMediaOfType:assessment.type];
+							 [self _safeToLoadMediaOfType:assessment.type atURL:assessment.url];
 						 } else {
 							 [self _unsafeToLoadMedia];
 						 }
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.completionBlock(self.genericValidationFailedError);
 }
 
-- (void)_safeToLoadMediaOfType:(ICLMediaType)mediaType
+- (void)_safeToLoadMediaOfType:(ICLMediaType)mediaType atURL:(NSURL *)url
 {
 	ICLPayloadMutable *payload = self.payload;
 
@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[[ICMInlineImage alloc] initWithPayload:payload
 									completionBlock:completionBlock];
 
-			[module performActionForFinalAddress:payload.address bypassImageCheck:YES];
+			[module performActionForFinalAddress:url.absoluteString bypassImageCheck:YES];
 
 			break;
 		}
@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[[ICMInlineVideo alloc] initWithPayload:payload
 									completionBlock:completionBlock];
 
-			[module performActionForFinalAddress:payload.address bypassVideoCheck:YES];
+			[module performActionForFinalAddress:url.absoluteString bypassVideoCheck:YES];
 
 			break;
 		}
