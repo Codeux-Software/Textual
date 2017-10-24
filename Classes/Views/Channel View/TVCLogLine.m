@@ -143,21 +143,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	self->_receivedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"receivedAt"];
 
-	self->_excludeKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"excludeKeywords"] copy];
-	self->_highlightKeywords = [[aDecoder decodeObjectOfClass:[NSArray class] forKey:@"highlightKeywords"] copy];
+	self->_excludeKeywords = [aDecoder decodeObjectOfClasses:[NSSet setWithObjects:[NSArray class], [NSString class], nil]
+													   forKey:@"excludeKeywords"];
 
-	self->_rendererAttributes = [[aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"rendererAttributes"] copy];
+	self->_highlightKeywords = [aDecoder decodeObjectOfClasses:[NSSet setWithObjects:[NSArray class], [NSString class], nil]
+													   forKey:@"highlightKeywords"];
+
+	self->_rendererAttributes = [aDecoder decodeDictionaryForKey:@"rendererAttributes"];
 
 	self->_isEncrypted = [aDecoder decodeBoolForKey:@"isEncrypted"];
 
-	self->_command = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"command"] copy];
-	self->_messageBody = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"messageBody"] copy];
-	self->_nickname = [[aDecoder decodeObjectOfClass:[NSString class] forKey:@"nickname"] copy];
+	self->_command = [aDecoder decodeStringForKey:@"command"];
+	self->_messageBody = [aDecoder decodeStringForKey:@"messageBody"];
+	self->_nickname = [aDecoder decodeStringForKey:@"nickname"];
 
 	self->_lineType = [aDecoder decodeIntegerForKey:@"lineType"];
 	self->_memberType = [aDecoder decodeIntegerForKey:@"memberType"];
 
-	self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
+	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
 
 	self->_sessionIdentifier = [aDecoder decodeIntegerForKey:@"sessionIdentifier"];
 
