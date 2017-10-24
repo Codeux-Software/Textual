@@ -461,7 +461,17 @@ ClassWithDesignatedInitializerInitMethod
 {
 	/* Refuse challenge requests */
 
-	completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+	NSString *authenticationMethod = challenge.protectionSpace.authenticationMethod;
+
+	if ([authenticationMethod isEqualToString:NSURLAuthenticationMethodHTTPBasic] ||
+		[authenticationMethod isEqualToString:NSURLAuthenticationMethodHTTPDigest])
+	{
+		completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+
+		return;
+	}
+
+	completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask;
