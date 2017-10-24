@@ -183,7 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)setContentType:(nullable NSString *)contentType
+- (void)setContentType:(NSString *)contentType
 {
 	if (self->_contentType != contentType) {
 		self->_contentType = contentType;

@@ -72,7 +72,7 @@ typedef NS_ENUM(NSUInteger, ICLMediaType)
 /**
  Value of the Content-Type header
  */
-@property (readonly, copy, nullable) NSString *contentType;
+@property (readonly, copy) NSString *contentType;
 
 /**
  Value of the Content-Length header
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, ICLMediaType)
 
 @interface ICLMediaAssessmentMutable : ICLMediaAssessment
 @property (nonatomic, assign, readwrite) ICLMediaType type;
-@property (nonatomic, copy, nullable, readwrite) NSString *contentType;
+@property (nonatomic, copy, readwrite) NSString *contentType;
 @property (nonatomic, assign, readwrite) unsigned long long contentLength;
 @end
 
