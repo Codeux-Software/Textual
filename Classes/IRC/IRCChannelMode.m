@@ -346,7 +346,12 @@ ClassWithDesignatedInitializerInitMethod
 	IRCChannelModeContainer *object =
 	[[IRCChannelModeContainer alloc] initWithSupportInfo:self.supportInfo];
 
-	object.modeObjects = [self.modeObjects copyDeepMutable]; // Copy all hosted IRCModeInfo objects
+	/* modeObjects contain immutable objects which means
+	 we don't have to copy the objects themselves. */
+	/* If we ever modify IRCModeInfo internal logic to ever
+	 modify the contents of the object after initialization,
+	 then we should perform a deep copy here. */
+	object.modeObjects = [self.modeObjects mutableCopy];
 
 	return object;
 }
