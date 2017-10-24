@@ -46,7 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 NSString * const ICLMediaAssessorErrorDomain = @"ICLMediaAssessorErrorDomain";
 
 @interface ICLMediaAssessorConfiguration : NSObject
-@property (nonatomic, copy) NSString *cacheToken;
 @property (nonatomic, copy) ICLMediaAssessorCompletionBlock completionBlock;
 @property (nonatomic, assign) ICLMediaType expectedType;
 @property (nonatomic, copy) NSURL *url;
@@ -151,8 +150,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Prepare configuration */
 	ICLMediaAssessorConfiguration *config = [ICLMediaAssessorConfiguration new];
-
-	config.cacheToken = url.absoluteString.md5;
 
 	config.completionBlock = completionBlock;
 
