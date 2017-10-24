@@ -999,6 +999,8 @@ ClassWithDesignatedInitializerInitMethod
 		[self _throwJavaScriptException:@"Invalid style"
 							  forCaller:context.caller
 							  inWebView:context.webView];
+
+		return;
 	}
 
 	context.completionBlock( [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum] );
