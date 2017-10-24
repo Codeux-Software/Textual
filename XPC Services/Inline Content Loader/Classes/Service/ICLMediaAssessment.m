@@ -42,11 +42,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLMediaAssessment
 
-- (instancetype)init
+- (instancetype)initWithURL:(NSURL *)url asType:(ICLMediaType)type
 {
+	NSParameterAssert(url != nil);
+
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
+		self->_url = [url copy];
+
 		[self populateDefaultsPostflight];
 
 		self->_objectInitialized = YES;
@@ -95,6 +99,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	ObjectIsAlreadyInitializedAssert
 
+	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
+
 	self->_type = [aDecoder decodeUnsignedIntegerForKey:@"type"];
 
 	self->_contentType = [aDecoder decodeStringForKey:@"contentType"];
@@ -103,6 +109,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+	[aCoder encodeObject:self->_url forKey:@"url"];
+
 	[aCoder encodeUnsignedInteger:self->_type forKey:@"type"];
 
 	[aCoder encodeString:self->_contentType forKey:@"contentType"];
@@ -132,6 +140,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	object->_objectInitializedAsCopy = YES;
+
+	object->_url = self->_url;
 
 	object->_type = self->_type;
 

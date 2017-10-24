@@ -50,6 +50,19 @@ typedef NS_ENUM(NSUInteger, ICLMediaType)
 
 @interface ICLMediaAssessment : NSObject <NSCoding, NSSecureCoding, NSCopying, NSMutableCopying>
 /**
+ Designated initializer
+ */
+- (instancetype)initWithURL:(NSURL *)url asType:(ICLMediaType)type NS_DESIGNATED_INITIALIZER;
+
+/**
+ The final URL that was assessed.
+
+ This URL may be different when compared to that passed
+ to the assessor due to HTTP redirects.
+ */
+@property (readonly, copy) NSURL *url;
+
+/**
  The type of the media.
 
  The type is determined by the Content-Type header.
