@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)inlineMediaLimitToBasics; // images & videos
 + (BOOL)inlineMediaLimitNaughtyContent; // No NSFW
 + (BOOL)inlineMediaLimitUnsafeContent; // No content that injects HTML
+
+ // Check every single URL to find out if it is an image or video
++ (BOOL)inlineMediaCheckEverything;
 @end
 
 NS_ASSUME_NONNULL_END

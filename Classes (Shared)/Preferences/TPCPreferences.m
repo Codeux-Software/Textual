@@ -102,6 +102,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitUnsafeContent"];
 }
 
++ (BOOL)inlineMediaCheckEverything
+{
+	return [RZUserDefaults() boolForKey:@"InlineMediaCheckEverything"];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
