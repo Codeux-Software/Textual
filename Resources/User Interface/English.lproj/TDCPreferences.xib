@@ -4234,7 +4234,7 @@ You should therefore not rely solely on this preference.</string>
                                         <rect key="frame" x="21" y="157" width="500" height="5"/>
                                     </box>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="glE-SK-wgV">
-                                        <rect key="frame" x="69" y="125" width="113" height="18"/>
+                                        <rect key="frame" x="116" y="125" width="113" height="18"/>
                                         <buttonCell key="cell" type="check" title="Load everything" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="0hr-Jw-zED">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -4245,7 +4245,7 @@ You should therefore not rely solely on this preference.</string>
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FwE-Z9-DZX">
-                                        <rect key="frame" x="87" y="91" width="292" height="28"/>
+                                        <rect key="frame" x="134" y="91" width="292" height="28"/>
                                         <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Load the contents of every URL posted in a channel to determine which are images or videos." id="Udl-QC-wcp">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -4275,7 +4275,7 @@ You should therefore not rely solely on this preference.</string>
                                     <constraint firstItem="YCI-pw-b4B" firstAttribute="leading" secondItem="9ej-U6-DGg" secondAttribute="trailing" constant="8" symbolic="YES" id="cIq-BC-Y7G"/>
                                     <constraint firstItem="rB5-7e-5BB" firstAttribute="leading" secondItem="hI8-8X-GvK" secondAttribute="trailing" constant="8" symbolic="YES" id="fgf-XQ-fiF"/>
                                     <constraint firstItem="scO-dk-fBz" firstAttribute="trailing" secondItem="KxB-vo-Iq5" secondAttribute="trailing" id="gs0-Xc-wic"/>
-                                    <constraint firstItem="glE-SK-wgV" firstAttribute="leading" secondItem="QNZ-KN-tQT" secondAttribute="leading" constant="71" id="i1w-z2-Dhh"/>
+                                    <constraint firstItem="glE-SK-wgV" firstAttribute="leading" secondItem="QNZ-KN-tQT" secondAttribute="leading" constant="118" id="i1w-z2-Dhh"/>
                                     <constraint firstItem="gJA-Vk-OGX" firstAttribute="baseline" secondItem="SBB-Bw-5cY" secondAttribute="baseline" id="pX9-Yz-uJJ"/>
                                     <constraint firstItem="YBL-dG-Rwr" firstAttribute="leading" secondItem="9ej-U6-DGg" secondAttribute="leading" constant="4" id="qfn-Jh-1MV"/>
                                     <constraint firstItem="YCI-pw-b4B" firstAttribute="centerY" secondItem="gJo-u9-dr9" secondAttribute="centerY" id="t0Y-Ze-u3S"/>
