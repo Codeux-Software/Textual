@@ -35,46 +35,39 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+#import "ICLMediaAssessmentPrivate.h"
 
-#import <CocoaExtensions/CocoaExtensions.h>
+/* Given a URL, the accessor will load the contents of that URL
+ to determine what type of media it is: image, video, or other.
+ It will also perform validations, based on user preference.
+ For example, if the user doesn't want to see images larger than
+ 300 pixels and the image is 400 pixels, then you get an error. */
 
-#import <GRMustache/GRMustache.h>
+NS_ASSUME_NONNULL_BEGIN
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+/* Both values will never be nil together.
+ There will either be an assessment or an error for why there isn't. */
+/* It is possible for there to be an assessment AND an error.
+ If that is the case, the assessor was able to determine the type
+ of media, but it was unable to perform extended validation.
+ Treat as failure. */
+typedef void (^ICLMediaAssessorCompletionBlock)(ICLMediaAssessment * _Nullable assessment, NSError * _Nullable error);
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-#import "ICLMediaAssessorPrivate.h"
+@interface ICLMediaAssessor : NSObject
+/* Use the following two methods to determine what type of media a URL is. */
++ (instancetype)assessorForURL:(NSURL *)url completionBlock:(ICLMediaAssessorCompletionBlock)completionBlock;
++ (instancetype)assessorForAddress:(NSString *)address completionBlock:(ICLMediaAssessorCompletionBlock)completionBlock;
 
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+/* Use the following two methods to determine whether the URL is the type of media. */
+/* If you are expecting the URL to be a specific type of media, these methods are better. */
++ (instancetype)assessorForURL:(NSURL *)url withType:(ICLMediaType)type completionBlock:(ICLMediaAssessorCompletionBlock)completionBlock;
++ (instancetype)assessorForAddress:(NSString *)address withType:(ICLMediaType)type completionBlock:(ICLMediaAssessorCompletionBlock)completionBlock;
 
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTweet.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+/* Suspend assessment */
+- (void)suspend;
+
+/* Resume assessment */
+- (void)resume;
+@end
+
+NS_ASSUME_NONNULL_END

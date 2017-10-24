@@ -35,46 +35,45 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+typedef NS_ENUM(NSUInteger, ICLMediaType)
+{
+	ICLMediaTypeUnknown = 0,
+	ICLMediaTypeImage,
+	ICLMediaTypeVideo,
+	ICLMediaTypeOther
+};
 
-#import <GRMustache/GRMustache.h>
+#pragma mark -
+#pragma mark Immutable Object
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+@interface ICLMediaAssessment : NSObject <NSCoding, NSSecureCoding, NSCopying, NSMutableCopying>
+/**
+ The type of the media.
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-#import "ICLMediaAssessorPrivate.h"
+ The type is determined by the Content-Type header.
+ */
+@property (readonly) ICLMediaType type;
 
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+/**
+ Value of the Content-Type header
+ */
+@property (readonly, copy, nullable) NSString *contentType;
 
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTweet.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+/**
+ Value of the Content-Length header
+ */
+@property (readonly) unsigned long long contentLength;
+@end
+
+#pragma mark -
+#pragma mark Mutable Object
+
+@interface ICLMediaAssessmentMutable : ICLMediaAssessment
+@property (nonatomic, assign, readwrite) ICLMediaType type;
+@property (nonatomic, copy, nullable, readwrite) NSString *contentType;
+@property (nonatomic, assign, readwrite) unsigned long long contentLength;
+@end
+
+NS_ASSUME_NONNULL_END
