@@ -269,6 +269,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	ICLMediaAssessment *assessment = self.state.assessment;
 
+	/* This condition is typically true when we refuse an authentication challenge. */
+	if (error == nil && assessment == nil) {
+		error = [self _errorWithDescription:@"Assessment failed" code:9999];
+	}
+
 	config.completionBlock(assessment, error);
 }
 
