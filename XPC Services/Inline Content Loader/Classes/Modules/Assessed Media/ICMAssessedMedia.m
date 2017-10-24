@@ -35,47 +35,98 @@
 
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <CocoaExtensions/CocoaExtensions.h>
+@interface ICMAssessedMedia ()
+@property (nonatomic, strong, nullable) ICLMediaAssessor *mediaAssessor;
+@end
 
-#import <GRMustache/GRMustache.h>
+@implementation ICMAssessedMedia
 
-/* Shared */
-#import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
+- (void)_assessMedia
+{
+	NSURL *url = self.payload.url;
 
-/* Service */
-#import "ICLPayload.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-#import "ICLMediaAssessorPrivate.h"
+	ICLMediaAssessor *mediaAssessor =
+	[ICLMediaAssessor assessorForURL:url
+					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
+						 BOOL safeToLoad = (error == nil);
 
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+						 if (safeToLoad) {
+							 [self _safeToLoadMediaOfType:assessment.type];
+						 } else {
+							 [self _unsafeToLoadMedia];
+						 }
 
-#import "ICMAssessedMedia.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTweet.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+						 self.mediaAssessor = nil;
+					 }];
+
+	self.mediaAssessor = mediaAssessor;
+
+	[mediaAssessor resume];
+}
+
+- (void)_unsafeToLoadMedia
+{
+	self.completionBlock(self.genericValidationFailedError);
+}
+
+- (void)_safeToLoadMediaOfType:(ICLMediaType)mediaType
+{
+	ICLPayload *payload = self.payload;
+
+	ICLInlineContentModuleCompletionBlock completionBlock = self.completionBlock;
+
+	switch (mediaType) {
+		case ICLMediaTypeImage:
+		{
+			  ICMInlineImage *module =
+			[[ICMInlineImage alloc] initWithPayload:payload
+									completionBlock:completionBlock];
+
+			[module performActionForFinalAddress:payload.address bypassImageCheck:YES];
+
+			break;
+		}
+		case ICLMediaTypeVideo:
+		{
+			  ICMInlineVideo *module =
+			[[ICMInlineVideo alloc] initWithPayload:payload
+									completionBlock:completionBlock];
+
+			[module performActionForFinalAddress:payload.address bypassVideoCheck:YES];
+
+			break;
+		}
+		default:
+		{
+			LogToConsoleError("Unknown media type: %ld", mediaType);
+
+			break;
+		} // case
+	} // switch
+}
+
+#pragma mark -
+#pragma mark Action
+
++ (SEL)actionForURL:(NSURL *)url
+{
+	if ([TPCPreferences inlineMediaCheckEverything] == NO) {
+		return NULL;
+	}
+
+	return @selector(_assessMedia);
+}
+
+#pragma mark -
+#pragma mark Utilities
+
++ (BOOL)contentImageOrVideo
+{
+	return YES;
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
