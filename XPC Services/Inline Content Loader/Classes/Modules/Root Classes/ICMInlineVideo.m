@@ -35,12 +35,10 @@
 
  *********************************************************************** */
 
-#import "ICMInlineVideoCheck.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineVideo ()
-@property (nonatomic, strong, nullable) ICMInlineVideoCheck *videoCheck;
+@property (nonatomic, strong, nullable) ICLMediaAssessor *videoCheck;
 @property (nonatomic, copy, nullable) NSString *finalAddress;
 @end
 
@@ -74,20 +72,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_performVideoCheck
 {
-	ICMInlineVideoCheck *videoCheck = [ICMInlineVideoCheck new];
+	ICLMediaAssessor *videoCheck =
+	[ICLMediaAssessor assessorForAddress:self.finalAddress
+								withType:ICLMediaTypeVideo
+						 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
+							 BOOL safeToLoad = (error == nil);
+
+							 if (safeToLoad) {
+								 [self _safeToLoadVideo];
+							 } else {
+								 [self _unsafeToLoadVideo];
+							 }
+
+							 self.videoCheck = nil;
+						 }];
 
 	self.videoCheck = videoCheck;
 
-	[videoCheck checkAddress:self.finalAddress
-			 completionBlock:^(BOOL safeToLoad, NSString * _Nullable videoOfType) {
-			 if (safeToLoad) {
-				 [self _safeToLoadVideo];
-			 } else {
-				 [self _unsafeToLoadVideo];
-			 }
-
-			 self.videoCheck = nil;
-		 }];
+	[videoCheck resume];
 }
 
 - (void)_unsafeToLoadVideo
@@ -155,24 +157,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Utilities
-
-+ (NSArray<NSString *> *)validVideoContentTypes
-{
-	static NSArray<NSString *> *cachedValue = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		cachedValue =
-		@[@"video/3gpp",
-		  @"video/3gpp2",
-		  @"video/mp4",
-		  @"video/quicktime",
-		  @"video/x-m4v"];
-	});
-
-	return cachedValue;
-}
 
 @end
 

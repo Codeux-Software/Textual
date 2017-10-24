@@ -28,13 +28,11 @@
 		4C8C84391F8E5AEC00062FFD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C84381F8E5AE400062FFD /* ImageIO.framework */; };
 		4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */; };
 		4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */; };
-		4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */; };
 		4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */; };
 		4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FF41F92D43000B116A4 /* ICMYouTube.m */; };
 		4C980FF81F92D73200B116A4 /* ICMYouTube.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FF61F92D47C00B116A4 /* ICMYouTube.mustache */; };
 		4C980FFD1F92E15600B116A4 /* ICMInlineImage.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */; };
 		4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */; };
-		4C9810081F93AE4B00B116A4 /* ICMInlineVideoCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810071F93AE4B00B116A4 /* ICMInlineVideoCheck.m */; };
 		4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810101F93BA8100B116A4 /* ICMCommonInlineVideos.m */; };
 		4C9810131F93BC5D00B116A4 /* ICMInlineVideo.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */; };
 		4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */; };
@@ -123,7 +121,6 @@
 		4C576D261F94465F00FD581F /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
 		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
 		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
-		4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadMutable.h; path = "../../Classes (Shared)/Headers/ICLPayloadMutable.h"; sourceTree = "<group>"; };
 		4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadPrivate.h; path = Classes/Headers/Private/ICLPayloadPrivate.h; sourceTree = "<group>"; };
 		4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModulePrivate.h; path = Classes/Headers/Private/ICLInlineContentModulePrivate.h; sourceTree = "<group>"; };
 		4C7879F61F88EA710030AA84 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = Classes/Service/ICLPayload.m; sourceTree = "<group>"; };
@@ -139,8 +136,6 @@
 		4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
 		4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImage.h; path = "Classes/Modules/Root Classes/ICMInlineImage.h"; sourceTree = "<group>"; };
 		4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImage.m; path = "Classes/Modules/Root Classes/ICMInlineImage.m"; sourceTree = "<group>"; };
-		4C980FE21F92C4D700B116A4 /* ICMInlineImageCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImageCheck.h; path = "Classes/Modules/Root Classes/ICMInlineImageCheck.h"; sourceTree = "<group>"; };
-		4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImageCheck.m; path = "Classes/Modules/Root Classes/ICMInlineImageCheck.m"; sourceTree = "<group>"; };
 		4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMCommonInlineImages.m; path = "Classes/Modules/Common Images/ICMCommonInlineImages.m"; sourceTree = "<group>"; };
 		4C980FEB1F92C5EA00B116A4 /* ICMCommonInlineImages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMCommonInlineImages.h; path = "Classes/Modules/Common Images/ICMCommonInlineImages.h"; sourceTree = "<group>"; };
 		4C980FF41F92D43000B116A4 /* ICMYouTube.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMYouTube.m; path = Classes/Modules/YouTube/ICMYouTube.m; sourceTree = "<group>"; };
@@ -149,8 +144,6 @@
 		4C980FFC1F92DF3A00B116A4 /* ICMInlineImage.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineImage.css; path = Resources/Modules/ICMInlineImage.css; sourceTree = "<group>"; };
 		4C9810011F93ABE700B116A4 /* ICMInlineVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineVideo.h; path = "Classes/Modules/Root Classes/ICMInlineVideo.h"; sourceTree = "<group>"; };
 		4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineVideo.m; path = "Classes/Modules/Root Classes/ICMInlineVideo.m"; sourceTree = "<group>"; };
-		4C9810061F93AE4B00B116A4 /* ICMInlineVideoCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineVideoCheck.h; path = "Classes/Modules/Root Classes/ICMInlineVideoCheck.h"; sourceTree = "<group>"; };
-		4C9810071F93AE4B00B116A4 /* ICMInlineVideoCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineVideoCheck.m; path = "Classes/Modules/Root Classes/ICMInlineVideoCheck.m"; sourceTree = "<group>"; };
 		4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineVideo.css; path = Resources/Modules/ICMInlineVideo.css; sourceTree = "<group>"; };
 		4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineVideo.mustache; path = Resources/Modules/ICMInlineVideo.mustache; sourceTree = "<group>"; };
 		4C98100F1F93BA8000B116A4 /* ICMCommonInlineVideos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMCommonInlineVideos.h; path = "Classes/Modules/Common Videos/ICMCommonInlineVideos.h"; sourceTree = "<group>"; };
@@ -191,7 +184,6 @@
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
 		4CE58BA91F8A5F8500493E7C /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = "<group>"; };
-		4CE58BC41F8A6F0900493E7C /* ICLInlineContentModuleInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModuleInternal.h; path = Classes/Headers/Internal/ICLInlineContentModuleInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,7 +374,6 @@
 				4C8C72651F1201A000ED72DB /* XPC Protocols */,
 				4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */,
 				4C7879F01F88D8E10030AA84 /* ICLPayload.h */,
-				4C7879F11F88D8E10030AA84 /* ICLPayloadMutable.h */,
 				4C1EAB171F89F2DE00A4E647 /* StaticDefinitions.h */,
 				4C1EAB191F89F41700A4E647 /* TPCPreferences.h */,
 				4C1EAB121F89F20600A4E647 /* TPCPreferencesUserDefaults.h */,
@@ -496,8 +487,6 @@
 				4CB3B61E1F9C42B70004502A /* Resources */,
 				4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */,
 				4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */,
-				4C980FE21F92C4D700B116A4 /* ICMInlineImageCheck.h */,
-				4C980FE31F92C4D700B116A4 /* ICMInlineImageCheck.m */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -508,8 +497,6 @@
 				4CB3B61F1F9C42BA0004502A /* Resources */,
 				4C9810011F93ABE700B116A4 /* ICMInlineVideo.h */,
 				4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */,
-				4C9810061F93AE4B00B116A4 /* ICMInlineVideoCheck.h */,
-				4C9810071F93AE4B00B116A4 /* ICMInlineVideoCheck.m */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -828,9 +815,7 @@
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
 				4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */,
 				4CB3B6191F9C3D260004502A /* ICMInlineHTML.m in Sources */,
-				4C980FE71F92C4D700B116A4 /* ICMInlineImageCheck.m in Sources */,
 				4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */,
-				4C9810081F93AE4B00B116A4 /* ICMInlineVideoCheck.m in Sources */,
 				4CB3B60B1F9C2CB00004502A /* ICMLiveleak.m in Sources */,
 				4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */,
 				4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */,
