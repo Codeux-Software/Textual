@@ -143,7 +143,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(payloadIn != nil);
 
 	/* Do not allow unsafe content */
-	if ([moduleClass contentNotSafeForWork] && [TPCPreferences inlineMediaLimitNaughtyContent]) {
+	if ([moduleClass contentImageOrVideo] == NO && [TPCPreferences inlineMediaLimitToBasics]) {
+		return NO;
+	} else if ([moduleClass contentNotSafeForWork] && [TPCPreferences inlineMediaLimitNaughtyContent]) {
 		return NO;
 	} else if ([moduleClass contentUntrusted] && [TPCPreferences inlineMediaLimitUnsafeContent]) {
 		return NO;
