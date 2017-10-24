@@ -47,9 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(completionBlock != nil);
 
 	if ((self = [super init])) {
-		self.payload = payload;
+		self->_payload = payload;
 
-		self.completionBlock = completionBlock;
+		self->_completionBlock = completionBlock;
 
 		return self;
 	}
