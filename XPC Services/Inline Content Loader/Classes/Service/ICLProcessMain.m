@@ -85,7 +85,11 @@ ClassWithDesignatedInitializerInitMethod
 		[ICMXkcd class],
 		[ICMYouTube class],
 		[ICMCommonInlineVideos class],
-		[ICMCommonInlineImages class]
+		[ICMCommonInlineImages class],
+
+		/* This module should ALWAYS be the last
+		 in line because it matches any URL. */
+		[ICMAssessedMedia class]
 	  ];
 }
 

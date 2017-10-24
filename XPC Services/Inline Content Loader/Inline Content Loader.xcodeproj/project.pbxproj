@@ -13,6 +13,7 @@
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
 		4C356A531F9FB06E00E671D9 /* ICLMediaAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A511F9FB06E00E671D9 /* ICLMediaAssessment.m */; };
 		4C356A541F9FB06E00E671D9 /* ICLMediaAssessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A521F9FB06E00E671D9 /* ICLMediaAssessor.m */; };
+		4C356A591F9FC0E200E671D9 /* ICMAssessedMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A571F9FBFE500E671D9 /* ICMAssessedMedia.m */; };
 		4C576D181F93C3CE00FD581F /* ICMInlineVideo.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D161F93C20700FD581F /* ICMInlineVideo.js */; };
 		4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D1A1F943F0D00FD581F /* ICMVimeo.m */; };
 		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
@@ -113,6 +114,8 @@
 		4C356A511F9FB06E00E671D9 /* ICLMediaAssessment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLMediaAssessment.m; path = Classes/Service/ICLMediaAssessment.m; sourceTree = "<group>"; };
 		4C356A521F9FB06E00E671D9 /* ICLMediaAssessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLMediaAssessor.m; path = Classes/Service/ICLMediaAssessor.m; sourceTree = "<group>"; };
 		4C356A551F9FB09600E671D9 /* ICLMediaAssessmentInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaAssessmentInternal.h; path = Classes/Headers/Internal/ICLMediaAssessmentInternal.h; sourceTree = "<group>"; };
+		4C356A561F9FBFE400E671D9 /* ICMAssessedMedia.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMAssessedMedia.h; path = "Classes/Modules/Assessed Media/ICMAssessedMedia.h"; sourceTree = "<group>"; };
+		4C356A571F9FBFE500E671D9 /* ICMAssessedMedia.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMAssessedMedia.m; path = "Classes/Modules/Assessed Media/ICMAssessedMedia.m"; sourceTree = "<group>"; };
 		4C576D161F93C20700FD581F /* ICMInlineVideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineVideo.js; path = Resources/Modules/ICMInlineVideo.js; sourceTree = "<group>"; };
 		4C576D1A1F943F0D00FD581F /* ICMVimeo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMVimeo.m; path = Classes/Modules/Vimeo/ICMVimeo.m; sourceTree = "<group>"; };
 		4C576D1B1F943F0D00FD581F /* ICMVimeo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMVimeo.h; path = Classes/Modules/Vimeo/ICMVimeo.h; sourceTree = "<group>"; };
@@ -337,6 +340,15 @@
 				4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		4C356A581F9FBFF500E671D9 /* Assessed Media */ = {
+			isa = PBXGroup;
+			children = (
+				4C356A561F9FBFE400E671D9 /* ICMAssessedMedia.h */,
+				4C356A571F9FBFE500E671D9 /* ICMAssessedMedia.m */,
+			);
+			name = "Assessed Media";
 			sourceTree = "<group>";
 		};
 		4C576D191F943EFE00FD581F /* Vimeo */ = {
@@ -689,6 +701,7 @@
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4C356A581F9FBFF500E671D9 /* Assessed Media */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C9CAC601F9585B8006887B7 /* Dailymotion */,
@@ -819,6 +832,7 @@
 				4CB3B60B1F9C2CB00004502A /* ICMLiveleak.m in Sources */,
 				4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */,
 				4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */,
+				4C356A591F9FC0E200E671D9 /* ICMAssessedMedia.m in Sources */,
 				4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
 				4C9CAC751F96A2D7006887B7 /* ICMGfycat.m in Sources */,
