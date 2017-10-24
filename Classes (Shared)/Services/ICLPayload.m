@@ -46,9 +46,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
-- (instancetype)_init
+- (instancetype)_initAfterCopy
 {
-	return [super init];
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		self->_objectInitialized = YES;
+
+		return self;
+	}
+
+	return nil;
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -61,6 +69,8 @@ ClassWithDesignatedInitializerInitMethod
 		[self decodeWithCoder:aDecoder];
 
 		[self populateDefaultsPostflight];
+
+		self->_objectInitialized = YES;
 
 		return self;
 	}
@@ -130,6 +140,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)populateDefaultsPostflight
 {
+	ObjectIsAlreadyInitializedAssert
+
 	self->_contentSize = NSZeroSize;
 
 	SetVariableIfNil(self->_scriptResources, @[]);
@@ -180,7 +192,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	object->_index = self->_index;
 
-	return [object _init];
+	return [object _initAfterCopy];
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
