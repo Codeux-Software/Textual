@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_safeToLoadMediaOfType:(ICLMediaType)mediaType
 {
-	ICLPayload *payload = self.payload;
+	ICLPayloadMutable *payload = self.payload;
 
 	ICLInlineContentModuleCompletionBlock completionBlock = self.completionBlock;
 
