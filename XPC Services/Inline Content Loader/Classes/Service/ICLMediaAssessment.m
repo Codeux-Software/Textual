@@ -105,6 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self->_contentType = [aDecoder decodeStringForKey:@"contentType"];
 	self->_contentLength = [aDecoder decodeUnsignedIntegerForKey:@"contentLength"];
+
+	[self initializedClassHealthCheck];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -127,6 +129,14 @@ NS_ASSUME_NONNULL_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	SetVariableIfNil(self->_contentType, @"application/binary");
+}
+
+- (void)initializedClassHealthCheck
+{
+	ObjectIsAlreadyInitializedAssert
+
+	NSParameterAssert(self->_url != nil);
+	NSParameterAssert(self->_contentType != nil);
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone asMutable:(BOOL)copyAsMutable
