@@ -137,14 +137,20 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 #pragma mark Context
 
 /**
- Whether the module may add content into the DOM which
+ Whether the module's content is an image or video.
+ This can include video services, not just video files.
+ */
+@property (readonly, class) BOOL contentImageOrVideo;
+
+/**
+ Whether the module might add content to the DOM which
  is not trusted such as HTML downloaded from some website.
  Other untrusted resources include remote resources.
  */
 @property (readonly, class) BOOL contentUntrusted;
 
 /**
- Whether module may load content that is not safe for work.
+ Whether module might load content that is not safe for work.
  */
 @property (readonly, class) BOOL contentNotSafeForWork;
 @end
