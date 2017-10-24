@@ -51,6 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self->_completionBlock = completionBlock;
 
+		[self mergePropertiesIntoPayload];
+
 		return self;
 	}
 
