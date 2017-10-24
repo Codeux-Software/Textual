@@ -36,8 +36,6 @@
  *********************************************************************** */
 
 #import "ICLPayload.h"
-#import "ICLPayloadMutable.h"
-
 #import "ICLPayloadInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -87,16 +85,16 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentLength = [aDecoder decodeUnsignedIntegerForKey:@"contentLength"];
 	self->_contentSize = [aDecoder decodeSizeForKey:@"contentSize"];
 
-	self->_styleResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSURL class]]]
+	self->_styleResources = [aDecoder decodeObjectOfClasses:[NSSet setWithObjects:[NSArray class], [NSURL class], nil]
 													 forKey:@"styleResources"];
 
-	self->_scriptResources = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSURL class]]]
+	self->_scriptResources = [aDecoder decodeObjectOfClasses:[NSSet setWithObjects:[NSArray class], [NSURL class], nil]
 													  forKey:@"scriptResources"];
 
 	self->_html = [aDecoder decodeStringForKey:@"html"];
 
 	self->_entrypoint = [aDecoder decodeStringForKey:@"entrypoint"];
-	self->_entrypointPayload = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"entrypointPayload"];
+	self->_entrypointPayload = [aDecoder decodeDictionaryForKey:@"entrypointPayload"];
 
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
 
@@ -118,17 +116,17 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder maybeEncodeObject:self->_styleResources forKey:@"styleResources"];
 	[aCoder maybeEncodeObject:self->_scriptResources forKey:@"scriptResources"];
 
-	[aCoder encodeObject:self->_html forKey:@"html"];
+	[aCoder encodeString:self->_html forKey:@"html"];
 
 	[aCoder maybeEncodeObject:self->_entrypoint forKey:@"entrypoint"];
 	[aCoder maybeEncodeObject:self->_entrypointPayload forKey:@"entrypointPayload"];
 
 	[aCoder encodeObject:self->_url forKey:@"url"];
 
-	[aCoder encodeObject:self->_lineNumber forKey:@"lineNumber"];
+	[aCoder encodeString:self->_lineNumber forKey:@"lineNumber"];
 
-	[aCoder encodeObject:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
-	[aCoder encodeObject:self->_viewIdentifier forKey:@"viewIdentifier"];
+	[aCoder encodeString:self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
+	[aCoder encodeString:self->_viewIdentifier forKey:@"viewIdentifier"];
 
 	[aCoder encodeUnsignedInteger:self->_index forKey:@"index"];
 }
@@ -271,7 +269,7 @@ ClassWithDesignatedInitializerInitMethod
 	return YES;
 }
 
-- (void)setContentLength:(NSUInteger)contentLength
+- (void)setContentLength:(unsigned long long)contentLength
 {
 	if (self->_contentLength != contentLength) {
 		self->_contentLength = contentLength;
