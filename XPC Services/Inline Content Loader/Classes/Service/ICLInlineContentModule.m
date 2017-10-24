@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((self = [super init])) {
 		self->_payload = payload;
 
-		self->_completionBlock = completionBlock;
+		self->_completionBlock = [completionBlock copy];
 
 		[self mergePropertiesIntoPayload];
 
