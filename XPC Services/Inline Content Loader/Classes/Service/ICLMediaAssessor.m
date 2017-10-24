@@ -464,7 +464,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	/* Refuse challenge requests */
 
-	completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallengee, nil);
+	completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask;
