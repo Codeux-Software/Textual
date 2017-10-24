@@ -151,6 +151,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index inView:(NSString *)viewIdentifier
 {
 	NSParameterAssert(url != nil);
+	NSParameterAssert(url.isFileURL == NO);
 	NSParameterAssert(uniqueIdentifier != nil);
 	NSParameterAssert(lineNumber != nil);
 	NSParameterAssert(viewIdentifier != nil);
