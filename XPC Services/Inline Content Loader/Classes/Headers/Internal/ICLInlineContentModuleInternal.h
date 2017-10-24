@@ -38,8 +38,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLInlineContentModule ()
-@property (nonatomic, strong, readwrite) ICLPayloadMutable *payload;
-@property (nonatomic, copy, readwrite) ICLInlineContentModuleCompletionBlock completionBlock;
+{
+@private
+	ICLPayloadMutable *_payload;
+	ICLInlineContentModuleCompletionBlock _completionBlock;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
