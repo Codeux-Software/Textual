@@ -98,6 +98,8 @@
 	<string>Your behavior is not conducive to the desired environment.</string>
 	<key>IRCopDefaultLocalizaiton -&gt; Shun Reason</key>
 	<string>1d Shunned.</string>
+	<key>InlineMediaCheckEverything</key>
+	<true/>
 	<key>InlineMediaLimitToBasics</key>
 	<false/>
 	<key>InlineMediaLimitNaughtyContent</key>
