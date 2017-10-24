@@ -4248,23 +4248,52 @@ You should therefore not rely solely on this preference.</string>
                                             </binding>
                                         </connections>
                                     </textField>
+                                    <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="scO-dk-fBz">
+                                        <rect key="frame" x="21" y="157" width="500" height="5"/>
+                                    </box>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="glE-SK-wgV">
+                                        <rect key="frame" x="69" y="125" width="113" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Load everything" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="0hr-Jw-zED">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="titleBar" size="12"/>
+                                        </buttonCell>
+                                        <accessibility description="Check every link to learn if it is a video or image"/>
+                                        <connections>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaCheckEverything" id="SFu-iR-jFH"/>
+                                        </connections>
+                                    </button>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FwE-Z9-DZX">
+                                        <rect key="frame" x="87" y="91" width="292" height="28"/>
+                                        <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Load the contents of every URL posted in a channel to determine which are images or videos." id="Udl-QC-wcp">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="glE-SK-wgV" firstAttribute="top" secondItem="scO-dk-fBz" secondAttribute="bottom" constant="18" id="3kd-1T-KdA"/>
                                     <constraint firstItem="Lga-QD-ob3" firstAttribute="baseline" secondItem="rB5-7e-5BB" secondAttribute="baseline" id="4Cu-nG-aSL"/>
                                     <constraint firstItem="gJA-Vk-OGX" firstAttribute="leading" secondItem="QNZ-KN-tQT" secondAttribute="leading" constant="59" id="4sE-un-A2n"/>
                                     <constraint firstItem="SBB-Bw-5cY" firstAttribute="leading" secondItem="gJA-Vk-OGX" secondAttribute="trailing" constant="8" symbolic="YES" id="7bw-lb-omn"/>
+                                    <constraint firstItem="FwE-Z9-DZX" firstAttribute="leading" secondItem="glE-SK-wgV" secondAttribute="leading" constant="18" id="B1i-kv-kY2"/>
                                     <constraint firstItem="gJA-Vk-OGX" firstAttribute="top" secondItem="QNZ-KN-tQT" secondAttribute="top" constant="23" id="EMy-Jv-Be4"/>
                                     <constraint firstItem="9ej-U6-DGg" firstAttribute="baseline" secondItem="gJo-u9-dr9" secondAttribute="baseline" id="Huj-ji-fzX"/>
+                                    <constraint firstItem="scO-dk-fBz" firstAttribute="leading" secondItem="KxB-vo-Iq5" secondAttribute="leading" id="Igq-HP-amp"/>
+                                    <constraint firstItem="scO-dk-fBz" firstAttribute="top" secondItem="hI8-8X-GvK" secondAttribute="bottom" constant="18" id="Rd9-xr-ikk"/>
                                     <constraint firstItem="gJA-Vk-OGX" firstAttribute="leading" secondItem="9ej-U6-DGg" secondAttribute="leading" id="SIe-Xh-sq4"/>
                                     <constraint firstItem="hI8-8X-GvK" firstAttribute="centerY" secondItem="rB5-7e-5BB" secondAttribute="centerY" id="UI9-3b-zB6"/>
                                     <constraint firstItem="Lga-QD-ob3" firstAttribute="leading" secondItem="QNZ-KN-tQT" secondAttribute="leading" constant="136" id="UuJ-xg-2PZ"/>
                                     <constraint firstItem="YCI-pw-b4B" firstAttribute="top" secondItem="SBB-Bw-5cY" secondAttribute="bottom" constant="6" id="WK3-Pc-Fel"/>
                                     <constraint firstItem="KxB-vo-Iq5" firstAttribute="centerX" secondItem="QNZ-KN-tQT" secondAttribute="centerX" id="Yat-Bn-GyX"/>
+                                    <constraint firstItem="FwE-Z9-DZX" firstAttribute="top" secondItem="glE-SK-wgV" secondAttribute="bottom" constant="8" id="ZHK-qL-RfS"/>
                                     <constraint firstItem="hI8-8X-GvK" firstAttribute="leading" secondItem="Lga-QD-ob3" secondAttribute="trailing" constant="8" symbolic="YES" id="ZXe-3q-9hN"/>
                                     <constraint firstItem="Lga-QD-ob3" firstAttribute="top" secondItem="KxB-vo-Iq5" secondAttribute="bottom" constant="19" id="Zdp-gz-7Gd"/>
                                     <constraint firstItem="KxB-vo-Iq5" firstAttribute="top" secondItem="YBL-dG-Rwr" secondAttribute="bottom" constant="18" id="cBD-2b-507"/>
                                     <constraint firstItem="YCI-pw-b4B" firstAttribute="leading" secondItem="9ej-U6-DGg" secondAttribute="trailing" constant="8" symbolic="YES" id="cIq-BC-Y7G"/>
                                     <constraint firstItem="rB5-7e-5BB" firstAttribute="leading" secondItem="hI8-8X-GvK" secondAttribute="trailing" constant="8" symbolic="YES" id="fgf-XQ-fiF"/>
+                                    <constraint firstItem="scO-dk-fBz" firstAttribute="trailing" secondItem="KxB-vo-Iq5" secondAttribute="trailing" id="gs0-Xc-wic"/>
+                                    <constraint firstItem="glE-SK-wgV" firstAttribute="leading" secondItem="QNZ-KN-tQT" secondAttribute="leading" constant="71" id="i1w-z2-Dhh"/>
                                     <constraint firstItem="gJA-Vk-OGX" firstAttribute="baseline" secondItem="SBB-Bw-5cY" secondAttribute="baseline" id="pX9-Yz-uJJ"/>
                                     <constraint firstItem="YBL-dG-Rwr" firstAttribute="leading" secondItem="9ej-U6-DGg" secondAttribute="leading" constant="4" id="qfn-Jh-1MV"/>
                                     <constraint firstItem="YCI-pw-b4B" firstAttribute="centerY" secondItem="gJo-u9-dr9" secondAttribute="centerY" id="t0Y-Ze-u3S"/>
