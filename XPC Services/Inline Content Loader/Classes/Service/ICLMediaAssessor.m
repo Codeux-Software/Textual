@@ -381,9 +381,8 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* Complete read in */
-	ICLMediaAssessmentMutable *assessment = [ICLMediaAssessmentMutable new];
-
-	assessment.type = mediaType;
+	ICLMediaAssessmentMutable *assessment =
+	[[ICLMediaAssessmentMutable alloc] initWithURL:response.URL asType:mediaType];
 
 	assessment.contentType = contentType;
 	assessment.contentLength = contentLength;
