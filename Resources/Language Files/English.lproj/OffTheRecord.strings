@@ -72,3 +72,5 @@
 "OffTheRecord[1011][1]" = "Not Encrypted";
 "OffTheRecord[1011][2]" = "Encrypted & Unverified";
 "OffTheRecord[1011][3]" = "Encrypted & Verified";
+
+"OffTheRecord[1011]" = "Off-the-Record Messaging: The fingerprint for %1$@ is “%2$@” — <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>";
