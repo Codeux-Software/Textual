@@ -35,15 +35,9 @@
 
  *********************************************************************** */
 
-NS_ASSUME_NONNULL_BEGIN
+#import "ICLMediaType.h"
 
-typedef NS_ENUM(NSUInteger, ICLMediaType)
-{
-	ICLMediaTypeUnknown = 0,
-	ICLMediaTypeImage,
-	ICLMediaTypeVideo,
-	ICLMediaTypeOther
-};
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Immutable Object

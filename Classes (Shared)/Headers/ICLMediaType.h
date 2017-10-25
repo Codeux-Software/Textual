@@ -37,65 +37,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICMAssessedMedia ()
-@property (nonatomic, strong, nullable) ICLMediaAssessor *mediaAssessor;
-@end
-
-@implementation ICMAssessedMedia
-
-- (void)_assessMedia
+typedef NS_ENUM(NSUInteger, ICLMediaType)
 {
-	NSURL *url = self.payload.url;
-
-	ICLMediaAssessor *mediaAssessor =
-	[ICLMediaAssessor assessorForURL:url
-					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
-						 BOOL safeToLoad = (error == nil);
-
-						 if (safeToLoad) {
-							 [self _safeToLoadMediaOfType:assessment.type atURL:assessment.url];
-						 } else {
-							 [self _unsafeToLoadMedia];
-						 }
-
-						 self.mediaAssessor = nil;
-					 }];
-
-	self.mediaAssessor = mediaAssessor;
-
-	[mediaAssessor resume];
-}
-
-- (void)_unsafeToLoadMedia
-{
-	[self cancel];
-}
-
-- (void)_safeToLoadMediaOfType:(ICLMediaType)mediaType atURL:(NSURL *)url
-{
-	[self deferAsType:mediaType withURL:url performCheck:NO];
-}
-
-#pragma mark -
-#pragma mark Action
-
-+ (SEL)actionForURL:(NSURL *)url
-{
-	if ([TPCPreferences inlineMediaCheckEverything] == NO) {
-		return NULL;
-	}
-
-	return @selector(_assessMedia);
-}
-
-#pragma mark -
-#pragma mark Utilities
-
-+ (BOOL)contentImageOrVideo
-{
-	return YES;
-}
-
-@end
+	ICLMediaTypeUnknown = 0,
+	ICLMediaTypeImage,
+	ICLMediaTypeVideo,
+	ICLMediaTypeOther
+};
 
 NS_ASSUME_NONNULL_END

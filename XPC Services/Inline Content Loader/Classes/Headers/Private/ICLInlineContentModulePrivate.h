@@ -37,11 +37,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ICLInlineContentModule (ICLInlineContentModulePrivate)
+@class ICLProcessMain;
+
+@interface ICLInlineContentModule (Private)
 @property (readonly, nullable) NSURL *templateURL;
 @property (readonly, nullable) GRMustacheTemplate *template;
-
-- (void)mergePropertiesIntoPayload;
 
 /* The generic validation error is a static error that the service
  recognizes as a sign that the URL in the payload shouldn't be displayed,
@@ -49,8 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSError *genericValidationFailedError;
 @property (copy, readonly, class) NSError *genericValidationFailedError;
 
-- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock;
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process;
+@end
 
+@interface ICLInlineContentModule (JSON)
 - (NSURLSessionDataTask *)requestJSONDataFromURL:(NSURL *)url completionBlock:(void (^)(BOOL success, NSDictionary<NSString *, id> * _Nullable data))completionBlock;
 - (NSURLSessionDataTask *)requestJSONDataFromAddress:(NSString *)address completionBlock:(void (^)(BOOL success, NSDictionary<NSString *, id> * _Nullable data))completionBlock;
 

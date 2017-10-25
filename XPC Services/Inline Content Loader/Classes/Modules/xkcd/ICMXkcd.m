@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 			 return;
 		 }
 
-		 [self performActionForFinalAddress:object];
+		 [self performActionForAddress:object];
 	 }];
 }
 

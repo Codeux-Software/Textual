@@ -44,12 +44,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineVideo
 
-- (void)performActionForFinalAddress:(NSString *)address
+- (void)performActionForURL:(NSURL *)url
 {
-	[self performActionForFinalAddress:address bypassVideoCheck:NO];
+	[self performActionForURL:url bypassVideoCheck:NO];
 }
 
-- (void)performActionForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
+- (void)performActionForURL:(NSURL *)url bypassVideoCheck:(BOOL)bypassVideoCheck
+{
+	NSParameterAssert(url != nil);
+
+	[self performActionForAddress:url.absoluteString bypassVideoCheck:bypassVideoCheck];
+}
+
+- (void)performActionForAddress:(NSString *)address
+{
+	[self performActionForAddress:address bypassVideoCheck:NO];
+}
+
+- (void)performActionForAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
 {
 	NSParameterAssert(address != nil);
 
@@ -128,35 +140,44 @@ NS_ASSUME_NONNULL_BEGIN
 
 	payload.html = html;
 
-	self.completionBlock(templateRenderError);
+	[self finalizeWithError:templateRenderError];
 }
 
 - (void)notifyUnsafeToLoadVideo
 {
-	self.completionBlock(self.genericValidationFailedError);
+	[self cancel];
 }
 
 #pragma mark -
 #pragma mark Action Block
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address
++ (ICLInlineContentModuleActionBlock)actionBlockForForURL:(NSURL *)url
 {
-	return [self actionBlockForFinalAddress:address bypassVideoCheck:NO];
+	return [self actionBlockForForURL:url bypassVideoCheck:NO];
 }
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
++ (ICLInlineContentModuleActionBlock)actionBlockForForURL:(NSURL *)url bypassVideoCheck:(BOOL)bypassVideoCheck
+{
+	NSParameterAssert(url != nil);
+
+	return [self actionBlockForAddress:url.absoluteString bypassVideoCheck:bypassVideoCheck];
+}
+
++ (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address
+{
+	return [self actionBlockForAddress:address bypassVideoCheck:NO];
+}
+
++ (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
 {
 	NSParameterAssert(address != nil);
 
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMInlineVideo *moduleTyped = (id)module;
 
-		[moduleTyped performActionForFinalAddress:address bypassVideoCheck:bypassVideoCheck];
+		[moduleTyped performActionForAddress:address bypassVideoCheck:bypassVideoCheck];
 	} copy];
 }
-
-#pragma mark -
-#pragma mark Utilities
 
 @end
 
@@ -165,9 +186,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineVideoFoundation
 
-- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process
 {
-	if ((self = [super initWithPayload:payload completionBlock:completionBlock])) {
+	if ((self = [super initWithPayload:payload inProcess:process])) {
 		[self prepareInitialState];
 
 		return self;
@@ -242,9 +263,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineGifVideo
 
-- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process
 {
-	if ((self = [super initWithPayload:payload completionBlock:completionBlock])) {
+	if ((self = [super initWithPayload:payload inProcess:process])) {
 		[self prepareInitialState];
 
 		return self;

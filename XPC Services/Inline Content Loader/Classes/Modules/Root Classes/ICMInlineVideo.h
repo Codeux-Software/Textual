@@ -52,11 +52,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Proper class to sublcass if that is your thing. */
 @interface ICMInlineVideo : ICMInlineVideoFoundation
-- (void)performActionForFinalAddress:(NSString *)address; // bypassVideoCheck = NO
-- (void)performActionForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
+- (void)performActionForAddress:(NSString *)address; // bypassVideoCheck = NO
+- (void)performActionForAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address; // bypassVideoCheck = NO
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
+- (void)performActionForURL:(NSURL *)url; // bypassVideoCheck = NO
+- (void)performActionForURL:(NSURL *)url bypassVideoCheck:(BOOL)bypassVideoCheck;
+
++ (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address; // bypassVideoCheck = NO
++ (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck;
+
++ (ICLInlineContentModuleActionBlock)actionBlockForForURL:(NSURL *)url; // bypassVideoCheck = NO
++ (ICLInlineContentModuleActionBlock)actionBlockForForURL:(NSURL *)url bypassVideoCheck:(BOOL)bypassVideoCheck;
 
 - (void)notifyUnsafeToLoadVideo;
 @end

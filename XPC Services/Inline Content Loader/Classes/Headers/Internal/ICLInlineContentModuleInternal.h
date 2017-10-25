@@ -40,8 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ICLInlineContentModule ()
 {
 @private
+	ICLProcessMain *_process;
 	ICLPayloadMutable *_payload;
-	ICLInlineContentModuleCompletionBlock _completionBlock;
+	BOOL _moduleFinalized;
 }
 
 @end

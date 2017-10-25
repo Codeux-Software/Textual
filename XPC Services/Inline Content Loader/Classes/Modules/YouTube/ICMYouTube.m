@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	payload.html = html;
 
-	self.completionBlock(templateRenderError);
+	[self finalizeWithError:templateRenderError];
 }
 
 #pragma mark -

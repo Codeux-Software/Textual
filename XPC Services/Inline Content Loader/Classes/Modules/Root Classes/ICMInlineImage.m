@@ -44,12 +44,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMInlineImage
 
-- (void)performActionForFinalAddress:(NSString *)address
+- (void)performActionForURL:(NSURL *)url
 {
-	[self performActionForFinalAddress:address bypassImageCheck:NO];
+	[self performActionForURL:url bypassImageCheck:NO];
 }
 
-- (void)performActionForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck
+- (void)performActionForURL:(NSURL *)url bypassImageCheck:(BOOL)bypassImageCheck
+{
+	NSParameterAssert(url != nil);
+
+	[self performActionForAddress:url.absoluteString bypassImageCheck:bypassImageCheck];
+}
+
+- (void)performActionForAddress:(NSString *)address
+{
+	[self performActionForAddress:address bypassImageCheck:NO];
+}
+
+- (void)performActionForAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck
 {
 	NSParameterAssert(address != nil);
 
@@ -116,30 +128,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 	payload.html = html;
 
-	self.completionBlock(templateRenderError);
+	[self finalizeWithError:templateRenderError];
 }
 
 - (void)notifyUnsafeToLoadImage
 {
-	self.completionBlock(self.genericValidationFailedError);
+	[self cancel];
 }
 
 #pragma mark -
 #pragma mark Action Block
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address
++ (ICLInlineContentModuleActionBlock)actionBlockURL:(NSURL *)url
 {
-	return [self actionBlockForFinalAddress:address bypassImageCheck:NO];
+	return [self actionBlockURL:url bypassImageCheck:NO];
 }
 
-+ (ICLInlineContentModuleActionBlock)actionBlockForFinalAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck
++ (ICLInlineContentModuleActionBlock)actionBlockURL:(NSURL *)url bypassImageCheck:(BOOL)bypassImageCheck
+{
+	NSParameterAssert(url != nil);
+
+	return [self actionBlockForAddress:url.absoluteString bypassImageCheck:bypassImageCheck];
+}
+
++ (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address
+{
+	return [self actionBlockForAddress:address bypassImageCheck:NO];
+}
+
++ (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address bypassImageCheck:(BOOL)bypassImageCheck
 {
 	NSParameterAssert(address != nil);
 
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMInlineImage *moduleTyped = (id)module;
 
-		[moduleTyped performActionForFinalAddress:address bypassImageCheck:NO];
+		[moduleTyped performActionForAddress:address bypassImageCheck:NO];
 	} copy];
 }
 

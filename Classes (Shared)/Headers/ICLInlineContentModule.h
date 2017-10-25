@@ -36,13 +36,11 @@
  *********************************************************************** */
 
 #import "ICLPayload.h"
+#import "ICLMediaType.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class ICLInlineContentModule;
-
-/* See description for self.completionBlock */
-typedef void (^ICLInlineContentModuleCompletionBlock)(NSError * _Nullable error);
 
 /* See description for -actionBlockForURL: */
 typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module);
@@ -57,16 +55,6 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  * This paylaod includes the address and the unique identifier.
  */
 @property (readonly, strong) ICLPayloadMutable *payload;
-
-/**
- * The completion block called when this module has finished performing
- * whatever logic it contains.
- *
- * The error argument is optional.
- *   If     nil, the action succeeded and the payload is processed.
- *   If non-nil, the action failed and the error is processed.
- */
-@property (readonly) ICLInlineContentModuleCompletionBlock completionBlock;
 
 /**
  * Module objects are not allowed to be allocated by a plugin.
@@ -84,16 +72,6 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  defined below is never called.
  */
 @property (readonly, copy, nullable, class) NSArray<NSString *> *domains;
-
-#pragma mark -
-#pragma mark Payload Helpers
-
-/* If a non-nil value is returned for any of these properties,
- then that value is inserted into the payload. */
-/* See ICLPayload.h for a description of each property. */
-@property (copy, readonly, nullable) NSArray<NSURL *> *styleResources;
-@property (copy, readonly, nullable) NSArray<NSURL *> *scriptResources;
-@property (copy, readonly, nullable) NSString *entrypoint;
 
 #pragma mark -
 #pragma mark Action
@@ -145,7 +123,8 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 /**
  Whether the module might add content to the DOM which
  is not trusted such as HTML downloaded from some website.
- Other untrusted resources include remote resources.
+ A module that loads remote JavaScript libraries is also
+ considered untrusted.
  */
 @property (readonly, class) BOOL contentUntrusted;
 
@@ -153,6 +132,120 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  Whether module might load content that is not safe for work.
  */
 @property (readonly, class) BOOL contentNotSafeForWork;
+
+#pragma mark -
+#pragma mark Resources
+
+/* If a non-nil value is returned for any of these properties,
+ then that value is inserted into the payload. */
+/* See ICLPayload.h for a description of each property. */
+@property (copy, readonly, nullable) NSArray<NSURL *> *styleResources;
+@property (copy, readonly, nullable) NSArray<NSURL *> *scriptResources;
+@property (copy, readonly, nullable) NSString *entrypoint;
+@end
+
+#pragma mark -
+#pragma mark Completion
+
+@interface ICLInlineContentModule (Completion)
+/**
+ Called by module to inform the media handler that no
+ more modifications will be made to the payload and that
+ the contents of it should now be processed.
+
+ - Warnings
+
+ This method will throw an exception if the module has
+ already been finalized by calling this method or a sibling.
+*/
+- (void)finalize;
+
+/**
+ Called by module to inform the media handler that no
+ more modifications will be made to the payload and that
+ the contents of it should now be processed.
+
+ - Warnings
+
+ This method will throw an exception if the module has
+ already been finalized by calling this method or a sibling.
+
+ - Arguments
+
+ @param error
+  nil to inform the media handler that the media should be
+  inlined or an error describing why that cannot happen.
+ */
+- (void)finalizeWithError:(nullable NSError *)error;
+
+/**
+ Called by the module to inform the media handler that
+ the module wants to cancel performing any work.
+
+ - Warnings
+
+ This method will throw an exception if the module has
+ already been finalized by calling this method or a sibling.
+ */
+- (void)cancel;
+
+/**
+ A module that is capable of performing work on more than
+ one type of media (such as images and videos) can call
+ this method when it is sure what type of media it has.
+
+ The media will be checked by performing a web request
+ to ensure that it is in fact the type described.
+
+ - See also
+
+ See -deferAsType:withURL:performCheck: for a detailed
+ description.
+*/
+- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url ; // performCheck = YES
+
+/**
+ A module that is capable of performing work on more than
+ one type of media (such as images and videos) can call
+ this method when it is sure what type of media it has.
+
+ - Examples
+
+ For example, if the module has the URL "example.com"
+ and believes it is a regular image, then it can call
+ this method with the type ICLMediaTypeImage to inform
+ the media handler to inline the URL as an image.
+
+ - Notes
+
+ Calling this method to inline images or other media
+ types is only required if the module is not already
+ a subclass of one of the root classes responsible for
+ handling these types of media.
+
+ - Warnings
+
+ This method will throw an exception if the module has
+ already been finalized by calling this method or a sibling.
+
+ - Arguments
+
+ @param type
+  The type of media that the content should be treated as.
+  The types supported are:
+  • ICLMediaTypeImage for images,
+  • ICLMediaTypeVideo for videos
+
+ @param url
+  The URL to be inlined as the type described.
+  If the URL is the same as in the payload, then
+  you can pass nil for the value of this argument.
+
+ @param performCheck
+  Whether to perform a web request to ensure that
+  it is in fact the type described.
+ */
+- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck;
 @end
 
 NS_ASSUME_NONNULL_END

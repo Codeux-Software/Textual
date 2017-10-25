@@ -39,6 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICLProcessMain : NSObject <ICLInlineContentServerProtocol>
 - (instancetype)initWithXPCConnection:(NSXPCConnection *)connection NS_DESIGNATED_INITIALIZER;
+
+- (void)_finalizeModule:(ICLInlineContentModule *)module withError:(nullable NSError *)error;
+- (void)_cancelModule:(ICLInlineContentModule *)module;
+- (void)_deferModule:(ICLInlineContentModule *)module asType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck;
 @end
 
 NS_ASSUME_NONNULL_END
