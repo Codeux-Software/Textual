@@ -63,7 +63,7 @@ TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfUsersFoundAttribute; 
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute; // NSString
 
 @interface TVCLogRenderer : NSObject
-+ (NSString *)escapeString:(NSString *)string;
++ (NSString *)escapeHTML:(NSString *)html;
 
 + (nullable NSColor *)mapColor:(id)color;
 + (NSColor *)mapColorCode:(NSUInteger)colorCode;
