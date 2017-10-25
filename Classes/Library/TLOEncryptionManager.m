@@ -704,7 +704,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	[OTRKitAuthenticationDialog showFingerprintConfirmation:mainWindow() username:username accountName:accountName protocol:protocol];
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		/* We print this message unescaped to include an anchor in the HTML
+		 that the user can click to authenticate the user.
+		 We are passing outside input to it, which we do escape. */
+		[self printMessage:TXTLS(@"OffTheRecord[1011]",
+								 [TVCLogRenderer escapeHTML:nickname],
+								 [TVCLogRenderer escapeHTML:theirHash])
+				 inChannel:channel
+				  onClient:client
+			 escapeMessage:NO];
+	} inRelationToAccountName:username];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
