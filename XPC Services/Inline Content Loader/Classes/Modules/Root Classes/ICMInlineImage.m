@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage ()
 @property (nonatomic, strong, nullable) ICLMediaAssessor *imageCheck;
-@property (nonatomic, copy, nullable) NSString *finalAddress;
+@property (nonatomic, copy, nullable) NSURL *url;
 @end
 
 @implementation ICMInlineImage
@@ -53,7 +53,15 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(url != nil);
 
-	[self performActionForAddress:url.absoluteString bypassImageCheck:bypassImageCheck];
+	NSAssert((self.url == nil), @"Module already initialized");
+
+	self.url = url;
+
+	if (bypassImageCheck == NO) {
+		[self _performImageCheck];
+	} else {
+		[self _safeToLoadImage];
+	}
 }
 
 - (void)performActionForAddress:(NSString *)address
@@ -65,39 +73,27 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(address != nil);
 
-	NSAssert((self.finalAddress == nil), @"Module already initialized");
+	NSURL *url = [ICLHelpers URLWithString:address];
 
-	/* If we do not force a scheme,
-	 then file:// is used by WebKit. */
-	if ([address hasPrefix:@"//"]) {
-		address = [@"https:" stringByAppendingString:address];
-	}
-
-	self.finalAddress = address;
-
-	if (bypassImageCheck == NO) {
-		[self _performImageCheck];
-	} else {
-		[self _safeToLoadImage];
-	}
+	[self performActionForURL:url bypassImageCheck:bypassImageCheck];
 }
 
 - (void)_performImageCheck
 {
 	ICLMediaAssessor *imageCheck =
-	[ICLMediaAssessor assessorForAddress:self.finalAddress
-								withType:ICLMediaTypeImage
-						 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
-							 BOOL safeToLoad = (error == nil);
+	[ICLMediaAssessor assessorForURL:self.url
+							withType:ICLMediaTypeImage
+					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
+						 BOOL safeToLoad = (error == nil);
 
-							 if (safeToLoad) {
-								 [self _safeToLoadImage];
-							 } else {
-								 [self _unsafeToLoadImage];
-							 }
+						 if (safeToLoad) {
+							 [self _safeToLoadImage];
+						 } else {
+							 [self _unsafeToLoadImage];
+						 }
 
-							 self.imageCheck = nil;
-						 }];
+						 self.imageCheck = nil;
+					 }];
 
 	self.imageCheck = imageCheck;
 
@@ -117,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 	@{
 		@"anchorLink" : payload.url.absoluteString,
 		@"classAttribute" : self.classAttribute,
-		@"imageURL" : self.finalAddress,
+		@"imageURL" : self.url.absoluteString,
 		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier
 	};

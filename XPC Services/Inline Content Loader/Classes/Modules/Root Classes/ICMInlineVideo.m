@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineVideo ()
 @property (nonatomic, strong, nullable) ICLMediaAssessor *videoCheck;
-@property (nonatomic, copy, nullable) NSString *finalAddress;
+@property (nonatomic, copy, nullable) NSURL *url;
 @end
 
 @implementation ICMInlineVideo
@@ -53,7 +53,15 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(url != nil);
 
-	[self performActionForAddress:url.absoluteString bypassVideoCheck:bypassVideoCheck];
+	NSAssert((self.url == nil), @"Module already initialized");
+
+	self.url = url;
+
+	if (bypassVideoCheck == NO) {
+		[self _performVideoCheck];
+	} else {
+		[self _safeToLoadVideo];
+	}
 }
 
 - (void)performActionForAddress:(NSString *)address
@@ -65,39 +73,27 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(address != nil);
 
-	NSAssert((self.finalAddress == nil), @"Module already initialized");
+	NSURL *url = [ICLHelpers URLWithString:address];
 
-	/* If we do not force a scheme,
-	 then file:// is used by WebKit. */
-	if ([address hasPrefix:@"//"]) {
-		address = [@"https:" stringByAppendingString:address];
-	}
-
-	self.finalAddress = address;
-
-	if (bypassVideoCheck == NO) {
-		[self _performVideoCheck];
-	} else {
-		[self _safeToLoadVideo];
-	}
+	[self performActionForURL:url bypassVideoCheck:bypassVideoCheck];
 }
 
 - (void)_performVideoCheck
 {
 	ICLMediaAssessor *videoCheck =
-	[ICLMediaAssessor assessorForAddress:self.finalAddress
-								withType:ICLMediaTypeVideo
-						 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
-							 BOOL safeToLoad = (error == nil);
+	[ICLMediaAssessor assessorForURL:self.url
+							withType:ICLMediaTypeVideo
+					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
+						 BOOL safeToLoad = (error == nil);
 
-							 if (safeToLoad) {
-								 [self _safeToLoadVideo];
-							 } else {
-								 [self _unsafeToLoadVideo];
-							 }
+						 if (safeToLoad) {
+							 [self _safeToLoadVideo];
+						 } else {
+							 [self _unsafeToLoadVideo];
+						 }
 
-							 self.videoCheck = nil;
-						 }];
+						 self.videoCheck = nil;
+					 }];
 
 	self.videoCheck = videoCheck;
 
@@ -131,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
 		@"videoMuteEnabled" : @(self.videoMuteEnabled),
 		@"videoPlaybackSpeed" : @(playbackSpeed),
 		@"videoStartTime" : @(self.videoStartTime),
-		@"videoURL" : self.finalAddress
+		@"videoURL" : self.url.absoluteString
 	};
 
 	NSError *templateRenderError = nil;
@@ -167,7 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	return [self actionBlockForAddress:address bypassVideoCheck:NO];
 }
-
+f
 + (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
 {
 	NSParameterAssert(address != nil);
