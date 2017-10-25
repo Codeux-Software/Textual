@@ -678,7 +678,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (isVerified) {
 			[self presentMessage:TXTLS(@"OffTheRecord[1001][02]") withAccountName:username];
 		} else {
-			[self presentMessage:TXTLS(@"OffTheRecord[1001][01]") withAccountName:username];
+			[self presentMessage:TXTLS(@"OffTheRecord[1001][01]") withAccountName:username escapeMessage:NO];
 		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
