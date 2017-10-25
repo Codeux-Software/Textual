@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *addressToRequest = [NSString stringWithFormat:@"https://xkcd.com/%@/info.0.json", comicIdentifier];
 
-	[self requestJSONObject:@"img"
-					 ofType:[NSString class]
-				inHierarchy:nil
-				fromAddress:addressToRequest
-			completionBlock:^(id object)
+	[ICLHelpers requestJSONObject:@"img"
+						   ofType:[NSString class]
+					  inHierarchy:nil
+					  fromAddress:addressToRequest
+				  completionBlock:^(id object)
 	 {
 		 if (object == nil) {
 			 [self notifyUnsafeToLoadImage];

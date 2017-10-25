@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *addressToRequest = [@"https://api.streamable.com/videos/" stringByAppendingString:videoIdentifier];
 
-	[self requestJSONObject:@"url"
-					 ofType:[NSString class]
-				inHierarchy:@[@"files", @"mp4"]
-				fromAddress:addressToRequest
-			completionBlock:^(id object)
+	[ICLHelpers requestJSONObject:@"url"
+						   ofType:[NSString class]
+					  inHierarchy:@[@"files", @"mp4"]
+					  fromAddress:addressToRequest
+				  completionBlock:^(id object)
 	{
 		if (object == nil) {
 			[self notifyUnsafeToLoadVideo];
