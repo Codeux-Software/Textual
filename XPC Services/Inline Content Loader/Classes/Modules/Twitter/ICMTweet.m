@@ -55,11 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSURL *requestURL = requestComponents.URL;
 
-	[self requestJSONObject:@"html"
-					 ofType:[NSString class]
-				inHierarchy:nil
-					fromURL:requestURL
-			completionBlock:^(id object) {
+	[ICLHelpers requestJSONObject:@"html"
+						   ofType:[NSString class]
+					  inHierarchy:nil
+						  fromURL:requestURL
+				  completionBlock:^(id object) {
 				if (object == nil) {
 					[self notifyUnableToPresentHTML];
 

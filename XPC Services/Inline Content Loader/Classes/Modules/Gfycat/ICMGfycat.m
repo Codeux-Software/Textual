@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *addressToRequest = [@"https://gfycat.com/cajax/get/" stringByAppendingString:videoIdentifier];
 
-	[self requestJSONObject:@"mp4Url"
-					 ofType:[NSString class]
-				inHierarchy:@[@"gfyItem"]
-				fromAddress:addressToRequest
-			completionBlock:^(id object)
+	[ICLHelpers requestJSONObject:@"mp4Url"
+						   ofType:[NSString class]
+					  inHierarchy:@[@"gfyItem"]
+					  fromAddress:addressToRequest
+				  completionBlock:^(id object)
 	 {
 		 if (object == nil) {
 			 [self notifyUnsafeToLoadVideo];
