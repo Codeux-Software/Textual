@@ -120,6 +120,8 @@ enum {
 - (nullable NSString *)formatNotificationToSpeak:(TLOSpokenNotification *)notification;
 
 - (id)queuedBatchMessageWithToken:(NSString *)batchToken;
+
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command escapeMessage:(BOOL)escapeMessage;
 @end
 
 NS_ASSUME_NONNULL_END

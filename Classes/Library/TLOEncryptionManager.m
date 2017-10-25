@@ -491,6 +491,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)printMessage:(NSString *)message inChannel:(IRCChannel *)channel onClient:(IRCClient *)client
 {
+	[self printMessage:message inChannel:channel onClient:client escapeMessage:YES];
+}
+
+- (void)printMessage:(NSString *)message inChannel:(IRCChannel *)channel onClient:(IRCClient *)client escapeMessage:(BOOL)escapeMessage
+{
 	NSParameterAssert(message != nil);
 	NSParameterAssert(channel != nil);
 	NSParameterAssert(client != nil);
@@ -499,24 +504,35 @@ NS_ASSUME_NONNULL_BEGIN
 			   by:nil
 		inChannel:channel
 		   asType:TVCLogLineOffTheRecordEncryptionStatusType
-		  command:TVCLogLineDefaultCommandValue];
+		  command:TVCLogLineDefaultCommandValue
+	escapeMessage:escapeMessage];
 }
 
 - (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName
+{
+	[self presentMessage:message withAccountName:accountName escapeMessage:YES];
+}
+
+- (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName escapeMessage:(BOOL)escapeMessage
 {
 	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
 		if (channel == nil) {
 			return;
 		}
 
-		[self printMessage:message inChannel:channel onClient:client];
+		[self printMessage:message inChannel:channel onClient:client escapeMessage:escapeMessage];
 	} inRelationToAccountName:accountName
 		createWindowIfMissing:YES];
 }
 
 - (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName
 {
-	[self presentMessage:errorMessage withAccountName:accountName];
+	[self presentErrorMessage:errorMessage withAccountName:accountName escapeMessage:YES];
+}
+
+- (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName escapeMessage:(BOOL)escapeMessage
+{
+	[self presentMessage:errorMessage withAccountName:accountName escapeMessage:escapeMessage];
 }
 
 - (void)authenticationStatusChangedForAccountName:(NSString *)accountName isVerified:(BOOL)isVerified
