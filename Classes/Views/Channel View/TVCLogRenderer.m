@@ -1073,6 +1073,19 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	return templateRender.removeAllNewlines;
 }
 
++ (NSString *)escapeHTML:(NSString *)html
+{
+	NSParameterAssert(html != nil);
+
+	NSString *stringEscaped = html.gtm_stringByEscapingForHTML;
+
+	if (stringEscaped == nil) {
+		stringEscaped = @"";
+	}
+
+	return html;
+}
+
 + (NSString *)escapeStringSimple:(NSString *)string
 {
 	NSParameterAssert(string != nil);
@@ -1087,13 +1100,9 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 {
 	NSParameterAssert(string != nil);
 
-	NSString *stringEscaped = string.gtm_stringByEscapingForHTML;
+	NSString *stringEscaped = [self escapeHTML:string];
 
-	if (stringEscaped == nil) {
-		stringEscaped = @"";
-	}
-
-	return [TVCLogRenderer escapeStringSimple:stringEscaped];
+	return [self escapeStringSimple:stringEscaped];
 }
 
 + (nullable NSString *)stringValueForColor:(id)color usesStyleTag:(BOOL *)usesStyleTag
