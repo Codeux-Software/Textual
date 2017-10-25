@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 
 	payload.html = html;
 
-	self.completionBlock(templateRenderError);
+	[self finalizeWithError:templateRenderError];
 }
 
 #pragma mark -

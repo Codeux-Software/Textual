@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 
 /**
- The value of the address argument supplied to the loader.
+ The URL associated with this payload.
  */
 @property (copy, readonly) NSURL *url;
 
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSString *address;
 
 /**
- The value of the unique identifier argument supplied to the loader.
+ The unique identifier associated with this payload.
  */
 @property (copy, readonly) NSString *uniqueIdentifier;
 

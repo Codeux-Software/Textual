@@ -45,6 +45,7 @@ NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
 @property (readonly, copy) NSArray<Class> *moduleClasses;
 @property (readonly, copy) NSDictionary<NSString *, NSArray<Class> *> *modules;
+@property (readonly) NSCache *moduleReferences;
 @end
 
 @implementation ICLProcessMain
@@ -218,6 +219,7 @@ ClassWithDesignatedInitializerInitMethod
 - (BOOL)_processPayload:(ICLPayloadMutable *)payloadIn usingModule:(Class)moduleClass
 {
 	NSParameterAssert(payloadIn != nil);
+	NSParameterAssert(moduleClass != NULL);
 
 	/* Do not allow unsafe content */
 	if ([moduleClass contentImageOrVideo] == NO && [TPCPreferences inlineMediaLimitToBasics]) {
@@ -243,58 +245,10 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
-	/* Create cache */
-	/* Cache is used to hold a reference to module until completion block is called. */
-	static NSCache *moduleCache = nil;
+	/* Create module and call it */
+	ICLInlineContentModule *module = [[moduleClass alloc] initWithPayload:payloadIn inProcess:self];
 
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		moduleCache = [NSCache new];
-	});
-
-	NSString *cacheToken = [NSString stringWithUUID];
-
-	/* The module has an action. Call it. */
-	ICLInlineContentModuleCompletionBlock completionBlock = ^(NSError * _Nullable error) {
-		ICLPayload *payloadOut = [payloadIn copy];
-
-		/* If you are wondering why so much care has been put into these errors
-		 when we control the code, it's because there are plans to support plugins
-		 for modules in the future so future proofing it is best. */
-		if (payloadOut.html.length == 0 &&
-			payloadOut.scriptResources.count == 0)
-		{
-			error =
-			[NSError errorWithDomain:ICLInlineContentErrorDomain
-								code:1001
-							userInfo:@{
-				NSLocalizedDescriptionKey : @"-[ICLPayload scriptResources] must contain at least one path if -[ICLPayload html] is empty"
-			}];
-		}
-		else if (payloadOut.html.length == 0 &&
-				 payloadOut.entrypoint.length == 0)
-		{
-			error =
-			[NSError errorWithDomain:ICLInlineContentErrorDomain
-								code:1002
-							userInfo:@{
-				NSLocalizedDescriptionKey : @"-[ICLPayload html] and -[ICLPayload entrypoint] cannot both be empty"
-			}];
-		}
-
-		if (error) {
-			[[self remoteObjectProxy] processingPayload:payloadOut failedWithError:error];
-		} else {
-			[[self remoteObjectProxy] processingPayloadSucceeded:payloadOut];
-		}
-
-		[moduleCache removeObjectForKey:cacheToken];
-	};
-
-	ICLInlineContentModule *module = [[moduleClass alloc] initWithPayload:payloadIn completionBlock:completionBlock];
-
-	[moduleCache setObject:module forKey:cacheToken];
+	[self _addReferenceForModule:module];
 
 	if (actionBlock) {
 		actionBlock(module);
@@ -307,6 +261,133 @@ ClassWithDesignatedInitializerInitMethod
 
 	return YES;
 }
+
+#pragma mark -
+#pragma mark State
+
+- (void)_finalizeModule:(ICLInlineContentModule *)module withError:(nullable NSError *)error
+{
+	NSParameterAssert(module != nil);
+
+	ICLPayload *payload = [module.payload copy];
+
+	/* Remove reference to module */
+	[self _removeReferenceForModule:module];
+
+	/* If you are wondering why so much care has been put into these errors
+	 when we control the code, it's because there are plans to support plugins
+	 for modules in the future so future proofing it is best. */
+	if (payload.html.length == 0 &&
+		payload.scriptResources.count == 0)
+	{
+		error =
+		[NSError errorWithDomain:ICLInlineContentErrorDomain
+							code:1001
+						userInfo:@{
+			NSLocalizedDescriptionKey : @"-[ICLPayload scriptResources] must contain at least one path if -[ICLPayload html] is empty"
+		}];
+	}
+	else if (payload.html.length == 0 &&
+			 payload.entrypoint.length == 0)
+	{
+		error =
+		[NSError errorWithDomain:ICLInlineContentErrorDomain
+							code:1002
+						userInfo:@{
+			NSLocalizedDescriptionKey : @"-[ICLPayload html] and -[ICLPayload entrypoint] cannot both be empty"
+		}];
+	}
+
+	if (error) {
+		[[self remoteObjectProxy] processingPayload:payload failedWithError:error];
+	} else {
+		[[self remoteObjectProxy] processingPayloadSucceeded:payload];
+	}
+}
+
+- (void)_cancelModule:(ICLInlineContentModule *)module
+{
+	NSParameterAssert(module != nil);
+
+	[self _removeReferenceForModule:module];
+}
+
+- (void)_deferModule:(ICLInlineContentModule *)module asType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck
+{
+	NSParameterAssert(module != nil);
+	NSParameterAssert(type == ICLMediaTypeImage ||
+					  type == ICLMediaTypeVideo);
+
+	ICLPayloadMutable *payload = [module.payload mutableCopy];
+
+	if (url == nil) {
+		url = payload.url;
+	}
+
+	switch (type) {
+		case ICLMediaTypeImage:
+		{
+			  ICMInlineImage *imageModule =
+			[[ICMInlineImage alloc] initWithPayload:payload inProcess:self];
+
+			[self _addReferenceForModule:imageModule];
+
+			[imageModule performActionForURL:url bypassImageCheck:performCheck];
+
+			break;
+		}
+		case ICLMediaTypeVideo:
+		{
+			  ICMInlineVideo *videoModule =
+			[[ICMInlineVideo alloc] initWithPayload:payload inProcess:self];
+
+			[self _addReferenceForModule:videoModule];
+
+			[videoModule performActionForURL:url bypassVideoCheck:performCheck];
+
+			break;
+		}
+		default:
+		{
+			LogToConsoleError("Unexpected media type: %ld", type);
+
+			break;
+		} // case
+	} // switch
+}
+
+#pragma mark -
+#pragma mark Memory
+
+- (NSCache *)moduleReferences
+{
+	static NSCache *modules = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		modules = [NSCache new];
+	});
+
+	return modules;
+}
+
+- (void)_addReferenceForModule:(ICLInlineContentModule *)module
+{
+	NSParameterAssert(module != nil);
+
+	[self.moduleReferences setObject:module forKey:module.description];
+}
+
+- (void)_removeReferenceForModule:(ICLInlineContentModule *)module
+{
+	NSParameterAssert(module != nil);
+
+	[self.moduleReferences removeObjectForKey:module.description];
+}
+
+#pragma mark -
+#pragma mark Preferences
 
 - (void)registerDefaults:(NSDictionary<NSString *,id> *)registrationDictionary
 {

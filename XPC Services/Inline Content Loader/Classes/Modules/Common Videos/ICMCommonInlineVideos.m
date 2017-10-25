@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	return [self actionBlockForFinalAddress:address];
+	return [super actionBlockForAddress:address];
 }
 
 + (nullable NSString *)_finalAddressForURL:(NSURL *)url

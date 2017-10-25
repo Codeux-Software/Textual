@@ -180,6 +180,7 @@
 		4CB3B6261F9C53220004502A /* ICMTweet.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTweet.js; path = Resources/Modules/Twitter/ICMTweet.js; sourceTree = "<group>"; };
 		4CB3B6271F9C53FD0004502A /* ICMTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTweet.h; path = Classes/Modules/Twitter/ICMTweet.h; sourceTree = "<group>"; };
 		4CB3B6281F9C53FD0004502A /* ICMTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTweet.m; path = Classes/Modules/Twitter/ICMTweet.m; sourceTree = "<group>"; };
+		4CC691E51FA1158000ECBC0A /* ICLMediaType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaType.h; path = "../../Classes (Shared)/Headers/ICLMediaType.h"; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE354491F9F425300F236A2 /* ICLInlineContentModuleInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModuleInternal.h; path = Classes/Headers/Internal/ICLInlineContentModuleInternal.h; sourceTree = "<group>"; };
 		4CE3544B1F9F42EE00F236A2 /* ICLMediaAssessorPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaAssessorPrivate.h; path = Classes/Headers/Private/ICLMediaAssessorPrivate.h; sourceTree = "<group>"; };
@@ -385,6 +386,7 @@
 				4C116B851F85993500BFFFF7 /* Private */,
 				4C8C72651F1201A000ED72DB /* XPC Protocols */,
 				4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */,
+				4CC691E51FA1158000ECBC0A /* ICLMediaType.h */,
 				4C7879F01F88D8E10030AA84 /* ICLPayload.h */,
 				4C1EAB171F89F2DE00A4E647 /* StaticDefinitions.h */,
 				4C1EAB191F89F41700A4E647 /* TPCPreferences.h */,

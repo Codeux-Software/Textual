@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		 self.videoPlaybackSpeed = playbackSpeed;
 
-		 [self performActionForFinalAddress:address];
+		 [self performActionForAddress:address];
 	 }];
 }
 

@@ -39,17 +39,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICLInlineContentModule (ICLInlineContentModulePrivate)
+@implementation ICLInlineContentModule (Private)
 
-- (instancetype)initWithPayload:(ICLPayloadMutable *)payload completionBlock:(ICLInlineContentModuleCompletionBlock)completionBlock
+- (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process
 {
 	NSParameterAssert(payload != nil);
-	NSParameterAssert(completionBlock != nil);
+	NSParameterAssert(process != nil);
 
 	if ((self = [super init])) {
 		self->_payload = payload;
 
-		self->_completionBlock = [completionBlock copy];
+		self->_process = process;
 
 		[self mergePropertiesIntoPayload];
 
@@ -128,8 +128,63 @@ NS_ASSUME_NONNULL_BEGIN
 	return error;
 }
 
+@end
+
+#pragma mark -
+#pragma mark Completion
+
+@implementation ICLInlineContentModule (Completion)
+
+- (void)_finalizeAll
+{
+	self->_moduleFinalized = YES;
+
+	self->_process = nil;
+}
+
+- (void)finalize
+{
+	[self finalizeWithError:nil];
+}
+
+- (void)finalizeWithError:(nullable NSError *)error
+{
+	NSAssert((self->_moduleFinalized == NO), @"Module already finalized");
+
+	[self->_process _finalizeModule:self withError:error];
+
+	[self _finalizeAll];
+}
+
+- (void)cancel
+{
+	NSAssert((self->_moduleFinalized == NO), @"Module already cancelled");
+
+	[self->_process _cancelModule:self];
+
+	[self _finalizeAll];
+}
+
+- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url
+{
+	[self deferAsType:type withURL:url performCheck:YES];
+}
+
+- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck
+{
+	NSAssert((self->_moduleFinalized == NO), @"Module already deferred");
+
+	[self->_process _deferModule:self asType:type withURL:url performCheck:performCheck];
+
+	[self _finalizeAll];
+}
+
+@end
+
 #pragma mark -
 #pragma mark JSON
+
+@implementation ICLInlineContentModule (JSON)
 
 - (NSURLSessionDataTask *)requestJSONObject:(NSString *)objectKey ofType:(Class)objectType inHierarchy:(nullable NSArray<NSString *> *)hierarchy fromURL:(NSURL *)url completionBlock:(void (^)(id _Nullable object))completionBlock
 {
