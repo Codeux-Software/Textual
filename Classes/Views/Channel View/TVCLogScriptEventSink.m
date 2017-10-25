@@ -438,6 +438,14 @@ ClassWithDesignatedInitializerInitMethod
 			  withSelector:@selector(_copySelectionWhenPermitted:)];
 }
 
+- (void)encryptionAuthenticateUser:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 forCaller:@"app.encryptionAuthenticateUser()"
+				 inWebView:webView
+			  withSelector:@selector(_encryptionAuthenticateUser:)];
+}
+
 - (void)inlineMediaEnabledForView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -906,6 +914,29 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	context.completionBlock( @(NO) );
+}
+
+- (void)_encryptionAuthenticateUser:(TVCLogScriptEventSinkContext *)context
+{
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	IRCClient *client = context.associatedClient;
+
+	if (client.isLoggedIn == NO) {
+		return;
+	}
+
+	IRCChannel *channel = context.associatedChannel;
+
+	if (channel == nil || channel.isPrivateMessage == NO) {
+		[self _throwJavaScriptException:@"View is not a private message"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	[client encryptionAuthenticateUser:channel.name];
+#endif
 }
 
 - (void)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
