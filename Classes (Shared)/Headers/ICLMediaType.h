@@ -42,6 +42,7 @@ typedef NS_ENUM(NSUInteger, ICLMediaType)
 	ICLMediaTypeUnknown = 0,
 	ICLMediaTypeImage,
 	ICLMediaTypeVideo,
+	ICLMediaTypeVideoGif,
 	ICLMediaTypeOther
 };
 

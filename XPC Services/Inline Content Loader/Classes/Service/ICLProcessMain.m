@@ -316,7 +316,8 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(module != nil);
 	NSParameterAssert(type == ICLMediaTypeImage ||
-					  type == ICLMediaTypeVideo);
+					  type == ICLMediaTypeVideo ||
+					  type == ICLMediaTypeVideoGif);
 
 	ICLPayloadMutable *payload = [module.payload mutableCopy];
 
@@ -340,6 +341,17 @@ ClassWithDesignatedInitializerInitMethod
 		{
 			  ICMInlineVideo *videoModule =
 			[[ICMInlineVideo alloc] initWithPayload:payload inProcess:self];
+
+			[self _addReferenceForModule:videoModule];
+
+			[videoModule performActionForURL:url bypassVideoCheck:performCheck];
+
+			break;
+		}
+		case ICLMediaTypeVideoGif:
+		{
+			  ICMInlineGifVideo *videoModule =
+			[[ICMInlineGifVideo alloc] initWithPayload:payload inProcess:self];
 
 			[self _addReferenceForModule:videoModule];
 

@@ -234,7 +234,8 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
   The type of media that the content should be treated as.
   The types supported are:
   • ICLMediaTypeImage for images,
-  • ICLMediaTypeVideo for videos
+  • ICLMediaTypeVideo for videos,
+  • ICLMediaTypeVideoGif for videos presented as a gif
 
  @param url
   The URL to be inlined as the type described.
