@@ -37,13 +37,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ICLProcessMain;
+@interface ICLHelpers : NSObject
++ (nullable NSURL *)URLWithString:(NSString *)address;
+@end
 
-@interface ICLInlineContentModule (Private)
-@property (readonly, nullable) NSURL *templateURL;
-@property (readonly, nullable) GRMustacheTemplate *template;
+@interface ICLHelpers (JSON)
++ (NSURLSessionDataTask *)requestJSONDataFromURL:(NSURL *)url completionBlock:(void (^)(BOOL success, NSDictionary<NSString *, id> * _Nullable data))completionBlock;
++ (NSURLSessionDataTask *)requestJSONDataFromAddress:(NSString *)address completionBlock:(void (^)(BOOL success, NSDictionary<NSString *, id> * _Nullable data))completionBlock;
 
-- (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process;
++ (NSURLSessionDataTask *)requestJSONObject:(NSString *)objectKey ofType:(Class)objectType inHierarchy:(nullable NSArray<NSString *> *)hierarchy fromURL:(NSURL *)url completionBlock:(void (^)(id _Nullable object))completionBlock;
++ (NSURLSessionDataTask *)requestJSONObject:(NSString *)objectKey ofType:(Class)objectType inHierarchy:(nullable NSArray<NSString *> *)hierarchy fromAddress:(NSString *)address completionBlock:(void (^)(id _Nullable object))completionBlock;
+@end
+
+@interface ICLHelpers (Errors)
+@property (copy, readonly, class) NSError *genericValidationFailedError;
 @end
 
 NS_ASSUME_NONNULL_END
