@@ -187,7 +187,7 @@ ClassWithDesignatedInitializerInitMethod
 	/* Prepare request */
 	ICLMediaAssessorRequest *request = [ICLMediaAssessorRequest new];
 
-	NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration] delegate:(id)self delegateQueue:nil];
+	NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[self.class _sharedSessionConfiguration] delegate:(id)self delegateQueue:nil];
 
 	request.session = urlSession;
 
@@ -292,6 +292,28 @@ ClassWithDesignatedInitializerInitMethod
 
 #pragma mark -
 #pragma mark URL Session Delegate
+
++ (NSURLSessionConfiguration *)_sharedSessionConfiguration
+{
+	static NSURLSessionConfiguration *config = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+
+		/* Ignore local caches */
+		config.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+
+		/* Do not send cookies from local store */
+		config.HTTPShouldSetCookies = NO;
+
+		/* Do not allow cookies to be set */
+		config.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyNever;
+	});
+
+	return config;
+}
 
 - (nullable ICLMediaAssessorState *)_readHeadersInWithError:(NSError **)error
 {
