@@ -1520,6 +1520,32 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #endif
 }
 
+- (void)encryptionAuthenticateUser:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	/* Encryption is disabled */
+	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+		return;
+	}
+
+	/* General rules */
+	if ([self stringIsNickname:nickname] == NO) {
+		return;
+	}
+
+	if ([self nicknameIsMyself:nickname]) {
+		return;
+	}
+
+	/* Authenticate user */
+	[sharedEncryptionManager() authenticateUser:[self encryptionAccountNameForUser:nickname]
+										   from:[self encryptionAccountNameForLocalUser]];
+#endif
+
+}
+
 #pragma mark -
 #pragma mark Growl
 

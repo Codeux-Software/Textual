@@ -313,6 +313,8 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 @property (nonatomic, readonly, copy) NSString * _Nonnull encryptionAccountNameForLocalUser;
 - (NSString *)encryptionAccountNameForUser:(NSString *)nickname;
+
+- (void)encryptionAuthenticateUser:(NSString *)nickname;
 #endif
 
 #pragma mark -
