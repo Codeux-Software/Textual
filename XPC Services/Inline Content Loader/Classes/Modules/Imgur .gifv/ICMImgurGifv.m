@@ -112,9 +112,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return cachedValue;
 }
 
-- (NSString *)classAttribute
+- (void)finalizePreflight
 {
-	return @"inlineImgurGifv";
+	self.payload.classAttribute = @"inlineImgurGifv";
 }
 
 @end

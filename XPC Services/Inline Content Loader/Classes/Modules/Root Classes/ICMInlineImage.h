@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 /* ICMInlineImageFoundation does nothing.
  It exists for internal use. */
 @interface ICMInlineImageFoundation : ICLInlineContentModule
-@property (copy, readonly) NSString *classAttribute;
 @end
 
 /* Proper class to sublcass if that is your thing. */

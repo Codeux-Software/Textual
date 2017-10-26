@@ -147,9 +147,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return @"_ICMTweet";
 }
 
-- (NSString *)classAttribute
+- (void)finalizePreflight
 {
-	return @"inlineTweet";
+	self.payload.classAttribute = @"inlineTweet";
 }
 
 @end

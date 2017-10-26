@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *templateAttributes =
 	@{
 		@"anchorLink" : payload.address,
-		@"classAttribute" : self.classAttribute,
+		@"classAttribute" : payload.classAttribute,
 		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier,
 		@"videoAutoplayEnabled" : @(self.videoAutoplayEnabled),
@@ -256,11 +256,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)entrypoint
 {
 	return @"_ICMInlineVideo";
-}
-
-- (NSString *)classAttribute
-{
-	return @"";
 }
 
 @end

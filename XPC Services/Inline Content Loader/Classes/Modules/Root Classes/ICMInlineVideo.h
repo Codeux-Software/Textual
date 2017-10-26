@@ -40,8 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 /* ICMInlineVideoFoundation does nothing.
  It exists for internal use. */
 @interface ICMInlineVideoFoundation : ICLInlineContentModule
-@property (copy, readonly) NSString *classAttribute;
-
 @property (nonatomic, assign) BOOL videoAutoplayEnabled; // default = NO
 @property (nonatomic, assign) BOOL videoControlsEnabled; // default = YES
 @property (nonatomic, assign) BOOL videoLoopEnabled; // default = NO

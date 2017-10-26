@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 /* ICMInlineHTMLFoundation does nothing.
  It exists for internal use. */
 @interface ICMInlineHTMLFoundation : ICLInlineContentModule
-@property (copy, readonly) NSString *classAttribute;
 @end
 
 /* Proper class to sublcass if that is your thing. */

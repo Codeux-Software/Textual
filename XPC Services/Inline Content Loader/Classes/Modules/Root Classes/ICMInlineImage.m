@@ -123,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *templateAttributes =
 	@{
 		@"anchorLink" : payload.address,
-		@"classAttribute" : self.classAttribute,
+		@"classAttribute" : payload.classAttribute,
 		@"imageURL" : payload.addressToInline,
 		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier
@@ -267,11 +267,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)entrypoint
 {
 	return @"_ICMInlineImage";
-}
-
-- (NSString *)classAttribute
-{
-	return @"";
 }
 
 @end

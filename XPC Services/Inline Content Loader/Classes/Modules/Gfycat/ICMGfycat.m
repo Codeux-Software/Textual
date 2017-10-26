@@ -143,9 +143,12 @@ NS_ASSUME_NONNULL_BEGIN
 	return domains;
 }
 
-- (NSString *)classAttribute
+#pragma mark -
+#pragma mark Utilities
+
+- (void)finalizePreflight
 {
-	return @"inlineGfycat";
+	self.payload.classAttribute = @"inlineGfycat";
 }
 
 @end

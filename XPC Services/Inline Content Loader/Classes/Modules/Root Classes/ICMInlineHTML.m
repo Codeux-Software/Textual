@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *templateAttributes =
 	@{
-		@"classAttribute" : self.classAttribute,
+		@"classAttribute" : payload.classAttribute,
 		@"unescapedHTML" : unescapedHTML,
 		@"uniqueIdentifier" : payload.uniqueIdentifier
 	};
@@ -132,11 +132,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)contentUntrusted
 {
 	return YES;
-}
-
-- (NSString *)classAttribute
-{
-	return @"";
 }
 
 @end
