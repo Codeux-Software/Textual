@@ -75,6 +75,7 @@ ClassWithDesignatedInitializerInitMethod
 	@[
 		[ICMDailymotion class],
 		[ICMGfycat class],
+		[ICMGyazo class],
 		[ICMImgurGifv class],
 		[ICMLiveleak class],
 		[ICMPornhub class],
