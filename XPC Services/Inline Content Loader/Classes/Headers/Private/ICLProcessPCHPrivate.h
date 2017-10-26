@@ -50,6 +50,7 @@
 #import "TPCPreferencesPrivate.h"
 
 /* Service */
+#import "ICLHelpersPrivate.h"
 #import "ICLPayload.h"
 #import "ICLPayloadPrivate.h"
 #import "ICLInlineContentModule.h"
