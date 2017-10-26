@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_finalizeModule:(ICLInlineContentModule *)module withError:(nullable NSError *)error;
 - (void)_cancelModule:(ICLInlineContentModule *)module;
-- (void)_deferModule:(ICLInlineContentModule *)module asType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck;
+- (void)_deferModule:(ICLInlineContentModule *)module asType:(ICLMediaType)type performCheck:(BOOL)performCheck;
 @end
 
 NS_ASSUME_NONNULL_END

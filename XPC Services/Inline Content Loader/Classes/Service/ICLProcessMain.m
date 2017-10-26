@@ -313,7 +313,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self _removeReferenceForModule:module];
 }
 
-- (void)_deferModule:(ICLInlineContentModule *)module asType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck
+- (void)_deferModule:(ICLInlineContentModule *)module asType:(ICLMediaType)type performCheck:(BOOL)performCheck
 {
 	NSParameterAssert(module != nil);
 	NSParameterAssert(type == ICLMediaTypeImage ||
@@ -321,10 +321,6 @@ ClassWithDesignatedInitializerInitMethod
 					  type == ICLMediaTypeVideoGif);
 
 	ICLPayloadMutable *payload = [module.payload mutableCopy];
-
-	if (url == nil) {
-		url = payload.url;
-	}
 
 	switch (type) {
 		case ICLMediaTypeImage:
@@ -334,7 +330,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self _addReferenceForModule:imageModule];
 
-			[imageModule performActionForURL:url bypassImageCheck:performCheck];
+			[imageModule performActionWithImageCheck:performCheck];
 
 			break;
 		}
@@ -345,7 +341,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self _addReferenceForModule:videoModule];
 
-			[videoModule performActionForURL:url bypassVideoCheck:performCheck];
+			[videoModule performActionWithVideoCheck:performCheck];
 
 			break;
 		}
@@ -356,7 +352,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self _addReferenceForModule:videoModule];
 
-			[videoModule performActionForURL:url bypassVideoCheck:performCheck];
+			[videoModule performActionWithVideoCheck:performCheck];
 
 			break;
 		}

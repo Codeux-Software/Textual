@@ -39,10 +39,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineVideo ()
 @property (nonatomic, strong, nullable) ICLMediaAssessor *videoCheck;
-@property (nonatomic, copy, nullable) NSURL *url;
 @end
 
 @implementation ICMInlineVideo
+
+- (void)performAction
+{
+	[self performActionWithVideoCheck:YES];
+}
+
+- (void)performActionWithVideoCheck:(BOOL)checkVideo
+{
+	if (checkVideo) {
+		[self _performVideoCheck];
+	} else {
+		[self _safeToLoadVideo];
+	}
+}
 
 - (void)performActionForURL:(NSURL *)url
 {
@@ -53,15 +66,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(url != nil);
 
-	NSAssert((self.url == nil), @"Module already initialized");
+	NSAssert((self.videoCheck == nil), @"Module already initialized");
 
-	self.url = url;
+	self.payload.urlToInline = url;
 
-	if (bypassVideoCheck == NO) {
-		[self _performVideoCheck];
-	} else {
-		[self _safeToLoadVideo];
-	}
+	[self performActionWithVideoCheck:(bypassVideoCheck == NO)];
 }
 
 - (void)performActionForAddress:(NSString *)address
@@ -80,8 +89,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_performVideoCheck
 {
+	ICLPayload *payload = self.payload;
+
 	ICLMediaAssessor *videoCheck =
-	[ICLMediaAssessor assessorForURL:self.url
+	[ICLMediaAssessor assessorForURL:payload.urlToInline
 							withType:ICLMediaTypeVideo
 					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
 						 BOOL safeToLoad = (error == nil);
@@ -117,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *templateAttributes =
 	@{
-		@"anchorLink" : payload.url.absoluteString,
+		@"anchorLink" : payload.address,
 		@"classAttribute" : self.classAttribute,
 		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier,
@@ -127,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 		@"videoMuteEnabled" : @(self.videoMuteEnabled),
 		@"videoPlaybackSpeed" : @(playbackSpeed),
 		@"videoStartTime" : @(self.videoStartTime),
-		@"videoURL" : self.url.absoluteString
+		@"videoURL" : payload.addressToInline
 	};
 
 	NSError *templateRenderError = nil;

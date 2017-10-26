@@ -39,10 +39,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage ()
 @property (nonatomic, strong, nullable) ICLMediaAssessor *imageCheck;
-@property (nonatomic, copy, nullable) NSURL *url;
 @end
 
 @implementation ICMInlineImage
+
+- (void)performAction
+{
+	[self performActionWithImageCheck:YES];
+}
+
+- (void)performActionWithImageCheck:(BOOL)checkImage
+{
+	if (checkImage) {
+		[self _performImageCheck];
+	} else {
+		[self _safeToLoadImage];
+	}
+}
 
 - (void)performActionForURL:(NSURL *)url
 {
@@ -53,15 +66,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(url != nil);
 
-	NSAssert((self.url == nil), @"Module already initialized");
+	NSAssert((self.imageCheck == nil), @"Module already initialized");
 
-	self.url = url;
+	self.payload.urlToInline = url;
 
-	if (bypassImageCheck == NO) {
-		[self _performImageCheck];
-	} else {
-		[self _safeToLoadImage];
-	}
+	[self performActionWithImageCheck:(bypassImageCheck == NO)];
 }
 
 - (void)performActionForAddress:(NSString *)address
@@ -80,8 +89,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_performImageCheck
 {
+	ICLPayload *payload = self.payload;
+
 	ICLMediaAssessor *imageCheck =
-	[ICLMediaAssessor assessorForURL:self.url
+	[ICLMediaAssessor assessorForURL:payload.urlToInline
 							withType:ICLMediaTypeImage
 					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
 						 BOOL safeToLoad = (error == nil);
@@ -111,9 +122,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *templateAttributes =
 	@{
-		@"anchorLink" : payload.url.absoluteString,
+		@"anchorLink" : payload.address,
 		@"classAttribute" : self.classAttribute,
-		@"imageURL" : self.url.absoluteString,
+		@"imageURL" : payload.addressToInline,
 		@"preferredMaximumWidth" : @([TPCPreferences inlineMediaMaxWidth]),
 		@"uniqueIdentifier" : payload.uniqueIdentifier
 	};

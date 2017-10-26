@@ -71,9 +71,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[self cancel];
 }
 
-- (void)_safeToLoadMediaOfType:(ICLMediaType)mediaType atURL:(NSURL *)url
+- (void)_safeToLoadMediaOfType:(ICLMediaType)type atURL:(NSURL *)url
 {
-	[self deferAsType:mediaType withURL:url performCheck:NO];
+	self.payload.urlToInline = url;
+
+	[self deferAsType:type performCheck:NO];
 }
 
 #pragma mark -

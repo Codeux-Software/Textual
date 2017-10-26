@@ -139,7 +139,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_safeToLoadMediaOfType:(ICLMediaType)type atURL:(NSURL *)url
 {
-	[self deferAsType:type withURL:url];
+	self.payload.urlToInline = url;
+
+	[self deferAsType:type];
 }
 
 - (void)_unsafeToLoadMedia
