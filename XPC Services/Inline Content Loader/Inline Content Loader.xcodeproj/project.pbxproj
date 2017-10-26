@@ -27,6 +27,7 @@
 		4C8C84301F8E368B00062FFD /* ICMInlineImage.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */; };
 		4C8C84311F8E368B00062FFD /* ICMInlineImage.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */; };
 		4C8C84391F8E5AEC00062FFD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C84381F8E5AE400062FFD /* ImageIO.framework */; };
+		4C8DBD441FA1522600BA025A /* ICMGyazo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DBD421FA151FB00BA025A /* ICMGyazo.m */; };
 		4C8DBD461FA1543D00BA025A /* ICLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DBD451FA1543D00BA025A /* ICLHelpers.m */; };
 		4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */; };
 		4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */; };
@@ -137,6 +138,8 @@
 		4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLProcessMain.m; path = Classes/Service/ICLProcessMain.m; sourceTree = "<group>"; };
 		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Service/main.m; sourceTree = "<group>"; };
 		4C8C84381F8E5AE400062FFD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		4C8DBD421FA151FB00BA025A /* ICMGyazo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMGyazo.m; path = Classes/Modules/Gyazo/ICMGyazo.m; sourceTree = "<group>"; };
+		4C8DBD431FA151FC00BA025A /* ICMGyazo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMGyazo.h; path = Classes/Modules/Gyazo/ICMGyazo.h; sourceTree = "<group>"; };
 		4C8DBD451FA1543D00BA025A /* ICLHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLHelpers.m; path = Classes/Service/ICLHelpers.m; sourceTree = "<group>"; };
 		4C8DBD471FA1545700BA025A /* ICLHelpersPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLHelpersPrivate.h; path = Classes/Headers/Private/ICLHelpersPrivate.h; sourceTree = "<group>"; };
 		4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
@@ -472,6 +475,15 @@
 			name = Service;
 			sourceTree = "<group>";
 		};
+		4C8DBD481FA15DAE00BA025A /* Gyazo */ = {
+			isa = PBXGroup;
+			children = (
+				4C8DBD431FA151FC00BA025A /* ICMGyazo.h */,
+				4C8DBD421FA151FB00BA025A /* ICMGyazo.m */,
+			);
+			name = Gyazo;
+			sourceTree = "<group>";
+		};
 		4C980FE91F92C4E900B116A4 /* Root Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -713,6 +725,7 @@
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C9CAC601F9585B8006887B7 /* Dailymotion */,
 				4C9CAC741F96A2AB006887B7 /* Gfycat */,
+				4C8DBD481FA15DAE00BA025A /* Gyazo */,
 				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4CB3B6071F9C2C5B0004502A /* Liveleak */,
 				4CA5D30D1F97CDA4006714D6 /* Pornhub */,
@@ -825,6 +838,7 @@
 				4C8DBD461FA1543D00BA025A /* ICLHelpers.m in Sources */,
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */,
+				4C8DBD441FA1522600BA025A /* ICMGyazo.m in Sources */,
 				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
 				4C356A531F9FB06E00E671D9 /* ICLMediaAssessment.m in Sources */,
