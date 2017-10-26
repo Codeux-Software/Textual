@@ -142,16 +142,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[self _finalizeAll];
 }
 
-- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url
+- (void)deferAsType:(ICLMediaType)type
 {
-	[self deferAsType:type withURL:url performCheck:YES];
+	[self deferAsType:type performCheck:YES];
 }
 
-- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck
+- (void)deferAsType:(ICLMediaType)type performCheck:(BOOL)performCheck
 {
 	NSAssert((self->_moduleFinalized == NO), @"Module already deferred");
 
-	[self->_process _deferModule:self asType:type withURL:url performCheck:performCheck];
+	[self->_process _deferModule:self asType:type performCheck:performCheck];
 
 	[self _finalizeAll];
 }

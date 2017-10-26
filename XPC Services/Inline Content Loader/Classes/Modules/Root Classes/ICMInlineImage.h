@@ -45,6 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Proper class to sublcass if that is your thing. */
 @interface ICMInlineImage : ICMInlineImageFoundation
+- (void)performAction; // checkImage = YES
+- (void)performActionWithImageCheck:(BOOL)checkImage;
+
 - (void)performActionForURL:(NSURL *)url; // bypassImageCheck = NO
 - (void)performActionForURL:(NSURL *)url bypassImageCheck:(BOOL)bypassImageCheck;
 

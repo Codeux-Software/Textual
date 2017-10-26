@@ -199,10 +199,9 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 
  - See also
 
- See -deferAsType:withURL:performCheck: for a detailed
- description.
+ See -deferAsType:performCheck: for a detailed description.
 */
-- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url ; // performCheck = YES
+- (void)deferAsType:(ICLMediaType)type; // performCheck = YES
 
 /**
  A module that is capable of performing work on more than
@@ -237,16 +236,11 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
   • ICLMediaTypeVideo for videos,
   • ICLMediaTypeVideoGif for videos presented as a gif
 
- @param url
-  The URL to be inlined as the type described.
-  If the URL is the same as in the payload, then
-  you can pass nil for the value of this argument.
-
  @param performCheck
   Whether to perform a web request to ensure that
   it is in fact the type described.
  */
-- (void)deferAsType:(ICLMediaType)type withURL:(nullable NSURL *)url performCheck:(BOOL)performCheck;
+- (void)deferAsType:(ICLMediaType)type performCheck:(BOOL)performCheck;
 @end
 
 NS_ASSUME_NONNULL_END
