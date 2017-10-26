@@ -46,4 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process;
 @end
 
+@interface ICLInlineContentModule (CompletionPrivate)
+- (void)finalizePreflight;
+@end
+
 NS_ASSUME_NONNULL_END
