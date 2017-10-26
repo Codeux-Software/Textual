@@ -1083,7 +1083,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 		stringEscaped = @"";
 	}
 
-	return html;
+	return stringEscaped;
 }
 
 + (NSString *)escapeStringSimple:(NSString *)string
