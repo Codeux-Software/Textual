@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "ICLMediaAssessmentPrivate.h"
+#import "ICLMediaAssessment.h"
 #import "ICLMediaAssessmentInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

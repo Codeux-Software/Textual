@@ -1626,11 +1626,8 @@
 		4CE58BAF1F8A62D700493E7C /* TVCLogControllerInlineMediaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */; };
 		4CE58BB01F8A62D700493E7C /* TVCLogControllerInlineMediaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */; };
 		4CE58BB11F8A62D700493E7C /* TVCLogControllerInlineMediaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */; };
-		4CE58BB61F8A63E700493E7C /* ICLInlineContentModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB41F8A63E000493E7C /* ICLInlineContentModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE58BB71F8A63E700493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CE58BB91F8A63E800493E7C /* ICLInlineContentModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB41F8A63E000493E7C /* ICLInlineContentModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE58BBA1F8A63E800493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CE58BBC1F8A63E800493E7C /* ICLInlineContentModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB41F8A63E000493E7C /* ICLInlineContentModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE58BBD1F8A63E800493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE58BC01F8A640A00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
 		4CE58BC11F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
@@ -2703,11 +2700,9 @@
 		4CE474401D2F3D0100909766 /* IRCClientPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCClientPrivate.h; path = Classes/Headers/Private/IRCClientPrivate.h; sourceTree = "<group>"; };
 		4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TVCLogControllerInlineMediaService.m; path = "Classes/Views/Channel View/Extras/TVCLogControllerInlineMediaService.m"; sourceTree = "<group>"; };
 		4CE58BB21F8A630F00493E7C /* TVCLogControllerInlineMediaServicePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogControllerInlineMediaServicePrivate.h; path = Classes/Headers/Private/TVCLogControllerInlineMediaServicePrivate.h; sourceTree = "<group>"; };
-		4CE58BB41F8A63E000493E7C /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
 		4CE58BB51F8A63E000493E7C /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
 		4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/ICLInlineContentProtocol.h"; sourceTree = "<group>"; };
 		4CE58BC61F8A738100493E7C /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICLPayload.m; sourceTree = "<group>"; };
-		4CE58BC71F8A738100493E7C /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE58BD01F8A743100493E7C /* ICLPayloadInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadInternal.h; path = "Classes (Shared)/Headers/Internal/ICLPayloadInternal.h"; sourceTree = "<group>"; };
 		4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOFileLoggerPrivate.h; path = Classes/Headers/Private/TLOFileLoggerPrivate.h; sourceTree = SOURCE_ROOT; };
 		4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLONicknameCompletionStatusPrivate.h; path = Classes/Headers/Private/TLONicknameCompletionStatusPrivate.h; sourceTree = "<group>"; };
@@ -3716,7 +3711,6 @@
 				4CE58BCF1F8A743100493E7C /* Internal */,
 				4C8C72C21F1205C500ED72DB /* Private */,
 				4C8C72B51F1205B600ED72DB /* XPC Protocols */,
-				4CE58BB41F8A63E000493E7C /* ICLInlineContentModule.h */,
 				4CE58BB51F8A63E000493E7C /* ICLPayload.h */,
 				4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */,
 				4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */,
@@ -4358,7 +4352,6 @@
 			isa = PBXGroup;
 			children = (
 				4CE58BC61F8A738100493E7C /* ICLPayload.m */,
-				4CE58BC71F8A738100493E7C /* ICLInlineContentModule.m */,
 			);
 			name = Services;
 			path = "Classes (Shared)/Services";
@@ -4687,7 +4680,6 @@
 				4C7B04E81D1210E300295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04E91D1210E300295E82 /* IRCWorldPrivateCloudExtension.h in Headers */,
 				4C10B3851D233B1A00868A74 /* TDCAboutDialogPrivate.h in Headers */,
-				4CE58BB61F8A63E700493E7C /* ICLInlineContentModule.h in Headers */,
 				4C7B04EA1D1210E300295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04EB1D1210E300295E82 /* NSTableVIewHelperPrivate.h in Headers */,
 				4C7B04EC1D1210E300295E82 /* NSViewHelperPrivate.h in Headers */,
@@ -4924,7 +4916,6 @@
 				4C5DD51A1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C7B04B61D1210DA00295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04B81D1210DA00295E82 /* NSObjectHelperPrivate.h in Headers */,
-				4CE58BB91F8A63E800493E7C /* ICLInlineContentModule.h in Headers */,
 				4C7B04B91D1210DA00295E82 /* NSTableVIewHelperPrivate.h in Headers */,
 				4C7B04BA1D1210DA00295E82 /* NSViewHelperPrivate.h in Headers */,
 				4C7B04BB1D1210DA00295E82 /* TextualApplicationPrivate.h in Headers */,
@@ -5171,7 +5162,6 @@
 				4C5DD51B1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C7B04CF1D1210E000295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04D11D1210E000295E82 /* NSObjectHelperPrivate.h in Headers */,
-				4CE58BBC1F8A63E800493E7C /* ICLInlineContentModule.h in Headers */,
 				4C7B04D21D1210E000295E82 /* NSTableVIewHelperPrivate.h in Headers */,
 				4C7B04D31D1210E000295E82 /* NSViewHelperPrivate.h in Headers */,
 				4C7B04D41D1210E000295E82 /* TextualApplicationPrivate.h in Headers */,

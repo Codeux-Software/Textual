@@ -39,7 +39,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICLInlineContentModule (Private)
+@implementation ICLInlineContentModule
+
+ClassWithDesignatedInitializerInitMethod
 
 - (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process
 {
@@ -57,31 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return nil;
-}
-
-- (nullable NSURL *)templateURL
-{
-	return nil;
-}
-
-- (nullable GRMustacheTemplate *)template
-{
-	NSURL *templateURL = self.templateURL;
-
-	if (templateURL == nil || templateURL.isFileURL == NO) {
-		return nil;
-	}
-
-	NSError *templateLoadError;
-
-	GRMustacheTemplate *template = [GRMustacheTemplate templateFromContentsOfURL:templateURL error:&templateLoadError];
-
-	if (template == nil) {
-		LogToConsoleError("Failed to load template '%@': %@",
-			  templateURL, templateLoadError.localizedDescription);
-	}
-
-	return template;
 }
 
 - (void)mergePropertiesIntoPayload
@@ -103,6 +80,76 @@ NS_ASSUME_NONNULL_BEGIN
 	if (entrypoint) {
 		self.payload.entrypoint = entrypoint;
 	}
+}
+
+- (nullable NSURL *)templateURL
+{
+	return nil;
+}
+
+- (nullable GRMustacheTemplate *)template
+{
+	NSURL *templateURL = self.templateURL;
+
+	if (templateURL == nil || templateURL.isFileURL == NO) {
+		return nil;
+	}
+
+	NSError *templateLoadError;
+
+	GRMustacheTemplate *template = [GRMustacheTemplate templateFromContentsOfURL:templateURL error:&templateLoadError];
+
+	if (template == nil) {
+		LogToConsoleError("Failed to load template '%@': %@",
+			templateURL, templateLoadError.localizedDescription);
+	}
+
+	return template;
+}
+
++ (nullable NSArray<NSString *> *)domains
+{
+	return nil;
+}
+
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
+{
+	return nil;
+}
+
++ (SEL)actionForURL:(NSURL *)url
+{
+	return NULL;
+}
+
+- (nullable NSArray<NSURL *> *)styleResources
+{
+	return nil;
+}
+
+- (nullable NSArray<NSURL *> *)scriptResources
+{
+	return nil;
+}
+
+- (nullable NSString *)entrypoint
+{
+	return nil;
+}
+
++ (BOOL)contentImageOrVideo
+{
+	return NO;
+}
+
++ (BOOL)contentUntrusted
+{
+	return NO;
+}
+
++ (BOOL)contentNotSafeForWork
+{
+	return NO;
 }
 
 @end

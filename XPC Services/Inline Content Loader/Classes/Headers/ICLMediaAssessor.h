@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "ICLMediaAssessmentPrivate.h"
+#import "ICLMediaAssessment.h"
 
 /* Given a URL, the accessor will load the contents of that URL
  to determine what type of media it is: image, video, or other.

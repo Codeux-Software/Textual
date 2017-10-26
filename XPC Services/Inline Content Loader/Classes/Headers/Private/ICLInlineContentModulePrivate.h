@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class ICLProcessMain;
 
-@interface ICLInlineContentModule (Private)
+@interface ICLInlineContentModule ()
 @property (readonly, nullable) NSURL *templateURL;
 @property (readonly, nullable) GRMustacheTemplate *template;
 
