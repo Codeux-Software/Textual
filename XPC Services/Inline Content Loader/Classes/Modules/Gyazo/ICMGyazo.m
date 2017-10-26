@@ -213,6 +213,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
+- (void)finalizePreflight
+{
+	self.payload.classAttribute = @"inlineGyazo";
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

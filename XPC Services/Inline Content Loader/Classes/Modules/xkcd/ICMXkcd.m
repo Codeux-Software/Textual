@@ -115,9 +115,12 @@ NS_ASSUME_NONNULL_BEGIN
 	return domains;
 }
 
-- (NSString *)classAttribute
+#pragma mark -
+#pragma mark Utilities
+
+- (void)finalizePreflight
 {
-	return @"inlineXkcd";
+	self.payload.classAttribute = @"inlineXkcd";
 }
 
 @end
