@@ -106,6 +106,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	self->_index = [aDecoder decodeUnsignedIntegerForKey:@"index"];
 
+	self->_classAttribute = [aDecoder decodeStringForKey:@"classAttribute"];
+
 	[self initializedClassHealthCheck];
 }
 
@@ -131,6 +133,8 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder encodeString:self->_viewIdentifier forKey:@"viewIdentifier"];
 
 	[aCoder encodeUnsignedInteger:self->_index forKey:@"index"];
+
+	[aCoder encodeString:self->_classAttribute forKey:@"classAttribute"];
 }
 
 + (BOOL)supportsSecureCoding
@@ -145,10 +149,9 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentSize = NSZeroSize;
 
 	SetVariableIfNil(self->_urlToInline, self->_url);
-
 	SetVariableIfNil(self->_scriptResources, @[]);
-
 	SetVariableIfNil(self->_html, @"");
+	SetVariableIfNil(self->_classAttribute, @"");
 }
 
 - (void)initializedClassHealthCheck
@@ -161,6 +164,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(self->_lineNumber != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
 	NSParameterAssert(self->_viewIdentifier != nil);
+	NSParameterAssert(self->_classAttribute != nil);
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone asMutable:(BOOL)copyAsMutable
@@ -196,6 +200,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	object->_index = self->_index;
 
+	object->_classAttribute = self->_classAttribute;
+
 	return [object _initAfterCopy];
 }
 
@@ -223,6 +229,7 @@ ClassWithDesignatedInitializerInitMethod
 - (NSDictionary<NSString *, id<NSCopying>> *)entrypointPayloadDefaultContext
 {
 	return @{
+		@"class" : self->_classAttribute,
 		@"html" : self->_html,
 		@"url" : self->_url,
 		@"urlToInline" : self->_urlToInline,
@@ -276,6 +283,7 @@ ClassWithDesignatedInitializerInitMethod
 @dynamic html;
 @dynamic entrypoint;
 @dynamic entrypointPayload;
+@dynamic classAttribute;
 
 - (BOOL)isMutable
 {
@@ -341,6 +349,15 @@ ClassWithDesignatedInitializerInitMethod
 		self->_entrypointPayload = entrypointPayload;
 
 		[self entrypointPayloadSetContext];
+	}
+}
+
+- (void)setClassAttribute:(NSString *)classAttribute
+{
+	NSParameterAssert(classAttribute != nil);
+
+	if (self->_classAttribute != classAttribute) {
+		self->_classAttribute = classAttribute;
 	}
 }
 

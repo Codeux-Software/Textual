@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_html;
 	NSString *_entrypoint;
 	NSDictionary<NSString *, id <NSCopying>> *_entrypointPayload;
+	NSString *_classAttribute;
 
 @private
 	BOOL _objectInitialized;

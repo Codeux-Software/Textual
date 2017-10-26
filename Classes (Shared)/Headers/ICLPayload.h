@@ -213,6 +213,17 @@ NS_ASSUME_NONNULL_BEGIN
  Custom types are treated as "undefined"
  */
 @property (copy, readonly) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
+
+/**
+ An optional class that is appended to the inlined media.
+
+ - Examples
+
+ • inlineStreamable is used for Streamable,
+ • inlineVimeo is used for Vimeo,
+ • inlineYouTube is used for YouTube
+ */
+@property (copy, readonly) NSString *classAttribute;
 @end
 
 #pragma mark -
@@ -227,6 +238,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *html;
 @property (nonatomic, copy, nullable, readwrite) NSString *entrypoint;
 @property (nonatomic, copy, null_resettable, readwrite) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;
+@property (nonatomic, copy, readwrite) NSString *classAttribute;
 @end
 
 NS_ASSUME_NONNULL_END

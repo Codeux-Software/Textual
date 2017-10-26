@@ -86,6 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self->_index = payload.index;
 		self->_uniqueIdentifier = payload.uniqueIdentifier;
 		self->_viewIdentifier = payload.viewIdentifier;
+		self->_classAttribute = payload.classAttribute;
 
 		[self populateDefaultsPostflight];
 
