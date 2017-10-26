@@ -159,13 +159,6 @@ ClassWithDesignatedInitializerInitMethod
 
 @implementation ICLInlineContentModule (Completion)
 
-- (void)_finalizeAll
-{
-	self->_moduleFinalized = YES;
-
-	self->_process = nil;
-}
-
 - (void)finalize
 {
 	[self finalizeWithError:nil];
@@ -175,6 +168,8 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSAssert((self->_moduleFinalized == NO), @"Module already finalized");
 
+	[self finalizePreflight];
+
 	[self->_process _finalizeModule:self withError:error];
 
 	[self _finalizeAll];
@@ -183,6 +178,8 @@ ClassWithDesignatedInitializerInitMethod
 - (void)cancel
 {
 	NSAssert((self->_moduleFinalized == NO), @"Module already cancelled");
+
+	[self finalizePreflight];
 
 	[self->_process _cancelModule:self];
 
@@ -198,9 +195,30 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSAssert((self->_moduleFinalized == NO), @"Module already deferred");
 
+	[self finalizePreflight];
+
 	[self->_process _deferModule:self asType:type performCheck:performCheck];
 
 	[self _finalizeAll];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Completion (Private)
+
+@implementation ICLInlineContentModule (CompletionPrivate)
+
+- (void)finalizePreflight
+{
+
+}
+
+- (void)_finalizeAll
+{
+	self->_moduleFinalized = YES;
+
+	self->_process = nil;
 }
 
 @end
