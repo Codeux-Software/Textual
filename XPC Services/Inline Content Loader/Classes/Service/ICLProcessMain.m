@@ -325,8 +325,7 @@ ClassWithDesignatedInitializerInitMethod
 	switch (type) {
 		case ICLMediaTypeImage:
 		{
-			  ICMInlineImage *imageModule =
-			[[ICMInlineImage alloc] initWithPayload:payload inProcess:self];
+			ICMInlineImage *imageModule = [[ICMInlineImage alloc] initWithDeferredModule:module];
 
 			[self _addReferenceForModule:imageModule];
 
@@ -336,8 +335,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 		case ICLMediaTypeVideo:
 		{
-			  ICMInlineVideo *videoModule =
-			[[ICMInlineVideo alloc] initWithPayload:payload inProcess:self];
+			ICMInlineVideo *videoModule = [[ICMInlineVideo alloc] initWithDeferredModule:module];
 
 			[self _addReferenceForModule:videoModule];
 
@@ -347,8 +345,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 		case ICLMediaTypeVideoGif:
 		{
-			  ICMInlineGifVideo *videoModule =
-			[[ICMInlineGifVideo alloc] initWithPayload:payload inProcess:self];
+			ICMInlineGifVideo *videoModule = [[ICMInlineGifVideo alloc] initWithDeferredModule:module];
 
 			[self _addReferenceForModule:videoModule];
 
