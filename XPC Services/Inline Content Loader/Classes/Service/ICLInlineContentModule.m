@@ -61,6 +61,23 @@ ClassWithDesignatedInitializerInitMethod
 	return nil;
 }
 
+- (instancetype)initWithDeferredModule:(ICLInlineContentModule *)module
+{
+	NSParameterAssert(module != nil);
+
+	if ((self = [super init])) {
+		self->_payload = [[ICLPayloadMutable alloc] initWithDeferredPayload:module.payload];
+
+		self->_process = module->_process;
+
+		[self mergePropertiesIntoPayload];
+
+		return self;
+	}
+
+	return nil;
+}
+
 - (void)mergePropertiesIntoPayload
 {
 	NSArray *scriptResources = self.scriptResources;
