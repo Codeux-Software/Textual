@@ -71,6 +71,32 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (instancetype)initWithDeferredPayload:(ICLPayload *)payload
+{
+	NSParameterAssert(payload != nil);
+
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		/* All values are immutable which means we
+		 don't need to copy their contents. */
+		self->_url = payload.url;
+		self->_urlToInline = payload.urlToInline;
+		self->_lineNumber = payload.lineNumber;
+		self->_index = payload.index;
+		self->_uniqueIdentifier = payload.uniqueIdentifier;
+		self->_viewIdentifier = payload.viewIdentifier;
+
+		[self populateDefaultsPostflight];
+
+		self->_objectInitialized = YES;
+
+		return self;
+	}
+
+	return nil;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -320,7 +320,7 @@ ClassWithDesignatedInitializerInitMethod
 					  type == ICLMediaTypeVideo ||
 					  type == ICLMediaTypeVideoGif);
 
-	ICLPayloadMutable *payload = [module.payload mutableCopy];
+	ICLPayloadMutable *payload = [[ICLPayloadMutable alloc] initWithDeferredPayload:module.payload];
 
 	switch (type) {
 		case ICLMediaTypeImage:
