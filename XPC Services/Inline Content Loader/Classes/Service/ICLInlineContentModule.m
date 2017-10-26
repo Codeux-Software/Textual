@@ -176,6 +176,13 @@ ClassWithDesignatedInitializerInitMethod
 
 @implementation ICLInlineContentModule (Completion)
 
+- (void)_finalizeAll
+{
+	self->_moduleFinalized = YES;
+
+	self->_process = nil;
+}
+
 - (void)finalize
 {
 	[self finalizeWithError:nil];
@@ -229,13 +236,6 @@ ClassWithDesignatedInitializerInitMethod
 - (void)finalizePreflight
 {
 
-}
-
-- (void)_finalizeAll
-{
-	self->_moduleFinalized = YES;
-
-	self->_process = nil;
 }
 
 @end
