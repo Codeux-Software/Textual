@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 						atLineNumber:(NSString *)lineNumber
 							   index:(NSUInteger)index
 							  inView:(NSString *)viewIdentifier;
+
+- (instancetype)initWithDeferredPayload:(ICLPayload *)payload;
 @end
 
 NS_ASSUME_NONNULL_END
