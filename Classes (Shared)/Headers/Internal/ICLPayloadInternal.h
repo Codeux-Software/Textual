@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ICLPayload ()
 {
 @protected
+	NSURL *_urlToInline;
 	unsigned long long _contentLength;
 	NSSize _contentSize;
 	NSArray<NSURL *> *_styleResources;

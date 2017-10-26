@@ -59,6 +59,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSString *address;
 
 /**
+ The URL of the content to inline, such as an image, can be
+ different than the value of -url because of redirects or API
+ requests. The -urlToInline property can be used to get and set
+ this different URL.
+
+ If left unchanged, the value of this property mirrors -url
+ */
+@property (copy, readonly) NSURL *urlToInline;
+
+/**
+ String value of the -urlToInline property.
+ */
+@property (copy, readonly) NSString *addressToInline;
+
+/**
  The unique identifier associated with this payload.
  */
 @property (copy, readonly) NSString *uniqueIdentifier;
@@ -172,8 +187,9 @@ NS_ASSUME_NONNULL_BEGIN
 
   1. "html" (string)
   2. "url" (string)
-  3. "lineNumber" (string)
-  4. "uniqueIdentifier" (string)
+  3. "urlToInline" (string)
+  4. "lineNumber" (string)
+  5. "uniqueIdentifier" (string)
 
  The value of these keys mirror the payload's.
 
@@ -203,6 +219,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Mutable Object
 
 @interface ICLPayloadMutable : ICLPayload
+@property (nonatomic, copy, readwrite) NSURL *urlToInline;
 @property (nonatomic, assign, readwrite) unsigned long long contentLength;
 @property (nonatomic, assign, readwrite) NSSize contentSize;
 @property (nonatomic, copy, nullable, readwrite) NSArray<NSURL *> *styleResources;

@@ -137,6 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[dic setObject:self->_url forKey:@"url"];
+	[dic setObject:self->_urlToInline forKey:@"urlToInline"];
 
 	[dic setObject:self->_lineNumber forKey:@"lineNumber"];
 

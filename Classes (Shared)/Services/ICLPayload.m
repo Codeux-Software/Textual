@@ -97,6 +97,7 @@ ClassWithDesignatedInitializerInitMethod
 	self->_entrypointPayload = [aDecoder decodeDictionaryForKey:@"entrypointPayload"];
 
 	self->_url = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"url"];
+	self->_urlToInline = [aDecoder decodeObjectOfClass:[NSURL class] forKey:@"urlToInline"];
 
 	self->_lineNumber = [aDecoder decodeStringForKey:@"lineNumber"];
 
@@ -122,6 +123,7 @@ ClassWithDesignatedInitializerInitMethod
 	[aCoder maybeEncodeObject:self->_entrypointPayload forKey:@"entrypointPayload"];
 
 	[aCoder encodeObject:self->_url forKey:@"url"];
+	[aCoder encodeObject:self->_urlToInline forKey:@"urlToInline"];
 
 	[aCoder encodeString:self->_lineNumber forKey:@"lineNumber"];
 
@@ -142,6 +144,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	self->_contentSize = NSZeroSize;
 
+	self->_urlToInline = self->_url;
+
 	SetVariableIfNil(self->_scriptResources, @[]);
 
 	SetVariableIfNil(self->_html, @"");
@@ -153,6 +157,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSParameterAssert(self->_html != nil);
 	NSParameterAssert(self->_url != nil);
+	NSParameterAssert(self->_urlToInline != nil);
 	NSParameterAssert(self->_lineNumber != nil);
 	NSParameterAssert(self->_uniqueIdentifier != nil);
 	NSParameterAssert(self->_viewIdentifier != nil);
@@ -182,6 +187,7 @@ ClassWithDesignatedInitializerInitMethod
 	object->_entrypointPayload = self->_entrypointPayload;
 
 	object->_url = self->_url;
+	object->_urlToInline = self->_urlToInline;
 
 	object->_lineNumber = self->_lineNumber;
 
@@ -219,6 +225,7 @@ ClassWithDesignatedInitializerInitMethod
 	return @{
 		@"html" : self->_html,
 		@"url" : self->_url,
+		@"urlToInline" : self->_urlToInline,
 		@"lineNumber" : self->_lineNumber,
 		@"uniqueIdentifier" : self->_uniqueIdentifier
 	};
@@ -245,6 +252,11 @@ ClassWithDesignatedInitializerInitMethod
 	return self->_url.absoluteString;
 }
 
+- (NSString *)addressToInline
+{
+	return self->_urlToInline.absoluteString;
+}
+
 - (BOOL)isMutable
 {
 	return NO;
@@ -256,6 +268,7 @@ ClassWithDesignatedInitializerInitMethod
 
 @implementation ICLPayloadMutable
 
+@dynamic urlToInline;
 @dynamic contentLength;
 @dynamic contentSize;
 @dynamic styleResources;
@@ -268,6 +281,17 @@ ClassWithDesignatedInitializerInitMethod
 {
 	return YES;
 }
+
+- (void)setUrlToInline:(NSURL *)urlToInline
+{
+	NSParameterAssert(urlToInline != nil);
+	NSParameterAssert(urlToInline.isFileURL == NO);
+
+	if (self->_urlToInline != urlToInline) {
+		self->_urlToInline = urlToInline;
+	}
+}
+
 
 - (void)setContentLength:(unsigned long long)contentLength
 {
