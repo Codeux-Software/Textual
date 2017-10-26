@@ -163,7 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	return [self actionBlockForAddress:address bypassVideoCheck:NO];
 }
-f
+
 + (ICLInlineContentModuleActionBlock)actionBlockForAddress:(NSString *)address bypassVideoCheck:(BOOL)bypassVideoCheck
 {
 	NSParameterAssert(address != nil);
