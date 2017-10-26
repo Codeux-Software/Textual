@@ -830,6 +830,8 @@ BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey)
 			@"mushy-argyle-oryx-428112186934176870777339608",
 			@"wicked-plaid-weasel-0681043544455415517323623",
 			@"juicy-cyan-toad-72508217265703758416002094229",
+			@"cheerful-turquoise-zebra-81864329409734131515",
+			@"many-wavy-fly-7043700524134077492967431288170",
 		];
 	}
 
