@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8C21F89065700CD8193 /* ICLPayload.m */; };
-		4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CC8CF1F89165C00CD8193 /* ICLInlineContentModule.m */; };
 		4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */; };
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
 		4C356A531F9FB06E00E671D9 /* ICLMediaAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A511F9FB06E00E671D9 /* ICLMediaAssessment.m */; };
@@ -58,6 +56,24 @@
 		4CB3B61C1F9C3E9B0004502A /* ICMInlineHTML.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */; };
 		4CB3B6291F9C54120004502A /* ICMTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3B6281F9C53FD0004502A /* ICMTweet.m */; };
 		4CB3B62B1F9C541C0004502A /* ICMTweet.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6261F9C53220004502A /* ICMTweet.js */; };
+		4CB5C5421FA225EE00E65FB5 /* ICLInlineContentModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C53C1FA2254E00E65FB5 /* ICLInlineContentModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5471FA2265900E65FB5 /* ICLHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C5441FA2262600E65FB5 /* ICLHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5481FA2265900E65FB5 /* ICLMediaAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C5451FA2262700E65FB5 /* ICLMediaAssessment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5491FA2265900E65FB5 /* ICLMediaAssessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C5461FA2262700E65FB5 /* ICLMediaAssessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C54A1FA2265900E65FB5 /* ICLMediaType.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C53D1FA2254F00E65FB5 /* ICLMediaType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C54C1FA2266300E65FB5 /* ICLInlineContentModuleInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE354491F9F425300F236A2 /* ICLInlineContentModuleInternal.h */; };
+		4CB5C54D1FA2266300E65FB5 /* ICLMediaAssessmentInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C356A551F9FB09600E671D9 /* ICLMediaAssessmentInternal.h */; };
+		4CB5C54E1FA2266300E65FB5 /* ICLPayloadInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C53F1FA2255B00E65FB5 /* ICLPayloadInternal.h */; };
+		4CB5C54F1FA2266300E65FB5 /* ICLInlineContentModulePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */; };
+		4CB5C5501FA2266300E65FB5 /* ICLPayloadPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */; };
+		4CB5C5511FA2266300E65FB5 /* ICLProcessDelegatePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72EE1F121EF000ED72DB /* ICLProcessDelegatePrivate.h */; };
+		4CB5C5521FA2266300E65FB5 /* ICLProcessMainPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72EC1F121EF000ED72DB /* ICLProcessMainPrivate.h */; };
+		4CB5C5531FA2266300E65FB5 /* ICLProcessPCHPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72EF1F121EF000ED72DB /* ICLProcessPCHPrivate.h */; };
+		4CB5C5541FA227A400E65FB5 /* ICMInlineHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB3B6181F9C3D240004502A /* ICMInlineHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5551FA227A400E65FB5 /* ICMInlineImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5561FA227A400E65FB5 /* ICMInlineVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9810011F93ABE700B116A4 /* ICMInlineVideo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5621FA228D900E65FB5 /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5C5611FA228D500E65FB5 /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB5C5641FA228F900E65FB5 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB5C5631FA228F600E65FB5 /* ICLPayload.m */; };
 		4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */; };
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
@@ -102,9 +118,6 @@
 		4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
-		4C1CC8C21F89065700CD8193 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = "../../Classes (Shared)/Services/ICLPayload.m"; sourceTree = "<group>"; };
-		4C1CC8C31F89080700CD8193 /* ICLPayloadInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadInternal.h; path = "../../Classes (Shared)/Headers/Internal/ICLPayloadInternal.h"; sourceTree = "<group>"; };
-		4C1CC8CF1F89165C00CD8193 /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = "../../Classes (Shared)/Services/ICLInlineContentModule.m"; sourceTree = "<group>"; };
 		4C1EAB121F89F20600A4E647 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaults.h; path = "../../Classes (Shared)/Headers/TPCPreferencesUserDefaults.h"; sourceTree = "<group>"; };
 		4C1EAB131F89F24B00A4E647 /* TPCPreferencesUserDefaultsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaultsPrivate.h; path = "../../Classes (Shared)/Headers/Private/TPCPreferencesUserDefaultsPrivate.h"; sourceTree = "<group>"; };
 		4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = "../../Classes (Shared)/Preferences/TPCPreferencesUserDefaults.m"; sourceTree = "<group>"; };
@@ -124,8 +137,6 @@
 		4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
 		4C576D251F94465E00FD581F /* ICMImgurGifv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMImgurGifv.h; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.h"; sourceTree = "<group>"; };
 		4C576D261F94465F00FD581F /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
-		4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = "../../Classes (Shared)/Headers/ICLInlineContentModule.h"; sourceTree = "<group>"; };
-		4C7879F01F88D8E10030AA84 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
 		4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadPrivate.h; path = Classes/Headers/Private/ICLPayloadPrivate.h; sourceTree = "<group>"; };
 		4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModulePrivate.h; path = Classes/Headers/Private/ICLInlineContentModulePrivate.h; sourceTree = "<group>"; };
 		4C7879F61F88EA710030AA84 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = Classes/Service/ICLPayload.m; sourceTree = "<group>"; };
@@ -141,7 +152,6 @@
 		4C8DBD421FA151FB00BA025A /* ICMGyazo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMGyazo.m; path = Classes/Modules/Gyazo/ICMGyazo.m; sourceTree = "<group>"; };
 		4C8DBD431FA151FC00BA025A /* ICMGyazo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMGyazo.h; path = Classes/Modules/Gyazo/ICMGyazo.h; sourceTree = "<group>"; };
 		4C8DBD451FA1543D00BA025A /* ICLHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLHelpers.m; path = Classes/Service/ICLHelpers.m; sourceTree = "<group>"; };
-		4C8DBD471FA1545700BA025A /* ICLHelpersPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLHelpersPrivate.h; path = Classes/Headers/Private/ICLHelpersPrivate.h; sourceTree = "<group>"; };
 		4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
 		4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImage.h; path = "Classes/Modules/Root Classes/ICMInlineImage.h"; sourceTree = "<group>"; };
 		4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImage.m; path = "Classes/Modules/Root Classes/ICMInlineImage.m"; sourceTree = "<group>"; };
@@ -186,11 +196,16 @@
 		4CB3B6261F9C53220004502A /* ICMTweet.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTweet.js; path = Resources/Modules/Twitter/ICMTweet.js; sourceTree = "<group>"; };
 		4CB3B6271F9C53FD0004502A /* ICMTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTweet.h; path = Classes/Modules/Twitter/ICMTweet.h; sourceTree = "<group>"; };
 		4CB3B6281F9C53FD0004502A /* ICMTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTweet.m; path = Classes/Modules/Twitter/ICMTweet.m; sourceTree = "<group>"; };
-		4CC691E51FA1158000ECBC0A /* ICLMediaType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaType.h; path = "../../Classes (Shared)/Headers/ICLMediaType.h"; sourceTree = "<group>"; };
+		4CB5C53C1FA2254E00E65FB5 /* ICLInlineContentModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModule.h; path = Classes/Headers/ICLInlineContentModule.h; sourceTree = "<group>"; };
+		4CB5C53D1FA2254F00E65FB5 /* ICLMediaType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaType.h; path = Classes/Headers/ICLMediaType.h; sourceTree = "<group>"; };
+		4CB5C53F1FA2255B00E65FB5 /* ICLPayloadInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadInternal.h; path = "../../Classes (Shared)/Headers/Internal/ICLPayloadInternal.h"; sourceTree = "<group>"; };
+		4CB5C5441FA2262600E65FB5 /* ICLHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLHelpers.h; path = Classes/Headers/ICLHelpers.h; sourceTree = "<group>"; };
+		4CB5C5451FA2262700E65FB5 /* ICLMediaAssessment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaAssessment.h; path = Classes/Headers/ICLMediaAssessment.h; sourceTree = "<group>"; };
+		4CB5C5461FA2262700E65FB5 /* ICLMediaAssessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaAssessor.h; path = Classes/Headers/ICLMediaAssessor.h; sourceTree = "<group>"; };
+		4CB5C5611FA228D500E65FB5 /* ICLPayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayload.h; path = "../../Classes (Shared)/Headers/ICLPayload.h"; sourceTree = "<group>"; };
+		4CB5C5631FA228F600E65FB5 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = "../../Classes (Shared)/Services/ICLPayload.m"; sourceTree = "<group>"; };
 		4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLInlineContentModule.m; path = Classes/Service/ICLInlineContentModule.m; sourceTree = "<group>"; };
 		4CE354491F9F425300F236A2 /* ICLInlineContentModuleInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModuleInternal.h; path = Classes/Headers/Internal/ICLInlineContentModuleInternal.h; sourceTree = "<group>"; };
-		4CE3544B1F9F42EE00F236A2 /* ICLMediaAssessorPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaAssessorPrivate.h; path = Classes/Headers/Private/ICLMediaAssessorPrivate.h; sourceTree = "<group>"; };
-		4CE3544C1F9F430C00F236A2 /* ICLMediaAssessmentPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLMediaAssessmentPrivate.h; path = Classes/Headers/Private/ICLMediaAssessmentPrivate.h; sourceTree = "<group>"; };
 		4CE58B961F8A36FB00493E7C /* ICMInlineImage.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMInlineImage.js; path = Resources/Modules/ICMInlineImage.js; sourceTree = "<group>"; };
 		4CE58BA71F8A5F1D00493E7C /* ICMInlineImage.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineImage.mustache; path = Resources/Modules/ICMInlineImage.mustache; sourceTree = "<group>"; };
 		4CE58BA91F8A5F8500493E7C /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = "<group>"; };
@@ -318,26 +333,9 @@
 				4C8C72621F1201A000ED72DB /* Headers */,
 				4C116B881F85998100BFFFF7 /* Helpers */,
 				4C1EAB141F89F25A00A4E647 /* Preferences */,
-				4C1CC8C11F89065700CD8193 /* Services */,
+				4CB5C5601FA228CC00E65FB5 /* Services */,
 			);
 			name = Shared;
-			sourceTree = "<group>";
-		};
-		4C1CC8C11F89065700CD8193 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				4C1CC8CF1F89165C00CD8193 /* ICLInlineContentModule.m */,
-				4C1CC8C21F89065700CD8193 /* ICLPayload.m */,
-			);
-			name = Services;
-			sourceTree = "<group>";
-		};
-		4C1CC8C41F89080A00CD8193 /* Internal */ = {
-			isa = PBXGroup;
-			children = (
-				4C1CC8C31F89080700CD8193 /* ICLPayloadInternal.h */,
-			);
-			name = Internal;
 			sourceTree = "<group>";
 		};
 		4C1EAB141F89F25A00A4E647 /* Preferences */ = {
@@ -388,12 +386,10 @@
 		4C8C72621F1201A000ED72DB /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				4C1CC8C41F89080A00CD8193 /* Internal */,
+				4CB5C5651FA22C8800E65FB5 /* Internal */,
 				4C116B851F85993500BFFFF7 /* Private */,
 				4C8C72651F1201A000ED72DB /* XPC Protocols */,
-				4C7879EF1F88D1650030AA84 /* ICLInlineContentModule.h */,
-				4CC691E51FA1158000ECBC0A /* ICLMediaType.h */,
-				4C7879F01F88D8E10030AA84 /* ICLPayload.h */,
+				4CB5C5611FA228D500E65FB5 /* ICLPayload.h */,
 				4C1EAB171F89F2DE00A4E647 /* StaticDefinitions.h */,
 				4C1EAB191F89F41700A4E647 /* TPCPreferences.h */,
 				4C1EAB121F89F20600A4E647 /* TPCPreferencesUserDefaults.h */,
@@ -441,6 +437,11 @@
 			children = (
 				4CE58BC31F8A6EFF00493E7C /* Internal */,
 				4C8C72EB1F121EF000ED72DB /* Private */,
+				4CB5C5441FA2262600E65FB5 /* ICLHelpers.h */,
+				4CB5C53C1FA2254E00E65FB5 /* ICLInlineContentModule.h */,
+				4CB5C5451FA2262700E65FB5 /* ICLMediaAssessment.h */,
+				4CB5C5461FA2262700E65FB5 /* ICLMediaAssessor.h */,
+				4CB5C53D1FA2254F00E65FB5 /* ICLMediaType.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -448,10 +449,7 @@
 		4C8C72EB1F121EF000ED72DB /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				4C8DBD471FA1545700BA025A /* ICLHelpersPrivate.h */,
 				4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */,
-				4CE3544C1F9F430C00F236A2 /* ICLMediaAssessmentPrivate.h */,
-				4CE3544B1F9F42EE00F236A2 /* ICLMediaAssessorPrivate.h */,
 				4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */,
 				4C8C72EE1F121EF000ED72DB /* ICLProcessDelegatePrivate.h */,
 				4C8C72EC1F121EF000ED72DB /* ICLProcessMainPrivate.h */,
@@ -463,12 +461,12 @@
 		4C8C72F71F121EF000ED72DB /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */,
 				4C8DBD451FA1543D00BA025A /* ICLHelpers.m */,
-				4C7879F61F88EA710030AA84 /* ICLPayload.m */,
-				4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */,
+				4CDF57B21F891C8600B2ECCC /* ICLInlineContentModule.m */,
 				4C356A511F9FB06E00E671D9 /* ICLMediaAssessment.m */,
 				4C356A521F9FB06E00E671D9 /* ICLMediaAssessor.m */,
+				4C7879F61F88EA710030AA84 /* ICLPayload.m */,
+				4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */,
 				4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */,
 				4C8C72FA1F121EF000ED72DB /* main.m */,
 			);
@@ -717,6 +715,22 @@
 			name = Twitter;
 			sourceTree = "<group>";
 		};
+		4CB5C5601FA228CC00E65FB5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4CB5C5631FA228F600E65FB5 /* ICLPayload.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		4CB5C5651FA22C8800E65FB5 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				4CB5C53F1FA2255B00E65FB5 /* ICLPayloadInternal.h */,
+			);
+			name = Internal;
+			sourceTree = "<group>";
+		};
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,6 +775,33 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		4CB5C5411FA225EA00E65FB5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CB5C5421FA225EE00E65FB5 /* ICLInlineContentModule.h in Headers */,
+				4CB5C5551FA227A400E65FB5 /* ICMInlineImage.h in Headers */,
+				4CB5C54A1FA2265900E65FB5 /* ICLMediaType.h in Headers */,
+				4CB5C5471FA2265900E65FB5 /* ICLHelpers.h in Headers */,
+				4CB5C5521FA2266300E65FB5 /* ICLProcessMainPrivate.h in Headers */,
+				4CB5C54C1FA2266300E65FB5 /* ICLInlineContentModuleInternal.h in Headers */,
+				4CB5C5481FA2265900E65FB5 /* ICLMediaAssessment.h in Headers */,
+				4CB5C5561FA227A400E65FB5 /* ICMInlineVideo.h in Headers */,
+				4CB5C54D1FA2266300E65FB5 /* ICLMediaAssessmentInternal.h in Headers */,
+				4CB5C54F1FA2266300E65FB5 /* ICLInlineContentModulePrivate.h in Headers */,
+				4CB5C54E1FA2266300E65FB5 /* ICLPayloadInternal.h in Headers */,
+				4CB5C5531FA2266300E65FB5 /* ICLProcessPCHPrivate.h in Headers */,
+				4CB5C5541FA227A400E65FB5 /* ICMInlineHTML.h in Headers */,
+				4CB5C5501FA2266300E65FB5 /* ICLPayloadPrivate.h in Headers */,
+				4CB5C5511FA2266300E65FB5 /* ICLProcessDelegatePrivate.h in Headers */,
+				4CB5C5491FA2265900E65FB5 /* ICLMediaAssessor.h in Headers */,
+				4CB5C5621FA228D900E65FB5 /* ICLPayload.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		4C1406411F11942B00C73D53 /* Inline Content Loader */ = {
 			isa = PBXNativeTarget;
@@ -770,6 +811,7 @@
 				4C14063F1F11942B00C73D53 /* Frameworks */,
 				4C1406401F11942B00C73D53 /* Resources */,
 				4C8C842B1F8E347500062FFD /* CopyFiles */,
+				4CB5C5411FA225EA00E65FB5 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -830,16 +872,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */,
-				4C1CC8C51F8908B400CD8193 /* ICLPayload.m in Sources */,
 				4CA5D31D1F97D75E006714D6 /* ICMTwitchClips.m in Sources */,
 				4C980FF71F92D71400B116A4 /* ICMYouTube.m in Sources */,
 				4C356A541F9FB06E00E671D9 /* ICLMediaAssessor.m in Sources */,
 				4C9CAC6E1F967F71006887B7 /* ICMStreamable.m in Sources */,
+				4CB5C5641FA228F900E65FB5 /* ICLPayload.m in Sources */,
 				4C8DBD461FA1543D00BA025A /* ICLHelpers.m in Sources */,
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */,
 				4C8DBD441FA1522600BA025A /* ICMGyazo.m in Sources */,
-				4C1CC8D01F89165C00CD8193 /* ICLInlineContentModule.m in Sources */,
 				4CDF57B31F891C8600B2ECCC /* ICLInlineContentModule.m in Sources */,
 				4C356A531F9FB06E00E671D9 /* ICLMediaAssessment.m in Sources */,
 				4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */,
