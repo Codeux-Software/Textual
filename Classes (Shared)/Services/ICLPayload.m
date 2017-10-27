@@ -150,6 +150,7 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentSize = NSZeroSize;
 
 	SetVariableIfNil(self->_urlToInline, self->_url);
+	SetVariableIfNil(self->_styleResources, @[]);
 	SetVariableIfNil(self->_scriptResources, @[]);
 	SetVariableIfNil(self->_html, @"");
 	SetVariableIfNil(self->_classAttribute, @"");
