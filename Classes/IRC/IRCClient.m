@@ -4067,7 +4067,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandTageIndex: // Command: TAGE
 		{
-			NSTimeInterval timePassed = [NSDate timeIntervalSinceNow:TXBirthdayReferenceDate];
+			NSTimeInterval timePassed = [NSDate timeIntervalSinceNow:[TPCApplicationInfo applicationBirthday]];
 
 			NSString *message = TXTLS(@"IRC[1101]", TXHumanReadableTimeInterval(timePassed, NO, 0));
 

@@ -147,6 +147,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZUserDefaults() setUnsignedInteger:runCount forKey:@"TXRunCount"];
 }
 
++ (NSTimeInterval)applicationBirthday
+{
+	/* The reference date is the date & time of the first commit to the
+	 Textual repo. Textual existed before then, of course, but the date
+	 will remain as the official reference date for its birthday. */
+	/* The date decodes to July 23, 2010 03:53:00 AM */
+
+	return 1279871580.000000;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
