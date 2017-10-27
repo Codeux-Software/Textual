@@ -36,19 +36,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "IRCClientConfig.h"
 #import "IRCCommandIndex.h"
 #import "IRCConnection.h"
 #import "IRCTreeItem.h"
-
 #import "TLOEncryptionManager.h"
-
 #import "TVCLogController.h"
 #import "TVCLogLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel, IRCClientConfig, IRCHighlightLogEntry, IRCISupportInfo;
+@class IRCAddressBookEntry, IRCMessage, IRCServer, IRCUser;
 
 typedef NS_ENUM(NSUInteger, IRCClientConnectMode) {
 	IRCClientConnectNormalMode = 0,

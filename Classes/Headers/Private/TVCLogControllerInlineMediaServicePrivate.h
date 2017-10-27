@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCTreeItem;
+
 #define TVCLogControllerInlineMediaSharedInstance()				[TVCLogControllerInlineMediaService sharedInstance]
 
 @interface TVCLogControllerInlineMediaService : NSObject

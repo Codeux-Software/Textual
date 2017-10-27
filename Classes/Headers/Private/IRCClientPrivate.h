@@ -35,9 +35,13 @@
 
  *********************************************************************** */
 
+#import "TLOGrowlController.h"
+#import "IRCClient.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class TLOSpokenNotification;
+@class IRCAddressBookUserTrackingContainer, IRCUserMutable;
 
 enum {
 	ClientIRCv3SupportedCapabilitySASLGeneric			= 1 << 22,

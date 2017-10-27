@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCAutoExpandingTokenField.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCAutoExpandingTokenField

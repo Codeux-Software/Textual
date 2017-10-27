@@ -36,9 +36,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "TVCLogLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class GRMustacheTemplate;
 
 #define TPCThemeSettingsDisabledIndentationOffset	 -99
 

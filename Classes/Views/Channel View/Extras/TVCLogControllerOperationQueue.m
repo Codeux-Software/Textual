@@ -35,6 +35,12 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TVCLogController.h"
+#import "TVCLogControllerOperationQueuePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -

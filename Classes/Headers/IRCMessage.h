@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCPrefix;
 
 #pragma mark -
 #pragma mark Immutable Object

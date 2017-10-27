@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import <SecurityInterface/SFCertificateTrustPanel.h>
+
+#import "GCDAsyncSocketExtensions.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation GCDAsyncSocket (GCDsyncSocketExtensions)

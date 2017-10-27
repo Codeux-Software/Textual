@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesCloudSyncExtension.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

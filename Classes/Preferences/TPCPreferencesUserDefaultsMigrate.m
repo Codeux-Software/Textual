@@ -37,6 +37,12 @@
 
 #import "BuildConfig.h"
 
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCResourceManager.h"
+#import "TPCPreferencesUserDefaultsPrivate.h"
+#import "TPCPreferencesUserDefaultsMigratePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)

@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TLOInternetAddressLookup.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _requestTimeoutInterval			30.0

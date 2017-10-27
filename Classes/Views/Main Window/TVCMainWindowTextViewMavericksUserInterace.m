@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCMainWindowTextViewMavericksUserInteracePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMainWindowTextViewMavericksUserInterace

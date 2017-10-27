@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "IRCCommandIndex.h"
+#import "IRCSendingMessage.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCSendingMessage

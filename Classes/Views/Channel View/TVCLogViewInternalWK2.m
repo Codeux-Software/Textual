@@ -40,6 +40,14 @@
 #include <objc/message.h>
 #include <objc/runtime.h>
 
+#import "IRCChannel.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCLogController.h"
+#import "TVCLogPolicyPrivate.h"
+#import "TVCLogScriptEventSinkPrivate.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK2.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _maximumProcessCount			8

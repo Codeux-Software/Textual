@@ -36,6 +36,37 @@
 
  *********************************************************************** */
 
+#import "NSViewHelper.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesCloudSyncExtensionPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeControllerPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "IRC.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCConnectionConfig.h"
+#import "IRCWorld.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCNotificationConfigurationViewControllerPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCFileTransferDialogPrivate.h"
+#import "TDCPreferencesNotificationConfigurationPrivate.h"
+#import "TDCPreferencesControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+#import <Sparkle/Sparkle.h>
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _scrollbackSaveLinesMin		100

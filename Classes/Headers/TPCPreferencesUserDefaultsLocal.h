@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "TPCPreferencesUserDefaults.h"
 
 NS_ASSUME_NONNULL_BEGIN

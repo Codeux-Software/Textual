@@ -36,10 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TVCLogLine.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {

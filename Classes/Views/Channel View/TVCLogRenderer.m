@@ -36,6 +36,27 @@
 
  *********************************************************************** */
 
+#import "GTMEncodeHTML.h"
+#import "NSColorHelper.h"
+#import "NSStringHelper.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCChannelUser.h"
+#import "IRCColorFormat.h"
+#import "IRCHighlightMatchCondition.h"
+#import "IRCUser.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOUnicodeHelper.h"
+#import "TLOLinkParser.h"
+#import "TVCLogController.h"
+#import "TVCLogLine.h"
+#import "TVCLogRenderer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogRenderer ()

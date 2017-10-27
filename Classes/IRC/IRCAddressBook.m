@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
 #import "IRCAddressBookInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

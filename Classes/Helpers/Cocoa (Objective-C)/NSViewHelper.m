@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCMainWindow.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSView (TXViewHelperPrivate)

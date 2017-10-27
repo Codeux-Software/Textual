@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import <SecurityInterface/SFCertificateTrustPanel.h>
+
+#import "GCDAsyncSocket.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^GCDAsyncSocketTrustResponseCompletionBlock)(BOOL trusted);

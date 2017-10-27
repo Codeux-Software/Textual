@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCResourceManager.h"
+#import "TPCThemeSettingsPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _templateEngineVersionMaximum			4

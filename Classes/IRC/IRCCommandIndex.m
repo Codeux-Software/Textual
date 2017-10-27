@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesLocal.h"
+#import "TPCResourceManager.h"
+#import "IRCCommandIndexPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _reservedSlotDictionaryKey			@"Reserved Information"

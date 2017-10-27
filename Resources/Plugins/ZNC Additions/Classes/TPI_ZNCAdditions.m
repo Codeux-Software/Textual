@@ -35,9 +35,12 @@
 
  *********************************************************************** */
 
+#import <SecurityInterface/SFCertificateTrustPanel.h>
+
 #import "TPI_ZNCAdditions.h"
 
-#import "TextualApplicationPrivate.h"
+#import "IRCClientPrivate.h"
+#import "TVCMainWindowPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

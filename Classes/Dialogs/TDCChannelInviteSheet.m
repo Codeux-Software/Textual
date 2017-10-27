@@ -36,6 +36,10 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCChannelInviteSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelInviteSheet ()

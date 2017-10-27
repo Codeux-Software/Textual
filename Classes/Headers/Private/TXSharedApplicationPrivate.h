@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TXSharedApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define windowController()				[TXSharedApplication sharedWindowController]
@@ -45,6 +47,27 @@ NS_ASSUME_NONNULL_BEGIN
 #define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
 
 @class OELReachability;
+@class THOPluginManager;
+@class TDCFileTransferDialog;
+@class TLOGrowlController, TLOSpeechSynthesizer;
+@class TVCLogControllerPrintingOperationQueue;
+@class TXWindowController;
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+@class TPCPreferencesCloudSync;
+#endif
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+@class TLOEncryptionManager;
+#endif
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+@class TDCLicenseManagerDialog;
+#endif
+
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+@class TDCInAppPurchaseDialog;
+#endif
 
 @interface TXSharedApplication ()
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

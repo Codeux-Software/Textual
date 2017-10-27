@@ -35,6 +35,16 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "IRCAddressBookUserTracking.h"
+#import "IRCClient.h"
+#import "IRCWorld.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCMainWindowPrivate.h"
+#import "TDCChannelSpotlightSearchResultPrivate.h"
+#import "TDCChannelSpotlightSearchResultsTablePrivate.h"
+#import "TDCChannelSpotlightControllerPanelPrivate.h"
 #import "TDCChannelSpotlightControllerInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

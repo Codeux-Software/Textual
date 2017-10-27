@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCChannelSelectionViewController;
 
 @interface TVCChannelSelectionOutlineCellView : NSTableCellView
 @property (nonatomic, weak) TVCChannelSelectionViewController *parentController;

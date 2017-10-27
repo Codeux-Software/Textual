@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "TPCPathInfo.h"
+#import "TLOLicenseManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* 
@@ -65,7 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *	<https://github.com/bdrister/AquaticPrime>
 */
-
 #pragma mark -
 #pragma mark Private Implementation
 

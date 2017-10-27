@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+#import "TDCNicknameColorSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCNicknameColorSheet ()

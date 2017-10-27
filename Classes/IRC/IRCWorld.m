@@ -36,6 +36,24 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCServerListPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCServer.h"
+#import "IRCTreeItemPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _autoConnectDelay				1

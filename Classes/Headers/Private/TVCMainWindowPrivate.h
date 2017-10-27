@@ -35,7 +35,19 @@
 
  *********************************************************************** */
 
+#import "IRCCommandIndex.h"
+
+#import "TVCMainWindow.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCUser;
+@class TLOInputHistory;
+@class TVCMainWindowChannelView;
+@class TVCMainWindowTitlebarAccessoryView, TVCMainWindowTitlebarAccessoryViewController;
+@class TVCMainWindowTitlebarAccessoryViewLockButton;
+@class TVCTextViewIRCFormattingMenu;
+@class TXMenuControllerMainWindowProxy;
 
 #define TVCMainWindowDefaultFrameWidth		800.0
 #define TVCMainWindowDefaultFrameHeight		474.0

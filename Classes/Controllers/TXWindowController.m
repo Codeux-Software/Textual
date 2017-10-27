@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "TVCMainWindow.h"
+#import "TXWindowControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TXWindowController ()

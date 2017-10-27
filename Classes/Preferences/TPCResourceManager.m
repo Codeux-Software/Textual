@@ -35,6 +35,12 @@
 
  *********************************************************************** */
 
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCResourceManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCResourceManagerBundleDocumentTypeExtension					= @".bundle";

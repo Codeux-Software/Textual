@@ -36,6 +36,19 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TPCApplicationInfo.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK1.h"
+#import "TVCLogViewInternalWK2.h"
+#import "TVCMainWindowPrivate.h"
+#import "WebScriptObjectHelperPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogView ()

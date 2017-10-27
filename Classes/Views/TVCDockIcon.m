@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCWorld.h"
+#import "TVCDockIconPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _badgeSeperationSpace		1.0

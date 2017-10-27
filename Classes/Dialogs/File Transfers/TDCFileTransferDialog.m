@@ -36,6 +36,17 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TLOInternetAddressLookup.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOTimer.h"
+#import "IRCWorld.h"
+#import "TVCBasicTableView.h"
+#import "TDCFileTransferDialogTableCellPrivate.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCFileTransferDialogInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

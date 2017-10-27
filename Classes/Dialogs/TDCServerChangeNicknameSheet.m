@@ -36,6 +36,12 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "IRCClient.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCServerChangeNicknameSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerChangeNicknameSheet ()

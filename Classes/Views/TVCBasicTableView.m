@@ -38,6 +38,8 @@
 
 #import <objc/runtime.h>
 
+#import "TVCBasicTableView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCBasicTableView

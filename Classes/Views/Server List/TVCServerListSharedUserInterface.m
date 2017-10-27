@@ -35,6 +35,14 @@
 
  *********************************************************************** */
 
+#import "NSColorHelper.h"
+#import "NSObjectHelperPrivate.h"
+#import "NSViewHelperPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCMainWindow.h"
+#import "TVCServerListPrivate.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListSharedUserInterface ()

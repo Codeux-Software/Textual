@@ -38,6 +38,11 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _overridesDefaultsKey		@"Nickname Color Style Overrides"

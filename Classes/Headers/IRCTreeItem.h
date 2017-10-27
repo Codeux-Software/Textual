@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel, TVCLogController;
 
 @interface IRCTreeItem : NSObject
 @property (readonly) BOOL isActive;

@@ -36,6 +36,16 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "IRC.h"
+#import "IRCAddressBook.h"
+#import "IRCChannelConfig.h"
+#import "IRCHighlightMatchCondition.h"
+#import "IRCNetworkList.h"
+#import "IRCServerPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOLanguagePreferences.h"
 #import "IRCClientConfigInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

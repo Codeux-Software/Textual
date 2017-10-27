@@ -35,7 +35,13 @@
 
  *********************************************************************** */
 
+#import <EncryptionKit/EncryptionKit.h>
+
+#import "TLOEncryptionManager.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, TVCMainWindowTitlebarAccessoryViewLockButton;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]

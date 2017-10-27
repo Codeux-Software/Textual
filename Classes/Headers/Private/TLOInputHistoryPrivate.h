@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCTreeItem, TVCMainWindow;
+
 @interface TLOInputHistory : NSObject
 - (instancetype)initWithWindow:(TVCMainWindow *)mainWindow NS_DESIGNATED_INITIALIZER;
 

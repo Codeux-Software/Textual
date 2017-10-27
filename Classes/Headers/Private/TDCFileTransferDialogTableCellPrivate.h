@@ -38,8 +38,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TDCFileTransferDialogTransferController;
-
 @interface TDCFileTransferDialogTableCell : NSTableCellView
 - (void)onMaintenanceTimer;
 

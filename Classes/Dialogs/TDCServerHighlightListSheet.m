@@ -35,6 +35,14 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCHighlightLogEntryPrivate.h"
+#import "TVCBasicTableView.h"
+#import "TVCMainWindow.h"
+#import "TDCServerHighlightListSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _renderedMessageTextFieldLeftRightPadding		2.0

@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCLogLine;
 
 @interface IRCHighlightLogEntry : NSObject <NSCopying, NSMutableCopying>
 @property (readonly, copy) TVCLogLine *lineLogged;

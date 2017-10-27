@@ -36,9 +36,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel;
+@class TVCLogLine, TVCLogView, TVCMainWindow;
 
 TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 

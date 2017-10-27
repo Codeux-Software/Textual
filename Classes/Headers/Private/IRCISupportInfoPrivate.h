@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCISupportInfo.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 @interface IRCISupportInfo ()
 @property (nonatomic, copy, readwrite, nullable) NSString *serverAddress;

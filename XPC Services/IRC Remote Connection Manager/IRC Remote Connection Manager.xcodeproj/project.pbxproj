@@ -49,7 +49,6 @@
 		4C6EF2E51F44324400A80A7B /* NSObjectHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = "../../Classes (Shared)/Helpers/Cocoa (Objective-C)/NSObjectHelper.m"; sourceTree = "<group>"; };
 		4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocket.h"; sourceTree = "<group>"; };
 		4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = "../../Classes (Shared)/Headers/XPC Protocols/RCMConnectionManagerProtocol.h"; sourceTree = "<group>"; };
-		4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplicationShared.h; path = "../../Classes (Shared)/Headers/TextualApplicationShared.h"; sourceTree = "<group>"; };
 		4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = "../../Classes (Shared)/Headers/StaticDefinitions.h"; sourceTree = "<group>"; };
 		4C8C72761F1201A000ED72DB /* TLOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOTimer.h; path = "../../Classes (Shared)/Headers/TLOTimer.h"; sourceTree = "<group>"; };
 		4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocket.m"; sourceTree = "<group>"; };
@@ -198,7 +197,6 @@
 				4C8C72651F1201A000ED72DB /* XPC Protocols */,
 				4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */,
 				4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */,
-				4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */,
 				4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */,
 				4C8C72761F1201A000ED72DB /* TLOTimer.h */,
 			);

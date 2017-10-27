@@ -37,6 +37,10 @@
 
 #import <objc/objc-runtime.h>
 
+#import "TLOLanguagePreferences.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TLOPopupPrompts.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppression -> ";

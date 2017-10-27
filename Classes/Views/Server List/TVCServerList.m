@@ -35,6 +35,15 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCServerListCellPrivate.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+#import "TVCServerListPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCServerListDragType = @"TVCServerListDragType";

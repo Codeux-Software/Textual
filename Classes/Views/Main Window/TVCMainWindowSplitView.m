@@ -36,6 +36,14 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCServerList.h"
+#import "TVCMemberList.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowSplitViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _minimumSplitViewWidth			120.0

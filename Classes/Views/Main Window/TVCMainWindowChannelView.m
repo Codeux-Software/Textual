@@ -35,6 +35,17 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "IRCTreeItem.h"
+#import "TVCLogController.h"
+#import "TVCLogView.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowSplitViewPrivate.h"
+#import "TVCMainWindowChannelViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class TVCMainWindowChannelViewSubviewOverlayView;

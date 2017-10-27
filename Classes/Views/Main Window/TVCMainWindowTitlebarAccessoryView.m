@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* This class is used by both Mavericks and Yosemite, but only the Yosemite

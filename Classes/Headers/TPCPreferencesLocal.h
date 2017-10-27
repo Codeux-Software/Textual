@@ -36,8 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
+#import "TLOGrowlController.h"
 #import "TPCPreferences.h"
 
 NS_ASSUME_NONNULL_BEGIN

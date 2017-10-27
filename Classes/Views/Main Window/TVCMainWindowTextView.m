@@ -35,6 +35,18 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "IRCColorFormat.h"
+#import "TLOLanguagePreferences.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTextViewMavericksUserInteracePrivate.h"
+#import "TVCMainWindowTextViewYosemiteUserInteracePrivate.h"
+#import "TVCMainWindowSegmentedControlPrivate.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
+#import "TVCMainWindowTextViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _WindowContentBorderTotalPaddingMavericks		23.0

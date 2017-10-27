@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLONotificationConfigurationPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TXDefaultAlertSoundPreferenceValue = @"Default";

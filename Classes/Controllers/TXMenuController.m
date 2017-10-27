@@ -36,6 +36,65 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCChannelMode.h"
+#import "IRCChannelUser.h"
+#import "IRCExtrasPrivate.h"
+#import "IRCISupportInfo.h"
+#import "IRCUser.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+#import "TVCBasicTableView.h"
+#import "TVCInputPromptDialog.h"
+#import "TVCLogController.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK2.h"
+#import "TVCMemberList.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowSplitView.h"
+#import "TVCMainWindowTextView.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TLOpenLink.h"
+#import "TLOPopupPrompts.h"
+#import "TDCAboutDialogPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCChannelInviteSheetPrivate.h"
+#import "TDCChannelModifyModesSheetPrivate.h"
+#import "TDCChannelModifyTopicSheetPrivate.h"
+#import "TDCChannelPropertiesSheetPrivate.h"
+#import "TDCChannelSpotlightControllerPrivate.h"
+#import "TDCFileTransferDialogPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
+#import "TDCNicknameColorSheetPrivate.h"
+#import "TDCPreferencesControllerPrivate.h"
+#import "TDCServerChangeNicknameSheetPrivate.h"
+#import "TDCServerHighlightListSheetPrivate.h"
+#import "TDCServerPropertiesSheetPrivate.h"
+#import "TDCWelcomeSheetPrivate.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesCloudSyncExtension.h"
+#import "TPCPreferencesImportExport.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TXMasterControllerPrivate.h"
+#import "TXWindowControllerPrivate.h"
+#import "TXMenuControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
+#import <HockeySDK/HockeySDK.h>
+#endif
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+#import <Sparkle/Sparkle.h>
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _channelIsActive			(c && [c isActive])

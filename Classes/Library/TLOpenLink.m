@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesLocal.h"
+#import "TLOpenLink.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOpenLink

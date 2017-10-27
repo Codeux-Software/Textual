@@ -35,6 +35,7 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
 #import "ICLPayload.h"
 #import "ICLPayloadInternal.h"
 

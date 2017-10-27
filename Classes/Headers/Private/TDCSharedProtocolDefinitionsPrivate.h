@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCClient, IRCChannel;
+
 @protocol TDCClientPrototype <NSObject>
 @required
 

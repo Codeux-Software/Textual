@@ -35,6 +35,14 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TVCBasicTableView.h"
+#import "TDCChannelBanListSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelBanListSheetEntry : NSObject

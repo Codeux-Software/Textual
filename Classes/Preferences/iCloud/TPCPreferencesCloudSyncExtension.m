@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TPCThemeController.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPreferencesCloudSyncExtensionPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

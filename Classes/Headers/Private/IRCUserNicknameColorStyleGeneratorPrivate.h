@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TPCThemeSettings.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCUserNicknameColorStyleGenerator : NSObject

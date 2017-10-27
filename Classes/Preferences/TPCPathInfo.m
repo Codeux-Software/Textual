@@ -37,6 +37,12 @@
 
 #import "BuildConfig.h"
 
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPathInfoPrivate.h"
+
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 #include <pwd.h>            // -------
 #include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox

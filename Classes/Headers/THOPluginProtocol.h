@@ -35,9 +35,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCCommandIndex.h"
+#import "TVCLogLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class AHHyperlinkScannerResult;
+@class IRCClient, IRCChannel, IRCChannelUser, IRCPrefix, IRCMessage;
+@class TVCLogController;
 
 @class THOPluginDidPostNewMessageConcreteObject;
 @class THOPluginDidReceiveServerInputConcreteObject;

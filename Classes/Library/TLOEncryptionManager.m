@@ -35,6 +35,19 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
+#import "TVCLogRenderer.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCWorld.h"
+#import "TLOEncryptionManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1

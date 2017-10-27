@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCMainWindowSplitView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]

@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCServerList;
+
 @interface TVCServerListSharedUserInterface : NSObject
 @property (readonly, weak) TVCServerList *serverList;
 
@@ -56,3 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#import "TVCServerListMavericksUserInterfacePrivate.h"
+#import "TVCServerListYosemiteUserInterfacePrivate.h"

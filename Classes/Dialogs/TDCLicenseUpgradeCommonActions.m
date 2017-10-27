@@ -35,6 +35,11 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TLOpenLink.h"
+#import "TDCLicenseUpgradeCommonActionsPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1

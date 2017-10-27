@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesUserDefaults.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)

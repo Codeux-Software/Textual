@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "IRCServer.h"
+#import "TVCBasicTableView.h"
+#import "TDCServerEndpointListSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _endpointEntryTableDragToken		@"TDCServerEndpointListSheetEntryTableDragToken"
