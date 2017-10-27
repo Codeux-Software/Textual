@@ -87,8 +87,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)applicationActiveStyle
 {
-	NSMutableString *resultString = [NSMutableString string];
-
 	NSString *themeName = themeController().name;
 
 	TPCThemeControllerStorageLocation storageLocation = themeController().storageLocation;
