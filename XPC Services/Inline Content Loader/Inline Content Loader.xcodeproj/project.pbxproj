@@ -16,6 +16,7 @@
 		4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D1A1F943F0D00FD581F /* ICMVimeo.m */; };
 		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
 		4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D261F94465F00FD581F /* ICMImgurGifv.m */; };
+		4C65216D1FA3BE26001FF5CA /* ICMGithubCommits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65216C1FA3BE26001FF5CA /* ICMGithubCommits.swift */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
@@ -137,6 +138,10 @@
 		4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
 		4C576D251F94465E00FD581F /* ICMImgurGifv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMImgurGifv.h; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.h"; sourceTree = "<group>"; };
 		4C576D261F94465F00FD581F /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
+		4C65216C1FA3BE26001FF5CA /* ICMGithubCommits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ICMGithubCommits.swift; path = Classes/Modules/Github/ICMGithubCommits.swift; sourceTree = "<group>"; };
+		4C65216E1FA3BE83001FF5CA /* ICLProcessSwiftBridgePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLProcessSwiftBridgePrivate.h; path = Classes/Headers/Private/ICLProcessSwiftBridgePrivate.h; sourceTree = "<group>"; };
+		4C6521711FA3CB59001FF5CA /* ICMGithubCommits.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMGithubCommits.css; path = Resources/Modules/Github/ICMGithubCommits.css; sourceTree = "<group>"; };
+		4C6521721FA3CB59001FF5CA /* ICMGithubCommits.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMGithubCommits.mustache; path = Resources/Modules/Github/ICMGithubCommits.mustache; sourceTree = "<group>"; };
 		4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadPrivate.h; path = Classes/Headers/Private/ICLPayloadPrivate.h; sourceTree = "<group>"; };
 		4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentModulePrivate.h; path = Classes/Headers/Private/ICLInlineContentModulePrivate.h; sourceTree = "<group>"; };
 		4C7879F61F88EA710030AA84 /* ICLPayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPayload.m; path = Classes/Service/ICLPayload.m; sourceTree = "<group>"; };
@@ -383,6 +388,24 @@
 			name = "Imgur .gifv";
 			sourceTree = "<group>";
 		};
+		4C65216F1FA3CAEA001FF5CA /* Github */ = {
+			isa = PBXGroup;
+			children = (
+				4C6521701FA3CAF0001FF5CA /* Resources */,
+				4C65216C1FA3BE26001FF5CA /* ICMGithubCommits.swift */,
+			);
+			name = Github;
+			sourceTree = "<group>";
+		};
+		4C6521701FA3CAF0001FF5CA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C6521711FA3CB59001FF5CA /* ICMGithubCommits.css */,
+				4C6521721FA3CB59001FF5CA /* ICMGithubCommits.mustache */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		4C8C72621F1201A000ED72DB /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,6 +472,7 @@
 		4C8C72EB1F121EF000ED72DB /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				4C65216E1FA3BE83001FF5CA /* ICLProcessSwiftBridgePrivate.h */,
 				4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */,
 				4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */,
 				4C8C72EE1F121EF000ED72DB /* ICLProcessDelegatePrivate.h */,
@@ -734,6 +758,7 @@
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4C65216F1FA3CAEA001FF5CA /* Github */,
 				4C356A581F9FBFF500E671D9 /* Assessed Media */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
@@ -833,6 +858,7 @@
 				TargetAttributes = {
 					4C1406411F11942B00C73D53 = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -894,6 +920,7 @@
 				4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */,
 				4CB3B60B1F9C2CB00004502A /* ICMLiveleak.m in Sources */,
 				4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */,
+				4C65216D1FA3BE26001FF5CA /* ICMGithubCommits.swift in Sources */,
 				4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */,
 				4C356A591F9FC0E200E671D9 /* ICMAssessedMedia.m in Sources */,
 				4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */,
@@ -911,7 +938,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessSwiftBridgePrivate.h";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -919,7 +950,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessSwiftBridgePrivate.h";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -953,7 +988,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessSwiftBridgePrivate.h";
+				SWIFT_VERSION = 4.0;
 			};
 			name = "Release (App Store)";
 		};
