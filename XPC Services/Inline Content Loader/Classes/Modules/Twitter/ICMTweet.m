@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Action Block
 
-+ (SEL)actionForURL:(NSURL *)url
++ (nullable SEL)actionForURL:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
 

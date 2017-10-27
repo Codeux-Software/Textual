@@ -134,7 +134,7 @@ ClassWithDesignatedInitializerInitMethod
 	return nil;
 }
 
-+ (SEL)actionForURL:(NSURL *)url
++ (nullable SEL)actionForURL:(NSURL *)url
 {
 	return NULL;
 }

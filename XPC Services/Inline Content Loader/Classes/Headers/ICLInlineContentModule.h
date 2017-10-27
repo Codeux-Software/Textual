@@ -109,7 +109,7 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
  *
  * NULL is returned if this method is not implemented.
  */
-+ (SEL)actionForURL:(NSURL *)url;
++ (nullable SEL)actionForURL:(NSURL *)url;
 
 #pragma mark -
 #pragma mark Context
