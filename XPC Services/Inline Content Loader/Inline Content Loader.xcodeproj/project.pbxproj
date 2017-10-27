@@ -17,6 +17,8 @@
 		4C576D231F9442CC00FD581F /* ICMVimeo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C576D1F1F943F2B00FD581F /* ICMVimeo.mustache */; };
 		4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C576D261F94465F00FD581F /* ICMImgurGifv.m */; };
 		4C65216D1FA3BE26001FF5CA /* ICMGithubCommits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65216C1FA3BE26001FF5CA /* ICMGithubCommits.swift */; };
+		4C74E2041FA3F5370067FB03 /* ICMGithubCommits.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C6521711FA3CB59001FF5CA /* ICMGithubCommits.css */; };
+		4C74E2051FA3F5370067FB03 /* ICMGithubCommits.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C6521721FA3CB59001FF5CA /* ICMGithubCommits.mustache */; };
 		4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7879F61F88EA710030AA84 /* ICLPayload.m */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
@@ -87,6 +89,8 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4C9CAC6A1F959585006887B7 /* ICMDailymotion.mustache in CopyFiles */,
+				4C74E2041FA3F5370067FB03 /* ICMGithubCommits.css in CopyFiles */,
+				4C74E2051FA3F5370067FB03 /* ICMGithubCommits.mustache in CopyFiles */,
 				4CB3B61A1F9C3E9B0004502A /* ICMInlineHTML.css in CopyFiles */,
 				4CB3B61B1F9C3E9B0004502A /* ICMInlineHTML.js in CopyFiles */,
 				4CB3B61C1F9C3E9B0004502A /* ICMInlineHTML.mustache in CopyFiles */,
@@ -758,12 +762,12 @@
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4C65216F1FA3CAEA001FF5CA /* Github */,
 				4C356A581F9FBFF500E671D9 /* Assessed Media */,
 				4CE58B941F8A36FB00493E7C /* Common Images */,
 				4C9810111F93BA8400B116A4 /* Common Videos */,
 				4C9CAC601F9585B8006887B7 /* Dailymotion */,
 				4C9CAC741F96A2AB006887B7 /* Gfycat */,
+				4C65216F1FA3CAEA001FF5CA /* Github */,
 				4C8DBD481FA15DAE00BA025A /* Gyazo */,
 				4C576D241F94461D00FD581F /* Imgur .gifv */,
 				4CB3B6071F9C2C5B0004502A /* Liveleak */,
