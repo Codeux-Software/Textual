@@ -107,14 +107,14 @@ NS_ASSUME_NONNULL_BEGIN
  A collection of paths for .css files that need to be loaded to allow the
  rendered HTML to appear correct.
  */
-@property (copy, readonly, nullable) NSArray<NSURL *> *styleResources;
+@property (copy, readonly) NSArray<NSURL *> *styleResources;
 
 /**
  A collection of paths for .js files that need to be loaded to allow the
  rendered HTML to appear correct.
 
  */
-@property (copy, readonly, nullable) NSArray<NSURL *> *scriptResources;
+@property (copy, readonly) NSArray<NSURL *> *scriptResources;
 
 /**
  Rendered HTML or an empty string
@@ -127,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
  If a module renders HTML using Objective-C, then the final result
  can be assigned to this property.
  */
-@property (copy, readonly, nullable) NSString *html;
+@property (copy, readonly) NSString *html;
 
 #pragma mark -
 #pragma mark Advanced
@@ -233,8 +233,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSURL *urlToInline;
 @property (nonatomic, assign, readwrite) unsigned long long contentLength;
 @property (nonatomic, assign, readwrite) NSSize contentSize;
-@property (nonatomic, copy, nullable, readwrite) NSArray<NSURL *> *styleResources;
-@property (nonatomic, copy, nullable, readwrite) NSArray<NSURL *> *scriptResources;
+@property (nonatomic, copy, readwrite) NSArray<NSURL *> *styleResources;
+@property (nonatomic, copy, readwrite) NSArray<NSURL *> *scriptResources;
 @property (nonatomic, copy, readwrite) NSString *html;
 @property (nonatomic, copy, nullable, readwrite) NSString *entrypoint;
 @property (nonatomic, copy, null_resettable, readwrite) NSDictionary<NSString *, id <NSCopying>> *entrypointPayload;

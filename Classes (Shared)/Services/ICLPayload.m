@@ -315,15 +315,19 @@ ClassWithDesignatedInitializerInitMethod
 	self->_contentSize = contentSize;
 }
 
-- (void)setStyleResources:(nullable NSArray<NSURL *> *)styleResources
+- (void)setStyleResources:(NSArray<NSURL *> *)styleResources
 {
+	NSParameterAssert(styleResources != nil);
+
 	if (self->_styleResources != styleResources) {
 		self->_styleResources = styleResources;
 	}
 }
 
-- (void)setScriptResources:(nullable NSArray<NSURL *> *)scriptResources
+- (void)setScriptResources:(NSArray<NSURL *> *)scriptResources
 {
+	NSParameterAssert(scriptResources != nil);
+
 	if (self->_scriptResources != scriptResources) {
 		self->_scriptResources = scriptResources;
 	}
