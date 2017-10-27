@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface NSCell (TXCellHelperPrivate)
+@property (readonly, nullable) NSWindow *window;
 @property (readonly, nullable) TVCMainWindow *mainWindow;
 @end
 

@@ -145,6 +145,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSCell (TXCellHelperPrivate)
 
+- (nullable NSWindow *)window
+{
+	return self.controlView.window;
+}
+
 - (nullable TVCMainWindow *)mainWindow
 {
 	return self.controlView.mainWindow;
