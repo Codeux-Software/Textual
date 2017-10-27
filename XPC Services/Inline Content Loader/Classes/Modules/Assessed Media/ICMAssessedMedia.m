@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Action
 
-+ (SEL)actionForURL:(NSURL *)url
++ (nullable SEL)actionForURL:(NSURL *)url
 {
 	if ([TPCPreferences inlineMediaCheckEverything] == NO) {
 		return NULL;
