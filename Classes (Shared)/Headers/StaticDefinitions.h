@@ -80,12 +80,6 @@
 /* Misc. */
 #define NSInvertedComparisonResult(c)			((c) * (-1))
 
-
-/* The reference date is the date & time of the first commit to the
- Textual repo. Textual existed before then, of course, but the date
- will remain as the official reference date for its birthday. */
-/* The date decodes to July 23, 2010 03:53:00 AM */
-#define TXBirthdayReferenceDate					1279871580.000000
 #define NSIsCurrentThreadMain()					[[NSThread isMainThread]]
 
 /* typedef for filesize information */

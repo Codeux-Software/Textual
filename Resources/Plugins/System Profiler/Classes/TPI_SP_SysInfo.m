@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSTimeInterval runtime = [TPCApplicationInfo timeIntervalSinceApplicationInstall];
 
-	NSTimeInterval birthday = [NSDate timeIntervalSinceNow:TXBirthdayReferenceDate];
+	NSTimeInterval birthday = [NSDate timeIntervalSinceNow:[TPCApplicationInfo applicationBirthday]];
 
 	if (runtime > birthday) {
 		runtime = birthday;
