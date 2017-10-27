@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "IRCMessage.h"
+#import "THOPluginItemPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "THOPluginDispatcherPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";

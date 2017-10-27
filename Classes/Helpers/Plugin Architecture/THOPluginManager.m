@@ -36,6 +36,18 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCResourceManager.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginItemPrivate.h"
+#import "THOPluginProtocol.h"
+#import "THOPluginManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _extrasInstallerExtensionUpdateCheckInterval			345600

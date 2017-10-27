@@ -37,7 +37,11 @@
 
 /* *** XPC PROTOCOL HEADERS ARE PRIVATE *** */
 
+#import "GCDAsyncSocketTrustPanel.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCConnectionConfig;
 
 typedef void (^RCMSecureConnectionInformationCompletionBlock)(
 											  NSString * _Nullable policyName,

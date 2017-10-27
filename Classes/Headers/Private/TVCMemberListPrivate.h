@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
+#import "TVCMemberList.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCMemberListMavericksUserInterfaceBackground;
+@class TVCMemberListUserInfoPopover;
 
 @interface TVCMemberList ()
 @property (nonatomic, weak) id keyDelegate;

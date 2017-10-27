@@ -35,6 +35,18 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "NSViewHelper.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TVCNotificationConfigurationViewControllerPrivate.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCPreferencesControllerPrivate.h"
+#import "TDCChannelPropertiesNotificationConfigurationPrivate.h"
 #import "TDCChannelPropertiesSheetInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

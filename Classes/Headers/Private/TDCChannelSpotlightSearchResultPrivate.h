@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCChannel, TDCChannelSpotlightController;
+
 @interface TDCChannelSpotlightSearchResult : NSObject
 @property (nonatomic, weak) TDCChannelSpotlightController *controller;
 @property (nonatomic, strong) IRCChannel *channel;

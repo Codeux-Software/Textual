@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCLogController.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class ICLPayload;
 
 @interface TVCLogController ()
 @property (nonatomic, assign, readwrite, getter=viewIsEncrypted) BOOL encrypted;

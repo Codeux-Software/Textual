@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#import "THOUnicodeHelper.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 static NSUInteger TABLE1[] = {

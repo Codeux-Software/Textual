@@ -37,6 +37,11 @@
 
 #import <CoreServices/CoreServices.h>
 
+#import "TPCPathInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* 

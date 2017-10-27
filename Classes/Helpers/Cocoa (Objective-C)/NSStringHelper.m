@@ -36,6 +36,13 @@
 
  *********************************************************************** */
 
+#import "IRC.h"
+#import "IRCClient.h"
+#import "IRCISupportInfo.h"
+#import "IRCColorFormat.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCLogRenderer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSStringEncoding const TXDefaultPrimaryStringEncoding = NSUTF8StringEncoding;

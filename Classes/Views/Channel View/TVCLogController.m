@@ -36,6 +36,33 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "ICLPayloadLocalPrivate.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannel.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettingsPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLinkParser.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogLine.h"
+#import "TVCLogRenderer.h"
+#import "TVCLogControllerHistoricLogFilePrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
+#import "TVCLogControllerOperationQueuePrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCLogControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _enqueueBlock(operationBlock)			\

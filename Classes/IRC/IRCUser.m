@@ -36,6 +36,11 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCUserPersistentStorePrivate.h"
+#import "IRCUserRelationsPrivate.h"
 #import "IRCUserInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

@@ -35,6 +35,12 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TVCMainWindowSplitView.h"
+#import "TVCMainWindowTextViewPrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowLoadingScreen.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowLoadingScreenView ()

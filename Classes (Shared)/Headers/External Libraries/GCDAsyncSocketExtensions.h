@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "GCDAsyncSocket.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)

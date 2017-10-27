@@ -36,6 +36,10 @@
 
  *********************************************************************** */
 
+#import "IRCColorFormat.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
+#import "TVCTextFormatterMenuPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _formattingMenuForegroundColorEnabledTag		95005

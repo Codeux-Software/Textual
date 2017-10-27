@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel;
 
 TEXTUAL_EXTERN NSString * const TVCLogLineUndefinedNicknameFormat;
 TEXTUAL_EXTERN NSString * const TVCLogLineActionNicknameFormat;

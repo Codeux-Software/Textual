@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannelConfig, IRCHighlightMatchCondition;
 
 @interface TDCHighlightEntrySheet : TDCSheetBase
 - (instancetype)initWithConfig:(nullable IRCHighlightMatchCondition *)config NS_DESIGNATED_INITIALIZER;

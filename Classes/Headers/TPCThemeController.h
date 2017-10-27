@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class TPCThemeSettings;
 
 TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameBasicPrefix;
 TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameCompletePrefix;

@@ -35,6 +35,16 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TLOLicenseManagerDownloaderPrivate.h"
+#import "TLOPopupPrompts.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
+#import "TDCLicenseUpgradeEligibilitySheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1

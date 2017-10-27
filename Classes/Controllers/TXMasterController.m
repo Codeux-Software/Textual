@@ -38,6 +38,42 @@
 
 #import "BuildConfig.h"
 
+#import "NSObjectHelperPrivate.h"
+#import "OELReachability.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TLOPopupPrompts.h"
+#import "TLOSpeechSynthesizerPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
+#import "TVCLogControllerHistoricLogFilePrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
+#import "TVCLogControllerOperationQueuePrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCCommandIndexPrivate.h"
+#import "IRCExtrasPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "TPCApplicationInfoPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCResourceManagerPrivate.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TXMenuControllerPrivate.h"
+#import "TXWindowControllerPrivate.h"
+#import "TXMasterControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
+#import <HockeySDK/HockeySDK.h>
+#endif
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+#import <Sparkle/Sparkle.h>
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TXMasterController ()

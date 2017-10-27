@@ -36,6 +36,17 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TVCMainWindow.h"
+#import "TVCServerListPrivate.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+#import "TVCServerListCellPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _groupItemLeadingConstraintQuirkCorrectedConstraint		5.0

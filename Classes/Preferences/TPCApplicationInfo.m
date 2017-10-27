@@ -37,6 +37,9 @@
 
 #import "BuildConfig.h"
 
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCApplicationInfoPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCApplicationInfo

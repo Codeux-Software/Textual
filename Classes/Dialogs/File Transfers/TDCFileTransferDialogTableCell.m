@@ -36,6 +36,11 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
+#import "TDCFileTransferDialogTableCellPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _filenameFieldWithProgressBarYCord				4

@@ -35,6 +35,11 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "IRCColorFormat.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define TVCTextViewWithIRCFormatterWidthPadding		1.0

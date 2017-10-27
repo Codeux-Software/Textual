@@ -36,6 +36,15 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TXGlobalModels.h"
+#import "NSTableVIewHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "IRCClient.h"
+#import "TVCBasicTableView.h"
+#import "TDCServerChannelListDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerChannelListDialogEntry : NSObject

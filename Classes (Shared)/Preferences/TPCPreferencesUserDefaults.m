@@ -37,6 +37,8 @@
 
 #include "BuildConfig.h"
 
+#import "TPCPreferencesUserDefaults.h"
+
 /* TPCPreferencesUserDefaults is specifically designed for reading and writing
  from the main app's preferences file, even within an XPC service. */
 /* NSUserDefaults can be used in an XPC service if service speific preferences

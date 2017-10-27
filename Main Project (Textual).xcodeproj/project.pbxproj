@@ -528,6 +528,8 @@
 		4C3D873E1EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D873D1EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h */; };
 		4C3D873F1EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D873D1EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h */; };
 		4C3D87401EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D873D1EC2510100F33C07 /* TDCServerEndpointListSheetPrivate.h */; };
+		4C3F1D5D1FA38E1200293F4B /* TPCPreferencesCloudSyncExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3F1D671FA38E1300293F4B /* TPCPreferencesCloudSyncExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3F5D391D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
 		4C3F5D3A1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
 		4C3F5D3B1D2EB00200A5E888 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3F5D381D2EB00200A5E888 /* IRCAddressBookInternal.h */; };
@@ -1135,9 +1137,6 @@
 		4C8AF6D0158E99520026668C /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
 		4C8AF6D1158E99520026668C /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
 		4C8AF6D2158E99520026668C /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
-		4C8C72A61F1204FC00ED72DB /* TextualApplicationShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8C72A71F1204FC00ED72DB /* TextualApplicationShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8C72A81F1204FC00ED72DB /* TextualApplicationShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8C72AC1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; };
 		4C8C72AD1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; };
 		4C8C72AE1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; };
@@ -1626,9 +1625,9 @@
 		4CE58BAF1F8A62D700493E7C /* TVCLogControllerInlineMediaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */; };
 		4CE58BB01F8A62D700493E7C /* TVCLogControllerInlineMediaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */; };
 		4CE58BB11F8A62D700493E7C /* TVCLogControllerInlineMediaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE58BAE1F8A62D600493E7C /* TVCLogControllerInlineMediaService.m */; };
-		4CE58BB71F8A63E700493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CE58BBA1F8A63E800493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CE58BBD1F8A63E800493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CE58BB71F8A63E700493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; };
+		4CE58BBA1F8A63E800493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; };
+		4CE58BBD1F8A63E800493E7C /* ICLPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BB51F8A63E000493E7C /* ICLPayload.h */; };
 		4CE58BC01F8A640A00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
 		4CE58BC11F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
 		4CE58BC21F8A640B00493E7C /* ICLInlineContentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE58BBF1F8A640200493E7C /* ICLInlineContentProtocol.h */; };
@@ -2500,7 +2499,6 @@
 		4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = "Classes (Shared)/Headers/External Libraries/GCDAsyncSocket.h"; sourceTree = "<group>"; };
 		4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMEncodeHTML.h; path = "Classes/Headers/External Libraries/GTMEncodeHTML.h"; sourceTree = "<group>"; };
 		4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "IRC Remote Connection Manager.xcodeproj"; path = "XPC Services/IRC Remote Connection Manager/IRC Remote Connection Manager.xcodeproj"; sourceTree = "<group>"; };
-		4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplicationShared.h; path = "Classes (Shared)/Headers/TextualApplicationShared.h"; sourceTree = SOURCE_ROOT; };
 		4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = "Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocket.m"; sourceTree = SOURCE_ROOT; };
 		4C8C72B61F1205B600ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/RCMConnectionManagerProtocol.h"; sourceTree = "<group>"; };
 		4C8C72B71F1205B600ED72DB /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/HLSHistoricLogProtocol.h"; sourceTree = "<group>"; };
@@ -3713,7 +3711,6 @@
 				4C8C72B51F1205B600ED72DB /* XPC Protocols */,
 				4CE58BB51F8A63E000493E7C /* ICLPayload.h */,
 				4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */,
-				4C8C72A51F1204FC00ED72DB /* TextualApplicationShared.h */,
 				4C2C52C61F12E209009701E0 /* TLOLanguagePreferences.h */,
 				4C8AF57B158E99520026668C /* TLOTimer.h */,
 				4C1EAB2E1F89F6E700A4E647 /* TPCPreferences.h */,
@@ -4464,7 +4461,6 @@
 			files = (
 				4C2C52C71F12E209009701E0 /* TLOLanguagePreferences.h in Headers */,
 				4CB1B6E01EBFB8CD00F2CCBA /* IRCServer.h in Headers */,
-				4C8C72A61F1204FC00ED72DB /* TextualApplicationShared.h in Headers */,
 				4CD98D671F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */,
 				4C1A5C7B1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */,
@@ -4713,7 +4709,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CB1B6E11EBFB8CD00F2CCBA /* IRCServer.h in Headers */,
-				4C8C72A71F1204FC00ED72DB /* TextualApplicationShared.h in Headers */,
 				4C1A5C7C1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C8C72B91F1205B600ED72DB /* RCMConnectionManagerProtocol.h in Headers */,
 				4C52EFA11D58C24C0003AA1C /* IRCUser.h in Headers */,
@@ -4910,6 +4905,7 @@
 				4C2D6AC51D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */,
 				4C7B48F91D131A2A008D7926 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
 				4CCD4CA41D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h in Headers */,
+				4C3F1D5D1FA38E1200293F4B /* TPCPreferencesCloudSyncExtension.h in Headers */,
 				4C7B05001D1210F300295E82 /* BuildConfig.h in Headers */,
 				4CB17EC61D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4CEA29C51D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
@@ -4960,7 +4956,6 @@
 			files = (
 				4C2C52C91F12E209009701E0 /* TLOLanguagePreferences.h in Headers */,
 				4CB1B6E21EBFB8CD00F2CCBA /* IRCServer.h in Headers */,
-				4C8C72A81F1204FC00ED72DB /* TextualApplicationShared.h in Headers */,
 				4CD98D691F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */,
 				4C1A5C7D1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C8C72BA1F1205B600ED72DB /* RCMConnectionManagerProtocol.h in Headers */,
@@ -5156,6 +5151,7 @@
 				4C2D6AC61D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */,
 				4C7B48FA1D131A2A008D7926 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
 				4CCD4CA51D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h in Headers */,
+				4C3F1D671FA38E1300293F4B /* TPCPreferencesCloudSyncExtension.h in Headers */,
 				4C7B05011D12110500295E82 /* BuildConfig.h in Headers */,
 				4CB17EC71D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4CEA29C61D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,

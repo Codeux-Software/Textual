@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCChannelUser.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCMemberList;
 
 @interface TVCMemberListSharedUserInterface : NSObject
 @property (readonly, weak) TVCMemberList *memberList;
@@ -71,3 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#import "TVCMemberListMavericksUserInterfacePrivate.h"
+#import "TVCMemberListYosemiteUserInterfacePrivate.h"

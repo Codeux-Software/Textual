@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "IRCAddressBookUserTracking.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const IRCAddressBookUserTrackingStatusChangedNotification = @"IRCAddressBookUserTrackingStatusChangedNotification";

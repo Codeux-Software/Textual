@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "TVCLogLine.h"
+#import "TLOLinkParser.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOLinkParser

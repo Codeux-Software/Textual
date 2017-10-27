@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCMainWindow;
+
 @interface TLONicknameCompletionStatus : NSObject
 - (instancetype)initWithWindow:(TVCMainWindow *)mainWindow NS_DESIGNATED_INITIALIZER;
 

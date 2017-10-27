@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "IRCChannel.h"
+#import "IRCUserRelationsPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCUserRelations ()

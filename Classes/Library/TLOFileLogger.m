@@ -36,6 +36,14 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TPCPathInfoPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TVCLogLinePrivate.h"
+#import "TLOFileLoggerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TLOFileLoggerConsoleDirectoryName				= @"Console";

@@ -41,6 +41,9 @@
  Each subclass overrides ALL methods of its super. That way changing the
  alignment of super wont have any impact on other sizes. */
 
+#import "NSObjectHelperPrivate.h"
+#import "TVCServerListYosemiteUserInterfacePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListYosemiteScaledUserInterface ()

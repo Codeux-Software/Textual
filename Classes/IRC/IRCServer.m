@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRC.h"
+#import "IRCConnectionConfig.h"
 #import "IRCServerInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

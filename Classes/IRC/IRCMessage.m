@@ -36,6 +36,11 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TXGlobalModelsPrivate.h"
+#import "IRCClientPrivate.h"
+#import "IRCPrefix.h"
 #import "IRCMessageInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

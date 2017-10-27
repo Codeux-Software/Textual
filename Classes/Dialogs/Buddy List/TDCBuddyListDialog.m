@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCBasicTableView.h"
+#import "TDCBuddyListDialogDropViewPrivate.h"
 #import "TDCBuddyListDialogInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

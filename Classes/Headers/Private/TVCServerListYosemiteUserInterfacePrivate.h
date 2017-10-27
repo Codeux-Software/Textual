@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCServerListSharedUserInterfacePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol TVCServerListYosemiteScaledUserInterfaceProtocol <NSObject>

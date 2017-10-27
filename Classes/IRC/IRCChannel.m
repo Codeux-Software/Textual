@@ -38,6 +38,33 @@
 
 #include <objc/message.h>
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXWindowControllerPrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMemberListPrivate.h"
+#import "TVCMemberListCellPrivate.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCLogControllerPrivate.h"
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCSheetBase.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOFileLoggerPrivate.h"
+#import "TLOInputHistoryPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelConfigPrivate.h"
+#import "IRCChannelModePrivate.h"
+#import "IRCChannelUserPrivate.h"
+#import "IRCISupportInfo.h"
+#import "IRCTreeItemPrivate.h"
+#import "IRCUser.h"
+#import "IRCUserRelationsPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCChannelPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelConfigurationWasUpdatedNotification";

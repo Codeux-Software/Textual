@@ -38,6 +38,21 @@
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 #import <StoreKit/StoreKit.h>
 
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "NSViewHelper.h"
+#import "TXGlobalModels.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TLOTimer.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
+#import "TDCInAppPurchaseProductTableCellViewPrivate.h"
+#import "TDCInAppPurchaseProductTableEntryPrivate.h"
+#import "TDCInAppPurchaseUpgradeEligibilitySheetPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TDCInAppPurchaseDialogTransactionFinishedNotification = @"TDCInAppPurchaseDialogTransactionFinishedNotification";

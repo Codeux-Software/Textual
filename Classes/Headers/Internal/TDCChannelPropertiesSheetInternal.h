@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TDCChannelPropertiesSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannelConfigMutable;
 
 @interface TDCChannelPropertiesSheet ()
 @property (nonatomic, strong) IRCChannelConfigMutable *config;

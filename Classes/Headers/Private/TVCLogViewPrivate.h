@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCLogView.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCLogController, TVCLogPolicy;
 
 @interface TVCLogView ()
 @property (nonatomic, weak) TVCLogController *viewController;

@@ -36,6 +36,22 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TPCPathInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOpenLink.h"
+#import "TLOPopupPrompts.h"
+#import "TVCMainWindow.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelConfig.h"
+#import "IRCChannel.h"
+#import "IRCServer.h"
+#import "IRCWorldPrivate.h"
+#import "IRCExtrasPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCExtras

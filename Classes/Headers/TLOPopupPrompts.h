@@ -36,8 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSString * const TLOPopupPromptSuppressionPrefix;

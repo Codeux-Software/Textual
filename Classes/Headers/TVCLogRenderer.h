@@ -36,9 +36,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class GRMustacheTemplate;
+@class TVCLogController;
 
 /* Properties to configure the renderer and provide additional
  context so that it can provide the best possible results. */

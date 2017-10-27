@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPreferencesPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPreferences

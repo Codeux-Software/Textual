@@ -36,6 +36,19 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesCloudSync.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCThemeSettingsPrivate.h"
+#import "TPCThemeControllerPrivate.h"
+
 #warning TODO: Figure out why the dynamic buffer might make Equinox lose content.
 
 NS_ASSUME_NONNULL_BEGIN
@@ -634,7 +647,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	[themesMappedByLocation setObject:checkPath([TPCPathInfo customThemes]) forKey:@(TPCThemeControllerStorageCustomLocation)];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[themesMappedToLocation setObject:checkPath([TPCPathInfo cloudCustomThemes]) forKey:@(TPCThemeControllerStorageCloudLocation)];
+	[themesMappedByLocation setObject:checkPath([TPCPathInfo cloudCustomThemes]) forKey:@(TPCThemeControllerStorageCloudLocation)];
 #endif
 
 	/* Next translate result into a dictionary whoes key is the name of the

@@ -36,7 +36,12 @@
 
  *********************************************************************** */
 
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel, IRCChannelModeContainer;
 
 @interface TDCChannelModifyModesSheet : TDCSheetBase <TDCChannelPrototype>
 - (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;

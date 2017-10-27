@@ -38,6 +38,9 @@
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 #import "BuildConfig.h"
 
+#import "ARLReceiptLoader.h"
+#import "TLOAppStoreManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -

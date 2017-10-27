@@ -38,6 +38,29 @@
 
 #include <objc/message.h>
 
+#import "GTMEncodeHTML.h"
+#import "WebScriptObjectHelperPrivate.h"
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+#import "IRCWorld.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogPolicyPrivate.h"
+#import "TVCLogRenderer.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK1.h"
+#import "TVCLogViewInternalWK2.h"
+#import "TVCLogScriptEventSinkPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogScriptEventSink ()

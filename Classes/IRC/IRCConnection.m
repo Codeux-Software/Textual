@@ -40,6 +40,16 @@
 
 #import <objc/message.h>
 
+#import "NSObjectHelperPrivate.h"
+#import "GCDAsyncSocketCipherNames.h"
+#import "GCDAsyncSocketExtensions.h"
+#import "GCDAsyncSocketTrustPanel.h"
+#import "TLOLanguagePreferences.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCConnectionConfig.h"
+#import "IRCConnectionPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection ()

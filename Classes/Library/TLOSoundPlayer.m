@@ -38,6 +38,9 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
+#import "TLONotificationConfigurationPrivate.h"
+#import "TLOSoundPlayer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOSoundPlayer

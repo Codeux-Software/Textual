@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCClient.h"
+#import "IRCISupportInfo.h"
 #import "IRCModeInfoInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

@@ -36,6 +36,15 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "GCDAsyncSocket.h"
+#import "TXGlobalModels.h"
+#import "IRCClientPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCFileTransferDialogTableCellPrivate.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCFileTransferDialogInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

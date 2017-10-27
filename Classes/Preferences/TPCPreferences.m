@@ -36,6 +36,18 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "IRCWorld.h"
+#import "TPCApplicationInfoPrivate.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesUserDefaultsLocal.h"
+#import "TPCPreferencesUserDefaultsMigratePrivate.h"
+#import "TPCPreferencesReloadPrivate.h"
+#import "TPCResourceManager.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "TPCPreferencesLocalPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCPreferencesThemeNameDefaultsKey	= @"Theme -> Name";

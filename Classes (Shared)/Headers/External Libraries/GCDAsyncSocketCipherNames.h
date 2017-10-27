@@ -1,6 +1,8 @@
 
 // See the contents of GCDAsyncSocketCipherNames.m for license information.
 
+#import "GCDAsyncSocket.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, GCDAsyncSocketCipherSuiteVersion) {

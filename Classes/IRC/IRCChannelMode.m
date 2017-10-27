@@ -36,6 +36,13 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCISupportInfoPrivate.h"
+#import "IRCModeInfo.h"
+#import "IRCChannelModePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCChannelMode ()

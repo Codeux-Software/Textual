@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import <Growl/Growl.h>
+
+#import "TLOLanguagePreferences.h"
+#import "TLONotificationConfigurationPrivate.h"
+#import "TLOSoundPlayer.h"
+#import "TVCNotificationConfigurationViewControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _alertSoundsDefaultSoundIndex			0

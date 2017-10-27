@@ -36,8 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 /* Each user on a server is allocated one instance of IRCUser. 
  IRCUser is used to keep track of information related to the user. */
 /* There is ever only one instance of IRCUser kept track of by the
@@ -47,6 +45,8 @@
  the actions necessary to update all components depending on the user. */
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 #pragma mark -
 #pragma mark Immutable Object

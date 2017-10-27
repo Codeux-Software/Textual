@@ -35,6 +35,21 @@
 
  *********************************************************************** */
 
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+#import "TXMasterController.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaultsLocal.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowLoadingScreen.h"
+#import "TVCServerList.h"
+#import "TPCPreferencesImportExportPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPreferencesImportExport

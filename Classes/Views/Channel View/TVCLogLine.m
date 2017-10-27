@@ -36,8 +36,17 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TXGlobalModels.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "TLOFileLoggerPrivate.h"
 #import "TVCLogLineInternal.h"
-
 #import "TVCLogLineXPCPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN

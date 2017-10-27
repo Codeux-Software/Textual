@@ -35,7 +35,16 @@
 
  *********************************************************************** */
 
+#import "IRCCommandIndex.h"
+#import "TVCLogLine.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel, IRCPrefix, IRCMessage;
+@class TVCLogController;
+
+@class THOPluginDidPostNewMessageConcreteObject;
+@class THOPluginWebViewJavaScriptPayloadConcreteObject;
 
 @interface THOPluginDispatcher : NSObject
 + (dispatch_queue_t)dispatchQueue;

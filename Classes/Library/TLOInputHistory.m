@@ -36,6 +36,16 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCWorld.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTextView.h"
+#import "TLOInputHistoryPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -

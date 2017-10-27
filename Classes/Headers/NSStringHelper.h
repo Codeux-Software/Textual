@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCClient;
+
 TEXTUAL_EXTERN NSStringEncoding const TXDefaultPrimaryStringEncoding;
 TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 

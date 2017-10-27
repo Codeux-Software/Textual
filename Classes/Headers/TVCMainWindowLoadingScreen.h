@@ -36,8 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 /* Animation is disabled unless an animated method is invoked */

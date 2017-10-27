@@ -35,6 +35,16 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TVCMainWindow.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCMemberListCellPrivate.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListUserInfoPopoverPrivate.h"
+#import "TVCMemberListPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCMemberListDragType = @"TVCMemberListDragType";

@@ -35,6 +35,15 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCWorld.h"
+#import "TVCChannelSelectionOutlineViewCellPrivate.h"
+#import "TVCChannelSelectionOutlineViewPrivate.h"
+#import "TVCChannelSelectionViewController.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCChannelSelectionViewController ()

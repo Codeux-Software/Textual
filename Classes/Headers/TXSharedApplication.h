@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class TXMasterController, TPCThemeController;
 
 #define masterController()			[self masterController]
 #define menuController()			[masterController() menuController]

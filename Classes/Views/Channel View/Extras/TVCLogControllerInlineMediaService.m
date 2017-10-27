@@ -35,9 +35,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "ICLInlineContentProtocol.h"
+#import "ICLPayload.h"
+#import "TXMasterController.h"
+#import "IRCTreeItem.h"
+#import "IRCWorld.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

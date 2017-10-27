@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesPrivate.h"
+#import "TPCPreferencesLocal.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPreferences (TPCPreferencesLocalPrivate)

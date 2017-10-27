@@ -35,6 +35,7 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
 #import "IRCHighlightMatchConditionInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

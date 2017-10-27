@@ -35,11 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "HLSHistoricLogProtocol.h"
 
+#import "TXMasterController.h"
+#import "IRCTreeItem.h"
+#import "IRCWorld.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogLinePrivate.h"
 #import "TVCLogLineXPCPrivate.h"
+#import "TVCLogControllerHistoricLogFilePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

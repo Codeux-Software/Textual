@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCServerList.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCServerListMavericksUserInterfaceBackground;
 
 @interface TVCServerList ()
 @property (nonatomic, weak) id keyDelegate;

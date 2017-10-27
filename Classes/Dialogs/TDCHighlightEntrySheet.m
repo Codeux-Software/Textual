@@ -36,6 +36,12 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCChannelConfig.h"
+#import "IRCHighlightMatchCondition.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCHighlightEntrySheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCHighlightEntrySheet ()

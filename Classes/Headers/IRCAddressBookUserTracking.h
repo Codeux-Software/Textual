@@ -35,9 +35,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCAddressBook.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingStatusChangedNotification;
 

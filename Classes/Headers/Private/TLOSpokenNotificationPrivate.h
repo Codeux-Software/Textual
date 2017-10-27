@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
+#import "TLOGrowlController.h"
+#import "TVCLogLine.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel, IRCTreeItem;
 
 @interface TLOSpokenNotification : NSObject
 @property (nonatomic, weak, null_unspecified, readonly) IRCClient *client;

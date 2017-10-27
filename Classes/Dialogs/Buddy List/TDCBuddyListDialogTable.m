@@ -35,6 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCAddressBookUserTracking.h"
+#import "IRCClient.h"
+#import "TDCBuddyListDialogEntryPrivate.h"
+#import "TDCBuddyListDialogTablePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCBuddyListDialogCellView

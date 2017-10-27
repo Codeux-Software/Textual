@@ -35,9 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCMainWindowTextView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCMainWindowTextViewContentView;
+@class TVCMainWindowSegmentedController, TVCMainWindowSegmentedControllerCell;
 
 @interface TVCMainWindowTextView ()
 - (TVCMainWindowSegmentedController *)segmentedController;
@@ -59,6 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)recalculateTextViewSize;
 - (void)recalculateTextViewSizeForced;
 @end
+
+@class TVCMainWindowTextViewContentView;
 
 @interface TVCMainWindowTextViewBackground : NSView
 @property (readonly, weak) TVCMainWindowTextViewContentView *contentView;

@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCUser.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel, IRCChannelUser;
 
 @interface IRCUser (IRCUserRelations)
 @property (readonly, copy) NSDictionary<IRCChannel *, IRCChannelUser *> *relations;

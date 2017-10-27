@@ -35,6 +35,16 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "IRCWorldPrivateCloudExtension.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TPCPreferencesCloudSyncExtensionPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesImportExportPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

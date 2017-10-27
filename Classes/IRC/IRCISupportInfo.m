@@ -36,6 +36,13 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "IRC.h"
+#import "IRCClientPrivate.h"
+#import "IRCModeInfo.h"
+#import "IRCISupportInfoPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _channelUserModeValue		100

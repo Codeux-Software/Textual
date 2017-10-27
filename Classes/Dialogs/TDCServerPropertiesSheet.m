@@ -36,6 +36,29 @@
 
  *********************************************************************** */
 
+#import <SecurityInterface/SFChooseIdentityPanel.h>
+
+#import "NSStringHelper.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCHighlightMatchCondition.h"
+#import "IRCNetworkList.h"
+#import "IRCServer.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCBasicTableView.h"
+#import "TVCComboBoxWithValueValidation.h"
+#import "TVCContentNavigationOutlineViewPrivate.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCAddressBookSheetPrivate.h"
+#import "TDCChannelPropertiesSheetPrivate.h"
+#import "TDCHighlightEntrySheetPrivate.h"
+#import "TDCServerEndpointListSheetPrivate.h"
+#import "TDCServerPropertiesSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _tableDragToken		@"TDCServerPropertiesSheetTableDragToken"

@@ -36,13 +36,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "IRCChannelConfig.h"
-
 #import "IRCTreeItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannelMode, IRCChannelUser;
 
 typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 	IRCChannelStatusParted = 0,

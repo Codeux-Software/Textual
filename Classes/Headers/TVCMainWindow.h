@@ -36,9 +36,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel, IRCTreeItem;
+@class TVCMainWindowLoadingScreenView, TVCMainWindowSplitView, TVCMainWindowTextView;
+@class TVCServerList, TVCMemberList;
+@class TVCLogController;
 
 typedef NS_ENUM(NSUInteger, TVCServerListNavigationMovementType) {
 	TVCServerListNavigationMovementAllType = 0,	// Move to next item

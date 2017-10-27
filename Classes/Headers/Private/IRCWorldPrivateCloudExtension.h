@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "IRCWorld.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

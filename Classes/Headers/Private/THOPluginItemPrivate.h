@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class THOPluginOutputSuppressionRule;
+
 typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
 	THOPluginItemSupportsDidReceiveCommandEvent				= 1 << 1,
 	THOPluginItemSupportsDidReceivePlainTextMessageEvent	= 1 << 2,

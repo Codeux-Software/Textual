@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCTreeItem, TVCLogLine;
+
 #define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
 
 @interface TVCLogControllerHistoricLogFile : NSObject

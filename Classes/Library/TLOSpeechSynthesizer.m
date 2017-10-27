@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "IRCClientPrivate.h"
+#import "TLOSpokenNotificationPrivate.h"
+#import "TLOSpeechSynthesizerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOSpeechSynthesizer ()
