@@ -42,6 +42,7 @@
 #import "TPCPreferencesUserDefaults.h"
 #import "ICLInlineContentModulePrivate.h"
 #import "ICLPayloadPrivate.h"
+#import "ICLPluginManagerPrivate.h"
 #import "CoreModulesImportsPrivate.h"
 #import "ICLProcessMainPrivate.h"
 
@@ -52,6 +53,7 @@ NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";
 @interface ICLProcessMain ()
 @property (nonatomic, strong) NSXPCConnection *serviceConnection;
 @property (readonly, copy) NSArray<Class> *moduleClasses;
+@property (readonly, copy) NSArray<Class> *moduleClassesInCore;
 @property (readonly, copy) NSDictionary<NSString *, NSArray<Class> *> *modules;
 @property (readonly) NSCache *moduleReferences;
 @end
@@ -77,7 +79,7 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark XPC Interface
 
 /* List of module classes that are automatically mapped */
-- (NSArray<Class> *)moduleClasses
+- (NSArray<Class> *)moduleClassesInCore
 {
 	return
 	@[
@@ -101,6 +103,15 @@ ClassWithDesignatedInitializerInitMethod
 		 in line because it matches any URL. */
 		[ICMAssessedMedia class]
 	  ];
+}
+
+- (NSArray<Class> *)moduleClasses
+{
+	NSArray *modules = [[ICLPluginManager sharedPluginManager] modules];
+
+	modules = [modules arrayByAddingObjectsFromArray:self.moduleClassesInCore];
+
+	return modules;
 }
 
 /* Returns a dictionary with the key equal to the domain a module
@@ -399,11 +410,20 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
-#pragma mark Preferences
+#pragma mark Process Management
 
-- (void)registerDefaults:(NSDictionary<NSString *,id> *)registrationDictionary
+- (void)warmServiceByLoadingPluginsAtLocations:(NSArray<NSURL *> *)pluginLocations
 {
-	[RZUserDefaults() registerDefaults:registrationDictionary];
+	NSParameterAssert(pluginLocations != nil);
+
+	[[ICLPluginManager sharedPluginManager] loadPluginsAtLocations:pluginLocations];
+}
+
+- (void)warmServiceByRegisteringDefaults:(NSDictionary<NSString *, id> *)defaults
+{
+	NSParameterAssert(defaults != nil);
+
+	[RZUserDefaults() registerDefaults:defaults];
 }
 
 #pragma mark -

@@ -35,34 +35,14 @@
 
  *********************************************************************** */
 
-/* *** XPC PROTOCOL HEADERS ARE PRIVATE *** */
-
 NS_ASSUME_NONNULL_BEGIN
 
-@class ICLPayload;
+@interface ICLPluginManager : NSObject
++ (ICLPluginManager *)sharedPluginManager;
 
-#pragma mark -
-#pragma mark Server Protocol
+- (void)loadPluginsAtLocations:(NSArray<NSURL *> *)pluginLocations;
 
-@protocol ICLInlineContentServerProtocol
-@required
-
-- (void)warmServiceByLoadingPluginsAtLocations:(NSArray<NSURL *> *)pluginLocations;
-- (void)warmServiceByRegisteringDefaults:(NSDictionary<NSString *, id> *)defaults;
-
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index inView:(NSString *)viewIdentifier;
-
-- (void)processPayload:(ICLPayload *)payload;
-@end
-
-#pragma mark -
-#pragma mark Client Protocol
-
-@protocol ICLInlineContentClientProtocol
-@required
-
-- (void)processingPayloadSucceeded:(ICLPayload *)payload;
-- (void)processingPayload:(ICLPayload *)payload failedWithError:(NSError *)error;
+@property (readonly, copy) NSArray<Class> *modules;
 @end
 
 NS_ASSUME_NONNULL_END
