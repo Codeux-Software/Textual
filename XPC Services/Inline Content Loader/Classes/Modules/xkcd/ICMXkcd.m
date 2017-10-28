@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "ICLHelpers.h"
+#import "ICMXkcd.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMXkcd

@@ -35,6 +35,12 @@
 
  *********************************************************************** */
 
+#import "TPCPreferences.h"
+#import "ICLHelpers.h"
+#import "ICLInlineContentModulePrivate.h"
+#import "ICLMediaAssessor.h"
+#import "ICMInlineImage.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMInlineImage ()

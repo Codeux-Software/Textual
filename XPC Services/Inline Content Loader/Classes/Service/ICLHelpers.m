@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "ICLHelpers.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLHelpers
@@ -68,8 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[NSError errorWithDomain:ICLInlineContentErrorDomain
 							code:1003
 						userInfo:@{
-								   NSLocalizedDescriptionKey : @"Validation failed"
-								   }];
+			NSLocalizedDescriptionKey : @"Validation failed"
+		}];
 	});
 
 	return error;

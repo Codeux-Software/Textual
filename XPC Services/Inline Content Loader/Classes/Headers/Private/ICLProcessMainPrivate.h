@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentProtocol.h"
+#import "ICLMediaType.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class ICLInlineContentModule;
 
 @interface ICLProcessMain : NSObject <ICLInlineContentServerProtocol>
 - (instancetype)initWithXPCConnection:(NSXPCConnection *)connection NS_DESIGNATED_INITIALIZER;

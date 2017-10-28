@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentModule.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* Checks every URL to determine if it is an

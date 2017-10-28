@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPreferences.h"
 #import "ICLMediaAssessment.h"
 #import "ICLMediaAssessor.h"
 

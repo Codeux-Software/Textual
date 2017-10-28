@@ -41,44 +41,6 @@
 
 #import <GRMustache/GRMustache.h>
 
-/* Shared */
 #import "StaticDefinitions.h"
-#import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCPreferences.h"
-#import "TPCPreferencesPrivate.h"
 
-/* Service */
-#import "ICLHelpers.h"
-#import "ICLPayload.h"
-#import "ICLPayloadPrivate.h"
-#import "ICLInlineContentModule.h"
-#import "ICLInlineContentModulePrivate.h"
-#import "ICLInlineContentProtocol.h"
-#import "ICLProcessDelegatePrivate.h"
-#import "ICLProcessMainPrivate.h"
-#import "ICLMediaAssessor.h"
-#import "ICLMediaAssessment.h"
-
-/* Modules */
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
-
-#import "ICMAssessedMedia.h"
-#import "ICMCommonInlineImages.h"
-#import "ICMCommonInlineVideos.h"
-#import "ICMDailymotion.h"
-#import "ICMGfycat.h"
-#import "ICMGyazo.h"
-#import "ICMImgurGifv.h"
-#import "ICMLiveLeak.h"
-#import "ICMPornhub.h"
-#import "ICMStreamable.h"
-#import "ICMTweet.h"
-#import "ICMTwitchClips.h"
-#import "ICMTwitchLive.h"
-#import "ICMVimeo.h"
-#import "ICMXkcd.h"
-#import "ICMYouTube.h"
+extern NSString * const ICLInlineContentErrorDomain;

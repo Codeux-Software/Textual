@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentModulePrivate.h"
+#import "ICLHelpers.h"
+#import "ICMTweet.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMTweet

@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "ICLPayloadPrivate.h"
+#import "ICLProcessMainPrivate.h"
 #import "ICLInlineContentModuleInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
