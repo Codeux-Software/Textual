@@ -35,7 +35,6 @@
 
  *********************************************************************** */
 
-#import "ICLInlineContentModulePrivate.h"
 #import "ICLHelpers.h"
 #import "ICMTweet.h"
 

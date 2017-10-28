@@ -38,6 +38,8 @@
 #import "ICLPayload.h"
 #import "ICLMediaType.h"
 
+#import <GRMustache/GRMustache.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class ICLInlineContentModule;
@@ -142,6 +144,22 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 @property (copy, readonly, nullable) NSArray<NSURL *> *styleResources;
 @property (copy, readonly, nullable) NSArray<NSURL *> *scriptResources;
 @property (copy, readonly, nullable) NSString *entrypoint;
+
+/**
+ URL to a file that is a mustache template.
+
+ Given a URL, the -template property automatically returns
+ a reference to the template.
+
+ It is possible to render HTML multiple ways which means you
+ do not need a template unless you want one.
+ */
+@property (readonly, nullable) NSURL *templateURL;
+
+/**
+ Reference to mustache template found at -templateURL
+ */
+@property (readonly, nullable) GRMustacheTemplate *template;
 @end
 
 #pragma mark -
