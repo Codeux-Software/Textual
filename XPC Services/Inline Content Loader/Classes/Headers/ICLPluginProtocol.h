@@ -35,34 +35,37 @@
 
  *********************************************************************** */
 
-/* *** XPC PROTOCOL HEADERS ARE PRIVATE *** */
+#import <Foundation/Foundation.h>
+
+#import "ICLInlineContentModule.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ICLPayload;
+/**
+ The ICLPluginProtocol protocol defines methods and properties
+ that a plugin can implement.
+ */
+@protocol ICLPluginProtocol <NSObject>
 
-#pragma mark -
-#pragma mark Server Protocol
-
-@protocol ICLInlineContentServerProtocol
 @required
 
-- (void)warmServiceByLoadingPluginsAtLocations:(NSArray<NSURL *> *)pluginLocations;
-- (void)warmServiceByRegisteringDefaults:(NSDictionary<NSString *, id> *)defaults;
+/**
+ An array of classes that are a subclass of ICLInlineContentModule
 
-- (void)processURL:(NSURL *)url withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index inView:(NSString *)viewIdentifier;
+ It is recommended that classes inside a plugin use the prefix ICP
+ so that their classes do not conflict with those that already exist.
+ */
+@property (readonly, copy, class) NSArray<Class> *modules;
 
-- (void)processPayload:(ICLPayload *)payload;
-@end
-
-#pragma mark -
-#pragma mark Client Protocol
-
-@protocol ICLInlineContentClientProtocol
-@required
-
-- (void)processingPayloadSucceeded:(ICLPayload *)payload;
-- (void)processingPayload:(ICLPayload *)payload failedWithError:(NSError *)error;
 @end
 
 NS_ASSUME_NONNULL_END
+
+/* Import root classes a module can subclass (if they want) */
+#import "ICMInlineHTML.h"
+#import "ICMInlineImage.h"
+#import "ICMInlineVideo.h"
+
+/* Import helpers that a plugin can access */
+#import "ICLHelpers.h"
+#import "ICLMediaAssessor.h"

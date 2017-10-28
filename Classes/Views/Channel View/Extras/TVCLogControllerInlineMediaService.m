@@ -40,6 +40,7 @@
 #import "TXMasterController.h"
 #import "IRCTreeItem.h"
 #import "IRCWorld.h"
+#import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCLogControllerPrivate.h"
 #import "TVCLogControllerInlineMediaServicePrivate.h"
@@ -121,6 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.serviceConnection = serviceConnection;
 
 	[self registerDefaults];
+	[self registerPlugins];
 }
 
 - (void)interuptionHandler
@@ -148,7 +150,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *defaults = [RZUserDefaults() registeredDefaults];
 
-	[[self remoteObjectProxy] registerDefaults:defaults];
+	[[self remoteObjectProxy] warmServiceByRegisteringDefaults:defaults];
+}
+
+- (void)registerPlugins
+{
+	NSArray *pluginLocations = @[
+		 [self _applicationSupportInlineMediaPluginsURL]
+	];
+
+	[[self remoteObjectProxy] warmServiceByLoadingPluginsAtLocations:pluginLocations];
+}
+
+- (NSURL *)_applicationSupportInlineMediaPluginsURL
+{
+	NSURL *sourceURL = [TPCPathInfo groupContainerApplicationSupportURL];
+
+	NSURL *baseuRL = [sourceURL URLByAppendingPathComponent:@"/Inline Media Modules/"];
+
+	[TPCPathInfo _createDirectoryAtURL:baseuRL];
+
+	return baseuRL;
 }
 
 #pragma mark -

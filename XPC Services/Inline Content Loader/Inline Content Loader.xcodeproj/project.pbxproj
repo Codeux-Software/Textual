@@ -27,6 +27,8 @@
 		4C8C84391F8E5AEC00062FFD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C84381F8E5AE400062FFD /* ImageIO.framework */; };
 		4C8DBD441FA1522600BA025A /* ICMGyazo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DBD421FA151FB00BA025A /* ICMGyazo.m */; };
 		4C8DBD461FA1543D00BA025A /* ICLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DBD451FA1543D00BA025A /* ICLHelpers.m */; };
+		4C9580611FA4F5F500F18BC8 /* ICLPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9580601FA4F5F400F18BC8 /* ICLPluginManager.m */; };
+		4C9580641FA4F62F00F18BC8 /* ICLPluginProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9580631FA4F61A00F18BC8 /* ICLPluginProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9580661FA4FAD100F18BC8 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */; };
 		4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */; };
 		4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */; };
@@ -153,6 +155,9 @@
 		4C9580311FA420BB00F18BC8 /* Services Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Debug.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Debug.xcconfig"; sourceTree = "<group>"; };
 		4C9580321FA420BB00F18BC8 /* Services App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services App Store Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services App Store Release.xcconfig"; sourceTree = "<group>"; };
 		4C9580331FA420BC00F18BC8 /* Services Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Standard Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Standard Release.xcconfig"; sourceTree = "<group>"; };
+		4C9580601FA4F5F400F18BC8 /* ICLPluginManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPluginManager.m; path = Classes/Service/ICLPluginManager.m; sourceTree = "<group>"; };
+		4C9580621FA4F61A00F18BC8 /* ICLPluginManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPluginManagerPrivate.h; path = Classes/Headers/Private/ICLPluginManagerPrivate.h; sourceTree = "<group>"; };
+		4C9580631FA4F61A00F18BC8 /* ICLPluginProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPluginProtocol.h; path = Classes/Headers/ICLPluginProtocol.h; sourceTree = "<group>"; };
 		4C9580651FA4F74000F18BC8 /* CoreModulesImportsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CoreModulesImportsPrivate.h; path = Classes/Headers/Private/CoreModulesImportsPrivate.h; sourceTree = "<group>"; };
 		4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
 		4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImage.h; path = "Classes/Modules/Root Classes/ICMInlineImage.h"; sourceTree = "<group>"; };
@@ -276,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8C72E31F121EF000ED72DB /* Headers */,
-				4CDF57B41F891D9100B2ECCC /* Modules */,
+				4CDF57B41F891D9100B2ECCC /* Modules (Core) */,
 				4C8C72F71F121EF000ED72DB /* Service */,
 				4C1406701F11A1F600C73D53 /* Shared */,
 			);
@@ -445,6 +450,7 @@
 				4CB5C5451FA2262700E65FB5 /* ICLMediaAssessment.h */,
 				4CB5C5461FA2262700E65FB5 /* ICLMediaAssessor.h */,
 				4CB5C53D1FA2254F00E65FB5 /* ICLMediaType.h */,
+				4C9580631FA4F61A00F18BC8 /* ICLPluginProtocol.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 				4C9580651FA4F74000F18BC8 /* CoreModulesImportsPrivate.h */,
 				4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */,
 				4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */,
+				4C9580621FA4F61A00F18BC8 /* ICLPluginManagerPrivate.h */,
 				4C8C72EE1F121EF000ED72DB /* ICLProcessDelegatePrivate.h */,
 				4C8C72EC1F121EF000ED72DB /* ICLProcessMainPrivate.h */,
 				4C8C72EF1F121EF000ED72DB /* ICLProcessPCHPrivate.h */,
@@ -470,6 +477,7 @@
 				4C356A511F9FB06E00E671D9 /* ICLMediaAssessment.m */,
 				4C356A521F9FB06E00E671D9 /* ICLMediaAssessor.m */,
 				4C7879F61F88EA710030AA84 /* ICLPayload.m */,
+				4C9580601FA4F5F400F18BC8 /* ICLPluginManager.m */,
 				4C8C72F81F121EF000ED72DB /* ICLProcessDelegate.m */,
 				4C8C72F91F121EF000ED72DB /* ICLProcessMain.m */,
 				4C8C72FA1F121EF000ED72DB /* main.m */,
@@ -735,7 +743,7 @@
 			name = Internal;
 			sourceTree = "<group>";
 		};
-		4CDF57B41F891D9100B2ECCC /* Modules */ = {
+		4CDF57B41F891D9100B2ECCC /* Modules (Core) */ = {
 			isa = PBXGroup;
 			children = (
 				4C356A581F9FBFF500E671D9 /* Assessed Media */,
@@ -756,7 +764,7 @@
 				4CA5D3181F97D3F0006714D6 /* xkcd */,
 				4C980FF31F92D43000B116A4 /* YouTube */,
 			);
-			name = Modules;
+			name = "Modules (Core)";
 			sourceTree = "<group>";
 		};
 		4CE58B941F8A36FB00493E7C /* Common Images */ = {
@@ -786,6 +794,7 @@
 			files = (
 				4CB5C5421FA225EE00E65FB5 /* ICLInlineContentModule.h in Headers */,
 				4CB5C5551FA227A400E65FB5 /* ICMInlineImage.h in Headers */,
+				4C9580641FA4F62F00F18BC8 /* ICLPluginProtocol.h in Headers */,
 				4CB5C54A1FA2265900E65FB5 /* ICLMediaType.h in Headers */,
 				4CB5C5471FA2265900E65FB5 /* ICLHelpers.h in Headers */,
 				4CB5C5521FA2266300E65FB5 /* ICLProcessMainPrivate.h in Headers */,
@@ -892,6 +901,7 @@
 				4C576D201F9440C200FD581F /* ICMVimeo.m in Sources */,
 				4C8C73011F121EF000ED72DB /* ICLProcessMain.m in Sources */,
 				4CB3B6291F9C54120004502A /* ICMTweet.m in Sources */,
+				4C9580611FA4F5F500F18BC8 /* ICLPluginManager.m in Sources */,
 				4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */,
 				4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */,
 				4C7879F71F88EA710030AA84 /* ICLPayload.m in Sources */,
