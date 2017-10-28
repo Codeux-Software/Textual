@@ -50,6 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(ICLInlineContentServerProtocol)];
 
+	[exportedInterface setClasses:[NSSet setWithObjects:[NSArray class], [NSURL class], nil]
+					  forSelector:@selector(warmServiceByLoadingPluginsAtLocations:)
+					argumentIndex:0
+						  ofReply:NO];
+
 	newConnection.exportedInterface = exportedInterface;
 
 	ICLProcessMain *exportedObject = [[ICLProcessMain alloc] initWithXPCConnection:newConnection];
