@@ -97,6 +97,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSXPCInterface *remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(ICLInlineContentServerProtocol)];
 
+	[remoteObjectInterface setClasses:[NSSet setWithObjects:[NSArray class], [NSURL class], nil]
+						  forSelector:@selector(warmServiceByLoadingPluginsAtLocations:)
+						argumentIndex:0
+							  ofReply:NO];
+
 	serviceConnection.remoteObjectInterface = remoteObjectInterface;
 
 	NSXPCInterface *exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(ICLInlineContentClientProtocol)];
