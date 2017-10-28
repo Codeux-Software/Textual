@@ -2191,12 +2191,6 @@
 		4C1F0F441F8B83170061662D /* ICLPayloadLocalPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPayloadLocalPrivate.h; path = Classes/Headers/Private/ICLPayloadLocalPrivate.h; sourceTree = "<group>"; };
 		4C20653C1D47931C00D42CD2 /* TDCWindowBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCWindowBase.m; path = Classes/Dialogs/TDCWindowBase.m; sourceTree = "<group>"; };
 		4C24DC751A93C9CE0098D1BE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "Frameworks/Static Libraries/Libraries/Sparkle.framework"; sourceTree = "<group>"; };
-		4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C24DC821A93CC340098D1BE /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared App Store Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared App Store Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C24DC851A93CC340098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Configuration for Extensions.xcconfig"; path = "Resources/Build Configurations/Shared Configuration for Extensions.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Standard Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Standard Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C250F361F381320001A92D1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4C25333C1F44390B0003A3F4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseUpgradeDialog.xib"; sourceTree = "<group>"; };
 		4C25333E1F44390C0003A3F4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseUpgradeActivateSheet.xib"; sourceTree = "<group>"; };
@@ -2513,6 +2507,10 @@
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Classes/Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		4C95804A1FA4213100F18BC8 /* Main Project App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project App Store Release.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project App Store Release.xcconfig"; sourceTree = "<group>"; };
+		4C95804B1FA4213200F18BC8 /* Main Project Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project Standard Release.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project Standard Release.xcconfig"; sourceTree = "<group>"; };
+		4C95804C1FA4213200F18BC8 /* Main Project Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project Debug.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project Debug.xcconfig"; sourceTree = "<group>"; };
+		4C95804D1FA4213200F18BC8 /* Main Project Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project Base.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project Base.xcconfig"; sourceTree = "<group>"; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Classes/Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
 		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManager.h; path = Classes/Headers/TLOEncryptionManager.h; sourceTree = "<group>"; };
 		4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItemPrivate.h; path = Classes/Headers/Private/IRCTreeItemPrivate.h; sourceTree = "<group>"; };
@@ -4282,12 +4280,10 @@
 		4CD6202E16E31EE600D780D6 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */,
-				4C24DC821A93CC340098D1BE /* Code Signing Identity.xcconfig */,
-				4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */,
-				4C24DC851A93CC340098D1BE /* Shared Configuration for Extensions.xcconfig */,
-				4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */,
-				4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */,
+				4C95804A1FA4213100F18BC8 /* Main Project App Store Release.xcconfig */,
+				4C95804D1FA4213200F18BC8 /* Main Project Base.xcconfig */,
+				4C95804C1FA4213200F18BC8 /* Main Project Debug.xcconfig */,
+				4C95804B1FA4213200F18BC8 /* Main Project Standard Release.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -7145,7 +7141,6 @@
 		4C0BA6D51990798800857343 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -7154,7 +7149,6 @@
 		4C0BA6D61990798800857343 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -7163,7 +7157,6 @@
 		4C0BA6D81990798800857343 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				PROVISIONING_PROFILE_SPECIFIER = "Development: com.codeux.apps.textual-mas";
@@ -7172,7 +7165,7 @@
 		};
 		4C1DC56E1580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */;
+			baseConfigurationReference = 4C95804C1FA4213200F18BC8 /* Main Project Debug.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
@@ -7185,7 +7178,7 @@
 		};
 		4C1DC56F1580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */;
+			baseConfigurationReference = 4C95804B1FA4213200F18BC8 /* Main Project Standard Release.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
@@ -7215,7 +7208,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				WARNING_LDFLAGS = "-Wdirect-ivar-access";
 			};
 			name = Debug;
 		};
@@ -7224,7 +7216,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				WARNING_LDFLAGS = "-Wdirect-ivar-access";
 			};
 			name = Release;
 		};
@@ -7233,13 +7224,12 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				WARNING_LDFLAGS = "-Wdirect-ivar-access";
 			};
 			name = "Release (App Store)";
 		};
 		4CCF2F9015804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */;
+			baseConfigurationReference = 4C95804A1FA4213100F18BC8 /* Main Project App Store Release.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";

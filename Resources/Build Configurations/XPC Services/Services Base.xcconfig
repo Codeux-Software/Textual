@@ -1,9 +1,7 @@
-
-#include "Base Configuration.xcconfig"
-
 // This configuration is designed for the XPC Services folder of
 // Textual and assumes that the paths are relative to that location.
 
+// ./(self) ../(XPC Services) ../(Root)
 TEXTUAL_PROJECT_ROOT = ${SRCROOT}/../../
 
 OBJROOT = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults-XPCServices
@@ -31,10 +29,8 @@ PROVISIONING_PROFILE_SPECIFIER =
 
 GCC_PREFIX_HEADER =
 
-// XPC services share header files with files that import TextualApplication.h
-// when we access these files, we don't want the primary header trying to import
-// every possible file. To work aroudn this, we declare the define
-// TEXTUAL_PRIMARY_PUBLIC_HEADER_DISABLED
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) TEXTUAL_BUILDING_XPC_SERVICE=1 TEXTUAL_PRIMARY_PUBLIC_HEADER_DISABLED=1
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) TEXTUAL_BUILDING_XPC_SERVICE=1
 
+// Link against frameworks in app itself rather than creating copies
+// ./(self) ../(Contents) ../(.xpc bundle) ../(XPCServices) ../(Contents)
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @loader_path/../../../../Frameworks

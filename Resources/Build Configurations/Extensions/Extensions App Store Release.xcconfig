@@ -1,0 +1,3 @@
+
+#include "../Textual App Store Release.xcconfig"
+#include "Extensions Base.xcconfig"

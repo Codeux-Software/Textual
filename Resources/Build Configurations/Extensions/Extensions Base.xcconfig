@@ -1,9 +1,8 @@
-#include "Base Configuration.xcconfig"
-
 // This configuration is designed for the Plugins folder of
 // Textual and assumes that the paths are relative to that
 // location.
 
+// ./(self) ../(Plugins) ../(Resources) ../(Root)
 TEXTUAL_PROJECT_ROOT = ${SRCROOT}/../../../
 
 OBJROOT = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults-Extensions
