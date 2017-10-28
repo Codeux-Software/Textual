@@ -43,9 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class GRMustacheTemplate, ICLPayloadMutable, ICLProcessMain;
 
 @interface ICLInlineContentModule ()
-@property (readonly, nullable) NSURL *templateURL;
-@property (readonly, nullable) GRMustacheTemplate *template;
-
 - (instancetype)initWithPayload:(ICLPayloadMutable *)payload inProcess:(ICLProcessMain *)process;
 
 - (instancetype)initWithDeferredModule:(ICLInlineContentModule *)module;

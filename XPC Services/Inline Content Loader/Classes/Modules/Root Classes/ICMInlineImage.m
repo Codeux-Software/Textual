@@ -37,7 +37,6 @@
 
 #import "TPCPreferences.h"
 #import "ICLHelpers.h"
-#import "ICLInlineContentModulePrivate.h"
 #import "ICLMediaAssessor.h"
 #import "ICMInlineImage.h"
 

@@ -35,7 +35,6 @@
 
  *********************************************************************** */
 
-#import "ICLInlineContentModulePrivate.h"
 #import "ICMInlineHTML.h"
 
 NS_ASSUME_NONNULL_BEGIN
