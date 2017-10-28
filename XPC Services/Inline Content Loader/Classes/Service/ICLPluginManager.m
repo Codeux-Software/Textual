@@ -72,8 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSAssert((self.pluginsLoaded == NO), @"Plugins already loaded");
 
-	pluginLocations =
-	[pluginLocations arrayByAddingObject:[self _bundledPluginsURL]];
+//	pluginLocations =
+//	[pluginLocations arrayByAddingObject:[self _bundledPluginsURL]];
 
 	NSMutableArray<NSBundle *> *loadedPlugins = [NSMutableArray array];
 
