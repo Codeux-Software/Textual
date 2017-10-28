@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "ICLHelpers.h"
+#import "ICMGfycat.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMGfycat

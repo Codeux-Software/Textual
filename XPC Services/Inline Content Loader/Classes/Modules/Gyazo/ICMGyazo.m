@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "ICLHelpers.h"
+#import "ICMGyazo.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMGyazo ()

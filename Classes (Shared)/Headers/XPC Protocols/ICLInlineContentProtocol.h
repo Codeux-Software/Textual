@@ -60,9 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Client Protocol
 
-/* Error domain returned by the following protocol */
-COCOA_EXTENSIONS_EXTERN NSString * const ICLInlineContentErrorDomain;
-
 @protocol ICLInlineContentClientProtocol
 @required
 

@@ -37,6 +37,14 @@
 
 #import <objc/runtime.h>
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPreferences.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "ICLInlineContentModulePrivate.h"
+#import "ICLPayloadPrivate.h"
+#import "CoreModulesImportsPrivate.h"
+#import "ICLProcessMainPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const ICLInlineContentErrorDomain = @"ICLInlineContentErrorDomain";

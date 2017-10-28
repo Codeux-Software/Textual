@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentModule.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* ICMInlineImageFoundation does nothing.

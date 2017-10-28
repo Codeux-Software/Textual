@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "ICMInlineVideo.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ICMGfycat : ICMInlineGifVideo

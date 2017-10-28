@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentModulePrivate.h"
+#import "ICMTwitchClips.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICMTwitchClips

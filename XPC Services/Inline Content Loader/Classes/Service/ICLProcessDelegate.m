@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentProtocol.h"
+#import "ICLProcessMainPrivate.h"
+#import "ICLProcessDelegatePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation ICLProcessDelegate

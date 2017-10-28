@@ -35,11 +35,23 @@
 
  *********************************************************************** */
 
+#import "ICMInlineHTML.h"
 #import "ICMInlineVideo.h"
+#import "ICMInlineImage.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface ICMVimeo : ICMInlineVideoFoundation
-@end
-
-NS_ASSUME_NONNULL_END
+#import "ICMAssessedMedia.h"
+#import "ICMCommonInlineImages.h"
+#import "ICMCommonInlineVideos.h"
+#import "ICMDailymotion.h"
+#import "ICMGfycat.h"
+#import "ICMGyazo.h"
+#import "ICMImgurGifv.h"
+#import "ICMLiveLeak.h"
+#import "ICMPornhub.h"
+#import "ICMStreamable.h"
+#import "ICMTweet.h"
+#import "ICMTwitchClips.h"
+#import "ICMTwitchLive.h"
+#import "ICMVimeo.h"
+#import "ICMXkcd.h"
+#import "ICMYouTube.h"

@@ -27,6 +27,7 @@
 		4C8C84391F8E5AEC00062FFD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C84381F8E5AE400062FFD /* ImageIO.framework */; };
 		4C8DBD441FA1522600BA025A /* ICMGyazo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DBD421FA151FB00BA025A /* ICMGyazo.m */; };
 		4C8DBD461FA1543D00BA025A /* ICLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8DBD451FA1543D00BA025A /* ICLHelpers.m */; };
+		4C9580661FA4FAD100F18BC8 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */; };
 		4C980FDF1F92C4C100B116A4 /* InlineImageLiveResize.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */; };
 		4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */; };
 		4C980FEC1F92C6C200B116A4 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C980FEA1F92C5EA00B116A4 /* ICMCommonInlineImages.m */; };
@@ -46,7 +47,6 @@
 		4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3161F97D3ED006714D6 /* ICMXkcd.m */; };
 		4CA5D31D1F97D75E006714D6 /* ICMTwitchClips.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D31B1F97D73D006714D6 /* ICMTwitchClips.m */; };
 		4CA5D3221F97D79F006714D6 /* ICMTwitchClips.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D31F1F97D791006714D6 /* ICMTwitchClips.mustache */; };
-		4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D3261F9810D1006714D6 /* ICMTwitchLive.m */; };
 		4CA5D3291F98275F006714D6 /* ICMTwitchLive.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CA5D3241F9810AE006714D6 /* ICMTwitchLive.mustache */; };
 		4CB3B60A1F9C2CAA0004502A /* ICMLiveleak.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6091F9C2C8A0004502A /* ICMLiveleak.mustache */; };
 		4CB3B60B1F9C2CB00004502A /* ICMLiveleak.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3B6061F9C2C580004502A /* ICMLiveleak.m */; };
@@ -153,6 +153,7 @@
 		4C9580311FA420BB00F18BC8 /* Services Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Debug.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Debug.xcconfig"; sourceTree = "<group>"; };
 		4C9580321FA420BB00F18BC8 /* Services App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services App Store Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services App Store Release.xcconfig"; sourceTree = "<group>"; };
 		4C9580331FA420BC00F18BC8 /* Services Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Standard Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Standard Release.xcconfig"; sourceTree = "<group>"; };
+		4C9580651FA4F74000F18BC8 /* CoreModulesImportsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CoreModulesImportsPrivate.h; path = Classes/Headers/Private/CoreModulesImportsPrivate.h; sourceTree = "<group>"; };
 		4C980FDE1F92C4BE00B116A4 /* InlineImageLiveResize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = InlineImageLiveResize.js; path = Resources/Modules/InlineImageLiveResize.js; sourceTree = "<group>"; };
 		4C980FE01F92C4D700B116A4 /* ICMInlineImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMInlineImage.h; path = "Classes/Modules/Root Classes/ICMInlineImage.h"; sourceTree = "<group>"; };
 		4C980FE11F92C4D700B116A4 /* ICMInlineImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineImage.m; path = "Classes/Modules/Root Classes/ICMInlineImage.m"; sourceTree = "<group>"; };
@@ -451,6 +452,7 @@
 		4C8C72EB1F121EF000ED72DB /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				4C9580651FA4F74000F18BC8 /* CoreModulesImportsPrivate.h */,
 				4C7879F51F88E9790030AA84 /* ICLInlineContentModulePrivate.h */,
 				4C7879F21F88E7760030AA84 /* ICLPayloadPrivate.h */,
 				4C8C72EE1F121EF000ED72DB /* ICLProcessDelegatePrivate.h */,
@@ -498,8 +500,8 @@
 			isa = PBXGroup;
 			children = (
 				4C980FFA1F92DD2D00B116A4 /* Resources */,
-				4C980FF41F92D43000B116A4 /* ICMYouTube.m */,
 				4C980FF51F92D43000B116A4 /* ICMYouTube.h */,
+				4C980FF41F92D43000B116A4 /* ICMYouTube.m */,
 			);
 			name = YouTube;
 			sourceTree = "<group>";
@@ -880,6 +882,7 @@
 				4C356A541F9FB06E00E671D9 /* ICLMediaAssessor.m in Sources */,
 				4C9CAC6E1F967F71006887B7 /* ICMStreamable.m in Sources */,
 				4CB5C5641FA228F900E65FB5 /* ICLPayload.m in Sources */,
+				4C9580661FA4FAD100F18BC8 /* ICMTwitchLive.m in Sources */,
 				4C8DBD461FA1543D00BA025A /* ICLHelpers.m in Sources */,
 				4C980FE61F92C4D700B116A4 /* ICMInlineImage.m in Sources */,
 				4C576D271F94467D00FD581F /* ICMImgurGifv.m in Sources */,
@@ -897,7 +900,6 @@
 				4CA5D3191F97D413006714D6 /* ICMXkcd.m in Sources */,
 				4CB3B60B1F9C2CB00004502A /* ICMLiveleak.m in Sources */,
 				4CA5D3101F97CE48006714D6 /* ICMPornhub.m in Sources */,
-				4CA5D3271F98112E006714D6 /* ICMTwitchLive.m in Sources */,
 				4C356A591F9FC0E200E671D9 /* ICMAssessedMedia.m in Sources */,
 				4C9810121F93BB9700B116A4 /* ICMCommonInlineVideos.m in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,

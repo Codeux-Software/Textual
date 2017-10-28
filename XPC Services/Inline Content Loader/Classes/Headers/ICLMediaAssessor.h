@@ -35,6 +35,7 @@
 
  *********************************************************************** */
 
+#import "ICLMediaType.h"
 #import "ICLMediaAssessment.h"
 
 /* Given a URL, the accessor will load the contents of that URL

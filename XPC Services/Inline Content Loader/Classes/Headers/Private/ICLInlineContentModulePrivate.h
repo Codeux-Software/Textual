@@ -35,9 +35,12 @@
 
  *********************************************************************** */
 
+#import "ICLInlineContentProtocol.h"
+#import "ICLInlineContentModule.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@class ICLProcessMain;
+@class GRMustacheTemplate, ICLPayloadMutable, ICLProcessMain;
 
 @interface ICLInlineContentModule ()
 @property (readonly, nullable) NSURL *templateURL;
