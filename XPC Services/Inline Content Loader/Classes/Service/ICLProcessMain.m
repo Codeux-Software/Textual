@@ -416,14 +416,22 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(pluginLocations != nil);
 
-	[[ICLPluginManager sharedPluginManager] loadPluginsAtLocations:pluginLocations];
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		[[ICLPluginManager sharedPluginManager] loadPluginsAtLocations:pluginLocations];
+	});
 }
 
 - (void)warmServiceByRegisteringDefaults:(NSDictionary<NSString *, id> *)defaults
 {
 	NSParameterAssert(defaults != nil);
 
-	[RZUserDefaults() registerDefaults:defaults];
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		[RZUserDefaults() registerDefaults:defaults];
+	});
 }
 
 #pragma mark -
