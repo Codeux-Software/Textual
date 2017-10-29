@@ -35,95 +35,11 @@
 
  *********************************************************************** */
 
-#import "ICMVimeo.h"
+#import "ICLPluginProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMVimeo
-
-- (void)_performActionForVideo:(NSString *)videoIdentifier
-{
-	NSParameterAssert(videoIdentifier != nil);
-
-	ICLPayloadMutable *payload = self.payload;
-
-	NSDictionary *templateAttributes =
-	@{
-	  @"uniqueIdentifier" : payload.uniqueIdentifier,
-	  @"videoIdentifier" : videoIdentifier
-	};
-
-	NSError *templateRenderError = nil;
-
-	NSString *html = [self.template renderObject:templateAttributes error:&templateRenderError];
-
-	payload.html = html;
-
-	[self finalizeWithError:templateRenderError];
-}
-
-#pragma mark -
-#pragma mark Action Block
-
-+ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
-{
-	NSParameterAssert(url != nil);
-
-	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
-
-	if (videoIdentifier == nil) {
-		return nil;
-	}
-
-	return [^(ICLInlineContentModule *module) {
-		__weak ICMVimeo *moduleTyped = (id)module;
-
-		[moduleTyped _performActionForVideo:videoIdentifier];
-	} copy];
-}
-
-+ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
-{
-	NSString *urlPath = url.path.percentEncodedURLPath;
-
-	if (urlPath.length == 0) {
-		return nil;
-	}
-
-	NSString *videoIdentifier = [urlPath trimCharacters:@"/"];
-
-	if (videoIdentifier.isNumericOnly == NO) {
-		return nil;
-	}
-
-	return videoIdentifier;
-}
-
-+ (nullable NSArray<NSString *> *)domains
-{
-	static NSArray<NSString *> *domains = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		domains =
-		@[
-		  @"vimeo.com",
-		  @"www.vimeo.com"
-		];
-	});
-
-	return domains;
-}
-
-#pragma mark -
-#pragma mark Utilities
-
-- (nullable NSURL *)templateURL
-{
-	return [RZMainBundle() URLForResource:@"ICMVimeo" withExtension:@"mustache" subdirectory:@"Components"];
-}
-
+@interface ICPCoreMedia : NSObject <ICLPluginProtocol>
 @end
 
 NS_ASSUME_NONNULL_END

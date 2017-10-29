@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "ICMDailymotion.h"
+#import "ICMLiveleak.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMDailymotion
+@implementation ICMLiveleak
 
 - (void)_performActionForVideo:(NSString *)videoIdentifier
 {
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return [^(ICLInlineContentModule *module) {
-		__weak ICMDailymotion *moduleTyped = (id)module;
+		__weak ICMLiveleak *moduleTyped = (id)module;
 
 		[moduleTyped _performActionForVideo:videoIdentifier];
 	} copy];
@@ -86,25 +86,21 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if ([urlPath hasPrefix:@"/video/"] == NO) {
+	if ([urlPath isEqualToString:@"/view"] == NO) {
 		return nil;
 	}
 
-	urlPath = [urlPath substringFromIndex:7]; // "/video/"
+	NSString *urlQuery = url.query.percentEncodedURLQuery;
 
-	/* Cut after first underscore so that URLs such as:
-	 http://www.dailymotion.com/video/x19pvwt_the-fantastic-four-1994-unreleased-roger-corman_shortfilms
-	 Automatically translate to their parent:
-	 http://www.dailymotion.com/video/x19pvwt */
-	NSInteger underscorePosition = [urlPath stringPosition:@"_"];
+	NSDictionary *queryItems = urlQuery.URLQueryItems;
 
-	if (underscorePosition > 0) {
-		urlPath = [urlPath substringToIndex:underscorePosition];
+	NSString *videoIdentifier = queryItems[@"i"];
+
+	if (videoIdentifier.length != 14) {
+		return nil;
 	}
 
-	NSString *videoIdentifier = urlPath;
-
-	if (videoIdentifier.isAlphabeticNumericOnly == NO) {
+	if ([videoIdentifier onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9Underscore]] == NO) {
 		return nil;
 	}
 
@@ -120,9 +116,8 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"dailymotion.com",
-		  @"www.dailymotion.com",
-		  @"mobile.dailymotion.com"
+		  @"liveleak.com",
+		  @"www.liveleak.com"
 		];
 	});
 
@@ -134,7 +129,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSURL *)templateURL
 {
-	return [RZMainBundle() URLForResource:@"ICMDailymotion" withExtension:@"mustache" subdirectory:@"Components"];
+	return [NSBundleForClass() URLForResource:@"ICMLiveleak" withExtension:@"mustache"];
+}
+
++ (BOOL)contentNotSafeForWork
+{
+	return YES;
 }
 
 @end

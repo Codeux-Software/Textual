@@ -35,83 +35,72 @@
 
  *********************************************************************** */
 
-#import "ICLHelpers.h"
-#import "ICMTweet.h"
+#import "ICMPornhub.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMTweet
+@implementation ICMPornhub
 
-- (void)_loadTweetContents
+- (void)_performActionForVideo:(NSString *)videoIdentifier
 {
-	NSString *tweetAddress = self.payload.address;
+	NSParameterAssert(videoIdentifier != nil);
 
-	NSURLComponents *requestComponents = [NSURLComponents componentsWithString:@"https://publish.twitter.com/oembed"];
+	ICLPayloadMutable *payload = self.payload;
 
-	requestComponents.queryItems =
-	@[
-	  [NSURLQueryItem queryItemWithName:@"dnt" value:@"true"], /* DO NOT TRACK */
-	  [NSURLQueryItem queryItemWithName:@"maxwidth" value:@"500"],
-	  [NSURLQueryItem queryItemWithName:@"omit_script" value:@"true"],
-	  [NSURLQueryItem queryItemWithName:@"url" value:tweetAddress]
-	];
+	NSDictionary *templateAttributes =
+	@{
+	  @"uniqueIdentifier" : payload.uniqueIdentifier,
+	  @"videoIdentifier" : videoIdentifier
+	};
 
-	NSURL *requestURL = requestComponents.URL;
+	NSError *templateRenderError = nil;
 
-	[ICLHelpers requestJSONObject:@"html"
-						   ofType:[NSString class]
-					  inHierarchy:nil
-						  fromURL:requestURL
-				  completionBlock:^(id object) {
-				if (object == nil) {
-					[self notifyUnableToPresentHTML];
+	NSString *html = [self.template renderObject:templateAttributes error:&templateRenderError];
 
-					return;
-				}
+	payload.html = html;
 
-				[self performActionForHTML:object];
-			}];
+	[self finalizeWithError:templateRenderError];
 }
 
 #pragma mark -
 #pragma mark Action Block
 
-+ (nullable SEL)actionForURL:(NSURL *)url
++ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
 
-	if ([self _URLIsTweet:url] == NO) {
-		return NULL;
+	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
+
+	if (videoIdentifier == nil) {
+		return nil;
 	}
 
-	return @selector(_loadTweetContents);
+	return [^(ICLInlineContentModule *module) {
+		__weak ICMPornhub *moduleTyped = (id)module;
+
+		[moduleTyped _performActionForVideo:videoIdentifier];
+	} copy];
 }
 
-+ (BOOL)_URLIsTweet:(NSURL *)url
++ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if (urlPath.length == 0) {
-		return NO;
+	if ([urlPath hasPrefix:@"/view_video.php"] == NO) {
+		return nil;
 	}
 
-	urlPath = [urlPath substringFromIndex:1]; // "/"
+	NSString *urlQuery = url.query.percentEncodedURLQuery;
 
-	NSArray<NSString *> *components = [urlPath componentsSeparatedByString:@"/"];
+	NSDictionary *queryItems = urlQuery.URLQueryItems;
 
-	if (components.count < 3) {
-		return NO;
+	NSString *videoIdentifier = queryItems[@"viewkey"];
+
+	if (videoIdentifier.isAlphabeticNumericOnly == NO) {
+		return nil;
 	}
 
-	if ([components[1] isEqualToString:@"status"] == NO) {
-		return NO;
-	}
-
-	if (components[2].isNumericOnly == NO) {
-		return NO;
-	}
-
-	return YES;
+	return videoIdentifier;
 }
 
 + (nullable NSArray<NSString *> *)domains
@@ -123,9 +112,10 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"twitter.com",
-		  @"www.twitter.com",
-		  @"mobile.twitter.com"
+		  @"pornhub.com",
+		  @"www.pornhub.com",
+		  @"pornhubpremium.com",
+		  @"www.pornhubpremium.com"
 		];
 	});
 
@@ -135,24 +125,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Utilities
 
-- (nullable NSArray<NSURL *> *)scriptResources
+- (nullable NSURL *)templateURL
 {
-	return
-	[[super scriptResources] arrayByAddingObjectsFromArray:
-	@[
-	  [NSURL URLWithString:@"https://platform.twitter.com/widgets.js"],
-	  [RZMainBundle() URLForResource:@"ICMTweet" withExtension:@"js" subdirectory:@"Components"]
-	]];
+	return [NSBundleForClass() URLForResource:@"ICMPornhub" withExtension:@"mustache"];
 }
 
-- (nullable NSString *)entrypoint
++ (BOOL)contentNotSafeForWork
 {
-	return @"_ICMTweet";
-}
-
-- (void)finalizePreflight
-{
-	self.payload.classAttribute = @"inlineTweet";
+	return YES;
 }
 
 @end

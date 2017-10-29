@@ -35,8 +35,9 @@
 
  *********************************************************************** */
 
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+#import <Foundation/Foundation.h>
 
-#import "ICMAssessedMedia.h"
+#import <CocoaExtensions/CocoaExtensions.h>
+
+#define NSBundleForClass() 	\
+	[NSBundle bundleForClass:self.class]

@@ -35,22 +35,39 @@
 
  *********************************************************************** */
 
-#import "ICMPornhub.h"
+#import "ICMTwitchLive.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMPornhub
-
-- (void)_performActionForVideo:(NSString *)videoIdentifier
+typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 {
-	NSParameterAssert(videoIdentifier != nil);
+	ICMTwitchLiveUnknownType = 0,
+	ICMTwitchLiveChannelType,
+	ICMTwitchLiveVideoType
+};
+
+@implementation ICMTwitchLive
+
+- (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentType)contentType
+{
+	NSParameterAssert(contentIdentifier != nil);
+	NSParameterAssert(contentType != ICMTwitchLiveUnknownType);
+
+	NSString *contentArgument = nil;
+
+	if (contentType == ICMTwitchLiveChannelType) {
+		contentArgument = @"channel";
+	} else if (contentType == ICMTwitchLiveVideoType) {
+		contentArgument = @"video";
+	}
 
 	ICLPayloadMutable *payload = self.payload;
 
 	NSDictionary *templateAttributes =
 	@{
 	  @"uniqueIdentifier" : payload.uniqueIdentifier,
-	  @"videoIdentifier" : videoIdentifier
+	  @"contentIdentifier" : contentIdentifier,
+	  @"contentArgument" : contentArgument
 	};
 
 	NSError *templateRenderError = nil;
@@ -69,38 +86,75 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(url != nil);
 
-	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
+	ICMTwitchLiveContentType contentType = ICMTwitchLiveUnknownType;
 
-	if (videoIdentifier == nil) {
+	NSString *contentIdentifier = [self _contentIdentifierForURL:url type:&contentType];
+
+	if (contentIdentifier == nil) {
 		return nil;
 	}
 
 	return [^(ICLInlineContentModule *module) {
-		__weak ICMPornhub *moduleTyped = (id)module;
+		__weak ICMTwitchLive *moduleTyped = (id)module;
 
-		[moduleTyped _performActionForVideo:videoIdentifier];
+		[moduleTyped _performActionForContent:contentIdentifier type:contentType];
 	} copy];
 }
 
-+ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
++ (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentType *)contentTypeIn
 {
+#warning TODO: Add support for starting at specific time (time=)
+
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if ([urlPath hasPrefix:@"/view_video.php"] == NO) {
+	if (urlPath.length == 0) {
 		return nil;
 	}
 
-	NSString *urlQuery = url.query.percentEncodedURLQuery;
+	urlPath = [urlPath substringFromIndex:1]; // "/"
 
-	NSDictionary *queryItems = urlQuery.URLQueryItems;
-
-	NSString *videoIdentifier = queryItems[@"viewkey"];
-
-	if (videoIdentifier.isAlphabeticNumericOnly == NO) {
+	/* These exceptions cover all domains */
+	if ([urlPath isEqualToString:@"directory"] ||
+		[urlPath hasPrefix:@"directory/"] ||
+		[urlPath isEqualToString:@"store"] ||
+		[urlPath hasPrefix:@"store/"])
+	{
 		return nil;
 	}
 
-	return videoIdentifier;
+	/* Match videos */
+	if ([urlPath hasPrefix:@"videos/"]) {
+		urlPath = [urlPath substringFromIndex:7];
+
+		NSString *contentIdentifier = [urlPath trimCharacters:@"/"];
+
+		if (contentIdentifier.isNumericOnly == NO) {
+			return nil;
+		}
+
+		*contentTypeIn = ICMTwitchLiveVideoType;
+
+		return contentIdentifier;
+	}
+
+	/* Consider any other match a channel */
+	{
+		NSString *contentIdentifier = [urlPath trimCharacters:@"/"];
+
+		if (contentIdentifier.length < 4 ||
+			contentIdentifier.length > 25)
+		{
+			return nil;
+		}
+
+		if ([contentIdentifier onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9Underscore]] == NO) {
+			return nil;
+		}
+
+		*contentTypeIn = ICMTwitchLiveChannelType;
+
+		return contentIdentifier;
+	}
 }
 
 + (nullable NSArray<NSString *> *)domains
@@ -112,10 +166,9 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"pornhub.com",
-		  @"www.pornhub.com",
-		  @"pornhubpremium.com",
-		  @"www.pornhubpremium.com"
+		  @"twitch.tv",
+		  @"www.twitch.tv",
+		  @"go.twitch.tv"
 		];
 	});
 
@@ -127,12 +180,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSURL *)templateURL
 {
-	return [RZMainBundle() URLForResource:@"ICMPornhub" withExtension:@"mustache" subdirectory:@"Components"];
-}
-
-+ (BOOL)contentNotSafeForWork
-{
-	return YES;
+	return [NSBundleForClass() URLForResource:@"ICMTwitchLive" withExtension:@"mustache"];
 }
 
 @end

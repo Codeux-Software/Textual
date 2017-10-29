@@ -175,8 +175,6 @@ NS_ASSUME_NONNULL_BEGIN
 	else if ([urlHost hasSuffix:@"instagram.com"] ||
 			 [urlHost hasSuffix:@"instagr.am"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
-
 		if ([urlPath hasPrefix:@"/p/"] == NO) {
 			return nil;
 		}
@@ -265,8 +263,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost hasSuffix:@"i.4cdn.org"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
-
 		if ([urlPath hasSuffix:@".webm"] == NO) {
 			return nil;
 		}
@@ -277,8 +273,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost hasSuffix:@"8ch.net"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
-
 		if ([urlPath hasSuffix:@".webm"] == NO) {
 			return nil;
 		}
@@ -350,7 +344,7 @@ NS_ASSUME_NONNULL_BEGIN
 	else if ([urlHost hasSuffix:@"nicovideo.jp"] ||
 			 [urlHost isEqualToString:@"nico.ms"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil)
+		NSObjectIsEmptyAssertReturn(urlPath, nil);
 
 		NSString *videoId = nil;
 

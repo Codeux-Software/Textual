@@ -35,8 +35,51 @@
 
  *********************************************************************** */
 
-#import "ICMInlineHTML.h"
-#import "ICMInlineVideo.h"
-#import "ICMInlineImage.h"
+#import "ICPCoreMediaPrivate.h"
 
-#import "ICMAssessedMedia.h"
+#import "ICMCommonInlineImages.h"
+#import "ICMCommonInlineVideos.h"
+#import "ICMDailymotion.h"
+#import "ICMGfycat.h"
+#import "ICMGyazo.h"
+#import "ICMImgurGifv.h"
+#import "ICMLiveLeak.h"
+#import "ICMPornhub.h"
+#import "ICMStreamable.h"
+#import "ICMTweet.h"
+#import "ICMTwitchClips.h"
+#import "ICMTwitchLive.h"
+#import "ICMVimeo.h"
+#import "ICMXkcd.h"
+#import "ICMYouTube.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation ICPCoreMedia
+
++ (NSArray<Class> *)modules
+{
+	return
+	@[
+		[ICMDailymotion class],
+		[ICMGfycat class],
+		[ICMGyazo class],
+		[ICMImgurGifv class],
+		[ICMLiveleak class],
+		[ICMPornhub class],
+		[ICMStreamable class],
+		[ICMTweet class],
+		[ICMTwitchClips class],
+		[ICMTwitchLive class],
+		[ICMVimeo class],
+		[ICMXkcd class],
+		[ICMYouTube class],
+
+		[ICMCommonInlineVideos class],
+		[ICMCommonInlineImages class]
+	];
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

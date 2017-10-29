@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "ICMLiveleak.h"
+#import "ICMTwitchClips.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMLiveleak
+@implementation ICMTwitchClips
 
 - (void)_performActionForVideo:(NSString *)videoIdentifier
 {
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return [^(ICLInlineContentModule *module) {
-		__weak ICMLiveleak *moduleTyped = (id)module;
+		__weak ICMTwitchClips *moduleTyped = (id)module;
 
 		[moduleTyped _performActionForVideo:videoIdentifier];
 	} copy];
@@ -86,21 +86,24 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if ([urlPath isEqualToString:@"/view"] == NO) {
+	if (urlPath.length == 0) {
 		return nil;
 	}
 
-	NSString *urlQuery = url.query.percentEncodedURLQuery;
+	urlPath = [urlPath substringFromIndex:1]; // "/"
 
-	NSDictionary *queryItems = urlQuery.URLQueryItems;
-
-	NSString *videoIdentifier = queryItems[@"i"];
-
-	if (videoIdentifier.length != 14) {
-		return nil;
+	// old: /username/NameOfClip
+	// new: /NameOfClip
+	//      /NameOfClip/edit
+	if ([urlPath hasSuffix:@"/edit"]) {
+		urlPath = [urlPath substringToIndex:(urlPath.length - 5)]; // "/edit"
 	}
 
-	if ([videoIdentifier onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9Underscore]] == NO) {
+	NSString *videoIdentifier = urlPath;
+
+	if ([videoIdentifier onlyContainsCharactersFromCharacterSet:
+		 [NSCharacterSet Ato9UnderscoreDashForwardSlash]] == NO)
+	{
 		return nil;
 	}
 
@@ -116,8 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"liveleak.com",
-		  @"www.liveleak.com"
+		  @"clips.twitch.tv"
 		];
 	});
 
@@ -129,12 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSURL *)templateURL
 {
-	return [RZMainBundle() URLForResource:@"ICMLiveleak" withExtension:@"mustache" subdirectory:@"Components"];
-}
-
-+ (BOOL)contentNotSafeForWork
-{
-	return YES;
+	return [NSBundleForClass() URLForResource:@"ICMTwitchClips" withExtension:@"mustache"];
 }
 
 @end

@@ -83,26 +83,10 @@ ClassWithDesignatedInitializerInitMethod
 {
 	return
 	@[
-		[ICMDailymotion class],
-		[ICMGfycat class],
-		[ICMGyazo class],
-		[ICMImgurGifv class],
-		[ICMLiveleak class],
-		[ICMPornhub class],
-		[ICMStreamable class],
-		[ICMTweet class],
-		[ICMTwitchClips class],
-		[ICMTwitchLive class],
-		[ICMVimeo class],
-		[ICMXkcd class],
-		[ICMYouTube class],
-		[ICMCommonInlineVideos class],
-		[ICMCommonInlineImages class],
-
 		/* This module should ALWAYS be the last
 		 in line because it matches any URL. */
 		[ICMAssessedMedia class]
-	  ];
+	 ];
 }
 
 - (NSArray<Class> *)moduleClasses

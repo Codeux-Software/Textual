@@ -35,39 +35,22 @@
 
  *********************************************************************** */
 
-#import "ICMTwitchLive.h"
+#import "ICMVimeo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
+@implementation ICMVimeo
+
+- (void)_performActionForVideo:(NSString *)videoIdentifier
 {
-	ICMTwitchLiveUnknownType = 0,
-	ICMTwitchLiveChannelType,
-	ICMTwitchLiveVideoType
-};
-
-@implementation ICMTwitchLive
-
-- (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentType)contentType
-{
-	NSParameterAssert(contentIdentifier != nil);
-	NSParameterAssert(contentType != ICMTwitchLiveUnknownType);
-
-	NSString *contentArgument = nil;
-
-	if (contentType == ICMTwitchLiveChannelType) {
-		contentArgument = @"channel";
-	} else if (contentType == ICMTwitchLiveVideoType) {
-		contentArgument = @"video";
-	}
+	NSParameterAssert(videoIdentifier != nil);
 
 	ICLPayloadMutable *payload = self.payload;
 
 	NSDictionary *templateAttributes =
 	@{
 	  @"uniqueIdentifier" : payload.uniqueIdentifier,
-	  @"contentIdentifier" : contentIdentifier,
-	  @"contentArgument" : contentArgument
+	  @"videoIdentifier" : videoIdentifier
 	};
 
 	NSError *templateRenderError = nil;
@@ -86,75 +69,34 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 {
 	NSParameterAssert(url != nil);
 
-	ICMTwitchLiveContentType contentType = ICMTwitchLiveUnknownType;
+	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
 
-	NSString *contentIdentifier = [self _contentIdentifierForURL:url type:&contentType];
-
-	if (contentIdentifier == nil) {
+	if (videoIdentifier == nil) {
 		return nil;
 	}
 
 	return [^(ICLInlineContentModule *module) {
-		__weak ICMTwitchLive *moduleTyped = (id)module;
+		__weak ICMVimeo *moduleTyped = (id)module;
 
-		[moduleTyped _performActionForContent:contentIdentifier type:contentType];
+		[moduleTyped _performActionForVideo:videoIdentifier];
 	} copy];
 }
 
-+ (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentType *)contentTypeIn
++ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
 {
-#warning TODO: Add support for starting at specific time (time=)
-
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
 	if (urlPath.length == 0) {
 		return nil;
 	}
 
-	urlPath = [urlPath substringFromIndex:1]; // "/"
+	NSString *videoIdentifier = [urlPath trimCharacters:@"/"];
 
-	/* These exceptions cover all domains */
-	if ([urlPath isEqualToString:@"directory"] ||
-		[urlPath hasPrefix:@"directory/"] ||
-		[urlPath isEqualToString:@"store"] ||
-		[urlPath hasPrefix:@"store/"])
-	{
+	if (videoIdentifier.isNumericOnly == NO) {
 		return nil;
 	}
 
-	/* Match videos */
-	if ([urlPath hasPrefix:@"videos/"]) {
-		urlPath = [urlPath substringFromIndex:7];
-
-		NSString *contentIdentifier = [urlPath trimCharacters:@"/"];
-
-		if (contentIdentifier.isNumericOnly == NO) {
-			return nil;
-		}
-
-		*contentTypeIn = ICMTwitchLiveVideoType;
-
-		return contentIdentifier;
-	}
-
-	/* Consider any other match a channel */
-	{
-		NSString *contentIdentifier = [urlPath trimCharacters:@"/"];
-
-		if (contentIdentifier.length < 4 ||
-			contentIdentifier.length > 25)
-		{
-			return nil;
-		}
-
-		if ([contentIdentifier onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9Underscore]] == NO) {
-			return nil;
-		}
-
-		*contentTypeIn = ICMTwitchLiveChannelType;
-
-		return contentIdentifier;
-	}
+	return videoIdentifier;
 }
 
 + (nullable NSArray<NSString *> *)domains
@@ -166,9 +108,8 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"twitch.tv",
-		  @"www.twitch.tv",
-		  @"go.twitch.tv"
+		  @"vimeo.com",
+		  @"www.vimeo.com"
 		];
 	});
 
@@ -180,7 +121,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 
 - (nullable NSURL *)templateURL
 {
-	return [RZMainBundle() URLForResource:@"ICMTwitchLive" withExtension:@"mustache" subdirectory:@"Components"];
+	return [NSBundleForClass() URLForResource:@"ICMVimeo" withExtension:@"mustache"];
 }
 
 @end
