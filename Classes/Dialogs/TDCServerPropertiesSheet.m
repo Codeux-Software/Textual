@@ -1562,7 +1562,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self loadPrimaryServerEndpoint];
 }
 
-- (void)serverEndpointListSheetWillClose:(TDCServerEndpointListSheet *)sender;
+- (void)serverEndpointListSheetWillClose:(TDCServerEndpointListSheet *)sender
 {
 	self.serverEndpointSheet = nil;
 }

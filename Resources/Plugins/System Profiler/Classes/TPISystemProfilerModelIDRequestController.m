@@ -282,7 +282,7 @@ NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> Syst
 	[self tearDownInternalObject];
 }
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName attributes:(NSDictionary<NSString *, NSString *> *)attributeDict;
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(nullable NSString *)namespaceURI qualifiedName:(nullable NSString *)qName attributes:(NSDictionary<NSString *, NSString *> *)attributeDict
 {
 	if ([elementName isEqualToString:@"configCode"] == NO) {
 		return;

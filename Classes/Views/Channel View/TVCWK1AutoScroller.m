@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Maximum distance user can scroll up before automatic scrolling is disabled. */
 static CGFloat _userScrolledMinimum = 25.0;
 
-- (instancetype)initWitFrameView:(WebFrameView *)frameView;
+- (instancetype)initWitFrameView:(WebFrameView *)frameView
 {
 	NSParameterAssert(frameView != nil);
 
