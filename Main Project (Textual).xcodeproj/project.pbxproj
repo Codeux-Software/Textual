@@ -5207,10 +5207,10 @@
 				4C0BA57A1990798800857343 /* Headers */,
 				4C0BA6221990798800857343 /* Frameworks */,
 				4C0BA6331990798800857343 /* Sources */,
+				4CF76A731A91157B0088BF9A /* Embed Frameworks */,
 				4C0BA6CA1990798800857343 /* Build Extensions */,
 				4C0BA6CB1990798800857343 /* Copy Extensions */,
 				4C0BA6D21990798800857343 /* Copy Acknowledgements */,
-				4CF76A731A91157B0088BF9A /* Embed Frameworks */,
 				4C761BB11E155E0000A505B7 /* Build XPC Services */,
 				4C761B901E155B7300A505B7 /* Copy XPC Services */,
 			);
@@ -5232,10 +5232,10 @@
 				4CCF2F9E15804C18006FFE21 /* Headers */,
 				4C1DC54F1580420500A47BC9 /* Frameworks */,
 				4C1DC54E1580420500A47BC9 /* Sources */,
+				4CF76A911A9116520088BF9A /* Embed Frameworks */,
 				4C01BA101581104D007E2DAF /* Build Extensions */,
 				4C52AED515811C2000940619 /* Copy Extensions */,
 				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
-				4CF76A911A9116520088BF9A /* Embed Frameworks */,
 				4C761BAF1E155D7400A505B7 /* Build XPC Services */,
 				4C761BA61E155C6E00A505B7 /* Copy XPC Services */,
 			);
@@ -5257,8 +5257,8 @@
 				4C5BA3D916F1302F00A96CA2 /* Headers */,
 				4C5BA45716F1302F00A96CA2 /* Frameworks */,
 				4C0444F316F1602900EBB665 /* Sources */,
-				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
 				4CF76A821A9115910088BF9A /* Embed Frameworks */,
+				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
 				4C761BB01E155DD900A505B7 /* Build XPC Services */,
 				4C761BA41E155C4300A505B7 /* Copy XPC Services */,
 			);
