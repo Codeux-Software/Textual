@@ -1086,8 +1086,8 @@
 		4C8354791D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8354781D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings */; };
 		4C83547A1D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8354781D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings */; };
 		4C83547B1D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8354781D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings */; };
-		4C83B9111BA9BECC00BD7718 /* ChatFilterExtension.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, CodeSignOnCopy, ); }; };
-		4C83B9121BA9BED500BD7718 /* ChatFilterExtension.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, CodeSignOnCopy, ); }; };
+		4C83B9111BA9BECC00BD7718 /* ChatFilterExtension.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4C83B9121BA9BED500BD7718 /* ChatFilterExtension.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -1488,8 +1488,8 @@
 		4CC4A7381F8A1407008FF15F /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4CC4A7391F8A1407008FF15F /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4CC4A73A1F8A1407008FF15F /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
-		4CC4A73B1F8A1518008FF15F /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, CodeSignOnCopy, ); }; };
-		4CC4A73C1F8A1524008FF15F /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, CodeSignOnCopy, ); }; };
+		4CC4A73B1F8A1518008FF15F /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CC4A73C1F8A1524008FF15F /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CC65AA71F2E74A4007870BE /* TLOLicenseManagerLastGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF56DA71F2E6A6A001F661C /* TLOLicenseManagerLastGen.m */; };
 		4CC65AAF1F2E74AA007870BE /* TLOLicenseManagerLastGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF56DA71F2E6A6A001F661C /* TLOLicenseManagerLastGen.m */; };
 		4CC8E10F1D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */; };
@@ -1501,7 +1501,7 @@
 		4CC934FF1DE0BFA7003FF1B4 /* TLOSpokenNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC934FE1DE0BFA7003FF1B4 /* TLOSpokenNotification.m */; };
 		4CC935001DE0BFA7003FF1B4 /* TLOSpokenNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC934FE1DE0BFA7003FF1B4 /* TLOSpokenNotification.m */; };
 		4CC935011DE0BFA7003FF1B4 /* TLOSpokenNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC934FE1DE0BFA7003FF1B4 /* TLOSpokenNotification.m */; };
-		4CCC51961F8A17FF008D1C42 /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, CodeSignOnCopy, ); }; };
+		4CCC51961F8A17FF008D1C42 /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CCD4CA31D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCD4CA21D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h */; };
 		4CCD4CA41D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCD4CA21D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h */; };
