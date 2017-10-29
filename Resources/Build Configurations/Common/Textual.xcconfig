@@ -3,7 +3,7 @@ CODE_SIGN_ENTITLEMENTS = ${PROJECT_DIR}/.tmp/Entitlements.entitlements
 FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/**" "${PROJECT_DIR}/.tmp/SharedBuildResults-Frameworks/**"
 GCC_PREFIX_HEADER = ${PROJECT_DIR}/Classes/Headers/Private/TextualApplicationPrivate.h
 HEADER_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/**" "${PROJECT_DIR}/Classes/Headers/**" "${PROJECT_DIR}/Classes (Shared)/Headers/**"
-LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/**"
+LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/**" "${PROJECT_DIR}/.tmp/SharedBuildResults-Frameworks/**"
 PRODUCT_BUNDLE_IDENTIFIER = ${TEXTUAL_BUNDLE_IDENTIFIER}
 
 // It is important to preserve symbols and code that is
