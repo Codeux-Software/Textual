@@ -110,6 +110,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4C03B5541FA6389100748FE7 /* XPC Service - ICL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL.xcconfig"; path = "../../Resources/Build Configurations/Standard Release/XPC Service - ICL.xcconfig"; sourceTree = "<group>"; };
+		4C03B5551FA6389100748FE7 /* XPC Service - ICL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL.xcconfig"; path = "../../Resources/Build Configurations/App Store Release/XPC Service - ICL.xcconfig"; sourceTree = "<group>"; };
+		4C03B5561FA6389100748FE7 /* XPC Service - ICL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL.xcconfig"; path = "../../Resources/Build Configurations/Debug/XPC Service - ICL.xcconfig"; sourceTree = "<group>"; };
 		4C116B841F85982400BFFFF7 /* ICLInlineContentProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentProtocol.h; path = "../../Classes (Shared)/Headers/XPC Protocols/ICLInlineContentProtocol.h"; sourceTree = "<group>"; };
 		4C116B861F85993500BFFFF7 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = "../../Classes (Shared)/Headers/Private/NSObjectHelperPrivate.h"; sourceTree = "<group>"; };
 		4C116B8A1F85998100BFFFF7 /* NSObjectHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = "../../Classes (Shared)/Helpers/Cocoa (Objective-C)/NSObjectHelper.m"; sourceTree = "<group>"; };
@@ -151,10 +154,6 @@
 		4C8DBD421FA151FB00BA025A /* ICMGyazo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMGyazo.m; path = Classes/Modules/Gyazo/ICMGyazo.m; sourceTree = "<group>"; };
 		4C8DBD431FA151FC00BA025A /* ICMGyazo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMGyazo.h; path = Classes/Modules/Gyazo/ICMGyazo.h; sourceTree = "<group>"; };
 		4C8DBD451FA1543D00BA025A /* ICLHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLHelpers.m; path = Classes/Service/ICLHelpers.m; sourceTree = "<group>"; };
-		4C9580301FA420BB00F18BC8 /* Services Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Base.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Base.xcconfig"; sourceTree = "<group>"; };
-		4C9580311FA420BB00F18BC8 /* Services Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Debug.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Debug.xcconfig"; sourceTree = "<group>"; };
-		4C9580321FA420BB00F18BC8 /* Services App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services App Store Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4C9580331FA420BC00F18BC8 /* Services Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Standard Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Standard Release.xcconfig"; sourceTree = "<group>"; };
 		4C9580601FA4F5F400F18BC8 /* ICLPluginManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICLPluginManager.m; path = Classes/Service/ICLPluginManager.m; sourceTree = "<group>"; };
 		4C9580621FA4F61A00F18BC8 /* ICLPluginManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPluginManagerPrivate.h; path = Classes/Headers/Private/ICLPluginManagerPrivate.h; sourceTree = "<group>"; };
 		4C9580631FA4F61A00F18BC8 /* ICLPluginProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLPluginProtocol.h; path = Classes/Headers/ICLPluginProtocol.h; sourceTree = "<group>"; };
@@ -310,10 +309,9 @@
 		4C1406541F1194F900C73D53 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C9580321FA420BB00F18BC8 /* Services App Store Release.xcconfig */,
-				4C9580301FA420BB00F18BC8 /* Services Base.xcconfig */,
-				4C9580311FA420BB00F18BC8 /* Services Debug.xcconfig */,
-				4C9580331FA420BC00F18BC8 /* Services Standard Release.xcconfig */,
+				4C03B5561FA6389100748FE7 /* XPC Service - ICL.xcconfig */,
+				4C03B5551FA6389100748FE7 /* XPC Service - ICL.xcconfig */,
+				4C03B5541FA6389100748FE7 /* XPC Service - ICL.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -924,10 +922,11 @@
 /* Begin XCBuildConfiguration section */
 		4C14064C1F11942B00C73D53 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580311FA420BB00F18BC8 /* Services Debug.xcconfig */;
+			baseConfigurationReference = 4C03B5561FA6389100748FE7 /* XPC Service - ICL.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				SWIFT_VERSION = 4.0;
 			};
@@ -935,10 +934,11 @@
 		};
 		4C14064D1F11942B00C73D53 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580331FA420BC00F18BC8 /* Services Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B5541FA6389100748FE7 /* XPC Service - ICL.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				SWIFT_VERSION = 4.0;
 			};
@@ -948,9 +948,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoader.entitlements";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
 				PRODUCT_NAME = InlineContentLoader;
@@ -961,9 +958,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoader.entitlements";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
 				PRODUCT_NAME = InlineContentLoader;
@@ -972,10 +966,11 @@
 		};
 		4C1406641F11965A00C73D53 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580321FA420BB00F18BC8 /* Services App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B5551FA6389100748FE7 /* XPC Service - ICL.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				SWIFT_VERSION = 4.0;
 			};
@@ -985,8 +980,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoaderAppStore.entitlements";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
 				PRODUCT_NAME = InlineContentLoader;

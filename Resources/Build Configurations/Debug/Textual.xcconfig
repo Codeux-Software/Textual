@@ -1,5 +1,8 @@
 
-#include "../Textual Debug.xcconfig"
+#include "../Common/Foundation.xcconfig"
+#include "../Common/Foundation Debug.xcconfig"
+#include "Enabled Features.xcconfig"
+#include "../Common/Textual.xcconfig"
 
 TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual
 TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual
@@ -8,5 +11,3 @@ TEXTUAL_BUILD_SCHEME_TOKEN = debug
 TEXTUAL_EXTENSION_BUILD_SCHEME = Debug
 TEXTUAL_FRAMEWORK_BUILD_SCHEME = Release // Frameworks don't have a Debug scheme
 TEXTUAL_XPC_SERVICE_BUILD_SCHEME = Debug
-
-#include "Main Project Base.xcconfig"

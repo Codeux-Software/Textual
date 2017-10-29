@@ -2124,6 +2124,9 @@
 		4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXSharedApplication.h; path = Classes/Headers/TXSharedApplication.h; sourceTree = "<group>"; };
 		4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesReload.h; path = Classes/Headers/TPCPreferencesReload.h; sourceTree = "<group>"; };
 		4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowSidebarSmoothTextFieldPrivate.h; path = Classes/Headers/Private/TVCMainWindowSidebarSmoothTextFieldPrivate.h; sourceTree = "<group>"; };
+		4C03B54E1FA6376300748FE7 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Textual.xcconfig; path = "Resources/Build Configurations/Standard Release/Textual.xcconfig"; sourceTree = "<group>"; };
+		4C03B54F1FA6376400748FE7 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Textual.xcconfig; path = "Resources/Build Configurations/App Store Release/Textual.xcconfig"; sourceTree = "<group>"; };
+		4C03B5501FA6376400748FE7 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Textual.xcconfig; path = "Resources/Build Configurations/Debug/Textual.xcconfig"; sourceTree = "<group>"; };
 		4C052F741D551CA90057522D /* IRCAddressBookUserTrackingPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCAddressBookUserTrackingPrivate.h; path = Classes/Headers/Private/IRCAddressBookUserTrackingPrivate.h; sourceTree = "<group>"; };
 		4C052F7D1D551CC70057522D /* IRCAddressBookUserTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCAddressBookUserTracking.m; path = Classes/IRC/IRCAddressBookUserTracking.m; sourceTree = "<group>"; };
 		4C056F111D1D89A100D85CEA /* TVCMemberListCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMemberListCellPrivate.h; path = Classes/Headers/Private/TVCMemberListCellPrivate.h; sourceTree = "<group>"; };
@@ -2509,10 +2512,6 @@
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Classes/Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4C95804A1FA4213100F18BC8 /* Main Project App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project App Store Release.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4C95804B1FA4213200F18BC8 /* Main Project Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project Standard Release.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project Standard Release.xcconfig"; sourceTree = "<group>"; };
-		4C95804C1FA4213200F18BC8 /* Main Project Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project Debug.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project Debug.xcconfig"; sourceTree = "<group>"; };
-		4C95804D1FA4213200F18BC8 /* Main Project Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Main Project Base.xcconfig"; path = "Resources/Build Configurations/Main Project/Main Project Base.xcconfig"; sourceTree = "<group>"; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Classes/Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
 		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManager.h; path = Classes/Headers/TLOEncryptionManager.h; sourceTree = "<group>"; };
 		4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItemPrivate.h; path = Classes/Headers/Private/IRCTreeItemPrivate.h; sourceTree = "<group>"; };
@@ -4282,10 +4281,9 @@
 		4CD6202E16E31EE600D780D6 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C95804A1FA4213100F18BC8 /* Main Project App Store Release.xcconfig */,
-				4C95804D1FA4213200F18BC8 /* Main Project Base.xcconfig */,
-				4C95804C1FA4213200F18BC8 /* Main Project Debug.xcconfig */,
-				4C95804B1FA4213200F18BC8 /* Main Project Standard Release.xcconfig */,
+				4C03B5501FA6376400748FE7 /* Textual.xcconfig */,
+				4C03B54F1FA6376400748FE7 /* Textual.xcconfig */,
+				4C03B54E1FA6376300748FE7 /* Textual.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -7145,50 +7143,38 @@
 		4C0BA6D51990798800857343 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
 		};
 		4C0BA6D61990798800857343 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
 		};
 		4C0BA6D81990798800857343 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				PROVISIONING_PROFILE_SPECIFIER = "Development: com.codeux.apps.textual-mas";
 			};
 			name = "Release (App Store)";
 		};
 		4C1DC56E1580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C95804C1FA4213200F18BC8 /* Main Project Debug.xcconfig */;
+			baseConfigurationReference = 4C03B5501FA6376400748FE7 /* Textual.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
 				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		4C1DC56F1580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C95804B1FA4213200F18BC8 /* Main Project Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B54E1FA6376300748FE7 /* Textual.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
 				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -7196,50 +7182,39 @@
 		4C1DC5711580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
 		};
 		4C1DC5721580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
 		};
 		4C5BA4E216F1302F00A96CA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
 		};
 		4C5BA4E316F1302F00A96CA2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
 		};
 		4C5BA4E416F1302F00A96CA2 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
 		};
 		4CCF2F9015804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C95804A1FA4213100F18BC8 /* Main Project App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B54F1FA6376400748FE7 /* Textual.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
 				PRODUCT_NAME = "Textual 7";
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (App Store)";
@@ -7247,7 +7222,6 @@
 		4CCF2F9115804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
 		};

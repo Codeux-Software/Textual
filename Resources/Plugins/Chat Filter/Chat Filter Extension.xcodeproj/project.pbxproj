@@ -22,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B5631FA6397100748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Debug/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B5641FA6397100748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Standard Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B5651FA6397100748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/App Store Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C51BE9312D0471600E79CEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C8355B81D751F03001FD782 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TPI_ChatFilterLogic.strings"; sourceTree = "<group>"; };
 		4C9AD1CD1B8A1634000B63EF /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = /Applications/Textual.app/Contents/Frameworks/CocoaExtensions.framework; sourceTree = "<absolute>"; };
@@ -30,10 +33,6 @@
 		4C9F475D1D4EB3D200392083 /* TPI_ChatFilterInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilterInternal.h; path = Classes/TPI_ChatFilterInternal.h; sourceTree = "<group>"; };
 		4C9F475E1D4EB3D200392083 /* TPI_ChatFilterLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilterLogic.h; path = Classes/TPI_ChatFilterLogic.h; sourceTree = "<group>"; };
 		4C9F475F1D4EB3D200392083 /* TPI_ChatFilterLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPI_ChatFilterLogic.m; path = Classes/TPI_ChatFilterLogic.m; sourceTree = "<group>"; };
-		4CCD21E61FA41E160056F5FE /* Extensions App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions App Store Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4CCD21E71FA41E160056F5FE /* Extensions Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Standard Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Standard Release.xcconfig"; sourceTree = "<group>"; };
-		4CCD21E81FA41E160056F5FE /* Extensions Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Debug.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Debug.xcconfig"; sourceTree = "<group>"; };
-		4CCD21E91FA41E160056F5FE /* Extensions Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Base.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Base.xcconfig"; sourceTree = "<group>"; };
 		4CEEB1FB1CC72F8E00FFA43D /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TPI_ChatFilterEditFilterSheet.strings"; sourceTree = "<group>"; };
 		4CEEB1FD1CC72F8E00FFA43D /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TPI_ChatFilterExtension.strings"; sourceTree = "<group>"; };
 		4CF488081BA7B43800A87EED /* TPI_ChatFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ChatFilter.h; path = Classes/TPI_ChatFilter.h; sourceTree = "<group>"; };
@@ -154,10 +153,9 @@
 		4CAA730C1BA9B06D00A38456 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4CCD21E61FA41E160056F5FE /* Extensions App Store Release.xcconfig */,
-				4CCD21E91FA41E160056F5FE /* Extensions Base.xcconfig */,
-				4CCD21E81FA41E160056F5FE /* Extensions Debug.xcconfig */,
-				4CCD21E71FA41E160056F5FE /* Extensions Standard Release.xcconfig */,
+				4C03B5651FA6397100748FE7 /* Textual Extensions.xcconfig */,
+				4C03B5641FA6397100748FE7 /* Textual Extensions.xcconfig */,
+				4C03B5631FA6397100748FE7 /* Textual Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
 			sourceTree = "<group>";
@@ -286,57 +284,66 @@
 		1DEB911C08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-ChatFilterExtension";
 				PRODUCT_NAME = ChatFilterExtension;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
 		1DEB912008733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CCD21E81FA41E160056F5FE /* Extensions Debug.xcconfig */;
+			baseConfigurationReference = 4C03B5631FA6397100748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes (Shared)/Headers/Private/**\"",
+				);
 			};
 			name = Debug;
 		};
 		4CCD21EC1FA41E250056F5FE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CCD21E71FA41E160056F5FE /* Extensions Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B5641FA6397100748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes (Shared)/Headers/Private/**\"",
+				);
 			};
 			name = Release;
 		};
 		4CCD21ED1FA41E250056F5FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-ChatFilterExtension";
 				PRODUCT_NAME = ChatFilterExtension;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
 		4CCD21EE1FA41E390056F5FE /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CCD21E61FA41E160056F5FE /* Extensions App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B5651FA6397100748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes (Shared)/Headers/Private/**\"",
+				);
 			};
 			name = "Release (App Store)";
 		};
 		4CCD21EF1FA41E390056F5FE /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-ChatFilterExtension";
 				PRODUCT_NAME = ChatFilterExtension;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = "Release (App Store)";
 		};

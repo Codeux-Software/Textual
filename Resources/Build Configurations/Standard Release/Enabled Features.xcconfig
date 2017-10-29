@@ -1,4 +1,7 @@
-#include "Base.xcconfig"
+
+// The main project of Textual, its extensions, and its XPC services
+// all inherit one of these configuration files to allow them to
+// selectively disable code based on which features are enabled.
 
 // GCC_PREPROCESSOR_DEFINITIONS defines macros that are used to disable and enable
 // the inclusion of certain segments of code. Toggling one of these flags does not

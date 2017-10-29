@@ -16,13 +16,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B5721FA648AD00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Debug/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B5731FA648AD00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Standard Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B5741FA648AD00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/App Store Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C661D481C2428DC001C2352 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C69EAFA1AC1A941003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = SOURCE_ROOT; };
-		4C9580261FA4203200F18BC8 /* Extensions App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions App Store Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4C9580271FA4203200F18BC8 /* Extensions Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Standard Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Standard Release.xcconfig"; sourceTree = "<group>"; };
-		4C9580281FA4203200F18BC8 /* Extensions Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Debug.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Debug.xcconfig"; sourceTree = "<group>"; };
-		4C9580291FA4203200F18BC8 /* Extensions Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Base.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Base.xcconfig"; sourceTree = "<group>"; };
 		4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CF40D651AC1A03F00A26BE0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CF40D691AC1A06300A26BE0 /* TPI_ZNCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ZNCAdditions.h; path = Classes/TPI_ZNCAdditions.h; sourceTree = "<group>"; };
@@ -98,10 +97,9 @@
 		4C69188516E3275D00BDE3A8 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C9580261FA4203200F18BC8 /* Extensions App Store Release.xcconfig */,
-				4C9580291FA4203200F18BC8 /* Extensions Base.xcconfig */,
-				4C9580281FA4203200F18BC8 /* Extensions Debug.xcconfig */,
-				4C9580271FA4203200F18BC8 /* Extensions Standard Release.xcconfig */,
+				4C03B5741FA648AD00748FE7 /* Textual Extensions.xcconfig */,
+				4C03B5731FA648AD00748FE7 /* Textual Extensions.xcconfig */,
+				4C03B5721FA648AD00748FE7 /* Textual Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
 			sourceTree = "<group>";
@@ -201,51 +199,63 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Release;
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580281FA4203200F18BC8 /* Extensions Debug.xcconfig */;
+			baseConfigurationReference = 4C03B5721FA648AD00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = ZNCAdditions;
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes (Shared)/Headers/Private/**\"",
+				);
 			};
 			name = Debug;
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580271FA4203200F18BC8 /* Extensions Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B5731FA648AD00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = ZNCAdditions;
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes (Shared)/Headers/Private/**\"",
+				);
 			};
 			name = Release;
 		};
 		4C95802A1FA4204000F18BC8 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580261FA4203200F18BC8 /* Extensions App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B5741FA648AD00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = ZNCAdditions;
+				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes (Shared)/Headers/Private/**\"",
+				);
 			};
 			name = "Release (App Store)";
 		};
 		4C95802B1FA4204000F18BC8 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = "Release (App Store)";
 		};

@@ -1,4 +1,0 @@
-
-GCC_PREFIX_HEADER = ${SRCROOT}/Classes/Headers/Private/TextualApplicationPrivate.h
-HEADER_SEARCH_PATHS = ${inherited} ${SRCROOT}/Classes\ \(Shared\)/Headers/**
-PRODUCT_BUNDLE_IDENTIFIER = ${TEXTUAL_BUNDLE_IDENTIFIER}

@@ -19,11 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B56C1FA6482600748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Debug/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B56D1FA6482600748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Standard Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B56E1FA6482600748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/App Store Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C69EAFE1AC1A96B003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = "<group>"; };
-		4C95801A1FA41F6600F18BC8 /* Extensions App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions App Store Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4C95801B1FA41F6600F18BC8 /* Extensions Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Standard Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Standard Release.xcconfig"; sourceTree = "<group>"; };
-		4C95801C1FA41F6600F18BC8 /* Extensions Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Debug.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Debug.xcconfig"; sourceTree = "<group>"; };
-		4C95801D1FA41F6600F18BC8 /* Extensions Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Base.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Base.xcconfig"; sourceTree = "<group>"; };
 		4CBE7B551A91483E008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CF40D761AC1A16E00A26BE0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
@@ -128,10 +127,9 @@
 		4C69188E16E3276200BDE3A8 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C95801A1FA41F6600F18BC8 /* Extensions App Store Release.xcconfig */,
-				4C95801D1FA41F6600F18BC8 /* Extensions Base.xcconfig */,
-				4C95801C1FA41F6600F18BC8 /* Extensions Debug.xcconfig */,
-				4C95801B1FA41F6600F18BC8 /* Extensions Standard Release.xcconfig */,
+				4C03B56E1FA6482600748FE7 /* Textual Extensions.xcconfig */,
+				4C03B56D1FA6482600748FE7 /* Textual Extensions.xcconfig */,
+				4C03B56C1FA6482600748FE7 /* Textual Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
 			sourceTree = "<group>";
@@ -239,54 +237,54 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SystemProfiler";
+				PRODUCT_NAME = SystemProfiler;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SystemProfiler";
+				PRODUCT_NAME = SystemProfiler;
 			};
 			name = Release;
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C95801C1FA41F6600F18BC8 /* Extensions Debug.xcconfig */;
+			baseConfigurationReference = 4C03B56C1FA6482600748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = SystemProfiler;
+				DEVELOPMENT_TEAM = "";
 			};
 			name = Debug;
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C95801B1FA41F6600F18BC8 /* Extensions Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B56D1FA6482600748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = SystemProfiler;
+				DEVELOPMENT_TEAM = "";
 			};
 			name = Release;
 		};
 		4C95801E1FA41F6D00F18BC8 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C95801A1FA41F6600F18BC8 /* Extensions App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B56E1FA6482600748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = SystemProfiler;
+				DEVELOPMENT_TEAM = "";
 			};
 			name = "Release (App Store)";
 		};
 		4C95801F1FA41F6D00F18BC8 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SystemProfiler";
+				PRODUCT_NAME = SystemProfiler;
 			};
 			name = "Release (App Store)";
 		};

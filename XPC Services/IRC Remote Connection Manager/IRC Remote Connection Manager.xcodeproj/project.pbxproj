@@ -30,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B5571FA638C800748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Standard Release/XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C03B5581FA638C800748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Debug/XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C03B5591FA638C800748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/App Store Release/XPC Services.xcconfig"; sourceTree = "<group>"; };
 		4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = RemoteConnectionManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C14065B1F1195A900C73D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C14065C1F1195B600C73D53 /* ConnectionManagerAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ConnectionManagerAppStore.entitlements; path = Resources/Sandbox/Entitlements/ConnectionManagerAppStore.entitlements; sourceTree = "<group>"; };
@@ -64,10 +67,6 @@
 		4C8C72FA1F121EF000ED72DB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/Service/main.m; sourceTree = "<group>"; };
 		4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfig.h; path = "../../Classes (Shared)/Headers/IRCConnectionConfig.h"; sourceTree = "<group>"; };
 		4C8C73061F1221C600ED72DB /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionConfig.m; path = "../../Classes (Shared)/IRC/IRCConnectionConfig.m"; sourceTree = "<group>"; };
-		4C9580341FA420F900F18BC8 /* Services Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Base.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Base.xcconfig"; sourceTree = "<group>"; };
-		4C9580351FA420F900F18BC8 /* Services Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Debug.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Debug.xcconfig"; sourceTree = "<group>"; };
-		4C9580361FA420F900F18BC8 /* Services App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services App Store Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4C9580371FA420F900F18BC8 /* Services Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Services Standard Release.xcconfig"; path = "../../Resources/Build Configurations/XPC Services/Services Standard Release.xcconfig"; sourceTree = "<group>"; };
 		4CAC2A071F12AFFB00D06046 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -145,10 +144,9 @@
 		4C1406541F1194F900C73D53 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C9580361FA420F900F18BC8 /* Services App Store Release.xcconfig */,
-				4C9580341FA420F900F18BC8 /* Services Base.xcconfig */,
-				4C9580351FA420F900F18BC8 /* Services Debug.xcconfig */,
-				4C9580371FA420F900F18BC8 /* Services Standard Release.xcconfig */,
+				4C03B5591FA638C800748FE7 /* XPC Services.xcconfig */,
+				4C03B5581FA638C800748FE7 /* XPC Services.xcconfig */,
+				4C03B5571FA638C800748FE7 /* XPC Services.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -472,7 +470,7 @@
 /* Begin XCBuildConfiguration section */
 		4C14064C1F11942B00C73D53 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580351FA420F900F18BC8 /* Services Debug.xcconfig */;
+			baseConfigurationReference = 4C03B5581FA638C800748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 			};
@@ -480,7 +478,7 @@
 		};
 		4C14064D1F11942B00C73D53 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580371FA420F900F18BC8 /* Services Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B5571FA638C800748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 			};
@@ -512,7 +510,7 @@
 		};
 		4C1406641F11965A00C73D53 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580361FA420F900F18BC8 /* Services App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B5591FA638C800748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 			};
