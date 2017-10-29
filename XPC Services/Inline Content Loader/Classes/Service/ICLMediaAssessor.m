@@ -77,7 +77,7 @@ NSString * const ICLMediaAssessorErrorDomain = @"ICLMediaAssessorErrorDomain";
 	BOOL _objectInitialized;
 }
 
-@property (nonatomic, strong) ICLMediaAssessorConfiguration *config;
+@property (nonatomic, strong, nullable) ICLMediaAssessorConfiguration *config;
 @property (nonatomic, strong, nullable) ICLMediaAssessorLimits *limits;
 @property (nonatomic, strong, nullable) ICLMediaAssessorRequest *request;
 @property (nonatomic, strong, nullable) ICLMediaAssessorState *state;
