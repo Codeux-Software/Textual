@@ -35,96 +35,83 @@
 
  *********************************************************************** */
 
-#import "ICMYouTube.h"
+#import "ICLHelpers.h"
+#import "ICMTweet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMYouTube
+@implementation ICMTweet
 
-- (void)_performActionForVideo:(NSString *)videoIdentifier
+- (void)_loadTweetContents
 {
-	NSParameterAssert(videoIdentifier != nil);
+	NSString *tweetAddress = self.payload.address;
 
-	ICLPayloadMutable *payload = self.payload;
+	NSURLComponents *requestComponents = [NSURLComponents componentsWithString:@"https://publish.twitter.com/oembed"];
 
-	NSDictionary *templateAttributes =
-	@{
-	  @"uniqueIdentifier" : payload.uniqueIdentifier,
-	  @"videoIdentifier" : videoIdentifier
-	};
+	requestComponents.queryItems =
+	@[
+	  [NSURLQueryItem queryItemWithName:@"dnt" value:@"true"], /* DO NOT TRACK */
+	  [NSURLQueryItem queryItemWithName:@"maxwidth" value:@"500"],
+	  [NSURLQueryItem queryItemWithName:@"omit_script" value:@"true"],
+	  [NSURLQueryItem queryItemWithName:@"url" value:tweetAddress]
+	];
 
-	NSError *templateRenderError = nil;
+	NSURL *requestURL = requestComponents.URL;
 
-	NSString *html = [self.template renderObject:templateAttributes error:&templateRenderError];
+	[ICLHelpers requestJSONObject:@"html"
+						   ofType:[NSString class]
+					  inHierarchy:nil
+						  fromURL:requestURL
+				  completionBlock:^(id object) {
+				if (object == nil) {
+					[self notifyUnableToPresentHTML];
 
-	payload.html = html;
+					return;
+				}
 
-	[self finalizeWithError:templateRenderError];
+				[self performActionForHTML:object];
+			}];
 }
 
 #pragma mark -
 #pragma mark Action Block
 
-+ (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
++ (nullable SEL)actionForURL:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
 
-	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
-
-	if (videoIdentifier == nil) {
-		return nil;
+	if ([self _URLIsTweet:url] == NO) {
+		return NULL;
 	}
 
-	return [^(ICLInlineContentModule *module) {
-		__weak ICMYouTube *moduleTyped = (id)module;
-
-		[moduleTyped _performActionForVideo:videoIdentifier];
-	} copy];
+	return @selector(_loadTweetContents);
 }
 
-+ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
++ (BOOL)_URLIsTweet:(NSURL *)url
 {
-#warning TODO: Add support for starting at specific time (t=)
+	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	NSString *videoIdentifier = nil;
-
-	NSString *urlHost = url.host;
-
-	if ([urlHost isEqualToString:@"youtu.be"])
-	{
-		NSString *urlPath = url.path.percentEncodedURLPath;
-
-		if (urlPath.length == 0) {
-			return nil;
-		}
-
-		videoIdentifier = [urlPath substringFromIndex:1];
-	}
-	else if ([urlHost isEqualToString:@"youtube.com"] ||
-			 [urlHost hasSuffix:@".youtube.com"])
-	{
-		NSString *urlPath = url.path.percentEncodedURLPath;
-
-		if ([urlPath isEqualToString:@"/watch"] == NO) {
-			return nil;
-		}
-
-		NSString *urlQuery = url.query.percentEncodedURLQuery;
-
-		NSDictionary *queryItems = urlQuery.URLQueryItems;
-
-		videoIdentifier = queryItems[@"v"];
+	if (urlPath.length == 0) {
+		return NO;
 	}
 
-	if (videoIdentifier.length < 11) {
-		return nil;
+	urlPath = [urlPath substringFromIndex:1]; // "/"
+
+	NSArray<NSString *> *components = [urlPath componentsSeparatedByString:@"/"];
+
+	if (components.count < 3) {
+		return NO;
 	}
 
-	if (videoIdentifier.length > 11) {
-		videoIdentifier = [videoIdentifier substringToIndex:11];
+	if ([components[1] isEqualToString:@"status"] == NO) {
+		return NO;
 	}
 
-	return videoIdentifier;
+	if (components[2].isNumericOnly == NO) {
+		return NO;
+	}
+
+	return YES;
 }
 
 + (nullable NSArray<NSString *> *)domains
@@ -136,10 +123,9 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"youtube.com",
-		  @"www.youtube.com",
-		  @"m.youtube.com",
-		  @"youtu.be"
+		  @"twitter.com",
+		  @"www.twitter.com",
+		  @"mobile.twitter.com"
 		];
 	});
 
@@ -149,9 +135,24 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Utilities
 
-- (nullable NSURL *)templateURL
+- (nullable NSArray<NSURL *> *)scriptResources
 {
-	return [RZMainBundle() URLForResource:@"ICMYouTube" withExtension:@"mustache" subdirectory:@"Components"];
+	return
+	[[super scriptResources] arrayByAddingObjectsFromArray:
+	@[
+	  [NSURL URLWithString:@"https://platform.twitter.com/widgets.js"],
+	  [NSBundleForClass() URLForResource:@"ICMTweet" withExtension:@"js"]
+	]];
+}
+
+- (nullable NSString *)entrypoint
+{
+	return @"_ICMTweet";
+}
+
+- (void)finalizePreflight
+{
+	self.payload.classAttribute = @"inlineTweet";
 }
 
 @end

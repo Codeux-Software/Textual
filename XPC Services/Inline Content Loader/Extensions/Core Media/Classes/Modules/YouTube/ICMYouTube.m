@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "ICMTwitchClips.h"
+#import "ICMYouTube.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation ICMTwitchClips
+@implementation ICMYouTube
 
 - (void)_performActionForVideo:(NSString *)videoIdentifier
 {
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return [^(ICLInlineContentModule *module) {
-		__weak ICMTwitchClips *moduleTyped = (id)module;
+		__weak ICMYouTube *moduleTyped = (id)module;
 
 		[moduleTyped _performActionForVideo:videoIdentifier];
 	} copy];
@@ -84,27 +84,44 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
 {
-	NSString *urlPath = url.path.percentEncodedURLPath;
+#warning TODO: Add support for starting at specific time (t=)
 
-	if (urlPath.length == 0) {
-		return nil;
-	}
+	NSString *videoIdentifier = nil;
 
-	urlPath = [urlPath substringFromIndex:1]; // "/"
+	NSString *urlHost = url.host;
 
-	// old: /username/NameOfClip
-	// new: /NameOfClip
-	//      /NameOfClip/edit
-	if ([urlPath hasSuffix:@"/edit"]) {
-		urlPath = [urlPath substringToIndex:(urlPath.length - 5)]; // "/edit"
-	}
-
-	NSString *videoIdentifier = urlPath;
-
-	if ([videoIdentifier onlyContainsCharactersFromCharacterSet:
-		 [NSCharacterSet Ato9UnderscoreDashForwardSlash]] == NO)
+	if ([urlHost isEqualToString:@"youtu.be"])
 	{
+		NSString *urlPath = url.path.percentEncodedURLPath;
+
+		if (urlPath.length == 0) {
+			return nil;
+		}
+
+		videoIdentifier = [urlPath substringFromIndex:1];
+	}
+	else if ([urlHost isEqualToString:@"youtube.com"] ||
+			 [urlHost hasSuffix:@".youtube.com"])
+	{
+		NSString *urlPath = url.path.percentEncodedURLPath;
+
+		if ([urlPath isEqualToString:@"/watch"] == NO) {
+			return nil;
+		}
+
+		NSString *urlQuery = url.query.percentEncodedURLQuery;
+
+		NSDictionary *queryItems = urlQuery.URLQueryItems;
+
+		videoIdentifier = queryItems[@"v"];
+	}
+
+	if (videoIdentifier.length < 11) {
 		return nil;
+	}
+
+	if (videoIdentifier.length > 11) {
+		videoIdentifier = [videoIdentifier substringToIndex:11];
 	}
 
 	return videoIdentifier;
@@ -119,7 +136,10 @@ NS_ASSUME_NONNULL_BEGIN
 	dispatch_once(&onceToken, ^{
 		domains =
 		@[
-		  @"clips.twitch.tv"
+		  @"youtube.com",
+		  @"www.youtube.com",
+		  @"m.youtube.com",
+		  @"youtu.be"
 		];
 	});
 
@@ -131,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSURL *)templateURL
 {
-	return [RZMainBundle() URLForResource:@"ICMTwitchClips" withExtension:@"mustache" subdirectory:@"Components"];
+	return [NSBundleForClass() URLForResource:@"ICMYouTube" withExtension:@"mustache"];
 }
 
 @end
