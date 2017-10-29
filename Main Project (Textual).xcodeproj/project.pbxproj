@@ -1208,6 +1208,8 @@
 		4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
 		4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
 		4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
+		4CA1FE741FA615770095901F /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA1FE7E1FA615770095901F /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA2B36D1F2F063D00C97780 /* TDCLicenseUpgradeCommonActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2B36C1F2F063D00C97780 /* TDCLicenseUpgradeCommonActions.m */; };
 		4CA2B36E1F2F063D00C97780 /* TDCLicenseUpgradeCommonActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2B36C1F2F063D00C97780 /* TDCLicenseUpgradeCommonActions.m */; };
 		4CA816B11D5F8A3000B3DAED /* TDCBuddyListDialogTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA816B01D5F8A3000B3DAED /* TDCBuddyListDialogTable.m */; };
@@ -4716,6 +4718,7 @@
 				4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B02FA1D12105D00295E82 /* NSColorHelper.h in Headers */,
 				4C7B02FB1D12105D00295E82 /* NSStringHelper.h in Headers */,
+				4CA1FE741FA615770095901F /* TPCPreferencesCloudSync.h in Headers */,
 				4C7B02FC1D12105D00295E82 /* StaticDefinitions.h in Headers */,
 				4C056F181D1D89A100D85CEA /* TVCMemberListCellPrivate.h in Headers */,
 				4C7B02FD1D12105D00295E82 /* TextualApplication.h in Headers */,
@@ -4962,6 +4965,7 @@
 				4C0D978A1D36352B001CD6D9 /* TLOInternetAddressLookup.h in Headers */,
 				4C3A3DD91D41750200569BA8 /* IRCNetworkList.h in Headers */,
 				4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
+				4CA1FE7E1FA615770095901F /* TPCPreferencesCloudSync.h in Headers */,
 				4C7B03091D12106300295E82 /* NSColorHelper.h in Headers */,
 				4C7B030A1D12106300295E82 /* NSStringHelper.h in Headers */,
 				4C7B030B1D12106300295E82 /* StaticDefinitions.h in Headers */,
