@@ -1,0 +1,33 @@
+
+// Textual Extensions *.xcconfig file contains settings that are
+// specific to extensions for Textual itself (the main project).
+
+// TEXTUAL_PRODUCT_LOCATION is replaced by the build script
+TEXTUAL_PRODUCT_LOCATION = /Applications/Textual.app
+
+// TEXTUAL_PRODUCT_BINARY is replaced by the build script
+TEXTUAL_PRODUCT_BINARY = ${TEXTUAL_PRODUCT_LOCATION}/Contents/MacOS/Textual
+
+// TEXTUAL_PROJECT_DIR is replaced by the build script
+TEXTUAL_PROJECT_DIR = ${PROJECT_DIR}/../../../
+
+OBJROOT = ${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildResults-Extensions
+
+SYMROOT = ${OBJROOT}
+BUILD_DIR = ${OBJROOT}
+TARGET_TEMP_DIR = ${OBJROOT}
+SHARED_PRECOMPS_DIR = ${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildPCH
+CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildProducts-Extensions
+
+CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_DIR}/Resources/Sandbox/Entitlements/Auxiliary.entitlements
+
+HEADER_SEARCH_PATHS = ${inherited} "${TEXTUAL_PRODUCT_LOCATION}/Contents/Headers/**"
+LIBRARY_SEARCH_PATHS = ${inherited} "${TEXTUAL_PRODUCT_LOCATION}/Contents/Frameworks/**"
+FRAMEWORK_SEARCH_PATHS = ${inherited} "${TEXTUAL_PRODUCT_LOCATION}/Contents/Frameworks/**"
+
+WRAPPER_EXTENSION = bundle
+
+PROVISIONING_PROFILE =
+PROVISIONING_PROFILE_SPECIFIER =
+
+BUNDLE_LOADER = ${TEXTUAL_PRODUCT_BINARY}

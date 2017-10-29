@@ -25,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B55A1FA6390B00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Debug/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B55B1FA6390B00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Standard Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B55C1FA6390B00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/App Store Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C40A3FC1AC45C6B0026FF91 /* TPIBlowfishEncryptionSwizzledClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPIBlowfishEncryptionSwizzledClasses.h; path = Classes/TPIBlowfishEncryptionSwizzledClasses.h; sourceTree = "<group>"; };
 		4C40A3FD1AC45C6B0026FF91 /* TPIBlowfishEncryptionSwizzledClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPIBlowfishEncryptionSwizzledClasses.m; path = Classes/TPIBlowfishEncryptionSwizzledClasses.m; sourceTree = "<group>"; };
 		4C69EB021AC1A9F9003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = "<group>"; };
@@ -33,10 +36,6 @@
 		4C69EB081AC1AA8A003EC07D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4C69EB0C1AC1AB35003EC07D /* TPIBlowfishEncryption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TPIBlowfishEncryption.xib; path = "Resources/User Interface/TPIBlowfishEncryption.xib"; sourceTree = "<group>"; };
 		4CBE7B4A1A91471A008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
-		4CCD21D01FA41B580056F5FE /* Extensions Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Standard Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Standard Release.xcconfig"; sourceTree = "<group>"; };
-		4CCD21D11FA41B580056F5FE /* Extensions App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions App Store Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4CCD21D31FA41B580056F5FE /* Extensions Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Debug.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Debug.xcconfig"; sourceTree = "<group>"; };
-		4CCD21D61FA41B580056F5FE /* Extensions Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Base.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Base.xcconfig"; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CF2849F1F8EE9BA00C14E24 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../../Frameworks/Static Libraries/Libraries/libcrypto.a"; sourceTree = "<group>"; };
 		4CF35F1A1AC19A4E00B1B0EB /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
@@ -125,10 +124,9 @@
 		4C69187C16E3275700BDE3A8 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4CCD21D11FA41B580056F5FE /* Extensions App Store Release.xcconfig */,
-				4CCD21D61FA41B580056F5FE /* Extensions Base.xcconfig */,
-				4CCD21D31FA41B580056F5FE /* Extensions Debug.xcconfig */,
-				4CCD21D01FA41B580056F5FE /* Extensions Standard Release.xcconfig */,
+				4C03B55C1FA6390B00748FE7 /* Textual Extensions.xcconfig */,
+				4C03B55B1FA6390B00748FE7 /* Textual Extensions.xcconfig */,
+				4C03B55A1FA6390B00748FE7 /* Textual Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
 			sourceTree = "<group>";
@@ -320,7 +318,7 @@
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CCD21D31FA41B580056F5FE /* Extensions Debug.xcconfig */;
+			baseConfigurationReference = 4C03B55A1FA6390B00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
@@ -329,7 +327,7 @@
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CCD21D01FA41B580056F5FE /* Extensions Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B55B1FA6390B00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
@@ -338,7 +336,7 @@
 		};
 		4CCD21D81FA41CE80056F5FE /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CCD21D11FA41B580056F5FE /* Extensions App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B55C1FA6390B00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;

@@ -15,12 +15,11 @@
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		4C03B5691FA639AF00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Debug/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B56A1FA639AF00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/Standard Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C03B56B1FA639AF00748FE7 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Textual Extensions.xcconfig"; path = "../../Build Configurations/App Store Release/Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C69EAF81AC1A930003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = "<group>"; };
-		4C9580141FA41EDD00F18BC8 /* Extensions App Store Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions App Store Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions App Store Release.xcconfig"; sourceTree = "<group>"; };
-		4C9580151FA41EDD00F18BC8 /* Extensions Standard Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Standard Release.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Standard Release.xcconfig"; sourceTree = "<group>"; };
-		4C9580161FA41EDD00F18BC8 /* Extensions Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Debug.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Debug.xcconfig"; sourceTree = "<group>"; };
-		4C9580171FA41EDD00F18BC8 /* Extensions Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Extensions Base.xcconfig"; path = "../../Build Configurations/Extensions/Extensions Base.xcconfig"; sourceTree = "<group>"; };
 		4CBE7B531A914826008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CF40D891AC1A1E400A26BE0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CF40D8D1AC1A1EB00A26BE0 /* TPISpammerParadise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPISpammerParadise.h; path = Classes/TPISpammerParadise.h; sourceTree = "<group>"; };
@@ -92,10 +91,9 @@
 		4C6918A016E3277A00BDE3A8 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C9580141FA41EDD00F18BC8 /* Extensions App Store Release.xcconfig */,
-				4C9580171FA41EDD00F18BC8 /* Extensions Base.xcconfig */,
-				4C9580161FA41EDD00F18BC8 /* Extensions Debug.xcconfig */,
-				4C9580151FA41EDD00F18BC8 /* Extensions Standard Release.xcconfig */,
+				4C03B56B1FA639AF00748FE7 /* Textual Extensions.xcconfig */,
+				4C03B56A1FA639AF00748FE7 /* Textual Extensions.xcconfig */,
+				4C03B5691FA639AF00748FE7 /* Textual Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
 			sourceTree = "<group>";
@@ -195,57 +193,54 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SpammerParadise";
+				PRODUCT_NAME = SpammerParadise;
 			};
 			name = Debug;
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SpammerParadise";
+				PRODUCT_NAME = SpammerParadise;
 			};
 			name = Release;
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580161FA41EDD00F18BC8 /* Extensions Debug.xcconfig */;
+			baseConfigurationReference = 4C03B5691FA639AF00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = SpammerParadise;
+				DEVELOPMENT_TEAM = "";
 			};
 			name = Debug;
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580151FA41EDD00F18BC8 /* Extensions Standard Release.xcconfig */;
+			baseConfigurationReference = 4C03B56A1FA639AF00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = SpammerParadise;
+				DEVELOPMENT_TEAM = "";
 			};
 			name = Release;
 		};
 		4C9580181FA41EE300F18BC8 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C9580141FA41EDD00F18BC8 /* Extensions App Store Release.xcconfig */;
+			baseConfigurationReference = 4C03B56B1FA639AF00748FE7 /* Textual Extensions.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = SpammerParadise;
+				DEVELOPMENT_TEAM = "";
 			};
 			name = "Release (App Store)";
 		};
 		4C9580191FA41EE300F18BC8 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SpammerParadise";
+				PRODUCT_NAME = SpammerParadise;
 			};
 			name = "Release (App Store)";
 		};

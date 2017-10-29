@@ -1,5 +1,7 @@
 
-#include "../Textual App Store Release.xcconfig"
+#include "../Common/Foundation.xcconfig"
+#include "Enabled Features.xcconfig"
+#include "../Common/Textual.xcconfig"
 
 TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual-mas
 TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual
@@ -8,5 +10,3 @@ TEXTUAL_BUILD_SCHEME_TOKEN = appstore
 TEXTUAL_EXTENSION_BUILD_SCHEME = Release
 TEXTUAL_FRAMEWORK_BUILD_SCHEME = Release
 TEXTUAL_XPC_SERVICE_BUILD_SCHEME = Release (App Store)
-
-#include "Main Project Base.xcconfig"
