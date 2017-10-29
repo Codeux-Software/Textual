@@ -727,7 +727,8 @@ NS_ASSUME_NONNULL_BEGIN
 				 inChannel:channel
 				  onClient:client
 			 escapeMessage:NO];
-	} inRelationToAccountName:username];
+	}  inRelationToAccountName:username
+		 createWindowIfMissing:YES];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
