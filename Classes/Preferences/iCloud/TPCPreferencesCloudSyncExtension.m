@@ -117,7 +117,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 
 	NSString *localValue = [TPCPreferences themeChannelViewFontName];
 
-	if ([localValue isEqual:remoteValue]) {
+	if (remoteValue == nil || [localValue isEqual:remoteValue]) {
 		return;
 	}
 
