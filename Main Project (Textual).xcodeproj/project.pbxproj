@@ -1594,7 +1594,7 @@
 		4CD98D551F12A01800D9ADC4 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D541F12A01800D9ADC4 /* IRCConnectionPrivate.h */; };
 		4CD98D561F12A01800D9ADC4 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D541F12A01800D9ADC4 /* IRCConnectionPrivate.h */; };
 		4CD98D571F12A01800D9ADC4 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D541F12A01800D9ADC4 /* IRCConnectionPrivate.h */; };
-		4CD98D591F12A03100D9ADC4 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D581F12A03100D9ADC4 /* IRCConnection.h */; };
+		4CD98D591F12A03100D9ADC4 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D581F12A03100D9ADC4 /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD98D5A1F12A03100D9ADC4 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D581F12A03100D9ADC4 /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD98D5B1F12A03100D9ADC4 /* IRCConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D581F12A03100D9ADC4 /* IRCConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD98D671F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
