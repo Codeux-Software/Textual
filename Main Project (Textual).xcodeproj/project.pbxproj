@@ -694,9 +694,6 @@
 		4C6CCF081D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */; };
 		4C6CCF091D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */; };
 		4C6CCF0A1D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */; };
-		4C6E2E731F859DCF0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C6E2E741F859DDB0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C6E2E751F859DE20093D8DC /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C6EF2CB1F442ACE00A80A7B /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6EF2CA1F442AC800A80A7B /* OELReachability.h */; };
 		4C6EF2CC1F442ACE00A80A7B /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6EF2CA1F442AC800A80A7B /* OELReachability.h */; };
 		4C6EF2CD1F442ACF00A80A7B /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6EF2CA1F442AC800A80A7B /* OELReachability.h */; };
@@ -720,9 +717,6 @@
 		4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */; };
 		4C74FBC51B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */; };
 		4C74FBC61B557BAA00DD1615 /* TDCLicenseManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */; };
-		4C761BA31E155C2800A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C761BA51E155C4B00A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C761BA71E155C7500A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C76CC861D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4C76CC871D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4C76CC881D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
@@ -1176,6 +1170,15 @@
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4C9A93401FA659EE003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93411FA659EE003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93421FA659EE003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93431FA659FB003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93441FA659FB003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93451FA659FB003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93461FA659FE003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93471FA659FE003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = ( ); }; };
+		4C9A93481FA659FE003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = ( ); }; };
 		4C9AEFF81D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9AEFF71D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h */; };
 		4C9AEFF91D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9AEFF71D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h */; };
 		4C9AEFFA1D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9AEFF71D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h */; };
@@ -1600,9 +1603,6 @@
 		4CD98D671F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD98D681F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD98D691F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98D661F12A20100D9ADC4 /* IRCConnectionConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD98D6A1F12A6B700D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C16D9D51F129EAA00711DE1 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CD98D6B1F12A6BC00D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C16D9D51F129EAA00711DE1 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CD98D6D1F12A6C500D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C16D9D51F129EAA00711DE1 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CD9FF811D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD9FF801D2C435C002E8A2E /* IRCMessagePrivate.h */; };
 		4CD9FF821D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD9FF801D2C435C002E8A2E /* IRCMessagePrivate.h */; };
 		4CD9FF831D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD9FF801D2C435C002E8A2E /* IRCMessagePrivate.h */; };
@@ -1887,75 +1887,12 @@
 			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
 			remoteInfo = "Build Frameworks";
 		};
-		4C16D9D41F129EAA00711DE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4C1406421F11942B00C73D53;
-			remoteInfo = "IRC Remote Connection Manager";
-		};
-		4C6E2E6C1F859D930093D8DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4C1406421F11942B00C73D53;
-			remoteInfo = "Inline Content Loader";
-		};
-		4C761B9E1E155BFF00A505B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4C442C881E13B3D200B187F4;
-			remoteInfo = "Historic Log File Manager";
-		};
-		4C83B90A1BA9BE4200BD7718 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = "Chat Filter Extension";
-		};
-		4C95689D194A887D003D97FD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SmileyConverter;
-		};
 		4CBB842C16F0DA1D004E3ED6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
 			remoteInfo = "Build Frameworks";
-		};
-		4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = ZNCAdditions;
-		};
-		4CCC6B75158E8CDA003A102B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = BragSpam;
-		};
-		4CCC6B7E158E8CF6003A102B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SystemProfiler;
-		};
-		4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SpammerParadise;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -2020,9 +1957,9 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				4C761BA31E155C2800A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
-				4C6E2E731F859DCF0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */,
-				4CD98D6A1F12A6B700D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */,
+				4C9A93401FA659EE003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */,
+				4C9A93411FA659EE003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */,
+				4C9A93421FA659EE003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2033,9 +1970,9 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				4C761BA51E155C4B00A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
-				4C6E2E741F859DDB0093D8DC /* InlineContentLoader.xpc in Copy XPC Services */,
-				4CD98D6B1F12A6BC00D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */,
+				4C9A93431FA659FB003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */,
+				4C9A93441FA659FB003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */,
+				4C9A93451FA659FB003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2046,9 +1983,9 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				4C761BA71E155C7500A505B7 /* HistoricLogFileManager.xpc in Copy XPC Services */,
-				4C6E2E751F859DE20093D8DC /* InlineContentLoader.xpc in Copy XPC Services */,
-				4CD98D6D1F12A6C500D9ADC4 /* RemoteConnectionManager.xpc in Copy XPC Services */,
+				4C9A93461FA659FE003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */,
+				4C9A93471FA659FE003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */,
+				4C9A93481FA659FE003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */,
 			);
 			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2230,7 +2167,6 @@
 		4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionOutlineCellView.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionOutlineCellView.m"; sourceTree = "<group>"; };
 		4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionViewController.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionViewController.m"; sourceTree = "<group>"; };
 		4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewCellPrivate.h; path = Classes/Headers/Private/TVCChannelSelectionOutlineViewCellPrivate.h; sourceTree = "<group>"; };
-		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C35DC731F2EBD5300FDE01E /* TDCLicenseUpgradeDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseUpgradeDialog.m; path = Classes/Dialogs/TDCLicenseUpgradeDialog.m; sourceTree = "<group>"; };
 		4C35DC761F2EBD7F00FDE01E /* TDCLicenseUpgradeDialogPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCLicenseUpgradeDialogPrivate.h; path = Classes/Headers/Private/TDCLicenseUpgradeDialogPrivate.h; sourceTree = "<group>"; };
 		4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserRelations.h; path = Classes/Headers/IRCUserRelations.h; sourceTree = "<group>"; };
@@ -2338,7 +2274,6 @@
 		4C6CCEFF1D29EF5700EADD8E /* TDCAddressBookSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCAddressBookSheetPrivate.h; path = Classes/Headers/Private/TDCAddressBookSheetPrivate.h; sourceTree = "<group>"; };
 		4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelPropertiesSheetPrivate.h; path = Classes/Headers/Private/TDCChannelPropertiesSheetPrivate.h; sourceTree = "<group>"; };
 		4C6CCF011D29EF5700EADD8E /* TDCServerPropertiesSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerPropertiesSheetPrivate.h; path = Classes/Headers/Private/TDCServerPropertiesSheetPrivate.h; sourceTree = "<group>"; };
-		4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Inline Content Loader.xcodeproj"; path = "XPC Services/Inline Content Loader/Inline Content Loader.xcodeproj"; sourceTree = "<group>"; };
 		4C6EF2CA1F442AC800A80A7B /* OELReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OELReachability.h; path = "Classes/Headers/External Libraries/OELReachability.h"; sourceTree = "<group>"; };
 		4C6EF2CE1F442B9300A80A7B /* TDCWindowBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCWindowBase.h; path = Classes/Headers/TDCWindowBase.h; sourceTree = "<group>"; };
 		4C6EF2D21F442CA200A80A7B /* IRCColorFormat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = IRCColorFormat.m; path = "Classes/Library/Color Formatting/IRCColorFormat.m"; sourceTree = "<group>"; };
@@ -2347,7 +2282,6 @@
 		4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogViewInternalWK2.m; path = "Classes/Views/Channel View/TVCLogViewInternalWK2.m"; sourceTree = "<group>"; };
 		4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerRecoverLostLicenseSheet.m; path = Classes/Dialogs/TDCLicenseManagerRecoverLostLicenseSheet.m; sourceTree = "<group>"; };
 		4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerDialog.m; path = Classes/Dialogs/TDCLicenseManagerDialog.m; sourceTree = "<group>"; };
-		4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Historic Log File Manager.xcodeproj"; path = "XPC Services/Historic Log File Manager/Historic Log File Manager.xcodeproj"; sourceTree = "<group>"; };
 		4C761BAE1E155CB100A505B7 /* BuildServices.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildServices.sh; path = "Main Project (Textual).xcodeproj/BuildServices.sh"; sourceTree = SOURCE_ROOT; };
 		4C76CC841D1DC688005CDDA9 /* TVCMainWindowTextViewMavericksUserInterace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextViewMavericksUserInterace.m; path = "Classes/Views/Main Window/TVCMainWindowTextViewMavericksUserInterace.m"; sourceTree = "<group>"; };
 		4C76CC851D1DC688005CDDA9 /* TVCMainWindowTextViewYosemiteUserInterace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextViewYosemiteUserInterace.m; path = "Classes/Views/Main Window/TVCMainWindowTextViewYosemiteUserInterace.m"; sourceTree = "<group>"; };
@@ -2397,7 +2331,6 @@
 		4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreHockeyAppFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreHockeyAppFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreSparkleFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreSparkleFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C8354781D3BB7FD00AB0A9B /* TDCChannelSpotlightController.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDCChannelSpotlightController.strings; path = "Resources/Language Files/English.lproj/TDCChannelSpotlightController.strings"; sourceTree = SOURCE_ROOT; };
-		4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Chat Filter Extension.xcodeproj"; path = "Resources/Plugins/Chat Filter/Chat Filter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ChatFilterExtension.bundle; path = ".tmp/SharedBuildProducts-Extensions/ChatFilterExtension.bundle"; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXGlobalModels.m; path = Classes/Controllers/TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXMasterController.m; path = Classes/Controllers/TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2497,7 +2430,6 @@
 		4C8AF5EE158E99520026668C /* TPCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferences.m; path = Classes/Preferences/TPCPreferences.m; sourceTree = "<group>"; };
 		4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = "Classes (Shared)/Headers/External Libraries/GCDAsyncSocket.h"; sourceTree = "<group>"; };
 		4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMEncodeHTML.h; path = "Classes/Headers/External Libraries/GTMEncodeHTML.h"; sourceTree = "<group>"; };
-		4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "IRC Remote Connection Manager.xcodeproj"; path = "XPC Services/IRC Remote Connection Manager/IRC Remote Connection Manager.xcodeproj"; sourceTree = "<group>"; };
 		4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = "Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocket.m"; sourceTree = SOURCE_ROOT; };
 		4C8C72B61F1205B600ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/RCMConnectionManagerProtocol.h"; sourceTree = "<group>"; };
 		4C8C72B71F1205B600ED72DB /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/HLSHistoricLogProtocol.h"; sourceTree = "<group>"; };
@@ -2511,7 +2443,6 @@
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCResourceManager.h; path = Classes/Headers/TPCResourceManager.h; sourceTree = "<group>"; };
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Classes/Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
-		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Classes/Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
 		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManager.h; path = Classes/Headers/TLOEncryptionManager.h; sourceTree = "<group>"; };
 		4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItemPrivate.h; path = Classes/Headers/Private/IRCTreeItemPrivate.h; sourceTree = "<group>"; };
@@ -2519,6 +2450,9 @@
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = ".tmp/SharedBuildProducts-Extensions/SystemProfiler.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = ".tmp/SharedBuildProducts-Extensions/ZNCAdditions.bundle"; sourceTree = SOURCE_ROOT; };
+		4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = HistoricLogFileManager.xpc; path = ".tmp/SharedBuildProducts-XPCServices/HistoricLogFileManager.xpc"; sourceTree = "<group>"; };
+		4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = InlineContentLoader.xpc; path = ".tmp/SharedBuildProducts-XPCServices/InlineContentLoader.xpc"; sourceTree = "<group>"; };
+		4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = RemoteConnectionManager.xpc; path = ".tmp/SharedBuildProducts-XPCServices/RemoteConnectionManager.xpc"; sourceTree = "<group>"; };
 		4C9AEFF71D2AF56700BA2DD5 /* TDCSharedProtocolDefinitionsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCSharedProtocolDefinitionsPrivate.h; path = Classes/Headers/Private/TDCSharedProtocolDefinitionsPrivate.h; sourceTree = "<group>"; };
 		4C9BA40E1D57D3590023B433 /* TDCBuddyListDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCBuddyListDialog.m; path = "Classes/Dialogs/Buddy List/TDCBuddyListDialog.m"; sourceTree = "<group>"; };
 		4C9BA4171D57D3710023B433 /* TDCBuddyListDialogDropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCBuddyListDialogDropView.m; path = "Classes/Dialogs/Buddy List/TDCBuddyListDialogDropView.m"; sourceTree = "<group>"; };
@@ -2647,10 +2581,7 @@
 		4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCFileTransferDialogInternal.h; path = Classes/Headers/Internal/TDCFileTransferDialogInternal.h; sourceTree = "<group>"; };
 		4CC934F91DE0BEA8003FF1B4 /* TLOSpokenNotificationPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOSpokenNotificationPrivate.h; path = Classes/Headers/Private/TLOSpokenNotificationPrivate.h; sourceTree = "<group>"; };
 		4CC934FE1DE0BFA7003FF1B4 /* TLOSpokenNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpokenNotification.m; path = Classes/Library/TLOSpokenNotification.m; sourceTree = "<group>"; };
-		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/Scripting/Script Files/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
-		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCD4CA21D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCServerChannelListDialogPrivate.h; path = Classes/Headers/Private/TDCServerChannelListDialogPrivate.h; sourceTree = "<group>"; };
 		4CCD4CA61D2455BF0004DAC3 /* TDCWelcomeSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCWelcomeSheetPrivate.h; path = Classes/Headers/Private/TDCWelcomeSheetPrivate.h; sourceTree = "<group>"; };
 		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JavaScript; path = Resources/Styles/JavaScript; sourceTree = SOURCE_ROOT; };
@@ -2983,14 +2914,6 @@
 			name = IRC;
 			sourceTree = "<group>";
 		};
-		4C16D9D11F129EAA00711DE1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C16D9D51F129EAA00711DE1 /* RemoteConnectionManager.xpc */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4C184D951D4A49C700593D4B /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
@@ -3006,7 +2929,6 @@
 				4C1DC55C1580420500A47BC9 /* Resources */,
 				4C1DC5551580420500A47BC9 /* Frameworks */,
 				4C1DC5531580420500A47BC9 /* Products */,
-				4C761B921E155BD700A505B7 /* XPC Services */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3033,11 +2955,10 @@
 		4C1DC55C1580420500A47BC9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C9A93491FA65A07003C3DB5 /* Addons */,
 				4CCC6B46158E8C1B003A102B /* Build Settings */,
 				4C46CCA21580437400846B64 /* Documentation */,
-				4C46CCA6158043BB00846B64 /* Extensions */,
 				4C6EF2E11F442EA700A80A7B /* Images */,
-				4C69E3571B65C266002782D4 /* Installers */,
 				4CCD93FC1CA7291300335381 /* JavaScript */,
 				4C51B8B7196ACDBB00003A87 /* Language Files */,
 				4C699C681B1FB04D001CD1C3 /* License Manager */,
@@ -3187,7 +3108,6 @@
 			isa = PBXGroup;
 			children = (
 				4C46CCA7158043C000846B64 /* Binaries */,
-				4C46CCA8158043D500846B64 /* Projects */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -3203,19 +3123,6 @@
 				4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */,
 			);
 			name = Binaries;
-			sourceTree = "<group>";
-		};
-		4C46CCA8158043D500846B64 /* Projects */ = {
-			isa = PBXGroup;
-			children = (
-				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
-				4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */,
-				4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */,
-				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
-				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
-				4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */,
-			);
-			name = Projects;
 			sourceTree = "<group>";
 		};
 		4C46CCB91580469200846B64 /* System Frameworks */ = {
@@ -3551,14 +3458,6 @@
 			name = Installers;
 			sourceTree = "<group>";
 		};
-		4C6E2E661F859D930093D8DC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4C6EF2C91F4429FC00A80A7B /* Server Endpoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -3683,24 +3582,6 @@
 			name = "License Manager";
 			sourceTree = "<group>";
 		};
-		4C761B921E155BD700A505B7 /* XPC Services */ = {
-			isa = PBXGroup;
-			children = (
-				4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */,
-				4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */,
-				4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */,
-			);
-			name = "XPC Services";
-			sourceTree = "<group>";
-		};
-		4C761B991E155BFF00A505B7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4C761BB31E155FF800A505B7 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3793,14 +3674,6 @@
 				4CC934FE1DE0BFA7003FF1B4 /* TLOSpokenNotification.m */,
 			);
 			name = Library;
-			sourceTree = "<group>";
-		};
-		4C83B9061BA9BE4200BD7718 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C83B90B1BA9BE4200BD7718 /* ChatFilterExtension.bundle */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		4C86B4A8181FB40A0043C544 /* Entitlements */ = {
@@ -4031,12 +3904,32 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
-		4C95689A194A887D003D97FD /* Products */ = {
+		4C9A933B1FA659D1003C3DB5 /* XPC Services */ = {
 			isa = PBXGroup;
 			children = (
-				4C95689E194A887D003D97FD /* SmileyConverter.bundle */,
+				4C9A933C1FA659D9003C3DB5 /* Binaries */,
 			);
-			name = Products;
+			name = "XPC Services";
+			sourceTree = "<group>";
+		};
+		4C9A933C1FA659D9003C3DB5 /* Binaries */ = {
+			isa = PBXGroup;
+			children = (
+				4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */,
+				4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */,
+				4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */,
+			);
+			name = Binaries;
+			sourceTree = "<group>";
+		};
+		4C9A93491FA65A07003C3DB5 /* Addons */ = {
+			isa = PBXGroup;
+			children = (
+				4C46CCA6158043BB00846B64 /* Extensions */,
+				4C69E3571B65C266002782D4 /* Installers */,
+				4C9A933B1FA659D1003C3DB5 /* XPC Services */,
+			);
+			name = Addons;
 			sourceTree = "<group>";
 		};
 		4C9BA40D1D57D3590023B433 /* Buddy List */ = {
@@ -4233,14 +4126,6 @@
 			name = Yosemite;
 			sourceTree = "<group>";
 		};
-		4CC9D8A21745BE1700461F05 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4CCC6B46158E8C1B003A102B /* Build Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -4251,22 +4136,6 @@
 				4CC70202171E1CB400BDFAE0 /* BuildConfig.h */,
 			);
 			name = "Build Settings";
-			sourceTree = "<group>";
-		};
-		4CCC6B6F158E8CDA003A102B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CCC6B76158E8CDA003A102B /* BragSpam.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4CCC6B78158E8CF6003A102B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		4CCDC6B61EC4FEA1001DDE9A /* Channel Properties */ = {
@@ -4414,14 +4283,6 @@
 				4C12C35F1ED1812700E98CA4 /* TVCMemberListYosemiteScaledUserInterface.m */,
 			);
 			name = "Member List";
-			sourceTree = "<group>";
-		};
-		4CF4D48316BC54C2000C5AC8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		4CFFFD5B1F2EF862003CAC46 /* Upgrade */ = {
@@ -5332,44 +5193,6 @@
 			mainGroup = 4C1DC5471580420500A47BC9;
 			productRefGroup = 4C1DC5531580420500A47BC9 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 4CCC6B6F158E8CDA003A102B /* Products */;
-					ProjectRef = 4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4C83B9061BA9BE4200BD7718 /* Products */;
-					ProjectRef = 4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4C761B991E155BFF00A505B7 /* Products */;
-					ProjectRef = 4C761B911E155BD700A505B7 /* Historic Log File Manager.xcodeproj */;
-				},
-				{
-					ProductGroup = 4C6E2E661F859D930093D8DC /* Products */;
-					ProjectRef = 4C6E2E651F859D930093D8DC /* Inline Content Loader.xcodeproj */;
-				},
-				{
-					ProductGroup = 4C16D9D11F129EAA00711DE1 /* Products */;
-					ProjectRef = 4C8C72991F1203B500ED72DB /* IRC Remote Connection Manager.xcodeproj */;
-				},
-				{
-					ProductGroup = 4C95689A194A887D003D97FD /* Products */;
-					ProjectRef = 4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4CF4D48316BC54C2000C5AC8 /* Products */;
-					ProjectRef = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4CCC6B78158E8CF6003A102B /* Products */;
-					ProjectRef = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4CC9D8A21745BE1700461F05 /* Products */;
-					ProjectRef = 4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				4C0BA4F81990798800857343 /* Textual (App Store) */,
@@ -5380,72 +5203,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		4C16D9D51F129EAA00711DE1 /* RemoteConnectionManager.xpc */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.xpc-service";
-			path = RemoteConnectionManager.xpc;
-			remoteRef = 4C16D9D41F129EAA00711DE1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4C6E2E6D1F859D930093D8DC /* InlineContentLoader.xpc */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.xpc-service";
-			path = InlineContentLoader.xpc;
-			remoteRef = 4C6E2E6C1F859D930093D8DC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4C761B9F1E155BFF00A505B7 /* HistoricLogFileManager.xpc */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.xpc-service";
-			path = HistoricLogFileManager.xpc;
-			remoteRef = 4C761B9E1E155BFF00A505B7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4C83B90B1BA9BE4200BD7718 /* ChatFilterExtension.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ChatFilterExtension.bundle;
-			remoteRef = 4C83B90A1BA9BE4200BD7718 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4C95689E194A887D003D97FD /* SmileyConverter.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SmileyConverter.bundle;
-			remoteRef = 4C95689D194A887D003D97FD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ZNCAdditions.bundle;
-			remoteRef = 4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CCC6B76158E8CDA003A102B /* BragSpam.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BragSpam.bundle;
-			remoteRef = 4CCC6B75158E8CDA003A102B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SystemProfiler.bundle;
-			remoteRef = 4CCC6B7E158E8CF6003A102B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SpammerParadise.bundle;
-			remoteRef = 4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4C0BA4FF1990798800857343 /* Resources */ = {

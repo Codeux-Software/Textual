@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C03B67A1FA656E600748FE7 /* Core Media.mediaPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C03B6491FA64F8C00748FE7 /* Core Media.mediaPlugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C1F0F331F8A8FE30061662D /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB1A1F89F49A00A4E647 /* TPCPreferences.m */; };
 		4C1F0F341F8A8FE90061662D /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EAB151F89F26D00A4E647 /* TPCPreferencesUserDefaults.m */; };
 		4C356A531F9FB06E00E671D9 /* ICLMediaAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A511F9FB06E00E671D9 /* ICLMediaAssessment.m */; };
@@ -32,6 +31,7 @@
 		4C9810041F93ABEA00B116A4 /* ICMInlineVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */; };
 		4C9810131F93BC5D00B116A4 /* ICMInlineVideo.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */; };
 		4C9810141F93BC5D00B116A4 /* ICMInlineVideo.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */; };
+		4C9A933A1FA65970003C3DB5 /* Core Media.mediaPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A93391FA65970003C3DB5 /* Core Media.mediaPlugin */; };
 		4CB3B6191F9C3D260004502A /* ICMInlineHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB3B6171F9C3D240004502A /* ICMInlineHTML.m */; };
 		4CB3B61A1F9C3E9B0004502A /* ICMInlineHTML.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */; };
 		4CB3B61B1F9C3E9B0004502A /* ICMInlineHTML.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CB3B6161F9C3C750004502A /* ICMInlineHTML.js */; };
@@ -58,16 +58,6 @@
 		4CE58BAA1F8A5FB800493E7C /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE58BA91F8A5F8500493E7C /* GRMustache.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4C03B6481FA64F8C00748FE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C03B6441FA64F8C00748FE7 /* Core Media.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CA1FE581FA606890095901F;
-			remoteInfo = "Core Media";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		4C03B6781FA656CE00748FE7 /* Copy Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -75,7 +65,7 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4C03B67A1FA656E600748FE7 /* Core Media.mediaPlugin in Copy Extensions */,
+				4C9A933A1FA65970003C3DB5 /* Core Media.mediaPlugin in Copy Extensions */,
 			);
 			name = "Copy Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,7 +94,6 @@
 		4C03B5541FA6389100748FE7 /* XPC Service - ICL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL.xcconfig"; path = "../../Resources/Build Configurations/Standard Release/XPC Service - ICL.xcconfig"; sourceTree = "<group>"; };
 		4C03B5551FA6389100748FE7 /* XPC Service - ICL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL.xcconfig"; path = "../../Resources/Build Configurations/App Store Release/XPC Service - ICL.xcconfig"; sourceTree = "<group>"; };
 		4C03B5561FA6389100748FE7 /* XPC Service - ICL.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL.xcconfig"; path = "../../Resources/Build Configurations/Debug/XPC Service - ICL.xcconfig"; sourceTree = "<group>"; };
-		4C03B6441FA64F8C00748FE7 /* Core Media.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Core Media.xcodeproj"; path = "Extensions/Core Media/Core Media.xcodeproj"; sourceTree = "<group>"; };
 		4C116B841F85982400BFFFF7 /* ICLInlineContentProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICLInlineContentProtocol.h; path = "../../Classes (Shared)/Headers/XPC Protocols/ICLInlineContentProtocol.h"; sourceTree = "<group>"; };
 		4C116B861F85993500BFFFF7 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = "../../Classes (Shared)/Headers/Private/NSObjectHelperPrivate.h"; sourceTree = "<group>"; };
 		4C116B8A1F85998100BFFFF7 /* NSObjectHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = "../../Classes (Shared)/Helpers/Cocoa (Objective-C)/NSObjectHelper.m"; sourceTree = "<group>"; };
@@ -151,6 +140,7 @@
 		4C9810021F93ABE700B116A4 /* ICMInlineVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMInlineVideo.m; path = "Classes/Modules/Root Classes/ICMInlineVideo.m"; sourceTree = "<group>"; };
 		4C98100B1F93B5CB00B116A4 /* ICMInlineVideo.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineVideo.css; path = Resources/Modules/ICMInlineVideo.css; sourceTree = "<group>"; };
 		4C98100C1F93B5CB00B116A4 /* ICMInlineVideo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineVideo.mustache; path = Resources/Modules/ICMInlineVideo.mustache; sourceTree = "<group>"; };
+		4C9A93391FA65970003C3DB5 /* Core Media.mediaPlugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Core Media.mediaPlugin"; path = "../../.tmp/SharedBuildProducts-ICLExtension/Core Media.mediaPlugin"; sourceTree = "<group>"; };
 		4CA1FE8D1FA6261A0095901F /* BuildExtensions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildExtensions.sh; path = "Inline Content Loader.xcodeproj/BuildExtensions.sh"; sourceTree = "<group>"; };
 		4CB3B6141F9C3C5C0004502A /* ICMInlineHTML.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMInlineHTML.mustache; path = Resources/Modules/ICMInlineHTML.mustache; sourceTree = "<group>"; };
 		4CB3B6151F9C3C5C0004502A /* ICMInlineHTML.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = ICMInlineHTML.css; path = Resources/Modules/ICMInlineHTML.css; sourceTree = "<group>"; };
@@ -187,14 +177,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C03B6451FA64F8C00748FE7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B6491FA64F8C00748FE7 /* Core Media.mediaPlugin */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4C116B851F85993500BFFFF7 /* Private */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				4C1406531F1194F100C73D53 /* Build Settings */,
+				4C9A93381FA65960003C3DB5 /* Extensions */,
 				4C1406561F11950F00C73D53 /* Property Lists */,
 			);
 			name = Resources;
@@ -450,6 +433,14 @@
 			name = Video;
 			sourceTree = "<group>";
 		};
+		4C9A93381FA65960003C3DB5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4C9A93391FA65970003C3DB5 /* Core Media.mediaPlugin */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		4CA1FE8E1FA6261D0095901F /* Build Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,7 +509,6 @@
 		4CDF57B41F891D9100B2ECCC /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4C03B6441FA64F8C00748FE7 /* Core Media.xcodeproj */,
 				4C356A581F9FBFF500E671D9 /* Assessed Media */,
 				4C980FE91F92C4E900B116A4 /* Root Classes */,
 			);
@@ -613,28 +603,12 @@
 			mainGroup = 4C1406391F11942B00C73D53;
 			productRefGroup = 4C1406431F11942B00C73D53 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 4C03B6451FA64F8C00748FE7 /* Products */;
-					ProjectRef = 4C03B6441FA64F8C00748FE7 /* Core Media.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				4C1406411F11942B00C73D53 /* Inline Content Loader */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		4C03B6491FA64F8C00748FE7 /* Core Media.mediaPlugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Core Media.mediaPlugin";
-			remoteRef = 4C03B6481FA64F8C00748FE7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4C1406401F11942B00C73D53 /* Resources */ = {
