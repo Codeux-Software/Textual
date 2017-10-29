@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, assign) BOOL overlayVisible;
 @property (nonatomic, assign) BOOL isObservingBackingView;
-@property (nonatomic, assign) BOOL backingViewIsLoading;
+@property (readonly) BOOL backingViewIsLoading;
 @property (nonatomic, copy) NSString *uniqueIdentifier;
 @property (nonatomic, strong, nullable) TVCLogView *backingView;
 @property (nonatomic, weak) TVCMainWindowChannelView *parentView;
