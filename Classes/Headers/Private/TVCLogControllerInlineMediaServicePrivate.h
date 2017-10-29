@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 		  atLineNumber:(NSString *)lineNumber
 				 index:(NSUInteger)index
 			   forItem:(IRCTreeItem *)item;
+
+- (void)reloadService;
 @end
 
 NS_ASSUME_NONNULL_END

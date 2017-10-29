@@ -233,6 +233,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[[self remoteObjectProxy] processURL:url withUniqueIdentifier:uniqueIdentifier atLineNumber:lineNumber index:index inView:item.uniqueIdentifier];
 }
 
+- (void)reloadService
+{
+	[self invalidateProcess];
+}
+
 #pragma mark -
 #pragma mark Private API (Client)
 
