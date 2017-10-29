@@ -112,6 +112,7 @@
 #import "TXWindowControllerPrivate.h"
 #import "TVCDockIconPrivate.h"
 #import "TVCLogControllerPrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
 #import "TVCLogControllerOperationQueuePrivate.h"
 #import "TVCLogRenderer.h"
 #import "TVCLogViewPrivate.h"
@@ -4433,6 +4434,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (destinationToSelect) {
 				[mainWindow() select:destinationToSelect];
 			}
+
+			break;
+		}
+		case IRCPublicCommandReloadICLIndex: // Command: RELOADICL
+		{
+			[TVCLogControllerInlineMediaSharedInstance() reloadService];
 
 			break;
 		}
