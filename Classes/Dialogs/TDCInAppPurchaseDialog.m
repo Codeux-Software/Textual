@@ -814,7 +814,7 @@ enum {
 
 - (void)upgradeEligibilitySheetContactSupport:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
 {
-	[menuController() contactSupport:nil];
+	[self contactSupport];
 }
 
 - (void)upgradeEligibilitySheetChanged:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
@@ -869,6 +869,11 @@ enum {
 - (void)restoreTransactions:(id)sender
 {
 	[self restoreTransactions];
+}
+
+- (void)contactSupport
+{
+	[menuController() contactSupport:nil];
 }
 
 #pragma mark -
@@ -1392,9 +1397,13 @@ enum {
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
 							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")
-						   alternateButton:nil
+						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0019][4]")
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
+								   [self contactSupport];
+							   }
+
 							   [self requestProductsAgain:YES];
 						   }];
 }
