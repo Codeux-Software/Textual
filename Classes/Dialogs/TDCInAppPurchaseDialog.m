@@ -1213,6 +1213,12 @@ enum {
 							   otherButton:nil];
 }
 
+- (BOOL)_productsListContainMinimum
+{
+	return (self.products[TLOAppStoreIAPFreeTrialProductIdentifier] != nil &&
+			self.products[TLOAppStoreIAPStandardEditionProductIdentifier] != nil);
+}
+
 #pragma mark -
 #pragma mark Receipt
 
@@ -1391,11 +1397,11 @@ enum {
 	self.products = productsDict;
 }
 
-- (void)onRequestProductsError:(NSError *)error
+- (void)onRequestProductsError:(nullable NSError *)error
 {
-	NSParameterAssert(error != nil);
-
-	LogToConsoleDebug("Products request error: %@", error.localizedDescription);
+	if (error) {
+		LogToConsoleDebug("Products request error: %@", error.localizedDescription);
+	}
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
@@ -1425,23 +1431,25 @@ enum {
 
 	self.productsRequest = nil;
 
-	/* Error callback is called after the properties have been
-	 unset so that when -requestProductsAgain: is called by the
-	 error callback, self.requestingProducts is already NO,
-	 which would otherwise do nothing if it was YES. */
-	if (error == nil)
-	{
-		/* Perform postflight actions */
-		if ([self restoreTransactionsOnShow] == NO) {
-			[self updateSelectedPane];
-		}
-
-		[self refreshProductsTableContents];
-	}
-	else
-	{
+	/* A copy of the app downloaded from the App Store returns
+	 an empty array of products for some reason when the receipt
+	 file is missing. I cannot replicate this behavior in the
+	 developer sandbox which suggests its an issue specific to
+	 the signing certificate the App Store replaces the code
+	 signature with. To prevent crashes, we check if the list
+	 of products contain identifiers we always expect to exist. */
+	if (error || [self _productsListContainMinimum] == NO) {
 		[self onRequestProductsError:error];
+
+		return;
 	}
+
+	/* Perform postflight actions */
+	if ([self restoreTransactionsOnShow] == NO) {
+		[self updateSelectedPane];
+	}
+
+	[self refreshProductsTableContents];
 }
 
 #pragma mark -
