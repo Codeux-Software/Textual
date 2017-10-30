@@ -99,7 +99,7 @@
 "TDCInAppPurchaseDialog[0017]" = "Your trial of Textual 7 will expire in %@";
 "TDCInAppPurchaseDialog[0018]" = "Your trial of Textual 7 has expired.";
 
-"TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app purchases could not be downloaded";
+"TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app products could not be downloaded";
 "TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";
 "TDCInAppPurchaseDialog[0019][3]" = "Try Again";
 "TDCInAppPurchaseDialog[0019][4]" = "Contact Support";
