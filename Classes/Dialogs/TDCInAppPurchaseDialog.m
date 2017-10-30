@@ -1381,7 +1381,11 @@ enum {
 	NSMutableDictionary<NSString *, SKProduct *> *productsDict = [NSMutableDictionary dictionary];
 
 	for (SKProduct *product in response.products) {
-		[productsDict setObject:product forKey:product.productIdentifier];
+		NSString *productIdentifier = product.productIdentifier;
+
+		LogToConsoleDebug("Received %@", productIdentifier);
+
+		[productsDict setObject:product forKey:productIdentifier];
 	}
 
 	self.products = productsDict;
