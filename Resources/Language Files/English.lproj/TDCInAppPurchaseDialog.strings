@@ -102,6 +102,7 @@
 "TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app purchases could not be downloaded";
 "TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";
 "TDCInAppPurchaseDialog[0019][3]" = "Try Again";
+"TDCInAppPurchaseDialog[0019][4]" = "Contact Support";
 
 "TDCInAppPurchaseDialog[0020][1]" = "Cannot continue transaction because a valid receipt file is missing";
 "TDCInAppPurchaseDialog[0020][2]" = "Do you want to refresh the receipt file?";
