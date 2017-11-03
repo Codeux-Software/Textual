@@ -55,7 +55,7 @@ Once you have your code signing certificate, **do not modify the Build Settings 
 
 After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
 
-When you build Textual for the first time, a framework that Textual that is dependent on (Encryption Kit) will download several open source libraries (libgpg-error, libgcrypt, and libotr) from the Internet which means if you do not have an active Internet connection, these files will not download and the build will fail.
+When you build Textual for the first time, a framework that Textual is dependent on (Encryption Kit) will download several open source libraries (libgpg-error, libgcrypt, and libotr) from the Internet which means if you do not have an active Internet connection, these files will not download and the build will fail.
 
 The build process can take up to a minute or more to complete because in addition to building Textual itself, Xcode has to build these open source libraries as well.
 
