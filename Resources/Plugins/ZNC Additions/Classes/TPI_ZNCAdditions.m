@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *message = inputObject.messageSequence;
 
-	if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
+	if ([client nickname:sender isZNCUser:@"status"] && [message hasPrefix:@"Disconnected from IRC"]) {
 		/* We listen for ZNC disconnects so that we can terminate channels when we
 		 disconnect from the server ZNC was connected to. ZNC does not localize 
 		 itself so detecting these disconnects is not very hard... */
@@ -382,9 +382,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *sender = senderInfo.nickname;
 
-	if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"buffextras"])) {
+	if ([client nickname:sender isZNCUser:@"buffextras"]) {
 		return [self interceptBufferExtrasZNCModule:input forClient:client];
-	} else if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"playback"])) {
+	} else if ([client nickname:sender isZNCUser:@"playback"]) {
 		return [self interceptBufferExtrasPlaybackModule:input forClient:client];
 	}
 
