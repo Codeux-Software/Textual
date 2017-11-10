@@ -260,6 +260,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (NSString *)formatNickname:(NSString *)nickname inChannel:(nullable IRCChannel *)channel withFormat:(nullable NSString *)format;
 
 - (BOOL)nicknameIsZNCUser:(NSString *)nickname;
+- (BOOL)nickname:(NSString *)nickname isZNCUser:(NSString *)zncNickname;
 - (nullable NSString *)nicknameAsZNCUser:(NSString *)nickname; // Returns nil if not connected to ZNC
 
 - (BOOL)nicknameIsMyself:(NSString *)nickname;

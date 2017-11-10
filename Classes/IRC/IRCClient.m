@@ -2255,6 +2255,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [nickname hasPrefix:@"*"];
 }
 
+- (BOOL)nickname:(NSString *)nickname isZNCUser:(NSString *)zncNickname
+{
+	NSParameterAssert(nickname != nil);
+	NSParameterAssert(zncNickname != nil);
+	
+	return [nickname isEqualToString:[self nicknameAsZNCUser:zncNickname]];
+}
+
 - (nullable NSString *)nicknameAsZNCUser:(NSString *)nickname
 {
 	NSParameterAssert(nickname != nil);
