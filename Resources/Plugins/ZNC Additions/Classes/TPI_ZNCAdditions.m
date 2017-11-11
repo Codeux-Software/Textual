@@ -211,9 +211,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
 	/* Define user information */
-	NSMutableArray *paramsMutable = [input.params mutableCopy];
+	NSMutableArray<NSString *> *paramsMutable = [input.params mutableCopy];
 
-	NSMutableString *stringIn = [paramsMutable[1] mutableCopy];
+	/* We have to normalize spaces for input from buffextras because as of version
+	 1.7, there are fixed width spaces in the incoming messages that throw off parser. */
+	NSMutableString *stringIn = [paramsMutable[1].normalizeSpaces mutableCopy];
 
 	NSString *hostmask = stringIn.token;
 
@@ -246,17 +248,26 @@ NS_ASSUME_NONNULL_BEGIN
 	senderMutable.hostmask = hostmask;
 
 	/* Process string */
+	/* The output of the buffextras module is not guaranteed.
+	 The ZNC author(s) have stated that they shouldn't be treated as such.
+	 ZNC 1.7 changed it so that the output of the module can be localized.
+	 We will ever only handle English here to reduce footprint. */
 	IRCMessageMutable *inputMutable = [input mutableCopy];
+	
+	NSArray<NSString *> *stringInComponents = nil;
 
-	if ([stringIn hasPrefix:@"is now known as "]) {
+	if ([stringIn isEqualToString:@"joined"])
+	{
+		/* Begin channel join */
+		inputMutable.command = IRCPrivateCommandIndex("join");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		/* End channel join */
+	}
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^is now known as ([^\\s]+)$" withoutCase:NO substringGroups:YES] == 2)
+	{
 		/* Begin nickname change */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"is now known as ").length)];
-
-		NSString *newNickname = stringIn.token;
-
-		if (newNickname.length == 0) {
-			return input;
-		}
+		NSString *newNickname = stringInComponents[1];
 
 		inputMutable.command = IRCPrivateCommandIndex("nick");
 
@@ -265,23 +276,53 @@ NS_ASSUME_NONNULL_BEGIN
 		[paramsMutable addObject:newNickname];
 		/* End nickname change */
 	}
-	else if ([stringIn isEqualToString:@"joined"])
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(parted with message: \\[(.*)\\]|part: (.*))$" withoutCase:NO substringGroups:YES] == 3)
 	{
-		/* Begin channel join */
-		inputMutable.command = IRCPrivateCommandIndex("join");
-
+		/* Begin part message */
+		NSString *partMessage = stringInComponents[2];
+	
+		inputMutable.command = IRCPrivateCommandIndex("part");
+		
 		[paramsMutable removeObjectAtIndex:1];
-		/* End channel join */
+		
+		[paramsMutable addObject:partMessage];
+		/* End part message */
 	}
-	else if ([stringIn hasPrefix:@"set mode: "])
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(quit with message: \\[(.*)\\]|quit: (.*))$" withoutCase:NO substringGroups:YES] == 3)
+	{
+		/* Begin quit message */
+		NSString *quitMessage = stringInComponents[2];
+
+		inputMutable.command = IRCPrivateCommandIndex("quit");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		
+		[paramsMutable addObject:quitMessage];
+		/* End quit message */
+	}
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(kicked ([^\\s]+) with reason: (.*)|kicked ([^\\s]+) Reason: \\[(.*)\\])$" withoutCase:NO substringGroups:YES] == 4)
+	{
+		/* Begin kick message */
+		NSString *kickedNickname = stringInComponents[2];
+		
+		NSString *kickReason = stringInComponents[3];
+		
+		inputMutable.command = IRCPrivateCommandIndex("kick");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		
+		[paramsMutable addObject:kickedNickname];
+		
+		[paramsMutable addObject:kickReason];
+		/* End kick message. */
+	}
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^set mode: ([^\\s]+)( .*)?$" withoutCase:NO substringGroups:YES] >= 2)
 	{
 		/* Begin mode processing */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"set mode: ").length)];
-
-		NSString *modeChanges = stringIn.token;
-
-		if (modeChanges.length == 0) {
-			return input;
+		NSString *modeChanges = stringInComponents[1];
+		
+		if (stringInComponents.count == 3) {
+			modeChanges = [modeChanges stringByAppendingString:stringInComponents[2]];
 		}
 
 		inputMutable.command = IRCPrivateCommandIndex("mode");
@@ -292,58 +333,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[paramsMutable addObject:stringIn];
 		/* End mode processing */
-	}
-	else if ([stringIn hasPrefix:@"quit with message: ["] && [stringIn hasSuffix:@"]"])
-	{
-		/* Begin quit message */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"quit with message: [").length)];	// Remove leading
-
-		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];				// Remove trailing
-
-		inputMutable.command = IRCPrivateCommandIndex("quit");
-
-		[paramsMutable removeObjectAtIndex:1];
-
-		[paramsMutable addObject:stringIn];
-		/* End quit message */
-	}
-	else if ([stringIn hasPrefix:@"parted with message: ["] && [stringIn hasSuffix:@"]"])
-	{
-		/* Begin part message */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"parted with message: [").length)];		// Remove leading
-
-		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];					// Remove trailing
-
-		inputMutable.command = IRCPrivateCommandIndex("part");
-
-		[paramsMutable removeObjectAtIndex:1];
-
-		[paramsMutable addObject:stringIn];
-		/* End part message */
-	}
-	else if ([stringIn hasPrefix:@"kicked "] && [stringIn hasSuffix:@"]"])
-	{
-		/* Begin kick message */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"kicked ").length)];		// Remove leading
-
-		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];	// Remove trailing
-
-		NSString *kickedNickname = stringIn.token;
-
-		if (kickedNickname.length == 0 || [stringIn hasPrefix:@"Reason: ["] == NO) {
-			return input;
-		}
-
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"Reason: [").length)];
-
-		inputMutable.command = IRCPrivateCommandIndex("kick");
-
-		[paramsMutable removeObjectAtIndex:1];
-
-		[paramsMutable addObject:kickedNickname];
-
-		[paramsMutable addObject:stringIn];
-		/* End kick message. */
 	}
 	else if ([stringIn hasPrefix:@"changed the topic to: "])
 	{
