@@ -122,7 +122,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		object->_sessionIdentifier = xpcObject.sessionIdentifier;
 	}
 
-	return object;
+	return [object copy];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
