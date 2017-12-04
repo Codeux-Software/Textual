@@ -165,8 +165,8 @@ _MessageBuffer.setBufferLimit = function(limit) /* PRIVATE */
 		_MessageBuffer._bufferSizeSoftLimit = _MessageBuffer._bufferSizeSoftLimitDefault;
 		_MessageBuffer._bufferSizeHardLimit = _MessageBuffer._bufferSizeHardLimitDefault;
 	} else {
-		_MessageBuffer._bufferSizeSoftLimitDefault = limit;
-		_MessageBuffer._bufferSizeHardLimitDefault = limit;
+		_MessageBuffer._bufferSizeSoftLimit = limit;
+		_MessageBuffer._bufferSizeHardLimit = limit;
 	}
 };
 
