@@ -371,7 +371,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (expectedType != ICLMediaTypeUnknown &&
 		expectedType != mediaType)
 	{
-		*error = [self _errorWithDescription:@"Unexpected media type" code:10003];
+		*error = [self _errorWithDescription:@"Unexpected media type" code:1003];
 
 		return nil;
 	}
