@@ -4001,11 +4001,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitNaughtyContent" id="YgG-oY-XgT">
-                                                <dictionary key="options">
-                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                </dictionary>
-                                            </binding>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitNaughtyContent" id="eGZ-ag-5hO"/>
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TxM-em-CxR">
