@@ -150,7 +150,11 @@ _MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers) /* P
 
 		_MessageBuffer.resizeBufferIfNeeded();
 
-		_Textual.messageAddedToView(lineNumbers, false);
+		try {
+			_Textual.messageAddedToView(lineNumbers, false);
+		} catch (error) {
+			console.error(error);			
+		}
 	}
 };
 
@@ -549,7 +553,11 @@ _MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestP
 		line.cancelMutation();
 
 		/* Post line numbers so style can do something with them. */
-		_Textual.messageAddedToView(lineNumbers, true);
+		try {
+			_Textual.messageAddedToView(lineNumbers, true);
+		} catch (error) {
+			console.error(error);			
+		}
 
 		/* Scroll line into view */
 		if (before) {
@@ -699,7 +707,11 @@ _MessageBuffer.loadMessagesWithJumpPostflight = function(requestPayload) /* PRIV
 		_MessageBuffer._bufferCurrentSize += html.length;
 
 		/* Post line numbers so style can do something with them. */
-		_Textual.messageAddedToView(lineNumbers, true);
+		try {
+			_Textual.messageAddedToView(lineNumbers, true);
+		} catch (error) {
+			console.error(error);			
+		}
 
 		/* Toggle automatic scrolling */
 		/* Call after resize so that it has latest state of bottom. */
