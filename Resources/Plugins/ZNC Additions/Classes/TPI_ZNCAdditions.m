@@ -276,7 +276,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[paramsMutable addObject:newNickname];
 		/* End nickname change */
 	}
-	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(parted with message: \\[(.*)\\]|part: (.*))$" withoutCase:NO substringGroups:YES] == 3)
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(parted with message: \\[(.*)\\]|parted: (.*))$" withoutCase:NO substringGroups:YES] == 3)
 	{
 		/* Begin part message */
 		NSString *partMessage = stringInComponents[2];
