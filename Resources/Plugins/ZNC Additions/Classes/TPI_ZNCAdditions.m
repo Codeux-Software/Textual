@@ -330,8 +330,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[paramsMutable removeObjectAtIndex:1];
 
 		[paramsMutable addObject:modeChanges];
-
-		[paramsMutable addObject:stringIn];
 		/* End mode processing */
 	}
 	else if ([stringIn hasPrefix:@"changed the topic to: "])
