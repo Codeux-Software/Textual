@@ -3668,9 +3668,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
-			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
-
-			[self send:IRCPrivateCommandIndex("join"), targetChannelName, stringIn.string, nil];
+			IRCTreeItem* targetChannel = [self findChannel: targetChannelName];
+			if(targetChannel.isActive)
+			{
+				[mainWindow() select:targetChannel];
+			}
+			else
+			{
+				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
+				[self send:IRCPrivateCommandIndex("join"), targetChannelName, stringIn.string, nil];
+			}
 
 			break;
 		}
