@@ -217,9 +217,7 @@
 
 /* /setcolor/ command */
 "IRC[1108]" = "Error: This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
-"IRC[1109]" = "Error: This command cannot be used unless the checkbox labeled “Enable new nickname color system” is checked in the \002Style\002 section of \002Preferences\002.";
 "IRC[1110]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
-"IRC[1111]" = "Error: The style that is in use is not compatible with this command";
 
 /* Cipher suite information */
 "IRC[1112][1]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";

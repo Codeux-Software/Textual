@@ -37,6 +37,8 @@
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 
+#import "TDCInAppPurchaseProductTableEntryPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCInAppPurchaseProductsTableEntry

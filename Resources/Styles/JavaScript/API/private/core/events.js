@@ -50,15 +50,15 @@ Textual.finishedLoadingHistory = false; /* PUBLIC */
 _Textual.notifyDidBecomeVisible = function() /* PRIVATE */
 {
 	Textual.clearSelection();
-	
-	document.documentElement.setAttribute("visible", "true");
+
+	document.body.dataset.visible = "true";
 };
 
 _Textual.notifyDidBecomeHidden = function() /* PRIVATE */
 {
 	Textual.clearSelection();
-	
-	document.documentElement.setAttribute("visible", "false");
+
+	document.body.dataset.visible = false;
 };
 
 _Textual.notifySelectionChanged = function(isSelected) /* PRIVATE */
@@ -70,11 +70,11 @@ _Textual.notifySelectionChanged = function(isSelected) /* PRIVATE */
 	var scrolledToBottom = TextualScroller.isScrolledToBottom();
 
 	if (isSelected) {
-		document.documentElement.setAttribute("selected", "true");
+		document.body.dataset.selected = "true";
 	} else {
-		document.documentElement.setAttribute("selected", "false");
+		document.body.dataset.selected = "false";
 	}
-	
+
 	if (scrolledToBottom) {
 		TextualScroller.scrollToBottom();
 	}
@@ -83,8 +83,8 @@ _Textual.notifySelectionChanged = function(isSelected) /* PRIVATE */
 Textual.viewBodyDidLoadInt = function() /* PRIVATE */
 {
 	console.warn("Textual.viewBodyDidLoadInt() is deprecated. Use _Textual.viewBodyDidLoad() instead.");
-	
-	_Textual.viewBodyDidLoad();	
+
+	_Textual.viewBodyDidLoad();
 };
 
 _Textual._viewBodyDidLoadAnimationFrame = null; /* PRIVATE */
@@ -128,10 +128,10 @@ _Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 	var scrollbackLimit = configuration.scrollbackLimit;
 
 	_TextualScroller.createMutationObserver();
-	
+
 	if (isVisible) {
 		_Textual.notifyDidBecomeVisible();
-	
+
 		if (isSelected) {
 			_Textual.notifySelectionChanged(true);
 		} else {
@@ -140,7 +140,7 @@ _Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 	} else {
 		_Textual.notifyDidBecomeHidden();
 	}
-	
+
 	if (isReloadingTheme) {
 		Textual.viewFinishedReload();
 	} else {
@@ -156,9 +156,9 @@ _Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 			_Textual._viewBodyDidLoad();
 		}
 	}
-	
+
 	Textual.changeTextSizeMultiplier(textSizeMultiplier);
-	
+
 	if (scrollbackLimit !== 0) { // 0 = use default
 		_MessageBuffer.setBufferLimit(scrollbackLimit);
 	}
@@ -173,27 +173,13 @@ _Textual.viewFinishedLoadingHistory = function() /* PRIVATE */
 
 _Textual.messageAddedToView = function(lineNumber, fromBuffer) /* PRIVATE */
 {
-	var oldCallbackExists = (typeof Textual.newMessagePostedToView === "function");
-	
-	if (oldCallbackExists) {
-		console.warn("Textual.newMessagePostedToView() is deprecated. Use Textual.messageAddedToView() instead.");
-	}
-	
 	/* Allow lineNumber to be an array of line numbers or a single line number. */
 	if (Array.isArray(lineNumber)) {
 		for (var i = 0; i < lineNumber.length; i++) {
-			if (oldCallbackExists) {
-				Textual.newMessagePostedToView(lineNumber[i]);
-			} else {
-				Textual.messageAddedToView(lineNumber[i], fromBuffer);
-			}
+			Textual.messageAddedToView(lineNumber[i], fromBuffer);
 		}
 	} else {
-		if (oldCallbackExists) {
-			Textual.newMessagePostedToView(lineNumber);
-		} else {
-			Textual.messageAddedToView(lineNumber, fromBuffer);
-		}
+		Textual.messageAddedToView(lineNumber, fromBuffer);
 	}
 
 	appPrivate.notifyLinesAddedToView(lineNumber);

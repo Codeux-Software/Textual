@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesLocal.h"
+#import "TPCResourceManager.h"
+#import "IRCCommandIndexPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _reservedSlotDictionaryKey			@"Reserved Information"
@@ -81,7 +85,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 
 		IRCCommandIndexPrivateValues = [privateValuesMutable copy];
 	}
-	
+
 	/* Only error checking we need. It either fails or succeeds. */
 	NSParameterAssert(IRCCommandIndexPrivateValues != nil);
 	NSParameterAssert(IRCCommandIndexPublicValues != nil);
@@ -142,7 +146,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 {
 	if (_cachedPublicCommandList == nil) {
 		NSMutableArray<NSString *> *commandList = [NSMutableArray array];
-		
+
 		BOOL developerModeEnabled = [TPCPreferences developerModeEnabled];
 
 		[IRCCommandIndexPublicValues enumerateKeysAndObjectsUsingBlock:^(NSString *indexKey, NSDictionary *indexValue, BOOL *stop) {

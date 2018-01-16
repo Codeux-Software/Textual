@@ -4,7 +4,7 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
+
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
@@ -35,6 +35,11 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
+#import "TDCFileTransferDialogTableCellPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -84,13 +89,13 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *totalFilesizeString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:totalFilesize];
 
 	self.filesizeTextField.stringValue = totalFilesizeString;
-	
+
 	self.progressIndicator.doubleValue = 0;
 	self.progressIndicator.minValue = 0;
 	self.progressIndicator.maxValue = totalFilesize;
 
 	NSImage *iconImage = [RZWorkspace() iconForFileType:filename.pathExtension];
-	
+
 	self.fileIconView.image = iconImage;
 
 	[self reloadStatusInformation];
@@ -163,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1001]", self.peerNickname);
 			}
-			
+
 			break;
 		}
 		case TDCFileTransferDialogTransferMappingListeningPortStatus:
@@ -205,14 +210,14 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferIsListeningAsReceiverStatus:
 		{
 			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1014]", self.peerNickname);
-			
+
 			break;
 		}
 		case TDCFileTransferDialogTransferFatalErrorStatus:
 		case TDCFileTransferDialogTransferRecoverableErrorStatus:
 		{
 			self.transferProgressTextField.stringValue = self.errorMessageDescription;
-			
+
 			break;
 		}
 		case TDCFileTransferDialogTransferCompleteStatus:
@@ -230,25 +235,25 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			/* Format time remaining */
 			NSTimeInterval timeRemaining = 0;
-			
+
 			NSString *timeRemainingString = nil;
 
 			TXUnsignedLongLong currentSpeed = self.currentSpeed;
-			
+
 			if (currentSpeed > 0) {
 				timeRemaining = ((self.totalFilesize - processedFilesize) / currentSpeed);
-				
+
 				if (timeRemaining > 0) {
 					timeRemainingString = TXHumanReadableTimeInterval(timeRemaining, YES, (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond));
 				}
 			}
-			
+
 			/* Update status */
 			NSString *totalFilesizeString = self.filesizeTextField.stringValue;
 
 			NSString *currentSpeedString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:currentSpeed];
 			NSString *processedFilesizeString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:processedFilesize];
-			
+
 			NSString *statusString = nil;
 
 			if (self.isReceiving) {
@@ -264,15 +269,15 @@ NS_ASSUME_NONNULL_BEGIN
 					statusString = TXTLS(@"TDCFileTransferDialog[1000][1]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
 				}
 			}
-			
+
 			self.transferProgressTextField.stringValue = statusString;
-			
+
 			break;
 		}
 		case TDCFileTransferDialogTransferConnectingStatus:
 		{
 			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1016]", self.peerNickname);
-			
+
 			break;
 		}
 		case TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus:
@@ -288,7 +293,7 @@ NS_ASSUME_NONNULL_BEGIN
 			break;
 		}
 	}
-	
+
 	/* Update clear button */
 	[self updateClearButton];
 }

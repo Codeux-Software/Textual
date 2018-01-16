@@ -40,6 +40,16 @@
 
 #import <objc/message.h>
 
+#import "NSObjectHelperPrivate.h"
+#import "GCDAsyncSocketCipherNames.h"
+#import "GCDAsyncSocketExtensions.h"
+#import "GCDAsyncSocketTrustPanel.h"
+#import "TLOLanguagePreferences.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCConnectionConfig.h"
+#import "IRCConnectionPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection ()
@@ -67,7 +77,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		self.config = config;
 	}
-	
+
 	return self;
 }
 
@@ -105,6 +115,8 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.serviceConnection != nil) {
 		return;
 	}
+
+	LogToConsoleDebug("Warming process...");
 
 	[self warmProcess];
 }
@@ -195,9 +207,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	[[self remoteObjectProxy] openWithConfig:self.config];
 
-    if ([TPCPreferences appNapEnabled] == NO) {
-        [[self remoteObjectProxy] disableAppNap];
-    }
+	if ([TPCPreferences appNapEnabled] == NO) {
+		[[self remoteObjectProxy] disableAppNap];
+	}
 
 	[[self remoteObjectProxy] disableSuddenTermination];
 }

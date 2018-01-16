@@ -1,0 +1,34 @@
+
+// TEXTUAL_PRODUCT_LOCATION is replaced by the build script
+TEXTUAL_PRODUCT_LOCATION = /Applications/Textual.app
+
+// TEXTUAL_PRODUCT_BINARY is replaced by the build script
+TEXTUAL_PRODUCT_BINARY = ${TEXTUAL_PRODUCT_LOCATION}/Contents/MacOS/Textual
+
+// TEXTUAL_PROJECT_DIR is replaced by the build script
+TEXTUAL_PROJECT_DIR = ${PROJECT_DIR}/../../
+
+OBJROOT = ${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildResults-XPCServices
+
+SYMROOT = ${OBJROOT}
+BUILD_DIR = ${OBJROOT}
+TARGET_TEMP_DIR = ${OBJROOT}
+SHARED_PRECOMPS_DIR = ${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildPCH
+CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildProducts-XPCServices
+
+CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_DIR}/Resources/Sandbox/Entitlements/Auxiliary.entitlements
+
+HEADER_SEARCH_PATHS = $(inherited) "${TEXTUAL_PRODUCT_LOCATION}/Contents/Headers/**"
+LIBRARY_SEARCH_PATHS = $(inherited) "${TEXTUAL_PRODUCT_LOCATION}/Contents/Frameworks/**"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${TEXTUAL_PRODUCT_LOCATION}/Contents/Frameworks/**"
+
+WRAPPER_EXTENSION = xpc
+
+PROVISIONING_PROFILE =
+PROVISIONING_PROFILE_SPECIFIER =
+
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) TEXTUAL_BUILDING_XPC_SERVICE=1
+
+// Link against frameworks in app itself rather than creating copies
+// ./(self) ../(Contents) ../(.xpc bundle) ../(XPCServices) ../(Contents)
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @loader_path/../../../../Frameworks

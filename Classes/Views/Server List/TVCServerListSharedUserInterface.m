@@ -35,6 +35,14 @@
 
  *********************************************************************** */
 
+#import "NSColorHelper.h"
+#import "NSObjectHelperPrivate.h"
+#import "NSViewHelperPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCMainWindow.h"
+#import "TVCServerListPrivate.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListSharedUserInterface ()
@@ -108,20 +116,20 @@ ClassWithDesignatedInitializerInitMethod
 	/* The following is specialized drawing for the normal source list
 	 background when inside a backed layer view. */
 	NSColor *backgroundColor = nil;
-	
+
 	if (self.mainWindow.isActiveForDrawing) {
 		backgroundColor = [[self.serverList userInterfaceObjects] serverListBackgroundColorForActiveWindow];
 	} else {
 		backgroundColor = [[self.serverList userInterfaceObjects] serverListBackgroundColorForInactiveWindow];
 	}
-	
+
 	if ( backgroundColor) {
 		[backgroundColor set];
-		
+
 		NSRectFill(self.bounds);
 	} else {
 		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
-		
+
 		[backgroundGradient drawInRect:self.bounds angle:270.0];
 	}
 }

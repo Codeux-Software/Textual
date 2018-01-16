@@ -36,154 +36,19 @@
  *********************************************************************** */
 
 #ifdef __OBJC__
-#ifndef TEXTUAL_PRIMARY_PUBLIC_HEADER_DISABLED
+	/* System frameworks */
 	#import <Cocoa/Cocoa.h>
-
-	#import <QuartzCore/QuartzCore.h>
 
 	#import <Security/Security.h>
 
-	#import <SecurityInterface/SFCertificatePanel.h>
-	#import <SecurityInterface/SFCertificateTrustPanel.h>
-	#import <SecurityInterface/SFChooseIdentityPanel.h>
-
 	#import <WebKit/WebKit.h>
 
+	/* Custom frameworks */
 	#import <AutoHyperlinks/AutoHyperlinks.h>
 	#import <CocoaExtensions/CocoaExtensions.h>
-	#import <EncryptionKit/EncryptionKit.h>
-
-	/* Class Forwarders */
-	@class IRCAddressBookEntry;
-	@class IRCAddressBookUserTrackingContainer;
-	@class IRCChannel;
-	@class IRCChannelConfig;
-	@class IRCChannelMode;
-	@class IRCChannelModeContainer;
-	@class IRCChannelUser;
-	@class IRCClient;
-	@class IRCClientConfig;
-	@class IRCCommandIndex;
-	@class IRCConnection;
-	@class IRCConnectionConfig;
-	@class IRCConnectionConfigMutable;
-	@class IRCHighlightLogEntry;
-	@class IRCHighlightMatchCondition;
-	@class IRCHighlightMatchConditionMutable;
-	@class IRCISupportInfo;
-	@class IRCMessage;
-	@class IRCMessageMutable;
-	@class IRCModeInfo;
-	@class IRCModeInfoMutable;
-	@class IRCNetwork;
-	@class IRCNetworkList;
-	@class IRCPrefix;
-	@class IRCPrefixMutable;
-	@class IRCSendingMessage;
-	@class IRCServer;
-	@class IRCServerMutable;
-	@class IRCTreeItem;
-	@class IRCUser;
-	@class IRCWorld;
-	@class TDCSheetBase;
-	@class TDCWindowBase;
-	@class THOUnicodeHelper;
-	@class TLOGrowlController;
-	@class TLOKeyEventHandler;
-	@class TLOLanguagePreferences;
-	@class TLOLinkParser;
-	@class TLOPopupPrompts;
-	@class TLOSoundPlayer;
-	@class TLOTimer;
-	@class TLOpenLink;
-	@class TPCApplicationInfo;
-	@class TPCPathInfo;
-	@class TPCPreferences;
-	@class TPCPreferencesCloudSync;
-	@class TPCPreferencesImportExport;
-	@class TPCPreferencesUserDefaults;
-	@class TPCPreferencesUserDefaultsController;
-	@class TPCResourceManager;
-	@class TPCThemeController;
-	@class TPCThemeSettings;
-	@class TVCAutoExpandingTextField;
-	@class TVCAutoExpandingTokenField;
-	@class TVCBasicTableView;
-	@class TVCChannelSelectionViewController;
-	@class TVCDockIcon;
-	@class TVCImageURLParser;
-	@class TVCInputPromptDialog;
-	@class TVCLogController;
-	@class TVCLogLine;
-	@class TVCLogRenderer;
-	@class TVCLogView;
-	@class TVCMainWindow;
-	@class TVCMainWindowChannelView;
-	@class TVCMainWindowLoadingScreenView;
-	@class TVCMainWindowSplitView;
-	@class TVCMainWindowTextView;
-	@class TVCMemberList;
-	@class TVCServerList;
-	@class TVCComboBoxWithValueValidation;
-	@class TVCComboBoxWithValueValidationCell;
-	@class TVCTextFieldWithValueValidation;
-	@class TVCTextFieldWithValueValidationCell;
-	@class TVCTextViewIRCFormattingMenu;
-	@class TVCTextViewWithIRCFormatter;
-	@class TXMasterController;
-	@class TXMenuController;
-	@class TXSharedApplication;
-	@class TXUserInterface;
 
 	/* Static Defeinitions */
 	#import "StaticDefinitions.h"
-
-	#import "TextualApplicationShared.h"
-
-	/* Import frameworks based on defines */
-	#ifndef TEXTUAL_BUILT_INSIDE_SANDBOX
-		#define TEXTUAL_BUILT_INSIDE_SANDBOX 0
-	#endif
-
-	#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-		#ifdef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
-			#undef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
-		#endif
-
-		#define TEXTUAL_BUILT_WITH_SPARKLE_ENABLED 0
-	#endif
-
-	#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
-		#define	TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED 0
-	#endif
-
-	#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-		#import <HockeySDK/HockeySDK.h>
-	#endif
-
-	#ifndef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
-		#define TEXTUAL_BUILT_WITH_SPARKLE_ENABLED 0
-	#endif
-
-	#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-		#import <Sparkle/Sparkle.h>
-	#endif
-
-	#ifndef TEXTUAL_BUILT_WITH_LICENSE_MANAGER
-		#define TEXTUAL_BUILT_WITH_LICENSE_MANAGER 0
-	#endif
-
-	#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		#define TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT 0
-	#endif
-
-	#ifndef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
-		#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 0
-	#endif
-
-	#ifndef TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION
-		#define TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION 0
-	#endif
 
 	/* IRC Controllers — Core */
 	#import "IRC.h"
@@ -229,8 +94,8 @@
 	/* Library */
 	#import "TLOEncryptionManager.h"
 	#import "TLOGrowlController.h"
-	#import "TLOKeyEventHandler.h"
 	#import "TLOInternetAddressLookup.h"
+	#import "TLOKeyEventHandler.h"
 	#import "TLOLanguagePreferences.h"
 	#import "TLOLinkParser.h"
 	#import "TLOPopupPrompts.h"
@@ -241,16 +106,12 @@
 	/* Preferences */
 	#import "TPCApplicationInfo.h"
 	#import "TPCPathInfo.h"
-	#import "TPCPreferences.h"
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	#import "TPCPreferencesCloudSync.h"
 	#import "TPCPreferencesCloudSyncExtension.h"
-#endif
-
 	#import "TPCPreferencesImportExport.h"
+	#import "TPCPreferencesLocal.h"
 	#import "TPCPreferencesReload.h"
-	#import "TPCPreferencesUserDefaults.h"
+	#import "TPCPreferencesUserDefaultsLocal.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"
@@ -261,7 +122,6 @@
 	#import "TVCBasicTableView.h"
 	#import "TVCChannelSelectionViewController.h"
 	#import "TVCComboBoxWithValueValidation.h"
-	#import "TVCImageURLParser.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCLogController.h"
 	#import "TVCLogLine.h"
@@ -282,7 +142,6 @@
 	#import "TXMenuController.h"
 	#import "TXSharedApplication.h"
 	#import "TXUserInterface.h"
-#endif
 #endif
 
 /* @end */

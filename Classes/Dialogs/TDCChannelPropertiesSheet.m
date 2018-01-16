@@ -35,6 +35,18 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "NSViewHelper.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TVCNotificationConfigurationViewControllerPrivate.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCPreferencesControllerPrivate.h"
+#import "TDCChannelPropertiesNotificationConfigurationPrivate.h"
 #import "TDCChannelPropertiesSheetInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -47,8 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isNewConfiguration;
 @property (nonatomic, copy) NSArray *navigationTree;
 @property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
-@property (nonatomic, weak) IBOutlet NSButton *disableInlineImagesCheck;
-@property (nonatomic, weak) IBOutlet NSButton *enableInlineImagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *disableInlineMediaCheck;
+@property (nonatomic, weak) IBOutlet NSButton *enableInlineMediaCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pushNotificationsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *showTreeBadgeCountCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreHighlightsCheck;
@@ -241,10 +253,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.ignoreGeneralEventMessagesCheck.state = self.config.ignoreGeneralEventMessages;
 	self.ignoreHighlightsCheck.state = self.config.ignoreHighlights;
 
-	if ([TPCPreferences showInlineImages]) {
-		self.disableInlineImagesCheck.state = self.config.ignoreInlineMedia;
+	if ([TPCPreferences showInlineMedia]) {
+		self.disableInlineMediaCheck.state = self.config.ignoreInlineMedia;
 	} else {
-		self.enableInlineImagesCheck.state = self.config.ignoreInlineMedia;
+		self.enableInlineMediaCheck.state = self.config.ignoreInlineMedia;
 	}
 
 	[self updateNavigationEnabledState];
@@ -340,7 +352,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)onInlineMediaCheckChanged:(id)sender
 {
-	if (self.enableInlineImagesCheck.state != NSOnState) {
+	if (self.enableInlineMediaCheck.state != NSOnState) {
 		return;
 	}
 
@@ -380,16 +392,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.config.ignoreGeneralEventMessages = self.ignoreGeneralEventMessagesCheck.state;
 	self.config.ignoreHighlights = self.ignoreHighlightsCheck.state;
 
-	if ([TPCPreferences showInlineImages]) {
-		self.config.ignoreInlineMedia = self.disableInlineImagesCheck.state;
+	if ([TPCPreferences showInlineMedia]) {
+		self.config.ignoreInlineMedia = self.disableInlineMediaCheck.state;
 	} else {
-		self.config.ignoreInlineMedia = self.enableInlineImagesCheck.state;
+		self.config.ignoreInlineMedia = self.enableInlineMediaCheck.state;
 	}
-	
+
 	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheet:onOk:)]) {
 		[self.delegate channelPropertiesSheet:self onOk:[self.config copy]];
 	}
-	
+
 	[super ok:nil];
 }
 

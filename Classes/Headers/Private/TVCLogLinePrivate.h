@@ -35,9 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCLogLine.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCLogLineXPC;
+@class TVCLogLineXPC, IRCTreeItem;
 
 @interface TVCLogLine ()
 @property (readonly) BOOL fromCurrentSession;

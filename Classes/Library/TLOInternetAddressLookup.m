@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TLOInternetAddressLookup.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _requestTimeoutInterval			30.0
@@ -64,7 +67,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(delegate != nil);
 
 	ObjectIsAlreadyInitializedAssert
-	
+
 	if ((self = [super init])) {
 		self.IPv4AddressIsValid = YES;
 		self.IPv6AddressIsValid = YES;

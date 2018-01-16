@@ -38,6 +38,9 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
+#import "TLONotificationConfigurationPrivate.h"
+#import "TLOSoundPlayer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOSoundPlayer
@@ -169,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)playAlertSound:(NSString *)name
 {
 	NSParameterAssert(name != nil);
-	
+
 	if ([name isEqualToString:TXNoAlertSoundPreferenceValue]) {
 		return;
 	}
@@ -181,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	SystemSoundID soundID = [TLOSoundPlayer alertSoundNamed:name];
-	
+
 	if (soundID) {
 		AudioServicesPlayAlertSound(soundID);
 

@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
@@ -117,6 +115,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandQuoteIndex = 5058,
 	IRCPublicCommandRawIndex = 5059,
 	IRCPublicCommandRejoinIndex = 5060,
+	IRCPublicCommandReloadICLIndex = 5115,
 	IRCPublicCommandRemoveIndex = 5061,
 	IRCPublicCommandServerIndex = 5062,
 	IRCPublicCommandSetcolorIndex = 5103,

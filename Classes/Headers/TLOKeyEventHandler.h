@@ -36,8 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 #define TXKeyReturnCode			0x24

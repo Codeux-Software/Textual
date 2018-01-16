@@ -104,8 +104,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)openSocket
 {
-    [self createSocketDispatchQueue];
-	
+	[self createSocketDispatchQueue];
+
 	self.isConnecting = YES;
 
 	self.socketConnection = [GCDAsyncSocket socketWithDelegate:self
@@ -181,9 +181,9 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	[self destroySocketDispatchQueue];
 
 	self.alternateDisconnectError = nil;
-	
+
 	self.isConnectedWithClientSideCertificate = NO;
-	
+
 	self.isConnected = NO;
 	self.isConnecting = NO;
 
@@ -570,7 +570,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		mutableConfig.proxyPort = [socksProxyPort integerValue];
 
 		mutableConfig.proxyType = IRCConnectionSocketSocks5ProxyType;
-		
+
 		mutableConfig.proxyUsername = socksProxyUsername;
 		mutableConfig.proxyPassword = socksProxyPassword;
 
@@ -963,7 +963,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 #define _dr(case, reason)			case: { failureReason = (reason); break; }
 
 			NSString *failureReason = nil;
-			
+
 			switch (reply) {
 				_dr(case 1,  @"SOCKS5 Error: General SOCKS server failure")
 				_dr(case 2,  @"SOCKS5 Error: Connection not allowed by ruleset")

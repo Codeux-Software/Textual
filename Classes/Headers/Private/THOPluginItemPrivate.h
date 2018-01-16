@@ -37,10 +37,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class THOPluginOutputSuppressionRule;
+
 typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
 	THOPluginItemSupportsDidReceiveCommandEvent				= 1 << 1,
 	THOPluginItemSupportsDidReceivePlainTextMessageEvent	= 1 << 2,
-	THOPluginItemSupportsInlineMediaManipulation			= 1 << 3,
+//	THOPluginItemSupportsInlineMediaManipulation			= 1 << 3,
 	THOPluginItemSupportsNewMessagePostedEvent				= 1 << 4,
 	THOPluginItemSupportsOutputSuppressionRules				= 1 << 5,
 	THOPluginItemSupportsPreferencePane						= 1 << 6,

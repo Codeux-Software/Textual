@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesCloudSyncExtension.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -53,12 +60,12 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 		}
 
 		NSDictionary *dictionaryValue = [u configurationDictionaryForCloud];
-		
+
 		NSString *dictionaryKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:u.uniqueIdentifier];
-		
+
 		dic[dictionaryKey] = dictionaryValue;
 	}
-	
+
 	return [dic copy];
 }
 
@@ -110,16 +117,16 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 	}
 
 	NSArray *deletedClients = [sharedCloudManager() valueForKey:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey];
-	
+
 	if (deletedClients) {
 		NSUInteger clientIndex = [deletedClients indexOfObject:clientId];
-		
+
 		if (clientIndex == NSNotFound) {
 			return;
 		}
 
 		deletedClients = [deletedClients arrayByRemovingObjectAtIndex:clientIndex];
-			
+
 		[sharedCloudManager() setValue:deletedClients forKey:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey];
 	}
 }
@@ -133,7 +140,7 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 	}
 
 	NSString *prefKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:clientId];
-	
+
 	[sharedCloudManager() removeObjectForKey:prefKey];
 }
 
@@ -144,7 +151,7 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
-		
+
 	[deletedClients enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 		IRCClient *u = [self findClientWithId:object];
 

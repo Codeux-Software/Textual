@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCServer;
 
 @protocol TDCServerEndpointListSheetDelegate;
 

@@ -36,6 +36,16 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "IRC.h"
+#import "IRCAddressBook.h"
+#import "IRCChannelConfig.h"
+#import "IRCHighlightMatchCondition.h"
+#import "IRCNetworkList.h"
+#import "IRCServerPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOLanguagePreferences.h"
 #import "IRCClientConfigInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -198,7 +208,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages
 {
 	ObjectIsAlreadyInitializedAssert
-	
+
 	if ((self = [super init])) {
 		if (self->_objectInitializedAsCopy == NO) {
 			[self populateDefaultsPreflight];
@@ -595,7 +605,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	NSDictionary *s1 = self.dictionaryValue;
-	
+
 	NSDictionary *s2 = ((IRCClientConfig *)object).dictionaryValue;
 
 	return (NSObjectsAreEqual(s1, s2) &&
@@ -795,7 +805,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	 be lost when reconstructing from dictionary value. */
 	if (isCopyOperation == NO) {
 		NSMutableArray<NSDictionary *> *channelListOut = [NSMutableArray array];
-		
+
 		for (IRCChannelConfig *e in self.channelList) {
 			NSDictionary *d = e.dictionaryValue;
 

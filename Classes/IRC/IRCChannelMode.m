@@ -36,6 +36,13 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCISupportInfoPrivate.h"
+#import "IRCModeInfo.h"
+#import "IRCChannelModePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCChannelMode ()
@@ -172,7 +179,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSMutableString *modeParamString = [NSMutableString string];
 
 	NSDictionary *modes = self.modes.modes;
-	
+
 	NSArray *modesSorted = modes.sortedDictionaryKeys;
 
 	for (NSString *modeSymbol in modesSorted) {
@@ -346,7 +353,12 @@ ClassWithDesignatedInitializerInitMethod
 	IRCChannelModeContainer *object =
 	[[IRCChannelModeContainer alloc] initWithSupportInfo:self.supportInfo];
 
-	object.modeObjects = [self.modeObjects copyDeepMutable]; // Copy all hosted IRCModeInfo objects
+	/* modeObjects contain immutable objects which means
+	 we don't have to copy the objects themselves. */
+	/* If we ever modify IRCModeInfo internal logic to ever
+	 modify the contents of the object after initialization,
+	 then we should perform a deep copy here. */
+	object.modeObjects = [self.modeObjects mutableCopy];
 
 	return object;
 }

@@ -80,13 +80,7 @@
 /* Misc. */
 #define NSInvertedComparisonResult(c)			((c) * (-1))
 
-#define NSIsCurrentThreadMain()					[[NSThread currentThread] isEqual:[NSThread mainThread]]
-
-/* The reference date is the date & time of the first commit to the
- Textual repo. Textual existed before then, of course, but the date
- will remain as the official reference date for its birthday. */
-/* The date decodes to July 23, 2010 03:53:00 AM */
-#define TXBirthdayReferenceDate					1279871580.000000
+#define NSIsCurrentThreadMain()					[[NSThread isMainThread]]
 
 /* typedef for filesize information */
 typedef unsigned long long						TXUnsignedLongLong;
@@ -94,14 +88,10 @@ typedef unsigned long long						TXUnsignedLongLong;
 /* Empty block for cleaner parameters. */
 typedef void (^TXEmtpyBlockDataType)(void);
 
-/* Include Off-the-Record Messaging (OTR) support */
-#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 1
-
-/* Include incomplete "Buddy List" window */
-// #define TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW 1
-
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							extern
+
+#define TEXTUAL_SYMBOL_USED						__attribute__((used))
 
 #define TEXTUAL_RUNNING_ON(version, name)		COCOA_EXTENSIONS_RUNNING_ON(version, name)
 
@@ -117,20 +107,6 @@ typedef void (^TXEmtpyBlockDataType)(void);
 
 #define TEXTUAL_IGNORE_DEPRECATION_END			_Pragma("clang diagnostic pop")
 
-/* Defines for script support instead of importing the
- entire Carbon framework for three items. */
-#ifndef kASAppleScriptSuite
-	#define kASAppleScriptSuite 'ascr'
-#endif
-
-#ifndef kASSubroutineEvent
-	#define kASSubroutineEvent 'psbr'
-#endif
-
-#ifndef keyASSubroutineName
-	#define keyASSubroutineName 'snam'
-#endif
-
 /* Helper function */
 #define StringFromBOOL(value) ((value) ? @"YES" : @"NO")
 
@@ -141,5 +117,46 @@ typedef void (^TXEmtpyBlockDataType)(void);
 
 #define SetVariableIfNilCopy(variable, value)				\
 	SetVariableIfNil((variable), [(value) copy])
+
+/* Define any missing macros */
+#ifndef TEXTUAL_BUILT_INSIDE_SANDBOX
+	#define TEXTUAL_BUILT_INSIDE_SANDBOX 0
+#endif
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+	#ifdef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
+		#undef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
+	#endif
+
+	#define TEXTUAL_BUILT_WITH_SPARKLE_ENABLED 0
+#endif
+
+#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
+	#define	TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED 0
+#endif
+
+#ifndef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
+	#define TEXTUAL_BUILT_WITH_SPARKLE_ENABLED 0
+#endif
+
+#ifndef TEXTUAL_BUILT_WITH_LICENSE_MANAGER
+	#define TEXTUAL_BUILT_WITH_LICENSE_MANAGER 0
+#endif
+
+#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	#define TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT 0
+#endif
+
+#ifndef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+	#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 0
+#endif
+
+#ifndef TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION
+	#define TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION 0
+#endif
+
+#ifndef TEXTUAL_BUILDING_XPC_SERVICE
+	#define TEXTUAL_BUILDING_XPC_SERVICE 0
+#endif
 
 /* @end */

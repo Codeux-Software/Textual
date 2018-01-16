@@ -35,6 +35,11 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "IRCColorFormat.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define TVCTextViewWithIRCFormatterWidthPadding		1.0
@@ -52,8 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[self prepareInitialState];
 
 		return self;
-    }
-	
+	}
+
 	return nil;
 }
 
@@ -80,9 +85,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [self.window makeFirstResponder:self];
+	[self.window makeFirstResponder:self];
 
-    [super mouseDown:theEvent];
+	[super mouseDown:theEvent];
 }
 
 #pragma mark -
@@ -199,7 +204,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	CGFloat newPointSize = self.preferredFont.pointSize;
 
-    [self.textStorage beginEditing];
+	[self.textStorage beginEditing];
 
 	[self.textStorage enumerateAttribute:NSFontAttributeName
 								 inRange:self.range
@@ -219,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}];
 
-    [self.textStorage endEditing];
+	[self.textStorage endEditing];
 }
 
 - (void)setPreferredFont:(NSFont *)preferredFont
@@ -307,7 +312,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSRange selectionLineRange;
 
 	(void)[layoutManager lineFragmentRectForGlyphAtIndex:selectionRange.location effectiveRange:&selectionLineRange];
-	
+
 	/* Loop through the range of each line in our text view using
 	 the same technique we use for counting our total number of
 	 lines. If a range matches our base while looping, then that
@@ -315,19 +320,19 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
 
 	NSUInteger numberOfLines = 0;
-	
+
 	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
 		NSRange lineRange;
 
 		(void)[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
-		
+
 		if (NSEqualRanges(selectionLineRange, lineRange)) {
 			return (numberOfLines + 1);
 		}
-		
+
 		i = NSMaxRange(lineRange);
 	}
-	
+
 	return self.numberOfLines;
 }
 
@@ -346,20 +351,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 		i = NSMaxRange(lineRange);
 	}
-	
+
 	/* The method used above for counting the number of lines in
 	 our text view does not take into consideration blank lines at
 	 the end of our field. Therefore, we must manually check if the
 	 last line of our input is a blank newline. If it is, then
 	 increase our count by one. */
 	NSInteger lastIndex = (self.stringLength - 1);
-	
+
 	UniChar lastCharacter = [self.stringValue characterAtIndex:lastIndex];
-	
+
 	if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastCharacter]) {
 		numberOfLines += 1;
 	}
-	
+
 	return numberOfLines;
 }
 
@@ -379,32 +384,32 @@ NS_ASSUME_NONNULL_BEGIN
 		NSRange lineRange;
 
 		NSRect rect = [layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
-		
+
 		if ((totalLineHeight +  rect.size.height) <= maximumHeight) {
 			 totalLineHeight += rect.size.height;
 		} else {
 			skipNewlineSymbolCheck = YES;
-			
+
 			break;
 		}
-		
+
 		i = NSMaxRange(lineRange);
 	}
-	
+
 	if (skipNewlineSymbolCheck == NO) {
 		NSInteger lastIndex = (self.stringLength - 1);
-		
+
 		UniChar lastCharacter = [self.stringValue characterAtIndex:lastIndex];
-		
+
 		if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastCharacter]) {
 			CGFloat defaultHeight = [layoutManager defaultLineHeightForFont:self.preferredFont];
-			
+
 			if ((totalLineHeight +  defaultHeight) <= maximumHeight) {
 				 totalLineHeight += defaultHeight;
 			}
 		}
 	}
-	
+
 	return totalLineHeight;
 }
 

@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);

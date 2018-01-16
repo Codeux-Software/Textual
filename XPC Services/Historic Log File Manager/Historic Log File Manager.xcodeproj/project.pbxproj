@@ -22,10 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B5511FA6385E00748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Standard Release/XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C03B5521FA6385E00748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Debug/XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C03B5531FA6385E00748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/App Store Release/XPC Services.xcconfig"; sourceTree = "<group>"; };
 		4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HistoricLogFileManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
-		4C442CAB1E13B49B00B187F4 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C442CAC1E13B49B00B187F4 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C442CB11E13B5F000B187F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C442CB31E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLSHistoricLogProcessMain.m; path = Classes/HLSHistoricLogProcessMain.m; sourceTree = SOURCE_ROOT; };
 		4C442CB51E13B5FC00B187F4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
@@ -109,9 +109,9 @@
 		4C442CAF1E13B55900B187F4 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C442CAB1E13B49B00B187F4 /* Base Configuration.xcconfig */,
-				4C442CAC1E13B49B00B187F4 /* Code Signing Identity.xcconfig */,
-				4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */,
+				4C03B5531FA6385E00748FE7 /* XPC Services.xcconfig */,
+				4C03B5521FA6385E00748FE7 /* XPC Services.xcconfig */,
+				4C03B5511FA6385E00748FE7 /* XPC Services.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -331,7 +331,7 @@
 /* Begin XCBuildConfiguration section */
 		4C442C921E13B3D200B187F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
+			baseConfigurationReference = 4C03B5521FA6385E00748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 			};
@@ -339,7 +339,7 @@
 		};
 		4C442C931E13B3D200B187F4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
+			baseConfigurationReference = 4C03B5511FA6385E00748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 			};
@@ -352,7 +352,6 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
 				PRODUCT_NAME = HistoricLogFileManager;
@@ -366,7 +365,6 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
 				PRODUCT_NAME = HistoricLogFileManager;
@@ -375,7 +373,7 @@
 		};
 		4C761BED1E15751C00A505B7 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C442CA91E13B45900B187F4 /* Shared Configuration for XPC Services.xcconfig */;
+			baseConfigurationReference = 4C03B5531FA6385E00748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 			};
@@ -388,7 +386,6 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
 				PRODUCT_NAME = HistoricLogFileManager;

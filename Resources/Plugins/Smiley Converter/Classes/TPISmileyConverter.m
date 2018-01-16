@@ -97,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[converstionTable addEntriesFromDictionary:tableData2];
 	}
-	
+
 	/* Save table contents */
 	self.conversionTable = converstionTable;
 
@@ -131,11 +131,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
 	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
-	
+
 	if (serviceEnabled == NO) {
 		return newMessage;
 	}
-	
+
 	if (lineType == TVCLogLineActionType ||
 		lineType == TVCLogLinePrivateMessageType)
 	{

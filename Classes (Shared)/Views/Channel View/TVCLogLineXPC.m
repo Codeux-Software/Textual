@@ -90,10 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(aDecoder != nil);
 
 	if ((self = [super init])) {
-		self->_data = [aDecoder decodeObjectOfClass:[NSData class] forKey:@"data"];
-		self->_uniqueIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"uniqueIdentifier"];
-		self->_viewIdentifier = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"viewIdentifier"];
-		self->_sessionIdentifier = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:@"sessionIdentifier"] integerValue];
+		[self decodeWithCoder:aDecoder];
 
 		return self;
 	}
@@ -101,12 +98,24 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (void)decodeWithCoder:(NSCoder *)aDecoder
+{
+	NSParameterAssert(aDecoder != nil);
+
+	self->_data = [aDecoder decodeDataForKey:@"data"];
+	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
+	self->_viewIdentifier = [aDecoder decodeStringForKey:@"viewIdentifier"];
+	self->_sessionIdentifier = [aDecoder decodeIntegerForKey:@"sessionIdentifier"];
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:self.data forKey:@"data"];
+	NSParameterAssert(aCoder != nil);
+
+	[aCoder encodeData:self.data forKey:@"data"];
 	[aCoder encodeObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[aCoder encodeObject:self.viewIdentifier forKey:@"viewIdentifier"];
-	[aCoder encodeObject:@(self.sessionIdentifier) forKey:@"sessionIdentifier"];
+	[aCoder encodeInteger:self.sessionIdentifier forKey:@"sessionIdentifier"];
 }
 
 + (BOOL)supportsSecureCoding

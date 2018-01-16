@@ -46,14 +46,7 @@
 /* Loading screen */
 Textual.loadingScreenElement = function() /* PUBLIC */
 {
-	return document.getElementById("loading_screen");
-};
-
-Textual.fadeInLoadingScreen = function(bodyOp, topicOp) /* PUBLIC */
-{
-	console.warn("Deprecated function. Use Textual.fadeOutLoadingScreen() instead.");
-
-	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
+	return document.getElementById("loadingScreen");
 };
 
 Textual.fadeOutLoadingScreen = function(bodyOp, topicOp) /* PUBLIC */
@@ -90,7 +83,7 @@ Textual._topicBarElementReference = null; /* PRIVATE */
 Textual.topicBarElement = function() /* PUBLIC */
 {
 	if (Textual._topicBarElementReference === null) {
-		Textual._topicBarElementReference = document.getElementById("topic_bar");
+		Textual._topicBarElementReference = document.getElementById("topicBar");
 	}
 
 	return Textual._topicBarElementReference;
@@ -107,7 +100,7 @@ Textual.topicBarValue = function(asText) /* PUBLIC */
 			return topicBar.innerHTML;
 		}
 	}
-		
+
 	return null;
 };
 
@@ -122,7 +115,7 @@ Textual.setTopicBarValue = function(topicValue, topicValueHTML) /* PUBLIC */
 
 		return true;
 	}
-	
+
 	return false;
 };
 
@@ -171,9 +164,9 @@ Textual._documentBodyElementReference = null; /* PRIVATE */
 Textual.documentBodyElement = function() /* PUBLIC */
 {
 	if (Textual._documentBodyElementReference === null) {
-		Textual._documentBodyElementReference = document.getElementById("body_home");
+		Textual._documentBodyElementReference = document.getElementById("body");
 	}
-	
+
 	return Textual._documentBodyElementReference;
 };
 
@@ -211,20 +204,72 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier) /* PUBLIC */
 };
 
 /* Line numbers */
-Textual.lineNumberStandardize = function(lineNumber) /* PUBLIC */
+HTMLDocument.prototype.getElementByLineNumber = function(lineNumber)
 {
-	if (lineNumber.indexOf("line-") !== 0) {
-		lineNumber = ("line-" + lineNumber);
-	}
-	
-	return lineNumber;
+	lineNumber = lineNumber.standardizedLineNumber();
+
+	return document.getElementById(lineNumber);
 };
 
-Textual.lineNumberContents = function(lineNumber) /* PUBLIC */
+String.prototype.standardizedLineNumber = function() /* PUBLIC */
 {
-	if (lineNumber.indexOf("line-") !== 0) {
-		return lineNumber;
+	if (this.indexOf("line-") !== 0) {
+		return ("line-" + this);
 	}
-	
-	return lineNumber.substr(5);
+
+	return this;
+};
+
+String.prototype.lineNumberContents = function(lineNumber) /* PUBLIC */
+{
+	if (this.indexOf("line-") === 0) {
+		return this.substr(5);
+	}
+
+	return this;
+};
+
+/* Given an element, find which .line element contains it. */
+Element.prototype.lineContainer = function()
+{
+	var testElement = (function(element) {
+		if (element.id && 
+			element.id.indexOf("line-") === 0 &&
+			element.classList &&
+			element.classList.contains("line")) 
+		{
+			return element;
+		}
+
+		return null;
+	});
+
+	var line = null; /* default value */
+
+	/* Test this element and all its parents */
+	var currentElement = this;
+
+	do {
+		line = testElement(currentElement);
+
+		if (line) {
+			break;
+		}
+	} while (currentElement = currentElement.parentElement);
+
+	/* Returns the line container or null */
+	return line;
+};
+
+Element.prototype.lineNumberContents = function()
+{
+	var line = this.lineContainer();
+
+	if (!line) {
+		return null;
+	}
+
+	var lineNumber = line.id;
+
+	return lineNumber.lineNumberContents();
 };

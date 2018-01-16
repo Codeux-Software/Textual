@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel;
 
 typedef NS_ENUM(NSUInteger, TXNotificationType) {
 	TXNotificationHighlightType							= 1000,

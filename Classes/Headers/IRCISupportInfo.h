@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCModeInfo;
 
 #define IRCISupportInfoHighestUserPrefixRank			100
 

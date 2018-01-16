@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCChannelSelectionOutlineViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _textLabelIndentationAmount		14.0

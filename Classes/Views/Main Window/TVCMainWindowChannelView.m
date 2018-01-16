@@ -35,6 +35,17 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "IRCTreeItem.h"
+#import "TVCLogController.h"
+#import "TVCLogView.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowSplitViewPrivate.h"
+#import "TVCMainWindowChannelViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class TVCMainWindowChannelViewSubviewOverlayView;
@@ -44,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, assign) BOOL overlayVisible;
 @property (nonatomic, assign) BOOL isObservingBackingView;
-@property (nonatomic, assign) BOOL backingViewIsLoading;
+@property (readonly) BOOL backingViewIsLoading;
 @property (nonatomic, copy) NSString *uniqueIdentifier;
 @property (nonatomic, strong, nullable) TVCLogView *backingView;
 @property (nonatomic, weak) TVCMainWindowChannelView *parentView;

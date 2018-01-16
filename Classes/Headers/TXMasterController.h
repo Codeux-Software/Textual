@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCWorld, TVCMainWindow, TXMenuController;
 
 @interface TXMasterController : NSObject
 @property (readonly) BOOL debugModeIsOn;

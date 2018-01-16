@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCApplicationInfo : NSObject
@@ -62,6 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (int)applicationProcessID;
 
 + (NSDictionary<NSString *, id> *)applicationInfoPlist;
+
++ (NSTimeInterval)applicationBirthday;
 @end
 
 NS_ASSUME_NONNULL_END

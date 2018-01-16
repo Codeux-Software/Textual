@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1

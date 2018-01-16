@@ -8,19 +8,19 @@ Sulaco = {
 	{
 		var previousLine = Sulaco.getPreviousLine(line);
 		var previousSender = Sulaco.getSenderNickname(previousLine);
-	
+
 		var sender = Sulaco.getSenderNickname(line);
-	
+
 		if (sender === null || previousSender === null) {
 			return;
 		}
-	
+
 		if (sender === previousSender &&
 			Sulaco.getLineType(line) === 'privmsg' &&
 			Sulaco.getLineType(previousLine) === 'privmsg')
 		{
 			line.classList.add('coalesced');
-	
+
 			Sulaco.getSenderElement(line).innerHTML = '';
 		}
 	},
@@ -41,7 +41,7 @@ Sulaco = {
 
 	getLineType: function (line)
 	{
-		return ((line) ? line.getAttribute('ltype') : null);
+		return ((line) ? line.dataset.lineType : null);
 	},
 
 	getMessage: function (line)
@@ -58,7 +58,7 @@ Sulaco = {
 	{
 		var sender = Sulaco.getSenderElement(line);
 
-		return ((sender) ? sender.getAttribute('nickname') : null);
+		return ((sender) ? sender.dataset.nickname : null);
 	}
 };
 

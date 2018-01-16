@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "IRCServer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCServer ()

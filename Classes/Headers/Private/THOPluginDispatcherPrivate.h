@@ -35,7 +35,16 @@
 
  *********************************************************************** */
 
+#import "IRCCommandIndex.h"
+#import "TVCLogLine.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel, IRCPrefix, IRCMessage;
+@class TVCLogController;
+
+@class THOPluginDidPostNewMessageConcreteObject;
+@class THOPluginWebViewJavaScriptPayloadConcreteObject;
 
 @interface THOPluginDispatcher : NSObject
 + (dispatch_queue_t)dispatchQueue;
@@ -45,7 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable IRCMessage *)interceptServerInput:(IRCMessage *)inputObject for:(IRCClient *)client;
 + (nullable id)interceptUserInput:(id)inputObject command:(IRCPrivateCommand)commandString;
 + (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType;
-+ (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
 + (void)userInputCommandInvokedOnClient:(IRCClient *)client commandString:(NSString *)commandString messageString:(NSString *)messageString;
 + (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)viewController;
 + (void)didReceiveServerInput:(IRCMessage *)inputObject onClient:(IRCClient *)client;

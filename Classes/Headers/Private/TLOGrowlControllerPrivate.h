@@ -38,7 +38,11 @@
 
 #import <Growl/Growl.h>
 
+#import "TLOGrowlController.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 TEXTUAL_EXTERN NSString * const TXNotificationDialogStandardNicknameFormat;
 TEXTUAL_EXTERN NSString * const TXNotificationDialogActionNicknameFormat;

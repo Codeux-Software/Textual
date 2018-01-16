@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-NS_ASSUME_NONNULL_BEGIN
+#import "IRCUserPrivate.h"
 
-@class IRCUserRelations;
+NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCUser ()
 {

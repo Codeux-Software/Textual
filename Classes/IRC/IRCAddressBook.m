@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
 #import "IRCAddressBookInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -107,7 +109,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
-	
+
 	return object;
 }
 
@@ -119,7 +121,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
-	
+
 	return object;
 }
 

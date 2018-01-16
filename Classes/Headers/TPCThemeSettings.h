@@ -36,16 +36,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "TVCLogLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define TPCThemeSettingsDisabledIndentationOffset     -99
+@class GRMustacheTemplate;
+
+#define TPCThemeSettingsDisabledIndentationOffset	 -99
 
 #define TPCThemeSettingsLatestTemplateEngineVersion		3
 
 typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorLegacyStyle = 0,
 	TPCThemeSettingsNicknameColorHashHueDarkStyle,
 	TPCThemeSettingsNicknameColorHashHueLightStyle
 };

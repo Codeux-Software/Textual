@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */; };
-		4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */; };
-		4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */; };
 		4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */; };
 		4C2C52D21F12ED5A009701E0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2C52D11F12ED5A009701E0 /* AppKit.framework */; };
 		4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */; };
@@ -33,13 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C03B5571FA638C800748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Standard Release/XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C03B5581FA638C800748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Debug/XPC Services.xcconfig"; sourceTree = "<group>"; };
+		4C03B5591FA638C800748FE7 /* XPC Services.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Services.xcconfig"; path = "../../Resources/Build Configurations/App Store Release/XPC Services.xcconfig"; sourceTree = "<group>"; };
 		4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = RemoteConnectionManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C14065B1F1195A900C73D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C14065C1F1195B600C73D53 /* ConnectionManagerAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ConnectionManagerAppStore.entitlements; path = Resources/Sandbox/Entitlements/ConnectionManagerAppStore.entitlements; sourceTree = "<group>"; };
 		4C14065D1F1195B600C73D53 /* ConnectionManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ConnectionManager.entitlements; path = Resources/Sandbox/Entitlements/ConnectionManager.entitlements; sourceTree = "<group>"; };
-		4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "../../Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "../../Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
-		4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Configuration for XPC Services.xcconfig"; path = "../../Resources/Build Configurations/Shared Configuration for XPC Services.xcconfig"; sourceTree = "<group>"; };
 		4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOLanguagePreferences.h; path = "../../Classes (Shared)/Headers/TLOLanguagePreferences.h"; sourceTree = "<group>"; };
 		4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLanguagePreferences.m; path = "../../Classes (Shared)/Library/TLOLanguagePreferences.m"; sourceTree = "<group>"; };
 		4C2C52D11F12ED5A009701E0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -52,7 +49,6 @@
 		4C6EF2E51F44324400A80A7B /* NSObjectHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = "../../Classes (Shared)/Helpers/Cocoa (Objective-C)/NSObjectHelper.m"; sourceTree = "<group>"; };
 		4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocket.h"; sourceTree = "<group>"; };
 		4C8C72661F1201A000ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = "../../Classes (Shared)/Headers/XPC Protocols/RCMConnectionManagerProtocol.h"; sourceTree = "<group>"; };
-		4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplicationShared.h; path = "../../Classes (Shared)/Headers/TextualApplicationShared.h"; sourceTree = "<group>"; };
 		4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = "../../Classes (Shared)/Headers/StaticDefinitions.h"; sourceTree = "<group>"; };
 		4C8C72761F1201A000ED72DB /* TLOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOTimer.h; path = "../../Classes (Shared)/Headers/TLOTimer.h"; sourceTree = "<group>"; };
 		4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocket.m"; sourceTree = "<group>"; };
@@ -148,9 +144,9 @@
 		4C1406541F1194F900C73D53 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C14065E1F1195CE00C73D53 /* Base Configuration.xcconfig */,
-				4C14065F1F1195CE00C73D53 /* Code Signing Identity.xcconfig */,
-				4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */,
+				4C03B5591FA638C800748FE7 /* XPC Services.xcconfig */,
+				4C03B5581FA638C800748FE7 /* XPC Services.xcconfig */,
+				4C03B5571FA638C800748FE7 /* XPC Services.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -201,7 +197,6 @@
 				4C8C72651F1201A000ED72DB /* XPC Protocols */,
 				4C8C73041F12215600ED72DB /* IRCConnectionConfig.h */,
 				4C8C726D1F1201A000ED72DB /* StaticDefinitions.h */,
-				4C8C72691F1201A000ED72DB /* TextualApplicationShared.h */,
 				4C2C52CA1F12E21F009701E0 /* TLOLanguagePreferences.h */,
 				4C8C72761F1201A000ED72DB /* TLOTimer.h */,
 			);
@@ -422,9 +417,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C1406631F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig in Resources */,
-				4C1406611F1195CE00C73D53 /* Base Configuration.xcconfig in Resources */,
-				4C1406621F1195CE00C73D53 /* Code Signing Identity.xcconfig in Resources */,
 				4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */,
 				4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */,
 			);
@@ -478,7 +470,7 @@
 /* Begin XCBuildConfiguration section */
 		4C14064C1F11942B00C73D53 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
+			baseConfigurationReference = 4C03B5581FA638C800748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 			};
@@ -486,7 +478,7 @@
 		};
 		4C14064D1F11942B00C73D53 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
+			baseConfigurationReference = 4C03B5571FA638C800748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 			};
@@ -518,7 +510,7 @@
 		};
 		4C1406641F11965A00C73D53 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C1406601F1195CE00C73D53 /* Shared Configuration for XPC Services.xcconfig */;
+			baseConfigurationReference = 4C03B5591FA638C800748FE7 /* XPC Services.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 			};

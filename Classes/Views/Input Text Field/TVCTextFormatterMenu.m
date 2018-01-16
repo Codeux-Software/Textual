@@ -36,6 +36,10 @@
 
  *********************************************************************** */
 
+#import "IRCColorFormat.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
+#import "TVCTextFormatterMenuPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _formattingMenuForegroundColorEnabledTag		95005
@@ -78,28 +82,28 @@ NS_ASSUME_NONNULL_BEGIN
 		case 95001:
 		{
 			NSMenu *rootMenu = item.menu;
-			
+
 			BOOL boldText = self.textIsBold;
-			
+
 			BOOL foregroundColor = self.textHasForegroundColor;
 			BOOL backgroundColor = self.textHasBackgroundColor;
-			
+
 			[rootMenu itemWithTag:_formattingMenuForegroundColorEnabledTag].hidden = foregroundColor;
 			[rootMenu itemWithTag:_formattingMenuForegroundColorDisabledTag].hidden = (foregroundColor == NO);
-			
+
 			[rootMenu itemWithTag:_formattingMenuBackgroundColorEnabledTag].hidden = backgroundColor;
 			[rootMenu itemWithTag:_formattingMenuBackgroundColorDisabledTag].hidden = (backgroundColor == NO);
-			
+
 			[rootMenu itemWithTag:_formattingMenuBackgroundColorEnabledTag].enabled = foregroundColor;
 
 			item.state = boldText;
-			
+
 			if (boldText) {
 				item.action = @selector(removeBoldCharFromTextBox:);
 			} else {
 				item.action = @selector(insertBoldCharIntoTextBox:);
 			}
-			
+
 			return YES;
 		}
 		case 95002:
@@ -113,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				item.action = @selector(insertItalicCharIntoTextBox:);
 			}
-			
+
 			return YES;
 		}
 		case 95009:
@@ -155,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				item.action = @selector(insertUnderlineCharIntoTextBox:);
 			}
-			
+
 			return YES;
 		}
 		default:
@@ -163,7 +167,7 @@ NS_ASSUME_NONNULL_BEGIN
 			break;
 		}
 	}
-	
+
 	return YES;
 }
 

@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCLogController.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class ICLPayload;
 
 @interface TVCLogController ()
 @property (nonatomic, assign, readwrite, getter=viewIsEncrypted) BOOL encrypted;
@@ -77,9 +81,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyLinesAddedToView:(NSArray<NSString *> *)lineNumbers;
 - (void)notifyLinesRemovedFromView:(NSArray<NSString *> *)lineNumbers;
 
-- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful;
+- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful scrolledToBottom:(BOOL)scrolledToBottom;
 
 - (void)notifyHistoricLogWillDeleteLines:(NSArray<NSString *> *)lineNumbers;
+
+- (void)processInlineMediaAtAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index;
+
+- (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload;
+- (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error;
 
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;

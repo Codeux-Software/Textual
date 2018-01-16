@@ -36,6 +36,12 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCISupportInfo.h"
+#import "IRCUserPrivate.h"
+#import "IRCUserRelationsPrivate.h"
 #import "IRCChannelUserInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

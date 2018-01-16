@@ -35,9 +35,26 @@
 
  *********************************************************************** */
 
+#import "OELReachability.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TXWindowControllerPrivate.h"
+#import "TPCPreferencesCloudSync.h"
+#import "TPCThemeController.h"
+#import "THOPluginManagerPrivate.h"
+#import "IRCWorld.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOGrowlController.h"
+#import "TLOSpeechSynthesizerPrivate.h"
+#import "TDCFileTransferDialogPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
+#import "TVCLogControllerOperationQueuePrivate.h"
+#import "TXSharedApplicationPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-NSString *TXErrorDomain = @"TextualErrorDomain";
+NSString * const TXErrorDomain = @"TextualErrorDomain";
 
 #define _defineSharedInstance(si_name, si_class, si_init_method)	\
 			+ (si_class *)si_name									\
@@ -106,21 +123,29 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (IRCWorld *)worldController
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	return TXGlobalMasterControllerClassReference.world;
 }
 
 + (IRCWorld *)worldController
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	return TXGlobalMasterControllerClassReference.world;
 }
 
 - (TXMenuController *)menuController
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	return TXGlobalMasterControllerClassReference.menuController;
 }
 
 + (TXMenuController *)menuController
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	return TXGlobalMasterControllerClassReference.menuController;
 }
 

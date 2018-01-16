@@ -36,6 +36,16 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCWorld.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTextView.h"
+#import "TLOInputHistoryPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
@@ -80,7 +90,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		return self;
 	}
-	
+
 	return nil;
 }
 
@@ -133,7 +143,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Change to new view */
 	self.currentTreeItem = treeItem.uniqueIdentifier;
-	
+
 	/* Does new seleciton have a history item? */
 	TLOInputHistoryObject *newObject = [self currentObjectForFocusedTreeView];
 
@@ -160,7 +170,7 @@ ClassWithDesignatedInitializerInitMethod
 					[self inputHistoryObjectScopeDidChangeApplyToItem:c.uniqueIdentifier];
 				}
 			}
-			
+
 			[self.historyObjects removeObjectForKey:_inputHistoryGlobalObjectKey];
 		}
 		else
@@ -177,7 +187,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(itemId != nil);
 
 	TLOInputHistoryObject *globalObject = self.historyObjects[_inputHistoryGlobalObjectKey];
-	
+
 	if (globalObject) {
 		TLOInputHistoryObject *newObject = [globalObject copy];
 
@@ -191,25 +201,25 @@ ClassWithDesignatedInitializerInitMethod
 {
 	@synchronized(self.historyObjects) {
 		NSString *currentObjectKey = nil;
-		
+
 		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 			currentObjectKey = self.currentTreeItem;
 		} else {
 			currentObjectKey = _inputHistoryGlobalObjectKey;
 		}
-		
+
 		if (currentObjectKey == nil) {
 			return nil;
 		}
-		
+
 		TLOInputHistoryObject *currentObject = self.historyObjects[currentObjectKey];
-		
+
 		if (currentObject == nil) {
 			currentObject = [TLOInputHistoryObject new];
-			
+
 			self.historyObjects[currentObjectKey] = currentObject;
 		}
-		
+
 		return currentObject;
 	}
 }
@@ -261,7 +271,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		return self;
 	}
-	
+
 	return nil;
 }
 
@@ -314,7 +324,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		self.historyBufferPosition -= 1;
-		
+
 		if (self.historyBufferPosition < 0) {
 			self.historyBufferPosition = 0;
 		} else if (self.historyBufferPosition < self.historyBuffer.count) {
@@ -332,7 +342,7 @@ ClassWithDesignatedInitializerInitMethod
 	@synchronized(self.historyBuffer) {
 		if (string.length == 0) {
 			self.historyBufferPosition = self.historyBuffer.count;
-			
+
 			return nil;
 		}
 
@@ -351,14 +361,15 @@ ClassWithDesignatedInitializerInitMethod
 		if (lastEntry) {
 			return lastEntry;
 		}
-		
+
 		return [NSAttributedString attributedString];
 	}
 }
 
 - (BOOL)bufferPositionIsInRange
 {
-	return (self.historyBufferPosition >= 0 && self.historyBufferPosition < self.historyBuffer.count);
+	return (self.historyBufferPosition >= 0 &&
+			self.historyBufferPosition < self.historyBuffer.count);
 }
 
 - (nullable NSAttributedString *)entryAtBufferPosition
@@ -373,12 +384,12 @@ ClassWithDesignatedInitializerInitMethod
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	TLOInputHistoryObject *newObject = [TLOInputHistoryObject new];
-	
-	newObject.historyBuffer = self.historyBuffer;
-	newObject.historyBufferPosition = self.historyBufferPosition;
-	
-	newObject.lastHistoryItem = self.lastHistoryItem;
-	
+
+	[newObject->_historyBuffer addObjectsFromArray:self->_historyBuffer];
+
+	newObject->_historyBufferPosition = self->_historyBufferPosition;
+	newObject->_lastHistoryItem = self->_lastHistoryItem;
+
 	return newObject;
 }
 

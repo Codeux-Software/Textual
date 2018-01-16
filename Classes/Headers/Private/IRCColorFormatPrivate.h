@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
+#import "TVCLogLine.h"
+#import "IRCColorFormat.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel;
 
 @interface NSAttributedString (IRCTextFormatterPrivate)
 /* Given contextual information (client, channel, lineType), the original attributed

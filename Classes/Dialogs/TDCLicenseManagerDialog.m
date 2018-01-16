@@ -35,6 +35,27 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "NSViewHelper.h"
+#import "TXGlobalModels.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
+#import "TDCLicenseManagerRecoverLostLicenseSheetPrivate.h"
+#import "TDCLicenseUpgradeActivateSheetPrivate.h"
+#import "TDCLicenseUpgradeCommonActionsPrivate.h"
+#import "TDCLicenseUpgradeDialogPrivate.h"
+#import "TDCLicenseUpgradeEligibilitySheetPrivate.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
+#import "TLOTimer.h"
+#import "TLOPopupPrompts.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerDownloaderPrivate.h"
+#import "TLOLicenseManagerLastGenPrivate.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
@@ -185,7 +206,6 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 			adjustedWidthConstraint:self.contentViewWidthConstraint
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
-
 
 #pragma mark -
 #pragma mark Trial Timer

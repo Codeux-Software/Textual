@@ -36,6 +36,21 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TVCMainWindow.h"
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCFileTransferDialogPrivate.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannel.h"
+#import "IRCWorld.h"
+#import "TLOGrowlControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _clickInterval			2

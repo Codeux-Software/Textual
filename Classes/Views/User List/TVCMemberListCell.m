@@ -17,8 +17,8 @@
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-    * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
-      names of its contributors may be used to endorse or promote products 
+    * Neither the name of Textual and/or "Codeux Software, LLC", nor the
+      names of its contributors may be used to endorse or promote products
       derived from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
@@ -34,6 +34,19 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+#import "NSStringHelper.h"
+#import "NSTableVIewHelperPrivate.h"
+#import "NSViewHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCChannelUser.h"
+#import "IRCUser.h"
+#import "TVCMainWindow.h"
+#import "TVCMemberListPrivate.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListUserInfoPopoverPrivate.h"
+#import "TVCMemberListCellPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -116,11 +129,11 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([stringValueOld isEqualTo:stringValueNew] == NO) {
 		textField.stringValue = stringValueNew;
 	}
-	
+
 	NSDictionary *drawingContext = self.drawingContext;
 
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:interfaceObjects inContext:drawingContext];
 
@@ -130,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		textField.attributedStringValue = newValue;
 	}
-		
+
 	[self updateUserMarkBadge:isSelected];
 
 	[self populateAccessibilityDescriptions];
@@ -156,19 +169,19 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannelUser *cellItem = self.cellItem;
 
 	NSTextField *textField = self.cellTextField;
-	
+
 	NSAttributedString *stringValue = textField.attributedStringValue;
 
 	NSRange stringValueRange = stringValue.range;
-	
+
 	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
-	
+
 	[mutableStringValue beginEditing];
 
 	NSShadow *itemShadow = [NSShadow new];
 
 	itemShadow.shadowOffset = NSMakeSize(0, (-1.0));
-	
+
 	if (isSelected == NO) {
 		itemShadow.shadowColor = [interfaceObjects normalCellTextShadowColor];
 	} else {
@@ -177,7 +190,7 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			itemShadow.shadowBlurRadius = 2.0;
 		}
-		
+
 		if (isActiveWindow) {
 			if (isGraphite && isInverted == NO) {
 				itemShadow.shadowColor = [interfaceObjects graphiteSelectedCellTextShadowColorForActiveWindow];
@@ -191,18 +204,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (isSelected) {
 		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects selectedCellTextFont] range:stringValueRange];
-		
+
 		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects selectedCellTextColor] range:stringValueRange];
 	} else {
 		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects normalCellTextFont] range:stringValueRange];
-		
+
 		if (cellItem.user.isAway) {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects awayUserCellTextColor] range:stringValueRange];
 		} else {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects normalCellTextColor] range:stringValueRange];
 		}
 	}
-	
+
 	[mutableStringValue addAttribute:NSShadowAttributeName value:itemShadow range:stringValueRange];
 
 	[mutableStringValue endEditing];
@@ -226,7 +239,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
 
 	[mutableStringValue beginEditing];
-	
+
 	if (isSelected == NO) {
 		if (cellItem.user.isAway == NO) {
 			if (isActiveWindow == NO) {
@@ -266,9 +279,9 @@ NS_ASSUME_NONNULL_BEGIN
 	id interfaceObjects = mainWindow.memberList.userInterfaceObjects;
 
 	NSColor *textColor = nil;
-	
+
 	NSFont *textFont = nil;
-	
+
 	if (isSelected) {
 		textColor = [interfaceObjects userMarkBadgeSelectedTextColor];
 
@@ -278,11 +291,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 		textFont = [interfaceObjects userMarkBadgeFont];
 	}
-	
+
 	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
-	
+
 	NSAttributedString *stringToDraw = [NSAttributedString attributedStringWithString:modeSymbol attributes:attributes];
-	
+
 	return stringToDraw;
 }
 
@@ -291,7 +304,7 @@ NS_ASSUME_NONNULL_BEGIN
 	id interfaceObjects = self.memberList.userInterfaceObjects;
 
 	IRCChannelUser *cellItem = self.cellItem;
-	
+
 	NSString *modeSymbol = cellItem.mark;
 
 	IRCUserRank userRankToDraw = IRCUserNoRank;
@@ -307,7 +320,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSImage *cachedImage = nil;
-	
+
 	if (isSelected == NO) {
 		cachedImage = [interfaceObjects cachedUserMarkBadgeForSymbol:modeSymbol rank:userRankToDraw];
 	}
@@ -332,29 +345,29 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL isDrawingOnMavericks = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
 
 	NSString *stringToDraw = self.cellItem.mark;
-	
+
 	/* Create image that we will draw into. If we are drawing for Mavericks,
 	 then the frame of our image is one pixel greater because we draw a shadow. */
 	NSImage *badgeImage = nil;
-	
+
 	NSRect badgeFrame = NSZeroRect;
-	
+
 	if (isDrawingOnMavericks) {
 		badgeFrame = NSMakeRect(0.0, 1.0,
 				[interfaceObjects userMarkBadgeWidth],
 				[interfaceObjects userMarkBadgeHeight]);
-		
+
 		badgeImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(badgeFrame), (NSHeight(badgeFrame) + 1.0))];
 	} else {
 		badgeFrame = NSMakeRect(0.0, 0.0,
 				[interfaceObjects userMarkBadgeWidth],
 				[interfaceObjects userMarkBadgeHeight]);
-		
+
 		badgeImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(badgeFrame),  NSHeight(badgeFrame))];
 	}
-	
+
 	[badgeImage lockFocus];
-	
+
 	/* Decide the background color */
 	NSColor *backgroundColor = nil;
 
@@ -390,7 +403,7 @@ NS_ASSUME_NONNULL_BEGIN
 			stringToDraw = @"×";
 		}
 	}
-	
+
 	/* Frame is dropped by 1 to make room for shadow */
 	if (isDrawingOnMavericks) {
 		if (isSelected == NO) {
@@ -399,22 +412,22 @@ NS_ASSUME_NONNULL_BEGIN
 			shadowFrame.origin.y -= 1;
 
 			NSBezierPath *shadowPath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:4.0 yRadius:4.0];
-			
+
 			NSColor *shadowColor = [interfaceObjects userMarkBadgeShadowColor];
-			
+
 			[shadowColor set];
-			
+
 			[shadowPath fill];
 		}
 	}
 
 	/* Draw the background of the badge */
 	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame xRadius:4.0 yRadius:4.0];
-	
+
 	[backgroundColor set];
-	
+
 	[badgePath fill];
-	
+
 	/* Begin building the actual mode string */
 	if (stringToDraw.length > 0) {
 		NSAttributedString *badgeText = [self modeBadgeText:stringToDraw isSelected:isSelected];
@@ -486,7 +499,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[badgeImage unlockFocus];
-	
+
 	return badgeImage;
 }
 
@@ -508,7 +521,7 @@ NS_ASSUME_NONNULL_BEGIN
 	userInfoPopover.nicknameField.stringValue = cellItem.user.nickname;
 
 	/* =============================================== */
-	
+
 	NSString *hostmaskUsername = cellItem.user.username;
 
 	if (hostmaskUsername.length == 0) {
@@ -595,15 +608,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-    NSRect cellFrame = [memberList frameOfCellAtColumn:0 row:self.rowIndex];
+	NSRect cellFrame = [memberList frameOfCellAtColumn:0 row:self.rowIndex];
 
 	/* Presenting the popover will steal focus. To workaround this,
 	 we record the active first responder then set it back. */
 	id activeFirstResponder = mainWindow.firstResponder;
 
-    [userInfoPopover showRelativeToRect:cellFrame
-                                 ofView:self.memberList
-                          preferredEdge:NSMaxXEdge];
+	[userInfoPopover showRelativeToRect:cellFrame
+								 ofView:self.memberList
+						  preferredEdge:NSMaxXEdge];
 
 	[mainWindow makeFirstResponder:activeFirstResponder];
 }
@@ -630,7 +643,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TVCMemberList *memberList = mainWindow.memberList;
 
 	NSInteger rowIndex = self.rowIndex;
-	
+
 	return @{
 		 @"isActiveWindow"		: @(mainWindow.isActiveForDrawing),
 		 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
@@ -651,7 +664,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setSelected:(BOOL)selected
 {
 	super.selected = selected;
-	
+
 	[self postSelectionChangeNeedsDisplay];
 }
 
@@ -680,7 +693,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 	}
-	
+
 	[self setNeedsDisplayOnChild];
 }
 
@@ -698,7 +711,7 @@ NS_ASSUME_NONNULL_BEGIN
 	TVCMainWindow *mainWindow = self.mainWindow;
 
 	id interfaceObjects = mainWindow.memberList.userInterfaceObjects;
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		NSColor *selectionColor = nil;
@@ -708,12 +721,12 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			selectionColor = [interfaceObjects rowSelectionColorForInactiveWindow];
 		}
-		
+
 		if (selectionColor) {
 			[selectionColor set];
 
 			NSRect selectionRect = self.bounds;
-			
+
 			NSRectFill(selectionRect);
 		} else {
 			[super drawSelectionInRect:dirtyRect];
@@ -728,10 +741,10 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			selectionImage = [interfaceObjects rowSelectionImageForInactiveWindow];
 		}
-		
+
 		if (selectionImage) {
 			NSRect selectionRect = self.bounds;
-			
+
 			[selectionImage drawInRect:selectionRect
 							  fromRect:NSZeroRect
 							 operation:NSCompositeSourceOver

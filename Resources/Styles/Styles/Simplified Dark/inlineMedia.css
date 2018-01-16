@@ -1,0 +1,41 @@
+
+/* Images */
+
+.inlineImage .content,
+.inlineVideo .content,
+.inlineVideoService .content,
+.inlineHTML .content {
+	display: inline-block;
+	float: left;
+	margin-right: 12px;
+	margin-left: 10px;
+	min-width: 40px;
+	max-width: 90%;
+}
+
+.inlineImage .closeButton,
+.inlineVideo .closeButton,
+.inlineVideoService .closeButton,
+.inlineHTML .closeButton {
+	cursor: pointer;
+	border-radius: 5px;
+	border: 2px solid #a1a1a1;
+	color: #a1a1a1;
+	display: inline-block;
+	line-height: 14px;
+	font-size: 15px;
+	font-family: "Helvetica Neue" !important;
+	text-indent: 7px;
+	width: 16px;
+	height: 16px;
+	float: left;
+	padding-right: 7px;
+	padding-left: 0px;
+}
+
+body[data-system-version=^"10.9"] .inlineImage .closeButton,
+body[data-system-version=^"10.9"] .inlineVideo .closeButton,
+body[data-system-version=^"10.9"] .inlineVideoService .closeButton,
+body[data-system-version=^"10.9"] .inlineHTML .closeButton {
+	line-height: 13px;
+}

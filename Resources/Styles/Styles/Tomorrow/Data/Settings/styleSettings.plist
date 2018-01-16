@@ -11,7 +11,7 @@
 	<key>Template Engine Versions</key>
 	<dict>
 		<key>default</key>
-		<integer>3</integer>
+		<integer>4</integer>
 	</dict>
 	<key>Underlying Window Color</key>
 	<string>#FFFFFF</string>

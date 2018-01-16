@@ -190,9 +190,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 
 	for (IRCChannelUser *member in membersMatched) {
-        NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", member.user.nickname, member.user.hostmask];
+		NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", member.user.nickname, member.user.hostmask];
 
-        [client printDebugInformation:resultString inChannel:channel];
+		[client printDebugInformation:resultString inChannel:channel];
 	}
 }
 
@@ -201,9 +201,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(channel != nil);
 	NSParameterAssert(client != nil);
 
-    NSMutableDictionary<NSString *, NSArray *> *members = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, NSArray *> *members = [NSMutableDictionary dictionary];
 
-    /* Populate our list by matching an array of users to that of the address. */
+	/* Populate our list by matching an array of users to that of the address. */
 	for (IRCChannelUser *member in channel.memberList) {
 		NSString *address = member.user.address;
 
@@ -221,39 +221,39 @@ NS_ASSUME_NONNULL_BEGIN
 			members[address] = clones;
 		} else {
 			members[address] = @[nickname];
-        }
-    }
+		}
+	}
 
-    /* Filter the new list by removing users with less than two matches. */
+	/* Filter the new list by removing users with less than two matches. */
 	NSArray *memberHosts = members.allKeys;
 
-    for (NSString *memberHost in memberHosts) {
-        NSArray *clones = [members arrayForKey:memberHost];
+	for (NSString *memberHost in memberHosts) {
+		NSArray *clones = [members arrayForKey:memberHost];
 
-        if (clones.count < 2) {
-            [members removeObjectForKey:memberHost];
-        }
-    }
+		if (clones.count < 2) {
+			[members removeObjectForKey:memberHost];
+		}
+	}
 
-    /* No cloes found */
-    if (members.count == 0) {
-        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]") inChannel:channel];
+	/* No cloes found */
+	if (members.count == 0) {
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]") inChannel:channel];
 
-        return;
-    }
+		return;
+	}
 
-    /* Build result string */
-    [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]", members.count, channel.name) inChannel:channel];
-    
-    for (NSString *memberHost in members) {
-        NSArray *clones = [members arrayForKey:memberHost];
+	/* Build result string */
+	[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]", members.count, channel.name) inChannel:channel];
+
+	for (NSString *memberHost in members) {
+		NSArray *clones = [members arrayForKey:memberHost];
 
 		NSString *clonesString = [clones componentsJoinedByString:@", "];
 
-        NSString *resultString = [NSString stringWithFormat:@"*!*@%@ -> %@", memberHost, clonesString];
+		NSString *resultString = [NSString stringWithFormat:@"*!*@%@ -> %@", memberHost, clonesString];
 
-        [client printDebugInformation:resultString inChannel:channel];
-    }
+		[client printDebugInformation:resultString inChannel:channel];
+	}
 }
 
 @end

@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TDCChannelSpotlightSearchResultPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCChannelSpotlightSearchResult

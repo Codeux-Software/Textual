@@ -36,6 +36,12 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCChannelConfig.h"
+#import "IRCHighlightMatchCondition.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCHighlightEntrySheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCHighlightEntrySheet ()
@@ -102,7 +108,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *matchChannelId = self.config.matchChannelId;
 
 	NSUInteger channelCount = 0;
-	
+
 	for (IRCChannelConfig *channel in self.channelList) {
 		NSString *channelName = channel.channelName;
 
@@ -145,7 +151,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[self.delegate highlightEntrySheet:self onOk:[self.config copy]];
-	
+
 	[super ok:sender];
 }
 

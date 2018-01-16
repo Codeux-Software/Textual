@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCWK1AutoScrollerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCWK1AutoScroller ()
@@ -45,10 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 	CGFloat _scrollPositionPreviousValue;
 	BOOL _userScrolled;
 	BOOL _scrolledUpwards;
+	BOOL _restoreScrollerPosition;
 /*	NSRect _lastFrame; */
 }
 
 @property (nonatomic, weak) WebFrameView *frameView;
+@property (readonly) NSView *documentView;
 @end
 
 @implementation TVCWK1AutoScroller
@@ -56,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Maximum distance user can scroll up before automatic scrolling is disabled. */
 static CGFloat _userScrolledMinimum = 25.0;
 
-- (instancetype)initWitFrameView:(WebFrameView *)frameView;
+- (instancetype)initWitFrameView:(WebFrameView *)frameView
 {
 	NSParameterAssert(frameView != nil);
 
@@ -98,27 +102,59 @@ static CGFloat _userScrolledMinimum = 25.0;
 	self->_scrollPositionPreviousValue = 0.0;
 
 	self->_userScrolled = NO;
+
+	self->_restoreScrollerPosition = YES;
+}
+
+- (NSView *)documentView
+{
+	return self.frameView.documentView;
 }
 
 - (BOOL)viewingBottom
 {
-	return (self->_userScrolled == NO);
+	if (self->_userScrolled == NO) {
+		return YES;
+	}
+
+	return [self viewIsScrolledToBottom:self.documentView];
+}
+
+- (BOOL)viewIsScrolledToBottom:(NSView *)aView
+{
+	NSRect visibleRect = aView.visibleRect;
+
+	CGFloat scrollHeight = (aView.frame.size.height - visibleRect.size.height);
+
+	CGFloat scrollPosition = visibleRect.origin.y;
+
+	return (scrollHeight == scrollPosition);
+}
+
+- (void)resetScrollerPosition
+{
+	[self resetScrollerPositionTo:NO];
+}
+
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
+{
+	self->_restoreScrollerPosition = scrolledToBottom;
 }
 
 - (void)saveScrollerPosition
 {
-	;
+	self->_restoreScrollerPosition = self.viewingBottom;
 }
 
 - (void)restoreScrollerPosition
 {
-	if (self->_userScrolled) {
+	if (self->_restoreScrollerPosition) {
+		self->_restoreScrollerPosition = NO;
+	} else {
 		return;
 	}
 
-	NSView *documentView = self.frameView.documentView;
-
-	[self scrollViewToBottom:documentView];
+	[self scrollViewToBottom:self.documentView];
 }
 
 - (void)scrollViewToBottom:(NSView *)aView
@@ -173,15 +209,13 @@ static CGFloat _userScrolledMinimum = 25.0;
 
 - (void)redrawFrame
 {
-	[self.frameView.documentView setNeedsLayout:YES];
+	[self.documentView setNeedsLayout:YES];
 }
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
 	/* Context */
-	WebFrameView *frameView = self.frameView;
-
-	NSView *documentView = frameView.documentView;
+	NSView *documentView = self.documentView;
 
 	NSRect visibleRect = documentView.visibleRect;
 
@@ -239,7 +273,7 @@ static CGFloat _userScrolledMinimum = 25.0;
 			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
 		}
 	}
-	
+
 	[self redrawFrameIfNeeded];
 }
 
@@ -250,24 +284,7 @@ static CGFloat _userScrolledMinimum = 25.0;
 		return;
 	}
 
-	/* Perform automatic scrolling */
-	WebFrameView *frameView = self.frameView;
-
-	NSView *documentView = frameView.documentView;
-
-/*
-	if (aNotification.object == documentView) {
-		NSRect documentViewFrame = documentView.frame;
-
-		if (NSEqualRects(documentViewFrame, self->_lastFrame)) {
-			return;
-		}
-
-		self->_lastFrame = documentViewFrame;
-	} 
-*/
-
-	[self scrollViewToBottom:documentView];
+	[self scrollViewToBottom:self.documentView];
 }
 
 @end

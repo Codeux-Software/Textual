@@ -38,6 +38,42 @@
 
 #import "BuildConfig.h"
 
+#import "NSObjectHelperPrivate.h"
+#import "OELReachability.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TLOPopupPrompts.h"
+#import "TLOSpeechSynthesizerPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
+#import "TVCLogControllerHistoricLogFilePrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
+#import "TVCLogControllerOperationQueuePrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCCommandIndexPrivate.h"
+#import "IRCExtrasPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "TPCApplicationInfoPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCResourceManagerPrivate.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TXMenuControllerPrivate.h"
+#import "TXWindowControllerPrivate.h"
+#import "TXMasterControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
+#import <HockeySDK/HockeySDK.h>
+#endif
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+#import <Sparkle/Sparkle.h>
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TXMasterController ()
@@ -68,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[self prepareInitialState];
 
 		return self;
-    }
+	}
 
 	return nil;
 }
@@ -133,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 so we still have to initalize it at some point. */
 	[sharedCloudManager() prepareInitialState];
 #endif
-	
+
 	self.world = [IRCWorld new];
 }
 
@@ -149,7 +185,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[IRCCommandIndex populateCommandIndex];
 
 	[self prepareNetworkReachabilityNotifier];
-	
+
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
@@ -408,7 +444,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.applicationIsTerminating) {
 		return YES;
 	}
-	
+
 	if ([TPCPreferences confirmQuit]) {
 		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1101][2]")
 														 title:TXTLS(@"Prompts[1101][1]")
@@ -417,7 +453,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return result;
 	}
-	
+
 	return YES;
 }
 
@@ -427,7 +463,7 @@ NS_ASSUME_NONNULL_BEGIN
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			[self performApplicationTerminationStepOne];
 		});
-		
+
 		return NSTerminateLater;
 	} else {
 		return NSTerminateCancel;
@@ -458,9 +494,9 @@ NS_ASSUME_NONNULL_BEGIN
 	self.applicationIsTerminating = YES;
 
 	[self.mainWindow prepareForApplicationTermination];
-	
+
 	[[NSApplication sharedApplication] setDelegate:nil];
-	
+
 	[RZWorkspaceNotificationCenter() removeObserver:self];
 
 	[RZNotificationCenter() removeObserver:self];
@@ -470,6 +506,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[[TXSharedApplication sharedNetworkReachabilityNotifier] stopNotifier];
 
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
+
+	[TVCLogControllerInlineMediaSharedInstance() prepareForApplicationTermination];
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 	[[TXSharedApplication sharedInAppPurchaseDialog] prepareForApplicationTermination];
@@ -503,25 +541,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return;
 	}
-    
-    /* We want certain things to 100% happen before the app completely closes.
-     This block that is performed below loops until all these actions are completed.
-     Notable actions: gracefully leaving IRC, saving historic logs, and closing
-     down iCloud syncing (if applicable). */ 
+
+	/* We want certain things to 100% happen before the app completely closes.
+	 This block that is performed below loops until all these actions are completed.
+	 Notable actions: gracefully leaving IRC, saving historic logs, and closing
+	 down iCloud syncing (if applicable). */ 
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
-        do {
-            /* We wait until this value reaches zero so that
-             view controllers had the chance to perform any
-             changes they want to historic log. */
-            if (self.terminatingClientCount == 0) {
-                [TVCLogControllerHistoricLogSharedInstance() prepareForApplicationTermination];
+		do {
+			/* We wait until this value reaches zero so that
+			 view controllers had the chance to perform any
+			 changes they want to historic log. */
+			if (self.terminatingClientCount == 0) {
+				[TVCLogControllerHistoricLogSharedInstance() prepareForApplicationTermination];
 
 				self.terminateHistoricLogSaveFinished = YES;
-            }
-            
-            /* Sleep a little bit so we aren't looping a lot. */
-            [NSThread sleepForTimeInterval:0.5];
-        } while (self.isSafeToPerformApplicationTermination == NO);
+			}
+
+			/* Sleep a little bit so we aren't looping a lot. */
+			[NSThread sleepForTimeInterval:0.5];
+		} while (self.isSafeToPerformApplicationTermination == NO);
 
 		[self performApplicationTerminationStepThree];
 	}, DISPATCH_QUEUE_PRIORITY_HIGH);

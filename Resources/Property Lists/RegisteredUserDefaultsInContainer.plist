@@ -98,6 +98,14 @@
 	<string>Your behavior is not conducive to the desired environment.</string>
 	<key>IRCopDefaultLocalizaiton -&gt; Shun Reason</key>
 	<string>1d Shunned.</string>
+	<key>InlineMediaCheckEverything</key>
+	<false/>
+	<key>InlineMediaLimitToBasics</key>
+	<false/>
+	<key>InlineMediaLimitNaughtyContent</key>
+	<true/>
+	<key>InlineMediaLimitUnsafeContent</key>
+	<true/>
 	<key>InlineMediaMaximumFilesize</key>
 	<integer>2</integer>
 	<key>InlineMediaMaximumHeight</key>
@@ -126,8 +134,6 @@
 	<true/>
 	<key>MainWindowTransparencyLevel</key>
 	<real>1</real>
-	<key>NicknameColorHashingComputesRGBValue</key>
-	<false/>
 	<key>NicknameHighlightMatchingType</key>
 	<integer>1</integer>
 	<key>NotificationType -&gt; Address Book Match -&gt; Enabled</key>

@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCTextFieldWithValueValidation.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCTextFieldWithValueValidation ()
@@ -72,23 +74,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)value
 {
 	NSString *stringValue = nil;
-	
+
 	if (self.stringValueUsesOnlyFirstToken) {
 		stringValue = self.trimmedFirstTokenStringValue;
 	} else {
 		stringValue = self.stringValue;
-		
+
 		if (self.stringValueIsTrimmed) {
 			stringValue = stringValue.trim;
 		}
 	}
 
 	if (stringValue.length == 0) {
-		if (       self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
+		if (	   self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
 			return self.defualtValue;
 		}
 	}
-	
+
 	return stringValue;
 }
 
@@ -128,9 +130,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)textDidChange:(NSNotification *)notification
 {
 	[self performValidation];
-	
+
 	[self informCallbackTextDidChange];
-	
+
 	[self recalculatePositionOfClipView];
 }
 
@@ -182,11 +184,11 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSView *subview in self.subviews) {
 		if ([subview isKindOfClass:[NSClipView class]]) {
 			clipView = (id)subview;
-			
+
 			break;
 		}
 	}
-	
+
 	if (clipView == nil) {
 		return;
 	}
@@ -240,7 +242,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* Look at all those magic numbers... */
 	CGFloat rightEdge = (NSMaxX(aRect) - 21.0);
-	
+
 	return NSMakeRect(rightEdge, 4.0, 15.0, 15.0);
 }
 
@@ -286,10 +288,10 @@ NS_ASSUME_NONNULL_BEGIN
 	} else if (self.parentValueIsEmpty == NO) {
 		statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
 	}
-	
+
 	if (statusImage) {
 		NSRect statusImageDrawRect = [self erroneousValueBadgeIconRectInParentRect:cellFrame];
-		
+
 		[statusImage drawInRect:statusImageDrawRect
 					   fromRect:NSZeroRect
 					  operation:NSCompositeSourceOver
@@ -320,18 +322,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)drawingRectForBounds:(NSRect)theRect
 {
 	NSRect fixedRect = [super drawingRectForBounds:theRect];
-	
+
 	return [self correctedDrawingRect:fixedRect];
 }
 
 - (void)recalculatePositionOfClipView:(NSClipView *)clipView
 {
 	NSRect clipViewRect = clipView.frame;
-	
+
 	clipViewRect.size.width = [self correctedWidthForClipViewRect];
-	
+
 	clipView.frame = clipViewRect;
-	
+
 	[self.parentField resetCursorRects];
 }
 

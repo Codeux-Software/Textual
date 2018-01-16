@@ -1,0 +1,65 @@
+{{! When this is a new fragment, but not the last fragment,
+then we use the following *ClosedAtStart tags to close any
+formatting that may be open for the previous fragment. }}
+{{#fragmentIsBoldClosedAtStart}}</b>{{/fragmentIsBoldClosedAtStart}}
+{{#fragmentIsItalicizedClosedAtStart}}</i>{{/fragmentIsItalicizedClosedAtStart}}
+{{#fragmentIsMonospaceClosedAtStart}}</tt>{{/fragmentIsMonospaceClosedAtStart}}
+{{#fragmentIsStruckthroughClosedAtStart}}</del>{{/fragmentIsStruckthroughClosedAtStart}}
+{{#fragmentIsUnderlinedClosedAtStart}}</u>{{/fragmentIsUnderlinedClosedAtStart}}
+{{#fragmentTextColorClosedAtStart}}
+</span>
+{{/fragmentTextColorClosedAtStart}}
+
+{{#fragmentTextColorOpened}}
+<span class="effect"
+	{{#fragmentTextColorUsesStyleTag}}
+		style="
+			{{#fragmentForegroundColorIsSet}}
+				color: {{fragmentForegroundColor}};
+			{{/fragmentForegroundColorIsSet}}
+
+			{{#fragmentBackgroundColorIsSet}}
+				background-color: {{fragmentBackgroundColor}};
+			{{/fragmentBackgroundColorIsSet}}
+		"
+	{{^fragmentTextColorUsesStyleTag}}
+		{{#fragmentForegroundColorIsSet}}
+			data-foreground-color="{{fragmentForegroundColor}}"
+		{{/fragmentForegroundColorIsSet}}
+
+		{{#fragmentBackgroundColorIsSet}}
+			data-background-color="{{fragmentBackgroundColor}}"
+		{{/fragmentBackgroundColorIsSet}}
+	{{/fragmentTextColorUsesStyleTag}}
+>
+{{/fragmentTextColorOpened}}
+{{#fragmentIsBoldOpened}}<b>{{/fragmentIsBoldOpened}}
+{{#fragmentIsItalicizedOpened}}<i>{{/fragmentIsItalicizedOpened}}
+{{#fragmentIsMonospaceOpened}}<tt>{{/fragmentIsMonospaceOpened}}
+{{#fragmentIsStruckthroughOpened}}<del>{{/fragmentIsStruckthroughOpened}}
+{{#fragmentIsUnderlinedOpened}}<u>{{/fragmentIsUnderlinedOpened}}
+
+{{#inlineNicknameMatchFound}}
+<span class="inlineSender" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" data-mode="{{inlineNicknameUserModeSymbol}}"
+	{{#nicknameColorStyleOverride}}
+		data-override-color="true"
+	{{/nicknameColorStyleOverride}}
+
+	{{^ isEmpty(inlineNicknameColorStyle) }}
+		style="color: {{inlineNicknameColorStyle}};"
+	{{/ isEmpty(inlineNicknameColorStyle) }}>{{inlineNicknameUserModeSymbol}}
+{{/inlineNicknameMatchFound}}
+{{{messageFragment}}}
+{{#inlineNicknameMatchFound}}
+</span>
+{{/inlineNicknameMatchFound}}
+
+{{! When this is the end of the last fragment, we terminate all }}
+{{#fragmentIsBoldClosedAtEnd}}</b>{{/fragmentIsBoldClosedAtEnd}}
+{{#fragmentIsItalicizedClosedAtEnd}}</i>{{/fragmentIsItalicizedClosedAtEnd}}
+{{#fragmentIsMonospaceClosedAtEnd}}</tt>{{/fragmentIsMonospaceClosedAtEnd}}
+{{#fragmentIsStruckthroughClosedAtEnd}}</del>{{/fragmentIsStruckthroughClosedAtEnd}}
+{{#fragmentIsUnderlinedClosedAtEnd}}</u>{{/fragmentIsUnderlinedClosedAtEnd}}
+{{#fragmentTextColorClosedAtEnd}}
+</span>
+{{/fragmentTextColorClosedAtEnd}}

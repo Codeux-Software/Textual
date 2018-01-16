@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "IRCMessage.h"
+#import "THOPluginItemPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "THOPluginDispatcherPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
@@ -212,46 +219,6 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 		}
 
 		returnValue = [returnedValue copy];
-	}
-
-	return returnValue;
-}
-
-+ (nullable NSString *)processInlineMediaContentURL:(NSString *)resource
-{
-	NSParameterAssert(resource != nil);
-
-	NSString *returnValue = nil;
-
-	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
-	{
-		if ([plugin supportsFeature:THOPluginItemSupportsInlineMediaManipulation] == NO) {
-			continue;
-		}
-
-		NSString *returnedValue = [plugin.primaryClass processInlineMediaContentURL:resource];
-
-		if (NSObjectIsEmpty(returnedValue)) {
-			continue;
-		} else if (NSObjectsAreEqual(returnedValue, returnValue)) {
-			continue;
-		}
-
-		NSURL *returnedValueURL = [NSURL URLWithString:returnedValue];
-
-		if ( returnedValueURL == nil ||
-			returnedValueURL.scheme == nil ||
-			returnedValueURL.host == nil ||
-			returnedValueURL.path == nil)
-		{
-			LogToConsoleDebug("Value '%{public}@' returned which is not a URL", returnedValue);
-
-			continue;
-		}
-
-		returnValue = [returnedValue copy];
-
-		break;
 	}
 
 	return returnValue;

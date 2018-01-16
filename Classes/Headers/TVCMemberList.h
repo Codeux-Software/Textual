@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannelUser;
 
 TEXTUAL_EXTERN NSString * const TVCMemberListDragType;
 

@@ -37,6 +37,12 @@
 
 #import "BuildConfig.h"
 
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPathInfoPrivate.h"
+
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 #include <pwd.h>            // -------
 #include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
@@ -281,6 +287,26 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)applicationTemporaryURL
 {
 	return [NSURL fileURLWithPath:self.applicationTemporary isDirectory:YES];
+}
+
++ (NSString *)applicationTemporaryProcessSpecific
+{
+	NSString *sourcePath = self.applicationTemporary;
+
+	int processIdentifier = [[NSProcessInfo processInfo] processIdentifier];
+
+	NSString *endPath = [NSString stringWithFormat:@"/tmp-%i", processIdentifier];
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:endPath];
+
+	[self _createDirectoryAtPath:basePath];
+
+	return basePath;
+}
+
++ (NSURL *)applicationTemporaryProcessSpecificURL
+{
+	return [NSURL fileURLWithPath:self.applicationTemporaryProcessSpecific isDirectory:YES];
 }
 
 + (NSString *)bundledExtensions
@@ -649,9 +675,9 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	}
 
 	BOOL resolvedBookmarkIsStale = YES;
-	
+
 	NSError *resolvedBookmarkError = nil;
-	
+
 	NSURL *resolvedBookmark =
 	[NSURL URLByResolvingBookmarkData:bookmark
 							  options:NSURLBookmarkResolutionWithSecurityScope
@@ -688,7 +714,7 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	}
 
 	_transcriptFolderURL = resolvedBookmark;
-		
+
 	if ([_transcriptFolderURL startAccessingSecurityScopedResource] == NO) {
 		LogToConsoleError("Failed to access bookmark");
 	}

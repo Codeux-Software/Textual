@@ -36,6 +36,20 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCChannelUser.h"
+#import "IRCCommandIndex.h"
+#import "IRCISupportInfo.h"
+#import "IRCUser.h"
+#import "THOPluginManagerPrivate.h"
+#import "TPCApplicationInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTextView.h"
+#import "TLONicknameCompletionStatusPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TLONicknameCompletionStatus ()
@@ -744,13 +758,13 @@ complete_operation:
 - (void)clear
 {
 	[self clearCache];
-	
+
 	self.currentTextViewStringValue = nil;
-	
+
 	self.rangeOfTextSelection = NSEmptyRange();
-	
+
 	self.selectionRangeAfterLastCompletion = NSEmptyRange();
-	
+
 	self.completionIsMovingForward = NO;
 }
 

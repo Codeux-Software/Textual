@@ -37,6 +37,11 @@
 
 #import <CoreServices/CoreServices.h>
 
+#import "TPCPathInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* 
@@ -149,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
 			userInfo[NSURLErrorKey] = url;
-			
+
 			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TLOLicenseManager[1009][1]", applicationName);
 
 			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TLOLicenseManager[1009][2]");

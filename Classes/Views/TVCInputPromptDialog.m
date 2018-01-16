@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCInputPromptDialog.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCInputPromptDialog ()
@@ -68,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (userInputText) {
 		self.informationalInput.stringValue = userInputText;
 	}
-	
+
 	self.defaultButton.title = defaultButtonTitle;
 	self.defaultButton.action = @selector(modalDidCloseWithDefaultButton:);
 	self.defaultButton.target = self;

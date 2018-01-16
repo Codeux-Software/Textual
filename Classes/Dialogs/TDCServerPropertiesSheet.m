@@ -36,6 +36,29 @@
 
  *********************************************************************** */
 
+#import <SecurityInterface/SFChooseIdentityPanel.h>
+
+#import "NSStringHelper.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCHighlightMatchCondition.h"
+#import "IRCNetworkList.h"
+#import "IRCServer.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TVCBasicTableView.h"
+#import "TVCComboBoxWithValueValidation.h"
+#import "TVCContentNavigationOutlineViewPrivate.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCAddressBookSheetPrivate.h"
+#import "TDCChannelPropertiesSheetPrivate.h"
+#import "TDCHighlightEntrySheetPrivate.h"
+#import "TDCServerEndpointListSheetPrivate.h"
+#import "TDCServerPropertiesSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _tableDragToken		@"TDCServerPropertiesSheetTableDragToken"
@@ -232,7 +255,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (IRCNetwork *network in listOfNetworks) {
 		[self.serverAddressComboBox addItemWithObjectValue:network.networkName];
 	}
-	
+
 	/* Connect commands text box better font */
 	self.connectCommandsField.font = [NSFont fontWithName:@"Lucida Grande" size:13.0];
 
@@ -240,9 +263,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Away nickname */
 	self.awayNicknameTextField.textDidChangeCallback = self;
-	
+
 	self.awayNicknameTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.awayNicknameTextField.stringValueIsInvalidOnEmpty = NO;
 	self.awayNicknameTextField.stringValueIsTrimmed = YES;
 	self.awayNicknameTextField.stringValueUsesOnlyFirstToken = YES;
@@ -250,90 +273,90 @@ NS_ASSUME_NONNULL_BEGIN
 	self.awayNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		return currentValue.isHostmaskNickname;
 	};
-	
+
 	/* Nickname */
 	self.nicknameTextField.textDidChangeCallback = self;
-	
+
 	self.nicknameTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.nicknameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.nicknameTextField.stringValueIsTrimmed = YES;
 	self.nicknameTextField.stringValueUsesOnlyFirstToken = YES;
-	
+
 	self.nicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		return currentValue.isHostmaskNickname;
 	};
-	
+
 	/* Username */
 	self.usernameTextField.textDidChangeCallback = self;
-	
+
 	self.usernameTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.usernameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.usernameTextField.stringValueIsTrimmed = YES;
 	self.usernameTextField.stringValueUsesOnlyFirstToken = YES;
-	
+
 	self.usernameTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		return currentValue.isHostmaskUsername;
 	};
 
 	/* Real name */
 	self.realNameTextField.textDidChangeCallback = self;
-	
+
 	self.realNameTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.realNameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.realNameTextField.stringValueIsTrimmed = YES;
 	self.realNameTextField.stringValueUsesOnlyFirstToken = NO;
-	
+
 	/* Normal leaving comment */
 	self.normalLeavingCommentTextField.textDidChangeCallback = self;
-	
+
 	self.normalLeavingCommentTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.normalLeavingCommentTextField.stringValueIsInvalidOnEmpty = NO;
 	self.normalLeavingCommentTextField.stringValueIsTrimmed = YES;
 	self.normalLeavingCommentTextField.stringValueUsesOnlyFirstToken = NO;
-	
+
 	self.normalLeavingCommentTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
 			return NO;
 		}
-		
+
 		return (currentValue.length < 390);
 	};
-	
+
 	/* Sleep mode leaving comment */
 	self.sleepModeQuitMessageTextField.textDidChangeCallback = self;
-	
+
 	self.sleepModeQuitMessageTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.sleepModeQuitMessageTextField.stringValueIsInvalidOnEmpty = NO;
 	self.sleepModeQuitMessageTextField.stringValueIsTrimmed = YES;
 	self.sleepModeQuitMessageTextField.stringValueUsesOnlyFirstToken = NO;
-	
+
 	self.sleepModeQuitMessageTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
 			return NO;
 		}
-		
+
 		return (currentValue.length < 390);
 	};
-	
+
 	/* Connection name */
 	self.connectionNameTextField.textDidChangeCallback = self;
-	
+
 	self.connectionNameTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.connectionNameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.connectionNameTextField.stringValueIsTrimmed = YES;
 	self.connectionNameTextField.stringValueUsesOnlyFirstToken = NO;
-	
+
 	/* Server address */
 	self.serverAddressComboBox.textDidChangeCallback = self;
-	
+
 	self.serverAddressComboBox.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.serverAddressComboBox.stringValueIsInvalidOnEmpty = YES;
 	self.serverAddressComboBox.stringValueIsTrimmed = YES;
 	self.serverAddressComboBox.stringValueUsesOnlyFirstToken = YES;
@@ -344,31 +367,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Server port */
 	self.serverPortTextField.textDidChangeCallback = self;
-	
+
 	self.serverPortTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.serverPortTextField.stringValueIsInvalidOnEmpty = YES;
 	self.serverPortTextField.stringValueIsTrimmed = YES;
 	self.serverPortTextField.stringValueUsesOnlyFirstToken = NO;
-	
+
 	self.serverPortTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		return currentValue.isValidInternetPort;
 	};
-	
+
 	/* Proxy address */
 	self.proxyAddressTextField.textDidChangeCallback = self;
-	
+
 	self.proxyAddressTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.proxyAddressTextField.stringValueIsInvalidOnEmpty = NO;
 	self.proxyAddressTextField.stringValueIsTrimmed = YES;
 	self.proxyAddressTextField.stringValueUsesOnlyFirstToken = YES;
-	
+
 	self.proxyAddressTextField.performValidationWhenEmpty = YES;
-	
+
 	self.proxyAddressTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
-		
+
 		if (proxyType == IRCConnectionSocketSocks4ProxyType ||
 			proxyType == IRCConnectionSocketSocks5ProxyType ||
 			proxyType == IRCConnectionSocketHTTPProxyType ||
@@ -379,12 +402,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return YES;
 	};
-	
+
 	/* Proxy port */
 	self.proxyPortTextField.textDidChangeCallback = self;
-	
+
 	self.proxyPortTextField.onlyShowStatusIfErrorOccurs = YES;
-	
+
 	self.proxyPortTextField.stringValueIsInvalidOnEmpty = NO;
 	self.proxyPortTextField.stringValueIsTrimmed = YES;
 	self.proxyPortTextField.stringValueUsesOnlyFirstToken = NO;
@@ -392,10 +415,10 @@ NS_ASSUME_NONNULL_BEGIN
 	self.proxyPortTextField.performValidationWhenEmpty = YES;
 
 	self.proxyPortTextField.defualtValue = [NSString stringWithUnsignedInteger:IRCConnectionDefaultProxyPort];
-	
+
 	self.proxyPortTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
-		
+
 		if (proxyType == IRCConnectionSocketSocks4ProxyType ||
 			proxyType == IRCConnectionSocketSocks5ProxyType ||
 			proxyType == IRCConnectionSocketHTTPProxyType ||
@@ -443,9 +466,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define _navigationIndexForFloodControl				13
 #define _navigationIndexForGeneral					5
 #define _navigationIndexForIdentity					6
-	
+
 	NSMutableArray *navigationTreeMatrix = [NSMutableArray array];
-	
+
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][15]"),
 		@"children" : @[
@@ -459,14 +482,14 @@ NS_ASSUME_NONNULL_BEGIN
 			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][08]"),	@"view" : self.contentViewDisconnectMessages},
 		]
 	}];
-	
+
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][16]"),
 		@"children" : @[
 			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][14]"),	@"view" : self.contentViewZncBouncer},
 		]
 	}];
-	
+
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][17]"),
 		@"children" : @[
@@ -488,7 +511,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.navigationOutlineview.expandParentonDoubleClick = YES;
 
 	[self.navigationOutlineview reloadData];
-	
+
 	[self.navigationOutlineview expandItem:navigationTreeMatrix[0]];
 }
 
@@ -497,24 +520,24 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.primaryEncodingButton removeAllItems];
 
 	[self.fallbackEncodingButton removeAllItems];
-	
+
 	/* Build list of encodings */
 	self.encodingList = [NSString supportedStringEncodingsWithTitle:NO];
-	
+
 	NSArray *encodingNames = self.encodingList.sortedDictionaryKeys;
-	
+
 	/* What we are basically doing now is sorting all the encodings, then removing
 	 UTF-8 from the sorted list and inserting it at the top of the list. */
 	NSString *utf8title = [NSString localizedNameOfStringEncoding:NSUTF8StringEncoding];
-	
+
 	NSMutableArray *encodingsToAdd = [encodingNames mutableCopy];
-	
+
 	[encodingsToAdd removeObject:utf8title];
-	
+
 	[self.primaryEncodingButton addItemWithTitle:utf8title];
 
 	[self.fallbackEncodingButton addItemWithTitle:utf8title];
-	
+
 	/* Add the encodings to the popup list. This for loop will find the first
 	 parentheses opening and compare everything before it to the one found for
 	 the previous encoding. If the prefix has changed, then a separator is
@@ -522,7 +545,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* We do this two times. The first time setups up preferred encodings at
 	 the top of the list. The next handles everything else. */
 	NSArray *favoredEncodings = @[@"Unicode", @"Western", @"Central European"];
-	
+
 	[self populateEncodingPopup:encodingsToAdd preferredEncodings:favoredEncodings ignoreFavored:NO];
 
 	if ([RZUserDefaults() boolForKey:@"Server Properties Window Sheet -> Include Advanced Encodings"]) {
@@ -533,22 +556,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)populateEncodingPopup:(NSArray<NSString *> *)encodingsToAdd preferredEncodings:(NSArray<NSString *> *)favoredEncodings ignoreFavored:(BOOL)ignoreFavored
 {
 	NSString *encodingPrefixPrevious = nil;
-	
+
 	for (NSString *encoding in encodingsToAdd) {
 		NSInteger parenthesisPosition = [encoding stringPosition:@" ("];
-		
+
 		if (parenthesisPosition <= 0) {
 			continue;
 		}
-		
+
 		NSString *encodingPrefix = [encoding substringToIndex:parenthesisPosition];
-		
+
 		if (ignoreFavored && [favoredEncodings containsObject:encodingPrefix]) {
 			continue;
 		} else if (ignoreFavored == NO && [favoredEncodings containsObject:encodingPrefix] == NO) {
 			continue;
 		}
-		
+
 		if ([encodingPrefix isEqualToString:encodingPrefixPrevious] == NO) {
 			encodingPrefixPrevious = encodingPrefix;
 
@@ -556,7 +579,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			[self.fallbackEncodingButton.menu addItem:[NSMenuItem separatorItem]];
 		}
-		
+
 		[self.primaryEncodingButton addItemWithTitle:encoding];
 
 		[self.fallbackEncodingButton addItemWithTitle:encoding];
@@ -704,7 +727,7 @@ NS_ASSUME_NONNULL_BEGIN
 							   self.config = [client.config mutableCopy];
 
 							   [self loadConfig];
-							   
+
 							   [self start];
 						   }];
 }
@@ -794,7 +817,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Connect Commands */
 	NSString *loginCommandsString = [self.config.loginCommands componentsJoinedByString:@"\n"];
-	
+
 	self.connectCommandsField.string = loginCommandsString;
 
 	self.setInvisibleModeOnConnectCheck.state = self.config.setInvisibleModeOnConnect;
@@ -887,7 +910,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.zncIgnoreConfiguredAutojoin = (self.zncIgnoreConfiguredAutojoinCheck.state == NSOnState);
 	self.config.zncIgnorePlaybackNotifications = (self.zncIgnorePlaybackNotificationsCheck.state == NSOnState);
 	self.config.zncOnlyPlaybackLatest = (self.zncOnlyPlaybackLatestCheck.state == NSOnState);
-	
+
 	/* Network Socket */
 	self.config.connectionPrefersIPv4 = (self.connectionPrefersIPv4Check.state == NSOnState);
 
@@ -904,9 +927,9 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.nickname = self.nicknameTextField.value;
 	self.config.username = self.usernameTextField.value;
 	self.config.realName = self.realNameTextField.value;
-	
+
 	self.config.awayNickname = self.awayNicknameTextField.value;
-	
+
 	self.config.nicknamePassword = self.nicknamePasswordTextField.trimmedStringValue;
 
 	self.config.autojoinWaitsForNickServ = (self.autojoinWaitsForNickServCheck.state == NSOnState);
@@ -915,24 +938,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Alternate nicknames */
 	NSString *alternateNicknamesString = self.alternateNicknamesTextField.stringValue;
-	
+
 	NSArray *alternateNicknames = [alternateNicknamesString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-	
+
 	self.config.alternateNicknames = [alternateNicknames arrayByRemovingEmptyValuesAndUniquing];
 
 	/* Messages */
 	self.config.sleepModeLeavingComment	= self.sleepModeQuitMessageTextField.value;
 	self.config.normalLeavingComment = self.normalLeavingCommentTextField.value;
-	
+
 	/* Encoding */
 	NSStringEncoding primaryEncoding = [self.encodingList unsignedIntegerForKey:self.primaryEncodingButton.title];
 
 	self.config.primaryEncoding	= primaryEncoding;
 
 	NSStringEncoding fallbackEncoding = [self.encodingList unsignedIntegerForKey:self.fallbackEncodingButton.title];
-	
+
 	self.config.fallbackEncoding = fallbackEncoding;
-	
+
 	/* Proxy Server */
 	self.config.proxyType = self.proxyTypeButton.selectedTag;
 
@@ -943,7 +966,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Connect Commands */
 	NSString *connectCommandsString = self.connectCommandsField.string;
-	
+
 	NSArray *connectCommands = [connectCommandsString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
 	self.config.loginCommands = [connectCommands arrayByRemovingEmptyValues:YES trimming:YES uniquing:NO];
@@ -953,7 +976,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Flood Control */
 	self.config.floodControlMaximumMessages = self.floodControlMessageCountSlider.integerValue;
 	self.config.floodControlDelayTimerInterval = self.floodControlDelayTimerSlider.integerValue;
-	
+
 	/* Mutable stores. */
 	self.config.channelList = self.channelListArrayController.arrangedObjects;
 	self.config.highlightList = self.highlightListArrayController.arrangedObjects;
@@ -1098,9 +1121,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)useSSLCheckChanged:(id)sender
 {
 	NSInteger serverPort = self.serverPortTextField.integerValue;
-	
+
 	BOOL useSSL = (self.prefersSecuredConnectionCheck.state == NSOnState);
-	
+
 	if (useSSL) {
 		if (serverPort == 6667) {
 			self.serverPortTextField.stringValue = @"6697";
@@ -1208,7 +1231,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL httpsEnabled = (proxyType == IRCConnectionSocketHTTPProxyType || proxyType == IRCConnectionSocketHTTPSProxyType);
 	BOOL socksEnabled = (proxyType == IRCConnectionSocketSocks4ProxyType || proxyType == IRCConnectionSocketSocks5ProxyType);
-	
+
 	BOOL enabled = (httpsEnabled || socksEnabled);
 
 	self.contentViewProxyServerInputView.hidden = (httpsEnabled == NO && socksEnabled == NO);
@@ -1220,10 +1243,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.proxyUsernameTextField.enabled = (socksEnabled && supportsAuthentication);
 	self.proxyPasswordTextField.enabled = (socksEnabled && supportsAuthentication);
-	
+
 	[self.proxyAddressTextField performValidation];
 	[self.proxyPortTextField performValidation];
-	
+
 	[self updateConnectionPage];
 }
 
@@ -1232,9 +1255,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *primaryEncoding = self.primaryEncodingButton.titleOfSelectedItem;
 
 	NSString *fallbackEncoding = self.fallbackEncodingButton.titleOfSelectedItem;
-	
+
 	[self populateEncodings];
-	
+
 	NSMenuItem *primaryEncodingItem = nil;
 
 	if (primaryEncoding) {
@@ -1246,11 +1269,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSMenuItem *fallbackEncodingItem = nil;
-	
+
 	if (fallbackEncoding) {
 		fallbackEncodingItem = [self.fallbackEncodingButton itemWithTitle:fallbackEncoding];
 	}
-	
+
 	if (fallbackEncodingItem == nil) {
 		fallbackEncoding = [NSString localizedNameOfStringEncoding:TXDefaultFallbackStringEncoding];
 	}
@@ -1309,7 +1332,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *fingerprint = self.clientCertificateSHA1FingerprintField.stringValue;
 
 	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", fingerprint];
-	
+
 	RZPasteboard().stringContent = command;
 }
 
@@ -1318,7 +1341,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *fingerprint = self.clientCertificateMD5FingerprintField.stringValue;
 
 	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", fingerprint];
-	
+
 	RZPasteboard().stringContent = command;
 }
 
@@ -1442,7 +1465,7 @@ NS_ASSUME_NONNULL_BEGIN
 						   md5Fingerprint:&md5Fingerprint];
 
 	BOOL hasNoCertificate = NSObjectIsEmpty(commonName);
-	
+
 	if (hasNoCertificate) {
 		self.clientCertificateCommonNameField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
 
@@ -1456,7 +1479,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.clientCertificateSHA1FingerprintField.stringValue = sha1Fingerprint.uppercaseString;
 		self.clientCertificateMD5FingerprintField.stringValue = md5Fingerprint.uppercaseString;
 	}
-	
+
 	self.clientCertificateResetCertificateButton.enabled = (hasNoCertificate == NO);
 
 	self.clientCertificateSHA2FingerprintCopyButton.enabled = (hasNoCertificate == NO);
@@ -1474,13 +1497,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onClientCertificateChangeRequested:(id)sender
 {
 	CFArrayRef identities = NULL;
-	
+
 	NSDictionary *queryFlags = @{
 		(id)kSecClass		: (id)kSecClassIdentity,
 		(id)kSecMatchLimit	: (id)kSecMatchLimitAll,
 		(id)kSecReturnRef	: (id)kCFBooleanTrue
 	};
-	
+
 	OSStatus queryStatus = SecItemCopyMatching((__bridge CFDictionaryRef)queryFlags, (CFTypeRef *)&identities);
 
 	if (queryStatus != noErr) {
@@ -1494,9 +1517,9 @@ NS_ASSUME_NONNULL_BEGIN
 	self.clientCertificateSelectCertificatePanel = panel;
 
 	[panel setInformativeText:TXTLS(@"TDCServerPropertiesSheet[1009][2]")];
-	
+
 	[panel setAlternateButtonTitle:TXTLS(@"Prompts[0004]")];
-	
+
 	NSInteger panelResponse =
 	[panel runModalForIdentities:(__bridge NSArray *)(identities)
 						 message:TXTLS(@"TDCServerPropertiesSheet[1009][1]")];
@@ -1539,7 +1562,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self loadPrimaryServerEndpoint];
 }
 
-- (void)serverEndpointListSheetWillClose:(TDCServerEndpointListSheet *)sender;
+- (void)serverEndpointListSheetWillClose:(TDCServerEndpointListSheet *)sender
 {
 	self.serverEndpointSheet = nil;
 }
@@ -1638,7 +1661,7 @@ NS_ASSUME_NONNULL_BEGIN
 	sheet.delegate = self;
 
 	sheet.window = self.sheet;
-	
+
 	[sheet startWithChannels:self.channelList];
 
 	self.highlightSheet = sheet;
@@ -1676,9 +1699,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self.highlightListArrayController removeObjectAtArrangedObjectIndex:selectedRow];
-	
+
 	NSUInteger listCount = self.highlightList.count;
-	
+
 	if (listCount > 0) {
 		if (listCount <= selectedRow) {
 			[self.highlightsTable selectItemAtIndex:(listCount - 1)];
@@ -1699,7 +1722,7 @@ NS_ASSUME_NONNULL_BEGIN
 	sheet.delegate = self;
 
 	sheet.window = self.sheet;
-	
+
 	[sheet start];
 
 	self.channelSheet = sheet;
@@ -1712,7 +1735,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (selectedRow < 0) {
 		return;
 	}
-	
+
 	IRCChannelConfig *config = self.channelList[selectedRow];
 
 	TDCChannelPropertiesSheet *sheet =
@@ -1857,7 +1880,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (selectedRow < 0) {
 		return;
 	}
-	
+
 	IRCAddressBookEntry *config = self.addressBookList[selectedRow];
 
 	TDCAddressBookSheet *sheet =
@@ -1922,11 +1945,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)tableView:(NSTableView *)tableView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	NSString *columnId = tableColumn.identifier;
-	
+
 	if (tableView == self.channelListTable)
 	{
 		IRCChannelConfig *config = self.channelList[row];
-		
+
 		if ([columnId isEqualToString:@"name"])
 		{
 			return config.channelName;
@@ -1934,7 +1957,7 @@ NS_ASSUME_NONNULL_BEGIN
 		else if ([columnId isEqualToString:@"pass"])
 		{
 			NSString *secretKeyValue = config.secretKey;
-			
+
 			if (secretKeyValue) {
 				return secretKeyValue;
 			}
@@ -1996,7 +2019,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 	}
-	
+
 	return nil;
 }
 
@@ -2008,11 +2031,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tableView:(NSTableView *)tableView setObjectValue:(nullable id)object forTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	NSString *columnId = tableColumn.identifier;
-		
+
 	if (tableView == self.channelListTable)
 	{
 		IRCChannelConfigMutable *config = [self.channelList[row] mutableCopy];
-		
+
 		if ([columnId isEqualToString:@"join"]) {
 			config.autoJoin = [object boolValue];
 		}
@@ -2024,7 +2047,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tableViewSelectionDidChange:(NSNotification *)aNote
 {
 	NSTableView *tableView = aNote.object;
-	
+
 	if (tableView == self.channelListTable) {
 		[self updateChannelListPage];
 	} else if (tableView == self.highlightsTable) {
@@ -2104,7 +2127,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.highlightsTable unregisterDraggedTypes];
 
 	[self.sheet makeFirstResponder:nil];
-	
+
 	if ([self.delegate respondsToSelector:@selector(serverPropertiesSheetWillClose:)]) {
 		[self.delegate serverPropertiesSheetWillClose:self];
 	}

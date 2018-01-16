@@ -36,6 +36,13 @@
 
  *********************************************************************** */
 
+#import "IRC.h"
+#import "IRCClient.h"
+#import "IRCISupportInfo.h"
+#import "IRCColorFormat.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCLogRenderer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSStringEncoding const TXDefaultPrimaryStringEncoding = NSUTF8StringEncoding;
@@ -53,8 +60,8 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		return YES;
 	}
 
-	return [self onlyContainsCharacters:
-		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"];
+	return [self onlyContainsCharactersFromCharacterSet:
+			[NSCharacterSet Ato9UnderscoreDashPeriod]];
 }
 
 - (BOOL)isValidInternetPort
@@ -221,7 +228,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	NSString *character1 = [self stringCharacterAtIndex:0];
 	NSString *character2 = [self stringCharacterAtIndex:1];
-		
+
 	/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
 	BOOL isPartyline = ([character1 isEqualToString:@"~"] && [character2 isEqualToString:@"#"]);
 
@@ -237,10 +244,10 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	UniChar c = [self characterAtIndex:0];
 
 	return (c == '#' ||
-		    c == '&' ||
-		    c == '+' ||
-		    c == '!' ||
-		    c == '~' ||
+			c == '&' ||
+			c == '+' ||
+			c == '!' ||
+			c == '~' ||
 			c == '?');
 }
 
@@ -429,7 +436,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	m_foregroundColor = [self substringWithRange:NSMakeRange(currentPosition, 6)];
 
-	if ([m_foregroundColor onlyContainsCharacters:@"abcdefABCDEF0123456789"]) {
+	if ([m_foregroundColor onlyContainsCharactersFromCharacterSet:[NSCharacterSet hexadecimalCharacterSet]]) {
 		currentPosition += 6; // Eat foreground color
 	} else {
 		m_foregroundColor = nil;
@@ -463,7 +470,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 	m_backgroundColor = [self substringWithRange:NSMakeRange(currentPosition, 6)];
 
-	if ([m_backgroundColor onlyContainsCharacters:@"abcdefABCDEF0123456789"]) {
+	if ([m_backgroundColor onlyContainsCharactersFromCharacterSet:[NSCharacterSet hexadecimalCharacterSet]]) {
 		currentPosition += 6; // Eat background color
 	} else {
 		m_backgroundColor = nil;

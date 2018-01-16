@@ -38,6 +38,29 @@
 
 #include <objc/message.h>
 
+#import "GTMEncodeHTML.h"
+#import "WebScriptObjectHelperPrivate.h"
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+#import "IRCWorld.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogPolicyPrivate.h"
+#import "TVCLogRenderer.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK1.h"
+#import "TVCLogViewInternalWK2.h"
+#import "TVCLogScriptEventSinkPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogScriptEventSink ()
@@ -438,12 +461,36 @@ ClassWithDesignatedInitializerInitMethod
 			  withSelector:@selector(_copySelectionWhenPermitted:)];
 }
 
+- (void)encryptionAuthenticateUser:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 forCaller:@"app.encryptionAuthenticateUser()"
+				 inWebView:webView
+			  withSelector:@selector(_encryptionAuthenticateUser:)];
+}
+
 - (void)inlineMediaEnabledForView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
 				 forCaller:@"app.inlineMediaEnabledForView()"
 				 inWebView:webView
 			  withSelector:@selector(_inlineMediaEnabledForView:)];
+}
+
+- (void)loadInlineMedia:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 forCaller:@"app.loadInlineMedia()"
+				 inWebView:webView
+			  withSelector:@selector(_loadInlineMedia:)
+	  minimumArgumentCount:4
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
+				if (argumentIndex <= 2) {
+					return [argument isKindOfClass:[NSString class]];
+				} else {
+					return [argument isKindOfClass:[NSNumber class]];
+				}
+			}];
 }
 
 - (void)localUserHostmask:(id)inputData inWebView:(id)webView
@@ -512,7 +559,9 @@ ClassWithDesignatedInitializerInitMethod
 			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
 					return [argument isKindOfClass:[NSString class]];
-				} else if (argumentIndex == 1) {
+				} else if (argumentIndex == 1 ||
+						   argumentIndex == 2)
+				{
 					return [argument isKindOfClass:[NSNumber class]];
 				}
 
@@ -890,9 +939,76 @@ ClassWithDesignatedInitializerInitMethod
 	context.completionBlock( @(NO) );
 }
 
+- (void)_encryptionAuthenticateUser:(TVCLogScriptEventSinkContext *)context
+{
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	IRCClient *client = context.associatedClient;
+
+	if (client.isLoggedIn == NO) {
+		return;
+	}
+
+	IRCChannel *channel = context.associatedChannel;
+
+	if (channel == nil || channel.isPrivateMessage == NO) {
+		[self _throwJavaScriptException:@"View is not a private message"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	[client encryptionAuthenticateUser:channel.name];
+#endif
+}
+
 - (void)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
 	context.completionBlock( @(context.viewController.inlineMediaEnabledForView) );
+}
+
+- (void)_loadInlineMedia:(TVCLogScriptEventSinkContext *)context
+{
+	NSArray *arguments = context.arguments;
+
+	NSString *address = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if (address.length == 0) {
+		[self _throwJavaScriptException:@"Length of address is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	NSString *uniqueIdentifier = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
+
+	if (uniqueIdentifier.length == 0) {
+		[self _throwJavaScriptException:@"Length of unique identifier is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	NSString *lineNumber = [TVCLogScriptEventSink objectValueToCommon:arguments[2]];
+
+	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
+
+	if (lineNumber.length == 0) {
+		[self _throwJavaScriptException:@"Length of line number is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
+
+	NSNumber *index = [TVCLogScriptEventSink objectValueToCommon:arguments[3]];
+
+	[context.viewController processInlineMediaAtAddress:address
+								   withUniqueIdentifier:uniqueIdentifier
+										   atLineNumber:lineNumber
+												  index:index.unsignedIntegerValue];
 }
 
 - (void)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
@@ -927,12 +1043,18 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *colorStyle = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
-	TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
+	TPCThemeSettingsNicknameColorStyle colorStyleEnum;
 
 	if ([colorStyle isEqualToString:@"HSL-dark"]) {
 		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueDarkStyle;
 	} else if ([colorStyle isEqualToString:@"HSL-light"]) {
 		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
+	} else {
+		[self _throwJavaScriptException:@"Invalid style"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
 	}
 
 	context.completionBlock( [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum] );
@@ -965,7 +1087,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL successful = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] boolValue];
 
-	[context.viewController notifyJumpToLine:lineNumber successful:successful];
+	BOOL scrolledToBottom = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] boolValue];
+
+	[context.viewController notifyJumpToLine:lineNumber successful:successful scrolledToBottom:scrolledToBottom];
 }
 
 - (void)_notifyLinesAddedToView:(TVCLogScriptEventSinkContext *)context
@@ -1244,6 +1368,14 @@ ClassWithDesignatedInitializerInitMethod
 	NSArray *arguments = context.arguments;
 
 	NSString *payloadLabel = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	if (payloadLabel.length == 0) {
+		[self _throwJavaScriptException:@"Length of payload label is 0"
+							  forCaller:context.caller
+							  inWebView:context.webView];
+
+		return;
+	}
 
 	id payloadContents = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 

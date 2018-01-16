@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCMainWindowTextViewYosemiteUserInteracePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMainWindowTextViewYosemiteUserInterace

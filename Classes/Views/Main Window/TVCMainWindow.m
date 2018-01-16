@@ -36,6 +36,53 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "IRCChannelPrivate.h"
+#import "IRCChannelMode.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCTreeItemPrivate.h"
+#import "IRCUserRelationsPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "TVCDockIconPrivate.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCMainWindowChannelViewPrivate.h"
+#import "TVCMainWindowLoadingScreen.h"
+#import "TVCMainWindowSplitViewPrivate.h"
+#import "TVCMainWindowTextViewPrivate.h"
+#import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
+#import "TVCServerListPrivate.h"
+#import "TVCServerListCellPrivate.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+#import "TVCMemberListPrivate.h"
+#import "TVCTextFormatterMenuPrivate.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
+#import "TPCApplicationInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TPCThemeSettings.h"
+#import "TXGlobalModels.h"
+#import "TXMasterControllerPrivate.h"
+#import "TXMenuControllerPrivate.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOGrowlControllerPrivate.h"
+#import "TLOKeyEventHandler.h"
+#import "TLOInputHistoryPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TLONicknameCompletionStatusPrivate.h"
+#import "TLOSpeechSynthesizerPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCChannelSpotlightControllerInternal.h"
+#import "TDCChannelSpotlightControllerPanelPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
+#import "TVCMainWindowPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowAppearanceChangedNotification";
@@ -92,7 +139,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if ((self = [super initWithContentRect:contentRect styleMask:style backing:bufferingType defer:flag])) {
 		[self prepareInitialState];
 	}
-	
+
 	return self;
 }
 
@@ -130,15 +177,15 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	self.delegate = (id)self;
 
 	self.allowsConcurrentViewDrawing = NO;
-	
+
 	self.alphaValue = [TPCPreferences mainWindowTransparency];
-	
+
 	(void)[self reloadLoadingScreen];
-	
+
 	[self makeMainWindow];
 
 	[self makeKeyAndOrderFront:nil];
-	
+
 	[self loadWindowState];
 
 	[self addAccessoryViewsToTitlebar];
@@ -146,7 +193,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self updateChannelViewArrangement];
 
 	[themeController() prepareInitialState];
-	
+
 	[menuController() prepareInitialState];
 
 	[self registerKeyHandlers];
@@ -154,7 +201,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[worldController() setupConfiguration];
 
 	[self updateBackgroundColor];
-	
+
 	[self setupTrees];
 
 	[TVCDockIcon drawWithoutCount];
@@ -326,7 +373,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	self.selectedItems = nil;
 	self.selectedItem = nil;
-	
+
 	[self close];
 }
 
@@ -338,11 +385,11 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if (masterController().applicationIsTerminating) {
 		return;
 	}
-	
+
 	[TVCDockIcon resetCachedCount];
 
 	[TVCDockIcon updateDockIcon];
-	
+
 	[self updateBackgroundColor];
 }
 
@@ -351,13 +398,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if (masterController().applicationIsTerminating) {
 		return;
 	}
-	
+
 	id selectedItem = self.selectedItem;
-	
+
 	if (selectedItem) {
 		[selectedItem resetState];
 	}
-	
+
 	[TVCDockIcon updateDockIcon];
 }
 
@@ -408,7 +455,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		/* We keep track of the last subview redraw so that we do
 		 not draw too often. Current maximum is 1.0 second. */
 		NSTimeInterval timeDifference = ([NSDate timeIntervalSince1970] - self.lastKeyWindowStateChange);
-		
+
 		if (timeDifference > 1.0) {
 			[self reloadSubviewDrawings];
 		}
@@ -418,7 +465,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	self.lastKeyWindowStateChange = [NSDate timeIntervalSince1970];
-	
+
 	[self resetSelectedItemState];
 
 	if (self.occluded) {
@@ -614,7 +661,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	NSParameterAssert(startingPoint >= 0);
 
 	NSInteger currentPosition = startingPoint;
-	
+
 	while (1) {
 		/* Move to next selection */
 		if (isMovingDown) {
@@ -622,7 +669,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		} else {
 			currentPosition -= 1;
 		}
-		
+
 		/* Make sure selection is within our bounds */
 		if (currentPosition >= entryCount || currentPosition < 0) {
 			if (isMovingDown == NO && currentPosition < 0) {
@@ -635,16 +682,16 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		if (currentPosition == startingPoint) {
 			break;
 		}
-		
+
 		/* Get next selection depending on data source */
 		id item;
-		
+
 		if (scannedRows) {
 			item = scannedRows[currentPosition];
 		} else {
 			item = [self.serverList itemAtRow:currentPosition];
 		}
-		
+
 		/* Skip entries depending on navigation type */
 		if (selectionType == TVCServerListNavigationSelectionChannelType)
 		{
@@ -658,12 +705,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				continue;
 			}
 		}
-		
+
 		/* Select current item if it is matched by our condition */
 		if (navigationType == TVCServerListNavigationMovementAllType)
 		{
 			[self select:item];
-			
+
 			break;
 		}
 		else if (navigationType == TVCServerListNavigationMovementActiveType)
@@ -697,9 +744,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)navigateChannelEntriesOutsideServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
 	NSInteger entryCount = self.serverList.numberOfRows;
-	
+
 	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
-	
+
 	[self navigateServerListEntries:nil
 						 entryCount:entryCount
 					  startingPoint:startingPoint
@@ -711,10 +758,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)navigateChannelEntriesWithinServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
 	NSArray *scannedRows = [self.serverList itemsFromParentGroup:self.selectedItem];
-	
+
 	/* We add selected server so navigation falls within its scope if its the selected item */
 	scannedRows = [scannedRows arrayByAddingObject:self.selectedClient];
-	
+
 	[self navigateServerListEntries:scannedRows
 						 entryCount:scannedRows.count
 					  startingPoint:[scannedRows indexOfObject:self.selectedItem]
@@ -726,7 +773,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
 	NSArray *scannedRows = self.serverList.groupItems;
-	
+
 	[self navigateServerListEntries:scannedRows
 						 entryCount:scannedRows.count
 					  startingPoint:[scannedRows indexOfObject:self.selectedClient]
@@ -738,9 +785,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)navigateToNextEntry:(BOOL)isMovingDown
 {
 	NSInteger entryCount = self.serverList.numberOfRows;
-	
+
 	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
-	
+
 	[self navigateServerListEntries:nil
 						 entryCount:entryCount
 					  startingPoint:startingPoint
@@ -819,10 +866,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)changeTextSize:(BOOL)bigger
 {
-#define MinimumZoomMultiplier       0.5
-#define MaximumZoomMultiplier       3.0
+#define MinimumZoomMultiplier	   0.5
+#define MaximumZoomMultiplier	   3.0
 
-#define ZoomMultiplierRatio         1.2
+#define ZoomMultiplierRatio			1.2
 
 	double textSizeMultiplier = self.textSizeMultiplier;
 
@@ -999,7 +1046,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)tab:(NSEvent *)e
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
-	
+
 	if (tabKeyAction == TXTabKeyNicknameCompleteAction) {
 		[self completeNickname:YES];
 	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
@@ -1010,7 +1057,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)shiftTab:(NSEvent *)e
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
-	
+
 	if (tabKeyAction == TXTabKeyNicknameCompleteAction) {
 		[self completeNickname:NO];
 	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
@@ -1044,30 +1091,30 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	if (checkScroller) {
 		NSUInteger numberOfLines = self.inputTextField.numberOfLines;
-		
+
 		if (numberOfLines >= 2) {
 			BOOL atTop = self.inputTextField.atTopOfView;
 			BOOL atBottom = self.inputTextField.atBottomOfView;
-			
+
 			if ((atTop			&& event.keyCode == TXKeyDownArrowCode) ||
 				(atBottom		&& event.keyCode == TXKeyUpArrowCode) ||
 				(atTop == NO	&& atBottom == NO))
 			{
 				[self.inputTextField keyDownToSuper:event];
-				
+
 				return;
 			}
 		}
 	}
-	
+
 	NSAttributedString *stringValue = self.inputTextField.attributedStringValue;
-	
+
 	if (movingUp) {
 		stringValue = [self.inputHistoryManager up:stringValue];
 	} else {
 		stringValue = [self.inputHistoryManager down:stringValue];
 	}
-	
+
 	if (stringValue) {
 		self.inputTextField.attributedStringValue = stringValue;
 
@@ -1140,10 +1187,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	NSRect textFieldFrame = self.inputTextField.frame;
-		
+
 	textFieldFrame.origin.y -= 200;
 	textFieldFrame.origin.x += 100;
-		
+
 	[self.formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil atLocation:textFieldFrame.origin inView:self.inputTextField];
 }
 
@@ -1221,7 +1268,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	self.inputTextField.attributedStringValue = [NSAttributedString attributedString];
 
 	[self.inputHistoryManager add:stringValue];
-		
+
 	[self inputText:stringValue asCommand:command];
 }
 
@@ -1248,19 +1295,19 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
  */
 - (void)swipeWithEvent:(NSEvent *)event
 {
-    CGFloat x = event.deltaX;
+	CGFloat x = event.deltaX;
 
 	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
-	
+
 	if (invertedScrollingDirection) {
 		x = (x * (-1));
 	}
-	
-    if (x > 0) {
-        [self selectNextWindow:nil];
-    } else if (x < 0) {
-        [self selectPreviousWindow:nil];
-    }
+
+	if (x > 0) {
+		[self selectNextWindow:nil];
+	} else if (x < 0) {
+		[self selectPreviousWindow:nil];
+	}
 }
 
 - (void)beginGestureWithEvent:(NSEvent *)event
@@ -1286,12 +1333,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	NSParameterAssert(fingerA != nil);
 	NSParameterAssert(fingerB != nil);
-	
+
 	NSSize deviceSize = fingerA.deviceSize;
-	
+
 	CGFloat x = ((fingerA.normalizedPosition.x + fingerB.normalizedPosition.x) / 2.0 * deviceSize.width);
 	CGFloat y = ((fingerA.normalizedPosition.y + fingerB.normalizedPosition.y) / 2.0 * deviceSize.height);
-	
+
 	return [NSValue valueWithPoint:NSMakePoint(x, y)];
 }
 
@@ -1314,26 +1361,26 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	NSArray *touchArray = touches.allObjects;
 
 	NSPoint origin = self.cachedSwipeOriginPoint.pointValue;
-	
+
 	NSPoint destination = [self touchesToPoint:touchArray[0] fingerB:touchArray[1]].pointValue;
 
 	self.cachedSwipeOriginPoint = nil;
 
-    NSPoint delta = NSMakePoint((origin.x - destination.x),
+	NSPoint delta = NSMakePoint((origin.x - destination.x),
 								(origin.y - destination.y));
 
 	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
 	}
-	
+
 	if (fabs(delta.x) < swipeMinimumLength) {
 		return;
 	}
-	
+
 	CGFloat x = delta.x;
-	
+
 	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
-	
+
 	if (invertedScrollingDirection) {
 		x = (x * (-1));
 	}
@@ -1492,10 +1539,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (NSRect)defaultWindowFrame
 {
 	NSRect windowFrame = self.frame;
-	
+
 	windowFrame.size.width = TVCMainWindowDefaultFrameWidth;
 	windowFrame.size.height = TVCMainWindowDefaultFrameHeight;
-	
+
 	return windowFrame;
 }
 
@@ -1769,7 +1816,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[menuController() mainWindowSelectionDidChange];
 
 	[TVCDockIcon updateDockIcon];
-	
+
 	[self updateTitle];
 }
 
@@ -2070,7 +2117,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	if (u == nil && c == nil) {
 		self.title = [TPCApplicationInfo applicationName];
-		
+
 		return;
 	}
 
@@ -2101,7 +2148,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		/* If we have the actual server that the client is connected
 		 to, then we we append that. Otherwise, we just leave it blank. */
 		NSString *serverAddress = u.serverAddress;
-		
+
 		if (serverAddress) {
 			[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
 
@@ -2259,21 +2306,21 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	self.serverList.delegate = (id)self;
 	self.serverList.dataSource = (id)self;
-	
+
 	self.serverList.target = self;
 	self.serverList.doubleAction = @selector(outlineViewDoubleClicked:);
 
 	/* Inform the table we want drag events */
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
-	
+
 	/* Prepare our first selection */
 	[self restoreExpandedClients];
 
 	[self restoreSelectionDuringSetup];
-	
+
 	/* Fake the delegate call */
 	[self outlineViewSelectionDidChange:nil];
-	
+
 	/* Populate navigation list */
 	[menuController() populateNavgiationChannelList];
 }
@@ -2336,7 +2383,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	[self reloadTreeItem:item];
-	
+
 	for (IRCChannel *channel in ((IRCClient *)item).channelList) {
 		[self reloadTreeItem:channel];
 	}
@@ -2480,7 +2527,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if ([self isItemInSelectedGroup:selectedItem] == NO) {
 		return;
 	}
-	
+
 	[self storePreviousSelection];
 
 	self.selectedItem = selectedItem;
@@ -2678,7 +2725,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if (u == nil && c == nil) {
 		return;
 	}
-	
+
 	if (u && c == nil)
 	{
 		if (u.isConnecting || u.isConnected)
@@ -2697,7 +2744,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				[u connect];
 			}
 		}
-		
+
 		[self expandClient:u];
 	}
 	else
@@ -2752,7 +2799,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
 	id interfaceObjects = self.serverList.userInterfaceObjects;
-	
+
 	if (item == nil || [item isClient]) {
 		return [interfaceObjects serverCellRowHeight];
 	}
@@ -2792,7 +2839,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
 {
 	id itemBeingCollapsed = notification.userInfo[@"NSObject"];
-	
+
 	IRCClient *u = [itemBeingCollapsed associatedClient];
 
 	u.sidebarItemIsExpanded = NO;
@@ -2801,7 +2848,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
 	id itemBeingCollapsed = notification.userInfo[@"NSObject"];
-	
+
 	IRCClient *u = [itemBeingCollapsed associatedClient];
 
 	u.sidebarItemIsExpanded = YES;
@@ -2919,7 +2966,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	/* TODO (March 27, 2016): Support dragging multiple items */
 	if (items.count == 1) {
 		NSString *itemToken = [worldController() pasteboardStringForItem:items[0]];
-		
+
 		[pasteboard declareTypes:_treeDragItemTypes owner:self];
 
 		[pasteboard setString:itemToken forType:_treeDragItemType];
@@ -2935,23 +2982,23 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	NSPasteboard *pasteboard = [info draggingPasteboard];
-	
+
 	if ([pasteboard availableTypeFromArray:_treeDragItemTypes] == nil) {
 		return NSDragOperationNone;
 	}
 
 	NSString *draggedItemToken = [pasteboard stringForType:_treeDragItemType];
-	
+
 	if (draggedItemToken == nil) {
 		return NSDragOperationNone;
 	}
 
 	IRCTreeItem *draggedItem = [worldController() findItemWithPasteboardString:draggedItemToken];
-	
+
 	if (draggedItem == nil) {
 		return NSDragOperationNone;
 	}
-	
+
 	if (draggedItem.isClient)
 	{
 		if (item) {
@@ -2965,7 +3012,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		if (channel.associatedClient != item) {
 			return NSDragOperationNone;
 		}
-		
+
 		IRCClient *client = (IRCClient *)item;
 
 		NSArray *channelList = client.channelList;

@@ -35,6 +35,19 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
+#import "TVCLogRenderer.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCWorld.h"
+#import "TLOEncryptionManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -491,6 +504,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)printMessage:(NSString *)message inChannel:(IRCChannel *)channel onClient:(IRCClient *)client
 {
+	[self printMessage:message inChannel:channel onClient:client escapeMessage:YES];
+}
+
+- (void)printMessage:(NSString *)message inChannel:(IRCChannel *)channel onClient:(IRCClient *)client escapeMessage:(BOOL)escapeMessage
+{
 	NSParameterAssert(message != nil);
 	NSParameterAssert(channel != nil);
 	NSParameterAssert(client != nil);
@@ -499,24 +517,35 @@ NS_ASSUME_NONNULL_BEGIN
 			   by:nil
 		inChannel:channel
 		   asType:TVCLogLineOffTheRecordEncryptionStatusType
-		  command:TVCLogLineDefaultCommandValue];
+		  command:TVCLogLineDefaultCommandValue
+	escapeMessage:escapeMessage];
 }
 
 - (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName
+{
+	[self presentMessage:message withAccountName:accountName escapeMessage:YES];
+}
+
+- (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName escapeMessage:(BOOL)escapeMessage
 {
 	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
 		if (channel == nil) {
 			return;
 		}
 
-		[self printMessage:message inChannel:channel onClient:client];
+		[self printMessage:message inChannel:channel onClient:client escapeMessage:escapeMessage];
 	} inRelationToAccountName:accountName
 		createWindowIfMissing:YES];
 }
 
 - (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName
 {
-	[self presentMessage:errorMessage withAccountName:accountName];
+	[self presentErrorMessage:errorMessage withAccountName:accountName escapeMessage:YES];
+}
+
+- (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName escapeMessage:(BOOL)escapeMessage
+{
+	[self presentMessage:errorMessage withAccountName:accountName escapeMessage:escapeMessage];
 }
 
 - (void)authenticationStatusChangedForAccountName:(NSString *)accountName isVerified:(BOOL)isVerified
@@ -662,7 +691,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (isVerified) {
 			[self presentMessage:TXTLS(@"OffTheRecord[1001][02]") withAccountName:username];
 		} else {
-			[self presentMessage:TXTLS(@"OffTheRecord[1001][01]") withAccountName:username];
+			[self presentMessage:TXTLS(@"OffTheRecord[1001][01]") withAccountName:username escapeMessage:NO];
 		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
@@ -688,7 +717,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	[OTRKitAuthenticationDialog showFingerprintConfirmation:mainWindow() username:username accountName:accountName protocol:protocol];
+	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
+		/* We print this message unescaped to include an anchor in the HTML
+		 that the user can click to authenticate the user.
+		 We are passing outside input to it, which we do escape. */
+		[self printMessage:TXTLS(@"OffTheRecord[1011]",
+								 [TVCLogRenderer escapeHTML:nickname],
+								 [TVCLogRenderer escapeHTML:theirHash])
+				 inChannel:channel
+				  onClient:client
+			 escapeMessage:NO];
+	}  inRelationToAccountName:username
+		 createWindowIfMissing:YES];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol

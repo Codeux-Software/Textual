@@ -4,7 +4,7 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
+
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
@@ -36,6 +36,17 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TLOInternetAddressLookup.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOTimer.h"
+#import "IRCWorld.h"
+#import "TVCBasicTableView.h"
+#import "TDCFileTransferDialogTableCellPrivate.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCFileTransferDialogInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -73,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((self = [super init])) {
 		[self prepareInitialState];
 	}
-	
+
 	return self;
 }
 
@@ -115,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		[self.window orderFront:nil];
 	}
-	
+
 	if (restorePosition) {
 		[self.window restoreWindowStateForClass:self.class];
 	}
@@ -184,7 +195,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.downloadDestinationURLPrivate) {
 		[self.downloadDestinationURLPrivate stopAccessingSecurityScopedResource];
 	}
-	
+
 	[self close];
 
 	[self enumerateFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
@@ -203,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 which appear in the file transfer, exhausting resources. */
 	if ([self receiverCount] > _addReceiverHardLimit) {
 		LogToConsoleError("Max receiver count of %{public}i exceeded.", _addReceiverHardLimit);
-		
+
 		return nil;
 	}
 
@@ -249,14 +260,14 @@ NS_ASSUME_NONNULL_BEGIN
 	if (autoOpen) {
 		[controller open];
 	}
-	
+
 	return controller.uniqueIdentifier;
 }
 
 - (void)updateClearButton
 {
 	NSArray *stoppedFileTransfers = [self stoppedFileTransfers];
-	
+
 	self.clearButton.enabled = (stoppedFileTransfers.count > 0);
 }
 
@@ -308,7 +319,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (selectedFileTransfers.count == 0) {
 		return NO;
 	}
-	
+
 	/* Begin actual validation. */
 	switch (tag) {
 		case 3001:	// Start Download
@@ -322,7 +333,7 @@ NS_ASSUME_NONNULL_BEGIN
 					return YES;
 				}
 			}
-			
+
 			return NO;
 		}
 		case 3003: // Stop Download
@@ -343,7 +354,7 @@ NS_ASSUME_NONNULL_BEGIN
 					return YES;
 				}
 			}
-			
+
 			return NO;
 		}
 		case 3004: // Remove Item
@@ -358,12 +369,12 @@ NS_ASSUME_NONNULL_BEGIN
 				if (fileTransfer.isSender != NO) {
 					continue;
 				}
-				
+
 				if (transferStatus == TDCFileTransferDialogTransferCompleteStatus) {
 					return YES;
 				}
 			}
-			
+
 			return NO;
 		}
 		case 3006: // Reveal In Finder
@@ -374,16 +385,16 @@ NS_ASSUME_NONNULL_BEGIN
 				if (fileTransfer.isSender != NO) {
 					continue;
 				}
-				
+
 				if (transferStatus == TDCFileTransferDialogTransferCompleteStatus) {
 					return YES;
 				}
 			}
-			
+
 			return NO;
 		}
 	}
-	
+
 	return NO; // Default validation to NO.
 }
 
@@ -394,7 +405,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[stoppedFileTransfers makeObjectsPerformSelector:@selector(prepareForPermanentDestruction)];
 
 	[self.fileTransfersController removeObjects:stoppedFileTransfers];
-	
+
 	[self updateClearButton];
 }
 
@@ -453,7 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		NSString *path = openDialog.URL.path;
-		
+
 		for (TDCFileTransferDialogTransferController *fileTransfer in fileTransfersPending) {
 			[fileTransfer openWithPath:path];
 		}

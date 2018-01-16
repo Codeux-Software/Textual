@@ -35,9 +35,13 @@
 
  *********************************************************************** */
 
+#import "TLOGrowlController.h"
+#import "IRCClient.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class TLOSpokenNotification;
+@class IRCAddressBookUserTrackingContainer, IRCUserMutable;
 
 enum {
 	ClientIRCv3SupportedCapabilitySASLGeneric			= 1 << 22,
@@ -120,6 +124,8 @@ enum {
 - (nullable NSString *)formatNotificationToSpeak:(TLOSpokenNotification *)notification;
 
 - (id)queuedBatchMessageWithToken:(NSString *)batchToken;
+
+- (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command escapeMessage:(BOOL)escapeMessage;
 @end
 
 NS_ASSUME_NONNULL_END

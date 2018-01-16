@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TDCBuddyListDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 @interface TDCBuddyListDialog ()
 - (void)droppedNicknames:(NSArray<NSString *> *)nicknames fromClient:(IRCClient *)client;

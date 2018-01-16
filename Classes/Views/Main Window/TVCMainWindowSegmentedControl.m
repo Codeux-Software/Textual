@@ -36,6 +36,16 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCMainWindow.h"
+#import "TVCMainWindowLoadingScreen.h"
+#import "IRCClient.h"
+#import "IRCWorld.h"
+#import "TVCMainWindowSegmentedControlPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _WindowSegmentedControllerDefaultWidth			150.0

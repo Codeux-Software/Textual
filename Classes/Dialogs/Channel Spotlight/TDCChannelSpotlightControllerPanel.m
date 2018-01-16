@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TDCChannelSpotlightControllerPanelPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCChannelSpotlightControllerPanel
@@ -54,7 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	self.movable = NO;
-
 
 #ifdef TXSystemIsOSXSierraOrLater
 	self.styleMask = (self.styleMask | NSWindowStyleMaskFullSizeContentView);

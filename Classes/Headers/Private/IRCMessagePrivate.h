@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCMessage.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCMessageBatchMessage;
 
 @interface IRCMessage ()
 @property (readonly, strong, nullable) IRCMessageBatchMessage *parentBatchMessage;

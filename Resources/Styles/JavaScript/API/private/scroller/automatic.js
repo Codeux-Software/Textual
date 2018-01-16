@@ -94,10 +94,10 @@ _TextualScroller.performScrollCancel = function() /* PRIVATE */
 {
 	if (_TextualScroller._performScrollTimeout) {
 		clearTimeout(_TextualScroller._performScrollTimeout);
-		
+
 		_TextualScroller._performScrollTimeout = null;
 	}
-	
+
 	_TextualScroller._performScrollNextPass = undefined;
 };
 
@@ -130,17 +130,10 @@ _TextualScroller.performScroll = function() /* PRIVATE */
 	if (!TextualScroller.automaticScrollingEnabled) {
 		return;
 	}
-	
+
 	/* Do not perform automatic scroll if the document is not visible. */
 	if (!TextualScroller.documentIsVisible) {
 		return;
-	}
-	
-	/* Do not perform scrolling if we are performing live resize. */
-	if (Textual.hasLiveResize()) {
-		if (InlineImageLiveResize.dragElement) {
-			return;
-		}
 	}
 
 	/* Scroll to bottom */
@@ -161,14 +154,24 @@ TextualScroller.setAutomaticScrollingEnabled = function(enabled) /* PUBLIC */
 /*              Mutation Observer Helpers             */
 /* ************************************************** */
 
-Element.prototype.prepareForMutation = function() /* PUBLIC */
+HTMLDocument.prototype.prepareForMutation = function() /* PUBLIC */
 {
 	_TextualScroller.prepareForMutation();
 };
 
-Element.prototype.cancelMutation = function() /* PUBLIC */
+HTMLDocument.prototype.cancelMutation = function() /* PUBLIC */
 {
 	_TextualScroller.cancelMutation();
+};
+
+Element.prototype.prepareForMutation = function() /* PUBLIC */
+{
+	document.prepareForMutation();
+};
+
+Element.prototype.cancelMutation = function() /* PUBLIC */
+{
+	document.cancelMutation();
 };
 
 _TextualScroller.prepareForMutation = function()
@@ -195,9 +198,9 @@ _TextualScroller._mutationObserverCallback = function(mutations) /* PRIVATE */
 _TextualScroller.createMutationObserver = function() /* PRIVATE */
 {
 	var buffer = MessageBuffer.bufferElement();
-	
+
 	var observer = new MutationObserver(_TextualScroller._mutationObserverCallback);
-	
+
 	observer.observe(
 		buffer, 
 

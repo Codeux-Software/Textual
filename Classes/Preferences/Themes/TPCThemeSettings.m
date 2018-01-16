@@ -35,10 +35,17 @@
 
  *********************************************************************** */
 
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCResourceManager.h"
+#import "TPCThemeSettingsPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-#define _templateEngineVersionMaximum			3
-#define _templateEngineVersionMinimum			3
+#define _templateEngineVersionMaximum			4
+#define _templateEngineVersionMinimum			4
 
 @interface TPCThemeSettings ()
 @property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
@@ -186,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)_keyValueStoreName
 {
 	NSString *storeName = self.settingsKeyValueStoreName;
-	
+
 	if (storeName.length == 0) {
 		return nil;
 	}
@@ -205,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSString *storeKey = [self _keyValueStoreName];
-	
+
 	if (storeKey == nil) {
 		if ( resultError) {
 			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
@@ -234,7 +241,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSString *storeKey = [self _keyValueStoreName];
-		
+
 	if (storeKey == nil) {
 		if (resultError) {
 			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
@@ -246,7 +253,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL removeValue = ( objectValue == nil ||
 						[objectValue isKindOfClass:[NSNull class]] ||
 						[objectValue isKindOfClass:[WebUndefined class]]);
-	
+
 	NSDictionary *styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
 
 	NSMutableDictionary<NSString *, id> *styleSettingsMutable = nil;
@@ -255,12 +262,12 @@ NS_ASSUME_NONNULL_BEGIN
 		if (removeValue) {
 			return YES;
 		}
-		
+
 		styleSettingsMutable = [NSMutableDictionary dictionaryWithCapacity:1];
 	} else {
 		styleSettingsMutable = [styleSettings mutableCopy];
 	}
-	
+
 	if (removeValue) {
 		[styleSettingsMutable removeObjectForKey:objectKey];
 	} else {
@@ -268,7 +275,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[RZUserDefaults() setObject:[styleSettingsMutable copy] forKey:storeKey];
-		
+
 	return YES;
 }
 
@@ -390,14 +397,16 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Nickname color style */
 		id nicknameColorStyle = [styleSettings objectForKey:@"Nickname Color Style"];
 
-		BOOL computeRGBValue = [TPCPreferences nicknameColorHashingComputesRGBValue];
-
-		if (computeRGBValue && NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
+		if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
-		} else if (computeRGBValue && NSObjectsAreEqual(nicknameColorStyle, @"HSL-dark")) {
+		} else if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-dark")) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
 		} else {
-			self.nicknameColorStyle = TPCThemeSettingsNicknameColorLegacyStyle;
+			if (self.underlyingWindowColorIsDark == NO) {
+				self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
+			} else {
+				self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+			}
 		}
 
 		/* Get style template version */

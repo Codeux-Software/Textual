@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "IRCAddressBook.h"
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol TDCAddressBookSheetDelegate;

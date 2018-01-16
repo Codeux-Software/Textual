@@ -35,9 +35,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "TVCChannelSelectionViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCChannelSelectionOutlineView, TVCChannelSelectionOutlineCellView;
 
 @interface TVCChannelSelectionViewController ()
 - (TVCChannelSelectionOutlineView *)outlineView;

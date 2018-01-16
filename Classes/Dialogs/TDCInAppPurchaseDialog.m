@@ -38,6 +38,21 @@
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 #import <StoreKit/StoreKit.h>
 
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "NSViewHelper.h"
+#import "TXGlobalModels.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TLOTimer.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
+#import "TDCInAppPurchaseProductTableCellViewPrivate.h"
+#import "TDCInAppPurchaseProductTableEntryPrivate.h"
+#import "TDCInAppPurchaseUpgradeEligibilitySheetPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TDCInAppPurchaseDialogTransactionFinishedNotification = @"TDCInAppPurchaseDialogTransactionFinishedNotification";
@@ -565,10 +580,10 @@ enum {
 
 		return;
 	}
-    
-    if (self.performingRestore) {
-        self.performingRestore = NO;
-    }
+
+	if (self.performingRestore) {
+		self.performingRestore = NO;
+	}
 
 	[self updateSelectedPane];
 }
@@ -621,7 +636,7 @@ enum {
 
 	NSDictionary *userInfo = @{
 		@"productIdentifiers" : [productIdentifiers copy]
-    };
+	};
 
 	[RZNotificationCenter() postNotificationName:notification
 										  object:self
@@ -657,14 +672,14 @@ enum {
 
 		return;
 	}
-	
+
 	[self _addTrialToProductsTableContents];
 
 	[self.productsTableController addObject:
 	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier]];
-	
+
 	TDCInAppPurchaseProductsTableEntry *discountEntry = [self productsTableUpgradeEligibilityEntry];
-	
+
 	if (discountEntry != nil) {
 		[self.productsTableController addObject:discountEntry];
 	}
@@ -799,7 +814,7 @@ enum {
 
 - (void)upgradeEligibilitySheetContactSupport:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
 {
-	[menuController() contactSupport:nil];
+	[self contactSupport];
 }
 
 - (void)upgradeEligibilitySheetChanged:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
@@ -856,6 +871,11 @@ enum {
 	[self restoreTransactions];
 }
 
+- (void)contactSupport
+{
+	[menuController() contactSupport:nil];
+}
+
 #pragma mark -
 #pragma mark Table View Delegate
 
@@ -899,7 +919,7 @@ enum {
 	NSTableView *tableView = self.productsTable;
 
 	NSSize cellViewSpacing = tableView.intercellSpacing;
-	
+
 	TDCInAppPurchaseProductsTableCellView *cellView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
 
 	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
@@ -936,19 +956,19 @@ enum {
 	{
 		return nil;
 	}
-	
+
 	/* Create entry */
 	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
-	
+
 	tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
-	
+
 	tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][1]");
 	tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0003][2]");
 	tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][3]");
 
 	tableEntry.target = self;
 	tableEntry.action = @selector(checkUpgradeEligibility:);
-	
+
 	return tableEntry;
 }
 
@@ -957,7 +977,7 @@ enum {
 	NSParameterAssert(product != nil);
 
 	NSString *productIdentifier = product.productIdentifier;
-	
+
 	TLOAppStoreIAPProduct productType = TLOAppStoreProductFromProductIdentifier(productIdentifier);
 
 	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
@@ -974,7 +994,7 @@ enum {
 		case TLOAppStoreIAPFreeTrialProduct:
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
-			
+
 			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
 			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0001][2]");
 			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][3]");
@@ -984,26 +1004,26 @@ enum {
 		case TLOAppStoreIAPStandardEditionProduct:
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
-			
+
 			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
 			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0002][2]");
 			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][3]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6Product:
 		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
-			
+
 			SKProduct *standardEdition = self.products[TLOAppStoreIAPStandardEditionProductIdentifier];
-			
+
 			if (standardEdition == nil) {
 				NSAssert(NO, @"The 'Standard Edition' product is missing");
 			}
-			
+
 			tableEntry.productPriceDiscounted = standardEdition.price;
-			
+
 			if (productType == TLOAppStoreIAPUpgradeFromV6Product)
 			{
 				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
@@ -1055,30 +1075,30 @@ enum {
 	TLOAppStoreIAPProduct productType = TLOAppStoreProductFromProductIdentifier(productIdentifier);
 
 	NSString *productTitle = nil;
-	
+
 	switch (productType) {
 		case TLOAppStoreIAPFreeTrialProduct:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPStandardEditionProduct:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6Product:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
-			
+
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][1]");
-			
+
 			break;
 		}
 		default:
@@ -1086,7 +1106,7 @@ enum {
 			break;
 		}
 	}
-	
+
 	return productTitle;
 }
 
@@ -1191,6 +1211,12 @@ enum {
 							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil];
+}
+
+- (BOOL)_productsListContainMinimum
+{
+	return (self.products[TLOAppStoreIAPFreeTrialProductIdentifier] != nil &&
+			self.products[TLOAppStoreIAPStandardEditionProductIdentifier] != nil);
 }
 
 #pragma mark -
@@ -1343,8 +1369,8 @@ enum {
 		TLOAppStoreIAPStandardEditionProductIdentifier,
 		TLOAppStoreIAPUpgradeFromV6ProductIdentifier,
 		TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier
-      ]
-    ];
+	  ]
+	];
 
 	SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
 
@@ -1361,25 +1387,33 @@ enum {
 	NSMutableDictionary<NSString *, SKProduct *> *productsDict = [NSMutableDictionary dictionary];
 
 	for (SKProduct *product in response.products) {
-		[productsDict setObject:product forKey:product.productIdentifier];
+		NSString *productIdentifier = product.productIdentifier;
+
+		LogToConsoleDebug("Received %@", productIdentifier);
+
+		[productsDict setObject:product forKey:productIdentifier];
 	}
 
 	self.products = productsDict;
 }
 
-- (void)onRequestProductsError:(NSError *)error
+- (void)onRequestProductsError:(nullable NSError *)error
 {
-	NSParameterAssert(error != nil);
-
-	LogToConsoleDebug("Products request error: %@", error.localizedDescription);
+	if (error) {
+		LogToConsoleDebug("Products request error: %@", error.localizedDescription);
+	}
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.window
 									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
 									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
 							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")
-						   alternateButton:nil
+						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0019][4]")
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
+								   [self contactSupport];
+							   }
+
 							   [self requestProductsAgain:YES];
 						   }];
 }
@@ -1397,23 +1431,25 @@ enum {
 
 	self.productsRequest = nil;
 
-	/* Error callback is called after the properties have been
-	 unset so that when -requestProductsAgain: is called by the
-	 error callback, self.requestingProducts is already NO,
-	 which would otherwise do nothing if it was YES. */
-	if (error == nil)
-	{
-		/* Perform postflight actions */
-		if ([self restoreTransactionsOnShow] == NO) {
-			[self updateSelectedPane];
-		}
-
-		[self refreshProductsTableContents];
-	}
-	else
-	{
+	/* A copy of the app downloaded from the App Store returns
+	 an empty array of products for some reason when the receipt
+	 file is missing. I cannot replicate this behavior in the
+	 developer sandbox which suggests its an issue specific to
+	 the signing certificate the App Store replaces the code
+	 signature with. To prevent crashes, we check if the list
+	 of products contain identifiers we always expect to exist. */
+	if (error || [self _productsListContainMinimum] == NO) {
 		[self onRequestProductsError:error];
+
+		return;
 	}
+
+	/* Perform postflight actions */
+	if ([self restoreTransactionsOnShow] == NO) {
+		[self updateSelectedPane];
+	}
+
+	[self refreshProductsTableContents];
 }
 
 #pragma mark -

@@ -38,9 +38,12 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
-NS_ASSUME_NONNULL_BEGIN
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 
-#define _colorNumberMaximum			30
+NS_ASSUME_NONNULL_BEGIN
 
 #define _overridesDefaultsKey		@"Nickname Color Style Overrides"
 
@@ -84,14 +87,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(stringHash != nil);
 
-	if (colorStyle == TPCThemeSettingsNicknameColorLegacyStyle)
-	{
-		NSInteger stringHash64 = stringHash.integerValue;
-
-		return [NSString stringWithInteger:(stringHash64 % _colorNumberMaximum)];
-	}
-	else if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-			 colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
 	{
 		/* Define base pair */
 		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);

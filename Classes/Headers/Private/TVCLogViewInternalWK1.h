@@ -37,6 +37,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCLogPolicy, TVCLogView;
+
 @interface TVCLogViewInternalWK1 : WebView
 @property (nonatomic, weak) TVCLogView *t_parentView;
 @property (nonatomic, assign) BOOL t_viewHasLoaded;

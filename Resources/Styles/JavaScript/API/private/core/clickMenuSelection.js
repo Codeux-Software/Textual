@@ -94,7 +94,7 @@ _Textual.usesCustomMenuConstructor = function() /* PRIVATE */
 	if (app.isWebKit2() === false) {
 		return false;
 	}
-	
+
 	/* macOS Sierra has an Objective-C API to modify the menus in 
 	WebKit2 which isn't too difficult to use which means we only
 	need a custom menu constructor on WebKit2 + OS X El Capitan. */
@@ -114,7 +114,7 @@ _Textual._openGenericContextualMenu = function() /* PRIVATE */
 
 	if (_Textual.usesCustomMenuConstructor()) {
 		event.preventDefault();
-		
+
 		_Textual.recordSelection();
 
 		appPrivate.displayContextMenu();
@@ -167,7 +167,7 @@ Textual.openInlineNicknameContextualMenu = function() /* PUBLIC */
 
 _Textual.setPolicyStandardNickname = function() /* PRIVATE */
 {
-	var userNickname = event.target.getAttribute("nickname");
+	var userNickname = event.target.dataset.nickname;
 
 	appPrivate.setNickname(userNickname);
 };
@@ -176,7 +176,7 @@ _Textual.setPolicyInlineNickname = function() /* PRIVATE */
 {
 	var userNickname = event.target.textContent;
 
-	var userMode = event.target.getAttribute("mode");
+	var userMode = event.target.dataset.mode;
 
 	if (userMode && userMode.length > 0 && userNickname.indexOf(userMode) === 0) {
 		appPrivate.setNickname(userNickname.substring(1));

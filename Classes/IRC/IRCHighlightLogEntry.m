@@ -35,6 +35,15 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "NSTableVIewHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TXMasterController.h"
+#import "IRCChannel.h"
+#import "IRCWorld.h"
+#import "TLOGrowlControllerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TVCLogLinePrivate.h"
 #import "IRCHighlightLogEntryInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

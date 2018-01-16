@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
+#import "IRCChannel.h"
+#import "TVCLogController.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCLogLine;
 
 @interface IRCChannel ()
 @property (nonatomic, assign, readwrite) IRCChannelStatus status;

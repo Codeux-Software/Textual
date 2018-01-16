@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TLOLanguagePreferences.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString *TXTLS(NSString *key, ...)

@@ -36,6 +36,19 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TPCApplicationInfo.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK1.h"
+#import "TVCLogViewInternalWK2.h"
+#import "TVCMainWindowPrivate.h"
+#import "WebScriptObjectHelperPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogView ()
@@ -239,7 +252,8 @@ ClassWithDesignatedInitializerInitMethod
 				LogToConsoleError("Failed to write temporary file: %{public}@", fileWriteError.localizedDescription);
 			}
 
-			[webView loadFileURL:filePath allowingReadAccessToURL:baseURL];
+			[webView loadFileURL:filePath
+		 allowingReadAccessToURL:[TPCPathInfo applicationTemporaryURL]];
 		} else {
 			[webView loadHTMLString:string baseURL:baseURL];
 		}
@@ -299,6 +313,20 @@ ClassWithDesignatedInitializerInitMethod
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[(id)self.webView redrawView];
+	});
+}
+
+- (void)resetScrollerPosition
+{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView resetScrollerPosition];
+	});
+}
+
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
+{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[(id)self.webView resetScrollerPositionTo:scrolledToBottom];
 	});
 }
 
@@ -392,6 +420,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
 	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\r" withString:@"\\r"];
+	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"];
 
 	return escapedString;
 }
@@ -568,6 +598,11 @@ ClassWithDesignatedInitializerInitMethod
 - (NSString *)compileJavaScriptGenericArgument:(id)object
 {
 	NSParameterAssert(object != nil);
+
+	if ([object isKindOfClass:[NSURL class]])
+	{
+		object = [object absoluteString];
+	}
 
 	if ([object isKindOfClass:[NSString class]])
 	{

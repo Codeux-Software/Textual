@@ -35,6 +35,12 @@
 
  *********************************************************************** */
 
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCResourceManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCResourceManagerBundleDocumentTypeExtension					= @".bundle";
@@ -51,7 +57,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	NSString *sourcePath = [TPCPathInfo customScripts];
 
 	NSString *destinationPath = [[TPCPathInfo groupContainerApplicationSupport] stringByAppendingPathComponent:@"/Custom Scripts/"];
-	
+
 	if ([RZFileManager() fileExistsAtPath:sourcePath] &&
 		[RZFileManager() fileExistsAtPath:destinationPath] == NO)
 	{
@@ -82,18 +88,18 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	if ([filePath hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
 		[self performImportOfScriptFile:url];
-		
+
 		return YES;
 	}
 
 	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"];
-	
+
 	if ([filePath hasSuffix:pluginSuffix]) {
 		[self performImportOfPluginFile:url];
-		
+
 		return YES;
 	}
-	
+
 	return NO;
 }
 

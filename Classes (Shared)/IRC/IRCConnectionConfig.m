@@ -83,23 +83,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	NSParameterAssert(aDecoder != nil);
 
 	if ((self = [super init])) {
-		self->_connectionPrefersIPv4 = [aDecoder decodeBoolForKey:@"connectionPrefersIPv4"];
-		self->_connectionPrefersModernCiphersOnly = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphersOnly"];
-		self->_connectionPrefersSecuredConnection = [aDecoder decodeBoolForKey:@"connectionPrefersSecuredConnection"];
-		self->_connectionShouldValidateCertificateChain = [aDecoder decodeBoolForKey:@"connectionShouldValidateCertificateChain"];
-		self->_floodControlDelayInterval = [aDecoder decodeUnsignedIntegerForKey:@"floodControlDelayInterval"];
-		self->_floodControlMaximumMessages = [aDecoder decodeUnsignedIntegerForKey:@"floodControlMaximumMessages"];
-		self->_identityClientSideCertificate = [aDecoder decodeDataForKey:@"identityClientSideCertificate"];
-		self->_proxyAddress = [aDecoder decodeStringForKey:@"proxyAddress"];
-		self->_proxyPassword = [aDecoder decodeStringForKey:@"proxyPassword"];
-		self->_proxyPort = [aDecoder decodeUnsignedShortForKey:@"proxyPort"];
-		self->_proxyType = [aDecoder decodeUnsignedIntegerForKey:@"proxyType"];
-		self->_proxyUsername = [aDecoder decodeStringForKey:@"proxyUsername"];
-		self->_serverAddress = [aDecoder decodeStringForKey:@"serverAddress"];
-		self->_serverPort = [aDecoder decodeUnsignedShortForKey:@"serverPort"];
-		self->_primaryEncoding = [aDecoder decodeUnsignedIntegerForKey:@"primaryEncoding"];
-		self->_fallbackEncoding = [aDecoder decodeUnsignedIntegerForKey:@"fallbackEncoding"];
-		self->_cipherSuites = [aDecoder decodeUnsignedIntegerForKey:@"cipherSuites"];
+		[self decodeWithCoder:aDecoder];
 
 		[self populateDefaultsPostflight];
 
@@ -109,8 +93,33 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	return nil;
 }
 
+- (void)decodeWithCoder:(NSCoder *)aDecoder
+{
+	NSParameterAssert(aDecoder != nil);
+
+	self->_connectionPrefersIPv4 = [aDecoder decodeBoolForKey:@"connectionPrefersIPv4"];
+	self->_connectionPrefersModernCiphersOnly = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphersOnly"];
+	self->_connectionPrefersSecuredConnection = [aDecoder decodeBoolForKey:@"connectionPrefersSecuredConnection"];
+	self->_connectionShouldValidateCertificateChain = [aDecoder decodeBoolForKey:@"connectionShouldValidateCertificateChain"];
+	self->_floodControlDelayInterval = [aDecoder decodeUnsignedIntegerForKey:@"floodControlDelayInterval"];
+	self->_floodControlMaximumMessages = [aDecoder decodeUnsignedIntegerForKey:@"floodControlMaximumMessages"];
+	self->_identityClientSideCertificate = [aDecoder decodeDataForKey:@"identityClientSideCertificate"];
+	self->_proxyAddress = [aDecoder decodeStringForKey:@"proxyAddress"];
+	self->_proxyPassword = [aDecoder decodeStringForKey:@"proxyPassword"];
+	self->_proxyPort = [aDecoder decodeUnsignedShortForKey:@"proxyPort"];
+	self->_proxyType = [aDecoder decodeUnsignedIntegerForKey:@"proxyType"];
+	self->_proxyUsername = [aDecoder decodeStringForKey:@"proxyUsername"];
+	self->_serverAddress = [aDecoder decodeStringForKey:@"serverAddress"];
+	self->_serverPort = [aDecoder decodeUnsignedShortForKey:@"serverPort"];
+	self->_primaryEncoding = [aDecoder decodeUnsignedIntegerForKey:@"primaryEncoding"];
+	self->_fallbackEncoding = [aDecoder decodeUnsignedIntegerForKey:@"fallbackEncoding"];
+	self->_cipherSuites = [aDecoder decodeUnsignedIntegerForKey:@"cipherSuites"];
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+	NSParameterAssert(aCoder != nil);
+
 	[aCoder encodeBool:self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 	[aCoder encodeBool:self->_connectionPrefersModernCiphersOnly forKey:@"connectionPrefersModernCiphersOnly"];
 	[aCoder encodeBool:self->_connectionPrefersSecuredConnection forKey:@"connectionPrefersSecuredConnection"];

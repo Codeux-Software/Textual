@@ -36,10 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TVCLogLine.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
@@ -76,18 +72,18 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; //
 @property (readonly, copy) NSString *attributedStringToASCIIFormatting;
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect
-                                  range:(NSRange)limitRange;
+								  range:(NSRange)limitRange;
 @end
 
 #pragma mark -
 
 @interface NSMutableAttributedString (IRCTextFormatter)
 - (void)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
-                           value:(id)value 
-                           range:(NSRange)limitRange;
+						   value:(id)value 
+						   range:(NSRange)limitRange;
 
 - (void)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
-                              range:(NSRange)limitRange;
+							  range:(NSRange)limitRange;
 @end
 
 NS_ASSUME_NONNULL_END

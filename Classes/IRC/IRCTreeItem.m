@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#import "IRCTreeItemPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma clang diagnostic push

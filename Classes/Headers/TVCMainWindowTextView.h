@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "TVCTextViewWithIRCFormatter.h"
 
 NS_ASSUME_NONNULL_BEGIN

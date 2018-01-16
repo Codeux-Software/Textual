@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,8 +20,8 @@
                 <outlet property="contentViewWidthConstraint" destination="cW1-Ut-AEa" id="m2p-Z2-hXq"/>
                 <outlet property="defaultModesTextField" destination="251" id="kwe-lU-JDc"/>
                 <outlet property="defaultTopicTextField" destination="250" id="Hda-fW-5nU"/>
-                <outlet property="disableInlineImagesCheck" destination="279" id="iwc-dc-DN4"/>
-                <outlet property="enableInlineImagesCheck" destination="HBZ-KH-HBg" id="IAK-i2-siX"/>
+                <outlet property="disableInlineMediaCheck" destination="279" id="7I7-HB-2wf"/>
+                <outlet property="enableInlineMediaCheck" destination="HBZ-KH-HBg" id="7cz-Ws-kfR"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="281" id="Nmo-db-2KD"/>
                 <outlet property="ignoreHighlightsCheck" destination="111" id="334"/>
                 <outlet property="notificationsController" destination="9qT-tK-TGk" id="xgI-Z3-Unm"/>
@@ -164,8 +164,8 @@ DQ
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="279">
-                    <rect key="frame" x="23" y="71" width="150" height="18"/>
-                    <buttonCell key="cell" type="check" title="Disable inline images" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
+                    <rect key="frame" x="23" y="71" width="143" height="18"/>
+                    <buttonCell key="cell" type="check" title="Disable inline media" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -178,8 +178,8 @@ DQ
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="HBZ-KH-HBg">
-                    <rect key="frame" x="23" y="71" width="138" height="18"/>
-                    <buttonCell key="cell" type="check" title="Show inline images" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
+                    <rect key="frame" x="23" y="71" width="131" height="18"/>
+                    <buttonCell key="cell" type="check" title="Show inline media" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

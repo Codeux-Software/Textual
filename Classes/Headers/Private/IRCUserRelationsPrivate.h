@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "IRCChannelUser.h"
+#import "IRCUserRelations.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* IRCUserRelations is a class used by IRCUser to store which

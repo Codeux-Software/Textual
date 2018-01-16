@@ -36,9 +36,9 @@
  *********************************************************************** */
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-#import "ARLReceiptLoader.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class ARLReceiptContents;
 
 typedef NS_ENUM(NSUInteger, TLOAppStoreIAPProduct)
 {

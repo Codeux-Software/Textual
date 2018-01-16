@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1027 */
+/* Next unusued key: 1033 */
 
 "BasicLanguage[1001]" = "None";
 "BasicLanguage[1002]" = "Unknown";
@@ -89,3 +89,7 @@
 "BasicLanguage[1027]" = "Loading configuration…";
 "BasicLanguage[1028]" = "Waiting for in-app purchase…";
 "BasicLanguage[1029]" = "Importing preferences…";
+
+"BasicLanguage[1030]" = "Built-in";
+"BasicLanguage[1031]" = "Custom";
+"BasicLanguage[1032]" = "Custom — iCloud Drive";
