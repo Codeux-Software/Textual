@@ -36,19 +36,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "IRCClientConfig.h"
 #import "IRCCommandIndex.h"
 #import "IRCConnection.h"
 #import "IRCTreeItem.h"
-
 #import "TLOEncryptionManager.h"
-
 #import "TVCLogController.h"
 #import "TVCLogLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel, IRCClientConfig, IRCHighlightLogEntry, IRCISupportInfo;
+@class IRCAddressBookEntry, IRCMessage, IRCServer, IRCUser;
 
 typedef NS_ENUM(NSUInteger, IRCClientConnectMode) {
 	IRCClientConnectNormalMode = 0,
@@ -262,6 +260,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (NSString *)formatNickname:(NSString *)nickname inChannel:(nullable IRCChannel *)channel withFormat:(nullable NSString *)format;
 
 - (BOOL)nicknameIsZNCUser:(NSString *)nickname;
+- (BOOL)nickname:(NSString *)nickname isZNCUser:(NSString *)zncNickname;
 - (nullable NSString *)nicknameAsZNCUser:(NSString *)nickname; // Returns nil if not connected to ZNC
 
 - (BOOL)nicknameIsMyself:(NSString *)nickname;
@@ -313,6 +312,8 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 @property (nonatomic, readonly, copy) NSString * _Nonnull encryptionAccountNameForLocalUser;
 - (NSString *)encryptionAccountNameForUser:(NSString *)nickname;
+
+- (void)encryptionAuthenticateUser:(NSString *)nickname;
 #endif
 
 #pragma mark -
@@ -322,12 +323,12 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 // referenceMessage and command cannot be nil together (this throws exceptions)
 - (void)		print:(NSString *)messageBody
 				   by:(nullable NSString *)nickname
-		    inChannel:(nullable IRCChannel *)channel
+			inChannel:(nullable IRCChannel *)channel
 			   asType:(TVCLogLineType)lineType
 			  command:(nullable NSString *)command
 		   receivedAt:(NSDate *)receivedAt
 		  isEncrypted:(BOOL)isEncrypted
-	    escapeMessage:(BOOL)escapeMessage
+		escapeMessage:(BOOL)escapeMessage
 	 referenceMessage:(nullable IRCMessage *)referenceMessage
 	  completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 

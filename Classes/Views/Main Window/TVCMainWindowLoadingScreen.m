@@ -35,6 +35,12 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TVCMainWindowSplitView.h"
+#import "TVCMainWindowTextViewPrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowLoadingScreen.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowLoadingScreenView ()
@@ -115,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self disableBackgroundControlsStepOne];
 
 	NSRect viewFrame = view.frame;
-	
+
 	self.loadingScreenMinimumWidthConstraint.constant = viewFrame.size.width;
 	self.loadingScreenMinimumHeightConstraint.constant = viewFrame.size.height;
 
@@ -148,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.alphaValue = 1.0;
 
 	self.hidden = NO;
-	
+
 	[self displayIfNeeded];
 
 	[self disableBackgroundControlsStepTwo];
@@ -160,7 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)hideView:(NSView *)view animate:(BOOL)animate
 {
 	[self enableBackgroundControlsStepOne];
-	
+
 	self.loadingScreenMinimumWidthConstraint.constant = 0.0;
 	self.loadingScreenMinimumHeightConstraint.constant = 0.0;
 
@@ -237,7 +243,7 @@ NS_ASSUME_NONNULL_BEGIN
 	textField.editable = YES;
 
 	textField.selectable = YES;
-	
+
 	[textField updateSegmentedController];
 }
 

@@ -35,6 +35,16 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TVCMainWindow.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCMemberListCellPrivate.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListUserInfoPopoverPrivate.h"
+#import "TVCMemberListPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
@@ -254,7 +264,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 							   selector:@selector(scrollViewBoundsDidChangeNotification:)
 								   name:NSViewBoundsDidChangeNotification
 								 object:[self scrollViewContentView]];
-	
+
 	[self registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
@@ -269,11 +279,11 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	}
 
 	NSPoint mouseLocation = [NSEvent mouseLocation];
-	
+
 	NSRect mouseLocationFaked = NSMakeRect(mouseLocation.x, mouseLocation.y, 1.0, 1.0);
-	
+
 	NSRect remotePoint = [self.window convertRectFromScreen:mouseLocationFaked];
-	
+
 	NSPoint localPoint = [self convertPoint:remotePoint.origin fromView:nil];
 
 	[self popUserInfoExpansionFrameAtPoint:localPoint ignoreTimerCheck:YES];
@@ -289,52 +299,52 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 - (NSInteger)draggedRow:(id <NSDraggingInfo>)sender
 {
-    NSPoint p = [self convertPoint:[sender draggingLocation] fromView:nil];
-	
-    return [self rowAtPoint:p];
+	NSPoint p = [self convertPoint:[sender draggingLocation] fromView:nil];
+
+	return [self rowAtPoint:p];
 }
 
 - (NSArray *)draggedFiles:(id <NSDraggingInfo>)sender
 {
-    return [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+	return [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
 }
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    return [self draggingUpdated:sender];
+	return [self draggingUpdated:sender];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    NSArray *files = [self draggedFiles:sender];
-	
-    if (files.count > 0 && [self draggedRow:sender] >= 0) {
-        return NSDragOperationCopy;
-    } else {
-        return NSDragOperationNone;
-    }
+	NSArray *files = [self draggedFiles:sender];
+
+	if (files.count > 0 && [self draggedRow:sender] >= 0) {
+		return NSDragOperationCopy;
+	} else {
+		return NSDragOperationNone;
+	}
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSArray *files = [self draggedFiles:sender];
-	
-    return (files.count > 0 && [self draggedRow:sender] >= 0);
+	NSArray *files = [self draggedFiles:sender];
+
+	return (files.count > 0 && [self draggedRow:sender] >= 0);
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSArray *files = [self draggedFiles:sender];
-	
-    if (files.count > 0) {
-        NSInteger row = [self draggedRow:sender];
+	NSArray *files = [self draggedFiles:sender];
 
-        if (row >= 0) {
+	if (files.count > 0) {
+		NSInteger row = [self draggedRow:sender];
+
+		if (row >= 0) {
 			[menuController() memberSendDroppedFiles:files row:row];
 
-            return YES;
-        }
-    }
+			return YES;
+		}
+	}
 
 	return NO;
 }
@@ -396,7 +406,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 - (void)reloadUserInterfaceObjects
 {
 	Class newObjects = NULL;
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		if ([TPCPreferences invertSidebarColors]) {
@@ -413,7 +423,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 			newObjects = [TVCMemberListMavericksLightUserInterface class];
 		}
 	}
-	
+
 	[self.userInterfaceObjects invalidateAllUserMarkBadgeCaches];
 
 	self.userInterfaceObjects = [[newObjects alloc] initWithMemberList:self];

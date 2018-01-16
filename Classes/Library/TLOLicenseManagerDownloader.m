@@ -35,6 +35,14 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TPCApplicationInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TLOLicenseManagerDownloaderPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* URLs for performing certain actions with license keys. */
@@ -124,7 +132,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 	NSDictionary *contextInfo = @{
 		@"receiptData" : receiptData,
 		@"licenseOwnerMacAddress" : macAddress
-    };
+	};
 
 	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestReceiptUpgradeEligibilityType
 								context:contextInfo];

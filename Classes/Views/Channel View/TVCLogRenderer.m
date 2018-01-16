@@ -36,6 +36,27 @@
 
  *********************************************************************** */
 
+#import "GTMEncodeHTML.h"
+#import "NSColorHelper.h"
+#import "NSStringHelper.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCChannelUser.h"
+#import "IRCColorFormat.h"
+#import "IRCHighlightMatchCondition.h"
+#import "IRCUser.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOUnicodeHelper.h"
+#import "TLOLinkParser.h"
+#import "TVCLogController.h"
+#import "TVCLogLine.h"
+#import "TVCLogRenderer.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogRenderer ()
@@ -136,8 +157,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 					NSUInteger colorOffset = [bodyWithAttributes.string
 											  colorComponentsOfCharacter:character
 															  startingAt:characterPosition
-													     foregroundColor:&foregroundColor
-													     backgroundColor:&backgroundColor];
+														 foregroundColor:&foregroundColor
+														 backgroundColor:&backgroundColor];
 
 					if (foregroundColor != nil) {
 						[bodyWithAttributes addAttribute:TVCLogRendererFormattingForegroundColorAttribute value:foregroundColor startingAt:characterPosition];
@@ -690,8 +711,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 			NSString *uniqueIdentifier = linksMapped[linkLocation];
 
 			if (uniqueIdentifier) {
-				templateTokens[@"anchorInlineImageAvailable"] = @(YES);
-				templateTokens[@"anchorInlineImageUniqueID"] = uniqueIdentifier;
+				templateTokens[@"anchorInlineMediaAvailable"] = @(YES);
+				templateTokens[@"anchorInlineMediaUniqueID"] = uniqueIdentifier;
 			}
 		}
 
@@ -739,10 +760,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 				templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 
-				templateTokens[@"inlineNicknameColorNumber"] = nicknameColorStyle;
 				templateTokens[@"inlineNicknameColorStyle"] = nicknameColorStyle;
-
-				templateTokens[@"nicknameColorHashingIsStyleBased"] = @(themeSettings().nicknameColorStyle != TPCThemeSettingsNicknameColorLegacyStyle);
 
 				templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 			}
@@ -898,7 +916,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	[self->_bodyWithAttributes
 	 enumerateAttributesInRange:NSMakeRange(0, stringLength)
-					    options:0
+						options:0
 					 usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange range, BOOL *stop) {
 		 BOOL isFirstFragment = (range.location == 0);
 		 BOOL isLastFragment = ((range.location + range.length) == stringLength);
@@ -925,8 +943,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	[self->_bodyWithAttributes
 		 enumerateAttributesInRange:NSMakeRange(0, string.length)
-						    options:0
-					     usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange range, BOOL *stop) {
+							options:0
+						 usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange range, BOOL *stop) {
 			 NSDictionary *attributesToAdd = [self appKitAttributesFromRendererAttributes:attributes];
 
 			 [finalResult addAttributes:attributesToAdd range:range];
@@ -1076,6 +1094,19 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	return templateRender.removeAllNewlines;
 }
 
++ (NSString *)escapeHTML:(NSString *)html
+{
+	NSParameterAssert(html != nil);
+
+	NSString *stringEscaped = html.gtm_stringByEscapingForHTML;
+
+	if (stringEscaped == nil) {
+		stringEscaped = @"";
+	}
+
+	return stringEscaped;
+}
+
 + (NSString *)escapeStringSimple:(NSString *)string
 {
 	NSParameterAssert(string != nil);
@@ -1090,13 +1121,9 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 {
 	NSParameterAssert(string != nil);
 
-	NSString *stringEscaped = string.gtm_stringByEscapingForHTML;
+	NSString *stringEscaped = [self escapeHTML:string];
 
-	if (stringEscaped == nil) {
-		stringEscaped = @"";
-	}
-
-	return [TVCLogRenderer escapeStringSimple:stringEscaped];
+	return [self escapeStringSimple:stringEscaped];
 }
 
 + (nullable NSString *)stringValueForColor:(id)color usesStyleTag:(BOOL *)usesStyleTag

@@ -409,7 +409,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self setToken:@"%_serverAddress_%" inTokenField:self.filterActionTokenServerAddress];
 }
 
-- (nullable NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard;
+- (nullable NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard
 {
 	NSString *stringContent = pboard.stringContent;
 
@@ -464,7 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return editingString;
 }
 
-- (nullable NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(nullable NSInteger *)selectedIndex;
+- (nullable NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(nullable NSInteger *)selectedIndex
 {
 	if (tokenField == self.filterActionTokenField) {
 		NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
@@ -833,7 +833,7 @@ NS_ASSUME_NONNULL_BEGIN
 		   @"%_Parameter_8_%"
 		];
 	}
-	
+
 	return tokens;
 }
 
@@ -864,7 +864,7 @@ NS_ASSUME_NONNULL_BEGIN
 		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][09]")
 		];
 	}
-	
+
 	return tokens;
 }
 

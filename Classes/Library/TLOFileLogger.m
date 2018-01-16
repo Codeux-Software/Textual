@@ -36,6 +36,14 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TPCPathInfoPrivate.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TVCLogLinePrivate.h"
+#import "TLOFileLoggerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TLOFileLoggerConsoleDirectoryName				= @"Console";
@@ -124,7 +132,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	NSString *stringToWrite = [string stringByAppendingString:@"\x0a"];
-		
+
 	NSData *dataToWrite = [stringToWrite dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 
 	if (dataToWrite) {
@@ -266,7 +274,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *channelName = self.channel.name;
 
 	NSString *basePath = nil;
-	
+
 	if (self.channel == nil) {
 		basePath = [NSString stringWithFormat:@"/%@/%@/", clientName.safeFilename, TLOFileLoggerConsoleDirectoryName];
 	} else if (self.channel.isChannel) {

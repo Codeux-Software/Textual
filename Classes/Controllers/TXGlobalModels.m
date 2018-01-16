@@ -37,6 +37,9 @@
 
 #import <time.h>
 
+#import "TLOLanguagePreferences.h"
+#import "TXGlobalModels.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
@@ -52,9 +55,9 @@ NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString *format)
 	const size_t outputBufferSize = 256;
 
 	char outputBuffer[(outputBufferSize + 1)];
-	
+
 	struct tm *localTime = localtime(&global);
-	
+
 	if (strftime(outputBuffer, outputBufferSize, format.UTF8String, localTime) == 0) {
 		return nil;
 	}
@@ -73,44 +76,44 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 					   NSCalendarUnitMinute			|
 					   NSCalendarUnitSecond);
 	}
-	
+
 	/* Convert calander units to a text rep */
 	NSMutableArray<NSNumber *> *units = [NSMutableArray arrayWithCapacity:6];
-	
+
 	if (orderMatrix & NSCalendarUnitYear) {
 		[units addObject:@(NSCalendarUnitYear)];
 	}
-	
+
 	if (orderMatrix & NSCalendarUnitMonth) {
 		[units addObject:@(NSCalendarUnitMonth)];
 	}
-	
+
 	if (orderMatrix & NSCalendarUnitDay) {
 		[units addObject:@(NSCalendarUnitDay)];
 	}
-	
+
 	if (orderMatrix & NSCalendarUnitHour) {
 		[units addObject:@(NSCalendarUnitHour)];
 	}
-	
+
 	if (orderMatrix & NSCalendarUnitMinute) {
 		[units addObject:@(NSCalendarUnitMinute)];
 	}
-	
+
 	if (orderMatrix & NSCalendarUnitSecond) {
 		[units addObject:@(NSCalendarUnitSecond)];
 	}
-	
+
 	/* Build compare information */
 	NSCalendar *systemCalendar = [NSCalendar currentCalendar];
-	
+
 	NSDate *date1 = [NSDate date];
 
 	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:(-(dateInterval + 1))];
-	
+
 	/* Perform comparison */
 	NSDateComponents *breakdownInfo = [systemCalendar components:orderMatrix fromDate:date1 toDate:date2 options:0];
-	
+
 	if (breakdownInfo == nil) {
 		return nil;
 	}
@@ -130,13 +133,13 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 		}
 
 		NSString *languageKey = nil;
-		
+
 		if (unitValue == 1) { // plurals
 			languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", unit];
 		} else {
 			languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", unit];
 		}
-		
+
 		/* shortValue returns only the first time component */
 		if (shortValue) {
 			return [NSString stringWithFormat:@"%ld %@", unitValue, TXTLS(languageKey)];
@@ -152,7 +155,7 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 			[returnResult appendFormat:@"%ld %@, ", unitValue, TXTLS(languageKey)];
 		}
 	}
-	
+
 	if (returnResult.length > 0) {
 		return [returnResult copy];
 	}
@@ -193,7 +196,7 @@ NSString * _Nullable TXFormatDate(id dateObject, NSDateFormatterStyle dateStyle,
 NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 {
 	static NSDateFormatter *_isoStandardDateFormatter = nil;
-	
+
 	if (_isoStandardDateFormatter == nil) {
 		NSDateFormatter *dateFormatter = [NSDateFormatter new];
 
@@ -202,10 +205,10 @@ NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 		dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
 
 		dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"; //2011-10-19T16:40:51.620Z
-		
+
 		_isoStandardDateFormatter = dateFormatter;
 	}
-	
+
 	return _isoStandardDateFormatter;
 }
 

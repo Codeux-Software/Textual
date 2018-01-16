@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCConnectionConfig;
 
 @interface IRCConnection : NSObject
 @property (readonly, weak) IRCClient *client;

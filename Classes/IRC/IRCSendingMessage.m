@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "IRCCommandIndex.h"
+#import "IRCSendingMessage.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCSendingMessage
@@ -70,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 			// that has a parameter which contains spaces. For example, PRIVMSG
 			// is in the formoat "PRIVMSG #channel :long message" — The message
 			// will have spaces part of it, so we inform the server.
-			
+
 			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:@" "])) {
 				[builtString appendString:@":"];
 			}

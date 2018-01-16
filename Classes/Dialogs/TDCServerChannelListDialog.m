@@ -36,6 +36,15 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TXGlobalModels.h"
+#import "NSTableVIewHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "IRCClient.h"
+#import "TVCBasicTableView.h"
+#import "TDCServerChannelListDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerChannelListDialogEntry : NSObject
@@ -73,7 +82,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ((self = [super init])) {
 		self.client = client;
 		self.clientId = client.uniqueIdentifier;
-		
+
 		[self prepareInitialState];
 
 		return self;
@@ -265,7 +274,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.channelListTable.delegate = nil;
 
 	[self.window saveWindowStateForClass:self.class];
-	
+
 	if ([self.delegate respondsToSelector:@selector(serverChannelDialogWillClose:)]) {
 		[self.delegate serverChannelDialogWillClose:self];
 	}

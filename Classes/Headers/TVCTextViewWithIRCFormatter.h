@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "TLOKeyEventHandler.h"
 
 NS_ASSUME_NONNULL_BEGIN

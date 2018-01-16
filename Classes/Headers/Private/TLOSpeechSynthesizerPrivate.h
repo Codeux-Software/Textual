@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 @interface TLOSpeechSynthesizer : NSObject
 /* If stopped, any items supplied to speak: will be completely ignored. */

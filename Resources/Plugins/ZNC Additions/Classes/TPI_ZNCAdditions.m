@@ -35,9 +35,12 @@
 
  *********************************************************************** */
 
+#import <SecurityInterface/SFCertificateTrustPanel.h>
+
 #import "TPI_ZNCAdditions.h"
 
-#import "TextualApplicationPrivate.h"
+#import "IRCClientPrivate.h"
+#import "TVCMainWindowPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *message = inputObject.messageSequence;
 
-	if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
+	if ([client nickname:sender isZNCUser:@"status"] && [message hasPrefix:@"Disconnected from IRC"]) {
 		/* We listen for ZNC disconnects so that we can terminate channels when we
 		 disconnect from the server ZNC was connected to. ZNC does not localize 
 		 itself so detecting these disconnects is not very hard... */
@@ -149,7 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
 			 [commandString isEqualIgnoringCase:@"ATTACH"])
 	{
 		messageString = messageString.trim;
-		
+
 		IRCChannel *matchedChannel = nil;
 
 		if ([client stringIsChannelName:messageString]) {
@@ -157,7 +160,7 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			matchedChannel = mainWindow().selectedChannel;
 		}
-		
+
 		if (matchedChannel == nil) {
 			return;
 		}
@@ -165,12 +168,12 @@ NS_ASSUME_NONNULL_BEGIN
 		BOOL isAttachEvent = [commandString isEqualIgnoringCase:@"ATTACH"];
 
 		matchedChannel.autoJoin = isAttachEvent;
-		
+
 		if (isAttachEvent) {
 			[client joinUnlistedChannel:matchedChannel.name];
 		} else {
 			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, matchedChannel.name]];
-		
+
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", matchedChannel.name) inChannel:matchedChannel];
 		}
 	}
@@ -200,19 +203,22 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		return nil; // Ignore this event
 	}
-	
+
 	return input;
 }
 
+#warning TODO: Update buffextras support to work with changes to znc/znc git repository.
 - (nullable IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
 	/* Define user information */
-	NSMutableArray *paramsMutable = [input.params mutableCopy];
+	NSMutableArray<NSString *> *paramsMutable = [input.params mutableCopy];
 
-	NSMutableString *stringIn = [paramsMutable[1] mutableCopy];
+	/* We have to normalize spaces for input from buffextras because as of version
+	 1.7, there are fixed width spaces in the incoming messages that throw off parser. */
+	NSMutableString *stringIn = [paramsMutable[1].normalizeSpaces mutableCopy];
 
 	NSString *hostmask = stringIn.token;
-	
+
 	if (hostmask.length == 0) {
 		return input; // Return original; bad input
 	}
@@ -222,7 +228,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *nicknameInt = nil;
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
-	
+
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
 		if (NSObjectsAreEqual(nicknameInt, client.userNickname)) {
 			return nil; // Do not post these events for self
@@ -242,26 +248,15 @@ NS_ASSUME_NONNULL_BEGIN
 	senderMutable.hostmask = hostmask;
 
 	/* Process string */
+	/* The output of the buffextras module is not guaranteed.
+	 The ZNC author(s) have stated that they shouldn't be treated as such.
+	 ZNC 1.7 changed it so that the output of the module can be localized.
+	 We will ever only handle English here to reduce footprint. */
 	IRCMessageMutable *inputMutable = [input mutableCopy];
+	
+	NSArray<NSString *> *stringInComponents = nil;
 
-	if ([stringIn hasPrefix:@"is now known as "]) {
-		/* Begin nickname change */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"is now known as ").length)];
-		
-		NSString *newNickname = stringIn.token;
-
-		if (newNickname.length == 0) {
-			return input;
-		}
-		
-		inputMutable.command = IRCPrivateCommandIndex("nick");
-
-		[paramsMutable removeObjectAtIndex:1];
-		
-		[paramsMutable addObject:newNickname];
-		/* End nickname change */
-	}
-	else if ([stringIn isEqualToString:@"joined"])
+	if ([stringIn isEqualToString:@"joined"])
 	{
 		/* Begin channel join */
 		inputMutable.command = IRCPrivateCommandIndex("join");
@@ -269,94 +264,90 @@ NS_ASSUME_NONNULL_BEGIN
 		[paramsMutable removeObjectAtIndex:1];
 		/* End channel join */
 	}
-	else if ([stringIn hasPrefix:@"set mode: "])
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^is now known as ([^\\s]+)$" withoutCase:NO substringGroups:YES] == 2)
 	{
-		/* Begin mode processing */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"set mode: ").length)];
+		/* Begin nickname change */
+		NSString *newNickname = stringInComponents[1];
 
-		NSString *modeChanges = stringIn.token;
-
-		if (modeChanges.length == 0) {
-			return input;
-		}
-
-		inputMutable.command = IRCPrivateCommandIndex("mode");
+		inputMutable.command = IRCPrivateCommandIndex("nick");
 
 		[paramsMutable removeObjectAtIndex:1];
-		
-		[paramsMutable addObject:modeChanges];
 
-		[paramsMutable addObject:stringIn];
-		/* End mode processing */
+		[paramsMutable addObject:newNickname];
+		/* End nickname change */
 	}
-	else if ([stringIn hasPrefix:@"quit with message: ["] && [stringIn hasSuffix:@"]"])
-	{
-		/* Begin quit message */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"quit with message: [").length)];	// Remove leading
-
-		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];				// Remove trailing
-		
-		inputMutable.command = IRCPrivateCommandIndex("quit");
-		
-		[paramsMutable removeObjectAtIndex:1];
-		
-		[paramsMutable addObject:stringIn];
-		/* End quit message */
-	}
-	else if ([stringIn hasPrefix:@"parted with message: ["] && [stringIn hasSuffix:@"]"])
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(parted with message: \\[(.*)\\]|parted: (.*))$" withoutCase:NO substringGroups:YES] == 3)
 	{
 		/* Begin part message */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"parted with message: [").length)];		// Remove leading
-
-		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];					// Remove trailing
-		
+		NSString *partMessage = stringInComponents[2];
+	
 		inputMutable.command = IRCPrivateCommandIndex("part");
 		
 		[paramsMutable removeObjectAtIndex:1];
 		
-		[paramsMutable addObject:stringIn];
+		[paramsMutable addObject:partMessage];
 		/* End part message */
 	}
-	else if ([stringIn hasPrefix:@"kicked "] && [stringIn hasSuffix:@"]"])
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(quit with message: \\[(.*)\\]|quit: (.*))$" withoutCase:NO substringGroups:YES] == 3)
+	{
+		/* Begin quit message */
+		NSString *quitMessage = stringInComponents[2];
+
+		inputMutable.command = IRCPrivateCommandIndex("quit");
+		
+		[paramsMutable removeObjectAtIndex:1];
+		
+		[paramsMutable addObject:quitMessage];
+		/* End quit message */
+	}
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^(kicked ([^\\s]+) with reason: (.*)|kicked ([^\\s]+) Reason: \\[(.*)\\])$" withoutCase:NO substringGroups:YES] == 4)
 	{
 		/* Begin kick message */
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"kicked ").length)];		// Remove leading
-
-		[stringIn deleteCharactersInRange:NSMakeRange((stringIn.length - 1), 1)];	// Remove trailing
+		NSString *kickedNickname = stringInComponents[2];
 		
-		NSString *kickedNickname = stringIn.token;
+		NSString *kickReason = stringInComponents[3];
 		
-		if (kickedNickname.length == 0 || [stringIn hasPrefix:@"Reason: ["] == NO) {
-			return input;
-		}
-		
-		[stringIn deleteCharactersInRange:NSMakeRange(0, (@"Reason: [").length)];
-
 		inputMutable.command = IRCPrivateCommandIndex("kick");
 		
 		[paramsMutable removeObjectAtIndex:1];
 		
 		[paramsMutable addObject:kickedNickname];
-
-		[paramsMutable addObject:stringIn];
+		
+		[paramsMutable addObject:kickReason];
 		/* End kick message. */
+	}
+	else if ([XRRegularExpression matches:&stringInComponents inString:stringIn withRegex:@"^set mode: ([^\\s]+)( .*)?$" withoutCase:NO substringGroups:YES] >= 2)
+	{
+		/* Begin mode processing */
+		NSString *modeChanges = stringInComponents[1];
+		
+		if (stringInComponents.count == 3) {
+			modeChanges = [modeChanges stringByAppendingString:stringInComponents[2]];
+		}
+
+		inputMutable.command = IRCPrivateCommandIndex("mode");
+
+		[paramsMutable removeObjectAtIndex:1];
+
+		[paramsMutable addObject:modeChanges];
+		/* End mode processing */
 	}
 	else if ([stringIn hasPrefix:@"changed the topic to: "])
 	{
 		/* Begin topic change */
 		/* We get the latest topic on join so we tell Textual to ignore this line. */
-		
+
 		return nil;
 		/* End topic change */
 	}
 
 	/* Return modified input */
 	inputMutable.isPrintOnlyMessage = YES;
-	
+
 	inputMutable.params = paramsMutable;
 
 	inputMutable.sender = senderMutable;
-	
+
 	return inputMutable;
 }
 
@@ -375,12 +366,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	IRCPrefix *senderInfo = input.sender;
-	
+
 	NSString *sender = senderInfo.nickname;
-	
-	if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"buffextras"])) {
+
+	if ([client nickname:sender isZNCUser:@"buffextras"]) {
 		return [self interceptBufferExtrasZNCModule:input forClient:client];
-	} else if (NSObjectsAreEqual(sender, [client nicknameAsZNCUser:@"playback"])) {
+	} else if ([client nickname:sender isZNCUser:@"playback"]) {
 		return [self interceptBufferExtrasPlaybackModule:input forClient:client];
 	}
 
@@ -401,7 +392,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-        [channel deactivate];
+		[channel deactivate];
 	}
 
 	[mainWindow() reloadTreeGroup:client];

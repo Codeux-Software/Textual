@@ -36,7 +36,7 @@ touch buildLog.txt
 echo "<h2>Changes in ${BUNDLE_VERSION_LONG}</h2>" >> buildLog.txt
 echo "<ul>" >> buildLog.txt
 
-git log --since='24 hours ago' --pretty=format:'<li>%s</li>' >> buildLog.txt
+git log --since='48 hours ago' --pretty=format:'<li>%s</li>' >> buildLog.txt
 
 echo "</ul>" >> buildLog.txt
 

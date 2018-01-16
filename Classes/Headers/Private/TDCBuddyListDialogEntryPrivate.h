@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCAddressBookUserTracking.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 @interface TDCBuddyListDialogEntry : NSObject
 @property (nonatomic, strong) IRCClient *client;

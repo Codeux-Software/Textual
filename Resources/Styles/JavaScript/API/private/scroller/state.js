@@ -84,7 +84,7 @@ _TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 	var clientHeight = scrolledElement.clientHeight;
 
 	var scrollPositionCurrent = (scrolledElement.scrollTop + clientHeight);
-	
+
 	var scrollPositionPrevious = TextualScroller.scrollPositionCurrentValue;
 
 	/* If nothing changed, we ignore the event.
@@ -95,21 +95,21 @@ _TextualScroller._documentScrolledCallback = function() /* PRIVATE */
 	if (scrollHeightPrevious === scrollHeightCurrent &&
 		scrollPositionPrevious === scrollPositionCurrent) 
 	{
-		return;		
+		return;
 	}
 
 	/* Even if user is elastic scrolling, we want to record
 	the latest scroll height values. */
 	TextualScroller.scrollHeightPreviousValue = scrollHeightPrevious;
 	TextualScroller.scrollHeightCurrentValue = scrollHeightCurrent;
-	
+
 	/* Ignore elastic scrolling */
 	if (scrollPositionCurrent < clientHeight ||
 		scrollPositionCurrent > scrollHeightCurrent) 
 	{
 		return;
 	}
-	
+
 	/* Only record scroll position changes if we weren't elastic scrolling. */
 	TextualScroller.scrollPositionPreviousValue = scrollPositionPrevious;
 	TextualScroller.scrollPositionCurrentValue = scrollPositionCurrent;
@@ -160,15 +160,15 @@ TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 {
 	var scrollHeightDifference = (_TextualScroller._restoreScrollHeightSecondValue - 
 								  _TextualScroller._restoreScrollHeightFirstValue);
-	
+
 	if (scrollHeightDifference === 0) {
 		return;
 	}
 
 	var scrolledElement = _TextualScroller._scrolledElement;
-	
+
 	var scrollTo = 0;
-	
+
 	if (_TextualScroller._restoreScrolledUpwards === false) {
 		scrollTo = (scrolledElement.scrollHeight - scrollHeightDifference);
 	} else {
@@ -183,7 +183,7 @@ TextualScroller.restoreScrollPosition = function() /* PUBLIC */
 
 	_TextualScroller._restoreScrollHeightFirstValue = undefined;
 	_TextualScroller._restoreScrollHeightSecondValue = undefined;
-	
+
 	_TextualScroller._restoreScrolledUpwards = undefined;
 };
 
@@ -247,7 +247,7 @@ Element.prototype.isScrolledToBottom = function() /* PUBLIC */
 
 Element.prototype.scrollToBottom = function() /* PUBLIC */
 {
-	this.scrollTop = this.scrollHeight;	
+	this.scrollTop = this.scrollHeight;
 };
 
 /* ************************************************** */
@@ -259,7 +259,7 @@ TextualScroller.scrollElementToCenter = function(element) /* PUBLIC */
 	var scrolledElement = _TextualScroller._scrolledElement;
 
 	var scrollCenter = element.scrollCenterIn(scrolledElement);
-	
+
 	scrolledElement.scrollTop = scrollCenter;
 };
 
@@ -291,7 +291,7 @@ TextualScroller.isScrolledToBottom = function() /* PUBLIC */
 	if (_TextualScroller._performScrollTimeout) {
 		return true;
 	}
-	
+
 	if (!TextualScroller.userScrolled) {
 		return true;
 	}
@@ -305,7 +305,7 @@ TextualScroller.scrollToBottom = function() /* PUBLIC */
 {
 	var scrolledElement = _TextualScroller._scrolledElement;
 
-	scrolledElement.scrollToBottom();	
+	scrolledElement.scrollToBottom();
 };
 
 /* ************************************************** */
@@ -348,25 +348,25 @@ _TextualScroller.bindToBestElement = function()
 		if (window.getComputedStyle(element).overflowY === "hidden") {
 			return false;
 		}
-		
+
 		TextualScroller.bindToElement(element);
-		
+
 		return true;
 	});
-	
+
 	if (bindToElement(document.body)) {
 		console.log("Binding to document body");
-		
+
 		return;
 	} else if (bindToElement(Textual.documentBodyElement())) {
 		console.log("Binding to #body_home");
-		
+
 		return;
 	} else if (bindToElement(MessageBuffer.bufferElement())) {
 		console.log("Binding to #message_buffer");
-		
+
 		return;
 	}
-	
+
 	console.error("No element to bind to. Manually call TextualScroller.bindToElement()");
 };

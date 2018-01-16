@@ -90,7 +90,7 @@
 "Prompts[1110][3]" = "Use Existing Connection";
 "Prompts[1110][4]" = "Create New Connection";
 
-"Prompts[1111][1]" = "WARNING: The inline image feature may leak your IP address if you do not have a system-wide proxy setup";
+"Prompts[1111][1]" = "WARNING: The inline media feature may leak your IP address if you do not have a system-wide proxy setup";
 "Prompts[1111][2]" = "Click “Configure Proxy” to open System Preferences.";
 "Prompts[1111][3]" = "Configure Proxy";
 
@@ -117,6 +117,7 @@
 
 "Prompts[1118][1]" = "The style named “%@” is not designed to work with this version of Textual";
 "Prompts[1118][2]" = "Some features will not work correctly with this style selected.";
+"Prompts[1118][3]" = "Change Style";
 
 "Prompts[1121][1]" = "Textual is using an encrypted connection to “%@“";
 "Prompts[1121][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";

@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TVCMainWindow.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSView (TXViewHelperPrivate)
@@ -142,6 +144,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 
 @implementation NSCell (TXCellHelperPrivate)
+
+- (nullable NSWindow *)window
+{
+	return self.controlView.window;
+}
 
 - (nullable TVCMainWindow *)mainWindow
 {

@@ -36,6 +36,18 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "IRCWorld.h"
+#import "TPCApplicationInfoPrivate.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesUserDefaultsLocal.h"
+#import "TPCPreferencesUserDefaultsMigratePrivate.h"
+#import "TPCPreferencesReloadPrivate.h"
+#import "TPCResourceManager.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "TPCPreferencesLocalPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCPreferencesThemeNameDefaultsKey	= @"Theme -> Name";
@@ -49,7 +61,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey = @"Theme 
 
 NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
-@implementation TPCPreferences
+@implementation TPCPreferences (TPCPreferencesLocal)
 
 #pragma mark -
 #pragma mark Default Identity
@@ -231,16 +243,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
 }
 
-+ (BOOL)nicknameColorHashingComputesRGBValue
-{
-	return [RZUserDefaults() boolForKey:@"NicknameColorHashingComputesRGBValue"];
-}
-
-+ (void)setNicknameColorHashingComputesRGBValue:(BOOL)nicknameColorHashingComputesRGBValue
-{
-	[RZUserDefaults() setBool:nicknameColorHashingComputesRGBValue forKey:@"NicknameColorHashingComputesRGBValue"];
-}
-
 + (BOOL)conversationTrackingIncludesUserModeSymbol
 {
 	return [RZUserDefaults() boolForKey:@"ConversationTrackingIncludesUserModeSymbol"];
@@ -369,6 +371,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)showInlineImages
 {
+	return [TPCPreferences showInlineMedia];
+}
+
++ (BOOL)showInlineMedia
+{
 	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Inline Media"];
 }
 
@@ -419,7 +426,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSUInteger)trackUserAwayStatusMaximumChannelSize
 {
-    return [RZUserDefaults() unsignedIntegerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
 }
 
 + (TXTabKeyAction)tabKeyAction
@@ -545,7 +552,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSParameterAssert(value != nil);
 
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameDefaultsKey];
-	
+
 	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 }
 
@@ -575,7 +582,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSParameterAssert(value != nil);
 
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeFontNameDefaultsKey];
-	
+
 	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 }
 
@@ -729,53 +736,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 + (BOOL)tabCompletionCutForwardToFirstWhitespace
 {
 	return [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
-}
-
-#pragma mark -
-#pragma mark Inline Image Size
-
-+ (TXUnsignedLongLong)inlineImagesMaxFilesize
-{
-	NSUInteger filesizeTag = [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumFilesize"];
-
-	switch (filesizeTag) {
-#define _dv(key, value)		case (key): { return (value); }
-
-		_dv(1, (TXUnsignedLongLong)1048576) // 1 MB
-		_dv(2, (TXUnsignedLongLong)2097152) // 2 MB
-		_dv(3, (TXUnsignedLongLong)3145728) // 3 MB
-		_dv(4, (TXUnsignedLongLong)4194304) // 4 MB
-		_dv(5, (TXUnsignedLongLong)5242880) // 5 MB
-		_dv(6, (TXUnsignedLongLong)10485760) // 10 MB
-		_dv(7, (TXUnsignedLongLong)15728640) // 15 MB
-		_dv(8, (TXUnsignedLongLong)20971520) // 20 MB
-		_dv(9, (TXUnsignedLongLong)52428800) // 50 MB
-		_dv(10, (TXUnsignedLongLong)104857600) // 100 MB
-
-#undef _dv
-	}
-
-	return (TXUnsignedLongLong)2097152; // 2 MB
-}
-
-+ (NSUInteger)inlineImagesMaxWidth
-{
-	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaScalingWidth"];
-}
-
-+ (NSUInteger)inlineImagesMaxHeight
-{
-	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumHeight"];
-}
-
-+ (void)setInlineImagesMaxWidth:(NSUInteger)value
-{
-	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaScalingWidth"];
-}
-
-+ (void)setInlineImagesMaxHeight:(NSUInteger)value
-{
-	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaMaximumHeight"];
 }
 
 #pragma mark -
@@ -980,7 +940,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 		return NO;
 	}
 
-    return [RZUserDefaults() boolForKey:eventKey];
+	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event
@@ -1297,7 +1257,20 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 + (NSDictionary<NSString *, id> *)defaultPreferences
 {
-	return [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSRegistrationDomain];
+	/* Note added October 2017:
+
+	 I wrote this code a year ago and today (when the note was written),
+	 I took another look at it. 95% of defaults are registered with
+	 RZUserDefaults, not NSUserDefaults. So why has this code never
+	 created a problem?
+
+	 After performing more research, it turns out the registration domain
+	 is app wide. It doesn't care which instance of NSUserDefaults you
+	 set it on or read it from. It will be consistent app wide.
+
+	 This is nothing exciting. I documenting this more for my own sanity. */
+
+	return [RZUserDefaults() volatileDomainForName:NSRegistrationDomain];
 }
 
 + (void)registerDynamicDefaults

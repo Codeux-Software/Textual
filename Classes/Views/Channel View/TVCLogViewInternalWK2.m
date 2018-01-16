@@ -40,6 +40,14 @@
 #include <objc/message.h>
 #include <objc/runtime.h>
 
+#import "IRCChannel.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCLogController.h"
+#import "TVCLogPolicyPrivate.h"
+#import "TVCLogScriptEventSinkPrivate.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogViewInternalWK2.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _maximumProcessCount			8
@@ -97,7 +105,9 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		}
 
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"encryptionAuthenticateUser"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"inlineMediaEnabledForView"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"loadInlineMedia"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"localUserHostmask"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"localUserNickname"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"logToConsole"];
@@ -123,7 +133,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setNickname"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setSelection"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setURLAddress"];
-		
+
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"showInAppPurchaseWindow"];
 #endif
@@ -445,6 +455,16 @@ create_normal_pool:
 }
 
 - (void)redrawView
+{
+	;
+}
+
+- (void)resetScrollerPosition
+{
+	;
+}
+
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
 {
 	;
 }

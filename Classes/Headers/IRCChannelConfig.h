@@ -4,7 +4,7 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
+
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
@@ -35,8 +35,6 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
-
-#import "TextualApplication.h"
 
 #import "TLOGrowlController.h"
 
@@ -104,7 +102,6 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 @property (nonatomic, copy, readwrite, nullable) NSString *defaultModes;
 @property (nonatomic, copy, readwrite, nullable) NSString *defaultTopic;
 @property (nonatomic, copy, readwrite, nullable) NSString *secretKey;
-
 
 - (void)setSound:(nullable NSString *)value forEvent:(TXNotificationType)event;
 

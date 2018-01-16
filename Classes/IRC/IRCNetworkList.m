@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCResourceManager.h"
+#import "IRCNetworkList.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCNetworkList ()

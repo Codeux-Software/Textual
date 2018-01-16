@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TVCComboBoxWithValueValidation.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCComboBoxWithValueValidation ()
@@ -106,11 +109,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (stringValue.length == 0) {
-		if (       self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
+		if (	   self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
 			return self.defualtValue;
 		}
 	}
-	
+
 	return stringValue;
 }
 
@@ -150,11 +153,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification
 {
 	self.lastOperationWasPredefinedSelection = YES;
-	
+
 	[self performValidation];
-	
+
 	[self informCallbackTextDidChange];
-	
+
 	[self recalculatePositionOfClipView];
 }
 
@@ -171,9 +174,9 @@ NS_ASSUME_NONNULL_BEGIN
 	self.lastOperationWasPredefinedSelection = NO;
 
 	[self performValidation];
-	
+
 	[self informCallbackTextDidChange];
-	
+
 	[self recalculatePositionOfClipView];
 }
 
@@ -248,7 +251,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self.cell recalculatePositionOfClipView:clipView];
-	
+
 }
 
 @end
@@ -274,9 +277,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)correctedWidthForClipViewRect
 {
 	NSRect parentRect = self.parentViewFrame;
-	
+
 	CGFloat parentWidth = NSWidth(parentRect);
-	
+
 	if (self.onlyShowStatusIfErrorOccurs) {
 		if (self.parentValueIsValid) {
 			return (parentWidth - 24.0);
@@ -298,7 +301,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Look at all those magic numbers... */
 	CGFloat rightEdge = (NSMaxX(aRect) - 40.0);
 
-	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan) && self.mainWindow.runningInHighResolutionMode) {
+	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan) && self.window.runningInHighResolutionMode) {
 		return NSMakeRect(rightEdge, 5.0, 14.0, 14.0);
 	} else if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		return NSMakeRect(rightEdge, 6.0, 14.0, 14.0);
@@ -311,19 +314,19 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if (self.parentValueIsValid == NO) {
 		NSRect backgroundFrame = cellFrame;
-		
+
 		backgroundFrame.origin.x += 1.0;
 		backgroundFrame.origin.y += 1.0;
-		
+
 		backgroundFrame.size.width -= 2.0;
 		backgroundFrame.size.height -= 2.0;
 
 		NSColor *backgroundColor = self.erroneousValueBackgroundColor;
-		
+
 		NSBezierPath *backgroundFill = [NSBezierPath bezierPathWithRect:backgroundFrame];
-		
+
 		[backgroundColor set];
-		
+
 		[backgroundFill fill];
 	}
 
@@ -333,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	[super drawWithFrame:cellFrame inView:controlView];
-	
+
 	/* Maybe not draw icon */
 	if (self.onlyShowStatusIfErrorOccurs) {
 		if (self.parentValueIsValid) {
@@ -349,10 +352,10 @@ NS_ASSUME_NONNULL_BEGIN
 	} else if (self.parentValueIsEmpty == NO) {
 		statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
 	}
-	
+
 	if (statusImage) {
 		NSRect statusImageDrawRect = [self erroneousValueBadgeIconRectInParentRect:cellFrame];
-		
+
 		[statusImage drawInRect:statusImageDrawRect
 					   fromRect:NSZeroRect
 					  operation:NSCompositeSourceOver
@@ -369,39 +372,39 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 {
 	[super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
-	
+
 	[self recalculatePositionOfClipView];
 }
 
 - (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(nullable id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
 	[super selectWithFrame:aRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
-	
+
 	[self recalculatePositionOfClipView];
 }
 
 - (NSRect)drawingRectForBounds:(NSRect)theRect
 {
 	NSRect fixedRect = [super drawingRectForBounds:theRect];
-	
+
 	return [self correctedDrawingRect:fixedRect];
 }
 
 - (NSRect)titleRectForBounds:(NSRect)theRect
 {
 	NSRect fixedRect = [super titleRectForBounds:theRect];
-	
+
 	return [self correctedDrawingRect:fixedRect];
 }
 
 - (void)recalculatePositionOfClipView:(NSClipView *)clipView
 {
 	NSRect clipViewRect = clipView.frame;
-	
+
 	clipViewRect.size.width = [self correctedWidthForClipViewRect];
-	
+
 	clipView.frame = clipViewRect;
-	
+
 	[self.parentField resetCursorRects];
 }
 

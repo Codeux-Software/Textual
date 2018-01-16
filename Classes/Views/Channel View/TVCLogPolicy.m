@@ -36,6 +36,18 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "IRCChannel.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOpenLink.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesLocal.h"
+#import "TPCThemeController.h"
+#import "TVCLogController.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogPolicyPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* Specific menu items are gathered and inserted at specific locations */

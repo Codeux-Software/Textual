@@ -87,6 +87,14 @@
 
 - (void)__tpi_encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
+#define _callback(_encodedString_, _wasEncrypted_) 	\
+	if (encodingCallback) { 	\
+		encodingCallback(messageBody, _wasEncrypted_); 	\
+	} 	\
+	if (injectionCallback) { 	\
+		injectionCallback(_encodedString_); 	\
+	} 	\
+
 	if ([TPIBlowfishEncryption isPluginEnabled] == NO) {
 		[self __tpi_encryptMessage:messageBody directedAt:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
 
@@ -96,12 +104,16 @@
 	IRCChannel *targetChannel = [self findChannel:messageTo];
 
 	if (targetChannel == nil) {
+		_callback(messageBody, NO);
+
 		return;
 	}
 
 	NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
 
 	if (encryptionKey == nil) {
+		_callback(messageBody, NO);
+
 		return;
 	}
 
@@ -115,17 +127,18 @@
 		return;
 	}
 
-	if (encodingCallback) {
-		encodingCallback(messageBody, YES);
-	}
+	_callback(encodedString, YES);
 
-	if (injectionCallback) {
-		injectionCallback(encodedString);
-	}
+#undef _callback
 }
 
 - (void)__tpi_decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom target:(NSString *)target decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
+#define _callback(_decodedString_, _wasEncrypted_) 	\
+	if (decodingCallback) { 	\
+		decodingCallback(_decodedString_, _wasEncrypted_); 	\
+	}
+
 	if ([TPIBlowfishEncryption isPluginEnabled] == NO) {
 		[self __tpi_decryptMessage:messageBody from:messageFrom target:target decodingCallback:decodingCallback];
 
@@ -135,6 +148,8 @@
 	if ([messageBody hasPrefix:@"+OK "] == NO &&
 		[messageBody hasPrefix:@"mcps"] == NO)
 	{
+		_callback(messageBody, NO);
+
 		return;
 	}
 
@@ -147,12 +162,16 @@
 	}
 
 	if (targetChannel == nil) {
+		_callback(messageBody, NO);
+
 		return;
 	}
 
 	NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
 
 	if (encryptionKey == nil) {
+		_callback(messageBody, NO);
+
 		return;
 	}
 
@@ -174,9 +193,9 @@
 		/* Do not return for this. This is not a fatal error. */
 	}
 
-	if (decodingCallback) {
-		decodingCallback(decodedString, YES);
-	}
+	_callback(decodedString, YES);
+
+#undef _callback
 }
 
 @end

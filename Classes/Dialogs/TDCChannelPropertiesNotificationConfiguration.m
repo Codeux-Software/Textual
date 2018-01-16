@@ -35,7 +35,9 @@
 
  *********************************************************************** */
 
+#import "IRCChannelConfig.h"
 #import "TDCChannelPropertiesSheetInternal.h"
+#import "TDCChannelPropertiesNotificationConfigurationPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

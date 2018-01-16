@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class TXMasterController, TPCThemeController;
 
 #define masterController()			[self masterController]
 #define menuController()			[masterController() menuController]
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define themeSettings()				[themeController() customSettings]
 
-TEXTUAL_EXTERN NSString *TXErrorDomain;
+TEXTUAL_EXTERN NSString * const TXErrorDomain;
 
 @interface TXSharedApplication : NSObject
 + (TPCThemeController *)sharedThemeController;

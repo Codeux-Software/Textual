@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "NSColorHelper.h"
+#import "TVCServerListMavericksUserInterfacePrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCServerListMavericksLightUserInterface

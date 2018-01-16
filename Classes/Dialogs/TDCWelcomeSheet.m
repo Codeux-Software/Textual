@@ -36,6 +36,17 @@
 
  *********************************************************************** */
 
+#import "NSStringHelper.h"
+#import "IRCChannelConfig.h"
+#import "IRCClientConfig.h"
+#import "IRCNetworkList.h"
+#import "IRCServer.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCBasicTableView.h"
+#import "TVCComboBoxWithValueValidation.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCWelcomeSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCWelcomeSheet ()
@@ -64,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return self;
 	}
-	
+
 	return nil;
 }
 
@@ -167,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableArray<IRCChannelConfig *> *channelList = [NSMutableArray array];
 
 	NSMutableArray<NSString *> *channelsAdded = [NSMutableArray array];
-	
+
 	for (NSString *channel in self.channelList) {
 		NSString *channelName = channel.trim;
 
@@ -202,13 +213,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onAddChannel:(id)sender
 {
 	[self.channelList addObject:@""];
-	
+
 	[self.channelTable reloadData];
-	
+
 	NSInteger rowToEdit = (self.channelList.count - 1);
-	
+
 	[self.channelTable selectItemAtIndex:rowToEdit];
-	
+
 	[self.channelTable editColumn:0 row:rowToEdit withEvent:nil select:YES];
 }
 
@@ -223,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.channelList removeObjectAtIndex:selectedRow];
 
 	[self.channelTable reloadData];
-		
+
 	NSInteger channelListCount = self.channelList.count;
 
 	if (selectedRow > channelListCount) {
@@ -267,7 +278,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *editedString = [note.object textStorage].string;
 
 	self.channelList[editedRow] = [editedString copy];
-	
+
 	[self.channelTable reloadData];
 
 	[self.channelTable selectItemAtIndex:editedRow];

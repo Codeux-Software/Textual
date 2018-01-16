@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPathInfo : NSObject
@@ -69,6 +67,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, class) NSString *applicationTemporary;
 @property (readonly, class) NSURL *applicationTemporaryURL;
+
+@property (readonly, class) NSString *applicationTemporaryProcessSpecific;
+@property (readonly, class) NSURL *applicationTemporaryProcessSpecificURL;
 
 @property (readonly, class) NSString *bundledExtensions;
 @property (readonly, class) NSURL *bundledExtensionsURL;

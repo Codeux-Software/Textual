@@ -37,6 +37,15 @@
 
 #include <objc/message.h>
 
+#import "TPCThemeController.h"
+#import "TPCThemeSettings.h"
+#import "TVCLogController.h"
+#import "TVCLogPolicyPrivate.h"
+#import "TVCLogScriptEventSinkPrivate.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCWK1AutoScrollerPrivate.h"
+#import "TVCLogViewInternalWK1.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogViewInternalWK1 ()
@@ -269,6 +278,16 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	}
 
 	[self.autoScroller redrawFrame];
+}
+
+- (void)resetScrollerPosition
+{
+	[self.autoScroller restoreScrollerPosition];
+}
+
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
+{
+	[self.autoScroller resetScrollerPositionTo:scrolledToBottom];
 }
 
 - (void)saveScrollerPosition

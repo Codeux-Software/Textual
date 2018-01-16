@@ -52,7 +52,7 @@ ConversationTracking.trackedNicknames = [];
 ConversationTracking.nicknameSingleClickEventCallback = function(senderElement)
 {
 	/* This is called when .sender is clicked */
-	var nickname = senderElement.getAttribute("nickname");
+	var nickname = senderElement.dataset.nickname;
 
 	/* Toggle status for nickname */
 	var trackingIndex = ConversationTracking.trackedNicknames.indexOf(nickname);
@@ -64,23 +64,23 @@ ConversationTracking.nicknameSingleClickEventCallback = function(senderElement)
 	}
 
 	/* Gather basic information */
-    var documentBody = Textual.documentBodyElement();
+	var documentBody = Textual.documentBodyElement();
 
-    var plainTextLines = documentBody.querySelectorAll('div[ltype="privmsg"], div[ltype="action"]');
+	var plainTextLines = documentBody.querySelectorAll('div[data-line-type="privmsg"], div[data-line-type="action"]');
 
 	/* Update all elements of the DOM matching conditions */
-    for (var i = 0; i < plainTextLines.length; i++) {
-        var lineSender = plainTextLines[i].querySelector(".sender");
+	for (var i = 0; i < plainTextLines.length; i++) {
+		var lineSender = plainTextLines[i].querySelector(".sender");
 
-        if (lineSender && lineSender.getAttribute("nickname") === nickname) {
+		if (lineSender && lineSender.dataset.nickname === nickname) {
 			ConversationTracking.toggleSelectionStatusForSenderElement(lineSender);
-        }
-    }
+		}
+	}
 };
 
 ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 {
-	var elementType = lineElement.getAttribute("ltype");
+	var elementType = lineElement.dataset.lineType;
 
 	/* We only want to target plain text messages */
 	if (elementType === "privmsg" ||
@@ -91,7 +91,7 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 
 		if (senderElement) {
 			/* Is this a tracked nickname? */
-			var nickname = senderElement.getAttribute("nickname");
+			var nickname = senderElement.dataset.nickname;
 
 			if (ConversationTracking.isNicknameTracked(nickname) === false) {
 				return;
@@ -105,27 +105,9 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 
 ConversationTracking.toggleSelectionStatusForSenderElement = function(senderElement)
 {
-	var testElement = (function(element) {
-		if (element.id && 
-			element.id.indexOf("line") === 0 &&
-			element.classList &&
-			element.classList.contains("line")) 
-		{
-			return true;
-		}
-		
-		return false;
-	});
-	
-	var currentElement = senderElement;
-	
-	while (currentElement = currentElement.parentNode) {
-		if (testElement(currentElement)) {
-			break;
-		}
-	}
+	var line = senderElement.lineContainer();
 
-	currentElement.classList.toggle("selectedUser");
+	line.classList.toggle("selectedUser");
 };
 
 /* Helper functions */

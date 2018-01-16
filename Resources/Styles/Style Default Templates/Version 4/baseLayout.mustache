@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset={{userConfiguredTextEncoding}}">
+
+		<link rel="stylesheet" type="text/css" href="{{activeStyleAbsolutePath}}/design.css?{{cacheToken}}" charset="UTF-8">
+
+		<link rel="stylesheet" type="text/css" href="{{applicationTemplatesPath}}/baseLayout.css?{{cacheToken}}" charset="UTF-8">
+
+		<script src="{{applicationResourcePath}}/JavaScript/API/core.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="{{applicationResourcePath}}/JavaScript/API/corePrivate.js" type="text/javascript" charset="UTF-8"></script>
+
+		<script type="text/javascript">
+			Textual.initializeCore("{{applicationResourcePath}}");
+		</script>
+
+		<script src="{{activeStyleAbsolutePath}}/scripts.js?{{cacheToken}}" type="text/javascript" charset="UTF-8"></script>
+
+		<style type="text/css">
+			html, body {
+				font-family: '{{userConfiguredFontName}}';
+				font-size: {{userConfiguredFontSize}}pt;
+			}
+
+			{{#nicknameIndentationAvailable}}
+				div.line p {
+					margin-left: {{predefinedTimestampWidth}}px;
+					text-indent: -{{predefinedTimestampWidth}}px;
+				}
+
+				dive.line .time {
+					width: {{predefinedTimestampWidth}}px;
+				}
+			{{/nicknameIndentationAvailable}}
+		</style>
+	</head>
+
+	<body
+
+		dir="{{textDirectionToken}}"
+
+		onload="_Textual.viewBodyDidLoad()"
+
+		data-appearance="{{appearanceToken}}"
+
+{{#usesCustomScrollers}}
+		data-custom-scroller="true"
+{{/usesCustomScrollers}}
+
+		{{! The operating system version declaration allows CSS selectors to target specific versions. }}
+		data-system-version="{{operatingSystemVersion}}"
+
+{{#isChannelView}}
+		data-view-name="{{channelName}}"
+{{/isChannelView}}
+
+{{#isPrivateMessageView}}
+		data-view-name="{{channelName}}"
+{{/isPrivateMessageView}}
+
+{{#isUtilityView}}
+		data-view-name="{{channelName}}"
+{{/isUtilityView}}
+
+		data-view-type="{{viewTypeToken}}">
+			{{! The elements "body," "messageBuffer," "loadingScreen,"
+			"topicBar," and "mark" must always remain the same id= as these
+			elements are used internally by Textual. }}
+
+			<div id="loadingScreen">View is Loading…</div>
+
+			{{#isChannelView}}
+				<div id="topicBar" ondblclick="Textual.topicBarDoubleClicked()">(No Topic)</div>
+			{{/isChannelView}}
+
+			<div id="body">
+				<div id="messageBuffer">
+				</div>
+			</div>
+	</body>
+</html>

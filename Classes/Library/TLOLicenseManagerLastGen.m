@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "TPCPathInfo.h"
+#import "TLOLicenseManagerPrivate.h"
+#import "TLOLicenseManagerLastGenPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1

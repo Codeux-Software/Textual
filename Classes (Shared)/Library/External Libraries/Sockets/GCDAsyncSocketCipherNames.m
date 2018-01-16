@@ -54,6 +54,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#import "GCDAsyncSocketCipherNames.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 static const int kAEADMACValue = 7;
@@ -427,7 +429,7 @@ static const char * _Nonnull kMacNames[] = {
 
 		return resultString;
 	}
-	
+
 	return @"Unknown";
 }
 

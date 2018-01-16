@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+#import "TPCPreferencesLocalPrivate.h"
+#import "TDCPreferencesNotificationConfigurationPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCPreferencesNotificationConfiguration

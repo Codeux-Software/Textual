@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TVCLogView.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TVCLogController, TVCLogPolicy;
 
 @interface TVCLogView ()
 @property (nonatomic, weak) TVCLogController *viewController;
@@ -74,6 +78,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)redrawViewIfNeeded;
 - (void)redrawView;
 
+- (void)resetScrollerPosition;
+- (void)resetScrollerPositionTo:(BOOL)scrolledToBottom;
 - (void)saveScrollerPosition;
 - (void)restoreScrollerPosition;
 

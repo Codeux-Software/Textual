@@ -36,8 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 /* The value of -action is validated to ensure that it returns 

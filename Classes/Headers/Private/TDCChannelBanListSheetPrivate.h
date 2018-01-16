@@ -35,7 +35,12 @@
 
  *********************************************************************** */
 
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel;
 
 typedef NS_ENUM(NSUInteger, TDCChannelBanListSheetEntryType) {
 	TDCChannelBanListSheetBanEntryType,

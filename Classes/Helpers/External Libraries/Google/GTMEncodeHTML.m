@@ -353,7 +353,6 @@ static HTMLEscapeMap gUnicodeHTMLEscapeMap[] = {
 	{ @"&euro;", 8364 },
 };
 
-
 // Utility function for Bsearching table above
 static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 	const unichar *uchar = (const unichar*)ucharVoid;
@@ -515,7 +514,5 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 	} while ((subrange = [self rangeOfString:@"&" options:NSBackwardsSearch range:range]).length != 0);
 	return finalString;
 } // gtm_stringByUnescapingHTML
-
-
 
 @end

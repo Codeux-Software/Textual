@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "IRCChannelMode.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCChannel;
 
 @interface IRCChannelMode ()
 - (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;

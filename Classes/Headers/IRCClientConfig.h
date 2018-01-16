@@ -36,11 +36,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import "IRCConnectionConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCAddressBookEntry, IRCChannelConfig, IRCHighlightMatchCondition;
+@class IRCNetwork, IRCServer;
 
 #pragma mark -
 #pragma mark Immutable Object

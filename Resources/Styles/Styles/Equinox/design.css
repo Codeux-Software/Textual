@@ -1,3 +1,7 @@
+
+/* Inline media */
+@import "inlineMedia.css";
+
 /* Basic Body Structure */
 
 * {
@@ -25,7 +29,7 @@ body .line {
   clear: both;
 }
 
-#body_home {
+#body {
   left: 0;
   right: 0;
   bottom: 0;
@@ -37,7 +41,7 @@ body .line {
   -webkit-transition: opacity 0.8s linear;
 }
 
-#body_home {
+#body {
   max-height: 100%;
 }
 
@@ -52,20 +56,20 @@ body[dir=rtl] .senderContainer {
 
 /* Scrolling */
 
-body[customscroller="true"]::-webkit-scrollbar {
+body[data-custom-scroller="true"]::-webkit-scrollbar {
   width: 17px;
 }
 
-body[customscroller="true"]::-webkit-scrollbar:horizontal {
-	height: 0;
+body[data-custom-scroller="true"]::-webkit-scrollbar:horizontal {
+  height: 0;
 }
 
-body[customscroller="true"]::-webkit-scrollbar-track {
+body[data-custom-scroller="true"]::-webkit-scrollbar-track {
   background: #393939;
   box-shadow: inset 1px 0px 0px 0px #4b4b4b;
 }
 
-body[customscroller="true"]::-webkit-scrollbar-thumb {
+body[data-custom-scroller="true"]::-webkit-scrollbar-thumb {
   background-color: #7c7c7c;
   border: 4px solid transparent;
   border-left: 5px solid transparent;
@@ -73,13 +77,13 @@ body[customscroller="true"]::-webkit-scrollbar-thumb {
   background-clip: content-box;
 }
 
-body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
+body[data-custom-scroller="true"]::-webkit-scrollbar-thumb:hover {
   background-color: #b0b0b0;
 }
 
 /* Loading Screen */
 
-#loading_screen {
+#loadingScreen {
   position: fixed;
   margin: auto;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -95,7 +99,7 @@ body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
   -webkit-transition: opacity 0.8s linear;
 }
 
-#loading_screen progress {
+#loadingScreen progress {
   margin-top: 5px;
 }
 
@@ -145,7 +149,7 @@ a:hover {
 }
 
 /* Topic Bar */
-#topic_bar {
+#topicBar {
   top: 0;
   left: 0;
   right: 0;
@@ -163,8 +167,8 @@ a:hover {
   background: rgba(60, 60, 60, 0.91);
 }
 
-#topic_bar a,
-#topic_bar .channel {
+#topicBar a,
+#topicBar .channel {
   color: #64a5ff;
   border-color: #64a5ff;
   text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
@@ -190,57 +194,6 @@ a:hover {
   background: rgba(31, 51, 81, .95);
 }
 
-
-/* Images */
-
-body a img {
-  border: 0;
-}
-
-body video,
-body img {
-  display: block;
-}
-
-.inlineImageCell {
-  position: relative;
-  display: table;
-  overflow: auto;
-  width: auto;
-  height: auto;
-}
-
-.inlineImageCell > a {
-  display: inline-block;
-  border: none;
-}
-
-.inlineImageCell .image {
-  display: inline-block;
-  float: left;
-  margin: 15px 15px 12px 10px;
-  min-width: 100px;
-}
-
-.inlineImageCell .closeButton {
-  background: #000000;
-  cursor: pointer;
-  border-radius: 50%;
-  position: absolute;
-  box-sizing: border-box;
-  font-size: 20px !important;
-  font-family: "Helvetica Neue" !important;
-  font-weight: 100 !important;
-  text-align: center;
-  line-height: 17px;
-  color: #f2f2f2;
-  border: 2px solid #f2f2f2;
-  top: 5px;
-  right: 5px;
-  width: 25px;
-  height: 25px;
-}
-
 /* Remember Line */
 #mark {
   position: relative;
@@ -251,7 +204,7 @@ body img {
   -webkit-transition: 0.2s linear;
 }
 
-body[dir=ltr] div[ltype=action] .sender:before {
+body[dir=ltr] div[data-line-type=action] .sender:before {
   margin-right: 0.6em;
   font-weight: bold;
   font-size: 80% !important;
@@ -260,71 +213,71 @@ body[dir=ltr] div[ltype=action] .sender:before {
 
 /* Message buffer loading animation */
 .message_buffer_loading_indicator {
-	text-align: center;
-	height: 42px;
+  text-align: center;
+  height: 42px;
 }
 
 .message_buffer_loading_indicator span {
-	font-family: Optima !important;
-	font-size: 35px;
-	font-weight: 600;
-	letter-spacing: 5px;
-	line-height: 43px;
-	color: #5a5a5a;
-	-webkit-animation: ellipsis-period 1.5s infinite;
-	animation: ellipsis-period 1.5s infinite;
+  font-family: Optima !important;
+  font-size: 35px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  line-height: 43px;
+  color: #5a5a5a;
+  -webkit-animation: ellipsis-period 1.5s infinite;
+  animation: ellipsis-period 1.5s infinite;
 }
 
 .message_buffer_loading_indicator span:nth-child(1) {
-	-webkit-animation-delay: 0.0s;
-	animation-delay: 0.0s;
+  -webkit-animation-delay: 0.0s;
+  animation-delay: 0.0s;
 }
 
 .message_buffer_loading_indicator span:nth-child(2) {
-	-webkit-animation-delay: 0.1s;
-	animation-delay: 0.1s;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
 }
 
 .message_buffer_loading_indicator span:nth-child(3) {
-	-webkit-animation-delay: 0.2s;
-	animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 
 @keyframes ellipsis-period {
-	0% { opacity: 0.2; }
-	20% { opacity: 1.0; }
-	100% { opacity: 0.2; }
+  0% { opacity: 0.2; }
+  20% { opacity: 1.0; }
+  100% { opacity: 0.2; }
 }
 
 /* Message buffer session indicator */
 .message_buffer_session_indicator {
-	display: flex;
-	display: -webkit-flex;
-	padding: .5em 0;
+  display: flex;
+  display: -webkit-flex;
+  padding: .5em 0;
 }
 
 .message_buffer_session_indicator > hr {
-	background: #444;
-	border: 0;
-	height: 1px;
-	margin-top: 0.6em;
-	flex: 1;
-	-webkit-flex: 1;
+  background: #444;
+  border: 0;
+  height: 1px;
+  margin-top: 0.6em;
+  flex: 1;
+  -webkit-flex: 1;
 }
 
 .message_buffer_session_indicator > span {
-	font-style: oblique;
-	margin: 0 1em;
+  font-style: oblique;
+  margin: 0 1em;
 }
 
 .message_buffer_session_indicator + #mark {
-	display: none;
+  display: none;
 }
 
 /* NOTICE/CTCP/WALLOPS */
-body div.line[ltype=ctcp],
-body div.line[ltype=notice],
-body div.line[ltype=wallops] {
+body div.line[data-line-type=ctcp],
+body div.line[data-line-type=notice],
+body div.line[data-line-type=wallops] {
   z-index: 191;
   position: relative;
   border-bottom: none;
@@ -333,8 +286,8 @@ body div.line[ltype=wallops] {
   background-color: #1d2734;
 }
 
-body div[ltype=ctcp] .senderContainer,
-body div[ltype=notice] .senderContainer {
+body div[data-line-type=ctcp] .senderContainer,
+body div[data-line-type=notice] .senderContainer {
   color: #f00;
   font-weight: 700;
   min-height:23px;
@@ -351,18 +304,18 @@ body div[ltype=notice] .senderContainer {
   background-color: #161616;
 }
 
-body div[ltype=notice] .message {
+body div[data-line-type=notice] .message {
   color: #f2f2f2;
 }
 
 /* PRIVMSG */
-body div.line[ltype=privmsg][highlight=false] {
+body div.line[data-line-type=privmsg][data-highlight=false] {
   padding: 0;
   position: relative;
   min-height: 23px;
 }
 
-body div[ltype=privmsg] .senderContainer {
+body div[data-line-type=privmsg] .senderContainer {
   /*  font-weight: 700; */
   min-height:23px;
   width: 134px;
@@ -384,32 +337,32 @@ body .senderContainer .swrapper {
   opacity: 0;
 }
 
-body div[ltype="privmsg"] .message {
+body div[data-line-type="privmsg"] .message {
   color: #f2f2f2;
 }
 
-body div[ltype="privmsg"][encrypted="true"] {
+body div[data-line-type="privmsg"][data-encrypted="true"] {
   background: repeating-linear-gradient(-45deg, rgba(79, 79, 79, 0.1), rgba(79, 79, 79, 0.1) 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
 }
 
-body div[ltype="privmsg"][encrypted="failed"] {
+body div[data-line-type="privmsg"][data-encrypted="failed"] {
   background: repeating-linear-gradient(-45deg, rgba(45, 6, 6, 0.2), rgba(45, 6, 6, 0.2) 20px, rgba(104, 15, 15, 0.2) 20px, rgba(104, 15, 15, 0.2) 40px) !important;
 }
 
-body div[ltype="privmsg"][highlight=true][encrypted="true"] {
+body div[data-line-type="privmsg"][data-highlight=true][data-encrypted="true"] {
   background: repeating-linear-gradient(-45deg, #30473a, #30473a 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
 }
 
-body div[ltype=privmsg] p[ltype=myself] .message {
+body div[data-line-type=privmsg][data-line-type=myself] .message {
   color: #f2f2f2;
 }
 
-body div[ltype=privmsg] p span.effect[color-number=1]:not([bgcolor-number]) {
+body div[data-line-type=privmsg] span.effect[data-foreground-color=1]:not([data-background-color]) {
   color: #f2f2f2; /* make black text with no bg white for readability */
 }
 
 /* ACTION */
-body div[ltype=action] .senderContainer {
+body div[data-line-type=action] .senderContainer {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -426,19 +379,19 @@ body div[ltype=action] .senderContainer {
   overflow: hidden;
 }
 
-body div.line[ltype=action] .message {
+body div.line[data-line-type=action] .message {
   padding-top: 1px;
 }
 
-body div.line[ltype=action][highlight=true] .message {
+body div.line[data-line-type=action][data-highlight=true] .message {
   color: #f2f2f2 !important;
 }
 
 /* DEBUG/INVITE */
-body div.line[ltype=invite],
-body div.line[ltype=debug],
-body div.line[ltype=dcc-file-transfer],
-body div.line[ltype=off-the-record-encryption-status] {
+body div.line[data-line-type=invite],
+body div.line[data-line-type=debug],
+body div.line[data-line-type=dcc-file-transfer],
+body div.line[data-line-type=off-the-record-encryption-status] {
   color: #f2f2f2;
   z-index: 190;
   background: #2f2f2f;
@@ -448,17 +401,17 @@ body div.line[ltype=off-the-record-encryption-status] {
   border-bottom: 1px solid #393939;
 }
 
-body div.line[ltype=ctcp] .message,
-body div.line[ltype=invite] .message,
-body div.line[ltype=debug] .message,
-body div.line[ltype=dcc-file-transfer] .message,
-body div.line[ltype=off-the-record-encryption-status] .message {
+body div.line[data-line-type=ctcp] .message,
+body div.line[data-line-type=invite] .message,
+body div.line[data-line-type=debug] .message,
+body div.line[data-line-type=dcc-file-transfer] .message,
+body div.line[data-line-type=off-the-record-encryption-status] .message {
   text-indent: 0;
   padding-left: 145px !important;
 }
 
 /* off-the-record-encryption-status Message Event */
-body div.line[ltype=off-the-record-encryption-status]  .message {
+body div.line[data-line-type=off-the-record-encryption-status]  .message {
   color: #ff0000;
   font-weight: 700;
 }
@@ -466,33 +419,33 @@ body div.line[ltype=off-the-record-encryption-status]  .message {
 /* Message of the Day (MOTD) */
 /* 720, 721, 722 are used by ShadowIRCd for Oper MOTD. */
 /* 372, 375, 376 are normal MOTD shared by several IRCds. */
-body div.line[command="372"],
-body div.line[command="721"] {
+body div.line[data-command="372"],
+body div.line[data-command="721"] {
   border: none;
   padding-top: 3px;
   padding-bottom: 3px;
 }
 
-body div.line[command="375"],
-body div.line[command="720"] { /* Start. */
+body div.line[data-command="375"],
+body div.line[data-command="720"] { /* Start. */
   border-bottom: none;
   padding-top: 2px;
   padding-bottom: 3px;
 }
 
-body div.line[command="376"],
-body div.line[command="722"] { /* End. */
+body div.line[data-command="376"],
+body div.line[data-command="722"] { /* End. */
   border-top: none;
   padding-top: 3px;
   padding-bottom: 3px;
 }
 
-body div.line[command="372"] .message,
-body div.line[command="375"] .message,
-body div.line[command="376"] .message
-body div.line[command="720"] .message,
-body div.line[command="721"] .message,
-body div.line[command="722"] .message {
+body div.line[data-command="372"] .message,
+body div.line[data-command="375"] .message,
+body div.line[data-command="376"] .message
+body div.line[data-command="720"] .message,
+body div.line[data-command="721"] .message,
+body div.line[data-command="722"] .message {
   font-family: "Menlo" !important;
 }
 
@@ -520,15 +473,15 @@ body div.event span.message {
   padding-left: 0;
 }
 
-body div.line[ltype=join],
-body div.line[ltype=part],
-body div.line[ltype=quit],
-body div.line[ltype=mode],
-body div.line[ltype=nick],
-body div.line[ltype=topic],
-body div.line[ltype=kill],
-body div.line[ltype=kick],
-body div.line[ltype=website] {
+body div.line[data-line-type=join],
+body div.line[data-line-type=part],
+body div.line[data-line-type=quit],
+body div.line[data-line-type=mode],
+body div.line[data-line-type=nick],
+body div.line[data-line-type=topic],
+body div.line[data-line-type=kill],
+body div.line[data-line-type=kick],
+body div.line[data-line-type=website] {
   font-size: 85%;
   min-height: 19px;
   padding-left: 145px;
@@ -536,36 +489,35 @@ body div.line[ltype=website] {
   background: #1d1d1d;
 }
 
-body div.line[ltype=topic] span.message {
+body div.line[data-line-type=topic] span.message {
   text-indent: 0;
 }
 
-body div.line[ltype=nick] {
+body div.line[data-line-type=nick] {
   color: #529567;
 }
-body div.line[ltype=kill],
-body div.line[ltype=kick] {
+body div.line[data-line-type=kill],
+body div.line[data-line-type=kick] {
   color: #ec5151;
 }
 
-body[dir=ltr] div[ltype=join] .message:before {
+body[dir=ltr] div[data-line-type=join] .message:before {
   content: "→";
   color: #0c0;
   margin-left:3px;
   margin-right: 5px;
 }
 
-
-body[dir=ltr] div[ltype=kick] .message:before,
-body[dir=ltr] div[ltype=part] .message:before,
-body[dir=ltr] div[ltype=quit] .message:before {
+body[dir=ltr] div[data-line-type=kick] .message:before,
+body[dir=ltr] div[data-line-type=part] .message:before,
+body[dir=ltr] div[data-line-type=quit] .message:before {
   content: "←";
   color: #e00;
   margin-left:3px;
   margin-right: 5px;
 }
 
-body[dir=ltr] div[ltype=nick] .message:before {
+body[dir=ltr] div[data-line-type=nick] .message:before {
   content: "\2022";
   color: #37be34;
   font-weight: 700;
@@ -573,7 +525,7 @@ body[dir=ltr] div[ltype=nick] .message:before {
   margin-right: 5px;
 }
 
-body[dir=ltr] div[ltype=mode] .message:before {
+body[dir=ltr] div[data-line-type=mode] .message:before {
   content: "\2022";
   color: #2cb6f6;
   font-weight: 700;
@@ -581,16 +533,16 @@ body[dir=ltr] div[ltype=mode] .message:before {
   margin-right: 5px;
 }
 
-body[dir=rtl] div[ltype=join] .message:before {
+body[dir=rtl] div[data-line-type=join] .message:before {
   content: "→";
   color: #0c0;
   margin-left:3px;
   margin-right: 5px;
 }
 
-body[dir=rtl] div[ltype=kick] .message:before,
-body[dir=rtl] div[ltype=part] .message:before,
-body[dir=rtl] div[ltype=quit] .message:before {
+body[dir=rtl] div[data-line-type=kick] .message:before,
+body[dir=rtl] div[data-line-type=part] .message:before,
+body[dir=rtl] div[data-line-type=quit] .message:before {
   content: "←";
   color: #e00;
   margin-left:3px;
@@ -598,7 +550,7 @@ body[dir=rtl] div[ltype=quit] .message:before {
 }
 
 /* Nickname Colors */
-body .sender[mtype=myself] {
+body .sender[data-member-type=myself] {
   color: #9A60FF;
 }
 
@@ -612,7 +564,6 @@ body .f {  /* fade out */
   color: rgb(22, 22, 22) !important;
 }
 
-
 /* SELECTED USER MESSAGES */
 
 .senderContainer {
@@ -621,23 +572,23 @@ body .f {  /* fade out */
   white-space: nowrap;
 }
 
-body div.line[ltype=privmsg]:not(.selectedUser),
-body div.line[ltype=action]:not(.selectedUser) {
+body div.line[data-line-type=privmsg]:not(.selectedUser),
+body div.line[data-line-type=action]:not(.selectedUser) {
   transition-property: background-color;
   transition-duration: 0.5s, 0.5s, 0.5s;
 }
 
-body div.line[ltype=privmsg] .time:not(.selectedUser),
-body div.line[ltype=action] .time:not(.selectedUser) {
+body div.line[data-line-type=privmsg] .time:not(.selectedUser),
+body div.line[data-line-type=action] .time:not(.selectedUser) {
   transition: color 0.5s;
 }
 
-body div.line.selectedUser[highlight=false] .time {
+body div.line.selectedUser[data-highlight=false] .time {
   transition: color 0.5s ease-in;
   color: #aaa;
 }
 
-body div.line.selectedUser[highlight=false] {
+body div.line.selectedUser[data-highlight=false] {
   transition-property: background-color;
   transition-duration: 0.5s, 0.5s, 0.5s;
   z-index: 190;
@@ -645,8 +596,8 @@ body div.line.selectedUser[highlight=false] {
   background-color: #2f3e53;
 }
 
-body div.line[ltype=privmsg][highlight=true],
-body div.line[ltype=action][highlight=true] {
+body div.line[data-line-type=privmsg][data-highlight=true],
+body div.line[data-line-type=action][data-highlight=true] {
   z-index: 191;
   position: relative;
   font-weight: normal;
@@ -679,66 +630,66 @@ body div.date + div#mark {
 }
 
 /* Shamelessly steal the background colors from Tomorrow Night */
-.effect[color-number='0'] {
+.effect[data-foreground-color='0'] {
   color: #EAEAEA !important;
 }
 
-.effect[color-number='1'] {
+.effect[data-foreground-color='1'] {
   color: #515151 !important;
 }
 
-.effect[color-number='2'] {
+.effect[data-foreground-color='2'] {
   color: #6699CC !important;
 }
 
-.effect[color-number='3'] {
+.effect[data-foreground-color='3'] {
   color: #99CC99 !important;
 }
 
-.effect[color-number='4'] {
+.effect[data-foreground-color='4'] {
   color: #F2777A !important;
 }
 
-.effect[color-number='5'] {
+.effect[data-foreground-color='5'] {
   color: #FF9DA4 !important;
 }
 
-.effect[color-number='6'] {
+.effect[data-foreground-color='6'] {
   color: #CC99CC !important;
 }
 
-.effect[color-number='7'] {
+.effect[data-foreground-color='7'] {
   color: #F99157 !important;
 }
 
-.effect[color-number='8'] {
+.effect[data-foreground-color='8'] {
   color: #FFCC66 !important;
 }
 
-.effect[color-number='9'] {
+.effect[data-foreground-color='9'] {
   color: #B9CA4A !important;
 }
 
-.effect[color-number='10'] {
+.effect[data-foreground-color='10'] {
   color: #66CCCC !important;
 }
 
-.effect[color-number='11'] {
+.effect[data-foreground-color='11'] {
   color: #99FFFF !important;
 }
 
-.effect[color-number='12'] {
+.effect[data-foreground-color='12'] {
   color: #7AA6DA !important;
 }
 
-.effect[color-number='13'] {
+.effect[data-foreground-color='13'] {
   color: #C397D8 !important;
 }
 
-.effect[color-number='14'] {
+.effect[data-foreground-color='14'] {
   color: #999999 !important;
 }
 
-.effect[color-number='15'] {
+.effect[data-foreground-color='15'] {
   color: #CCCCCC !important;
 }

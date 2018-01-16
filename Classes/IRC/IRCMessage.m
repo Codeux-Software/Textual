@@ -36,6 +36,11 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TXGlobalModelsPrivate.h"
+#import "IRCClientPrivate.h"
+#import "IRCPrefix.h"
 #import "IRCMessageInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -123,14 +128,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	for (NSUInteger i = index; i < paramsCount; i++) {
 		NSString *param = params[i];
-		
+
 		if (i != index) {
 			[sequence appendString:@" "];
 		}
-		
+
 		[sequence appendString:param];
 	}
-	
+
 	return [sequence copy];
 }
 
@@ -359,7 +364,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (dateString) {
 			NSDate *dateObject = nil;
 
-			if ([dateString onlyContainsCharacters:@"0123456789."]) {
+			if ([dateString onlyContainsCharactersFromCharacterSet:[NSCharacterSet ZeroToNineDecimalCharacetSet]]) {
 				dateObject = [NSDate dateWithTimeIntervalSince1970:dateString.doubleValue];
 			} else {
 				dateObject = [TXSharedISOStandardDateFormatter() dateFromString:dateString];
@@ -376,7 +381,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
 		NSString *batchToken = extensionsOut[@"batch"];
 
-		if ([batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters]) {
+		if ([batchToken onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9UnderscoreDash]]) {
 			self->_batchToken = [batchToken copy];
 
 			self->_parentBatchMessage = [client queuedBatchMessageWithToken:batchToken];

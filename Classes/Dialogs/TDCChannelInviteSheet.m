@@ -36,6 +36,10 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCChannelInviteSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelInviteSheet ()
@@ -93,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (NSString *channel in channels) {
 		[self.channelListPopup addItemWithTitle:channel];
 	}
-	
+
 	[self startSheet];
 }
 

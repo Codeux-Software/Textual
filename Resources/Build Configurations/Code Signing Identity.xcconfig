@@ -1,7 +1,5 @@
 
-// This is the code signing identity used by the Standard Release
-// and Debug builds of Textual. This is all you should have to edit.
-// This value is automatically inherited by all frameworks and plugins.
+// This is the code signing identity used by all projects.
 
 CODE_SIGN_IDENTITY = Mac Developer
 

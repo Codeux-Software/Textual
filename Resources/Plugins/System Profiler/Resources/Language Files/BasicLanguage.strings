@@ -74,22 +74,14 @@
 "BasicLanguage[1028]" = "Error: Unable to locate any network statistics.";
 
 /* /style/ command. */
-"BasicLanguage[1033]" = "\002Current Style:\002 %@ — \002Environment:\002 ";
-"BasicLanguage[1034]" = "\002Current Style:\002 %@ (Custom) — \002Environment:\002 ";
-"BasicLanguage[1035]" = "\002Current Style:\002 %@ (iCloud) — \002Environment:\002 ";
-"BasicLanguage[1036]" = "Light mode in Textual, ";
-"BasicLanguage[1037]" = "Dark mode in Textual, ";
-"BasicLanguage[1038]" = "system wide aqua";
-"BasicLanguage[1039]" = "system wide graphite";
-"BasicLanguage[1050]" = ", and light mode on %@";
-"BasicLanguage[1051]" = ", and dark mode on %@";
+"BasicLanguage[1033]" = "\002Current Style:\002 %1$@ – (%2$@) \002•\002 \002Inverted sidebars:\002 %3$@ \002•\002 \002WebKit2\002: %4$@";
 
 /* /screens/ command. */
 "BasicLanguage[1041]" = "\002Display Resolution:\002 #%1$ld: %2$@";
 "BasicLanguage[1042]" = "; #%1$ld: %2$@";
 
 /* Misc., one line commands. */
-"BasicLanguage[1045]" = "System Uptime: %1$@ - Textual Uptime: %2$@";
+"BasicLanguage[1045]" = "System Uptime: %1$@ \002•\002 Textual Uptime: %2$@";
 "BasicLanguage[1046]" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
 "BasicLanguage[1047]" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
-"BasicLanguage[1049]" = "Textual has sent \002%1$@\002 commands since startup with a total of \002%2$@\002 commands received. The last command received on this connection occurred %3$@ ago. This all equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
+"BasicLanguage[1049]" = "Textual has sent \002%1$@\002 commands since startup with a total of \002%2$@\002 commands received. The last command received on this connection occurred %3$@ ago. This equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";

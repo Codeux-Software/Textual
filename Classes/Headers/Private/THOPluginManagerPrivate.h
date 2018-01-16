@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "THOPluginItemPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class THOPluginOutputSuppressionRule;
 
 TEXTUAL_EXTERN NSString * const THOPluginManagerFinishedLoadingPluginsNotification;
 

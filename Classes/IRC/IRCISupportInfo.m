@@ -36,6 +36,13 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "IRC.h"
+#import "IRCClientPrivate.h"
+#import "IRCModeInfo.h"
+#import "IRCISupportInfoPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _channelUserModeValue		100
@@ -70,7 +77,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		return self;
 	}
-	
+
 	return nil;
 }
 
@@ -81,10 +88,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)reset
 {
-    self.cachedConfiguration = @[];
-    
+	self.cachedConfiguration = @[];
+
 	self.serverAddress = nil;
-	
+
 	self.networkName = nil;
 	self.networkNameFormatted = nil;
 
@@ -102,7 +109,7 @@ ClassWithDesignatedInitializerInitMethod
 		@"o" : @(_channelUserModeValue),
 		@"v" : @(_channelUserModeValue)
 	};
-	
+
 	self.privateMessageNicknamePrefix = nil;
 }
 
@@ -122,7 +129,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	IRCClient *client = self.client;
 
-    NSMutableDictionary *configuration = [NSMutableDictionary dictionary];
+	NSMutableDictionary *configuration = [NSMutableDictionary dictionary];
 
 	NSArray *segments = [configurationData componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
@@ -206,7 +213,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	} // while()
 
-    self.cachedConfiguration = [self.cachedConfiguration arrayByAddingObject:configuration];
+	self.cachedConfiguration = [self.cachedConfiguration arrayByAddingObject:configuration];
 }
 
 - (nullable NSString *)stringValueForConfiguration:(NSDictionary<NSString *, id> *)configuration
@@ -257,11 +264,11 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(modeString != nil);
 
 	NSMutableArray<IRCModeInfo *> *modes = [NSMutableArray array];
-	
+
 	NSMutableString *modeStringMutable = [modeString mutableCopy];
-	
+
 	BOOL modeIsSet = NO;
-	
+
 	do {
 		NSString *nextToken = modeStringMutable.token;
 
@@ -278,7 +285,7 @@ ClassWithDesignatedInitializerInitMethod
 		modeIsSet = (nextCharacter == '+');
 
 		nextToken = [nextToken substringFromIndex:1];
-		
+
 		for (NSUInteger i = 0; i < nextToken.length; i++) {
 			nextCharacter = [nextToken characterAtIndex:i];
 
@@ -302,7 +309,7 @@ ClassWithDesignatedInitializerInitMethod
 			}
 		}
 	} while (modeStringMutable.length > 0);
-	
+
 	return [modes copy];
 }
 
@@ -392,7 +399,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	for (NSUInteger i = 0; i < modes.count; i++) {
 		NSString *modeSet = modes[i];
-		
+
 		for (NSUInteger j = 0; j < modeSet.length; j++) {
 			NSString *modeSymbol = [modeSet stringCharacterAtIndex:j];
 
@@ -496,7 +503,7 @@ ClassWithDesignatedInitializerInitMethod
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol
 {
 	NSParameterAssert(modeSymbol != nil);
-	
+
 	return [[IRCModeInfo alloc] initWithModeSymbol:modeSymbol];
 }
 

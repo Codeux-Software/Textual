@@ -155,7 +155,7 @@ Textual.handleEvent                            = function(eventToken) {};
 		)
 */
 
-/* Checks whether inline images are enabled for this particular view. Inline images can be enabled and 
+/* Checks whether inline media are enabled for this particular view. Inline media can be enabled and 
    on a per-view basis so querying preferences alone for the value will only give the global value. */
 // app.inlineMediaEnabledForView(callbackFunction)
 
@@ -233,6 +233,7 @@ Textual.handleEvent                            = function(eventToken) {};
 		NSNumber		=>		number
 		NSDictionary	=>		object
 		NSString		=>		string
+		NSURL           =>      string
 
 	When the value of a setting is retrieved, null will be returned if key is not found.
  */

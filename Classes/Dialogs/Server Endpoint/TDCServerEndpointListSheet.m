@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "IRCServer.h"
+#import "TVCBasicTableView.h"
+#import "TDCServerEndpointListSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _endpointEntryTableDragToken		@"TDCServerEndpointListSheetEntryTableDragToken"
@@ -79,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 	for (IRCServer *server in serverList) {
 		[self.entryTableController addObject:[server mutableCopy]];
 	}
-	
+
 	[self startSheet];
 }
 
@@ -180,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return NSDragOperationGeneric;
 }
 
-- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation;
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation
 {
 	NSPasteboard *pasteboard = [info draggingPasteboard];
 
@@ -206,7 +210,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[self.delegate serverEndpointListSheetWillClose:self];
 	}
 }
-
 
 @end
 

@@ -35,9 +35,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCCommandIndex.h"
+#import "TVCLogLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class AHHyperlinkScannerResult;
+@class IRCClient, IRCChannel, IRCChannelUser, IRCPrefix, IRCMessage;
+@class TVCLogController;
 
 @class THOPluginDidPostNewMessageConcreteObject;
 @class THOPluginDidReceiveServerInputConcreteObject;
@@ -122,23 +127,23 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @param textDestination The channel that the message is destined for
  * @param lineType The line type of the message
  *
- *          Possible values: `TVCLogLinePrivateMessageType`, `TVCLogLineActionType`,
- *                           `TVCLogLineNoticeType`
+ *    Possible values: `TVCLogLinePrivateMessageType`, `TVCLogLineActionType`,
+ *           `TVCLogLineNoticeType`
  * @param client The client the message was received on
  * @param receivedAt The date & time of the message. Depending on whether a custom
- *          value was specified using the server-time IRCv3 capability, this `NSDate`
- *          object may be very far in the past, or even possibly in the future.
+ *    value was specified using the server-time IRCv3 capability, this `NSDate`
+ *    object may be very far in the past, or even possibly in the future.
  * @param wasEncrypted Whether or not the message was encrypted
  *
  * @return `YES` to display the contents of the message to the user, `NO` otherwise.
  */
 - (BOOL)receivedText:(NSString *)text
-          authoredBy:(IRCPrefix *)textAuthor
-         destinedFor:(nullable IRCChannel *)textDestination
-          asLineType:(TVCLogLineType)lineType
-            onClient:(IRCClient *)client
-          receivedAt:(NSDate *)receivedAt
-        wasEncrypted:(BOOL)wasEncrypted;
+	      authoredBy:(IRCPrefix *)textAuthor
+	     destinedFor:(nullable IRCChannel *)textDestination
+	      asLineType:(TVCLogLineType)lineType
+	        onClient:(IRCClient *)client
+	      receivedAt:(NSDate *)receivedAt
+	    wasEncrypted:(BOOL)wasEncrypted;
 
 /**
  * @brief Method used to modify and/or completely ignore incoming data from the server.
@@ -235,25 +240,6 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 			  forViewController:(TVCLogController *)viewController
 					   lineType:(TVCLogLineType)lineType
 					 memberType:(TVCLogLineMemberType)memberType;
-
-#pragma mark -
-
-/**
- * @brief Given a URL, returns the same URL or another that can be shown as an 
- *  image inline with chat.
- *
- * @discussion Considerations:
- *
- * 1. The return value must be a valid URL for an image file if non-`nil`
- * 2. Textual uses the first non-`nil`, valid URL returned by any plugin. It does not chain
- *  the responses similar to other methods defined by the `THOPluginProtocol` protocol.
- *
- * @param resource A URL that was detected in a message being rendered.
- *
- * @return A URL that can be shown as an inline image in relation to resource or `nil`
- *  if there is no interest in the URL.
- */
-- (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
 
 #pragma mark -
 #pragma mark Subscribed Events
@@ -368,9 +354,11 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 #pragma mark -
 #pragma mark Deprecated
 
+- (nullable NSString *)processInlineMediaContentURL:(NSString *)resource TEXTUAL_DEPRECATED("There is currently no alternative to this method. It is no longer called.");
+
 - (void)didReceiveServerInputOnClient:(IRCClient *)client
-                    senderInformation:(NSDictionary<NSString *, id> *)senderDict
-                   messageInformation:(NSDictionary<NSString *, id> *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+	                senderInformation:(NSDictionary<NSString *, id> *)senderDict
+	               messageInformation:(NSDictionary<NSString *, id> *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
@@ -386,9 +374,9 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNet
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 
 - (void)didPostNewMessageForViewController:(TVCLogController *)viewController
-                               messageInfo:(NSDictionary<NSString *, id> *)messageInfo
-                             isThemeReload:(BOOL)isThemeReload
-                           isHistoryReload:(BOOL)isHistoryReload TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+	                           messageInfo:(NSDictionary<NSString *, id> *)messageInfo
+	                         isThemeReload:(BOOL)isThemeReload
+	                       isHistoryReload:(BOOL)isHistoryReload TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
 
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");

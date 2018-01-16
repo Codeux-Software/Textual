@@ -36,16 +36,47 @@
 
  *********************************************************************** */
 
+#import "NSViewHelper.h"
+#import "TXMasterController.h"
+#import "TXMenuController.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesCloudSyncExtensionPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeControllerPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "IRC.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCConnectionConfig.h"
+#import "IRCWorld.h"
+#import "TLOAppStoreManagerPrivate.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCNotificationConfigurationViewControllerPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCFileTransferDialogPrivate.h"
+#import "TDCPreferencesNotificationConfigurationPrivate.h"
+#import "TDCPreferencesControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+#import <Sparkle/Sparkle.h>
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _scrollbackSaveLinesMin		100
 #define _scrollbackSaveLinesMax		50000
 #define _scrollbackVisibleLinesMin	100
 #define _scrollbackVisibleLinesMax	15000
-#define _inlineImageWidthMax		2000
-#define _inlineImageWidthMin		40
-#define _inlineImageHeightMax		6000
-#define _inlineImageHeightMin		0
+#define _inlineMediaWidthMax		2000
+#define _inlineMediaWidthMin		40
+#define _inlineMediaHeightMax		6000
+#define _inlineMediaHeightMin		0
 
 #define _fileTransferPortRangeMin			1024
 #define _fileTransferPortRangeMax			TXMaximumTCPPort
@@ -70,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _toolbarItemIndexLogLocation				108007
 #define _toolbarItemIndexDefaultIdentity			108008
 #define _toolbarItemIndexDefualtIRCopMessages		108009
-#define _toolbarItemIndexOffRecordMessaging		    108010
+#define _toolbarItemIndexOffRecordMessaging			108010
 #define _toolbarItemIndexHiddenPreferences			108011 // unused
 
 #define _addonsToolbarInstalledAddonsMenuItemIndex		109000
@@ -116,7 +147,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHiddenPreferences;
-
 
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *shareDataBetweenDevicesView;
@@ -302,6 +332,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)show:(TDCPreferencesControllerNavigationSelection)selection
 {
 	switch (selection) {
+		case TDCPreferencesControllerStyleNavigationSelection:
+		{
+			[self _showPane:self.contentViewStyle selectedItem:_toolbarItemIndexStyle];
+
+			break;
+		}
 		case TDCPreferencesControllerHiddenPreferencesNavigationSelection:
 		{
 			[self _showPane:self.contentViewHiddenPreferences selectedItem:_toolbarItemIndexAdvanced];
@@ -384,7 +420,6 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		_de(_toolbarItemIndexOffRecordMessaging, self.contentViewOffRecordMessaging, _toolbarItemIndexAdvanced)
 #endif
-
 
 		_de(_addonsToolbarInstalledAddonsMenuItemIndex, self.contentViewInstalledAddons, _toolbarItemIndexAddons)
 
@@ -485,24 +520,24 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences setTabCompletionSuffix:value];
 }
 
-- (NSString *)inlineImageMaxWidth
+- (NSString *)inlineMediaMaxWidth
 {
-	return _unsignedIntegerString([TPCPreferences inlineImagesMaxWidth]);
+	return _unsignedIntegerString([TPCPreferences inlineMediaMaxWidth]);
 }
 
-- (NSString *)inlineImageMaxHeight
+- (NSString *)inlineMediaMaxHeight
 {
-	return _unsignedIntegerString([TPCPreferences inlineImagesMaxHeight]);
+	return _unsignedIntegerString([TPCPreferences inlineMediaMaxHeight]);
 }
 
-- (void)setInlineImageMaxWidth:(NSString *)value
+- (void)setInlineMediaMaxWidth:(NSString *)value
 {
-	[TPCPreferences setInlineImagesMaxWidth:value.integerValue];
+	[TPCPreferences setInlineMediaMaxWidth:value.integerValue];
 }
 
-- (void)setInlineImageMaxHeight:(NSString *)value
+- (void)setInlineMediaMaxHeight:(NSString *)value
 {
-	[TPCPreferences setInlineImagesMaxHeight:value.integerValue];
+	[TPCPreferences setInlineMediaMaxHeight:value.integerValue];
 }
 
 - (NSString *)themeChannelViewFontName
@@ -595,20 +630,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAppNapEnabled:(BOOL)appNapEnabled
 {
 	[TPCPreferences setAppNapEnabled:appNapEnabled];
-}
-
-- (BOOL)enableNewNicknameColorSystem
-{
-	if ([TPCPreferences disableNicknameColorHashing]) {
-		return NO;
-	}
-
-	return [TPCPreferences nicknameColorHashingComputesRGBValue];
-}
-
-- (void)setEnableNewNicknameColorSystem:(BOOL)enableNewNicknameColorSystem
-{
-	[TPCPreferences setNicknameColorHashingComputesRGBValue:enableNewNicknameColorSystem];
 }
 
 - (BOOL)onlySpeakEventsForSelection
@@ -737,51 +758,51 @@ NS_ASSUME_NONNULL_BEGIN
 		} else if (valueInteger > _scrollbackVisibleLinesMax) {
 			*value = _unsignedIntegerString(_scrollbackVisibleLinesMax);
 		}
-	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
+	} else if ([key isEqualToString:@"inlineMediaMaxWidth"]) {
 		NSInteger valueInteger = [*value integerValue];
 
-		if (valueInteger < _inlineImageWidthMin) {
-			*value = _unsignedIntegerString(_inlineImageWidthMin);
-		} else if (_inlineImageWidthMax < valueInteger) {
-			*value = _unsignedIntegerString(_inlineImageWidthMax);
+		if (valueInteger < _inlineMediaWidthMin) {
+			*value = _unsignedIntegerString(_inlineMediaWidthMin);
+		} else if (_inlineMediaWidthMax < valueInteger) {
+			*value = _unsignedIntegerString(_inlineMediaWidthMax);
 		}
-	} else if ([key isEqualToString:@"inlineImageMaxHeight"]) {
+	} else if ([key isEqualToString:@"inlineMediaMaxHeight"]) {
 		NSInteger valueInteger = [*value integerValue];
 
-		if (valueInteger < _inlineImageHeightMin) {
-			*value = _unsignedIntegerString(_inlineImageHeightMin);
-		} else if (_inlineImageHeightMax < valueInteger) {
-			*value = _unsignedIntegerString(_inlineImageHeightMax);
+		if (valueInteger < _inlineMediaHeightMin) {
+			*value = _unsignedIntegerString(_inlineMediaHeightMin);
+		} else if (_inlineMediaHeightMax < valueInteger) {
+			*value = _unsignedIntegerString(_inlineMediaHeightMax);
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeStart"]) {
 		NSInteger valueInteger = [*value integerValue];
-		
+
 		NSUInteger valueRangeEnd = [TPCPreferences fileTransferPortRangeEnd];
-		
+
 		if (valueInteger < _fileTransferPortRangeMin) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMin);
 		} else if (_fileTransferPortRangeMax < valueInteger) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMax);
 		}
-		
+
 		valueInteger = [*value integerValue];
-		
+
 		if (valueInteger > valueRangeEnd) {
 			*value = _unsignedIntegerString(valueRangeEnd);
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeEnd"]) {
 		NSInteger valueInteger = [*value integerValue];
-		
+
 		NSUInteger valueRangeStart = [TPCPreferences fileTransferPortRangeStart];
-		
+
 		if (valueInteger < _fileTransferPortRangeMin) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMin);
 		} else if (_fileTransferPortRangeMax < valueInteger) {
 			*value = _unsignedIntegerString(_fileTransferPortRangeMax);
 		}
-		
+
 		valueInteger = [*value integerValue];
-		
+
 		if (valueInteger < valueRangeStart) {
 			*value = _unsignedIntegerString(valueRangeStart);
 		}
@@ -821,18 +842,18 @@ NS_ASSUME_NONNULL_BEGIN
 	TDCFileTransferDialog *transferController = [TXSharedApplication sharedFileTransferDialog];
 
 	NSURL *path = transferController.downloadDestinationURL;
-	
+
 	NSMenuItem *item = [self.fileTransferDownloadDestinationButton itemAtIndex:0];
-	
+
 	if (path == nil) {
 		item.image = nil;
-		
+
 		item.title = TXTLS(@"TDCPreferencesController[1003]");
 	} else {
 		NSImage *icon = [RZWorkspace() iconForFile:path.path];
 
 		item.image = icon;
-		
+
 		icon.size = NSMakeSize(16, 16);
 
 		item.title = path.lastPathComponent;
@@ -853,32 +874,32 @@ NS_ASSUME_NONNULL_BEGIN
 		d.canChooseFiles = NO;
 		d.canCreateDirectories = YES;
 		d.resolvesAliases = YES;
-		
+
 		d.prompt = TXTLS(@"Prompts[0006]");
-		
+
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
-			
+
 			if (returnCode != NSModalResponseOK) {
 				return;
 			}
 
 			NSURL *path = d.URLs[0];
-			
+
 			NSError *bookmarkError = nil;
-			
+
 			NSData *bookmark = [path bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
 							  includingResourceValuesForKeys:nil
 											   relativeToURL:nil
 													   error:&bookmarkError];
-			
+
 			if (bookmark == nil) {
 				LogToConsoleError("Error creating bookmark for URL (%{public}@): %{public}@",
 				  path, bookmarkError.localizedDescription);
 			}
 
 			[transferController setDownloadDestinationURL:bookmark];
-			
+
 			[self updateFileTransferDownloadDestinationFolder];
 		}];
 	}
@@ -928,7 +949,7 @@ NS_ASSUME_NONNULL_BEGIN
 		d.canChooseFiles = NO;
 		d.canCreateDirectories = YES;
 		d.resolvesAliases = YES;
-		
+
 		d.prompt = TXTLS(@"Prompts[0006]");
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
@@ -981,36 +1002,52 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self.themeSelectionButton removeAllItems];
 
-	NSDictionary *themes = [TPCThemeController dictionaryOfAllThemes];
+	NSString *currentThemeName = themeController().name;
 
-	NSArray *themeNamesSorted = themes.sortedDictionaryKeys;
+	TPCThemeControllerStorageLocation currentStorageLocation = themeController().storageLocation;
 
-	for (NSString *themeName in themeNamesSorted) {
-		NSString *themeSource = themes[themeName];
+	[TPCThemeController enumerateAvailableThemesWithBlock:^(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop) {
+		NSString *displayName = themeName;
 
-		NSMenuItem *item = [NSMenuItem menuItemWithTitle:themeName target:nil action:nil];
+		if (multipleVaraints) {
+			displayName = [NSString stringWithFormat:@"%@ — (%@)",
+				themeName, [TPCThemeController descriptionForStorageLocation:storageLocation]];
+		}
 
-		item.userInfo = themeSource;
+		NSMenuItem *item = [NSMenuItem menuItemWithTitle:displayName target:nil action:nil];
+
+		item.representedObject =
+		@{
+		  @"themeName" : themeName,
+		  @"storageLocation" : @(storageLocation)
+		};
+
+		if ([currentThemeName isEqualToString:themeName] &&
+			currentStorageLocation == storageLocation)
+		{
+			item.tag = 100; // Tag for item to select
+		}
 
 		[self.themeSelectionButton.menu addItem:item];
-	}
+	}];
 
-	[self.themeSelectionButton selectItemWithTitle:themeController().name];
+	[self.themeSelectionButton selectItemWithTag:100];
 }
 
 - (void)onChangedThemeSelection:(id)sender
 {
 	NSMenuItem *selectedItem = self.themeSelectionButton.selectedItem;
 
-	NSString *newThemeName = selectedItem.title;
+	NSDictionary *context = selectedItem.representedObject;
 
-	 TPCThemeControllerStorageLocation expectedStorageLocation =
-	[TPCThemeController expectedStorageLocationOfThemeWithName:selectedItem.userInfo];
-	
-	NSString *newTheme = [TPCThemeController buildFilename:newThemeName forStorageLocation:expectedStorageLocation];
-	
+	NSString *newThemeName = context[@"themeName"];
+
+	TPCThemeControllerStorageLocation newStorageLocation = [context unsignedIntegerForKey:@"storageLocation"];
+
+	NSString *newTheme = [TPCThemeController buildFilename:newThemeName forStorageLocation:newStorageLocation];
+
 	NSString *currentTheme = [TPCPreferences themeName];
-	
+
 	if ([currentTheme isEqual:newTheme]) {
 		return;
 	}
@@ -1076,9 +1113,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSFont *currentFont = [TPCPreferences themeChannelViewFont];
 
 	[RZFontManager() setSelectedFont:currentFont isMultiple:NO];
-	
+
 	[RZFontManager() orderFrontFontPanel:self];
-	
+
 	RZFontManager().action = @selector(onChangedChannelViewFont:);
 }
 
@@ -1165,9 +1202,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedDisableNicknameColorHashing:(id)sender
 {
 	[self onChangedTheme:nil];
-
-	[self willChangeValueForKey:@"enableNewNicknameColorSystem"];
-	[self didChangeValueForKey:@"enableNewNicknameColorSystem"];
 }
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -1282,7 +1316,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedInlineMediaOption:(id)sender
 {
-	if ([TPCPreferences showInlineImages]) {
+	if ([TPCPreferences showInlineMedia]) {
 		[TDCPreferencesController showTorAnonymityNetworkInlineMediaWarning];
 	}
 
@@ -1321,7 +1355,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
 #endif
-	
+
 	[self onChangedServerListUnreadBadgeColor:sender];
 }
 
@@ -1379,7 +1413,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onFileTransferIPAddressDetectionMethodChanged:(id)sender
 {
 	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
-	
+
 	self.fileTransferManuallyEnteredIPAddressTextField.enabled = (detectionMethod == TXFileTransferIPAddressManualDetectionMethod);
 }
 
@@ -1434,7 +1468,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[sharedCloudManager() resetDataToSync];
 	} else {
 		[RZUbiquitousKeyValueStore() synchronize];
-		
+
 		[sharedCloudManager() syncEverythingNextSync];
 
 		[sharedCloudManager() synchronizeFromCloud];
@@ -1508,7 +1542,7 @@ NS_ASSUME_NONNULL_BEGIN
 			copyingToCloud = YES;
 		}
 #endif
-		
+
 		if (copyingToCloud) {
 			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openOnCopy:YES];
 		} else {
@@ -1519,7 +1553,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onOpenPathToTheme:(id)sender
 {
-    if (themeController().bundledTheme) {
+	if (themeController().bundledTheme) {
 		[TLOPopupPrompts sheetWindowWithWindow:NSApp.keyWindow
 										  body:TXTLS(@"TDCPreferencesController[1007][2]")
 										 title:TXTLS(@"TDCPreferencesController[1007][1]")
@@ -1529,10 +1563,10 @@ NS_ASSUME_NONNULL_BEGIN
 							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 								   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
 							   }];
-		
+
 		return;
-    }
-		
+	}
+
 	[self openPathToTheme];
 }
 

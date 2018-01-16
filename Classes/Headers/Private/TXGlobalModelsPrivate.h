@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);

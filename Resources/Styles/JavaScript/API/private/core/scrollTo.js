@@ -47,7 +47,7 @@
 Textual.scrollToBottomOfView = function(fireNotification) /* PUBLIC */
 {
 	TextualScroller.scrollToBottom();
-	
+
 	if (fireNotification) {
 		Textual.viewPositionMovedToBottom();
 	}
@@ -71,13 +71,17 @@ Textual.jumpToLine = function(lineNumber) /* PUBLIC */
 {
 	MessageBuffer.jumpToLine(
 		lineNumber, 
-		
+
 		(function(success) {
+			var scrolledToBottom = false;
+
 			if (success) {
+				scrolledToBottom = TextualScroller.isScrolledToBottom();
+
 				Textual.viewPositionMovedToLine(lineNumber);
 			}
 
-			appPrivate.notifyJumpToLineCallback(lineNumber, success);
+			appPrivate.notifyJumpToLineCallback(lineNumber, success, scrolledToBottom);
 		})
 	);
 };
@@ -88,10 +92,10 @@ Textual.scrollToElement = function(elementName) /* PUBLIC */
 
 	if (element) {
 		TextualScroller.scrollElementToCenter(element);
-	
+
 		return true;
 	}
-	
+
 	return false;
 };
 

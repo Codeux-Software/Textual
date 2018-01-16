@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCClient, IRCChannel, TVCLogLine;
+
 TEXTUAL_EXTERN NSString * const TLOFileLoggerConsoleDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerChannelDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerPrivateMessageDirectoryName;

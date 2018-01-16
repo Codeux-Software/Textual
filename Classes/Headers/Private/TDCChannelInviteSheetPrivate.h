@@ -36,7 +36,12 @@
 
  *********************************************************************** */
 
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 @interface TDCChannelInviteSheet : TDCSheetBase <TDCClientPrototype>
 @property (readonly, copy) NSArray<NSString *> *nicknames;

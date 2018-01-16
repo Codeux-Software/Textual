@@ -35,6 +35,21 @@
 
  *********************************************************************** */
 
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+#import "TXMasterController.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaultsLocal.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowLoadingScreen.h"
+#import "TVCServerList.h"
+#import "TPCPreferencesImportExportPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPreferencesImportExport
@@ -128,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Import data */
 	[TPCPreferencesImportExport importContentsOfDictionary:propertyList reloadPreferences:NO];
-	
+
 	/* Do not push the loading screen right away. Add a little delay to give everything
 	 a chance to settle down before presenting the changes to the user. */
 	[TPCPreferencesImportExport performSelectorInCommonModes:@selector(importPostflightCleanup:) withObject:propertyList.allKeys afterDelay:2.0];
@@ -161,7 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([object isKindOfClass:[NSString class]] == NO) {
 			return;
 		}
-		
+
 		[TPCPreferences setThemeNameWithExistenceCheck:object];
 	}
 	else if ([key isEqual:TPCPreferencesThemeFontNameDefaultsKey])
@@ -169,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([object isKindOfClass:[NSString class]] == NO) {
 			return;
 		}
-		
+
 		[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:object];
 	}
 	else if ([key isEqual:IRCWorldClientListDefaultsKey])
@@ -224,7 +239,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 #endif
-		
+
 	if (client) {
 		if (isImportedFromCloud) {
 			[client updateConfigFromTheCloud:clientConfig];
@@ -273,41 +288,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary<NSString *, id> *)exportedPreferencesDictionary:(BOOL)filterJunk filterDefaults:(BOOL)filterDefaults
 {
-	NSDictionary *exportedPreferences = [RZUserDefaults() dictionaryRepresentation];
+	/* Combine list of keys to strip */
+	NSMutableArray *keysToStrip = [NSMutableArray array];
 
 	NSDictionary *argumentsDomain = [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSArgumentDomain];
 
-	NSDictionary *defaultsDomain = nil;
-
-	NSDictionary *globalsDomain = nil;
+	[keysToStrip addObjectsFromArray:argumentsDomain.allKeys];
 
 	if (filterDefaults) {
-		defaultsDomain = [TPCPreferences defaultPreferences];
+		NSDictionary *defaultsDomain = [TPCPreferences defaultPreferences];
+
+		[keysToStrip addObjectsFromArray:defaultsDomain.allKeys];
 	}
 
 	if (filterJunk) {
-		globalsDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+		NSDictionary *globalsDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+
+		[keysToStrip addObjectsFromArray:globalsDomain.allKeys];
 	}
 
-	NSMutableDictionary<NSString *, id> *finalDictionary = [NSMutableDictionary dictionary];
+	/* Create mutable copy of preferences and strip keys */
+	NSDictionary *exportedPreferences = [RZUserDefaults() dictionaryRepresentation];
 
-	[exportedPreferences enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-		if (NSObjectsAreEqual(object, argumentsDomain[key])) {
-			return;
-		}
+	NSMutableDictionary<NSString *, id> *finalDictionary = [exportedPreferences mutableCopy];
 
-		if (filterJunk && [TPCPreferencesImportExport isKeyNameSupposedToBeIgnored:key]) {
-			return;
-		} else if (filterJunk && NSObjectsAreEqual(object, globalsDomain[key])) {
-			return;
-		} else if (filterDefaults && NSObjectsAreEqual(object, defaultsDomain[key])) {
-			return;
-		}
+	[finalDictionary removeObjectsForKeys:keysToStrip];
 
-		finalDictionary[key] = object;
-	}];
+	/* Strip keys that must be checked dynamically */
+	if (filterJunk) {
+		NSSet *keysToStrip2 =
+		[finalDictionary keysOfEntriesPassingTest:^BOOL(NSString *key, id object, BOOL *stop) {
+			return [TPCPreferencesImportExport isKeyNameSupposedToBeIgnored:key];
+		}];
 
-	return finalDictionary;
+		[finalDictionary removeObjectsForKeys:keysToStrip2.allObjects];
+	}
+
+	return [finalDictionary copy];
 }
 
 + (void)exportInWindow:(NSWindow *)window

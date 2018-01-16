@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TPCThemeController.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesReload.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCPreferencesCloudSyncExtensionPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -110,7 +117,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 
 	NSString *localValue = [TPCPreferences themeChannelViewFontName];
 
-	if ([localValue isEqual:remoteValue]) {
+	if (remoteValue == nil || [localValue isEqual:remoteValue]) {
 		return;
 	}
 

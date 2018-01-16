@@ -4,7 +4,7 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
+
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
@@ -36,14 +36,23 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "GCDAsyncSocket.h"
+#import "TXGlobalModels.h"
+#import "IRCClientPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TLOEncryptionManagerPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TDCFileTransferDialogTableCellPrivate.h"
+#import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCFileTransferDialogInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 #define RECORDS_LENGTH  10
 #define MAX_QUEUE_SIZE  2
-#define BUFFER_SIZE     (1024 * 64)
-#define RATE_LIMIT      (1024 * 1024 * 10)
+#define BUFFER_SIZE	 (1024 * 64)
+#define RATE_LIMIT	  (1024 * 1024 * 10)
 
 #define _connectTimeout			30.0
 #define _sendDataTimeout		30.0
@@ -1131,14 +1140,14 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)isActingAsServer
 {
-	return ((self.isSender	     && self.isReversed == NO) ||
+	return ((self.isSender		 && self.isReversed == NO) ||
 			(self.isSender == NO && self.isReversed));
 }
 
 - (BOOL)isActingAsClient
 {
 	return ((self.isSender == NO && self.isReversed == NO) ||
-			(self.isSender	     && self.isReversed));
+			(self.isSender		 && self.isReversed));
 }
 
 - (TDCFileTransferDialog *)transferDialog

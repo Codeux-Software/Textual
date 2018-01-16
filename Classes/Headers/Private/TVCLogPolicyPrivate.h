@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCLogView;
+
 @interface TVCLogPolicy : NSObject
 @property (nonatomic, copy, nullable) NSString *anchorURL;
 @property (nonatomic, copy, nullable) NSString *channelName;

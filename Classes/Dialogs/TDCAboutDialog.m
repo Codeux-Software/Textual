@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "TLOLanguagePreferences.h"
+#import "TPCApplicationInfo.h"
+#import "TDCAboutDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCAboutDialog ()
@@ -82,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)windowWillClose:(NSNotification *)note
 {
 	[self.window saveWindowStateForClass:self.class];
-	
+
 	if ([self.delegate respondsToSelector:@selector(aboutDialogWillClose:)]) {
 		[self.delegate aboutDialogWillClose:self];
 	}

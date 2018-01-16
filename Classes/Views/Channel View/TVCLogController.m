@@ -36,6 +36,33 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXGlobalModels.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "ICLPayloadLocalPrivate.h"
+#import "IRCClientConfig.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannel.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCThemeController.h"
+#import "TPCThemeSettingsPrivate.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLinkParser.h"
+#import "TVCLogViewPrivate.h"
+#import "TVCLogLine.h"
+#import "TVCLogRenderer.h"
+#import "TVCLogControllerHistoricLogFilePrivate.h"
+#import "TVCLogControllerInlineMediaServicePrivate.h"
+#import "TVCLogControllerOperationQueuePrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCLogControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _enqueueBlock(operationBlock)			\
@@ -216,7 +243,7 @@ ClassWithDesignatedInitializerInitMethod
 	/* Delete any trace of the channel, including context */
 	[TVCLogControllerHistoricLogSharedInstance() forgetItem:self.associatedItem];
 }
-	
+
 - (void)historicLogResetChannel
 {
 	/* Delete log for channel but keep context */
@@ -274,7 +301,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (TVCLogControllerPrintingOperationQueue *)printingQueue
 {
-    return [TXSharedApplication sharedPrintingQueue];
+	return [TXSharedApplication sharedPrintingQueue];
 }
 
 - (BOOL)inlineMediaEnabledForView
@@ -283,11 +310,11 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
-	/* If global showInlineImages is YES, then the value of ignoreInlineImages is designed to
-	 be as it is named. Disable them for specific channels. However if showInlineImages is NO
-	 on a global scale, then ignoreInlineImages actually enables them for specific channels. */
-	return (([TPCPreferences showInlineImages]			&& self.associatedChannel.config.ignoreInlineMedia == NO) ||
-			([TPCPreferences showInlineImages] == NO	&& self.associatedChannel.config.ignoreInlineMedia));
+	/* If global showInlineMedia is YES, then the value of ignoreInlineMedia is designed to
+	 be as it is named. Disable them for specific channels. However if showInlineMedia is NO
+	 on a global scale, then ignoreInlineMedia actually enables them for specific channels. */
+	return (([TPCPreferences showInlineMedia]		&& self.associatedChannel.config.ignoreInlineMedia == NO) ||
+			([TPCPreferences showInlineMedia] == NO	&& self.associatedChannel.config.ignoreInlineMedia));
 }
 
 - (BOOL)viewIsSelected
@@ -674,9 +701,6 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(lineNumber != nil);
 
-#warning TODO: Fix jumping to line before switching to view not working correctly \
-	because the WebKit1 auto scroller does not detect frame changes when view is hidden. 
-
 	/* Jumping to line chains callback functinos which may take time to load.
 	 We do not want invoke the completion handler until we know for certain
 	 whether the line was jumped to. We therefore change the completion
@@ -739,9 +763,20 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Plugins
 
-- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful
+- (void)notifyJumpToLine:(NSString *)lineNumber successful:(BOOL)successful scrolledToBottom:(BOOL)scrolledToBottom
 {
 	NSParameterAssert(lineNumber != nil);
+
+	/* The Objective-C based automatic scroller relies on notifications of
+	 bounds and frame changes to know when a WebView scrolls. If the WebView
+	 is offscreen, then we have no way to know when a jump occurs because
+	 these notifications are not received. To workaround this, the JavaScript
+	 passes the scrolledToBottom argument. The Objective-C automatic scroller
+	 can then be passed this argument to know whether to perform automatic
+	 scrolling when the view becomes visible. */
+	if (successful) {
+		[self.backingView resetScrollerPositionTo:scrolledToBottom];
+	}
 
 	void (^callbackHandler)(BOOL) = [self.jumpToLineCallbacks objectForKey:lineNumber];
 
@@ -802,6 +837,66 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark Inline Media
+
+- (void)processingInlineMediaPayloadSucceeded:(ICLPayload *)payload
+{
+	[self _evaluateFunction:@"_InlineMediaLoader.processPayload" withArguments:@[payload.javaScriptObject]];
+}
+
+- (void)processingInlineMediaPayload:(ICLPayload *)payload failedWithError:(NSError *)error
+{
+	LogToConsoleError("Processing request for '%@' at '%@' failed with error: %@",
+		payload.uniqueIdentifier, payload.lineNumber, error.localizedDescription);
+}
+
+- (void)processInlineMedia:(NSArray<AHHyperlinkScannerResult *> *)mediaLinks atLineNumber:(NSString *)lineNumber
+{
+	NSParameterAssert(mediaLinks != nil);
+	NSParameterAssert(lineNumber != nil);
+
+	if (mediaLinks.count == 0) {
+		return;
+	}
+
+	/* Unique list */
+	NSMutableArray<NSString *> *linksMatched = [NSMutableArray array];
+
+	NSMutableArray<AHHyperlinkScannerResult *> *linksToProcess = [NSMutableArray array];
+
+	for (AHHyperlinkScannerResult *link in mediaLinks) {
+		if ([linksMatched containsObject:link.stringValue]) {
+			continue;
+		}
+
+		[linksToProcess addObject:link];
+	}
+
+	[linksToProcess enumerateObjectsUsingBlock:^(AHHyperlinkScannerResult *link, NSUInteger index, BOOL *stop) {
+		[self processInlineMediaAtAddress:link.stringValue
+					 withUniqueIdentifier:link.uniqueIdentifier
+							 atLineNumber:lineNumber
+									index:index];
+	}];
+}
+
+- (void)processInlineMediaAtAddress:(NSString *)address withUniqueIdentifier:(NSString *)uniqueIdentifier atLineNumber:(NSString *)lineNumber index:(NSUInteger)index
+{
+	NSParameterAssert(address != nil);
+	NSParameterAssert(uniqueIdentifier != nil);
+	NSParameterAssert(lineNumber != nil);
+
+	IRCTreeItem *associatedItem = self.associatedItem;
+
+	[TVCLogControllerInlineMediaSharedInstance()
+			 processAddress:address
+	   withUniqueIdentifier:uniqueIdentifier
+			   atLineNumber:lineNumber
+					  index:index
+					forItem:associatedItem];
+}
+
+#pragma mark -
 #pragma mark Manage Highlights
 
 - (NSUInteger)numberOfLines
@@ -825,7 +920,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.loaded == NO || self.terminating) {
 		return;
 	}
-	
+
 	@synchronized(self.highlightedLineNumbers) {
 		if (self.highlightedLineNumbers.count == 0) {
 			return;
@@ -887,11 +982,11 @@ ClassWithDesignatedInitializerInitMethod
 	if (clearWithReset) {
 		[self historicLogResetChannel];
 	}
-	
+
 	@synchronized(self.highlightedLineNumbers) {
 		[self.highlightedLineNumbers removeAllObjects];
 	}
-	
+
 	self.activeLineCount = 0;
 
 	self.lastVisitedHighlight = nil;
@@ -1022,9 +1117,9 @@ ClassWithDesignatedInitializerInitMethod
 
 		[TVCLogControllerHistoricLogSharedInstance()
 			 fetchEntriesForItem:self.associatedItem
-		    withUniqueIdentifier:lineNumber
-			    beforeFetchLimit:numberOfLinesBefore
-			     afterFetchLimit:numberOfLinesAfter
+			withUniqueIdentifier:lineNumber
+				beforeFetchLimit:numberOfLinesBefore
+				 afterFetchLimit:numberOfLinesAfter
 					 limitToDate:nil
 			 withCompletionBlock:historicLogCompletionBlock];
 	};
@@ -1060,7 +1155,7 @@ ClassWithDesignatedInitializerInitMethod
 			@"lineNumber" : lineNumber,
 			@"html" : html,
 			@"timestamp" : @(logLine.receivedAt.timeIntervalSince1970)
-	    }];
+		}];
 
 		/* Add "Current Session" message */
 		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
@@ -1068,7 +1163,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			[renderedLogLines addObject:@{
 				  @"html" : html
-		    }];
+			}];
 		}
 
 		/* Add reference to plugin concrete object */
@@ -1116,7 +1211,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	TVCLogControllerPrintingBlock printBlock = ^(id operation) {
 		NSDictionary<NSString *, id> *resultInfo = nil;
-		
+
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html == nil) {
@@ -1127,14 +1222,14 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSString *lineNumber = logLine.uniqueIdentifier;
 
-		NSDictionary<NSString *, NSString *> *listOfInlineImages = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
-
 		NSSet<IRCChannelUser *> *listOfUsers = resultInfo[TVCLogRendererResultsListOfUsersFoundAttribute];
+
+		BOOL processInlineMedia = [resultInfo boolForKey:@"processInlineMedia"];
 
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
-		
+
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			if (self.terminating) {
 				return;
@@ -1163,17 +1258,17 @@ ClassWithDesignatedInitializerInitMethod
 
 			[self appendToDocumentBody:html withLineNumbers:@[lineNumber]];
 
-			/* Begin processing inline images */
-			/* We go through the inline image list here and pass to the loader now so that
-			 we know the links have hit the webview before we even try loading them. */
-			[listOfInlineImages enumerateKeysAndObjectsUsingBlock:^(NSString *uniqueId, NSString *imageUrl, BOOL *stop) {
-				TVCImageURLoader *imageLoader = [TVCImageURLoader new];
+#warning TODO: Modify logic of inline media to only truly \
+	process images if the line is in fact on the WebView.
+			/* Begin processing inline media */
+			/* We go through the inline media list here and pass to the loader now so
+			 that we know the links have hit the WebView before we even try loading them. */
+			if (processInlineMedia) {
+				NSArray<AHHyperlinkScannerResult *> *listOfLinks = resultInfo[TVCLogRendererResultsListOfLinksInBodyAttribute];
 
-				imageLoader.delegate = (id)self;
+				[self processInlineMedia:listOfLinks atLineNumber:lineNumber];
+			}
 
-				[imageLoader assesURL:imageUrl withId:uniqueId];
-			}];
-			
 			/* Log this log line */
 			/* If the channel is encrypted, then we refuse to write to
 			 the actual historic log so there is no trace of the chatter
@@ -1236,7 +1331,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	[rendererAttributes maybeSetObject:logLine.excludeKeywords forKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 	[rendererAttributes maybeSetObject:logLine.highlightKeywords forKey:TVCLogRendererConfigurationHighlightKeywordsAttribute];
-	
+
 	[rendererAttributes setBool:renderLinks forKey:TVCLogRendererConfigurationRenderLinksAttribute];
 
 	[rendererAttributes setUnsignedInteger:logLine.lineType forKey:TVCLogRendererConfigurationLineTypeAttribute];
@@ -1262,73 +1357,19 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL highlighted = [rendererResults boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
-	NSArray<AHHyperlinkScannerResult *> *linksInBody = rendererResults[TVCLogRendererResultsListOfLinksInBodyAttribute];
+	BOOL inlineMedia =
+		(self.inlineMediaEnabledForView &&
+		 (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType));
 
 	// ************************************************************************** /
 
 	NSMutableDictionary<NSString *, id> *pathAttributes = [NSMutableDictionary new];
 
 	pathAttributes[@"activeStyleAbsolutePath"] = self.baseURL.path;
-	
+
 	pathAttributes[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	NSMutableDictionary<NSString *, id> *templateAttributes = [pathAttributes mutableCopy];
-
-	// ************************************************************************** /
-
-	if (self.inlineMediaEnabledForView == NO ||
-		(lineType != TVCLogLinePrivateMessageType && lineType != TVCLogLineActionType))
-	{
-		templateAttributes[@"inlineMediaAvailable"] = @(NO);
-	}
-	else
-	{
-		// Array of attributes for template to render HTML for each image
-		NSMutableArray<NSDictionary *> *inlineImageAttributes = [NSMutableArray array];
-
-		// Array to keep track of images so that duplicates aren't processed
-		NSMutableArray<NSString *> *inlineImagesProcessed = [NSMutableArray array];
-
-		// Array of images whoes content will be loaded to ensure they are actually images
-		NSMutableDictionary<NSString *, NSString *> *inlineImagesToValidate = nil;
-
-		for (AHHyperlinkScannerResult *link in linksInBody) {
-			NSString *imageUrl = [TVCImageURLParser imageURLFromBase:link.stringValue];
-
-			if (imageUrl == nil) {
-				continue;
-			}
-
-			if ([inlineImagesProcessed containsObject:imageUrl]) {
-				continue;
-			}
-
-			[inlineImageAttributes addObject:@{
-				  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
-				  @"anchorInlineImageUniqueID"	: link.uniqueIdentifier,
-				  @"anchorLink"					: link.stringValue,
-				  @"imageURL"					: imageUrl,
-			}];
-
-			[inlineImagesProcessed addObject:imageUrl];
-
-			if (resultInfoTemp) {
-				if (inlineImagesToValidate == nil) {
-					inlineImagesToValidate = [NSMutableDictionary dictionary];
-				}
-
-				inlineImagesToValidate[link.uniqueIdentifier] = imageUrl;
-			}
-		}
-
-		templateAttributes[@"inlineMediaArray"]	= inlineImageAttributes;
-		
-		templateAttributes[@"inlineMediaAvailable"] = @(inlineImagesProcessed.count > 0);
-
-		if (resultInfoTemp) {
-			resultInfoTemp[@"InlineImagesToValidate"] = inlineImagesToValidate;
-		}
-	}
 
 	// ---- //
 
@@ -1348,18 +1389,14 @@ ClassWithDesignatedInitializerInitMethod
 		templateAttributes[@"isNicknameAvailable"] = @(NO);
 	} else {
 		templateAttributes[@"isNicknameAvailable"] = @(YES);
-		
-		templateAttributes[@"nicknameColorNumber"] = logLine.nicknameColorStyle;
-		templateAttributes[@"nicknameColorStyle"] = logLine.nicknameColorStyle;
 
+		templateAttributes[@"nicknameColorStyle"] = logLine.nicknameColorStyle;
 		templateAttributes[@"nicknameColorStyleOverride"] = @(logLine.nicknameColorStyleOverride);
 
 		templateAttributes[@"nicknameColorHashingEnabled"] = @([TPCPreferences disableNicknameColorHashing] == NO);
 
-		templateAttributes[@"nicknameColorHashingIsStyleBased"] = @(themeSettings().nicknameColorStyle != TPCThemeSettingsNicknameColorLegacyStyle);
-		
 		templateAttributes[@"formattedNickname"] = nickname.trim;
-		
+
 		templateAttributes[@"nickname"]	= logLine.nickname;
 		templateAttributes[@"nicknameType"]	= logLine.memberTypeString;
 	}
@@ -1381,14 +1418,14 @@ ClassWithDesignatedInitializerInitMethod
 		classAttribute = @"event";
 	}
 
-	templateAttributes[@"lineClassAttributeRepresentation"] = classAttribute;
+	templateAttributes[@"lineClassAttribute"] = classAttribute;
 
 	// ---- //
 
 	if (highlighted) {
-		templateAttributes[@"highlightAttributeRepresentation"] = @"true";
+		templateAttributes[@"highlightAttribute"] = @"true";
 	} else {
-		templateAttributes[@"highlightAttributeRepresentation"] = @"false";
+		templateAttributes[@"highlightAttribute"] = @"false";
 	}
 
 	// ---- //
@@ -1413,12 +1450,14 @@ ClassWithDesignatedInitializerInitMethod
 	// ---- //
 
 	NSString *serverName = self.associatedClient.networkNameAlt;
-	
+
 	if (serverName) {
 		templateAttributes[@"configuredServerName"] = serverName;
 	}
-	
+
 	// ---- //
+
+	templateAttributes[@"inlineMediaEnabled"] = @(inlineMedia);
 
 	templateAttributes[@"lineNumber"] = logLine.uniqueIdentifier;
 
@@ -1427,7 +1466,11 @@ ClassWithDesignatedInitializerInitMethod
 	// ************************************************************************** /
 
 	if (resultInfoTemp) {
+		resultInfoTemp[@"processInlineMedia"] = @(inlineMedia);
+
 		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
+			NSArray<AHHyperlinkScannerResult *> *listOfLinks = rendererResults[TVCLogRendererResultsListOfLinksInBodyAttribute];
+
 			 THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject =
 			[THOPluginDidPostNewMessageConcreteObject new];
 
@@ -1444,7 +1487,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			pluginConcreteObject.messageContents = rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute];
 
-			pluginConcreteObject.listOfHyperlinks = linksInBody;
+			pluginConcreteObject.listOfHyperlinks = listOfLinks;
 
 			pluginConcreteObject.listOfUsers = rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute];
 
@@ -1465,16 +1508,6 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *html = [TVCLogRenderer renderTemplate:template attributes:templateAttributes];
 
 	return html;
-}
-
-- (void)isSafeToPresentImageWithId:(NSString *)uniqueId
-{
-	[self _evaluateFunction:@"_Textual.toggleInlineImageVisibility" withArguments:@[uniqueId]];
-}
-
-- (void)isNotSafeToPresentImageWithId:(NSString *)uniqueId
-{
-	;
 }
 
 #pragma mark -
@@ -1498,14 +1531,14 @@ ClassWithDesignatedInitializerInitMethod
 	NSMutableDictionary *templateTokens = [self generateOverrideStyle];
 
 	templateTokens[@"activeStyleAbsolutePath"] = self.baseURL.path;
-	
+
 	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
 	templateTokens[@"applicationTemplatesPath"] = themeSettings().applicationTemplateRepositoryPath;
 
 	templateTokens[@"cacheToken"] = themeController().cacheToken;
 
-    templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
+	templateTokens[@"configuredServerName"] = self.associatedClient.networkNameAlt;
 
 	templateTokens[@"isReloadingStyle"] = @(self.reloadingTheme);
 
@@ -1519,11 +1552,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (self.associatedChannel) {
 		templateTokens[@"isChannelView"] = @(self.associatedChannel.isChannel);
-        templateTokens[@"isPrivateMessageView"] = @(self.associatedChannel.isPrivateMessage);
+		templateTokens[@"isPrivateMessageView"] = @(self.associatedChannel.isPrivateMessage);
 		templateTokens[@"isUtilityView"] = @(self.associatedChannel.isUtility);
 
 		templateTokens[@"channelName"] = self.associatedChannel.name;
-		
+
 		templateTokens[@"viewTypeToken"] = self.associatedChannel.channelTypeString;
 	} else {
 		templateTokens[@"viewTypeToken"] = @"server";
@@ -1533,6 +1566,12 @@ ClassWithDesignatedInitializerInitMethod
 		templateTokens[@"textDirectionToken"] = @"rtl";
 	} else {
 		templateTokens[@"textDirectionToken"] = @"ltr";
+	}
+
+	if ([themeSettings() underlyingWindowColorIsDark]) {
+		templateTokens[@"appearanceToken"] = @"dark";
+	} else {
+		templateTokens[@"appearanceToken"] = @"light";
 	}
 
 	return [TVCLogRenderer renderTemplateNamed:@"baseLayout" attributes:templateTokens];
@@ -1561,9 +1600,9 @@ ClassWithDesignatedInitializerInitMethod
 		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
-		
+
 		NSString *timeFormat = themeSettings().themeTimestampFormat;
-		
+
 		if (timeFormat == nil) {
 			timeFormat = [TPCPreferences themeTimestampFormat];
 		}

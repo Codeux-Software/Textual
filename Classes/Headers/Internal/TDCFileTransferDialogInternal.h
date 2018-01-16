@@ -4,7 +4,7 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
+
  Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -34,6 +34,8 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+#import "TDCFileTransferDialogPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

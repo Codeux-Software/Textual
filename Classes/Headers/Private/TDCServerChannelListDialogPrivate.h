@@ -36,7 +36,12 @@
 
  *********************************************************************** */
 
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCWindowBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient;
 
 @protocol TDCServerChannelListDialogDelegate;
 

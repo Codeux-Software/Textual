@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TVCLogRenderer.h"
+#import "IRC.h"
+#import "IRCClientConfig.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "IRCColorFormatPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const IRCTextFormatterBoldAttributeName = @"IRCTextFormatterBoldAttributeName";
@@ -524,7 +531,7 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 [result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
 		 }
 	 }];
-	
+
 	return result;
 }
 

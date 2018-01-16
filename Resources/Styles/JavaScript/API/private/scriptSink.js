@@ -269,9 +269,9 @@ appPrivate.renderTemplate = function(templateName, templateAttributes, callbackF
 	}
 };
 
-appPrivate.notifyJumpToLineCallback = function(lineNumber, successful)
+appPrivate.notifyJumpToLineCallback = function(lineNumber, successful, scrolledToBottom)
 {
-	var dataValue = {"values" : [lineNumber, successful]};
+	var dataValue = {"values" : [lineNumber, successful, scrolledToBottom]};
 
 	if (app.isWebKit2()) {
 		window.webkit.messageHandlers.notifyJumpToLineCallback.postMessage(dataValue);
@@ -295,6 +295,26 @@ appPrivate.notifyLinesRemovedFromView = function(lineNumbers)
 		window.webkit.messageHandlers.notifyLinesRemovedFromView.postMessage(lineNumbers);
 	} else {
 		TextualScriptSink.notifyLinesRemovedFromView(lineNumbers);
+	}
+};
+
+appPrivate.loadInlineMedia = function(address, uniqueIdentifier, lineNumber, index)
+{
+	var dataValue = {"values" : [address, uniqueIdentifier, lineNumber, index]};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.loadInlineMedia.postMessage(dataValue);
+	} else {
+		TextualScriptSink.loadInlineMedia(dataValue);
+	}
+};
+
+appPrivate.encryptionAuthenticateUser = function()
+{
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.encryptionAuthenticateUser.postMessage(null);
+	} else {
+		TextualScriptSink.encryptionAuthenticateUser();
 	}
 };
 

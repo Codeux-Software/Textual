@@ -36,7 +36,12 @@
 
  *********************************************************************** */
 
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCSheetBase.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCClientConfig;
 
 typedef NS_ENUM(NSUInteger, TDCServerPropertiesSheetNavigationSelection) {
 	TDCServerPropertiesSheetDefaultNavigationSelection = 0,

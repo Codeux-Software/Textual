@@ -36,9 +36,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class TPCThemeSettings;
 
 TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameBasicPrefix;
 TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameCompletePrefix;
@@ -79,10 +79,10 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 - (BOOL)validateThemeAndRelaodIfNecessary;
 
 /* Calls for all themes */
++ (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock;
+
 /* A theme is considered existent if the designated design.css file and scripts.js for
  it exists. Otherwise, the theme is considered nonexistent even if the folder exists. */
-+ (NSDictionary<NSString *, NSString *> *)dictionaryOfAllThemes;
-
 + (BOOL)themeExists:(NSString *)themeName;
 
 + (nullable NSString *)pathOfThemeWithName:(NSString *)themeName;
@@ -94,6 +94,8 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 + (nullable NSString *)extractThemeName:(NSString *)source;
 
 + (TPCThemeControllerStorageLocation)expectedStorageLocationOfThemeWithName:(NSString *)themeName;
+
++ (nullable NSString *)descriptionForStorageLocation:(TPCThemeControllerStorageLocation)storageLocation;
 @end
 
 NS_ASSUME_NONNULL_END

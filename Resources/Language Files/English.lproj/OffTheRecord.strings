@@ -37,7 +37,7 @@
 
 /* Next unusued key: 1012 */
 
-"OffTheRecord[1001][01]" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user.";
+"OffTheRecord[1001][01]" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user. <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>.";
 "OffTheRecord[1001][02]" = "Off-the-Record Messaging: Private conversation started with a recognized user.";
 
 "OffTheRecord[1002]" = "Off-the-Record Messaging: %@ was successful in confirming their identity.";
@@ -72,3 +72,5 @@
 "OffTheRecord[1011][1]" = "Not Encrypted";
 "OffTheRecord[1011][2]" = "Encrypted & Unverified";
 "OffTheRecord[1011][3]" = "Encrypted & Verified";
+
+"OffTheRecord[1011]" = "Off-the-Record Messaging: The fingerprint for %1$@ is “%2$@” — <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>";

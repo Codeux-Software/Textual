@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#import "THOUnicodeHelper.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 static NSUInteger TABLE1[] = {
@@ -422,12 +424,12 @@ static NSUInteger OTHERS_TABLE[] = {
 + (BOOL)isAlphabeticalCodePoint:(NSInteger)c
 {
 	NSUInteger *T = 0;
-	
+
 	if (c <= 0x7f) {
 		return ((0x41 <= c && c <= 0x5a) ||
 				(0x61 <= c && c <= 0x7a));
 	}
-	
+
 	if (0xaa <= c && c <= 0x2ee) {
 		T = TABLE1;
 	} else if (0x37a <= c && c <= 0xf8b) {
@@ -443,38 +445,38 @@ static NSUInteger OTHERS_TABLE[] = {
 	} else if (0x10000 <= c && c <= 0x1d7cb) {
 		T = OTHERS_TABLE;
 	}
-	
+
 	if (T == 0) {
 		return NO;
 	}
-	
+
 	NSInteger count = *T;
 
 	T++;
-	
+
 	NSInteger left = 0;
 	NSInteger right = count;
-	
+
 	while (left < right) {
 		NSInteger center = ((left + right) / 2);
 		NSInteger start = T[(center * 2)];
 		NSInteger end = T[(center * 2 + 1)];
-		
+
 		if (start <= c && c <= end) {
 			return YES;
 		}
-		
+
 		if (c < start) {
 			right = center;
-			
+
 			continue;
 		} else {
 			left = (center + 1);
-			
+
 			continue;
 		}
 	}
-	
+
 	return NO;
 }
 

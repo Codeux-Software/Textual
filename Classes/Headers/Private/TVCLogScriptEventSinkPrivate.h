@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCLogView;
+
 @interface TVCLogScriptEventSink : NSObject
 - (instancetype)initWithWebView:(nullable TVCLogView *)webView NS_DESIGNATED_INITIALIZER;
 @end

@@ -1,0 +1,30 @@
+
+<span class="inlineVideo {{classAttribute}}" id="inlineMedia-{{uniqueIdentifier}}">
+	<span class="closeButton" href="#" onclick="_ICMInlineVideo.hideOnClick('{{uniqueIdentifier}}');">×</span>
+
+	<video
+
+{{#videoAutoplayEnabled}}
+		autoplay
+{{/videoAutoplayEnabled}}
+
+{{#videoControlsEnabled}}
+		controls
+{{/videoControlsEnabled}}
+
+{{#videoLoopEnabled}}
+		loop
+{{/videoLoopEnabled}}
+
+{{#videoMuteEnabled}}
+		muted
+{{/videoMuteEnabled}}
+
+		data-speed="{{videoPlaybackSpeed}}"
+		data-start="{{videoStartTime}}"
+		src="{{videoURL}}"
+		class="content"
+		style="max-width: {{preferredMaximumWidth}}px;"
+		onloadedmetadata="_ICMInlineVideo.metadataLoadedCallback()"
+		onloadeddata="_ICMInlineVideo.dataLoadedCallback()"></video>
+</span>

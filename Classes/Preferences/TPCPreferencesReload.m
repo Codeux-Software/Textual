@@ -35,6 +35,25 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TXMasterControllerPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
+#import "IRCClientPrivate.h"
+#import "IRCChannelPrivate.h"
+#import "IRCCommandIndexPrivate.h"
+#import "IRCWorld.h"
+#import "TLOInputHistoryPrivate.h"
+#import "TVCDockIconPrivate.h"
+#import "TVCLogControllerPrivate.h"
+#import "TVCLogControllerHistoricLogFilePrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowTextViewPrivate.h"
+#import "TVCServerListPrivate.h"
+#import "TVCMemberListPrivate.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TPCPreferencesReload.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
@@ -88,7 +107,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[keys containsObject:@"DisableRemoteNicknameColorHashing"] ||
 		[keys containsObject:@"DisplayEventInLogView -> Inline Media"] ||
 		[keys containsObject:@"DisplayEventInLogView -> Join, Part, Quit"] ||
-		[keys containsObject:@"NicknameColorHashingComputesRGBValue"] ||
 		[keys containsObject:@"Theme -> Nickname Format"] ||
 		[keys containsObject:@"Theme -> Timestamp Format"] ||
 		[keys containsObject:@"Theme -> Channel Font Preference Enabled"] ||
@@ -349,11 +367,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[masterController() prepareThirdPartyServiceSparkleFramework];
 	}
 #endif
-
-	/* Inline media cache */
-	if ((reloadAction & TPCPreferencesReloadInlineMediaCacheAction) == TPCPreferencesReloadInlineMediaCacheAction) {
-		[TVCImageURLoader invalidateInternalCache];
-	}
 
 	/* Command index cache */
 	if ((reloadAction & TPCPreferencesReloadIRCCommandCacheAction) == TPCPreferencesReloadIRCCommandCacheAction) {

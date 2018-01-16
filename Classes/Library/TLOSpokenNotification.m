@@ -35,6 +35,10 @@
 
  *********************************************************************** */
 
+#import "IRCClient.h"
+#import "IRCChannel.h"
+#import "TLOSpokenNotificationPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOSpokenNotification ()

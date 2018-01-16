@@ -35,6 +35,11 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
+#import "TVCTextFieldWithValueValidation.h"
+#import "TDCAddressBookSheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCAddressBookSheet ()
@@ -192,7 +197,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ([self.delegate respondsToSelector:@selector(addressBookSheet:onOk:)]) {
 		[self.delegate addressBookSheet:self onOk:[self.config copy]];
 	}
-	
+
 	[super ok:nil];
 }
 

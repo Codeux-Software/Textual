@@ -35,7 +35,14 @@
 
  *********************************************************************** */
 
+#import "TXMasterController.h"
+#import "IRCClient.h"
+#import "IRCChannelPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "TVCServerList.h"
+#import "TVCMemberList.h"
 #import "TDCBuddyListDialogInternal.h"
+#import "TDCBuddyListDialogDropViewPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

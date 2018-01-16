@@ -1,0 +1,6 @@
+
+// The main project of Textual, its extensions, and its XPC services
+// all inherit one of these configuration files to allow them to
+// selectively disable code based on which features are enabled.
+
+GCC_PREPROCESSOR_DEFINITIONS = TEXTUAL_BUILT_INSIDE_SANDBOX=1 TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION=1 TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED=1 TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT=1 TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION=1

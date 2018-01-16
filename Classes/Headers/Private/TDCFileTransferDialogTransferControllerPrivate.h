@@ -4,7 +4,7 @@
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
- 
+
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
@@ -36,7 +36,12 @@
 
  *********************************************************************** */
 
+#import "TDCSharedProtocolDefinitionsPrivate.h"
+#import "TDCFileTransferDialogPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, TDCFileTransferDialogTableCell;
 
 @interface TDCFileTransferDialogTransferController : NSObject <TDCClientPrototype>
 @property (nonatomic, weak) TDCFileTransferDialogTableCell *transferTableCell;

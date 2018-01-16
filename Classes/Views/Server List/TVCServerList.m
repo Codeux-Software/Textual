@@ -35,6 +35,15 @@
 
  *********************************************************************** */
 
+#import "NSViewHelperPrivate.h"
+#import "TXMasterController.h"
+#import "TXMenuControllerPrivate.h"
+#import "TVCMainWindowPrivate.h"
+#import "TPCPreferencesLocal.h"
+#import "TVCServerListCellPrivate.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+#import "TVCServerListPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCServerListDragType = @"TVCServerListDragType";
@@ -79,7 +88,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 		rowIndex = [childrenItems indexOfObject:object];
 	} else {
 		NSArray *groupItems = self.groupItems;
-		
+
 		rowIndex = [groupItems indexOfObject:object];
 	}
 
@@ -153,7 +162,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
 	NSParameterAssert(cellItem != nil);
-	
+
 	NSInteger rowIndex = [self rowForItem:cellItem];
 
 	[self updateDrawingForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
@@ -162,7 +171,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 - (void)updateMessageCountForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
 	NSParameterAssert(cellItem != nil);
-	
+
 	NSInteger rowIndex = [self rowForItem:cellItem];
 
 	[self updateMessageCountForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
@@ -179,9 +188,9 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	}
 
 	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-		
+
 	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-		
+
 	if (isChildItem) {
 		[rowView populateMessageCountBadge];
 	}
@@ -198,7 +207,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	}
 
 	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-	
+
 	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
 
 	if (isGroupItem) {
@@ -216,7 +225,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 - (void)reloadUserInterfaceObjects
 {
 	Class newObjects = NULL;
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
 		if ([TPCPreferences invertSidebarColors]) {
@@ -269,17 +278,17 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	self.mainWindow.ignoreOutlineViewSelectionChanges = YES;
 
 	self.allowsEmptySelection = YES;
-	
+
 	NSIndexSet *selectedRows = self.selectedRowIndexes;
-	
+
 	[self deselectAll:nil];
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateVibrancy];
 	}
-	
+
 	[self reloadUserInterfaceObjects];
-	
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
 		if ([TPCPreferences invertSidebarColors]) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
@@ -295,7 +304,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	self.allowsEmptySelection = NO;
 
 	self.mainWindow.ignoreOutlineViewSelectionChanges = NO;
-	
+
 	[self reloadAllDrawings:YES];
 }
 
@@ -359,7 +368,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 		default:
 		{
 			[self.keyDelegate serverListKeyDown:e];
-			
+
 			break;
 		}
 	}

@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+#import "TPCPathInfo.h"
+#import "TLOLicenseManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /* 
@@ -65,7 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *	<https://github.com/bdrister/AquaticPrime>
 */
-
 #pragma mark -
 #pragma mark Private Implementation
 
@@ -121,7 +123,7 @@ void TLOLicenseManagerSetup(void)
 		_setupComplete = YES;
 
 		TLOLicenseManagerPopulatePublicKeyRef();
-		
+
 		(void)TLOLicenseManagerLoadLicenseDictionary();
 
 		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
@@ -142,7 +144,7 @@ BOOL TLOLicenseManagerTextualIsRegistered(void)
 	} else if (TLOLicenseManagerLicenseFileExists() == NO) {
 		return NO;
 	}
-	
+
 	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
 
 	return (licenseDictionary != nil);
@@ -200,7 +202,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 
 		if ([trialInformationFilePath setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifyTrialInformationAttributesError] == NO) {
 			LogToConsoleError("Failed to modify attributes of trial information file: %{public}@", modifyTrialInformationAttributesError.localizedDescription);
-			
+
 			return 0; // Cannot continue function...
 		}
 
@@ -300,17 +302,17 @@ NSNumberFormatter *TLOLicenseManagerStringValueNumberFormatter(void)
 		 fraction digits. This allows us to avoid having to determine
 		 what type of number NSNumber is actually storing. Just format
 		 everything the same exact way.
-	 
+
 		 Integer 1 = "1.0000",
 		 Double 2.43561 = "2.4356"
 	 */
 	static NSNumberFormatter *numberFormatter = nil;
-	
+
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
 		numberFormatter = [NSNumberFormatter new];
-		
+
 		numberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
 		numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
 		numberFormatter.alwaysShowsDecimalSeparator = YES;
@@ -318,7 +320,7 @@ NSNumberFormatter *TLOLicenseManagerStringValueNumberFormatter(void)
 		numberFormatter.minimumFractionDigits = 4;
 		numberFormatter.maximumFractionDigits = 4;
 	});
-	
+
 	return numberFormatter;
 }
 
@@ -337,7 +339,7 @@ NSString *TLOLicenseManagerStringValueForObject(id object)
 
 			[stringValue appendFormat:@"%ld%@", index, objectValue];
 		}];
-		
+
 		return [stringValue copy];
 	}
 	else if ([object isKindOfClass:[NSDictionary class]])
@@ -348,10 +350,10 @@ NSString *TLOLicenseManagerStringValueForObject(id object)
 
 		for (NSString *key in sortedDictionaryKeys) {
 			NSString *objectValue = TLOLicenseManagerStringValueForObject(object[key]);
-			
+
 			[stringValue appendFormat:@"%@%@", key, objectValue];
 		}
-		
+
 		return [stringValue copy];
 	}
 	else if ([object isKindOfClass:[NSString class]])
@@ -368,11 +370,11 @@ NSString *TLOLicenseManagerStringValueForObject(id object)
 			}
 		} else {
 			NSNumberFormatter *numberFormatter = TLOLicenseManagerStringValueNumberFormatter();
-			
+
 			return [numberFormatter stringFromNumber:object];
 		}
 	}
-	
+
 	return @"";
 }
 
@@ -408,15 +410,15 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 	/* Combine all contents of the dictionary, in sorted order, excluding
 	 the license dictinoary signature because thats used for comparison. */
 	NSMutableDictionary *licenseDictionaryToCombine = [licenseDictionary mutableCopy];
-	
+
 	[licenseDictionaryToCombine removeObjectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
 	[licenseDictionaryToCombine removeObjectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureGenerationKey];
-	
+
 	NSString *combinedLicenseDataString = TLOLicenseManagerStringValueForObject(licenseDictionaryToCombine);
 
 	if (combinedLicenseDataString.length <= 0) {
 		LogToConsoleError("Legnth of combinedLicenseDataString is below or equal to zero (0)");
-		
+
 		return NO;
 	}
 
@@ -493,25 +495,25 @@ BOOL TLOLicenseManagerWriteLicenseFileContents(NSData * _Nullable newContents)
 	if (newContents) {
 		if (TLOLicenseManagerLoadLicenseDictionaryWithData(newContents) == NO) {
 			LogToConsoleError("Verify for new license file contents failed");
-			
+
 			return NO;
 		}
 
 		NSError *writeFileError = nil;
-		
+
 		if ([newContents writeToURL:licenseFilePath options:NSDataWritingAtomic error:&writeFileError] == NO) {
 			LogToConsoleError("Failed to write user license file with error: %{public}@", writeFileError.localizedDescription);
-			
+
 			return NO;
 		}
 	} else {
 		TLOLicenseManagerCachedLicenseDictionary = nil;
 
 		NSError *deleteError = nil;
-		
+
 		if ([RZFileManager() removeItemAtURL:licenseFilePath error:&deleteError] == NO) {
 			LogToConsoleError("Failed to delete user license file with error: %{public}@", deleteError.localizedDescription);
-			
+
 			return NO;
 		}
 	}
@@ -564,11 +566,11 @@ NSData * _Nullable TLOLicenseManagerLicenseFileContents(void)
 BOOL TLOLicenseManagerLoadLicenseDictionary(void)
 {
 	NSData *licenseContents = TLOLicenseManagerLicenseFileContents();
-	
+
 	if (licenseContents == nil) {
 		return NO;
 	}
-	
+
 	return TLOLicenseManagerLoadLicenseDictionaryWithData(licenseContents);
 }
 
@@ -577,17 +579,17 @@ BOOL TLOLicenseManagerLoadLicenseDictionaryWithData(NSData *licenseContents)
 	NSCParameterAssert(licenseContents != nil);
 
 	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseContents);
-	
+
 	if (licenseDictionary == nil) {
 		return NO;
 	}
-	
+
 	if (TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary) == NO) {
 		return NO;
 	}
-	
+
 	TLOLicenseManagerCachedLicenseDictionary = [licenseDictionary copy];
-	
+
 	return YES;
 }
 
@@ -752,11 +754,11 @@ NSString * _Nullable TLOLicenseManagerLicenseKey(void)
 NSUInteger TLOLicenseManagerLicenseGeneration(void)
 {
 	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
-	
+
 	if (licenseDictionary == nil) {
 		return 0;
 	}
-	
+
 	return [licenseDictionary unsignedIntegerForKey:TLOLicenseManagerLicenseDictionaryLicenseGenerationKey];
 }
 
@@ -830,6 +832,8 @@ BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey)
 			@"mushy-argyle-oryx-428112186934176870777339608",
 			@"wicked-plaid-weasel-0681043544455415517323623",
 			@"juicy-cyan-toad-72508217265703758416002094229",
+			@"cheerful-turquoise-zebra-81864329409734131515",
+			@"many-wavy-fly-7043700524134077492967431288170",
 		];
 	}
 

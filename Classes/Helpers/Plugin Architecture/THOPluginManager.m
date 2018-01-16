@@ -36,6 +36,18 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOPopupPrompts.h"
+#import "TPCApplicationInfo.h"
+#import "TPCPathInfo.h"
+#import "TPCPreferencesUserDefaults.h"
+#import "TPCResourceManager.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginItemPrivate.h"
+#import "THOPluginProtocol.h"
+#import "THOPluginManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _extrasInstallerExtensionUpdateCheckInterval			345600
@@ -284,13 +296,24 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 - (void)extrasInstallerCheckForUpdates
 {
 	/* Do not check for updates too often */
-	NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
+#define _defaultsKey 	@"THOPluginManager -> Extras Installer Last Check for Update Payload"
 
-	NSTimeInterval lastUpdateTime =
-	[RZUserDefaults() doubleForKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
+	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
-	if ((currentTime - lastUpdateTime) < _extrasInstallerExtensionUpdateCheckInterval) {
-		return;
+	NSString *applicationVersion = [TPCApplicationInfo applicationVersion];
+
+	NSDictionary<NSString *, id> *lastUpdatePayload = [RZUserDefaults() dictionaryForKey:_defaultsKey];
+
+	if (lastUpdatePayload) {
+		NSTimeInterval lastCheckTime = [lastUpdatePayload doubleForKey:@"lastCheck"];
+
+		NSString *lastVersion = [lastUpdatePayload stringForKey:@"lastVersion"];
+
+		if ((currentTime - lastCheckTime) < _extrasInstallerExtensionUpdateCheckInterval &&
+			[lastVersion isEqualToString:applicationVersion])
+		{
+			return;
+		}
 	}
 
 	/* Perform update check */
@@ -323,7 +346,12 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 	}
 
 	/* Record the last time updates were checked for */
-	[RZUserDefaults() setDouble:currentTime forKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
+	[RZUserDefaults() setObject:@{
+		  @"lastCheck" : @(currentTime),
+		  @"lastVersion" : applicationVersion
+	} forKey:_defaultsKey];
+
+#undef _defaultsKey
 }
 
 - (void)extrasInstallerInformUserAboutUpdateForBundle:(NSBundle *)bundle
@@ -475,7 +503,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	_ef(THOPluginItemSupportsDidReceiveCommandEvent)
 	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
-	_ef(THOPluginItemSupportsInlineMediaManipulation)
+//	_ef(THOPluginItemSupportsInlineMediaManipulation)
 	_ef(THOPluginItemSupportsNewMessagePostedEvent)
 	_ef(THOPluginItemSupportsOutputSuppressionRules)
 	_ef(THOPluginItemSupportsPreferencePane)
@@ -558,7 +586,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	dispatch_once(&onceToken, ^{
 		NSMutableArray<NSString *> *allCommands = [NSMutableArray array];
-		
+
 		for (THOPluginItem *plugin in self.loadedPlugins) {
 			if ([plugin supportsFeature:THOPluginItemSupportsSubscribedServerInputCommands] == NO) {
 				continue;
@@ -587,7 +615,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	dispatch_once(&onceToken, ^{
 		NSMutableArray<THOPluginItem *> *allExtensions = [NSMutableArray array];
-		
+
 		for (THOPluginItem *plugin in self.loadedPlugins) {
 			if ([plugin supportsFeature:THOPluginItemSupportsPreferencePane] == NO) {
 				continue;

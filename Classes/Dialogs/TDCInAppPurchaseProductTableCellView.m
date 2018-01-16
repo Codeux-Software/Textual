@@ -37,6 +37,9 @@
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 
+#import "TDCInAppPurchaseProductTableEntryPrivate.h"
+#import "TDCInAppPurchaseProductTableCellViewPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCInAppPurchaseProductsTableCellView ()

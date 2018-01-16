@@ -35,6 +35,13 @@
 
  *********************************************************************** */
 
+#import "TPCPathInfo.h"
+#import "TLOLanguagePreferences.h"
+#import "TLOLicenseManagerDownloaderPrivate.h"
+#import "TLOPopupPrompts.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
+#import "TDCInAppPurchaseUpgradeEligibilitySheetPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1

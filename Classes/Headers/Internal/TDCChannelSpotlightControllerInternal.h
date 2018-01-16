@@ -35,7 +35,11 @@
 
  *********************************************************************** */
 
+#import "TDCChannelSpotlightControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+@class TDCChannelSpotlightSearchResult;
 
 @interface TDCChannelSpotlightController ()
 @property (nonatomic, weak) TVCMainWindow *parentWindow;

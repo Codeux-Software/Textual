@@ -36,13 +36,13 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class IRCClient, IRCChannel, IRCChannelUser;
 
 /*
 	Tag Reference:
- 
+
 	The following tags apply to the main menu:
 
 	001: "Textual"
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 	100: "About Textual"
 	101: "Preferences…"
 	102: "Manage license…"
-    110: "In-app Purchase…"
+	110: "In-app Purchase…"
 	103: "Updates"
 	109: "Check for updates…"
 	104: "Services"
@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 	106: "Hide Others"
 	107: "Show All"
 	108: "Quit Textual & IRC"
- 
+
 	200: "Disable All Notifications"
 	201: "Disable All Notification Sounds"
 	202: "Print"
@@ -175,10 +175,10 @@ NS_ASSUME_NONNULL_BEGIN
 	814: "Bring All to Front"
 
 	900: "Acknowledgements"
-    901: "End User License Agreement"
+	901: "End User License Agreement"
 	902: "Privacy Policy"
-    903: "Connect to Help Channel"
-    904: "Connect to Testing Channel"
+	903: "Connect to Help Channel"
+	904: "Connect to Testing Channel"
 	930: "Frequently Asked Questions"
 	931: "Introduction to Writing Scripts"
 	932: "Other Helpful Resources"
@@ -196,24 +196,24 @@ NS_ASSUME_NONNULL_BEGIN
 	944: "DCC File Transfer Information"
 	960: "Advanced"
 	961: "Enable Developer Mode"
-    962: "Hidden Preferences"
+	962: "Hidden Preferences"
 	963: "Export Preferences"
 	964: "Import Preferences"
-    965: "Reset 'Don't Ask Me' Warnings"
- 
+	965: "Reset 'Don't Ask Me' Warnings"
+
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
- 
+
 	The following tags apply to the "Open URL" menu:
 	1100: "Copy URL"
- 
+
 	The following tags apply to the "Segmented Controller" menu:
 	1200: "Add Server…"
 	1201: "Add Channel…"
- 
+
 	The following tags apply to the "Add Server" menu:
 	1300: "Add Server…"
- 
+
 	The following tags apply to the "Encryption Manager" menu:
 	1400: "What is this?"
 	1401: "Start Private Conversation"
@@ -221,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
 	1403: "End Private Conversation"
 	1404: "Authenticate Chat Partner"
 	1405: "View List of Fingerprints"
- 
+
 	The following tags apply to the "User Control" menu:
 	1532: "Add Ignore"
 	1533: "Modify Ignore"
@@ -259,7 +259,7 @@ NS_ASSUME_NONNULL_BEGIN
 	1524: "Kill from Server"
 	1525: "Shun on Server"
 	1526: "Ban from Server (G:Line)"
- 
+
 	The following tags apply to the "Channel View" menu:
 	1600: "Change Nickname…"
 	1601: "Search With Google"
@@ -423,6 +423,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)showServerHighlightList:(id)sender;
 - (IBAction)showServerPropertiesSheet:(id)sender;
 - (IBAction)showSetVhostPrompt:(id)sender;
+- (IBAction)showStylePreferences:(id)sender;
 - (IBAction)showWelcomeSheet:(id)sender;
 
 - (IBAction)sortChannelListNames:(id)sender;

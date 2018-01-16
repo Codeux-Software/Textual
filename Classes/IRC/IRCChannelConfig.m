@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TPCPreferencesLocalPrivate.h"
 #import "IRCChannelConfigInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -90,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *dic = @{@"channelName" : channelName};
 
 	IRCChannelConfig *config = [[self alloc] initWithDictionary:dic];
-		
+
 	return config;
 }
 
@@ -312,7 +314,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return [self->_notificationsMutable copy];
 	}
 }
-
 
 #pragma mark -
 #pragma mark Keychain Management

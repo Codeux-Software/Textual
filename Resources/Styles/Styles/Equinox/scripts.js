@@ -50,15 +50,14 @@ var NickColorGenerator = (function () {
 
     // Start alternative nick colouring procedure
     var selectNick = message.querySelector('.sender');
-    selectNick.removeAttribute('colornumber');
 
-    inlineNicks = message.querySelectorAll('.inline_nickname');
+    inlineNicks = message.querySelectorAll('.inlineSender');
 
-    this.generateColorFromNickname(selectNick.getAttribute('nickname'),
+    this.generateColorFromNickname(selectNick.dataset.nickname,
       function(nickcolor) {
         selectNick.style.color = nickcolor;
 
-        if (message.getAttribute('ltype') === 'action') {
+        if (message.dataset.lineType === 'action') {
           message.querySelector('.message').style.color = nickcolor;
         }
       }
@@ -66,10 +65,9 @@ var NickColorGenerator = (function () {
 
     var self = this;
     for (i = 0; i < inlineNicks.length; i++) {
-      inlineNicks[i].removeAttribute('colornumber');
       nick = inlineNicks[i].textContent;
-      if (inlineNicks[i].getAttribute('mode').length > 0) {
-        nick = nick.replace(inlineNicks[i].getAttribute('mode'), '');
+      if (inlineNicks[i].dataset.mode.length > 0) {
+        nick = nick.replace(inlineNicks[i].dataset.mode, '');
       }
       var inlineNick = inlineNicks[i];
       (function(inlineNickname) {
@@ -143,9 +141,9 @@ function toggleHistoryIfScrolled() {
   'use strict';
 
   var line, lines;
-  var topic = document.getElementById('topic_bar');
+  var topic = document.getElementById('topicBar');
 
-  lines = document.getElementById('body_home').getElementsByClassName('line');
+  lines = document.getElementById('body').getElementsByClassName('line');
   if (lines.length < 2) {
     return;
   }
@@ -173,7 +171,7 @@ function dateChange(e) {
     return;
   }
 
-  timestamp = parseFloat(e.getAttribute('timestamp')) * 1000;
+  timestamp = parseFloat(e.dataset.timestamp) * 1000;
   datetime = new Date(timestamp);
 
   year = datetime.getFullYear();
@@ -184,7 +182,7 @@ function dateChange(e) {
   // Occasionally when replaying, Textual will post messages in the future, and then jump backwards
   // As such, we'll ignore all joins, modes, and topics, if they're more than MAXTIMEOFFSET milliseconds
   // from the current time
-  ltype = e.getAttribute('ltype');
+  ltype = e.dataset.lineType;
   if (ltype !== 'privmsg') {
     if (Date.now() - timestamp > MAXTIMEOFFSET) {
       return;
@@ -237,7 +235,7 @@ Textual.handleEvent = function (event) {
   var i, messages;
 
   if (event === 'channelJoined') {
-    messages = document.querySelectorAll('div[command="-100"]');
+    messages = document.querySelectorAll('div[data-command="-100"]');
     for (i = 0; i < messages.length; i++) {
       if (messages[i].getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
         messages[i].parentNode.removeChild(messages[i]);
@@ -252,15 +250,15 @@ Textual.messageAddedToView = function (line, fromBuffer) {
   var clone, elem, getEmbeddedImages, i, mode, messageText, sender, topic;
 
   // reset the message count and previous nick, when you rejoin a channel
-  if (message.getAttribute('ltype') !== 'privmsg') {
+  if (message.dataset.lineType !== 'privmsg') {
     rs.nick.count = 1;
     rs.nick.nick = undefined;
   }
 
   // if it's a private message, colorize the nick and then track the state and fade away the nicks if needed
-  if (message.getAttribute('ltype') === 'privmsg' || message.getAttribute('ltype') === 'action') {
+  if (message.dataset.lineType === 'privmsg' || message.dataset.lineType === 'action') {
     sender = message.getElementsByClassName('sender')[0];
-    if (sender.getAttribute('coloroverride') !== 'true') {
+    if (sender.dataset.overrideColor !== 'true') {
       new NickColorGenerator(message); // colorized the nick
     }
 
@@ -272,7 +270,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
 
     // Track the nicks that submit messages, so that we can space out everything
     if ((rs.nick.nick === sender.textContent) && (rs.nick.count < Equinox.fadeNicksFreq)
-      && (message.getAttribute('ltype') !== 'action') && (Equinox.fadeNicks === true)) {
+      && (message.dataset.lineType !== 'action') && (Equinox.fadeNicks === true)) {
       rs.nick.delete = true;
       rs.nick.count += 1;
     } else {
@@ -291,9 +289,9 @@ Textual.messageAddedToView = function (line, fromBuffer) {
     if (fromBuffer === false) {
       rs.history.appendChild(clone);
     }
-   
+
     // Colorize it as well
-    if (sender.getAttribute('coloroverride') !== 'true') {
+    if (sender.dataset.overrideColor !== 'true') {
       new NickColorGenerator(clone); // colorized the nick
     }
 
@@ -302,7 +300,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
       rs.history.removeChild(rs.history.childNodes[0]);
 
       // Hide the first nick in the hidden history, if it's the same as the second
-      if ((rs.nick.count > 1) && (message.getAttribute('ltype') !== 'action')) {
+      if ((rs.nick.count > 1) && (message.dataset.lineType !== 'action')) {
         rs.history.getElementsByClassName('sender')[0].style.visibility = 'hidden';
       }
     }
@@ -310,10 +308,10 @@ Textual.messageAddedToView = function (line, fromBuffer) {
 
   /* Let's kill topics that appear where they had already been set before
      This happens when you join a room (like a reconnect) that you had been in and seen the topic before */
-  if (Equinox.squashTopics === true && message.getAttribute('ltype') === 'topic') {
+  if (Equinox.squashTopics === true && message.dataset.lineType === 'topic') {
     topic = message.getElementsByClassName('message')[0].textContent.replace('Topic is ', '').replace(/\s+/, '');
 
-    if (message.getAttribute('command') === '332') { // an actual topic change
+    if (message.dataset.command === '332') { // an actual topic change
       // hide the topic if it's the same topic again
       if (topic === rs.topic.topic) {
         message.parentNode.removeChild(message);
@@ -323,14 +321,14 @@ Textual.messageAddedToView = function (line, fromBuffer) {
       rs.topic.topic = topic;
     }
 
-    if ((message.getAttribute('command') === '333') && (rs.topic.delete === true)) {
+    if ((message.dataset.command === '333') && (rs.topic.delete === true)) {
       message.parentNode.removeChild(message);
       rs.topic.delete = false;
     }
   }
 
   // much like we suppress duplicate topics, we want to suppress duplicate modes
-  if (Equinox.squashModes === true && message.getAttribute('ltype') === 'mode') {
+  if (Equinox.squashModes === true && message.dataset.lineType === 'mode') {
     mode = message.getElementsByClassName('message')[0].textContent.replace(/\s+/, '');
 
     if (mode === rs.mode.mode) {
@@ -341,7 +339,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
   }
 
   // hide messages about yourself joining
-  if ((message.getAttribute('ltype') === 'join') || (message.getAttribute('ltype') === 'part')) {
+  if ((message.dataset.lineType === 'join') || (message.dataset.lineType === 'part')) {
     app.localUserNickname(
       function(returnValue) {
         if (returnValue == message.getElementsByClassName('message')[0].getElementsByTagName('b')[0].textContent) {
@@ -353,7 +351,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
 
   /* clear out all the old disconnect messages, if you're currently connected to the channel
      note that normally Textual.handleEvent will catch this, but if you reload a theme, they will reappear */
-  if ((message.getAttribute('ltype') === 'debug') && (message.getAttribute('command') === '-100')) {
+  if ((message.dataset.lineType === 'debug') && (message.dataset.command === '-100')) {
     app.channelIsJoined(
       function(returnValue) {
         if (returnValue && message.getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
@@ -363,15 +361,15 @@ Textual.messageAddedToView = function (line, fromBuffer) {
     );
   } else {
     // call the dateChange() function, for any message with a timestamp that's not a debug message
-    if (message.getAttribute('timestamp')) {
+    if (message.dataset.timestamp) {
       dateChange(message);
     }
   }
 
-  if (message.getAttribute('encrypted') === 'true') {
+  if (message.dataset.encrypted === 'true') {
     messageText = message.querySelector('.innerMessage');
     if (messageText.innerText.indexOf('+OK') !== -1) {
-      message.setAttribute('encrypted', 'failed');
+      message.dataset.encrypted = 'failed';
     }
   }
 
@@ -399,12 +397,6 @@ Textual.nicknameSingleClicked = function (e) {
 Textual.viewBodyDidLoad = function () {
   'use strict';
   Textual.fadeOutLoadingScreen(1.00, 0.95);
-  
-  /* Disable date changes on OS X Mountain Lion because WebKit does not have some of
-     the features that this feature depends on (e.g. -webkit-flex) */
-  if (document.documentElement.getAttribute("systemversion").indexOf("10.8.") === 0) {
-    Equinox.showDateChanges = false;
-  }
 };
 
 Textual.viewFinishedLoadingHistory = function () {
@@ -420,7 +412,7 @@ Textual.viewInitiated = function () {
   'use strict';
 
   /* When the view is loaded, create a hidden history div which we display if there is scrollback */
-  var body = document.getElementById('body_home'), div = document.createElement('div');
+  var body = document.getElementById('body'), div = document.createElement('div');
   div.id = 'scrolling_history';
   document.getElementsByTagName('body')[0].appendChild(div);
   rs.history = div;

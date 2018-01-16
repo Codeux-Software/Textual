@@ -35,7 +35,13 @@
 
  *********************************************************************** */
 
+#import "TXGlobalModels.h"
+#import "TLOLanguagePreferences.h"
+#import "IRCClient.h"
+#import "IRCChannel.h"
 #import "TDCChannelSpotlightControllerInternal.h"
+#import "TDCChannelSpotlightSearchResultPrivate.h"
+#import "TDCChannelSpotlightSearchResultsTablePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

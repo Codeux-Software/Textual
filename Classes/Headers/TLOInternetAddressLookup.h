@@ -35,10 +35,8 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
- 
+
 @protocol TLOInternetAddressLookupDelegate;
 
 @interface TLOInternetAddressLookup : NSObject
