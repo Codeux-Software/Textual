@@ -587,8 +587,7 @@
 				TargetAttributes = {
 					4C1406411F11942B00C73D53 = {
 						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -671,7 +670,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -682,7 +680,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -691,6 +688,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoader.entitlements";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
@@ -702,6 +700,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoader.entitlements";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
@@ -715,7 +714,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
 				SWIFT_VERSION = 4.0;
 			};
 			name = "Release (App Store)";
@@ -724,6 +722,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/InlineContentLoaderAppStore.entitlements";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
