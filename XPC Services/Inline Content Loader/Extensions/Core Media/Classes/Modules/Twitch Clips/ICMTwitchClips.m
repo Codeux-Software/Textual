@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if (urlPath.length == 0) {
+	if (urlPath.length <= 1) {
 		return nil;
 	}
 
