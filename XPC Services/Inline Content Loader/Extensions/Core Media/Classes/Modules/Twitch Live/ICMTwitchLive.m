@@ -107,7 +107,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
-	if (urlPath.length == 0) {
+	if (urlPath.length <= 1) {
 		return nil;
 	}
 
