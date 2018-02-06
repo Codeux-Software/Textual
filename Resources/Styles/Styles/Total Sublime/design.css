@@ -354,11 +354,6 @@ div.line[data-line-type="action"] .sender {
 	color: #aaa;
 }
 
-div.line[data-line-type="action"][data-member-type="myself"] .sender,
-div.line[data-line-type="action"][data-member-type="myself"] .message {
-	color: #ff6f6f;
-}
-
 body[dir="ltr"] div.line[data-line-type="action"] .sender:before {
 	content: "\2022";
 	margin-right: 0.4em;
