@@ -11834,6 +11834,12 @@ present_error:
 	if ([filenameEscaped contains:@" "] == NO) {
 		return filenameEscaped;
 	}
+	
+	/* Escape double quotes because the filename will be wrapped.
+	 February 20, 2017: Maybe we should replace the double quote
+	 with another character or remove completely? Untested how other
+	 clients will handle an escaped double quote. */
+	filenameEscaped = [filenameEscaped stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
 
 	return [NSString stringWithFormat:@"\"%@\"", filenameEscaped];
 }
