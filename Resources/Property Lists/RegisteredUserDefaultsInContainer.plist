@@ -102,6 +102,8 @@
 	<false/>
 	<key>InlineMediaLimitToBasics</key>
 	<false/>
+	<key>InlineMediaLimitInsecureContent</key>
+	<false/>
 	<key>InlineMediaLimitNaughtyContent</key>
 	<true/>
 	<key>InlineMediaLimitUnsafeContent</key>
