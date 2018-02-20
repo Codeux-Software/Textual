@@ -95,12 +95,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitToBasics"];
 }
 
++ (BOOL)inlineMediaLimitInsecureContent
+{
+	return [RZUserDefaults() boolForKey:@"InlineMediaLimitInsecureContent"];
+}
+
 + (BOOL)inlineMediaLimitNaughtyContent
 {
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitNaughtyContent"];
 }
 
-+ (BOOL)inlineMediaLimitUnsafeContent
++ (BOOL)inlineMediaLimitUnsafeContent /* */
 {
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitUnsafeContent"];
 }
