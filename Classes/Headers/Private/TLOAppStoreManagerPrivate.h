@@ -55,6 +55,7 @@ TEXTUAL_EXTERN NSString * const TLOAppStoreIAPUpgradeFromV6ProductIdentifier;
 TEXTUAL_EXTERN NSString * const TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier;
 
 TEXTUAL_EXTERN BOOL TLOAppStoreLoadReceipt(void);
+TEXTUAL_EXTERN BOOL TLOAppStoreReceiptLoaded(void);
 TEXTUAL_EXTERN ARLReceiptContents * _Nullable TLOAppStoreReceipt(void);
 
 TEXTUAL_EXTERN BOOL TLOAppStoreTextualIsRegistered(void);

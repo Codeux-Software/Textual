@@ -89,6 +89,11 @@ BOOL TLOAppStoreLoadReceipt(void)
 	return YES;
 }
 
+BOOL TLOAppStoreReceiptLoaded(void)
+{
+	return (TLOAppStoreReceiptContents != nil);
+}
+
 ARLReceiptContents * _Nullable TLOAppStoreReceipt(void)
 {
 	return TLOAppStoreReceiptContents;
