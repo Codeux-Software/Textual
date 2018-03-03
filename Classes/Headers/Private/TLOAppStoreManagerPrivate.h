@@ -64,6 +64,8 @@ TEXTUAL_EXTERN BOOL TLOAppStoreIsTrialPurchased(void);
 TEXTUAL_EXTERN BOOL TLOAppStoreIsTrialExpired(void);
 TEXTUAL_EXTERN NSTimeInterval TLOAppStoreTimeReaminingInTrial(void);
 
+TEXTUAL_EXTERN NSUInteger TLOAppStoreNumberOfPurchasedProducts(void);
+
 TEXTUAL_EXTERN TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(NSString *productIdentifier);
 
 NS_ASSUME_NONNULL_END
