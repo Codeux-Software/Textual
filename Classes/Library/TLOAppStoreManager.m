@@ -102,15 +102,20 @@ ARLReceiptContents * _Nullable TLOAppStoreReceipt(void)
 #pragma mark -
 #pragma mark Products
 
-NSUInteger TLOAppStoreNumberOfPurchasedProducts(void)
+NSArray<NSString *> *TLOAppStorePurchasedProducts(void)
 {
 	ARLReceiptContents *receipt = TLOAppStoreReceipt();
 	
 	if (receipt == nil) {
-		return 0;
+		return @[];
 	}
 	
-	return receipt.inAppPurchases.count;
+	return receipt.inAppPurchases.allKeys;
+}
+
+NSUInteger TLOAppStoreNumberOfPurchasedProducts(void)
+{
+	return TLOAppStorePurchasedProducts().count;
 }
 
 BOOL TLOAppStoreIsOneProductPurchased(NSArray<NSString *> *productIdentifiers)
