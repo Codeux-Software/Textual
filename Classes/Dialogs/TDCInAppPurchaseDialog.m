@@ -1199,7 +1199,7 @@ enum {
 
 	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0007]")];
 
-	SKReceiptRefreshRequest *receiptRefreshRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:@{SKReceiptPropertyIsRevoked : @(YES)}];
+	SKReceiptRefreshRequest *receiptRefreshRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
 
 	receiptRefreshRequest.delegate = (id)self;
 
