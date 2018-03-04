@@ -36,7 +36,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="cbe-og-fxh"/>
             </connections>
-            <point key="canvasLocation" x="-314" y="133"/>
+            <point key="canvasLocation" x="-328" y="-99"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Zck-S6-jkS">
             <rect key="frame" x="0.0" y="0.0" width="500" height="504"/>
@@ -456,14 +456,28 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mVu-QC-HVJ">
+                    <rect key="frame" x="47" y="20" width="406" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="402" id="Rbd-cJ-sZr"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="gys-Cy-lXI">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Please be patient while this task is completed. It could take several minutes to complete depending on the availability of the Mac App Store.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstAttribute="width" constant="500" id="4op-L3-LAu"/>
+                <constraint firstAttribute="bottom" secondItem="mVu-QC-HVJ" secondAttribute="bottom" constant="20" id="WHc-BP-7Nk"/>
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerY" secondItem="lkd-lf-FMT" secondAttribute="centerY" id="d1c-fx-phO"/>
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="leading" secondItem="b03-92-7hd" secondAttribute="trailing" constant="10" id="e3T-bN-RKr"/>
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerX" secondItem="lkd-lf-FMT" secondAttribute="centerX" constant="21" id="iLf-pc-Zte"/>
                 <constraint firstItem="b03-92-7hd" firstAttribute="centerY" secondItem="gTa-O0-6Lc" secondAttribute="centerY" id="jrJ-mX-tzB"/>
                 <constraint firstAttribute="height" constant="350" id="pHW-lW-vUf"/>
+                <constraint firstItem="mVu-QC-HVJ" firstAttribute="centerX" secondItem="lkd-lf-FMT" secondAttribute="centerX" id="rvW-x8-hze"/>
             </constraints>
             <point key="canvasLocation" x="27" y="143"/>
         </customView>
