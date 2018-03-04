@@ -203,6 +203,7 @@ BOOL TLOAppStoreIsTrialPurchased(void)
 
 BOOL TLOAppStoreIsTrialExpired(void)
 {
+	return YES;
 	if (TLOAppStoreIsTrialPurchased() == NO) {
 		return NO;
 	}
@@ -214,6 +215,7 @@ BOOL TLOAppStoreIsTrialExpired(void)
 
 NSTimeInterval TLOAppStoreTimeReaminingInTrial(void)
 {
+	return 0;
 	ARLInAppPurchaseContents *purchaseDetails = TLOAppStorePurchasedProductDetails(TLOAppStoreIAPFreeTrialProductIdentifier);
 
 	if (purchaseDetails == nil) {

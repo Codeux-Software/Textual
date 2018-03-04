@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1022 */
+/* Next unusued key: 1026 */
 
 /* Product detail: Free Trial */
 /* 1 = Title, 2 = Description, 3 = Action button title */
@@ -72,10 +72,6 @@
 "TDCInAppPurchaseDialog[0007]" = "Refreshing receipt…";
 "TDCInAppPurchaseDialog[0008]" = "Downloading list of products…";
 "TDCInAppPurchaseDialog[0009]" = "Waiting for order to be completed…";
-"TDCInAppPurchaseDialog[0010]" = "Restoring purchase…";
-
-"TDCInAppPurchaseDialog[0011][1]" = "The following error was returned while processing request:";
-"TDCInAppPurchaseDialog[0011][2]" = "%@";
 
 "TDCInAppPurchaseDialog[0012][1]" = "The following error was returned while processing request:";
 "TDCInAppPurchaseDialog[0012][2]" = "%@";
@@ -104,8 +100,16 @@
 "TDCInAppPurchaseDialog[0019][3]" = "Try Again";
 "TDCInAppPurchaseDialog[0019][4]" = "Contact Support";
 
-"TDCInAppPurchaseDialog[0020][1]" = "Cannot continue transaction because a valid receipt file is missing";
-"TDCInAppPurchaseDialog[0020][2]" = "Do you want to refresh the receipt file?";
-
 "TDCInAppPurchaseDialog[0021][1]" = "The following error was returned while processing request:";
 "TDCInAppPurchaseDialog[0021][2]" = "%@";
+"TDCInAppPurchaseDialog[0021][3]" = "Try Again";
+"TDCInAppPurchaseDialog[0021][4]" = "Contact Support";
+
+"TDCInAppPurchaseDialog[0022][1]" = "Cannot continue because Textual's list of in-app products could not be downloaded";
+"TDCInAppPurchaseDialog[0022][2]" = "Asking the Mac App Store for a new copy of your receipt usually fixes this problem. Click “Continue” to have Textual do this on your behalf.";
+
+"TDCInAppPurchaseDialog[0023]" = "Request must not be cancelled.";
+"TDCInAppPurchaseDialog[0024]" = "Request failed.";
+
+"TDCInAppPurchaseDialog[0025][1]" = "Textual is already unlocked";
+"TDCInAppPurchaseDialog[0025][2]" = "";
