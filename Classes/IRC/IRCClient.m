@@ -7077,6 +7077,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				[self updateUserTrackingStatusForEntry:newNicknameIgnoreInfo withMessage:m];
 			}
 		}
+
+		/* Inform style of change */
+		[self postEventToViewController:@"nicknameChanged"];
 	}
 
 	/* Inform observers */
