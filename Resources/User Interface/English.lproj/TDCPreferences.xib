@@ -4207,7 +4207,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                 <rect key="frame" x="10" y="25" width="543" height="276"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="v9I-u1-n87">
+                                    <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v9I-u1-n87">
                                         <rect key="frame" x="65" y="48" width="238" height="18"/>
                                         <buttonCell key="cell" type="check" title="Only inline media from secure sources" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="86n-ee-PXx">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4217,7 +4217,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitInsecureContent" id="Bwd-et-ERl"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O0M-rK-jaI">
+                                    <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O0M-rK-jaI">
                                         <rect key="frame" x="83" y="28" width="333" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="329" id="TNN-vx-rfw"/>
