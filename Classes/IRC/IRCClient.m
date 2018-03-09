@@ -7055,6 +7055,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (self.tryingNicknameSentNickname != nil) {
 				self.tryingNicknameSentNickname = newNickname;
 			}
+
+			/* Reload window title (our nickname is shown there) */
+			[mainWindow() updateTitleFor:self];
 		}
 		else
 		{
@@ -7076,6 +7079,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
+	/* Inform observers */
+	[RZNotificationCenter() postNotificationName:IRCClientUserNicknameChangedNotification
+										  object:self
+										userInfo:@{
+											@"oldNickname" : oldNickname,
+											@"newNickname" : newNickname
+										}];
+
+	/* Look for user */
 	IRCUser *user = nil;
 
 	if (isPrintOnlyMessage == NO) {
@@ -7190,19 +7202,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	for (IRCChannel *c in self.channelList) {
 		printingBlock(c);
 	}
-
-	/* Reload window title (our nickname is shown there) */
-	if (myself) {
-		[mainWindow() updateTitleFor:self];
-	}
-
-	/* Inform observers */
-	[RZNotificationCenter() postNotificationName:IRCClientUserNicknameChangedNotification
-										  object:self
-										userInfo:@{
-											@"oldNickname" : oldNickname,
-											@"newNickname" : newNickname
-										}];
 }
 
 - (void)receiveMode:(IRCMessage *)m
