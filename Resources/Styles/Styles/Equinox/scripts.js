@@ -21,6 +21,7 @@ var Equinox = {
 /* Set the default statuses for everything tracked in the roomState */
 var mappedSelectedUsers = [];
 var rs                  = { // room state
+  channelJoined: false,
   date: {
     year: 0,
     month: 0,
@@ -36,12 +37,35 @@ var rs                  = { // room state
     id: undefined,
     nick: undefined
   },
+  nickname: null,
   topic: {
     delete: false,
     topic: undefined
   }
 };
 
+/* State tracking for client information */
+Equinox.refreshLocalNicknameCache = function()
+{
+  'use strict';
+  app.localUserNickname(
+    function(returnValue) {
+      rs.nickname = returnValue;   
+    }
+  );
+};
+
+Equinox.refreshChannelJoinedCache = function()
+{
+  'use strict';
+  app.channelIsJoined(
+    function(returnValue) {
+      rs.channelJoined = returnValue;    
+    }  
+  );
+};
+
+/* Nickname colors */
 var NickColorGenerator = (function () {
   'use strict';
 
@@ -234,14 +258,39 @@ Textual.handleEvent = function (event) {
   'use strict';
   var i, messages;
 
-  if (event === 'channelJoined') {
-    messages = document.querySelectorAll('div[data-command="-100"]');
-    for (i = 0; i < messages.length; i++) {
-      if (messages[i].getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
-        messages[i].parentNode.removeChild(messages[i]);
+  switch(event) {
+    case "channelJoined": {
+      rs.channelJoined = true;
+      messages = document.querySelectorAll('div[data-command="-100"]');
+      for (i = 0; i < messages.length; i++) {
+        if (messages[i].getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
+          messages[i].parentNode.removeChild(messages[i]);
+        }
       }
+      
+      break;
     }
-  }
+    case "channelParted": {
+      rs.channelJoined = false;  
+      break;
+    }
+    case "nicknameChanged": {
+      Equinox.refreshLocalNicknameCache();
+      break;
+    }
+    /* It is important to have serverConnected as a state 
+      because the nickname may change then, outside of the
+      NICK command (handled by "nicknameChanged").
+      For example, user can connect to ZNC which has
+      a different nickname than set locally. */
+    case "serverConnected": {
+      Equinox.refreshLocalNicknameCache();
+      break;
+    }
+    default: {
+      break;
+    }
+  } // switch()
 };
 
 Textual.messageAddedToView = function (line, fromBuffer) {
@@ -340,25 +389,17 @@ Textual.messageAddedToView = function (line, fromBuffer) {
 
   // hide messages about yourself joining
   if ((message.dataset.lineType === 'join') || (message.dataset.lineType === 'part')) {
-    app.localUserNickname(
-      function(returnValue) {
-        if (returnValue == message.getElementsByClassName('message')[0].getElementsByTagName('b')[0].textContent) {
-          message.parentNode.removeChild(message);
-        }
-      }
-    );
+    if (rs.nickname == message.getElementsByClassName('message')[0].getElementsByTagName('b')[0].textContent) {
+      message.parentNode.removeChild(message);
+    }
   }
 
   /* clear out all the old disconnect messages, if you're currently connected to the channel
      note that normally Textual.handleEvent will catch this, but if you reload a theme, they will reappear */
   if ((message.dataset.lineType === 'debug') && (message.dataset.command === '-100')) {
-    app.channelIsJoined(
-      function(returnValue) {
-        if (returnValue && message.getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
-          message.parentNode.removeChild(message);
-        }
-      }
-    );
+    if (rs.channelJoined && message.getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
+      message.parentNode.removeChild(message);
+    }
   } else {
     // call the dateChange() function, for any message with a timestamp that's not a debug message
     if (message.dataset.timestamp) {
@@ -428,4 +469,9 @@ Textual.viewInitiated = function () {
 
     rs.scrollTimer = setTimeout(toggleHistoryIfScrolled, 100);
   });
+  
+  /* Cache client information so we do not have to wait
+     for callback functions to complete. */
+  Equinox.refreshChannelJoinedCache();
+  Equinox.refreshLocalNicknameCache();
 };
