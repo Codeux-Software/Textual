@@ -124,6 +124,7 @@ Textual.preferencesDidChange						= function() {};
 	channelParted                   — Channel associated with this view has been parted.
 	channelMemberAdded              — Member added to the channel associated with this view.
 	channelMemberRemoved            — Member removed from the channel associated with this view.
+	nicknameChanged					— Nickname of local user changed
 
 	THESE EVENTS ARE PUSHED WHEN THEY OCCUR. When a style is reloaded by Textual or
 	the end user, these events are not sent again. It is recommended to use a feature
