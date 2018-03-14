@@ -582,6 +582,13 @@ CA
                                     <action selector="emptyAction:" target="267" id="CGk-8u-95l"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" tag="620" id="Ps7-LA-2sD"/>
+                            <menuItem title="Copy Unique Identifier" tag="621" id="72G-h4-O52">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="copyUniqueIdentifier:" target="267" id="P8r-qZ-lGV"/>
+                                </connections>
+                            </menuItem>
                         </items>
                         <connections>
                             <outlet property="delegate" destination="267" id="yiG-92-xdd"/>
@@ -1063,7 +1070,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-1248" y="-1083"/>
+            <point key="canvasLocation" x="-1498" y="-1249"/>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
@@ -1522,6 +1529,13 @@ CA
                                 </menu>
                                 <connections>
                                     <action selector="emptyAction:" target="267" id="n4B-t5-DT3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" tag="620" id="xMd-Eh-lz8"/>
+                            <menuItem title="Copy Unique Identifier" tag="621" id="4vN-zB-zor">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="copyUniqueIdentifier:" target="267" id="XqJ-hs-5hl"/>
                                 </connections>
                             </menuItem>
                         </items>
