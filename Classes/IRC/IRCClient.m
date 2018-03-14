@@ -2648,6 +2648,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)modifyUser:(IRCUser *)user asAway:(BOOL)away
 {
+	NSParameterAssert(user != nil);
+	
 	if (self.monitorAwayStatus == NO) {
 		return;
 	}
