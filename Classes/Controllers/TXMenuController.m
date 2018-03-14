@@ -106,6 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _isClient					(u && c == nil)
 #define _isChannel					(c && [c isChannel])
 #define _isQuery					(c && [c isPrivateMessage])
+#define _isChannelOrQuery			(_isChannel || _isQuery)
 #define _isUtility					(c && [c isUtility])
 #define _noChannel					(c == nil)
 #define _noClient					(u == nil)
@@ -556,9 +557,10 @@ NS_ASSUME_NONNULL_BEGIN
 		case 006: // "Channel" (Main Menu)
 		case 1607: // "Channel" (WebView)
 		{
-#define _channelMenuSeparatorTag_1			602
-#define _channelMenuSeparatorTag_2			605
-#define _channelMenuSeparatorTag_3			1605
+
+#define _channelMenuSeparatorTag_1			602 // below "Leave Channel"
+#define _channelMenuSeparatorTag_2			605 // below "Delete Channel"
+#define _channelMenuSeparatorTag_3			1605 // below "Paste"
 #define _channelWebkitMenuTag				1607
 
 			NSMenu *hostMenu = nil;
@@ -571,12 +573,9 @@ NS_ASSUME_NONNULL_BEGIN
 				hostMenu = menuItem.submenu;
 			}
 
-			BOOL condition = (_isChannel || _isQuery);
-
 			[hostMenu itemWithTag:_channelMenuSeparatorTag_1].hidden = (_isChannel == NO);
-
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_2].hidden = (condition == NO);
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_3].hidden = (condition == NO);
+			[hostMenu itemWithTag:_channelMenuSeparatorTag_2].hidden = (_isChannelOrQuery == NO);
+			[hostMenu itemWithTag:_channelMenuSeparatorTag_3].hidden = (_isChannelOrQuery == NO);
 
 #undef _channelMenuSeparatorTag_1
 #undef _channelMenuSeparatorTag_2
