@@ -585,6 +585,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
+		case 621: // "Copy Unique Identifier"
+		{
+
+#define _channelMenuSeparatorTag			620 // below "Channel Properties"
+			
+			BOOL condition = ([TPCPreferences developerModeEnabled] == NO || _isChannel == NO);
+			
+			menuItem.hidden = condition;
+
+			[menuItem.submenu itemWithTag:_channelMenuSeparatorTag].hidden = condition;
+
+#undef _channelMenuSeparatorTag
+			
+			return YES;
+		}
 		case 510: // "Connect Without Proxy"
 		{
 			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
@@ -3718,6 +3733,20 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	[[SUUpdater sharedUpdater] checkForUpdates:sender];
 #endif
+}
+
+#pragma mark -
+#pragma mark Navigation
+
+- (void)copyUniqueIdentifier:(id)sender
+{
+	IRCChannel *c = self.selectedChannel;
+
+	if (_noChannel) {
+		return;
+	}
+	
+	[RZPasteboard() setStringContent:c.uniqueIdentifier];
 }
 
 @end
