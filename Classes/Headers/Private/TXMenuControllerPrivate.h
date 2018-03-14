@@ -41,6 +41,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IRCTreeItem;
+
 @interface TXMenuController ()
 @property (nonatomic, copy, nullable) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 
@@ -74,6 +76,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)toggleMuteOnNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
+
+- (void)navigateToTreeItemAtURL:(NSURL *)url;
+- (void)navigateToTreeItemWithIdentifier:(NSString *)identifier;
+- (void)navigateToTreeItem:(IRCTreeItem *)item;
 
 - (IBAction)emptyAction:(id)sender TEXTUAL_DEPRECATED("Do not target this method");
 @end

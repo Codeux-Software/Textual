@@ -147,6 +147,12 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		(void)[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
 	}
+	else if ([action isEqualToString:@"goto"])
+	{
+		NSURL *url = [NSURL URLWithString:sourceLocation];
+
+		[menuController() navigateToTreeItemAtURL:url];
+	}
 }
 
 + (void)parseIRCProtocolURI:(NSString *)location

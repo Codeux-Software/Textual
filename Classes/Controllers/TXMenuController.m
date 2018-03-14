@@ -3748,6 +3748,53 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZPasteboard() setStringContent:c.uniqueIdentifier];
 }
 
+- (void)navigateToTreeItemAtURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	NSString *path = url.path;
+	
+	if (path == nil) {
+		return;
+	}
+	
+	NSCharacterSet *slashCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
+	
+	NSString *identifier = [path stringByTrimmingCharactersInSet:slashCharacterSet];
+	
+	if (identifier.length == 0) {
+		return;
+	}
+	
+	[self navigateToTreeItemWithIdentifier:identifier];
+}
+
+- (void)navigateToTreeItemWithIdentifier:(NSString *)identifier
+{
+	NSParameterAssert(identifier != nil);
+	
+	/* Do not use assert for this condition so we
+	 don't crash user when we open a malformed URL. */
+	if (identifier.length != 36) {
+		return;
+	}
+	
+	IRCTreeItem *item = [worldController() findItemWithId:identifier];
+	
+	if (item == nil) {
+		return;
+	}
+	
+	[self navigateToTreeItem:item];
+}
+
+- (void)navigateToTreeItem:(IRCTreeItem *)item
+{
+	NSParameterAssert(item != nil);
+	
+	[mainWindow() select:item];
+}
+
 @end
 
 #pragma mark -
