@@ -70,16 +70,17 @@ NS_ASSUME_NONNULL_BEGIN
 	contributors						— Open contributors file
 	custom-scripts-folder				– Open the custom scripts storage location folder
 	custom-style-folder					— Open the custom style storage location folder
-	custom-styles-folder				— Same as custom-style-folder except plural
+	custom-styles-folder				— Open the custom style storage location folder
 	diagnostic-reports-folder			— System diagnostic reports folder
-	icloud-style-folder					— -/
-	icloud-styles-folder				— Same as custom-style-folder except plural
+	goto 								— Navigate to an item
+	icloud-style-folder					— Open the custom style storage location folder on iCloud
+	icloud-styles-folder				— Open the custom style storage location folder on iCloud
 	knowledge-base						— Open the homepage of our knowledge base
 	newsletter							— Open the subscription page for the newsletter
 	support-channel						— Connect to the #textual channel
 	testing-channel						— Connect to the #textual-testing channel
-	unsupervised-script-folder			— --/
-	unsupervised-scripts-folder			— -/
+	unsupervised-script-folder			— Open the custom scripts storage location folder
+	unsupervised-scripts-folder			— Open the custom scripts storage location folder
 */
 
 	if ([action isEqualToString:@"acknowledgements"])
@@ -100,31 +101,35 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		[menuController() openMacAppStoreWebpage:nil];
 	}
+	else if ([action isEqualToString:@"application-support-folder"])
+	{
+		(void)[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
+	}
 	else if ([action isEqualToString:@"contributors"])
 	{
 		[menuController() showAcknowledgements:nil];
+	}
+	else if ([action isEqualToString:@"custom-scripts-folder"] ||
+			 [action isEqualToString:@"unsupervised-script-folder"] ||
+			 [action isEqualToString:@"unsupervised-scripts-folder"])
+	{
+		(void)[RZWorkspace() openFile:[TPCPathInfo customScripts]];
 	}
 	else if ([action isEqualToString:@"custom-style-folder"] ||
 			 [action isEqualToString:@"custom-styles-folder"])
 	{
 		[RZWorkspace() openFile:[TPCPathInfo customThemes]];
 	}
-	else if ([action isEqualToString:@"newsletter"])
-	{
-		[TLOpenLink openWithString:@"https://www.codeux.com/textual/newsletter/" inBackground:NO];
-	}
 	else if ([action isEqualToString:@"diagnostic-reports-folder"])
 	{
 		(void)[RZWorkspace() openFile:[TPCPathInfo userDiagnosticReports]];
 		(void)[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReports]];
 	}
-	else if ([action isEqualToString:@"support-channel"])
+	else if ([action isEqualToString:@"goto"])
 	{
-		[menuController() connectToTextualHelpChannel:nil];
-	}
-	else if ([action isEqualToString:@"testing-channel"])
-	{
-		[menuController() connectToTextualTestingChannel:nil];
+		NSURL *url = [NSURL URLWithString:sourceLocation];
+
+		[menuController() navigateToTreeItemAtURL:url];
 	}
 	else if ([action isEqualToString:@"icloud-style-folder"] ||
 			 [action isEqualToString:@"icloud-styles-folder"])
@@ -133,25 +138,21 @@ NS_ASSUME_NONNULL_BEGIN
 		[TPCPathInfo openCloudCustomThemes];
 #endif
 	}
-	else if ([action isEqualToString:@"custom-scripts-folder"] ||
-			 [action isEqualToString:@"unsupervised-script-folder"] ||
-			 [action isEqualToString:@"unsupervised-scripts-folder"])
-	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo customScripts]];
-	}
 	else if ([action isEqualToString:@"knowledge-base"])
 	{
 		[TLOpenLink openWithString:@"https://help.codeux.com/textual/" inBackground:NO];
 	}
-	else if ([action isEqualToString:@"application-support-folder"])
+	else if ([action isEqualToString:@"newsletter"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
+		[TLOpenLink openWithString:@"https://www.codeux.com/textual/newsletter/" inBackground:NO];
 	}
-	else if ([action isEqualToString:@"goto"])
+	else if ([action isEqualToString:@"support-channel"])
 	{
-		NSURL *url = [NSURL URLWithString:sourceLocation];
-
-		[menuController() navigateToTreeItemAtURL:url];
+		[menuController() connectToTextualHelpChannel:nil];
+	}
+	else if ([action isEqualToString:@"testing-channel"])
+	{
+		[menuController() connectToTextualTestingChannel:nil];
 	}
 }
 
