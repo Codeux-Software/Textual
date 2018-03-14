@@ -2633,6 +2633,34 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self modifyUser:user withBlock:block];
 }
 
+- (void)modifyUserWithNickname:(NSString *)nickname asAway:(BOOL)away
+{
+	NSParameterAssert(nickname != nil);
+	
+	IRCUser *user = [self findUser:nickname];
+	
+	if (user == nil) {
+		return;
+	}
+
+	[self modifyUser:user asAway:away];
+}
+
+- (void)modifyUser:(IRCUser *)user asAway:(BOOL)away
+{
+	if (self.monitorAwayStatus == NO) {
+		return;
+	}
+
+	if (away) {
+		[user markAsAway];
+	} else {
+		[user markAsReturned];
+	}
+	
+	[mainWindow() updateDrawingForUserInUserList:user];
+}
+
 - (void)resetAwayStatusForUsers
 {
 	[self.userList makeObjectsPerformSelector:@selector(markAsReturned)];
@@ -8153,23 +8181,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	BOOL userIsAway = NSObjectIsNotEmpty(m.sequence);
+	BOOL away = NSObjectIsNotEmpty(m.sequence);
 
 	NSString *nickname = m.senderNickname;
 
-	IRCUser *user = [self findUser:nickname];
-
-	if (user == nil) {
-		return;
-	}
-
-	if (userIsAway) {
-		[user markAsAway];
-	} else {
-		[user markAsReturned];
-	}
-
-	[mainWindow() updateDrawingForUserInUserList:user];
+	[self modifyUserWithNickname:nickname asAway:away];
 }
 
 - (void)receiveInit:(IRCMessage *)m // Raw numeric = 001
@@ -8269,7 +8285,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSInteger numeric = m.commandNumeric;
 
-	if (numeric > 400 && numeric < 600 && numeric != 403 && numeric != 422) {
+	if (numeric > 400 && numeric < 597 && numeric != 403 && numeric != 422) {
 		[self receiveErrorNumericReply:m];
 
 		return;
@@ -8503,21 +8519,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			NSString *localNickname = self.userNickname;
-
-			IRCUser *myself = [self findUser:localNickname];
+			IRCUser *myself = self.myself;
 
 			if (myself == nil) {
 				break;
 			}
+			
+			BOOL away = (numeric == 306);
 
-			if (numeric == 306) {
-				[myself markAsAway];
-			} else {
-				[myself markAsReturned];
-			}
-
-			[mainWindow() updateDrawingForUserInUserList:myself];
+			[self modifyUser:myself asAway:away];
 
 			break;
 		}
@@ -9475,6 +9485,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case 597: // RPL_REAWAY
+		case 598: // RPL_GONEAWAY
+		case 599: // RPL_NOTAWAY
 		case 600: // RPL_LOGON
 		case 601: // RPL_LOGOFF
 		case 604: // RPL_NOWON
@@ -9510,15 +9523,49 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if (numeric == 600) { // logged online
-				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
-			} else if (numeric == 601) { // logged offline
-				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
-			} else if (numeric == 604) { // is online
-				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsAvailalbeStatus notify:NO];
-			} else if (numeric == 605) { // is offline
-				[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsNotAvailalbeStatus notify:NO];
-			}
+			switch (numeric) {
+				case 600: // logged online
+				{
+					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
+					
+					break;
+				}
+				case 601: // logged offline
+				{
+					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
+					
+					break;
+				}
+				case 604: // is online
+				{
+					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsAvailalbeStatus notify:NO];
+					
+					break;
+				}
+				case 605: // is offline
+				{
+					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsNotAvailalbeStatus notify:NO];
+					
+					break;
+				}
+				case 597:
+				case 598: // is away
+				{
+					[self modifyUserWithNickname:nickname asAway:YES];
+					
+					break;
+				}
+				case 599: // is no longer away
+				{
+					[self modifyUserWithNickname:nickname asAway:NO];
+					
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			} // switch()
 
 			break;
 		}
