@@ -138,6 +138,7 @@
 #import "IRCConnectionConfig.h"
 #import "IRCExtrasPrivate.h"
 #import "IRCHighlightLogEntryPrivate.h"
+#import "IRCHighlightMatchCondition.h"
 #import "IRCISupportInfoPrivate.h"
 #import "IRCMessagePrivate.h"
 #import "IRCMessageBatchPrivate.h"
@@ -4815,23 +4816,48 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Define list of highlight keywords */
-	NSArray<NSString *> *excludeKeywords = nil;
-	NSArray<NSString *> *matchKeywords = nil;
+	BOOL matchHighlights =
+		(channel &&
+		 channel.config.ignoreHighlights == NO &&
+		 (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType) &&
+		 memberType == TVCLogLineMemberNormalType);
 
-	if (channel &&
-		channel.config.ignoreHighlights == NO &&
-		(lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType) &&
-		memberType == TVCLogLineMemberNormalType)
-	{
-		excludeKeywords = [TPCPreferences highlightExcludeKeywords];
-		matchKeywords = [TPCPreferences highlightMatchKeywords];
+	NSMutableArray<NSString *> *excludeKeywords = nil;
+	NSMutableArray<NSString *> *matchKeywords = nil;
+	
+	if (matchHighlights) {
+		/* Global highlight keywords */
+		excludeKeywords = [[TPCPreferences highlightExcludeKeywords] mutableCopy];
+		matchKeywords = [[TPCPreferences highlightMatchKeywords] mutableCopy];
 
+		/* Self nickname keyword */
 		if ([TPCPreferences highlightMatchingMethod] != TXNicknameHighlightRegularExpressionMatchType &&
 			[TPCPreferences highlightCurrentNickname])
 		{
-			matchKeywords = [matchKeywords arrayByAddingObject:localNickname];
+			[matchKeywords addObjectWithoutDuplication:localNickname];
 		}
-	}
+
+		/* Client/channel specific keywords */
+		NSArray *clientHighlightList = self.config.highlightList;
+
+		NSString *channelId = channel.uniqueIdentifier;
+
+		for (IRCHighlightMatchCondition *e in clientHighlightList) {
+			NSString *matchChannelId = e.matchChannelId;
+			
+			if (matchChannelId.length > 0) {
+				if ([matchChannelId isEqualToString:channelId] == NO) {
+					continue;
+				}
+			}
+			
+			if (e.matchIsExcluded) {
+				[excludeKeywords addObjectWithoutDuplication:e.matchKeyword];
+			} else {
+				[matchKeywords addObjectWithoutDuplication:e.matchKeyword];
+			}
+		}
+	} // matchKeywords
 
 	if (lineType == TVCLogLineActionNoHighlightType) {
 		lineType = TVCLogLineActionType;
