@@ -44,7 +44,6 @@
 #import "IRCChannel.h"
 #import "IRCChannelUser.h"
 #import "IRCColorFormat.h"
-#import "IRCHighlightMatchCondition.h"
 #import "IRCUser.h"
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 #import "TPCPreferencesLocal.h"
@@ -340,43 +339,6 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	id excludedKeywords = [self->_rendererAttributes arrayForKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 	id highlightKeywords = [self->_rendererAttributes arrayForKey:TVCLogRendererConfigurationHighlightKeywordsAttribute];
-
-	IRCClient *client = self->_viewController.associatedClient;
-	IRCChannel *channel = self->_viewController.associatedChannel;
-
-	NSArray *clientHighlightList = client.config.highlightList;
-
-	if (clientHighlightList.count > 0) {
-		if (excludedKeywords == nil) {
-			excludedKeywords = [NSMutableArray array];
-		} else {
-			excludedKeywords = [excludedKeywords mutableCopy];
-		}
-
-		if (highlightKeywords == nil) {
-			highlightKeywords = [NSMutableArray array];
-		} else {
-			highlightKeywords = [highlightKeywords mutableCopy];
-		}
-	}
-
-	for (IRCHighlightMatchCondition *e in clientHighlightList) {
-		NSString *matchChannelId = e.matchChannelId;
-
-		if (matchChannelId.length > 0) {
-			NSString *channelId = channel.uniqueIdentifier;
-
-			if ([matchChannelId isEqualToString:channelId] == NO) {
-				continue;
-			}
-		}
-
-		if (e.matchIsExcluded) {
-			[excludedKeywords addObjectWithoutDuplication:e.matchKeyword];
-		} else {
-			[highlightKeywords addObjectWithoutDuplication:e.matchKeyword];
-		}
-	}
 
 	if ([highlightKeywords count] == 0) {
 		self->_outputDictionary[TVCLogRendererResultsKeywordMatchFoundAttribute] = @(NO);
