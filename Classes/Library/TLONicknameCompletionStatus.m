@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -18,8 +18,8 @@
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-    * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
-      names of its contributors may be used to endorse or promote products 
+    * Neither the name of Textual and/or "Codeux Software, LLC", nor the
+      names of its contributors may be used to endorse or promote products
       derived from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
@@ -188,6 +188,9 @@ ClassWithDesignatedInitializerInitMethod
 
 		[choicesUppercase addObjectsFromArray:sharedPluginManager().supportedUserInputCommands];
 		[choicesUppercase addObjectsFromArray:sharedPluginManager().supportedAppleScriptCommands];
+
+		/* complete commands in alphabetical order */
+		[choicesUppercase sortUsingSelector:@selector(localizedCompare:)];
 	}
 	else if (self.isCompletingChannelName)
 	{
