@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5116</real>
+		<real>5117</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -87,6 +87,15 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5005</integer>
+	</dict>
+	<key>bufferdebug</key>
+	<dict>
+		<key>command</key>
+		<string>BUFFERDEBUG</string>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<real>5116</real>
 	</dict>
 	<key>cap</key>
 	<dict>
