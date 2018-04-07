@@ -3133,6 +3133,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandBufferdebugIndex:
+		{
+			IRCTreeItem *treeItem = ((targetChannel) ? targetChannel : self);
+			
+			TVCLogView *backingView = treeItem.viewController.backingView;
+			
+			[backingView evaluateJavaScript:@"JSON.stringify(_MessageBuffer)"
+						  completionHandler:^(id result) {
+							  [self printDebugInformation:TXTLS(@"IRC[1128]", result)];
+						  }];
+			
+			break;
+		}
 		case IRCPublicCommandCapIndex: // Command: CAP
 		case IRCPublicCommandCapsIndex: // Command: CAPS
 		{

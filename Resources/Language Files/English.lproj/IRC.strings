@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1128 */
+/* Next unusued key: 1129 */
 
 /* Script errors */
 "IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
@@ -234,3 +234,6 @@
 
 /* Message buffer session indicator */
 "IRC[1127]" = "Current Session";
+
+/* /bufferdebug/ command */
+"IRC[1128]" = "Please share the following information with support: %@";
