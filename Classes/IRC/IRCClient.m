@@ -3138,12 +3138,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			IRCTreeItem *treeItem = ((targetChannel) ? targetChannel : self);
 			
 			TVCLogView *backingView = treeItem.viewController.backingView;
-			
-			[backingView evaluateJavaScript:@"JSON.stringify(_MessageBuffer)"
-						  completionHandler:^(id result) {
-							  [self printDebugInformation:TXTLS(@"IRC[1128]", result)];
-						  }];
-			
+
+			__weak IRCClient *weakSelf = self;
+
+			[backingView dictionaryByEvaluatingFunction:@"_Textual.bufferDebugInformation"
+									  completionHandler:^(NSDictionary<NSString *, id> *result) {
+										  IRCChannel *utilityChannel = [weakSelf findChannelOrCreate:@"Buffer Debug" isUtility:YES];
+										  
+										  [weakSelf printDebugInformation:TXTLS(@"IRC[1128]",
+																				result[@"Textual"],
+																				result[@"_Textual"],
+																				result[@"_TextualScroller"],
+																				result[@"_MessageBuffer"],
+																				[result unsignedIntegerForKey:@"Unclaimed callbacks"])
+																inChannel:utilityChannel
+										   
+										   /* Message is not escaped because:
+											1. Line breaks in localization make it easier for information to be read.
+											2. We know for certain where the information is coming from. */
+															escapeMessage:NO];
+
+										  [weakSelf setUnreadStateForChannel:utilityChannel];
+									  }];
 			break;
 		}
 		case IRCPublicCommandCapIndex: // Command: CAP

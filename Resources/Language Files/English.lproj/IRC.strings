@@ -236,4 +236,4 @@
 "IRC[1127]" = "Current Session";
 
 /* /bufferdebug/ command */
-"IRC[1128]" = "Please share the following information with support: %@";
+"IRC[1128]" = "Please share the following information with support:<br /><br /> \002\00304’Textual’ object:\003\002 \00303%1$@\003<br /> \002\00304’_Textual’ object:\003\002 \00303%2$@\003<br /> \002\00304’_TextualScroller` object:\003\002 \00303%3$@\003<br /> \002\00304’_MessageBuffer’ object:\003\002 \00303%4$@\003<br /> \002\00304Unclaimed callbacks:\003\002 \00303%5$ld\003";
