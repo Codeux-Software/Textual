@@ -75,6 +75,8 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 + (NSString *)escapeJavaScriptString:(NSString *)string;
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult;
+
+- (void)logToJavaScriptConsole:(NSString *)message, ...;
 @end
 
 NS_ASSUME_NONNULL_END

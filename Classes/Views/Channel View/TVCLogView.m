@@ -43,6 +43,7 @@
 #import "TPCPathInfo.h"
 #import "TPCPreferencesLocal.h"
 #import "TVCLogControllerPrivate.h"
+#import "TVCLogScriptEventSinkPrivate.h"
 #import "TVCLogViewPrivate.h"
 #import "TVCLogViewInternalWK1.h"
 #import "TVCLogViewInternalWK2.h"
@@ -523,6 +524,18 @@ ClassWithDesignatedInitializerInitMethod
 			completionHandler(resultDictionary);
 		}
 	}];
+}
+
+- (void)logToJavaScriptConsole:(NSString *)message, ...
+{
+	NSParameterAssert(message != nil);
+	
+	va_list arguments;
+	va_start(arguments, message);
+	
+	[TVCLogScriptEventSink logToJavaScriptConsole:message inWebView:self withArguments:arguments];
+	
+	va_end(arguments);
 }
 
 @end

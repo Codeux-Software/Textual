@@ -257,9 +257,9 @@ ClassWithDesignatedInitializerInitMethod
 
 		if (promiseIndexObj) {
 			if ([promiseIndexObj isKindOfClass:[NSNumber class]] == NO) {
-				[self _throwJavaScriptException:@"'promiseIndex' must be a number"
-									  forCaller:caller
-									  inWebView:intWebView];
+				[TVCLogScriptEventSink throwJavaScriptException:@"'promiseIndex' must be a number"
+													  forCaller:caller
+													  inWebView:intWebView];
 
 				return;
 			}
@@ -272,9 +272,9 @@ ClassWithDesignatedInitializerInitMethod
 			id valuesObj = [inputData valueForKey:@"values"];
 
 			if (valuesObj == nil || [valuesObj isKindOfClass:[NSArray class]] == NO) {
-				[self _throwJavaScriptException:@"'values' must be an array"
-									  forCaller:caller
-									  inWebView:intWebView];
+				[TVCLogScriptEventSink throwJavaScriptException:@"'values' must be an array"
+													  forCaller:caller
+													  inWebView:intWebView];
 
 				return;
 			} else {
@@ -305,9 +305,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Perform validation if needed */
 	if (minimumArgumentCount > 0 && values.count < minimumArgumentCount) {
-		[self _throwJavaScriptException:@"Minimum number of arguments (%ld) condition not met"
-							  forCaller:caller
-							  inWebView:intWebView, minimumArgumentCount];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Minimum number of arguments (%ld) condition not met"
+											  forCaller:caller
+											  inWebView:intWebView, minimumArgumentCount];
 
 		return;
 	}
@@ -324,9 +324,9 @@ ClassWithDesignatedInitializerInitMethod
 		}];
 
 		if (validationPassed == NO) {
-			[self _throwJavaScriptException:@"Invalid argument type(s)"
-								  forCaller:caller
-								  inWebView:intWebView];
+			[TVCLogScriptEventSink throwJavaScriptException:@"Invalid argument type(s)"
+												  forCaller:caller
+												  inWebView:intWebView];
 
 			return;
 		}
@@ -361,46 +361,68 @@ ClassWithDesignatedInitializerInitMethod
 	(void)objc_msgSend(self, selector, context);
 }
 
-- (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView, ...
++ (void)logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView, ...
 {
+	NSParameterAssert(message != nil);
+	NSParameterAssert(webView != nil);
+	
 	va_list arguments;
 	va_start(arguments, webView);
 
-	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
-
+	[self logToJavaScriptConsole:message inWebView:webView withArguments:arguments];
+	
 	va_end(arguments);
+}
+
++ (void)logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView withArguments:(va_list)arguments
+{
+	NSParameterAssert(message != nil);
+	NSParameterAssert(webView != nil);
+	NSParameterAssert(arguments != NULL);
+
+	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
 
 	[webView evaluateFunction:@"console.log" withArguments:@[messageFormatted]];
 }
 
-- (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView, ...
++ (void)throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView, ...
 {
+	NSParameterAssert(message != nil);
+	NSParameterAssert(webView != nil);
+
 	va_list arguments;
 	va_start(arguments, webView);
-
-	[self _throwJavaScriptException:message
-						  forCaller:nil
-						  inWebView:webView
-					  withArguments:arguments];
-
+	
+	[self throwJavaScriptException:message
+						 forCaller:nil
+						 inWebView:webView
+					 withArguments:arguments];
+	
 	va_end(arguments);
 }
 
-- (void)_throwJavaScriptException:(NSString *)message forCaller:(nullable NSString *)caller inWebView:(TVCLogView *)webView, ...
++ (void)throwJavaScriptException:(NSString *)message forCaller:(nullable NSString *)caller inWebView:(TVCLogView *)webView, ...
 {
+	NSParameterAssert(message != nil);
+	NSParameterAssert(webView != nil);
+
 	va_list arguments;
 	va_start(arguments, webView);
-
-	[self _throwJavaScriptException:message
-						  forCaller:caller
-						  inWebView:webView
-					  withArguments:arguments];
-
+	
+	[self throwJavaScriptException:message
+						 forCaller:caller
+						 inWebView:webView
+					 withArguments:arguments];
+	
 	va_end(arguments);
 }
 
-- (void)_throwJavaScriptException:(NSString *)message forCaller:(nullable NSString *)caller inWebView:(TVCLogView *)webView withArguments:(va_list)arguments
++ (void)throwJavaScriptException:(NSString *)message forCaller:(nullable NSString *)caller inWebView:(TVCLogView *)webView withArguments:(va_list)arguments
 {
+	NSParameterAssert(message != nil);
+	NSParameterAssert(webView != nil);
+	NSParameterAssert(arguments != NULL);
+
 	NSString *messageFormatted = [[NSString alloc] initWithFormat:message arguments:arguments];
 
 	if (caller) {
@@ -951,9 +973,9 @@ ClassWithDesignatedInitializerInitMethod
 	IRCChannel *channel = context.associatedChannel;
 
 	if (channel == nil || channel.isPrivateMessage == NO) {
-		[self _throwJavaScriptException:@"View is not a private message"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"View is not a private message"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -974,9 +996,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *address = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	if (address.length == 0) {
-		[self _throwJavaScriptException:@"Length of address is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of address is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -984,9 +1006,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *uniqueIdentifier = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
 	if (uniqueIdentifier.length == 0) {
-		[self _throwJavaScriptException:@"Length of unique identifier is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of unique identifier is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -996,9 +1018,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of line number is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -1050,9 +1072,9 @@ ClassWithDesignatedInitializerInitMethod
 	} else if ([colorStyle isEqualToString:@"HSL-light"]) {
 		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
 	} else {
-		[self _throwJavaScriptException:@"Invalid style"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Invalid style"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -1076,9 +1098,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of line number is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1160,9 +1182,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of line number is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1172,9 +1194,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[1]] integerValue];
 
 	if (maximumNumberOfLines <= 0) {
-		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 1 or greater"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Maximum number of lines must be equal to 1 or greater"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1211,9 +1233,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (lineNumberAfter.length == 0 ||
 		lineNumberBefore.length == 0)
 	{
-		[self _throwJavaScriptException:@"Length of line number is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of line number is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1223,9 +1245,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSInteger maximumNumberOfLines = [[TVCLogScriptEventSink objectValueToCommon:arguments[2]] integerValue];
 
 	if (maximumNumberOfLines < 0) {
-		[self _throwJavaScriptException:@"Maximum number of lines must be equal to 0 or greater"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Maximum number of lines must be equal to 0 or greater"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1253,9 +1275,9 @@ ClassWithDesignatedInitializerInitMethod
 	lineNumber = [TVCLogScriptEventSink standardizeLineNumber:lineNumber];
 
 	if (lineNumber.length == 0) {
-		[self _throwJavaScriptException:@"Length of line number is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of line number is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1268,9 +1290,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (numberOfLinesBefore < 0 ||
 		numberOfLinesAfter < 0)
 	{
-		[self _throwJavaScriptException:@"Number of lines must be equal to 0 or greater"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Number of lines must be equal to 0 or greater"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		contextCompletionBlock(nil);
 
@@ -1294,9 +1316,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *templateName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	if (templateName.length == 0) {
-		[self _throwJavaScriptException:@"Length of template name is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of template name is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		context.completionBlock(nil);
 
@@ -1322,17 +1344,17 @@ ClassWithDesignatedInitializerInitMethod
 	[TPCPreferences methodSignatureForSelector:methodSelector];
 
 	if (methodSignature == nil) {
-		[self _throwJavaScriptException:@"Unknown method named: '%@'"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Unknown method named: '%@'"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		context.completionBlock(nil);
 
 		return;
 	} else if (strcmp(methodSignature.methodReturnType, @encode(void)) == 0) {
-		[self _throwJavaScriptException:@"Method named '%@' does not return a value"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Method named '%@' does not return a value"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		context.completionBlock(nil);
 
@@ -1358,9 +1380,9 @@ ClassWithDesignatedInitializerInitMethod
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
 {
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
-		[self _throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -1370,9 +1392,9 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *payloadLabel = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	if (payloadLabel.length == 0) {
-		[self _throwJavaScriptException:@"Length of payload label is 0"
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:@"Length of payload label is 0"
+											  forCaller:context.caller
+											  inWebView:context.webView];
 
 		return;
 	}
@@ -1475,9 +1497,9 @@ ClassWithDesignatedInitializerInitMethod
 	id result = [themeSettings() styleSettingsRetrieveValueForKey:keyName error:&errorValue];
 
 	if (errorValue) {
-		[self _throwJavaScriptException:errorValue
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:errorValue
+											  forCaller:context.caller
+											  inWebView:context.webView];
 	}
 
 	context.completionBlock( result );
@@ -1496,9 +1518,9 @@ ClassWithDesignatedInitializerInitMethod
 	BOOL result = [themeSettings() styleSettingsSetValue:keyValue forKey:keyName error:&errorValue];
 
 	if (errorValue) {
-		[self _throwJavaScriptException:errorValue
-							  forCaller:context.caller
-							  inWebView:context.webView];
+		[TVCLogScriptEventSink throwJavaScriptException:errorValue
+											  forCaller:context.caller
+											  inWebView:context.webView];
 	}
 
 	if (result) {
