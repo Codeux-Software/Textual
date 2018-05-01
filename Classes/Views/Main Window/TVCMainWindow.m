@@ -1281,6 +1281,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	NSString *stringValue = [THOPluginDispatcher interceptUserInput:string command:command];
+	
+	if (stringValue == nil) {
+		return;
+	}
 
 	[self.selectedClient inputText:stringValue asCommand:command];
 }
