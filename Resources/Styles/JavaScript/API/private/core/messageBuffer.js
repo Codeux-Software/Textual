@@ -554,7 +554,7 @@ _MessageBuffer.loadMessagesDuringScrollWithPayloadPostflight = function(requestP
 			line.insertAdjacentHTML('afterend', htmlString);
 		}
 
-		_MessageBuffer._bufferCurrentSize += html.length;
+		_MessageBuffer._bufferCurrentSize += lineNumbers.length;
 	} // renderedMessagesCount > 0
 
 	/* If the number of results is less than our batch size,
@@ -731,7 +731,7 @@ _MessageBuffer.loadMessagesWithJumpPostflight = function(requestPayload) /* PRIV
 		buffer.cancelMutation();
 
 		/* Update buffer size to include appended lines. */
-		_MessageBuffer._bufferCurrentSize += html.length;
+		_MessageBuffer._bufferCurrentSize += lineNumbers.length;
 
 		/* Post line numbers so style can do something with them. */
 		try {
