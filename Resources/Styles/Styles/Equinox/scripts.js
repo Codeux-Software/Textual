@@ -218,14 +218,6 @@ function dateChange(e) {
     return;
   }
 
-  var deleteLastlineDate = function (ll) {
-    if (ll) {
-      if ((ll.id === 'mark') || (ll.className === 'date')) {
-        ll.parentNode.removeChild(ll);
-      }
-    }
-  };
-
   // Create the date element: <div class="date"><hr /><span>...</span><hr /></div>
   var div = document.createElement('div');
   var span = document.createElement('span');
@@ -257,6 +249,7 @@ function dateChange(e) {
 Textual.handleEvent = function (event) {
   'use strict';
   var i, messages;
+  var messagesRemovedCount = 0;
 
   switch(event) {
     case "channelJoined": {
@@ -265,7 +258,12 @@ Textual.handleEvent = function (event) {
       for (i = 0; i < messages.length; i++) {
         if (messages[i].getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
           messages[i].parentNode.removeChild(messages[i]);
+          messagesRemovedCount += 1;
         }
+      }
+
+      if (messagesRemovedCount > 0) {
+        MessageBuffer.noteMessagesRemovedFromBuffer(messagesRemovedCount);
       }
       
       break;
@@ -296,6 +294,7 @@ Textual.handleEvent = function (event) {
 Textual.messageAddedToView = function (line, fromBuffer) {
   'use strict';
   var message = document.getElementById('line-' + line);
+  var messageRemoved;
   var clone, elem, getEmbeddedImages, i, mode, messageText, sender, topic;
 
   // reset the message count and previous nick, when you rejoin a channel
@@ -364,6 +363,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
       // hide the topic if it's the same topic again
       if (topic === rs.topic.topic) {
         message.parentNode.removeChild(message);
+        messageRemoved = true;
         rs.topic.delete = true;
       }
 
@@ -372,6 +372,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
 
     if ((message.dataset.command === '333') && (rs.topic.delete === true)) {
       message.parentNode.removeChild(message);
+      messageRemoved = true;
       rs.topic.delete = false;
     }
   }
@@ -382,6 +383,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
 
     if (mode === rs.mode.mode) {
       message.parentNode.removeChild(message);
+      messageRemoved = true;
     } else {
       rs.mode.mode = mode;
     }
@@ -391,6 +393,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
   if ((message.dataset.lineType === 'join') || (message.dataset.lineType === 'part')) {
     if (rs.nickname == message.getElementsByClassName('message')[0].getElementsByTagName('b')[0].textContent) {
       message.parentNode.removeChild(message);
+      messageRemoved = true;
     }
   }
 
@@ -399,19 +402,23 @@ Textual.messageAddedToView = function (line, fromBuffer) {
   if ((message.dataset.lineType === 'debug') && (message.dataset.command === '-100')) {
     if (rs.channelJoined && message.getElementsByClassName('message')[0].textContent.search('Disconnect') !== -1) {
       message.parentNode.removeChild(message);
+      messagesRemoved = true;
     }
-  } else {
-    // call the dateChange() function, for any message with a timestamp that's not a debug message
-    if (message.dataset.timestamp) {
-      dateChange(message);
-    }
+  } 
+
+  /* Textual's buffer keeps a record of number of messages that
+  appear in the buffer. The buffer counts anything with a line
+  number as a message. If we remove messages, we should let it
+  know so that it can correct any irregularities in its math. */
+  if (messageRemoved > 0) {
+    MessageBuffer.noteMessageRemovedFromBuffer();
+    
+    return;
   }
 
-  if (message.dataset.encrypted === 'true') {
-    messageText = message.querySelector('.innerMessage');
-    if (messageText.innerText.indexOf('+OK') !== -1) {
-      message.dataset.encrypted = 'failed';
-    }
+  // call the dateChange() function, for any message with a timestamp that's not a debug message
+  if (message.dataset.timestamp) {
+    dateChange(message);
   }
 
   getEmbeddedImages = message.querySelectorAll('img');
