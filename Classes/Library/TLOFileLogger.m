@@ -236,54 +236,70 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark File Handler Path
 
-- (nullable NSString *)writePathLeading
++ (nullable NSString *)writePathForItem:(IRCTreeItem *)item
 {
-	return [self writePathWithUniqueId:YES];
+	NSParameterAssert(item != nil);
+	
+	return [self writePathWithUniqueIdentifier:YES forItem:item];
 }
 
-- (nullable NSString *)writePathWithUniqueId:(BOOL)includeUniqueId
++ (nullable NSString *)writePathWithUniqueIdentifier:(BOOL)withUniqueIdentifier forItem:(IRCTreeItem *)item
 {
-	NSURL *sourcePath = [TPCPathInfo transcriptFolderURL];
+	NSParameterAssert(item != nil);
 
+	NSURL *sourcePath = [TPCPathInfo transcriptFolderURL];
+	
 	if (sourcePath == nil) {
 		return nil;
 	}
-
+	
+	IRCClient *client = item.associatedClient;
+	
 	NSString *clientName = nil;
-
+	
 	/* When our folder structure is not flat, then we have to make sure the folders
 	 that we create are unique. The check of whether our folders are unique was not
-	 added until version 3.0.0. To keep backwards compatible, we first see if our 
+	 added until version 3.0.0. To keep backwards compatible, we first see if our
 	 folder exists using the old naming scheme. If it does, then we use that for
 	 our write path. This makes the transition to the new naming scheme seamless
 	 for the end user. */
-	if (includeUniqueId) {
-		NSString *pathWithoutUniqueId = [self writePathWithUniqueId:NO];
-
-		if ([RZFileManager() fileExistsAtPath:pathWithoutUniqueId]) {
-			return pathWithoutUniqueId;
+	if (withUniqueIdentifier) {
+		NSString *pathWithoutIdentifier = [self writePathWithUniqueIdentifier:NO forItem:item];
+		
+		if ([RZFileManager() fileExistsAtPath:pathWithoutIdentifier]) {
+			return pathWithoutIdentifier;
 		}
-
-		NSString *uniqueId = [self.client.uniqueIdentifier substringToIndex:5];
-
-		clientName = [NSString stringWithFormat:@"%@ (%@)", self.client.name, uniqueId];
+		
+		NSString *identifier = [client.uniqueIdentifier substringToIndex:5];
+		
+		clientName = [NSString stringWithFormat:@"%@ (%@)", client.name, identifier];
 	} else {
-		clientName = self.client.name;
+		clientName = client.name;
 	}
-
-	NSString *channelName = self.channel.name;
+	
+	IRCChannel *channel = item.associatedChannel;
 
 	NSString *basePath = nil;
-
-	if (self.channel == nil) {
+	
+	if (channel == nil) {
 		basePath = [NSString stringWithFormat:@"/%@/%@/", clientName.safeFilename, TLOFileLoggerConsoleDirectoryName];
-	} else if (self.channel.isChannel) {
-		basePath = [NSString stringWithFormat:@"/%@/%@/%@/", clientName.safeFilename, TLOFileLoggerChannelDirectoryName, channelName.safeFilename];
-	} else if (self.channel.isPrivateMessage) {
-		basePath = [NSString stringWithFormat:@"/%@/%@/%@/", clientName.safeFilename, TLOFileLoggerPrivateMessageDirectoryName, channelName.safeFilename];
+	} else if (channel.isChannel) {
+		basePath = [NSString stringWithFormat:@"/%@/%@/%@/", clientName.safeFilename, TLOFileLoggerChannelDirectoryName, channel.name.safeFilename];
+	} else if (channel.isPrivateMessage) {
+		basePath = [NSString stringWithFormat:@"/%@/%@/%@/", clientName.safeFilename, TLOFileLoggerPrivateMessageDirectoryName, channel.name.safeFilename];
 	}
-
+	
 	return [sourcePath.path stringByAppendingPathComponent:basePath];
+}
+
+- (nullable NSString *)writePathLeading
+{
+	IRCClient *client = self.client;
+	IRCChannel *channel = self.channel;
+	
+	IRCTreeItem *item = ((channel) ? channel : client);
+
+	return [TLOFileLogger writePathForItem:item];
 }
 
 - (NSString *)filename
