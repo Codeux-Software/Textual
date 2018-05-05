@@ -53,6 +53,7 @@ NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey	
 NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey		= @"ignoreGeneralEventMessages";
 NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey		= @"ignoreFileTransferRequests";
 NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey	= @"ignoreClientToClientProtocol";
+NSString * const IRCAddressBookDictionaryValueIgnoreInlineMediaKey 				= @"ignoreInlineMedia";
 
 NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackUserActivity";
 
@@ -65,6 +66,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	  @"ignoreClientToClientProtocol" : @(NO),
 	  @"ignoreFileTransferRequests"	: @(NO),
 	  @"ignoreGeneralEventMessages"	: @(NO),
+	  @"ignoreInlineMedia" : @(NO),
 	  @"ignoreNoticeMessages" : @(NO),
 	  @"ignorePrivateMessageHighlights" : @(NO),
 	  @"ignorePrivateMessages" : @(NO),
@@ -106,6 +108,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 		IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey : @(YES),
 		IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey : @(YES),
 		IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey : @(YES),
+		IRCAddressBookDictionaryValueIgnoreInlineMediaKey : @(YES),
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
@@ -186,6 +189,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic assignBoolTo:&self->_ignoreClientToClientProtocol forKey:@"ignoreClientToClientProtocol"];
 		[dic assignBoolTo:&self->_ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
 		[dic assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+		[dic assignBoolTo:&self->_ignoreInlineMedia forKey:@"ignoreInlineMedia"];
 		[dic assignBoolTo:&self->_ignoreNoticeMessages forKey:@"ignoreNoticeMessages"];
 		[dic assignBoolTo:&self->_ignorePrivateMessageHighlights forKey:@"ignorePrivateMessageHighlights"];
 		[dic assignBoolTo:&self->_ignorePrivateMessages forKey:@"ignorePrivateMessages"];
@@ -276,6 +280,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic setBool:self.ignoreClientToClientProtocol forKey:@"ignoreClientToClientProtocol"];
 		[dic setBool:self.ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+		[dic setBool:self.ignoreInlineMedia forKey:@"ignoreInlineMedia"];
 		[dic setBool:self.ignoreMessagesContainingMatch forKey:@"ignoreMessagesContainingMatch"];
 		[dic setBool:self.ignoreNoticeMessages forKey:@"ignoreNoticeMessages"];
 		[dic setBool:self.ignorePrivateMessageHighlights forKey:@"ignorePrivateMessageHighlights"];
@@ -350,6 +355,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic ignoreClientToClientProtocol;
 @dynamic ignoreFileTransferRequests;
 @dynamic ignoreGeneralEventMessages;
+@dynamic ignoreInlineMedia;
 @dynamic ignoreMessagesContainingMatch;
 @dynamic ignoreNoticeMessages;
 @dynamic ignorePrivateMessageHighlights;
@@ -401,6 +407,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	if (self->_ignoreGeneralEventMessages != ignoreGeneralEventMessages) {
 		self->_ignoreGeneralEventMessages = ignoreGeneralEventMessages;
+	}
+}
+
+- (void)setIgnoreInlineMedia:(BOOL)ignoreInlineMedia
+{
+	if (self->_ignoreInlineMedia != ignoreInlineMedia) {
+		self->_ignoreInlineMedia = ignoreInlineMedia;
 	}
 }
 
