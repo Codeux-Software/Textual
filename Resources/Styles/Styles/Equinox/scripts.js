@@ -410,7 +410,7 @@ Textual.messageAddedToView = function (line, fromBuffer) {
   appear in the buffer. The buffer counts anything with a line
   number as a message. If we remove messages, we should let it
   know so that it can correct any irregularities in its math. */
-  if (messageRemoved > 0) {
+  if (messageRemoved) {
     MessageBuffer.noteMessageRemovedFromBuffer();
     
     return;
