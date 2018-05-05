@@ -38,7 +38,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCClient, IRCChannel, TVCLogLine;
+@class IRCClient, IRCChannel, IRCTreeItem, TVCLogLine;
 
 TEXTUAL_EXTERN NSString * const TLOFileLoggerConsoleDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerChannelDirectoryName;
@@ -65,6 +65,8 @@ TEXTUAL_EXTERN NSString * const TLOFileLoggerISOStandardClockFormat;
 
 - (void)writeLogLine:(TVCLogLine *)logLine;
 - (void)writePlainText:(NSString *)string;
+
++ (nullable NSString *)writePathForItem:(IRCTreeItem *)item;
 @end
 
 NS_ASSUME_NONNULL_END
