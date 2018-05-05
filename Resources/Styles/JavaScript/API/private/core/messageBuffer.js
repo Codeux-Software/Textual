@@ -162,6 +162,33 @@ _MessageBuffer.bufferElementInsert = function(placement, html, lineNumbers) /* P
 /*               Buffer Size Management               */
 /* ************************************************** */
 
+MessageBuffer.noteMessageRemovedFromBuffer = function()
+{
+	_MessageBuffer._adjustCurrentBufferSize(-1);
+};
+
+MessageBuffer.noteMessagesRemovedFromBuffer = function(numberRemoved)
+{
+	_MessageBuffer._adjustCurrentBufferSize(-1 * numberRemoved);
+};
+
+_MessageBuffer._adjustCurrentBufferSize = function(byHowMuch)
+{
+	console.log("Adjusting buffer by: " + byHowMuch);
+	
+	var newSize = (_MessageBuffer._bufferCurrentSize + byHowMuch);
+
+	if (newSize < 0) {
+		newSize = 0;
+	} else if (newSize > _MessageBuffer._bufferSizeHardLimit) {
+		newSize = _MessageBuffer._bufferSizeHardLimit;
+	}
+
+	_MessageBuffer._bufferCurrentSize = newSize;
+	
+	console.log("Buffer adjusted to: " + newSize);
+};
+
 /* Allow user to set a custom buffer limit */
 _MessageBuffer.setBufferLimit = function(limit) /* PRIVATE */
 {
