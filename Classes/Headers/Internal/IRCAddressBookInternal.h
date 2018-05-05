@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _ignoreClientToClientProtocol;
 	BOOL _ignoreFileTransferRequests;
 	BOOL _ignoreGeneralEventMessages;
+	BOOL _ignoreInlineMedia;
 	BOOL _ignoreNoticeMessages;
 	BOOL _ignorePrivateMessageHighlights;
 	BOOL _ignorePrivateMessages;

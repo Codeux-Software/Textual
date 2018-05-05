@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,6 +14,7 @@
                 <outlet property="ignoreEntryView" destination="5" id="nse-Nb-KaW"/>
                 <outlet property="ignoreFileTransferRequestsCheck" destination="rur-OE-BUc" id="j5n-cr-6wF"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="477" id="b5y-ct-VK8"/>
+                <outlet property="ignoreInlineMediaCheck" destination="3hh-2X-z2a" id="Lr7-rY-cdh"/>
                 <outlet property="ignoreNoticeMessagesCheck" destination="476" id="S3r-Hr-k0A"/>
                 <outlet property="ignorePrivateMessageHighlightsCheck" destination="44o-H8-79C" id="4Nm-VY-TNd"/>
                 <outlet property="ignorePrivateMessagesCheck" destination="481" id="613"/>
@@ -211,14 +212,14 @@ DQ
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Ignore User Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="407" y="164" width="526" height="371"/>
+            <rect key="contentRect" x="407" y="164" width="526" height="398"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="526" height="371"/>
+                <rect key="frame" x="0.0" y="0.0" width="526" height="398"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="93" y="329" width="413" height="22"/>
+                        <rect key="frame" x="93" y="356" width="413" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="NhJ-Fz-bJp"/>
                         </constraints>
@@ -232,7 +233,7 @@ DQ
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="300">
-                        <rect key="frame" x="161" y="300" width="205" height="14"/>
+                        <rect key="frame" x="142" y="327" width="205" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -241,7 +242,7 @@ DQ
                         <accessibility description="Format for Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="594">
-                        <rect key="frame" x="112" y="300" width="47" height="14"/>
+                        <rect key="frame" x="93" y="327" width="47" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -249,7 +250,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="97" y="284" width="62" height="14"/>
+                        <rect key="frame" x="78" y="311" width="62" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -257,7 +258,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="161" y="284" width="308" height="14"/>
+                        <rect key="frame" x="142" y="311" width="308" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -266,7 +267,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="306">
-                        <rect key="frame" x="161" y="271" width="314" height="14"/>
+                        <rect key="frame" x="142" y="298" width="314" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -275,7 +276,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="308">
-                        <rect key="frame" x="161" y="258" width="303" height="14"/>
+                        <rect key="frame" x="142" y="285" width="303" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -284,7 +285,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="309">
-                        <rect key="frame" x="161" y="245" width="264" height="14"/>
+                        <rect key="frame" x="142" y="272" width="264" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -293,88 +294,24 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="38" y="224" width="450" height="5"/>
+                        <rect key="frame" x="38" y="251" width="450" height="5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="450" id="6qa-Fy-fTC"/>
                         </constraints>
                     </box>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="476">
-                        <rect key="frame" x="280" y="106" width="127" height="18"/>
-                        <buttonCell key="cell" type="check" title="Notice Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="494">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Private Notices from User"/>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="479">
-                        <rect key="frame" x="74" y="106" width="171" height="18"/>
-                        <buttonCell key="cell" type="check" title="Client-to-Client Protocol" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="491">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Client-to-Client Protocol (CTCP) Requests"/>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="480">
-                        <rect key="frame" x="74" y="134" width="158" height="18"/>
-                        <buttonCell key="cell" type="check" title="Highlights in Channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="490">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Highlights by User in a Channel"/>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="481">
-                        <rect key="frame" x="280" y="162" width="129" height="18"/>
-                        <buttonCell key="cell" type="check" title="Private Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="489">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Private Messages from User"/>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="482">
-                        <rect key="frame" x="74" y="162" width="124" height="18"/>
-                        <buttonCell key="cell" type="check" title="Public Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="488">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Public Messages from User"/>
-                    </button>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="632">
                         <rect key="frame" x="38" y="59" width="450" height="5"/>
                     </box>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="rur-OE-BUc">
-                        <rect key="frame" x="74" y="78" width="157" height="18"/>
-                        <buttonCell key="cell" type="check" title="File Transfer Requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore File Transfer Requests from User"/>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
-                        <rect key="frame" x="280" y="134" width="148" height="18"/>
-                        <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Highlights by User in a Private Message"/>
-                    </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
-                        <rect key="frame" x="61" y="193" width="405" height="17"/>
+                        <rect key="frame" x="61" y="220" width="405" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
-                        <rect key="frame" x="280" y="78" width="172" height="18"/>
-                        <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
-                    </button>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="296">
-                        <rect key="frame" x="18" y="331" width="69" height="17"/>
+                        <rect key="frame" x="18" y="358" width="69" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -404,61 +341,147 @@ DQ
                             <action selector="ok:" target="-2" id="587"/>
                         </connections>
                     </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="DZg-Rc-DxS">
+                        <rect key="frame" x="84" y="78" width="358" height="126"/>
+                        <subviews>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="476">
+                                <rect key="frame" x="-2" y="82" width="127" height="18"/>
+                                <buttonCell key="cell" type="check" title="Notice Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="494">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Private Notices from User"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="479">
+                                <rect key="frame" x="196" y="82" width="164" height="18"/>
+                                <buttonCell key="cell" type="check" title="Client-to-Client (CTCP)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="491">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Client-to-Client Protocol (CTCP) Requests"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="480">
+                                <rect key="frame" x="-2" y="54" width="158" height="18"/>
+                                <buttonCell key="cell" type="check" title="Highlights in Channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="490">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Highlights by User in a Channel"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="481">
+                                <rect key="frame" x="196" y="110" width="129" height="18"/>
+                                <buttonCell key="cell" type="check" title="Private Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="489">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Private Messages from User"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="482">
+                                <rect key="frame" x="-2" y="110" width="124" height="18"/>
+                                <buttonCell key="cell" type="check" title="Public Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="488">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Public Messages from User"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="rur-OE-BUc">
+                                <rect key="frame" x="196" y="26" width="157" height="18"/>
+                                <buttonCell key="cell" type="check" title="File Transfer Requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore File Transfer Requests from User"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
+                                <rect key="frame" x="196" y="54" width="148" height="18"/>
+                                <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Highlights by User in a Private Message"/>
+                            </button>
+                            <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
+                                <rect key="frame" x="-2" y="26" width="172" height="18"/>
+                                <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="3hh-2X-z2a">
+                                <rect key="frame" x="-2" y="-2" width="95" height="18"/>
+                                <buttonCell key="cell" type="check" title="Inline Media" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wyq-Xb-urU">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <accessibility description="Ignore File Transfer Requests from User"/>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="482" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="top" id="6u8-Sm-kMT"/>
+                            <constraint firstItem="476" firstAttribute="top" secondItem="482" secondAttribute="bottom" constant="14" id="7st-zM-NKO"/>
+                            <constraint firstItem="3hh-2X-z2a" firstAttribute="top" secondItem="477" secondAttribute="bottom" constant="14" id="7y3-YH-AAv"/>
+                            <constraint firstItem="481" firstAttribute="baseline" secondItem="482" secondAttribute="baseline" id="AQf-GH-qrF"/>
+                            <constraint firstItem="481" firstAttribute="leading" secondItem="477" secondAttribute="trailing" constant="30" id="ENn-48-k8K"/>
+                            <constraint firstItem="44o-H8-79C" firstAttribute="leading" secondItem="479" secondAttribute="leading" id="FKx-D7-Qyq"/>
+                            <constraint firstItem="rur-OE-BUc" firstAttribute="leading" secondItem="44o-H8-79C" secondAttribute="leading" id="IQW-ed-2vV"/>
+                            <constraint firstItem="477" firstAttribute="top" secondItem="480" secondAttribute="bottom" constant="14" id="LeF-aw-kQz"/>
+                            <constraint firstItem="479" firstAttribute="top" secondItem="481" secondAttribute="bottom" constant="14" id="TFY-es-Y80"/>
+                            <constraint firstItem="44o-H8-79C" firstAttribute="top" secondItem="479" secondAttribute="bottom" constant="14" id="Vz9-St-rYW"/>
+                            <constraint firstItem="477" firstAttribute="leading" secondItem="480" secondAttribute="leading" id="Xbs-nM-PXx"/>
+                            <constraint firstItem="476" firstAttribute="leading" secondItem="482" secondAttribute="leading" id="Xwo-xP-xJ5"/>
+                            <constraint firstItem="482" firstAttribute="leading" secondItem="DZg-Rc-DxS" secondAttribute="leading" id="foE-5J-p23"/>
+                            <constraint firstItem="480" firstAttribute="top" secondItem="476" secondAttribute="bottom" constant="14" id="gsX-HR-kP5"/>
+                            <constraint firstItem="rur-OE-BUc" firstAttribute="top" secondItem="44o-H8-79C" secondAttribute="bottom" constant="14" id="jVo-aw-g0A"/>
+                            <constraint firstItem="479" firstAttribute="leading" secondItem="481" secondAttribute="leading" id="nNC-4s-JRa"/>
+                            <constraint firstItem="482" firstAttribute="leading" secondItem="DZg-Rc-DxS" secondAttribute="leading" id="q7P-ZK-o1z"/>
+                            <constraint firstAttribute="trailing" secondItem="479" secondAttribute="trailing" id="tSU-kb-AL0"/>
+                            <constraint firstItem="3hh-2X-z2a" firstAttribute="leading" secondItem="477" secondAttribute="leading" id="tvO-7n-IQn"/>
+                            <constraint firstItem="480" firstAttribute="leading" secondItem="476" secondAttribute="leading" id="uBP-ka-lUx"/>
+                            <constraint firstAttribute="bottom" secondItem="3hh-2X-z2a" secondAttribute="bottom" id="y5w-CP-w0a"/>
+                        </constraints>
+                    </customView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="DZg-Rc-DxS" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="0oQ-lR-xkf"/>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>
-                    <constraint firstItem="482" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="76" id="0rX-P1-qmK"/>
-                    <constraint firstItem="rur-OE-BUc" firstAttribute="top" secondItem="479" secondAttribute="bottom" constant="14" id="293-dY-bqb"/>
                     <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" constant="-1" id="2M6-Zr-1e8"/>
-                    <constraint firstItem="476" firstAttribute="leading" secondItem="477" secondAttribute="leading" id="3K7-Fz-KM8"/>
-                    <constraint firstItem="480" firstAttribute="leading" secondItem="479" secondAttribute="leading" id="51B-Ip-WYq"/>
-                    <constraint firstItem="479" firstAttribute="leading" secondItem="rur-OE-BUc" secondAttribute="leading" id="5fv-OJ-Tzn"/>
-                    <constraint firstItem="632" firstAttribute="top" secondItem="rur-OE-BUc" secondAttribute="bottom" constant="18" id="5mW-kO-6AE"/>
+                    <constraint firstItem="632" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="bottom" constant="16" id="40h-JY-PZP"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="300" secondAttribute="leading" id="8xv-3j-IIn"/>
                     <constraint firstItem="298" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="BR4-Fl-myM"/>
-                    <constraint firstItem="482" firstAttribute="top" secondItem="PQp-5W-SVj" secondAttribute="bottom" constant="15" id="Bf7-Sa-qdR"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="CXj-wL-SUJ"/>
                     <constraint firstItem="304" firstAttribute="baseline" secondItem="302" secondAttribute="baseline" id="Dgq-fR-czw"/>
                     <constraint firstItem="594" firstAttribute="top" secondItem="298" secondAttribute="bottom" constant="15" id="G1Q-Vh-L5K"/>
-                    <constraint firstAttribute="trailing" secondItem="306" secondAttribute="trailing" constant="53" id="Grb-6Z-8ZJ"/>
-                    <constraint firstItem="480" firstAttribute="top" secondItem="482" secondAttribute="bottom" constant="14" id="HUb-bd-cbs"/>
+                    <constraint firstItem="DZg-Rc-DxS" firstAttribute="top" secondItem="PQp-5W-SVj" secondAttribute="bottom" constant="16" id="HfF-WD-d1r"/>
                     <constraint firstItem="485" firstAttribute="trailing" secondItem="298" secondAttribute="trailing" id="Hvg-9U-IrZ"/>
-                    <constraint firstItem="476" firstAttribute="baseline" secondItem="479" secondAttribute="baseline" id="IBa-TA-kGg"/>
-                    <constraint firstItem="482" firstAttribute="leading" secondItem="480" secondAttribute="leading" id="IP6-C5-0Xe"/>
                     <constraint firstItem="296" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="JST-eo-Rn2"/>
                     <constraint firstItem="314" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="K0I-XJ-6Ix"/>
                     <constraint firstAttribute="trailing" secondItem="298" secondAttribute="trailing" constant="20" symbolic="YES" id="Ney-ZY-meW"/>
+                    <constraint firstItem="302" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="80" id="PDt-xa-JHR"/>
                     <constraint firstItem="485" firstAttribute="baseline" secondItem="484" secondAttribute="baseline" id="Q90-dv-YnK"/>
-                    <constraint firstItem="479" firstAttribute="top" secondItem="480" secondAttribute="bottom" constant="14" id="Sd9-rf-MIH"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="306" secondAttribute="trailing" constant="20" id="QT3-bc-W3J"/>
                     <constraint firstItem="302" firstAttribute="top" secondItem="594" secondAttribute="bottom" constant="2" id="TCq-bu-JyI"/>
                     <constraint firstAttribute="bottom" secondItem="484" secondAttribute="bottom" constant="20" symbolic="YES" id="W2y-wz-igA"/>
-                    <constraint firstItem="rur-OE-BUc" firstAttribute="baseline" secondItem="477" secondAttribute="baseline" id="Xqy-2v-IW1"/>
-                    <constraint firstItem="480" firstAttribute="baseline" secondItem="44o-H8-79C" secondAttribute="baseline" id="ckp-bM-zDS"/>
+                    <constraint firstItem="306" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="-1" id="aV0-p8-LrY"/>
                     <constraint firstItem="485" firstAttribute="leading" secondItem="484" secondAttribute="trailing" constant="12" symbolic="YES" id="dKr-Zg-Chb"/>
-                    <constraint firstItem="306" firstAttribute="top" secondItem="300" secondAttribute="bottom" constant="15" id="dcV-d8-ojs"/>
                     <constraint firstItem="308" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="12" id="fhQ-8f-WAX"/>
                     <constraint firstItem="302" firstAttribute="trailing" secondItem="594" secondAttribute="trailing" id="gLt-VL-8jX"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="hi2-A9-vwX"/>
-                    <constraint firstItem="314" firstAttribute="top" secondItem="309" secondAttribute="bottom" constant="18" id="jCP-Ku-yxu"/>
                     <constraint firstItem="298" firstAttribute="leading" secondItem="296" secondAttribute="trailing" constant="8" symbolic="YES" id="kZO-a5-URC"/>
                     <constraint firstItem="632" firstAttribute="trailing" secondItem="314" secondAttribute="trailing" id="mV6-BH-O7l"/>
                     <constraint firstItem="300" firstAttribute="leading" secondItem="594" secondAttribute="trailing" constant="6" id="pGp-Ox-fW2"/>
                     <constraint firstItem="300" firstAttribute="baseline" secondItem="594" secondAttribute="baseline" id="ph8-pR-q7d"/>
-                    <constraint firstItem="481" firstAttribute="baseline" secondItem="482" secondAttribute="baseline" id="rFb-wM-IqF"/>
                     <constraint firstItem="632" firstAttribute="leading" secondItem="314" secondAttribute="leading" id="rf3-di-18P"/>
-                    <constraint firstItem="476" firstAttribute="leading" secondItem="479" secondAttribute="trailing" constant="39" id="rie-Cg-2sE"/>
-                    <constraint firstItem="476" firstAttribute="leading" secondItem="44o-H8-79C" secondAttribute="leading" id="s6u-BD-lvn"/>
                     <constraint firstItem="309" firstAttribute="top" secondItem="306" secondAttribute="bottom" constant="12" id="sUo-oc-VZu"/>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="tvK-Lf-7Tb"/>
                     <constraint firstItem="484" firstAttribute="top" secondItem="632" secondAttribute="bottom" constant="20" id="x2o-Lh-hhK"/>
-                    <constraint firstItem="44o-H8-79C" firstAttribute="leading" secondItem="481" secondAttribute="leading" id="xib-Yx-EM4"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="309" secondAttribute="leading" id="yi4-Qh-uRn"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="228"/>
             </connections>
-            <point key="canvasLocation" x="287" y="259.5"/>
+            <point key="canvasLocation" x="287" y="275"/>
         </window>
     </objects>
 </document>

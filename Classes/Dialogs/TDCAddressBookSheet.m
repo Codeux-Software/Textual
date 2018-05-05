@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
 @property (nonatomic, strong) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
 @property (nonatomic, strong) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
+@property (nonatomic, strong) IBOutlet NSButton *ignoreInlineMediaCheck;
 @property (nonatomic, strong) IBOutlet NSButton *ignoreNoticeMessagesCheck;
 @property (nonatomic, strong) IBOutlet NSButton *ignorePrivateMessageHighlightsCheck;
 @property (nonatomic, strong) IBOutlet NSButton *ignorePrivateMessagesCheck;
@@ -138,8 +139,9 @@ ClassWithDesignatedInitializerInitMethod
 		self.ignoreEntryHostmaskTextField.stringValue = self.config.hostmask;
 
 		self.ignoreClientToClientProtocolCheck.state = self.config.ignoreClientToClientProtocol;
-		self.ignoreGeneralEventMessagesCheck.state = self.config.ignoreGeneralEventMessages;
 		self.ignoreFileTransferRequestsCheck.state = self.config.ignoreFileTransferRequests;
+		self.ignoreGeneralEventMessagesCheck.state = self.config.ignoreGeneralEventMessages;
+		self.ignoreInlineMediaCheck.state = self.config.ignoreInlineMedia;
 		self.ignoreNoticeMessagesCheck.state = self.config.ignoreNoticeMessages;
 		self.ignorePrivateMessageHighlightsCheck.state = self.config.ignorePrivateMessageHighlights;
 		self.ignorePrivateMessagesCheck.state = self.config.ignorePrivateMessages;
@@ -181,6 +183,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.config.ignoreClientToClientProtocol = (self.ignoreClientToClientProtocolCheck.state == NSOnState);
 		self.config.ignoreFileTransferRequests = (self.ignoreFileTransferRequestsCheck.state == NSOnState);
 		self.config.ignoreGeneralEventMessages = (self.ignoreGeneralEventMessagesCheck.state == NSOnState);
+		self.config.ignoreInlineMedia = (self.ignoreInlineMediaCheck.state == NSOnState);
 		self.config.ignoreNoticeMessages = (self.ignoreNoticeMessagesCheck.state == NSOnState);
 		self.config.ignorePrivateMessageHighlights = (self.ignorePrivateMessageHighlightsCheck.state == NSOnState);
 		self.config.ignorePrivateMessages = (self.ignorePrivateMessagesCheck.state == NSOnState);
