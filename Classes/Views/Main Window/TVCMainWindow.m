@@ -2144,8 +2144,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	} else if (u.isQuitting) {
 		[title appendString:TXTLS(@"TVCMainWindow[1017]")];
 	}
+	
+	NSString *awayStatus = ((u.userIsAway) ? TXTLS(@"TVCMainWindow[1022]") : @"");
 
-	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.userNickname, u.networkNameAlt)];
+	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.userNickname, awayStatus, u.networkNameAlt)];
 
 	if (u && c == nil) // = Client
 	{

@@ -54,10 +54,11 @@
 "TVCMainWindow[1012]" = " — ";
 "TVCMainWindow[1013]" = " (%@)";
 "TVCMainWindow[1014]" = " (%@ users)";
-"TVCMainWindow[1015]" = "%1$@ on %2$@";
+"TVCMainWindow[1015]" = "%1$@%2$@ on %3$@";
 "TVCMainWindow[1016]" = "Disconnected — ";
 "TVCMainWindow[1017]" = "Disconnecting… — ";
 "TVCMainWindow[1018]" = "Connecting… — ";
 "TVCMainWindow[1019]" = "Logging on… — ";
 "TVCMainWindow[1020]" = "Reconnecting… — ";
 "TVCMainWindow[1021]" = "Waiting to reconnect… — ";
+"TVCMainWindow[1022]" = " (away)";

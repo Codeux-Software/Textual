@@ -8565,6 +8565,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case 306: // RPL_NOWAWAY
 		{
 			self.userIsAway = (numeric == 306);
+			
+			[mainWindow() updateTitleFor:self];
 
 			if (printMessage) {
 				[self printUnknownReply:m];
