@@ -69,6 +69,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (instancetype)initWithEntryType:(IRCAddressBookEntryType)entryType
 {
+	NSParameterAssert(entryType == IRCAddressBookIgnoreEntryType ||
+					  entryType == IRCAddressBookUserTrackingEntryType);
+
 	if ((self = [super init])) {
 		if (entryType == IRCAddressBookIgnoreEntryType) {
 			self.config = [IRCAddressBookEntryMutable newIgnoreEntry];
