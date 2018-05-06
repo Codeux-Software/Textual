@@ -170,7 +170,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[dic assignUnsignedIntegerTo:&self->_entryType forKey:@"entryType"];
 
-	if (self->_entryType == IRCAddressBookIgnoreEntryType) {
+	IRCAddressBookEntryType entryType = self->_entryType;
+	
+	if (entryType == IRCAddressBookIgnoreEntryType ||
+		entryType == IRCAddressBookMixedEntryType)
+	{
 		/* Load the newest set of keys */
 		[dic assignBoolTo:&self->_ignoreClientToClientProtocol forKey:@"ignoreClientToClientProtocol"];
 		[dic assignBoolTo:&self->_ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
@@ -191,7 +195,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic assignBoolTo:&self->_ignorePublicMessageHighlights forKey:@"ignoreHighlights"];
 		[dic assignBoolTo:&self->_ignorePublicMessages forKey:@"ignorePublicMsg"];
 	}
-	else if (self->_entryType == IRCAddressBookUserTrackingEntryType)
+	
+	if (entryType == IRCAddressBookUserTrackingEntryType ||
+		entryType == IRCAddressBookMixedEntryType)
 	{
 		/* Load the newest set of keys */
 		[dic assignBoolTo:&self->_trackUserActivity forKey:@"trackUserActivity"];
@@ -268,7 +274,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic maybeSetObject:self.hostmask forKey:@"hostmask"];
 	[dic maybeSetObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 
-	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	IRCAddressBookEntryType entryType = self.entryType;
+
+	if (entryType == IRCAddressBookIgnoreEntryType ||
+		entryType == IRCAddressBookMixedEntryType)
 	{
 		[dic setBool:self.ignoreClientToClientProtocol forKey:@"ignoreClientToClientProtocol"];
 		[dic setBool:self.ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
@@ -280,12 +289,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic setBool:self.ignorePublicMessageHighlights forKey:@"ignorePublicMessageHighlights"];
 		[dic setBool:self.ignorePublicMessages forKey:@"ignorePublicMessages"];
 	}
-	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	
+	if (entryType == IRCAddressBookUserTrackingEntryType ||
+		entryType == IRCAddressBookMixedEntryType)
 	{
 		[dic setBool:self.trackUserActivity forKey:@"trackUserActivity"];
 	}
 
-	[dic setUnsignedInteger:self.entryType forKey:@"entryType"];
+	[dic setUnsignedInteger:entryType forKey:@"entryType"];
 
 	return [dic dictionaryByRemovingDefaults:self->_defaults];
 }
