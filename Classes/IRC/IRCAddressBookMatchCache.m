@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (matchedEntries) {
 		IRCAddressBookEntryMutable *mixedEntry = [IRCAddressBookEntryMutable new];
 		
-		mixedEntry.entryType = IRCAddressBookUserMixedEntryType;
+		mixedEntry.entryType = IRCAddressBookMixedEntryType;
 		
 		mixedEntry.parentEntries = matchedEntries;
 

@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookEntryType) {
 	
 	/* Entry type used when multiple instances of IRCAddressBookEntry
 	 are combined into a single object which represents all. */
-	IRCAddressBookUserMixedEntryType,
+	IRCAddressBookMixedEntryType,
 };
 
 typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
@@ -77,7 +77,7 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
 @property (readonly) BOOL ignoreMessagesContainingMatch;
 @property (readonly) BOOL trackUserActivity;
 
-/* When IRCAddressBookUserMixedEntryType is mixed, this array holds
+/* When IRCAddressBookMixedEntryType is mixed, this array holds
  a reference to each entry that is mixed into the current object. */
 @property (readonly, copy, nullable) NSArray<IRCAddressBookEntry *> *parentEntries;
 
