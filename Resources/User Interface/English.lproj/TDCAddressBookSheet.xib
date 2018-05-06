@@ -14,7 +14,6 @@
                 <outlet property="ignoreEntryView" destination="5" id="nse-Nb-KaW"/>
                 <outlet property="ignoreFileTransferRequestsCheck" destination="rur-OE-BUc" id="j5n-cr-6wF"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="477" id="b5y-ct-VK8"/>
-                <outlet property="ignoreInlineMediaCheck" destination="3hh-2X-z2a" id="Lr7-rY-cdh"/>
                 <outlet property="ignoreNoticeMessagesCheck" destination="476" id="S3r-Hr-k0A"/>
                 <outlet property="ignorePrivateMessageHighlightsCheck" destination="44o-H8-79C" id="4Nm-VY-TNd"/>
                 <outlet property="ignorePrivateMessagesCheck" destination="481" id="613"/>
@@ -294,7 +293,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="38" y="253" width="450" height="5"/>
+                        <rect key="frame" x="38" y="227" width="450" height="5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="450" id="6qa-Fy-fTC"/>
                         </constraints>
@@ -303,7 +302,7 @@ DQ
                         <rect key="frame" x="38" y="59" width="450" height="5"/>
                     </box>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
-                        <rect key="frame" x="61" y="222" width="405" height="17"/>
+                        <rect key="frame" x="61" y="196" width="405" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -342,10 +341,10 @@ DQ
                         </connections>
                     </button>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="DZg-Rc-DxS">
-                        <rect key="frame" x="84" y="80" width="358" height="126"/>
+                        <rect key="frame" x="84" y="82" width="358" height="98"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="476">
-                                <rect key="frame" x="-2" y="82" width="127" height="18"/>
+                                <rect key="frame" x="-2" y="54" width="127" height="18"/>
                                 <buttonCell key="cell" type="check" title="Notice Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="494">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -353,7 +352,7 @@ DQ
                                 <accessibility description="Ignore Private Notices from User"/>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="479">
-                                <rect key="frame" x="196" y="82" width="164" height="18"/>
+                                <rect key="frame" x="196" y="54" width="164" height="18"/>
                                 <buttonCell key="cell" type="check" title="Client-to-Client (CTCP)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="491">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -361,7 +360,7 @@ DQ
                                 <accessibility description="Ignore Client-to-Client Protocol (CTCP) Requests"/>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="480">
-                                <rect key="frame" x="-2" y="54" width="158" height="18"/>
+                                <rect key="frame" x="-2" y="26" width="158" height="18"/>
                                 <buttonCell key="cell" type="check" title="Highlights in Channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="490">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -369,7 +368,7 @@ DQ
                                 <accessibility description="Ignore Highlights by User in a Channel"/>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="481">
-                                <rect key="frame" x="196" y="110" width="129" height="18"/>
+                                <rect key="frame" x="196" y="82" width="129" height="18"/>
                                 <buttonCell key="cell" type="check" title="Private Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="489">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -377,7 +376,7 @@ DQ
                                 <accessibility description="Ignore Private Messages from User"/>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="482">
-                                <rect key="frame" x="-2" y="110" width="124" height="18"/>
+                                <rect key="frame" x="-2" y="82" width="124" height="18"/>
                                 <buttonCell key="cell" type="check" title="Public Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="488">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -385,7 +384,7 @@ DQ
                                 <accessibility description="Ignore Public Messages from User"/>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="rur-OE-BUc">
-                                <rect key="frame" x="196" y="26" width="157" height="18"/>
+                                <rect key="frame" x="196" y="-2" width="157" height="18"/>
                                 <buttonCell key="cell" type="check" title="File Transfer Requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -393,7 +392,7 @@ DQ
                                 <accessibility description="Ignore File Transfer Requests from User"/>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
-                                <rect key="frame" x="196" y="54" width="148" height="18"/>
+                                <rect key="frame" x="196" y="26" width="148" height="18"/>
                                 <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -401,26 +400,17 @@ DQ
                                 <accessibility description="Ignore Highlights by User in a Private Message"/>
                             </button>
                             <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
-                                <rect key="frame" x="-2" y="26" width="172" height="18"/>
+                                <rect key="frame" x="-2" y="-2" width="172" height="18"/>
                                 <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
                             </button>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="3hh-2X-z2a">
-                                <rect key="frame" x="-2" y="-2" width="95" height="18"/>
-                                <buttonCell key="cell" type="check" title="Inline Media" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wyq-Xb-urU">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <accessibility description="Ignore File Transfer Requests from User"/>
-                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="482" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="top" id="6u8-Sm-kMT"/>
                             <constraint firstItem="476" firstAttribute="top" secondItem="482" secondAttribute="bottom" constant="14" id="7st-zM-NKO"/>
-                            <constraint firstItem="3hh-2X-z2a" firstAttribute="top" secondItem="477" secondAttribute="bottom" constant="14" id="7y3-YH-AAv"/>
                             <constraint firstItem="481" firstAttribute="baseline" secondItem="482" secondAttribute="baseline" id="AQf-GH-qrF"/>
                             <constraint firstItem="481" firstAttribute="leading" secondItem="477" secondAttribute="trailing" constant="30" id="ENn-48-k8K"/>
                             <constraint firstItem="44o-H8-79C" firstAttribute="leading" secondItem="479" secondAttribute="leading" id="FKx-D7-Qyq"/>
@@ -435,10 +425,9 @@ DQ
                             <constraint firstItem="rur-OE-BUc" firstAttribute="top" secondItem="44o-H8-79C" secondAttribute="bottom" constant="14" id="jVo-aw-g0A"/>
                             <constraint firstItem="479" firstAttribute="leading" secondItem="481" secondAttribute="leading" id="nNC-4s-JRa"/>
                             <constraint firstItem="482" firstAttribute="leading" secondItem="DZg-Rc-DxS" secondAttribute="leading" id="q7P-ZK-o1z"/>
+                            <constraint firstAttribute="bottom" secondItem="rur-OE-BUc" secondAttribute="bottom" id="rr7-IE-11K"/>
                             <constraint firstAttribute="trailing" secondItem="479" secondAttribute="trailing" id="tSU-kb-AL0"/>
-                            <constraint firstItem="3hh-2X-z2a" firstAttribute="leading" secondItem="477" secondAttribute="leading" id="tvO-7n-IQn"/>
                             <constraint firstItem="480" firstAttribute="leading" secondItem="476" secondAttribute="leading" id="uBP-ka-lUx"/>
-                            <constraint firstAttribute="bottom" secondItem="3hh-2X-z2a" secondAttribute="bottom" id="y5w-CP-w0a"/>
                         </constraints>
                     </customView>
                 </subviews>
@@ -446,7 +435,7 @@ DQ
                     <constraint firstItem="DZg-Rc-DxS" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="0oQ-lR-xkf"/>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>
                     <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" constant="-1" id="2M6-Zr-1e8"/>
-                    <constraint firstItem="632" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="bottom" constant="18" id="40h-JY-PZP"/>
+                    <constraint firstItem="632" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="bottom" constant="20" id="40h-JY-PZP"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="300" secondAttribute="leading" id="8xv-3j-IIn"/>
                     <constraint firstItem="298" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="BR4-Fl-myM"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="CXj-wL-SUJ"/>
