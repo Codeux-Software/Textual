@@ -66,10 +66,6 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 - (BOOL)isValidInternetPort
 {
-	if (self.length == 0) {
-		return NO;
-	}
-
 	if (self.isNumericOnly == NO) {
 		return NO;
 	}
