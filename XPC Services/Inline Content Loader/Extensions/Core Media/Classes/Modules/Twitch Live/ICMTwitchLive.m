@@ -103,8 +103,6 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 
 + (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentType *)contentTypeIn
 {
-#warning TODO: Add support for starting at specific time (time=)
-
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
 	if (urlPath.length <= 1) {
