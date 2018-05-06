@@ -91,6 +91,8 @@ ClassWithDesignatedInitializerInitMethod
 - (instancetype)initWithConfig:(IRCAddressBookEntry *)config
 {
 	NSParameterAssert(config != nil);
+	NSParameterAssert(config.entryType == IRCAddressBookIgnoreEntryType ||
+					  config.entryType == IRCAddressBookUserTrackingEntryType);
 
 	if ((self = [super init])) {
 		self.config = [config mutableCopy];

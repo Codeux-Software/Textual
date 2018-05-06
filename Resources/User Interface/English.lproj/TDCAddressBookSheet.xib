@@ -294,7 +294,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="38" y="251" width="450" height="5"/>
+                        <rect key="frame" x="38" y="253" width="450" height="5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="450" id="6qa-Fy-fTC"/>
                         </constraints>
@@ -303,7 +303,7 @@ DQ
                         <rect key="frame" x="38" y="59" width="450" height="5"/>
                     </box>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
-                        <rect key="frame" x="61" y="220" width="405" height="17"/>
+                        <rect key="frame" x="61" y="222" width="405" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -342,7 +342,7 @@ DQ
                         </connections>
                     </button>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="DZg-Rc-DxS">
-                        <rect key="frame" x="84" y="78" width="358" height="126"/>
+                        <rect key="frame" x="84" y="80" width="358" height="126"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="476">
                                 <rect key="frame" x="-2" y="82" width="127" height="18"/>
@@ -446,7 +446,7 @@ DQ
                     <constraint firstItem="DZg-Rc-DxS" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="0oQ-lR-xkf"/>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>
                     <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" constant="-1" id="2M6-Zr-1e8"/>
-                    <constraint firstItem="632" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="bottom" constant="16" id="40h-JY-PZP"/>
+                    <constraint firstItem="632" firstAttribute="top" secondItem="DZg-Rc-DxS" secondAttribute="bottom" constant="18" id="40h-JY-PZP"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="300" secondAttribute="leading" id="8xv-3j-IIn"/>
                     <constraint firstItem="298" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="BR4-Fl-myM"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="CXj-wL-SUJ"/>
