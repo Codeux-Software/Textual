@@ -228,6 +228,7 @@
 "IRC[1116]" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
 "IRC[1117]" = "No ignores could be found that matches \002%@\002";
 "IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+"IRC[1129]" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
 
 /* XPC errors */
 "IRC[1124]" = "Connection service closed unexpectedly";

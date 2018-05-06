@@ -50,6 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
  IRCAddressBookMixedEntryType. */
 - (nullable IRCAddressBookEntry *)findAddressBookEntryForHostmask:(NSString *)hostmask;
 
+- (NSArray<IRCAddressBookEntry *> *)findIgnoresForHostmask:(NSString *)hostmask;
+
 - (void)clearCachedMatches;
 - (void)clearCachedMatchesForHostmask:(NSString *)hostmask;
 @end

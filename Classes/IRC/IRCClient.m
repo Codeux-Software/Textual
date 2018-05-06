@@ -1394,9 +1394,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Address Book
 
-- (nullable IRCAddressBookEntry *)findIgnoreForHostmask:(NSString *)hostmask
+- (NSArray<IRCAddressBookEntry *> *)findIgnoresForHostmask:(NSString *)hostmask
 {
-	return [self findAddressBookEntryForHostmask:hostmask];
+	return [self.addressBookMatchCache findIgnoresForHostmask:hostmask];
 }
 
 - (nullable IRCAddressBookEntry *)findUserTrackingAddressBookEntryForHostmask:(NSString *)hostmask
@@ -3651,6 +3651,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					[self printDebugInformation:TXTLS(@"IRC[1117]", member.nickname)];
 
 					break;
+				} else if (matchedIgnores.count > 1) {
+					[self printDebugInformation:TXTLS(@"IRC[1129]", member.nickname)];
+					
+					break;
 				}
 			}
 
@@ -3665,11 +3669,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				[mutableIgnoreList addObject:ignore];
 			} else{
-				for (IRCAddressBookEntry *ignore in matchedIgnores) {
-					[self printDebugInformation:TXTLS(@"IRC[1116]", member.nickname, ignore.hostmask)];
+				IRCAddressBookEntry *ignore = matchedIgnores[0];
+				
+				[self printDebugInformation:TXTLS(@"IRC[1116]", member.nickname, ignore.hostmask)];
 
-					[mutableIgnoreList removeObjectIdenticalTo:ignore];
-				}
+				[mutableIgnoreList removeObjectIdenticalTo:ignore];
 			}
 
 			/* Save modified ignore list */
