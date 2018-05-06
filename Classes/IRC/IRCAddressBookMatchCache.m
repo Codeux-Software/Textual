@@ -116,10 +116,14 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 		
-		if (matchedEntry) {
+		if (matchedEntries) {
+			[matchedEntries addObject:entry];
+		} else if (matchedEntry) {
 			matchedEntries = [NSMutableArray array];
-			
+
 			[matchedEntries addObject:matchedEntry];
+			
+			[matchedEntries addObject:entry];
 			
 			matchedEntry = nil;
 		} else {
