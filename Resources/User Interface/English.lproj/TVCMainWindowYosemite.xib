@@ -35,13 +35,13 @@
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
                                     <font key="font" metaFont="system"/>
                                     <segments>
-                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
+                                        <segment toolTip="Manage Selection" image="NSActionTemplate" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="48" tag="2">
+                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
