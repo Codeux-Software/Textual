@@ -1433,7 +1433,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)clearAddressBookCacheForHostmask:(NSString *)hostmask
 {
+	/* Clear host */
 	[self.addressBookMatchCache clearCachedMatchesForHostmask:hostmask];
+
+	/* Clear nickname */
+	NSString *nickname = hostmask.nicknameFromHostmask;
+
+	NSString *nicknameHostmask = [NSString stringWithFormat:@"%@!*@*", nickname];
+	
+	[self.addressBookMatchCache clearCachedMatchesForHostmask:nicknameHostmask];
 }
 
 #pragma mark -
