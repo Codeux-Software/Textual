@@ -85,6 +85,25 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.cachedMatchesInt removeObjectForKey:hostmask];
 }
 
+- (NSArray<IRCAddressBookEntry *> *)findIgnoresForHostmask:(NSString *)hostmask
+{
+	IRCAddressBookEntry *match = [self findAddressBookEntryForHostmask:hostmask];
+	
+	if (match.entryType == IRCAddressBookIgnoreEntryType) {
+		return @[match];
+	}
+
+	if (match.entryType == IRCAddressBookMixedEntryType) {
+		NSArray *parentEntries = match.parentEntries;
+		
+		return
+		[parentEntries filteredArrayUsingPredicate:
+		 [NSPredicate predicateWithFormat:@"entryType == %d", IRCAddressBookIgnoreEntryType]];
+	}
+	
+	return @[];
+}
+
 - (nullable IRCAddressBookEntry *)findAddressBookEntryForHostmask:(NSString *)hostmask
 {
 	NSParameterAssert(hostmask != nil);

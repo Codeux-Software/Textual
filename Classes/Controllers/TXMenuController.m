@@ -884,7 +884,6 @@ NS_ASSUME_NONNULL_BEGIN
 			 menu items except "Add Ignore" and disable the "Add Ignore" item. */
 			if (nicknames.count != 1 || hostmask == nil) {
 				modifyIgnoreMenuItem.hidden = YES;
-				modifyIgnoreMenuItem.representedObject = nil;
 
 				removeIgnoreMenuItem.hidden = YES;
 
@@ -894,12 +893,16 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			/* Update visiblity depending on whether ignore is available */
-			IRCAddressBookEntry *userIgnore = [u findIgnoreForHostmask:hostmask];
+			/* When this logic was first introduced, we kept a reference to
+			 the ignores in the represented object of the menu item.
+			 This was stopped because information about the ignore can
+			 change while the menu item is still open, making the object
+			 we will reference when action is performed garbage. */
+			NSArray *userIgnores = [u findIgnoresForHostmask:hostmask];
 
-			BOOL condition = (userIgnore == nil);
+			BOOL condition = (userIgnores.count == 0);
 
 			modifyIgnoreMenuItem.hidden = condition;
-			modifyIgnoreMenuItem.representedObject = userIgnore;
 
 			removeIgnoreMenuItem.hidden = condition;
 
@@ -2448,19 +2451,32 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	id userIgnore = [sender representedObject];
-
-	if (userIgnore == nil) {
-		return;
-	}
-
-	[sender setRepresentedObject:nil];
+	NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:sender];
 
 	[self deselectMembers:sender];
-
-	[self showServerPropertiesSheetForClient:u
-							   withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
-									 context:userIgnore];
+	
+	/* User's hostmask and other information can change between the point
+	 the menu item is opened and the point the action is performed.
+	 We therefore perform a new query for ignores when performing action. */
+	NSString *hostmask = nicknames.firstObject.user.hostmask;
+	
+	if (nicknames.count != 1 || hostmask == nil) {
+		return;
+	}
+	
+	NSArray *userIgnores = [u findIgnoresForHostmask:hostmask];
+	
+	/* If we have more than one user ignore, then open
+	 the address book instead of a specific ignore. */
+	if (userIgnores.count == 1) {
+		[self showServerPropertiesSheetForClient:u
+								   withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
+										 context:userIgnores[0]];
+	} else {
+		[self showServerPropertiesSheetForClient:u
+								   withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection
+										 context:nil];
+	}
 }
 
 #pragma mark -
