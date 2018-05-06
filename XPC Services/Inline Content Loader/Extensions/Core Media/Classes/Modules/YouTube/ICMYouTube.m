@@ -50,7 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *templateAttributes =
 	@{
 	  @"uniqueIdentifier" : payload.uniqueIdentifier,
-	  @"videoIdentifier" : videoIdentifier
+	  @"videoIdentifier" : videoIdentifier,
+	  @"videoStartTime" : @(self.videoStartTime)
 	};
 
 	NSError *templateRenderError = nil;
@@ -68,8 +69,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable ICLInlineContentModuleActionBlock)actionBlockForURL:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
+	
+	NSTimeInterval startPosition = 0;
 
-	NSString *videoIdentifier = [self _videoIdentifierForURL:url];
+	NSString *videoIdentifier = [self _videoIdentifierForURL:url startPosition:&startPosition];
 
 	if (videoIdentifier == nil) {
 		return nil;
@@ -78,17 +81,20 @@ NS_ASSUME_NONNULL_BEGIN
 	return [^(ICLInlineContentModule *module) {
 		__weak ICMYouTube *moduleTyped = (id)module;
 
+		moduleTyped.videoStartTime = startPosition;
+		
 		[moduleTyped _performActionForVideo:videoIdentifier];
 	} copy];
 }
 
-+ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url
++ (nullable NSString *)_videoIdentifierForURL:(NSURL *)url startPosition:(NSTimeInterval *)startPosition
 {
-#warning TODO: Add support for starting at specific time (t=)
-
 	NSString *videoIdentifier = nil;
 
 	NSString *urlHost = url.host;
+	NSString *urlQuery = url.query.percentEncodedURLQuery;
+	
+	NSDictionary *queryItems = urlQuery.URLQueryItems;
 
 	if ([urlHost isEqualToString:@"youtu.be"])
 	{
@@ -109,10 +115,6 @@ NS_ASSUME_NONNULL_BEGIN
 			return nil;
 		}
 
-		NSString *urlQuery = url.query.percentEncodedURLQuery;
-
-		NSDictionary *queryItems = urlQuery.URLQueryItems;
-
 		videoIdentifier = queryItems[@"v"];
 	}
 
@@ -122,6 +124,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (videoIdentifier.length > 11) {
 		videoIdentifier = [videoIdentifier substringToIndex:11];
+	}
+
+	NSString *timestamp = queryItems[@"t"];
+
+	if (timestamp) {
+		*startPosition = [self parseYouTubeEsqueTimestamp:timestamp];
 	}
 
 	return videoIdentifier;
