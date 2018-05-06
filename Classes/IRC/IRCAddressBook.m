@@ -274,7 +274,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic setBool:self.ignoreFileTransferRequests forKey:@"ignoreFileTransferRequests"];
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
 		[dic setBool:self.ignoreInlineMedia forKey:@"ignoreInlineMedia"];
-		[dic setBool:self.ignoreMessagesContainingMatch forKey:@"ignoreMessagesContainingMatch"];
 		[dic setBool:self.ignoreNoticeMessages forKey:@"ignoreNoticeMessages"];
 		[dic setBool:self.ignorePrivateMessageHighlights forKey:@"ignorePrivateMessageHighlights"];
 		[dic setBool:self.ignorePrivateMessages forKey:@"ignorePrivateMessages"];
@@ -349,7 +348,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic ignoreFileTransferRequests;
 @dynamic ignoreGeneralEventMessages;
 @dynamic ignoreInlineMedia;
-@dynamic ignoreMessagesContainingMatch;
 @dynamic ignoreNoticeMessages;
 @dynamic ignorePrivateMessageHighlights;
 @dynamic ignorePrivateMessages;

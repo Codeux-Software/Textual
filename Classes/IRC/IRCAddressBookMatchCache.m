@@ -143,7 +143,6 @@ NS_ASSUME_NONNULL_BEGIN
 			mixedEntry.ignorePublicMessages = ((entry.ignorePublicMessages) ? YES : mixedEntry.ignorePublicMessages);
 			mixedEntry.ignoreFileTransferRequests = ((entry.ignoreFileTransferRequests) ? YES : mixedEntry.ignoreFileTransferRequests);
 			mixedEntry.ignoreInlineMedia = ((entry.ignoreInlineMedia) ? YES : mixedEntry.ignoreInlineMedia);
-			mixedEntry.ignoreMessagesContainingMatch = ((entry.ignoreMessagesContainingMatch) ? YES : mixedEntry.ignoreMessagesContainingMatch);
 			mixedEntry.trackUserActivity = ((entry.trackUserActivity) ? YES : mixedEntry.trackUserActivity);
 		}
 		
