@@ -294,6 +294,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	  IRCAddressBookEntry *object =
 	[[IRCAddressBookEntry alloc] initWithDictionary:[self dictionaryValue]];
+	
+	object->_parentEntries = self->_parentEntries;
 
 	return object;
 }
@@ -302,6 +304,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	  IRCAddressBookEntryMutable *object =
 	[[IRCAddressBookEntryMutable alloc] initWithDictionary:[self dictionaryValue]];
+	
+	((IRCAddressBookEntry *)object)->_parentEntries = self->_parentEntries;
 
 	return object;
 }
@@ -354,6 +358,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic ignorePublicMessageHighlights;
 @dynamic ignorePublicMessages;
 @dynamic trackUserActivity;
+@dynamic parentEntries;
 
 - (BOOL)isMutable
 {
@@ -447,6 +452,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	if (self->_trackUserActivity != trackUserActivity) {
 		self->_trackUserActivity = trackUserActivity;
+	}
+}
+
+- (void)setParentEntries:(nullable NSArray<IRCAddressBookEntry *> *)childrenEntries
+{
+	if (self->_parentEntries != childrenEntries) {
+		self->_parentEntries = [childrenEntries copy];
 	}
 }
 

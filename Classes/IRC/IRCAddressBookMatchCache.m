@@ -78,7 +78,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.cachedMatchesInt removeAllObjects];
 }
 
-
 - (void)clearCachedMatchesForHostmask:(NSString *)hostmask
 {
 	NSParameterAssert(hostmask != nil);
@@ -136,6 +135,8 @@ NS_ASSUME_NONNULL_BEGIN
 		IRCAddressBookEntryMutable *mixedEntry = [IRCAddressBookEntryMutable new];
 		
 		mixedEntry.entryType = IRCAddressBookUserMixedEntryType;
+		
+		mixedEntry.parentEntries = matchedEntries;
 
 		for (IRCAddressBookEntry *entry in matchedEntries) {
 			mixedEntry.ignoreClientToClientProtocol = ((entry.ignoreClientToClientProtocol) ? YES : mixedEntry.ignoreClientToClientProtocol);
