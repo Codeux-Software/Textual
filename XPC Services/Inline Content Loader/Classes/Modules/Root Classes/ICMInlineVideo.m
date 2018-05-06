@@ -264,6 +264,50 @@ NS_ASSUME_NONNULL_BEGIN
 	return @"_ICMInlineVideo";
 }
 
++ (NSTimeInterval)parseYouTubeEsqueTimestamp:(NSString *)timestamp
+{
+	NSParameterAssert(timestamp != nil);
+	
+	if (timestamp.isPositiveWholeNumber) {
+		return timestamp.doubleValue;
+	}
+	
+	__block NSTimeInterval startTime = 0;
+	
+	__block BOOL matchedHour = NO;
+	__block BOOL matchedMinute = NO;
+	__block BOOL matchedSecond = NO;
+
+	[timestamp enumerateMatchesOfRegularExpression:@"[0-9]+[hms]"
+										 withBlock:^(NSRange range, BOOL *stop)
+	 {
+		 NSString *fragment = [timestamp substringWithRange:range];
+		 
+		 NSString *fragmentUnit = [fragment substringAtIndex:0 toLength:(-1)];
+		 NSString *fragmentValue = [fragment substringAtIndex:(-1) toLength:0];
+		 
+		 /* Could use dictionary to index each formatter, but
+		  that seemed like overkill for this implemention. */
+		 if (matchedHour == NO && [fragmentUnit isEqualToString:@"h"]) {
+			 matchedHour = YES;
+			 startTime += (fragmentValue.integerValue * 3600); // 1 hour
+		 } else if (matchedMinute == NO && [fragmentUnit isEqualToString:@"m"]) {
+			 matchedMinute = YES;
+			 startTime += (fragmentValue.integerValue * 60); // 1 minute
+		 } else if (matchedSecond == NO && [fragmentUnit isEqualToString:@"s"]) {
+			 matchedSecond = YES;
+			 startTime += fragmentValue.integerValue;
+		 }
+		 
+		 if (matchedHour && matchedMinute && matchedSecond) {
+			*stop = YES;
+		 }
+	 }
+										   options:NSCaseInsensitiveSearch];
+	
+	return startTime;
+}
+
 @end
 
 #pragma mark -
