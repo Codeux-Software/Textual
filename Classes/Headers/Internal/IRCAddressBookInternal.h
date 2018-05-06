@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *_hostmask;
 	NSString *_hostmaskRegularExpression;
 	NSString *_trackingNickname;
+	NSArray<IRCAddressBookEntry *> *_parentEntries;
 
 @private
 	BOOL _objectInitialized;
