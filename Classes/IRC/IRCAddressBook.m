@@ -43,20 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCAddressBookEntry
 
-NSString * const IRCAddressBookDictionaryValueEntryTypeKey						= @"entryType";
-
-NSString * const IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey			= @"ignoreNoticeMessages";
-NSString * const IRCAddressBookDictionaryValueIgnorePublicMessagesKey			= @"ignorePublicMessages";
-NSString * const IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey	= @"ignorePublicMessageHighlights";
-NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessagesKey			= @"ignorePrivateMessages";
-NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey	= @"ignorePrivateMessageHighlights";
-NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey		= @"ignoreGeneralEventMessages";
-NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey		= @"ignoreFileTransferRequests";
-NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey	= @"ignoreClientToClientProtocol";
-NSString * const IRCAddressBookDictionaryValueIgnoreInlineMediaKey 				= @"ignoreInlineMedia";
-
-NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackUserActivity";
-
 - (void)populateDefaultsPreflight
 {
 	ObjectIsAlreadyInitializedAssert
@@ -99,16 +85,16 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 	NSDictionary *dic = @{
 		@"hostmask" : hostmask,
-		IRCAddressBookDictionaryValueEntryTypeKey : @(IRCAddressBookIgnoreEntryType),
-		IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey : @(YES),
-		IRCAddressBookDictionaryValueIgnorePublicMessagesKey : @(YES),
-		IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey : @(YES),
-		IRCAddressBookDictionaryValueIgnorePrivateMessagesKey : @(YES),
-		IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey : @(YES),
-		IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey : @(YES),
-		IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey : @(YES),
-		IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey : @(YES),
-		IRCAddressBookDictionaryValueIgnoreInlineMediaKey : @(YES),
+		@"entryType" : @(IRCAddressBookIgnoreEntryType),
+		@"ignoreClientToClientProtocol" : @(YES),
+		@"ignoreFileTransferRequests" : @(YES),
+		@"ignoreGeneralEventMessages" : @(YES),
+		@"ignoreInlineMedia" : @(YES),
+		@"ignoreNoticeMessages" : @(YES),
+		@"ignorePrivateMessageHighlights" : @(YES),
+		@"ignorePrivateMessages" : @(YES),
+		@"ignorePublicMessageHighlights" : @(YES),
+		@"ignorePublicMessages" : @(YES)
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
@@ -119,8 +105,8 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 + (instancetype)newUserTrackingEntry
 {
 	NSDictionary *dic = @{
-		IRCAddressBookDictionaryValueEntryTypeKey : @(IRCAddressBookUserTrackingEntryType),
-		IRCAddressBookDictionaryValueTrackUserActivityKey : @(YES)
+		@"entryType" : @(IRCAddressBookUserTrackingEntryType),
+		@"trackUserActivity" : @(YES)
 	};
 
 	IRCAddressBookEntry *object = [[self alloc] initWithDictionary:dic];
@@ -229,7 +215,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSString *hostmask = self.hostmask;
 
-	if (self.entryType == IRCAddressBookIgnoreEntryType) {
+	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	{
 		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
 		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
 		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
@@ -241,8 +228,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
 		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
 		hostmask = [hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
-	} else if (self.entryType == IRCAddressBookUserTrackingEntryType) {
+	}
+	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	{
 		hostmask = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
+	}
+	else
+	{
+		return;
 	}
 
 	self->_hostmaskRegularExpression = [hostmask copy];

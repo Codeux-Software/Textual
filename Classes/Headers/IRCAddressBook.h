@@ -39,7 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCAddressBookEntryType) {
 	IRCAddressBookIgnoreEntryType = 0,
-	IRCAddressBookUserTrackingEntryType
+	IRCAddressBookUserTrackingEntryType,
+	
+	/* Entry type used when multiple instances of IRCAddressBookEntry
+	 are combined into a single object which represents all. */
+	IRCAddressBookUserMixedEntryType,
 };
 
 typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
@@ -51,20 +55,6 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
 	IRCAddressBookUserTrackingIsAwayStatus,
 	IRCAddressBookUserTrackingIsNotAwayStatus
 };
-
-/* Keys that can be accessed by -dictionaryValue. It is recommended to only access
- these keys as any other are used internally and may change without notice. */
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePublicMessagesKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessagesKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreInlineMediaKey;
-
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey;
 
 #pragma mark -
 #pragma mark Immutable Object
