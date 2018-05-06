@@ -106,7 +106,6 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
 @property (nonatomic, assign, readwrite) BOOL ignorePublicMessages;
 @property (nonatomic, assign, readwrite) BOOL ignoreFileTransferRequests;
 @property (nonatomic, assign, readwrite) BOOL ignoreInlineMedia;
-@property (nonatomic, assign, readwrite) BOOL ignoreMessagesContainingMatch;
 @property (nonatomic, assign, readwrite) BOOL trackUserActivity;
 @end
 
