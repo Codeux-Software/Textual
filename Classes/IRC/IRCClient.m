@@ -2577,6 +2577,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(user != nil);
 
 	[user cancelRemoveUserTimer];
+	
+	NSString *hostmask = user.hostmask;
+
+	if (hostmask) {
+		[self clearAddressBookCacheForHostmask:hostmask];
+	}
 
 	[self removeUserWithNickname:user.nickname];
 }
