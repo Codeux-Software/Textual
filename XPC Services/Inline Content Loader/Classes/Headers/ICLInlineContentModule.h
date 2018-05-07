@@ -259,6 +259,11 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
   it is in fact the type described.
  */
 - (void)deferAsType:(ICLMediaType)type performCheck:(BOOL)performCheck;
+
+/**
+ Returns YES if a type is supported by -deferAsType:
+ */
++ (BOOL)isTypeDeferrable:(ICLMediaType)type;
 @end
 
 NS_ASSUME_NONNULL_END
