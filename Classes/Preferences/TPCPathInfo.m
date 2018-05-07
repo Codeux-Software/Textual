@@ -39,6 +39,7 @@
 
 #import "TLOLanguagePreferences.h"
 #import "TLOPopupPrompts.h"
+#import "TPCPreferencesLocal.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TPCPathInfoPrivate.h"
@@ -660,6 +661,12 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 
 + (void)warnUserAboutStaleTranscriptFolderURL
 {
+	/* If logging isn't enabled, then we don't inform user of stale
+	 bookmarks because they probably aren't interested in that fact. */
+	if ([TPCPreferences logToDisk] == NO) {
+		return;
+	}
+	
 	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1134][2]")
 											 title:TXTLS(@"Prompts[1134][1]")
 									 defaultButton:TXTLS(@"Prompts[0005]")
@@ -668,6 +675,9 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 
 + (void)startUsingTranscriptFolderURL
 {
+	/* Even if user has logging disabled, we still start using the bookmark
+	 so that we can present it in the Preferences window while the pop up
+	 for selecting a new location is disabled. */
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark_5"];
 
 	if (bookmark == nil) {
