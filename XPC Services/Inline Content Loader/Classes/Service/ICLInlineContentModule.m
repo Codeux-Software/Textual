@@ -213,6 +213,13 @@ ClassWithDesignatedInitializerInitMethod
 	[self _finalizeAll];
 }
 
++ (BOOL)isTypeDeferrable:(ICLMediaType)type
+{
+	return (type == ICLMediaTypeImage ||
+			type == ICLMediaTypeVideo ||
+			type == ICLMediaTypeVideoGif);
+}
+
 - (void)deferAsType:(ICLMediaType)type
 {
 	[self deferAsType:type performCheck:YES];
