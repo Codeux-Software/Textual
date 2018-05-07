@@ -89,11 +89,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCAddressBookEntry *match = [self findAddressBookEntryForHostmask:hostmask];
 	
-	if (match.entryType == IRCAddressBookIgnoreEntryType) {
+	if (match && match.entryType == IRCAddressBookIgnoreEntryType) {
 		return @[match];
 	}
 
-	if (match.entryType == IRCAddressBookMixedEntryType) {
+	if (match && match.entryType == IRCAddressBookMixedEntryType) {
 		NSArray *parentEntries = match.parentEntries;
 		
 		return
