@@ -1258,8 +1258,10 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL presentDialog = NO;
 
 	for (IRCClient *u in worldController().clientList) {
-		if (u.config.proxyType == IRCConnectionSocketTorBrowserType) {
+		if (u.config.proxyType != IRCConnectionSocketNoProxyType) {
 			presentDialog = YES;
+			
+			break;
 		}
 	}
 
