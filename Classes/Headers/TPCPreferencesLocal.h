@@ -102,8 +102,11 @@ typedef NS_ENUM(NSUInteger, TXFileTransferRequestReplyAction) {
 };
 
 typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
-	TXFileTransferIPAddressAutomaticDetectionMethod			= 1,
-	TXFileTransferIPAddressManualDetectionMethod			= 2,
+	/* integers are out of order to preserve existing preferences */
+	TXFileTransferIPAddressRouterOnlyMethod				= 3,
+	TXFileTransferIPAddressRouterAndFirstPartyMethod	= 1,
+	TXFileTransferIPAddressRouterAndThirdPartyMethod	= 4,
+	TXFileTransferIPAddressManualDetectionMethod		= 2,
 };
 
 typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
