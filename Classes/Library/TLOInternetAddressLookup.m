@@ -36,7 +36,7 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
-#import "TPCPreferencesUserDefaults.h"
+#import "TPCPreferencesLocal.h"
 #import "TLOInternetAddressLookup.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -133,9 +133,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (NSString *)addressSourceURL
 {
-	BOOL useThirdPartySource = [RZUserDefaults() boolForKey:@"File Transfers -> File Transfer IP Address Detection Prefers 3rd-party Sources"];
-	
-	if (useThirdPartySource) {
+	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressRouterAndThirdPartyMethod) {
 		return [self thirdPartySourceURL];
 	}
 	

@@ -515,8 +515,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	LogToConsoleDebug("TDCFileTransferDialog cached IP address: %{public}@", address);
 
-	BOOL manuallyDetect = ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod);
-
+	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
+	
+	BOOL manuallyDetect = (detectionMethod == TXFileTransferIPAddressManualDetectionMethod);
+	
 	if (address == nil && manuallyDetect == NO) {
 		NSString *publicAddress = self.portMapping.publicAddress;
 
@@ -531,7 +533,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Request address? */
 	if (address == nil) {
-		if (manuallyDetect) {
+		if (manuallyDetect || detectionMethod == TXFileTransferIPAddressRouterOnlyMethod) {
 			LogToConsoleError("User has set IP address detection to be manual but have no address set");
 
 			[self noteIPAddressLookupFailed];
