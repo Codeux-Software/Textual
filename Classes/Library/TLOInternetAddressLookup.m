@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
+#import "TPCPreferencesUserDefaults.h"
 #import "TLOInternetAddressLookup.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -132,9 +133,20 @@ ClassWithDesignatedInitializerInitMethod
 
 - (NSString *)addressSourceURL
 {
+	BOOL useThirdPartySource = [RZUserDefaults() boolForKey:@"File Transfers -> File Transfer IP Address Detection Prefers 3rd-party Sources"];
+	
+	if (useThirdPartySource) {
+		return [self thirdPartySourceURL];
+	}
+	
+	return @"https://myip.codeux.com/";
+}
+
+- (NSString *)thirdPartySourceURL
+{
 	NSArray *services = @[
-	  @"http://wtfismyip.com/text",
-	  @"http://canhazip.com/",
+	  @"https://wtfismyip.com/text",
+	  @"https://canhazip.com/",
 	  @"http://ifconfig.me/ip",
 	  @"http://v4.ipv6-test.com/api/myip.php",
 	];
