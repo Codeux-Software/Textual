@@ -15,6 +15,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5001</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>ame</key>
 	<dict>
@@ -24,6 +26,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5002</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>amsg</key>
 	<dict>
@@ -33,6 +37,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5003</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>aquote</key>
 	<dict>
@@ -42,6 +48,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5095</integer>
+		<key>arguments</key>
+		<string>&lt;input&gt;</string>
 	</dict>
 	<key>araw</key>
 	<dict>
@@ -51,6 +59,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5096</integer>
+		<key>arguments</key>
+		<string>&lt;input&gt;</string>
 	</dict>
 	<key>autojoin</key>
 	<dict>
@@ -69,6 +79,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5004</integer>
+		<key>arguments</key>
+		<string>[comment]</string>
 	</dict>
 	<key>back</key>
 	<dict>
@@ -87,6 +99,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5005</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>bufferdebug</key>
 	<dict>
@@ -123,6 +137,8 @@
 		<true/>
 		<key>indexValue</key>
 		<integer>5008</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt; &lt;count&gt; [-h]</string>
 	</dict>
 	<key>chatops</key>
 	<dict>
@@ -159,6 +175,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5012</integer>
+		<key>arguments</key>
+		<string>[target]</string>
 	</dict>
 	<key>conn</key>
 	<dict>
@@ -168,6 +186,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5013</integer>
+		<key>arguments</key>
+		<string>[server]</string>
 	</dict>
 	<key>ctcp</key>
 	<dict>
@@ -177,6 +197,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5014</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt; &lt;command&gt; [extra]</string>
 	</dict>
 	<key>ctcpreply</key>
 	<dict>
@@ -186,6 +208,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5015</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt; &lt;command&gt; [extra]</string>
 	</dict>
 	<key>cycle</key>
 	<dict>
@@ -213,6 +237,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5018</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>defaults</key>
 	<dict>
@@ -222,6 +248,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5092</integer>
+		<key>New item</key>
+		<string>&lt;enable | disable&gt; [-a] &lt;feature&gt;</string>
 	</dict>
 	<key>dehalfop</key>
 	<dict>
@@ -231,6 +259,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5019</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>deop</key>
 	<dict>
@@ -240,6 +270,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5020</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>devoice</key>
 	<dict>
@@ -249,6 +281,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5021</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>echo</key>
 	<dict>
@@ -258,6 +292,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5022</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>empty_caches</key>
 	<dict>
@@ -276,6 +312,8 @@
 		<true/>
 		<key>indexValue</key>
 		<integer>5087</integer>
+		<key>arguments</key>
+		<string>&lt;input&gt;</string>
 	</dict>
 	<key>getscripts</key>
 	<dict>
@@ -294,6 +332,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5023</integer>
+		<key>arguments</key>
+		<string>&lt;+ | -&gt;&lt;hostmask | nickname&gt; [duration] [comment]</string>
 	</dict>
 	<key>globops</key>
 	<dict>
@@ -303,6 +343,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5024</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>goto</key>
 	<dict>
@@ -312,6 +354,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5099</integer>
+		<key>arguments</key>
+		<string>&lt;needle&gt;</string>
 	</dict>
 	<key>gzline</key>
 	<dict>
@@ -321,6 +365,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5025</integer>
+		<key>arguments</key>
+		<string>&lt;+ | -&gt;&lt;hostmask | nickname&gt; [duration] [comment]</string>
 	</dict>
 	<key>halfop</key>
 	<dict>
@@ -330,6 +376,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5026</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>hop</key>
 	<dict>
@@ -348,6 +396,8 @@
 		<true/>
 		<key>indexValue</key>
 		<integer>5028</integer>
+		<key>arguments</key>
+		<string>&lt;highlight count&gt; &lt;message count&gt;</string>
 	</dict>
 	<key>ignore</key>
 	<dict>
@@ -357,6 +407,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5029</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>invite</key>
 	<dict>
@@ -366,6 +418,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5030</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt; [channel]</string>
 	</dict>
 	<key>ison</key>
 	<dict>
@@ -375,6 +429,8 @@
 		<false/>
 		<key>indexValue</key>
 		<real>5100</real>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>j</key>
 	<dict>
@@ -384,6 +440,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5031</integer>
+		<key>arguments</key>
+		<string>&lt;channel[,channel]]&gt; [key[,key]]</string>
 	</dict>
 	<key>join</key>
 	<dict>
@@ -393,6 +451,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5032</integer>
+		<key>arguments</key>
+		<string>&lt;channel[,channel]]&gt; [key[,key]]</string>
 	</dict>
 	<key>join_random</key>
 	<dict>
@@ -402,6 +462,8 @@
 		<true/>
 		<key>indexValue</key>
 		<real>5109</real>
+		<key>arguments</key>
+		<string>[count]</string>
 	</dict>
 	<key>kb</key>
 	<dict>
@@ -411,6 +473,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5083</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt; [comment]</string>
 	</dict>
 	<key>kick</key>
 	<dict>
@@ -420,6 +484,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5033</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt; [comment]</string>
 	</dict>
 	<key>kickban</key>
 	<dict>
@@ -429,6 +495,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5034</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt; [comment]</string>
 	</dict>
 	<key>kill</key>
 	<dict>
@@ -438,6 +506,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5035</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt; [comment]</string>
 	</dict>
 	<key>lagcheck</key>
 	<dict>
@@ -456,6 +526,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5036</integer>
+		<key>arguments</key>
+		<string>[comment]</string>
 	</dict>
 	<key>list</key>
 	<dict>
@@ -474,6 +546,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5039</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>m</key>
 	<dict>
@@ -483,6 +557,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5040</integer>
+		<key>arguments</key>
+		<string>&lt;target&gt; [flags] [arguments]</string>
 	</dict>
 	<key>me</key>
 	<dict>
@@ -492,6 +568,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5041</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>mode</key>
 	<dict>
@@ -501,6 +579,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5042</integer>
+		<key>arguments</key>
+		<string>&lt;target&gt; [flags] [arguments]</string>
 	</dict>
 	<key>monitor</key>
 	<dict>
@@ -519,6 +599,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5043</integer>
+		<key>arguments</key>
+		<string>&lt;target[,target]]&gt; &lt;message&gt;</string>
 	</dict>
 	<key>mute</key>
 	<dict>
@@ -555,6 +637,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5047</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>names</key>
 	<dict>
@@ -564,6 +648,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5094</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt;</string>
 	</dict>
 	<key>nick</key>
 	<dict>
@@ -573,6 +659,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5048</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>notice</key>
 	<dict>
@@ -582,6 +670,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5050</integer>
+		<key>arguments</key>
+		<string>&lt;target[,target]]&gt; &lt;message&gt;</string>
 	</dict>
 	<key>notifybubble</key>
 	<dict>
@@ -591,6 +681,8 @@
 		<false/>
 		<key>indexValue</key>
 		<real>5112</real>
+		<key>arguments</key>
+		<string>[target] &lt;message&gt;</string>
 	</dict>
 	<key>notifysound</key>
 	<dict>
@@ -600,6 +692,8 @@
 		<false/>
 		<key>indexValue</key>
 		<real>5113</real>
+		<key>arguments</key>
+		<string>&lt;sound&gt;</string>
 	</dict>
 	<key>notifyspeak</key>
 	<dict>
@@ -609,6 +703,8 @@
 		<false/>
 		<key>indexValue</key>
 		<real>5114</real>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>omsg</key>
 	<dict>
@@ -618,6 +714,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5051</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt; &lt;message&gt;</string>
 	</dict>
 	<key>onotice</key>
 	<dict>
@@ -627,6 +725,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5052</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt; &lt;message&gt;</string>
 	</dict>
 	<key>op</key>
 	<dict>
@@ -636,6 +736,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5053</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>part</key>
 	<dict>
@@ -645,6 +747,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5054</integer>
+		<key>arguments</key>
+		<string>[comment]</string>
 	</dict>
 	<key>pass</key>
 	<dict>
@@ -654,6 +758,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5055</integer>
+		<key>arguments</key>
+		<string>&lt;password&gt;</string>
 	</dict>
 	<key>query</key>
 	<dict>
@@ -663,6 +769,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5056</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>quit</key>
 	<dict>
@@ -672,6 +780,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5057</integer>
+		<key>arguments</key>
+		<string>[comment]</string>
 	</dict>
 	<key>quiet</key>
 	<dict>
@@ -681,6 +791,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5107</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>quote</key>
 	<dict>
@@ -690,6 +802,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5058</integer>
+		<key>arguments</key>
+		<string>&lt;input&gt;</string>
 	</dict>
 	<key>raw</key>
 	<dict>
@@ -699,6 +813,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5059</integer>
+		<key>arguments</key>
+		<string>&lt;input&gt;</string>
 	</dict>
 	<key>rejoin</key>
 	<dict>
@@ -726,6 +842,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5061</integer>
+		<key>arguments</key>
+		<string>[target]</string>
 	</dict>
 	<key>server</key>
 	<dict>
@@ -735,6 +853,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5062</integer>
+		<key>arguments</key>
+		<string>&lt;address&gt; [[+] port] [password]</string>
 	</dict>
 	<key>setcolor</key>
 	<dict>
@@ -744,6 +864,8 @@
 		<false/>
 		<key>indexValue</key>
 		<real>5103</real>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>shun</key>
 	<dict>
@@ -753,6 +875,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5063</integer>
+		<key>arguments</key>
+		<string>&lt;+ | -&gt;&lt;hostmask | nickname&gt; [duration] [comment]</string>
 	</dict>
 	<key>sme</key>
 	<dict>
@@ -762,6 +886,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5064</integer>
+		<key>arguments</key>
+		<string>&lt;target[,target]]&gt; &lt;message&gt;</string>
 	</dict>
 	<key>smsg</key>
 	<dict>
@@ -771,6 +897,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5065</integer>
+		<key>arguments</key>
+		<string>&lt;target[,target]]&gt; &lt;message&gt;</string>
 	</dict>
 	<key>sslcontext</key>
 	<dict>
@@ -789,6 +917,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5067</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt; [topic]</string>
 	</dict>
 	<key>tage</key>
 	<dict>
@@ -807,6 +937,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5068</integer>
+		<key>arguments</key>
+		<string>&lt;+ | -&gt;&lt;hostmask | nickname&gt; [comment]</string>
 	</dict>
 	<key>timer</key>
 	<dict>
@@ -816,6 +948,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5069</integer>
+		<key>arguments</key>
+		<string>&lt;seconds&gt; &lt;command&gt;</string>
 	</dict>
 	<key>topic</key>
 	<dict>
@@ -825,6 +959,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5070</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt; [topic]</string>
 	</dict>
 	<key>ume</key>
 	<dict>
@@ -834,6 +970,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5089</integer>
+		<key>arguments</key>
+		<string>&lt;target&gt; &lt;message&gt;</string>
 	</dict>
 	<key>umode</key>
 	<dict>
@@ -843,6 +981,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5071</integer>
+		<key>arguments</key>
+		<string>[flags] [arguments]</string>
 	</dict>
 	<key>umsg</key>
 	<dict>
@@ -852,6 +992,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5088</integer>
+		<key>arguments</key>
+		<string>&lt;target&gt; &lt;message&gt;</string>
 	</dict>
 	<key>unban</key>
 	<dict>
@@ -861,6 +1003,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5072</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>unignore</key>
 	<dict>
@@ -870,6 +1014,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5073</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>unmute</key>
 	<dict>
@@ -888,6 +1034,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5090</integer>
+		<key>arguments</key>
+		<string>&lt;target&gt; &lt;message&gt;</string>
 	</dict>
 	<key>unquiet</key>
 	<dict>
@@ -897,6 +1045,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5108</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>voice</key>
 	<dict>
@@ -906,6 +1056,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5076</integer>
+		<key>arguments</key>
+		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
 	<key>wallops</key>
 	<dict>
@@ -915,6 +1067,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5077</integer>
+		<key>arguments</key>
+		<string>&lt;message&gt;</string>
 	</dict>
 	<key>watch</key>
 	<dict>
@@ -933,6 +1087,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5079</integer>
+		<key>arguments</key>
+		<string>&lt;channel&gt;</string>
 	</dict>
 	<key>whois</key>
 	<dict>
@@ -942,6 +1098,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5080</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>whowas</key>
 	<dict>
@@ -951,6 +1109,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5081</integer>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
 	</dict>
 	<key>zline</key>
 	<dict>
@@ -960,6 +1120,8 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5082</integer>
+		<key>arguments</key>
+		<string>&lt;+ | -&gt;&lt;hostmask | nickname&gt; [duration] [comment]</string>
 	</dict>
 </dict>
 </plist>

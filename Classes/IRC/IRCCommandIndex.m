@@ -180,6 +180,8 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 	}
 
 	return index;
+	
+	return nil;
 }
 
 + (nullable NSString *)IRCCommandFromIndexKey:(NSString *)indexKey publicSearch:(BOOL)publicSearch
@@ -342,6 +344,29 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 	}
 
 	return NSNotFound;
+}
+
++ (nullable NSString *)syntaxForCommand:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+	
+	/* This command is not used frequently which means
+	 we don't use caching for it. */
+	NSDictionary *index = [IRCCommandIndex indexFromIndexKey:command publicSearch:YES];
+	
+	if (index == nil) {
+		return nil;
+	}
+	
+	NSString *commandFormatted = [index[@"command"] uppercaseString];
+
+	NSString *argumentFormat = index[@"arguments"];
+	
+	if (argumentFormat) {
+		return [NSString stringWithFormat:@"%@ %@", commandFormatted, argumentFormat];
+	}
+	
+	return commandFormatted;
 }
 
 @end

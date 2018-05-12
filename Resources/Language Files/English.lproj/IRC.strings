@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1129 */
+/* Next unusued key: 1131 */
 
 /* Script errors */
 "IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
@@ -171,6 +171,7 @@
 "IRC[1114]" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
 "IRC[1120]" = "Server closed read stream";
 "IRC[1122]" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
+"IRC[1130]" = "Invalid syntax: %@";
 
 /* Software trial (Mac App Store) */
 "IRC[1125]" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
