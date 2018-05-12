@@ -3159,7 +3159,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandBufferdebugIndex:
+		case IRCPublicCommandBufferdebugIndex: // Command: BUFFERDEBUG
 		{
 			IRCTreeItem *treeItem = ((targetChannel) ? targetChannel : self);
 			
@@ -3708,7 +3708,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandInviteIndex:
+		case IRCPublicCommandInviteIndex: // Command: INVITE
 		{
 			NSAssertReturnLoopBreak(stringInStringLength != 0);
 
