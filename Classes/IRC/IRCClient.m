@@ -4617,6 +4617,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self sendLine:stringToSend];
 }
 
+- (void)printInvalidSyntaxMessageForCommand:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+	
+	NSString *syntax = [IRCCommandIndex syntaxForCommand:command];
+	
+	if (syntax == nil) {
+		return;
+	}
+	
+	[self printDebugInformation:TXTLS(@"IRC[1130]", syntax)];
+}
+
 #pragma mark -
 #pragma mark Log File
 
