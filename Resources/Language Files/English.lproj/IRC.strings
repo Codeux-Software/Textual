@@ -35,10 +35,10 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1131 */
+/* Next unusued key: 1138 */
 
 /* Script errors */
-"IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
+"IRC[1001]" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
 
 "IRC[1002]" = "Script Execution Failure: %@";
 "IRC[1003]" = "Script Execution Failure (%1$@: %2$@): %3$@";
@@ -57,6 +57,55 @@
 /* Network not available messages */
 "IRC[1010]" = "Delaying auto connect for %ld seconds";
 
+/* File transfer server console messages */
+"IRC[1018]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
+"IRC[1019]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
+"IRC[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
+
+/* Version info */
+"IRC[1026]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
+
+/* Software trial (Mac App Store) */
+"IRC[1125]" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
+"IRC[1126]" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
+
+/* Specific IRC related, app-specific errors */
+"IRC[1121]" = "Messages cannot be sent to this window.";
+"IRC[1123]" = "There are no servers configured to connect to.";
+
+/* Raw mode messages */
+"IRC[1092]" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
+
+/* Log file session headers */
+"IRC[1095]" = "------------- Begin Session -------------";
+"IRC[1096]" = "------------- End Session -------------";
+
+/* Ban list */
+"IRC[1102][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1102][2]" = "Ban in %1$@: %2$@";
+
+/* Invite exception list */
+"IRC[1103][1]" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1103][2]" = "Invite Exception in %1$@: %2$@";
+
+/* Ban exception list */
+"IRC[1104][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1104][2]" = "Ban exception in %1$@: %2$@";
+
+/* Quiet list */
+"IRC[1119][1]" = "Quiet in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1119][2]" = "Quiet in %1$@: %2$@";
+
+/* Cipher suite information */
+"IRC[1112][1]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
+"IRC[1112][2]" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
+
+/* XPC errors */
+"IRC[1124]" = "Connection service closed unexpectedly";
+
+/* Message buffer session indicator */
+"IRC[1127]" = "Current Session";
+
 /* /defaults/ command */
 "IRC[1012]" = "Invalid Syntax. Type “/defaults help” for more information.";
 
@@ -74,11 +123,6 @@
 
 "IRC[1016]" = "Enabled Feature: %@";
 "IRC[1017]" = "Disabled Feature: %@";
-
-/* File transfer server console messages */
-"IRC[1018]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
-"IRC[1019]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
-"IRC[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
 
 /* /mode/ command */
 "IRC[1021]" = "The mode \002+%@\002 is not supported on this server";
@@ -99,14 +143,51 @@
 "IRC[1025][08]" = "Dang! Call your ISP";
 "IRC[1025][09]" = "You Fail!";
 
-/* Version info */
-"IRC[1026]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
-
 /* /myversion/ command */
 "IRC[1027]" = "%1$@ %2$@ (Build %3$@) (%4$@)";
 "IRC[1028]" = "Mac App Store";
 "IRC[1029]" = "Standalone Version";
 "IRC[1030]" = "I am using %@";
+
+/* /timer/ command */
+"IRC[1090]" = "Timer command requires a whole number for interval. Syntax: “/timer <seconds> <command>”";
+
+/* /mute/ command */
+"IRC[1097]" = "Sound is already muted";
+"IRC[1098]" = "Sound is no longer muted";
+"IRC[1099]" = "Sound is not muted";
+"IRC[1100]" = "Sound has been muted";
+
+/* /tage/ command */
+"IRC[1101]" = "\002Time Since First Commit:\002 %@";
+
+/* /setcolor/ command */
+"IRC[1108]" = "This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
+"IRC[1110]" = "Cannot set color for “%@“ because that does not appear to be a valid nickname.";
+
+/* /ignore/ command */
+"IRC[1115]" = "Added ignore that matches \002%1$@\002 with pattern: %2$@";
+"IRC[1116]" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
+"IRC[1117]" = "No ignores could be found that matches \002%@\002";
+"IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+"IRC[1129]" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* /bufferdebug/ command */
+"IRC[1128]" = "Please share the following information with support:<br /><br /> \002\00304’Textual’ object:\003\002 \00303%1$@\003<br /> \002\00304’_Textual’ object:\003\002 \00303%2$@\003<br /> \002\00304’_TextualScroller’ object:\003\002 \00303%3$@\003<br /> \002\00304’_MessageBuffer’ object:\003\002 \00303%4$@\003<br /> \002\00304Unclaimed callbacks:\003\002 \00303%5$ld\003";
+
+/* /msg/ command errors */
+"IRC[1136]" = "Cannot send operator message because the mode \002+o\002 is not supported by this server.";
+
+/* /monitor/ command errors */
+"IRC[1137]" = "Please use the \002Address Book\002 to add or remove tracked users. Open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* Common command errors */
+"IRC[1130]" = "Invalid syntax: “%@“";
+"IRC[1131]" = "Cannot find channel named “%@“";
+"IRC[1132]" = "Cannot find query named “%@“";
+"IRC[1133]" = "This command can only be used with a channel.";
+"IRC[1134]" = "This command can only be used with a query.";
+"IRC[1135]" = "One or more arguments are not properly formatted for this command.";
 
 /* Miscellaneous messages related to IRC events */
 "IRC[1031]" = "Be back later";
@@ -171,71 +252,3 @@
 "IRC[1114]" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
 "IRC[1120]" = "Server closed read stream";
 "IRC[1122]" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
-"IRC[1130]" = "Invalid syntax: %@";
-
-/* Software trial (Mac App Store) */
-"IRC[1125]" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
-"IRC[1126]" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
-
-/* Specific IRC related, app-specific errors */
-"IRC[1121]" = "\002Error:\002 Messages cannot be sent to this window.";
-"IRC[1123]" = "\002Error:\002 There are no servers configured to connect to.";
-
-/* /timer/ command */
-"IRC[1090]" = "Timer command requires a whole number for interval. Syntax: “/timer <seconds> <command>”";
-
-/* Raw mode messages */
-"IRC[1092]" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
-
-/* Log file session headers */
-"IRC[1095]" = "------------- Begin Session -------------";
-"IRC[1096]" = "------------- End Session -------------";
-
-/* /mute/ command */
-"IRC[1097]" = "Sound is already muted";
-"IRC[1098]" = "Sound is no longer muted";
-"IRC[1099]" = "Sound is not muted";
-"IRC[1100]" = "Sound has been muted";
-
-/* /tage/ command */
-"IRC[1101]" = "\002Time Since First Commit:\002 %@";
-
-/* Ban list */
-"IRC[1102][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1102][2]" = "Ban in %1$@: %2$@";
-
-/* Invite exception list */
-"IRC[1103][1]" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1103][2]" = "Invite Exception in %1$@: %2$@";
-
-/* Ban exception list */
-"IRC[1104][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1104][2]" = "Ban exception in %1$@: %2$@";
-
-/* Quiet list */
-"IRC[1119][1]" = "Quiet in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1119][2]" = "Quiet in %1$@: %2$@";
-
-/* /setcolor/ command */
-"IRC[1108]" = "Error: This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
-"IRC[1110]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
-
-/* Cipher suite information */
-"IRC[1112][1]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
-"IRC[1112][2]" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
-
-/* /ignore/ command */
-"IRC[1115]" = "Added ignore that matches \002%1$@\002 with pattern: %2$@";
-"IRC[1116]" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
-"IRC[1117]" = "No ignores could be found that matches \002%@\002";
-"IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
-"IRC[1129]" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
-
-/* XPC errors */
-"IRC[1124]" = "Connection service closed unexpectedly";
-
-/* Message buffer session indicator */
-"IRC[1127]" = "Current Session";
-
-/* /bufferdebug/ command */
-"IRC[1128]" = "Please share the following information with support:<br /><br /> \002\00304’Textual’ object:\003\002 \00303%1$@\003<br /> \002\00304’_Textual’ object:\003\002 \00303%2$@\003<br /> \002\00304’_TextualScroller’ object:\003\002 \00303%3$@\003<br /> \002\00304’_MessageBuffer’ object:\003\002 \00303%4$@\003<br /> \002\00304Unclaimed callbacks:\003\002 \00303%5$ld\003";

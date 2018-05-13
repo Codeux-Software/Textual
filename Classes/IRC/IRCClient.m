@@ -3057,10 +3057,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *lowercaseCommand = command.lowercaseString;
 	NSString *uppercaseCommand = command.uppercaseString;
 
-	NSString *stringInString = stringIn.string;
-
-	NSUInteger stringInStringLength = stringInString.length;
-
 	IRCClient *selectedClient = mainWindow().selectedClient;
 	IRCChannel *selectedChannel = mainWindow().selectedChannel;
 
@@ -3084,14 +3080,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandAmeIndex: // Command: AME
 		case IRCPublicCommandAmsgIndex: // Command: AMSG
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			IRCPrivateCommand command = 0;
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+
+			IRCPrivateCommand sendAsCommand = 0;
 
 			if (commandNumeric == IRCPublicCommandAmsgIndex) {
-				command = IRCPrivateCommandPrivmsgIndex;
+				sendAsCommand = IRCPrivateCommandPrivmsgIndex;
 			} else {
-				command = IRCPrivateCommandPrivmsgActionIndex;
+				sendAsCommand = IRCPrivateCommandPrivmsgActionIndex;
 			}
 
 			for (IRCClient *client in worldController().clientList) {
@@ -3104,7 +3106,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 						continue;
 					}
 
-					[client sendText:stringIn asCommand:command toChannel:channel];
+					[client sendText:stringIn asCommand:sendAsCommand toChannel:channel];
 
 					[client setUnreadStateForChannel:channel];
 				}
@@ -3115,10 +3117,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandAquoteIndex: // Command: AQUOTE
 		case IRCPublicCommandArawIndex: // Command: ARAW
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			NSAssertReturnLoopBreak(self.isConnected);
+
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			for (IRCClient *client in worldController().clientList) {
-				[client sendLine:stringInString];
+				[client sendLine:stringIn.string];
 			}
 
 			break;
@@ -3140,7 +3148,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					continue;
 				}
 
-				[client toggleAwayStatusWithComment:stringInString];
+				[client toggleAwayStatusWithComment:stringIn.string];
 			}
 
 			break;
@@ -3207,12 +3215,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *badgeCount = stringIn.tokenAsString;
 
 			if (channelName.length == 0 || badgeCount.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+					
 				break;
 			}
 
 			IRCChannel *channel = [self findChannel:channelName];
 
 			if (channel == nil) {
+				[self printDebugInformation:TXTLS(@"IRC[1131]", channelName)];
+				
 				break;
 			}
 
@@ -3257,7 +3269,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandCloseIndex: // Command: CLOSE
 		case IRCPublicCommandRemoveIndex: // Command: REMOVE
 		{
-			if (stringInStringLength == 0) {
+			NSString *channelName = stringIn.tokenAsString;
+			
+			if (channelName.length == 0) {
 				if (targetChannel) {
 					[worldController() destroyChannel:targetChannel];
 				}
@@ -3265,25 +3279,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			NSString *channelName = stringIn.tokenAsString;
-
 			IRCChannel *channel = [self findChannel:channelName];
 
-			if (channel) {
-				[worldController() destroyChannel:channel];
+			if (channel == nil) {
+				[self printDebugInformation:TXTLS(@"IRC[1131]", channelName)];
+				
+				break;
 			}
+			
+			[worldController() destroyChannel:channel];
 
 			break;
 		}
 		case IRCPublicCommandConnIndex: // Command: CONN
 		{
-			if (stringInStringLength > 0) {
-				NSString *serverAddress = stringIn.lowercaseGetToken;
+			NSString *serverAddress = stringIn.lowercaseGetToken;
 
+			if (serverAddress.length == 0) {
 				if (serverAddress.isValidInternetAddress == NO) {
-					LogToConsoleInfo("Silently ignoring bad server address");
-
-					return;
+					[self printDebugInformation:TXTLS(@"IRC[1135]")];
+					
+					break;
 				}
 
 				self.temporaryServerAddressOverride = serverAddress;
@@ -3319,6 +3335,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *subCommand = stringIn.uppercaseGetToken;
 
 			if (subCommand.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
 				break;
 			}
 
@@ -3341,6 +3359,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			if (targetChannel == nil || targetChannel.isChannel == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[1133]")];
+				
 				break;
 			}
 
@@ -3357,10 +3377,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandOpIndex: // Command: OP
 		case IRCPublicCommandVoiceIndex: // Command: VOICE
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
-
+			
 			BOOL modeIsSet = (commandNumeric == IRCPublicCommandOpIndex ||
 							  commandNumeric == IRCPublicCommandHalfopIndex ||
 							  commandNumeric == IRCPublicCommandVoiceIndex);
@@ -3381,17 +3399,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if ([self stringIsChannelName:stringInString] == NO) {
+			if ([self stringIsChannelName:stringIn.string] == NO) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					
 					break;
 				}
 			} else {
 				targetChannelName = stringIn.tokenAsString;
 			}
-
+			
 			NSString *nicknamesString = stringIn.string;
+
+			if (nicknamesString.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			NSArray *modeChanges =
 			[self compileListOfModeChangesForModeSymbol:modeSymbol
@@ -3407,7 +3433,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandDebugIndex: // Command: DEBUG
 		case IRCPublicCommandEchoIndex: // Command: ECHO
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+			
+			NSString *stringInString = stringIn.string;
 
 			if ([stringInString isEqualIgnoringCase:@"raw on"])
 			{
@@ -3426,7 +3458,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandDefaultsIndex: // Command: DEFAULTS
 		{
-			if (stringInStringLength == 0) {
+			if (stringIn.length == 0) {
 				[self printDebugInformation:TXTLS(@"IRC[1012]")];
 
 				break;
@@ -3537,9 +3569,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandFakerawdataIndex: // Command: FAKERAWDATA
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
-			[self ircConnection:self.socket didReceiveData:stringInString];
+			[self ircConnection:self.socket didReceiveData:stringIn.string];
 
 			break;
 		}
@@ -3566,7 +3602,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandGotoIndex: // Command: GOTO
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			NSString *needle = stringIn.tokenAsString;
 
@@ -3592,12 +3632,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandIcbadgeIndex: // Command: ICBADGE
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
-			NSArray *components = [stringInString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			NSArray *components = [stringIn.string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			if (components.count != 2) {
-				return;
+				[self printInvalidSyntaxMessageForCommand:command];
+					
+				break;
 			}
 
 			[TVCDockIcon drawWithHighlightCount:[components unsignedLongAtIndex:0]
@@ -3610,7 +3656,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			BOOL isIgnoreCommand = (commandNumeric == 5029);
 
-			if (stringInStringLength == 0 || targetChannel == nil) {
+			if (stringIn.length == 0 || targetChannel == nil) {
 				if (isIgnoreCommand) {
 					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:@""];
 				} else {
@@ -3710,20 +3756,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandInviteIndex: // Command: INVITE
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			NSArray *nicknames = [stringInString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
-			if ([self stringIsChannelName:nicknames.lastObject]) {
-				targetChannelName = nicknames.lastObject;
-			} else {
+			NSArray *nicknames = [stringIn.string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			if ([self stringIsChannelName:nicknames.lastObject] == NO) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					
 					break;
 				}
+			} else {
+				targetChannelName = nicknames.lastObject;
+				
+				nicknames = [nicknames subarrayWithRange:NSMakeRange(0, (nicknames.count - 1))];
 			}
 
 			for (NSString *nickname in nicknames) {
@@ -3738,13 +3792,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandIsonIndex: // Command: ISON
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedIsonRequest];
 
-			[self send:IRCPrivateCommandIndex("ison"), stringInString, nil];
+			[self send:IRCPrivateCommandIndex("ison"), stringIn.string, nil];
 
 			break;
 		}
@@ -3753,10 +3811,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if (stringInStringLength == 0) {
+			if (stringIn.length == 0) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					
 					break;
 				}
 			} else {
@@ -3765,16 +3825,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if ([self stringIsChannelNameOrZero:targetChannelName] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
+				
+				targetChannel = [self findChannel:targetChannelName];
 			}
 
-			IRCTreeItem* targetChannel = [self findChannel: targetChannelName];
-			if(targetChannel.isActive)
-			{
+			if (targetChannel.isActive) {
 				[mainWindow() select:targetChannel];
-			}
-			else
-			{
+			} else {
 				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
+				
 				[self send:IRCPrivateCommandIndex("join"), targetChannelName, stringIn.string, nil];
 			}
 
@@ -3786,12 +3845,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSInteger numberOfChannelsToJoin = 0;
 
-			if (stringInStringLength > 0) {
-				NSString *numberToken = stringIn.tokenAsString;
+			NSString *numberOfChannelsToken = stringIn.tokenAsString;
 
-				if (numberToken.isNumericOnly) {
-					numberOfChannelsToJoin = numberToken.integerValue;
-				}
+			if (numberOfChannelsToken.isNumericOnly) {
+				numberOfChannelsToJoin = numberOfChannelsToken.integerValue;
 			}
 
 			if (numberOfChannelsToJoin <= 0) {
@@ -3816,21 +3873,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if ([self stringIsChannelName:stringInString] == NO) {
+			NSString *nickname = stringIn.tokenAsString;
+
+			if ([self stringIsChannelName:nickname] == NO) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					
 					break;
 				}
 			} else {
-				targetChannelName = stringIn.tokenAsString;
+				targetChannelName = nickname;
 
 				targetChannel = [self findChannel:targetChannelName];
+				
+				nickname = stringIn.tokenAsString;
 			}
 
-			NSString *nickname = stringIn.tokenAsString;
-
 			if (nickname.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+					
 				break;
 			}
 
@@ -3891,11 +3954,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandKillIndex: // Command: KILL
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			NSString *nickname = stringIn.getTokenAsString;
+
+			if (nickname.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+
 			NSString *reason = stringIn.string;
 
 			if (reason.length == 0) {
@@ -3928,7 +3996,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if ([self stringIsChannelName:stringInString] == NO) {
+			if ([self stringIsChannelName:stringIn.string] == NO) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else if (targetChannel) {
@@ -3941,7 +4009,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			} else {
 				targetChannelName = stringIn.tokenAsString;
 			}
-
+			
 			NSString *reason = stringIn.string;
 
 			if (reason.length == 0) {
@@ -3971,20 +4039,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if (stringInStringLength == 0 ||
-				([stringInString hasPrefix:@"+"] ||
-				 [stringInString hasPrefix:@"-"]))
+			NSString *modeString = stringIn.string;
+
+			if (  modeString.length == 0 ||
+				([modeString hasPrefix:@"+"] ||
+				 [modeString hasPrefix:@"-"]))
 			{
-				if (targetChannel) {
+				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
+					[self printInvalidSyntaxMessageForCommand:command];
+					
 					break;
 				}
 			} else {
 				targetChannelName = stringIn.tokenAsString;
 			}
-
-			NSString *modeString = stringIn.string;
 
 			if (modeString.length == 0) {
 				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
@@ -4037,9 +4107,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandNickIndex: // Command: NICK
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
+			/* Use -isConnected instead of -isLoggedIn so that
+			 user can change their nickname during registration
+			 phase before the 001 numeric is received. */
+			NSAssertReturnLoopBreak(self.isConnected);
+			
 			NSString *newNickname = stringIn.tokenAsString;
+			
+			if (newNickname.length) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			for (IRCClient *client in worldController().clientList) {
 				if (client != self && [TPCPreferences nickAllConnections] == NO) {
@@ -4053,12 +4132,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandNotifybubble: // Command: NOTIFYBUBBLE
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
-			if ([self stringIsChannelName:stringInString]) {
+			if ([self stringIsChannelName:stringIn.string]) {
 				targetChannel = [self findChannel:stringIn.tokenAsString];
 			} else {
 				targetChannel = nil;
+			}
+			
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				return;
 			}
 
 			NSUserNotification *notification = [NSUserNotification new];
@@ -4067,7 +4150,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			notification.title = [TPCApplicationInfo applicationNameWithoutVersion];
 
-			notification.informativeText = stringInString;
+			notification.informativeText = stringIn.string;
 
 			if (targetChannel) {
 				notification.userInfo = @{@"clientId": self.uniqueIdentifier, @"channelId": targetChannel.uniqueIdentifier};
@@ -4081,9 +4164,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandNotifysound: // Command: NOTIFYSOUND
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSString *soundName = stringIn.tokenAsString;
+			
+			if (soundName.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			[TLOSoundPlayer playAlertSound:soundName];
 
@@ -4091,19 +4178,29 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandNotifyspeak: // Command: NOTIFYSPEAK
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
-			[[TXSharedApplication sharedSpeechSynthesizer] speak:stringInString];
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+			
+			[[TXSharedApplication sharedSpeechSynthesizer] speak:stringIn.string];
 
 			break;
 		}
 		case IRCPublicCommandQueryIndex: // Command: QUERY
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSString *nickname = stringIn.tokenAsString;
+			
+			if (nickname.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			if ([self stringIsNickname:nickname] == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[1135]")];
+				
 				break;
 			}
 
@@ -4116,38 +4213,48 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCPublicCommandQuoteIndex: // Command: QUOTE
 		case IRCPublicCommandRawIndex: // Command: RAW
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
-			[self sendLine:stringInString];
+			NSAssertReturnLoopBreak(self.isConnected);
+			
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+			
+			[self sendLine:stringIn.string];
 
 			break;
 		}
 		case IRCPublicCommandQuitIndex: // Command: QUIT
 		{
-			if (stringInStringLength == 0) {
+			NSAssertReturnLoopBreak(self.isConnected);
+
+			if (stringIn.length == 0) {
 				[self quit];
 			} else {
-				[self quitWithComment:stringInString];
+				[self quitWithComment:stringIn.string];
 			}
 
 			break;
 		}
 		case IRCPublicCommandNamesIndex: // Command: NAMES
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedNamesRequest];
 
-			[self send:IRCPrivateCommandIndex("names"), stringInString, nil];
+			[self send:IRCPrivateCommandIndex("names"), stringIn.string, nil];
 
 			break;
 		}
 		case IRCPublicCommandSetcolorIndex: // Command: SETCOLOR
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			if ([TPCPreferences disableNicknameColorHashing]) {
 				[self printDebugInformation:TXTLS(@"IRC[1108]")];
 
@@ -4155,6 +4262,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			NSString *nickname = stringIn.lowercaseGetToken;
+
+			if (nickname.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			if ([self stringIsNickname:nickname] == NO) {
 				[self printDebugInformation:TXTLS(@"IRC[1110]", nickname)];
@@ -4168,9 +4281,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandServerIndex: // Command: SERVER
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
-			[IRCExtras createConnectionToServer:stringInString channelList:nil connectWhenCreated:YES];
+			[IRCExtras createConnectionToServer:stringIn.string channelList:nil connectWhenCreated:YES];
 
 			break;
 		}
@@ -4196,9 +4313,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandTimerIndex: // Command: TIMER
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
+			NSString *timerIntervalToken = stringIn.tokenAsString;
 
-			NSInteger timerInterval = stringIn.tokenAsString.integerValue;
+			if (timerIntervalToken.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+			
+			NSInteger timerInterval = timerIntervalToken.integerValue;
 
 			if (timerInterval <= 0) {
 				[self printDebugInformation:TXTLS(@"IRC[1090]")];
@@ -4209,6 +4332,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *timerCommand = stringIn.string;
 
 			if (timerCommand.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
 				break;
 			}
 
@@ -4229,7 +4354,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if ([self stringIsChannelName:stringInString] == NO) {
+			if ([self stringIsChannelName:stringIn.string] == NO) {
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
@@ -4249,14 +4374,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandUmodeIndex:
+		case IRCPublicCommandUmodeIndex: // Command: UMODE
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if (stringInStringLength == 0) {
+			if (stringIn.length == 0) {
 				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, nil];
 			} else {
-				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, stringInString, nil];
+				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, stringIn.string, nil];
 			}
 
 			break;
@@ -4275,11 +4400,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandWallopsIndex: // Command: WALLOPS
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			[self send:IRCPrivateCommandIndex("wallops"), stringInString, nil];
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+
+			[self send:IRCPrivateCommandIndex("wallops"), stringIn.string, nil];
 
 			break;
 		}
@@ -4288,25 +4417,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			if ([stringInString hasSuffix:@"-"] || [stringInString hasSuffix:@"+"] ) {
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
+
+			if ([stringIn.string hasSuffix:@"-"] || [stringIn.string hasSuffix:@"+"] ) {
+				[self printDebugInformation:TXTLS(@"IRC[1137]")];
+
 				break;
 			}
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWatchRequest];
 
-			[self sendCommand:uppercaseCommand withData:stringInString];
+			[self sendCommand:uppercaseCommand withData:stringIn.string];
 
 			break;
 		}
 		case IRCPublicCommandWhoIndex: // Command: WHO
 		{
-			NSAssertReturnLoopBreak(stringInStringLength != 0);
-
 			NSAssertReturnLoopBreak(self.isLoggedIn);
+
+			if (stringIn.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+				
+				break;
+			}
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWhoRequest];
 
-			[self send:IRCPrivateCommandIndex("who"), stringInString, nil];
+			[self send:IRCPrivateCommandIndex("who"), stringIn.string, nil];
 
 			break;
 		}
@@ -4315,16 +4456,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			NSString *nickname1 = stringIn.tokenAsString;
-			NSString *nickname2 = stringIn.tokenAsString;
 
 			if (nickname1.length == 0) {
 				if (targetChannel && targetChannel.isPrivateMessage) {
 					nickname1 = targetChannel.name;
 				} else {
+					[self printInvalidSyntaxMessageForCommand:command];
+					
 					break;
 				}
 			}
 
+			NSString *nickname2 = stringIn.tokenAsString;
+	
 			if (nickname2.length == 0) {
 				[self send:IRCPrivateCommandIndex("whois"), nickname1, nickname1, nil];
 			} else {
@@ -4405,7 +4549,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 not exist, then fail here. The user may be trying to send something 
 				 secret with an expectation for privacy and we cannot deliver that. */
 				if (channelNamePrefix == nil) {
-					LogToConsoleError("User wants to send operator message but there is no +o mode");
+					[self printDebugInformation:TXTLS(@"IRC[1136]", @"o")];
 
 					break;
 				}
@@ -4418,14 +4562,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* All other scenarios use the string in (token) */
 			if (isSecretMessage == NO && lineType == TVCLogLineActionType && targetChannel) {
 				targetChannelName = targetChannel.name;
-			} else if (isOperatorMessage && [self stringIsChannelName:stringInString] == NO && targetChannel.isChannel) {
+			} else if (isOperatorMessage && [self stringIsChannelName:stringIn.string] == NO && targetChannel.isChannel) {
 				targetChannelName = targetChannel.name;
 			} else {
 				targetChannelName = stringIn.tokenAsString;
 			}
 
 			if (targetChannelName.length == 0) {
-				LogToConsoleError("Bad target channel name");
+				[self printInvalidSyntaxMessageForCommand:command];
 
 				break;
 			}
@@ -4576,11 +4720,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound)
 			{
-				LogToConsoleError("%{public}@", TXTLS(@"IRC[1001]", uppercaseCommand));
+				[self printDebugInformation:TXTLS(@"IRC[1001]", uppercaseCommand)];
+				
+				break;
 			}
 			else if (pluginFound && scriptFound == NO)
 			{
-				[self processBundlesUserMessage:stringInString command:lowercaseCommand];
+				[self processBundlesUserMessage:stringIn.string command:lowercaseCommand];
 
 				break;
 			}
@@ -4588,7 +4734,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			{
 				NSMutableDictionary<NSString *, NSString *> *context = [NSMutableDictionary dictionaryWithCapacity:3];
 
-				[context maybeSetObject:stringInString forKey:@"inputString"];
+				[context maybeSetObject:stringIn.string forKey:@"inputString"];
 
 				[context maybeSetObject:addonPath forKey:@"path"];
 
@@ -4600,7 +4746,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			/* Send input to server */
-			[self sendCommand:uppercaseCommand withData:stringInString];
+			[self sendCommand:uppercaseCommand withData:stringIn.string];
 
 			break;
 		}
