@@ -3011,6 +3011,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)sendCTCPPing:(NSString *)nickname
 {
+	NSParameterAssert(nickname != nil);
+	
 	NSString *text = [NSString stringWithFormat:@"%f", [NSDate timeIntervalSince1970]];
 
 	[self sendCTCPQuery:nickname
