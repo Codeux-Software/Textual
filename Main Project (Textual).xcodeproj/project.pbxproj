@@ -1752,12 +1752,12 @@
 		4CF40E661AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DD71AC1A4AC00A26BE0 /* TVCInputPromptDialog.m */; };
 		4CF40E671AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DD71AC1A4AC00A26BE0 /* TVCInputPromptDialog.m */; };
 		4CF40E681AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DD71AC1A4AC00A26BE0 /* TVCInputPromptDialog.m */; };
-		4CF40ECE1AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */; };
-		4CF40ECF1AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */; };
-		4CF40ED01AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */; };
-		4CF40ED21AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */; };
-		4CF40ED31AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */; };
-		4CF40ED41AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */; };
+		4CF40ECE1AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist */; };
+		4CF40ECF1AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist */; };
+		4CF40ED01AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist */; };
+		4CF40ED21AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist */; };
+		4CF40ED31AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist */; };
+		4CF40ED41AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist */; };
 		4CF40ED61AC1A57800A26BE0 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */; };
 		4CF40ED71AC1A57800A26BE0 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */; };
 		4CF40ED81AC1A57800A26BE0 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */; };
@@ -2679,8 +2679,8 @@
 		4CF40DD61AC1A4AC00A26BE0 /* TVCDockIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCDockIcon.m; path = Classes/Views/TVCDockIcon.m; sourceTree = "<group>"; };
 		4CF40DD71AC1A4AC00A26BE0 /* TVCInputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCInputPromptDialog.m; path = Classes/Views/TVCInputPromptDialog.m; sourceTree = "<group>"; };
 		4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Entitlements/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
-		4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPrivateValues.plist; path = "Resources/Property Lists/IRCCommandIndexPrivateValues.plist"; sourceTree = SOURCE_ROOT; };
-		4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPublicValues.plist; path = "Resources/Property Lists/IRCCommandIndexPublicValues.plist"; sourceTree = SOURCE_ROOT; };
+		4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexRemoteData.plist; path = "Resources/Property Lists/IRCCommandIndexRemoteData.plist"; sourceTree = SOURCE_ROOT; };
+		4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexLocalData.plist; path = "Resources/Property Lists/IRCCommandIndexLocalData.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = "Resources/Property Lists/IRCNetworks.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaults.plist; path = "Resources/Property Lists/RegisteredUserDefaults.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = StaticStore.plist; path = "Resources/Property Lists/StaticStore.plist"; sourceTree = SOURCE_ROOT; };
@@ -3102,8 +3102,8 @@
 			children = (
 				4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */,
 				4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */,
-				4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */,
-				4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */,
+				4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist */,
+				4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist */,
 				4CF40EC61AC1A57800A26BE0 /* IRCNetworks.plist */,
 				4CF40EC71AC1A57800A26BE0 /* RegisteredUserDefaults.plist */,
 				4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */,
@@ -5316,7 +5316,7 @@
 				4CBC76B01CC72B5100484A13 /* BasicLanguage.strings in Resources */,
 				4C0BA53E1990798800857343 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
 				4C0BA53F1990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
-				4CF40ED21AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */,
+				4CF40ED21AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist in Resources */,
 				4C1383271AA9F9CF0099F887 /* birthdayIcon.icns in Resources */,
 				4C0BA5411990798800857343 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
 				4CCFA6621ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
@@ -5376,7 +5376,7 @@
 				4C0BA56B1990798800857343 /* Styles in Resources */,
 				4CF40F2A1AC1A59500A26BE0 /* TDCChannelPropertiesSheet.xib in Resources */,
 				4C0BA56C1990798800857343 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
-				4CF40ECE1AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
+				4CF40ECE1AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */,
 				4C0BA56E1990798800857343 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
 				4C5CCDD71D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib in Resources */,
 				4C0BA56F1990798800857343 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
@@ -5478,7 +5478,7 @@
 				4CB229661978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB2293E1978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
 				4CB229641978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
-				4CF40ED41AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */,
+				4CF40ED41AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist in Resources */,
 				4C1383291AA9F9CF0099F887 /* birthdayIcon.icns in Resources */,
 				4CB2296C1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
 				4CCFA6641ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
@@ -5547,7 +5547,7 @@
 				4CF40F2C1AC1A59500A26BE0 /* TDCChannelPropertiesSheet.xib in Resources */,
 				4CEC286B1F46DBC50070D178 /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */,
 				4CB229361978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
-				4CF40ED01AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
+				4CF40ED01AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */,
 				4CB229241978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
 				4C7766401978CECA00759774 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
 				4CBC76AF1CC72B5100484A13 /* Accessibility.strings in Resources */,
@@ -5649,7 +5649,7 @@
 				4CB229671978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB2293F1978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
 				4CB229651978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
-				4CF40ED31AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */,
+				4CF40ED31AC1A57800A26BE0 /* IRCCommandIndexLocalData.plist in Resources */,
 				4C1383281AA9F9CF0099F887 /* birthdayIcon.icns in Resources */,
 				4CB2296D1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
 				4C2533491F4439180003A3F4 /* TDCLicenseUpgradeActivateSheet.xib in Resources */,
@@ -5716,7 +5716,7 @@
 				4C5BA3CC16F1302F00A96CA2 /* Styles in Resources */,
 				4CF40F2B1AC1A59500A26BE0 /* TDCChannelPropertiesSheet.xib in Resources */,
 				4CB229371978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
-				4CF40ECF1AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
+				4CF40ECF1AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */,
 				4CB229251978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
 				4C7766411978CECA00759774 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
 				4CBC76D81CC72B5100484A13 /* TLOLicenseManager.strings in Resources */,

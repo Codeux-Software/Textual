@@ -636,7 +636,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self performBlock:^(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel) {
-		[client send:IRCPrivateCommandIndex("privmsg"), nickname, message, nil];
+		[client send:@"PRIVMSG", nickname, message, nil];
 	} inRelationToAccountName:username];
 }
 

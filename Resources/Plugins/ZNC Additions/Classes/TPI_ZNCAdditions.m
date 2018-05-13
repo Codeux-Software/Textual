@@ -259,7 +259,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([stringIn isEqualToString:@"joined"])
 	{
 		/* Begin channel join */
-		inputMutable.command = IRCPrivateCommandIndex("join");
+		inputMutable.command = @"JOIN";
 		
 		[paramsMutable removeObjectAtIndex:1];
 		/* End channel join */
@@ -269,7 +269,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Begin nickname change */
 		NSString *newNickname = stringInComponents[1];
 
-		inputMutable.command = IRCPrivateCommandIndex("nick");
+		inputMutable.command = @"NICK";
 
 		[paramsMutable removeObjectAtIndex:1];
 
@@ -281,7 +281,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Begin part message */
 		NSString *partMessage = stringInComponents[2];
 	
-		inputMutable.command = IRCPrivateCommandIndex("part");
+		inputMutable.command = @"PART";
 		
 		[paramsMutable removeObjectAtIndex:1];
 		
@@ -293,7 +293,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Begin quit message */
 		NSString *quitMessage = stringInComponents[2];
 
-		inputMutable.command = IRCPrivateCommandIndex("quit");
+		inputMutable.command = @"QUIT";
 		
 		[paramsMutable removeObjectAtIndex:1];
 		
@@ -307,7 +307,7 @@ NS_ASSUME_NONNULL_BEGIN
 		
 		NSString *kickReason = stringInComponents[3];
 		
-		inputMutable.command = IRCPrivateCommandIndex("kick");
+		inputMutable.command = @"KICK";
 		
 		[paramsMutable removeObjectAtIndex:1];
 		
@@ -325,7 +325,7 @@ NS_ASSUME_NONNULL_BEGIN
 			modeChanges = [modeChanges stringByAppendingString:stringInComponents[2]];
 		}
 
-		inputMutable.command = IRCPrivateCommandIndex("mode");
+		inputMutable.command = @"MODE";
 
 		[paramsMutable removeObjectAtIndex:1];
 
@@ -361,7 +361,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return input;
 	}
 
-	if (NSObjectsAreEqual(input.command, IRCPrivateCommandIndex("privmsg")) == NO) {
+	if (NSObjectsAreEqual(input.command, @"PRIVMSG") == NO) {
 		return input;
 	}
 

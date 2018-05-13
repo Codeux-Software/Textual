@@ -2217,7 +2217,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", command, nil];
+	[self send:@"PRIVMSG", @"*playback", command, nil];
 }
 
 - (void)requestPlayback
@@ -2242,7 +2242,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", command, nil];
+	[self send:@"PRIVMSG", @"*playback", command, nil];
 }
 
 #pragma mark -
@@ -2869,15 +2869,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	TVCLogLineType lineType = TVCLogLineUndefinedType;
 
 	if (command == IRCPrivateCommandPrivmsgIndex) {
-		commandToSend = IRCPrivateCommandIndex("privmsg");
+		commandToSend = @"PRIVMSG";
 
 		lineType = TVCLogLinePrivateMessageType;
 	} else if (command == IRCPrivateCommandPrivmsgActionIndex) {
-		commandToSend = IRCPrivateCommandIndex("privmsg");
+		commandToSend = @"PRIVMSG";
 
 		lineType = TVCLogLineActionType;
 	} else if (command == IRCPrivateCommandNoticeIndex) {
-		commandToSend = IRCPrivateCommandIndex("notice");
+		commandToSend = @"NOTICE";
 
 		lineType = TVCLogLineNoticeType;
 	}
@@ -2911,7 +2911,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSString *sendMessage = encodedString;
 
 				if (lineType == TVCLogLineActionType) {
-					sendMessage = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), sendMessage, 0x01];
+					sendMessage = [NSString stringWithFormat:@"%cACTION %@%c", 0x01, sendMessage, 0x01];
 				}
 
 				[self send:commandToSend, channel.name, sendMessage, nil];
@@ -2988,7 +2988,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, stringToSend, 0x01];
 
-	[self send:IRCPrivateCommandIndex("privmsg"), nickname, message, nil];
+	[self send:@"PRIVMSG", nickname, message, nil];
 }
 
 - (void)sendCTCPReply:(NSString *)nickname command:(NSString *)command text:(nullable NSString *)text
@@ -3006,7 +3006,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, stringToSend, 0x01];
 
-	[self send:IRCPrivateCommandIndex("notice"), nickname, message, nil];
+	[self send:@"NOTICE", nickname, message, nil];
 }
 
 - (void)sendCTCPPing:(NSString *)nickname
@@ -3014,7 +3014,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *text = [NSString stringWithFormat:@"%f", [NSDate timeIntervalSince1970]];
 
 	[self sendCTCPQuery:nickname
-				command:IRCPrivateCommandIndex("ctcp_ping")
+				command:@"PING"
 				   text:text];
 }
 
@@ -3062,7 +3062,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCChannel *targetChannel = nil;
 
-	NSInteger commandNumeric = [IRCCommandIndex indexOfIRCommand:uppercaseCommand publicSearch:YES];
+	NSInteger commandNumeric = [IRCCommandIndex indexOfLocalCommand:command];
 
 	if (completeTarget && targetChannelName != nil) {
 		targetChannel = [self findChannel:targetChannelName];
@@ -3341,7 +3341,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (commandNumeric == IRCPublicCommandCtcpIndex) {
-				if ([subCommand isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
+				if ([subCommand isEqualToString:@"PING"]) {
 					[self sendCTCPPing:targetChannelName];
 				} else {
 					[self sendCTCPQuery:targetChannelName command:subCommand text:stringIn.string];
@@ -3425,7 +3425,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 										parameterString:nicknamesString];
 
 			for (NSString *modeChange in modeChanges) {
-				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, modeChange, nil];
+				[self send:@"MODE", targetChannelName, modeChange, nil];
 			}
 
 			break;
@@ -3785,7 +3785,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					continue;
 				}
 
-				[self send:IRCPrivateCommandIndex("invite"), nickname, targetChannelName, nil];
+				[self send:@"INVITE", nickname, targetChannelName, nil];
 			}
 
 			break;
@@ -3802,7 +3802,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedIsonRequest];
 
-			[self send:IRCPrivateCommandIndex("ison"), stringIn.string, nil];
+			[self send:@"ISON", stringIn.string, nil];
 
 			break;
 		}
@@ -3834,7 +3834,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			} else {
 				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
 				
-				[self send:IRCPrivateCommandIndex("join"), targetChannelName, stringIn.string, nil];
+				[self send:@"JOIN", targetChannelName, stringIn.string, nil];
 			}
 
 			break;
@@ -3858,7 +3858,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			for (NSUInteger i = 0; i < numberOfChannelsToJoin; i++) {
 				NSString *channelName = [NSString stringWithFormat:@"#debug-channel-%ld", TXRandomNumber(9999999)];
 
-				[self send:IRCPrivateCommandIndex("join"), channelName, nil];
+				[self send:@"JOIN", channelName, nil];
 			}
 
 			break;
@@ -3931,9 +3931,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if (commandNumeric == IRCPublicCommandUnbanIndex ||
 					commandNumeric == IRCPublicCommandUnquietIndex)
 				{
-					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, [@"-" stringByAppendingString:modeSymbol], banMask, nil];
+					[self send:@"MODE", targetChannelName, [@"-" stringByAppendingString:modeSymbol], banMask, nil];
 				} else {
-					[self send:IRCPrivateCommandIndex("mode"), targetChannelName, [@"+" stringByAppendingString:modeSymbol], banMask, nil];
+					[self send:@"MODE", targetChannelName, [@"+" stringByAppendingString:modeSymbol], banMask, nil];
 				}
 			}
 
@@ -3947,7 +3947,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					reason = [TPCPreferences defaultKickMessage];
 				}
 
-				[self send:IRCPrivateCommandIndex("kick"), targetChannelName, nickname, reason, nil];
+				[self send:@"KICK", targetChannelName, nickname, reason, nil];
 			}
 
 			break;
@@ -3970,7 +3970,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				reason = [TPCPreferences IRCopDefaultKillMessage];
 			}
 
-			[self send:IRCPrivateCommandIndex("kill"), nickname, reason, nil];
+			[self send:@"KILL", nickname, reason, nil];
 
 			break;
 		}
@@ -3985,7 +3985,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				self.lagCheckDestinationChannel = [mainWindow() selectedChannelOn:self];
 			}
 
-			[self sendCTCPQuery:self.userNickname command:IRCPrivateCommandIndex("ctcp_lagcheck") text:nil];
+			[self sendCTCPQuery:self.userNickname command:@"LAGCHECK" text:nil];
 
 			[self printDebugInformation:TXTLS(@"IRC[1023]")];
 
@@ -4016,7 +4016,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				reason = self.config.normalLeavingComment;
 			}
 
-			[self send:IRCPrivateCommandIndex("part"), targetChannelName, reason, nil];
+			[self send:@"PART", targetChannelName, reason, nil];
 
 			break;
 		}
@@ -4059,9 +4059,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (modeString.length == 0) {
 				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
 
-				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, nil];
+				[self send:@"MODE", targetChannelName, nil];
 			} else {
-				[self send:IRCPrivateCommandIndex("mode"), targetChannelName, modeString, nil];
+				[self send:@"MODE", targetChannelName, modeString, nil];
 			}
 
 			break;
@@ -4249,7 +4249,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedNamesRequest];
 
-			[self send:IRCPrivateCommandIndex("names"), stringIn.string, nil];
+			[self send:@"NAMES", stringIn.string, nil];
 
 			break;
 		}
@@ -4367,9 +4367,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *topic = stringIn.attributedStringToASCIIFormatting;
 
 			if (topic.length == 0) {
-				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, nil];
+				[self send:@"TOPIC", targetChannelName, nil];
 			} else {
-				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, topic, nil];
+				[self send:@"TOPIC", targetChannelName, topic, nil];
 			}
 
 			break;
@@ -4379,9 +4379,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			if (stringIn.length == 0) {
-				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, nil];
+				[self send:@"MODE", self.userNickname, nil];
 			} else {
-				[self send:IRCPrivateCommandIndex("mode"), self.userNickname, stringIn.string, nil];
+				[self send:@"MODE", self.userNickname, stringIn.string, nil];
 			}
 
 			break;
@@ -4408,7 +4408,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			[self send:IRCPrivateCommandIndex("wallops"), stringIn.string, nil];
+			[self send:@"WALLOPS", stringIn.string, nil];
 
 			break;
 		}
@@ -4447,7 +4447,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWhoRequest];
 
-			[self send:IRCPrivateCommandIndex("who"), stringIn.string, nil];
+			[self send:@"WHO", stringIn.string, nil];
 
 			break;
 		}
@@ -4470,9 +4470,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *nickname2 = stringIn.tokenAsString;
 	
 			if (nickname2.length == 0) {
-				[self send:IRCPrivateCommandIndex("whois"), nickname1, nickname1, nil];
+				[self send:@"WHOIS", nickname1, nickname1, nil];
 			} else {
-				[self send:IRCPrivateCommandIndex("whois"), nickname1, nickname2, nil];
+				[self send:@"WHOIS", nickname1, nickname2, nil];
 			}
 
 			break;
@@ -4511,7 +4511,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				commandNumeric == IRCPublicCommandSmsgIndex ||
 				commandNumeric == IRCPublicCommandUmsgIndex)
 			{
-				commandToSend = IRCPrivateCommandIndex("privmsg");
+				commandToSend = @"PRIVMSG";
 
 				lineType = TVCLogLinePrivateMessageType;
 
@@ -4523,7 +4523,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					 commandNumeric == IRCPublicCommandSmeIndex ||
 					 commandNumeric == IRCPublicCommandUmeIndex)
 			{
-				commandToSend = IRCPrivateCommandIndex("privmsg");
+				commandToSend = @"PRIVMSG";
 
 				lineType = TVCLogLineActionType;
 
@@ -4534,7 +4534,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					 commandNumeric == IRCPublicCommandOnoticeIndex || // Command: ONOTICE
 					 commandNumeric == IRCPublicCommandUnoticeIndex)   // Command: UNOTICE
 			{
-				commandToSend = IRCPrivateCommandIndex("notice");
+				commandToSend = @"NOTICE";
 
 				lineType = TVCLogLineNoticeType;
 
@@ -4667,7 +4667,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 						NSString *sendMessage = encodedString;
 
 						if (lineType == TVCLogLineActionType) {
-							sendMessage = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), sendMessage, 0x01];
+							sendMessage = [NSString stringWithFormat:@"%cACTION %@%c", 0x01, sendMessage, 0x01];
 						}
 
 						[self send:commandToSend, destinationName, sendMessage, nil];
@@ -4767,7 +4767,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(command != nil);
 	
-	NSString *syntax = [IRCCommandIndex syntaxForCommand:command];
+	NSString *syntax = [IRCCommandIndex syntaxForLocalommand:command];
 	
 	if (syntax == nil) {
 		return;
@@ -5542,7 +5542,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self changeNickname:self.tryingNicknameSentNickname];
 
-	[self send:IRCPrivateCommandIndex("user"), username, modeSymbols, @"*", realName, nil];
+	[self send:@"USER", username, modeSymbols, @"*", realName, nil];
 }
 
 - (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError
@@ -5693,7 +5693,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (message.commandNumeric > 0) {
 		[self receiveNumericReply:message];
 	} else {
-		NSUInteger commandNumeric = [IRCCommandIndex indexOfIRCommand:message.command publicSearch:NO];
+		NSUInteger commandNumeric = [IRCCommandIndex indexOfRemoteCommand:message.command];
 
 		switch (commandNumeric) {
 			case IRCPrivateCommandNoticeIndex: // Command: NOTICE
@@ -5946,7 +5946,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCMessageMutable *messageMutable = [m mutableCopy];
 
-	messageMutable.command = IRCPrivateCommandIndex("notice");
+	messageMutable.command = @"NOTICE";
 
 	messageMutable.params = paramsMutable;
 
@@ -5971,7 +5971,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	TVCLogLineType lineType = TVCLogLinePrivateMessageType;
 
-	BOOL isPlainText = [m.command isEqualToString:IRCPrivateCommandIndex("privmsg")];
+	BOOL isPlainText = [m.command isEqualToString:@"PRIVMSG"];
 
 	if ([text hasPrefix:@"\x01"]) {
 		text = [text substringFromIndex:1];
@@ -6489,19 +6489,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			{
 				NSString *message = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
 
-				[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", message, nil];
+				[self send:@"PRIVMSG", @"NickServ@services.dal.net", message, nil];
 			}
 			else if (self.config.sendAuthenticationRequestsToUserServ)
 			{
 				NSString *message = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, nicknamePassword];
 
-				[self send:IRCPrivateCommandIndex("privmsg"), @"userserv", message, nil];
+				[self send:@"PRIVMSG", @"userserv", message, nil];
 			}
 			else
 			{
 				NSString *message = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
 
-				[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", message, nil];
+				[self send:@"PRIVMSG", @"NickServ", message, nil];
 			}
 
 			// Reset properties
@@ -6630,14 +6630,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Process DCC requests elsewhere */
-	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
+	if ([command isEqualToString:@"DCC"]) {
 		[self receivedDCCQuery:m text:textMutable ignoreInfo:ignoreInfo];
 
 		return;
 	}
 
 	/* Print message */
-	BOOL isLagCheckQuery = [command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")];
+	BOOL isLagCheckQuery = [command isEqualToString:@"LAGCHECK"];
 
 	IRCChannel *printTarget = nil;
 
@@ -6663,19 +6663,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* CLIENTINFO command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")])
+	else if ([command isEqualToString:@"CLIENTINFO"])
 	{
 		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[1034]")];
 	}
 
 	/* FINGER command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")])
+	else if ([command isEqualToString:@"FINGER"])
 	{
 		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[1035]")];
 	}
 
 	/* PING command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")])
+	else if ([command isEqualToString:@"PING"])
 	{
 		if (textMutable.length > 50) {
 			LogToConsoleInfo("Ignoring PING query that exceeds 50 bytes");
@@ -6687,7 +6687,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* TIME command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_time")])
+	else if ([command isEqualToString:@"TIME"])
 	{
 		NSDateFormatter *dateFormatter = TXSharedISOStandardDateFormatter();
 
@@ -6697,13 +6697,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* USERINFO command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")])
+	else if ([command isEqualToString:@"USERINFO"])
 	{
 		[self sendCTCPReply:sender command:command text:self.config.realName];
 	}
 
 	/* VERSION command */
-	else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
+	else if ([command isEqualToString:@"VERSION"])
 	{
 		NSString *fakeVersion = [TPCPreferences masqueradeCTCPVersion];
 
@@ -6805,7 +6805,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *messageToPrint = nil;
 
-	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
+	if ([command isEqualToString:@"PING"]) {
 		double delta = ([NSDate timeIntervalSince1970] - textMutable.doubleValue);
 
 		messageToPrint = TXTLS(@"IRC[1063]", sender, command, delta);
@@ -8247,7 +8247,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *subcommand = [m paramAt:1];
 	NSString *actions = [m sequence:2];
 
-	if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("cap")])
+	if ([command isEqualIgnoringCase:@"CAP"])
 	{
 		if ([subcommand isEqualIgnoringCase:@"LS"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -8283,7 +8283,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self sendNextCapability];
 	}
-	else if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("cap_authenticate")])
+	else if ([command isEqualIgnoringCase:@"AUTHENTICATE"])
 	{
 		if ([modifier isEqualToString:@"+"]) {
 			[self sendSASLIdentificationInformation];
@@ -11121,7 +11121,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("quit"), comment, nil];
+	[self send:@"QUIT", comment, nil];
 
 	/* We give it two seconds before forcefully breaking so that the graceful
 	 quit with the quit message above can be performed. */
@@ -11150,7 +11150,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("nick"), newNickname, nil];
+	[self send:@"NICK", newNickname, nil];
 }
 
 - (void)joinKickedChannel:(IRCChannel *)channel
@@ -11222,7 +11222,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("join"), channel, password, nil];
+	[self send:@"JOIN", channel, password, nil];
 }
 
 - (void)joinChannels:(NSArray<IRCChannel *> *)channels
@@ -11277,11 +11277,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (joinStringWithoutKey) {
-		[self send:IRCPrivateCommandIndex("join"), joinStringWithoutKey, nil];
+		[self send:@"JOIN", joinStringWithoutKey, nil];
 	}
 
 	if (joinStringWithKey && keyString) {
-		[self send:IRCPrivateCommandIndex("join"), joinStringWithKey, keyString, nil];
+		[self send:@"JOIN", joinStringWithKey, keyString, nil];
 	}
 }
 
@@ -11328,7 +11328,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		comment = self.config.normalLeavingComment;
 	}
 
-	[self send:IRCPrivateCommandIndex("part"), channel.name, comment, nil];
+	[self send:@"PART", channel.name, comment, nil];
 }
 
 - (void)sendWhoToChannel:(IRCChannel *)channel
@@ -11354,7 +11354,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("who"), channel, nil];
+	[self send:@"WHO", channel, nil];
 }
 
 - (void)sendWhois:(NSString *)nickname
@@ -11369,7 +11369,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("whois"), nickname, nickname, nil];
+	[self send:@"WHOIS", nickname, nickname, nil];
 }
 
 - (void)kick:(NSString *)nickname inChannel:(IRCChannel *)channel
@@ -11391,7 +11391,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *reason = [TPCPreferences defaultKickMessage];
 
-	[self send:IRCPrivateCommandIndex("kick"), channel.name, nickname, reason, nil];
+	[self send:@"KICK", channel.name, nickname, reason, nil];
 }
 
 - (void)toggleAwayStatusWithComment:(nullable NSString *)comment
@@ -11423,9 +11423,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (setAway) {
-		[self send:IRCPrivateCommandIndex("away"), comment, nil];
+		[self send:@"AWAY", comment, nil];
 	} else {
-		[self send:IRCPrivateCommandIndex("away"), nil];
+		[self send:@"AWAY", nil];
 	}
 
 	NSString *newNickname = nil;
@@ -11504,7 +11504,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("mode"), channel, modeSymbols, parametersString, nil];
+	[self send:@"MODE", channel, modeSymbols, parametersString, nil];
 }
 
 - (void)sendPing:(NSString *)tokenString
@@ -11515,7 +11515,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("ping"), tokenString, nil];
+	[self send:@"PING", tokenString, nil];
 }
 
 - (void)sendPong:(NSString *)tokenString
@@ -11526,7 +11526,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("pong"), tokenString, nil];
+	[self send:@"PONG", tokenString, nil];
 }
 
 - (void)sendInviteTo:(NSString *)nickname toJoinChannel:(IRCChannel *)channel
@@ -11549,7 +11549,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("invite"), nickname, channel, nil];
+	[self send:@"INVITE", nickname, channel, nil];
 }
 
 - (void)requestTopicForChannel:(IRCChannel *)channel
@@ -11585,7 +11585,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("topic"), channel, topic, nil];
+	[self send:@"TOPIC", channel, topic, nil];
 }
 
 - (void)sendCapability:(NSString *)subcommand data:(nullable NSString *)data
@@ -11596,7 +11596,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("cap"), subcommand, data, nil];
+	[self send:@"CAP", subcommand, data, nil];
 }
 
 - (void)sendCapabilityAuthenticate:(NSString *)data
@@ -11611,7 +11611,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("cap_authenticate"), data, nil];
+	[self send:@"AUTHENTICATE", data, nil];
 }
 
 - (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames
@@ -11639,7 +11639,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("ison"), nicknames, nil];
+	[self send:@"ISON", nicknames, nil];
 }
 
 - (void)requestChannelList
@@ -11648,7 +11648,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("list"), nil];
+	[self send:@"LIST", nil];
 }
 
 - (void)sendPassword:(NSString *)password
@@ -11663,7 +11663,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self send:IRCPrivateCommandIndex("pass"), password, nil];
+	[self send:@"PASS", password, nil];
 }
 
 - (void)modifyWatchListBy:(BOOL)adding nicknames:(NSArray<NSString *> *)nicknames
@@ -11690,7 +11690,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		NSString *nicknamesString = [nicknames componentsJoinedByString:@","];
 
-		[self send:IRCPrivateCommandIndex("monitor"), modifier, nicknamesString, nil];
+		[self send:@"MONITOR", modifier, nicknamesString, nil];
 	}
 	else if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityWatchCommand])
 	{
@@ -11702,7 +11702,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		NSString *nicknamesString = [nicknames componentsJoinedByString:modifier];
 
-		[self send:IRCPrivateCommandIndex("watch"), [modifier stringByAppendingString:nicknamesString], nil];
+		[self send:@"WATCH", [modifier stringByAppendingString:nicknamesString], nil];
 	}
 }
 

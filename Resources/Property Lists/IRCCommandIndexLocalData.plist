@@ -9,8 +9,6 @@
 	</dict>
 	<key>adchat</key>
 	<dict>
-		<key>command</key>
-		<string>ADCHAT</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -20,8 +18,6 @@
 	</dict>
 	<key>ame</key>
 	<dict>
-		<key>command</key>
-		<string>AME</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -31,8 +27,6 @@
 	</dict>
 	<key>amsg</key>
 	<dict>
-		<key>command</key>
-		<string>AMSG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -42,8 +36,6 @@
 	</dict>
 	<key>aquote</key>
 	<dict>
-		<key>command</key>
-		<string>AQUOTE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -53,8 +45,6 @@
 	</dict>
 	<key>araw</key>
 	<dict>
-		<key>command</key>
-		<string>ARAW</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -64,8 +54,6 @@
 	</dict>
 	<key>autojoin</key>
 	<dict>
-		<key>command</key>
-		<string>AUTOJOIN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -73,8 +61,6 @@
 	</dict>
 	<key>away</key>
 	<dict>
-		<key>command</key>
-		<string>AWAY</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -84,8 +70,6 @@
 	</dict>
 	<key>back</key>
 	<dict>
-		<key>command</key>
-		<string>BACK</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -93,8 +77,6 @@
 	</dict>
 	<key>ban</key>
 	<dict>
-		<key>command</key>
-		<string>BAN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -104,8 +86,6 @@
 	</dict>
 	<key>bufferdebug</key>
 	<dict>
-		<key>command</key>
-		<string>BUFFERDEBUG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -113,8 +93,6 @@
 	</dict>
 	<key>cap</key>
 	<dict>
-		<key>command</key>
-		<string>CAP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -122,8 +100,6 @@
 	</dict>
 	<key>caps</key>
 	<dict>
-		<key>command</key>
-		<string>CAPS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -131,8 +107,6 @@
 	</dict>
 	<key>ccbadge</key>
 	<dict>
-		<key>command</key>
-		<string>CCBADGE</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -142,8 +116,6 @@
 	</dict>
 	<key>chatops</key>
 	<dict>
-		<key>command</key>
-		<string>CHATOPS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -151,8 +123,6 @@
 	</dict>
 	<key>clear</key>
 	<dict>
-		<key>command</key>
-		<string>CLEAR</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -160,8 +130,6 @@
 	</dict>
 	<key>clearall</key>
 	<dict>
-		<key>command</key>
-		<string>CLEARALL</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -169,8 +137,6 @@
 	</dict>
 	<key>close</key>
 	<dict>
-		<key>command</key>
-		<string>CLOSE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -180,8 +146,6 @@
 	</dict>
 	<key>conn</key>
 	<dict>
-		<key>command</key>
-		<string>CONN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -191,8 +155,6 @@
 	</dict>
 	<key>ctcp</key>
 	<dict>
-		<key>command</key>
-		<string>CTCP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -202,8 +164,6 @@
 	</dict>
 	<key>ctcpreply</key>
 	<dict>
-		<key>command</key>
-		<string>CTCPREPLY</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -213,8 +173,6 @@
 	</dict>
 	<key>cycle</key>
 	<dict>
-		<key>command</key>
-		<string>CYCLE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -222,8 +180,6 @@
 	</dict>
 	<key>dcc</key>
 	<dict>
-		<key>command</key>
-		<string>DCC</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -231,8 +187,6 @@
 	</dict>
 	<key>debug</key>
 	<dict>
-		<key>command</key>
-		<string>DEBUG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -242,8 +196,6 @@
 	</dict>
 	<key>defaults</key>
 	<dict>
-		<key>command</key>
-		<string>DEFAULTS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -253,8 +205,6 @@
 	</dict>
 	<key>dehalfop</key>
 	<dict>
-		<key>command</key>
-		<string>DEHALFOP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -264,8 +214,6 @@
 	</dict>
 	<key>deop</key>
 	<dict>
-		<key>command</key>
-		<string>DEOP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -275,8 +223,6 @@
 	</dict>
 	<key>devoice</key>
 	<dict>
-		<key>command</key>
-		<string>DEVOICE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -286,8 +232,6 @@
 	</dict>
 	<key>echo</key>
 	<dict>
-		<key>command</key>
-		<string>ECHO</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -297,8 +241,6 @@
 	</dict>
 	<key>empty_caches</key>
 	<dict>
-		<key>command</key>
-		<string>EMPTY_CACHES</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -306,8 +248,6 @@
 	</dict>
 	<key>fakerawdata</key>
 	<dict>
-		<key>command</key>
-		<string>FAKERAWDATA</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -317,8 +257,6 @@
 	</dict>
 	<key>getscripts</key>
 	<dict>
-		<key>command</key>
-		<string>GETSCRIPTS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -326,8 +264,6 @@
 	</dict>
 	<key>gline</key>
 	<dict>
-		<key>command</key>
-		<string>GLINE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -337,8 +273,6 @@
 	</dict>
 	<key>globops</key>
 	<dict>
-		<key>command</key>
-		<string>GLOBOPS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -348,8 +282,6 @@
 	</dict>
 	<key>goto</key>
 	<dict>
-		<key>command</key>
-		<string>GOTO</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -359,8 +291,6 @@
 	</dict>
 	<key>gzline</key>
 	<dict>
-		<key>command</key>
-		<string>GZLINE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -370,8 +300,6 @@
 	</dict>
 	<key>halfop</key>
 	<dict>
-		<key>command</key>
-		<string>HALFOP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -381,8 +309,6 @@
 	</dict>
 	<key>hop</key>
 	<dict>
-		<key>command</key>
-		<string>HOP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -390,8 +316,6 @@
 	</dict>
 	<key>icbadge</key>
 	<dict>
-		<key>command</key>
-		<string>ICBADGE</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -401,8 +325,6 @@
 	</dict>
 	<key>ignore</key>
 	<dict>
-		<key>command</key>
-		<string>IGNORE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -412,8 +334,6 @@
 	</dict>
 	<key>invite</key>
 	<dict>
-		<key>command</key>
-		<string>INVITE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -423,8 +343,6 @@
 	</dict>
 	<key>ison</key>
 	<dict>
-		<key>command</key>
-		<string>ISON</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -434,8 +352,6 @@
 	</dict>
 	<key>j</key>
 	<dict>
-		<key>command</key>
-		<string>J</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -445,8 +361,6 @@
 	</dict>
 	<key>join</key>
 	<dict>
-		<key>command</key>
-		<string>JOIN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -456,8 +370,6 @@
 	</dict>
 	<key>join_random</key>
 	<dict>
-		<key>command</key>
-		<string>JOIN_RANDOM</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -467,8 +379,6 @@
 	</dict>
 	<key>kb</key>
 	<dict>
-		<key>command</key>
-		<string>KB</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -478,8 +388,6 @@
 	</dict>
 	<key>kick</key>
 	<dict>
-		<key>command</key>
-		<string>KICK</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -489,8 +397,6 @@
 	</dict>
 	<key>kickban</key>
 	<dict>
-		<key>command</key>
-		<string>KICKBAN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -500,8 +406,6 @@
 	</dict>
 	<key>kill</key>
 	<dict>
-		<key>command</key>
-		<string>KILL</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -511,8 +415,6 @@
 	</dict>
 	<key>lagcheck</key>
 	<dict>
-		<key>command</key>
-		<string>LAGCHECK</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -520,8 +422,6 @@
 	</dict>
 	<key>leave</key>
 	<dict>
-		<key>command</key>
-		<string>LEAVE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -531,8 +431,6 @@
 	</dict>
 	<key>list</key>
 	<dict>
-		<key>command</key>
-		<string>LIST</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -540,8 +438,6 @@
 	</dict>
 	<key>locops</key>
 	<dict>
-		<key>command</key>
-		<string>LOCOPS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -551,8 +447,6 @@
 	</dict>
 	<key>m</key>
 	<dict>
-		<key>command</key>
-		<string>M</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -562,8 +456,6 @@
 	</dict>
 	<key>me</key>
 	<dict>
-		<key>command</key>
-		<string>ME</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -573,8 +465,6 @@
 	</dict>
 	<key>mode</key>
 	<dict>
-		<key>command</key>
-		<string>MODE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -584,8 +474,6 @@
 	</dict>
 	<key>monitor</key>
 	<dict>
-		<key>command</key>
-		<string>MONITOR</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -593,8 +481,6 @@
 	</dict>
 	<key>msg</key>
 	<dict>
-		<key>command</key>
-		<string>MSG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -604,8 +490,6 @@
 	</dict>
 	<key>mute</key>
 	<dict>
-		<key>command</key>
-		<string>MUTE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -613,8 +497,6 @@
 	</dict>
 	<key>mylag</key>
 	<dict>
-		<key>command</key>
-		<string>MYLAG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -622,8 +504,6 @@
 	</dict>
 	<key>myversion</key>
 	<dict>
-		<key>command</key>
-		<string>MYVERSION</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -631,8 +511,6 @@
 	</dict>
 	<key>nachat</key>
 	<dict>
-		<key>command</key>
-		<string>NACHAT</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -642,8 +520,6 @@
 	</dict>
 	<key>names</key>
 	<dict>
-		<key>command</key>
-		<string>NAMES</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -653,8 +529,6 @@
 	</dict>
 	<key>nick</key>
 	<dict>
-		<key>command</key>
-		<string>NICK</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -664,8 +538,6 @@
 	</dict>
 	<key>notice</key>
 	<dict>
-		<key>command</key>
-		<string>NOTICE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -675,8 +547,6 @@
 	</dict>
 	<key>notifybubble</key>
 	<dict>
-		<key>command</key>
-		<string>NOTIFYBUBBLE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -686,8 +556,6 @@
 	</dict>
 	<key>notifysound</key>
 	<dict>
-		<key>command</key>
-		<string>NOTIFYSOUND</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -697,8 +565,6 @@
 	</dict>
 	<key>notifyspeak</key>
 	<dict>
-		<key>command</key>
-		<string>NOTIFYSPEAK</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -708,8 +574,6 @@
 	</dict>
 	<key>omsg</key>
 	<dict>
-		<key>command</key>
-		<string>OMSG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -719,8 +583,6 @@
 	</dict>
 	<key>onotice</key>
 	<dict>
-		<key>command</key>
-		<string>ONOTICE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -730,8 +592,6 @@
 	</dict>
 	<key>op</key>
 	<dict>
-		<key>command</key>
-		<string>OP</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -741,8 +601,6 @@
 	</dict>
 	<key>part</key>
 	<dict>
-		<key>command</key>
-		<string>PART</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -752,8 +610,6 @@
 	</dict>
 	<key>pass</key>
 	<dict>
-		<key>command</key>
-		<string>PASS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -763,8 +619,6 @@
 	</dict>
 	<key>query</key>
 	<dict>
-		<key>command</key>
-		<string>QUERY</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -774,8 +628,6 @@
 	</dict>
 	<key>quit</key>
 	<dict>
-		<key>command</key>
-		<string>QUIT</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -785,8 +637,6 @@
 	</dict>
 	<key>quiet</key>
 	<dict>
-		<key>command</key>
-		<string>QUIET</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -796,8 +646,6 @@
 	</dict>
 	<key>quote</key>
 	<dict>
-		<key>command</key>
-		<string>QUOTE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -807,8 +655,6 @@
 	</dict>
 	<key>raw</key>
 	<dict>
-		<key>command</key>
-		<string>RAW</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -818,8 +664,6 @@
 	</dict>
 	<key>rejoin</key>
 	<dict>
-		<key>command</key>
-		<string>REJOIN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -827,8 +671,6 @@
 	</dict>
 	<key>reloadicl</key>
 	<dict>
-		<key>command</key>
-		<string>RELOADICL</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -836,8 +678,6 @@
 	</dict>
 	<key>remove</key>
 	<dict>
-		<key>command</key>
-		<string>REMOVE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -847,8 +687,6 @@
 	</dict>
 	<key>server</key>
 	<dict>
-		<key>command</key>
-		<string>SERVER</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -858,8 +696,6 @@
 	</dict>
 	<key>setcolor</key>
 	<dict>
-		<key>command</key>
-		<string>SETCOLOR</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -869,8 +705,6 @@
 	</dict>
 	<key>shun</key>
 	<dict>
-		<key>command</key>
-		<string>SHUN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -880,8 +714,6 @@
 	</dict>
 	<key>sme</key>
 	<dict>
-		<key>command</key>
-		<string>SME</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -891,8 +723,6 @@
 	</dict>
 	<key>smsg</key>
 	<dict>
-		<key>command</key>
-		<string>SMSG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -902,8 +732,6 @@
 	</dict>
 	<key>sslcontext</key>
 	<dict>
-		<key>command</key>
-		<string>SSLCONTEXT</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -911,8 +739,6 @@
 	</dict>
 	<key>t</key>
 	<dict>
-		<key>command</key>
-		<string>T</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -922,8 +748,6 @@
 	</dict>
 	<key>tage</key>
 	<dict>
-		<key>command</key>
-		<string>TAGE</string>
 		<key>developerModeOnly</key>
 		<true/>
 		<key>indexValue</key>
@@ -931,8 +755,6 @@
 	</dict>
 	<key>tempshun</key>
 	<dict>
-		<key>command</key>
-		<string>TEMPSHUN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -942,8 +764,6 @@
 	</dict>
 	<key>timer</key>
 	<dict>
-		<key>command</key>
-		<string>TIMER</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -953,8 +773,6 @@
 	</dict>
 	<key>topic</key>
 	<dict>
-		<key>command</key>
-		<string>TOPIC</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -964,8 +782,6 @@
 	</dict>
 	<key>ume</key>
 	<dict>
-		<key>command</key>
-		<string>UME</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -975,8 +791,6 @@
 	</dict>
 	<key>umode</key>
 	<dict>
-		<key>command</key>
-		<string>UMODE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -986,8 +800,6 @@
 	</dict>
 	<key>umsg</key>
 	<dict>
-		<key>command</key>
-		<string>UMSG</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -997,8 +809,6 @@
 	</dict>
 	<key>unban</key>
 	<dict>
-		<key>command</key>
-		<string>UNBAN</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1008,8 +818,6 @@
 	</dict>
 	<key>unignore</key>
 	<dict>
-		<key>command</key>
-		<string>UNIGNORE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1019,8 +827,6 @@
 	</dict>
 	<key>unmute</key>
 	<dict>
-		<key>command</key>
-		<string>UNMUTE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1028,8 +834,6 @@
 	</dict>
 	<key>unotice</key>
 	<dict>
-		<key>command</key>
-		<string>UNOTICE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1039,8 +843,6 @@
 	</dict>
 	<key>unquiet</key>
 	<dict>
-		<key>command</key>
-		<string>UNQUIET</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1050,8 +852,6 @@
 	</dict>
 	<key>voice</key>
 	<dict>
-		<key>command</key>
-		<string>VOICE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1061,8 +861,6 @@
 	</dict>
 	<key>wallops</key>
 	<dict>
-		<key>command</key>
-		<string>WALLOPS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1072,8 +870,6 @@
 	</dict>
 	<key>watch</key>
 	<dict>
-		<key>command</key>
-		<string>WATCH</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1081,8 +877,6 @@
 	</dict>
 	<key>who</key>
 	<dict>
-		<key>command</key>
-		<string>WHO</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1092,8 +886,6 @@
 	</dict>
 	<key>whois</key>
 	<dict>
-		<key>command</key>
-		<string>WHOIS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1103,8 +895,6 @@
 	</dict>
 	<key>whowas</key>
 	<dict>
-		<key>command</key>
-		<string>WHOWAS</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>
@@ -1114,8 +904,6 @@
 	</dict>
 	<key>zline</key>
 	<dict>
-		<key>command</key>
-		<string>ZLINE</string>
 		<key>developerModeOnly</key>
 		<false/>
 		<key>indexValue</key>

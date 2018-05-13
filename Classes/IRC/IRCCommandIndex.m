@@ -45,13 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCCommandIndex
 
-static NSArray *_cachedPublicCommandList = nil;
+static NSArray *_cachedLocalCommandList = nil;
 
-static NSCache *_publicIndexLookupCache = nil;
-static NSCache *_privateIndexLookupCache = nil;
-
-static NSDictionary *IRCCommandIndexPublicValues = nil;
-static NSDictionary *IRCCommandIndexPrivateValues = nil;
+static NSDictionary *IRCCommandIndexLocalData = nil;
+static NSDictionary *IRCCommandIndexRemoteData = nil;
 
 + (void)populateCommandIndex
 {
@@ -65,300 +62,146 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 + (void)_populateCommandIndex
 {
 	/* Populate public data */
-	NSDictionary *publicValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCCommandIndexPublicValues"];
+	NSDictionary *publicValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCCommandIndexLocalData"];
 
 	if (publicValues) {
 		NSMutableDictionary *publicValuesMutable = [publicValues mutableCopy];
 
 		[publicValuesMutable removeObjectForKey:_reservedSlotDictionaryKey];
 
-		IRCCommandIndexPublicValues = [publicValuesMutable copy];
+		IRCCommandIndexLocalData = [publicValuesMutable copy];
 	}
 
 	/* Populate private data */
-	NSDictionary *privateValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCCommandIndexPrivateValues"];
+	NSDictionary *privateValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCCommandIndexRemoteData"];
 
 	if (privateValues) {
 		NSMutableDictionary *privateValuesMutable = [privateValues mutableCopy];
 
 		[privateValuesMutable removeObjectForKey:_reservedSlotDictionaryKey];
 
-		IRCCommandIndexPrivateValues = [privateValuesMutable copy];
+		IRCCommandIndexRemoteData = [privateValuesMutable copy];
 	}
 
 	/* Only error checking we need. It either fails or succeeds. */
-	NSParameterAssert(IRCCommandIndexPrivateValues != nil);
-	NSParameterAssert(IRCCommandIndexPublicValues != nil);
-
-	/* Prepare caches */
-	_publicIndexLookupCache = [NSCache new];
-	_publicIndexLookupCache.countLimit = 35;
-
-	_privateIndexLookupCache = [NSCache new];
-	_privateIndexLookupCache.countLimit = 35;
+	NSParameterAssert(IRCCommandIndexRemoteData != nil);
+	NSParameterAssert(IRCCommandIndexLocalData != nil);
 }
 
-+ (void)_invalidateCaches
++ (void)invalidateCaches
 {
-	_cachedPublicCommandList = nil;
-
-	[_publicIndexLookupCache removeAllObjects];
-	[_privateIndexLookupCache removeAllObjects];
+	_cachedLocalCommandList = nil;
 }
 
-+ (void)cacheValue:(id)cachedValue withKey:(NSString *)cachedKey publicCache:(BOOL)publicCache
++ (void)rebuildLocalCommandList
 {
-	NSParameterAssert(cachedValue != nil);
-	NSParameterAssert(cachedKey != nil);
-
-	if (publicCache) {
-		[_publicIndexLookupCache setObject:cachedValue forKey:cachedKey];
-	} else {
-		[_privateIndexLookupCache setObject:cachedValue forKey:cachedKey];
-	}
-}
-
-+ (nullable id)cachedValueForKey:(NSString *)cachedKey publicCache:(BOOL)publicCache
-{
-	NSParameterAssert(cachedKey != nil);
-
-	NSDictionary *cachedValue = nil;
-
-	if (publicCache) {
-		cachedValue = [_publicIndexLookupCache objectForKey:cachedKey];
-	} else {
-		cachedValue = [_privateIndexLookupCache objectForKey:cachedKey];
-	}
-
-	return cachedValue;
-}
-
-+ (NSDictionary<NSString *, NSDictionary *> *)IRCCommandIndex:(BOOL)publicIndex
-{
-	if (publicIndex) {
-		return IRCCommandIndexPublicValues;
-	} else {
-		return IRCCommandIndexPrivateValues;
-	}
-}
-
-+ (NSArray<NSString *> *)publicIRCCommandList
-{
-	if (_cachedPublicCommandList == nil) {
-		NSMutableArray<NSString *> *commandList = [NSMutableArray array];
-
-		BOOL developerModeEnabled = [TPCPreferences developerModeEnabled];
-
-		[IRCCommandIndexPublicValues enumerateKeysAndObjectsUsingBlock:^(NSString *indexKey, NSDictionary *indexValue, BOOL *stop) {
-			BOOL developerOnly = [indexValue boolForKey:@"developerModeOnly"];
-
-			if (developerModeEnabled == NO && developerOnly) {
-				return;
-			}
-
-			[commandList addObject:indexValue[@"command"]];
-		}];
-
-		_cachedPublicCommandList = [commandList copy];
-	}
-
-	return _cachedPublicCommandList;
-}
-
-+ (nullable NSDictionary *)indexFromIndexKey:(NSString *)indexKey publicSearch:(BOOL)publicSearch
-{
-	NSDictionary *indexSet = [IRCCommandIndex IRCCommandIndex:publicSearch];
-
-	NSDictionary *index = indexSet[indexKey];
-
-	if (index == nil) {
-		NSString *indexKeyCaseless = [indexSet keyIgnoringCase:indexSet];
-
-		if (indexKeyCaseless) {
-			index = indexSet[indexKeyCaseless];
-		}
-	}
-
-	return index;
+	NSMutableArray<NSString *> *commandList = [NSMutableArray array];
 	
-	return nil;
+	BOOL developerModeEnabled = [TPCPreferences developerModeEnabled];
+	
+	[IRCCommandIndexLocalData enumerateKeysAndObjectsUsingBlock:^(NSString *indexKey, NSDictionary *indexValue, BOOL *stop) {
+		BOOL developerOnly = [indexValue boolForKey:@"developerModeOnly"];
+		
+		if (developerModeEnabled == NO && developerOnly) {
+			return;
+		}
+		
+		[commandList addObject:indexKey.uppercaseString];
+	}];
+	
+	_cachedLocalCommandList = [commandList copy];
 }
 
-+ (nullable NSString *)IRCCommandFromIndexKey:(NSString *)indexKey publicSearch:(BOOL)publicSearch
++ (NSArray<NSString *> *)localCommandList
 {
-	NSParameterAssert(indexKey != nil);
-
-	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", _cmd, indexKey];
-
-	NSString *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:publicSearch];
-
-	if (cachedValue == nil) {
-		NSDictionary *index = [IRCCommandIndex indexFromIndexKey:indexKey publicSearch:publicSearch];
-
-		if (index) {
-			cachedValue = index[@"command"];
-
-			[IRCCommandIndex cacheValue:cachedValue withKey:cachedKey publicCache:publicSearch];
-		}
+	if (_cachedLocalCommandList == nil) {
+		[self rebuildLocalCommandList];
 	}
 
-	return cachedValue;
+	return _cachedLocalCommandList;
 }
 
 NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey)
 {
-	return [IRCCommandIndex IRCCommandFromIndexKey:@(indexKey) publicSearch:NO];
+	NSCParameterAssert(indexKey != NULL);
+	
+	TEXTUAL_DEPRECATED_WARNING;
+	
+	return [@(indexKey) uppercaseString];
 }
 
 NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 {
-	return [IRCCommandIndex IRCCommandFromIndexKey:@(indexKey) publicSearch:YES];
-}
+	NSCParameterAssert(indexKey != NULL);
 
-+ (NSUInteger)indexOfIRCommand:(NSString *)command
-{
-	return [IRCCommandIndex indexOfIRCommand:command publicSearch:YES];
-}
-
-+ (NSUInteger)_indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch
-{
-	NSParameterAssert(command != nil);
-
-	NSDictionary *searchPath = [IRCCommandIndex IRCCommandIndex:publicSearch];
-
-	BOOL developerModeEnabled = [TPCPreferences developerModeEnabled];
-
-	__block NSDictionary *index = nil;
-
-	[searchPath enumerateKeysAndObjectsUsingBlock:^(NSString *indexKey, NSDictionary *indexValue, BOOL *stop) {
-		NSString *indexCommand = indexValue[@"command"];
-
-		if ([indexCommand isEqualIgnoringCase:command] == NO) {
-			return;
-		}
-
-		if (publicSearch) {
-			BOOL isDeveloperOnly = [indexValue boolForKey:@"developerModeOnly"];
-
-			if (isDeveloperOnly && developerModeEnabled == NO) {
-				return;
-			}
-		} else {
-			BOOL isStandalone = [indexValue boolForKey:@"isStandalone"];
-
-			if (isStandalone == NO) {
-				return;
-			}
-		}
-
-		index = indexValue;
-
-		*stop = YES;
-	}];
-
-	if (index) {
-		return [index unsignedIntegerForKey:@"indexValue"];
-	}
-
-	return NSNotFound;
-}
-
-+ (NSUInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch
-{
-	NSParameterAssert(command != nil);
-
-	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", _cmd, command];
-
-	NSNumber *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:publicSearch];
-
-	if (cachedValue == nil) {
-		NSUInteger index = [IRCCommandIndex _indexOfIRCommand:command publicSearch:publicSearch];
-
-		if (index != NSNotFound) {
-			cachedValue = @(index);
-
-			[IRCCommandIndex cacheValue:cachedValue withKey:cachedKey publicCache:publicSearch];
-		}
-	}
-
-	if (cachedValue) {
-		return cachedValue.unsignedIntegerValue;
-	}
-
-	return NSNotFound;
-}
-
-+ (NSUInteger)_colonIndexForCommand:(NSString *)command
-{
-	NSParameterAssert(command != nil);
-
-	/* The command index that Textual uses is complex for anyone who
-	 has never seen it before, but on the other hand, it is also very
-	 convenient for storing static information about any IRC command
-	 that Textual may handle. For example, the internal command list
-	 keeps track of where the colon (:) should be placed for specific
-	 outgoing commands. Better than guessing. */
-	__block NSUInteger index = NSNotFound;
-
-	[IRCCommandIndexPrivateValues enumerateKeysAndObjectsUsingBlock:^(NSString *indexKey, NSDictionary *indexValue, BOOL *stop) {
-		if ([indexValue boolForKey:@"isStandalone"] == NO) {
-			return;
-		}
-
-		NSString *indexCommand = indexValue[@"command"];
-
-		if ([indexCommand isEqualIgnoringCase:command]) {
-			NSInteger colonIndex = [indexValue integerForKey:@"outgoingColonIndex"];
-
-			if (colonIndex >= 0) {
-				index = colonIndex;
-			}
-
-			*stop = YES;
-		}
-	}];
-
-	return index;
-}
-
-+ (NSUInteger)colonIndexForCommand:(NSString *)command
-{
-	NSParameterAssert(command != nil);
-
-	NSString *cachedKey = [NSString stringWithFormat:@"%s-%@", _cmd, command];
-
-	NSNumber *cachedValue = [IRCCommandIndex cachedValueForKey:cachedKey publicCache:NO];
-
-	if (cachedValue == nil) {
-		NSUInteger index = [IRCCommandIndex _colonIndexForCommand:command];
-
-		if (index != NSNotFound) {
-			cachedValue = @(index);
-
-			[IRCCommandIndex cacheValue:cachedValue withKey:cachedKey publicCache:NO];
-		}
-	}
-
-	if (cachedValue) {
-		return cachedValue.unsignedIntegerValue;
-	}
-
-	return NSNotFound;
-}
-
-+ (nullable NSString *)syntaxForCommand:(NSString *)command
-{
-	NSParameterAssert(command != nil);
+	TEXTUAL_DEPRECATED_WARNING;
 	
-	/* This command is not used frequently which means
-	 we don't use caching for it. */
-	NSDictionary *index = [IRCCommandIndex indexFromIndexKey:command publicSearch:YES];
+	return [@(indexKey) uppercaseString];
+}
+
++ (NSUInteger)indexOfLocalCommand:(NSString *)command
+{
+	return [self indexOfCommand:command isLocal:YES];
+}
+
++ (NSUInteger)indexOfRemoteCommand:(NSString *)command
+{
+	return [self indexOfCommand:command isLocal:NO];
+}
+
++ (NSUInteger)indexOfCommand:(NSString *)command isLocal:(BOOL)isLocalCommand
+{
+	NSDictionary *index = nil;
 	
+	if (isLocalCommand) {
+		index = IRCCommandIndexLocalData[command.lowercaseString];
+	} else {
+		index = IRCCommandIndexRemoteData[command.lowercaseString];
+	}
+	
+	if (index == nil) {
+		return NSNotFound;
+	}
+	
+	if (isLocalCommand) {
+		if ([index boolForKey:@"developerModeOnly"] && [TPCPreferences developerModeEnabled] == NO) {
+			return NSNotFound;
+		}
+	}
+	
+	return [index unsignedIntegerForKey:@"indexValue"];
+}
+
++ (NSUInteger)colonPositionForRemoteCommand:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+
+	NSDictionary *index = IRCCommandIndexRemoteData[command.lowercaseString];
+	
+	if (index == nil) {
+		return NSNotFound;
+	}
+	
+	NSInteger position = [index integerForKey:@"outgoingColonIndex"];
+	
+	if (position < 0) {
+		return NSNotFound;
+	}
+	
+	return position;
+}
+
++ (nullable NSString *)syntaxForLocalommand:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+
+	NSDictionary *index = IRCCommandIndexLocalData[command.lowercaseString];
+
 	if (index == nil) {
 		return nil;
 	}
-	
-	NSString *commandFormatted = [index[@"command"] uppercaseString];
+
+	NSString *commandFormatted = command.uppercaseString;
 
 	NSString *argumentFormat = index[@"arguments"];
 	

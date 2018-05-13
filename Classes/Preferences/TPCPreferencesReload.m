@@ -370,7 +370,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Command index cache */
 	if ((reloadAction & TPCPreferencesReloadIRCCommandCacheAction) == TPCPreferencesReloadIRCCommandCacheAction) {
-		[IRCCommandIndex _invalidateCaches];
+		[IRCCommandIndex invalidateCaches];
 	}
 
 	/* Transcript folder URL */

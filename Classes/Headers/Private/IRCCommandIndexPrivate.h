@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IRCCommandIndex ()
 + (void)populateCommandIndex;
 
-+ (void)_invalidateCaches;
++ (void)invalidateCaches;
 @end
 
 NS_ASSUME_NONNULL_END
