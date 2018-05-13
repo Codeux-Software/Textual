@@ -182,7 +182,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (self.isCompletingCommand)
 	{
-		for (NSString *command in [IRCCommandIndex publicIRCCommandList]) {
+		for (NSString *command in [IRCCommandIndex localCommandList]) {
 			[choicesUppercase addObject:command.lowercaseString];
 		}
 

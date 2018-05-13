@@ -37,6 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/* Public commands are client-local commands (local) */
 typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandAdchatIndex = 5001,
 	IRCPublicCommandAmeIndex = 5002,
@@ -146,6 +147,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandZlineIndex = 5082
 };
 
+/* Private commands are server-side commands (remote) */
 typedef NS_ENUM(NSUInteger, IRCPrivateCommand) {
 	IRCPrivateCommandAdchatIndex = 1003,
 	IRCPrivateCommandAuthenticateIndex = 1005,
@@ -192,21 +194,19 @@ typedef NS_ENUM(NSUInteger, IRCPrivateCommand) {
 };
 
 /* Command index */
-TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey);
-TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey);
+TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey) TEXTUAL_DEPRECATED("Use strings instead");
+TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey) TEXTUAL_DEPRECATED("Use strings instead");
 
 /* Controlling class */
 @interface IRCCommandIndex : NSObject
-+ (NSArray<NSString *> *)publicIRCCommandList;
++ (NSArray<NSString *> *)localCommandList;
 
-+ (NSUInteger)indexOfIRCommand:(NSString *)command;
-+ (NSUInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch;
++ (NSUInteger)indexOfRemoteCommand:(NSString *)command;
++ (NSUInteger)indexOfLocalCommand:(NSString *)command;
 
-+ (NSDictionary<NSString *, NSDictionary *> *)IRCCommandIndex:(BOOL)publicIndex;
++ (NSUInteger)colonPositionForRemoteCommand:(NSString *)command;
 
-+ (NSUInteger)colonIndexForCommand:(NSString *)command;
-
-+ (nullable NSString *)syntaxForCommand:(NSString *)command;
++ (nullable NSString *)syntaxForLocalommand:(NSString *)command;
 @end
 
 NS_ASSUME_NONNULL_END

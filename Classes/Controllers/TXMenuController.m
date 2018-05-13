@@ -2694,7 +2694,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_finger") text:nil];
+		[u sendCTCPQuery:nickname command:@"FINGER" text:nil];
 	}
 
 	[self deselectMembers:sender];
@@ -2710,7 +2710,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_time") text:nil];
+		[u sendCTCPQuery:nickname command:@"TIME" text:nil];
 	}
 
 	[self deselectMembers:sender];
@@ -2726,7 +2726,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_version") text:nil];
+		[u sendCTCPQuery:nickname command:@"VERSION" text:nil];
 	}
 
 	[self deselectMembers:sender];
@@ -2742,7 +2742,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_userinfo") text:nil];
+		[u sendCTCPQuery:nickname command:@"USERINFO" text:nil];
 	}
 
 	[self deselectMembers:sender];
@@ -2758,7 +2758,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_clientinfo") text:nil];
+		[u sendCTCPQuery:nickname command:@"CLIENTINFO" text:nil];
 	}
 
 	[self deselectMembers:sender];
@@ -2928,32 +2928,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)memberModeGiveOp:(id)sender
 {
-	[self processModeChange:sender usingCommand:IRCPublicCommandIndex("op")];
+	[self processModeChange:sender usingCommand:@"OP"];
 }
 
 - (void)memberModeTakeOp:(id)sender
 { 
-	[self processModeChange:sender usingCommand:IRCPublicCommandIndex("deop")];
+	[self processModeChange:sender usingCommand:@"DEOP"];
 }
 
 - (void)memberModeGiveHalfop:(id)sender
 { 
-	[self processModeChange:sender usingCommand:IRCPublicCommandIndex("halfop")];
+	[self processModeChange:sender usingCommand:@"HALFOP"];
 }
 
 - (void)memberModeTakeHalfop:(id)sender
 { 
-	[self processModeChange:sender usingCommand:IRCPublicCommandIndex("dehalfop")];
+	[self processModeChange:sender usingCommand:@"DEHALFOP"];
 }
 
 - (void)memberModeGiveVoice:(id)sender
 { 
-	[self processModeChange:sender usingCommand:IRCPublicCommandIndex("voice")];
+	[self processModeChange:sender usingCommand:@"VOICE"];
 }
 
 - (void)memberModeTakeVoice:(id)sender
 { 
-	[self processModeChange:sender usingCommand:IRCPublicCommandIndex("devoice")];
+	[self processModeChange:sender usingCommand:@"DEVOICE"];
 }
 
 - (void)memberKickFromChannel:(id)sender
@@ -2982,7 +2982,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("ban"), nickname];
+		NSString *command = [NSString stringWithFormat:@"BAN %@", nickname];
 
 		[u sendCommand:command completeTarget:YES target:c.name];
 	}
@@ -3000,7 +3000,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kickban"), nickname, [TPCPreferences defaultKickMessage]];
+		NSString *command = [NSString stringWithFormat:@"KICKBAN %@ %@", nickname, [TPCPreferences defaultKickMessage]];
 
 		[u sendCommand:command completeTarget:YES target:c.name];
 	}
@@ -3018,7 +3018,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kill"), nickname, [TPCPreferences IRCopDefaultKillMessage]];
+		NSString *command = [NSString stringWithFormat:@"KILL %@ %@", nickname, [TPCPreferences IRCopDefaultKillMessage]];
 
 		[u sendCommand:command];
 	}
@@ -3042,7 +3042,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), nickname, [TPCPreferences IRCopDefaultGlineMessage]];
+		NSString *command = [NSString stringWithFormat:@"GLINE %@ %@", nickname, [TPCPreferences IRCopDefaultGlineMessage]];
 
 		[u sendCommand:command];
 	}
@@ -3060,7 +3060,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("shun"), nickname, [TPCPreferences IRCopDefaultShunMessage]];
+		NSString *command = [NSString stringWithFormat:@"SHUN %@ %@", nickname, [TPCPreferences IRCopDefaultShunMessage]];
 
 		[u sendCommand:command];
 	}
