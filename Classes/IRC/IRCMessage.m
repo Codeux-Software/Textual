@@ -318,31 +318,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 located at: <http://ircv3.net/specs/core/message-tags-3.2.html> */
 	/* An example grouping would look like the following:
 	 @aaa=bbb;ccc;example.com/ddd=eee */
-	/* The specification does not specify what is to happen if the value
-	 of an extension will contain a semicolon so at this point we will
-	 assume that they will not exist and only be there as a divider. */
-	NSArray<NSString *> *extensionsIn = [extensionInfo componentsSeparatedByString:@";"];
-
-	NSMutableDictionary<NSString *, NSString *> *extensionsOut =
-	[NSMutableDictionary dictionaryWithCapacity:extensionsIn.count];
-
-	/* We now go through each tag using an equal sign as a divider and
-	 placing each into a dictionary. */
-	[extensionsIn enumerateObjectsUsingBlock:^(NSString *extension, NSUInteger index, BOOL *stop) {
-		NSInteger equalSignPosition = [extension stringPosition:@"="];
-
-		if (equalSignPosition <= 0) {
-			return;
-		}
-
-		NSString *extensionKey = [extension substringToIndex:equalSignPosition];
-
-		NSString *extensionValue = [extension substringAfterIndex:equalSignPosition];
-
-		extensionsOut[extensionKey] = extensionValue.percentDecodedString;
+	NSDictionary<NSString *, NSString *> *extensions =
+	[extensionInfo formDataUsingSeparator:@";" decodingBlock:^NSString *(NSString *value) {
+		return value.decodedMessageTagString;
 	}];
 
-	self->_messageTags = [extensionsOut copy];
+	self->_messageTags = [extensions copy];
 
 	/* If there is no client, then further processing is not possible */
 	if (client == nil) {
@@ -355,10 +336,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		 time in the format as defined by ISO 8601:2004(E) 4.3.2. */
 		/* The t= value is a legacy value in a epoch time. We always favor
 		 the new time= format over the old. */
-		NSString *dateString = extensionsOut[@"time"];
+		NSString *dateString = extensions[@"time"];
 
 		if (dateString == nil) {
-			dateString = extensionsOut[@"t"];
+			dateString = extensions[@"t"];
 		}
 
 		if (dateString) {
@@ -379,7 +360,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
-		NSString *batchToken = extensionsOut[@"batch"];
+		NSString *batchToken = extensions[@"batch"];
 
 		if ([batchToken onlyContainsCharactersFromCharacterSet:[NSCharacterSet Ato9UnderscoreDash]]) {
 			self->_batchToken = [batchToken copy];
