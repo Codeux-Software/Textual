@@ -87,6 +87,10 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 - (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname username:(NSString * _Nullable * _Nullable)username address:(NSString * _Nullable * _Nullable)address onClient:(nullable IRCClient *)client
 {
+	if (self.length == 0) {
+		return NO;
+	}
+
 	/* Find first ! starting from left side of string */
 	NSRange bang1pos = [self rangeOfString:@"!" options:0];
 
@@ -611,6 +615,10 @@ return_method:
 
 - (NSArray<NSString *> *)base64EncodingWithLineLength:(NSUInteger)lineLength
 {
+	if (self.length == 0) {
+		return @[self];
+	}
+
 	NSData *selfData = [self dataUsingEncoding:NSUTF8StringEncoding];
 
 	NSString *encodedString = [XRBase64Encoding encodeData:selfData];
@@ -655,6 +663,10 @@ return_method:
 - (nullable NSString *)prettyLicenseKey
 {
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	if (self.length == 0) {
+		return nil;
+	}
+
 	NSRange lastDashRange = [self rangeOfString:@"-" options:NSBackwardsSearch];
 
 	if (lastDashRange.location == NSNotFound) {
@@ -676,6 +688,10 @@ return_method:
 /* Source: https://ircv3.net/specs/core/message-tags-3.2.html */
 - (NSString *)encodedMessageTagString
 {
+	if (self.length == 0) {
+		return self;
+	}
+
 	NSMutableString *bob = [self mutableCopy];
 	
 	[bob replaceOccurrencesOfString:@"\\" withString:@"\\\\" options:0 range:bob.range];
@@ -689,6 +705,10 @@ return_method:
 
 - (NSString *)decodedMessageTagString
 {
+	if (self.length == 0) {
+		return self;
+	}
+
 	NSMutableString *bob = [self mutableCopy];
 	
 	if ([bob hasSuffix:@"\\"]) {
