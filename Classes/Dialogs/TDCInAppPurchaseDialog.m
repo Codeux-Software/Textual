@@ -267,7 +267,6 @@ enum {
 	}
 
 	/* Do not show trial is expired message too often. */
-/*
 	NSTimeInterval lastCheckTime = [RZUserDefaults() doubleForKey:@"Textual In-App Purchase -> Trial Expired Message Last Presentation"];
 
 	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
@@ -281,7 +280,7 @@ enum {
 	}
 
 	[RZUserDefaults() setDouble:currentTime forKey:@"Textual In-App Purchase -> Trial Expired Message Last Presentation"];
-*/
+
 	/* Show trial expired message */
 	[self _showTrialIsExpiredMessageInWindow:window];
 }
