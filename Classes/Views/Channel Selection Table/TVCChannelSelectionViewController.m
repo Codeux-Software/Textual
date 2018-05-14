@@ -41,14 +41,13 @@
 #import "IRCChannel.h"
 #import "IRCWorld.h"
 #import "TVCChannelSelectionOutlineViewCellPrivate.h"
-#import "TVCChannelSelectionOutlineViewPrivate.h"
 #import "TVCChannelSelectionViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCChannelSelectionViewController ()
 @property (nonatomic, strong) IBOutlet NSScrollView *outlineViewScrollView;
-@property (nonatomic, weak) IBOutlet TVCChannelSelectionOutlineView *outlineView;
+@property (nonatomic, weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, weak) NSView *attachedView;
 @property (nonatomic, strong) NSMutableArray<NSString *> *cachedSelectedClientIds;
 @property (nonatomic, strong) NSMutableArray<NSString *> *cachedSelectedChannelIds;
@@ -359,7 +358,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
-	TVCChannelSelectionOutlineCellView *newView = (id)[outlineView makeViewWithIdentifier:@"tableEntry" owner:self];
+	TVCChannelSelectionOutlineCellView *newView = nil;
+	
+	if ([item isClient]) {
+		newView = (id)[outlineView makeViewWithIdentifier:@"serverEntry" owner:self];
+	} else {
+		newView = (id)[outlineView makeViewWithIdentifier:@"channelEntry" owner:self];
+	}
 
 	newView.parentController = self;
 

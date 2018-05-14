@@ -126,12 +126,6 @@
 		4C08AE3E1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */; };
 		4C08AE3F1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */; };
 		4C08AE401E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */; };
-		4C08AE471E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */; };
-		4C08AE481E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */; };
-		4C08AE491E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */; };
-		4C08AE4B1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */; };
-		4C08AE4C1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */; };
-		4C08AE4D1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */; };
 		4C092B5B1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C092B5C1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C092B5D1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */; };
@@ -2083,8 +2077,6 @@
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Classes/Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Classes/Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
 		4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionViewControllerPrivate.h; path = Classes/Headers/Private/TVCChannelSelectionViewControllerPrivate.h; sourceTree = "<group>"; };
-		4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewPrivate.h; path = Classes/Headers/Private/TVCChannelSelectionOutlineViewPrivate.h; sourceTree = "<group>"; };
-		4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionOutlineView.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionOutlineView.m"; sourceTree = "<group>"; };
 		4C092B5A1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsInContainer.plist; path = "Resources/Property Lists/RegisteredUserDefaultsInContainer.plist"; sourceTree = SOURCE_ROOT; };
 		4C0A900F1D54D24300B64244 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCBuddyListDialog.xib"; sourceTree = SOURCE_ROOT; };
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3023,7 +3015,6 @@
 		4C34F34A1E051523006E1004 /* Channel Selection Table */ = {
 			isa = PBXGroup;
 			children = (
-				4C08AE4A1E054E56006E9195 /* TVCChannelSelectionOutlineView.m */,
 				4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */,
 				4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */,
 			);
@@ -3402,7 +3393,6 @@
 				4C673EE01D10FB5000979B60 /* TPCThemeControllerPrivate.h */,
 				4C673EE11D10FB5000979B60 /* TPCThemeSettingsPrivate.h */,
 				4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */,
-				4C08AE461E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h */,
 				4C08AE3D1E0543FE006E9195 /* TVCChannelSelectionViewControllerPrivate.h */,
 				4C5DD5041D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h */,
 				4C5DD5051D1E098600F2E1AE /* TVCDockIconPrivate.h */,
@@ -4553,7 +4543,6 @@
 				4C7B04EF1D1210E300295E82 /* TPCApplicationInfoPrivate.h in Headers */,
 				4C26F6E31D5A566D008DE497 /* IRCUserPrivate.h in Headers */,
 				4C7B04F01D1210E300295E82 /* TPCPathInfoPrivate.h in Headers */,
-				4C08AE471E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */,
 				4C7B04F11D1210E300295E82 /* TPCPreferencesCloudSyncPrivate.h in Headers */,
 				4CF642E91D2DC33700CB9165 /* IRCChannelPrivate.h in Headers */,
 				4C7B49011D131A2A008D7926 /* TVCLogLinePrivate.h in Headers */,
@@ -4683,7 +4672,6 @@
 				4C7B03ED1D1210A800295E82 /* TLOGrowlController.h in Headers */,
 				4CF642FD1D2DC48200CB9165 /* IRCUserNicknameColorStyleGeneratorPrivate.h in Headers */,
 				4CC8E1101D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */,
-				4C08AE481E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */,
 				4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C0FDE301D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
 				4CD1C4CA1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
@@ -4931,7 +4919,6 @@
 				4C7B046E1D1210B000295E82 /* TLOGrowlController.h in Headers */,
 				4CF642FE1D2DC48200CB9165 /* IRCUserNicknameColorStyleGeneratorPrivate.h in Headers */,
 				4CC8E1111D36979D00C88311 /* TDCFileTransferDialogInternal.h in Headers */,
-				4C08AE491E054E2E006E9195 /* TVCChannelSelectionOutlineViewPrivate.h in Headers */,
 				4CEFCB8C1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C0FDE311D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
 				4CD1C4CB1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
@@ -5930,7 +5917,6 @@
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
 				4C25335B1F443A020003A3F4 /* TVCLogLineXPC.m in Sources */,
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
-				4C08AE4C1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,
 				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
 				4C699C631B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
@@ -6124,7 +6110,6 @@
 				4C58FF711F400FE700BC1431 /* TDCInAppPurchaseProductTableCellView.m in Sources */,
 				4CAC2A1D1F12D48700D06046 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C2C52CE1F12E254009701E0 /* TLOLanguagePreferences.m in Sources */,
-				4C08AE4B1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,
 				4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */,
 				4CF40E661AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */,
 				4C52EF8B1D58BF2E0003AA1C /* IRCUser.m in Sources */,
@@ -6308,7 +6293,6 @@
 				4C25335A1F443A010003A3F4 /* TVCLogLineXPC.m in Sources */,
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
 				4C8AF6AC158E99520026668C /* IRCMessage.m in Sources */,
-				4C08AE4D1E054E56006E9195 /* TVCChannelSelectionOutlineView.m in Sources */,
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
 				4C699C641B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
