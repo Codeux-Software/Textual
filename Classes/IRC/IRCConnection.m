@@ -58,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) SFCertificateTrustPanel *trustPanel;
 @property (nonatomic, assign) BOOL trustPanelDoNotInvokeCompletionBlock;
 @property (nonatomic, assign) BOOL connectionInvalidatedVoluntarily;
+@property (nonatomic, copy, readwrite) NSString *uniqueIdentifier;
 @end
 
 @implementation IRCConnection
@@ -76,6 +77,8 @@ ClassWithDesignatedInitializerInitMethod
 		self.client = client;
 
 		self.config = config;
+		
+		self.uniqueIdentifier = [NSString stringWithUUID];
 	}
 
 	return self;
