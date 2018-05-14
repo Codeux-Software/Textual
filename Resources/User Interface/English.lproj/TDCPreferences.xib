@@ -156,8 +156,8 @@
                                                 <action selector="onPrefPaneSelected:" target="-2" id="Dyy-4W-dEd"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="W4U-AF-ygV"/>
-                                        <menuItem title="Compatibility" tag="108004" id="FDb-XE-P95">
+                                        <menuItem isSeparatorItem="YES" hidden="YES" id="W4U-AF-ygV"/>
+                                        <menuItem title="Compatibility" tag="108004" hidden="YES" id="FDb-XE-P95">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="wJI-G9-QuF"/>

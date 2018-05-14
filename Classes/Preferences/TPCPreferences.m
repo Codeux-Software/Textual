@@ -205,7 +205,9 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)enableEchoMessageCapability
 {
-	return [RZUserDefaults() boolForKey:@"IRC -> Enable echo-message Capability"];
+//	return [RZUserDefaults() boolForKey:@"IRC -> Enable echo-message Capability"];
+	
+	return NO;
 }
 
 + (BOOL)displayServerMOTD
