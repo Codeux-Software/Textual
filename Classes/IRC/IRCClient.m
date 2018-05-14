@@ -6769,13 +6769,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		ratingString = TXTLS(@"IRC[1025][01]");
 	} else if (delta > 25 && delta <= 100) { // Pretty good
 		ratingString = TXTLS(@"IRC[1025][02]");
-	} else if (delta > 100 && delta < 125) { // Not bad
+	} else if (delta > 100 && delta <= 125) { // Not bad
 		ratingString = TXTLS(@"IRC[1025][03]");
-	} else if (delta > 125 && delta < 200) { // Okay
+	} else if (delta > 125 && delta <= 200) { // Okay
 		ratingString = TXTLS(@"IRC[1025][04]");
-	} else if (delta > 200 && delta < 225) { // Needs work
+	} else if (delta > 200 && delta <= 225) { // Needs work
 		ratingString = TXTLS(@"IRC[1025][05]");
-	} else if (delta > 225 && delta < 300) { // Slow
+	} else if (delta > 225 && delta <= 300) { // Slow
 		ratingString = TXTLS(@"IRC[1025][06]");
 	} else if (delta > 300) { // Very Slow
 		ratingString = TXTLS(@"IRC[1025][07]");
