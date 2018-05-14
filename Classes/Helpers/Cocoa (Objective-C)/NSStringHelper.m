@@ -673,6 +673,37 @@ return_method:
 #endif
 }
 
+/* Source: https://ircv3.net/specs/core/message-tags-3.2.html */
+- (NSString *)encodedMessageTagString
+{
+	NSMutableString *bob = [self mutableCopy];
+	
+	[bob replaceOccurrencesOfString:@"\\" withString:@"\\\\" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@";" withString:@"\\:" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@" " withString:@"\\s" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@"\r" withString:@"\\r" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@"\n" withString:@"\\n" options:0 range:bob.range];
+	
+	return [bob copy];
+}
+
+- (NSString *)decodedMessageTagString
+{
+	NSMutableString *bob = [self mutableCopy];
+	
+	if ([bob hasSuffix:@"\\"]) {
+		[bob deleteCharactersInRange:NSMakeRange((bob.length - 1), 1)];
+	}
+	
+	[bob replaceOccurrencesOfString:@"\\:" withString:@";" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@"\\\\" withString:@"\\" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@"\\s" withString:@" " options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@"\\r" withString:@"\r" options:0 range:bob.range];
+	[bob replaceOccurrencesOfString:@"\\n" withString:@"\n" options:0 range:bob.range];
+	
+	return [bob copy];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
