@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+#warning TODO: Fix server address auto completion only saving what is typed.
+
 #import <SecurityInterface/SFChooseIdentityPanel.h>
 
 #import "NSStringHelper.h"
