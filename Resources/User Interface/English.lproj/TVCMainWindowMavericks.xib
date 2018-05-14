@@ -1245,6 +1245,7 @@
                                                         <outlet property="segmentedController" destination="Ijw-SU-h2Z" id="L11-W6-6qN"/>
                                                         <outlet property="segmentedControllerCell" destination="pkk-4P-MNX" id="qdM-kk-0XX"/>
                                                         <outlet property="textViewHeightConstraint" destination="1Oz-Li-WCr" id="NpY-RD-bjx"/>
+                                                        <outlet property="windowContentViewMinimumHeight" destination="pSQ-Ro-Ok1" id="TJD-IO-rj4"/>
                                                     </connections>
                                                 </textView>
                                             </subviews>

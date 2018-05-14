@@ -52,8 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define _WindowContentBorderTotalPaddingMavericks		23.0
 #define _WindowContentBorderTotalPaddingYosemite		23.0
 
-#define _WindowContentViewMinimumHeightConstraint		35.0
-
 #define _KeyObservingArray 	@[	@"TextFieldAutomaticSpellCheck", \
 								@"TextFieldAutomaticGrammarCheck", \
 								@"TextFieldAutomaticSpellCorrection", \
@@ -69,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) TVCMainWindowTextViewFontSize cachedFontSize;
 @property (nonatomic, copy) NSAttributedString *placeholderString;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *windowContentViewMinimumHeight;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 @property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
@@ -337,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.stringLength < 1) {
 		backgroundHeight = (backgroundHeightDefault + contentBorderPadding);
 	} else {
-		CGFloat backgroundHeightMaximum = (NSHeight(windowFrame) - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
+		CGFloat backgroundHeightMaximum = (NSHeight(windowFrame) - (self.windowContentViewMinimumHeight.constant + contentBorderPadding));
 
 		backgroundHeight = [self highestHeightBelowHeight:backgroundHeightMaximum withPadding:contentBorderPadding];
 

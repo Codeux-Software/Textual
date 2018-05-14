@@ -63,11 +63,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _tableDragToken		@"TDCServerPropertiesSheetTableDragToken"
 
-#define _preferencePaneViewFramePadding				47
-
-#define _forcedPreferencePaneViewFrameHeight		304
-#define _forcedPreferencePaneViewFrameWidth			529
-
 @interface TDCServerPropertiesSheet ()
 @property (nonatomic, strong, readwrite, nullable) IRCClient *client;
 @property (nonatomic, copy, readwrite, nullable) NSString *clientId;
@@ -503,10 +498,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.navigationOutlineview.navigationTreeMatrix = navigationTreeMatrix;
 
-	self.navigationOutlineview.contentViewPadding = _preferencePaneViewFramePadding;
-
-	self.navigationOutlineview.contentViewPreferredWidth = _forcedPreferencePaneViewFrameWidth;
-	self.navigationOutlineview.contentViewPreferredHeight = _forcedPreferencePaneViewFrameHeight;
+	/* Auto layout will grow view beyond these values.
+	 We are just declaring the default which doesn't matter much. */
+	self.navigationOutlineview.contentViewPreferredWidth = 100;
+	self.navigationOutlineview.contentViewPreferredHeight = 100;
 
 	self.navigationOutlineview.expandParentonDoubleClick = YES;
 

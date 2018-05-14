@@ -69,8 +69,6 @@ enum {
 
 #define _trialExpiredRemindMeInterval		432000 // 5 days
 
-#define _trialInformationViewDefaultHeight	42
-
 #define _upgradeFromV6FreeThreshold		1497484800 // June 15, 2017
 
 @class TDCInAppPurchaseDialogChangedProductsPayload;
@@ -631,12 +629,12 @@ enum {
 - (void)refreshTrialInformationView
 {
 	if (TLOAppStoreIsTrialPurchased() == NO) {
-		self.trialInformationHeightConstraint.constant = 0.0;
+		[self.trialInformationHeightConstraint archiveConstantAndZeroOut];
 		
 		return;
 	}
 
-	self.trialInformationHeightConstraint.constant = _trialInformationViewDefaultHeight;
+	[self.trialInformationHeightConstraint restoreArchivedConstant];
 
 	NSString *formattedTrialInformation = [self timeRemainingInTrialFormattedMessage];
 

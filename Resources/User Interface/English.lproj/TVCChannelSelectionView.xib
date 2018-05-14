@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13122.17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
                 <rect key="frame" x="1" y="1" width="550" height="288"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="nwZ-Am-U4H" id="YUW-LN-mDa" customClass="TVCChannelSelectionOutlineView">
+                    <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationMarkerFollowsCell="NO" outlineTableColumn="nwZ-Am-U4H" id="YUW-LN-mDa">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="288"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -39,7 +39,7 @@
                                 </textFieldCell>
                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                 <prototypeCellViews>
-                                    <tableCellView identifier="tableEntry" id="tz7-a8-xMR" customClass="TVCChannelSelectionOutlineCellView">
+                                    <tableCellView identifier="serverEntry" id="tz7-a8-xMR" userLabel="Server Cell" customClass="TVCChannelSelectionOutlineCellView">
                                         <rect key="frame" x="0.0" y="0.0" width="550" height="18"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
@@ -76,6 +76,45 @@
                                         <connections>
                                             <outlet property="selectedCheckbox" destination="O7s-3h-Zh7" id="hcW-LK-iIs"/>
                                             <outlet property="textField" destination="myz-4S-cMH" id="5wJ-Id-v0x"/>
+                                        </connections>
+                                    </tableCellView>
+                                    <tableCellView identifier="channelEntry" id="qui-zI-7Lr" userLabel="Channel Cell" customClass="TVCChannelSelectionOutlineCellView">
+                                        <rect key="frame" x="0.0" y="18" width="550" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <button translatesAutoresizingMaskIntoConstraints="NO" id="KU9-QJ-egQ">
+                                                <rect key="frame" x="18" y="0.0" width="22" height="18"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="18" id="xTs-MK-jR6"/>
+                                                </constraints>
+                                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" allowsMixedState="YES" inset="2" id="i3R-8u-WOc">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <accessibility description="Limit filter to item"/>
+                                                <connections>
+                                                    <action selector="selectionCheckboxClicked:" target="qui-zI-7Lr" id="fnq-22-AGL"/>
+                                                </connections>
+                                            </button>
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="yCi-cd-PTx">
+                                                <rect key="frame" x="39" y="1" width="96" height="17"/>
+                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="hGN-67-Q2Q">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="KU9-QJ-egQ" firstAttribute="leading" secondItem="qui-zI-7Lr" secondAttribute="leading" constant="20" id="9j6-Vk-cEc"/>
+                                            <constraint firstItem="yCi-cd-PTx" firstAttribute="leading" secondItem="KU9-QJ-egQ" secondAttribute="trailing" constant="3" id="IUY-LY-gsT"/>
+                                            <constraint firstItem="yCi-cd-PTx" firstAttribute="top" secondItem="qui-zI-7Lr" secondAttribute="top" id="dKq-MX-kKA"/>
+                                            <constraint firstItem="KU9-QJ-egQ" firstAttribute="top" secondItem="qui-zI-7Lr" secondAttribute="top" constant="2" id="dgw-23-u7j"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yCi-cd-PTx" secondAttribute="trailing" constant="4" id="qfh-hJ-adK"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="selectedCheckbox" destination="KU9-QJ-egQ" id="sY9-ge-Id9"/>
+                                            <outlet property="textField" destination="yCi-cd-PTx" id="ODN-0m-6vc"/>
                                         </connections>
                                     </tableCellView>
                                 </prototypeCellViews>

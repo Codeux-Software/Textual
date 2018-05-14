@@ -50,8 +50,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define WindowDefaultHeight								221.0
-#define NoResultsLabelLeadingConstraintDefault			14.0
-#define SearchResultsViewHeightConstraintDefault		140.0
 
 @implementation TDCChannelSpotlightController
 
@@ -117,6 +115,10 @@ ClassWithDesignatedInitializerInitMethod
 	[self updateBackgroundColor];
 
 	[self updateControlsState];
+
+	[self.noResultsLabelLeadingConstraint archiveConstant];
+	
+	[self.searchResultsViewHeightConstraint archiveConstant];
 }
 
 #pragma mark -
@@ -171,9 +173,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (searchString.length == 0) {
 		self.noResultsLabel.stringValue = @"";
 
-		self.noResultsLabelLeadingConstraint.constant = 0.0;
+		[self.noResultsLabelLeadingConstraint zeroOutConstant];
 
-		self.searchResultsViewHeightConstraint.constant = 0.0;
+		[self.searchResultsViewHeightConstraint zeroOutConstant];
 
 		return;
 	}
@@ -181,18 +183,18 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.searchResultsCount == 0) {
 		self.noResultsLabel.stringValue = @"No Results";
 
-		self.noResultsLabelLeadingConstraint.constant = NoResultsLabelLeadingConstraintDefault;
+		[self.noResultsLabelLeadingConstraint restoreArchivedConstant];
 
-		self.searchResultsViewHeightConstraint.constant = 0.0;
+		[self.searchResultsViewHeightConstraint zeroOutConstant];
 
 		return;
 	}
 
 	self.noResultsLabel.stringValue = @"";
 
-	self.noResultsLabelLeadingConstraint.constant = 0.0;
+	[self.noResultsLabelLeadingConstraint zeroOutConstant];
 
-	self.searchResultsViewHeightConstraint.constant = SearchResultsViewHeightConstraintDefault;
+	[self.searchResultsViewHeightConstraint restoreArchivedConstant];
 
 	[self selectFirstSearchResultIfNecessary];
 }

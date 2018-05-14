@@ -48,11 +48,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _WindowSegmentedControllerDefaultWidth			150.0
-
-#define _WindowSegmentedControllerLeadingHiddenEdge		0.0
-#define _WindowSegmentedControllerLeadingVisibleEdge	10.0
-
 @interface TVCMainWindowSegmentedController ()
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
@@ -72,11 +67,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateSegmentedControllerOrigin
 {
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
-		self.segmentedControllerLeadingConstraint.constant = _WindowSegmentedControllerLeadingHiddenEdge;
-		self.segmentedControllerWidthConstraint.constant = 0.0;
+		[self.segmentedControllerLeadingConstraint archiveConstantAndZeroOut];
+		[self.segmentedControllerWidthConstraint archiveConstantAndZeroOut];
 	} else {
-		self.segmentedControllerLeadingConstraint.constant =_WindowSegmentedControllerLeadingVisibleEdge;
-		self.segmentedControllerWidthConstraint.constant =_WindowSegmentedControllerDefaultWidth;
+		[self.segmentedControllerLeadingConstraint restoreArchivedConstant];
+		[self.segmentedControllerWidthConstraint restoreArchivedConstant];
 	}
 }
 

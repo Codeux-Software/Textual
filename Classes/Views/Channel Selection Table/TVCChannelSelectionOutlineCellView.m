@@ -37,7 +37,6 @@
 
 #import "IRCTreeItem.h"
 #import "TVCChannelSelectionViewControllerPrivate.h"
-#import "TVCChannelSelectionOutlineViewPrivate.h"
 #import "TVCChannelSelectionOutlineViewCellPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN

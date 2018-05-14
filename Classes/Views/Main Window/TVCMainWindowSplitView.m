@@ -46,8 +46,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _minimumSplitViewWidth			120.0
-
 NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindowSplitView";
 
 @interface TVCMainWindowSplitView ()
@@ -128,7 +126,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	[self setPosition:[self positionToRestoreServerListAt] ofDividerAtIndex:0];
 
-	self.serverListWidthConstraint.constant = _minimumSplitViewWidth;
+	[self.serverListWidthConstraint restoreArchivedConstant];
 
 	self.stopFrameUpdatesForServerList = NO;
 }
@@ -145,7 +143,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	[self setPosition:[self positionToRestoreMemberListAt] ofDividerAtIndex:1];
 
-	self.memberListWidthConstraint.constant = _minimumSplitViewWidth;
+	[self.memberListWidthConstraint restoreArchivedConstant];
 
 	self.stopFrameUpdatesForMemberList = NO;
 }
@@ -154,7 +152,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForServerList = YES;
 
-	self.serverListWidthConstraint.constant = 0.0;
+	[self.serverListWidthConstraint archiveConstantAndZeroOut];
 
 	NSScrollView *scrollView = self.mainWindow.serverList.enclosingScrollView;
 
@@ -171,7 +169,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForMemberList = YES;
 
-	self.memberListWidthConstraint.constant = 0.0;
+	[self.memberListWidthConstraint archiveConstantAndZeroOut];
 
 	NSView *subview = self.subviews[2];
 
