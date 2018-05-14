@@ -28,20 +28,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9x-Ny-Yn4" customClass="TVCMainWindowSegmentedController">
-                                <rect key="frame" x="10" y="6" width="150" height="23"/>
+                                <rect key="frame" x="10" y="6" width="152" height="23"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="1ir-ed-Ia3"/>
+                                    <constraint firstAttribute="width" constant="152" id="1ir-ed-Ia3"/>
                                 </constraints>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
                                     <font key="font" metaFont="system"/>
                                     <segments>
-                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate">
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Manage Selection" image="NSActionTemplate" tag="1">
+                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" tag="2">
+                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="48" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -56,19 +56,19 @@
                                 </connections>
                             </segmentedControl>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="nbK-l5-9k5" customClass="TVCMainWindowTextViewBackground">
-                                <rect key="frame" x="170" y="6" width="620" height="25"/>
+                                <rect key="frame" x="172" y="6" width="618" height="25"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnK-JZ-PNd">
-                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
+                                        <rect key="frame" x="0.0" y="3" width="608" height="19"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="R89-6i-JgM">
-                                            <rect key="frame" x="0.0" y="0.0" width="610" height="19"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="608" height="19"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="Ub5-no-pBU" customClass="TVCMainWindowTextView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="610" height="19"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="608" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="610" height="19"/>
+                                                    <size key="minSize" width="608" height="19"/>
                                                     <size key="maxSize" width="632" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <accessibility description="Main Text Field"/>
