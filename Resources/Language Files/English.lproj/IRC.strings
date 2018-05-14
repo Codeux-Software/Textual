@@ -128,20 +128,18 @@
 "IRC[1021]" = "The mode \002+%@\002 is not supported on this server";
 
 /* /lagcheck/ command */
-"IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
+"IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.0f milliseconds. (Rating: %3$@)";
 "IRC[1023]" = "Waiting for response from lag check…";
 "IRC[1024]" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
 
 "IRC[1025][00]" = "Yeah, okay…";
 "IRC[1025][01]" = "Are you plugged into the server?";
-"IRC[1025][02]" = "Almost No Lag";
-"IRC[1025][03]" = "Very Fast";
-"IRC[1025][04]" = "Fast";
-"IRC[1025][05]" = "Average";
+"IRC[1025][02]" = "Pretty good";
+"IRC[1025][03]" = "Not bad";
+"IRC[1025][04]" = "Okay";
+"IRC[1025][05]" = "Needs work";
 "IRC[1025][06]" = "Slow";
 "IRC[1025][07]" = "Very Slow";
-"IRC[1025][08]" = "Dang! Call your ISP";
-"IRC[1025][09]" = "You Fail!";
 
 /* /myversion/ command */
 "IRC[1027]" = "%1$@ %2$@ (Build %3$@) (%4$@)";

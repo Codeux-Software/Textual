@@ -228,7 +228,6 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *whoTimer;
-@property (nonatomic, weak) IRCChannel *lagCheckDestinationChannel;
 @property (nonatomic, assign) BOOL capabilityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
@@ -238,7 +237,6 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) BOOL zncBoucnerIsSendingCertificateInfo;
 @property (nonatomic, assign) BOOL zncBouncerIsPlayingBackHistory;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *capabilitiesPending;
-@property (nonatomic, assign) NSTimeInterval lagCheckLastCheck;
 @property (nonatomic, assign) NSUInteger connectDelay;
 @property (nonatomic, assign) NSUInteger lastServerSelected;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
@@ -3981,13 +3979,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
-			self.lagCheckLastCheck = [NSDate timeIntervalSince1970];
+			/* We only accept LAGCHECK CTCP responses from ourselves which
+			 means it is relatively safe to pack some data on the end of
+			 the CTCP so that we can provide ourselves some context. */
+			NSMutableDictionary *lagCheckContext = [NSMutableDictionary dictionaryWithCapacity:3];
+
+			lagCheckContext[@"connection"] = self.socket.uniqueIdentifier;
+			
+			lagCheckContext[@"time"] = @([NSDate timeIntervalSince1970]);
 
 			if (commandNumeric == IRCPublicCommandMylagIndex) {
-				self.lagCheckDestinationChannel = [mainWindow() selectedChannelOn:self];
+				IRCChannel *selectedChannel = [mainWindow() selectedChannelOn:self];
+				
+				if (selectedChannel) {
+					lagCheckContext[@"channel"] = selectedChannel.name;
+				}
 			}
+			
+			NSString *ctcpContext = [lagCheckContext formDataUsingSeparator:@"&"];
 
-			[self sendCTCPQuery:self.userNickname command:@"LAGCHECK" text:nil];
+			[self sendCTCPQuery:self.userNickname
+						command:@"LAGCHECK"
+						   text:ctcpContext];
 
 			[self printDebugInformation:TXTLS(@"IRC[1023]")];
 
@@ -5321,9 +5334,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.reconnectEnabled = NO;
 
 	self.timeoutWarningShownToUser = NO;
-
-	self.lagCheckDestinationChannel = nil;
-	self.lagCheckLastCheck = 0;
 
 	self.lastWhoRequestChannelListIndex = 0;
 
@@ -6661,7 +6671,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Respond to query with the value asked for */
 	if (isLagCheckQuery)
 	{
-		[self receiveCTCPLagCheckQuery:m];
+		[self receiveCTCPLagCheckQuery:m text:textMutable];
 	}
 
 	/* CLIENTINFO command */
@@ -6724,55 +6734,68 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)receiveCTCPLagCheckQuery:(IRCMessage *)m
+- (void)receiveCTCPLagCheckQuery:(IRCMessage *)m text:(NSString *)text
 {
 	NSParameterAssert(m != nil);
 
 	if ([self messageIsFromMyself:m] == NO) {
 		return;
 	}
-
-	if (self.lagCheckLastCheck == 0) {
+	
+	NSDictionary *lagCheckContext = [text formDataUsingSeparator:@"&"];
+	
+	if (lagCheckContext.count == 0) {
 		return;
 	}
 
-	double delta = ([NSDate timeIntervalSince1970] - self.lagCheckLastCheck);
+	NSString *connectionIdentifier = lagCheckContext[@"connection"];
+	
+	if ([connectionIdentifier isEqualToString:self.socket.uniqueIdentifier] == NO) {
+		/* We check which connection this event is linked to so that
+		 we ignore events after reconnects (such as from a bouncer). */
 
+		return;
+	}
+	
+	NSTimeInterval firstTime = [lagCheckContext doubleForKey:@"time"];
+
+	double delta = (([NSDate timeIntervalSince1970] - firstTime) * 1000);
+	
 	NSString *ratingString = nil;
-
-	if (delta < 0.01) {
+	
+	if (delta < 10) { // Yeah, okay…
 		ratingString = TXTLS(@"IRC[1025][00]");
-	} else if (delta >= 0.01 && delta < 0.1) {
+	} else if (delta > 10 && delta <= 25) { // Are you plugged into the server?
 		ratingString = TXTLS(@"IRC[1025][01]");
-	} else if (delta >= 0.1 && delta < 0.2) {
+	} else if (delta > 25 && delta <= 100) { // Pretty good
 		ratingString = TXTLS(@"IRC[1025][02]");
-	} else if (delta >= 0.2 && delta < 0.5) {
+	} else if (delta > 100 && delta < 125) { // Not bad
 		ratingString = TXTLS(@"IRC[1025][03]");
-	} else if (delta >= 0.5 && delta < 1.0) {
+	} else if (delta > 125 && delta < 200) { // Okay
 		ratingString = TXTLS(@"IRC[1025][04]");
-	} else if (delta >= 1.0 && delta < 2.0) {
+	} else if (delta > 200 && delta < 225) { // Needs work
 		ratingString = TXTLS(@"IRC[1025][05]");
-	} else if (delta >= 2.0 && delta < 5.0) {
+	} else if (delta > 225 && delta < 300) { // Slow
 		ratingString = TXTLS(@"IRC[1025][06]");
-	} else if (delta >= 5.0 && delta < 10.0) {
+	} else if (delta > 300) { // Very Slow
 		ratingString = TXTLS(@"IRC[1025][07]");
-	} else if (delta >= 10.0 && delta < 30.0) {
-		ratingString = TXTLS(@"IRC[1025][08]");
-	} else if (delta >= 30.0) {
-		ratingString = TXTLS(@"IRC[1025][09]");
+	}
+	
+	NSString *message = TXTLS(@"IRC[1022]", self.serverAddress, delta, ratingString);
+	
+	NSString *channelName = lagCheckContext[@"channel"];
+	
+	IRCChannel *channel = nil;
+	
+	if (channelName) {
+		channel = [self findChannel:channelName];
 	}
 
-	NSString *message = TXTLS(@"IRC[1022]", self.serverAddress, delta, ratingString);
-
-	if (self.lagCheckDestinationChannel) {
-		[self sendPrivmsg:message toChannel:self.lagCheckDestinationChannel];
-
-		self.lagCheckDestinationChannel = nil;
+	if (channel) {
+		[self sendPrivmsg:message toChannel:channel];
 	} else {
 		[self printDebugInformation:message];
 	}
-
-	self.lagCheckLastCheck = 0;
 }
 
 - (void)receiveCTCPReply:(IRCMessage *)m text:(NSString *)text
