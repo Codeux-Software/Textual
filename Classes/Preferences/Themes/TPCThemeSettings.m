@@ -147,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 	GRMustacheTemplate *template = [self _templateWithName:templateName logErrors:NO];
 
 	if (template == nil) {
-		templateName = [[self templateLineTypes] objectForKey:typeString];
+		templateName = [self templateLineTypes][typeString];
 
 		if (templateName == nil) {
 			return nil;
@@ -380,7 +380,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.js_postPreferencesDidChangesNotifications = [styleSettings boolForKey:@"Post Textual.preferencesDidChange() Notifications"];
 
 		/* Disable indentation? */
-		id indentationOffset = [styleSettings objectForKey:@"Indentation Offset"];
+		id indentationOffset = styleSettings[@"Indentation Offset"];
 
 		if (indentationOffset == nil) {
 			self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
@@ -395,7 +395,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		/* Nickname color style */
-		id nicknameColorStyle = [styleSettings objectForKey:@"Nickname Color Style"];
+		id nicknameColorStyle = styleSettings[@"Nickname Color Style"];
 
 		if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;

@@ -641,8 +641,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	NSMutableDictionary<NSNumber *, NSArray<NSString *> *> *themesMappedByLocation = [NSMutableDictionary dictionary];
 
-	[themesMappedByLocation setObject:checkPath([TPCPathInfo bundledThemes]) forKey:@(TPCThemeControllerStorageBundleLocation)];
-	[themesMappedByLocation setObject:checkPath([TPCPathInfo customThemes]) forKey:@(TPCThemeControllerStorageCustomLocation)];
+	themesMappedByLocation[@(TPCThemeControllerStorageBundleLocation)] = checkPath([TPCPathInfo bundledThemes]);
+	themesMappedByLocation[@(TPCThemeControllerStorageCustomLocation)] = checkPath([TPCPathInfo customThemes]);
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[themesMappedByLocation setObject:checkPath([TPCPathInfo cloudCustomThemes]) forKey:@(TPCThemeControllerStorageCloudLocation)];
@@ -659,7 +659,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 			if (mappedLocations == nil) {
 				mappedLocations = [NSMutableArray array];
 
-				[themesMappedByName setObject:mappedLocations forKey:theme];
+				themesMappedByName[theme] = mappedLocations;
 			}
 
 			[mappedLocations addObject:storageLocation];

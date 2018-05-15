@@ -534,7 +534,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* This key is no longer assigned. We still check it so that
 	 clients that did not set dictionaryVersion but did set this
 	 key wont trigger migration again. */
-	id migratedToServerListV1Layout = [dic objectForKey:@"migratedToServerListV1Layout"];
+	id migratedToServerListV1Layout = dic[@"migratedToServerListV1Layout"];
 
 	if (migratedToServerListV1Layout && [migratedToServerListV1Layout boolValue]) {
 		return;

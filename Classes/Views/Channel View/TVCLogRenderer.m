@@ -592,13 +592,13 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	if ([attributesIn containsKey:TVCLogRendererFormattingMonospaceTextAttribute]) {
 		boldItalicFont = [RZFontManager() convertFont:boldItalicFont toFamily:@"Menlo"];
 
-		[attributesOut setObject:@(YES) forKey:IRCTextFormatterMonospaceAttributeName];
+		attributesOut[IRCTextFormatterMonospaceAttributeName] = @(YES);
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingBoldTextAttribute]) {
 		boldItalicFont = [RZFontManager() convertFont:boldItalicFont toHaveTrait:NSBoldFontMask];
 
-		[attributesOut setObject:@(YES) forKey:IRCTextFormatterBoldAttributeName];
+		attributesOut[IRCTextFormatterBoldAttributeName] = @(YES);
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingItalicTextAttribute]) {
@@ -608,43 +608,43 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 			boldItalicFont = boldItalicFont.convertToItalics;
 		}
 
-		[attributesOut setObject:@(YES) forKey:IRCTextFormatterItalicAttributeName];
+		attributesOut[IRCTextFormatterItalicAttributeName] = @(YES);
 	}
 
 	if (boldItalicFont) {
-		[attributesOut setObject:boldItalicFont forKey:NSFontAttributeName];
+		attributesOut[NSFontAttributeName] = boldItalicFont;
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingStrikethroughTextAttribute]) {
-		[attributesOut setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
+		attributesOut[NSStrikethroughStyleAttributeName] = @(NSUnderlineStyleSingle);
 
-		[attributesOut setObject:@(YES) forKey:IRCTextFormatterStrikethroughAttributeName];
+		attributesOut[IRCTextFormatterStrikethroughAttributeName] = @(YES);
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingUnderlineTextAttribute]) {
-		[attributesOut setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+		attributesOut[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle);
 
-		[attributesOut setObject:@(YES) forKey:IRCTextFormatterUnderlineAttributeName];
+		attributesOut[IRCTextFormatterUnderlineAttributeName] = @(YES);
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingForegroundColorAttribute]) {
 		id foregroundColor = attributesIn[TVCLogRendererFormattingForegroundColorAttribute];
 
-		[attributesOut setObject:[self.class mapColor:foregroundColor] forKey:NSForegroundColorAttributeName];
+		attributesOut[NSForegroundColorAttributeName] = [self.class mapColor:foregroundColor];
 
-		[attributesOut setObject:foregroundColor forKey:IRCTextFormatterForegroundColorAttributeName];
+		attributesOut[IRCTextFormatterForegroundColorAttributeName] = foregroundColor;
 	} else {
 		if (defaultFontColor) {
-			[attributesOut setObject:defaultFontColor forKey:NSForegroundColorAttributeName];
+			attributesOut[NSForegroundColorAttributeName] = defaultFontColor;
 		}
 	}
 
 	if ([attributesIn containsKey:TVCLogRendererFormattingBackgroundColorAttribute]) {
 		id backgroundColor = attributesIn[TVCLogRendererFormattingBackgroundColorAttribute];
 
-		[attributesOut setObject:[self.class mapColor:backgroundColor] forKey:NSBackgroundColorAttributeName];
+		attributesOut[NSBackgroundColorAttributeName] = [self.class mapColor:backgroundColor];
 
-		[attributesOut setObject:backgroundColor forKey:IRCTextFormatterBackgroundColorAttributeName];
+		attributesOut[IRCTextFormatterBackgroundColorAttributeName] = backgroundColor;
 	}
 
 	return [attributesOut copy];
@@ -816,7 +816,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	}
 
 	if (setNewColors && foregroundColorNew) {
-		[self->_renderedBodyOpenAttributes setObject:foregroundColorNew forKey:TVCLogRendererFormattingForegroundColorAttribute];
+		self->_renderedBodyOpenAttributes[TVCLogRendererFormattingForegroundColorAttribute] = foregroundColorNew;
 
 		BOOL usesStyleTag = NO;
 
@@ -831,7 +831,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	}
 
 	if (setNewColors && backgroundColorNew) {
-		[self->_renderedBodyOpenAttributes setObject:backgroundColorNew forKey:TVCLogRendererFormattingBackgroundColorAttribute];
+		self->_renderedBodyOpenAttributes[TVCLogRendererFormattingBackgroundColorAttribute] = backgroundColorNew;
 
 		BOOL usesStyleTag = NO;
 

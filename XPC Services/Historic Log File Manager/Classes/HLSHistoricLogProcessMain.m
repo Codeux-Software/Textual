@@ -910,7 +910,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 	@synchronized(self.contextObjects) {
 		/* Returned cached object or create new */
-		HLSHistoricLogViewContext *viewContext = [self.contextObjects objectForKey:viewId];
+		HLSHistoricLogViewContext *viewContext = self.contextObjects[viewId];
 
 		if (viewContext != nil) {
 			return viewContext;
@@ -942,7 +942,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 		/* Cache new object and return it */
 		[parentObjectContext performBlockAndWait:^{
-			[self.contextObjects setObject:viewContext forKey:viewId];
+			self.contextObjects[viewId] = viewContext;
 		}];
 
 		return viewContext;

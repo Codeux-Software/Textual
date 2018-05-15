@@ -121,7 +121,7 @@ ClassWithDesignatedInitializerInitMethod
 			if (mappedDomains == nil) {
 				mappedDomains = [NSMutableArray array];
 
-				[modulesOut setObject:mappedDomains forKey:moduleDomain];
+				modulesOut[moduleDomain] = mappedDomains;
 			}
 
 			[mappedDomains addObject:moduleClass];
@@ -198,7 +198,7 @@ ClassWithDesignatedInitializerInitMethod
 	BOOL (^processModulesWithDomain)(NSString *) = ^BOOL (NSString *domain) {
 		NSParameterAssert(domain != nil);
 
-		NSArray *modules = [self.modules objectForKey:domain];
+		NSArray *modules = self.modules[domain];
 
 		for (Class module in modules) {
 			if ([self _processPayload:payloadIn usingModule:module]) {
