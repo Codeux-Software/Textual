@@ -48,9 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-+ (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode
++ (nullable NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode
 {
-	NSInteger positiveErrorCode = (errorCode * (-1));
+	NSUInteger positiveErrorCode = (errorCode * (-1));
 
 	if ((positiveErrorCode >= 9800) && (positiveErrorCode <= 9850)) {
 		/* Request the heading for the formatted error message. */
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 											   table:@"SecureTransportErrorCodes"];
 
 		/* Request the reason for the formatting error message. */
-		NSString *lookupKey = [NSString stringWithInteger:positiveErrorCode];
+		NSString *lookupKey = [NSString stringWithUnsignedInteger:positiveErrorCode];
 
 		NSString *localizedError =
 		[[NSBundle mainBundle] localizedStringForKey:lookupKey
