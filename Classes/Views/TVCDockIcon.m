@@ -71,9 +71,9 @@ static NSInteger _cachedMessageCount = (-1);
 	}
 
 	if (messageCount == 0 && highlightCount == 0) {
-		[TVCDockIcon drawWithoutCount];
+		[self drawWithoutCount];
 	} else {
-		[TVCDockIcon drawWithHighlightCount:highlightCount messageCount:messageCount];
+		[self drawWithHighlightCount:highlightCount messageCount:messageCount];
 	}
 }
 
@@ -111,7 +111,7 @@ static NSInteger _cachedMessageCount = (-1);
 	_cachedMessageCount = 0;
 	_cachedHighlightCount = 0;
 
-	[NSApp setApplicationIconImage:[TVCDockIcon applicationIcon]];
+	[NSApp setApplicationIconImage:[self applicationIcon]];
 }
 
 + (void)drawWithHighlightCount:(NSUInteger)highlightCount messageCount:(NSUInteger)messageCount
@@ -166,7 +166,7 @@ static NSInteger _cachedMessageCount = (-1);
 	/* Load Drawing Images */
 	/* ////////////////////////////////////////////////////////// */
 
-	NSImage *appIcon = [[TVCDockIcon applicationIcon] copy];
+	NSImage *appIcon = [[self applicationIcon] copy];
 
 	NSImage *redBadgeLeft = nil;
 	NSImage *redBadgeCenter = nil;
@@ -215,7 +215,7 @@ static NSInteger _cachedMessageCount = (-1);
 		redBadgeLeftFrame.size.height = 53.0;
 
 		redBadgeLeftFrame.size.width = 27.0;
-		redBadgeCenterFrame.size.width = [TVCDockIcon badgeCenterTileWidthForYosemite:messageCount];
+		redBadgeCenterFrame.size.width = [self badgeCenterTileWidthForYosemite:messageCount];
 		redBadgeRightFrame.size.width = 26.0;
 
 		/* Green Badge Size */
@@ -224,7 +224,7 @@ static NSInteger _cachedMessageCount = (-1);
 		greenBadgeLeftFrame.size.height	= 53.0;
 
 		greenBadgeLeftFrame.size.width = 27.0;
-		greenBadgeCenterFrame.size.width = [TVCDockIcon badgeCenterTileWidthForYosemite:highlightCount];
+		greenBadgeCenterFrame.size.width = [self badgeCenterTileWidthForYosemite:highlightCount];
 		greenBadgeRightFrame.size.width	= 26.0;
 	}
 	else
@@ -235,7 +235,7 @@ static NSInteger _cachedMessageCount = (-1);
 		redBadgeLeftFrame.size.height = 44.0;
 
 		redBadgeLeftFrame.size.width = 21.0;
-		redBadgeCenterFrame.size.width = [TVCDockIcon badgeCenterTileWidthForMavericks:messageCount];
+		redBadgeCenterFrame.size.width = [self badgeCenterTileWidthForMavericks:messageCount];
 		redBadgeRightFrame.size.width = 20.0;
 
 		/* Green Badge Size */
@@ -244,7 +244,7 @@ static NSInteger _cachedMessageCount = (-1);
 		greenBadgeLeftFrame.size.height	= 44.0;
 
 		greenBadgeLeftFrame.size.width = 21.0;
-		greenBadgeCenterFrame.size.width = [TVCDockIcon badgeCenterTileWidthForMavericks:highlightCount];
+		greenBadgeCenterFrame.size.width = [self badgeCenterTileWidthForMavericks:highlightCount];
 		greenBadgeRightFrame.size.width	= 20.0;
 	}
 

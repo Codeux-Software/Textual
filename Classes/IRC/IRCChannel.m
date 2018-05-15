@@ -593,19 +593,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 + (void)resumeMemberListSerialQueues
 {
-	dispatch_resume([IRCChannel modifyMembmerListSerialQueue]);
+	dispatch_resume([self modifyMembmerListSerialQueue]);
 }
 
 + (void)suspendMemberListSerialQueues
 {
-	dispatch_suspend([IRCChannel modifyMembmerListSerialQueue]);
+	dispatch_suspend([self modifyMembmerListSerialQueue]);
 }
 
 + (void)accessMemberListUsingBlock:(dispatch_block_t)block
 {
 	NSCParameterAssert(block != NULL);
 
-	dispatch_queue_t workerQueue = [IRCChannel modifyMembmerListSerialQueue];
+	dispatch_queue_t workerQueue = [self modifyMembmerListSerialQueue];
 
 	static void *IsOnWorkerQueueKey = NULL;
 
@@ -744,7 +744,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	__block NSInteger sortedIndex = (-1);
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		sortedIndex = [self _sortedInsert:member];
 	}];
 
@@ -783,7 +783,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	__block BOOL memberRemoved = NO;
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		memberRemoved = [self _removeMemberFromMemberList:member];
 	}];
 
@@ -824,7 +824,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	__block NSInteger sortedIndex = (-1);
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		if (resort) {
 			[self _removeMemberFromMemberList:member1];
 
@@ -999,7 +999,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)clearMembers
 {
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		[self willChangeValueForKey:@"numberOfMembers"];
 		[self willChangeValueForKey:@"memberList"];
 
@@ -1016,7 +1016,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	__block NSUInteger memberCount = 0;
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		memberCount = self.memberListStandardSortedContainer.count;
 	}];
 
@@ -1027,7 +1027,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	__block NSArray<IRCChannelUser *> *memberList = nil;
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		memberList = [self.memberListStandardSortedContainer copy];
 	}];
 
@@ -1093,7 +1093,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(callbackBlock != nil);
 
 	return
-	[IRCChannel readNicknamesFromPasteboardData:pasteboardData withBlock:^(IRCChannel *channel, NSArray<NSString *> *nicknames) {
+	[self readNicknamesFromPasteboardData:pasteboardData withBlock:^(IRCChannel *channel, NSArray<NSString *> *nicknames) {
 		NSMutableArray *members = [NSMutableArray arrayWithCapacity:nicknames.count];
 
 		for (NSString *nickname in nicknames) {
@@ -1141,7 +1141,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	__block IRCChannelUser *member = nil;
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		member = self.memberListStandardSortedContainer[index];
 	}];
 
@@ -1167,7 +1167,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[IRCChannel accessMemberListUsingBlock:^{
+	[self.class accessMemberListUsingBlock:^{
 		[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
 	}];
 

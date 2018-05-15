@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ([addressScheme isEqualToString:@"textual"]) {
-		[IRCExtras performSpecialActionForTextualScheme:serverAddress source:locationValue];
+		[self performSpecialActionForTextualScheme:serverAddress source:locationValue];
 
 		return;
 	}
@@ -288,12 +288,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* A URL is consider untrusted and will not auto connect */
-	[IRCExtras createConnectionToServer:resultValue channelList:channelList connectWhenCreated:NO mergeConnectionIfPossible:YES selectFirstChannelAdded:NO];
+	[self createConnectionToServer:resultValue channelList:channelList connectWhenCreated:NO mergeConnectionIfPossible:YES selectFirstChannelAdded:NO];
 }
 
 + (void)createConnectionToServer:(NSString *)serverInfo channelList:(nullable NSString *)channelList connectWhenCreated:(BOOL)connectWhenCreated
 {
-	[IRCExtras createConnectionToServer:serverInfo channelList:channelList connectWhenCreated:connectWhenCreated mergeConnectionIfPossible:NO selectFirstChannelAdded:NO];
+	[self createConnectionToServer:serverInfo channelList:channelList connectWhenCreated:connectWhenCreated mergeConnectionIfPossible:NO selectFirstChannelAdded:NO];
 }
 
 + (void)createConnectionToServer:(NSString *)serverInfo
@@ -447,14 +447,14 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Create connection */
-	[IRCExtras createConnectionToServer:serverAddress
-							 serverPort:serverPort
-						 serverPassword:serverPassword
-						connectSecurely:connectSecurely
-							channelList:[channelListArray copy]
-					 connectWhenCreated:connectWhenCreated
-			  mergeConnectionIfPossible:mergeConnectionIfPossible
-				selectFirstChannelAdded:selectFirstChannelAdded];
+	[self createConnectionToServer:serverAddress
+						serverPort:serverPort
+					serverPassword:serverPassword
+				   connectSecurely:connectSecurely
+					   channelList:[channelListArray copy]
+				connectWhenCreated:connectWhenCreated
+		 mergeConnectionIfPossible:mergeConnectionIfPossible
+		   selectFirstChannelAdded:selectFirstChannelAdded];
 }
 
 + (void)createConnectionToServer:(NSString *)serverAddress

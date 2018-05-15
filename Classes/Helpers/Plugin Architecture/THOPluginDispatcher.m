@@ -230,7 +230,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	NSParameterAssert(commandString != nil);
 	NSParameterAssert(messageString != nil);
 
-	XRPerformBlockAsynchronouslyOnQueue([THOPluginDispatcher dispatchQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
 		NSString *lowercaseCommand = commandString.lowercaseString;
 
 		NSString *uppercaseCommand = commandString.uppercaseString;
@@ -255,7 +255,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	NSParameterAssert(payloadObject != nil);
 	NSParameterAssert(viewController != nil);
 
-	XRPerformBlockAsynchronouslyOnQueue([THOPluginDispatcher dispatchQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 		{
 			if ([plugin supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
@@ -272,7 +272,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	NSParameterAssert(inputObject != nil);
 	NSParameterAssert(client != nil);
 
-	XRPerformBlockAsynchronouslyOnQueue([THOPluginDispatcher dispatchQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
 		NSDictionary *senderDictionary = nil;
 
 		NSDictionary *messageDictionary = nil;
@@ -350,7 +350,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 
-	XRPerformBlockAsynchronouslyOnQueue([THOPluginDispatcher dispatchQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
 		NSDictionary *messageDictionary = nil;
 
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)

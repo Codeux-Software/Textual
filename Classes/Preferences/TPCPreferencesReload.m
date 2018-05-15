@@ -79,12 +79,12 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 + (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+	[self performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
 }
 
 + (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+	[self performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
 }
 #endif
 
@@ -223,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 care of everything else that does not need specific reloads. */
 	reloadAction |= TPCPreferencesReloadPreferencesChangedAction;
 
-	[TPCPreferences performReloadAction:reloadAction];
+	[self performReloadAction:reloadAction];
 }
 
 + (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction
@@ -330,12 +330,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Highlight keywords */
 	if ((reloadAction & TPCPreferencesReloadHighlightKeywordsAction) == TPCPreferencesReloadHighlightKeywordsAction) {
-		[TPCPreferences cleanUpHighlightKeywords];
+		[self cleanUpHighlightKeywords];
 	}
 
 	/* Highlight logging */
 	if ((reloadAction & TPCPreferencesReloadHighlightLoggingAction) == TPCPreferencesReloadHighlightLoggingAction) {
-		if ([TPCPreferences logHighlights] == NO) {
+		if ([self logHighlights] == NO) {
 			for (IRCClient *u in worldController().clientList) {
 				[u clearCachedHighlights];
 			}

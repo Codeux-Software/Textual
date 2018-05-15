@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)nicknameColorStyleForString:(NSString *)inputString
 {
-	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:inputString isOverride:NULL];
+	return [self nicknameColorStyleForString:inputString isOverride:NULL];
 }
 
 + (NSString *)nicknameColorStyleForString:(NSString *)inputString isOverride:(BOOL * _Nullable)isOverride
@@ -60,8 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *unshuffledString = inputString.lowercaseString;
 
-	NSColor *styleOverride =
-	[IRCUserNicknameColorStyleGenerator nicknameColorStyleOverrideForKey:unshuffledString];
+	NSColor *styleOverride = [self nicknameColorStyleOverrideForKey:unshuffledString];
 
 	if (styleOverride) {
 		if (isOverride) {
@@ -78,9 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 	TPCThemeSettingsNicknameColorStyle colorStyle = themeSettings().nicknameColorStyle;
 
 	NSNumber *stringHash =
-	[IRCUserNicknameColorStyleGenerator hashForString:unshuffledString colorStyle:colorStyle];
+	[self hashForString:unshuffledString colorStyle:colorStyle];
 
-	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
+	return [self nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
 }
 
 + (NSString *)nicknameColorStyleForHash:(NSNumber *)stringHash colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
@@ -179,8 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(inputString != nil);
 
-	NSString *stringToHash =
-	[IRCUserNicknameColorStyleGenerator preprocessString:inputString colorStyle:colorStyle];
+	NSString *stringToHash = [self preprocessString:inputString colorStyle:colorStyle];
 
 	NSUInteger stringToHashLength = stringToHash.length;
 

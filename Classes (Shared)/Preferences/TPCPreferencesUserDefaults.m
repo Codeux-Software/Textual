@@ -74,12 +74,12 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 + (instancetype)alloc
 {
-	return [TPCPreferencesUserDefaults sharedUserDefaults];
+	return [self sharedUserDefaults];
 }
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone
 {
-	return [TPCPreferencesUserDefaults sharedUserDefaults];
+	return [self sharedUserDefaults];
 }
 
 - (instancetype)_init
@@ -101,17 +101,17 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
 - (instancetype)init
 {
-	return [TPCPreferencesUserDefaults sharedUserDefaults];
+	return [self.class sharedUserDefaults];
 }
 
 - (nullable instancetype)initWithSuiteName:(nullable NSString *)suitename
 {
-	return [TPCPreferencesUserDefaults sharedUserDefaults];
+	return [self.class sharedUserDefaults];
 }
 
 - (nullable instancetype)initWithUser:(NSString *)username
 {
-	return [TPCPreferencesUserDefaults sharedUserDefaults];
+	return [self.class sharedUserDefaults];
 }
 #pragma clang diagnostic pop
 

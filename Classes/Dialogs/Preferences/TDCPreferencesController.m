@@ -1287,7 +1287,7 @@ NS_ASSUME_NONNULL_BEGIN
 							 alternateButton:TXTLS(@"Prompts[1111][3]")];
 
 	if (clickResult == NO) {
-		[TDCPreferencesController openProxySettingsInSystemPreferences];
+		[self openProxySettingsInSystemPreferences];
 	}
 }
 
@@ -1319,7 +1319,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedInlineMediaOption:(id)sender
 {
 	if ([TPCPreferences showInlineMedia]) {
-		[TDCPreferencesController showTorAnonymityNetworkInlineMediaWarning];
+		[self.class showTorAnonymityNetworkInlineMediaWarning];
 	}
 
 	[self onChangedTheme:nil];

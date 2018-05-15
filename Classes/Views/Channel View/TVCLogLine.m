@@ -199,12 +199,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (void)populateDefaultUniqueIdentifier
 {
-	self->_uniqueIdentifier = [TVCLogLine newUniqueIdentifier];
+	self->_uniqueIdentifier = [self.class newUniqueIdentifier];
 }
 
 - (void)populateDefaultSessionIdentifier
 {
-	self->_sessionIdentifier = [TVCLogLine currentSessionIdentifier];
+	self->_sessionIdentifier = [self.class currentSessionIdentifier];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -271,7 +271,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (BOOL)fromCurrentSession
 {
-	return (self.sessionIdentifier == [TVCLogLine currentSessionIdentifier]);
+	return (self.sessionIdentifier == [self.class currentSessionIdentifier]);
 }
 
 + (nullable NSString *)stringForLineType:(TVCLogLineType)type
@@ -321,12 +321,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (nullable NSString *)lineTypeString
 {
-	return [TVCLogLine stringForLineType:self.lineType];
+	return [self.class stringForLineType:self.lineType];
 }
 
 - (NSString *)memberTypeString
 {
-	return [TVCLogLine stringForMemberType:self.memberType];
+	return [self.class stringForMemberType:self.memberType];
 }
 
 - (NSString *)formattedTimestamp

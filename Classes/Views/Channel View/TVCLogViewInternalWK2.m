@@ -72,7 +72,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		[TVCLogViewInternalWK2 constructProcessPool];
+		[self constructProcessPool];
 
 		_sharedWebViewConfiguration = [WKWebViewConfiguration new];
 
@@ -188,7 +188,7 @@ create_normal_pool:
 
 - (instancetype)initWithHostView:(TVCLogView *)hostView
 {
-	[[self class] _t_initialize];
+	[self.class _t_initialize];
 
 	if ((self = [self initWithFrame:NSZeroRect configuration:_sharedWebViewConfiguration])) {
 		[self constructWebViewWithHostView:hostView];
@@ -279,7 +279,7 @@ create_normal_pool:
 
 + (void)emptyCaches
 {
-	[[self class] emptyCaches:nil];
+	[self.class emptyCaches:nil];
 }
 
 + (void)emptyCaches:(void (^ _Nullable)(void))completionHandler

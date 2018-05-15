@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addWindowToWindowList:(id)window inRelationTo:(nullable id)relatedObject
 {
-	NSString *windowDescription = [TXWindowController windowDescriptionForWindow:window inRelationTo:relatedObject];
+	NSString *windowDescription = [self.class windowDescriptionForWindow:window inRelationTo:relatedObject];
 
 	[self addWindowToWindowList:window withDescription:windowDescription];
 }
@@ -139,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		windowDescription = window;
 	} else {
-		windowDescription = [TXWindowController windowDescriptionForWindow:window inRelationTo:relatedObject];
+		windowDescription = [self.class windowDescriptionForWindow:window inRelationTo:relatedObject];
 	}
 
 	if (windowDescription == nil) {

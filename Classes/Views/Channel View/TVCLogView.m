@@ -565,7 +565,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		/* Add key and value to new object. */
-		NSString *keyString = [TVCLogView escapeJavaScriptString:key];
+		NSString *keyString = [self.class escapeJavaScriptString:key];
 
 		NSString *objectString = [self compileJavaScriptGenericArgument:object];
 
@@ -619,7 +619,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ([object isKindOfClass:[NSString class]])
 	{
-		NSString *objectEscaped = [TVCLogView escapeJavaScriptString:object];
+		NSString *objectEscaped = [self.class escapeJavaScriptString:object];
 
 		return [NSString stringWithFormat:@"\"%@\"", objectEscaped];
 	}

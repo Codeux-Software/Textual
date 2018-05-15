@@ -630,7 +630,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	if ([attributesIn containsKey:TVCLogRendererFormattingForegroundColorAttribute]) {
 		id foregroundColor = attributesIn[TVCLogRendererFormattingForegroundColorAttribute];
 
-		[attributesOut setObject:[TVCLogRenderer mapColor:foregroundColor] forKey:NSForegroundColorAttributeName];
+		[attributesOut setObject:[self.class mapColor:foregroundColor] forKey:NSForegroundColorAttributeName];
 
 		[attributesOut setObject:foregroundColor forKey:IRCTextFormatterForegroundColorAttributeName];
 	} else {
@@ -642,7 +642,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	if ([attributesIn containsKey:TVCLogRendererFormattingBackgroundColorAttribute]) {
 		id backgroundColor = attributesIn[TVCLogRendererFormattingBackgroundColorAttribute];
 
-		[attributesOut setObject:[TVCLogRenderer mapColor:backgroundColor] forKey:NSBackgroundColorAttributeName];
+		[attributesOut setObject:[self.class mapColor:backgroundColor] forKey:NSBackgroundColorAttributeName];
 
 		[attributesOut setObject:backgroundColor forKey:IRCTextFormatterBackgroundColorAttributeName];
 	}
@@ -680,15 +680,15 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 		templateTokens[@"anchorLocation"] = linkLocation;
 
-		templateTokens[@"anchorTitle"] = [TVCLogRenderer escapeString:fragment];
+		templateTokens[@"anchorTitle"] = [self.class escapeString:fragment];
 
-		html = [TVCLogRenderer renderTemplateNamed:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
+		html = [self.class renderTemplateNamed:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
 	else if ([stringAttributes containsKey:TVCLogRendererFormattingChannelNameAttribute])
 	{
-		templateTokens[@"channelName"] = [TVCLogRenderer escapeString:fragment];
+		templateTokens[@"channelName"] = [self.class escapeString:fragment];
 
-		html = [TVCLogRenderer renderTemplateNamed:@"renderedChannelNameLinkResource" attributes:templateTokens];
+		html = [self.class renderTemplateNamed:@"renderedChannelNameLinkResource" attributes:templateTokens];
 	}
 	else if ([stringAttributes containsKey:TVCLogRendererFormattingConversationTrackingAttribute])
 	{
@@ -728,7 +728,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 			}
 		}
 
-		html = [TVCLogRenderer escapeString:fragment];
+		html = [self.class escapeString:fragment];
 	}
 
 	BOOL escapeBody = self.escapeBody;
@@ -737,7 +737,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	if (html == nil) {
 		if (escapeBody) {
-			html = [TVCLogRenderer escapeString:fragment];
+			html = [self.class escapeString:fragment];
 		} else {
 			html = fragment;
 		}
@@ -821,7 +821,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 		BOOL usesStyleTag = NO;
 
 		templateTokens[@"fragmentTextColorOpened"] = @(YES);
-		templateTokens[@"fragmentForegroundColor"] = [TVCLogRenderer stringValueForColor:foregroundColorNew usesStyleTag:&usesStyleTag];
+		templateTokens[@"fragmentForegroundColor"] = [self.class stringValueForColor:foregroundColorNew usesStyleTag:&usesStyleTag];
 		templateTokens[@"fragmentForegroundColorIsSet"] = @(YES);
 		templateTokens[@"fragmentTextColorUsesStyleTag"] = @(usesStyleTag);
 
@@ -836,7 +836,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 		BOOL usesStyleTag = NO;
 
 		templateTokens[@"fragmentTextColorOpened"] = @(YES);
-		templateTokens[@"fragmentBackgroundColor"] = [TVCLogRenderer stringValueForColor:backgroundColorNew usesStyleTag:&usesStyleTag];
+		templateTokens[@"fragmentBackgroundColor"] = [self.class stringValueForColor:backgroundColorNew usesStyleTag:&usesStyleTag];
 		templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
 		templateTokens[@"fragmentTextColorUsesStyleTag"] = @(usesStyleTag);
 
@@ -863,7 +863,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	templateTokens[@"messageFragment"] = html;
 
-	return [TVCLogRenderer renderTemplateNamed:@"formattedMessageFragment" attributes:templateTokens];
+	return [self.class renderTemplateNamed:@"formattedMessageFragment" attributes:templateTokens];
 }
 
 #pragma mark -
@@ -941,7 +941,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	BOOL escapeBody = ([inputDictionary boolForKey:TVCLogRendererConfigurationDoNotEscapeBodyAttribute] == NO);
 
-	TVCLogRenderer *renderer = [TVCLogRenderer new];
+	TVCLogRenderer *renderer = [self new];
 
 	renderer.body =
 	[THOPluginDispatcher willRenderMessage:body
@@ -997,7 +997,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	NSAssert((defaultFont != nil),
 		@"FATAL ERROR: TVCLogRenderer cannot be supplied with a nil 'TVCLogRendererAttributedStringPreferredFontAttribute' attribute when rendering an attributed string");
 
-	TVCLogRenderer *renderer = [TVCLogRenderer new];
+	TVCLogRenderer *renderer = [self new];
 
 	renderer.body = body;
 
@@ -1022,7 +1022,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 + (nullable NSString *)renderTemplateNamed:(NSString *)templateName
 {
-	return [TVCLogRenderer renderTemplateNamed:templateName attributes:nil];
+	return [self renderTemplateNamed:templateName attributes:nil];
 }
 
 + (nullable NSString *)renderTemplateNamed:(NSString *)templateName attributes:(nullable NSDictionary<NSString *, id> *)templateTokens
@@ -1116,7 +1116,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	}
 	else if ([color isKindOfClass:[NSNumber class]])
 	{
-		return [TVCLogRenderer mapColorCode:[color unsignedIntegerValue]];
+		return [self mapColorCode:[color unsignedIntegerValue]];
 	}
 
 	return nil;

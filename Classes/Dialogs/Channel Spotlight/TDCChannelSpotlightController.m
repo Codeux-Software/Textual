@@ -159,7 +159,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)updateControlsAppearance
 {
-	if ([TDCChannelSpotlightController appearsVibrantDark]) {
+	if ([self.class appearsVibrantDark]) {
 		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantDark];
 	} else {
 		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantLight];
