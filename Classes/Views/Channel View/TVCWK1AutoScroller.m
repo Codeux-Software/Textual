@@ -128,7 +128,7 @@ static CGFloat _userScrolledMinimum = 25.0;
 
 	CGFloat scrollPosition = visibleRect.origin.y;
 
-	return (scrollHeight == scrollPosition);
+	return CGFloatAreEqual(scrollHeight, scrollPosition);
 }
 
 - (void)resetScrollerPosition
@@ -234,8 +234,8 @@ static CGFloat _userScrolledMinimum = 25.0;
 	 because we ignore elastic scrolling. User can reach bottom,
 	 elsastic scroll, then bounce back. We get notification for
 	 both times we reach bottom, but values do not change. */
-	if (scrollHeightPrevious == scrollHeightCurrent &&
-		scrollPositionPrevious == scrollPositionCurrent)
+	if (CGFloatAreEqual(scrollHeightPrevious, scrollHeightCurrent) &&
+		CGFloatAreEqual(scrollPositionPrevious, scrollPositionCurrent))
 	{
 		return;
 	}
