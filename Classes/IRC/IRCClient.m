@@ -3856,7 +3856,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			for (NSUInteger i = 0; i < numberOfChannelsToJoin; i++) {
-				NSString *channelName = [NSString stringWithFormat:@"#debug-channel-%ld", TXRandomNumber(9999999)];
+				NSString *channelName = [NSString stringWithFormat:@"#debug-channel-%lu", TXRandomNumber(9999999)];
 
 				[self send:@"JOIN", channelName, nil];
 			}
@@ -12051,9 +12051,9 @@ present_error:
 	NSString *stringToSend = nil;
 
 	if (transferToken) {
-		stringToSend = [NSString stringWithFormat:@"%@ %lu %lli %@", escapedFilename, port, totalFilesize, transferToken];
+		stringToSend = [NSString stringWithFormat:@"%@ %hu %lli %@", escapedFilename, port, totalFilesize, transferToken];
 	} else {
-		stringToSend = [NSString stringWithFormat:@"%@ %lu %lli", escapedFilename, port, totalFilesize];
+		stringToSend = [NSString stringWithFormat:@"%@ %hu %lli", escapedFilename, port, totalFilesize];
 	}
 
 	[self sendCTCPQuery:nickname command:@"DCC RESUME" text:stringToSend];
@@ -12069,9 +12069,9 @@ present_error:
 	NSString *stringToSend = nil;
 
 	if (transferToken) {
-		stringToSend = [NSString stringWithFormat:@"%@ %lu %lli %@", escapedFilename, port, totalFilesize, transferToken];
+		stringToSend = [NSString stringWithFormat:@"%@ %hu %lli %@", escapedFilename, port, totalFilesize, transferToken];
 	} else {
-		stringToSend = [NSString stringWithFormat:@"%@ %lu %lli", escapedFilename, port, totalFilesize];
+		stringToSend = [NSString stringWithFormat:@"%@ %hu %lli", escapedFilename, port, totalFilesize];
 	}
 
 	[self sendCTCPQuery:nickname command:@"DCC ACCEPT" text:stringToSend];
@@ -12093,9 +12093,9 @@ present_error:
 	NSString *stringToSend = nil;
 
 	if (transferToken.length > 0) {
-		stringToSend = [NSString stringWithFormat:@"%@ %@ %lu %lli %@", escapedFilename, address, port, totalFilesize, transferToken];
+		stringToSend = [NSString stringWithFormat:@"%@ %@ %hu %lli %@", escapedFilename, address, port, totalFilesize, transferToken];
 	} else {
-		stringToSend = [NSString stringWithFormat:@"%@ %@ %lu %lli", escapedFilename, address, port, totalFilesize];
+		stringToSend = [NSString stringWithFormat:@"%@ %@ %hu %lli", escapedFilename, address, port, totalFilesize];
 	}
 
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:stringToSend];

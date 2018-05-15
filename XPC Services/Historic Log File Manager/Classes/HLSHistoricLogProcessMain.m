@@ -300,7 +300,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 			return;
 		}
 
-		LogToConsoleDebug("%ld results fetched for view %@",
+		LogToConsoleDebug("%lu results fetched for view %@",
 						  fetchedObjects.count, viewId);
 
 		@autoreleasepool {
@@ -364,7 +364,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 			return;
 		}
 
-		LogToConsoleDebug("%ld results fetched for view %@",
+		LogToConsoleDebug("%lu results fetched for view %@",
 						  fetchedObjects.count, viewId);
 
 		@autoreleasepool {
@@ -453,7 +453,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 			return;
 		}
 
-		LogToConsoleDebug("%ld results fetched for view %@",
+		LogToConsoleDebug("%lu results fetched for view %@",
 						  fetchedObjects.count, viewId);
 
 		@autoreleasepool {
@@ -493,7 +493,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 			return;
 		}
 
-		LogToConsoleDebug("%ld results fetched for view %@",
+		LogToConsoleDebug("%lu results fetched for view %@",
 						  fetchedObjects.count, viewId);
 
 		@autoreleasepool {
@@ -806,7 +806,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		blockToPerform();
 	}
 
-	LogToConsoleDebug("Deleted %ld rows in %@", rowsDeleted, viewContext.hls_viewId);
+	LogToConsoleDebug("Deleted %lu rows in %@", rowsDeleted, viewContext.hls_viewId);
 
 	return rowsDeleted;
 }
@@ -935,7 +935,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		viewContext.hls_newestIdentifier = [self _newestIdentifierInViewContextFromDatabase:viewContext performOnQueue:YES];
 
 		/* Log information for debugging */
-		LogToConsoleDebug("Context created for %@ - Line count: %ld, Newest identifier: %ld",
+		LogToConsoleDebug("Context created for %@ - Line count: %lu, Newest identifier: %lu",
 						  viewContext.hls_viewId,
 						  viewContext.hls_totalLineCount,
 						  viewContext.hls_newestIdentifier);

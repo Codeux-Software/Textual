@@ -356,7 +356,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 		default:
 		{
-			LogToConsoleError("Unexpected media type: %ld", type);
+			LogToConsoleError("Unexpected media type: %lu", type);
 
 			break;
 		} // case
