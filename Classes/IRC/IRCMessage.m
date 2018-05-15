@@ -345,7 +345,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (dateString) {
 			NSDate *dateObject = nil;
 
-			if ([dateString onlyContainsCharactersFromCharacterSet:[NSCharacterSet ZeroToNineDecimalCharacetSet]]) {
+			if ([dateString onlyContainsCharactersFromCharacterSet:[NSCharacterSet ZeroToNineDecimalCharacterSet]]) {
 				dateObject = [NSDate dateWithTimeIntervalSince1970:dateString.doubleValue];
 			} else {
 				dateObject = [TXSharedISOStandardDateFormatter() dateFromString:dateString];
