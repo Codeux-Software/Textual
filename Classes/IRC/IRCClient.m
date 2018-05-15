@@ -4129,7 +4129,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			NSString *newNickname = stringIn.tokenAsString;
 			
-			if (newNickname.length) {
+			if (newNickname.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
 				
 				break;
