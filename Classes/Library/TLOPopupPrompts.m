@@ -72,7 +72,7 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 {
 	TLOPopupPromptsContext *promptData = (TLOPopupPromptsContext *)CFBridgingRelease(contextInfo);
 
-	[TLOPopupPrompts _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptData];
+	[self _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptData];
 }
 
 + (void)_sheetWindowWithWindowCallback_stage2:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(TLOPopupPromptsContext *)contextInfo
@@ -111,16 +111,16 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 			  alternateButton:(nullable NSString *)buttonAlternate
 				  otherButton:(nullable NSString *)otherButton
 {
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:bodyText
-									 title:titleText
-							 defaultButton:buttonDefault
-						   alternateButton:buttonAlternate
-							   otherButton:otherButton
-							suppressionKey:nil
-						   suppressionText:nil
-						   completionBlock:nil
-							 accessoryView:nil];
+	[self sheetWindowWithWindow:window
+						   body:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+					otherButton:otherButton
+				 suppressionKey:nil
+				suppressionText:nil
+				completionBlock:nil
+				  accessoryView:nil];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -131,16 +131,16 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 				  otherButton:(nullable NSString *)otherButton
 			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
 {
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:bodyText
-									 title:titleText
-							 defaultButton:buttonDefault
-						   alternateButton:buttonAlternate
-							   otherButton:otherButton
-							suppressionKey:nil
-						   suppressionText:nil
-						   completionBlock:completionBlock
-							 accessoryView:nil];
+	[self sheetWindowWithWindow:window
+						   body:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+					otherButton:otherButton
+				 suppressionKey:nil
+				suppressionText:nil
+				completionBlock:completionBlock
+				  accessoryView:nil];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -152,16 +152,16 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
 				accessoryView:(nullable NSView *)accessoryView
 {
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:bodyText
-									 title:titleText
-							 defaultButton:buttonDefault
-						   alternateButton:buttonAlternate
-							   otherButton:otherButton
-							suppressionKey:nil
-						   suppressionText:nil
-						   completionBlock:completionBlock
-							 accessoryView:accessoryView];
+	[self sheetWindowWithWindow:window
+						   body:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+					otherButton:otherButton
+				 suppressionKey:nil
+				suppressionText:nil
+				completionBlock:completionBlock
+				  accessoryView:accessoryView];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -174,16 +174,16 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 			  suppressionText:(nullable NSString *)suppressText
 			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
 {
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									body:bodyText
-								   title:titleText
-						   defaultButton:buttonDefault
-						 alternateButton:buttonAlternate
-							 otherButton:otherButton
-						  suppressionKey:suppressKey
-						 suppressionText:suppressText
-						 completionBlock:completionBlock
-						   accessoryView:nil];
+	[self sheetWindowWithWindow:window
+						   body:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+					otherButton:otherButton
+				 suppressionKey:suppressKey
+				suppressionText:suppressText
+				completionBlock:completionBlock
+				  accessoryView:nil];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -205,16 +205,16 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 	/* Check which thread is accessed */
 	if ([NSThread isMainThread] == NO) {
 		[self performBlockOnMainThread:^{
-			[TLOPopupPrompts sheetWindowWithWindow:window
-											  body:bodyText
-											 title:titleText
-									 defaultButton:buttonDefault
-								   alternateButton:buttonAlternate
-									   otherButton:otherButton
-									suppressionKey:suppressKey
-								   suppressionText:suppressText
-								   completionBlock:completionBlock
-									 accessoryView:accessoryView];
+			[self sheetWindowWithWindow:window
+								   body:bodyText
+								  title:titleText
+						  defaultButton:buttonDefault
+						alternateButton:buttonAlternate
+							otherButton:otherButton
+						 suppressionKey:suppressKey
+						suppressionText:suppressText
+						completionBlock:completionBlock
+						  accessoryView:accessoryView];
 		}];
 
 		return;
@@ -275,11 +275,11 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 	/* Pop alert */
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
-			[TLOPopupPrompts _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptObject];
+			[self _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptObject];
 		}];
 	} else {
 		[alert beginSheetModalForWindow:window
-						  modalDelegate:[TLOPopupPrompts class]
+						  modalDelegate:[self class]
 						 didEndSelector:@selector(_sheetWindowWithWindowCallback_stage1:returnCode:contextInfo:)
 							contextInfo:(void *)CFBridgingRetain(promptObject)];
 	}
@@ -293,12 +293,12 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(nullable NSString *)buttonAlternate
 {
-	return [TLOPopupPrompts dialogWindowWithMessage:bodyText
-											  title:titleText
-									  defaultButton:buttonDefault
-									alternateButton:buttonAlternate
-									 suppressionKey:nil
-									suppressionText:nil];
+	return [self dialogWindowWithMessage:bodyText
+								   title:titleText
+						   defaultButton:buttonDefault
+						 alternateButton:buttonAlternate
+						  suppressionKey:nil
+						 suppressionText:nil];
 }
 
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
@@ -308,13 +308,13 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 				 suppressionKey:(nullable NSString *)suppressKey
 				suppressionText:(nullable NSString *)suppressText
 {
-	return [TLOPopupPrompts dialogWindowWithMessage:bodyText
-											  title:titleText
-									  defaultButton:buttonDefault
-									alternateButton:buttonAlternate
-									 suppressionKey:suppressKey
-									suppressionText:suppressText
-								suppressionResponse:NULL];
+	return [self dialogWindowWithMessage:bodyText
+								   title:titleText
+						   defaultButton:buttonDefault
+						 alternateButton:buttonAlternate
+						  suppressionKey:suppressKey
+						 suppressionText:suppressText
+					 suppressionResponse:NULL];
 }
 
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
@@ -335,13 +335,13 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 
 		[self performBlockOnMainThread:^{
 			result =
-			[TLOPopupPrompts dialogWindowWithMessage:bodyText
-											   title:titleText
-									   defaultButton:buttonDefault
-									 alternateButton:buttonAlternate
-									  suppressionKey:suppressKey
-									 suppressionText:suppressText
-								 suppressionResponse:suppressionResponse];
+			[self dialogWindowWithMessage:bodyText
+									title:titleText
+							defaultButton:buttonDefault
+						  alternateButton:buttonAlternate
+						   suppressionKey:suppressKey
+						  suppressionText:suppressText
+					  suppressionResponse:suppressionResponse];
 		}];
 
 		return result;

@@ -136,7 +136,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	NSString *themeName = self.cachedThemeName;
 
-	return [TPCThemeController extractThemeName:themeName];
+	return [self.class extractThemeName:themeName];
 }
 
 + (BOOL)themeExists:(NSString *)themeName
@@ -183,16 +183,16 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 + (nullable NSString *)pathOfThemeWithName:(NSString *)themeName
 {
-	return [TPCThemeController pathOfThemeWithName:themeName storageLocation:NULL];
+	return [self pathOfThemeWithName:themeName storageLocation:NULL];
 }
 
 + (nullable NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(nullable TPCThemeControllerStorageLocation *)storageLocation
 {
 	NSParameterAssert(themeName != nil);
 
-	NSString *fileName = [TPCThemeController extractThemeName:themeName];
+	NSString *fileName = [self extractThemeName:themeName];
 
-	NSString *fileSource = [TPCThemeController extractThemeSource:themeName];
+	NSString *fileSource = [self extractThemeSource:themeName];
 
 	NSObjectIsEmptyAssertReturn(fileName, nil)
 	NSObjectIsEmptyAssertReturn(fileSource, nil)
@@ -228,7 +228,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		return nil;
 	}
 
-	if ([TPCThemeController themeAtPathIsValid:filePath]) {
+	if ([self themeAtPathIsValid:filePath]) {
 		if ( storageLocation) {
 			*storageLocation = fileLocation;
 		}
@@ -246,7 +246,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	TPCThemeControllerStorageLocation storageLocation = TPCThemeControllerStorageUnknownLocation;
 
-	NSString *themePath = [TPCThemeController pathOfThemeWithName:themeName storageLocation:&storageLocation];
+	NSString *themePath = [self.class pathOfThemeWithName:themeName storageLocation:&storageLocation];
 
 	NSAssert1((storageLocation != TPCThemeControllerStorageUnknownLocation),
 		@"Missing style resource files: %@", themeName);
@@ -409,9 +409,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 
 	/* Validate theme */
-	NSString *themeName = [TPCThemeController extractThemeName:validatedTheme];
+	NSString *themeName = [self.class extractThemeName:validatedTheme];
 
-	NSString *themeSource = [TPCThemeController extractThemeSource:validatedTheme];
+	NSString *themeSource = [self.class extractThemeSource:validatedTheme];
 
 	LogToConsoleInfo("Performing validation on theme named '%{public}@' with source type of '%{public}@'", themeName, themeSource);
 
@@ -419,7 +419,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	{
 		/* If the theme is faulted and is a bundled theme, then we can do
 		 nothing except try to recover by using the default one. */
-		if ([TPCThemeController themeExists:validatedTheme] == NO) {
+		if ([self.class themeExists:validatedTheme] == NO) {
 			if ( suggestedThemeName) {
 				*suggestedThemeName = [TPCPreferences themeNameDefault];
 
@@ -433,9 +433,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		 a cloud variant of it exists and if it does, prefer that over the custom. */
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		NSString *cloudTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCloudLocation];
+		NSString *cloudTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCloudLocation];
 
-		if ([TPCThemeController themeExists:cloudTheme]) {
+		if ([self.class themeExists:cloudTheme]) {
 			/* If the theme exists in the cloud, then we go to that. */
 			if ( suggestedThemeName) {
 				*suggestedThemeName = cloudTheme;
@@ -446,10 +446,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 #endif
 
 			/* If there is no cloud theme, then we continue validation. */
-			if ([TPCThemeController themeExists:validatedTheme] == NO) {
-				NSString *bundledTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageBundleLocation];
+			if ([self.class themeExists:validatedTheme] == NO) {
+				NSString *bundledTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeControllerStorageBundleLocation];
 
-				if ([TPCThemeController themeExists:bundledTheme]) {
+				if ([self.class themeExists:bundledTheme]) {
 					/* Use a bundled theme with the same name if available. */
 					if ( suggestedThemeName) {
 						*suggestedThemeName = bundledTheme;
@@ -473,21 +473,21 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 	else if ([themeSource isEqualToString:TPCThemeControllerCloudThemeNameBasicPrefix])
 	{
-		if ([TPCThemeController themeExists:validatedTheme] == NO) {
+		if ([self.class themeExists:validatedTheme] == NO) {
 			/* If the current theme stored in the cloud is not valid, then we try to revert
 			 to a custom one or a bundled one depending which one is available. */
-			NSString *customTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCustomLocation];
+			NSString *customTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeControllerStorageCustomLocation];
 
-			NSString *bundledTheme = [TPCThemeController buildFilename:themeName forStorageLocation:TPCThemeControllerStorageBundleLocation];
+			NSString *bundledTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeControllerStorageBundleLocation];
 
-			if ([TPCThemeController themeExists:customTheme]) {
+			if ([self.class themeExists:customTheme]) {
 				/* Use a custom theme with the same name if available. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = customTheme;
 
 					keyChanged = YES;
 				}
-			} else if ([TPCThemeController themeExists:bundledTheme]) {
+			} else if ([self.class themeExists:bundledTheme]) {
 				/* Use a bundled theme with the same name if available. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = bundledTheme;
@@ -629,7 +629,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		for (NSString *file in files) {
 			NSString *filePath = [storagePath stringByAppendingPathComponent:file];
 
-			if ([TPCThemeController themeAtPathIsValid:filePath] == NO) {
+			if ([self themeAtPathIsValid:filePath] == NO) {
 				continue;
 			}
 

@@ -361,9 +361,9 @@ static const char * _Nonnull kMacNames[] = {
 
 + (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version withProtocol:(BOOL)appendProtocol
 {
-	NSArray *cipherSuites = [GCDAsyncSocket cipherListOfVersion:version];
+	NSArray *cipherSuites = [self cipherListOfVersion:version];
 
-	return [GCDAsyncSocket descriptionsForCipherSuites:cipherSuites withProtocol:appendProtocol];
+	return [self descriptionsForCipherSuites:cipherSuites withProtocol:appendProtocol];
 }
 
 + (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites
@@ -379,7 +379,7 @@ static const char * _Nonnull kMacNames[] = {
 
 	for (NSNumber *cipherSuite in cipherSuites) {
 		[descriptions addObject:
-		 [GCDAsyncSocket descriptionForCipherSuite:cipherSuite.intValue withProtocol:appendProtocol]];
+		 [self descriptionForCipherSuite:cipherSuite.intValue withProtocol:appendProtocol]];
 	}
 
 	return [descriptions copy];
@@ -435,7 +435,7 @@ static const char * _Nonnull kMacNames[] = {
 
 + (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite
 {
-	return [[GCDAsyncSocket cipherListDeprecated] containsObject:@(cipherSuite)];
+	return [[self cipherListDeprecated] containsObject:@(cipherSuite)];
 }
 
 + (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version includeDeprecatedCiphers:(BOOL)includeDepecatedCiphers

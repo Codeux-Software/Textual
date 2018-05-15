@@ -105,8 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(filename != nil);
 
 	/* Construct controller */
-	TDCFileTransferDialogTransferController *controller =
-	[[TDCFileTransferDialogTransferController alloc] initWithClient:client];
+	TDCFileTransferDialogTransferController *controller = [[self alloc] initWithClient:client];
 
 	if (transferToken.length > 0) {
 		controller.transferToken = transferToken;
@@ -169,8 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *filePath = path.stringByDeletingLastPathComponent;
 
 	/* Construct controller */
-	TDCFileTransferDialogTransferController *controller =
-	[[TDCFileTransferDialogTransferController alloc] initWithClient:client];
+	TDCFileTransferDialogTransferController *controller = [[self alloc] initWithClient:client];
 
 	controller.isReversed = [TPCPreferences fileTransferRequestsAreReversed];
 

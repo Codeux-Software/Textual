@@ -56,14 +56,14 @@ NS_ASSUME_NONNULL_BEGIN
 									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock
 {
 	return
-	[GCDAsyncSocket presentTrustPanelInWindow:window
-										 body:bodyText
-										title:titleText
-								defaultButton:buttonDefault
-							  alternateButton:buttonAlternate
-									 trustRef:trustRef
-							  completionBlock:completionBlock
-								  contextInfo:nil];
+	[self presentTrustPanelInWindow:window
+							   body:bodyText
+							  title:titleText
+					  defaultButton:buttonDefault
+					alternateButton:buttonAlternate
+						   trustRef:trustRef
+					completionBlock:completionBlock
+						contextInfo:nil];
 }
 
 + (SFCertificateTrustPanel *)presentTrustPanelInWindow:(nullable NSWindow *)window
@@ -81,14 +81,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self performBlockOnMainThread:^{
 			panel =
-			[GCDAsyncSocket presentTrustPanelInWindow:window
-												 body:bodyText
-												title:titleText
-										defaultButton:buttonDefault
-									  alternateButton:buttonAlternate
-											 trustRef:trustRef
-									  completionBlock:completionBlock
-										  contextInfo:contextInfo];
+			[self presentTrustPanelInWindow:window
+									   body:bodyText
+									  title:titleText
+							  defaultButton:buttonDefault
+							alternateButton:buttonAlternate
+								   trustRef:trustRef
+							completionBlock:completionBlock
+								contextInfo:contextInfo];
 		}];
 
 		return panel;
@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[panel setInformativeText:bodyText];
 
 	[panel beginSheetForWindow:window
-				 modalDelegate:[GCDAsyncSocket class]
+				 modalDelegate:[self class]
 				didEndSelector:@selector(_trustPanelCallback_stage1:returnCode:contextInfo:)
 				   contextInfo:(void *)CFBridgingRetain(promptObject)
 						 trust:trustRef
@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	GCDAsyncSocketTrustPanelContext *panelData = (GCDAsyncSocketTrustPanelContext *)CFBridgingRelease(contextInfo);
 
-	[GCDAsyncSocket _trustPanelCallback_stage2:sheet returnCode:returnCode contextInfo:panelData];
+	[self _trustPanelCallback_stage2:sheet returnCode:returnCode contextInfo:panelData];
 }
 
 + (void)_trustPanelCallback_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(GCDAsyncSocketTrustPanelContext *)contextInfo

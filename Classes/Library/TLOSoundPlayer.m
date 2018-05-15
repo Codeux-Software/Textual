@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
 
-	return [TLOSoundPlayer soundFilesAtPath:folder];
+	return [self soundFilesAtPath:folder];
 }
 
 + (nullable NSDictionary<NSString *, NSString *> *)systemLibrarySoundFiles
@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
 
-	return [TLOSoundPlayer soundFilesAtPath:folder];
+	return [self soundFilesAtPath:folder];
 }
 
 + (nullable NSDictionary<NSString *, NSString *> *)userLibrarySoundFiles
@@ -98,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
 
-	return [TLOSoundPlayer soundFilesAtPath:folder];
+	return [self soundFilesAtPath:folder];
 }
 
 + (void)doesSoundFileDictionary:(NSDictionary<NSString *, NSString *> *)fileList containName:(NSString *)name returnedPath:(NSString **)path
@@ -133,20 +133,20 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *soundPath = nil;
 
-	NSDictionary *soundFiles = [TLOSoundPlayer userLibrarySoundFiles];
+	NSDictionary *soundFiles = [self userLibrarySoundFiles];
 
-	[TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
+	[self doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
 
 	if (soundPath == nil) {
-		soundFiles = [TLOSoundPlayer systemLibrarySoundFiles];
+		soundFiles = [self systemLibrarySoundFiles];
 
-		[TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
+		[self doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
 	}
 
 	if (soundPath == nil) {
-		soundFiles = [TLOSoundPlayer systemAlertSoundFiles];
+		soundFiles = [self systemAlertSoundFiles];
 
-		[TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
+		[self doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
 	}
 
 	if (soundPath == nil) {
@@ -183,7 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	SystemSoundID soundID = [TLOSoundPlayer alertSoundNamed:name];
+	SystemSoundID soundID = [self alertSoundNamed:name];
 
 	if (soundID) {
 		AudioServicesPlayAlertSound(soundID);
@@ -200,19 +200,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[sounds addObject:@"Beep"]; // For NSBeep()
 
-	for (NSString *sound in [TLOSoundPlayer systemAlertSoundFiles]) {
+	for (NSString *sound in [self systemAlertSoundFiles]) {
 		if ([sounds containsObject:sound] == NO) {
 			[sounds addObject:sound];
 		}
 	}
 
-	for (NSString *sound in [TLOSoundPlayer systemLibrarySoundFiles]) {
+	for (NSString *sound in [self systemLibrarySoundFiles]) {
 		if ([sounds containsObject:sound] == NO) {
 			[sounds addObject:sound];
 		}
 	}
 
-	for (NSString *sound in [TLOSoundPlayer userLibrarySoundFiles]) {
+	for (NSString *sound in [self userLibrarySoundFiles]) {
 		if ([sounds containsObject:sound] == NO) {
 			[sounds addObject:sound];
 		}

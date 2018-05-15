@@ -81,7 +81,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 - (instancetype)initWithHostView:(TVCLogView *)hostView
 {
-	[[self class] _t_initialize];
+	[self.class _t_initialize];
 
 	if ((self = [self initWithFrame:NSZeroRect])) {
 		[self constructWebViewWithHostView:hostView];
@@ -154,7 +154,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 + (void)emptyCaches
 {
-	[[self class] emptyCaches:nil];
+	[self.class emptyCaches:nil];
 }
 
 + (void)emptyCaches:(void (^ _Nullable)(void))completionHandler

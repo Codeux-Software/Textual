@@ -177,8 +177,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Do not perform migration for specific identifiers when we
 	 had done so in the past using the old style defaults key. */
-	if ([RZUserDefaults() boolForKey:@"TPCPreferences -> Migration -> Preference Files"]) {
-		[RZUserDefaults() setBool:YES forKey:(_defaultsKeyPrefix "8f014f5a-b079-4574-b856-c4f893c99145")];
+	if ([[self sharedUserDefaults] boolForKey:@"TPCPreferences -> Migration -> Preference Files"]) {
+		[[self sharedUserDefaults] setBool:YES forKey:(_defaultsKeyPrefix "8f014f5a-b079-4574-b856-c4f893c99145")];
 	}
 
 	/* Perform migration */
@@ -206,7 +206,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSString *defaultsKey = [_defaultsKeyPrefix stringByAppendingString:identifier];
 
-			if ([RZUserDefaults() boolForKey:defaultsKey]) {
+			if ([[self sharedUserDefaults] boolForKey:defaultsKey]) {
 				continue;
 			}
 
@@ -228,7 +228,7 @@ NS_ASSUME_NONNULL_BEGIN
 				continue;
 			}
 
-			[RZUserDefaults() setBool:YES forKey:defaultsKey];
+			[[self sharedUserDefaults] setBool:YES forKey:defaultsKey];
 		}
 	}
 
@@ -277,7 +277,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Perform migration */
 	[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(NSString *key, id object, BOOL *stop) {
-		[RZUserDefaults() setObject:object forKey:key postNotification:NO];
+		[[self sharedUserDefaults] setObject:object forKey:key postNotification:NO];
 	}];
 
 	return YES;

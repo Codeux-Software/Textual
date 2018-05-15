@@ -157,29 +157,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)alloc
 {
-	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+	return [self sharedUserDefaultsController];
 }
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone
 {
-	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+	return [self sharedUserDefaultsController];
 }
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
 - (instancetype)init
 {
-	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+	return [self.class sharedUserDefaultsController];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder
 {
-	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+	return [self.class sharedUserDefaultsController];
 }
 
 - (instancetype)initWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *, id> *)initialValues
 {
-	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+	return [self.class sharedUserDefaultsController];
 }
 #pragma clang diagnostic pop
 

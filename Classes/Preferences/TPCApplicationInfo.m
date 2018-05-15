@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSTimeInterval)timeIntervalSinceApplicationLaunch
 {
-	NSDate *launchDate = [TPCApplicationInfo applicationLaunchDate];
+	NSDate *launchDate = [self applicationLaunchDate];
 
 	if (launchDate == nil) {
 		return 0;
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSTimeInterval)timeIntervalSinceApplicationInstall
 {
-	NSTimeInterval runTime = [TPCApplicationInfo timeIntervalSinceApplicationLaunch];
+	NSTimeInterval runTime = [self timeIntervalSinceApplicationLaunch];
 
 	NSTimeInterval runTimeTotal = [RZUserDefaults() doubleForKey:@"TXRunTime"];
 
@@ -130,7 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)saveTimeIntervalSinceApplicationInstall
 {
-	NSTimeInterval timeInterval = [TPCApplicationInfo timeIntervalSinceApplicationInstall];
+	NSTimeInterval timeInterval = [self timeIntervalSinceApplicationInstall];
 
 	[RZUserDefaults() setDouble:timeInterval forKey:@"TXRunTime"];
 }
@@ -142,7 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)incrementApplicationRunCount
 {
-	NSUInteger runCount = ([TPCApplicationInfo applicationRunCount] + 1);
+	NSUInteger runCount = ([self applicationRunCount] + 1);
 
 	[RZUserDefaults() setUnsignedInteger:runCount forKey:@"TXRunCount"];
 }

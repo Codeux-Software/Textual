@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 						   alternateButton:TXTLS(@"Prompts[0004]")
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [TPCPreferencesImportExport importPreflight:buttonClicked];
+							   [self importPreflight:buttonClicked];
 						   }];
 }
 
@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (returnCode == NSModalResponseOK) {
 			NSURL *pathURL = d.URLs[0];
 
-			[TPCPreferencesImportExport importPostflight:pathURL];
+			[self importPostflight:pathURL];
 		}
 	}];
 }
@@ -100,20 +100,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *backupPath = [sourcePath stringByAppendingPathComponent:basePath];
 
-	return [TPCPreferencesImportExport exportPostflightForPath:backupPath filterJunk:NO];
+	return [self exportPostflightForPath:backupPath filterJunk:NO];
 }
 
 + (void)importPostflight:(NSURL *)pathURL
 {
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[TPCPreferencesImportExport _importPostflight:pathURL];
+		[self _importPostflight:pathURL];
 	});
 }
 
 + (void)_importPostflight:(NSURL *)pathURL
 {
 	/* Create a backup of the old configuration */
-	if ([TPCPreferencesImportExport importPostflightBackupPreferences] == NO) {
+	if ([self importPostflightBackupPreferences] == NO) {
 		return;
 	}
 
@@ -142,16 +142,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[mainWindowServerList() beginUpdates];
 
 	/* Import data */
-	[TPCPreferencesImportExport importContentsOfDictionary:propertyList reloadPreferences:NO];
+	[self importContentsOfDictionary:propertyList reloadPreferences:NO];
 
 	/* Do not push the loading screen right away. Add a little delay to give everything
 	 a chance to settle down before presenting the changes to the user. */
-	[TPCPreferencesImportExport performSelectorInCommonModes:@selector(importPostflightCleanup:) withObject:propertyList.allKeys afterDelay:2.0];
+	[self performSelectorInCommonModes:@selector(importPostflightCleanup:) withObject:propertyList.allKeys afterDelay:2.0];
 }
 
 + (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict
 {
-	[TPCPreferencesImportExport importContentsOfDictionary:aDict reloadPreferences:YES];
+	[self importContentsOfDictionary:aDict reloadPreferences:YES];
 }
 
 + (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict reloadPreferences:(BOOL)reloadPreferences
@@ -159,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(aDict != nil);
 
 	[aDict enumerateKeysAndObjectsUsingBlock:^(NSString *key, id object, BOOL *stop) {
-		[TPCPreferencesImportExport import:object withKey:key];
+		[self import:object withKey:key];
 	}];
 
 	if (reloadPreferences) {
@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		[object enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-			[TPCPreferencesImportExport importClientConfiguration:object isImportedFromCloud:NO];
+			[self importClientConfiguration:object isImportedFromCloud:NO];
 		}];
 	}
 	else if ([key isEqual:@"World Controller"])
@@ -206,7 +206,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSArray<NSDictionary *> *clientList = [object arrayForKey:@"clients"];
 
 		if (clientList) {
-			[TPCPreferencesImportExport import:clientList withKey:IRCWorldClientListDefaultsKey];
+			[self import:clientList withKey:IRCWorldClientListDefaultsKey];
 		}
 	}
 
@@ -273,17 +273,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryForCloud
 {
-	return [TPCPreferencesImportExport exportedPreferencesDictionary:YES filterDefaults:NO];
+	return [self exportedPreferencesDictionary:YES filterDefaults:NO];
 }
 
 + (NSDictionary<NSString *, id> *)exportedPreferencesDictionary
 {
-	return [TPCPreferencesImportExport exportedPreferencesDictionary:YES filterDefaults:YES];
+	return [self exportedPreferencesDictionary:YES filterDefaults:YES];
 }
 
 + (NSDictionary<NSString *, id> *)exportedPreferencesDictionary:(BOOL)filterJunk
 {
-	return [TPCPreferencesImportExport exportedPreferencesDictionary:filterJunk filterDefaults:filterJunk];
+	return [self exportedPreferencesDictionary:filterJunk filterDefaults:filterJunk];
 }
 
 + (NSDictionary<NSString *, id> *)exportedPreferencesDictionary:(BOOL)filterJunk filterDefaults:(BOOL)filterDefaults
@@ -318,7 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (filterJunk) {
 		NSSet *keysToStrip2 =
 		[finalDictionary keysOfEntriesPassingTest:^BOOL(NSString *key, id object, BOOL *stop) {
-			return [TPCPreferencesImportExport isKeyNameSupposedToBeIgnored:key];
+			return [self isKeyNameSupposedToBeIgnored:key];
 		}];
 
 		[finalDictionary removeObjectsForKeys:keysToStrip2.allObjects];
@@ -338,7 +338,7 @@ NS_ASSUME_NONNULL_BEGIN
 						   alternateButton:TXTLS(@"Prompts[0004]")
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [TPCPreferencesImportExport exportPreflight:buttonClicked];
+							   [self exportPreflight:buttonClicked];
 						   }];
 }
 
@@ -358,19 +358,19 @@ NS_ASSUME_NONNULL_BEGIN
 		if (returnCode == NSModalResponseOK) {
 			NSURL *pathURL = d.URL;
 
-			(void)[TPCPreferencesImportExport exportPostflightForURL:pathURL filterJunk:YES];
+			(void)[self exportPostflightForURL:pathURL filterJunk:YES];
 		}
 	}];
 }
 
 + (BOOL)exportPostflightForPath:(NSString *)path
 {
-	return [TPCPreferencesImportExport exportPostflightForPath:path filterJunk:YES];
+	return [self exportPostflightForPath:path filterJunk:YES];
 }
 
 + (BOOL)exportPostflightForURL:(NSURL *)pathURL
 {
-	return [TPCPreferencesImportExport exportPostflightForURL:pathURL filterJunk:YES];
+	return [self exportPostflightForURL:pathURL filterJunk:YES];
 }
 
 + (BOOL)exportPostflightForPath:(NSString *)path filterJunk:(BOOL)filterJunk
@@ -379,14 +379,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSURL *pathURL = [NSURL fileURLWithPath:path];
 
-	return [TPCPreferencesImportExport exportPostflightForURL:pathURL filterJunk:filterJunk];
+	return [self exportPostflightForURL:pathURL filterJunk:filterJunk];
 }
 
 + (BOOL)exportPostflightForURL:(NSURL *)pathURL filterJunk:(BOOL)filterJunk
 {
 	NSParameterAssert(pathURL != nil);
 
-	NSDictionary *exportedPreferences = [TPCPreferencesImportExport exportedPreferencesDictionary:filterJunk];
+	NSDictionary *exportedPreferences = [self exportedPreferencesDictionary:filterJunk];
 
 	/* The export will be saved as binary. Two reasons: 1) Discourages user from
 	 trying to tamper with stuff. 2) Smaller, faster. Mostly #1. */

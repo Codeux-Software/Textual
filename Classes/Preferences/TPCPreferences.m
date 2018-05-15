@@ -68,7 +68,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSString *)_defaultNicknamePrefix
 {
-	return [TPCPreferences defaultPreferences][@"DefaultIdentity -> Nickname"];
+	return [self defaultPreferences][@"DefaultIdentity -> Nickname"];
 }
 
 + (void)_populateDefaultNickname
@@ -76,7 +76,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	/* Using "Guest" as the default nickname may create conflicts as nickname guesses are 
 	 exhausted while appending underscores. To fix this, a random number is appended to 
 	 the end of the default nickname. */
-	NSString *nicknamePrefix = [TPCPreferences _defaultNicknamePrefix];
+	NSString *nicknamePrefix = [self _defaultNicknamePrefix];
 
 	NSString *nickname = [nicknamePrefix stringByAppendingFormat:@"%lu", TXRandomNumber(100)];
 
@@ -373,7 +373,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)showInlineImages
 {
-	return [TPCPreferences showInlineMedia];
+	return [self showInlineMedia];
 }
 
 + (BOOL)showInlineMedia
@@ -541,7 +541,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSString *)themeNameDefault
 {
-	return [TPCPreferences defaultPreferences][TPCPreferencesThemeNameDefaultsKey];
+	return [self defaultPreferences][TPCPreferencesThemeNameDefaultsKey];
 }
 
 + (NSString *)themeName
@@ -563,7 +563,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSParameterAssert(value != nil);
 
 	if ([TPCThemeController themeExists:value]) {
-		[TPCPreferences setThemeName:value];
+		[self setThemeName:value];
 	} else {
 		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 	}
@@ -571,7 +571,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSString *)themeChannelViewFontNameDefault
 {
-	return [TPCPreferences defaultPreferences][TPCPreferencesThemeFontNameDefaultsKey];
+	return [self defaultPreferences][TPCPreferencesThemeFontNameDefaultsKey];
 }
 
 + (NSString *)themeChannelViewFontName
@@ -593,7 +593,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	NSParameterAssert(value != nil);
 
 	if ([NSFont fontIsAvailable:value]) {
-		[TPCPreferences setThemeChannelViewFontName:value];
+		[self setThemeChannelViewFontName:value];
 	} else {
 		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 	}
@@ -611,8 +611,8 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (nullable NSFont *)themeChannelViewFont
 {
-	return [NSFont fontWithName:[TPCPreferences themeChannelViewFontName]
-						   size:[TPCPreferences themeChannelViewFontSize]];
+	return [NSFont fontWithName:[self themeChannelViewFontName]
+						   size:[self themeChannelViewFontSize]];
 }
 
 + (BOOL)themeChannelViewFontPreferenceUserConfigurable
@@ -627,7 +627,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSString *)themeNicknameFormatDefault
 {
-	return [TPCPreferences defaultPreferences][@"Theme -> Nickname Format"];
+	return [self defaultPreferences][@"Theme -> Nickname Format"];
 }
 
 + (NSString *)themeNicknameFormat
@@ -647,7 +647,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (NSString *)themeTimestampFormatDefault
 {
-	return [TPCPreferences defaultPreferences][@"Theme -> Timestamp Format"];
+	return [self defaultPreferences][@"Theme -> Timestamp Format"];
 }
 
 + (NSString *)themeTimestampFormat
@@ -870,7 +870,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (nullable NSString *)soundForEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Sound"];
+	NSString *eventKey = [self keyForEvent:event category:@"Sound"];
 
 	if (eventKey == nil) {
 		return nil;
@@ -881,7 +881,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (void)setSound:(nullable NSString *)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Sound"];
+	NSString *eventKey = [self keyForEvent:event category:@"Sound"];
 
 	if (eventKey == nil) {
 		return;
@@ -892,7 +892,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Enabled"];
+	NSString *eventKey = [self keyForEvent:event category:@"Enabled"];
 
 	if (eventKey == nil) {
 		return NO;
@@ -903,7 +903,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Enabled"];
+	NSString *eventKey = [self keyForEvent:event category:@"Enabled"];
 
 	if (eventKey == nil) {
 		return;
@@ -914,7 +914,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Disable While Away"];
+	NSString *eventKey = [self keyForEvent:event category:@"Disable While Away"];
 
 	if (eventKey == nil) {
 		return NO;
@@ -925,7 +925,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Disable While Away"];
+	NSString *eventKey = [self keyForEvent:event category:@"Disable While Away"];
 
 	if (eventKey == nil) {
 		return;
@@ -936,7 +936,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon"];
+	NSString *eventKey = [self keyForEvent:event category:@"Bounce Dock Icon"];
 
 	if (eventKey == nil) {
 		return NO;
@@ -947,7 +947,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon"];
+	NSString *eventKey = [self keyForEvent:event category:@"Bounce Dock Icon"];
 
 	if (eventKey == nil) {
 		return;
@@ -958,7 +958,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
+	NSString *eventKey = [self keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
 
 	if (eventKey == nil) {
 		return NO;
@@ -969,7 +969,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
+	NSString *eventKey = [self keyForEvent:event category:@"Bounce Dock Icon Repeatedly"];
 
 	if (eventKey == nil) {
 		return;
@@ -980,7 +980,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)speakEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Speak"];
+	NSString *eventKey = [self keyForEvent:event category:@"Speak"];
 
 	if (eventKey == nil) {
 		return NO;
@@ -991,7 +991,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:event category:@"Speak"];
+	NSString *eventKey = [self keyForEvent:event category:@"Speak"];
 
 	if (eventKey == nil) {
 		return;
@@ -1012,28 +1012,28 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)channelMessageSpeakChannelName
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
+	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
+	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
 
 	[RZUserDefaults() setBool:channelMessageSpeakChannelName forKey:eventKey];
 }
 
 + (BOOL)channelMessageSpeakNickname
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
+	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname
 {
-	NSString *eventKey = [TPCPreferences keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
+	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
 
 	[RZUserDefaults() setBool:channelMessageSpeakNickname forKey:eventKey];
 }
@@ -1114,9 +1114,9 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 + (void)cleanUpHighlightKeywords
 {
-	[TPCPreferences _cleanUpKeywords:@"Highlight List -> Primary Matches"];
+	[self _cleanUpKeywords:@"Highlight List -> Primary Matches"];
 
-	[TPCPreferences _cleanUpKeywords:@"Highlight List -> Excluded Matches"];
+	[self _cleanUpKeywords:@"Highlight List -> Excluded Matches"];
 }
 
 + (nullable NSArray<NSString *> *)highlightMatchKeywords
@@ -1135,9 +1135,9 @@ static NSArray<NSString *> *_matchKeywords = nil;
 + (void)observeValueForKeyPath:(NSString *)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([key isEqualToString:@"Highlight List -> Primary Matches"]) {
-		[TPCPreferences _loadMatchKeywords];
+		[self _loadMatchKeywords];
 	} else if ([key isEqualToString:@"Highlight List -> Excluded Matches"]) {
-		[TPCPreferences _loadExcludeKeywords];
+		[self _loadExcludeKeywords];
 	}
 }
 
@@ -1169,13 +1169,13 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	NSArray<NSDictionary *> *clientList = [worldController arrayForKey:@"clients"];
 
 	if (clientList.count > 0) {
-		[TPCPreferences setClientList:clientList];
+		[self setClientList:clientList];
 	}
 
 	BOOL soundIsMuted = [worldController boolForKey:@"soundIsMuted"];
 
 	if (soundIsMuted) {
-		[TPCPreferences setSoundIsMuted:soundIsMuted];
+		[self setSoundIsMuted:soundIsMuted];
 	}
 
 	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
@@ -1324,7 +1324,7 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[RZUserDefaults() registerDefaults:dynamicDefaults];
 
-	[TPCPreferences registerPreferencesDictionaryVersion];
+	[self registerPreferencesDictionaryVersion];
 }
 
 + (void)registerDefaults
@@ -1339,7 +1339,7 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[RZUserDefaults() registerDefaults:containerDefaults];
 
-	[TPCPreferences registerDynamicDefaults];
+	[self registerDynamicDefaults];
 }
 
 + (void)initPreferences
@@ -1354,14 +1354,14 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[TPCPreferencesUserDefaults migratePreferences];
 #endif
 
-	[TPCPreferences _migratePreferencesToVersion602];
+	[self _migratePreferencesToVersion602];
 
-	[TPCPreferences registerDefaults];
+	[self registerDefaults];
 
-	[TPCPreferences _migrateWorldControllerToVersion600];
+	[self _migrateWorldControllerToVersion600];
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	[TPCPreferences _migrateSparkleConfigurationToVersion601];
+	[self _migrateSparkleConfigurationToVersion601];
 #endif
 
 	[TPCPathInfo startUsingTranscriptFolderURL];
@@ -1369,10 +1369,10 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
-	[TPCPreferences _loadExcludeKeywords];
-	[TPCPreferences _loadMatchKeywords];
+	[self _loadExcludeKeywords];
+	[self _loadMatchKeywords];
 
-	[TPCPreferences observeReloadableNotifications];
+	[self observeReloadableNotifications];
 }
 
 #pragma mark -

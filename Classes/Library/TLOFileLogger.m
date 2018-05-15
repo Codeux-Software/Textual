@@ -299,7 +299,7 @@ ClassWithDesignatedInitializerInitMethod
 	
 	IRCTreeItem *item = ((channel) ? : client);
 
-	return [TLOFileLogger writePathForItem:item];
+	return [self.class writePathForItem:item];
 }
 
 - (NSString *)filename

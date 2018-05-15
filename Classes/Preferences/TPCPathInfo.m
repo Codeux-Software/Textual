@@ -656,7 +656,7 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 
 	[RZUserDefaults() setObject:transcriptFolderURL forKey:@"LogTranscriptDestinationSecurityBookmark_5"];
 
-	[TPCPathInfo startUsingTranscriptFolderURL];
+	[self startUsingTranscriptFolderURL];
 }
 
 + (void)warnUserAboutStaleTranscriptFolderURL
@@ -706,9 +706,9 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 																  error:NULL];
 
 		if (newBookmark) {
-			[TPCPathInfo setTranscriptFolderURL:newBookmark];
+			[self setTranscriptFolderURL:newBookmark];
 		} else {
-			[TPCPathInfo warnUserAboutStaleTranscriptFolderURL];
+			[self warnUserAboutStaleTranscriptFolderURL];
 		}
 
 		return;
@@ -718,7 +718,7 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 		LogToConsoleError("Error creating bookmark for URL: %{public}@",
 			  resolvedBookmarkError.localizedDescription);
 
-		[TPCPathInfo warnUserAboutStaleTranscriptFolderURL];
+		[self warnUserAboutStaleTranscriptFolderURL];
 
 		return;
 	}
