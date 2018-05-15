@@ -397,7 +397,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* @synchronized is used here because IRCChannelConfigMutable can modify
 	 this value underneath us. */
 	@synchronized (self->_notificationsMutable) {
-		return [self->_notificationsMutable objectForKey:eventKey];
+		return self->_notificationsMutable[eventKey];
 	}
 }
 
@@ -406,7 +406,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(eventKey != nil);
 
 	@synchronized (self->_notificationsMutable) {
-		NSNumber *value = [self->_notificationsMutable objectForKey:eventKey];
+		NSNumber *value = self->_notificationsMutable[eventKey];
 
 		if (value == nil) {
 			return NSMixedState;
@@ -589,7 +589,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (value == nil) {
 			[self->_notificationsMutable removeObjectForKey:eventKey];
 		} else {
-			[self->_notificationsMutable setObject:value forKey:eventKey];
+			self->_notificationsMutable[eventKey] = value;
 		}
 	}
 }
@@ -602,13 +602,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		switch (state) {
 			case NSOnState:
 			{
-				[self->_notificationsMutable setObject:@(YES) forKey:eventKey];
+				self->_notificationsMutable[eventKey] = @(YES);
 
 				break;
 			}
 			case NSOffState:
 			{
-				[self->_notificationsMutable setObject:@(NO) forKey:eventKey];
+				self->_notificationsMutable[eventKey] = @(NO);
 
 				break;
 			}

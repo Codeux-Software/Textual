@@ -668,7 +668,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (standardSortedMemberIndex != NSNotFound) {
 		replacedIndex = standardSortedMemberIndex;
 
-		[self.memberListStandardSortedContainer replaceObjectAtIndex:standardSortedMemberIndex withObject:member2];
+		self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
 	}
 
 	return replacedIndex;

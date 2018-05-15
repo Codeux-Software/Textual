@@ -259,7 +259,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* Ensure the response we received is a type we support. */
-	id eligibilityObject = [statusContext objectForKey:@"licenseUpgradeEligibility"];
+	id eligibilityObject = statusContext[@"licenseUpgradeEligibility"];
 
 	if (eligibilityObject == nil || [eligibilityObject isKindOfClass:[NSNumber class]] == NO) {
 		LogToConsoleError("'licenseUpgradeEligibility' is nil or not of kind 'NSNumber'");

@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSArray<TVCLogControllerPrintingOperation *> *pendingOperations = nil;
 
 	@synchronized (self.pendingOperations) {
-		pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
+		pendingOperations = self.pendingOperations[pendingOperationsKey];
 	}
 
 	if (pendingOperations == nil) {
@@ -156,12 +156,12 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *pendingOperationsKey = operation.viewController.description;
 
 	@synchronized (self.pendingOperations) {
-		NSMutableArray *pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
+		NSMutableArray *pendingOperations = self.pendingOperations[pendingOperationsKey];
 
 		if (pendingOperations == nil) {
 			pendingOperations = [NSMutableArray array];
 
-			[self.pendingOperations setObject:pendingOperations forKey:pendingOperationsKey];
+			self.pendingOperations[pendingOperationsKey] = pendingOperations;
 		} else {
 			for (TVCLogControllerPrintingOperation *pendingOperation in pendingOperations.reverseObjectEnumerator) {
 				if (pendingOperation.isCancelled || pendingOperation.isStandalone) {
@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *pendingOperationsKey = operation.viewController.description;
 
 	@synchronized (self.pendingOperations) {
-		NSMutableArray *pendingOperations = [self.pendingOperations objectForKey:pendingOperationsKey];
+		NSMutableArray *pendingOperations = self.pendingOperations[pendingOperationsKey];
 
 		if (pendingOperations == nil) {
 			LogToConsoleError("'pendingOperations' is nil when it's not supposed to be. wat?");
