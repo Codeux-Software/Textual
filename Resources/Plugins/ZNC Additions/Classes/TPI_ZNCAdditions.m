@@ -207,7 +207,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return input;
 }
 
-#warning TODO: Update buffextras support to work with changes to znc/znc git repository.
 - (nullable IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input forClient:(IRCClient *)client
 {
 	/* Define user information */
