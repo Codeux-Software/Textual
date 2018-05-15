@@ -337,7 +337,7 @@ NSString *TLOLicenseManagerStringValueForObject(id object)
 		[object enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			NSString *objectValue = TLOLicenseManagerStringValueForObject(object);
 
-			[stringValue appendFormat:@"%ld%@", index, objectValue];
+			[stringValue appendFormat:@"%lu%@", index, objectValue];
 		}];
 
 		return [stringValue copy];

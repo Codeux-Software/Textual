@@ -388,7 +388,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_extractEligibilityFromResponseWithStatusCode:(NSUInteger)statusCode statusContext:(nullable NSDictionary<NSString *, id> *)statusContext
 {
-	LogToConsoleDebug("Status code: %ld", statusCode);
+	LogToConsoleDebug("Status code: %lu", statusCode);
 
 #define _presentEligibilityCheckFailedSheet 	\
 	[self _presentEligibilityCheckFailedSheetWithError:errorMessage]; 	\

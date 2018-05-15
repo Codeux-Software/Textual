@@ -209,7 +209,7 @@ enum {
 
 	self.trialTimer = trialTimer;
 
-	LogToConsoleDebug("Starting trial timer to end on %d", timeRemaining);
+	LogToConsoleDebug("Starting trial timer to end on %f", timeRemaining);
 }
 
 - (void)stopTrialTimer
@@ -350,7 +350,7 @@ enum {
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
-	LogToConsoleDebug("Updating %ld transactions", transactions.count);
+	LogToConsoleDebug("Updating %lu transactions", transactions.count);
 
 	BOOL atleastOneTransaction = NO;
 	BOOL atleastOneTransactionFinished = NO;
@@ -448,7 +448,7 @@ enum {
 {
 	NSArray *transactions = [[SKPaymentQueue defaultQueue] transactions];
 
-	LogToConsoleDebug("Processing %ld transactions", transactions.count);
+	LogToConsoleDebug("Processing %lu transactions", transactions.count);
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		for (SKPaymentTransaction *transaction in transactions) {
@@ -726,7 +726,7 @@ enum {
 
 - (void)upgradeEligibilitySheetChanged:(TDCInAppPurchaseUpgradeEligibilitySheet *)sender
 {
-	LogToConsoleDebug("Eligibility changed to %ld", sender.eligibility);
+	LogToConsoleDebug("Eligibility changed to %lu", sender.eligibility);
 
 	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibilityUnknown ||
 		sender.eligibility == TLOInAppPurchaseUpgradeNotEligible)
@@ -833,7 +833,7 @@ enum {
 
 	entryItem.rowHeight = (cellView.innerContentViewSize.height + cellViewSpacing.height);
 
-	LogToConsoleDebug("Height of row %ld is %f", row, entryItem.rowHeight);
+	LogToConsoleDebug("Height of row %lu is %f", row, entryItem.rowHeight);
 
 	[NSAnimationContext performBlockWithoutAnimation:^{
 		[tableView noteHeightOfRowsWithIndexesChanged:

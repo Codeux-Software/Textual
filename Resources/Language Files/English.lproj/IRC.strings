@@ -55,7 +55,7 @@
 "IRC[1009]" = "1d Shunned";
 
 /* Network not available messages */
-"IRC[1010]" = "Delaying auto connect for %ld seconds";
+"IRC[1010]" = "Delaying auto connect for %lu seconds";
 
 /* File transfer server console messages */
 "IRC[1018]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";

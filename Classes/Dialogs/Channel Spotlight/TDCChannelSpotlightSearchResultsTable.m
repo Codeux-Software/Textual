@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 		keyboardShortcutIndex = 0;
 	}
 
-	return [NSString stringWithFormat:@"⌘%ld", keyboardShortcutIndex];
+	return [NSString stringWithFormat:@"⌘%lu", keyboardShortcutIndex];
 }
 
 - (NSColor *)keyboardShortcutTextColorSelected

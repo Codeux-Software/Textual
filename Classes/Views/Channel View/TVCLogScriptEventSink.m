@@ -305,7 +305,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Perform validation if needed */
 	if (minimumArgumentCount > 0 && values.count < minimumArgumentCount) {
-		[self.class throwJavaScriptException:@"Minimum number of arguments (%ld) condition not met"
+		[self.class throwJavaScriptException:@"Minimum number of arguments (%lu) condition not met"
 								   forCaller:caller
 								   inWebView:intWebView, minimumArgumentCount];
 

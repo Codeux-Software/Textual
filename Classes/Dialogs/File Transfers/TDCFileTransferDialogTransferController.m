@@ -861,9 +861,9 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *newFilename = nil;
 
 		if (filenameExtension.length == 0) {
-			newFilename = [NSString stringWithFormat:@"%@_%ld", filenameWithoutExtension, i];
+			newFilename = [NSString stringWithFormat:@"%@_%lu", filenameWithoutExtension, i];
 		} else {
-			newFilename = [NSString stringWithFormat:@"%@_%ld.%@", filenameWithoutExtension, i, filenameExtension];
+			newFilename = [NSString stringWithFormat:@"%@_%lu.%@", filenameWithoutExtension, i, filenameExtension];
 		}
 
 		filePath = [self.path stringByAppendingPathComponent:newFilename];
