@@ -834,6 +834,7 @@ BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey)
 			@"juicy-cyan-toad-72508217265703758416002094229",
 			@"cheerful-turquoise-zebra-81864329409734131515",
 			@"many-wavy-fly-7043700524134077492967431288170",
+			@"helpful-jade-quelea-7403506199409693779877124",
 		];
 	}
 
