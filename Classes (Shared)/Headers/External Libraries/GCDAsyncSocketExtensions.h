@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
 + (BOOL)isBadSSLCertificateError:(NSError *)error;
-+ (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode;
++ (nullable NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode;
 
 @property (readonly) SSLProtocol sslNegotiatedProtocolVersion;
 @property (readonly) SSLCipherSuite sslNegotiatedCipherSuite;
