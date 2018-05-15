@@ -46,9 +46,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *valueKey = nil;
 
 	if (value != 1) {
-		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][1]", valueToken];
+		valueKey = [NSString stringWithFormat:@"BasicLanguage[%lu][1]", valueToken];
 	} else {
-		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][0]", valueToken];
+		valueKey = [NSString stringWithFormat:@"BasicLanguage[%lu][0]", valueToken];
 	}
 
 	[resultString appendString:TPILocalizedString(valueKey, value)];
