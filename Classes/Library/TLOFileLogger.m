@@ -297,7 +297,7 @@ ClassWithDesignatedInitializerInitMethod
 	IRCClient *client = self.client;
 	IRCChannel *channel = self.channel;
 	
-	IRCTreeItem *item = ((channel) ? channel : client);
+	IRCTreeItem *item = ((channel) ? : client);
 
 	return [TLOFileLogger writePathForItem:item];
 }

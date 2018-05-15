@@ -3169,7 +3169,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandBufferdebugIndex: // Command: BUFFERDEBUG
 		{
-			IRCTreeItem *treeItem = ((targetChannel) ? targetChannel : self);
+			IRCTreeItem *treeItem = ((targetChannel) ?: self);
 			
 			TVCLogView *backingView = treeItem.viewController.backingView;
 
