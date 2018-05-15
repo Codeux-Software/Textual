@@ -195,7 +195,7 @@ enum {
 
 	NSTimeInterval timeRemaining = (TLOAppStoreTimeReaminingInTrial() * (-1.0));
 
-	if (timeRemaining == 0) {
+	if (CGFloatAreEqual(timeRemaining, 0)) {
 		return;
 	}
 
