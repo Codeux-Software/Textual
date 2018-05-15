@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13189.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,7 +69,7 @@
                 <outlet property="hideAutojoinDelayedWarningsCheck" destination="ptP-ZP-JAf" id="LXI-a8-mzH"/>
                 <outlet property="highlightListArrayController" destination="XVW-tl-Aro" id="yo0-76-qlh"/>
                 <outlet property="highlightsTable" destination="2454" id="2474"/>
-                <outlet property="navigationOutlineview" destination="Uj0-Wm-eox" id="1KT-DU-Q7e"/>
+                <outlet property="navigationOutlineView" destination="Uj0-Wm-eox" id="9jc-dy-sjg"/>
                 <outlet property="nicknamePasswordTextField" destination="1601" id="i9R-Eg-aTO"/>
                 <outlet property="nicknameTextField" destination="1595" id="BL9-gX-P5G"/>
                 <outlet property="normalLeavingCommentTextField" destination="2290" id="Fhf-Py-Njw"/>

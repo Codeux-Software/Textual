@@ -206,7 +206,7 @@ TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey) 
 
 + (NSUInteger)colonPositionForRemoteCommand:(NSString *)command;
 
-+ (nullable NSString *)syntaxForLocalommand:(NSString *)command;
++ (nullable NSString *)syntaxForLocalCommand:(NSString *)command;
 @end
 
 NS_ASSUME_NONNULL_END

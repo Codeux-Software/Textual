@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCMainWindowSidebarYosemiteSmoothTextField : NSTextField
 @end
 
-@interface TVCMainWindowSidebarYosemtieSmoothTextFieldCell : NSTextFieldCell
+@interface TVCMainWindowSidebarYosemiteSmoothTextFieldCell : NSTextFieldCell
 @end
 
 NS_ASSUME_NONNULL_END

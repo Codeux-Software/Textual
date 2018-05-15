@@ -482,7 +482,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
-- (BOOL)eventIsErrornous:(OTRKitMessageEvent)event
+- (BOOL)eventIsErroneous:(OTRKitMessageEvent)event
 {
 	switch (event) {
 		case OTRKitMessageEventEncryptionError:
@@ -595,7 +595,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return 400; // Chosen by fair dice roll.
 }
 
-- (NSString *)maybeInsertProperNegotationMessge:(NSString *)message
+- (NSString *)maybeInsertProperNegotiationMessage:(NSString *)message
 {
 	static NSRegularExpression *boundryRegex = nil;
 
@@ -623,7 +623,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag
 {
-	message = [self maybeInsertProperNegotationMessge:message];
+	message = [self maybeInsertProperNegotiationMessage:message];
 
 	if (tag && [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 		TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
@@ -744,7 +744,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	if ([self eventIsErrornous:event]) {
+	if ([self eventIsErroneous:event]) {
 		NSString *errorMessage = [self localizedStringForEvent:event];
 
 		[self presentErrorMessage:errorMessage withAccountName:username];

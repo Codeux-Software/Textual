@@ -186,7 +186,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	subview.hidden = YES;
 }
 
-- (void)toggleServerListVisbility
+- (void)toggleServerListVisibility
 {
 	if (self.serverListCollapsed) {
 		[self expandServerList];
@@ -195,7 +195,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	}
 }
 
-- (void)toggleMemberListVisbility
+- (void)toggleMemberListVisibility
 {
 	if (self.memberListCollapsed) {
 		[self expandMemberList];

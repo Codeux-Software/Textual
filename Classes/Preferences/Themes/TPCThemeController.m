@@ -96,7 +96,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	self.customSettings = [TPCThemeSettings new];
 
-	[self startMonitoringAcitveThemePath];
+	[self startMonitoringActiveThemePath];
 
 	/* resetPreferencesForPreferredTheme is called for the configured
 	 theme before the first ever -reload is called to recover from a
@@ -338,7 +338,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 }
 
-- (BOOL)validateThemeAndRelaodIfNecessary
+- (BOOL)validateThemeAndReloadIfNecessary
 {
 	if ([self resetPreferencesForActiveTheme]) {
 		LogToConsoleInfo("Reloading theme because it failed validation");
@@ -772,7 +772,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		{
 			LogToConsoleInfo("The contents of the configured theme was deleted. Validation and reload will now occur.");
 
-			(void)[themeController validateThemeAndRelaodIfNecessary];
+			(void)[themeController validateThemeAndReloadIfNecessary];
 		}
 		else if (activeThemeContentsWereModified)
 		{
@@ -793,7 +793,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	[self stopMonitoringActiveThemePath];
 
-	[self startMonitoringAcitveThemePath];
+	[self startMonitoringActiveThemePath];
 }
 
 - (void)stopMonitoringActiveThemePath
@@ -809,7 +809,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	self.eventStreamRef = NULL;
 }
 
-- (void)startMonitoringAcitveThemePath
+- (void)startMonitoringActiveThemePath
 {
 	if (self.eventStreamRef) {
 		[self stopMonitoringActiveThemePath];

@@ -1126,7 +1126,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.menuIsOpen = NO;
 
-	/* This delegate callback is recieved before -menuItemPerformedAction:
+	/* This delegate callback is received before -menuItemPerformedAction:
 	 is called. So that our selected items can be reset if the user did 
 	 not perform an action, we call -menuClosedTimer the next time the 
 	 main queue comes around. The action is performed on the current pass
@@ -1227,7 +1227,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Navigation Channel List
 
-- (void)populateNavgiationChannelList
+- (void)populateNavigationChannelList
 {
 #define _channelNavigationMenuEntryMenuTag		717
 
@@ -1378,7 +1378,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Find Panel
 
-- (void)_showFindPromptOpenDailog:(id)sender
+- (void)_showFindPromptOpenDialog:(id)sender
 {
 	_popWindowViewIfExists(@"TXMenuControllerFindPrompt");
 
@@ -1417,7 +1417,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _findPromptMoveForwardMenuTag	309
 
 	if ([sender tag] == _findPromptOpenDialogMenuTag || self.currentSearchPhrase.length == 0) {
-		[self _showFindPromptOpenDailog:sender];
+		[self _showFindPromptOpenDialog:sender];
 
 		return;
 	}
@@ -3610,7 +3610,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Toggle Mute
 
-- (void)toggleMuteOnNotifcationsShortcut:(NSInteger)state
+- (void)toggleMuteOnNotificationsShortcut:(NSInteger)state
 {
 	sharedGrowlController().areNotificationsDisabled = (state == NSOnState);
 
@@ -3640,9 +3640,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)toggleMuteOnNotifications:(id)sender
 {
 	if (sharedGrowlController().areNotificationsDisabled) {
-		[self toggleMuteOnNotifcationsShortcut:NSOffState];
+		[self toggleMuteOnNotificationsShortcut:NSOffState];
 	} else {
-		[self toggleMuteOnNotifcationsShortcut:NSOnState];
+		[self toggleMuteOnNotificationsShortcut:NSOnState];
 	}
 }
 
@@ -3651,14 +3651,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)toggleServerListVisibility:(id)sender
 {
-	[mainWindow().contentSplitView toggleServerListVisbility];
+	[mainWindow().contentSplitView toggleServerListVisibility];
 }
 
 - (void)toggleMemberListVisibility:(id)sender
 {
 	mainWindowMemberList().isHiddenByUser = (mainWindowMemberList().isHiddenByUser == NO);
 
-	[mainWindow().contentSplitView toggleMemberListVisbility];
+	[mainWindow().contentSplitView toggleMemberListVisibility];
 }
 
 #pragma mark -

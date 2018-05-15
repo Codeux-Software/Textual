@@ -152,7 +152,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (fileURL) {
 		NSString *filename = fileURL.path;
 
-		[self.viewController logViewWebViewRecievedDropWithFile:filename];
+		[self.viewController logViewWebViewReceivedDropWithFile:filename];
 	}
 
 	return NO;

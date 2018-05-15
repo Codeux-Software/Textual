@@ -141,7 +141,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
 }
 
-- (NSColor *)messageCountBadgeGraphtieBackgroundColor
+- (NSColor *)messageCountBadgeGraphiteBackgroundColor
 {
 	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
 }

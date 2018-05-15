@@ -216,7 +216,7 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 + (TXCommandWKeyAction)commandWKeyAction;
 
 + (BOOL)commandReturnSendsMessageAsAction;
-+ (BOOL)controlEnterSnedsMessage;
++ (BOOL)controlEnterSendsMessage;
 
 + (BOOL)openBrowserInBackground;
 

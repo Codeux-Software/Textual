@@ -225,7 +225,7 @@ NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> Syst
 	BOOL isValidResponse = (self.requestResponse.statusCode == 200);
 
 	if (isValidResponse) {
-		[self didRecieveXMLData:self.requestResponseData];
+		[self didReceiveXMLData:self.requestResponseData];
 	} else {
 		[self tearDownInternalObject];
 	}
@@ -258,7 +258,7 @@ NSString * const _userDefaultsSerialCacheKey = @"Private Extension Store -> Syst
 #pragma mark -
 #pragma mark XML Parser Delegate
 
-- (void)didRecieveXMLData:(NSData *)incomingData
+- (void)didReceiveXMLData:(NSData *)incomingData
 {
 	self.modelInformation = [NSMutableString string];
 

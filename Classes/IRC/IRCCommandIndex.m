@@ -191,7 +191,7 @@ NSString * _Nullable IRCPublicCommandIndex(const char *indexKey)
 	return position;
 }
 
-+ (nullable NSString *)syntaxForLocalommand:(NSString *)command
++ (nullable NSString *)syntaxForLocalCommand:(NSString *)command
 {
 	NSParameterAssert(command != nil);
 

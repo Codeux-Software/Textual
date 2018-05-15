@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSUInteger contentViewPreferredHeight;
 @property (nonatomic, copy) NSArray *navigationTreeMatrix;
 @property (nonatomic, assign) BOOL updateWindowFrameWhileOffscreen;
-@property (nonatomic, assign) BOOL expandParentonDoubleClick;
+@property (nonatomic, assign) BOOL expandParentOnDoubleClick;
 
 - (void)startAtSelectionIndex:(NSUInteger)startingSelection;
 @end

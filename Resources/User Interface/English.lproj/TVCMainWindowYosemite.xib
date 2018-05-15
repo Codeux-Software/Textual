@@ -154,7 +154,7 @@
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
                                                                             <rect key="frame" x="4" y="0.0" width="142" height="17"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="fBN-3b-ksS" customClass="TVCMainWindowSidebarYosemtieSmoothTextFieldCell">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="fBN-3b-ksS" customClass="TVCMainWindowSidebarYosemiteSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="systemBold"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -185,7 +185,7 @@
                                                                         </imageView>
                                                                         <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="YvY-15-HQ3">
                                                                             <rect key="frame" x="22" y="0.0" width="90" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="aWH-di-A9U" customClass="TVCMainWindowSidebarYosemtieSmoothTextFieldCell">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="aWH-di-A9U" customClass="TVCMainWindowSidebarYosemiteSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -300,7 +300,7 @@
                                                                         </imageView>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dg2-9M-ak9">
                                                                             <rect key="frame" x="26" y="0.0" width="118" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="Kxh-ox-Uqw" customClass="TVCMainWindowSidebarYosemtieSmoothTextFieldCell">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="Kxh-ox-Uqw" customClass="TVCMainWindowSidebarYosemiteSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

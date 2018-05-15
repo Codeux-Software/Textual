@@ -767,7 +767,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
-	[licenseManagerDownloader migrateMacAppStorePurcahse:receiptData
+	[licenseManagerDownloader migrateMacAppStorePurchase:receiptData
 											 licenseOwnerName:licenseOwnerName
 								   licenseOwnerContactAddress:licenseOwnerContactAddress];
 

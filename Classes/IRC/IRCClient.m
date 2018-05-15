@@ -234,7 +234,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) BOOL reconnectEnabled;
 @property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
-@property (nonatomic, assign) BOOL zncBoucnerIsSendingCertificateInfo;
+@property (nonatomic, assign) BOOL zncBouncerIsSendingCertificateInfo;
 @property (nonatomic, assign) BOOL zncBouncerIsPlayingBackHistory;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *capabilitiesPending;
 @property (nonatomic, assign) NSUInteger connectDelay;
@@ -602,7 +602,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Update navigation list */
-	[menuController() populateNavgiationChannelList];
+	[menuController() populateNavigationChannelList];
 
 	/* Write passwords to keychain */
 	[self writePasswordsToKeychain];
@@ -975,7 +975,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* If the data is stll being processed, then return
 	 nil so that partial data is not returned. */
 	if (self.isConnectedToZNC == NO ||
-		self.zncBoucnerIsSendingCertificateInfo ||
+		self.zncBouncerIsSendingCertificateInfo ||
 		self.zncBouncerCertificateChainDataMutable == nil)
 	{
 		return nil;
@@ -4782,7 +4782,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(command != nil);
 	
-	NSString *syntax = [IRCCommandIndex syntaxForLocalommand:command];
+	NSString *syntax = [IRCCommandIndex syntaxForLocalCommand:command];
 	
 	if (syntax == nil) {
 		return;
@@ -5327,7 +5327,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.userIsIRCop = NO;
 
 	self.isConnectedToZNC = NO;
-	self.zncBoucnerIsSendingCertificateInfo = NO;
+	self.zncBouncerIsSendingCertificateInfo = NO;
 	self.zncBouncerCertificateChainDataMutable = nil;
 	self.zncBouncerIsPlayingBackHistory = NO;
 
@@ -7649,7 +7649,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* CERTINFO is not a standard command for Textual to
 	 receive which means we should be strict about what
 	 conditions we will accept it under. */
-	if (self.zncBoucnerIsSendingCertificateInfo == NO ||
+	if (self.zncBouncerIsSendingCertificateInfo == NO ||
 		m.senderIsServer == NO ||
 		NSObjectsAreEqual(m.senderNickname, @"znc.in") == NO)
 	{
@@ -7739,7 +7739,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
 			self.zncBouncerIsPlayingBackHistory = NO;
 		} else if (NSObjectsAreEqual(batchType, @"znc.in/tlsinfo")) {
-			self.zncBoucnerIsSendingCertificateInfo = NO;
+			self.zncBouncerIsSendingCertificateInfo = NO;
 		}
 	}
 	else // isBatchOpening == NO
@@ -7769,7 +7769,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
 			self.zncBouncerIsPlayingBackHistory = self.isConnectedToZNC;
 		} else if (NSObjectsAreEqual(batchType, @"znc.in/tlsinfo")) {
-			self.zncBoucnerIsSendingCertificateInfo = self.isConnectedToZNC;
+			self.zncBouncerIsSendingCertificateInfo = self.isConnectedToZNC;
 
 			/* If this is parent batch (there is no @batch=), then we
 			 reset the mutable object to read new data. */
@@ -8088,7 +8088,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	@synchronized (self.capabilitiesPending) {
 		/* -CapabilitiesPending can contain values that are used internally for state traking 
 		 and should never meet the socket. To workaround this as best we can, we scan the 
-		 array for the first capability that is acceptable for negotation. */
+		 array for the first capability that is acceptable for negotiation. */
 		NSUInteger nextCapabilityIndex =
 		[self.capabilitiesPending indexOfObjectPassingTest:^BOOL(NSNumber *capabilityPending, NSUInteger index, BOOL *stop) {
 			ClientIRCv3SupportedCapabilities capability = capabilityPending.unsignedIntegerValue;
@@ -8133,12 +8133,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)pauseCapabilityNegotation
+- (void)pauseCapabilityNegotiation
 {
 	self.capabilityNegotiationIsPaused = YES;
 }
 
-- (void)resumeCapabilityNegotation
+- (void)resumeCapabilityNegotiation
 {
 	self.capabilityNegotiationIsPaused = NO;
 
@@ -8185,7 +8185,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if ([capabilityString isEqualIgnoringCase:@"sasl"]) {
 		if (enabled) {
 			if ([self sendSASLIdentificationRequest]) {
-				[self pauseCapabilityNegotation];
+				[self pauseCapabilityNegotiation];
 			}
 		}
 
@@ -8319,7 +8319,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
-#pragma mark SASL Negotation
+#pragma mark SASL Negotiation
 
 - (void)processPendingCapabilityForSASL:(nullable NSArray<NSString *> *)capabilityOptions
 {
@@ -9927,7 +9927,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if ([self isPendingCapabilityEnabled:ClientIRCv3SupportedCapabilityIsInSASLNegotiation]) {
 				[self disablePendingCapability:ClientIRCv3SupportedCapabilityIsInSASLNegotiation];
 
-				[self resumeCapabilityNegotation];
+				[self resumeCapabilityNegotiation];
 			}
 
 			break;

@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSFont *serverCellFont;
 
 @property (readonly, copy) NSColor *messageCountBadgeAquaBackgroundColor;
-@property (readonly, copy) NSColor *messageCountBadgeGraphtieBackgroundColor;
+@property (readonly, copy) NSColor *messageCountBadgeGraphiteBackgroundColor;
 
 @property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForActiveWindow;
 @property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForInactiveWindow;

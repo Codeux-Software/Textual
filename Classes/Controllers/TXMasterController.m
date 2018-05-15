@@ -166,7 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Cloud files are synced regardless of user preference
-	 so we still have to initalize it at some point. */
+	 so we still have to initialize it at some point. */
 	[sharedCloudManager() prepareInitialState];
 #endif
 

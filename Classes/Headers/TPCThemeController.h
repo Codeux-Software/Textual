@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;
 
 /* Returns YES if a theme reload was necessary */
-- (BOOL)validateThemeAndRelaodIfNecessary;
+- (BOOL)validateThemeAndReloadIfNecessary;
 
 /* Calls for all themes */
 + (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock;

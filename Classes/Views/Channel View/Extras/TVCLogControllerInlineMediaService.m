@@ -111,9 +111,9 @@ NS_ASSUME_NONNULL_BEGIN
 	serviceConnection.exportedObject = self;
 
 	serviceConnection.interruptionHandler = ^{
-		[self interuptionHandler];
+		[self interruptionHandler];
 
-		LogToConsole("Interuption handler called");
+		LogToConsole("Interruption handler called");
 	};
 
 	serviceConnection.invalidationHandler = ^{
@@ -130,7 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self registerPlugins];
 }
 
-- (void)interuptionHandler
+- (void)interruptionHandler
 {
 	[self invalidateProcess];
 }

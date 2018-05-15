@@ -391,7 +391,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"CommandReturnSendsMessageAsAction"];
 }
 
-+ (BOOL)controlEnterSnedsMessage
++ (BOOL)controlEnterSendsMessage
 {
 	return [RZUserDefaults() boolForKey:@"ControlEnterSendsMessage"];
 }
