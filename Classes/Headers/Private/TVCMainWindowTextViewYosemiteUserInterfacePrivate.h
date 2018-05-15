@@ -37,19 +37,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowTextViewMavericksUserInterace : NSObject
-+ (NSColor *)inputTextFieldPrimaryTextColor;
-+ (NSColor *)inputTextFieldPlaceholderTextColor;
+@interface TVCMainWindowTextViewYosemiteUserInterface : NSObject
++ (NSColor *)blackInputTextFieldPlaceholderTextColor;
++ (NSColor *)whiteInputTextFieldPlaceholderTextColor;
 
-+ (NSColor *)inputTextFieldOutlineColorForActiveWindow;
-+ (NSColor *)inputTextFieldOutlineColorForInactiveWindow;
++ (NSColor *)blackInputTextFieldPrimaryTextColor;
++ (NSColor *)whiteInputTextFieldPrimaryTextColor;
 
-+ (NSColor *)inputTextFieldBackgroundColor;
++ (NSColor *)blackInputTextFieldInsideBlackBackgroundColor;
 
-+ (NSColor *)inputTextFieldInsideShadowColorForActiveWindow;
-+ (NSColor *)inputTextFieldInsideShadowColorForInactiveWindow;
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetina;
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
 
-+ (NSColor *)inputTextFieldOutsideShadowColor;
++ (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorder;
+
++ (NSGradient *)whiteInputTextFieldInsideWhiteGradient;
+
++ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina;
++ (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina;
+
++ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithoutRetina;
+
++ (NSColor *)writersProTextFieldCursorPinkColor;
++ (NSColor *)writersProTextFieldCursorBlueColor;
 @end
 
 NS_ASSUME_NONNULL_END

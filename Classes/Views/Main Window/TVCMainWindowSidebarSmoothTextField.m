@@ -98,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation TVCMainWindowSidebarYosemiteSmoothTextField
 @end
 
-@implementation TVCMainWindowSidebarYosemtieSmoothTextFieldCell
+@implementation TVCMainWindowSidebarYosemiteSmoothTextFieldCell
 
 - (CGFloat)contentsScale
 {

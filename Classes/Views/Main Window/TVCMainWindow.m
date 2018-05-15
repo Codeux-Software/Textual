@@ -319,10 +319,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)updateAlphaValueToReflectPreferences
 {
-	[self updateAlphaValueToReflectPreferencesAnimiated:NO];
+	[self updateAlphaValueToReflectPreferencesAnimated:NO];
 }
 
-- (void)updateAlphaValueToReflectPreferencesAnimiated:(BOOL)animate
+- (void)updateAlphaValueToReflectPreferencesAnimated:(BOOL)animate
 {
 	if (self.inFullscreenMode) {
 		return;
@@ -518,7 +518,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
-	[self updateAlphaValueToReflectPreferencesAnimiated:YES];
+	[self updateAlphaValueToReflectPreferencesAnimated:YES];
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
@@ -1067,7 +1067,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)sendControlEnterMessageMaybe:(NSEvent *)e
 {
-	if ([TPCPreferences controlEnterSnedsMessage]) {
+	if ([TPCPreferences controlEnterSendsMessage]) {
 		[self textEntered];
 
 		return;
@@ -2328,7 +2328,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self outlineViewSelectionDidChange:nil];
 
 	/* Populate navigation list */
-	[menuController() populateNavgiationChannelList];
+	[menuController() populateNavigationChannelList];
 }
 
 - (nullable IRCClient *)selectedClient
@@ -3108,7 +3108,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		[self.serverList moveItemAtIndex:originalIndex inParent:client toIndex:index inParent:client];
 	}
 
-	[menuController() populateNavgiationChannelList];
+	[menuController() populateNavigationChannelList];
 
 	return YES;
 }

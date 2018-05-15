@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define _toolbarItemIndexInlineMedia				108006
 #define _toolbarItemIndexLogLocation				108007
 #define _toolbarItemIndexDefaultIdentity			108008
-#define _toolbarItemIndexDefualtIRCopMessages		108009
+#define _toolbarItemIndexDefaultIRCopMessages		108009
 #define _toolbarItemIndexOffRecordMessaging			108010
 #define _toolbarItemIndexHiddenPreferences			108011 // unused
 
@@ -415,7 +415,7 @@ NS_ASSUME_NONNULL_BEGIN
 		_de(_toolbarItemIndexInlineMedia, self.contentViewInlineMedia, _toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexLogLocation, self.contentViewLogLocation, _toolbarItemIndexAdvanced);
 		_de(_toolbarItemIndexDefaultIdentity, self.contentViewDefaultIdentity, _toolbarItemIndexAdvanced)
-		_de(_toolbarItemIndexDefualtIRCopMessages, self.contentViewDefaultIRCopMessages, _toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexDefaultIRCopMessages, self.contentViewDefaultIRCopMessages, _toolbarItemIndexAdvanced)
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		_de(_toolbarItemIndexOffRecordMessaging, self.contentViewOffRecordMessaging, _toolbarItemIndexAdvanced)

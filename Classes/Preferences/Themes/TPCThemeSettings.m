@@ -317,7 +317,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return templatesPath;
 }
 
-- (void)loadApplicationTemplateRespository
+- (void)loadApplicationTemplateRepository
 {
 	NSString *templatesPath = self.applicationTemplateRepositoryPath;
 
@@ -442,7 +442,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Fall back to the default repository */
 	self.templateEngineVersion = templateEngineVersion;
 
-	[self loadApplicationTemplateRespository];
+	[self loadApplicationTemplateRepository];
 
 	/* Inform our defaults controller about a few overrides. */
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 

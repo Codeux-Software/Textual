@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSString *uppercaseNickname;
 
 /* -presentAwayMessageFor301 keeps track of the last time raw numeric
- 301 (away message) is recieved and will return YES if the message
+ 301 (away message) is received and will return YES if the message
  should be presented, NO otherwise. */
 @property (readonly) BOOL presentAwayMessageFor301;
 

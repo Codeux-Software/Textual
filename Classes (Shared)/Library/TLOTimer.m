@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[self prepareInitalState];
+		[self prepareInitialState];
 
 		return self;
 	}
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
-- (void)prepareInitalState
+- (void)prepareInitialState
 {
 	self.repeatTimer = YES;
 }

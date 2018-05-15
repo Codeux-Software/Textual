@@ -148,7 +148,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 								context:contextInfo];
 }
 
-- (void)migrateMacAppStorePurcahse:(NSString *)receiptData licenseOwnerName:(NSString *)licenseOwnerName licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress
+- (void)migrateMacAppStorePurchase:(NSString *)receiptData licenseOwnerName:(NSString *)licenseOwnerName licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress
 {
 	NSParameterAssert(receiptData != nil);
 	NSParameterAssert(licenseOwnerName != nil);

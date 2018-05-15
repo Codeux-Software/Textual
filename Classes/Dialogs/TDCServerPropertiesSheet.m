@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelListTable;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightsTable;
 @property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
-@property (nonatomic, weak) IBOutlet TVCContentNavigationOutlineView *navigationOutlineview;
+@property (nonatomic, weak) IBOutlet TVCContentNavigationOutlineView *navigationOutlineView;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *awayNicknameTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *connectionNameTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
@@ -411,7 +411,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.proxyPortTextField.performValidationWhenEmpty = YES;
 
-	self.proxyPortTextField.defualtValue = [NSString stringWithUnsignedInteger:IRCConnectionDefaultProxyPort];
+	self.proxyPortTextField.defaultValue = [NSString stringWithUnsignedInteger:IRCConnectionDefaultProxyPort];
 
 	self.proxyPortTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
@@ -498,18 +498,18 @@ NS_ASSUME_NONNULL_BEGIN
 		]
 	}];
 
-	self.navigationOutlineview.navigationTreeMatrix = navigationTreeMatrix;
+	self.navigationOutlineView.navigationTreeMatrix = navigationTreeMatrix;
 
 	/* Auto layout will grow view beyond these values.
 	 We are just declaring the default which doesn't matter much. */
-	self.navigationOutlineview.contentViewPreferredWidth = 100;
-	self.navigationOutlineview.contentViewPreferredHeight = 100;
+	self.navigationOutlineView.contentViewPreferredWidth = 100;
+	self.navigationOutlineView.contentViewPreferredHeight = 100;
 
-	self.navigationOutlineview.expandParentonDoubleClick = YES;
+	self.navigationOutlineView.expandParentOnDoubleClick = YES;
 
-	[self.navigationOutlineview reloadData];
+	[self.navigationOutlineView reloadData];
 
-	[self.navigationOutlineview expandItem:navigationTreeMatrix[0]];
+	[self.navigationOutlineView expandItem:navigationTreeMatrix[0]];
 }
 
 - (void)populateEncodings
@@ -584,7 +584,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Initalization Handler
+#pragma mark Initialization Handler
 
 - (void)start
 {
@@ -627,7 +627,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startWithViewAtIndex:(NSUInteger)viewIndex
 {
-	[self.navigationOutlineview startAtSelectionIndex:viewIndex];
+	[self.navigationOutlineView startAtSelectionIndex:viewIndex];
 
 	[self startSheet];
 

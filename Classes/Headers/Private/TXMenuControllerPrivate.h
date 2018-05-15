@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)mainWindowSelectionDidChange;
 
-- (void)populateNavgiationChannelList;
+- (void)populateNavigationChannelList;
 
 - (IBAction)performNavigationAction:(id)sender;
 
@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument;
 #endif
 
-- (void)toggleMuteOnNotifcationsShortcut:(NSInteger)state;
+- (void)toggleMuteOnNotificationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
 
 - (void)navigateToTreeItemAtURL:(NSURL *)url;

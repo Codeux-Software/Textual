@@ -41,13 +41,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCMainWindowSplitView : NSSplitView
 - (void)expandServerList;
 - (void)collapseServerList;
-- (void)toggleServerListVisbility;
+- (void)toggleServerListVisibility;
 
 @property (getter=isServerListCollapsed, readonly) BOOL serverListCollapsed;
 
 - (void)expandMemberList;
 - (void)collapseMemberList;
-- (void)toggleMemberListVisbility;
+- (void)toggleMemberListVisibility;
 
 @property (getter=isMemberListCollapsed, readonly) BOOL memberListCollapsed;
 @end

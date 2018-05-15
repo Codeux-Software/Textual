@@ -188,11 +188,11 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	if (self.preferencesDidChangeTimerIsActive == NO) {
 		self.preferencesDidChangeTimerIsActive = YES;
 
-		[self performSelectorInCommonModes:@selector(informaAllViewsUserDefaultsDidChange) withObject:nil afterDelay:1.0];
+		[self performSelectorInCommonModes:@selector(informAllViewsUserDefaultsDidChange) withObject:nil afterDelay:1.0];
 	}
 }
 
-- (void)informaAllViewsUserDefaultsDidChange
+- (void)informAllViewsUserDefaultsDidChange
 {
 	self.preferencesDidChangeTimerIsActive = NO;
 
@@ -539,7 +539,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 	(void)[mainWindow() reloadLoadingScreen];
 
-	[menuController() populateNavgiationChannelList];
+	[menuController() populateNavigationChannelList];
 
 	[self postClientListWasModifiedNotification];
 
@@ -575,7 +575,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	if (adjust) {
 		[mainWindow() adjustSelection];
 
-		[menuController() populateNavgiationChannelList];
+		[menuController() populateNavigationChannelList];
 	}
 
 	return channel;
@@ -686,7 +686,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 	(void)[mainWindow() reloadLoadingScreen];
 
-	[menuController() populateNavgiationChannelList];
+	[menuController() populateNavigationChannelList];
 }
 
 - (void)destroyChannel:(IRCChannel *)channel
@@ -734,7 +734,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 		[mainWindow() adjustSelection];
 
-		[menuController() populateNavgiationChannelList];
+		[menuController() populateNavigationChannelList];
 	}
 }
 

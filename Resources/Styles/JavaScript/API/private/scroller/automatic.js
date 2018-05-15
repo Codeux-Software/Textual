@@ -49,7 +49,7 @@
 
 TextualScroller.documentIsVisible = undefined; /* PUBLIC */
 
-_TextualScroller._documentVisbilityChangedCallback = function() /* PRIVATE */
+_TextualScroller._documentVisibilityChangedCallback = function() /* PRIVATE */
 {
 	var documentHidden = document.hidden;
 
@@ -141,7 +141,7 @@ _TextualScroller.performScroll = function() /* PRIVATE */
 };
 
 /* This function sets a flag that tells the scroller not to do anything,
-regardless of whether it is visible or not. Visbility will control whether
+regardless of whether it is visible or not. Visibility will control whether
 the timer itself is activate, not this function. */
 TextualScroller.automaticScrollingEnabled = true; /* PRIVATE */
 
@@ -221,7 +221,7 @@ _TextualScroller.createMutationObserver = function() /* PRIVATE */
 
 window.addEventListener("resize", _TextualScroller._documentResizedCallback, false);
 
-document.addEventListener("visibilitychange", _TextualScroller._documentVisbilityChangedCallback, false);
+document.addEventListener("visibilitychange", _TextualScroller._documentVisibilityChangedCallback, false);
 
 /* Populate initial visiblity state and maybe create timer */
-_TextualScroller._documentVisbilityChangedCallback();
+_TextualScroller._documentVisibilityChangedCallback();

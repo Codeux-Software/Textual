@@ -139,9 +139,9 @@ ClassWithDesignatedInitializerInitMethod
 	serviceConnection.exportedObject = self;
 
 	serviceConnection.interruptionHandler = ^{
-		[self interuptionHandler];
+		[self interruptionHandler];
 
-		LogToConsole("Interuption handler called");
+		LogToConsole("Interruption handler called");
 	};
 
 	serviceConnection.invalidationHandler = ^{
@@ -155,7 +155,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.serviceConnection = serviceConnection;
 }
 
-- (void)interuptionHandler
+- (void)interruptionHandler
 {
 	[self invalidateProcess];
 }

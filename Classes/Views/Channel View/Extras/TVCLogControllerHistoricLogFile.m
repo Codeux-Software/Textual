@@ -195,9 +195,9 @@ NS_ASSUME_NONNULL_BEGIN
 	serviceConnection.exportedObject = self;
 
 	serviceConnection.interruptionHandler = ^{
-		[self interuptionHandler];
+		[self interruptionHandler];
 
-		LogToConsole("Interuption handler called");
+		LogToConsole("Interruption handler called");
 	};
 
 	serviceConnection.invalidationHandler = ^{
@@ -211,7 +211,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.serviceConnection = serviceConnection;
 }
 
-- (void)interuptionHandler
+- (void)interruptionHandler
 {
 	[self invalidateProcess];
 }
@@ -306,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 		TVCLogLine *logLine = [TVCLogLine logLineFromXPCObject:xpcObject];
 
 		if (logLine == nil) {
-			LogToConsoleError("Failed to initalize object %@. Corrupt data?",
+			LogToConsoleError("Failed to initialize object %@. Corrupt data?",
 							  xpcObject.description);
 
 			continue;

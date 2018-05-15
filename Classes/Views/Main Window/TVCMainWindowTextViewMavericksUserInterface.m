@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "TVCMainWindowTextViewMavericksUserInteracePrivate.h"
+#import "TVCMainWindowTextViewMavericksUserInterfacePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TVCMainWindowTextViewMavericksUserInterace
+@implementation TVCMainWindowTextViewMavericksUserInterface
 
 + (NSColor *)inputTextFieldPlaceholderTextColor
 {

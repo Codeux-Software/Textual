@@ -1682,7 +1682,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self.attachedWindow redirectKeyDown:e];
 }
 
-- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename
+- (void)logViewWebViewReceivedDropWithFile:(NSString *)filename
 {
 	[menuController() memberSendDroppedFilesToSelectedChannel:@[filename]];
 }

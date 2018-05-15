@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;
 - (void)logViewWebViewKeyDown:(NSEvent *)e;
-- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
+- (void)logViewWebViewReceivedDropWithFile:(NSString *)filename;
 @end
 
 NS_ASSUME_NONNULL_END

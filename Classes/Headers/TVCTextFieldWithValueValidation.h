@@ -50,7 +50,7 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 @property (nonatomic, assign) BOOL performValidationWhenEmpty;
 @property (nonatomic, weak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
 @property (nonatomic, assign) BOOL doNotInformCallbackOfNextChange;
-@property (nonatomic, copy, nullable) NSString *defualtValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
+@property (nonatomic, copy, nullable) NSString *defaultValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
 
 @property (readonly, copy) NSString *value; /* The current value. */
 @property (readonly, copy) NSString *lowercaseValue;

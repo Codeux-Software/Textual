@@ -304,7 +304,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	completionHandler(NO);
 }
 
-- (void)maybeBeginTLSNegotation
+- (void)maybeBeginTLSNegotiation
 {
 	if (self.config.connectionPrefersSecuredConnection == NO) {
 		return;
@@ -339,7 +339,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)onSocketConnectedToHost
 {
-	[self maybeBeginTLSNegotation];
+	[self maybeBeginTLSNegotiation];
 
 	self.isConnecting = NO;
 	self.isConnected = YES;

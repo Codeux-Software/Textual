@@ -589,7 +589,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		NSRect badgeRect = [self messageCountBadgeRectWithText:stringToDraw];
 
-		[self drawMessageCountBadge:stringToDraw inRect:badgeRect isHighlighgt:isHighlight isSelected:isSelected];
+		[self drawMessageCountBadge:stringToDraw inRect:badgeRect isHighlight:isHighlight isSelected:isSelected];
 
 		self.messageCountBadgeTrailingConstraint.constant = [interfaceObjects messageCountBadgeRightMargin];
 		self.messageCountBadgeWidthConstraint.constant = NSWidth(badgeRect);
@@ -657,7 +657,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return badgeFrame;
 }
 
-- (void)drawMessageCountBadge:(NSAttributedString *)stringToDraw inRect:(NSRect)rectToDraw isHighlighgt:(BOOL)isHighlight isSelected:(BOOL)isSelected
+- (void)drawMessageCountBadge:(NSAttributedString *)stringToDraw inRect:(NSRect)rectToDraw isHighlight:(BOOL)isHighlight isSelected:(BOOL)isSelected
 {
 	TVCMainWindow *mainWindow = self.mainWindow;
 
@@ -708,7 +708,7 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			if (isDrawingOnMavericks) {
 				if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-					backgroundColor = [interfaceObjects messageCountBadgeGraphtieBackgroundColor];
+					backgroundColor = [interfaceObjects messageCountBadgeGraphiteBackgroundColor];
 				} else {
 					backgroundColor = [interfaceObjects messageCountBadgeAquaBackgroundColor];
 				}

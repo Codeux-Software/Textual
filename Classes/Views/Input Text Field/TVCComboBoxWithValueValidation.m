@@ -109,8 +109,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (stringValue.length == 0) {
-		if (	   self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
-			return self.defualtValue;
+		if (	   self.defaultValue && self.stringValueIsInvalidOnEmpty == NO) {
+			return self.defaultValue;
 		}
 	}
 

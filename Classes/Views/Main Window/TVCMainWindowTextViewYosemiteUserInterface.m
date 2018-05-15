@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "TVCMainWindowTextViewYosemiteUserInteracePrivate.h"
+#import "TVCMainWindowTextViewYosemiteUserInterfacePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TVCMainWindowTextViewYosemiteUserInterace
+@implementation TVCMainWindowTextViewYosemiteUserInterface
 
 + (NSColor *)blackInputTextFieldPlaceholderTextColor
 {

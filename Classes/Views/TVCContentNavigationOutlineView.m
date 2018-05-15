@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
-	if (self.expandParentonDoubleClick == NO) {
+	if (self.expandParentOnDoubleClick == NO) {
 		return;
 	}
 
