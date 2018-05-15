@@ -77,6 +77,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[self rebuildCachedChannelList];
 }
 
+- (void)dealloc
+{
+	[self removeObserverForChannelListUpdates];
+}
+
 - (void)attachToView:(NSView *)view
 {
 	NSParameterAssert(view != nil);
@@ -260,6 +265,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCWorldClientListWasModifiedNotification object:nil];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCClientChannelListWasModifiedNotification object:nil];
+}
+
+- (void)removeObserverForChannelListUpdates
+{
+	[RZNotificationCenter() removeObserver:self];
 }
 
 - (void)reloadOutlineView
