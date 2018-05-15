@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#warning TODO: Add non-blocking version of alerts.
+
 TEXTUAL_EXTERN NSString * const TLOPopupPromptSuppressionPrefix;
 
 typedef NS_ENUM(NSUInteger, TLOPopupPromptReturnType) {
