@@ -76,6 +76,23 @@ typedef void (^TDCAlertCompletionBlock)(TDCAlertResponse buttonClicked, BOOL sup
 			  alternateButton:(nullable NSString *)buttonAlternate
 			   suppressionKey:(nullable NSString *)suppressKey
 			  suppressionText:(nullable NSString *)suppressText
+				accessoryView:(nullable NSView *)accessoryView;
+
++ (BOOL)modalAlertWithMessage:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+		  suppressionResponse:(nullable BOOL *)suppressionResponse;
+
++ (BOOL)modalAlertWithMessage:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+				accessoryView:(nullable NSView *)accessoryView
 		  suppressionResponse:(nullable BOOL *)suppressionResponse;
 
 #pragma mark -
