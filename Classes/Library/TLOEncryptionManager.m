@@ -36,8 +36,8 @@
  *********************************************************************** */
 
 #import "TXMasterController.h"
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TVCMainWindow.h"
 #import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
 #import "TVCLogRenderer.h"
@@ -359,10 +359,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (currentState == OTRKitMessageStateEncrypted) {
 		if (isIncomingFileTransfer) {
-			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1132][2]")
-																 title:TXTLS(@"Prompts[1132][1]", filename)
-														 defaultButton:TXTLS(@"Prompts[0004]")
-													   alternateButton:TXTLS(@"Prompts[1132][3]")];
+			BOOL continueop = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1132][2]")
+														title:TXTLS(@"Prompts[1132][1]", filename)
+												defaultButton:TXTLS(@"Prompts[0004]")
+											  alternateButton:TXTLS(@"Prompts[1132][3]")];
 
 			return (continueop == NO);
 		}
@@ -370,10 +370,10 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			NSString *nickname = [self nicknameFromAccountName:messageTo];
 
-			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1133][2]")
-																 title:TXTLS(@"Prompts[1133][1]", filename, nickname)
-														 defaultButton:TXTLS(@"Prompts[0004]")
-													   alternateButton:TXTLS(@"Prompts[1133][3]")];
+			BOOL continueop = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1133][2]")
+														title:TXTLS(@"Prompts[1133][1]", filename, nickname)
+												defaultButton:TXTLS(@"Prompts[0004]")
+											  alternateButton:TXTLS(@"Prompts[1133][3]")];
 
 			return (continueop == NO);
 		}

@@ -39,10 +39,10 @@
 #import "NSStringHelper.h"
 #import "TXMasterController.h"
 #import "TXMenuControllerPrivate.h"
+#import "TDCAlert.h"
 #import "TPCPathInfo.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOpenLink.h"
-#import "TLOPopupPrompts.h"
 #import "TVCMainWindow.h"
 #import "IRCClientConfig.h"
 #import "IRCClientPrivate.h"
@@ -486,15 +486,15 @@ NS_ASSUME_NONNULL_BEGIN
 		if (channelListCount > 1) {
 			NSString *channelListFormatted = [channelList componentsJoinedByString:@", "];
 
-			mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1110][2]", existingClient.name)
-																 title:TXTLS(@"Prompts[1110][1]", serverAddress, channelListFormatted)
-														 defaultButton:TXTLS(@"Prompts[1110][3]")
-													   alternateButton:TXTLS(@"Prompts[1110][4]")];
+			mergeConnection = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1110][2]", existingClient.name)
+														title:TXTLS(@"Prompts[1110][1]", serverAddress, channelListFormatted)
+												defaultButton:TXTLS(@"Prompts[1110][3]")
+											  alternateButton:TXTLS(@"Prompts[1110][4]")];
 		} else {
-			mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1109][2]", existingClient.name)
-																 title:TXTLS(@"Prompts[1109][1]", serverAddress, channelList.firstObject)
-														 defaultButton:TXTLS(@"Prompts[1109][3]")
-													   alternateButton:TXTLS(@"Prompts[1109][4]")];
+			mergeConnection = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1109][2]", existingClient.name)
+														title:TXTLS(@"Prompts[1109][1]", serverAddress, channelList.firstObject)
+												defaultButton:TXTLS(@"Prompts[1109][3]")
+											  alternateButton:TXTLS(@"Prompts[1109][4]")];
 		}
 
 		// YES = default button (create new connection)

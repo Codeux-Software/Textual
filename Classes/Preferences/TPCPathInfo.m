@@ -37,8 +37,8 @@
 
 #import "BuildConfig.h"
 
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
@@ -605,12 +605,12 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(path != nil);
 
 	if (sharedCloudManager().ubiquitousContainerIsAvailable == NO) {
-		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-										  body:TXTLS(@"Prompts[1105][2]")
-										 title:TXTLS(@"Prompts[1105][1]")
-								 defaultButton:TXTLS(@"Prompts[1040]")
-							   alternateButton:nil
-								   otherButton:nil];
+		[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
+								  body:TXTLS(@"Prompts[1105][2]")
+								 title:TXTLS(@"Prompts[1105][1]")
+						 defaultButton:TXTLS(@"Prompts[1040]")
+					   alternateButton:nil
+						   otherButton:nil];
 
 		return;
 	}
@@ -667,10 +667,10 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 		return;
 	}
 	
-	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1134][2]")
-											 title:TXTLS(@"Prompts[1134][1]")
-									 defaultButton:TXTLS(@"Prompts[0005]")
-								   alternateButton:nil];
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1134][2]")
+						 title:TXTLS(@"Prompts[1134][1]")
+				 defaultButton:TXTLS(@"Prompts[0005]")
+			   alternateButton:nil];
 }
 
 + (void)startUsingTranscriptFolderURL

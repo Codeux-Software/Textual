@@ -39,9 +39,9 @@
 #import "TXMasterController.h"
 #import "TXMenuControllerPrivate.h"
 #import "IRCChannel.h"
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOpenLink.h"
-#import "TLOPopupPrompts.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"
 #import "TVCLogController.h"
@@ -372,12 +372,12 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *applicationName = [RZWorkspace() nameOfApplicationToOpenURL:webpageURL];
 
 	BOOL openLink =
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1114][2]", webpageURL.absoluteString)
-									   title:TXTLS(@"Prompts[1114][1]", applicationName)
-							   defaultButton:TXTLS(@"Prompts[0001]")
-							 alternateButton:TXTLS(@"Prompts[0002]")
-							  suppressionKey:@"open_non_http_url_warning"
-							 suppressionText:nil];
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1114][2]", webpageURL.absoluteString)
+							  title:TXTLS(@"Prompts[1114][1]", applicationName)
+					  defaultButton:TXTLS(@"Prompts[0001]")
+					alternateButton:TXTLS(@"Prompts[0002]")
+					 suppressionKey:@"open_non_http_url_warning"
+					suppressionText:nil];
 
 	if (openLink == NO) {
 		return;

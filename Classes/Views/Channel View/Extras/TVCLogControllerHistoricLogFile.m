@@ -40,8 +40,8 @@
 #import "TXMasterController.h"
 #import "IRCTreeItem.h"
 #import "IRCWorld.h"
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
@@ -243,10 +243,10 @@ NS_ASSUME_NONNULL_BEGIN
 		lastErrorMessage = TXTLS(@"Prompts[1137][2]", lastErrorMessage);
 	}
 
-	(void)[TLOPopupPrompts dialogWindowWithMessage:lastErrorMessage
-											 title:TXTLS(@"Prompts[1137][1]")
-									 defaultButton:TXTLS(@"Prompts[0005]")
-								   alternateButton:nil];
+	[TDCAlert alertWithMessage:lastErrorMessage
+						 title:TXTLS(@"Prompts[1137][1]")
+				 defaultButton:TXTLS(@"Prompts[0005]")
+			   alternateButton:nil];
 }
 
 - (void)resetContext

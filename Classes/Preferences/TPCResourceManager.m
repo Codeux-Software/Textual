@@ -35,10 +35,10 @@
 
  *********************************************************************** */
 
+#import "TDCAlert.h"
 #import "TPCApplicationInfo.h"
 #import "TPCPathInfo.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCResourceManagerPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -112,10 +112,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	NSString *filename = url.lastPathComponent;
 
-	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1130][2]")
-															 title:TXTLS(@"Prompts[1130][1]", filename)
-													 defaultButton:TXTLS(@"Prompts[0001]")
-												   alternateButton:TXTLS(@"Prompts[0002]")];
+	BOOL performInstall = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1130][2]")
+													title:TXTLS(@"Prompts[1130][1]", filename)
+											defaultButton:TXTLS(@"Prompts[0001]")
+										  alternateButton:TXTLS(@"Prompts[0002]")];
 
 	if (performInstall == NO) {
 		return;
@@ -128,10 +128,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	if (didImport) {
 		NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
 
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1128][2]")
-										   title:TXTLS(@"Prompts[1128][1]", filenameWithoutExtension)
-								   defaultButton:TXTLS(@"Prompts[0005]")
-								 alternateButton:nil];
+		[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1128][2]")
+								  title:TXTLS(@"Prompts[1128][1]", filenameWithoutExtension)
+						  defaultButton:TXTLS(@"Prompts[0005]")
+						alternateButton:nil];
 	}
 }
 
@@ -167,10 +167,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	NSString *filename = url.lastPathComponent;
 
 	/* Ask user before installing. */
-	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1130][2]")
-															 title:TXTLS(@"Prompts[1130][1]", filename)
-													 defaultButton:TXTLS(@"Prompts[0001]")
-												   alternateButton:TXTLS(@"Prompts[0002]")];
+	BOOL performInstall = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1130][2]")
+													title:TXTLS(@"Prompts[1130][1]", filename)
+											defaultButton:TXTLS(@"Prompts[0001]")
+										  alternateButton:TXTLS(@"Prompts[0002]")];
 
 	if (performInstall == NO) {
 		return; // Do not install.
@@ -231,10 +231,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
 
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1127][2]", filenameWithoutExtension)
-									   title:TXTLS(@"Prompts[1127][1]", filenameWithoutExtension)
-							   defaultButton:TXTLS(@"Prompts[0005]")
-							 alternateButton:nil];
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1127][2]", filenameWithoutExtension)
+							  title:TXTLS(@"Prompts[1127][1]", filenameWithoutExtension)
+					  defaultButton:TXTLS(@"Prompts[0005]")
+					alternateButton:nil];
 }
 
 #pragma mark -

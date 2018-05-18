@@ -42,9 +42,9 @@
 #import "IRCChannel.h"
 #import "TPCPreferencesLocal.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
 #import "TVCTextFieldWithValueValidation.h"
+#import "TDCAlert.h"
 #import "TDCPreferencesControllerPrivate.h"
 #import "TDCChannelPropertiesNotificationConfigurationPrivate.h"
 #import "TDCChannelPropertiesSheetInternal.h"
@@ -326,28 +326,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	IRCChannel *channel = notification.object;
 
 	NSWindow *window = self.sheet;
-
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:TXTLS(@"Prompts[1117][2]")
-									 title:TXTLS(@"Prompts[1117][1]")
-							 defaultButton:TXTLS(@"Prompts[0001]")
-						   alternateButton:TXTLS(@"Prompts[0002]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked != TLOPopupPromptReturnPrimaryType) {
-								   return;
-							   }
-
-							   [self close];
-
-							   self.config = [channel.config copy];
-
-							   [self loadConfig];
-
-							   [self reloadNotificationsController];
-
-							   [self start];
-						   }];
+	
+	[TDCAlert alertSheetWithWindow:window
+							  body:TXTLS(@"Prompts[1117][2]")
+							 title:TXTLS(@"Prompts[1117][1]")
+					 defaultButton:TXTLS(@"Prompts[0001]")
+				   alternateButton:TXTLS(@"Prompts[0002]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked != TDCAlertResponseDefaultButton) {
+						   return;
+					   }
+					   
+					   [self close];
+					   
+					   self.config = [channel.config copy];
+					   
+					   [self loadConfig];
+					   
+					   [self reloadNotificationsController];
+					   
+					   [self start];
+				   }];
 }
 
 - (void)onInlineMediaCheckChanged:(id)sender

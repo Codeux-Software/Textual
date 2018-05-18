@@ -39,9 +39,9 @@
 #import "TXGlobalModels.h"
 #import "TXMasterController.h"
 #import "TXMenuController.h"
-#import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
+#import "TDCAlert.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
+#import "TLOLanguagePreferences.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesCloudSync.h"
 #import "TPCPreferencesLocalPrivate.h"
@@ -325,17 +325,19 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	NSString *suppressionKey = [NSString stringWithFormat:
 					@"incompatible_theme_dialog_%lu", themeNameHash];
 
-	BOOL openPreferneces =
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1118][2]")
-									   title:TXTLS(@"Prompts[1118][1]", self.name)
-							   defaultButton:TXTLS(@"Prompts[1118][3]")
-							 alternateButton:TXTLS(@"Prompts[0005]")
-							  suppressionKey:suppressionKey
-							 suppressionText:nil];
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1118][2]")
+						 title:TXTLS(@"Prompts[1118][1]", self.name)
+				 defaultButton:TXTLS(@"Prompts[1118][3]")
+			   alternateButton:TXTLS(@"Prompts[0005]")
+				suppressionKey:suppressionKey
+			   suppressionText:nil
+			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+				   if (buttonClicked != TDCAlertResponseDefaultButton) {
+					   return;
+				   }
 
-	if (openPreferneces) {
-		[menuController() showStylePreferences:nil];
-	}
+				   [menuController() showStylePreferences:nil];
+			   }];
 }
 
 - (BOOL)validateThemeAndReloadIfNecessary

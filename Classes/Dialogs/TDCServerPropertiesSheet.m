@@ -48,7 +48,6 @@
 #import "IRCNetworkList.h"
 #import "IRCServer.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCBasicTableView.h"
@@ -56,6 +55,7 @@
 #import "TVCContentNavigationOutlineViewPrivate.h"
 #import "TVCTextFieldWithValueValidation.h"
 #import "TDCAddressBookSheetPrivate.h"
+#import "TDCAlert.h"
 #import "TDCChannelPropertiesSheetPrivate.h"
 #import "TDCHighlightEntrySheetPrivate.h"
 #import "TDCServerEndpointListSheetPrivate.h"
@@ -705,28 +705,28 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *client = notification.object;
 
 	NSWindow *window = self.sheet.deepestWindow;
-
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:TXTLS(@"Prompts[1116][2]")
-									 title:TXTLS(@"Prompts[1116][1]")
-							 defaultButton:TXTLS(@"Prompts[0001]")
-						   alternateButton:TXTLS(@"Prompts[0002]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked != TLOPopupPromptReturnPrimaryType) {
-								   return;
-							   }
-
-							   [self close];
-
-							   [client updateStoredConfiguration];
-
-							   self.config = [client.config mutableCopy];
-
-							   [self loadConfig];
-
-							   [self start];
-						   }];
+	
+	[TDCAlert alertSheetWithWindow:window
+							  body:TXTLS(@"Prompts[1116][2]")
+							 title:TXTLS(@"Prompts[1116][1]")
+					 defaultButton:TXTLS(@"Prompts[0001]")
+				   alternateButton:TXTLS(@"Prompts[0002]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked != TDCAlertResponseDefaultButton) {
+						   return;
+					   }
+					   
+					   [self close];
+					   
+					   [client updateStoredConfiguration];
+					   
+					   self.config = [client.config mutableCopy];
+					   
+					   [self loadConfig];
+					   
+					   [self start];
+				   }];
 }
 
 - (void)loadConfig
@@ -1180,10 +1180,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1136][2]")
-											 title:TXTLS(@"Prompts[1136][1]")
-									 defaultButton:TXTLS(@"Prompts[0005]")
-								   alternateButton:nil];
+	(void)[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1136][2]")
+									title:TXTLS(@"Prompts[1136][1]")
+							defaultButton:TXTLS(@"Prompts[0005]")
+						  alternateButton:nil];
 }
 
 - (void)serverAddressChanged:(id)sender
@@ -1209,12 +1209,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *cipherSuitesTitle = self.preferredCipherSuitesButton.titleOfSelectedItem;
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.sheet
-									  body:TXTLS(@"TDCServerPropertiesSheet[1010][2]", cipherSuitesDescription)
-									 title:TXTLS(@"TDCServerPropertiesSheet[1010][1]", cipherSuitesTitle)
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:nil
-							   otherButton:nil];
+	[TDCAlert alertSheetWithWindow:self.sheet
+							  body:TXTLS(@"TDCServerPropertiesSheet[1010][2]", cipherSuitesDescription)
+							 title:TXTLS(@"TDCServerPropertiesSheet[1010][1]", cipherSuitesTitle)
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil];
 }
 
 - (void)proxyTypeChanged:(id)sender
@@ -1291,19 +1291,19 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		NSWindow *window = self.sheet;
 
-		[TLOPopupPrompts sheetWindowWithWindow:window
-										  body:TXTLS(@"TDCServerPropertiesSheet[1002][2]")
-										 title:TXTLS(@"TDCServerPropertiesSheet[1002][1]")
-								 defaultButton:TXTLS(@"Prompts[0001]")
-							   alternateButton:TXTLS(@"Prompts[0002]")
-								   otherButton:nil
-							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-								   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-									   self.requestRemovalFromCloudOnClose = NO;
-								   } else {
-									   self.requestRemovalFromCloudOnClose = YES;
-								   }
-							   }];
+		[TDCAlert alertSheetWithWindow:window
+								  body:TXTLS(@"TDCServerPropertiesSheet[1002][2]")
+								 title:TXTLS(@"TDCServerPropertiesSheet[1002][1]")
+						 defaultButton:TXTLS(@"Prompts[0001]")
+					   alternateButton:TXTLS(@"Prompts[0002]")
+						   otherButton:nil
+					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+						   if (buttonClicked == TDCAlertResponseAlternateButton) {
+							   self.requestRemovalFromCloudOnClose = NO;
+						   } else {
+							   self.requestRemovalFromCloudOnClose = YES;
+						   }
+					   }];
 	}
 	else // state == NSOnState
 	{

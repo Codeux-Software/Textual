@@ -208,10 +208,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)filterRemove:(id)sender
 {
-	BOOL performRemove = [TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"TPI_ChatFilterExtension[0005][2]")
-															title:TPILocalizedString(@"TPI_ChatFilterExtension[0005][1]")
-													defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0005][3]")
-												  alternateButton:TPILocalizedString(@"TPI_ChatFilterExtension[0005][4]")];
+	BOOL performRemove = [TDCAlert modalAlertWithMessage:TPILocalizedString(@"TPI_ChatFilterExtension[0005][2]")
+												   title:TPILocalizedString(@"TPI_ChatFilterExtension[0005][1]")
+										   defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0005][3]")
+										 alternateButton:TPILocalizedString(@"TPI_ChatFilterExtension[0005][4]")];
 
 	if (performRemove == NO) {
 		return;
@@ -335,10 +335,10 @@ NS_ASSUME_NONNULL_BEGIN
 		TPI_ChatFilter *filter = [[TPI_ChatFilter alloc] initWithContentsOfURL:pathURL];
 
 		if (filter == nil) {
-			(void)[TLOPopupPrompts dialogWindowWithMessage:@""
-													 title:TPILocalizedString(@"TPI_ChatFilterExtension[0007][1]")
-											 defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0007][2]")
-										   alternateButton:nil];
+			(void)[TDCAlert modalAlertWithMessage:@""
+											title:TPILocalizedString(@"TPI_ChatFilterExtension[0007][1]")
+									defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0007][2]")
+								  alternateButton:nil];
 
 			return;
 		}

@@ -49,11 +49,11 @@
 #import "TDCLicenseUpgradeEligibilitySheetPrivate.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
 #import "TLOTimer.h"
-#import "TLOPopupPrompts.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
 #import "TLOLicenseManagerLastGenPrivate.h"
 #import "TLOLicenseManagerPrivate.h"
+#import "TDCAlert.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -266,10 +266,10 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	if (lastGenLicenseKey != nil) {
 		BOOL upgradeLicense =
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1024][2]", lastGenLicenseKey.prettyLicenseKey)
-										   title:TXTLS(@"TLOLicenseManager[1024][1]")
-								   defaultButton:TXTLS(@"TLOLicenseManager[1024][3]")
-								 alternateButton:TXTLS(@"TLOLicenseManager[1024][4]")];
+		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1024][2]", lastGenLicenseKey.prettyLicenseKey)
+								  title:TXTLS(@"TLOLicenseManager[1024][1]")
+						  defaultButton:TXTLS(@"TLOLicenseManager[1024][3]")
+						alternateButton:TXTLS(@"TLOLicenseManager[1024][4]")];
 
 		if (upgradeLicense) {
 			[self showUpgradeDialogForLicenseKey:lastGenLicenseKey];
@@ -361,20 +361,20 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 	 outside influence. Everything else is internalized which means this check is
 	 only necessary here... at least for now. */
 	if (self.operationInProgress) {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1020][2]")
-										   title:TXTLS(@"TLOLicenseManager[1020][1]", licenseKey.prettyLicenseKey)
-								   defaultButton:TXTLS(@"Prompts[0005]")
-								 alternateButton:nil];
+		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1020][2]")
+								  title:TXTLS(@"TLOLicenseManager[1020][1]", licenseKey.prettyLicenseKey)
+						  defaultButton:TXTLS(@"Prompts[0005]")
+						alternateButton:nil];
 
 		return;
 	}
 
 	/* Do not activate license we are already using. */
 	if (licenseKey == TLOLicenseManagerLicenseKey()) {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1021][2]")
-										   title:TXTLS(@"TLOLicenseManager[1021][1]", licenseKey.prettyLicenseKey)
-								   defaultButton:TXTLS(@"Prompts[0005]")
-								 alternateButton:nil];
+		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1021][2]")
+								  title:TXTLS(@"TLOLicenseManager[1021][1]", licenseKey.prettyLicenseKey)
+						  defaultButton:TXTLS(@"Prompts[0005]")
+						alternateButton:nil];
 
 		return;
 	}
@@ -407,10 +407,10 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		NSString *lastGenLicenseKey = [TLOLicenseManagerLastGen licenseKeyForLicenseContents:statusContext];
 
 		if (lastGenLicenseKey != nil) {
-			[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1022][2]")
-											   title:TXTLS(@"TLOLicenseManager[1022][1]", lastGenLicenseKey.prettyLicenseKey)
-									   defaultButton:TXTLS(@"TLOLicenseManager[1022][3]")
-									 alternateButton:nil];
+			[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1022][2]")
+									  title:TXTLS(@"TLOLicenseManager[1022][1]", lastGenLicenseKey.prettyLicenseKey)
+							  defaultButton:TXTLS(@"TLOLicenseManager[1022][3]")
+							alternateButton:nil];
 
 			[weakSelf showUpgradeDialogForLicenseKey:lastGenLicenseKey];
 
@@ -702,10 +702,10 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 - (void)registeredViewDeactivateTextual:(id)sender
 {
-	BOOL deactivateCopy = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1007][2]")
-															 title:TXTLS(@"TLOLicenseManager[1007][1]")
-													 defaultButton:TXTLS(@"Prompts[0001]")
-												   alternateButton:TXTLS(@"Prompts[0002]")];
+	BOOL deactivateCopy = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1007][2]")
+													title:TXTLS(@"TLOLicenseManager[1007][1]")
+											defaultButton:TXTLS(@"Prompts[0001]")
+										  alternateButton:TXTLS(@"Prompts[0002]")];
 
 	if (deactivateCopy == NO) {
 		return; // Cancel operation...
