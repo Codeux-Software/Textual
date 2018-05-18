@@ -176,6 +176,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		   alternateButton:buttonAlternate
 			suppressionKey:nil
 		   suppressionText:nil
+			 accessoryView:nil
 		   completionBlock:nil];
 }
 
@@ -192,6 +193,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		   alternateButton:buttonAlternate
 			suppressionKey:suppressKey
 		   suppressionText:suppressText
+			 accessoryView:nil
 		   completionBlock:nil];
 }
 
@@ -207,6 +209,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		   alternateButton:buttonAlternate
 			suppressionKey:nil
 		   suppressionText:nil
+			 accessoryView:nil
 		   completionBlock:completionBlock];
 }
 
@@ -217,6 +220,25 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		  suppressionKey:(nullable NSString *)suppressKey
 		 suppressionText:(nullable NSString *)suppressText
 		 completionBlock:(nullable TDCAlertCompletionBlock)completionBlock
+{
+	[self alertWithMessage:bodyText
+					 title:titleText
+			 defaultButton:buttonDefault
+		   alternateButton:buttonAlternate
+			suppressionKey:nil
+		   suppressionText:nil
+			 accessoryView:nil
+		   completionBlock:completionBlock];
+}
+
++ (void)alertWithMessage:(NSString *)bodyText
+				   title:(NSString *)titleText
+		   defaultButton:(NSString *)buttonDefault
+		 alternateButton:(nullable NSString *)buttonAlternate
+		  suppressionKey:(nullable NSString *)suppressKey
+		 suppressionText:(nullable NSString *)suppressText
+		   accessoryView:(nullable NSView *)accessoryView
+		 completionBlock:(nullable TDCAlertCompletionBlock)completionBlock;
 {
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);
@@ -231,6 +253,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 				   alternateButton:buttonAlternate
 					suppressionKey:suppressKey
 				   suppressionText:suppressText
+					 accessoryView:accessoryView
 				   completionBlock:completionBlock];
 		}];
 	}
@@ -269,6 +292,10 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		alert.showsSuppressionButton = YES;
 
 		alert.suppressionButton.title = suppressText;
+	}
+
+	if (accessoryView) {
+		alert.accessoryView = accessoryView;
 	}
 
 	/* Pop alert */
