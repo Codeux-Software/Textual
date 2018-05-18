@@ -107,6 +107,15 @@ typedef void (^TDCAlertCompletionBlock)(TDCAlertResponse buttonClicked, BOOL sup
 		 suppressionText:(nullable NSString *)suppressText
 		 completionBlock:(nullable TDCAlertCompletionBlock)completionBlock;
 
++ (void)alertWithMessage:(NSString *)bodyText
+				   title:(NSString *)titleText
+		   defaultButton:(NSString *)buttonDefault
+		 alternateButton:(nullable NSString *)buttonAlternate
+		  suppressionKey:(nullable NSString *)suppressKey
+		 suppressionText:(nullable NSString *)suppressText
+		   accessoryView:(nullable NSView *)accessoryView
+		 completionBlock:(nullable TDCAlertCompletionBlock)completionBlock;
+
 #pragma mark -
 #pragma mark Non-blocking Alerts (Sheet)
 
