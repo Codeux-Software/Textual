@@ -65,6 +65,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 				alternateButton:buttonAlternate
 				 suppressionKey:nil
 				suppressionText:nil
+				  accessoryView:nil
 			suppressionResponse:NULL];
 }
 
@@ -82,6 +83,26 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 				alternateButton:buttonAlternate
 				 suppressionKey:suppressKey
 				suppressionText:suppressText
+				  accessoryView:nil
+			suppressionResponse:NULL];
+}
+
++ (BOOL)modalAlertWithMessage:(NSString *)bodyText
+						 title:(NSString *)titleText
+				 defaultButton:(NSString *)buttonDefault
+			   alternateButton:(nullable NSString *)buttonAlternate
+				suppressionKey:(nullable NSString *)suppressKey
+			   suppressionText:(nullable NSString *)suppressText
+				 accessoryView:(nullable NSView *)accessoryView
+{
+	return
+	[self modalAlertWithMessage:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+				 suppressionKey:suppressKey
+				suppressionText:suppressText
+				  accessoryView:accessoryView
 			suppressionResponse:NULL];
 }
 
@@ -93,7 +114,26 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 			  suppressionText:(nullable NSString *)suppressText
 		  suppressionResponse:(nullable BOOL *)suppressionResponse
 {
+	return
+	[self modalAlertWithMessage:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+				 suppressionKey:suppressKey
+				suppressionText:suppressText
+				  accessoryView:nil
+			suppressionResponse:suppressionResponse];
+}
 
++ (BOOL)modalAlertWithMessage:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(nullable NSString *)buttonAlternate
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+				accessoryView:(nullable NSView *)accessoryView
+		  suppressionResponse:(nullable BOOL *)suppressionResponse
+{
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);
 	NSParameterAssert(buttonDefault != nil);
@@ -110,6 +150,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 						alternateButton:buttonAlternate
 						 suppressionKey:suppressKey
 						suppressionText:suppressText
+						  accessoryView:accessoryView
 					suppressionResponse:suppressionResponse];
 		}];
 
@@ -146,6 +187,10 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		alert.showsSuppressionButton = YES;
 
 		alert.suppressionButton.title = suppressText;
+	}
+
+	if (accessoryView) {
+		alert.accessoryView = accessoryView;
 	}
 
 	/* Pop alert */
