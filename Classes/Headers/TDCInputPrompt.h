@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2018 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,19 +35,21 @@
 
  *********************************************************************** */
 
+#import "TDCAlert.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCInputPromptDialog;
+@class TDCInputPrompt;
 
-typedef void (^TVCInputPromptDialogCompletionBlock)(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString);
+typedef void (^TDCInputPromptCompletionBlock)(TDCAlertResponse buttonClicked, NSString *resultString);
 
-@interface TVCInputPromptDialog : NSWindowController
-- (void)alertWithMessageTitle:(NSString *)messageTitle
-			  informativeText:(NSString *)informativeText
-				defaultButton:(NSString *)defaultButtonTitle
-			  alternateButton:(nullable NSString *)alternateButtonTitle
-			 defaultUserInput:(nullable NSString *)userInputText
-			  completionBlock:(nullable TVCInputPromptDialogCompletionBlock)completionBlock;
+@interface TDCInputPrompt : TDCAlert
++ (void)promptWithMessage:(NSString *)bodyText
+					title:(NSString *)titleText
+			defaultButton:(NSString *)buttonDefault
+		  alternateButton:(nullable NSString *)buttonAlternate
+			prefillString:(nullable NSString *)prefillString
+		  completionBlock:(TDCInputPromptCompletionBlock)completionBlock;
 @end
 
 NS_ASSUME_NONNULL_END

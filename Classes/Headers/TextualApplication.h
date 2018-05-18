@@ -85,6 +85,7 @@
 
 	/* Dialogs */
 	#import "TDCAlert.h"
+	#import "TDCInputPrompt.h"
 	#import "TDCSheetBase.h"
 	#import "TDCWindowBase.h"
 
@@ -124,7 +125,6 @@
 	#import "TVCBasicTableView.h"
 	#import "TVCChannelSelectionViewController.h"
 	#import "TVCComboBoxWithValueValidation.h"
-	#import "TVCInputPromptDialog.h"
 	#import "TVCLogController.h"
 	#import "TVCLogLine.h"
 	#import "TVCLogRenderer.h"
