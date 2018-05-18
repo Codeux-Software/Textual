@@ -1382,12 +1382,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	_popWindowViewIfExists(@"TXMenuControllerFindPrompt");
 
-	TDCInputPromptCompletionBlock promptCompletionBlock = ^(TDCAlertResponse buttonClicked, NSString *resultString)
+	void (^promptCompletionBlock)(NSString *) = ^(NSString *resultString)
 	{
-		if (buttonClicked != TDCAlertResponseDefaultButton) {
-			return;
-		}
-
 		if ([self.currentSearchPhrase isEqualToString:resultString]) {
 			return;
 		}
@@ -1399,12 +1395,19 @@ NS_ASSUME_NONNULL_BEGIN
 		[webView findString:resultString movingForward:YES];
 	};
 
+	NSString *resultString = nil;
+
+	TVCAlertResponse response =
 	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1106][2]")
 								title:TXTLS(@"Prompts[1106][1]")
 						defaultButton:TXTLS(@"Prompts[1106][3]")
 					  alternateButton:TXTLS(@"Prompts[0004]")
 						prefillString:self.currentSearchPhrase
-					  completionBlock:promptCompletionBlock];
+						 resultString:&resultString];
+
+	if (response == TVCAlertResponseFirstButton) {
+		promptCompletionBlock(resultString);
+	}
 }
 
 - (void)showFindPrompt:(id)sender
@@ -3228,12 +3231,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self deselectMembers:sender];
 
-	TDCInputPromptCompletionBlock promptCompletionBlock = ^(TDCAlertResponse buttonClicked, NSString *resultString)
+	void (^promptCompletionBlock)(NSString *) = ^(NSString *resultString)
 	{
-		if (buttonClicked != TDCAlertResponseDefaultButton) {
-			return;
-		}
-
 		if (resultString.length == 0) {
 			return;
 		}
@@ -3247,12 +3246,19 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	};
 
+	NSString *vhost = nil;
+
+	TVCAlertResponse response =
 	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1102][2]")
 								title:TXTLS(@"Prompts[1102][1]")
 						defaultButton:TXTLS(@"Prompts[0005]")
 					  alternateButton:TXTLS(@"Prompts[0004]")
 						prefillString:nil
-					  completionBlock:promptCompletionBlock];
+						 resultString:&vhost];
+
+	if (response == TVCAlertResponseFirstButton) {
+		promptCompletionBlock(vhost);
+	}
 }
 
 - (void)showSetVhostPrompt:(id)sender
