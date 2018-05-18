@@ -48,7 +48,6 @@
 #import "IRCWorldPrivate.h"
 #import "IRCWorldPrivateCloudExtension.h"
 #import "TVCBasicTableView.h"
-#import "TVCInputPromptDialog.h"
 #import "TVCLogController.h"
 #import "TVCLogViewPrivate.h"
 #import "TVCLogViewInternalWK2.h"
@@ -70,6 +69,7 @@
 #import "TDCChannelPropertiesSheetPrivate.h"
 #import "TDCChannelSpotlightControllerPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
+#import "TDCInputPrompt.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TDCNicknameColorSheetPrivate.h"
 #import "TDCPreferencesControllerPrivate.h"
@@ -1382,33 +1382,29 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	_popWindowViewIfExists(@"TXMenuControllerFindPrompt");
 
-	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
-
-	[windowController() addWindowToWindowList:dialog withDescription:@"TXMenuControllerFindPrompt"];
-
-	TVCInputPromptDialogCompletionBlock completionBlock =
-	^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
-		if (defaultButtonClicked) {
-			if ([self.currentSearchPhrase isEqualToString:resultString] == NO) {
-				self.currentSearchPhrase = resultString;
-
-				XRPerformBlockAsynchronouslyOnMainQueue(^{
-					TVCLogView *webView = self.selectedViewControllerBackingView;
-
-					[webView findString:self.currentSearchPhrase movingForward:YES];
-				});
-			}
+	TDCInputPromptCompletionBlock promptCompletionBlock = ^(TDCAlertResponse buttonClicked, NSString *resultString)
+	{
+		if (buttonClicked != TDCAlertResponseDefaultButton) {
+			return;
 		}
 
-		[windowController() removeWindowFromWindowList:@"TXMenuControllerFindPrompt"];
+		if ([self.currentSearchPhrase isEqualToString:resultString]) {
+			return;
+		}
+
+		self.currentSearchPhrase = resultString;
+
+		TVCLogView *webView = self.selectedViewControllerBackingView;
+
+		[webView findString:resultString movingForward:YES];
 	};
 
-	[dialog alertWithMessageTitle:TXTLS(@"Prompts[1106][1]")
-				  informativeText:TXTLS(@"Prompts[1106][2]")
-					defaultButton:TXTLS(@"Prompts[1106][3]")
-				  alternateButton:TXTLS(@"Prompts[0004]")
-				 defaultUserInput:self.currentSearchPhrase
-				  completionBlock:completionBlock];
+	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1106][2]")
+								title:TXTLS(@"Prompts[1106][1]")
+						defaultButton:TXTLS(@"Prompts[1106][3]")
+					  alternateButton:TXTLS(@"Prompts[0004]")
+						prefillString:self.currentSearchPhrase
+					  completionBlock:promptCompletionBlock];
 }
 
 - (void)showFindPrompt:(id)sender
@@ -3232,29 +3228,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self deselectMembers:sender];
 
-	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
-
-	[windowController() addWindowToWindowList:dialog];
-
-	TVCInputPromptDialogCompletionBlock completionBlock =
-	^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
-		if (defaultButtonClicked && resultString.length > 0) {
-			for (NSString *nickname in nicknames) {
-				NSString *command = [NSString stringWithFormat:@"hs setall %@ %@", nickname, resultString];
-
-				[u sendCommand:command completeTarget:NO target:nil];
-			}
+	TDCInputPromptCompletionBlock promptCompletionBlock = ^(TDCAlertResponse buttonClicked, NSString *resultString)
+	{
+		if (buttonClicked != TDCAlertResponseDefaultButton) {
+			return;
 		}
 
-		[windowController() removeWindowFromWindowList:sender];
+		if (resultString.length == 0) {
+			return;
+		}
+
+		NSString *vhost = resultString.trimAndGetFirstToken;
+
+		for (NSString *nickname in nicknames) {
+			NSString *command = [NSString stringWithFormat:@"hs setall %@ %@", nickname, vhost];
+
+			[u sendCommand:command completeTarget:NO target:nil];
+		}
 	};
 
-	[dialog alertWithMessageTitle:TXTLS(@"Prompts[1102][1]")
-				  informativeText:TXTLS(@"Prompts[1102][2]")
-					defaultButton:TXTLS(@"Prompts[0005]")
-				  alternateButton:TXTLS(@"Prompts[0004]")
-				 defaultUserInput:nil
-				  completionBlock:completionBlock];
+	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1102][2]")
+								title:TXTLS(@"Prompts[1102][1]")
+						defaultButton:TXTLS(@"Prompts[0005]")
+					  alternateButton:TXTLS(@"Prompts[0004]")
+						prefillString:nil
+					  completionBlock:promptCompletionBlock];
 }
 
 - (void)showSetVhostPrompt:(id)sender
