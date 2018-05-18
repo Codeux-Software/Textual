@@ -41,17 +41,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCInputPrompt
 
-+ (void)promptWithMessage:(NSString *)bodyText
-					title:(NSString *)titleText
-			defaultButton:(NSString *)buttonDefault
-		  alternateButton:(nullable NSString *)buttonAlternate
-			prefillString:(nullable NSString *)prefillString
-		  completionBlock:(TDCInputPromptCompletionBlock)completionBlock;
++ (TVCAlertResponse)promptWithMessage:(NSString *)bodyText
+								title:(NSString *)titleText
+						defaultButton:(NSString *)buttonDefault
+					  alternateButton:(nullable NSString *)buttonAlternate
+						prefillString:(nullable NSString *)prefillString
+						 resultString:(NSString * _Nonnull * _Nonnull )resultString;
 {
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);
 	NSParameterAssert(buttonDefault != nil);
-	NSParameterAssert(completionBlock != nil);
 
 	/* Create text field */
 	NSTextField *textField = [NSTextField new];
@@ -91,25 +90,27 @@ NS_ASSUME_NONNULL_BEGIN
 		textField.stringValue = prefillString;
 	}
 
-	/* Present prompt */
-	[self alertWithMessage:bodyText
-					 title:titleText
-			 defaultButton:buttonDefault
-		   alternateButton:buttonAlternate
-			suppressionKey:nil
-		   suppressionText:nil
-			 accessoryView:textField
-		   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-			   [self _finalizePromptWithResponse:buttonClicked textField:textField completionBlock:completionBlock];
-		   }];
+	/* Create alert */
+	TVCAlert *alert = [TVCAlert new];
 
-	/* Make text field first responder */
-	[textField.window makeFirstResponder:textField];
-}
+	alert.messageText = titleText;
+	alert.informativeText = bodyText;
 
-+ (void)_finalizePromptWithResponse:(TDCAlertResponse)response textField:(NSTextField *)textField completionBlock:(TDCInputPromptCompletionBlock)completionBlock
-{
-	completionBlock(response, textField.stringValue);
+	[alert addButtonWithTitle:buttonDefault];
+	[alert addButtonWithTitle:buttonAlternate];
+
+	alert.accessoryView = textField;
+
+	alert.window.initialFirstResponder = textField;
+
+	/* Run modal */
+	TVCAlertResponse response = [alert runModal];
+
+	/* Assign result */
+	*resultString = textField.stringValue;
+
+	/* Return response */
+	return response;
 }
 
 @end

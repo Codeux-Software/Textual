@@ -39,17 +39,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TDCInputPrompt;
-
-typedef void (^TDCInputPromptCompletionBlock)(TDCAlertResponse buttonClicked, NSString *resultString);
-
 @interface TDCInputPrompt : TDCAlert
-+ (void)promptWithMessage:(NSString *)bodyText
-					title:(NSString *)titleText
-			defaultButton:(NSString *)buttonDefault
-		  alternateButton:(nullable NSString *)buttonAlternate
-			prefillString:(nullable NSString *)prefillString
-		  completionBlock:(TDCInputPromptCompletionBlock)completionBlock;
++ (TVCAlertResponse)promptWithMessage:(NSString *)bodyText
+								title:(NSString *)titleText
+						defaultButton:(NSString *)buttonDefault
+					  alternateButton:(nullable NSString *)buttonAlternate
+						prefillString:(nullable NSString *)prefillString
+						 resultString:(NSString * _Nonnull * _Nonnull )resultString;
 @end
 
 NS_ASSUME_NONNULL_END
