@@ -137,7 +137,10 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	alert.informativeText = bodyText;
 
 	[alert addButtonWithTitle:buttonDefault];
-	[alert addButtonWithTitle:buttonAlternate];
+
+	if (buttonAlternate) {
+		[alert addButtonWithTitle:buttonAlternate];
+	}
 
 	if (suppressKey || suppressText) {
 		alert.showsSuppressionButton = YES;
@@ -257,7 +260,10 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	alert.informativeText = bodyText;
 
 	[alert addButtonWithTitle:buttonDefault];
-	[alert addButtonWithTitle:buttonAlternate];
+
+	if (buttonAlternate) {
+		[alert addButtonWithTitle:buttonAlternate];
+	}
 
 	if (suppressKey || suppressText) {
 		alert.showsSuppressionButton = YES;
@@ -420,8 +426,14 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	alert.informativeText = bodyText;
 
 	[alert addButtonWithTitle:buttonDefault];
-	[alert addButtonWithTitle:buttonAlternate];
-	[alert addButtonWithTitle:otherButton];
+
+	if (buttonAlternate) {
+		[alert addButtonWithTitle:buttonAlternate];
+	}
+
+	if (otherButton) {
+		[alert addButtonWithTitle:otherButton];
+	}
 
 	if (suppressKey || suppressText) {
 		alert.showsSuppressionButton = YES;
