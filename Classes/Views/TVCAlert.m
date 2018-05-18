@@ -41,6 +41,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, TVCAlertType) {
+	TVCAlertTypeNonblockingPanel = 0,
+	TVCAlertTypeModal,
+	TVCAlertTypeSheet
+};
+
 @interface TVCAlert ()
 @property (nonatomic, strong) NSMutableArray *buttonsInt;
 @property (nonatomic, strong, readwrite) IBOutlet NSPanel *panel;
@@ -55,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL alertImmutable;
 @property (nonatomic, assign) BOOL alertVisible;
 @property (nonatomic, assign) BOOL layoutPerformed;
+@property (nonatomic, assign) TVCAlertType alertType;
 @property (nonatomic, copy) TVCAlertCompletionBlock completionBlock;
 
 - (IBAction)buttonPressed:(id)sender;
@@ -96,14 +103,14 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(window != nil);
 
-	NSAssert(NO, @"Not implemented");
+	[self showAlertInWindow:window withCompletionBlock:nil];
 }
 
 - (void)showAlertInWindow:(NSWindow *)window withCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock
 {
 	NSParameterAssert(window != nil);
 
-	NSAssert(NO, @"Not implemented");
+	[self _showAlertInWindow:window withCompletionBlock:completionBlock];
 }
 
 - (void)_showAlertInWindow:(nullable NSWindow *)window withCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock
@@ -127,9 +134,44 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Present alert */
 	self.completionBlock = completionBlock;
 
-	[self.panel makeKeyAndOrderFront:nil];
-
 	self.alertVisible = YES;
+
+	if (window) {
+		self.alertType = TVCAlertTypeSheet;
+
+		[NSApp beginSheet:self.panel
+		   modalForWindow:window
+			modalDelegate:self
+		   didEndSelector:@selector(_alertSheetDidEnd:returnCode:contextInfo:)
+			  contextInfo:nil];
+	} else {
+		self.alertType = TVCAlertTypeNonblockingPanel;
+
+		[self.panel makeKeyAndOrderFront:nil];
+	}
+}
+
+- (TVCAlertResponse)runModal
+{
+	NSAssert((self.alertFinished == NO),
+		@"Cannot show alert because it has already finished");
+
+	/* Do not allow this method to be called while modal is running */
+	NSAssert((self.alertVisible == NO),
+		@"Cannot show alert because it's already visible");
+
+	/* Do not allow changes to be made to the alert */
+	self.alertImmutable = YES;
+
+	/* Perform layout */
+	[self _layout];
+
+	/* Present alert */
+	self.alertVisible = YES;
+
+	self.alertType = TVCAlertTypeModal;
+
+	return [NSApp runModalForWindow:self.panel];
 }
 
 #pragma mark -
@@ -137,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_layout
 {
-	/* We need at least one button. */
+	/* Do not perform more than once */
 	NSAssert((self.layoutPerformed == NO),
 		@"Cannot perform layout multiple times");
 
@@ -249,11 +291,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)buttonPressed:(id)sender
 {
-	[self.panel close];
+	self.alertFinished = NO;
 
-	if (self.completionBlock) {
-		self.completionBlock(self, [sender tag]);
+	NSInteger buttonClicked = [sender tag];
+
+	switch (self.alertType) {
+		case TVCAlertTypeNonblockingPanel:
+		{
+			[self _postCompletionBlockWithResponse:buttonClicked];
+
+			[self.panel orderOut:nil];
+
+			break;
+		}
+		case TVCAlertTypeSheet:
+		{
+			[NSApp endSheet:self.panel returnCode:buttonClicked];
+
+			break;
+		}
+		case TVCAlertTypeModal:
+		{
+			[NSApp stopModalWithCode:buttonClicked];
+
+			[self.panel orderOut:nil];
+
+			break;
+		}
 	}
+
+	self.alertVisible = NO;
 }
 
 - (NSArray<NSButton *> *)buttons
@@ -374,11 +441,23 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
+#pragma mark Utilities
+
+- (void)_postCompletionBlockWithResponse:(TVCAlertResponse)response
+{
+	if (self.completionBlock) {
+		self.completionBlock(self, response);
+	}
+}
+
+#pragma mark -
 #pragma mark Panel Delegate
 
-- (void)windowWillClose:(NSNotification *)note
+- (void)_alertSheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	self.alertFinished = YES;
+	[self _postCompletionBlockWithResponse:returnCode];
+
+	[sender orderOut:nil];
 }
 
 @end
