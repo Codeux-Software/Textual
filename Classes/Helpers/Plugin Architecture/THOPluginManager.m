@@ -337,7 +337,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 	NSDictionary<NSString *, NSString *> *latestVersions =
 	[staticValues dictionaryForKey:@"THOPluginManager Extras Installer Latest Extension Versions"];
 
-	NSMutableArray<NSBundle *> *outdatedBundles = [NSMutableArray array];
+	NSMutableArray<NSBundle *> *outdatedBundles = nil;
 
 	for (THOPluginItem *plugin in self.loadedPlugins) {
 		NSBundle *bundle = plugin.bundle;
