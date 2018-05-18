@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2018 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,20 +35,45 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1007 */
+NS_ASSUME_NONNULL_BEGIN
 
-"Accessibility[1000]" = "User %@ in User List";
+/* TVCAlert acts as a non-blocking substitute to NSAlert
+ which can be used to show messages that aren't important. */
 
-"Accessibility[1001][1]" = "Connection %@, Connected";
-"Accessibility[1001][2]" = "Connection %@, Disconnected";
+typedef NS_ENUM(NSUInteger, TVCAlertResponse) {
+	TVCAlertResponseFirstButton = 1000,
+	TVCAlertResponseSecondButton = 1001,
+	TVCAlertResponseThirdButton = 1002
+};
 
-"Accessibility[1002][1]" = "Channel %@, Channel Joined";
-"Accessibility[1002][2]" = "Channel %@, Channel Not Joined";
+@class TVCAlert;
 
-"Accessibility[1003]" = "Query with User %@";
+typedef void (^TVCAlertCompletionBlock)(TVCAlert *sender, TVCAlertResponse buttonClicked);
 
-"Accessibility[1004]" = "Main Window"; // Main window title description
+@interface TVCAlert : NSObject
+/* All properties are immutable once alert is visible */
+@property (nonatomic, copy) NSString *messageText;
+@property (nonatomic, copy) NSString *informativeText;
 
-"Accessibility[1005]" = "Chat View";
+@property (nonatomic, strong, null_resettable) NSImage *icon;
 
-"Accessibility[1006]" = "Alert dialog %@";
+- (NSButton *)addButtonWithTitle:(NSString *)title;
+
+@property (copy, readonly) NSArray<NSButton *> *buttons;
+
+@property (nonatomic, assign) BOOL showsSuppressionButton;
+
+@property (readonly, weak) NSButton *suppressionButton;
+
+@property (nonatomic, strong, nullable) NSView *accessoryView;
+
+@property (readonly, strong) NSWindow *window;
+
+- (void)showAlert;
+- (void)showAlertWithCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock;
+
+- (void)showAlertInWindow:(NSWindow *)window NS_UNAVAILABLE;
+- (void)showAlertInWindow:(NSWindow *)window withCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock NS_UNAVAILABLE;
+@end
+
+NS_ASSUME_NONNULL_END

@@ -40,8 +40,8 @@
 #import "IRCWorldPrivate.h"
 #import "IRCWorldPrivateCloudExtension.h"
 #import "TXMasterController.h"
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesReload.h"
 #import "TPCPreferencesUserDefaultsLocal.h"
@@ -58,20 +58,20 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(window != nil);
 
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:TXTLS(@"Prompts[1124][2]")
-									 title:TXTLS(@"Prompts[1124][1]")
-							 defaultButton:TXTLS(@"Prompts[1124][3]")
-						   alternateButton:TXTLS(@"Prompts[0004]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [self importPreflight:buttonClicked];
-						   }];
+	[TDCAlert alertSheetWithWindow:window
+							  body:TXTLS(@"Prompts[1124][2]")
+							 title:TXTLS(@"Prompts[1124][1]")
+					 defaultButton:TXTLS(@"Prompts[1124][3]")
+				   alternateButton:TXTLS(@"Prompts[0004]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   [self importPreflight:buttonClicked];
+				   }];
 }
 
-+ (void)importPreflight:(TLOPopupPromptReturnType)buttonPressed
++ (void)importPreflight:(TDCAlertResponse)buttonPressed
 {
-	if (buttonPressed != TLOPopupPromptReturnPrimaryType) {
+	if (buttonPressed != TDCAlertResponseDefaultButton) {
 		return;
 	}
 
@@ -331,20 +331,20 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(window != nil);
 
-	[TLOPopupPrompts sheetWindowWithWindow:window
-									  body:TXTLS(@"Prompts[1123][2]")
-									 title:TXTLS(@"Prompts[1123][1]")
-							 defaultButton:TXTLS(@"Prompts[1123][3]")
-						   alternateButton:TXTLS(@"Prompts[0004]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [self exportPreflight:buttonClicked];
-						   }];
+	[TDCAlert alertSheetWithWindow:window
+							  body:TXTLS(@"Prompts[1123][2]")
+							 title:TXTLS(@"Prompts[1123][1]")
+					 defaultButton:TXTLS(@"Prompts[1123][3]")
+				   alternateButton:TXTLS(@"Prompts[0004]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   [self exportPreflight:buttonClicked];
+				   }];
 }
 
-+ (void)exportPreflight:(TLOPopupPromptReturnType)buttonPressed
++ (void)exportPreflight:(TDCAlertResponse)buttonPressed
 {
-	if (buttonPressed != TLOPopupPromptReturnPrimaryType) {
+	if (buttonPressed != TDCAlertResponseDefaultButton) {
 		return;
 	}
 

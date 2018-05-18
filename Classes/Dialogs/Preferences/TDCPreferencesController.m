@@ -55,9 +55,9 @@
 #import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
+#import "TDCAlert.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCPreferencesNotificationConfigurationPrivate.h"
@@ -1097,15 +1097,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *themeName = [TPCThemeController extractThemeName:currentTheme];
 
-	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-									  body:TXTLS(@"TDCPreferencesController[1008][2]", themeName, forcedValues)
-									 title:TXTLS(@"TDCPreferencesController[1008][1]")
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:nil
-							   otherButton:nil
-							suppressionKey:@"theme_override_info"
-						   suppressionText:nil
-						   completionBlock:nil];
+	[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
+							  body:TXTLS(@"TDCPreferencesController[1008][2]", themeName, forcedValues)
+							 title:TXTLS(@"TDCPreferencesController[1008][1]")
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil
+					suppressionKey:@"theme_override_info"
+				   suppressionText:nil
+				   completionBlock:nil];
 }
 
 - (void)onSelectNewFont:(id)sender
@@ -1281,10 +1281,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	BOOL clickResult =
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1111][2]")
-									   title:TXTLS(@"Prompts[1111][1]")
-							   defaultButton:TXTLS(@"Prompts[0005]")
-							 alternateButton:TXTLS(@"Prompts[1111][3]")];
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1111][2]")
+							  title:TXTLS(@"Prompts[1111][1]")
+					  defaultButton:TXTLS(@"Prompts[0005]")
+					alternateButton:TXTLS(@"Prompts[1111][3]")];
 
 	if (clickResult == NO) {
 		[self openProxySettingsInSystemPreferences];
@@ -1496,9 +1496,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode
+- (void)onPurgeOfCloudDataRequestedCallback:(TDCAlertResponse)returnCode
 {
-	if (returnCode != TLOPopupPromptReturnPrimaryType) {
+	if (returnCode != TDCAlertResponseDefaultButton) {
 		return;
 	}
 
@@ -1516,25 +1516,27 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[TLOPopupPrompts sheetWindowWithWindow:NSApp.keyWindow
-									  body:TXTLS(@"TDCPreferencesController[1001][2]")
-									 title:TXTLS(@"TDCPreferencesController[1001][1]")
-							 defaultButton:TXTLS(@"Prompts[0001]")
-						   alternateButton:TXTLS(@"Prompts[0002]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked];
-						   }];
+	[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
+							  body:TXTLS(@"TDCPreferencesController[1001][2]")
+							 title:TXTLS(@"TDCPreferencesController[1001][1]")
+					 defaultButton:TXTLS(@"Prompts[0001]")
+				   alternateButton:TXTLS(@"Prompts[0002]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   [self onPurgeOfCloudDataRequestedCallback:buttonClicked];
+				   }];
 #endif
 }
 
-- (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
+- (void)openPathToThemesCallback:(TDCAlertResponse)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-	if (returnCode == TLOPopupPromptReturnSecondaryType) {
+	NSParameterAssert(originalAlert != nil);
+
+	if (returnCode == TDCAlertResponseAlternateButton) {
 		[self openPathToTheme];
 	}
 
-	if (returnCode == TLOPopupPromptReturnPrimaryType) {
+	if (returnCode == TDCAlertResponseDefaultButton) {
 		[originalAlert.window orderOut:nil];
 
 		BOOL copyingToCloud = NO;
@@ -1556,15 +1558,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onOpenPathToTheme:(id)sender
 {
 	if (themeController().bundledTheme) {
-		[TLOPopupPrompts sheetWindowWithWindow:NSApp.keyWindow
-										  body:TXTLS(@"TDCPreferencesController[1007][2]")
-										 title:TXTLS(@"TDCPreferencesController[1007][1]")
-								 defaultButton:TXTLS(@"Prompts[0001]")
-							   alternateButton:TXTLS(@"Prompts[0002]")
-								   otherButton:nil
-							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-								   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
-							   }];
+		[TDCAlert alertSheetWithWindow:NSApp.keyWindow
+								  body:TXTLS(@"TDCPreferencesController[1007][2]")
+								 title:TXTLS(@"TDCPreferencesController[1007][1]")
+						 defaultButton:TXTLS(@"Prompts[0001]")
+					   alternateButton:TXTLS(@"Prompts[0002]")
+						   otherButton:nil
+					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+						   [self openPathToThemesCallback:buttonClicked withOriginalAlert:underlyingAlert];
+					   }];
 
 		return;
 	}

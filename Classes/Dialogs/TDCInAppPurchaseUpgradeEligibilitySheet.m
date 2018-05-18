@@ -38,7 +38,7 @@
 #import "TPCPathInfo.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
-#import "TLOPopupPrompts.h"
+#import "TDCAlert.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
 #import "TDCInAppPurchaseUpgradeEligibilitySheetPrivate.h"
 
@@ -280,36 +280,36 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(errorMessage != nil);
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][2]", errorMessage)
-									 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][1]")
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][3]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self actionContactSupport:nil];
-							   }
-
-							   [self windowWillClose:nil];
-						   }];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][2]", errorMessage)
+							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][1]")
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][3]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self actionContactSupport:nil];
+					   }
+					   
+					   [self windowWillClose:nil];
+				   }];
 }
 
 - (void)_presentReceiptFailedValidationSheet
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][2]")
-									 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][1]")
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][3]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self actionContactSupport:nil];
-							   }
-
-							   [self windowWillClose:nil];
-						   }];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][2]")
+							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][1]")
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][3]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self actionContactSupport:nil];
+					   }
+					   
+					   [self windowWillClose:nil];
+				   }];
 }
 
 - (void)_cancelEligibilityCheck

@@ -40,10 +40,10 @@
 
 #import "NSObjectHelperPrivate.h"
 #import "OELReachability.h"
+#import "TDCAlert.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOLicenseManagerPrivate.h"
-#import "TLOPopupPrompts.h"
 #import "TLOSpeechSynthesizerPrivate.h"
 #import "THOPluginManagerPrivate.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
@@ -359,10 +359,10 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 			}
 
-			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1115][2]")
-																	 title:TXTLS(@"Prompts[1115][1]")
-															 defaultButton:TXTLS(@"Prompts[0001]")
-														   alternateButton:TXTLS(@"Prompts[0002]")];
+			BOOL continueLaunch = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1115][2]")
+															title:TXTLS(@"Prompts[1115][1]")
+													defaultButton:TXTLS(@"Prompts[0001]")
+												  alternateButton:TXTLS(@"Prompts[0002]")];
 
 			if (continueLaunch == NO) {
 				[self forceTerminate];
@@ -446,10 +446,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ([TPCPreferences confirmQuit]) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1101][2]")
-														 title:TXTLS(@"Prompts[1101][1]")
-												 defaultButton:TXTLS(@"Prompts[1101][3]")
-											   alternateButton:TXTLS(@"Prompts[0004]")];
+		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1101][2]")
+												title:TXTLS(@"Prompts[1101][1]")
+										defaultButton:TXTLS(@"Prompts[1101][3]")
+									  alternateButton:TXTLS(@"Prompts[0004]")];
 
 		return result;
 	}

@@ -84,6 +84,7 @@
 	#import "NSViewHelper.h"
 
 	/* Dialogs */
+	#import "TDCAlert.h"
 	#import "TDCSheetBase.h"
 	#import "TDCWindowBase.h"
 
@@ -117,6 +118,7 @@
 	#import "TPCThemeSettings.h"
 
 	/* View Controllers */
+	#import "TVCAlert.h"
 	#import "TVCAutoExpandingTextField.h"
 	#import "TVCAutoExpandingTokenField.h"
 	#import "TVCBasicTableView.h"

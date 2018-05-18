@@ -37,8 +37,8 @@
  *********************************************************************** */
 
 #import "TXGlobalModels.h"
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCApplicationInfo.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesUserDefaults.h"
@@ -316,12 +316,28 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		}
 	}
 
+	/* Record the last time updates were checked for */
+	[RZUserDefaults() setObject:@{
+		@"lastCheck" : @(currentTime),
+		@"lastVersion" : applicationVersion
+	} forKey:_defaultsKey];
+
+	/* Check for updates */
+	[self _extrasInstallerCheckForUpdates];
+
+#undef _defaultsKey
+}
+
+- (void)_extrasInstallerCheckForUpdates
+{
 	/* Perform update check */
 	NSDictionary *staticValues =
 	[TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 	NSDictionary<NSString *, NSString *> *latestVersions =
 	[staticValues dictionaryForKey:@"THOPluginManager Extras Installer Latest Extension Versions"];
+
+	NSMutableArray<NSBundle *> *outdatedBundles = [NSMutableArray array];
 
 	for (THOPluginItem *plugin in self.loadedPlugins) {
 		NSBundle *bundle = plugin.bundle;
@@ -341,22 +357,22 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		NSComparisonResult comparisonResult = [currentVersion compare:latestVersion options:NSNumericSearch];
 
 		if (comparisonResult == NSOrderedAscending) {
-			[self extrasInstallerInformUserAboutUpdateForBundle:bundle];
+			if (outdatedBundles == nil) {
+				outdatedBundles = [NSMutableArray array];
+			}
+
+			[outdatedBundles addObject:bundle];
 		}
 	}
 
-	/* Record the last time updates were checked for */
-	[RZUserDefaults() setObject:@{
-		  @"lastCheck" : @(currentTime),
-		  @"lastVersion" : applicationVersion
-	} forKey:_defaultsKey];
-
-#undef _defaultsKey
+	if (outdatedBundles) {
+		[self _extrasInstallerInformUserAboutUpdateForBundles:[outdatedBundles copy]];
+	}
 }
 
-- (void)extrasInstallerInformUserAboutUpdateForBundle:(NSBundle *)bundle
+- (void)_extrasInstallerInformUserAboutUpdateForBundles:(NSArray<NSBundle *> *)bundles
 {
-	NSParameterAssert(bundle != nil);
+	NSParameterAssert(bundles != nil);
 
 	/* Append the current version to the suppression key so that updates 
 	 aren't refused forever. Only until the next verison of Textual is out. */
@@ -364,16 +380,27 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 	[@"plugin_manager_extension_update_dialog_"
 	 stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
 
-	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1112][2]")
-													   title:TXTLS(@"Prompts[1112][1]", bundle.displayName)
-											   defaultButton:TXTLS(@"Prompts[1112][3]")
-											 alternateButton:TXTLS(@"Prompts[1112][4]")
-											  suppressionKey:suppressionKey
-											 suppressionText:nil];
+	NSMutableArray *bundleNames = [NSMutableArray arrayWithCapacity:bundles.count];
 
-	if (download == NO) {
-		[self extrasInstallerLaunchInstaller];
+	for (NSBundle *bundle in bundles) {
+		[bundleNames addObject:bundle.displayName];
 	}
+
+	NSString *bundlesName = [bundleNames componentsJoinedByString:@", "];
+
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1112][2]")
+						 title:TXTLS(@"Prompts[1112][1]", bundlesName)
+				 defaultButton:TXTLS(@"Prompts[1112][3]")
+			   alternateButton:TXTLS(@"Prompts[1112][4]")
+				suppressionKey:suppressionKey
+			   suppressionText:nil
+			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id  _Nullable underlyingAlert) {
+				   if (buttonClicked != TDCAlertResponseAlternateButton) {
+					   return;
+				   }
+
+				   [self extrasInstallerLaunchInstaller];
+			   }];
 }
 
 - (NSArray<NSString *> *)extrasInstallerReservedCommands
@@ -461,12 +488,12 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 {
 	NSParameterAssert(command != nil);
 
-	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1113][2]")
-													   title:TXTLS(@"Prompts[1113][1]", command)
-											   defaultButton:TXTLS(@"Prompts[1113][3]")
-											 alternateButton:TXTLS(@"Prompts[0004]")
-											  suppressionKey:@"plugin_manager_reserved_command_dialog"
-											 suppressionText:nil];
+	BOOL download = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1113][2]")
+											  title:TXTLS(@"Prompts[1113][1]", command)
+									  defaultButton:TXTLS(@"Prompts[1113][3]")
+									alternateButton:TXTLS(@"Prompts[0004]")
+									 suppressionKey:@"plugin_manager_reserved_command_dialog"
+									suppressionText:nil];
 
 	if (download) {
 		[self extrasInstallerLaunchInstaller];

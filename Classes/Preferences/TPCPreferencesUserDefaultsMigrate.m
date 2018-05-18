@@ -37,8 +37,8 @@
 
 #import "BuildConfig.h"
 
+#import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TPCResourceManager.h"
 #import "TPCPreferencesUserDefaultsPrivate.h"
 #import "TPCPreferencesUserDefaultsMigratePrivate.h"
@@ -288,10 +288,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)presentMigrationFailedErrorMessage
 {
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1138][1]")
-									   title:TXTLS(@"Prompts[1138][2]")
-							   defaultButton:TXTLS(@"Prompts[0005]")
-							 alternateButton:nil];
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1138][1]")
+						 title:TXTLS(@"Prompts[1138][2]")
+				 defaultButton:TXTLS(@"Prompts[0005]")
+			   alternateButton:nil];
 }
 
 @end

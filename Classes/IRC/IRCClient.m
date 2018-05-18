@@ -101,7 +101,6 @@
 #import "TLOInputHistoryPrivate.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOpenLink.h"
-#import "TLOPopupPrompts.h"
 #import "TLOSoundPlayer.h"
 #import "TLOSpeechSynthesizerPrivate.h"
 #import "TLOSpokenNotificationPrivate.h"
@@ -119,6 +118,7 @@
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowTextViewPrivate.h"
 #import "TVCServerListPrivate.h"
+#import "TDCAlert.h"
 #import "TDCChannelBanListSheetPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCFileTransferDialogTransferControllerPrivate.h"
@@ -2797,12 +2797,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Warn if the split value is above 4 lines or if the total string 
 	 length exceeds TXMaximumIRCBodyLength times 4. */
 	if (lines.count > 4 || (stringIn.length > (TXMaximumIRCBodyLength * 4))) {
-		BOOL continueInput = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1108][2]")
-																title:TXTLS(@"Prompts[1108][1]")
-														defaultButton:TXTLS(@"Prompts[0001]")
-													  alternateButton:TXTLS(@"Prompts[0002]")
-													   suppressionKey:@"input_text_possible_flood_warning"
-													  suppressionText:nil];
+		BOOL continueInput = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1108][2]")
+													   title:TXTLS(@"Prompts[1108][1]")
+											   defaultButton:TXTLS(@"Prompts[0001]")
+											 alternateButton:TXTLS(@"Prompts[0002]")
+											  suppressionKey:@"input_text_possible_flood_warning"
+											 suppressionText:nil];
 
 		if (continueInput == NO) {
 			return;

@@ -45,9 +45,9 @@
 #import "TPCPreferencesUserDefaults.h"
 #import "TLOAppStoreManagerPrivate.h"
 #import "TLOLanguagePreferences.h"
-#import "TLOPopupPrompts.h"
 #import "TLOTimer.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
+#import "TDCAlert.h"
 #import "TDCInAppPurchaseProductTableCellViewPrivate.h"
 #import "TDCInAppPurchaseProductTableEntryPrivate.h"
 #import "TDCInAppPurchaseUpgradeEligibilitySheetPrivate.h"
@@ -289,50 +289,50 @@ enum {
 {
 	NSParameterAssert(window != nil);
 
-	[TLOPopupPrompts sheetWindowWithWindow:window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0015][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0015][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0015][3]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0015][4]")
-							   otherButton:TXTLS(@"Prompts[0008]")
-							suppressionKey:@"trial_is_expired_mas"
-						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnOtherType) {
-								   return;
-							   }
-							   
-							   [self show];
-							   
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self restoreTransactionsByClick];
-							   }
-						   }];
+	[TDCAlert alertSheetWithWindow:window.deepestWindow
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0015][2]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0015][1]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0015][3]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0015][4]")
+					   otherButton:TXTLS(@"Prompts[0008]")
+					suppressionKey:@"trial_is_expired_mas"
+				   suppressionText:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseOtherButton) {
+						   return;
+					   }
+
+					   [self show];
+
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self restoreTransactionsByClick];
+					   }
+				   }];
 }
 
 - (void)showFeatureIsLimitedMessageInWindow:(NSWindow *)window
 {
 	NSParameterAssert(window != nil);
 
-	[TLOPopupPrompts sheetWindowWithWindow:window.deepestWindow
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0014][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0014][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0014][3]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0014][4]")
-							   otherButton:TXTLS(@"Prompts[0008]")
-							suppressionKey:@"trial_is_expired_mas"
-						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnOtherType) {
-								   return;
-							   }
-							   
-							   [self show];
-							   
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self restoreTransactionsByClick];
-							   }
-						   }];
+	[TDCAlert alertSheetWithWindow:window.deepestWindow
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0014][2]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0014][1]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0014][3]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0014][4]")
+					   otherButton:TXTLS(@"Prompts[0008]")
+					suppressionKey:@"trial_is_expired_mas"
+				   suppressionText:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseOtherButton) {
+						   return;
+					   }
+
+					   [self show];
+
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self restoreTransactionsByClick];
+					   }
+				   }];
 }
 
 #pragma mark -
@@ -463,12 +463,12 @@ enum {
 						break;
 					}
 
-					[TLOPopupPrompts sheetWindowWithWindow:self.window
-													  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]", transationError.localizedDescription)
-													 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
-											 defaultButton:TXTLS(@"Prompts[0005]")
-										   alternateButton:nil
-											   otherButton:nil];
+					[TDCAlert alertSheetWithWindow:self.window
+											  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]", transationError.localizedDescription)
+											 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
+									 defaultButton:TXTLS(@"Prompts[0005]")
+								   alternateButton:nil
+									   otherButton:nil];
 
 					break;
 				}
@@ -542,12 +542,12 @@ enum {
 		return;
 	}
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0016][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0016][1]")
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:nil
-							   otherButton:nil];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0016][2]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0016][1]")
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil];
 }
 
 - (void)postTransactionFinishedNotification:(NSArray<NSString *> *)products
@@ -1040,12 +1040,12 @@ enum {
 	if (product == nil) {
 		NSString *productTitle = [self localizedTitleForProductIdentifier:productIdentifier];
 
-		[TLOPopupPrompts sheetWindowWithWindow:self.window
-										  body:TXTLS(@"TDCInAppPurchaseDialog[0006][2]")
-										 title:TXTLS(@"TDCInAppPurchaseDialog[0006][1]", productTitle)
-								 defaultButton:TXTLS(@"Prompts[0005]")
-							   alternateButton:nil
-								   otherButton:nil];
+		[TDCAlert alertSheetWithWindow:self.window
+								  body:TXTLS(@"TDCInAppPurchaseDialog[0006][2]")
+								 title:TXTLS(@"TDCInAppPurchaseDialog[0006][1]", productTitle)
+						 defaultButton:TXTLS(@"Prompts[0005]")
+					   alternateButton:nil
+						   otherButton:nil];
 
 		return;
 	}
@@ -1083,12 +1083,12 @@ enum {
 	 that the user can click the restore button after the fact.
 	 We intercept that event below. */
 	if (TLOAppStoreTextualIsRegistered()) {
-		[TLOPopupPrompts sheetWindowWithWindow:self.window
-										  body:TXTLS(@"TDCInAppPurchaseDialog[0025][2]")
-										 title:TXTLS(@"TDCInAppPurchaseDialog[0025][1]")
-								 defaultButton:TXTLS(@"Prompts[0005]")
-							   alternateButton:nil
-								   otherButton:nil];
+		[TDCAlert alertSheetWithWindow:self.window
+								  body:TXTLS(@"TDCInAppPurchaseDialog[0025][2]")
+								 title:TXTLS(@"TDCInAppPurchaseDialog[0025][1]")
+						 defaultButton:TXTLS(@"Prompts[0005]")
+					   alternateButton:nil
+						   otherButton:nil];
 		
 		return;
 	}
@@ -1211,19 +1211,19 @@ enum {
 
 	LogToConsoleDebug("Receipt refresh error: %@", error.localizedDescription);
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]", error.localizedDescription)
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0021][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0021][3]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0021][4]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self contactSupport];
-							   }
-							   
-							   [self requestReceiptRefresh];
-						   }];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]", error.localizedDescription)
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0021][1]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0021][3]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0021][4]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self contactSupport];
+					   }
+
+					   [self requestReceiptRefresh];
+				   }];
 }
 
 - (void)onRefreshReceiptPostflightWithError:(nullable NSError *)error
@@ -1366,34 +1366,34 @@ enum {
 	
 	LogToConsoleDebug("Products request error: %@", error.localizedDescription);
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
-							 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")
-						   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0019][4]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self contactSupport];
-							   }
-
-							   [self requestProducts];
-						   }];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0019][4]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self contactSupport];
+					   }
+					   
+					   [self requestProducts];
+				   }];
 }
 
 - (void)onRequestProductsEmptyProductListError
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0022][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0022][1]")
-							 defaultButton:TXTLS(@"Prompts[0003]")
-						   alternateButton:nil
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   self.loadProductsAfterReceiptRefresh = YES;
-							   
-							   [self requestReceiptRefresh];
-						   }];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0022][2]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0022][1]")
+					 defaultButton:TXTLS(@"Prompts[0003]")
+				   alternateButton:nil
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   self.loadProductsAfterReceiptRefresh = YES;
+					   
+					   [self requestReceiptRefresh];
+				   }];
 }
 
 - (void)onRequestProductsPostflightWithError:(nullable NSError *)error
@@ -1468,12 +1468,12 @@ enum {
 
 - (void)showPleaseSelectItemError
 {
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCInAppPurchaseDialog[0013][2]")
-									 title:TXTLS(@"TDCInAppPurchaseDialog[0013][1]")
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:nil
-							   otherButton:nil];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCInAppPurchaseDialog[0013][2]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[0013][1]")
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil];
 }
 
 - (BOOL)windowShouldClose:(NSWindow *)sender

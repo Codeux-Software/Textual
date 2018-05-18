@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TVCAlert">
+            <connections>
+                <outlet property="firstButton" destination="oPI-db-OzA" id="JOm-yw-ibf"/>
+                <outlet property="iconImageView" destination="3" id="97e-CJ-VFV"/>
+                <outlet property="informativeTextField" destination="7" id="Le7-Va-H64"/>
+                <outlet property="messageTextField" destination="5" id="i4G-bO-OfR"/>
+                <outlet property="panel" destination="pMN-4u-gqK" id="UbP-kP-1xb"/>
+                <outlet property="secondButton" destination="Fv3-Bh-Zpr" id="SMp-Mr-kL6"/>
+                <outlet property="suppressionButton" destination="ygL-Yb-5Mh" id="CXb-ff-4AM"/>
+                <outlet property="thirdButton" destination="gz4-k0-7mW" id="tuc-in-mBx"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Alert" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="pMN-4u-gqK" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" documentModal="YES"/>
+            <rect key="contentRect" x="272" y="172" width="420" height="140"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="xFR-rx-kmt">
+                <rect key="frame" x="0.0" y="0.0" width="426" height="140"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="3">
+                        <rect key="frame" x="20" y="59" width="65" height="65"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="9GO-fq-JK2"/>
+                            <constraint firstAttribute="height" constant="65" id="brw-ee-Ghm"/>
+                            <constraint firstAttribute="width" constant="65" id="jJy-qZ-1jH"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="4"/>
+                        <accessibility description="Textual Logo"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                        <rect key="frame" x="103" y="107" width="305" height="17"/>
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="#infoTitle" id="6">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7">
+                        <rect key="frame" x="103" y="85" width="305" height="14"/>
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="#InfoMessage" id="8">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" tag="1000" translatesAutoresizingMaskIntoConstraints="NO" id="oPI-db-OzA">
+                        <rect key="frame" x="320" y="11" width="92" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="nBf-X1-zW3"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ey2-K6-XER">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="buttonPressed:" target="-2" id="qhJ-l9-Ttz"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" verticalHuggingPriority="750" tag="1001" translatesAutoresizingMaskIntoConstraints="NO" id="Fv3-Bh-Zpr">
+                        <rect key="frame" x="229" y="11" width="92" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Q4V-Jj-RmP"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZZc-F9-DOe">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="buttonPressed:" target="-2" id="x9z-AU-Ov2"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" verticalHuggingPriority="750" tag="1002" translatesAutoresizingMaskIntoConstraints="NO" id="gz4-k0-7mW">
+                        <rect key="frame" x="99" y="11" width="92" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="i0R-bj-b2M"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7W2-c2-bfN">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="buttonPressed:" target="-2" id="Wh3-6u-Oim"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ygL-Yb-5Mh">
+                        <rect key="frame" x="103" y="49" width="225" height="18"/>
+                        <buttonCell key="cell" type="check" title="Do not show this messasge again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="lEw-jf-Cbx">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="8zW-HU-7Yp"/>
+                    <constraint firstItem="gz4-k0-7mW" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="H9p-Un-PXq"/>
+                    <constraint firstItem="Fv3-Bh-Zpr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gz4-k0-7mW" secondAttribute="trailing" constant="50" id="KU6-ql-rdi"/>
+                    <constraint firstItem="Fv3-Bh-Zpr" firstAttribute="baseline" secondItem="oPI-db-OzA" secondAttribute="baseline" id="MKG-sB-q7g"/>
+                    <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="20" id="awG-JV-Mam"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ygL-Yb-5Mh" secondAttribute="trailing" constant="20" id="axI-xQ-Dfh"/>
+                    <constraint firstItem="5" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="by0-pW-Lm1"/>
+                    <constraint firstItem="5" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="20" id="iTR-5Z-72U"/>
+                    <constraint firstAttribute="trailing" secondItem="oPI-db-OzA" secondAttribute="trailing" constant="20" id="jD4-M1-xU7"/>
+                    <constraint firstItem="5" firstAttribute="top" secondItem="xFR-rx-kmt" secondAttribute="top" constant="16" id="k4b-VK-fMd"/>
+                    <constraint firstItem="3" firstAttribute="top" secondItem="xFR-rx-kmt" secondAttribute="top" constant="16" id="kTZ-SL-ljH"/>
+                    <constraint firstItem="gz4-k0-7mW" firstAttribute="baseline" secondItem="Fv3-Bh-Zpr" secondAttribute="baseline" id="ppq-BW-luc"/>
+                    <constraint firstAttribute="bottom" secondItem="oPI-db-OzA" secondAttribute="bottom" constant="18" id="qc8-iz-wW8"/>
+                    <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="20" id="tAy-L1-8YY"/>
+                    <constraint firstItem="3" firstAttribute="leading" secondItem="xFR-rx-kmt" secondAttribute="leading" constant="20" id="vOf-RU-5xf"/>
+                    <constraint firstItem="oPI-db-OzA" firstAttribute="leading" secondItem="Fv3-Bh-Zpr" secondAttribute="trailing" constant="11" id="x9M-7p-RI5"/>
+                    <constraint firstItem="ygL-Yb-5Mh" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="ykz-b9-Ujj"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="xrA-ik-3E7"/>
+            </connections>
+            <point key="canvasLocation" x="-388" y="416"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="applicationIconYosemite" width="512" height="512"/>
+    </resources>
+</document>

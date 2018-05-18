@@ -38,10 +38,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#warning TODO: Add non-blocking version of alerts.
-
-TEXTUAL_EXTERN NSString * const TLOPopupPromptSuppressionPrefix;
-
 typedef NS_ENUM(NSUInteger, TLOPopupPromptReturnType) {
 	TLOPopupPromptReturnPrimaryType = 0,
 	TLOPopupPromptReturnSecondaryType,
@@ -50,12 +46,8 @@ typedef NS_ENUM(NSUInteger, TLOPopupPromptReturnType) {
 
 typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse);
 
+TEXTUAL_DEPRECATED("Use TDCAlert instead")
 @interface TLOPopupPrompts : NSObject
-/* Return the actual suppression key used internally. Do not feed this to
- the suppressionKey: field of these alerts. This is what is fed to that field
- turns into once the alert is processed. */
-+ (NSString *)suppressionKeyWithBase:(NSString *)base;
-
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault

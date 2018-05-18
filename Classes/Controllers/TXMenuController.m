@@ -61,8 +61,8 @@
 #import "TLOLanguagePreferences.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLOpenLink.h"
-#import "TLOPopupPrompts.h"
 #import "TDCAboutDialogPrivate.h"
+#import "TDCAlert.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCChannelInviteSheetPrivate.h"
 #import "TDCChannelModifyModesSheetPrivate.h"
@@ -1964,13 +1964,13 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 #endif
 
-	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1107][2]")
-													 title:TXTLS(@"Prompts[1107][1]")
-											 defaultButton:TXTLS(@"Prompts[0001]")
-										   alternateButton:TXTLS(@"Prompts[0002]")
-											suppressionKey:nil
-										   suppressionText:suppressionText
-									   suppressionResponse:&suppressionResult];
+	BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1107][2]")
+											title:TXTLS(@"Prompts[1107][1]")
+									defaultButton:TXTLS(@"Prompts[0001]")
+								  alternateButton:TXTLS(@"Prompts[0002]")
+								   suppressionKey:nil
+								  suppressionText:suppressionText
+							  suppressionResponse:&suppressionResult];
 
 	if (result == NO) {
 		return;
@@ -2325,12 +2325,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (_isChannel) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1103][2]")
-														 title:TXTLS(@"Prompts[1103][1]")
-												 defaultButton:TXTLS(@"Prompts[0001]")
-											   alternateButton:TXTLS(@"Prompts[0002]")
-												suppressionKey:@"delete_channel"
-											   suppressionText:nil];
+		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1103][2]")
+												title:TXTLS(@"Prompts[1103][1]")
+										defaultButton:TXTLS(@"Prompts[0001]")
+									  alternateButton:TXTLS(@"Prompts[0002]")
+									   suppressionKey:@"delete_channel"
+									  suppressionText:nil];
 
 		if (result == NO) {
 			return;
@@ -3176,10 +3176,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1104][2]")
-									   title:TXTLS(@"Prompts[1104][1]")
-							   defaultButton:TXTLS(@"Prompts[0005]")
-							 alternateButton:nil];
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
+							  title:TXTLS(@"Prompts[1104][1]")
+					  defaultButton:TXTLS(@"Prompts[0005]")
+					alternateButton:nil];
 }
 
 - (void)openChannelLogs:(id)sender
@@ -3199,10 +3199,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1104][2]")
-									   title:TXTLS(@"Prompts[1104][1]")
-							   defaultButton:TXTLS(@"Prompts[0005]")
-							 alternateButton:nil];
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
+							  title:TXTLS(@"Prompts[1104][1]")
+					  defaultButton:TXTLS(@"Prompts[0005]")
+					alternateButton:nil];
 }
 
 - (void)connectToTextualHelpChannel:(id)sender 
@@ -3492,7 +3492,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
 
 	for (NSString *key in settings) {
-		if ([key hasPrefix:TLOPopupPromptSuppressionPrefix] == NO) {
+		if ([key hasPrefix:TDCAlertSuppressionPrefix] == NO) {
 			continue;
 		}
 

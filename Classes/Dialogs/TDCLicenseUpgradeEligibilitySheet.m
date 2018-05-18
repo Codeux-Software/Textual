@@ -41,7 +41,7 @@
 #import "TLOLanguagePreferences.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
-#import "TLOPopupPrompts.h"
+#import "TDCAlert.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
 #import "TDCLicenseUpgradeEligibilitySheetPrivate.h"
 
@@ -154,19 +154,19 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(errorMessage != nil);
 
-	[TLOPopupPrompts sheetWindowWithWindow:self.window
-									  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][2]", errorMessage)
-									 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][1]", self.licenseKey.prettyLicenseKey)
-							 defaultButton:TXTLS(@"Prompts[0005]")
-						   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][3]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
-								   [self actionContactSupport:nil];
-							   }
-
-							   [self endSheetEarly];
-						   }];
+	[TDCAlert alertSheetWithWindow:self.window
+							  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][2]", errorMessage)
+							 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][1]", self.licenseKey.prettyLicenseKey)
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][3]")
+					   otherButton:nil
+				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   [self actionContactSupport:nil];
+					   }
+					   
+					   [self endSheetEarly];
+				   }];
 }
 
 - (void)_cancelEligibilityCheck
