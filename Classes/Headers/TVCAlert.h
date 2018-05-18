@@ -72,8 +72,10 @@ typedef void (^TVCAlertCompletionBlock)(TVCAlert *sender, TVCAlertResponse butto
 - (void)showAlert;
 - (void)showAlertWithCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock;
 
-- (void)showAlertInWindow:(NSWindow *)window NS_UNAVAILABLE;
-- (void)showAlertInWindow:(NSWindow *)window withCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock NS_UNAVAILABLE;
+- (void)showAlertInWindow:(NSWindow *)window;
+- (void)showAlertInWindow:(NSWindow *)window withCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock;
+
+- (TVCAlertResponse)runModal;
 @end
 
 NS_ASSUME_NONNULL_END
