@@ -136,6 +136,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return NO;
 }
 
+- (nullable NSString *)hostmaskFragment
+{
+	NSString *username = self.username;
+	NSString *address = self.address;
+
+	if (username == nil || address == nil) {
+		return nil;
+	}
+
+	return [NSString stringWithFormat:@"%@@%@", username, address];
+}
+
 - (nullable NSString *)hostmask
 {
 	NSString *nickname = self.nickname;

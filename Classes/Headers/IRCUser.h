@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSString *username;
 @property (readonly, copy, nullable) NSString *address;
 @property (readonly, copy, nullable) NSString *hostmask;
+@property (readonly, copy, nullable) NSString *hostmaskFragment; // -hostmask without nickname
 @property (readonly, copy, nullable) NSString *realName;
 @property (readonly) BOOL isAway;
 @property (readonly) BOOL isIRCop;
