@@ -7407,9 +7407,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					IRCChannel *newNicknameQuery = [self findChannel:newNickname];
 
 					if (newNicknameQuery) {
-						/* If a query of this name already exists, then we
-						 destroy it before changing name of old. */
-						[worldController() destroyChannel:newNicknameQuery];
+						break;
 					}
 
 					channel.name = newNickname;
@@ -7425,7 +7423,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					return;
 				}
 			}
-		}
+		} // isPrintOnlyMessage == NO
 
 		/* Determine whether the message should be printed */
 		if (channel.isChannel) {
