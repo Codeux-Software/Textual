@@ -4156,7 +4156,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
 				
-				return;
+				break;
 			}
 
 			NSUserNotification *notification = [NSUserNotification new];
@@ -4273,7 +4273,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if ([TPCPreferences disableNicknameColorHashing]) {
 				[self printDebugInformation:TXTLS(@"IRC[1108]")];
 
-				return;
+				break;
 			}
 
 			NSString *nickname = stringIn.lowercaseGetToken;
@@ -4287,7 +4287,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if ([self stringIsNickname:nickname] == NO) {
 				[self printDebugInformation:TXTLS(@"IRC[1110]", nickname)];
 
-				return;
+				break;
 			}
 
 			[menuController() memberChangeColor:nickname];
