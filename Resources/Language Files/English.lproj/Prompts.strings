@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1139 */
+/* Next unusued key: 1140 */
 
 "Prompts[0001]" = "Yes";
 "Prompts[0002]" = "No";
@@ -171,3 +171,6 @@
 
 "Prompts[1138][1]" = "Your preferences could not be migrated. They have NOT been lost. Textual does not have access to them.";
 "Prompts[1138][2]" = "Please report this problem to support@codeux.com";
+
+"Prompts[1139][1]" = "A query named “%@“ already exists. Do you want to delete this query?";
+"Prompts[1139][2]" = "There is no undo and all data related to this query, except for logs, will be erased.";

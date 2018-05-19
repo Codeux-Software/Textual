@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5117</real>
+		<real>5118</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -700,6 +700,15 @@
 		<false/>
 		<key>indexValue</key>
 		<real>5103</real>
+		<key>arguments</key>
+		<string>&lt;nickname&gt;</string>
+	</dict>
+	<key>setqueryname</key>
+	<dict>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<real>5117</real>
 		<key>arguments</key>
 		<string>&lt;nickname&gt;</string>
 	</dict>

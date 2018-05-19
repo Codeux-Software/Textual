@@ -121,6 +121,7 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandRemoveIndex = 5061,
 	IRCPublicCommandServerIndex = 5062,
 	IRCPublicCommandSetcolorIndex = 5103,
+	IRCPublicCommandSetquerynameIndex = 5117,
 	IRCPublicCommandShunIndex = 5063,
 	IRCPublicCommandSmeIndex = 5064,
 	IRCPublicCommandSmsgIndex = 5065,

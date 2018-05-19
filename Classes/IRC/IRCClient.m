@@ -4294,6 +4294,52 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCPublicCommandSetquerynameIndex: // Command: SETQUERYNAME
+		{
+			if (targetChannel == nil || targetChannel.isPrivateMessage == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[1134]")];
+
+				break;
+			}
+
+			NSString *nickname = stringIn.getTokenAsString;
+
+			if (nickname.length == 0) {
+				[self printInvalidSyntaxMessageForCommand:command];
+
+				break;
+			}
+
+			if ([self stringIsNickname:nickname] == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[1135]")];
+
+				break;
+			}
+
+			IRCChannel *oldQuery = [self findChannel:nickname];
+
+			if (oldQuery) {
+				BOOL deleteOldQuery =
+				[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1139][2]")
+										  title:TXTLS(@"Prompts[1139][1]", oldQuery.name)
+								  defaultButton:TXTLS(@"Prompts[0001]")
+								alternateButton:TXTLS(@"Prompts[0002]")];
+
+				if (deleteOldQuery) {
+					[worldController() destroyChannel:oldQuery];
+				} else {
+					break;
+				}
+			}
+
+			targetChannel.name = nickname;
+
+			[mainWindow() reloadTreeItem:targetChannel];
+
+			[mainWindow() updateTitleFor:targetChannel];
+
+			break;
+		}
 		case IRCPublicCommandServerIndex: // Command: SERVER
 		{
 			if (stringIn.length == 0) {
