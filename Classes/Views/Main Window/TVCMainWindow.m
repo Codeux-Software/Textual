@@ -2149,7 +2149,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.userNickname, awayStatus, u.networkNameAlt)];
 
-	if (u && c == nil) // = Client
+	if (c == nil) // = Client
 	{
 		/* If we have the actual server that the client is connected
 		 to, then we we append that. Otherwise, we just leave it blank. */
@@ -2165,10 +2165,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	{
 		[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
 
+		NSString *channelName = c.name;
+
 		switch (c.type) {
 			case IRCChannelChannelType:
 			{
-				[title appendString:c.name];
+				[title appendString:channelName];
 
 				NSString *userCount = TXFormattedNumber(c.numberOfMembers);
 
@@ -2187,19 +2189,21 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				/* Textual defines the topic of a private message as the user host. */
 				/* If it is not defined yet, then we just use the channel name
 				 which is equal to the nickname of the private message owner. */
-				NSString *hostmask = c.topic;
+				IRCUser *user = [u findUser:channelName];
 
-				if (hostmask.isHostmask) {
-					[title appendString:hostmask];
+				NSString *hostmask = user.hostmaskFragment;
+
+				if (hostmask) {
+					[title appendString:TXTLS(@"TVCMainWindow[1023]", channelName, hostmask)];
 				} else {
-					[title appendString:c.name];
+					[title appendString:channelName];
 				}
 
 				break;
 			}
 			case IRCChannelUtilityType:
 			{
-				[title appendString:c.name];
+				[title appendString:channelName];
 
 				break;
 			}
