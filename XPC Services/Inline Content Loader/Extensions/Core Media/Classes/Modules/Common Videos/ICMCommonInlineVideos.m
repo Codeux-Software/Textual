@@ -58,21 +58,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)_finalAddressForURL:(NSURL *)url
 {
+	NSString *urlHost = url.host;
 	NSString *urlPath = url.path.percentEncodedURLPath;
+	NSString *urlPathExtension = urlPath.pathExtension;
 
-	if (urlPath.length <= 1) {
-		return nil;
+	BOOL hasFileExtension = [self.validFileExtensions containsObject:urlPathExtension];
+
+	if (hasFileExtension) {
+		if ([urlHost isEqualToString:@"video.nest.com"]) {
+			/* Processed below */
+		} else {
+			return url.absoluteString;
+		}
 	}
 
-	urlPath = [urlPath substringFromIndex:1];
+	if ([urlHost hasSuffix:@"video.nest.com"])
+	{
+		if ([urlPath hasPrefix:@"/clip/"] == NO) {
+			return nil;
+		}
 
-	NSString *fileExtension = urlPath.pathExtension;
+		NSString *filename = urlPath.lastPathComponent;
 
-	if ([self.validFileExtensions containsObject:fileExtension] == NO) {
-		return nil;
+		NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
+
+		if (filenameWithoutExtension.alphabeticNumericOnly) {
+			return [NSString stringWithFormat:@"http://clips.dropcam.com/%@", filename];
+		}
 	}
 
-	return url.absoluteString;
+	return nil;
 }
 
 + (NSArray<NSString *> *)validFileExtensions
