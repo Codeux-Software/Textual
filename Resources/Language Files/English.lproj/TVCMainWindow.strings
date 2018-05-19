@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1022 */
+/* Next unusued key: 1024 */
 
 "TVCMainWindow[1001]" = "No Privileges";
 "TVCMainWindow[1002]" = "Voice";
@@ -62,3 +62,4 @@
 "TVCMainWindow[1020]" = "Reconnecting… — ";
 "TVCMainWindow[1021]" = "Waiting to reconnect… — ";
 "TVCMainWindow[1022]" = " (away)";
+"TVCMainWindow[1023]" = "%1$@ (%2$@)";

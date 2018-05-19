@@ -6409,17 +6409,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	/* Set the query topic to the host of the sender */
-	/* Internally this is how Textual sets the title of the window.
-	 It is kind of hackish, but it's really not that bad. */
-	NSString *senderHostmask = m.senderHostmask;
-
-	if (NSObjectsAreEqual(query.topic, senderHostmask) == NO) {
-		query.topic = senderHostmask;
-
-		[mainWindow() updateTitleFor:query];
-	}
-
 	/* Update query status */
 	if (query.isActive == NO) {
 		[query activate];
@@ -7426,6 +7415,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					channel.name = newNickname;
 
 					[mainWindow() reloadTreeItem:channel];
+
+					[mainWindow() updateTitleFor:channel]; // Refresh hostmask
 
 					break;
 				}
