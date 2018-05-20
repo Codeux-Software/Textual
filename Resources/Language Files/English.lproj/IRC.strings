@@ -165,8 +165,8 @@
 "IRC[1151]" = "There are %ld timers:";
 "IRC[1152]" = "There is %ld timer:";
 
-"IRC[1153]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Command:\002 “%4$@“";
-"IRC[1154]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Repeat:\002 Yes • \002Repeat Limit:\002 %4$@ • \002Iteration:\002 %5$ld • \002Command:\002 “%6$@“";
+"IRC[1153]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Command:\002 “%5$@“";
+"IRC[1154]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Repeat:\002 Yes • \002Repeat Limit:\002 %5$@ • \002Iteration:\002 %6$ld • \002Command:\002 “%7$@“";
 "IRC[1155][01]" = "Active";
 "IRC[1155][02]" = "Stopped";
 "IRC[1156]" = "No Limit";
