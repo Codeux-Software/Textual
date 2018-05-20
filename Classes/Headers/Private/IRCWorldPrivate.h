@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IRCWorld ()
 @property (nonatomic, assign, readwrite) NSUInteger messagesSent;
 @property (nonatomic, assign, readwrite) NSUInteger messagesReceived;
-@property (nonatomic, assign, readwrite) TXUnsignedLongLong bandwidthIn;
-@property (nonatomic, assign, readwrite) TXUnsignedLongLong bandwidthOut;
+@property (nonatomic, assign, readwrite) uint64_t bandwidthIn;
+@property (nonatomic, assign, readwrite) uint64_t bandwidthOut;
 @property (nonatomic, assign) BOOL isImportingConfiguration;
 @property (nonatomic, copy, readwrite) NSArray<IRCClient *> *clientList;
 

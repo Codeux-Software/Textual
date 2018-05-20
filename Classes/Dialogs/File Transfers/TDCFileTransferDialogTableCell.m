@@ -60,9 +60,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferProgressTextFieldConstraint;
 @property (readonly) BOOL isReceiving;
 @property (readonly) TDCFileTransferDialogTransferStatus transferStatus;
-@property (readonly) TXUnsignedLongLong processedFilesize;
-@property (readonly) TXUnsignedLongLong totalFilesize;
-@property (readonly) TXUnsignedLongLong currentRecord;
+@property (readonly) uint64_t processedFilesize;
+@property (readonly) uint64_t totalFilesize;
+@property (readonly) uint64_t currentRecord;
 @property (readonly, copy) NSArray<NSNumber *> *speedRecords;
 @property (readonly, copy, nullable) NSString *errorMessageDescription;
 @property (readonly, copy, nullable) NSString *path;
@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.filenameTextField.stringValue = filename;
 
-	TXUnsignedLongLong totalFilesize = self.totalFilesize;
+	uint64_t totalFilesize = self.totalFilesize;
 
 	NSString *totalFilesizeString = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:totalFilesize];
 
@@ -124,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 							  transferStatus == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus ||
 							  transferStatus == TDCFileTransferDialogTransferWaitingForResumeAcceptStatus);
 
-	TXUnsignedLongLong processedFilesize = self.processedFilesize;
+	uint64_t processedFilesize = self.processedFilesize;
 
 	if (transferIsStopped) {
 		if (self.progressIndicator.hidden == NO) {
@@ -238,7 +238,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSString *timeRemainingString = nil;
 
-			TXUnsignedLongLong currentSpeed = self.currentSpeed;
+			uint64_t currentSpeed = self.currentSpeed;
 
 			if (currentSpeed > 0) {
 				timeRemaining = ((self.totalFilesize - processedFilesize) / currentSpeed);
@@ -364,22 +364,22 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.cellItem.hostPort;
 }
 
-- (TXUnsignedLongLong)totalFilesize
+- (uint64_t)totalFilesize
 {
 	return self.cellItem.totalFilesize;
 }
 
-- (TXUnsignedLongLong)processedFilesize
+- (uint64_t)processedFilesize
 {
 	return self.cellItem.processedFilesize;
 }
 
-- (TXUnsignedLongLong)currentRecord
+- (uint64_t)currentRecord
 {
 	return self.cellItem.currentRecord;
 }
 
-- (TXUnsignedLongLong)currentSpeed
+- (uint64_t)currentSpeed
 {
 	NSArray *speedRecords = self.speedRecords;
 
@@ -387,7 +387,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return 0;
 	}
 
-	TXUnsignedLongLong totalTransferred = 0;
+	uint64_t totalTransferred = 0;
 
 	for (NSNumber *record in speedRecords) {
 		totalTransferred += record.unsignedLongLongValue;

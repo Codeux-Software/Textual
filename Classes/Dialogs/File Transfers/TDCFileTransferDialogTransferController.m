@@ -65,9 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL isReversed;
 @property (nonatomic, assign, readwrite) BOOL isSender;
 @property (nonatomic, assign, readwrite) TDCFileTransferDialogTransferStatus transferStatus;
-@property (nonatomic, assign, readwrite) TXUnsignedLongLong totalFilesize;
-@property (nonatomic, assign, readwrite) TXUnsignedLongLong processedFilesize;
-@property (nonatomic, assign, readwrite) TXUnsignedLongLong currentRecord;
+@property (nonatomic, assign, readwrite) uint64_t totalFilesize;
+@property (nonatomic, assign, readwrite) uint64_t processedFilesize;
+@property (nonatomic, assign, readwrite) uint64_t currentRecord;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> *speedRecordsPrivate;
 @property (nonatomic, copy, readwrite, nullable) NSString *errorMessageDescription;
 @property (nonatomic, copy, readwrite, nullable) NSString *path;
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) GCDAsyncSocket *listeningServerConnectedClient;
 @property (nonatomic, strong, nullable) GCDAsyncSocket *connectionToRemoteServer;
 @property (nonatomic, strong, nullable) id transferProgressHandler; // Used to prevent system sleep
-@property (readonly) TXUnsignedLongLong currentFilesize;
+@property (readonly) uint64_t currentFilesize;
 @property (readonly) TDCFileTransferDialog *transferDialog;
 @property (readonly, nullable) GCDAsyncSocket *readSocket;
 @property (readonly, nullable) GCDAsyncSocket *writeSocket;
@@ -97,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-+ (nullable instancetype)receiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(uint16_t)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
++ (nullable instancetype)receiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(uint16_t)hostPort filename:(NSString *)filename filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(client != nil);
 	NSParameterAssert(nickname != nil);
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	TXUnsignedLongLong totalFilesize = [fileAttributes fileSize];
+	uint64_t totalFilesize = [fileAttributes fileSize];
 
 	if (totalFilesize == 0) {
 		LogToConsoleError("Fatal error: Cannot create sender because filesize == 0");
@@ -590,9 +590,9 @@ ClassWithDesignatedInitializerInitMethod
 	[self closeWithLocalizedError:@"TDCFileTransferDialog[1020]"];
 }
 
-- (void)didReceiveResumeRequest:(TXUnsignedLongLong)proposedPosition
+- (void)didReceiveResumeRequest:(uint64_t)proposedPosition
 {
-	TXUnsignedLongLong currentFilesize = self.currentFilesize;
+	uint64_t currentFilesize = self.currentFilesize;
 
 	if (proposedPosition == 0 || currentFilesize < proposedPosition) {
 		return;
@@ -605,11 +605,11 @@ ClassWithDesignatedInitializerInitMethod
 	[self sendTransferResumeAcceptToClient];
 }
 
-- (void)didReceiveResumeAccept:(TXUnsignedLongLong)proposedPosition
+- (void)didReceiveResumeAccept:(uint64_t)proposedPosition
 {
 	[self cancelPerformRequestsWithSelector:@selector(transferResumeRequestTimeout) object:nil];
 
-	TXUnsignedLongLong currentFilesize = self.currentFilesize;
+	uint64_t currentFilesize = self.currentFilesize;
 
 	if (currentFilesize != proposedPosition) {
 		[self closeWithLocalizedError:@"TDCFileTransferDialog[1022]" isFatalError:YES];
@@ -659,7 +659,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)sendTransferRequestToClient
 {
 	if (self.isSender) {
-		TXUnsignedLongLong currentFilesize = self.currentFilesize;
+		uint64_t currentFilesize = self.currentFilesize;
 
 		if (self.isReversed) {
 			[self buildTransferToken];
@@ -677,7 +677,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)sendTransferResumeRequestToClient
 {
-	TXUnsignedLongLong currentFilesize = self.currentFilesize;
+	uint64_t currentFilesize = self.currentFilesize;
 
 	if (currentFilesize == 0 || currentFilesize > self.totalFilesize) {
 		[self transferResumeRequestTimeout];
@@ -1177,7 +1177,7 @@ ClassWithDesignatedInitializerInitMethod
 	return [path stringByAppendingPathComponent:filename];
 }
 
-- (TXUnsignedLongLong)currentFilesize
+- (uint64_t)currentFilesize
 {
 	NSString *filePath = self.filePath;
 

@@ -82,9 +82,6 @@
 
 #define NSIsCurrentThreadMain()					[[NSThread isMainThread]]
 
-/* typedef for filesize information */
-typedef unsigned long long						TXUnsignedLongLong;
-
 /* Empty block for cleaner parameters. */
 typedef void (^TXEmtpyBlockDataType)(void);
 

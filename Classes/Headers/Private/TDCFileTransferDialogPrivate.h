@@ -88,7 +88,7 @@ typedef NS_ENUM(NSUInteger, TDCFileTransferDialogNavigationSelectedTab) {
 									address:(NSString *)hostAddress
 									   port:(uint16_t)hostPort
 								   filename:(NSString *)filename
-								   filesize:(TXUnsignedLongLong)totalFilesize
+								   filesize:(uint64_t)totalFilesize
 									  token:(nullable NSString *)transferToken;
 
 - (nullable NSString *)addSenderForClient:(IRCClient *)client
