@@ -95,9 +95,19 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitToBasics"];
 }
 
++ (void)setInlineMediaLimitToBasics:(BOOL)inlineMediaLimitToBasics
+{
+	[RZUserDefaults() setBool:inlineMediaLimitToBasics forKey:@"InlineMediaLimitToBasics"];
+}
+
 + (BOOL)inlineMediaLimitBasicsToFiles
 {
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitBasicsToFiles"];
+}
+
++ (void)setInlineMediaLimitBasicsToFiles:(BOOL)inlineMediaLimitBasicsToFiles
+{
+	[RZUserDefaults() setBool:inlineMediaLimitBasicsToFiles forKey:@"InlineMediaLimitBasicsToFiles"];
 }
 
 + (BOOL)inlineMediaLimitInsecureContent

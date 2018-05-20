@@ -4216,7 +4216,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitToBasics" id="J9K-P7-7d7"/>
+                                            <binding destination="-2" name="value" keyPath="self.inlineMediaLimitToBasics" id="UgE-VO-ael"/>
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Ceh-Ul-KZi">
@@ -4226,7 +4226,8 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitBasicsToFiles" id="93H-5y-WnU">
+                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.InlineMediaLimitToBasics" id="NR7-a0-huY"/>
+                                            <binding destination="-2" name="value" keyPath="self.inlineMediaLimitBasicsToFiles" id="xsv-3y-iMV">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                 </dictionary>

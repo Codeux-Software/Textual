@@ -740,6 +740,34 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 }
 
+- (BOOL)inlineMediaLimitToBasics
+{
+	return [TPCPreferences inlineMediaLimitToBasics];
+}
+
+- (void)setInlineMediaLimitToBasics:(BOOL)inlineMediaLimitToBasics
+{
+	[TPCPreferences setInlineMediaLimitToBasics:inlineMediaLimitToBasics];
+
+	[self willChangeValueForKey:@"inlineMediaLimitBasicsToFiles"];
+	[self didChangeValueForKey:@"inlineMediaLimitBasicsToFiles"];
+}
+
+- (BOOL)inlineMediaLimitBasicsToFiles
+{
+	/* Show value as enabled when basics is disabled */
+	if ([TPCPreferences inlineMediaLimitToBasics] == NO) {
+		return NO; // UI negates bool so return NO for YES
+	}
+
+	return [TPCPreferences inlineMediaLimitBasicsToFiles];
+}
+
+- (void)setInlineMediaLimitBasicsToFiles:(BOOL)inlineMediaLimitBasicsToFiles
+{
+	[TPCPreferences setInlineMediaLimitBasicsToFiles:inlineMediaLimitBasicsToFiles];
+}
+
 - (BOOL)validateValue:(inout id *)value forKey:(NSString *)key error:(out NSError **)outError
 {
 	if ([key isEqualToString:@"scrollbackSaveLimit"]) {
