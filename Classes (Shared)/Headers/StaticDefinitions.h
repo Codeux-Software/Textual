@@ -82,9 +82,6 @@
 
 #define NSIsCurrentThreadMain()					[[NSThread isMainThread]]
 
-/* Empty block for cleaner parameters. */
-typedef void (^TXEmtpyBlockDataType)(void);
-
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							extern
 

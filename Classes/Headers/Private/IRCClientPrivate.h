@@ -54,7 +54,7 @@ enum {
 };
 
 @interface IRCClient ()
-@property (nonatomic, copy, nullable) TXEmtpyBlockDataType disconnectCallback;
+@property (nonatomic, copy, nullable) dispatch_block_t disconnectCallback;
 @property (nonatomic, assign, readwrite) IRCClientConnectMode connectType;
 @property (nonatomic, assign, readwrite) IRCClientDisconnectMode disconnectType;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
