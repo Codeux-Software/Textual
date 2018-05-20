@@ -199,15 +199,13 @@ enum {
 		return;
 	}
 
-	TLOTimer *trialTimer = [TLOTimer new];
-
-	trialTimer.repeatTimer = NO;
-	trialTimer.target = self;
-	trialTimer.action = @selector(onTrialTimer:);
-
-	[trialTimer start:timeRemaining];
+	TLOTimer *trialTimer = [TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onTrialTimer];
+	}];
 
 	self.trialTimer = trialTimer;
+
+	[trialTimer start:timeRemaining];
 
 	LogToConsoleDebug("Starting trial timer to end on %f", timeRemaining);
 }
@@ -224,7 +222,7 @@ enum {
 	LogToConsoleDebug("Stopping trial timer");
 }
 
-- (void)onTrialTimer:(id)sender
+- (void)onTrialTimer
 {
 	[self show];
 

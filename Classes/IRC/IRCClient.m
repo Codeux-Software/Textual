@@ -322,46 +322,46 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.lastServerSelected = NSNotFound;
 
-	self.autojoinTimer = [TLOTimer new];
-	self.autojoinTimer.repeatTimer = YES;
-	self.autojoinTimer.target = self;
-	self.autojoinTimer.action = @selector(onAutojoinTimer:);
+	self.autojoinTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onAutojoinTimer];
+	}];
 
-	self.autojoinDelayedWarningTimer = [TLOTimer new];
-	self.autojoinDelayedWarningTimer.repeatTimer = YES;
-	self.autojoinDelayedWarningTimer.target = self;
-	self.autojoinDelayedWarningTimer.action = @selector(onAutojoinDelayedWarningTimer:);
+	self.autojoinDelayedWarningTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onAutojoinDelayedWarningTimer];
+	}];
 
-	self.isonTimer	= [TLOTimer new];
-	self.isonTimer.repeatTimer = YES;
-	self.isonTimer.target = self;
-	self.isonTimer.action = @selector(onISONTimer:);
+	self.isonTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onISONTimer];
+	}];
 
-	self.reconnectTimer = [TLOTimer new];
-	self.reconnectTimer.repeatTimer = YES;
-	self.reconnectTimer.target = self;
-	self.reconnectTimer.action = @selector(onReconnectTimer:);
+	self.reconnectTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onReconnectTimer];
+	}];
 
-	self.retryTimer = [TLOTimer new];
-	self.retryTimer.repeatTimer = NO;
-	self.retryTimer.target = self;
-	self.retryTimer.action = @selector(onRetryTimer:);
+	self.retryTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onRetryTimer];
+	}];
 
-	self.pongTimer = [TLOTimer new];
-	self.pongTimer.repeatTimer = YES;
-	self.pongTimer.target = self;
-	self.pongTimer.action = @selector(onPongTimer:);
+	self.pongTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onPongTimer];
+	}];
 
-	self.whoTimer = [TLOTimer new];
-	self.whoTimer.repeatTimer = YES;
-	self.whoTimer.target = self;
-	self.whoTimer.action = @selector(onWhoTimer:);
+	self.whoTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onWhoTimer];
+	}];
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	self.softwareTrialTimer = [TLOTimer new];
-	self.softwareTrialTimer.repeatTimer = NO;
-	self.softwareTrialTimer.target = self;
-	self.softwareTrialTimer.action = @selector(onSoftwareTrialTimer:);
+	self.softwareTrialTimer
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onSoftwareTrialTimer];
+	}];
 #endif
 
 	[RZNotificationCenter() addObserver:self selector:@selector(willDestroyChannel:) name:IRCWorldWillDestroyChannelNotification object:nil];
@@ -10120,7 +10120,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self.autojoinDelayedWarningTimer start:_autojoinDelayedWarningInterval];
+	[self.autojoinDelayedWarningTimer start:_autojoinDelayedWarningInterval onRepeat:YES];
 }
 
 - (void)stopAutojoinDelayedWarningTimer
@@ -10132,7 +10132,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.autojoinDelayedWarningTimer stop];
 }
 
-- (void)onAutojoinDelayedWarningTimer:(id)sender
+- (void)onAutojoinDelayedWarningTimer
 {
 	if (self.isLoggedIn == NO ||
 		self.config.hideAutojoinDelayedWarnings ||
@@ -10166,7 +10166,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSTimeInterval interval = [TPCPreferences autojoinDelayBetweenChannelJoins];
 
-	[self.autojoinTimer start:interval];
+	[self.autojoinTimer start:interval onRepeat:YES];
 }
 
 - (void)stopAutojoinTimer
@@ -10180,7 +10180,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.channelsToAutojoin = nil;
 }
 
-- (void)onAutojoinTimer:(id)sender
+- (void)onAutojoinTimer
 {
 	[self autojoinNextChannel];
 }
@@ -10291,7 +10291,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self startAutojoinTimer];
 
-	[self onAutojoinTimer:nil];
+	[self onAutojoinTimer];
 }
 
 #pragma mark -
@@ -10340,7 +10340,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self.pongTimer start:_pongCheckInterval];
+	[self.pongTimer start:_pongCheckInterval onRepeat:YES];
 }
 
 - (void)stopPongTimer
@@ -10352,7 +10352,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.pongTimer stop];
 }
 
-- (void)onPongTimer:(id)sender
+- (void)onPongTimer
 {
 	if (self.isLoggedIn == NO) {
 		[self stopPongTimer];
@@ -10409,7 +10409,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self.reconnectTimer start:_reconnectInterval];
+	[self.reconnectTimer start:_reconnectInterval onRepeat:YES];
 }
 
 - (void)stopReconnectTimer
@@ -10421,7 +10421,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.reconnectTimer stop];
 }
 
-- (void)onReconnectTimer:(id)sender
+- (void)onReconnectTimer
 {
 	if (self.isConnecting || self.isConnected) {
 		return;
@@ -10448,7 +10448,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.retryTimer stop];
 }
 
-- (void)onRetryTimer:(id)sender
+- (void)onRetryTimer
 {
 	if (self.isConnected == NO) {
 		return;
@@ -10513,7 +10513,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.softwareTrialTimer stop];
 }
 
-- (void)onSoftwareTrialTimer:(id)sender
+- (void)onSoftwareTrialTimer
 {
 	NSUInteger timerStep = ((NSNumber *)self.softwareTrialTimer.context).unsignedIntegerValue;
 
@@ -12276,7 +12276,7 @@ present_error:
 		return;
 	}
 
-	[self.isonTimer start:_isonCheckInterval];
+	[self.isonTimer start:_isonCheckInterval onRepeat:YES];
 
 	[self startWhoTimer];
 }
@@ -12292,7 +12292,7 @@ present_error:
 	[self stopWhoTimer];
 }
 
-- (void)onISONTimer:(id)sender
+- (void)onISONTimer
 {
 	if (self.isLoggedIn == NO || self.isBrokenIRCd_aka_Twitch) {
 		return;
@@ -12323,7 +12323,7 @@ present_error:
 		return;
 	}
 
-	[self.whoTimer start:_whoCheckInterval];
+	[self.whoTimer start:_whoCheckInterval onRepeat:YES];
 }
 
 - (void)stopWhoTimer
@@ -12335,7 +12335,7 @@ present_error:
 	[self.whoTimer stop];
 }
 
-- (void)onWhoTimer:(id)sender
+- (void)onWhoTimer
 {
 	if (self.isLoggedIn == NO || self.isBrokenIRCd_aka_Twitch) {
 		return;
