@@ -42,26 +42,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOTimer ()
 @property (nonatomic, assign, readwrite) NSTimeInterval interval;
-@property (nonatomic, assign) BOOL actionValidated;
+@property (nonatomic, assign, readwrite) BOOL repeatTimer;
 @property (nonatomic, strong, nullable) dispatch_source_t timerSource;
 @end
 
 @implementation TLOTimer
 
-- (instancetype)init
++ (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock
 {
-	if ((self = [super init])) {
-		[self prepareInitialState];
+	NSParameterAssert(actionBlock != NULL);
 
-		return self;
-	}
-
-	return nil;
+	return [self _timerWithActionBlock:actionBlock onQueue:NULL];
 }
 
-- (void)prepareInitialState
++ (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock onQueue:(dispatch_queue_t)queue
 {
-	self.repeatTimer = YES;
+	NSParameterAssert(actionBlock != NULL);
+	NSParameterAssert(queue != NULL);
+
+	return [self _timerWithActionBlock:actionBlock onQueue:queue];
+}
+
++ (instancetype)_timerWithActionBlock:(TLOTimerActionBlock)actionBlock onQueue:(nullable dispatch_queue_t)queue
+{
+	NSParameterAssert(actionBlock != NULL);
+
+	TLOTimer *timer = [TLOTimer new];
+
+	timer.actionBlock = actionBlock;
+
+	timer.queue = queue;
+
+	return timer;
 }
 
 - (void)dealloc
@@ -69,26 +81,17 @@ NS_ASSUME_NONNULL_BEGIN
 	[self stop];
 }
 
-- (void)setAction:(nullable SEL)action
-{
-	if (self->_action != action) {
-		self->_action = action;
-
-		[self invalidateActionValidation];
-	}
-}
-
-- (void)invalidateActionValidation
-{
-	self.actionValidated = NO;
-}
-
 - (BOOL)timerIsActive
 {
 	return (self.timerSource != nil);
 }
 
-- (void)start:(NSTimeInterval)interval
+- (void)start:(NSTimeInterval)timerInterval
+{
+	[self start:timerInterval onRepeat:NO];
+}
+
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer
 {
 	[self stop];
 
@@ -100,13 +103,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	dispatch_source_t timerSource = XRScheduleBlockOnQueue(sourceQueue, ^{
 		[self fireTimer];
-	}, interval, self.repeatTimer);
+	}, timerInterval, repeatTimer);
 
 	XRResumeScheduledBlock(timerSource);
 
-	self.interval = interval;
+	self.interval = timerInterval;
 
 	self.timerSource = timerSource;
+
+	self.repeatTimer = repeatTimer;
 }
 
 - (void)stop
@@ -124,24 +129,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)fireTimer
 {
-	if (self.target == nil || self.action == NULL) {
+	/* Perform block */
+	TLOTimerActionBlock actionBlock = self.actionBlock;
+
+	if (actionBlock) {
+		actionBlock(self);
+
 		return;
 	}
 
-	if (self.actionValidated == NO) {
-		NSMethodSignature *actionSignature = [self.target methodSignatureForSelector:self.action];
+	/* Perform action */
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
-		if ([actionSignature validateMethodIsValidSenderDestination] == NO) {
-			return;
-		}
+	id target = self.target;
 
-		self.actionValidated = YES;
+	SEL action = self.action;
+
+	if (target == nil || action == NULL) {
+		return;
 	}
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	(void)[self.target performSelector:self.action withObject:self];
 #pragma clang diagnostic pop
+
+TEXTUAL_IGNORE_DEPRECATION_END
 }
 
 @end

@@ -38,19 +38,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* The value of -action is validated to ensure that it returns 
- no value (void) and that it takes only one argument, an object */
+@class TLOTimer;
+
+typedef void (^TLOTimerActionBlock)(TLOTimer *sender);
+
 @interface TLOTimer : NSObject
-@property (nonatomic, weak) id target;
-@property (nonatomic, assign, nullable) SEL action;
-@property (nonatomic, assign) BOOL repeatTimer; // defaults to YES
+@property (nonatomic, weak) id target TEXTUAL_DEPRECATED("Use -actionBlock instead");
+@property (nonatomic, assign, nullable) SEL action TEXTUAL_DEPRECATED("Use -actionBlock instead");
+@property (nonatomic, copy, nullable) TLOTimerActionBlock actionBlock;
 @property (nonatomic, strong, nullable) dispatch_queue_t queue; // Defaults to main queue. Changed ignored while active.
 @property (nonatomic, strong, nullable) id context;
 
 @property (readonly) NSTimeInterval interval;
 @property (readonly) BOOL timerIsActive;
+@property (readonly) BOOL repeatTimer;
 
-- (void)start:(NSTimeInterval)interval;
++ (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock;
++ (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock onQueue:(dispatch_queue_t)queue;
+
+- (void)start:(NSTimeInterval)interval; // repeatTimer = NO
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer;
+
 - (void)stop;
 @end
 
