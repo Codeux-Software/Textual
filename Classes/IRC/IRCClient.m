@@ -247,6 +247,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong, nullable) NSMutableArray<IRCChannel *> *channelsToAutojoin;
 @property (nonatomic, strong) IRCAddressBookMatchCache *addressBookMatchCache;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, IRCTimedCommand *> *timedCommands;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCUser *> *userListPrivate;
 @property (nonatomic, strong, nullable) NSMutableString *zncBouncerCertificateChainDataMutable;
 @property (nonatomic, copy, nullable) NSString *temporaryServerAddressOverride;
@@ -310,7 +311,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.cachedHighlights = @[];
 
 	self.capabilitiesPending = [NSMutableArray array];
+
 	self.channelListPrivate = [NSMutableArray array];
+
+	self.timedCommands = [NSMutableDictionary dictionary];
 
 	self.userListPrivate = [NSMutableDictionary dictionary];
 
@@ -404,6 +408,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.logFile = nil;
 	self.socket = nil;
 	self.supportInfo = nil;
+	self.timedCommands = nil;
 	self.trackedUsers = nil;
 	self.userListPrivate = nil;
 
@@ -4363,29 +4368,308 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandTimerIndex: // Command: TIMER
 		{
-			NSString *timerIntervalToken = stringIn.tokenAsString;
-
-			if (timerIntervalToken.length == 0) {
-				[self printInvalidSyntaxMessageForCommand:command];
-				
-				break;
-			}
-			
-			NSInteger timerInterval = timerIntervalToken.integerValue;
-
-			if (timerInterval <= 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1090]")];
+			if (stringIn.length == 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1138]")];
 
 				break;
 			}
 
-			NSString *timerCommand = stringIn.string;
+			NSString *action = stringIn.tokenAsString;
 
-			if (timerCommand.length == 0) {
-				[self printInvalidSyntaxMessageForCommand:command];
-				
+			/* Present help */
+			if ([action isEqualToString:@"help"])
+			{
+				NSString *topic = stringIn.tokenAsString;
+
+				if ([topic isEqualIgnoringCase:@"add"])
+				{
+					[self printDebugInformation:TXTLS(@"IRC[1163]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][01]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][02]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][03]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][04]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][05]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][06]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][07]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][08]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][09]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][10]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][11]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][12]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][13]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][14]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][15]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][16]")];
+					[self printDebugInformation:TXTLS(@"IRC[1158][17]")];
+
+				}
+				else if ([topic isEqualIgnoringCase:@"remove"])
+				{
+					[self printDebugInformation:TXTLS(@"IRC[1162][01]")];
+					[self printDebugInformation:TXTLS(@"IRC[1162][02]")];
+					[self printDebugInformation:TXTLS(@"IRC[1162][03]")];
+					[self printDebugInformation:TXTLS(@"IRC[1162][04]")];
+					[self printDebugInformation:TXTLS(@"IRC[1162][05]")];
+					[self printDebugInformation:TXTLS(@"IRC[1162][06]")];
+					[self printDebugInformation:TXTLS(@"IRC[1162][07]")];
+				}
+				else if ([topic isEqualIgnoringCase:@"list"])
+				{
+					[self printDebugInformation:TXTLS(@"IRC[1163]")];
+					[self printDebugInformation:TXTLS(@"IRC[1159][01]")];
+					[self printDebugInformation:TXTLS(@"IRC[1159][02]")];
+					[self printDebugInformation:TXTLS(@"IRC[1159][03]")];
+				}
+				else if ([topic isEqualIgnoringCase:@"stop"])
+				{
+					[self printDebugInformation:TXTLS(@"IRC[1163]")];
+					[self printDebugInformation:TXTLS(@"IRC[1160][01]")];
+					[self printDebugInformation:TXTLS(@"IRC[1160][02]")];
+					[self printDebugInformation:TXTLS(@"IRC[1160][03]")];
+					[self printDebugInformation:TXTLS(@"IRC[1160][04]")];
+					[self printDebugInformation:TXTLS(@"IRC[1160][05]")];
+				}
+				else if ([topic isEqualIgnoringCase:@"restart"])
+				{
+					[self printDebugInformation:TXTLS(@"IRC[1163]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][01]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][02]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][03]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][04]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][05]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][06]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][07]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][08]")];
+					[self printDebugInformation:TXTLS(@"IRC[1161][09]")];
+				}
+				else
+				{
+					[self printDebugInformation:TXTLS(@"IRC[1163]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][01]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][02]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][03]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][04]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][05]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][06]")];
+					[self printDebugInformation:TXTLS(@"IRC[1157][07]")];
+				}
+
 				break;
 			}
+
+			/* Stop timer */
+			if ([action isEqualToString:@"stop"])
+			{
+				NSString *identifier = stringIn.tokenAsString;
+
+				if (identifier.length == 0) {
+					[self printDebugInformation:TXTLS(@"IRC[1141]")];
+
+					break;
+				}
+
+				IRCTimedCommand *timedCommand = [self timedCommandWithIdentifier:identifier];
+
+				if (timedCommand == nil) {
+					[self printDebugInformation:TXTLS(@"IRC[1142]", identifier)];
+
+					break;
+				}
+
+				if (timedCommand.timerIsActive == NO) {
+					[self printDebugInformation:TXTLS(@"IRC[1144]", identifier)];
+
+					break;
+				}
+
+				[self stopTimedCommand:timedCommand];
+
+				[self printDebugInformation:TXTLS(@"IRC[1145]", identifier)];
+
+				break;
+			}
+
+			/* Restart timer */
+			if ([action isEqualToString:@"restart"])
+			{
+				NSString *identifier = stringIn.tokenAsString;
+
+				if (identifier.length == 0) {
+					[self printDebugInformation:TXTLS(@"IRC[1141]")];
+
+					break;
+				}
+
+				IRCTimedCommand *timedCommand = [self timedCommandWithIdentifier:identifier];
+
+				if (timedCommand == nil) {
+					[self printDebugInformation:TXTLS(@"IRC[1142]", identifier)];
+
+					break;
+				}
+
+				if ([self restartTimedCommand:timedCommand]) {
+					[self printDebugInformation:TXTLS(@"IRC[1147]", identifier)];
+				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1146]", identifier)];
+				}
+
+				break;
+			}
+
+			/* Remove timer */
+			if ([action isEqualToString:@"remove"])
+			{
+				NSString *identifier = stringIn.tokenAsString;
+
+				if (identifier.length == 0) {
+					[self printDebugInformation:TXTLS(@"IRC[1141]")];
+
+					break;
+				}
+
+				if ([identifier isEqualIgnoringCase:@"all"]) {
+					[self removeTimedCommands];
+
+					[self printDebugInformation:TXTLS(@"IRC[1164]")];
+
+					break;
+				}
+
+				IRCTimedCommand *timedCommand = [self timedCommandWithIdentifier:identifier];
+
+				if (timedCommand == nil) {
+					[self printDebugInformation:TXTLS(@"IRC[1142]", identifier)];
+
+					break;
+				}
+
+				[self removeTimedCommand:timedCommand];
+
+				[self printDebugInformation:TXTLS(@"IRC[1148]", identifier)];
+
+				break;
+			}
+
+			/* List timers */
+			if ([action isEqualToString:@"list"])
+			{
+				NSArray *timedCommands = [self listOfTimedCommands];
+
+				NSUInteger numberOfTimers = timedCommands.count;
+
+				if (numberOfTimers == 0) {
+					[self printDebugInformation:TXTLS(@"IRC[1150]")];
+
+					break;
+				} else if (numberOfTimers == 1) {
+					[self printDebugInformation:TXTLS(@"IRC[1151]", numberOfTimers)];
+				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1152]", numberOfTimers)];
+				}
+
+				for (IRCTimedCommand *timedCommand in timedCommands) {
+					NSString *description = [self descriptionForTimedCommand:timedCommand];
+
+					[self printDebugInformation:description];
+				}
+
+				break;
+			}
+
+			/* Add timer */
+			/*
+			 This command is designed to be backwards compatible.
+
+			 Old syntax:
+			 "/timer <seconds> <command>"
+
+			 New syntax:
+			 "/timer <seconds> <repeat> <command>"
+
+			 We check the value of the second argument. If it's a number,
+			 then we treat it as the new syntax which means that number
+			 is the repeat count for the timer.
+			 */
+
+			/* Parse interval */
+			NSString *intervalString = action;
+
+			if (intervalString.length == 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1138]")];
+
+				break;
+			}
+
+			NSInteger interval = intervalString.integerValue;
+
+			if (interval <= 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1139]")];
+
+				break;
+			}
+
+			/* Parse repeat count and/or command */
+			/*
+			 Repeat argument is treated as such:
+			   == 0 — repeat and never stop
+			   == 1 - perform timer once, do not repeat
+			   > 1 — repeat number of times
+			 */
+			NSString *repeatString = stringIn.tokenAsString;
+
+			NSInteger repeat = NSNotFound;
+
+			NSString *command = stringIn.trimmedString;
+
+			if ([repeatString contentsIsOfType:CSStringAnyNumberType])
+			{
+				/* Contents of second argument is a number,
+				 which means we want to treat it as the repeat count. */
+				repeat = repeatString.integerValue;
+			}
+			else
+			{
+				/* Contents of second argument is NOT a number,
+				 which means we need to merge that back with the
+				 remainder of the command value. */
+				if (command.length == 0) {
+					command = repeatString;
+				} else {
+					command = [repeatString stringByAppendingFormat:@" %@", command];
+				}
+			}
+
+			/* Perform additional validation */
+			if (repeat < 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1140]")];
+
+				break;
+			}
+
+			if (command.length == 0) {
+				[self printDebugInformation:TXTLS(@"IRC[1138]")];
+
+				break;
+			}
+
+			/* If we have no repeat value, then treat is one pass. */
+			if (repeat == NSNotFound) {
+				repeat = 1;
+			}
+
+			/* Add timer */
+			IRCTimedCommand *timedCommand = nil;
+
+			if (targetChannel == nil) {
+				timedCommand = [[IRCTimedCommand alloc] initWithCommand:command onClient:self];
+			} else {
+				timedCommand = [[IRCTimedCommand alloc] initWithCommand:command onClient:self inChannel:targetChannel];
+			}
+
+			[self addTimedCommand:timedCommand];
+
+			[self startTimedCommand:timedCommand interval:interval onRepeat:(repeat != 1) iterations:repeat];
 
 			break;
 		}
@@ -5395,6 +5679,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	BOOL isTerminating = self.isTerminating;
 
 	self.socket = nil;
+
+	[self removeTimedCommands];
 
 	[self stopAutojoinTimer];
 	[self stopAutojoinDelayedWarningTimer];
@@ -12172,9 +12458,131 @@ present_error:
 #pragma mark -
 #pragma mark Command Queue
 
+- (NSString *)descriptionForTimedCommand:(IRCTimedCommand *)timedCommand
+{
+	NSParameterAssert(timedCommand != nil);
+
+	NSString *timerInterval = TXHumanReadableTimeInterval(timedCommand.timerInterval, NO, 0);
+
+	NSString *timerStatus = nil;
+
+	if (timedCommand.timerIsActive == NO) {
+		timerStatus = TXTLS(@"IRC[1155][02]");
+	} else {
+		timerStatus = TXTLS(@"IRC[1155][01]");
+	}
+
+	if (timedCommand.repeatTimer == NO) {
+		return TXTLS(@"IRC[1153]",
+					 timedCommand.identifier,
+					 timerStatus,
+					 timerInterval,
+					 timedCommand.command);
+	} else {
+		NSUInteger repeatLimit = timedCommand.iterations;
+
+		NSString *repeatLimitDescriptor = nil;
+
+		if (repeatLimit == 0) {
+			repeatLimitDescriptor = TXTLS(@"IRC[1156]");
+		} else {
+			repeatLimitDescriptor = [NSString stringWithUnsignedInteger:repeatLimit];
+		}
+
+		return TXTLS(@"IRC[1154]",
+					 timedCommand.identifier,
+					 timerStatus,
+					 timerInterval,
+					 repeatLimitDescriptor,
+					 timedCommand.currentIteration,
+					 timedCommand.command);
+	}
+}
+
+- (nullable IRCTimedCommand *)timedCommandWithIdentifier:(NSString *)identifier
+{
+	NSParameterAssert(identifier != nil);
+
+	@synchronized (self.timedCommands) {
+		return self.timedCommands[identifier];
+	}
+}
+
+- (NSArray<IRCTimedCommand *> *)listOfTimedCommands
+{
+	@synchronized (self.timedCommands) {
+		return self.timedCommands.allValues;
+	}
+}
+
+- (void)addTimedCommand:(IRCTimedCommand *)timedCommand
+{
+	NSParameterAssert(timedCommand != nil);
+
+	@synchronized (self.timedCommands) {
+		self.timedCommands[timedCommand.identifier] = timedCommand;
+	}
+}
+
+- (void)removeTimedCommands
+{
+	@synchronized (self.timedCommands) {
+		[self.timedCommands removeAllObjects];
+	}
+}
+
+- (void)removeTimedCommand:(IRCTimedCommand *)timedCommand
+{
+	NSParameterAssert(timedCommand != nil);
+
+	@synchronized (self.timedCommands) {
+		[self.timedCommands removeObjectForKey:timedCommand.identifier];
+	}
+}
+
+- (void)stopTimedCommand:(IRCTimedCommand *)timedCommand
+{
+	NSParameterAssert(timedCommand != nil);
+
+	[timedCommand stop];
+}
+
+- (void)startTimedCommand:(IRCTimedCommand *)timedCommand interval:(NSUInteger)timerInterval
+{
+	NSParameterAssert(timedCommand != nil);
+
+	[self startTimedCommand:timedCommand interval:timerInterval onRepeat:NO iterations:0];
+}
+
+- (void)startTimedCommand:(IRCTimedCommand *)timedCommand interval:(NSUInteger)timerInterval onRepeat:(BOOL)repeatTimer
+{
+	NSParameterAssert(timedCommand != nil);
+
+	[self startTimedCommand:timedCommand interval:timerInterval onRepeat:repeatTimer iterations:0];
+}
+
+- (void)startTimedCommand:(IRCTimedCommand *)timedCommand interval:(NSUInteger)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations
+{
+	NSParameterAssert(timedCommand != nil);
+
+	[timedCommand start:timerInterval onRepeat:repeatTimer iterations:iterations];
+}
+
+- (BOOL)restartTimedCommand:(IRCTimedCommand *)timedCommand
+{
+	NSParameterAssert(timedCommand != nil);
+
+	return [timedCommand restart];
+}
+
 - (void)onTimedCommand:(IRCTimedCommand *)timedCommand
 {
 	NSParameterAssert(timedCommand != nil);
+
+	/* Remove timer */
+	if (timedCommand.timerIsActive == NO) {
+		[self removeTimedCommand:timedCommand];
+	}
 
 	/* The -channelId is only a suggestion. It's okay if this returns nil.
 	 The channel is what was selected at the time that the timer was created.
