@@ -4563,9 +4563,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 					break;
 				} else if (numberOfTimers == 1) {
-					[self printDebugInformation:TXTLS(@"IRC[1151]", numberOfTimers)];
-				} else {
 					[self printDebugInformation:TXTLS(@"IRC[1152]", numberOfTimers)];
+				} else {
+					[self printDebugInformation:TXTLS(@"IRC[1151]", numberOfTimers)];
 				}
 
 				for (IRCTimedCommand *timedCommand in timedCommands) {
