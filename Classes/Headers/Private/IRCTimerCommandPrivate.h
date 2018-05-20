@@ -38,10 +38,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCTimerCommandContext : NSObject
-@property (nonatomic, copy, nullable) NSString *channelId;
-@property (nonatomic, copy, nullable) NSString *rawInput;
-@property (nonatomic, assign) NSTimeInterval timerInterval;
+@class IRCClient, IRCChannel;
+
+@interface IRCTimedCommand : NSObject
+@property (readonly, copy) NSString *identifier;
+
+@property (readonly, copy) NSString *clientId;
+@property (readonly, copy, nullable) NSString *channelId;
+
+@property (readonly, copy) NSString *command;
+
+@property (readonly) NSTimeInterval timerInterval;
+@property (readonly) BOOL timerIsActive;
+@property (readonly) BOOL repeatTimer;
+
+- (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client inChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+
+- (void)start:(NSTimeInterval)timerInterval; // repeatTimer = NO
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer;
+
+- (void)stop;
 @end
 
 NS_ASSUME_NONNULL_END
