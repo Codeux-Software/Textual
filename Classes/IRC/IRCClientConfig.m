@@ -604,13 +604,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return NO;
 	}
 
+	IRCClientConfig *objectCast = (IRCClientConfig *)object;
+
 	NSDictionary *s1 = self.dictionaryValue;
 
-	NSDictionary *s2 = ((IRCClientConfig *)object).dictionaryValue;
+	NSDictionary *s2 = objectCast.dictionaryValue;
 
 	return ([s1 isEqualToDictionary:s2] &&
-			[self->_nicknamePassword isEqualToString:((IRCClientConfig *)object)->_nicknamePassword] &&
-			[self->_proxyPassword isEqualToString:((IRCClientConfig *)object)->_proxyPassword]);
+			
+			((self->_nicknamePassword == nil && objectCast->_nicknamePassword == nil) ||
+			 [self->_nicknamePassword isEqualToString:objectCast->_nicknamePassword]) &&
+
+			((self->_proxyPassword == nil && objectCast->_proxyPassword == nil) ||
+			 [self->_proxyPassword isEqualToString:objectCast->_proxyPassword]));
 }
 
 - (NSUInteger)hash

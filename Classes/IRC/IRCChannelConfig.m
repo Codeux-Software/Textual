@@ -241,12 +241,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return NO;
 	}
 
+	IRCChannelConfig *objectCast = (IRCChannelConfig *)object;
+
 	NSDictionary *s1 = self.dictionaryValue;
 
-	NSDictionary *s2 = ((IRCChannelConfig *)object).dictionaryValue;
+	NSDictionary *s2 = objectCast.dictionaryValue;
 
 	return ([s1 isEqualToDictionary:s2] &&
-			[self->_secretKey isEqualToString:((IRCChannelConfig *)object)->_secretKey]);
+			
+			((self->_secretKey == nil && objectCast->_secretKey == nil) ||
+			 [self->_secretKey isEqualToString:objectCast->_secretKey]));
 }
 
 - (NSUInteger)hash

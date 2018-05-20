@@ -124,8 +124,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	IRCModeInfo *objectCast = (IRCModeInfo *)object;
 
 	return (self.modeIsSet == objectCast.modeIsSet &&
-			[self.modeSymbol isEqualToString:objectCast.modeSymbol] &&
-			[self.modeParameter isEqualToString:objectCast.modeParameter]);
+			
+			((self.modeSymbol == nil && objectCast.modeSymbol == nil) ||
+			 [self.modeSymbol isEqualToString:objectCast.modeSymbol]) &&
+
+			((self.modeParameter == nil && objectCast.modeParameter == nil) ||
+			 [self.modeParameter isEqualToString:objectCast.modeParameter]));
 }
 
 - (BOOL)isMutable
