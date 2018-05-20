@@ -83,6 +83,7 @@
 		4C03B65C1FA6519300748FE7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C03B6771FA6568500748FE7 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "/Users/michael/Projects/Textual/XPC Services/Inline Content Loader/../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<absolute>"; };
 		4CA1FE581FA606890095901F /* Core Media.mediaPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Core Media.mediaPlugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CACEEF220B127840039CD30 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = "../../../../Classes (Shared)/Headers/TPCPreferences.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +104,7 @@
 			children = (
 				4C03B64B1FA6509E00748FE7 /* Headers */,
 				4C03B5AF1FA64C8800748FE7 /* Modules */,
+				4CACEEF020B1274D0039CD30 /* Shared */,
 				4C03B5D91FA64DAA00748FE7 /* ICPCoreMedia.m */,
 			);
 			name = "Source Code";
@@ -437,6 +439,22 @@
 			children = (
 			);
 			name = "Build Scripts";
+			sourceTree = "<group>";
+		};
+		4CACEEF020B1274D0039CD30 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4CACEEF320B1278B0039CD30 /* Headers */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		4CACEEF320B1278B0039CD30 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4CACEEF220B127840039CD30 /* TPCPreferences.h */,
+			);
+			name = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
