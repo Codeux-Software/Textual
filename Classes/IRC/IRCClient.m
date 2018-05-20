@@ -362,7 +362,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}];
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	self.softwareTrialTimer
+	self.softwareTrialTimer =
 	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
 		[self onSoftwareTrialTimer];
 	}];
