@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1138 */
+/* Next unusued key: 1156 */
 
 /* Script errors */
 "IRC[1001]" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
@@ -148,7 +148,84 @@
 "IRC[1030]" = "I am using %@";
 
 /* /timer/ command */
-"IRC[1090]" = "Timer command requires a whole number for interval. Syntax: “/timer <seconds> <command>”";
+"IRC[1138]" = "Invalid Syntax. Type “/timer help” for more information.";
+"IRC[1139]" = "Timer interval must be a whole number that is grater than zero (0). Type “/timer help” for more information.";
+"IRC[1140]" = "Timer repeat count must be a whole number that is grater than or equal to zero (0). Type “/timer help” for more information.";
+"IRC[1141]" = "Timer identifier is not properly formatted. Type “/timer list“ for a list of timers.";
+"IRC[1142]" = "Timer with identifier “%@“ does not exist. Type “/timer list“ for a list of timers.";
+"IRC[1143]" = "Timer with identifier “%@“ can't be stopped";
+"IRC[1144]" = "Timer with identifier “%@“ is already stopped";
+"IRC[1145]" = "Timer with identifier “%@“ stopped";
+"IRC[1146]" = "Timer with identifier “%@“ can't be restarted. Add a new timer.";
+"IRC[1147]" = "Timer with identifier “%@“ restarted";
+"IRC[1148]" = "Timer with identifier “%@“ removed";
+"IRC[1164]" = "All timers removed";
+"IRC[1149]" = "Timer with identifier “%@“ added"; // unused
+"IRC[1150]" = "There are no timers";
+"IRC[1151]" = "There are %ld timers:";
+"IRC[1152]" = "There is %ld timer:";
+
+"IRC[1153]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Command:\002 “%4$@“";
+"IRC[1154]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Repeat:\002 Yes • \002Repeat Limit:\002 %4$@ • \002Iteration:\002 %5$ld • \002Command:\002 “%6$@“";
+"IRC[1155][01]" = "Active";
+"IRC[1155][02]" = "Stopped";
+"IRC[1156]" = "No Limit";
+
+"IRC[1157][01]" = "The timer command can be used to perform a command after a specific amount of time and optionally repeat it.";
+"IRC[1157][02]" = " ";
+"IRC[1157][03]" = "To learn more, type:";
+"IRC[1157][04]" = " ";
+"IRC[1157][05]" = "“/timer help <topic>“";
+"IRC[1157][06]" = " ";
+"IRC[1157][07]" = "Available topics: ADD, REMOVE, LIST, STOP, RESTART";
+
+"IRC[1158][01]" = "“/timer <seconds> <repeat> <command>“";
+"IRC[1158][02]" = " ";
+"IRC[1158][03]" = "\002<seconds>\002 is the interval of the timer.";
+"IRC[1158][04]" = "The interval must be a \002whole number that is greater than zero (0)\002.";
+"IRC[1158][05]" = " ";
+"IRC[1158][06]" = "\002<repeat>\002 is the repeat count for the timer.";
+"IRC[1158][07]" = "• To perform the timer only once, use one (1) as the repeat count.";
+"IRC[1158][08]" = "• To repeat the timer until manually stopped, use zero (0) as the repeat count.";
+"IRC[1158][09]" = "• To repeat the timer X number of times, use that number as the repeat count.";
+"IRC[1158][10]" = " ";
+"IRC[1158][11]" = "\002<command>\002 is the command to perform when the timer fires.";
+"IRC[1158][12]" = "\002Example:\002 “msg #textual-testing Hey everyone!”";
+"IRC[1158][13]" = "\002Scope:\002 The channel or query that is selected when a timer is added is used as the target for commands that do not take a channel name as an argument.";
+"IRC[1158][14]" = " ";
+"IRC[1158][15]" = "\002Example #1:\002 “/timer 10 1 <command>” — perform command one time, after ten seconds.";
+"IRC[1158][16]" = "\002Example #2:\002 “/timer 10 20 <command>” — perform command twenty times, once every ten seconds.";
+"IRC[1158][17]" = "\002Example #3:\002 “/timer 10 0 <command>” — perform command every ten seconds until the heat death of the universe.";
+
+"IRC[1159][01]" = "“/timer list“";
+"IRC[1159][02]" = " ";
+"IRC[1159][03]" = "List timers";
+
+"IRC[1160][01]" = "“/timer stop <identifier>“";
+"IRC[1160][02]" = " ";
+"IRC[1160][03]" = "Stop the timer assigned to \002<identifier>\002.";
+"IRC[1160][04]" = " ";
+"IRC[1160][05]" = "The identifier for a timer can be found using “/timer list”";
+
+"IRC[1161][01]" = "“/timer restart <identifier>“";
+"IRC[1161][02]" = " ";
+"IRC[1161][03]" = "Restart the timer assigned to \002<identifier>\002.";
+"IRC[1161][04]" = " ";
+"IRC[1161][05]" = "The identifier for a timer can be found using “/timer list”";
+"IRC[1161][06]" = " ";
+"IRC[1161][07]" = "When restarting a timer, the iteration count is reset";
+"IRC[1161][08]" = "which means a timer that is setup to repeat X number";
+"IRC[1161][09]" = "of times will start over from the beginning.";
+
+"IRC[1162][01]" = "“/timer remove <identifier>“";
+"IRC[1162][02]" = " ";
+"IRC[1162][03]" = "Remove the timer assigned to \002<identifier>\002.";
+"IRC[1162][04]" = " ";
+"IRC[1162][05]" = "To remove all timers, pass “all” as \002<identifier>\002.";
+"IRC[1162][06]" = " ";
+"IRC[1162][07]" = "The identifier for a timer can be found using “/timer list”";
+
+"IRC[1163]" = "---------------------------------------";
 
 /* /mute/ command */
 "IRC[1097]" = "Sound is already muted";
