@@ -172,6 +172,11 @@ ClassWithDesignatedInitializerInitMethod
 	return NO;
 }
 
++ (BOOL)contentIsFile
+{
+	return NO;
+}
+
 @end
 
 #pragma mark -

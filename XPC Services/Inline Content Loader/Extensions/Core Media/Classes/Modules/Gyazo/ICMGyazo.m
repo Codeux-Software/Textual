@@ -216,6 +216,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
++ (BOOL)contentIsFile
+{
+	return YES;
+}
+
 - (void)finalizePreflight
 {
 	self.payload.classAttribute = @"inlineGyazo";
