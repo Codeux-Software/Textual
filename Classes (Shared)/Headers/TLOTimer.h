@@ -49,10 +49,14 @@ typedef void (^TLOTimerActionBlock)(TLOTimer *sender);
 @property (nonatomic, strong, nullable) dispatch_queue_t queue; // Defaults to main queue. Changed ignored while active.
 @property (nonatomic, strong, nullable) id context;
 
+@property (readonly) NSTimeInterval startTime;
+@property (readonly) NSTimeInterval timeRemaining;
+
 @property (readonly) NSTimeInterval interval;
 @property (readonly) BOOL timerIsActive;
 @property (readonly) BOOL repeatTimer;
 @property (readonly) NSUInteger iterations;
+
 @property (readonly) NSUInteger currentIteration;
 
 + (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock;
