@@ -62,6 +62,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations; // 0 iterations = infinite
 
 - (void)stop;
+
+/* If the timer has been started before, then
+ we already know the vlues to pass to -start:
+ In that case, we return YES.
+ If we don't know this information yet, then
+ we return NO. */
+/* Restarting the timer resets the iteration count. */
+- (BOOL)restart;
 @end
 
 NS_ASSUME_NONNULL_END
