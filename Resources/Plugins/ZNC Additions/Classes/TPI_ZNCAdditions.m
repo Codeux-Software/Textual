@@ -229,7 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *addressInt = nil;
 
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
-		if (NSObjectsAreEqual(nicknameInt, client.userNickname)) {
+		if ([nicknameInt isEqualToString:client.userNickname]) {
 			return nil; // Do not post these events for self
 		}
 
@@ -360,7 +360,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return input;
 	}
 
-	if (NSObjectsAreEqual(input.command, @"PRIVMSG") == NO) {
+	if ([input.command isEqualToString:@"PRIVMSG"] == NO) {
 		return input;
 	}
 

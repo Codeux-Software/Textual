@@ -797,8 +797,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	if (foregroundColorOld || backgroundColorOld)
 	{
 		/* There is no need to open a new HTML segment if the color hasn't changed. */
-		if (NSObjectsAreEqual(foregroundColorNew, foregroundColorOld) &&
-			NSObjectsAreEqual(backgroundColorNew, backgroundColorOld))
+		if ([foregroundColorNew isEqual:foregroundColorOld] &&
+			 [backgroundColorNew isEqual:backgroundColorOld])
 		{
 			setNewColors = NO;
 		} else {

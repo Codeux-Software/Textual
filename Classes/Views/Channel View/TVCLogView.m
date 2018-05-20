@@ -108,7 +108,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSString *selection = self.selection;
 
-	return (NSObjectIsEmpty(selection) == NO);
+	return (selection.length > 0);
 }
 
 - (void)clearSelection

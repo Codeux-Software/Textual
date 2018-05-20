@@ -95,7 +95,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost hasSuffix:@"instacod.es"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		NSString *s = [urlPath substringFromIndex:1];
 
@@ -105,7 +107,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost isEqualToString:@"pbs.twimg.com"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		urlPath = [urlPath
 				   stringByReplacingOccurrencesOfString:@"\\:(large|medium|orig|small|thumb)$"
@@ -141,7 +145,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost hasSuffix:@"twitpic.com"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		NSString *s = [urlPath substringFromIndex:1];
 
@@ -155,7 +161,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost hasSuffix:@"cl.ly"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		NSString *s = [urlPath substringFromIndex:1];
 
@@ -189,7 +197,9 @@ NS_ASSUME_NONNULL_BEGIN
 			 [urlHost hasSuffix:@"lfil.es"] ||
 			 [urlHost hasSuffix:@"i.leetfil.es"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		if ([urlHost hasSuffix:@"i.leetfil.es"]) {
 			NSString *s = [urlPath substringFromIndex:1];
@@ -231,7 +241,9 @@ NS_ASSUME_NONNULL_BEGIN
 			 [urlHost hasSuffix:@"i.arxius.io"] ||
 			 [urlHost hasSuffix:@"v.arxius.io"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		if ([urlHost hasSuffix:@"i.arxius.io"]) {
 			NSString *s = [urlPath substringFromIndex:1];
@@ -321,7 +333,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost isEqualToString:@"puu.sh"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		NSString *s = [urlPath substringFromIndex:1];
 
@@ -344,7 +358,9 @@ NS_ASSUME_NONNULL_BEGIN
 	else if ([urlHost hasSuffix:@"nicovideo.jp"] ||
 			 [urlHost isEqualToString:@"nico.ms"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		NSString *videoId = nil;
 
@@ -370,7 +386,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([urlHost isEqualToString:@"i.reddituploads.com"])
 	{
-		NSObjectIsEmptyAssertReturn(urlPath, nil);
+		if (urlPath.length == 0) {
+			return nil;
+		}
 
 		NSString *s = [urlPath substringFromIndex:1];
 

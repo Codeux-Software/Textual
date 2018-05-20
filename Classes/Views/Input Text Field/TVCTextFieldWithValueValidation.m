@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)valueIsEmpty
 {
-	return NSObjectIsEmpty(self.stringValue);
+	return (self.stringValue.length == 0);
 }
 
 - (BOOL)valueIsValid
@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performValidation
 {
-	if (NSObjectIsEmpty(self.value) == NO) {
+	if (self.value.length > 0) {
 		if (self.validationBlock) {
 			self.cachedValidValue = self.validationBlock(self.stringValue);
 		} else {

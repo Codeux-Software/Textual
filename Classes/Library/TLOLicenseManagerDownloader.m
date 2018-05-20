@@ -307,7 +307,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
 
-				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
+				if (licenseOwnerContactAddress.length == 0) {
 					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length");
 
 					goto present_fatal_error;
@@ -336,7 +336,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
 
-				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
+				if (licenseOwnerContactAddress.length == 0) {
 					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length");
 
 					goto present_fatal_error;
@@ -404,7 +404,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSString *licenseKey = statusContext[@"licenseKey"];
 
-				if (NSObjectIsEmpty(licenseKey)) {
+				if (licenseKey.length == 0) {
 					LogToConsoleError("'licenseKey' is nil or of zero length");
 
 					goto present_fatal_error;
@@ -429,7 +429,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSString *licenseKey = statusContext[@"licenseKey"];
 
-				if (NSObjectIsEmpty(licenseKey)) {
+				if (licenseKey.length == 0) {
 					LogToConsoleError("'licenseKey' is nil or of zero length");
 
 					goto present_fatal_error;
@@ -461,7 +461,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSString *originalInput = statusContext[@"originalInput"];
 
-				if (NSObjectIsEmpty(originalInput)) {
+				if (originalInput.length == 0) {
 					LogToConsoleError("'originalInput' is nil or of zero length");
 
 					goto present_fatal_error;
@@ -493,7 +493,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSString *errorMessage = statusContext[@"Error Message"];
 
-				if (NSObjectIsEmpty(errorMessage)) {
+				if (errorMessage.length == 0) {
 					LogToConsoleError("'errorMessage' is nil or of zero length");
 
 					goto present_fatal_error;

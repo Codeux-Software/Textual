@@ -1461,7 +1461,7 @@ NS_ASSUME_NONNULL_BEGIN
 						  sha1Fingerprint:&sha1Fingerprint
 						   md5Fingerprint:&md5Fingerprint];
 
-	BOOL hasNoCertificate = NSObjectIsEmpty(commonName);
+	BOOL hasNoCertificate = (commonName.length == 0);
 
 	if (hasNoCertificate) {
 		self.clientCertificateCommonNameField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
@@ -1980,7 +1980,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (matchChannelId) {
 				for (IRCChannelConfig *channel in self.channelList) {
-					if (NSObjectsAreEqual(channel.uniqueIdentifier, matchChannelId) == NO) {
+					if ([channel.uniqueIdentifier isEqualToString:matchChannelId] == NO) {
 						continue;
 					}
 

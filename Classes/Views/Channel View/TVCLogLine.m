@@ -336,15 +336,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (NSString *)formattedTimestampWithFormat:(nullable NSString *)format
 {
-	if (NSObjectIsEmpty(format)) {
+	if (format.length == 0) {
 		format = themeSettings().themeTimestampFormat;
 	}
 
-	if (NSObjectIsEmpty(format)) {
+	if (format.length == 0) {
 		format = [TPCPreferences themeTimestampFormat];
 	}
 
-	if (NSObjectIsEmpty(format)) {
+	if (format.length == 0) {
 		format = [TPCPreferences themeTimestampFormatDefault];
 	}
 

@@ -76,7 +76,7 @@ BOOL TLOAppStoreLoadReceipt(void)
 		return NO;
 	}
 
-	if (NSObjectsAreEqual(TXBundleBuildProductIdentifier, receiptContents.bundleIdentifier) == NO) {
+	if ([TXBundleBuildProductIdentifier isEqualToString:receiptContents.bundleIdentifier] == NO) {
 		LogToConsoleError("Mismatched bundle identifier");
 
 		TLOAppStoreReceiptContents = nil;

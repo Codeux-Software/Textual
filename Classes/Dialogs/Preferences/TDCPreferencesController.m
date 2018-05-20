@@ -1048,7 +1048,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *currentTheme = [TPCPreferences themeName];
 
-	if ([currentTheme isEqual:newTheme]) {
+	if ([currentTheme isEqualToString:newTheme]) {
 		return;
 	}
 
@@ -1269,8 +1269,8 @@ NS_ASSUME_NONNULL_BEGIN
 		NSUInteger applicationIndex =
 		[RZWorkspace().runningApplications indexOfObjectPassingTest:^BOOL(NSRunningApplication *application, NSUInteger index, BOOL *stop) {
 			return
-			(NSObjectsAreEqual(application.localizedName, @"TorBrowser") ||
-			 NSObjectsAreEqual(application.localizedName, @"Tor Browser"));
+			([application.localizedName isEqualToString:@"TorBrowser"] ||
+			 [application.localizedName isEqualToString:@"Tor Browser"]);
 		}];
 
 		presentDialog = (applicationIndex != NSNotFound);

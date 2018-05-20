@@ -3408,7 +3408,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return [name1 compare:name2];
 		}];
 
-		if (NSObjectsAreEqual(u.channelList, channelList)) {
+		if ([channelList isEqualToArray:u.channelList]) {
 			continue;
 		}
 

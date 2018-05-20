@@ -116,10 +116,16 @@ NS_ASSUME_NONNULL_BEGIN
 	NSObjectIsKindOfClassAssertReturn(dictObject, NSDictionary, nil)
 
 	id keyValue = dictObject[@"key"];
+
+	if (keyValue == nil) {
+		return nil;
+	}
+
 	id objectValue = dictObject[@"value"];
 
-	PointerIsEmptyAssertReturn(keyValue, nil)
-	PointerIsEmptyAssertReturn(objectValue, nil)
+	if (objectValue == nil) {
+		return nil;
+	}
 
 	if ( unhashedKey) {
 		*unhashedKey = keyValue;
@@ -355,7 +361,7 @@ NS_ASSUME_NONNULL_BEGIN
 			id remoteValue = remoteValues[key];
 
 			if (defaultsValue != nil && remoteValue == nil) {
-				if (NSObjectsAreEqual(defaultsValue, objectValue)) {
+				if ([defaultsValue isEqual:objectValue]) {
 					return;
 				}
 			}
@@ -439,12 +445,12 @@ NS_ASSUME_NONNULL_BEGIN
 			/* This is for when we are going through the entire dictionary */
 			id localValue = [RZUserDefaults() objectForKey:unhashedKey];
 
-			if (localValue && NSObjectsAreEqual(localValue, unhashedValue)) {
+			if (localValue && [localValue isEqual:unhashedValue]) {
 				continue;
 			}
 
 			/* Set it to the new dictionary */
-			if ([unhashedKey isEqual:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey])
+			if ([unhashedKey isEqualToString:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey])
 			{
 				if ([unhashedValue isKindOfClass:[NSArray class]] == NO) {
 					continue;

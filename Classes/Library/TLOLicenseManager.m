@@ -662,7 +662,7 @@ void TLOLicenseManagerSetPublicKeyIsGenuine(void)
 
 	NSString *publicKeyHash = publicKeyContents.sha256;
 
-	if (NSObjectsAreEqual(TLOLicenseManagerHashOfGenuinePublicKey, publicKeyHash)) {
+	if ([TLOLicenseManagerHashOfGenuinePublicKey isEqualToString:publicKeyHash]) {
 		TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 	} else {
 		TLOLicenseManagerPublicKeyIsGenuineResult = NO;

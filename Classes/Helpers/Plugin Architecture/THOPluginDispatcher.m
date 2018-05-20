@@ -152,7 +152,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 
 		if (returnedValue == nil) {
 			return nil;
-		} else if (NSObjectsAreEqual(returnedValue, returnValue) == NO) {
+		} else if (returnedValue != returnValue) {
 			if ([returnedValue isKindOfClass:[IRCMessageMutable class]]) {
 				returnValue = [returnedValue copy];
 			} else {
@@ -180,7 +180,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 
 		if (returnedValue == nil) {
 			return nil;
-		} else if (NSObjectsAreEqual(returnedValue, returnValue) == NO &&
+		} else if ([returnedValue isEqual:returnValue] == NO &&
 				   ([returnedValue isKindOfClass:[NSString class]] ||
 					[returnedValue isKindOfClass:[NSAttributedString class]]))
 		{
@@ -212,9 +212,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 
 		NSString *returnedValue = [plugin.primaryClass willRenderMessage:returnValue forViewController:viewController lineType:lineType memberType:memberType];
 
-		if (NSObjectIsEmpty(returnedValue)) {
+		if (returnedValue.length == 0) {
 			continue;
-		} else if (NSObjectsAreEqual(returnedValue, returnValue)) {
+		} else if ([returnedValue isEqualToString:returnValue]) {
 			continue;
 		}
 

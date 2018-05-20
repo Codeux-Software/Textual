@@ -245,8 +245,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSDictionary *s2 = ((IRCChannelConfig *)object).dictionaryValue;
 
-	return (NSObjectsAreEqual(s1, s2) &&
-			NSObjectsAreEqual(self->_secretKey, ((IRCChannelConfig *)object)->_secretKey));
+	return ([s1 isEqualToDictionary:s2] &&
+			[self->_secretKey isEqualToString:((IRCChannelConfig *)object)->_secretKey]);
 }
 
 - (NSUInteger)hash

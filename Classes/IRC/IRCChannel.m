@@ -140,8 +140,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		if (currentConfig.type != config.type ||
-			NSObjectsAreEqual(currentConfig.channelName, config.channelName) == NO ||
-			NSObjectsAreEqual(currentConfig.uniqueIdentifier, config.uniqueIdentifier) == NO)
+			[currentConfig.channelName isEqualToString:config.channelName] == NO ||
+			[currentConfig.uniqueIdentifier isEqualToString:config.uniqueIdentifier] == NO)
 		{
 			LogToConsoleError("Tried to load configuration for incorrect channel");
 
@@ -483,7 +483,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 													@"TDCChannelBanListSheet"]];
 
 	for (TDCSheetBase <TDCChannelPrototype> *windowObject in openWindows) {
-		if (NSObjectsAreEqual(windowObject.channelId, self.uniqueIdentifier)) {
+		if ([windowObject.channelId isEqualToString:self.uniqueIdentifier]) {
 			[windowObject close];
 		}
 	}

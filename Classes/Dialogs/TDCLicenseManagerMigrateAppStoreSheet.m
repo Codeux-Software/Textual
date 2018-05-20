@@ -310,8 +310,9 @@ NS_ASSUME_NONNULL_BEGIN
 	 value that we are expecting from an older copy which we cannot change. */
 	NSString *applicationBundleID = [applicationBundle objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 
-	if (NSObjectsAreEqual(applicationBundleID, @"com.codeux.irc.textual5") == NO &&
-		NSObjectsAreEqual(applicationBundleID, @"com.codeux.apps.textual-mas") == NO)
+	if (applicationBundleID == nil ||
+		[applicationBundleID isEqualToString:@"com.codeux.irc.textual5"] == NO ||
+		[applicationBundleID isEqualToString:@"com.codeux.apps.textual-mas"] == NO)
 	{
 		return NO;
 	}

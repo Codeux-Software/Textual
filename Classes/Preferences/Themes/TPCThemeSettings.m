@@ -397,9 +397,9 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Nickname color style */
 		id nicknameColorStyle = styleSettings[@"Nickname Color Style"];
 
-		if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
+		if ([nicknameColorStyle isEqual:@"HSL-light"]) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
-		} else if (NSObjectsAreEqual(nicknameColorStyle, @"HSL-dark")) {
+		} else if ([nicknameColorStyle isEqual:@"HSL-dark"]) {
 			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
 		} else {
 			if (self.underlyingWindowColorIsDark == NO) {
@@ -452,9 +452,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[TPCPreferences setThemeChannelViewFontPreferenceUserConfigurable:(self.themeChannelViewFont == nil)];
 
-	[TPCPreferences setThemeNicknameFormatPreferenceUserConfigurable:NSObjectIsEmpty(self.themeNicknameFormat)];
+	[TPCPreferences setThemeNicknameFormatPreferenceUserConfigurable:(self.themeNicknameFormat.length == 0)];
 
-	[TPCPreferences setThemeTimestampFormatPreferenceUserConfigurable:NSObjectIsEmpty(self.themeTimestampFormat)];
+	[TPCPreferences setThemeTimestampFormatPreferenceUserConfigurable:(self.themeTimestampFormat.length == 0)];
 }
 
 @end
