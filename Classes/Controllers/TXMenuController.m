@@ -584,10 +584,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 621: // "Copy Unique Identifier"
+		case 622: // "Copy Unique Identifier"
 		{
 
-#define _channelMenuSeparatorTag			620 // below "Channel Properties"
+#define _channelMenuSeparatorTag			621 // below "Channel Properties"
 			
 			BOOL condition = ([TPCPreferences developerModeEnabled] == NO || _isChannel == NO);
 			
