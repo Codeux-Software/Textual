@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer
 {
-	[self start:timerInterval onRepeat:NO iterations:0];
+	[self start:timerInterval onRepeat:repeatTimer iterations:0];
 }
 
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations;
