@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.maintenanceTimer =
 	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
-		[self onMaintenanceTimer]
+		[self onMaintenanceTimer];
 	} onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(clientWillBeDestroyed:) name:IRCWorldWillDestroyClientNotification object:nil];
