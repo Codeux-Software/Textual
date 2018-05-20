@@ -222,7 +222,6 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong, nullable) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *autojoinTimer;
 @property (nonatomic, strong) TLOTimer *autojoinDelayedWarningTimer;
-@property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
@@ -246,7 +245,6 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, copy, nullable) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelsToAutojoin;
-@property (nonatomic, strong) NSMutableArray<IRCTimerCommandContext *> *commandQueue;
 @property (nonatomic, strong) IRCAddressBookMatchCache *addressBookMatchCache;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCUser *> *userListPrivate;
@@ -313,7 +311,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.capabilitiesPending = [NSMutableArray array];
 	self.channelListPrivate = [NSMutableArray array];
-	self.commandQueue = [NSMutableArray array];
 
 	self.userListPrivate = [NSMutableDictionary dictionary];
 
@@ -334,11 +331,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.autojoinDelayedWarningTimer.repeatTimer = YES;
 	self.autojoinDelayedWarningTimer.target = self;
 	self.autojoinDelayedWarningTimer.action = @selector(onAutojoinDelayedWarningTimer:);
-
-	self.commandQueueTimer = [TLOTimer new];
-	self.commandQueueTimer.repeatTimer = NO;
-	self.commandQueueTimer.target = self;
-	self.commandQueueTimer.action = @selector(onCommandQueueTimer:);
 
 	self.isonTimer	= [TLOTimer new];
 	self.isonTimer.repeatTimer = YES;
@@ -390,7 +382,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self.autojoinTimer stop];
 	[self.autojoinDelayedWarningTimer stop];
-	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
 	[self.reconnectTimer stop];
@@ -399,7 +390,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.autojoinTimer = nil;
 	self.autojoinDelayedWarningTimer = nil;
-	self.commandQueueTimer = nil;
 	self.isonTimer = nil;
 	self.pongTimer = nil;
 	self.reconnectTimer = nil;
@@ -411,7 +401,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.cachedHighlights = nil;
 	self.channelListPrivate = nil;
 	self.channelsToAutojoin = nil;
-	self.commandQueue = nil;
 	self.logFile = nil;
 	self.socket = nil;
 	self.supportInfo = nil;
@@ -4398,16 +4387,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			IRCTimerCommandContext *timer = [IRCTimerCommandContext new];
-
-			timer.channelId = targetChannel.uniqueIdentifier;
-
-			timer.rawInput = timerCommand;
-
-			timer.timerInterval = ([NSDate timeIntervalSince1970] + timerInterval);
-
-			[self addCommandToCommandQueue:timer];
-
 			break;
 		}
 		case IRCPublicCommandTIndex: // Command: T
@@ -5400,10 +5379,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	@synchronized (self.capabilitiesPending) {
 		[self.capabilitiesPending removeAllObjects];
-	}
-
-	@synchronized(self.commandQueue) {
-		[self.commandQueue removeAllObjects];
 	}
 
 	@synchronized (self.userListPrivate) {
@@ -12192,85 +12167,6 @@ present_error:
 	a |= z;
 
 	return [NSString stringWithFormat:@"%llu", a];
-}
-
-#pragma mark -
-#pragma mark Command Queue
-
-- (void)processCommandsInCommandQueue
-{
-	NSTimeInterval now = [NSDate timeIntervalSince1970];
-
-	@synchronized(self.commandQueue) {
-		while (self.commandQueue.count > 0) {
-			IRCTimerCommandContext *command = self.commandQueue[0];
-
-			if (command.timerInterval > now) {
-				break;
-			}
-
-			[self.commandQueue removeObjectAtIndex:0];
-
-			IRCChannel *channel = (IRCChannel *)[worldController() findItemWithId:command.channelId];
-
-			[self sendCommand:command.rawInput completeTarget:YES target:channel.name];
-		}
-
-		if (self.commandQueue.count > 0) {
-			IRCTimerCommandContext *command = self.commandQueue[0];
-
-			NSTimeInterval delta = (command.timerInterval - [NSDate timeIntervalSince1970]);
-
-			[self.commandQueueTimer start:delta];
-		} else {
-			[self.commandQueueTimer stop];
-		}
-	}
-}
-
-- (void)addCommandToCommandQueue:(IRCTimerCommandContext *)commandIn
-{
-	NSParameterAssert(commandIn != nil);
-
-	BOOL added = NO;
-
-	NSUInteger i = 0;
-
-	@synchronized(self.commandQueue) {
-		for (IRCTimerCommandContext *command in self.commandQueue) {
-			if (commandIn.timerInterval < command.timerInterval) {
-				added = YES;
-
-				[self.commandQueue insertObject:commandIn atIndex:i];
-
-				break;
-			}
-
-			i++;
-		}
-
-		if (added == NO) {
-			[self.commandQueue addObject:commandIn];
-		}
-	}
-
-	if (i == 0) {
-		[self processCommandsInCommandQueue];
-	}
-}
-
-- (void)clearCommandQueue
-{
-	@synchronized(self.commandQueue) {
-		[self.commandQueue removeAllObjects];
-	}
-
-	[self.commandQueueTimer stop];
-}
-
-- (void)onCommandQueueTimer:(id)sender
-{
-	[self processCommandsInCommandQueue];
 }
 
 #pragma mark -
