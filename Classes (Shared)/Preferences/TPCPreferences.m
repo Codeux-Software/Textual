@@ -95,6 +95,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitToBasics"];
 }
 
++ (BOOL)inlineMediaLimitBasicsToFiles
+{
+	return [RZUserDefaults() boolForKey:@"InlineMediaLimitBasicsToFiles"];
+}
+
 + (BOOL)inlineMediaLimitInsecureContent
 {
 	return [RZUserDefaults() boolForKey:@"InlineMediaLimitInsecureContent"];

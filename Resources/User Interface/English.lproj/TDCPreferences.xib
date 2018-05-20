@@ -250,7 +250,7 @@
                         <popUpButton key="view" tag="109" id="yuI-3m-esZ">
                             <rect key="frame" x="0.0" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -3486,7 +3486,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="120" y="88" width="360" height="14"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="MeX-O6-c8G">
                         <rect key="frame" x="0.0" y="0.0" width="360" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ijO-xj-OPG">
                                 <rect key="frame" x="0.0" y="0.0" width="360" height="14"/>
@@ -3662,12 +3662,12 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <constraints>
                         <constraint firstAttribute="width" constant="266" id="hNw-KM-a6x"/>
                     </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Ask router with no fallback" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="PpR-MQ-ujy" id="eNz-BX-xFG">
+                    <popUpButtonCell key="cell" type="push" title="Ask router with no fallback" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="PpR-MQ-ujy" id="eNz-BX-xFG">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="faJ-I4-ysS">
                             <items>
-                                <menuItem title="Ask router with no fallback" tag="3" id="PpR-MQ-ujy"/>
+                                <menuItem title="Ask router with no fallback" state="on" tag="3" id="PpR-MQ-ujy"/>
                                 <menuItem title="Ask router with myip.codeux.com as fallback" tag="1" id="C0d-vg-gP1"/>
                                 <menuItem title="Ask router with 3rd-party website as fallback" tag="4" id="x7k-y5-Qhz"/>
                                 <menuItem title="Manually Enter Address" tag="2" id="Pp5-Ci-F1D"/>
@@ -3892,11 +3892,11 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="Hhx-gR-bl2">
                             <view key="view" id="Ib9-4w-05S">
-                                <rect key="frame" x="10" y="29" width="543" height="272"/>
+                                <rect key="frame" x="10" y="25" width="543" height="276"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Clr-Kc-72d">
-                                        <rect key="frame" x="65" y="238" width="329" height="18"/>
+                                        <rect key="frame" x="65" y="242" width="329" height="18"/>
                                         <buttonCell key="cell" type="check" title="Show images, videos, and other media inline with chat" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3YM-rY-vwI">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3912,7 +3912,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Hcs-pJ-o5Q">
-                                        <rect key="frame" x="80" y="205" width="396" height="27"/>
+                                        <rect key="frame" x="80" y="209" width="396" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0hr-p6-n5d">
                                             <rect key="frame" x="0.0" y="0.0" width="396" height="27"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4072,7 +4072,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="63" y="188" width="420" height="16"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fLL-jK-jtT">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="16"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="upu-Ej-zfD">
                                                     <rect key="frame" x="0.0" y="42" width="420" height="16"/>
@@ -4209,27 +4209,6 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                 <rect key="frame" x="10" y="25" width="543" height="276"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v9I-u1-n87">
-                                        <rect key="frame" x="65" y="48" width="238" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Only inline media from secure sources" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="86n-ee-PXx">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="titleBar" size="12"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitInsecureContent" id="Bwd-et-ERl"/>
-                                        </connections>
-                                    </button>
-                                    <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O0M-rK-jaI">
-                                        <rect key="frame" x="83" y="28" width="333" height="14"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="329" id="TNN-vx-rfw"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Secure sources are services that perform encryption. (https)" id="DrF-r1-sdz">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="oNJ-ok-jAs">
                                         <rect key="frame" x="65" y="242" width="190" height="18"/>
                                         <buttonCell key="cell" type="check" title="Only inline images and videos" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2vc-4Q-CJ8">
@@ -4240,19 +4219,22 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitToBasics" id="J9K-P7-7d7"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdZ-Qa-u7A">
-                                        <rect key="frame" x="83" y="208" width="333" height="28"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="329" id="gqo-fv-6RO"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="This includes video services such as Dailymotion, Streamable, Vimeo, YouTube, and others." id="S6T-Y8-8nH">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Ceh-Ul-KZi">
+                                        <rect key="frame" x="83" y="222" width="324" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Including video services such as YouTube and others." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="nXf-63-MkU">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="titleBar" size="12"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaLimitBasicsToFiles" id="93H-5y-WnU">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
+                                    </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="I6X-6F-yH4">
-                                        <rect key="frame" x="65" y="182" width="280" height="18"/>
+                                        <rect key="frame" x="65" y="194" width="280" height="18"/>
                                         <buttonCell key="cell" type="check" title="Only inline media that is safe to view in public" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="NlC-I6-LZo">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -4262,7 +4244,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhW-5j-NXk">
-                                        <rect key="frame" x="83" y="134" width="333" height="42"/>
+                                        <rect key="frame" x="83" y="146" width="305" height="42"/>
                                         <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="Kjb-nu-50w">
                                             <font key="font" metaFont="smallSystem"/>
                                             <string key="title">This preference works by disabling certain services.
@@ -4273,7 +4255,7 @@ You should therefore not rely solely on this preference.</string>
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="36L-dm-E2y">
-                                        <rect key="frame" x="65" y="108" width="224" height="18"/>
+                                        <rect key="frame" x="65" y="120" width="224" height="18"/>
                                         <buttonCell key="cell" type="check" title="Only inline media from safe sources" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="pmi-Al-qyW">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -4283,7 +4265,7 @@ You should therefore not rely solely on this preference.</string>
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zk5-W6-ihe">
-                                        <rect key="frame" x="83" y="74" width="333" height="28"/>
+                                        <rect key="frame" x="83" y="86" width="308" height="28"/>
                                         <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Safe sources are services that don't inject HTML nor load external JavaScript resoures to inline media." id="Ygv-nr-zSp">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -4292,24 +4274,17 @@ You should therefore not rely solely on this preference.</string>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="O0M-rK-jaI" firstAttribute="top" secondItem="v9I-u1-n87" secondAttribute="bottom" constant="8" id="08q-yB-pIB"/>
-                                    <constraint firstItem="O0M-rK-jaI" firstAttribute="leading" secondItem="v9I-u1-n87" secondAttribute="leading" constant="18" id="29Z-MV-rwu"/>
+                                    <constraint firstItem="I6X-6F-yH4" firstAttribute="top" secondItem="Ceh-Ul-KZi" secondAttribute="bottom" constant="14" id="5gJ-eO-TwY"/>
                                     <constraint firstItem="36L-dm-E2y" firstAttribute="top" secondItem="ZhW-5j-NXk" secondAttribute="bottom" constant="10" id="61y-bI-KFp"/>
                                     <constraint firstItem="ZhW-5j-NXk" firstAttribute="leading" secondItem="I6X-6F-yH4" secondAttribute="leading" constant="18" id="7bc-8Y-Gkb"/>
                                     <constraint firstItem="Zk5-W6-ihe" firstAttribute="leading" secondItem="36L-dm-E2y" secondAttribute="leading" constant="18" id="9Vp-bD-qVh"/>
-                                    <constraint firstItem="v9I-u1-n87" firstAttribute="leading" secondItem="36L-dm-E2y" secondAttribute="leading" id="AAe-t1-IYu"/>
-                                    <constraint firstItem="Zk5-W6-ihe" firstAttribute="trailing" secondItem="ZhW-5j-NXk" secondAttribute="trailing" id="Pkf-ps-nea"/>
+                                    <constraint firstItem="Ceh-Ul-KZi" firstAttribute="leading" secondItem="oNJ-ok-jAs" secondAttribute="leading" constant="18" id="MJG-ag-Cn8"/>
                                     <constraint firstItem="I6X-6F-yH4" firstAttribute="leading" secondItem="oNJ-ok-jAs" secondAttribute="leading" id="QgZ-Ax-aDj"/>
-                                    <constraint firstItem="ZhW-5j-NXk" firstAttribute="trailing" secondItem="mdZ-Qa-u7A" secondAttribute="trailing" id="RzW-P5-DCn"/>
                                     <constraint firstItem="36L-dm-E2y" firstAttribute="leading" secondItem="I6X-6F-yH4" secondAttribute="leading" id="ZFe-9j-UWM"/>
                                     <constraint firstItem="oNJ-ok-jAs" firstAttribute="top" secondItem="PcM-EK-9Mh" secondAttribute="top" constant="18" id="bho-gk-o9y"/>
-                                    <constraint firstItem="mdZ-Qa-u7A" firstAttribute="top" secondItem="oNJ-ok-jAs" secondAttribute="bottom" constant="8" id="cLh-tQ-6Bl"/>
-                                    <constraint firstItem="v9I-u1-n87" firstAttribute="top" secondItem="Zk5-W6-ihe" secondAttribute="bottom" constant="10" id="cee-WE-g3Y"/>
+                                    <constraint firstItem="Ceh-Ul-KZi" firstAttribute="top" secondItem="oNJ-ok-jAs" secondAttribute="bottom" constant="6" id="ge1-qs-WLY"/>
                                     <constraint firstItem="Zk5-W6-ihe" firstAttribute="top" secondItem="36L-dm-E2y" secondAttribute="bottom" constant="8" id="jdk-2I-37Y"/>
-                                    <constraint firstItem="I6X-6F-yH4" firstAttribute="top" secondItem="mdZ-Qa-u7A" secondAttribute="bottom" constant="10" id="kau-fS-Xns"/>
                                     <constraint firstItem="oNJ-ok-jAs" firstAttribute="leading" secondItem="PcM-EK-9Mh" secondAttribute="leading" constant="67" id="qSP-Ti-zoH"/>
-                                    <constraint firstItem="mdZ-Qa-u7A" firstAttribute="leading" secondItem="oNJ-ok-jAs" secondAttribute="leading" constant="18" id="qsO-8x-GtR"/>
-                                    <constraint firstItem="O0M-rK-jaI" firstAttribute="trailing" secondItem="Zk5-W6-ihe" secondAttribute="trailing" id="wP9-4p-uIf"/>
                                     <constraint firstItem="ZhW-5j-NXk" firstAttribute="top" secondItem="I6X-6F-yH4" secondAttribute="bottom" constant="8" id="zzf-XD-GBh"/>
                                 </constraints>
                             </view>
