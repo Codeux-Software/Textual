@@ -48,10 +48,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, copy) NSString *command;
 
+@property (readonly) NSTimeInterval startTime;
+@property (readonly) NSTimeInterval timeRemaining;
+
 @property (readonly) NSTimeInterval timerInterval;
 @property (readonly) BOOL timerIsActive;
 @property (readonly) BOOL repeatTimer;
 @property (readonly) NSUInteger iterations;
+
 @property (readonly) NSUInteger currentIteration;
 
 - (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;

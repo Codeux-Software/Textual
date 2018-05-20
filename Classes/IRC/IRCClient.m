@@ -12464,6 +12464,8 @@ present_error:
 
 	NSString *timerInterval = TXHumanReadableTimeInterval(timedCommand.timerInterval, NO, 0);
 
+	NSString *timeRemaining = TXHumanReadableTimeInterval(timedCommand.timeRemaining, NO, 0);
+
 	NSString *timerStatus = nil;
 
 	if (timedCommand.timerIsActive == NO) {
@@ -12477,6 +12479,7 @@ present_error:
 					 timedCommand.identifier,
 					 timerStatus,
 					 timerInterval,
+					 timeRemaining,
 					 timedCommand.command);
 	} else {
 		NSUInteger repeatLimit = timedCommand.iterations;
@@ -12493,6 +12496,7 @@ present_error:
 					 timedCommand.identifier,
 					 timerStatus,
 					 timerInterval,
+					 timeRemaining,
 					 repeatLimitDescriptor,
 					 timedCommand.currentIteration,
 					 timedCommand.command);

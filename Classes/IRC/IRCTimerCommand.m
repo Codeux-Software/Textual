@@ -180,6 +180,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.timer.currentIteration;
 }
 
+- (NSTimeInterval)startTime
+{
+	return self.timer.startTime;
+}
+
+- (NSTimeInterval)timeRemaining
+{
+	return self.timer.timeRemaining;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
