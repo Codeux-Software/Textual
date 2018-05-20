@@ -41,7 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class TLOSpokenNotification;
-@class IRCAddressBookUserTrackingContainer, IRCUserMutable;
+@class IRCAddressBookUserTrackingContainer, IRCTimedCommand, IRCUserMutable;
 
 enum {
 	ClientIRCv3SupportedCapabilitySASLGeneric			= 1 << 22,
@@ -126,6 +126,8 @@ enum {
 - (id)queuedBatchMessageWithToken:(NSString *)batchToken;
 
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command escapeMessage:(BOOL)escapeMessage;
+
+- (void)onTimedCommand:(IRCTimedCommand *)timedCommand;
 @end
 
 NS_ASSUME_NONNULL_END

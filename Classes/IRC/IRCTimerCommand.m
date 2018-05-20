@@ -36,11 +36,112 @@
 
  *********************************************************************** */
 
+#import "IRCClientPrivate.h"
+#import "IRCChannel.h"
+#import "NSObjectHelperPrivate.h"
+#import "TLOTimer.h"
 #import "IRCTimerCommandPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation IRCTimerCommandContext
+static NSUInteger IRCTimedCommandLastIdentifier = 0;
+
+@interface IRCTimedCommand ()
+@property (nonatomic, copy, readwrite) NSString *identifier;
+@property (nonatomic, copy, readwrite) NSString *clientId;
+@property (nonatomic, copy, nullable, readwrite) NSString *channelId;
+@property (nonatomic, copy, readwrite) NSString *command;
+@property (nonatomic, strong) TLOTimer *timer;
+@end
+
+@implementation IRCTimedCommand
+
+ClassWithDesignatedInitializerInitMethod
+
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client
+{
+	NSParameterAssert(command != nil);
+	NSParameterAssert(client != nil);
+
+	return [self _initWithCommand:command onClient:client inChannel:nil];
+}
+
+- (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client inChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(command != nil);
+	NSParameterAssert(client != nil);
+	NSParameterAssert(channel != nil);
+
+	return [self _initWithCommand:command onClient:client inChannel:channel];
+}
+
+- (instancetype)_initWithCommand:(NSString *)command onClient:(IRCClient *)client inChannel:(nullable IRCChannel *)channel
+{
+	NSParameterAssert(command != nil);
+
+	if ((self = [super init])) {
+		self.clientId = client.uniqueIdentifier;
+		self.channelId = channel.uniqueIdentifier;
+
+		[self assignIdentifier];
+
+		[self initTimerForClient:client];
+
+		return self;
+	}
+
+	return nil;
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (void)assignIdentifier
+{
+	IRCTimedCommandLastIdentifier++;
+
+	self.identifier = [NSString stringWithUnsignedInteger:IRCTimedCommandLastIdentifier];
+}
+
+- (void)initTimerForClient:(IRCClient *)client
+{
+	NSParameterAssert(client != nil);
+
+	self.timer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer * _Nonnull sender) {
+		[client onTimedCommand:self];
+	}];
+}
+
+- (void)start:(NSTimeInterval)timerInterval
+{
+	[self start:timerInterval onRepeat:NO];
+}
+
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer
+{
+	[self.timer start:timerInterval onRepeat:repeatTimer];
+}
+
+- (void)stop
+{
+	[self.timer stop];
+}
+
+- (NSTimeInterval)timerInterval
+{
+	return self.timer.interval;
+}
+
+- (BOOL)timerIsActive
+{
+	return self.timer.timerIsActive;
+}
+
+- (BOOL)repeatTimer
+{
+	return self.timer.repeatTimer;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
