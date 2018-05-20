@@ -3892,11 +3892,11 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="Hhx-gR-bl2">
                             <view key="view" id="Ib9-4w-05S">
-                                <rect key="frame" x="10" y="25" width="543" height="276"/>
+                                <rect key="frame" x="10" y="29" width="543" height="272"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Clr-Kc-72d">
-                                        <rect key="frame" x="65" y="242" width="329" height="18"/>
+                                        <rect key="frame" x="65" y="238" width="329" height="18"/>
                                         <buttonCell key="cell" type="check" title="Show images, videos, and other media inline with chat" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3YM-rY-vwI">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -3912,7 +3912,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Hcs-pJ-o5Q">
-                                        <rect key="frame" x="80" y="209" width="396" height="27"/>
+                                        <rect key="frame" x="80" y="205" width="396" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0hr-p6-n5d">
                                             <rect key="frame" x="0.0" y="0.0" width="396" height="27"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4072,7 +4072,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="63" y="188" width="420" height="16"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fLL-jK-jtT">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="upu-Ej-zfD">
                                                     <rect key="frame" x="0.0" y="42" width="420" height="16"/>
@@ -4226,12 +4226,12 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.InlineMediaLimitToBasics" id="NR7-a0-huY"/>
                                             <binding destination="-2" name="value" keyPath="self.inlineMediaLimitBasicsToFiles" id="xsv-3y-iMV">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.InlineMediaLimitToBasics" id="NR7-a0-huY"/>
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="I6X-6F-yH4">
@@ -4246,7 +4246,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhW-5j-NXk">
                                         <rect key="frame" x="83" y="146" width="305" height="42"/>
-                                        <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="Kjb-nu-50w">
+                                        <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" id="Kjb-nu-50w">
                                             <font key="font" metaFont="smallSystem"/>
                                             <string key="title">This preference works by disabling certain services.
 It doesn't know whether a specific image or video is safe.

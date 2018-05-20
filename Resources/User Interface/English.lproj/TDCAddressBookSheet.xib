@@ -84,7 +84,7 @@ DQ
                         <rect key="frame" x="23" y="80" width="323" height="81"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LME-Ik-P6C">
                             <rect key="frame" x="0.0" y="0.0" width="323" height="81"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="TVw-lr-Mo6">
                                     <rect key="frame" x="0.0" y="0.0" width="323" height="81"/>
@@ -211,14 +211,14 @@ DQ
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Ignore User Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="407" y="164" width="526" height="398"/>
+            <rect key="contentRect" x="407" y="164" width="526" height="372"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="526" height="398"/>
+                <rect key="frame" x="0.0" y="0.0" width="526" height="372"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="93" y="356" width="413" height="22"/>
+                        <rect key="frame" x="93" y="330" width="413" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="NhJ-Fz-bJp"/>
                         </constraints>
@@ -232,7 +232,7 @@ DQ
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="300">
-                        <rect key="frame" x="142" y="327" width="205" height="14"/>
+                        <rect key="frame" x="142" y="301" width="205" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -241,7 +241,7 @@ DQ
                         <accessibility description="Format for Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="594">
-                        <rect key="frame" x="93" y="327" width="47" height="14"/>
+                        <rect key="frame" x="93" y="301" width="47" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -249,7 +249,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="78" y="311" width="62" height="14"/>
+                        <rect key="frame" x="78" y="285" width="62" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -257,7 +257,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="142" y="311" width="308" height="14"/>
+                        <rect key="frame" x="142" y="285" width="308" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -266,7 +266,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="306">
-                        <rect key="frame" x="142" y="298" width="314" height="14"/>
+                        <rect key="frame" x="142" y="272" width="314" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -275,7 +275,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="308">
-                        <rect key="frame" x="142" y="285" width="303" height="14"/>
+                        <rect key="frame" x="142" y="259" width="303" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -284,7 +284,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="309">
-                        <rect key="frame" x="142" y="272" width="264" height="14"/>
+                        <rect key="frame" x="142" y="246" width="264" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -310,7 +310,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="296">
-                        <rect key="frame" x="18" y="358" width="69" height="17"/>
+                        <rect key="frame" x="18" y="332" width="69" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -450,9 +450,10 @@ DQ
                     <constraint firstItem="485" firstAttribute="baseline" secondItem="484" secondAttribute="baseline" id="Q90-dv-YnK"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="306" secondAttribute="trailing" constant="20" id="QT3-bc-W3J"/>
                     <constraint firstItem="302" firstAttribute="top" secondItem="594" secondAttribute="bottom" constant="2" id="TCq-bu-JyI"/>
-                    <constraint firstAttribute="bottom" secondItem="484" secondAttribute="bottom" constant="20" symbolic="YES" id="W2y-wz-igA"/>
+                    <constraint firstAttribute="bottom" secondItem="485" secondAttribute="bottom" constant="20" id="Vqm-7m-i3s"/>
                     <constraint firstItem="306" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="-1" id="aV0-p8-LrY"/>
                     <constraint firstItem="485" firstAttribute="leading" secondItem="484" secondAttribute="trailing" constant="12" symbolic="YES" id="dKr-Zg-Chb"/>
+                    <constraint firstItem="314" firstAttribute="top" secondItem="309" secondAttribute="bottom" constant="16" id="drE-RW-vgR"/>
                     <constraint firstItem="308" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="12" id="fhQ-8f-WAX"/>
                     <constraint firstItem="302" firstAttribute="trailing" secondItem="594" secondAttribute="trailing" id="gLt-VL-8jX"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="hi2-A9-vwX"/>
@@ -470,7 +471,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="228"/>
             </connections>
-            <point key="canvasLocation" x="287" y="275"/>
+            <point key="canvasLocation" x="287" y="262"/>
         </window>
     </objects>
 </document>
