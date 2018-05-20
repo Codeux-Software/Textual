@@ -608,9 +608,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSDictionary *s2 = ((IRCClientConfig *)object).dictionaryValue;
 
-	return (NSObjectsAreEqual(s1, s2) &&
-			NSObjectsAreEqual(self->_nicknamePassword, ((IRCClientConfig *)object)->_nicknamePassword) &&
-			NSObjectsAreEqual(self->_proxyPassword, ((IRCClientConfig *)object)->_proxyPassword));
+	return ([s1 isEqualToDictionary:s2] &&
+			[self->_nicknamePassword isEqualToString:((IRCClientConfig *)object)->_nicknamePassword] &&
+			[self->_proxyPassword isEqualToString:((IRCClientConfig *)object)->_proxyPassword]);
 }
 
 - (NSUInteger)hash

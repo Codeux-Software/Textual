@@ -114,7 +114,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		[self.matchChannelPopupButton addItemWithTitle:channelName];
 
-		if (NSObjectsAreEqual(channel.uniqueIdentifier, matchChannelId)) {
+		if ([channel.uniqueIdentifier isEqualToString:matchChannelId]) {
 			[self.matchChannelPopupButton selectItemWithTitle:channelName];
 		}
 
@@ -142,7 +142,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *selectedChannelName = self.matchChannelPopupButton.titleOfSelectedItem;
 
 		for (IRCChannelConfig *c in self.channelList) {
-			if (NSObjectsAreEqual(c.channelName, selectedChannelName)) {
+			if ([c.channelName isEqualToString:selectedChannelName]) {
 				self.config.matchChannelId = c.uniqueIdentifier;
 
 				break;

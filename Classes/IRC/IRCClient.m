@@ -469,7 +469,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return;
 		}
 
-		if (NSObjectsAreEqual(currentConfig.uniqueIdentifier, config.uniqueIdentifier) == NO) {
+		if ([currentConfig.uniqueIdentifier isEqualToString:config.uniqueIdentifier] == NO) {
 			LogToConsoleError("Tried to load configuration for incorrect client");
 
 			return;
@@ -789,7 +789,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 												@"TDCServerPropertiesSheet"]];
 
 	for (TDCSheetBase <TDCClientPrototype> *windowObject in openWindows) {
-		if (NSObjectsAreEqual(windowObject.clientId, self.uniqueIdentifier)) {
+		if ([windowObject.clientId isEqualToString:self.uniqueIdentifier]) {
 			[windowObject close];
 		}
 	}
@@ -1145,7 +1145,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Reload table if the window is open. */
 	TDCServerHighlightListSheet *highlightListSheet = [windowController() windowFromWindowList:@"TDCServerHighlightListSheet"];
 
-	if (NSObjectsAreEqual(highlightListSheet.clientId, self.uniqueIdentifier) == NO) {
+	if ([highlightListSheet.clientId isEqualToString:self.uniqueIdentifier] == NO) {
 		return;
 	}
 
@@ -2320,7 +2320,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityBatch]) {
 		NSString *batchType = message.parentBatchMessage.batchType;
 
-		return (NSObjectsAreEqual(batchType, @"znc.in/playback") == NO);
+		return ([batchType isEqualToString:@"znc.in/playback"] == NO);
 	}
 
 	return (message.isHistoric == NO);
@@ -2338,7 +2338,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	if (NSObjectsAreEqual(message.senderNickname, @"irc.znc.in")) {
+	if ([message.senderNickname isEqualToString:@"irc.znc.in"]) {
 		self.isConnectedToZNC = YES;
 
 		LogToConsoleInfo("ZNC detected...");
@@ -3467,7 +3467,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *action = stringIn.tokenAsString;
 
 			/* Present help */
-			if (NSObjectsAreEqual(action, @"help"))
+			if ([action isEqualToString:@"help"])
 			{
 				[self printDebugInformation:TXTLS(@"IRC[1013][01]")];
 				[self printDebugInformation:TXTLS(@"IRC[1013][02]")];
@@ -3482,7 +3482,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			/* Present list of features */
-			else if (NSObjectsAreEqual(action, @"features"))
+			else if ([action isEqualToString:@"features"])
 			{
 				[TLOpenLink openWithString:@"https://help.codeux.com/textual/Command-Reference.kb#cr=defaults" inBackground:NO];
 
@@ -3492,7 +3492,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Prepare to toggle feature */
 			NSString *feature = stringIn.tokenIncludingQuotes.string;
 
-			BOOL applyToAll = NSObjectsAreEqual(feature, @"-a");
+			BOOL applyToAll = [feature isEqualToString:@"-a"];
 
 			if (applyToAll) {
 				feature = stringIn.tokenIncludingQuotes.string;
@@ -3505,7 +3505,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				@"Send WHO Command Requests to Channels"			: @"setSendWhoCommandRequestsToChannels:",
 			};
 
-			BOOL enableFeature = NSObjectsAreEqual(action, @"enable");
+			BOOL enableFeature = [action isEqualToString:@"enable"];
 
 			/* Cannot toggle feature if the user doesn't tell us which */
 			if (feature.length == 0) {
@@ -4952,15 +4952,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(nickname != nil);
 
-	if (NSObjectIsEmpty(format)) {
+	if (format.length == 0) {
 		format = themeSettings().themeNicknameFormat;
 	}
 
-	if (NSObjectIsEmpty(format)) {
+	if (format.length == 0) {
 		format = [TPCPreferences themeNicknameFormat];
 	}
 
-	if (NSObjectIsEmpty(format)) {
+	if (format.length == 0) {
 		format = [TPCPreferences themeNicknameFormatDefault];
 	}
 
@@ -5099,7 +5099,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	TVCLogLineMemberType memberType = TVCLogLineMemberNormalType;
 
-	if (NSObjectsAreEqual(nickname, localNickname)) {
+	if ([nickname isEqualToString:localNickname]) {
 		memberType = TVCLogLineMemberLocalUserType;
 	}
 
@@ -7686,7 +7686,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 conditions we will accept it under. */
 	if (self.zncBouncerIsSendingCertificateInfo == NO ||
 		m.senderIsServer == NO ||
-		NSObjectsAreEqual(m.senderNickname, @"znc.in") == NO)
+		[m.senderNickname isEqualToString:@"znc.in"] == NO)
 	{
 		return;
 	}
@@ -7771,9 +7771,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self recursivelyProcessBatchMessage:thisBatchMessage];
 
 		/* Set vendor specific flags based on BATCH command values */
-		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
+		if ([batchType isEqualToString:@"znc.in/playback"]) {
 			self.zncBouncerIsPlayingBackHistory = NO;
-		} else if (NSObjectsAreEqual(batchType, @"znc.in/tlsinfo")) {
+		} else if ([batchType isEqualToString:@"znc.in/tlsinfo"]) {
 			self.zncBouncerIsSendingCertificateInfo = NO;
 		}
 	}
@@ -7801,9 +7801,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self.batchMessages queueEntry:newBatchMessage];
 
 		/* Set vendor specific flags based on BATCH command values */
-		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
+		if ([batchType isEqualToString:@"znc.in/playback"]) {
 			self.zncBouncerIsPlayingBackHistory = self.isConnectedToZNC;
-		} else if (NSObjectsAreEqual(batchType, @"znc.in/tlsinfo")) {
+		} else if ([batchType isEqualToString:@"znc.in/tlsinfo"]) {
 			self.zncBouncerIsSendingCertificateInfo = self.isConnectedToZNC;
 
 			/* If this is parent batch (there is no @batch=), then we
@@ -9365,7 +9365,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				BOOL IRCopStatusChanged = (user.isIRCop != userMutable.isIRCop);
 
 				BOOL resortMember =
-				(IRCopStatusChanged || NSObjectsAreEqual(member.modes, memberMutable.modes) == NO);
+				(IRCopStatusChanged || [member.modes isEqualToString:memberMutable.modes] == NO);
 
 				BOOL replaceInAllChannels =
 				(IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);

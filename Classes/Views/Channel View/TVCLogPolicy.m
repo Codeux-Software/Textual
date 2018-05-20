@@ -360,9 +360,9 @@ NS_ASSUME_NONNULL_BEGIN
 		openInBackground = !openInBackground;
 	}
 
-	if (NSObjectsAreEqual(webpageURL.scheme, @"http") ||
-		NSObjectsAreEqual(webpageURL.scheme, @"https") ||
-		NSObjectsAreEqual(webpageURL.scheme, @"textual"))
+	if ([webpageURL.scheme isEqualToString:@"http"] ||
+		[webpageURL.scheme isEqualToString:@"https"] ||
+		[webpageURL.scheme isEqualToString:@"textual"])
 	{
 		[TLOpenLink open:webpageURL inBackground:openInBackground];
 

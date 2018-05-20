@@ -329,8 +329,8 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		NSString *clientId = context[@"clientId"];
 		NSString *channelId = context[@"channelId"];
 
-		if (NSObjectsAreEqual(clientId, client.uniqueIdentifier) &&
-			NSObjectsAreEqual(channelId, channel.uniqueIdentifier))
+		if ([clientId isEqualToString:client.uniqueIdentifier] &&
+			[channelId isEqualToString:channel.uniqueIdentifier])
 		{
 			[RZUserNotificationCenter() removeDeliveredNotification:note];
 		}
@@ -395,7 +395,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 	NSTimeInterval now = [NSDate timeIntervalSince1970];
 
 	if ((now - self.lastClickedTime) < _clickInterval) {
-		if (self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
+		if (self.lastClickedContext && [self.lastClickedContext isEqualToDictionary:context]) {
 			return;
 		}
 	}

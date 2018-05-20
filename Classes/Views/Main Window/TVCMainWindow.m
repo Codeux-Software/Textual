@@ -1639,7 +1639,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	NSArray *selectedItems = self.serverList.selectedObjects;
 
 	/* Update selected item even if group hasn't changed */
-	if (NSObjectsAreEqual(selectedItems, self.selectedItems)) {/* Update selected item even if group hasn't changed */
+	if ([selectedItems isEqualToArray:self.selectedItems]) { /* Update selected item even if group hasn't changed */
 		if (selectedItem) {
 			[self selectItemInSelectedItems:selectedItem];
 		}
@@ -2439,7 +2439,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	/* If the selected rows have not changed, then only select the one item */
 	NSIndexSet *selectedRows = self.serverList.selectedRowIndexes;
 
-	if ([selectedRows isEqual:itemRows] == NO) {
+	if ([selectedRows isEqualToIndexSet:itemRows] == NO) {
 		/* Selection updates are disabled and selection changes are faked so that
 		 the correct next item is selected when moving to previous group. */
 		self.ignoreNextOutlineViewSelectionChange = YES;

@@ -450,7 +450,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 	NSDictionary *scriptPaths = self.supportedAppleScriptCommandsAndPaths;
 
 	for (NSString *scriptCommand in scriptPaths) {
-		if (NSObjectsAreEqual(scriptCommand, command) == NO) {
+		if ([scriptCommand isEqualToString:command] == NO) {
 			continue;
 		}
 

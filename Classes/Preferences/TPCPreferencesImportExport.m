@@ -171,7 +171,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(key != nil);
 
-	if ([key isEqual:TPCPreferencesThemeNameDefaultsKey])
+	if ([key isEqualToString:TPCPreferencesThemeNameDefaultsKey])
 	{
 		if ([object isKindOfClass:[NSString class]] == NO) {
 			return;
@@ -179,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[TPCPreferences setThemeNameWithExistenceCheck:object];
 	}
-	else if ([key isEqual:TPCPreferencesThemeFontNameDefaultsKey])
+	else if ([key isEqualToString:TPCPreferencesThemeFontNameDefaultsKey])
 	{
 		if ([object isKindOfClass:[NSString class]] == NO) {
 			return;
@@ -187,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:object];
 	}
-	else if ([key isEqual:IRCWorldClientListDefaultsKey])
+	else if ([key isEqualToString:IRCWorldClientListDefaultsKey])
 	{
 		if ([object isKindOfClass:[NSArray class]] == NO) {
 			return;
@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[self importClientConfiguration:object isImportedFromCloud:NO];
 		}];
 	}
-	else if ([key isEqual:@"World Controller"])
+	else if ([key isEqualToString:@"World Controller"])
 	{
 		if ([object isKindOfClass:[NSDictionary class]] == NO) {
 			return;

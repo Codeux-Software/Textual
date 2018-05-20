@@ -291,7 +291,7 @@ ClassWithDesignatedInitializerInitMethod
 	@synchronized(self.historyBuffer) {
 		NSAttributedString *lastEntry = self.historyBuffer.lastObject;
 
-		if (NSObjectsAreEqual(lastEntry.string, string.string) == NO) {
+		if (lastEntry != nil || [lastEntry.string isEqualToString:string.string] == NO) {
 			[self addToBuffer:string];
 		}
 
@@ -318,7 +318,7 @@ ClassWithDesignatedInitializerInitMethod
 		if (string.length > 0) {
 			NSAttributedString *lastEntry = [self entryAtBufferPosition];
 
-			if (lastEntry == nil || NSObjectsAreEqual(lastEntry.string, string.string) == NO) {
+			if (lastEntry == nil || [lastEntry.string isEqualToString:string.string] == NO) {
 				[self addToBuffer:string];
 			}
 		}
@@ -348,7 +348,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSAttributedString *lastEntry = [self entryAtBufferPosition];
 
-		if (lastEntry == nil || NSObjectsAreEqual(lastEntry.string, string.string) == NO) {
+		if (lastEntry == nil || [lastEntry.string isEqualToString:string.string] == NO) {
 			[self addToBuffer:string];
 
 			return [NSAttributedString attributedString];

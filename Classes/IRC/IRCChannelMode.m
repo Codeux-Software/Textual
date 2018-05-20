@@ -128,7 +128,7 @@ ClassWithDesignatedInitializerInitMethod
 	[modesSetNew enumerateKeysAndObjectsUsingBlock:^(NSString *modeSymbol, IRCModeInfo *mode, BOOL *stop) {
 		IRCModeInfo *modeOld = modesSetOld[modeSymbol];
 
-		if (NSObjectsAreEqual(mode, modeOld)) {
+		if ([mode isEqual:modeOld]) {
 			return;
 		}
 

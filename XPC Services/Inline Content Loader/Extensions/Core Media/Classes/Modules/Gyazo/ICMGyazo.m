@@ -85,9 +85,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Check "type" */
-	if ([typeString isEqual:@"photo"]) {
+	if ([typeString isEqualToString:@"photo"]) {
 		[self _processJSONDataForImage:data];
-	} else if ([typeString isEqual:@"video"]) {
+	} else if ([typeString isEqualToString:@"video"]) {
 		[self _processJSONDataForVideo:data];
 	} else {
 		[self _unsafeToLoadMedia];

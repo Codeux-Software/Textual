@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TDCFileTransferDialogTransferController *fileTransfer =
 	[self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
-		return NSObjectsAreEqual(identifier, controller.uniqueIdentifier);
+		return [identifier isEqualToString:controller.uniqueIdentifier];
 	}];
 
 	return fileTransfer;
@@ -160,7 +160,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TDCFileTransferDialogTransferController *fileTransfer =
 	[self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
-		return NSObjectsAreEqual(transferToken, controller.transferToken);
+		return [transferToken isEqualToString:controller.transferToken];
 	}];
 
 	return (fileTransfer != nil);
@@ -172,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TDCFileTransferDialogTransferController *fileTransfer =
 	[self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
-		return (NSObjectsAreEqual(transferToken, controller.transferToken) && controller.isSender);
+		return ([transferToken isEqualToString:controller.transferToken] && controller.isSender);
 	}];
 
 	return fileTransfer;
@@ -184,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TDCFileTransferDialogTransferController *fileTransfer =
 	[self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
-		return (NSObjectsAreEqual(transferToken, controller.transferToken) && controller.isSender == NO);
+		return ([transferToken isEqualToString:controller.transferToken] && controller.isSender == NO);
 	}];
 
 	return fileTransfer;

@@ -124,8 +124,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	IRCModeInfo *objectCast = (IRCModeInfo *)object;
 
 	return (self.modeIsSet == objectCast.modeIsSet &&
-			NSObjectsAreEqual(self.modeSymbol, objectCast.modeSymbol) &&
-			NSObjectsAreEqual(self.modeParameter, objectCast.modeParameter));
+			[self.modeSymbol isEqualToString:objectCast.modeSymbol] &&
+			[self.modeParameter isEqualToString:objectCast.modeParameter]);
 }
 
 - (BOOL)isMutable

@@ -139,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)valueIsEmpty
 {
-	return NSObjectIsEmpty(self.stringValue);
+	return (self.stringValue.length == 0);
 }
 
 - (BOOL)valueIsValid
@@ -219,7 +219,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Perform validation on user entered string value */
 	NSString *validationValue = self.stringValue;
 
-	if (NSObjectIsEmpty(validationValue) == NO) {
+	if (validationValue.length > 0) {
 		if (self.validationBlock) {
 			self.cachedValidValue = self.validationBlock(validationValue);
 		} else {

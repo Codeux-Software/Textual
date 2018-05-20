@@ -56,7 +56,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		return NO;
 	}
 
-	if (self.isIPAddress || NSObjectsAreEqual(self, @"localhost")) {
+	if (self.isIPAddress || [self isEqualToString:@"localhost"]) {
 		return YES;
 	}
 

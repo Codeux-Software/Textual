@@ -712,13 +712,15 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)peerNicknameChanged:(NSNotification *)notification
 {
-	NSString *oldNickname = notification.userInfo[@"oldNickname"];
+	NSDictionary *userInfo = notification.userInfo;
 
-	if (NSObjectsAreEqual(oldNickname, self.peerNickname) == NO) {
+	NSString *oldNickname = userInfo[@"oldNickname"];
+
+	if ([self.peerNickname isEqualToString:oldNickname] == NO) {
 		return;
 	}
 
-	self.peerNickname = notification.userInfo[@"newNickname"];
+	self.peerNickname = userInfo[@"newNickname"];
 }
 
 - (void)clientDisconnected:(NSNotification *)notification

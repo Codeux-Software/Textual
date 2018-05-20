@@ -192,10 +192,15 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	NSString *fileName = [self extractThemeName:themeName];
 
+	if (fileName.length == 0) {
+		return nil;
+	}
+
 	NSString *fileSource = [self extractThemeSource:themeName];
 
-	NSObjectIsEmptyAssertReturn(fileName, nil)
-	NSObjectIsEmptyAssertReturn(fileSource, nil)
+	if (fileSource.length == 0) {
+		return nil;
+	}
 
 	TPCThemeControllerStorageLocation fileLocation;
 

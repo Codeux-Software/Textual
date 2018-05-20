@@ -136,9 +136,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *currentTextViewStringValue = textView.string;
 
-	if (NSObjectIsEmpty(self.currentTextViewStringValue)) {
+	if (self.currentTextViewStringValue.length == 0) {
 		canContinuePreviousScan = NO;
-	} else if (NSObjectsAreEqual(self.currentTextViewStringValue, currentTextViewStringValue) == NO) {
+	} else if ([self.currentTextViewStringValue isEqualToString:currentTextViewStringValue] == NO) {
 		canContinuePreviousScan = NO;
 	}
 
@@ -166,7 +166,7 @@ ClassWithDesignatedInitializerInitMethod
 - (BOOL)performCompletion_step1
 {
 	/* Only blindly complete nicknames */
-	BOOL searchPatternIsEmpty = NSObjectIsEmpty(self.cachedSearchPattern);
+	BOOL searchPatternIsEmpty = (self.cachedSearchPattern.length == 0);
 
 	if (searchPatternIsEmpty && self.isCompletingNickname == NO) {
 		return NO;
@@ -380,7 +380,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.selectionIndexOfLastCompletion = indexOfMatchedValue;
 	}
 
-	if (NSObjectIsEmpty(self.cachedSearchPatternPrefixCharacter) == NO) {
+	if (self.cachedSearchPatternPrefixCharacter.length > 0) {
 		valueMatchedBySearchPattern = [self.cachedSearchPatternPrefixCharacter stringByAppendingString:valueMatchedBySearchPattern];
 	}
 
@@ -605,7 +605,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	UniChar searchPatternFirstCharacter = 0; // null
 
-	if (NSObjectIsEmpty(self.cachedSearchPattern) == NO) {
+	if (self.cachedSearchPattern.length > 0) {
 		searchPatternFirstCharacter = [self.cachedSearchPattern characterAtIndex:0];
 	}
 
@@ -670,7 +670,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.isCompletingNickname) {
 		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
 
-		if (NSObjectIsEmpty(userCompletionSuffix) == NO) {
+		if (userCompletionSuffix.length > 0) {
 			NSRange completionSearchRange = NSMakeRange(selectedRange.location,
 														(totalTextLength - selectedRange.location));
 
