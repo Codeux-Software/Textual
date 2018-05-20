@@ -41,6 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOTimer ()
+@property (nonatomic, assign, readwrite) NSTimeInterval startTime;
 @property (nonatomic, assign, readwrite) NSTimeInterval interval;
 @property (nonatomic, assign, readwrite) BOOL repeatTimer;
 @property (nonatomic, assign, readwrite) NSUInteger iterations;
@@ -88,6 +89,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return (self.timerSource != nil);
 }
 
+- (NSTimeInterval)timeRemaining
+{
+	return (self.interval - (CFAbsoluteTimeGetCurrent() - self.startTime));
+}
+
 - (void)start:(NSTimeInterval)timerInterval
 {
 	[self start:timerInterval onRepeat:NO iterations:0];
@@ -122,6 +128,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.timerSource = timerSource;
 
 	XRResumeScheduledBlock(timerSource);
+
+	self.startTime = CFAbsoluteTimeGetCurrent();
 }
 
 - (void)stop
