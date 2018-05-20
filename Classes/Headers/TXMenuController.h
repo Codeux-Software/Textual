@@ -129,8 +129,8 @@ NS_ASSUME_NONNULL_BEGIN
 	618: "List of Invite Exceptions"
 	620: "List of Quiets"
 	619: "Channel Properties"
-	620: "-"
-	621: "Copy Unique Identifier"
+	621: "-"
+	622: "Copy Unique Identifier"
 
 	700: "Servers"
 	701: "Next Server"

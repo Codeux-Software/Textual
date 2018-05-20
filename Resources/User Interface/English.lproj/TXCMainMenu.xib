@@ -582,8 +582,8 @@ CA
                                     <action selector="emptyAction:" target="267" id="CGk-8u-95l"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" tag="620" id="Ps7-LA-2sD"/>
-                            <menuItem title="Copy Unique Identifier" tag="621" id="72G-h4-O52">
+                            <menuItem isSeparatorItem="YES" tag="621" id="Ps7-LA-2sD"/>
+                            <menuItem title="Copy Unique Identifier" tag="622" id="72G-h4-O52">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="copyUniqueIdentifier:" target="267" id="P8r-qZ-lGV"/>
@@ -1531,8 +1531,8 @@ CA
                                     <action selector="emptyAction:" target="267" id="n4B-t5-DT3"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" tag="620" id="xMd-Eh-lz8"/>
-                            <menuItem title="Copy Unique Identifier" tag="621" id="4vN-zB-zor">
+                            <menuItem isSeparatorItem="YES" tag="621" id="xMd-Eh-lz8"/>
+                            <menuItem title="Copy Unique Identifier" tag="622" id="4vN-zB-zor">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="copyUniqueIdentifier:" target="267" id="XqJ-hs-5hl"/>
