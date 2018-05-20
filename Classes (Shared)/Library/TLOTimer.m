@@ -100,6 +100,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations;
 {
+	NSParameterAssert(timerInterval > 0);
+
 	[self stop];
 
 	dispatch_queue_t sourceQueue = self.queue;
