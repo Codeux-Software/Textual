@@ -117,6 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.interval = timerInterval;
 	self.repeatTimer = repeatTimer;
 	self.iterations = iterations;
+	self.currentIteration = 0;
 
 	self.timerSource = timerSource;
 
