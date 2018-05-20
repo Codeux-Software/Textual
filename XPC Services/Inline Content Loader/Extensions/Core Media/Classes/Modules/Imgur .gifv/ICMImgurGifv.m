@@ -114,6 +114,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return cachedValue;
 }
 
++ (BOOL)contentIsFile
+{
+	return YES;
+}
+
 - (void)finalizePreflight
 {
 	self.payload.classAttribute = @"inlineImgurGifv";

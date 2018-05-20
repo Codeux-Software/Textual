@@ -123,6 +123,13 @@ typedef void (^ICLInlineContentModuleActionBlock)(ICLInlineContentModule *module
 @property (readonly, class) BOOL contentImageOrVideo;
 
 /**
+ Whether the module's content is a regular file,
+ such as an image or video. Not an iframe, embeded,
+ or dynamic content (such as JavaScript).
+ */
+@property (readonly, class) BOOL contentIsFile;
+
+/**
  Whether the module might add content to the DOM which
  is not trusted such as HTML downloaded from some website.
  A module that loads remote JavaScript libraries is also

@@ -146,6 +146,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return domains;
 }
 
++ (BOOL)contentIsFile
+{
+	return YES;
+}
+
 #pragma mark -
 #pragma mark Utilities
 
