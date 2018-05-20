@@ -52,6 +52,7 @@ static NSUInteger IRCTimedCommandLastIdentifier = 0;
 @property (nonatomic, copy, nullable, readwrite) NSString *channelId;
 @property (nonatomic, copy, readwrite) NSString *command;
 @property (nonatomic, strong) TLOTimer *timer;
+@property (nonatomic, assign) BOOL startedBefore;
 @end
 
 @implementation IRCTimedCommand
@@ -132,11 +133,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations
 {
 	[self.timer start:timerInterval onRepeat:repeatTimer iterations:iterations];
+
+	self.startedBefore = YES;
 }
 
 - (void)stop
 {
 	[self.timer stop];
+}
+
+- (BOOL)restart
+{
+	if (self.startedBefore == NO) {
+		return NO;
+	}
+
+	[self start:self.timerInterval onRepeat:self.repeatTimer iterations:self.iterations];
+
+	return YES;
 }
 
 - (NSTimeInterval)timerInterval
