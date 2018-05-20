@@ -52,12 +52,15 @@ typedef void (^TLOTimerActionBlock)(TLOTimer *sender);
 @property (readonly) NSTimeInterval interval;
 @property (readonly) BOOL timerIsActive;
 @property (readonly) BOOL repeatTimer;
+@property (readonly) NSUInteger iterations;
+@property (readonly) NSUInteger currentIteration;
 
 + (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock;
 + (instancetype)timerWithActionBlock:(TLOTimerActionBlock)actionBlock onQueue:(dispatch_queue_t)queue;
 
 - (void)start:(NSTimeInterval)interval; // repeatTimer = NO
-- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer;
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer; // iterations = 0
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations; // 0 iterations = infinite
 
 - (void)stop;
 @end
