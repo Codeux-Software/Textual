@@ -101,10 +101,18 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCPrefix *objectCast = (IRCPrefix *)object;
 
 	return (self.isServer == objectCast.isServer &&
-			[self.nickname isEqualToString:objectCast.nickname] &&
-			[self.username isEqualToString:objectCast.username] &&
-			[self.address isEqualToString:objectCast.address] &&
-			[self.hostmask isEqualToString:objectCast.hostmask]);
+
+			((self.nickname == nil && objectCast.nickname == nil) ||
+			 [self.nickname isEqualToString:objectCast.nickname]) &&
+
+			((self.username == nil && objectCast.username == nil) ||
+			 [self.username isEqualToString:objectCast.username]) &&
+
+			((self.address == nil && objectCast.address == nil) ||
+			 [self.address isEqualToString:objectCast.address]) &&
+
+			((self.hostmask == nil && objectCast.hostmask == nil) ||
+			 [self.hostmask isEqualToString:objectCast.hostmask]));
 }
 
 - (BOOL)isMutable
