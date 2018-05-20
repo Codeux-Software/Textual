@@ -121,12 +121,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)start:(NSTimeInterval)timerInterval
 {
-	[self start:timerInterval onRepeat:NO];
+	[self start:timerInterval onRepeat:NO iterations:0];
 }
 
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer
 {
-	[self.timer start:timerInterval onRepeat:repeatTimer];
+	[self start:timerInterval onRepeat:repeatTimer iterations:0];
+}
+
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations
+{
+	[self.timer start:timerInterval onRepeat:repeatTimer iterations:iterations];
 }
 
 - (void)stop
@@ -147,6 +152,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (BOOL)repeatTimer
 {
 	return self.timer.repeatTimer;
+}
+
+- (NSUInteger)iterations
+{
+	return self.timer.iterations;
+}
+
+- (NSUInteger)currentIteration
+{
+	return self.timer.currentIteration;
 }
 
 @end

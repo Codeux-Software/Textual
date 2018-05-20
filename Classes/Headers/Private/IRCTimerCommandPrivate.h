@@ -51,12 +51,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSTimeInterval timerInterval;
 @property (readonly) BOOL timerIsActive;
 @property (readonly) BOOL repeatTimer;
+@property (readonly) NSUInteger iterations;
+@property (readonly) NSUInteger currentIteration;
 
 - (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCommand:(NSString *)command onClient:(IRCClient *)client inChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
-- (void)start:(NSTimeInterval)timerInterval; // repeatTimer = NO
-- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer;
+- (void)start:(NSTimeInterval)interval; // repeatTimer = NO
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer; // iterations = 0
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations; // 0 iterations = infinite
 
 - (void)stop;
 @end
