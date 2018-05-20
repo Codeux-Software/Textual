@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TLOTimer ()
 @property (nonatomic, assign, readwrite) NSTimeInterval interval;
 @property (nonatomic, assign, readwrite) BOOL repeatTimer;
+@property (nonatomic, assign, readwrite) NSUInteger iterations;
+@property (nonatomic, assign, readwrite) NSUInteger currentIteration;
 @property (nonatomic, strong, nullable) dispatch_source_t timerSource;
 @end
 
@@ -88,10 +90,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start:(NSTimeInterval)timerInterval
 {
-	[self start:timerInterval onRepeat:NO];
+	[self start:timerInterval onRepeat:NO iterations:0];
 }
 
 - (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer
+{
+	[self start:timerInterval onRepeat:NO iterations:0];
+}
+
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations;
 {
 	[self stop];
 
@@ -105,13 +112,13 @@ NS_ASSUME_NONNULL_BEGIN
 		[self fireTimer];
 	}, timerInterval, repeatTimer);
 
-	XRResumeScheduledBlock(timerSource);
-
 	self.interval = timerInterval;
+	self.repeatTimer = repeatTimer;
+	self.iterations = iterations;
 
 	self.timerSource = timerSource;
 
-	self.repeatTimer = repeatTimer;
+	XRResumeScheduledBlock(timerSource);
 }
 
 - (void)stop
@@ -127,12 +134,31 @@ NS_ASSUME_NONNULL_BEGIN
 	self.timerSource = nil;
 }
 
+- (void)stopIfNeeded
+{
+	if (self.iterations > 0 &&
+		self.iterations == self.currentIteration)
+	{
+		[self stop];
+	}
+}
+
 - (void)fireTimer
 {
+	self.currentIteration += 1;
+
+	/* In the logic presented below, we call
+	 -stopIfNeeded before the action. */
+	/* We should probably always keep this progression so
+	 that the action can know when the iterations limit
+	 has been reached by the fact the timer has stopped. */
+
 	/* Perform block */
 	TLOTimerActionBlock actionBlock = self.actionBlock;
 
 	if (actionBlock) {
+		[self stopIfNeeded];
+
 		actionBlock(self);
 
 		return;
@@ -148,6 +174,8 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 	if (target == nil || action == NULL) {
 		return;
 	}
+
+	[self stopIfNeeded];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
