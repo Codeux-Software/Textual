@@ -244,12 +244,12 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) NSUInteger autojoinDelayedWarningCount;
 @property (nonatomic, copy, nullable) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
-@property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelsToAutojoin;
+@property (nonatomic, strong, nullable) NSMutableArray<IRCChannel *> *channelsToAutojoin;
 @property (nonatomic, strong) IRCAddressBookMatchCache *addressBookMatchCache;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCUser *> *userListPrivate;
 @property (nonatomic, strong, nullable) NSMutableString *zncBouncerCertificateChainDataMutable;
-@property (nonatomic, copy) NSString *temporaryServerAddressOverride;
+@property (nonatomic, copy, nullable) NSString *temporaryServerAddressOverride;
 @property (nonatomic, assign) uint16_t temporaryServerPortOverride;
 @property (readonly) BOOL isBrokenIRCd_aka_Twitch;
 @property (readonly) BOOL monitorAwayStatus;
