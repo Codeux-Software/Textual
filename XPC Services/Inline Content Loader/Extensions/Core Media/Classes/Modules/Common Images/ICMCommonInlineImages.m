@@ -35,6 +35,7 @@
 
  *********************************************************************** */
 
+#import "TPCPreferences.h"
 #import "ICMCommonInlineImages.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -395,6 +396,39 @@ NS_ASSUME_NONNULL_BEGIN
 		if (s.alphabeticNumericOnly) {
 			return url.absoluteString;
 		}
+	}
+	else if ([urlHost hasSuffix:@"youtube.com"] ||
+			 [urlHost isEqualToString:@"youtu.be"])
+	{
+		/* If we aren't allowed to embed YouTube,
+		 at least show show the thumbnail for the video. */
+		if ([TPCPreferences inlineMediaLimitBasicsToFiles] == NO) {
+			return nil;
+		}
+
+		if (urlPath.length == 0) {
+			return nil;
+		}
+
+		NSString *videoId = nil;
+
+		if ([urlHost isEqualToString:@"youtu.be"]) {
+			videoId = [urlPath substringFromIndex:1];
+		} else {
+			NSDictionary *queryItems = urlQuery.URLQueryItems;
+
+			videoId = queryItems[@"v"];
+		}
+
+		if (videoId.length < 11) {
+			return nil;
+		}
+
+		if (videoId.length > 11) {
+			videoId = [videoId substringToIndex:11];
+		}
+
+		return [NSString stringWithFormat:@"http://i.ytimg.com/vi/%@/mqdefault.jpg", videoId];
 	}
 	else if ([urlPath hasPrefix:@"/image/"])
 	{
