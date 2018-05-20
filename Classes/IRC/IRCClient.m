@@ -12170,6 +12170,22 @@ present_error:
 }
 
 #pragma mark -
+#pragma mark Command Queue
+
+- (void)onTimedCommand:(IRCTimedCommand *)timedCommand
+{
+	NSParameterAssert(timedCommand != nil);
+
+	/* The -channelId is only a suggestion. It's okay if this returns nil.
+	 The channel is what was selected at the time that the timer was created.
+	 -sendCommand:completeTarget:target: may very well ignore the channel we
+	 give it, even if it's non-nil, depending on format of command. */
+	IRCChannel *channel = (IRCChannel *)[worldController() findItemWithId:timedCommand.channelId];
+
+	[self sendCommand:timedCommand.command completeTarget:YES target:channel.name];
+}
+
+#pragma mark -
 #pragma mark User Tracking
 
 - (void)clearTrackedUsers
