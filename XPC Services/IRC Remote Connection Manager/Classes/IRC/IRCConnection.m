@@ -72,13 +72,9 @@ ClassWithDesignatedInitializerInitMethod
 {
 	self.sendQueue = [NSMutableArray new];
 
-	self.floodControlTimer = [TLOTimer new];
-
-	self.floodControlTimer.repeatTimer = YES;
-
-	self.floodControlTimer.target = self;
-	self.floodControlTimer.action = @selector(onFloodControlTimer:);
-	self.floodControlTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	self.floodControlTimer = [TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onFloodControlTimer];
+	} onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 
 	self.uniqueIdentifier = [NSString stringWithUUID];
 }
@@ -286,7 +282,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)startFloodControlTimer
 {
 	if (self.floodControlTimer.timerIsActive == NO) {
-		[self.floodControlTimer start:self.config.floodControlDelayInterval];
+		[self.floodControlTimer start:self.config.floodControlDelayInterval onRepeat:YES];
 	}
 }
 
@@ -297,7 +293,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 }
 
-- (void)onFloodControlTimer:(id)sender
+- (void)onFloodControlTimer
 {
 	self.floodControlCurrentMessageCount = 0;
 

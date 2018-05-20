@@ -231,15 +231,13 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		return;
 	}
 
-	TLOTimer *trialTimer = [TLOTimer new];
-
-	trialTimer.repeatTimer = NO;
-	trialTimer.target = self;
-	trialTimer.action = @selector(onTrialTimer:);
-
-	[trialTimer start:timeRemaining];
+	TLOTimer *trialTimer = [TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onTrialTimer];
+	}];
 
 	self.trialTimer = trialTimer;
+
+	[trialTimer start:timeRemaining];
 }
 
 - (void)stopTrialTimer
@@ -252,7 +250,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 	self.trialTimer = nil;
 }
 
-- (void)onTrialTimer:(id)sender
+- (void)onTrialTimer
 {
 	[RZNotificationCenter() postNotificationName:TDCLicenseManagerTrialExpiredNotification object:self];
 }

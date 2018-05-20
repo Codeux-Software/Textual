@@ -92,11 +92,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	(void)[RZMainBundle() loadNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
 
-	self.maintenanceTimer = [TLOTimer new];
-	self.maintenanceTimer.repeatTimer = YES;
-	self.maintenanceTimer.target = self;
-	self.maintenanceTimer.action = @selector(onMaintenanceTimer:);
-	self.maintenanceTimer.queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	self.maintenanceTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onMaintenanceTimer]
+	} onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(clientWillBeDestroyed:) name:IRCWorldWillDestroyClientNotification object:nil];
 }
@@ -524,7 +523,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	} else {
 		if (activeFileTransfers.count > 0) {
-			[self.maintenanceTimer start:1.0];
+			[self.maintenanceTimer start:1.0 onRepeat:YES];
 		}
 	}
 }
@@ -536,7 +535,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)onMaintenanceTimer:(TLOTimer *)sender
+- (void)onMaintenanceTimer
 {
 	NSArray *activeFileTransfers = [self activeFileTransfers];
 
