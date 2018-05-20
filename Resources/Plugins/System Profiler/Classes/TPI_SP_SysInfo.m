@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TPI_SP_WebViewProcessInfo : NSObject
 @property (nonatomic, assign) pid_t processIdentifier;
-@property (nonatomic, assign) TXUnsignedLongLong processMemoryUse;
+@property (nonatomic, assign) uint64_t processMemoryUse;
 @property (nonatomic, strong) NSArray<NSString *> *processViewNames;
 @end
 
@@ -66,18 +66,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSTimeInterval)systemUptime;
 + (NSTimeInterval)applicationUptime;
 
-+ (TXUnsignedLongLong)freeMemorySize;
-+ (TXUnsignedLongLong)totalMemorySize;
++ (uint64_t)freeMemorySize;
++ (uint64_t)totalMemorySize;
 
-+ (TXUnsignedLongLong)applicationMemoryInformation;
++ (uint64_t)applicationMemoryInformation;
 
 + (nullable NSString *)formattedGraphicsCardInformation;
 + (nullable NSString *)formattedLocalVolumeDiskUsage;
 + (NSString *)formattedTotalMemorySize;
-+ (NSString *)formattedDiskSize:(TXUnsignedLongLong)diskSize;
++ (NSString *)formattedDiskSize:(uint64_t)diskSize;
 + (NSString *)formattedCPUFrequency:(double)frequency;
 
-+ (TXUnsignedLongLong)memoryUseForProcess:(pid_t)processIdentifier;
++ (uint64_t)memoryUseForProcess:(pid_t)processIdentifier;
 
 + (NSArray<TPI_SP_WebViewProcessInfo *> *)webViewProcessIdentifiers;
 + (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem;
@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
-	TXUnsignedLongLong textualMemoryUse = [TPI_SP_SysInfo applicationMemoryInformation];
+	uint64_t textualMemoryUse = [TPI_SP_SysInfo applicationMemoryInformation];
 
 	return TPILocalizedString(@"BasicLanguage[1020]",
 		[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
@@ -183,7 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[resultString appendString:@"\n"];
 
-	TXUnsignedLongLong totalMemoryUse = 0;
+	uint64_t totalMemoryUse = 0;
 
 	for (TPI_SP_WebViewProcessInfo *processInfo in webViewProcesses) {
 		totalMemoryUse += processInfo.processMemoryUse;
@@ -223,8 +223,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[volumes enumerateObjectsUsingBlock:^(NSURL *volume, NSUInteger index, BOOL *stop) {
 		NSString *volumeName = [volume resourceValueForKey:NSURLVolumeNameKey];
 
-		TXUnsignedLongLong totalSpace = [[volume resourceValueForKey:NSURLVolumeTotalCapacityKey] longLongValue];
-		TXUnsignedLongLong freeSpace = [[volume resourceValueForKey:NSURLVolumeAvailableCapacityKey] longLongValue];
+		uint64_t totalSpace = [[volume resourceValueForKey:NSURLVolumeTotalCapacityKey] longLongValue];
+		uint64_t freeSpace = [[volume resourceValueForKey:NSURLVolumeAvailableCapacityKey] longLongValue];
 
 		if (index == 0) {
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[1022]", volumeName,
@@ -392,10 +392,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)systemMemoryInformation
 {
-	TXUnsignedLongLong totalMemory = [TPI_SP_SysInfo totalMemorySize];
-	TXUnsignedLongLong freeMemory = [TPI_SP_SysInfo freeMemorySize];
+	uint64_t totalMemory = [TPI_SP_SysInfo totalMemorySize];
+	uint64_t freeMemory = [TPI_SP_SysInfo freeMemorySize];
 
-	TXUnsignedLongLong usedMemory = (totalMemory - freeMemory);
+	uint64_t usedMemory = (totalMemory - freeMemory);
 
 	long double memoryUsedPercent = (((long double)usedMemory / (long double)totalMemory) * 100.0);
 
@@ -502,7 +502,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Formatting/Processing 
 
-+ (NSString *)formattedDiskSize:(TXUnsignedLongLong)diskSize
++ (NSString *)formattedDiskSize:(uint64_t)diskSize
 {
 	return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:diskSize];
 }
@@ -529,7 +529,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+	uint64_t totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
 
 	return [self formattedDiskSize:totalSpace];
 }
@@ -703,7 +703,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self formattedCPUFrequency:clockSpeed];
 }
 
-+ (TXUnsignedLongLong)freeMemorySize
++ (uint64_t)freeMemorySize
 {
 	vm_size_t page_size;
 
@@ -720,7 +720,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return ((host_info_out.inactive_count + host_info_out.free_count) * page_size);
 }
 
-+ (TXUnsignedLongLong)totalMemorySize
++ (uint64_t)totalMemorySize
 {
 	uint64_t memoryTotal = 0L;
 
@@ -733,14 +733,14 @@ NS_ASSUME_NONNULL_BEGIN
 	return (memoryTotal / _systemMemoryDivisor);
 }
 
-+ (TXUnsignedLongLong)applicationMemoryInformation
++ (uint64_t)applicationMemoryInformation
 {
 	pid_t processIdentifier = (pid_t)[NSProcessInfo processInfo].processIdentifier;
 
 	return [TPI_SP_SysInfo memoryUseForProcess:processIdentifier];
 }
 
-+ (TXUnsignedLongLong)memoryUseForProcess:(pid_t)processIdentifier
++ (uint64_t)memoryUseForProcess:(pid_t)processIdentifier
 {
 	if (processIdentifier == 0) {
 		return 0;
@@ -752,7 +752,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	uint64_t processAddress = 0;
 
-	TXUnsignedLongLong memoryUse = 0;
+	uint64_t memoryUse = 0;
 
 	int memoryPageSize = getpagesize();
 
@@ -817,7 +817,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Object values */
 		pid_t processIdentifier = [key intValue];
 
-		TXUnsignedLongLong processMemoryUse = [TPI_SP_SysInfo memoryUseForProcess:processIdentifier];
+		uint64_t processMemoryUse = [TPI_SP_SysInfo memoryUseForProcess:processIdentifier];
 
 		NSArray *processViewNames = [object sortedArrayUsingSelector:@selector(compare:)];
 
@@ -836,8 +836,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Sort objects based on memory use (highest to lowest) */
 	[webViewProcessObjects sortUsingComparator:^NSComparisonResult(id object1, id object2) {
-		TXUnsignedLongLong processMemoryUse1 = [object1 processMemoryUse];
-		TXUnsignedLongLong processMemoryUse2 = [object2 processMemoryUse];
+		uint64_t processMemoryUse1 = [object1 processMemoryUse];
+		uint64_t processMemoryUse2 = [object2 processMemoryUse];
 
 		if (processMemoryUse1 > processMemoryUse2) {
 			return NSOrderedAscending;

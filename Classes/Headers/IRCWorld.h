@@ -52,8 +52,8 @@ TEXTUAL_EXTERN NSString * const IRCWorldWillDestroyChannelNotification;
 @interface IRCWorld : NSObject
 @property (readonly) NSUInteger messagesSent;
 @property (readonly) NSUInteger messagesReceived;
-@property (readonly) TXUnsignedLongLong bandwidthIn;
-@property (readonly) TXUnsignedLongLong bandwidthOut;
+@property (readonly) uint64_t bandwidthIn;
+@property (readonly) uint64_t bandwidthOut;
 @property (readonly, copy) NSArray<IRCClient *> *clientList;
 @property (readonly) NSUInteger clientCount;
 

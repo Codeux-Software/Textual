@@ -50,9 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isReversed;
 @property (readonly) BOOL isSender;
 @property (readonly) TDCFileTransferDialogTransferStatus transferStatus;
-@property (readonly) TXUnsignedLongLong totalFilesize;
-@property (readonly) TXUnsignedLongLong processedFilesize;
-@property (readonly) TXUnsignedLongLong currentRecord;
+@property (readonly) uint64_t totalFilesize;
+@property (readonly) uint64_t processedFilesize;
+@property (readonly) uint64_t currentRecord;
 @property (readonly, copy) NSArray<NSNumber *> *speedRecords;
 @property (readonly, copy, nullable) NSString *errorMessageDescription;
 @property (readonly, copy, nullable) NSString *path;
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 								   address:(NSString *)hostAddress
 									  port:(uint16_t)hostPort
 								  filename:(NSString *)filename
-								  filesize:(TXUnsignedLongLong)totalFilesize
+								  filesize:(uint64_t)totalFilesize
 									 token:(nullable NSString *)transferToken;
 
 + (nullable instancetype)senderForClient:(IRCClient *)client
@@ -91,8 +91,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didReceiveSendRequest:(NSString *)hostAddress hostPort:(uint16_t)hostPort;
 
-- (void)didReceiveResumeAccept:(TXUnsignedLongLong)proposedPosition;
-- (void)didReceiveResumeRequest:(TXUnsignedLongLong)proposedPosition;
+- (void)didReceiveResumeAccept:(uint64_t)proposedPosition;
+- (void)didReceiveResumeRequest:(uint64_t)proposedPosition;
 
 - (void)onMaintenanceTimer;
 

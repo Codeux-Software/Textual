@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (nullable NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(uint16_t)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
+- (nullable NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(uint16_t)hostPort filename:(NSString *)filename filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(client != nil);
 	NSParameterAssert(nickname != nil);

@@ -11769,7 +11769,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark File Transfers
 
-- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize requestIdentifier:(NSString *)identifier
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(uint64_t)totalFilesize requestIdentifier:(NSString *)identifier
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(filename != nil);
@@ -12053,7 +12053,7 @@ present_error:
 	[self print:TXTLS(@"IRC[1020]", sender) by:nil inChannel:nil asType:TVCLogLineDCCFileTransferType command:TVCLogLineDefaultCommandValue];
 }
 
-- (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(uint16_t)port filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
+- (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(uint16_t)port filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(filename != nil);
@@ -12076,7 +12076,7 @@ present_error:
 	[self notifyFileTransfer:TXNotificationFileTransferReceiveRequestedType nickname:nickname filename:filename filesize:totalFilesize requestIdentifier:addedRequest];
 }
 
-- (void)sendFileResume:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
+- (void)sendFileResume:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(filename != nil);
@@ -12094,7 +12094,7 @@ present_error:
 	[self sendCTCPQuery:nickname command:@"DCC RESUME" text:stringToSend];
 }
 
-- (void)sendFileResumeAccept:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
+- (void)sendFileResumeAccept:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(filename != nil);
@@ -12112,7 +12112,7 @@ present_error:
 	[self sendCTCPQuery:nickname command:@"DCC ACCEPT" text:stringToSend];
 }
 
-- (void)sendFile:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(nullable NSString *)transferToken
+- (void)sendFile:(NSString *)nickname port:(uint16_t)port filename:(NSString *)filename filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(filename != nil);

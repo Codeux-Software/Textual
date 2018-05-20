@@ -39,7 +39,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPreferences : NSObject
-+ (TXUnsignedLongLong)inlineImagesMaxFilesize;
++ (uint64_t)inlineImagesMaxFilesize;
 
 + (NSUInteger)inlineMediaMaxWidth;
 + (NSUInteger)inlineMediaMaxHeight;
