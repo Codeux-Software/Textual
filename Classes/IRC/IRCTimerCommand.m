@@ -95,6 +95,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 }
 DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
+- (void)dealloc
+{
+	[self.timer stop];
+
+	self.timer = nil;
+}
+
 - (void)assignIdentifier
 {
 	IRCTimedCommandLastIdentifier++;
