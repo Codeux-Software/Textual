@@ -85,6 +85,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		self.clientId = client.uniqueIdentifier;
 		self.channelId = channel.uniqueIdentifier;
 
+		self.command = command;
+
 		[self assignIdentifier];
 
 		[self initTimerForClient:client];
