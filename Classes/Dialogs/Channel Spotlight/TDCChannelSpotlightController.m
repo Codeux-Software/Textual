@@ -114,11 +114,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	[self updateBackgroundColor];
 
-	[self updateControlsState];
-
 	[self.noResultsLabelLeadingConstraint archiveConstant];
-	
+
 	[self.searchResultsViewHeightConstraint archiveConstant];
+
+	[self updateControlsState];
 }
 
 #pragma mark -
