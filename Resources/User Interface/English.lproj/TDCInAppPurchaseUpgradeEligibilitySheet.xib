@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,11 +31,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="86o-pP-6Hi">
-                        <rect key="frame" x="18" y="61" width="333" height="34"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="329" id="vep-O9-gy7"/>
-                        </constraints>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="86o-pP-6Hi">
+                        <rect key="frame" x="41" y="61" width="287" height="34"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Unfortunately, you are not eligible for a free or discounted upgrade." id="axq-6T-VR5">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -58,12 +55,14 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="86o-pP-6Hi" firstAttribute="top" secondItem="eX9-9T-nFn" secondAttribute="bottom" constant="15" id="3Tz-Zv-TwS"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="86o-pP-6Hi" secondAttribute="trailing" constant="20" id="DiF-HQ-Fre"/>
+                    <constraint firstItem="86o-pP-6Hi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zmB-R2-bXm" secondAttribute="leading" constant="20" id="P3u-hC-RFk"/>
                     <constraint firstAttribute="bottom" secondItem="aEw-pj-DLf" secondAttribute="bottom" constant="20" id="Qcu-ML-BJW"/>
                     <constraint firstItem="eX9-9T-nFn" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="SlH-Zp-lew"/>
+                    <constraint firstItem="aEw-pj-DLf" firstAttribute="centerX" secondItem="86o-pP-6Hi" secondAttribute="centerX" id="ayx-XP-3hI"/>
                     <constraint firstItem="aEw-pj-DLf" firstAttribute="top" secondItem="86o-pP-6Hi" secondAttribute="bottom" constant="20" id="bPy-EH-EWI"/>
+                    <constraint firstItem="86o-pP-6Hi" firstAttribute="centerX" secondItem="eX9-9T-nFn" secondAttribute="centerX" id="hHg-A8-IXn"/>
                     <constraint firstItem="eX9-9T-nFn" firstAttribute="top" secondItem="zmB-R2-bXm" secondAttribute="top" constant="20" id="ndK-Ox-HJg"/>
-                    <constraint firstItem="aEw-pj-DLf" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="s6j-zm-p4H"/>
-                    <constraint firstItem="86o-pP-6Hi" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="z0O-Ba-I88"/>
                 </constraints>
             </view>
             <connections>
@@ -87,11 +86,8 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svY-JN-wRd">
-                        <rect key="frame" x="17" y="61" width="347" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="343" id="aEK-gG-zN7"/>
-                        </constraints>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="svY-JN-wRd">
+                        <rect key="frame" x="45" y="61" width="290" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Congratulations, you are eligible for a discount." id="1V5-vh-2id">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -113,13 +109,15 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="W1h-Tu-uqZ" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="6pw-w3-Ued"/>
+                    <constraint firstItem="svY-JN-wRd" firstAttribute="centerX" secondItem="0Oi-4c-Yln" secondAttribute="centerX" id="0NZ-bK-QSX"/>
                     <constraint firstItem="0Oi-4c-Yln" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="Edi-QM-hFh"/>
                     <constraint firstItem="svY-JN-wRd" firstAttribute="top" secondItem="0Oi-4c-Yln" secondAttribute="bottom" constant="15" id="FRt-HK-aUa"/>
                     <constraint firstItem="W1h-Tu-uqZ" firstAttribute="top" secondItem="svY-JN-wRd" secondAttribute="bottom" constant="20" id="KMm-fY-3L0"/>
+                    <constraint firstItem="svY-JN-wRd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MHB-dt-yu8" secondAttribute="leading" constant="20" id="MRP-kp-Lcm"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="svY-JN-wRd" secondAttribute="trailing" constant="20" id="MSH-Mz-fQk"/>
+                    <constraint firstItem="W1h-Tu-uqZ" firstAttribute="centerX" secondItem="svY-JN-wRd" secondAttribute="centerX" id="VxA-sS-kvr"/>
                     <constraint firstAttribute="bottom" secondItem="W1h-Tu-uqZ" secondAttribute="bottom" constant="20" id="efG-Ly-JWX"/>
                     <constraint firstItem="0Oi-4c-Yln" firstAttribute="top" secondItem="MHB-dt-yu8" secondAttribute="top" constant="20" id="uCC-Hr-hsv"/>
-                    <constraint firstItem="svY-JN-wRd" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="zeG-vL-Drq"/>
                 </constraints>
             </view>
             <connections>
@@ -143,11 +141,8 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PUt-g1-NNM">
-                        <rect key="frame" x="18" y="61" width="378" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="374" id="RNv-p4-zYH"/>
-                        </constraints>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PUt-g1-NNM">
+                        <rect key="frame" x="49" y="61" width="316" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Congratulations, you are eligible for a free upgrade." id="T1q-Ug-ZcD">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -169,13 +164,15 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PUt-g1-NNM" secondAttribute="trailing" constant="20" id="BKX-TD-APW"/>
                     <constraint firstItem="USW-SV-QEO" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="BVd-J5-LXW"/>
                     <constraint firstItem="USW-SV-QEO" firstAttribute="top" secondItem="TsN-yE-dfp" secondAttribute="top" constant="20" id="Chb-ro-o6B"/>
                     <constraint firstAttribute="bottom" secondItem="X2Q-y1-pP6" secondAttribute="bottom" constant="20" id="EQ2-SQ-8Gw"/>
-                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="HiL-i7-lGY"/>
-                    <constraint firstItem="PUt-g1-NNM" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="VPr-II-qGr"/>
+                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="centerX" secondItem="PUt-g1-NNM" secondAttribute="centerX" id="LmZ-Dc-ghg"/>
                     <constraint firstItem="X2Q-y1-pP6" firstAttribute="top" secondItem="PUt-g1-NNM" secondAttribute="bottom" constant="20" id="ZfV-qU-Q5k"/>
+                    <constraint firstItem="PUt-g1-NNM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TsN-yE-dfp" secondAttribute="leading" constant="20" id="a7L-Is-KPB"/>
                     <constraint firstItem="PUt-g1-NNM" firstAttribute="top" secondItem="USW-SV-QEO" secondAttribute="bottom" constant="15" id="aMk-rd-Ejm"/>
+                    <constraint firstItem="PUt-g1-NNM" firstAttribute="centerX" secondItem="USW-SV-QEO" secondAttribute="centerX" id="xWV-g3-KAD"/>
                 </constraints>
             </view>
             <connections>

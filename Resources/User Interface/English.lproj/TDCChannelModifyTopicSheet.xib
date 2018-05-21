@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,7 +27,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
-                        <rect key="frame" x="18" y="163" width="87" height="17"/>
+                        <rect key="frame" x="20" y="163" width="88" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Topic for %@:" id="27">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -99,17 +99,18 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="26" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="1mB-Nf-Rc1"/>
-                    <constraint firstAttribute="trailing" secondItem="37" secondAttribute="trailing" constant="20" symbolic="YES" id="OAV-tk-YYe"/>
-                    <constraint firstAttribute="bottom" secondItem="10" secondAttribute="bottom" constant="20" symbolic="YES" id="TlO-Sc-odm"/>
+                    <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="20" id="59a-dd-1Rf"/>
+                    <constraint firstItem="26" firstAttribute="leading" secondItem="40" secondAttribute="leading" id="5M7-hO-UUf"/>
+                    <constraint firstAttribute="trailing" secondItem="37" secondAttribute="trailing" constant="20" id="No7-Wc-km1"/>
+                    <constraint firstItem="26" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="40" secondAttribute="trailing" id="SvT-gc-Mhc"/>
                     <constraint firstItem="37" firstAttribute="top" secondItem="26" secondAttribute="bottom" constant="8" symbolic="YES" id="UxQ-Tf-Kqm"/>
-                    <constraint firstItem="10" firstAttribute="top" secondItem="37" secondAttribute="bottom" constant="20" symbolic="YES" id="VAf-Db-bNQ"/>
-                    <constraint firstItem="37" firstAttribute="trailing" secondItem="9" secondAttribute="trailing" id="Z0d-yS-F24"/>
-                    <constraint firstItem="37" firstAttribute="leading" secondItem="26" secondAttribute="leading" id="iVV-0b-zrc"/>
+                    <constraint firstItem="9" firstAttribute="top" secondItem="40" secondAttribute="bottom" constant="22" id="cnl-Pw-siu"/>
+                    <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="20" id="eem-Dd-aGC"/>
+                    <constraint firstItem="10" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="hrc-7X-pfb"/>
                     <constraint firstItem="26" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="kkM-IF-4TV"/>
+                    <constraint firstItem="37" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="lWD-lj-Riz"/>
                     <constraint firstItem="10" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="ofe-J5-e16"/>
                     <constraint firstItem="9" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="12" symbolic="YES" id="ttT-T7-e4m"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="26" secondAttribute="trailing" constant="20" id="xYx-me-knl"/>
                 </constraints>
             </view>
             <connections>

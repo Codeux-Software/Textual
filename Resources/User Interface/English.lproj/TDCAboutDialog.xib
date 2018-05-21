@@ -59,15 +59,11 @@
                             <action selector="displayAcknowledgements:" target="-2" id="44"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="MDL-oh-scd">
-                        <rect key="frame" x="207" y="0.0" width="11" height="15"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="15" id="9QW-b5-VXx"/>
-                            <constraint firstAttribute="width" constant="11" id="k5m-0J-ITf"/>
-                        </constraints>
-                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="jdf-Pe-UVP">
+                    <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MDL-oh-scd">
+                        <rect key="frame" x="214" y="228" width="4" height="16"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" controlSize="mini" transparent="YES" imageScaling="proportionallyDown" inset="2" id="jdf-Pe-UVP">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" metaFont="miniSystem"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
 Gw
 </string>
@@ -79,17 +75,19 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="MDL-oh-scd" secondAttribute="trailing" id="4s6-UM-qYJ"/>
-                    <constraint firstItem="40" firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="7Cy-qY-XZK"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7" secondAttribute="trailing" constant="20" id="Clc-o4-cbp"/>
                     <constraint firstItem="3" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="Gmx-1B-Kee"/>
+                    <constraint firstItem="MDL-oh-scd" firstAttribute="top" secondItem="2" secondAttribute="top" id="I2h-px-ym1"/>
                     <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="18" id="LqP-v5-xwR"/>
-                    <constraint firstAttribute="bottom" secondItem="MDL-oh-scd" secondAttribute="bottom" id="S9R-MU-Zvh"/>
+                    <constraint firstAttribute="trailing" secondItem="MDL-oh-scd" secondAttribute="trailing" id="Oda-rS-ckT"/>
+                    <constraint firstItem="MDL-oh-scd" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="56" id="Ol2-wj-hAe"/>
                     <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="TSu-8F-A7d"/>
                     <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="20" symbolic="YES" id="VzH-QN-2U2"/>
                     <constraint firstItem="40" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="cgP-eI-aZl"/>
-                    <constraint firstItem="7" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="ckB-g5-Adn"/>
+                    <constraint firstItem="5" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" id="dEB-DP-MBO"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="eHu-4Q-o7e"/>
-                    <constraint firstItem="5" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="gpD-Wb-ugP"/>
+                    <constraint firstItem="7" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="hcE-6k-MdM"/>
+                    <constraint firstItem="7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2" secondAttribute="leading" constant="20" id="otR-aw-eMc"/>
                 </constraints>
             </view>
             <connections>

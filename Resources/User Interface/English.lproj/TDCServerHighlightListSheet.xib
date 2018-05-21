@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -216,7 +216,7 @@ Gw
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="249">
                         <rect key="frame" x="18" y="301" width="176" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -233,17 +233,18 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="246" firstAttribute="top" secondItem="249" secondAttribute="bottom" constant="13" id="2eU-2Y-oXs"/>
+                    <constraint firstItem="277" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" id="9QX-LB-5Wf"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="249" secondAttribute="trailing" constant="20" id="Icy-sJ-SEY"/>
+                    <constraint firstAttribute="bottom" secondItem="248" secondAttribute="bottom" constant="10" id="Qlf-2Y-QUR"/>
                     <constraint firstItem="247" firstAttribute="baseline" secondItem="248" secondAttribute="baseline" id="R8L-kg-ypT"/>
                     <constraint firstItem="248" firstAttribute="leading" secondItem="247" secondAttribute="trailing" constant="12" symbolic="YES" id="UhY-2I-PFH"/>
-                    <constraint firstItem="277" firstAttribute="leading" secondItem="249" secondAttribute="leading" id="Yg8-pk-yLy"/>
+                    <constraint firstItem="247" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="277" secondAttribute="trailing" constant="20" id="dys-lh-nPv"/>
                     <constraint firstItem="277" firstAttribute="baseline" secondItem="247" secondAttribute="baseline" id="hLC-nJ-ycH"/>
                     <constraint firstAttribute="trailing" secondItem="248" secondAttribute="trailing" constant="20" symbolic="YES" id="iFS-I2-HQM"/>
-                    <constraint firstAttribute="bottom" secondItem="247" secondAttribute="bottom" constant="10" id="loK-IN-9bb"/>
                     <constraint firstItem="246" firstAttribute="centerX" secondItem="244" secondAttribute="centerX" id="n2A-Ou-C5Z"/>
                     <constraint firstItem="249" firstAttribute="top" secondItem="244" secondAttribute="top" constant="13" id="oHc-Jd-kBt"/>
                     <constraint firstItem="249" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" symbolic="YES" id="oYF-cz-qoa"/>
-                    <constraint firstItem="247" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="qys-dq-XwC"/>
+                    <constraint firstItem="248" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="ocI-Av-3pC"/>
                     <constraint firstItem="246" firstAttribute="leading" secondItem="244" secondAttribute="leading" id="ypx-IL-Ez0"/>
                 </constraints>
             </view>

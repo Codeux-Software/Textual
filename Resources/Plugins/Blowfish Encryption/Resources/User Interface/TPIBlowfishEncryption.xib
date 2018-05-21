@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIBlowfishEncryption">
@@ -70,8 +70,6 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="437" height="25"/>
-                                <size key="maxSize" width="549" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -86,7 +84,7 @@
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KZ9-Ql-hLa">
-                    <rect key="frame" x="18" y="64" width="441" height="44"/>
+                    <rect key="frame" x="18" y="64" width="427" height="44"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="WARNING: There is absolutely no guarantee that data you encrypt using FiSH is secure." id="omF-Az-3FB">
                         <font key="font" metaFont="systemBold" size="18"/>
                         <color key="textColor" red="0.85371291035353536" green="0.10235263760745605" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,16 +102,16 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="V4q-92-b4n" firstAttribute="trailing" secondItem="KZ9-Ql-hLa" secondAttribute="trailing" id="A9O-Mx-TxZ"/>
+                <constraint firstAttribute="trailing" secondItem="nP9-Nm-5KC" secondAttribute="trailing" constant="20" id="3Be-5M-Stp"/>
+                <constraint firstItem="KZ9-Ql-hLa" firstAttribute="leading" secondItem="LOA-uM-qhd" secondAttribute="leading" constant="20" id="3jV-xY-tCR"/>
                 <constraint firstAttribute="trailing" secondItem="V4q-92-b4n" secondAttribute="trailing" constant="20" symbolic="YES" id="HCF-PA-cke"/>
-                <constraint firstItem="KZ9-Ql-hLa" firstAttribute="leading" secondItem="nP9-Nm-5KC" secondAttribute="leading" id="NXG-XB-m7J"/>
                 <constraint firstItem="V4q-92-b4n" firstAttribute="leading" secondItem="LOA-uM-qhd" secondAttribute="leading" constant="20" symbolic="YES" id="OBn-Ja-zH8"/>
-                <constraint firstItem="V4q-92-b4n" firstAttribute="leading" secondItem="KZ9-Ql-hLa" secondAttribute="leading" id="S39-3R-yyQ"/>
                 <constraint firstItem="KZ9-Ql-hLa" firstAttribute="top" secondItem="JUL-dK-X0r" secondAttribute="bottom" constant="21" id="Sil-BA-5mM"/>
                 <constraint firstItem="V4q-92-b4n" firstAttribute="centerX" secondItem="JUL-dK-X0r" secondAttribute="centerX" id="WL9-LW-y4V"/>
+                <constraint firstItem="nP9-Nm-5KC" firstAttribute="leading" secondItem="LOA-uM-qhd" secondAttribute="leading" constant="20" id="Y92-64-uTF"/>
                 <constraint firstItem="nP9-Nm-5KC" firstAttribute="top" secondItem="KZ9-Ql-hLa" secondAttribute="bottom" constant="14" id="cWo-CR-LCm"/>
                 <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="V4q-92-b4n" secondAttribute="bottom" constant="21" id="dQx-VI-L5f"/>
-                <constraint firstItem="KZ9-Ql-hLa" firstAttribute="trailing" secondItem="nP9-Nm-5KC" secondAttribute="trailing" id="flY-J6-tZ4"/>
+                <constraint firstAttribute="trailing" secondItem="KZ9-Ql-hLa" secondAttribute="trailing" constant="34" id="k6x-X3-xFd"/>
                 <constraint firstItem="V4q-92-b4n" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="30" id="qFd-Bj-T47"/>
                 <constraint firstAttribute="bottom" secondItem="nP9-Nm-5KC" secondAttribute="bottom" constant="25" id="vU5-Zp-WEa"/>
             </constraints>

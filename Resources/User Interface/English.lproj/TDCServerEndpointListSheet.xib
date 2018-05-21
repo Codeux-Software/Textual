@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,12 +25,13 @@
             <rect key="contentRect" x="196" y="213" width="695" height="317"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="695" height="317"/>
+            <value key="maxSize" type="size" width="1024" height="720"/>
             <view key="contentView" id="rOf-7y-CFb">
                 <rect key="frame" x="0.0" y="0.0" width="695" height="317"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ThC-su-OJ3">
-                        <rect key="frame" x="18" y="8" width="70" height="24"/>
+                        <rect key="frame" x="18" y="8" width="71" height="24"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="dUS-P9-b7z">
                             <font key="font" metaFont="system"/>
                             <segments>
@@ -44,7 +45,7 @@
                         </connections>
                     </segmentedControl>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pOF-VD-WZg">
-                        <rect key="frame" x="18" y="287" width="648" height="17"/>
+                        <rect key="frame" x="18" y="287" width="659" height="17"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The order of this table, from top to bottom, determines the order in which Textual connects to each server." id="qeA-Ep-V8r">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -174,9 +175,6 @@
                                                     <subviews>
                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="Jha-5I-0JH">
                                                             <rect key="frame" x="39" y="0.0" width="22" height="18"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="18" id="eqG-B3-dJZ"/>
-                                                            </constraints>
                                                             <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ik6-LW-mE0">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
@@ -284,16 +282,18 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="xvV-vQ-BBH" firstAttribute="baseline" secondItem="UvC-Rd-H2d" secondAttribute="baseline" id="3vd-Kr-bcI"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pOF-VD-WZg" secondAttribute="trailing" constant="20" id="DMO-j4-bjp"/>
+                    <constraint firstAttribute="trailing" secondItem="pOF-VD-WZg" secondAttribute="trailing" constant="20" id="DMO-j4-bjp"/>
                     <constraint firstItem="pOF-VD-WZg" firstAttribute="leading" secondItem="rOf-7y-CFb" secondAttribute="leading" constant="20" id="EWm-cg-xPW"/>
+                    <constraint firstAttribute="bottom" secondItem="UvC-Rd-H2d" secondAttribute="bottom" constant="10" id="EhU-Ol-e7F"/>
+                    <constraint firstItem="xvV-vQ-BBH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ThC-su-OJ3" secondAttribute="trailing" constant="20" id="Eqv-6V-D5t"/>
                     <constraint firstItem="4Gy-fQ-L47" firstAttribute="top" secondItem="pOF-VD-WZg" secondAttribute="bottom" constant="13" id="LMR-wr-Rxa"/>
                     <constraint firstAttribute="trailing" secondItem="4Gy-fQ-L47" secondAttribute="trailing" id="PVF-ga-z6L"/>
-                    <constraint firstAttribute="bottom" secondItem="UvC-Rd-H2d" secondAttribute="bottom" constant="10" id="R1a-hK-yfg"/>
                     <constraint firstItem="ThC-su-OJ3" firstAttribute="leading" secondItem="rOf-7y-CFb" secondAttribute="leading" constant="20" id="T03-Wi-3PA"/>
                     <constraint firstItem="pOF-VD-WZg" firstAttribute="top" secondItem="rOf-7y-CFb" secondAttribute="top" constant="13" id="fTm-yf-ce7"/>
                     <constraint firstItem="UvC-Rd-H2d" firstAttribute="leading" secondItem="xvV-vQ-BBH" secondAttribute="trailing" constant="12" symbolic="YES" id="fzO-Vr-rpf"/>
                     <constraint firstAttribute="bottom" secondItem="ThC-su-OJ3" secondAttribute="bottom" constant="10" id="hm5-rL-vUR"/>
                     <constraint firstAttribute="trailing" secondItem="UvC-Rd-H2d" secondAttribute="trailing" constant="20" symbolic="YES" id="jPt-SV-qn6"/>
+                    <constraint firstItem="UvC-Rd-H2d" firstAttribute="top" secondItem="4Gy-fQ-L47" secondAttribute="bottom" constant="10" id="nIe-eR-IDo"/>
                     <constraint firstItem="ThC-su-OJ3" firstAttribute="top" secondItem="4Gy-fQ-L47" secondAttribute="bottom" constant="10" id="r4Z-jy-Wv6"/>
                     <constraint firstItem="4Gy-fQ-L47" firstAttribute="leading" secondItem="rOf-7y-CFb" secondAttribute="leading" id="yEg-C6-EQz"/>
                 </constraints>

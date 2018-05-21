@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -32,10 +32,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="86o-pP-6Hi">
-                        <rect key="frame" x="18" y="167" width="333" height="34"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="329" id="vep-O9-gy7"/>
-                        </constraints>
+                        <rect key="frame" x="41" y="167" width="287" height="34"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Unfortunately, you are not eligible for a free or discounted upgrade." id="axq-6T-VR5">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -43,10 +40,9 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kly-4d-CEl">
-                        <rect key="frame" x="40" y="60" width="289" height="41"/>
+                        <rect key="frame" x="40" y="60" width="289" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="39" id="WjR-PJ-Rnm"/>
-                            <constraint firstAttribute="width" constant="289" id="dbv-k6-C6O"/>
+                            <constraint firstAttribute="height" constant="38" id="Nqr-CV-KB4"/>
                         </constraints>
                         <buttonCell key="cell" type="smallSquare" title="Purchase in Mac App Store" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4On-qj-WpA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -57,10 +53,9 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ln-qj-Yq8">
-                        <rect key="frame" x="40" y="107" width="289" height="41"/>
+                        <rect key="frame" x="40" y="108" width="289" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="289" id="3kR-Eq-2lT"/>
-                            <constraint firstAttribute="height" constant="39" id="ce1-t9-gol"/>
+                            <constraint firstAttribute="height" constant="38" id="95Y-b1-mQ6"/>
                         </constraints>
                         <buttonCell key="cell" type="smallSquare" title="Purchase in Codeux Software Store" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cbV-gz-k63">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -85,17 +80,20 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="aEw-pj-DLf" firstAttribute="centerX" secondItem="86o-pP-6Hi" secondAttribute="centerX" id="2Mb-h3-nLM"/>
                     <constraint firstItem="86o-pP-6Hi" firstAttribute="top" secondItem="eX9-9T-nFn" secondAttribute="bottom" constant="15" id="3Tz-Zv-TwS"/>
-                    <constraint firstItem="kly-4d-CEl" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="5ra-l5-MWt"/>
-                    <constraint firstItem="0Ln-qj-Yq8" firstAttribute="top" secondItem="86o-pP-6Hi" secondAttribute="bottom" constant="20" id="8ID-h8-21C"/>
-                    <constraint firstItem="0Ln-qj-Yq8" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="PbD-hr-R3p"/>
+                    <constraint firstItem="kly-4d-CEl" firstAttribute="leading" secondItem="zmB-R2-bXm" secondAttribute="leading" constant="40" id="511-16-Jm4"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="86o-pP-6Hi" secondAttribute="trailing" constant="20" id="BJC-TO-9DU"/>
+                    <constraint firstItem="86o-pP-6Hi" firstAttribute="centerX" secondItem="eX9-9T-nFn" secondAttribute="centerX" id="CQe-Pr-0XW"/>
+                    <constraint firstAttribute="trailing" secondItem="0Ln-qj-Yq8" secondAttribute="trailing" constant="40" id="Ldt-Ac-ivA"/>
+                    <constraint firstItem="0Ln-qj-Yq8" firstAttribute="top" secondItem="86o-pP-6Hi" secondAttribute="bottom" constant="20" id="MN6-ai-PDT"/>
                     <constraint firstAttribute="bottom" secondItem="aEw-pj-DLf" secondAttribute="bottom" constant="20" id="Qcu-ML-BJW"/>
+                    <constraint firstItem="aEw-pj-DLf" firstAttribute="top" secondItem="kly-4d-CEl" secondAttribute="bottom" constant="20" id="RLO-Hn-t2Q"/>
                     <constraint firstItem="eX9-9T-nFn" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="SlH-Zp-lew"/>
-                    <constraint firstItem="kly-4d-CEl" firstAttribute="top" secondItem="0Ln-qj-Yq8" secondAttribute="bottom" constant="8" id="dTY-aj-NKd"/>
-                    <constraint firstItem="aEw-pj-DLf" firstAttribute="top" secondItem="kly-4d-CEl" secondAttribute="bottom" constant="20" id="e1s-RY-TJw"/>
+                    <constraint firstItem="0Ln-qj-Yq8" firstAttribute="leading" secondItem="zmB-R2-bXm" secondAttribute="leading" constant="40" id="a4H-jW-JAq"/>
                     <constraint firstItem="eX9-9T-nFn" firstAttribute="top" secondItem="zmB-R2-bXm" secondAttribute="top" constant="20" id="ndK-Ox-HJg"/>
-                    <constraint firstItem="aEw-pj-DLf" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="s6j-zm-p4H"/>
-                    <constraint firstItem="86o-pP-6Hi" firstAttribute="centerX" secondItem="zmB-R2-bXm" secondAttribute="centerX" id="z0O-Ba-I88"/>
+                    <constraint firstItem="86o-pP-6Hi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zmB-R2-bXm" secondAttribute="leading" constant="20" id="tIK-bc-uX7"/>
+                    <constraint firstAttribute="trailing" secondItem="kly-4d-CEl" secondAttribute="trailing" constant="40" id="yCY-Y7-BqM"/>
                 </constraints>
             </view>
             <connections>
@@ -120,10 +118,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="svY-JN-wRd">
-                        <rect key="frame" x="17" y="120" width="347" height="119"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="343" id="aEK-gG-zN7"/>
-                        </constraints>
+                        <rect key="frame" x="22" y="120" width="337" height="119"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="1V5-vh-2id">
                             <font key="font" metaFont="system"/>
                             <string key="title">Congratulations, you are eligible for a discount.
@@ -149,9 +144,9 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mIg-BY-n6R">
-                        <rect key="frame" x="22" y="60" width="165" height="41"/>
+                        <rect key="frame" x="20" y="60" width="168" height="41"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="165" id="gpP-f5-X4S"/>
+                            <constraint firstAttribute="width" constant="168" id="gpP-f5-X4S"/>
                             <constraint firstAttribute="height" constant="39" id="pmZ-lK-JMG"/>
                         </constraints>
                         <buttonCell key="cell" type="smallSquare" title="Purchase Upgrade" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Psq-Ta-ai7">
@@ -163,10 +158,10 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iK4-4C-6gn">
-                        <rect key="frame" x="195" y="60" width="165" height="41"/>
+                        <rect key="frame" x="192" y="60" width="168" height="41"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="39" id="daB-pF-r0B"/>
-                            <constraint firstAttribute="width" constant="165" id="rPj-Hi-kCN"/>
+                            <constraint firstAttribute="width" constant="168" id="rPj-Hi-kCN"/>
                         </constraints>
                         <buttonCell key="cell" type="smallSquare" title="Activate Textual" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oDA-Wn-QrS">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -178,17 +173,19 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="W1h-Tu-uqZ" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="6pw-w3-Ued"/>
+                    <constraint firstItem="W1h-Tu-uqZ" firstAttribute="centerX" secondItem="svY-JN-wRd" secondAttribute="centerX" id="Dco-er-TQp"/>
                     <constraint firstItem="0Oi-4c-Yln" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="Edi-QM-hFh"/>
                     <constraint firstItem="svY-JN-wRd" firstAttribute="top" secondItem="0Oi-4c-Yln" secondAttribute="bottom" constant="15" id="FRt-HK-aUa"/>
                     <constraint firstItem="mIg-BY-n6R" firstAttribute="top" secondItem="svY-JN-wRd" secondAttribute="bottom" constant="20" id="LMl-SG-kzu"/>
+                    <constraint firstItem="svY-JN-wRd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MHB-dt-yu8" secondAttribute="leading" constant="20" id="WXI-md-hRL"/>
                     <constraint firstAttribute="bottom" secondItem="W1h-Tu-uqZ" secondAttribute="bottom" constant="20" id="efG-Ly-JWX"/>
                     <constraint firstItem="iK4-4C-6gn" firstAttribute="top" secondItem="svY-JN-wRd" secondAttribute="bottom" constant="20" id="eru-wx-Nm8"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="svY-JN-wRd" secondAttribute="trailing" constant="20" id="gfe-Fg-EL2"/>
+                    <constraint firstItem="svY-JN-wRd" firstAttribute="centerX" secondItem="0Oi-4c-Yln" secondAttribute="centerX" id="iVs-AW-i0q"/>
                     <constraint firstItem="W1h-Tu-uqZ" firstAttribute="top" secondItem="mIg-BY-n6R" secondAttribute="bottom" constant="20" id="q2h-vJ-Hr4"/>
                     <constraint firstItem="0Oi-4c-Yln" firstAttribute="top" secondItem="MHB-dt-yu8" secondAttribute="top" constant="20" id="uCC-Hr-hsv"/>
                     <constraint firstAttribute="trailing" secondItem="iK4-4C-6gn" secondAttribute="trailing" constant="20" id="uMy-Mf-qvE"/>
-                    <constraint firstItem="mIg-BY-n6R" firstAttribute="leading" secondItem="MHB-dt-yu8" secondAttribute="leading" constant="22" id="w6l-a2-C1b"/>
-                    <constraint firstItem="svY-JN-wRd" firstAttribute="centerX" secondItem="MHB-dt-yu8" secondAttribute="centerX" id="zeG-vL-Drq"/>
+                    <constraint firstItem="mIg-BY-n6R" firstAttribute="leading" secondItem="MHB-dt-yu8" secondAttribute="leading" constant="20" id="w6l-a2-C1b"/>
                 </constraints>
             </view>
             <connections>
@@ -213,10 +210,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PUt-g1-NNM">
-                        <rect key="frame" x="18" y="120" width="378" height="51"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="374" id="RNv-p4-zYH"/>
-                        </constraints>
+                        <rect key="frame" x="49" y="120" width="316" height="51"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="T1q-Ug-ZcD">
                             <font key="font" metaFont="system"/>
                             <string key="title">Congratulations, you are eligible for a free upgrade.
@@ -240,10 +234,9 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VXG-Ri-gpe">
-                        <rect key="frame" x="134" y="60" width="147" height="41"/>
+                        <rect key="frame" x="133" y="61" width="148" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="39" id="PCb-Ra-OAH"/>
-                            <constraint firstAttribute="width" constant="147" id="sq5-x8-F3g"/>
+                            <constraint firstAttribute="height" constant="38" id="qmY-Qh-SWX"/>
                         </constraints>
                         <buttonCell key="cell" type="smallSquare" title="Activate Textual" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OZr-al-Gi8">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -255,15 +248,17 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="VXG-Ri-gpe" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="AdD-HJ-CT3"/>
                     <constraint firstItem="USW-SV-QEO" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="BVd-J5-LXW"/>
                     <constraint firstItem="USW-SV-QEO" firstAttribute="top" secondItem="TsN-yE-dfp" secondAttribute="top" constant="20" id="Chb-ro-o6B"/>
                     <constraint firstAttribute="bottom" secondItem="X2Q-y1-pP6" secondAttribute="bottom" constant="20" id="EQ2-SQ-8Gw"/>
-                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="HiL-i7-lGY"/>
-                    <constraint firstItem="PUt-g1-NNM" firstAttribute="centerX" secondItem="TsN-yE-dfp" secondAttribute="centerX" id="VPr-II-qGr"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PUt-g1-NNM" secondAttribute="trailing" constant="20" id="PLh-1D-cne"/>
+                    <constraint firstItem="VXG-Ri-gpe" firstAttribute="leading" secondItem="TsN-yE-dfp" secondAttribute="leading" constant="133" id="W4U-Xw-KcH"/>
                     <constraint firstItem="PUt-g1-NNM" firstAttribute="top" secondItem="USW-SV-QEO" secondAttribute="bottom" constant="15" id="aMk-rd-Ejm"/>
-                    <constraint firstItem="VXG-Ri-gpe" firstAttribute="top" secondItem="PUt-g1-NNM" secondAttribute="bottom" constant="20" id="nWw-mo-fwM"/>
-                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="top" secondItem="VXG-Ri-gpe" secondAttribute="bottom" constant="20" id="pA9-hB-Vkq"/>
+                    <constraint firstItem="PUt-g1-NNM" firstAttribute="centerX" secondItem="USW-SV-QEO" secondAttribute="centerX" id="eP2-7w-RYK"/>
+                    <constraint firstItem="X2Q-y1-pP6" firstAttribute="centerX" secondItem="PUt-g1-NNM" secondAttribute="centerX" id="jI3-Na-W3T"/>
+                    <constraint firstItem="PUt-g1-NNM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TsN-yE-dfp" secondAttribute="leading" constant="20" id="mkK-Lr-E5U"/>
+                    <constraint firstItem="VXG-Ri-gpe" firstAttribute="top" secondItem="PUt-g1-NNM" secondAttribute="bottom" constant="20" id="qby-bw-tpB"/>
+                    <constraint firstAttribute="trailing" secondItem="VXG-Ri-gpe" secondAttribute="trailing" constant="133" id="xM0-zD-WqR"/>
                 </constraints>
             </view>
             <connections>

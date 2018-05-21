@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11191" systemVersion="16A286a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterExtension">
@@ -20,25 +21,21 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Age-ET-si9">
             <rect key="frame" x="0.0" y="0.0" width="589" height="413"/>
-            <userGuides>
-                <userLayoutGuide location="345" affinity="minY"/>
-                <userLayoutGuide location="30" affinity="minY"/>
-            </userGuides>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gPh-Vf-Ty1">
-                    <rect key="frame" x="20" y="59" width="549" height="222"/>
+                    <rect key="frame" x="30" y="59" width="529" height="222"/>
                     <clipView key="contentView" id="seO-3c-oh7">
-                        <rect key="frame" x="1" y="0.0" width="547" height="221"/>
+                        <rect key="frame" x="1" y="0.0" width="527" height="221"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="KyR-f3-84p" viewBased="YES" id="xhh-gD-9rb" customClass="TVCBasicTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="547" height="198"/>
+                                <rect key="frame" x="0.0" y="0.0" width="527" height="198"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="544" minWidth="40" maxWidth="1000" id="iBz-kH-njW">
+                                    <tableColumn identifier="" width="524" minWidth="40" maxWidth="1000" id="iBz-kH-njW">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Filter Description">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,11 +49,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="ej9-iB-qgp">
-                                                <rect key="frame" x="1" y="1" width="544" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="524" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="QaU-xP-qMH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="544" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="524" height="17"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="D7G-go-Bq0">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -91,8 +88,11 @@
                             </tableView>
                         </subviews>
                     </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="222" id="oPO-od-3xa"/>
+                    </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="iJb-x6-x6a">
-                        <rect key="frame" x="1" y="119" width="223" height="15"/>
+                        <rect key="frame" x="1" y="205" width="514" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cdX-i1-2vb">
@@ -100,13 +100,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="KyR-f3-84p">
-                        <rect key="frame" x="0.0" y="0.0" width="547" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="527" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="List of Filters"/>
                 </scrollView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xp-tp-X2E">
-                    <rect key="frame" x="41" y="298" width="467" height="85"/>
+                    <rect key="frame" x="28" y="298" width="533" height="85"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="IGh-Af-VcM">
                         <font key="font" metaFont="system"/>
                         <string key="title">The “Chat Filter” addon is a very powerful tool which can be used to ignore specific content or automatically perform one or more commands (including external scripts) based on the contents of a message.
@@ -117,10 +117,10 @@ Click the + button in the bottom left corner to add your first filter.</string>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="un4-9j-DSX">
-                    <rect key="frame" x="20" y="29" width="25" height="23"/>
+                    <rect key="frame" x="30" y="29" width="25" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="Y5V-gE-yHZ"/>
-                        <constraint firstAttribute="width" constant="25" id="xjy-7r-SyM"/>
+                        <constraint firstAttribute="width" constant="25" id="l1a-6x-RTe"/>
+                        <constraint firstAttribute="height" constant="21" id="tIE-Rt-Pwu"/>
                     </constraints>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cTJ-QJ-tKS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -131,25 +131,11 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <action selector="presentFilterAddMenu:" target="-2" id="Gln-vg-wH7"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p1g-v9-KVk">
-                    <rect key="frame" x="44" y="29" width="25" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="25" id="oAO-CT-D3X"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UvM-Ae-sCx">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Delete Filter"/>
-                    <connections>
-                        <action selector="filterRemove:" target="-2" id="whW-fQ-9Ve"/>
-                        <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="9H4-zs-t6R"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1aY-QC-Kzo">
-                    <rect key="frame" x="524" y="29" width="45" height="23"/>
+                    <rect key="frame" x="514" y="29" width="45" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="45" id="SC5-YV-7Wl"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="NnH-eU-lfK"/>
+                        <constraint firstAttribute="height" constant="21" id="en9-1C-Qoe"/>
                     </constraints>
                     <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yxL-c7-9D2">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -161,24 +147,39 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="Bc1-fQ-e8I"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p1g-v9-KVk">
+                    <rect key="frame" x="56" y="29" width="25" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="S5t-Pm-GTY"/>
+                        <constraint firstAttribute="height" constant="21" id="hSt-4b-rEX"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UvM-Ae-sCx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <accessibility description="Delete Filter"/>
+                    <connections>
+                        <action selector="filterRemove:" target="-2" id="whW-fQ-9Ve"/>
+                        <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="9H4-zs-t6R"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="1xp-tp-X2E" firstAttribute="leading" secondItem="Age-ET-si9" secondAttribute="leading" constant="43" id="5Xs-ot-gyp"/>
-                <constraint firstItem="gPh-Vf-Ty1" firstAttribute="leading" secondItem="Age-ET-si9" secondAttribute="leading" constant="20" symbolic="YES" id="5Y2-Hi-IMf"/>
-                <constraint firstItem="un4-9j-DSX" firstAttribute="leading" secondItem="gPh-Vf-Ty1" secondAttribute="leading" id="5c4-LA-e2K"/>
+                <constraint firstItem="gPh-Vf-Ty1" firstAttribute="leading" secondItem="Age-ET-si9" secondAttribute="leading" constant="30" id="5Y2-Hi-IMf"/>
                 <constraint firstItem="gPh-Vf-Ty1" firstAttribute="top" secondItem="1xp-tp-X2E" secondAttribute="bottom" constant="17" id="6Sz-dA-G9S"/>
-                <constraint firstItem="gPh-Vf-Ty1" firstAttribute="trailing" secondItem="1aY-QC-Kzo" secondAttribute="trailing" id="6mQ-Nc-5Cp"/>
-                <constraint firstItem="un4-9j-DSX" firstAttribute="top" secondItem="p1g-v9-KVk" secondAttribute="top" id="IRZ-8h-fc7"/>
-                <constraint firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" constant="20" symbolic="YES" id="MoV-hc-nRm"/>
-                <constraint firstItem="un4-9j-DSX" firstAttribute="baseline" secondItem="p1g-v9-KVk" secondAttribute="baseline" id="UzV-xL-GVL"/>
-                <constraint firstAttribute="trailing" secondItem="1xp-tp-X2E" secondAttribute="trailing" constant="83" id="dKG-lP-Vpr"/>
-                <constraint firstItem="p1g-v9-KVk" firstAttribute="baseline" secondItem="1aY-QC-Kzo" secondAttribute="baseline" id="eVg-ro-m07"/>
+                <constraint firstItem="p1g-v9-KVk" firstAttribute="baseline" secondItem="un4-9j-DSX" secondAttribute="baseline" id="Dy0-A0-Enh"/>
+                <constraint firstItem="1xp-tp-X2E" firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" id="Gh5-zV-hSO"/>
+                <constraint firstAttribute="bottom" secondItem="un4-9j-DSX" secondAttribute="bottom" constant="30" id="LUH-JP-vpY"/>
+                <constraint firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" constant="30" id="MoV-hc-nRm"/>
+                <constraint firstItem="un4-9j-DSX" firstAttribute="leading" secondItem="gPh-Vf-Ty1" secondAttribute="leading" id="Qck-pT-anC"/>
+                <constraint firstItem="p1g-v9-KVk" firstAttribute="leading" secondItem="un4-9j-DSX" secondAttribute="trailing" constant="1" id="R78-e2-s6s"/>
+                <constraint firstItem="1aY-QC-Kzo" firstAttribute="baseline" secondItem="p1g-v9-KVk" secondAttribute="baseline" id="VBV-Yt-0Nn"/>
                 <constraint firstItem="1xp-tp-X2E" firstAttribute="top" secondItem="Age-ET-si9" secondAttribute="top" constant="30" id="khm-as-hhl"/>
-                <constraint firstItem="p1g-v9-KVk" firstAttribute="leading" secondItem="Age-ET-si9" secondAttribute="leading" constant="44" id="kux-kH-xMh"/>
-                <constraint firstItem="un4-9j-DSX" firstAttribute="top" secondItem="gPh-Vf-Ty1" secondAttribute="bottom" constant="8" symbolic="YES" id="n7J-E9-CXw"/>
-                <constraint firstAttribute="bottom" secondItem="un4-9j-DSX" secondAttribute="bottom" constant="30" id="yQw-kQ-bUd"/>
+                <constraint firstItem="1aY-QC-Kzo" firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" id="uPi-o2-pSC"/>
+                <constraint firstItem="1xp-tp-X2E" firstAttribute="leading" secondItem="gPh-Vf-Ty1" secondAttribute="leading" id="vOA-VA-gaY"/>
+                <constraint firstItem="un4-9j-DSX" firstAttribute="top" secondItem="gPh-Vf-Ty1" secondAttribute="bottom" constant="8" id="vc8-xo-twR"/>
             </constraints>
-            <point key="canvasLocation" x="433.5" y="375"/>
+            <point key="canvasLocation" x="433.5" y="374.5"/>
         </customView>
         <arrayController objectClassName="TPI_ChatFilter" preservesSelection="NO" avoidsEmptySelection="NO" id="gVm-uR-B4M">
             <declaredKeys>

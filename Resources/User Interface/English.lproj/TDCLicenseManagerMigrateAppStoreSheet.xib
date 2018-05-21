@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,9 +28,6 @@
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F12-H0-P9Z">
                         <rect key="frame" x="18" y="125" width="330" height="34"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="326" id="Bjc-Th-25F"/>
-                        </constraints>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Enter the name and e-mail address that you would like to be associated with your license key. " id="fYJ-sf-Wdh">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -39,10 +36,7 @@
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rVI-TX-GRu" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="124" y="61" width="222" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="WFY-Ga-T7L"/>
-                        </constraints>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Fsp-5h-Da6" customClass="TVCTextFieldWithValueValidationCell">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Fsp-5h-Da6" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -50,7 +44,7 @@
                         <accessibility description="E-mail address to associate with license key"/>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZa-CW-72p">
-                        <rect key="frame" x="18" y="64" width="100" height="17"/>
+                        <rect key="frame" x="18" y="63" width="100" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="E-mail Address:" id="Vhu-bj-bYq">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -87,10 +81,7 @@ Gw
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JL9-wh-1Zp" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="124" y="91" width="222" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="ftD-Dl-8rg"/>
-                        </constraints>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="cjP-El-bvn" customClass="TVCTextFieldWithValueValidationCell">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="cjP-El-bvn" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -98,7 +89,7 @@ Gw
                         <accessibility description="Name to assosicate with license key"/>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNw-4C-0KS">
-                        <rect key="frame" x="74" y="94" width="44" height="17"/>
+                        <rect key="frame" x="74" y="93" width="44" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="1zk-IO-jS5">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -109,21 +100,26 @@ Gw
                 <constraints>
                     <constraint firstItem="Jam-O7-WoM" firstAttribute="leading" secondItem="caz-XB-TnX" secondAttribute="trailing" constant="12" symbolic="YES" id="2SD-mE-6cd"/>
                     <constraint firstItem="F12-H0-P9Z" firstAttribute="top" secondItem="gBo-7N-KkR" secondAttribute="top" constant="20" symbolic="YES" id="2VN-NF-6OU"/>
-                    <constraint firstItem="rVI-TX-GRu" firstAttribute="centerY" secondItem="NZa-CW-72p" secondAttribute="centerY" id="5rF-tM-Jer"/>
+                    <constraint firstItem="jNw-4C-0KS" firstAttribute="top" secondItem="JL9-wh-1Zp" secondAttribute="top" constant="3" id="4SP-8C-5iZ"/>
                     <constraint firstItem="Jam-O7-WoM" firstAttribute="baseline" secondItem="caz-XB-TnX" secondAttribute="baseline" id="6Rq-7H-NUS"/>
                     <constraint firstItem="JL9-wh-1Zp" firstAttribute="leading" secondItem="rVI-TX-GRu" secondAttribute="leading" id="6v2-ba-prQ"/>
+                    <constraint firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" constant="20" id="9pA-AE-BiC"/>
                     <constraint firstAttribute="trailing" secondItem="Jam-O7-WoM" secondAttribute="trailing" constant="20" id="Csy-gA-e4q"/>
                     <constraint firstItem="JL9-wh-1Zp" firstAttribute="leading" secondItem="jNw-4C-0KS" secondAttribute="trailing" constant="8" symbolic="YES" id="Hnn-fY-i1J"/>
-                    <constraint firstItem="JL9-wh-1Zp" firstAttribute="centerY" secondItem="jNw-4C-0KS" secondAttribute="centerY" id="IHp-Cs-31p"/>
-                    <constraint firstAttribute="trailing" secondItem="F12-H0-P9Z" secondAttribute="trailing" constant="20" symbolic="YES" id="KwJ-66-7q0"/>
+                    <constraint firstItem="caz-XB-TnX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="KPZ-1u-jhI"/>
+                    <constraint firstAttribute="trailing" secondItem="F12-H0-P9Z" secondAttribute="trailing" constant="20" id="KwJ-66-7q0"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="leading" secondItem="NZa-CW-72p" secondAttribute="trailing" constant="8" symbolic="YES" id="Lfi-S6-HR9"/>
-                    <constraint firstItem="NZa-CW-72p" firstAttribute="leading" secondItem="F12-H0-P9Z" secondAttribute="leading" id="WYe-Ki-5qa"/>
-                    <constraint firstItem="F12-H0-P9Z" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" symbolic="YES" id="Y0u-1y-hv1"/>
+                    <constraint firstItem="Jam-O7-WoM" firstAttribute="top" secondItem="rVI-TX-GRu" secondAttribute="bottom" constant="20" id="Ni1-8E-t2Q"/>
+                    <constraint firstItem="NZa-CW-72p" firstAttribute="trailing" secondItem="jNw-4C-0KS" secondAttribute="trailing" id="UTL-Af-W7f"/>
+                    <constraint firstItem="F12-H0-P9Z" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="Y0u-1y-hv1"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="top" secondItem="JL9-wh-1Zp" secondAttribute="bottom" constant="8" id="Y2V-Ky-gId"/>
                     <constraint firstItem="JL9-wh-1Zp" firstAttribute="top" secondItem="F12-H0-P9Z" secondAttribute="bottom" constant="12" id="ckO-oX-we6"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" id="g4X-xm-dMs"/>
                     <constraint firstAttribute="bottom" secondItem="caz-XB-TnX" secondAttribute="bottom" constant="20" symbolic="YES" id="hQc-YA-T5i"/>
-                    <constraint firstItem="F12-H0-P9Z" firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" id="iav-s2-gJT"/>
+                    <constraint firstItem="jNw-4C-0KS" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="76" id="kKx-Zj-gUe"/>
+                    <constraint firstItem="NZa-CW-72p" firstAttribute="top" secondItem="jNw-4C-0KS" secondAttribute="bottom" constant="13" id="pSl-iq-11a"/>
+                    <constraint firstItem="NZa-CW-72p" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="rhD-Pp-vj1"/>
+                    <constraint firstAttribute="bottom" secondItem="Jam-O7-WoM" secondAttribute="bottom" constant="20" id="yOO-X1-aCZ"/>
                 </constraints>
             </view>
             <connections>

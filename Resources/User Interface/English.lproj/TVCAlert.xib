@@ -22,7 +22,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Alert" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="pMN-4u-gqK" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" documentModal="YES"/>
-            <rect key="contentRect" x="272" y="172" width="420" height="140"/>
+            <rect key="contentRect" x="272" y="172" width="426" height="140"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="xFR-rx-kmt">
                 <rect key="frame" x="0.0" y="0.0" width="426" height="140"/>
@@ -31,7 +31,6 @@
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="3">
                         <rect key="frame" x="20" y="59" width="65" height="65"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="9GO-fq-JK2"/>
                             <constraint firstAttribute="height" constant="65" id="brw-ee-Ghm"/>
                             <constraint firstAttribute="width" constant="65" id="jJy-qZ-1jH"/>
                         </constraints>
@@ -108,13 +107,14 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="gz4-k0-7mW" firstAttribute="leading" secondItem="xFR-rx-kmt" secondAttribute="leading" constant="105" id="5eq-97-B9P"/>
+                    <constraint firstItem="7" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="20" id="8Gn-HO-9VC"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="8zW-HU-7Yp"/>
-                    <constraint firstItem="gz4-k0-7mW" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="H9p-Un-PXq"/>
                     <constraint firstItem="Fv3-Bh-Zpr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gz4-k0-7mW" secondAttribute="trailing" constant="50" id="KU6-ql-rdi"/>
                     <constraint firstItem="Fv3-Bh-Zpr" firstAttribute="baseline" secondItem="oPI-db-OzA" secondAttribute="baseline" id="MKG-sB-q7g"/>
                     <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="20" id="awG-JV-Mam"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ygL-Yb-5Mh" secondAttribute="trailing" constant="20" id="axI-xQ-Dfh"/>
-                    <constraint firstItem="5" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="by0-pW-Lm1"/>
+                    <constraint firstItem="ygL-Yb-5Mh" firstAttribute="leading" secondItem="xFR-rx-kmt" secondAttribute="leading" constant="105" id="dQD-WO-cE8"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="20" id="iTR-5Z-72U"/>
                     <constraint firstAttribute="trailing" secondItem="oPI-db-OzA" secondAttribute="trailing" constant="20" id="jD4-M1-xU7"/>
                     <constraint firstItem="5" firstAttribute="top" secondItem="xFR-rx-kmt" secondAttribute="top" constant="16" id="k4b-VK-fMd"/>
@@ -124,7 +124,6 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="20" id="tAy-L1-8YY"/>
                     <constraint firstItem="3" firstAttribute="leading" secondItem="xFR-rx-kmt" secondAttribute="leading" constant="20" id="vOf-RU-5xf"/>
                     <constraint firstItem="oPI-db-OzA" firstAttribute="leading" secondItem="Fv3-Bh-Zpr" secondAttribute="trailing" constant="11" id="x9M-7p-RI5"/>
-                    <constraint firstItem="ygL-Yb-5Mh" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="ykz-b9-Ujj"/>
                 </constraints>
             </view>
             <connections>

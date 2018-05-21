@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -242,7 +242,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="33">
-                        <rect key="frame" x="18" y="282" width="84" height="17"/>
+                        <rect key="frame" x="18" y="282" width="85" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Bans for %@" id="34">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -271,19 +271,20 @@ Gw
                 <constraints>
                     <constraint firstItem="mxf-43-RTj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="33" secondAttribute="trailing" constant="20" id="1iZ-r9-Lbu"/>
                     <constraint firstItem="3" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="2Bd-76-9yw"/>
+                    <constraint firstItem="14" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="6qs-wk-hLa"/>
                     <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="6zy-UX-gxj"/>
                     <constraint firstAttribute="trailing" secondItem="mxf-43-RTj" secondAttribute="trailing" constant="20" id="AZG-85-OZC"/>
-                    <constraint firstAttribute="bottom" secondItem="14" secondAttribute="bottom" constant="10" id="Ccs-FX-sQp"/>
-                    <constraint firstItem="33" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="DZF-cq-xo9"/>
-                    <constraint firstItem="14" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="Gw5-fe-B9P"/>
+                    <constraint firstItem="33" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="DZF-cq-xo9"/>
                     <constraint firstItem="3" firstAttribute="top" secondItem="33" secondAttribute="bottom" constant="13" id="JB7-OU-2sj"/>
+                    <constraint firstItem="18" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="Shh-hn-QfD"/>
+                    <constraint firstAttribute="bottom" secondItem="18" secondAttribute="bottom" constant="10" id="SjZ-AW-WWE"/>
                     <constraint firstItem="18" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="12" symbolic="YES" id="WcY-ms-GlP"/>
-                    <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="20" symbolic="YES" id="iLu-la-jhn"/>
+                    <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="20" id="iLu-la-jhn"/>
+                    <constraint firstItem="16" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="14" secondAttribute="trailing" constant="20" id="izk-DV-J5e"/>
                     <constraint firstItem="33" firstAttribute="top" secondItem="2" secondAttribute="top" constant="13" id="k9D-3a-TlO"/>
                     <constraint firstItem="16" firstAttribute="baseline" secondItem="14" secondAttribute="baseline" id="nCU-Yl-GOk"/>
                     <constraint firstItem="mxf-43-RTj" firstAttribute="top" secondItem="2" secondAttribute="top" constant="13" id="tLU-s9-vhb"/>
                     <constraint firstItem="18" firstAttribute="baseline" secondItem="16" secondAttribute="baseline" id="ulH-EH-VR5"/>
-                    <constraint firstItem="14" firstAttribute="leading" secondItem="33" secondAttribute="leading" id="vTV-hY-IGn"/>
                 </constraints>
             </view>
             <connections>

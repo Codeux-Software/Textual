@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,11 +21,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s9C-FG-WiP">
-                    <rect key="frame" x="76" y="90" width="437" height="32"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="433" id="cDI-T6-TcM"/>
-                        <constraint firstAttribute="height" constant="32" id="hg9-tx-W1q"/>
-                    </constraints>
+                    <rect key="frame" x="99" y="90" width="392" height="32"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This addon replaces plain text emoticons (e.g. “:-)”) with their emoji equivalent; the result of which is only visible to you." id="fQA-0x-acP">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -58,14 +54,17 @@
             </subviews>
             <constraints>
                 <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="102" id="4gB-Ee-FI9"/>
-                <constraint firstItem="s9C-FG-WiP" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="A09-RX-jgs"/>
                 <constraint firstItem="s9C-FG-WiP" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="E1z-Wc-Pn2"/>
                 <constraint firstItem="d4p-fS-sg0" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="12" id="ZS1-MY-EVd"/>
+                <constraint firstAttribute="trailing" secondItem="s9C-FG-WiP" secondAttribute="trailing" constant="100" id="b82-Ic-lGC"/>
                 <constraint firstAttribute="bottom" secondItem="d4p-fS-sg0" secondAttribute="bottom" constant="30" id="bWk-65-phe"/>
                 <constraint firstItem="d4p-fS-sg0" firstAttribute="leading" secondItem="64" secondAttribute="leading" id="cqh-kX-hHP"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="64" secondAttribute="trailing" constant="20" id="dk6-jv-Oti"/>
+                <constraint firstItem="s9C-FG-WiP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="101" id="mjl-0e-FTY"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="d4p-fS-sg0" secondAttribute="trailing" constant="20" id="nhv-OJ-Udv"/>
                 <constraint firstItem="64" firstAttribute="top" secondItem="s9C-FG-WiP" secondAttribute="bottom" constant="20" id="yZn-Gd-y1s"/>
             </constraints>
-            <point key="canvasLocation" x="412.5" y="318"/>
+            <point key="canvasLocation" x="63" y="104"/>
         </customView>
         <userDefaultsController id="LeY-as-hAW" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
