@@ -222,7 +222,7 @@ Gw
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="132">
                         <rect key="frame" x="18" y="269" width="108" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -262,19 +262,20 @@ Gw
                     </searchField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="74" firstAttribute="trailing" secondItem="103" secondAttribute="trailing" id="1Tu-Kp-wDR"/>
-                    <constraint firstAttribute="bottom" secondItem="139" secondAttribute="bottom" constant="13" id="1fY-x5-bpK"/>
+                    <constraint firstItem="74" firstAttribute="top" secondItem="65" secondAttribute="bottom" constant="13" id="9cD-7w-cMk"/>
                     <constraint firstAttribute="trailing" secondItem="103" secondAttribute="trailing" constant="20" symbolic="YES" id="Cz5-Bb-inG"/>
                     <constraint firstItem="103" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="132" secondAttribute="trailing" constant="20" id="Few-xO-gBE"/>
-                    <constraint firstItem="139" firstAttribute="top" secondItem="65" secondAttribute="bottom" constant="13" id="Ga2-F9-ab6"/>
                     <constraint firstItem="65" firstAttribute="top" secondItem="103" secondAttribute="bottom" constant="10" id="Idf-R4-CqE"/>
+                    <constraint firstAttribute="trailing" secondItem="74" secondAttribute="trailing" constant="20" id="Ku9-ei-0zH"/>
+                    <constraint firstAttribute="bottom" secondItem="74" secondAttribute="bottom" constant="13" id="LEG-kP-kBr"/>
                     <constraint firstItem="74" firstAttribute="leading" secondItem="76" secondAttribute="trailing" constant="12" symbolic="YES" id="NqQ-Of-1y7"/>
                     <constraint firstItem="132" firstAttribute="baseline" secondItem="103" secondAttribute="baseline" id="PmL-vy-ip4"/>
+                    <constraint firstItem="139" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="Qca-Mp-mnz"/>
                     <constraint firstItem="65" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="S1M-98-hH9"/>
-                    <constraint firstItem="139" firstAttribute="leading" secondItem="132" secondAttribute="leading" id="WGZ-MY-1Km"/>
                     <constraint firstItem="76" firstAttribute="baseline" secondItem="74" secondAttribute="baseline" id="ew2-ax-kv3"/>
                     <constraint firstItem="132" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="od9-bj-Cfd"/>
                     <constraint firstItem="65" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="rDb-4R-I0a"/>
+                    <constraint firstItem="76" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="139" secondAttribute="trailing" constant="20" id="vWb-Qf-IzU"/>
                     <constraint firstItem="139" firstAttribute="baseline" secondItem="76" secondAttribute="baseline" id="vck-zb-Gav"/>
                     <constraint firstItem="103" firstAttribute="top" secondItem="6" secondAttribute="top" constant="11" id="w1e-BN-ryI"/>
                 </constraints>

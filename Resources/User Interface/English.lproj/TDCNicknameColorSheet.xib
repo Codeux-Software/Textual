@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,14 +19,41 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="gNj-W9-RE1" userLabel="Sheet">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="593" y="397" width="341" height="104"/>
+            <rect key="contentRect" x="593" y="397" width="315" height="101"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="Cdd-Jy-aKw">
-                <rect key="frame" x="0.0" y="0.0" width="341" height="104"/>
+                <rect key="frame" x="0.0" y="0.0" width="315" height="101"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fbs-59-BbJ">
+                        <rect key="frame" x="18" y="64" width="166" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Change nickname color to:" id="Ril-X5-ce2">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="PRL-el-8JJ">
+                        <rect key="frame" x="190" y="60" width="48" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="hdn-qg-gfg"/>
+                            <constraint firstAttribute="width" constant="48" id="jaK-L8-JRC"/>
+                        </constraints>
+                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </colorWell>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wi2-Ib-F3T">
+                        <rect key="frame" x="246" y="59" width="49" height="25"/>
+                        <buttonCell key="cell" type="roundTextured" title="Reset" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B0R-Mq-sMG">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Reset Color for Nickname"/>
+                        <connections>
+                            <action selector="resetNicknameColor:" target="-2" id="l3S-g4-yfb"/>
+                        </connections>
+                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bdT-W6-ebh">
-                        <rect key="frame" x="257" y="13" width="70" height="32"/>
+                        <rect key="frame" x="231" y="13" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="HVO-sY-mGM">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -40,7 +67,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNT-UD-yxI">
-                        <rect key="frame" x="175" y="13" width="82" height="32"/>
+                        <rect key="frame" x="149" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="u11-Xe-NNB">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -53,52 +80,26 @@ Gw
                             <action selector="cancel:" target="-2" id="GB3-wv-mj2"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fbs-59-BbJ">
-                        <rect key="frame" x="18" y="64" width="166" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Change nickname color to:" id="Ril-X5-ce2">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="PRL-el-8JJ">
-                        <rect key="frame" x="190" y="60" width="48" height="24"/>
-                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </colorWell>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wi2-Ib-F3T">
-                        <rect key="frame" x="246" y="59" width="75" height="25"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="75" id="yZj-EQ-bGT"/>
-                        </constraints>
-                        <buttonCell key="cell" type="roundTextured" title="Reset" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B0R-Mq-sMG">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Reset Color for Nickname"/>
-                        <connections>
-                            <action selector="resetNicknameColor:" target="-2" id="l3S-g4-yfb"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="Wi2-Ib-F3T" secondAttribute="trailing" constant="20" symbolic="YES" id="2KC-dO-8OX"/>
-                    <constraint firstItem="PRL-el-8JJ" firstAttribute="top" secondItem="Cdd-Jy-aKw" secondAttribute="top" constant="20" symbolic="YES" id="2Kj-gf-1VR"/>
-                    <constraint firstItem="bdT-W6-ebh" firstAttribute="leading" secondItem="SNT-UD-yxI" secondAttribute="trailing" constant="12" symbolic="YES" id="5h9-qq-2fj"/>
-                    <constraint firstItem="PRL-el-8JJ" firstAttribute="leading" secondItem="Fbs-59-BbJ" secondAttribute="trailing" constant="8" symbolic="YES" id="GdJ-o0-ugq"/>
-                    <constraint firstItem="bdT-W6-ebh" firstAttribute="trailing" secondItem="Wi2-Ib-F3T" secondAttribute="trailing" id="TKx-eW-HRn"/>
-                    <constraint firstItem="bdT-W6-ebh" firstAttribute="top" secondItem="Wi2-Ib-F3T" secondAttribute="bottom" constant="20" symbolic="YES" id="Z6H-V0-xwR"/>
-                    <constraint firstItem="SNT-UD-yxI" firstAttribute="baseline" secondItem="bdT-W6-ebh" secondAttribute="baseline" id="cHk-Yv-DRY"/>
-                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="centerY" secondItem="PRL-el-8JJ" secondAttribute="centerY" id="ibA-zb-968"/>
-                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="leading" secondItem="PRL-el-8JJ" secondAttribute="trailing" constant="8" symbolic="YES" id="kYn-7C-LDg"/>
-                    <constraint firstAttribute="bottom" secondItem="SNT-UD-yxI" secondAttribute="bottom" constant="20" symbolic="YES" id="x1z-5x-IYb"/>
-                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="baseline" secondItem="Fbs-59-BbJ" secondAttribute="baseline" id="yJR-Fw-hCf"/>
-                    <constraint firstItem="Fbs-59-BbJ" firstAttribute="leading" secondItem="Cdd-Jy-aKw" secondAttribute="leading" constant="20" symbolic="YES" id="yj5-8z-JFz"/>
+                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="baseline" secondItem="Fbs-59-BbJ" secondAttribute="baseline" id="Bjh-1M-v6M"/>
+                    <constraint firstItem="SNT-UD-yxI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cdd-Jy-aKw" secondAttribute="leading" constant="20" id="HWw-Gn-3sa"/>
+                    <constraint firstItem="SNT-UD-yxI" firstAttribute="baseline" secondItem="bdT-W6-ebh" secondAttribute="baseline" id="M1Z-we-XpM"/>
+                    <constraint firstItem="bdT-W6-ebh" firstAttribute="leading" secondItem="SNT-UD-yxI" secondAttribute="trailing" constant="12" id="QnB-rZ-NbI"/>
+                    <constraint firstItem="Fbs-59-BbJ" firstAttribute="top" secondItem="PRL-el-8JJ" secondAttribute="top" constant="3" id="WvP-Xm-YyL"/>
+                    <constraint firstAttribute="trailing" secondItem="Wi2-Ib-F3T" secondAttribute="trailing" constant="20" id="aVs-i1-n4V"/>
+                    <constraint firstItem="PRL-el-8JJ" firstAttribute="top" secondItem="Cdd-Jy-aKw" secondAttribute="top" constant="17" id="dvf-Sc-Nwr"/>
+                    <constraint firstItem="PRL-el-8JJ" firstAttribute="leading" secondItem="Fbs-59-BbJ" secondAttribute="trailing" constant="8" id="iTo-HP-ueb"/>
+                    <constraint firstAttribute="bottom" secondItem="bdT-W6-ebh" secondAttribute="bottom" constant="20" id="qkj-TI-uqS"/>
+                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="leading" secondItem="PRL-el-8JJ" secondAttribute="trailing" constant="8" id="qnb-KV-iAB"/>
+                    <constraint firstItem="Fbs-59-BbJ" firstAttribute="leading" secondItem="Cdd-Jy-aKw" secondAttribute="leading" constant="20" id="vVn-zc-2tg"/>
+                    <constraint firstAttribute="trailing" secondItem="bdT-W6-ebh" secondAttribute="trailing" constant="20" id="vfR-YI-gMj"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="HQC-jV-a1U"/>
             </connections>
-            <point key="canvasLocation" x="329.5" y="198"/>
+            <point key="canvasLocation" x="22.5" y="233.5"/>
         </window>
     </objects>
 </document>

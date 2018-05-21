@@ -154,10 +154,9 @@
                             <action selector="clear:" target="-2" id="T9p-oR-2hf"/>
                         </connections>
                     </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S61-G4-yuP">
-                        <rect key="frame" x="-2" y="-3" width="24" height="27"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="SeN-Yp-yzc">
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="S61-G4-yuP">
+                        <rect key="frame" x="546" y="0.0" width="4" height="15"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="center" state="on" transparent="YES" imageScaling="proportionallyDown" inset="2" id="SeN-Yp-yzc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -172,8 +171,12 @@ Gw
                 <constraints>
                     <constraint firstItem="Jdf-Fe-O7N" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="013-kX-aEM"/>
                     <constraint firstItem="Jdf-Fe-O7N" firstAttribute="top" secondItem="6" secondAttribute="top" id="I9I-e4-KC6"/>
+                    <constraint firstAttribute="trailing" secondItem="S61-G4-yuP" secondAttribute="trailing" id="OHO-Y9-5gc"/>
+                    <constraint firstAttribute="bottom" secondItem="S61-G4-yuP" secondAttribute="bottom" id="SOp-rS-gkY"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="117" secondAttribute="trailing" constant="10" id="T4G-fr-nGn"/>
                     <constraint firstItem="117" firstAttribute="top" secondItem="Jdf-Fe-O7N" secondAttribute="bottom" constant="6" id="X30-Wz-Xwz"/>
                     <constraint firstItem="117" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="10" id="ZUf-Ec-p4G"/>
+                    <constraint firstItem="S61-G4-yuP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="117" secondAttribute="trailing" id="kkO-l5-ets"/>
                     <constraint firstAttribute="bottom" secondItem="117" secondAttribute="bottom" constant="5" id="uVj-fq-PFp"/>
                     <constraint firstAttribute="trailing" secondItem="Jdf-Fe-O7N" secondAttribute="trailing" id="yBR-gX-R1n"/>
                 </constraints>
@@ -209,7 +212,7 @@ Gw
                 </defaultToolbarItems>
             </toolbar>
             <contentBorderThickness minY="33"/>
-            <point key="canvasLocation" x="605" y="361.5"/>
+            <point key="canvasLocation" x="236" y="289.5"/>
         </window>
         <arrayController objectClassName="TDCFileTransferDialogTransferController" editable="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="5qZ-cx-fmP"/>
         <menu title="Menu" id="34" userLabel="TableMenu">

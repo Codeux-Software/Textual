@@ -141,7 +141,9 @@
                                                                     <constraint firstItem="hvG-NT-4R5" firstAttribute="centerY" secondItem="cXW-D6-ofH" secondAttribute="centerY" id="2Y7-Gy-gZh"/>
                                                                     <constraint firstAttribute="width" constant="138" id="6Tg-2x-gQF"/>
                                                                     <constraint firstAttribute="height" constant="48" id="L0e-IK-neq"/>
+                                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hvG-NT-4R5" secondAttribute="trailing" constant="2" id="TBc-Hi-gFB"/>
                                                                     <constraint firstItem="hvG-NT-4R5" firstAttribute="centerX" secondItem="cXW-D6-ofH" secondAttribute="centerX" id="gae-Ug-DSv"/>
+                                                                    <constraint firstItem="hvG-NT-4R5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cXW-D6-ofH" secondAttribute="leading" constant="2" id="xqS-m3-t2V"/>
                                                                 </constraints>
                                                             </customView>
                                                         </subviews>
@@ -229,11 +231,13 @@
                                                                     </textField>
                                                                 </subviews>
                                                                 <constraints>
+                                                                    <constraint firstItem="0TY-yl-88J" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VE4-5T-CFa" secondAttribute="leading" constant="2" id="77P-9m-xkj"/>
                                                                     <constraint firstItem="HwS-wb-ejD" firstAttribute="centerX" secondItem="VE4-5T-CFa" secondAttribute="centerX" id="Ilh-dG-6ne"/>
                                                                     <constraint firstItem="0TY-yl-88J" firstAttribute="centerX" secondItem="VE4-5T-CFa" secondAttribute="centerX" id="OqN-su-UPh"/>
                                                                     <constraint firstItem="HwS-wb-ejD" firstAttribute="top" secondItem="VE4-5T-CFa" secondAttribute="top" id="P2a-iG-utP"/>
                                                                     <constraint firstAttribute="height" constant="48" id="RW6-FV-7Hf"/>
                                                                     <constraint firstItem="HwS-wb-ejD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VE4-5T-CFa" secondAttribute="leading" constant="5" id="SC2-vP-gtN"/>
+                                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0TY-yl-88J" secondAttribute="trailing" constant="2" id="cxC-Mf-NPN"/>
                                                                     <constraint firstAttribute="width" constant="138" id="hHi-OB-qyA"/>
                                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HwS-wb-ejD" secondAttribute="trailing" constant="5" id="vzO-8F-qtZ"/>
                                                                     <constraint firstAttribute="bottom" secondItem="0TY-yl-88J" secondAttribute="bottom" id="xno-Ql-KJ5"/>
@@ -304,10 +308,9 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j9I-e8-k3W">
-                    <rect key="frame" x="158" y="19" width="185" height="42"/>
+                    <rect key="frame" x="158" y="19" width="184" height="42"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CHp-I7-0Gh"/>
-                        <constraint firstAttribute="width" constant="185" id="NEo-KC-1BO"/>
                     </constraints>
                     <buttonCell key="cell" type="smallSquare" title="Restore Purchase" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="phf-Qh-ceK">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -327,7 +330,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mq0-0D-14M">
-                                        <rect key="frame" x="14" y="11" width="247" height="19"/>
+                                        <rect key="frame" x="14" y="11" width="248" height="19"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Your trial of Textual expires in %@" id="f1F-rw-z5k">
                                             <font key="font" metaFont="system" size="16"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -335,6 +338,9 @@
                                         </textFieldCell>
                                     </textField>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Mq0-0D-14M" secondAttribute="trailing" constant="16" id="bKn-DV-tee"/>
+                                </constraints>
                             </view>
                             <constraints>
                                 <constraint firstItem="Mq0-0D-14M" firstAttribute="centerY" secondItem="L3F-F6-YYG" secondAttribute="centerY" id="gMC-TK-9Zu"/>
@@ -361,16 +367,18 @@
             </subviews>
             <constraints>
                 <constraint firstItem="rwI-t0-XSd" firstAttribute="top" secondItem="GGh-td-IEA" secondAttribute="bottom" constant="20" id="3sw-o2-QD5"/>
+                <constraint firstItem="j9I-e8-k3W" firstAttribute="leading" secondItem="Zck-S6-jkS" secondAttribute="leading" constant="158" id="4gE-O5-idt"/>
                 <constraint firstItem="isM-ZF-W18" firstAttribute="centerX" secondItem="Zck-S6-jkS" secondAttribute="centerX" id="7JQ-vM-JRe"/>
                 <constraint firstItem="j9I-e8-k3W" firstAttribute="top" secondItem="o15-9k-aOQ" secondAttribute="bottom" constant="15" id="8Mj-L5-zrE"/>
                 <constraint firstItem="0gm-bD-0YI" firstAttribute="top" secondItem="rwI-t0-XSd" secondAttribute="bottom" constant="18" id="9rZ-1A-Apt"/>
                 <constraint firstItem="fRS-k4-RUx" firstAttribute="centerX" secondItem="Zck-S6-jkS" secondAttribute="centerX" constant="36" id="AoX-Hu-NFm"/>
                 <constraint firstItem="fRS-k4-RUx" firstAttribute="centerY" secondItem="rwI-t0-XSd" secondAttribute="centerY" constant="1" id="CVx-Yw-L90"/>
                 <constraint firstItem="isM-ZF-W18" firstAttribute="top" secondItem="DMD-BA-sK5" secondAttribute="bottom" constant="20" id="EoO-wj-MEZ"/>
-                <constraint firstItem="j9I-e8-k3W" firstAttribute="centerX" secondItem="Zck-S6-jkS" secondAttribute="centerX" id="RMO-R5-Qua"/>
                 <constraint firstItem="GGh-td-IEA" firstAttribute="top" secondItem="Zck-S6-jkS" secondAttribute="top" id="RZP-qE-Xyg"/>
                 <constraint firstItem="GGh-td-IEA" firstAttribute="leading" secondItem="Zck-S6-jkS" secondAttribute="leading" id="U6p-TX-7Gi"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0gm-bD-0YI" secondAttribute="trailing" constant="20" id="VFK-cZ-wre"/>
                 <constraint firstItem="fRS-k4-RUx" firstAttribute="leading" secondItem="rwI-t0-XSd" secondAttribute="trailing" constant="8" id="VWu-Xm-SLo"/>
+                <constraint firstAttribute="trailing" secondItem="j9I-e8-k3W" secondAttribute="trailing" constant="158" id="d4o-9k-9gK"/>
                 <constraint firstAttribute="trailing" secondItem="GGh-td-IEA" secondAttribute="trailing" id="d7Y-nv-bxV"/>
                 <constraint firstItem="o15-9k-aOQ" firstAttribute="top" secondItem="isM-ZF-W18" secondAttribute="bottom" constant="15" id="dni-HP-pPJ"/>
                 <constraint firstItem="DMD-BA-sK5" firstAttribute="leading" secondItem="Zck-S6-jkS" secondAttribute="leading" constant="20" id="e2T-YY-uHB"/>
@@ -386,56 +394,42 @@
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="fXK-tP-ATQ" userLabel="Content View Thank You">
             <rect key="frame" x="0.0" y="0.0" width="500" height="270"/>
             <subviews>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="eTr-uV-KXe">
-                    <rect key="frame" x="43" y="46" width="414" height="178"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jEZ-Dy-gT8">
-                            <rect key="frame" x="9" y="134" width="395" height="24"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Thank you for your purchase of Textual 7!" id="xeb-Kf-7p1">
-                                <font key="font" metaFont="systemBold" size="20"/>
-                                <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9F2-R6-GOn">
-                            <rect key="frame" x="67" y="63" width="279" height="51"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="275" id="qKk-aw-9uM"/>
-                            </constraints>
-                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="All limitations have been lifted.  Please write a review in your spare time." id="4jJ-Es-moD">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VTE-ay-w6Y">
-                            <rect key="frame" x="155" y="19" width="104" height="25"/>
-                            <buttonCell key="cell" type="roundTextured" title="Write a Review" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Ny-Ft-p9h">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="writeReview:" target="-2" id="Evc-ah-alZ"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="jEZ-Dy-gT8" firstAttribute="top" secondItem="eTr-uV-KXe" secondAttribute="top" constant="20" id="1C6-os-e90"/>
-                        <constraint firstAttribute="width" constant="414" id="1YJ-MK-1vo"/>
-                        <constraint firstItem="jEZ-Dy-gT8" firstAttribute="centerX" secondItem="eTr-uV-KXe" secondAttribute="centerX" id="N26-Xh-csR"/>
-                        <constraint firstItem="VTE-ay-w6Y" firstAttribute="centerX" secondItem="eTr-uV-KXe" secondAttribute="centerX" id="Vm1-8a-fKc"/>
-                        <constraint firstItem="VTE-ay-w6Y" firstAttribute="top" secondItem="9F2-R6-GOn" secondAttribute="bottom" constant="20" id="XuJ-en-cDQ"/>
-                        <constraint firstItem="9F2-R6-GOn" firstAttribute="centerX" secondItem="eTr-uV-KXe" secondAttribute="centerX" id="dp3-n0-tcG"/>
-                        <constraint firstAttribute="height" constant="178" id="lmB-dd-wvX"/>
-                        <constraint firstItem="9F2-R6-GOn" firstAttribute="top" secondItem="jEZ-Dy-gT8" secondAttribute="bottom" constant="20" id="t9h-1q-hdT"/>
-                    </constraints>
-                </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OXT-Ee-aMq">
+                    <rect key="frame" x="53" y="179" width="395" height="24"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Thank you for your purchase of Textual 7!" id="IG8-oi-oIW">
+                        <font key="font" metaFont="systemBold" size="20"/>
+                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oku-xz-Fxe">
+                    <rect key="frame" x="127" y="108" width="247" height="51"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" title="All limitations have been lifted.  Please write a review in your spare time." id="FjZ-w2-Mtn">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7FC-io-wmx">
+                    <rect key="frame" x="198" y="64" width="104" height="25"/>
+                    <buttonCell key="cell" type="roundTextured" title="Write a Review" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PQc-EM-qjl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="writeReview:" target="-2" id="gkS-QW-itg"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstItem="7FC-io-wmx" firstAttribute="centerX" secondItem="Oku-xz-Fxe" secondAttribute="centerX" id="2rH-GU-gtN"/>
                 <constraint firstAttribute="width" constant="500" id="30C-6G-tnq"/>
                 <constraint firstAttribute="height" constant="270" id="EFT-5k-gzW"/>
-                <constraint firstItem="eTr-uV-KXe" firstAttribute="centerX" secondItem="fXK-tP-ATQ" secondAttribute="centerX" id="G8Z-oW-xle"/>
-                <constraint firstItem="eTr-uV-KXe" firstAttribute="centerY" secondItem="fXK-tP-ATQ" secondAttribute="centerY" id="ezV-hK-vv5"/>
+                <constraint firstItem="OXT-Ee-aMq" firstAttribute="top" secondItem="fXK-tP-ATQ" secondAttribute="top" constant="67" id="NYP-VP-QdL"/>
+                <constraint firstItem="7FC-io-wmx" firstAttribute="top" secondItem="Oku-xz-Fxe" secondAttribute="bottom" constant="20" id="b6Z-rN-W3h"/>
+                <constraint firstItem="OXT-Ee-aMq" firstAttribute="centerX" secondItem="fXK-tP-ATQ" secondAttribute="centerX" id="hbS-SF-gVL"/>
+                <constraint firstItem="Oku-xz-Fxe" firstAttribute="top" secondItem="OXT-Ee-aMq" secondAttribute="bottom" constant="20" id="lPZ-Wz-DVf"/>
+                <constraint firstItem="Oku-xz-Fxe" firstAttribute="centerX" secondItem="OXT-Ee-aMq" secondAttribute="centerX" id="tU6-4x-xTk"/>
             </constraints>
             <point key="canvasLocation" x="-940" y="562"/>
         </customView>
@@ -447,20 +441,14 @@
                 </progressIndicator>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gTa-O0-6Lc">
                     <rect key="frame" x="163" y="163" width="216" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="610" id="brB-cA-0HO"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloading products…" id="RdL-j5-R4V">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Downloading products…" id="RdL-j5-R4V">
                         <font key="font" metaFont="system" size="20"/>
                         <color key="textColor" red="0.388623805861399" green="0.388623805861399" blue="0.388623805861399" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mVu-QC-HVJ">
-                    <rect key="frame" x="47" y="20" width="406" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="402" id="Rbd-cJ-sZr"/>
-                    </constraints>
+                    <rect key="frame" x="48" y="20" width="404" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="gys-Cy-lXI">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Please be patient while this task is completed. It could take several minutes to complete depending on the availability of the Mac App Store.</string>
@@ -471,15 +459,18 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="width" constant="500" id="4op-L3-LAu"/>
+                <constraint firstItem="b03-92-7hd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lkd-lf-FMT" secondAttribute="leading" constant="20" id="Czi-9b-tx8"/>
                 <constraint firstAttribute="bottom" secondItem="mVu-QC-HVJ" secondAttribute="bottom" constant="20" id="WHc-BP-7Nk"/>
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerY" secondItem="lkd-lf-FMT" secondAttribute="centerY" id="d1c-fx-phO"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gTa-O0-6Lc" secondAttribute="trailing" constant="20" id="d3j-It-cgU"/>
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="leading" secondItem="b03-92-7hd" secondAttribute="trailing" constant="10" id="e3T-bN-RKr"/>
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerX" secondItem="lkd-lf-FMT" secondAttribute="centerX" constant="21" id="iLf-pc-Zte"/>
                 <constraint firstItem="b03-92-7hd" firstAttribute="centerY" secondItem="gTa-O0-6Lc" secondAttribute="centerY" id="jrJ-mX-tzB"/>
+                <constraint firstAttribute="trailing" secondItem="mVu-QC-HVJ" secondAttribute="trailing" constant="50" id="pDT-E9-JUg"/>
                 <constraint firstAttribute="height" constant="350" id="pHW-lW-vUf"/>
-                <constraint firstItem="mVu-QC-HVJ" firstAttribute="centerX" secondItem="lkd-lf-FMT" secondAttribute="centerX" id="rvW-x8-hze"/>
+                <constraint firstItem="mVu-QC-HVJ" firstAttribute="leading" secondItem="lkd-lf-FMT" secondAttribute="leading" constant="50" id="vvI-pc-9qC"/>
             </constraints>
-            <point key="canvasLocation" x="27" y="143"/>
+            <point key="canvasLocation" x="207" y="236"/>
         </customView>
         <arrayController objectClassName="TDCInAppPurchaseProductTableEntry" preservesSelection="NO" avoidsEmptySelection="NO" id="T1b-RU-oAd"/>
     </objects>

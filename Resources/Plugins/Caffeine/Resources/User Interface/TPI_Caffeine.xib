@@ -31,10 +31,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bql-3Z-Voy">
-                    <rect key="frame" x="122" y="30" width="326" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="322" id="Dat-fC-WKn"/>
-                    </constraints>
+                    <rect key="frame" x="122" y="30" width="354" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not allow your Mac to go to sleep, thus disconnecting the Internet, while Textual has at least one connection open." id="Qhn-Wh-BWO">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -47,7 +44,8 @@
                 <constraint firstItem="s7v-vd-1wt" firstAttribute="leading" secondItem="ARD-gu-kap" secondAttribute="leading" constant="106" id="MIl-tU-QVX"/>
                 <constraint firstItem="s7v-vd-1wt" firstAttribute="top" secondItem="ARD-gu-kap" secondAttribute="top" constant="30" id="SF2-qZ-ePs"/>
                 <constraint firstAttribute="bottom" secondItem="Bql-3Z-Voy" secondAttribute="bottom" constant="30" id="Ylc-ia-aXe"/>
-                <constraint firstItem="Bql-3Z-Voy" firstAttribute="leading" secondItem="ARD-gu-kap" secondAttribute="leading" constant="124" id="xFV-06-Df6"/>
+                <constraint firstAttribute="trailing" secondItem="Bql-3Z-Voy" secondAttribute="trailing" constant="115" id="fxu-9X-7sX"/>
+                <constraint firstItem="Bql-3Z-Voy" firstAttribute="leading" secondItem="s7v-vd-1wt" secondAttribute="leading" constant="18" id="jbZ-Nn-bp1"/>
             </constraints>
             <point key="canvasLocation" x="363.5" y="-3953"/>
         </customView>

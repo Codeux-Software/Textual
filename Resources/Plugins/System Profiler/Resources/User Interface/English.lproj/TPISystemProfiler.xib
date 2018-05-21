@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -64,7 +64,6 @@
                     </clipView>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="gi2-gU-wES"/>
-                        <constraint firstAttribute="width" constant="369" id="seK-ll-f5t"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="94">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
@@ -192,7 +191,7 @@
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-fu-TKI">
                     <rect key="frame" x="176" y="30" width="254" height="14"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Whether to ask apple.com which Mac you have." id="mTb-3O-ZNG">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Whether to ask apple.com which Mac you have." id="mTb-3O-ZNG">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -200,30 +199,40 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="92" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="0jm-t1-9mg"/>
                 <constraint firstItem="97" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="1hl-wt-fGE"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="92" secondAttribute="bottom" constant="19" id="2xv-2g-xxg"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="160" id="4fg-70-ieJ"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="14" secondAttribute="trailing" constant="20" id="4gm-2x-wbi"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="18" secondAttribute="trailing" constant="20" id="6EA-ui-clT"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="98" secondAttribute="trailing" constant="20" id="7yl-zH-oAH"/>
                 <constraint firstItem="14" firstAttribute="top" secondItem="12" secondAttribute="bottom" constant="14" id="Cqq-tW-rrq"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="22" secondAttribute="trailing" constant="20" id="DL3-4N-JNH"/>
                 <constraint firstItem="12" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="DaV-SE-lzH"/>
                 <constraint firstItem="18" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="E3p-0W-CWO"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5" secondAttribute="trailing" constant="20" id="FxO-gV-ubb"/>
                 <constraint firstItem="12" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="Gc3-57-Hcg"/>
                 <constraint firstItem="16" firstAttribute="top" secondItem="14" secondAttribute="bottom" constant="14" id="HUN-fa-hhY"/>
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="top" secondItem="98" secondAttribute="bottom" constant="8" id="Ixu-Kj-Kve"/>
                 <constraint firstItem="92" firstAttribute="top" secondItem="1" secondAttribute="top" constant="28" id="LcK-yq-TdT"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="12" secondAttribute="trailing" constant="20" id="MqS-xh-hrb"/>
+                <constraint firstItem="92" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="110" id="NrM-wg-MJR"/>
                 <constraint firstItem="12" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="14" id="Olx-0n-2Ss"/>
                 <constraint firstItem="98" firstAttribute="top" secondItem="97" secondAttribute="bottom" constant="18" id="Tfk-11-JcR"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="16" secondAttribute="trailing" constant="20" id="X8O-vf-9yq"/>
                 <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="14" id="YN8-Sk-bDj"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3" secondAttribute="trailing" constant="20" id="b9p-Gr-p3G"/>
                 <constraint firstItem="18" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="14" id="c9O-La-C2b"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6bj-fu-TKI" secondAttribute="trailing" constant="140" id="cbc-ys-DMR"/>
                 <constraint firstItem="22" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="14" id="fdL-9S-zVb"/>
+                <constraint firstItem="98" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="160" id="gvY-pJ-Aqe"/>
                 <constraint firstItem="22" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="huX-hj-Car"/>
-                <constraint firstItem="98" firstAttribute="leading" secondItem="22" secondAttribute="leading" id="itH-9b-TUp"/>
                 <constraint firstItem="16" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="kku-SS-yIh"/>
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="leading" secondItem="98" secondAttribute="leading" constant="18" id="lmT-vP-6Kc"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="qWh-kV-gCg"/>
+                <constraint firstAttribute="trailing" secondItem="92" secondAttribute="trailing" constant="110" id="ufs-Ny-yam"/>
                 <constraint firstItem="97" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="18" id="yY3-HT-8Kf"/>
             </constraints>
-            <point key="canvasLocation" x="390.5" y="409"/>
+            <point key="canvasLocation" x="190" y="385"/>
         </customView>
         <userDefaultsController id="114" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>

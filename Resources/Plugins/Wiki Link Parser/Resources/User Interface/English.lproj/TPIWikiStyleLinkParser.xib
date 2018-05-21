@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikiStyleLinkParser">
@@ -24,18 +25,18 @@
             <rect key="frame" x="0.0" y="0.0" width="588" height="446"/>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="60">
-                    <rect key="frame" x="61" y="296" width="467" height="120"/>
+                    <rect key="frame" x="40" y="296" width="508" height="120"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pdQ-DS-ILK">
-                        <rect key="frame" x="0.0" y="0.0" width="467" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="508" height="120"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="61">
-                                <rect key="frame" x="0.0" y="0.0" width="467" height="120"/>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" id="61">
+                                <rect key="frame" x="0.0" y="0.0" width="508" height="120"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="467" height="120"/>
-                                <size key="maxSize" width="488" height="10000000"/>
+                                <size key="minSize" width="508" height="120"/>
+                                <size key="maxSize" width="509" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="This addon replaces Wiki markup title blocks, similar to ">
                                         <attributes>
@@ -74,12 +75,13 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="467" height="120"/>
-                                <size key="maxSize" width="488" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                     </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="n6P-Qd-B2v"/>
+                    </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="62">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -100,7 +102,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="68">
-                    <rect key="frame" x="47" y="243" width="85" height="17"/>
+                    <rect key="frame" x="38" y="243" width="85" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Link Prefixes:" id="69">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -108,13 +110,13 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="273">
-                    <rect key="frame" x="47" y="59" width="494" height="176"/>
+                    <rect key="frame" x="40" y="59" width="508" height="176"/>
                     <clipView key="contentView" id="K0X-dB-5Eh">
-                        <rect key="frame" x="1" y="0.0" width="492" height="175"/>
+                        <rect key="frame" x="1" y="0.0" width="506" height="175"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="276" id="274">
-                                <rect key="frame" x="0.0" y="0.0" width="492" height="152"/>
+                                <rect key="frame" x="0.0" y="0.0" width="506" height="152"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -133,7 +135,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="link" editable="NO" width="360.34393310546875" minWidth="10" maxWidth="3.4028234663852886e+38" id="282">
+                                    <tableColumn identifier="link" editable="NO" width="374.34393310546875" minWidth="10" maxWidth="3.4028234663852886e+38" id="282">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Link Prefix">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -154,10 +156,12 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="176" id="5gT-nk-eUH"/>
+                    </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="275">
-                        <rect key="frame" x="1" y="153" width="492" height="16"/>
+                        <rect key="frame" x="1" y="159" width="491" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="277">
@@ -165,16 +169,13 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="276">
-                        <rect key="frame" x="0.0" y="0.0" width="492" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="506" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="284">
-                    <rect key="frame" x="47" y="29" width="30" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="aI7-ZC-bzM"/>
-                        <constraint firstAttribute="height" constant="21" id="tZO-qS-kCU"/>
-                    </constraints>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="284">
+                    <rect key="frame" x="40" y="29" width="30" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="285">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -184,11 +185,9 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         <binding destination="ak5-9U-7uX" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="ExP-nb-61m"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="286">
-                    <rect key="frame" x="77" y="29" width="30" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="NZI-aS-Wn3"/>
-                    </constraints>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="286">
+                    <rect key="frame" x="70" y="29" width="30" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -200,22 +199,18 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="60" firstAttribute="centerX" secondItem="273" secondAttribute="centerX" id="1vG-uv-jrq"/>
-                <constraint firstItem="286" firstAttribute="leading" secondItem="284" secondAttribute="trailing" id="5XY-TJ-PLr"/>
+                <constraint firstItem="68" firstAttribute="leading" secondItem="273" secondAttribute="leading" id="C5s-UU-9dL"/>
+                <constraint firstAttribute="trailing" secondItem="60" secondAttribute="trailing" constant="40" id="CcQ-q1-Mzl"/>
                 <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="65" id="IWA-VD-5ft"/>
-                <constraint firstItem="64" firstAttribute="top" secondItem="1" secondAttribute="top" constant="158" id="KRv-aK-U6D"/>
-                <constraint firstItem="273" firstAttribute="leading" secondItem="284" secondAttribute="leading" id="Lcf-fb-BR0"/>
-                <constraint firstItem="284" firstAttribute="top" secondItem="273" secondAttribute="bottom" constant="8" symbolic="YES" id="NdQ-pP-7AQ"/>
-                <constraint firstItem="68" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="49" id="Pue-oj-1MS"/>
-                <constraint firstItem="286" firstAttribute="bottom" secondItem="284" secondAttribute="bottom" id="Qht-i9-Lxc"/>
-                <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="61" id="Qwf-8t-mVI"/>
+                <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="Qwf-8t-mVI"/>
                 <constraint firstItem="273" firstAttribute="top" secondItem="68" secondAttribute="bottom" constant="8" symbolic="YES" id="TUc-iM-2d5"/>
                 <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="8" symbolic="YES" id="Taf-Ox-BPO"/>
                 <constraint firstItem="60" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="YnO-Bm-phb"/>
-                <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="47" id="aYl-YB-IJi"/>
-                <constraint firstAttribute="bottom" secondItem="284" secondAttribute="bottom" constant="30" id="crk-i5-yrb"/>
+                <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="aYl-YB-IJi"/>
+                <constraint firstAttribute="trailing" secondItem="273" secondAttribute="trailing" constant="40" id="c4y-is-j1d"/>
                 <constraint firstItem="60" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="jGq-yp-ByY"/>
-                <constraint firstItem="286" firstAttribute="top" secondItem="284" secondAttribute="top" id="ndf-ZJ-85f"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="64" secondAttribute="trailing" constant="20" id="jkb-3Q-SkS"/>
+                <constraint firstItem="68" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="273" secondAttribute="trailing" id="nQx-1v-XfB"/>
                 <constraint firstItem="68" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="14" id="uzQ-tN-oSt"/>
             </constraints>
             <point key="canvasLocation" x="593" y="460"/>
@@ -239,9 +234,6 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="244" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="137" y="88" width="292" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="NqI-hi-F20"/>
-                        </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="https://en.wikipedia.org/wiki/" id="245" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -252,18 +244,15 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="246">
-                        <rect key="frame" x="17" y="63" width="91" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="87" id="x7z-wW-vxi"/>
-                        </constraints>
+                        <rect key="frame" x="17" y="65" width="89" height="17"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="247">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="262">
-                        <rect key="frame" x="112" y="58" width="318" height="26"/>
+                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="262">
+                        <rect key="frame" x="110" y="58" width="320" height="26"/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="263">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -274,10 +263,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         </connections>
                     </popUpButton>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="258">
-                        <rect key="frame" x="340" y="13" width="95" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="83" id="BFA-Xv-MbU"/>
-                        </constraints>
+                        <rect key="frame" x="365" y="13" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="259">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -290,10 +276,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="260">
-                        <rect key="frame" x="245" y="13" width="95" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="83" id="Bdl-yp-mfK"/>
-                        </constraints>
+                        <rect key="frame" x="283" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="261">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -307,20 +290,22 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="262" firstAttribute="baseline" secondItem="246" secondAttribute="baseline" id="2ud-3H-mWK"/>
+                    <constraint firstAttribute="trailing" secondItem="258" secondAttribute="trailing" constant="20" id="3K6-md-ogp"/>
+                    <constraint firstItem="242" firstAttribute="top" secondItem="244" secondAttribute="top" constant="3" id="65a-Co-2Ud"/>
                     <constraint firstItem="244" firstAttribute="top" secondItem="225" secondAttribute="top" constant="17" id="9xM-YK-c59"/>
-                    <constraint firstItem="242" firstAttribute="top" secondItem="225" secondAttribute="top" constant="20" symbolic="YES" id="L2Z-Gx-BIf"/>
-                    <constraint firstItem="260" firstAttribute="top" secondItem="262" secondAttribute="bottom" constant="20" symbolic="YES" id="LHs-b2-ejr"/>
-                    <constraint firstItem="262" firstAttribute="centerY" secondItem="246" secondAttribute="centerY" id="LMj-38-I71"/>
-                    <constraint firstItem="262" firstAttribute="top" secondItem="242" secondAttribute="bottom" constant="8" symbolic="YES" id="ULL-BS-SPL"/>
+                    <constraint firstItem="258" firstAttribute="top" secondItem="262" secondAttribute="bottom" constant="20" id="EGf-FQ-VAF"/>
+                    <constraint firstAttribute="bottom" secondItem="258" secondAttribute="bottom" constant="20" id="ISX-Ln-AKB"/>
                     <constraint firstItem="262" firstAttribute="leading" secondItem="246" secondAttribute="trailing" constant="8" symbolic="YES" id="XF4-Fj-tK4"/>
-                    <constraint firstItem="244" firstAttribute="trailing" secondItem="258" secondAttribute="trailing" id="Xb5-ol-YAr"/>
                     <constraint firstAttribute="trailing" secondItem="262" secondAttribute="trailing" constant="22" id="Z1p-RR-CLO"/>
                     <constraint firstItem="258" firstAttribute="leading" secondItem="260" secondAttribute="trailing" constant="12" symbolic="YES" id="aFj-4x-amE"/>
+                    <constraint firstItem="246" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="19" id="aKM-Rh-WVv"/>
                     <constraint firstItem="242" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="19" id="cHA-Qn-BqW"/>
                     <constraint firstItem="244" firstAttribute="leading" secondItem="242" secondAttribute="trailing" constant="8" symbolic="YES" id="mqD-EF-bqC"/>
+                    <constraint firstItem="262" firstAttribute="top" secondItem="244" secondAttribute="bottom" constant="6" id="nZF-y4-eDq"/>
                     <constraint firstAttribute="trailing" secondItem="244" secondAttribute="trailing" constant="20" symbolic="YES" id="nlH-IK-rw9"/>
+                    <constraint firstItem="260" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="225" secondAttribute="leading" constant="20" id="oc0-NC-bRR"/>
                     <constraint firstItem="260" firstAttribute="baseline" secondItem="258" secondAttribute="baseline" id="qhq-pI-9ag"/>
-                    <constraint firstItem="242" firstAttribute="leading" secondItem="246" secondAttribute="leading" id="vTh-ip-cbp"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="165.5" y="110.5"/>

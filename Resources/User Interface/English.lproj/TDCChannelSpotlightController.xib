@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="101200" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
@@ -10,7 +10,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelSpotlightController">
             <connections>
                 <outlet property="noResultsLabel" destination="Gag-Uy-6zA" id="hU8-te-kTl"/>
-                <outlet property="noResultsLabelLeadingConstraint" destination="5Kn-yl-6CJ" id="3OB-c6-KM7"/>
                 <outlet property="searchField" destination="1E4-kg-4iF" id="bZT-CB-oym"/>
                 <outlet property="searchResultsController" destination="fxa-x1-fZ7" id="xfS-1h-r9R"/>
                 <outlet property="searchResultsTable" destination="tt4-3F-bvy" id="x3U-fE-QVn"/>
@@ -48,7 +47,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="twL-Dm-bZc"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Search for channel" usesSingleLineMode="YES" id="xLW-8e-ask">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Search for channel" usesSingleLineMode="YES" id="xLW-8e-ask">
                                     <font key="font" metaFont="systemLight" size="26"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -108,7 +107,7 @@
                                                                                 <binding destination="G8b-ye-mjd" name="value" keyPath="self.channelName" id="1l0-Lg-xo1"/>
                                                                             </connections>
                                                                         </textField>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Js1-ti-O0L">
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Js1-ti-O0L">
                                                                             <rect key="frame" x="8" y="6" width="172" height="16"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1 unread message, 1 highlight" id="P1U-vp-d2N">
                                                                                 <font key="font" metaFont="cellTitle"/>
@@ -136,6 +135,7 @@
                                                                         <constraint firstAttribute="trailing" secondItem="ipN-YI-lSG" secondAttribute="trailing" constant="10" id="GR1-o1-WxB"/>
                                                                         <constraint firstItem="Js1-ti-O0L" firstAttribute="leading" secondItem="d8V-0z-qfJ" secondAttribute="leading" id="HsT-0R-vWV"/>
                                                                         <constraint firstItem="d8V-0z-qfJ" firstAttribute="top" secondItem="G8b-ye-mjd" secondAttribute="top" constant="6" id="Pez-e3-n1I"/>
+                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Js1-ti-O0L" secondAttribute="trailing" constant="20" id="RDu-yd-Q5y"/>
                                                                         <constraint firstItem="Js1-ti-O0L" firstAttribute="top" secondItem="d8V-0z-qfJ" secondAttribute="bottom" constant="-1" id="bds-0C-hYT"/>
                                                                         <constraint firstItem="d8V-0z-qfJ" firstAttribute="leading" secondItem="G8b-ye-mjd" secondAttribute="leading" constant="10" id="jsX-oK-3kx"/>
                                                                         <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d8V-0z-qfJ" secondAttribute="trailing" constant="20" id="vNH-SU-jCE"/>
@@ -185,9 +185,9 @@
                                     <constraint firstItem="DH2-Zr-hDS" firstAttribute="leading" secondItem="bUM-jd-4A3" secondAttribute="leading" id="vok-8D-7qu"/>
                                 </constraints>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gag-Uy-6zA">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gag-Uy-6zA">
                                 <rect key="frame" x="551" y="184" width="37" height="17"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Label" id="hR8-rl-k0H">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="hR8-rl-k0H">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -196,11 +196,12 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="bUM-jd-4A3" secondAttribute="bottom" id="0I1-hx-BY2"/>
-                            <constraint firstItem="Gag-Uy-6zA" firstAttribute="leading" secondItem="1E4-kg-4iF" secondAttribute="trailing" constant="14" id="5Kn-yl-6CJ"/>
                             <constraint firstAttribute="trailing" secondItem="bUM-jd-4A3" secondAttribute="trailing" id="7gC-Ny-6OU"/>
                             <constraint firstItem="1E4-kg-4iF" firstAttribute="leading" secondItem="Diu-wk-ZgA" secondAttribute="trailing" constant="14" id="9Bu-lx-Js9"/>
                             <constraint firstItem="bUM-jd-4A3" firstAttribute="top" secondItem="1E4-kg-4iF" secondAttribute="bottom" constant="12" id="Eda-ho-Uej"/>
                             <constraint firstItem="1E4-kg-4iF" firstAttribute="top" secondItem="OYV-WK-xFr" secondAttribute="top" constant="12" id="Syt-uA-Div"/>
+                            <constraint firstAttribute="width" constant="600" id="bXM-cm-Q46"/>
+                            <constraint firstItem="Gag-Uy-6zA" firstAttribute="leading" secondItem="1E4-kg-4iF" secondAttribute="trailing" constant="14" id="mSk-dR-BZk"/>
                             <constraint firstItem="Gag-Uy-6zA" firstAttribute="top" secondItem="OYV-WK-xFr" secondAttribute="top" constant="20" id="nlm-fg-QMS"/>
                             <constraint firstAttribute="trailing" secondItem="Gag-Uy-6zA" secondAttribute="trailing" constant="14" id="qFg-Ax-Qlz"/>
                             <constraint firstItem="Diu-wk-ZgA" firstAttribute="leading" secondItem="OYV-WK-xFr" secondAttribute="leading" constant="14" id="qcB-VV-GRh"/>
