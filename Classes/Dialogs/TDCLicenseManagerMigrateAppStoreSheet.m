@@ -311,8 +311,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *applicationBundleID = [applicationBundle objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 
 	if (applicationBundleID == nil ||
-		[applicationBundleID isEqualToString:@"com.codeux.irc.textual5"] == NO ||
-		[applicationBundleID isEqualToString:@"com.codeux.apps.textual-mas"] == NO)
+		([applicationBundleID isEqualToString:@"com.codeux.irc.textual5"] == NO &&
+		 [applicationBundleID isEqualToString:@"com.codeux.apps.textual-mas"] == NO))
 	{
 		return NO;
 	}
