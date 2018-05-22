@@ -541,6 +541,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic defaultTopic;
 @dynamic ignoreGeneralEventMessages;
 @dynamic ignoreHighlights;
+@dynamic ignoreInlineMedia;
 @dynamic inlineMediaDisabled;
 @dynamic inlineMediaEnabled;
 @dynamic pushNotifications;
