@@ -84,13 +84,6 @@
 		<key>arguments</key>
 		<string>[channel] &lt;nickname&gt;</string>
 	</dict>
-	<key>bufferdebug</key>
-	<dict>
-		<key>developerModeOnly</key>
-		<false/>
-		<key>indexValue</key>
-		<real>5116</real>
-	</dict>
 	<key>cap</key>
 	<dict>
 		<key>developerModeOnly</key>

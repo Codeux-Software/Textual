@@ -50,7 +50,6 @@ var _Textual = {};
 Textual.initializeCore = function(resourcesPath)
 {
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/clickMenuSelection.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/debug.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/documentBody.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/events.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/inlineMedia.js");

@@ -48,7 +48,6 @@ typedef NS_ENUM(NSUInteger, IRCPublicCommand) {
 	IRCPublicCommandAwayIndex = 5004,
 	IRCPublicCommandBackIndex = 5105,
 	IRCPublicCommandBanIndex = 5005,
-	IRCPublicCommandBufferdebugIndex = 5116,
 	IRCPublicCommandCapIndex = 5006,
 	IRCPublicCommandCapsIndex = 5007,
 	IRCPublicCommandCcbadgeIndex = 5008,
