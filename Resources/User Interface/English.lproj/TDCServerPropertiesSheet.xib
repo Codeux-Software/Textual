@@ -920,7 +920,7 @@ Gw
                     <rect key="frame" x="35" y="240" width="460" height="36"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Fx0-Yf-kbO">
                         <rect key="frame" x="0.0" y="0.0" width="460" height="36"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
                                 <rect key="frame" x="0.0" y="0.0" width="460" height="36"/>
@@ -1023,7 +1023,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1337,7 +1337,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="179"/>
@@ -1444,7 +1444,7 @@ Gw
                     <rect key="frame" x="57" y="54" width="416" height="200"/>
                     <clipView key="contentView" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="414" height="198"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -1503,6 +1503,37 @@ Gw
                 <userLayoutGuide location="192" affinity="minX"/>
             </userGuides>
             <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="GFp-Qd-4ck">
+                    <rect key="frame" x="56" y="76" width="418" height="155"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFG-yi-lT4">
+                            <rect key="frame" x="18" y="79" width="382" height="51"/>
+                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" id="R86-j6-hCz">
+                                <font key="font" metaFont="system"/>
+                                <string key="title">When enabled, the SOCKS proxy that can be configured in the Network section of System Preferences will be used with the “Automatic” proxy type selected.</string>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h41-zX-k7q">
+                            <rect key="frame" x="110" y="31" width="198" height="32"/>
+                            <buttonCell key="cell" type="push" title="Open System Preferences" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j5N-EC-4uH">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="openProxySettingsInSystemPreferences:" target="-2" id="Pfm-LV-j2c"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="h41-zX-k7q" secondAttribute="bottom" constant="38" id="2EO-j0-5CG"/>
+                        <constraint firstItem="h41-zX-k7q" firstAttribute="top" secondItem="fFG-yi-lT4" secondAttribute="bottom" constant="20" id="Cgr-xO-25x"/>
+                        <constraint firstItem="fFG-yi-lT4" firstAttribute="leading" secondItem="GFp-Qd-4ck" secondAttribute="leading" constant="20" symbolic="YES" id="Efy-hc-gPW"/>
+                        <constraint firstAttribute="trailing" secondItem="fFG-yi-lT4" secondAttribute="trailing" constant="20" symbolic="YES" id="GMo-7J-c8z"/>
+                        <constraint firstItem="fFG-yi-lT4" firstAttribute="top" secondItem="GFp-Qd-4ck" secondAttribute="top" constant="25" id="TY6-VB-cKH"/>
+                    </constraints>
+                </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yql-kd-PP5">
                     <rect key="frame" x="56" y="76" width="418" height="156"/>
                     <subviews>
@@ -1521,26 +1552,6 @@ Gw
                         <constraint firstItem="P8N-qI-sG7" firstAttribute="leading" secondItem="yql-kd-PP5" secondAttribute="leading" constant="20" symbolic="YES" id="Bas-dV-XdT"/>
                         <constraint firstAttribute="trailing" secondItem="P8N-qI-sG7" secondAttribute="trailing" constant="20" symbolic="YES" id="hJo-l3-fiV"/>
                         <constraint firstItem="P8N-qI-sG7" firstAttribute="top" secondItem="yql-kd-PP5" secondAttribute="top" constant="41" id="iPC-W3-AGi"/>
-                    </constraints>
-                </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="GFp-Qd-4ck">
-                    <rect key="frame" x="56" y="76" width="418" height="155"/>
-                    <subviews>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFG-yi-lT4">
-                            <rect key="frame" x="18" y="64" width="382" height="51"/>
-                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" id="R86-j6-hCz">
-                                <font key="font" metaFont="system"/>
-                                <string key="title">When enabled, the SOCKS proxy that can be configured in the Network section of System Preferences will be used with the “Automatic” proxy type selected.</string>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="fFG-yi-lT4" firstAttribute="leading" secondItem="GFp-Qd-4ck" secondAttribute="leading" constant="20" symbolic="YES" id="Efy-hc-gPW"/>
-                        <constraint firstAttribute="trailing" secondItem="fFG-yi-lT4" secondAttribute="trailing" constant="20" symbolic="YES" id="GMo-7J-c8z"/>
-                        <constraint firstItem="fFG-yi-lT4" firstAttribute="top" secondItem="GFp-Qd-4ck" secondAttribute="top" constant="40" id="TY6-VB-cKH"/>
-                        <constraint firstAttribute="bottom" secondItem="fFG-yi-lT4" secondAttribute="bottom" constant="64" id="hD0-5E-yQN"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="KJ6-gu-xq3">
@@ -1802,27 +1813,27 @@ Gw
             </subviews>
             <constraints>
                 <constraint firstItem="CGs-VH-G07" firstAttribute="top" secondItem="KJ6-gu-xq3" secondAttribute="bottom" constant="6" id="17W-O7-Sze"/>
-                <constraint firstItem="GFp-Qd-4ck" firstAttribute="top" secondItem="1978" secondAttribute="bottom" constant="8" id="55X-wx-XRV"/>
                 <constraint firstItem="CGs-VH-G07" firstAttribute="top" secondItem="yql-kd-PP5" secondAttribute="bottom" constant="6" id="763-bY-CJi"/>
                 <constraint firstItem="1896" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="107" id="7EE-Ig-sgH"/>
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="56" id="9Iy-Ze-ay1"/>
                 <constraint firstItem="1905" firstAttribute="top" secondItem="1887" secondAttribute="top" constant="30" id="Dbg-uJ-q91"/>
-                <constraint firstItem="GFp-Qd-4ck" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="56" id="F4E-DC-xeV"/>
                 <constraint firstItem="1905" firstAttribute="leading" secondItem="1896" secondAttribute="trailing" constant="8" symbolic="YES" id="HCi-HW-Ly0"/>
-                <constraint firstItem="CGs-VH-G07" firstAttribute="top" secondItem="GFp-Qd-4ck" secondAttribute="bottom" constant="6" id="J7g-x1-pgV"/>
+                <constraint firstItem="GFp-Qd-4ck" firstAttribute="top" secondItem="1978" secondAttribute="bottom" constant="8" id="LQR-c1-szX"/>
                 <constraint firstItem="1978" firstAttribute="top" secondItem="1905" secondAttribute="bottom" constant="4" id="MhR-ku-jWp"/>
                 <constraint firstAttribute="trailing" secondItem="KJ6-gu-xq3" secondAttribute="trailing" constant="56" id="N3Z-QT-57p"/>
                 <constraint firstItem="yql-kd-PP5" firstAttribute="top" secondItem="1978" secondAttribute="bottom" constant="7" id="PMv-h5-Ngv"/>
+                <constraint firstAttribute="trailing" secondItem="GFp-Qd-4ck" secondAttribute="trailing" constant="56" id="SAa-tA-4mb"/>
                 <constraint firstAttribute="trailing" secondItem="1905" secondAttribute="trailing" constant="108" id="ST6-5w-t01"/>
                 <constraint firstAttribute="trailing" secondItem="CGs-VH-G07" secondAttribute="trailing" constant="48" id="Wvo-Vb-qx0"/>
+                <constraint firstItem="GFp-Qd-4ck" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="56" id="Xvx-OA-cOW"/>
                 <constraint firstItem="1978" firstAttribute="centerX" secondItem="1905" secondAttribute="centerX" id="bJC-Ld-1xr"/>
-                <constraint firstAttribute="trailing" secondItem="GFp-Qd-4ck" secondAttribute="trailing" constant="56" id="bSX-0j-ygs"/>
                 <constraint firstItem="1896" firstAttribute="top" secondItem="1905" secondAttribute="top" constant="2" id="fxp-db-lFJ"/>
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="top" secondItem="1978" secondAttribute="bottom" constant="7" id="iWC-dI-SzZ"/>
                 <constraint firstItem="yql-kd-PP5" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="56" id="iWs-nE-rQe"/>
                 <constraint firstItem="CGs-VH-G07" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="48" id="kRu-eF-vfK"/>
                 <constraint firstAttribute="bottom" secondItem="CGs-VH-G07" secondAttribute="bottom" constant="28" id="mKa-Wd-Ww9"/>
                 <constraint firstAttribute="trailing" secondItem="yql-kd-PP5" secondAttribute="trailing" constant="56" id="tqV-pU-pn7"/>
+                <constraint firstItem="CGs-VH-G07" firstAttribute="top" secondItem="GFp-Qd-4ck" secondAttribute="bottom" constant="6" id="u3W-In-D4G"/>
             </constraints>
             <point key="canvasLocation" x="316" y="199.5"/>
         </customView>

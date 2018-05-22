@@ -58,6 +58,7 @@
 #import "TDCAlert.h"
 #import "TDCChannelPropertiesSheetPrivate.h"
 #import "TDCHighlightEntrySheetPrivate.h"
+#import "TDCPreferencesControllerPrivate.h"
 #import "TDCServerEndpointListSheetPrivate.h"
 #import "TDCServerPropertiesSheetPrivate.h"
 
@@ -195,6 +196,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)deleteAddressBookEntry:(id)sender;
 
 - (IBAction)showAddAddressBookEntryMenu:(id)sender;
+
+- (IBAction)openProxySettingsInSystemPreferences:(id)sender;
 
 - (IBAction)editSeverEndpoints:(id)sender;
 
@@ -1245,6 +1248,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.proxyPortTextField performValidation];
 
 	[self updateConnectionPage];
+}
+
+- (void)openProxySettingsInSystemPreferences:(id)sender
+{
+	[TDCPreferencesController openProxySettingsInSystemPreferences];
 }
 
 - (void)toggleAdvancedEncodings:(id)sender
