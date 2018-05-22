@@ -1183,7 +1183,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1281,8 +1281,8 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2358">
-                    <rect key="frame" x="52" y="265" width="223" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Ignore or track the following people:" id="2359">
+                    <rect key="frame" x="52" y="265" width="426" height="17"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Ignore or track the following people:" id="2359">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1337,7 +1337,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="179"/>
@@ -1404,7 +1404,7 @@ Gw
                 <constraint firstAttribute="bottom" secondItem="1843" secondAttribute="bottom" constant="25" id="2Gi-2g-Nwu"/>
                 <constraint firstItem="1845" firstAttribute="leading" secondItem="1843" secondAttribute="trailing" constant="1" id="2qb-yz-69l"/>
                 <constraint firstItem="2358" firstAttribute="top" secondItem="1817" secondAttribute="top" constant="25" id="9z4-Kb-aMe"/>
-                <constraint firstItem="2358" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="1842" secondAttribute="trailing" id="HJR-XB-yIn"/>
+                <constraint firstItem="2358" firstAttribute="trailing" secondItem="1842" secondAttribute="trailing" id="HJR-XB-yIn"/>
                 <constraint firstItem="1844" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1845" secondAttribute="trailing" constant="20" id="PyA-u7-Bx7"/>
                 <constraint firstAttribute="trailing" secondItem="1842" secondAttribute="trailing" constant="54" id="StT-5t-K2p"/>
                 <constraint firstItem="1843" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" id="Uz3-NU-geK"/>
@@ -1515,7 +1515,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h41-zX-k7q">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h41-zX-k7q">
                             <rect key="frame" x="110" y="31" width="198" height="32"/>
                             <buttonCell key="cell" type="push" title="Open System Preferences" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j5N-EC-4uH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1532,6 +1532,7 @@ Gw
                         <constraint firstItem="fFG-yi-lT4" firstAttribute="leading" secondItem="GFp-Qd-4ck" secondAttribute="leading" constant="20" symbolic="YES" id="Efy-hc-gPW"/>
                         <constraint firstAttribute="trailing" secondItem="fFG-yi-lT4" secondAttribute="trailing" constant="20" symbolic="YES" id="GMo-7J-c8z"/>
                         <constraint firstItem="fFG-yi-lT4" firstAttribute="top" secondItem="GFp-Qd-4ck" secondAttribute="top" constant="25" id="TY6-VB-cKH"/>
+                        <constraint firstItem="h41-zX-k7q" firstAttribute="centerX" secondItem="GFp-Qd-4ck" secondAttribute="centerX" id="n8M-sY-58X"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yql-kd-PP5">
@@ -1733,7 +1734,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
@@ -1910,7 +1911,7 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1gq-lL-Ur6">
+                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1gq-lL-Ur6">
                     <rect key="frame" x="110" y="31" width="311" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="The options presented above require a reconnect to apply." id="MJ0-IQ-dNi">
                         <font key="font" metaFont="smallSystem"/>
@@ -1980,6 +1981,7 @@ Gw
                 <constraint firstItem="kGJ-aW-aWu" firstAttribute="top" secondItem="0Af-cs-B5g" secondAttribute="bottom" constant="8" symbolic="YES" id="qsx-mb-ZuJ"/>
                 <constraint firstItem="kGJ-aW-aWu" firstAttribute="baseline" secondItem="sAt-Ob-XHX" secondAttribute="baseline" constant="1" id="rZK-5G-n5F"/>
                 <constraint firstItem="Itb-Ee-5gX" firstAttribute="baseline" secondItem="rXs-B6-ItZ" secondAttribute="baseline" constant="1" id="sef-SZ-hSe"/>
+                <constraint firstItem="1gq-lL-Ur6" firstAttribute="top" secondItem="O6l-eN-3Uc" secondAttribute="bottom" constant="55" id="wIN-vF-LwF"/>
                 <constraint firstAttribute="trailing" secondItem="rXs-B6-ItZ" secondAttribute="trailing" constant="47" id="wzB-ws-UMp"/>
                 <constraint firstAttribute="trailing" secondItem="CGo-eo-J2e" secondAttribute="trailing" constant="35" id="xcr-1J-iZh"/>
                 <constraint firstAttribute="bottom" secondItem="1gq-lL-Ur6" secondAttribute="bottom" constant="31" id="xrS-C0-31F"/>

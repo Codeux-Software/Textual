@@ -804,6 +804,7 @@ Gw
                                     <constraints>
                                         <constraint firstItem="gXn-wi-BH2" firstAttribute="leading" secondItem="Poo-f2-StF" secondAttribute="leading" id="0c4-hq-Cmo"/>
                                         <constraint firstAttribute="bottom" secondItem="Poo-f2-StF" secondAttribute="bottom" constant="17" id="Jbh-h4-OdV"/>
+                                        <constraint firstItem="gXn-wi-BH2" firstAttribute="top" secondItem="EWz-Am-gtB" secondAttribute="top" constant="11" id="Mhq-un-DrX"/>
                                         <constraint firstItem="gXn-wi-BH2" firstAttribute="trailing" secondItem="Poo-f2-StF" secondAttribute="trailing" id="aI8-Zm-44b"/>
                                         <constraint firstAttribute="trailing" secondItem="Poo-f2-StF" secondAttribute="trailing" constant="16" id="rXW-BL-WBS"/>
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="16" id="vrf-o9-n91"/>
@@ -970,12 +971,13 @@ Gw
                 <constraints>
                     <constraint firstItem="T01-Nx-QhV" firstAttribute="leading" secondItem="alB-sv-LJa" secondAttribute="leading" constant="20" symbolic="YES" id="313-yA-dtJ"/>
                     <constraint firstItem="wmA-Wb-Jwj" firstAttribute="baseline" secondItem="dLf-X5-R1o" secondAttribute="baseline" id="6eu-sD-jeM"/>
+                    <constraint firstItem="dLf-X5-R1o" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="alB-sv-LJa" secondAttribute="leading" constant="20" id="DKh-Ad-aJF"/>
                     <constraint firstItem="T01-Nx-QhV" firstAttribute="top" secondItem="alB-sv-LJa" secondAttribute="top" constant="12" symbolic="YES" id="E0g-PM-axe"/>
-                    <constraint firstAttribute="bottom" secondItem="dLf-X5-R1o" secondAttribute="bottom" constant="20" symbolic="YES" id="MRj-o4-Mky"/>
                     <constraint firstItem="wmA-Wb-Jwj" firstAttribute="leading" secondItem="dLf-X5-R1o" secondAttribute="trailing" constant="12" symbolic="YES" id="OPi-GS-LqS"/>
-                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" id="Tmo-Vs-hHD"/>
                     <constraint firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" constant="20" symbolic="YES" id="XtM-y2-hFO"/>
-                    <constraint firstItem="dLf-X5-R1o" firstAttribute="top" secondItem="T01-Nx-QhV" secondAttribute="bottom" constant="20" id="xIG-AK-aej"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="top" secondItem="T01-Nx-QhV" secondAttribute="bottom" constant="20" id="dGJ-lM-idy"/>
+                    <constraint firstAttribute="bottom" secondItem="wmA-Wb-Jwj" secondAttribute="bottom" constant="20" id="gnX-EQ-b9J"/>
+                    <constraint firstAttribute="trailing" secondItem="wmA-Wb-Jwj" secondAttribute="trailing" constant="20" id="ueU-CV-8zA"/>
                 </constraints>
             </view>
             <connections>
