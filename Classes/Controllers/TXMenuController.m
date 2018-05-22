@@ -573,7 +573,7 @@ NS_ASSUME_NONNULL_BEGIN
 				hostMenu = menuItem.submenu;
 			}
 
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_1].hidden = (_isChannel == NO);
+			[hostMenu itemWithTag:_channelMenuSeparatorTag_1].hidden = (_isChannel == NO || _clientIsntLoggedIn);
 			[hostMenu itemWithTag:_channelMenuSeparatorTag_2].hidden = (_isChannelOrQuery == NO);
 			[hostMenu itemWithTag:_channelMenuSeparatorTag_3].hidden = (_isChannelOrQuery == NO);
 
