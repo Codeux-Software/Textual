@@ -771,7 +771,7 @@
 		<key>indexValue</key>
 		<integer>5069</integer>
 		<key>arguments</key>
-		<string>&lt;seconds&gt; &lt;command&gt;</string>
+		<string>&lt;seconds&gt; &lt;repeat&gt; &lt;command&gt;</string>
 	</dict>
 	<key>topic</key>
 	<dict>
