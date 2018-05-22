@@ -423,6 +423,15 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (tag) {
+		case 400: // "Mark Scrollback"
+		case 401: // "Scrollback Marker"
+		case 402: // "Mark All as Read"
+		case 403: // "Clear Scrollback"
+		case 405: // "Increase Font Size"
+		case 406: // "Decrease Font Size"
+		{
+			return (self.selectedViewController != nil);
+		}
 		case 109: // "Check for Updates"
 		{
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
