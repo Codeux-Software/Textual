@@ -441,12 +441,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
+		case 609: // "Modify Topic"
+		case 611: // "Moderated (+m)"
+		case 612: // "Unmoderated (-m)"
+		case 613: // "Invite Only (+i)"
+		case 614: // "Anyone Can Join (-i)"
+		case 615: // "Manage All Modes"
 		case 616: // "List of Bans"
 		case 617: // "List of Ban Exceptions"
 		case 618: // "List of Invite Exceptions"
 		case 620: // "List of Quiets"
 		{
-			BOOL condition = _clientIsConnected;
+			BOOL condition = _clientIsLoggedIn;
 
 			if (tag == 620) {
 				/* +q is used by some servers as the user mode for channel owner. 
