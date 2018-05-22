@@ -833,7 +833,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case 812: // "Highlight List"
 		{
-			if (_clientIsntConnected) {
+			if (_noClient) {
 				return NO;
 			}
 
