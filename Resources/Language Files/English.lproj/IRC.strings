@@ -247,9 +247,6 @@
 "IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
 "IRC[1129]" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
 
-/* /bufferdebug/ command */
-"IRC[1128]" = "Please share the following information with support:<br /><br /> \002\00304’Textual’ object:\003\002 \00303%1$@\003<br /> \002\00304’_Textual’ object:\003\002 \00303%2$@\003<br /> \002\00304’_TextualScroller’ object:\003\002 \00303%3$@\003<br /> \002\00304’_MessageBuffer’ object:\003\002 \00303%4$@\003<br /> \002\00304Unclaimed callbacks:\003\002 \00303%5$ld\003";
-
 /* /msg/ command errors */
 "IRC[1136]" = "Cannot send operator message because the mode \002+o\002 is not supported by this server.";
 
