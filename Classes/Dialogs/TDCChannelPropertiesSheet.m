@@ -253,11 +253,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.ignoreGeneralEventMessagesCheck.state = self.config.ignoreGeneralEventMessages;
 	self.ignoreHighlightsCheck.state = self.config.ignoreHighlights;
 
-	if ([TPCPreferences showInlineMedia]) {
-		self.disableInlineMediaCheck.state = self.config.ignoreInlineMedia;
-	} else {
-		self.enableInlineMediaCheck.state = self.config.ignoreInlineMedia;
-	}
+	self.disableInlineMediaCheck.state = self.config.inlineMediaDisabled;
+	self.enableInlineMediaCheck.state = self.config.inlineMediaEnabled;
 
 	[self updateNavigationEnabledState];
 }
@@ -392,11 +389,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.config.ignoreGeneralEventMessages = self.ignoreGeneralEventMessagesCheck.state;
 	self.config.ignoreHighlights = self.ignoreHighlightsCheck.state;
 
-	if ([TPCPreferences showInlineMedia]) {
-		self.config.ignoreInlineMedia = self.disableInlineMediaCheck.state;
-	} else {
-		self.config.ignoreInlineMedia = self.enableInlineMediaCheck.state;
-	}
+	self.config.inlineMediaDisabled = self.disableInlineMediaCheck.state;
+	self.config.inlineMediaEnabled = self.enableInlineMediaCheck.state;
 
 	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheet:onOk:)]) {
 		[self.delegate channelPropertiesSheet:self onOk:[self.config copy]];

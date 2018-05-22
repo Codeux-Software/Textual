@@ -53,7 +53,8 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 @property (readonly) BOOL autoJoin;
 @property (readonly) BOOL ignoreGeneralEventMessages;
 @property (readonly) BOOL ignoreHighlights;
-@property (readonly) BOOL ignoreInlineMedia;
+@property (readonly) BOOL inlineMediaDisabled;
+@property (readonly) BOOL inlineMediaEnabled;
 @property (readonly) BOOL pushNotifications;
 @property (readonly) BOOL showTreeBadgeCount;
 @property (readonly) IRCChannelType type;
@@ -85,6 +86,10 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 - (NSUInteger)bounceDockIconForEvent:(TXNotificationType)event;
 - (NSUInteger)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event;
 - (NSUInteger)speakEvent:(TXNotificationType)event;
+
+/* Deprecated */
+/* This property will always return NO */
+@property (readonly) BOOL ignoreInlineMedia;
 @end
 
 #pragma mark -
@@ -95,7 +100,8 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 @property (nonatomic, assign, readwrite) BOOL autoJoin;
 @property (nonatomic, assign, readwrite) BOOL ignoreGeneralEventMessages;
 @property (nonatomic, assign, readwrite) BOOL ignoreHighlights;
-@property (nonatomic, assign, readwrite) BOOL ignoreInlineMedia;
+@property (nonatomic, assign, readwrite) BOOL inlineMediaDisabled;
+@property (nonatomic, assign, readwrite) BOOL inlineMediaEnabled;
 @property (nonatomic, assign, readwrite) BOOL pushNotifications;
 @property (nonatomic, assign, readwrite) BOOL showTreeBadgeCount;
 @property (nonatomic, copy, readwrite) NSString *channelName;
@@ -113,6 +119,10 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 - (void)setBounceDockIcon:(NSUInteger)value forEvent:(TXNotificationType)event;
 - (void)setBounceDockIconRepeatedly:(NSUInteger)value forEvent:(TXNotificationType)event;
 - (void)setEventIsSpoken:(NSUInteger)value forEvent:(TXNotificationType)event;
+
+/* Deprecated */
+/* Trying to set one of the following properties will throw an exception. */
+@property (nonatomic, assign, readwrite) BOOL ignoreInlineMedia TEXTUAL_DEPRECATED("Use -disableInlineMedia and -enableInlineMedia instead");
 @end
 
 NS_ASSUME_NONNULL_END

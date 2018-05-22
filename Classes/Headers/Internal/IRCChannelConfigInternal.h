@@ -45,7 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _autoJoin;
 	BOOL _ignoreGeneralEventMessages;
 	BOOL _ignoreHighlights;
-	BOOL _ignoreInlineMedia;
+	BOOL _inlineMediaDisabled;
+	BOOL _inlineMediaEnabled;
 	BOOL _pushNotifications;
 	BOOL _showTreeBadgeCount;
 	IRCChannelType _type;
