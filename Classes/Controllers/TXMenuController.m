@@ -423,154 +423,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (tag) {
-		case 400: // "Mark Scrollback"
-		case 401: // "Scrollback Marker"
-		case 402: // "Mark All as Read"
-		case 403: // "Clear Scrollback"
-		case 405: // "Increase Font Size"
-		case 406: // "Decrease Font Size"
-		{
-			return (self.selectedViewController != nil);
-		}
-		case 109: // "Check for Updates"
-		{
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-			menuItem.hidden = YES;
-#endif
-
-			return YES;
-		}
-		case 815: // "Buddy List"
-		{
-#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
-			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
-#else 
-			menuItem.hidden = YES;
-#endif
-
-			return YES;
-		}
-		case 609: // "Modify Topic"
-		case 611: // "Moderated (+m)"
-		case 612: // "Unmoderated (-m)"
-		case 613: // "Invite Only (+i)"
-		case 614: // "Anyone Can Join (-i)"
-		case 615: // "Manage All Modes"
-		case 616: // "List of Bans"
-		case 617: // "List of Ban Exceptions"
-		case 618: // "List of Invite Exceptions"
-		case 620: // "List of Quiets"
-		{
-			BOOL condition = _clientIsLoggedIn;
-
-			if (tag == 620) {
-				/* +q is used by some servers as the user mode for channel owner. 
-				 If this mode is a user mode, then hide the menu item. */
-				menuItem.hidden = [u.supportInfo modeSymbolIsUserPrefix:@"q"];
-			}
-
-			return condition;
-		}
-		case 718: // "Search channels…"
-		{
-			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
-
-			return YES;
-		}
-		case 102: // "Manage license…"
-		{
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 0
-			menuItem.hidden = YES;
-#endif
-
-			return YES;
-		}
-		case 110: // "In-app Purchase…"
-		{
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 0
-			menuItem.hidden = YES;
-#endif
-
-			return YES;
-		}
-		case 965: // "Reset 'Don't Ask Me' Warnings"
-		{
-			BOOL condition = [TPCPreferences developerModeEnabled];
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-
-		}
-		case 315: // "Search With Google"
-		case 1601: // "Search With Google"
-		{
-			TVCLogView *webView = self.selectedViewControllerBackingView;
-
-			if (webView == nil) {
-				return NO;
-			}
-
-			NSString *searchProviderName = [self searchProviderName];
-
-			menuItem.title = TXTLS(@"BasicLanguage[1020]", searchProviderName);
-
-			return webView.hasSelection;
-		}
-		case 1608: // "Look Up in Dictionary"
-		{
-			TVCLogView *webView = self.selectedViewControllerBackingView;
-
-			if (webView == nil) {
-				return NO;
-			}
-
-			NSString *selection = webView.selection;
-
-			NSUInteger selectionLength = selection.length;
-
-			if (selectionLength == 0 || selectionLength > 40) {
-				menuItem.title = TXTLS(@"BasicLanguage[1018]");
-
-				return NO;
-			}
-
-			if (selectionLength > 25) {
-				selection = [selection substringToIndex:24];
-
-				selection = [NSString stringWithFormat:@"%@…", selection.trim];
-			}
-
-			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
-
-			return (selectionLength > 0);
-		}
-		case 802: // "Toggle Visiblity of Member List"
-		{
-			return _isChannel;
-		}
-		case 606: // "Query Logs"
-		case 1606: // "Query Logs"
-		{
-			BOOL condition = _isQuery;
-
-			menuItem.hidden = (condition == NO);
-
-			return [TPCPreferences logToDiskIsEnabled];
-		}
-		case 608: // "View Logs"
-		case 811: // "View Logs"
-		{
-			return [TPCPreferences logToDiskIsEnabled];
-		}
-		case 607: // "Channel Properties"
-		{
-			BOOL condition = _isChannel;
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-		}
 		case 006: // "Channel" (Main Menu)
 		case 1607: // "Channel" (WebView)
 		{
@@ -601,183 +453,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 622: // "Copy Unique Identifier"
+		case 102: // "Manage license…"
 		{
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 0
+			menuItem.hidden = YES;
+#endif
 
-#define _channelMenuSeparatorTag			621 // below "Channel Properties"
-			
-			BOOL condition = ([TPCPreferences developerModeEnabled] == NO || _isChannel == NO);
-			
-			menuItem.hidden = condition;
-
-			[menuItem.menu itemWithTag:_channelMenuSeparatorTag].hidden = condition;
-
-#undef _channelMenuSeparatorTag
-			
 			return YES;
 		}
-		case 510: // "Connect Without Proxy"
+		case 109: // "Check for Updates"
 		{
-			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
+			menuItem.hidden = YES;
+#endif
 
-			if (flags != NSShiftKeyMask) {
-				menuItem.hidden = YES;
-
-				return NO;
-			}
-
-			if (_noClient) {
-				menuItem.hidden = YES;
-
-				return NO;
-			}
-
-			BOOL condition = (_clientIsConnected || u.isConnecting||
-				u.config.proxyType == IRCConnectionSocketNoProxyType);
-
-			menuItem.hidden = condition;
-
-			return (condition == NO && u.isQuitting == NO);
+			return YES;
 		}
-		case 500: // "Connect"
+		case 110: // "In-app Purchase…"
 		{
-			if (_noClient) {
-				menuItem.hidden = NO;
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 0
+			menuItem.hidden = YES;
+#endif
 
-				return NO;
-			}
-
-			BOOL condition = (_clientIsConnected || u.isConnecting);
-
-			menuItem.hidden = condition;
-
-			BOOL prefersIPv4 = u.config.connectionPrefersIPv4;
-
-			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
-
-			if (flags == NSShiftKeyMask) {
-				if (prefersIPv4 == NO) {
-					prefersIPv4 = YES;
-
-					menuItem.title = TXTLS(@"BasicLanguage[1014][2]");
-				}
-			} else {
-				menuItem.title = TXTLS(@"BasicLanguage[1014][1]");
-			}
-
-			if (prefersIPv4) {
-				menuItem.action = @selector(connectPreferringIPv4:);
-			} else {
-				menuItem.action = @selector(connectPreferringIPv6:);
-			}
-
-			return (condition == NO && u.isQuitting == NO);
-		}
-		case 501: // "Disconnect"
-		{
-			BOOL condition = (_clientIsConnected || u.isConnecting);
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-		}
-		case 502: // "Cancel Reconnect"
-		{
-			BOOL condition = u.isReconnecting;
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-		}
-		case 1600: // "Change Nickname…"
-		case 503: // "Change Nickname…"
-		case 504: // "Channel List…"
-		{
-			return _clientIsLoggedIn;
-		}
-		case 507: // "Delete Server"
-		{
-			return _clientIsntConnected;
-		}
-		case 506: // "Duplicate Server"
-		case 509: // "Server Properties…"
-		case 809: // "Address Book"
-		case 810: // "Ignore List"
-		{
-			return (_noClient == NO);
-		}
-		case 600: // "Join Channel"
-		{
-			BOOL condition = (_clientIsLoggedIn && _isChannel && _channelIsntActive);
-
-			if (_noChannel) {
-				menuItem.hidden = YES;
-			} else {
-				menuItem.hidden = (condition == NO);
-			}
-
-			return condition;
-		}
-		case 601: // "Leave Channel"
-		{
-			BOOL condition = (_clientIsLoggedIn && _isChannel && _channelIsActive);
-
-			if (_noChannel) {
-				menuItem.hidden = YES;
-			} else {
-				menuItem.hidden = (condition == NO);
-			}
-
-			return condition;
-		}
-		case 508: // "Add Channel…"
-		case 603: // "Add Channel…"
-		{
-			menuItem.hidden = (_isQuery || _isUtility);
-
-			return (_noClient == NO);
-		}
-		case 604: // "Delete Channel"
-		{
-			menuItem.hidden = _noChannel;
-
-			if (_isChannel) {
-				menuItem.title = TXTLS(@"BasicLanguage[1012]");
-
-				return YES;
-			} else if (_isQuery) {
-				menuItem.title = TXTLS(@"BasicLanguage[1013]");
-
-				return YES;
-			} else if (_isUtility) {
-				/* Declared as different if statement in case
-				 I decide to set a different label later. */
-				menuItem.title = TXTLS(@"BasicLanguage[1013]");
-
-				return YES;
-			}
-
-			return NO;
-		}
-		case 1201: // "Add Channel…" - Server Menu
-		{
-			return (_noClient == NO);
-		}
-		case 1500: // "Invite To…"
-		{
-			if ([self checkSelectedMembers:menuItem] == NO) {
-				return NO;
-			}
-
-			NSUInteger channelCount = 0;
-
-			for (IRCChannel *e in u.channelList) {
-				if (c != e && e.isChannel) {
-					channelCount++;
-				}
-			}
-
-			return (channelCount > 0);
+			return YES;
 		}
 		case 203: // "Close Window"
 		{
@@ -840,6 +538,277 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
+		case 304: // "Paste"
+		case 1604: // "Paste" (WebView)
+		{
+			NSString *currentPasteboard = RZPasteboard().stringContent;
+
+			if (currentPasteboard.length == 0) {
+				return NO;
+			}
+
+			if (mainWindow().keyWindow) {
+				return mainWindowTextField().editable;
+			}
+
+			id firstResponder = [NSApp keyWindow].firstResponder;
+
+			if ([firstResponder respondsToSelector:@selector(isEditable)]) {
+				return [firstResponder isEditable];
+			}
+
+			return NO;
+		}
+		case 315: // "Search With Google"
+		case 1601: // "Search With Google"
+		{
+			TVCLogView *webView = self.selectedViewControllerBackingView;
+
+			if (webView == nil) {
+				return NO;
+			}
+
+			NSString *searchProviderName = [self searchProviderName];
+
+			menuItem.title = TXTLS(@"BasicLanguage[1020]", searchProviderName);
+
+			return webView.hasSelection;
+		}
+		case 400: // "Mark Scrollback"
+		case 401: // "Scrollback Marker"
+		case 402: // "Mark All as Read"
+		case 403: // "Clear Scrollback"
+		case 405: // "Increase Font Size"
+		case 406: // "Decrease Font Size"
+		{
+			return (self.selectedViewController != nil);
+		}
+		case 500: // "Connect"
+		{
+			if (_noClient) {
+				menuItem.hidden = NO;
+
+				return NO;
+			}
+
+			BOOL condition = (_clientIsConnected || u.isConnecting);
+
+			menuItem.hidden = condition;
+
+			BOOL prefersIPv4 = u.config.connectionPrefersIPv4;
+
+			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+			if (flags == NSShiftKeyMask) {
+				if (prefersIPv4 == NO) {
+					prefersIPv4 = YES;
+
+					menuItem.title = TXTLS(@"BasicLanguage[1014][2]");
+				}
+			} else {
+				menuItem.title = TXTLS(@"BasicLanguage[1014][1]");
+			}
+
+			if (prefersIPv4) {
+				menuItem.action = @selector(connectPreferringIPv4:);
+			} else {
+				menuItem.action = @selector(connectPreferringIPv6:);
+			}
+
+			return (condition == NO && u.isQuitting == NO);
+		}
+		case 501: // "Disconnect"
+		{
+			BOOL condition = (_clientIsConnected || u.isConnecting);
+
+			menuItem.hidden = (condition == NO);
+
+			return condition;
+		}
+		case 502: // "Cancel Reconnect"
+		{
+			BOOL condition = u.isReconnecting;
+
+			menuItem.hidden = (condition == NO);
+
+			return condition;
+		}
+		case 503: // "Change Nickname…"
+		case 504: // "Channel List…"
+		case 1600: // "Change Nickname…"
+		{
+			return _clientIsLoggedIn;
+		}
+		case 506: // "Duplicate Server"
+		case 509: // "Server Properties…"
+		case 809: // "Address Book"
+		case 810: // "Ignore List"
+		{
+			return (_noClient == NO);
+		}
+		case 507: // "Delete Server"
+		{
+			return _clientIsntConnected;
+		}
+		case 508: // "Add Channel…"
+		case 603: // "Add Channel…"
+		{
+			menuItem.hidden = (_isQuery || _isUtility);
+
+			return (_noClient == NO);
+		}
+		case 510: // "Connect Without Proxy"
+		{
+			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+			if (flags != NSShiftKeyMask) {
+				menuItem.hidden = YES;
+
+				return NO;
+			}
+
+			if (_noClient) {
+				menuItem.hidden = YES;
+
+				return NO;
+			}
+
+			BOOL condition = (_clientIsConnected || u.isConnecting||
+							  u.config.proxyType == IRCConnectionSocketNoProxyType);
+
+			menuItem.hidden = condition;
+
+			return (condition == NO && u.isQuitting == NO);
+		}
+		case 600: // "Join Channel"
+		{
+			BOOL condition = (_clientIsLoggedIn && _isChannel && _channelIsntActive);
+
+			if (_noChannel) {
+				menuItem.hidden = YES;
+			} else {
+				menuItem.hidden = (condition == NO);
+			}
+
+			return condition;
+		}
+		case 601: // "Leave Channel"
+		{
+			BOOL condition = (_clientIsLoggedIn && _isChannel && _channelIsActive);
+
+			if (_noChannel) {
+				menuItem.hidden = YES;
+			} else {
+				menuItem.hidden = (condition == NO);
+			}
+
+			return condition;
+		}
+		case 604: // "Delete Channel"
+		{
+			menuItem.hidden = _noChannel;
+
+			if (_isChannel) {
+				menuItem.title = TXTLS(@"BasicLanguage[1012]");
+
+				return YES;
+			} else if (_isQuery) {
+				menuItem.title = TXTLS(@"BasicLanguage[1013]");
+
+				return YES;
+			} else if (_isUtility) {
+				/* Declared as different if statement in case
+				 I decide to set a different label later. */
+				menuItem.title = TXTLS(@"BasicLanguage[1013]");
+
+				return YES;
+			}
+
+			return NO;
+		}
+		case 606: // "Query Logs"
+		case 1606: // "Query Logs"
+		{
+			BOOL condition = _isQuery;
+
+			menuItem.hidden = (condition == NO);
+
+			return [TPCPreferences logToDiskIsEnabled];
+		}
+		case 607: // "Channel Properties"
+		{
+			BOOL condition = _isChannel;
+
+			menuItem.hidden = (condition == NO);
+
+			return condition;
+		}
+		case 608: // "View Logs"
+		case 811: // "View Logs"
+		{
+			return [TPCPreferences logToDiskIsEnabled];
+		}
+		case 609: // "Modify Topic"
+		case 611: // "Moderated (+m)"
+		case 612: // "Unmoderated (-m)"
+		case 613: // "Invite Only (+i)"
+		case 614: // "Anyone Can Join (-i)"
+		case 615: // "Manage All Modes"
+		case 616: // "List of Bans"
+		case 617: // "List of Ban Exceptions"
+		case 618: // "List of Invite Exceptions"
+		case 620: // "List of Quiets"
+		{
+			BOOL condition = _clientIsLoggedIn;
+
+			if (tag == 620) {
+				/* +q is used by some servers as the user mode for channel owner.
+				 If this mode is a user mode, then hide the menu item. */
+				menuItem.hidden = [u.supportInfo modeSymbolIsUserPrefix:@"q"];
+			}
+
+			return condition;
+		}
+		case 622: // "Copy Unique Identifier"
+		{
+
+#define _channelMenuSeparatorTag			621 // below "Channel Properties"
+
+			BOOL condition = ([TPCPreferences developerModeEnabled] == NO || _isChannel == NO);
+
+			menuItem.hidden = condition;
+
+			[menuItem.menu itemWithTag:_channelMenuSeparatorTag].hidden = condition;
+
+#undef _channelMenuSeparatorTag
+
+			return YES;
+		}
+		case 715: // "Next Highlight"
+		case 716: // "Previous Highlight"
+		{
+			TVCLogController *viewController = self.selectedViewController;
+
+			if (viewController == nil) {
+				return NO;
+			}
+
+			return [viewController highlightAvailable:(tag == 716)];
+		}
+		case 718: // "Search channels…"
+		{
+			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
+
+			return YES;
+		}
+		case 802: // "Toggle Visiblity of Member List"
+		{
+			return _isChannel;
+		}
+		case 804: // "Toggle Window Appearance"
+		{
+			return [TPCPreferences invertSidebarColorsPreferenceUserConfigurable];
+		}
 		case 812: // "Highlight List"
 		{
 			if (_noClient) {
@@ -848,90 +817,82 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return [TPCPreferences logHighlights];
 		}
+		case 815: // "Buddy List"
+		{
+#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
+			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
+#else 
+			menuItem.hidden = YES;
+#endif
+
+			return YES;
+		}
 		case 961: // Developer Mode
 		{
 			if ([TPCPreferences developerModeEnabled]) {
 				menuItem.state = NSOnState;
-			} else {  
+			} else {
 				menuItem.state = NSOffState;
 			}
 
 			return YES;
 		}
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
-		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
-		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
-		case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
-		case TLOEncryptionManagerMenuItemTagViewListOfFingerprints:
+		case 965: // "Reset 'Don't Ask Me' Warnings"
 		{
-			/* Even if we are not logged in, we still ask the encryption manager
-			 to validate the menu item first so that it can hide specific menu items. 
-			 After it has done that, then we can disable if not logged in. */
-			if ([TPCPreferences textEncryptionIsEnabled] == NO) {
-				return NO;
-			}
-
-			BOOL valid = [sharedEncryptionManager()
-						  validateMenuItem:menuItem
-							   withStateOf:[u encryptionAccountNameForUser:c.name]
-									  from:[u encryptionAccountNameForLocalUser]];
-
-			if (_clientIsntLoggedIn) {
-				return NO;
-			}
-
-			return valid;
-		}
-#endif
-
-		case 1532: // "Add Ignore"
-		{
-			/* To make it as efficient as possible, we only check for ignore
-			 for the "Add Ignore" menu item. When that menu item is validated,
-			 we validate "Modify Ignore" and "Remove Ignore" at the same time. */
-			NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:menuItem];
-
-			NSMenuItem *modifyIgnoreMenuItem = [menuItem.menu itemWithTag:1533];
-			NSMenuItem *removeIgnoreMenuItem = [menuItem.menu itemWithTag:1534];
-
-			NSString *hostmask = nicknames.firstObject.user.hostmask;
-
-			/* If less than or more than one user is selected, then hide all
-			 menu items except "Add Ignore" and disable the "Add Ignore" item. */
-			if (nicknames.count != 1 || hostmask == nil) {
-				modifyIgnoreMenuItem.hidden = YES;
-
-				removeIgnoreMenuItem.hidden = YES;
-
-				menuItem.hidden = NO;
-
-				return NO;
-			}
-
-			/* Update visiblity depending on whether ignore is available */
-			/* When this logic was first introduced, we kept a reference to
-			 the ignores in the represented object of the menu item.
-			 This was stopped because information about the ignore can
-			 change while the menu item is still open, making the object
-			 we will reference when action is performed garbage. */
-			NSArray *userIgnores = [u findIgnoresForHostmask:hostmask];
-
-			BOOL condition = (userIgnores.count == 0);
-
-			modifyIgnoreMenuItem.hidden = condition;
-
-			removeIgnoreMenuItem.hidden = condition;
+			BOOL condition = [TPCPreferences developerModeEnabled];
 
 			menuItem.hidden = (condition == NO);
 
-			return YES;
+			return condition;
+
 		}
-		case 1533: // "Modify Ignore"
-		case 1534: // "Remove Ignore"
+		case 1201: // "Add Channel…" - Server Menu
 		{
-			return YES;
+			return (_noClient == NO);
+		}
+		case 1608: // "Look Up in Dictionary"
+		{
+			TVCLogView *webView = self.selectedViewControllerBackingView;
+
+			if (webView == nil) {
+				return NO;
+			}
+
+			NSString *selection = webView.selection;
+
+			NSUInteger selectionLength = selection.length;
+
+			if (selectionLength == 0 || selectionLength > 40) {
+				menuItem.title = TXTLS(@"BasicLanguage[1018]");
+
+				return NO;
+			}
+
+			if (selectionLength > 25) {
+				selection = [selection substringToIndex:24];
+
+				selection = [NSString stringWithFormat:@"%@…", selection.trim];
+			}
+
+			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
+
+			return (selectionLength > 0);
+		}
+		case 1500: // "Invite To…"
+		{
+			if ([self checkSelectedMembers:menuItem] == NO) {
+				return NO;
+			}
+
+			NSUInteger channelCount = 0;
+
+			for (IRCChannel *e in u.channelList) {
+				if (c != e && e.isChannel) {
+					channelCount++;
+				}
+			}
+
+			return (channelCount > 0);
 		}
 		case 1502: // "Private Message (Query)"
 		case 1503: // "Give Op (+o)"
@@ -946,28 +907,6 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			return NO;
-		}
-		case 1511: // "Ban"
-		case 1512: // "Kick"
-		case 1513: // "Ban and Kick"
-		{
-
-#define _userControlsBanKickSeparatorTag		1531
-
-			BOOL condition = _isChannel;
-
-			menuItem.hidden = (condition == NO);
-
-			[menuItem.menu itemWithTag:_userControlsBanKickSeparatorTag].hidden = (condition == NO);
-
-			if (condition) {
-				return [self checkSelectedMembers:menuItem];
-			}
-
-			return NO;
-
-#undef _userControlsBanKickSeparatorTag
-
 		}
 		case 1506: // "All Modes Given"
 		{
@@ -1075,17 +1014,103 @@ NS_ASSUME_NONNULL_BEGIN
 #undef _userControlsMenuTakeModeSeparatorTag
 
 		}
-		case 715: // "Next Highlight"
-		case 716: // "Previous Highlight"
+		case 1511: // "Ban"
+		case 1512: // "Kick"
+		case 1513: // "Ban and Kick"
 		{
-			TVCLogController *viewController = self.selectedViewController;
 
-			if (viewController == nil) {
+#define _userControlsBanKickSeparatorTag		1531
+
+			BOOL condition = _isChannel;
+
+			menuItem.hidden = (condition == NO);
+
+			[menuItem.menu itemWithTag:_userControlsBanKickSeparatorTag].hidden = (condition == NO);
+
+			if (condition) {
+				return [self checkSelectedMembers:menuItem];
+			}
+
+			return NO;
+
+#undef _userControlsBanKickSeparatorTag
+
+		}
+		case 1532: // "Add Ignore"
+		{
+			/* To make it as efficient as possible, we only check for ignore
+			 for the "Add Ignore" menu item. When that menu item is validated,
+			 we validate "Modify Ignore" and "Remove Ignore" at the same time. */
+			NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:menuItem];
+
+			NSMenuItem *modifyIgnoreMenuItem = [menuItem.menu itemWithTag:1533];
+			NSMenuItem *removeIgnoreMenuItem = [menuItem.menu itemWithTag:1534];
+
+			NSString *hostmask = nicknames.firstObject.user.hostmask;
+
+			/* If less than or more than one user is selected, then hide all
+			 menu items except "Add Ignore" and disable the "Add Ignore" item. */
+			if (nicknames.count != 1 || hostmask == nil) {
+				modifyIgnoreMenuItem.hidden = YES;
+
+				removeIgnoreMenuItem.hidden = YES;
+
+				menuItem.hidden = NO;
+
 				return NO;
 			}
 
-			return [viewController highlightAvailable:(tag == 716)];
+			/* Update visiblity depending on whether ignore is available */
+			/* When this logic was first introduced, we kept a reference to
+			 the ignores in the represented object of the menu item.
+			 This was stopped because information about the ignore can
+			 change while the menu item is still open, making the object
+			 we will reference when action is performed garbage. */
+			NSArray *userIgnores = [u findIgnoresForHostmask:hostmask];
+
+			BOOL condition = (userIgnores.count == 0);
+
+			modifyIgnoreMenuItem.hidden = condition;
+
+			removeIgnoreMenuItem.hidden = condition;
+
+			menuItem.hidden = (condition == NO);
+
+			return YES;
 		}
+		case 1533: // "Modify Ignore"
+		case 1534: // "Remove Ignore"
+		{
+			return YES;
+		}
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
+		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagViewListOfFingerprints:
+		{
+			/* Even if we are not logged in, we still ask the encryption manager
+			 to validate the menu item first so that it can hide specific menu items.
+			 After it has done that, then we can disable if not logged in. */
+			if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+				return NO;
+			}
+
+			BOOL valid = [sharedEncryptionManager()
+						  validateMenuItem:menuItem
+						  withStateOf:[u encryptionAccountNameForUser:c.name]
+						  from:[u encryptionAccountNameForLocalUser]];
+
+			if (_clientIsntLoggedIn) {
+				return NO;
+			}
+
+			return valid;
+		}
+#endif
+
 		case 1603: // "Copy" (WebView)
 		{
 			TVCLogView *webView = self.selectedViewControllerBackingView;
@@ -1095,31 +1120,6 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			return webView.hasSelection;
-		}
-		case 304: // "Paste"
-		case 1604: // "Paste" (WebView)
-		{
-			NSString *currentPasteboard = RZPasteboard().stringContent;
-
-			if (currentPasteboard.length == 0) {
-				return NO;
-			}
-
-			if (mainWindow().keyWindow) {
-				return mainWindowTextField().editable;
-			}
-
-			id firstResponder = [NSApp keyWindow].firstResponder;
-
-			if ([firstResponder respondsToSelector:@selector(isEditable)]) {
-				return [firstResponder isEditable];
-			}
-
-			return NO;
-		}
-		case 804: // "Toggle Window Appearance"
-		{
-			return [TPCPreferences invertSidebarColorsPreferenceUserConfigurable];
 		}
 		default:
 		{
