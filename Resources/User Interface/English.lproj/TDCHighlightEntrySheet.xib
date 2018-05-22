@@ -45,7 +45,7 @@
                         <accessibility description="Highlight Match Type"/>
                     </popUpButton>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="18" y="64" width="89" height="17"/>
+                        <rect key="frame" x="18" y="64" width="90" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="in the channel" id="315">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -53,7 +53,10 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="316">
-                        <rect key="frame" x="111" y="58" width="306" height="26"/>
+                        <rect key="frame" x="112" y="58" width="305" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="300" id="O88-U8-9d4"/>
+                        </constraints>
                         <popUpButtonCell key="cell" type="push" title="All Channels" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="319" id="317">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
