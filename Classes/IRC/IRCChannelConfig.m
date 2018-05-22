@@ -56,7 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 	  @"channelType" : @(IRCChannelChannelType),
 	  @"ignoreGeneralEventMessages"	: @(NO),
 	  @"ignoreHighlights" : @(NO),
-	  @"ignoreInlineMedia" : @(NO),
+	  @"inlineMediaEnabled" : @(NO),
+	  @"inlineMediaDisabled" : @(NO),
 	  @"pushNotifications" : @(YES),
 	  @"showTreeBadgeCount" : @(YES)
 	};
@@ -159,30 +160,67 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable assignUnsignedIntegerTo:&self->_type forKey:@"channelType"];
 
-	if (self->_type == IRCChannelChannelType) {
-		/* Load the newest set of keys */
-		[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"autoJoin"];
-		[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
-		[defaultsMutable assignBoolTo:&self->_ignoreHighlights forKey:@"ignoreHighlights"];
-		[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"ignoreInlineMedia"];
+	if (self->_type != IRCChannelChannelType) {
+		return;
+	}
 
-		[defaultsMutable assignStringTo:&self->_defaultModes forKey:@"defaultMode"];
-		[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
+	/* Load the newest set of keys */
+	[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"autoJoin"];
+	[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
+	[defaultsMutable assignBoolTo:&self->_ignoreHighlights forKey:@"ignoreHighlights"];
+	[defaultsMutable assignBoolTo:&self->_inlineMediaDisabled forKey:@"inlineMediaDisabled"];
+	[defaultsMutable assignBoolTo:&self->_inlineMediaEnabled forKey:@"inlineMediaEnabled"];
 
-		NSDictionary *notifications = [defaultsMutable dictionaryForKey:@"notifications"];
+	[defaultsMutable assignStringTo:&self->_defaultModes forKey:@"defaultMode"];
+	[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
 
-		if (notifications != nil) {
-			self->_notificationsMutable = [notifications mutableCopy];
+	NSDictionary *notifications = [defaultsMutable dictionaryForKey:@"notifications"];
+
+	if (notifications != nil) {
+		self->_notificationsMutable = [notifications mutableCopy];
+	}
+
+	/* Load legacy keys (if they exist) */
+	if (self->_objectInitializedAsCopy) {
+		return;
+	}
+
+	[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"joinOnConnect"];
+	[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreJPQActivity"];
+	[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
+	[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
+
+	/* Migrate inline media */
+	/* Old behavior was to store a single property named "ignoreInlineMedia"
+	 Depending on the value of the global preference, the value of this
+	 property was used to determine whether to hide inline media per-channel
+	 or to show it per-channel. That is stupid idea because if someone
+	 has it enabled globally, has it turned off in a channel, turns it
+	 off globally, then it is turned on in that channel. We split it
+	 up into two properties and this logic performs migraiton. */
+	{
+		/* Do new keys exist in incoming dictionary/ */
+		if (dic[@"inlineMediaEnabled"] != nil &&
+			dic[@"inlineMediaDisabled"] != nil)
+		{
+			return;
 		}
 
-		/* Load legacy keys (if they exist) */
-		if (self->_objectInitializedAsCopy == NO) {
-			[defaultsMutable assignBoolTo:&self->_autoJoin forKey:@"joinOnConnect"];
-			[defaultsMutable assignBoolTo:&self->_ignoreGeneralEventMessages forKey:@"ignoreJPQActivity"];
-			[defaultsMutable assignBoolTo:&self->_ignoreInlineMedia forKey:@"disableInlineMedia"];
-			[defaultsMutable assignBoolTo:&self->_pushNotifications forKey:@"enableNotifications"];
-			[defaultsMutable assignBoolTo:&self->_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
+		NSNumber *ignoreInlineMedia = dic[@"ignoreInlineMedia"]; // old key
+
+		/* If old value is NO, then we do not have to continue
+		 because the defualt value for the new values is NO. */
+		if (ignoreInlineMedia == nil || ignoreInlineMedia.boolValue == NO) {
+			return;
 		}
+
+		BOOL inlineEnabledGlboally = [TPCPreferences showInlineMedia];
+
+		/* Old property was the inverse of the global */
+		/* Global enabled = local disabled,
+		   Global disabled = local enabled */
+		self->_inlineMediaDisabled = inlineEnabledGlboally;
+		self->_inlineMediaEnabled = !inlineEnabledGlboally;
 	}
 }
 
@@ -216,7 +254,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[dic setBool:self.autoJoin forKey:@"autoJoin"];
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
 		[dic setBool:self.ignoreHighlights forKey:@"ignoreHighlights"];
-		[dic setBool:self.ignoreInlineMedia forKey:@"ignoreInlineMedia"];
+		[dic setBool:self.inlineMediaDisabled forKey:@"inlineMediaDisabled"];
+		[dic setBool:self.inlineMediaEnabled forKey:@"inlineMediaEnabled"];
 	}
 
 	[dic maybeSetObject:self.channelName forKey:@"channelName"];
@@ -479,6 +518,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [self _stateForEventKey:eventKey];
 }
 
+#pragma mark -
+#pragma mark Deprecated
+
+- (BOOL)ignoreInlineMedia
+{
+	TEXTUAL_DEPRECATED_WARNING;
+
+	return NO;
+}
+
 @end
 
 #pragma mark -
@@ -492,7 +541,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic defaultTopic;
 @dynamic ignoreGeneralEventMessages;
 @dynamic ignoreHighlights;
-@dynamic ignoreInlineMedia;
+@dynamic inlineMediaDisabled;
+@dynamic inlineMediaEnabled;
 @dynamic pushNotifications;
 @dynamic secretKey;
 @dynamic showTreeBadgeCount;
@@ -532,8 +582,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)setIgnoreInlineMedia:(BOOL)ignoreInlineMedia
 {
-	if (self->_ignoreInlineMedia != ignoreInlineMedia) {
-		self->_ignoreInlineMedia = ignoreInlineMedia;
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)setInlineMediaDisabled:(BOOL)inlineMediaDisabled
+{
+	if (self->_inlineMediaDisabled != inlineMediaDisabled) {
+		self->_inlineMediaDisabled = inlineMediaDisabled;
+	}
+}
+
+- (void)setInlineMediaEnabled:(BOOL)inlineMediaEnabled
+{
+	if (self->_inlineMediaEnabled != inlineMediaEnabled) {
+		self->_inlineMediaEnabled = inlineMediaEnabled;
 	}
 }
 
