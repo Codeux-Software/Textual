@@ -229,6 +229,7 @@
                 <constraint firstItem="16" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="kku-SS-yIh"/>
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="leading" secondItem="98" secondAttribute="leading" constant="18" id="lmT-vP-6Kc"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="qWh-kV-gCg"/>
+                <constraint firstAttribute="bottom" secondItem="6bj-fu-TKI" secondAttribute="bottom" constant="30" id="scM-rb-FFG"/>
                 <constraint firstAttribute="trailing" secondItem="92" secondAttribute="trailing" constant="110" id="ufs-Ny-yam"/>
                 <constraint firstItem="97" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="18" id="yY3-HT-8Kf"/>
             </constraints>
