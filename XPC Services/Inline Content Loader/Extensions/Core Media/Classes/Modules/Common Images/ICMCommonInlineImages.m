@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
 												options:NSRegularExpressionSearch
 												  range:urlPath.range];
 
-		return [NSString stringWithFormat:@"https://pbs.twimg.com/%@:orig", urlPath];
+		return [NSString stringWithFormat:@"https://pbs.twimg.com%@:orig", urlPath];
 	}
 	else if ([urlHost isEqualToString:@"docs.google.com"])
 	{
