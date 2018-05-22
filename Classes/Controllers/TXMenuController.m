@@ -518,13 +518,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSString *selection = webView.selection;
 
-			if (selection.length == 0 || selection.length > 40) {
+			NSUInteger selectionLength = selection.length;
+
+			if (selectionLength == 0 || selectionLength > 40) {
 				menuItem.title = TXTLS(@"BasicLanguage[1018]");
 
 				return NO;
 			}
 
-			if (selection.length > 25) {
+			if (selectionLength > 25) {
 				selection = [selection substringToIndex:24];
 
 				selection = [NSString stringWithFormat:@"%@…", selection.trim];
@@ -532,7 +534,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
 
-			return YES;
+			return (selectionLength > 0);
 		}
 		case 802: // "Toggle Visiblity of Member List"
 		{
