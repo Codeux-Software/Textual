@@ -678,6 +678,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return condition;
 		}
+		case 1600: // "Change Nickname…"
 		case 503: // "Change Nickname…"
 		case 504: // "Channel List…"
 		{
