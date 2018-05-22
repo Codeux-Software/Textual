@@ -109,7 +109,7 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 
 	NSDate *date1 = [NSDate date];
 
-	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:(-(dateInterval + 1))];
+	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:dateInterval];
 
 	/* Perform comparison */
 	NSDateComponents *breakdownInfo = [systemCalendar components:orderMatrix fromDate:date1 toDate:date2 options:0];
