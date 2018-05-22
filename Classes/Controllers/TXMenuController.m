@@ -593,7 +593,7 @@ NS_ASSUME_NONNULL_BEGIN
 			
 			menuItem.hidden = condition;
 
-			[menuItem.submenu itemWithTag:_channelMenuSeparatorTag].hidden = condition;
+			[menuItem.menu itemWithTag:_channelMenuSeparatorTag].hidden = condition;
 
 #undef _channelMenuSeparatorTag
 			
