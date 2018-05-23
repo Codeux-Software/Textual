@@ -42,6 +42,7 @@
 #import "IRCChannelPrivate.h"
 #import "IRCCommandIndexPrivate.h"
 #import "IRCWorld.h"
+#import "TLOEncryptionManagerPrivate.h"
 #import "TLOInputHistoryPrivate.h"
 #import "TVCDockIconPrivate.h"
 #import "TVCLogControllerPrivate.h"
@@ -218,6 +219,16 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([keys containsObject:@"ChannelViewArrangement"]) {
 		reloadAction |= TPCPreferencesReloadChannelViewArrangementAction;
 	}
+
+	/* Encryption policy */
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	if ([keys containsObject:@"Off-the-Record Messaging -> Enable Encryption"] ||
+		[keys containsObject:@"Off-the-Record Messaging -> Automatically Enable Service"] ||
+		[keys containsObject:@"Off-the-Record Messaging -> Require Encryption"])
+	{
+		reloadAction |= TPCPreferencesReloadEncryptionPolicyAction;
+	}
+#endif
 
 	/* After this is all complete; we call -preferencesChanged just to take 
 	 care of everything else that does not need specific reloads. */
@@ -403,6 +414,16 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((reloadAction & TPCPreferencesReloadChannelViewArrangementAction) == TPCPreferencesReloadChannelViewArrangementAction) {
 		[mainWindow() updateChannelViewArrangement];
 	}
+
+	/* Encryption policy */
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	if ((reloadAction & TPCPreferencesReloadEncryptionPolicyAction) == TPCPreferencesReloadEncryptionPolicyAction) {
+		[sharedEncryptionManager() updatePolicy];
+
+		/* Maybe remove title bar accessory view if encryption is disabled. */
+		[mainWindow() updateTitle];
+	}
+#endif
 
 	/* World controller preferences changed call */
 	if ((reloadAction & TPCPreferencesReloadPreferencesChangedAction) == TPCPreferencesReloadPreferencesChangedAction) {

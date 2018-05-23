@@ -1235,7 +1235,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
-	[sharedEncryptionManager() updatePolicy];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadEncryptionPolicyAction];
 
 	[self willChangeValueForKey:@"textEncryptionIsOpportunistic"];
 	[self didChangeValueForKey:@"textEncryptionIsOpportunistic"];
