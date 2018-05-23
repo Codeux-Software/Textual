@@ -108,8 +108,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	otrKit.delegate = (id)self;
 
-	otrKit.asynchronous = NO;
-
 	[otrKit setupWithDataPath:[self pathToStoreEncryptionSecrets]];
 
 	[self prepareEncryptionComponentPath:otrKit.fingerprintsPath];
@@ -258,7 +256,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
 												accountName:messageFrom
-												   protocol:[self otrKitProtocol]];
+												   protocol:[self otrKitProtocol]
+											 asynchronously:YES];
 }
 
 #pragma mark -
@@ -300,10 +299,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	messageObject.encodingCallback = decodingCallback;
 
+	/* Messages are decoded synchronously because many things incoming
+	 from IRC are never passed through OTRKit. To keep the incoming
+	 queue synchronous, we keep it synchronous here. */
 	[[OTRKit sharedInstance] decodeMessage:messageBody
 								  username:messageFrom
 							   accountName:messageTo
 								  protocol:[self otrKitProtocol]
+							asynchronously:NO
 									   tag:messageObject];
 }
 
@@ -329,6 +332,7 @@ NS_ASSUME_NONNULL_BEGIN
 								  username:messageTo
 							   accountName:messageFrom
 								  protocol:[self otrKitProtocol]
+							asynchronously:NO
 									   tag:messageObject];
 }
 
@@ -640,7 +644,7 @@ NS_ASSUME_NONNULL_BEGIN
 	} inRelationToAccountName:username];
 }
 
-- (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(NSError *)error
+- (void)otrKit:(OTRKit *)otrKit encodedMessage:(nullable NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(nullable NSError *)error
 {
 	if (tag == nil || [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]] == NO) {
 		return;
@@ -731,12 +735,12 @@ NS_ASSUME_NONNULL_BEGIN
 		 createWindowIfMissing:YES];
 }
 
-- (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
+- (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol error:(nullable NSError *)error
 {
 	[OTRKitAuthenticationDialog handleAuthenticationRequest:event progress:progress question:question username:username accountName:accountName protocol:protocol];
 }
 
-- (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(NSError *)error
+- (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(nullable NSError *)error
 {
 	if (event == OTRKitMessageEventReceivedMessageUnencrypted) {
 		[self otrKit:otrKit decodedMessage:message wasEncrypted:NO tlvs:nil username:username accountName:accountName protocol:protocol tag:tag];
