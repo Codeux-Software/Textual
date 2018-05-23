@@ -228,7 +228,7 @@ ClassWithDesignatedInitializerInitMethod
 	/* Do not allow unsafe content */
 	if ([moduleClass contentImageOrVideo] == NO && [TPCPreferences inlineMediaLimitToBasics]) {
 		return NO;
-	} else if ([moduleClass contentIsFile] == NO && [TPCPreferences inlineMediaLimitBasicsToFiles]) {
+	} else if ([moduleClass contentIsFile] == NO && [TPCPreferences inlineMediaLimitToBasics] && [TPCPreferences inlineMediaLimitBasicsToFiles]) {
 		return NO;
 	} else if ([moduleClass contentNotSafeForWork] && [TPCPreferences inlineMediaLimitNaughtyContent]) {
 		return NO;
