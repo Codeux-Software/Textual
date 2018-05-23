@@ -128,6 +128,8 @@ enum {
 - (void)print:(NSString *)messageBody by:(nullable NSString *)nickname inChannel:(nullable IRCChannel *)channel asType:(TVCLogLineType)lineType command:(NSString *)command escapeMessage:(BOOL)escapeMessage;
 
 - (void)onTimedCommand:(IRCTimedCommand *)timedCommand;
+
+- (void)logFileRecordSessionChanged:(BOOL)toNewSession inChannel:(nullable IRCChannel *)channel;
 @end
 
 NS_ASSUME_NONNULL_END

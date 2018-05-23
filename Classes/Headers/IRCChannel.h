@@ -69,6 +69,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (readonly, strong, nullable) IRCChannelMode *modeInfo;
 @property (readonly, copy, nullable) NSString *secretKey;
 @property (readonly, copy, nullable) NSURL *logFilePath;
+@property (readonly) NSUInteger logFileSessionCount; // Number of lines sent to channel log file for session (from connect to disconnect)
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (readonly) BOOL encryptionStateIsEncrypted;

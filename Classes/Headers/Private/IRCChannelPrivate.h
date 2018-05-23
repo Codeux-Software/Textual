@@ -78,6 +78,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reloadDataForTableViewBySortingMembers;
 
 - (void)writeToLogLineToLogFile:(TVCLogLine *)logLine;
+- (void)logFileWriteSessionBegin;
+- (void)logFileWriteSessionEnd;
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;

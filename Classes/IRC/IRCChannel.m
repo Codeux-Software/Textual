@@ -77,6 +77,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 @property (nonatomic, assign, readwrite) NSTimeInterval channelJoinTime;
 @property (nonatomic, strong, readwrite, nullable) IRCChannelMode *modeInfo;
 @property (nonatomic, strong) TLOFileLogger *logFile;
+@property (nonatomic, assign, readwrite) NSUInteger logFileSessionCount;
 
 /* memberListStandardSortedContainer is a copy of the member list sorted by the channel
  rank of each member.*/
@@ -539,6 +540,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.logFile close];
 }
 
+- (void)logFileWriteSessionBegin
+{
+	[self.associatedClient logFileRecordSessionChanged:YES inChannel:self];
+}
+
+- (void)logFileWriteSessionEnd
+{
+	[self.associatedClient logFileRecordSessionChanged:NO inChannel:self];
+
+	self.logFileSessionCount = 0;
+}
+
 #pragma mark -
 #pragma mark Printing
 
@@ -548,6 +561,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if ([TPCPreferences logToDiskIsEnabled] == NO || self.isUtility) {
 		return;
+	}
+
+	// Perform addition before if statement to avoid infinite loop
+	self.logFileSessionCount += 1;
+
+	if (self.logFileSessionCount == 1) {
+		[self logFileWriteSessionBegin];
 	}
 
 	if (self.logFile == nil) {

@@ -137,6 +137,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 @property (readonly, copy) NSString *networkNameAlt; // The name of the network connected to or the configured Connection Name
 @property (readonly, copy, nullable) NSString *preAwayUserNickname; // Nickname before away was set or nil
 @property (readonly, copy, nullable) NSData *zncBouncerCertificateChainData;
+@property (readonly) NSUInteger logFileSessionCount; // Number of lines sent to server console log file for session (from connect to disconnect)
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)connectMode;
