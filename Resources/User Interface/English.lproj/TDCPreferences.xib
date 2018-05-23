@@ -198,16 +198,7 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Y0B-GY-ayZ">
                                             <connections>
-                                                <binding destination="G2Q-fc-ddg" name="hidden2" keyPath="values.Off-the-Record Messaging -&gt; Enable Encryption" previousBinding="cU0-EC-vBc" id="5xM-Dm-6dz">
-                                                    <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                                        <integer key="NSNullPlaceholder" value="-1"/>
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                                <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with Off-the-Record Messaging Support" id="cU0-EC-vBc">
+                                                <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with Off-the-Record Messaging Support" id="NtP-3I-5El">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -218,15 +209,6 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="TBI-ND-xPg"/>
-                                                <binding destination="G2Q-fc-ddg" name="hidden2" keyPath="values.Off-the-Record Messaging -&gt; Enable Encryption" previousBinding="2he-Tf-7Pa" id="4Nn-lG-G5k">
-                                                    <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                                        <integer key="NSNullPlaceholder" value="-1"/>
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                                 <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with Off-the-Record Messaging Support" id="2he-Tf-7Pa">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -250,7 +232,7 @@
                         <popUpButton key="view" tag="109" id="yuI-3m-esZ">
                             <rect key="frame" x="0.0" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -1979,20 +1961,20 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="yKL-ON-PSA">
                             <view key="view" id="bCO-56-p1h">
-                                <rect key="frame" x="10" y="25" width="543" height="256"/>
+                                <rect key="frame" x="10" y="29" width="543" height="252"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
-                                        <rect key="frame" x="50" y="192" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="188" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="BpY-Xc-j0l"/>
                                         </constraints>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
-                                        <rect key="frame" x="50" y="136" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="132" width="443" height="5"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
-                                        <rect key="frame" x="128" y="159" width="33" height="16"/>
+                                        <rect key="frame" x="128" y="155" width="33" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Font:" id="Rms-5m-RLS">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2000,7 +1982,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
-                                        <rect key="frame" x="167" y="157" width="180" height="19"/>
+                                        <rect key="frame" x="167" y="153" width="180" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="rq9-Y9-W1h"/>
                                         </constraints>
@@ -2025,7 +2007,7 @@
                                         </connections>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                        <rect key="frame" x="355" y="156" width="58" height="19"/>
+                                        <rect key="frame" x="355" y="152" width="58" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Change" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Oyi-xz-dDf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -2047,7 +2029,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
-                                        <rect key="frame" x="121" y="104" width="234" height="18"/>
+                                        <rect key="frame" x="121" y="100" width="234" height="18"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="imb-ex-Fq2">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2057,7 +2039,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
-                                        <rect key="frame" x="121" y="76" width="194" height="18"/>
+                                        <rect key="frame" x="121" y="72" width="194" height="18"/>
                                         <buttonCell key="cell" type="check" title="Show general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="toP-T2-dv6">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2067,7 +2049,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
-                                        <rect key="frame" x="139" y="56" width="350" height="14"/>
+                                        <rect key="frame" x="139" y="52" width="350" height="14"/>
                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -2078,7 +2060,7 @@
                                         </connections>
                                     </textField>
                                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-wc-PBy">
-                                        <rect key="frame" x="122" y="212" width="214" height="22"/>
+                                        <rect key="frame" x="122" y="208" width="214" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="208" id="wld-Y2-GTP"/>
                                         </constraints>
@@ -2098,7 +2080,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="inL-ss-ERr">
-                                        <rect key="frame" x="82" y="216" width="37" height="16"/>
+                                        <rect key="frame" x="82" y="212" width="37" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="33" id="VBj-ex-Msv"/>
                                         </constraints>
@@ -2109,7 +2091,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="341" y="214" width="118" height="19"/>
+                                        <rect key="frame" x="341" y="210" width="118" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gtM-zH-PMU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -2176,7 +2158,7 @@
                                         <rect key="frame" x="103" y="189" width="350" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="KAw-Vj-iII">
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="ZRn-G5-YfE">
                                                     <rect key="frame" x="0.0" y="0.0" width="350" height="27"/>
@@ -2380,7 +2362,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="156" y="198" width="296" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mPp-b5-RuW">
                                             <rect key="frame" x="0.0" y="0.0" width="296" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
@@ -2435,7 +2417,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="107" y="146" width="340" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYd-WC-meI">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
@@ -3633,7 +3615,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                 <constraint firstItem="mqa-tv-bpf" firstAttribute="top" secondItem="McB-sS-fgg" secondAttribute="bottom" constant="8" id="vP7-iz-2mN"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qfG-DF-6ev" secondAttribute="trailing" constant="20" id="xZh-Qx-lGJ"/>
             </constraints>
-            <point key="canvasLocation" x="626.5" y="-4376"/>
+            <point key="canvasLocation" x="675" y="-4594"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="4pD-W0-ghZ" userLabel="File Transfers">
             <rect key="frame" x="0.0" y="0.0" width="591" height="314"/>
@@ -4079,7 +4061,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="65" y="189" width="420" height="16"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fLL-jK-jtT">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="upu-Ej-zfD">
                                                     <rect key="frame" x="0.0" y="42" width="420" height="16"/>
@@ -4666,12 +4648,40 @@ You should therefore not rely solely on this preference.</string>
             <point key="canvasLocation" x="348.5" y="-607.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZYk-23-zvA" userLabel="Off-the-Record Messaging">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="138"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="225"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="lYh-JG-BN5">
+                    <rect key="frame" x="84" y="179" width="215" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable Off-the-Record Messaging" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Ebq-y2-sIl">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="offRecordMessagingPolicyChanged:" target="-2" id="Off-Gl-wab"/>
+                        <binding destination="-2" name="value" keyPath="self.textEncryptionIsEnabled" id="6xO-cN-Iea"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yGO-On-ZvN">
+                    <rect key="frame" x="102" y="145" width="324" height="28"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Disabling this preference, disables all features, including the ability to start an Off-the-Record conversation manually." id="dGa-dE-wl9">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="lYh-JG-BN5" id="D3l-cP-SuS"/>
+                    </connections>
+                </textField>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="lVR-sX-Fvg">
+                    <rect key="frame" x="73" y="124" width="442" height="5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="442" id="2W8-1o-AOl"/>
+                    </constraints>
+                </box>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="c2f-dF-OoT">
                     <rect key="frame" x="84" y="64" width="226" height="18"/>
                     <buttonCell key="cell" type="check" title="Do not send unencrypted messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="m4s-Bh-UhF">
@@ -4680,7 +4690,8 @@ You should therefore not rely solely on this preference.</string>
                     </buttonCell>
                     <connections>
                         <action selector="offRecordMessagingPolicyChanged:" target="-2" id="VDz-Hf-aGA"/>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Off-the-Record Messaging -&gt; Require Encryption" id="G3G-Ro-h2g"/>
+                        <binding destination="-2" name="enabled" keyPath="self.textEncryptionIsRequiredPreferenceEnabled" id="sD8-2L-tLT"/>
+                        <binding destination="-2" name="value" keyPath="self.textEncryptionIsRequired" id="GxY-st-TFJ"/>
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="318-ie-koO">
@@ -4691,12 +4702,8 @@ You should therefore not rely solely on this preference.</string>
                     </buttonCell>
                     <connections>
                         <action selector="offRecordMessagingPolicyChanged:" target="-2" id="dHa-Df-hCq"/>
-                        <binding destination="-2" name="value" keyPath="textEncryptionIsOpportunistic" id="r8C-6r-14Z"/>
-                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Off-the-Record Messaging -&gt; Require Encryption" id="SCm-cO-76g">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
+                        <binding destination="-2" name="enabled" keyPath="self.textEncryptionIsOpportunisticPreferenceEnabled" id="Xsf-ZT-s4O"/>
+                        <binding destination="-2" name="value" keyPath="self.textEncryptionIsOpportunistic" id="vV4-Wd-SzN"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwB-LQ-B19">
@@ -4712,18 +4719,24 @@ You should therefore not rely solely on this preference.</string>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="318-ie-koO" firstAttribute="top" secondItem="ZYk-23-zvA" secondAttribute="top" constant="30" id="4RD-K6-c0q"/>
+                <constraint firstItem="yGO-On-ZvN" firstAttribute="leading" secondItem="lYh-JG-BN5" secondAttribute="leading" constant="18" id="1dF-VB-Zu9"/>
                 <constraint firstItem="kwB-LQ-B19" firstAttribute="leading" secondItem="c2f-dF-OoT" secondAttribute="leading" constant="18" id="6mp-U9-7u9"/>
                 <constraint firstItem="kwB-LQ-B19" firstAttribute="top" secondItem="c2f-dF-OoT" secondAttribute="bottom" constant="8" symbolic="YES" id="7iI-bo-lEf"/>
-                <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="86" id="IRF-NU-bcZ"/>
+                <constraint firstItem="lVR-sX-Fvg" firstAttribute="top" secondItem="yGO-On-ZvN" secondAttribute="bottom" constant="18" id="85P-0i-Qgk"/>
+                <constraint firstItem="lYh-JG-BN5" firstAttribute="top" secondItem="ZYk-23-zvA" secondAttribute="top" constant="30" id="Bs8-VT-PLv"/>
+                <constraint firstItem="318-ie-koO" firstAttribute="top" secondItem="lVR-sX-Fvg" secondAttribute="bottom" constant="18" id="Eyl-rW-vkH"/>
                 <constraint firstAttribute="trailing" secondItem="kwB-LQ-B19" secondAttribute="trailing" constant="139" id="KjO-Aa-UVH"/>
                 <constraint firstItem="c2f-dF-OoT" firstAttribute="top" secondItem="318-ie-koO" secondAttribute="bottom" constant="14" id="N3o-wf-4q0"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="318-ie-koO" secondAttribute="trailing" constant="20" id="QrJ-aH-ugh"/>
+                <constraint firstItem="lYh-JG-BN5" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="86" id="Stq-SX-6sM"/>
                 <constraint firstAttribute="bottom" secondItem="kwB-LQ-B19" secondAttribute="bottom" constant="30" id="eeQ-Ja-LDM"/>
                 <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="c2f-dF-OoT" secondAttribute="leading" id="gLD-YE-ihs"/>
+                <constraint firstItem="yGO-On-ZvN" firstAttribute="top" secondItem="lYh-JG-BN5" secondAttribute="bottom" constant="8" symbolic="YES" id="ix3-hc-LpM"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c2f-dF-OoT" secondAttribute="trailing" constant="20" id="jJg-oA-7Xh"/>
+                <constraint firstItem="lVR-sX-Fvg" firstAttribute="centerX" secondItem="ZYk-23-zvA" secondAttribute="centerX" id="s4o-ck-4fB"/>
+                <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="86" id="xRe-qX-3ze"/>
             </constraints>
-            <point key="canvasLocation" x="335" y="-4105"/>
+            <point key="canvasLocation" x="691" y="-3944"/>
         </customView>
         <arrayController alwaysUsesMultipleValuesMarker="YES" id="4310" userLabel="Keywords">
             <declaredKeys>
