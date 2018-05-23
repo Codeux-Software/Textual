@@ -702,6 +702,16 @@ NS_ASSUME_NONNULL_BEGIN
 			   messageState == OTRKitMessageStatePlaintext)
 	{
 		[self presentMessage:TXTLS(@"OffTheRecord[1004]") withAccountName:username];
+
+		/* When policy is changed to never, all open conversations are
+		 closed. Because user probably wont intend to use authenication
+		 dialogs without encryption enabled, then let's cancel any that
+		 are open for this condition. */
+		if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+			[OTRKitAuthenticationDialog cancelRequestForUsername:username
+													 accountName:accountName
+														protocol:protocol];
+		}
 	}
 }
 
