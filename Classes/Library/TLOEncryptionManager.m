@@ -427,12 +427,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performBlock:(void (^)(NSString *nickname, IRCClient *client, IRCChannel * _Nullable channel))block inRelationToAccountName:(NSString *)accountName createWindowIfMissing:(BOOL)createWindowIfMissing
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		NSString *nickname = [self nicknameFromAccountName:accountName];
-
 		IRCClient *client = [self connectionFromAccountName:accountName];
 
-		NSAssert((client != nil),
-			@"-connectionFromAccountName: returned a nil value; failing");
+		if (client == nil) {
+			return;
+		}
+
+		NSString *nickname = [self nicknameFromAccountName:accountName];
 
 		IRCChannel *channel = nil;
 
