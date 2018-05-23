@@ -192,9 +192,19 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
 }
 
++ (void)setTextEncryptionIsRequired:(BOOL)textEncryptionIsRequired
+{
+	[RZUserDefaults() setBool:textEncryptionIsRequired forKey:@"Off-the-Record Messaging -> Require Encryption"];
+}
+
 + (BOOL)textEncryptionIsRequired
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Require Encryption"];
+}
+
++ (void)setTextEncryptionIsEnabled:(BOOL)textEncryptionIsEnabled
+{
+	[RZUserDefaults() setBool:textEncryptionIsEnabled forKey:@"Off-the-Record Messaging -> Enable Encryption"];
 }
 
 + (BOOL)textEncryptionIsEnabled

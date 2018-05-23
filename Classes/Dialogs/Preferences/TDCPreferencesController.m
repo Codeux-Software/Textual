@@ -583,8 +583,17 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+- (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic
+{
+	[TPCPreferences setTextEncryptionIsOpportunistic:textEncryptionIsOpportunistic];
+}
+
 - (BOOL)textEncryptionIsOpportunistic
 {
+	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+		return NO;
+	}
+
 	if ([TPCPreferences textEncryptionIsRequired]) {
 		return YES;
 	}
@@ -592,19 +601,92 @@ NS_ASSUME_NONNULL_BEGIN
 	return [TPCPreferences textEncryptionIsOpportunistic];
 }
 
-- (void)setTextEncryptionIsOpportunistic:(BOOL)value
+- (BOOL)textEncryptionIsOpportunisticPreferenceEnabled
 {
-	[TPCPreferences setTextEncryptionIsOpportunistic:value];
-}
-#else
-- (BOOL)textEncryptionIsOpportunistic
-{
-	return NO;
+	return ([TPCPreferences textEncryptionIsEnabled] &&
+			[TPCPreferences textEncryptionIsRequired] == NO);
 }
 
-- (void)setTextEncryptionIsOpportunistic:(BOOL)value
+- (void)setTextEncryptionIsRequired:(BOOL)textEncryptionIsRequired
 {
-	;
+	[TPCPreferences setTextEncryptionIsRequired:textEncryptionIsRequired];
+
+	[self willChangeValueForKey:@"textEncryptionIsOpportunistic"];
+	[self didChangeValueForKey:@"textEncryptionIsOpportunistic"];
+}
+
+- (BOOL)textEncryptionIsRequired
+{
+	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+		return NO;
+	}
+
+	return [TPCPreferences textEncryptionIsRequired];
+}
+
+- (BOOL)textEncryptionIsRequiredPreferenceEnabled
+{
+	return [TPCPreferences textEncryptionIsEnabled];
+}
+
+- (void)setTextEncryptionIsEnabled:(BOOL)textEncryptionIsEnabled
+{
+	[TPCPreferences setTextEncryptionIsEnabled:textEncryptionIsEnabled];
+
+	[self willChangeValueForKey:@"textEncryptionIsOpportunistic"];
+	[self willChangeValueForKey:@"textEncryptionIsOpportunisticPreferenceEnabled"];
+	[self willChangeValueForKey:@"textEncryptionIsRequired"];
+	[self willChangeValueForKey:@"textEncryptionIsRequiredPreferenceEnabled"];
+
+	[self didChangeValueForKey:@"textEncryptionIsOpportunistic"];
+	[self didChangeValueForKey:@"textEncryptionIsOpportunisticPreferenceEnabled"];
+	[self didChangeValueForKey:@"textEncryptionIsRequired"];
+	[self didChangeValueForKey:@"textEncryptionIsRequiredPreferenceEnabled"];
+}
+
+- (BOOL)textEncryptionIsEnabled
+{
+	return [TPCPreferences textEncryptionIsEnabled];
+}
+#else
+- (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic
+{
+
+}
+
+- (BOOL)textEncryptionIsOpportunistic
+{
+
+}
+
+- (BOOL)textEncryptionIsOpportunisticPreferenceEnabled
+{
+
+}
+
+- (void)setTextEncryptionIsRequired:(BOOL)textEncryptionIsRequired
+{
+
+}
+
+- (BOOL)textEncryptionIsRequired
+{
+
+}
+
+- (BOOL)textEncryptionIsRequiredPreferenceEnabled
+{
+
+}
+
+- (void)setTextEncryptionIsEnabled:(BOOL)textEncryptionIsEnabled
+{
+
+}
+
+- (BOOL)textEncryptionIsEnabled
+{
+
 }
 #endif
 
@@ -1236,9 +1318,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
 	[TPCPreferences performReloadAction:TPCPreferencesReloadEncryptionPolicyAction];
-
-	[self willChangeValueForKey:@"textEncryptionIsOpportunistic"];
-	[self didChangeValueForKey:@"textEncryptionIsOpportunistic"];
 }
 #endif
 
