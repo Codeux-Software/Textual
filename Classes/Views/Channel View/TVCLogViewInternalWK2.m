@@ -441,47 +441,47 @@ create_normal_pool:
 
 - (void)enableOffScreenUpdates
 {
-	;
+
 }
 
 - (void)disableOffScreenUpdates
 {
-	;
+
 }
 
 - (void)redrawViewIfNeeded
 {
-	;
+
 }
 
 - (void)redrawView
 {
-	;
+
 }
 
 - (void)resetScrollerPosition
 {
-	;
+
 }
 
 - (void)resetScrollerPositionTo:(BOOL)scrolledToBottom
 {
-	;
+
 }
 
 - (void)saveScrollerPosition
 {
-	;
+
 }
 
 - (void)restoreScrollerPosition
 {
-	;
+
 }
 
 - (void)setAutomaticScrollingEnabled:(BOOL)automaticScrollingEnabled
 {
-	;
+
 }
 
 #pragma mark -

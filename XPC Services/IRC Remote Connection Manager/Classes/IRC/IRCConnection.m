@@ -298,7 +298,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.floodControlCurrentMessageCount = 0;
 
 	while ([self tryToSend] != NO) {
-		;
+
 	}
 }
 

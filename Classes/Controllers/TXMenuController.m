@@ -1574,7 +1574,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)emptyAction:(id)sender
 {
-	;
+
 }
 
 - (void)copy:(id)sender

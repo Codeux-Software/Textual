@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateDefaultsPostflight
 {
-	;
+
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
