@@ -214,6 +214,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, copy, readwrite) NSString *userNickname;
 @property (nonatomic, copy, readwrite) NSString *serverAddress;
 @property (nonatomic, copy, readwrite, nullable) NSString *preAwayUserNickname;
+@property (nonatomic, assign, readwrite) NSUInteger logFileSessionCount;
 
 // Properties private
 @property (nonatomic, assign) BOOL configurationIsStale;
@@ -5110,6 +5111,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
+	// Perform addition before if statement to avoid infinite loop
+	self.logFileSessionCount += 1;
+
+	if (self.logFileSessionCount == 1) {
+		[self logFileWriteSessionBegin];
+	}
+
 	if (self.logFile == nil) {
 		self.logFile = [[TLOFileLogger alloc] initWithClient:self];
 	}
@@ -5117,8 +5125,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.logFile writeLogLine:logLine];
 }
 
-- (void)logFileRecordSessionChanged:(BOOL)toNewSession
+- (void)logFileRecordSessionChanged:(BOOL)toNewSession inChannel:(nullable IRCChannel *)channel
 {
+	NSParameterAssert(channel.isUtility == NO);
+
 	NSString *localization = nil;
 
 	if (toNewSession) {
@@ -5127,51 +5137,62 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		localization = @"IRC[1096]";
 	}
 
-	/* ============================ */
-
-	TVCLogLineMutable *topLine = [TVCLogLineMutable new];
-
-	topLine.messageBody = @" ";
-
-	[self writeToLogLineToLogFile:topLine];
+	TVCLogLineMutable *logLine = [TVCLogLineMutable new];
 
 	/* ============================ */
 
-	TVCLogLineMutable *middleLine = [TVCLogLineMutable new];
+	logLine.messageBody = @" ";
 
-	middleLine.messageBody = TXTLS(localization);
-
-	[self writeToLogLineToLogFile:middleLine];
-
-	/* ============================ */
-
-	TVCLogLineMutable *bottomLine = [TVCLogLineMutable new];
-
-	bottomLine.messageBody = @" ";
-
-	[self writeToLogLineToLogFile:bottomLine];
+	if (channel) {
+		[channel writeToLogLineToLogFile:logLine];
+	} else {
+		[self writeToLogLineToLogFile:logLine];
+	}
 
 	/* ============================ */
 
+	logLine.messageBody = TXTLS(localization);
+
+	if (channel) {
+		[channel writeToLogLineToLogFile:logLine];
+	} else {
+		[self writeToLogLineToLogFile:logLine];
+	}
+
+	/* ============================ */
+
+	logLine.messageBody = @" ";
+
+	if (channel) {
+		[channel writeToLogLineToLogFile:logLine];
+	} else {
+		[self writeToLogLineToLogFile:logLine];
+	}
+}
+
+- (void)endLoggingSessions
+{
 	for (IRCChannel *channel in self.channelList) {
 		if (channel.isUtility) {
 			continue;
 		}
 
-		[channel writeToLogLineToLogFile:topLine];
-		[channel writeToLogLineToLogFile:middleLine];
-		[channel writeToLogLineToLogFile:bottomLine];
+		[channel logFileWriteSessionEnd];
 	}
+
+	[self logFileWriteSessionEnd];
 }
 
 - (void)logFileWriteSessionBegin
 {
-	[self logFileRecordSessionChanged:YES];
+	[self logFileRecordSessionChanged:YES inChannel:nil];
 }
 
 - (void)logFileWriteSessionEnd
 {
-	[self logFileRecordSessionChanged:NO];
+	[self logFileRecordSessionChanged:NO inChannel:nil];
+
+	self.logFileSessionCount = 0;
 }
 
 #pragma mark -
@@ -5725,7 +5746,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self postEventToViewController:@"serverDisconnected"];
 	}
 
-	[self logFileWriteSessionEnd];
+	[self endLoggingSessions];
 
 	[self resetAllPropertyValues];
 
@@ -11236,8 +11257,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Present status to user */
 	[mainWindow() updateTitleFor:self];
-
-	[self logFileWriteSessionBegin];
 
 	if (connectMode == IRCClientConnectReconnectMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1060]")];
