@@ -2876,7 +2876,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)outlineViewItemWillCollapse:(NSNotification *)notification
 {
-	;
+
 }
 
 - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView

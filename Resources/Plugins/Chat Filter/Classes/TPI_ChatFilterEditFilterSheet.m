@@ -482,7 +482,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performFilterActionTokenCompletion
 {
-	;
+
 }
 
 - (NSString *)stringValueForTokenField:(NSTokenField *)tokenField
@@ -685,7 +685,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateEnableStateOfFilterActionTokenField
 {
-	;
+
 }
 
 - (void)updateEnabledStateOfFilterEvents
