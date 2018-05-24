@@ -4377,6 +4377,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 				else if ([topic isEqualIgnoringCase:@"remove"])
 				{
+					[self printDebugInformation:TXTLS(@"IRC[1163]")];
 					[self printDebugInformation:TXTLS(@"IRC[1162][01]")];
 					[self printDebugInformation:TXTLS(@"IRC[1162][02]")];
 					[self printDebugInformation:TXTLS(@"IRC[1162][03]")];
