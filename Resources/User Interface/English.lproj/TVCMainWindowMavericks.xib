@@ -638,6 +638,61 @@
                             <action selector="insertMonospaceCharIntoTextBox:" target="yyd-f5-aHb" id="ExC-qe-eLr"/>
                         </connections>
                     </menuItem>
+                    <menuItem title="Spoiler" tag="95010" id="S0o-eI-T21">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Spoiler">
+                                <attributes>
+                                    <color key="NSBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="NSColor" white="0.8407" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <font key="NSFont" metaFont="system"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                        <tabStops>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="insertSpoilerCharIntoTextBox:" target="yyd-f5-aHb" id="Ei6-1S-nHB"/>
+                        </connections>
+                    </menuItem>
                     <menuItem title="Strikethrough" tag="95008" id="8dI-sd-HIl">
                         <attributedString key="attributedTitle">
                             <fragment content="Strikethrough">
@@ -1205,7 +1260,13 @@
                                     </connections>
                                 </menuItem>
                             </items>
+                            <connections>
+                                <outlet property="delegate" destination="yyd-f5-aHb" id="WXW-2c-DXq"/>
+                            </connections>
                         </menu>
+                        <connections>
+                            <action selector="emptyAction:" target="yyd-f5-aHb" id="abJ-MZ-jhK"/>
+                        </connections>
                     </menuItem>
                     <menuItem title="Background Color" state="on" tag="95006" hidden="YES" keyEquivalent="H" id="9gn-db-A9t">
                         <modifierMask key="keyEquivalentModifierMask" control="YES"/>
@@ -1657,7 +1718,13 @@
                                     </connections>
                                 </menuItem>
                             </items>
+                            <connections>
+                                <outlet property="delegate" destination="yyd-f5-aHb" id="2ex-If-SJh"/>
+                            </connections>
                         </menu>
+                        <connections>
+                            <action selector="emptyAction:" target="yyd-f5-aHb" id="792-Lz-a6e"/>
+                        </connections>
                     </menuItem>
                 </items>
                 <connections>

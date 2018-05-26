@@ -31,6 +31,10 @@ formatting that may be open for the previous fragment. }}
 			data-background-color="{{fragmentBackgroundColor}}"
 		{{/fragmentBackgroundColorIsSet}}
 	{{/fragmentTextColorUsesStyleTag}}
+
+	{{#fragmentIsSpoiler}}
+		data-is-spoiler="true"
+	{{/fragmentIsSpoiler}}
 >
 {{/fragmentTextColorOpened}}
 {{#fragmentIsBoldOpened}}<b>{{/fragmentIsBoldOpened}}

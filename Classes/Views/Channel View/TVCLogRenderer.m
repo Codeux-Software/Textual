@@ -792,6 +792,9 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	id foregroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingForegroundColorAttribute];
 	id backgroundColorOld = self->_renderedBodyOpenAttributes[TVCLogRendererFormattingBackgroundColorAttribute];
 
+	NSString *foregroundColor = nil;
+	NSString *backgroundColor = nil;
+
 	BOOL setNewColors = YES;
 
 	if (foregroundColorOld || backgroundColorOld)
@@ -820,8 +823,10 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 		BOOL usesStyleTag = NO;
 
+		foregroundColor = [self.class stringValueForColor:foregroundColorNew usesStyleTag:&usesStyleTag];
+
 		templateTokens[@"fragmentTextColorOpened"] = @(YES);
-		templateTokens[@"fragmentForegroundColor"] = [self.class stringValueForColor:foregroundColorNew usesStyleTag:&usesStyleTag];
+		templateTokens[@"fragmentForegroundColor"] = foregroundColor;
 		templateTokens[@"fragmentForegroundColorIsSet"] = @(YES);
 		templateTokens[@"fragmentTextColorUsesStyleTag"] = @(usesStyleTag);
 
@@ -835,13 +840,21 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 		BOOL usesStyleTag = NO;
 
+		backgroundColor =  [self.class stringValueForColor:backgroundColorNew usesStyleTag:&usesStyleTag];
+
 		templateTokens[@"fragmentTextColorOpened"] = @(YES);
-		templateTokens[@"fragmentBackgroundColor"] = [self.class stringValueForColor:backgroundColorNew usesStyleTag:&usesStyleTag];
+		templateTokens[@"fragmentBackgroundColor"] = backgroundColor;
 		templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
 		templateTokens[@"fragmentTextColorUsesStyleTag"] = @(usesStyleTag);
 
 		// backwards compatibility
 		templateTokens[@"fragmentTextColorIsSet"] = @(YES);
+	}
+
+	if ([self isRenderingPRIVMSG_or_NOTICE]) {
+		templateTokens[@"fragmentIsSpoiler"] = @(setNewColors && [foregroundColor isEqualToString:backgroundColor]);
+	} else {
+		templateTokens[@"fragmentIsSpoiler"] = @(NO);
 	}
 
 	// --- //

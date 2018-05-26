@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL textIsUnderlined;
 @property (readonly) BOOL textHasForegroundColor;
 @property (readonly) BOOL textHasBackgroundColor;
+@property (readonly) BOOL textHasSpoiler;
 
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
 - (IBAction)insertItalicCharIntoTextBox:(id)sender;
@@ -61,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
 - (IBAction)insertForegroundColorCharIntoTextBox:(id)sender;
 - (IBAction)insertBackgroundColorCharIntoTextBox:(id)sender;
+- (IBAction)insertSpoilerCharIntoTextBox:(id)sender;
 
 - (IBAction)removeBoldCharFromTextBox:(id)sender;
 - (IBAction)removeItalicCharFromTextBox:(id)sender;
@@ -69,6 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)removeUnderlineCharFromTextBox:(id)sender;
 - (IBAction)removeForegroundColorCharFromTextBox:(id)sender;
 - (IBAction)removeBackgroundColorCharFromTextBox:(id)sender;
+- (IBAction)removeSpoilerCharFromTextBox:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END
