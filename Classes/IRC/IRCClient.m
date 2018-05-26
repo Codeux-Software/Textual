@@ -3225,7 +3225,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				[mainWindow() clearContentsOfClient:self];
 
-				for (IRCChannel *channel in self.channelList) {
+				for (IRCChannel *channel in client.channelList) {
 					[mainWindow() clearContentsOfChannel:channel];
 				}
 			}
