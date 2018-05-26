@@ -166,7 +166,7 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
 + (BOOL)nickAllConnections;
-+ (BOOL)clearAllOnlyOnActiveServer;
++ (BOOL)clearAllConnections;
 
 + (BOOL)memberListSortFavorsServerStaff;
 + (BOOL)memberListUpdatesUserInfoPopoverOnScroll;
