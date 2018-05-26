@@ -36,16 +36,13 @@
 
  *********************************************************************** */
 
+#import "NSColorHelper.h"
 #import "IRCColorFormat.h"
 #import "TVCTextViewWithIRCFormatterPrivate.h"
 #import "TVCTextFormatterMenuPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _formattingMenuForegroundColorEnabledTag		95005
-#define _formattingMenuBackgroundColorEnabledTag		95007
-#define _formattingMenuForegroundColorDisabledTag		95004
-#define _formattingMenuBackgroundColorDisabledTag		95006
 #define _formattingMenuRainbowColorMenuItemTag			299
 #define _formattingMenuHexColorMenuItemTag				300
 
@@ -54,6 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *formatterMenu;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenu *foregroundColorMenu;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenu *backgroundColorMenu;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *foregroundColorSetMenuItem;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *backgroundColorSetMenuItem;
+
+- (IBAction)emptyAction:(id)sender;
 @end
 
 @implementation TVCTextViewIRCFormattingMenu
@@ -79,22 +80,35 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (item.tag) {
-		case 95001:
+		case 95005: // Foreground Color Missing
 		{
-			NSMenu *rootMenu = item.menu;
+			item.hidden = self.textHasForegroundColor;
 
+			return YES;
+		}
+		case 95004: // Foreground Color Set
+		{
+			item.hidden = (self.textHasForegroundColor == NO);
+
+			/* Do not enable menu item when there is spoiler */
+			return (self.textHasSpoiler == NO);
+		}
+		case 95007: // Background Color Missing
+		{
+			item.hidden = self.textHasBackgroundColor;
+
+			/* Require foreground color before background color can be set */
+			return self.textHasForegroundColor;
+		}
+		case 95006: // Background Color Set
+		{
+			item.hidden = (self.textHasBackgroundColor == NO);
+
+			return (self.textHasSpoiler == NO);
+		}
+		case 95001: // Bold
+		{
 			BOOL boldText = self.textIsBold;
-
-			BOOL foregroundColor = self.textHasForegroundColor;
-			BOOL backgroundColor = self.textHasBackgroundColor;
-
-			[rootMenu itemWithTag:_formattingMenuForegroundColorEnabledTag].hidden = foregroundColor;
-			[rootMenu itemWithTag:_formattingMenuForegroundColorDisabledTag].hidden = (foregroundColor == NO);
-
-			[rootMenu itemWithTag:_formattingMenuBackgroundColorEnabledTag].hidden = backgroundColor;
-			[rootMenu itemWithTag:_formattingMenuBackgroundColorDisabledTag].hidden = (backgroundColor == NO);
-
-			[rootMenu itemWithTag:_formattingMenuBackgroundColorEnabledTag].enabled = foregroundColor;
 
 			item.state = boldText;
 
@@ -106,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95002:
+		case 95002: // Italics
 		{
 			BOOL italicText = self.textIsItalicized;
 
@@ -120,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95009:
+		case 95009: // Monospace
 		{
 			BOOL monospaceText = self.textIsMonospace;
 
@@ -134,7 +148,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95008:
+		case 95010: // Spoiler
+		{
+			BOOL spoilerText = self.textHasSpoiler;
+
+			item.state = spoilerText;
+
+			if (spoilerText) {
+				item.action = @selector(removeSpoilerCharFromTextBox:);
+			} else {
+				item.action = @selector(insertSpoilerCharIntoTextBox:);
+			}
+
+			return YES;
+		}
+		case 95008: // Strikethrough
 		{
 			BOOL struckthroughText = self.textIsStruckthrough;
 
@@ -148,7 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95003:
+		case 95003: // Underline
 		{
 			BOOL underlineText = self.textIsUnderlined;
 
@@ -169,6 +197,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return YES;
+}
+
+- (void)emptyAction:(id)sender
+{
+	/* Empty action used to validate submenus */
 }
 
 #pragma mark -
@@ -216,6 +249,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self propertyIsSet:IRCTextFormatterBackgroundColorEffect];
 }
 
+- (BOOL)textHasSpoiler
+{
+	return [self propertyIsSet:IRCTextFormatterSpoilerEffect];
+}
+
 #pragma mark -
 #pragma mark Formatting Storage Helpers
 
@@ -231,7 +269,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self applyAttributedStringToTextBox:stringMutableCopy inRange:limitRange];
 
-	if (formatterEffect == IRCTextFormatterForegroundColorEffect && value == nil) {
+	if (value == nil &&
+		(formatterEffect == IRCTextFormatterForegroundColorEffect ||
+		 formatterEffect == IRCTextFormatterSpoilerEffect))
+	{
 		[self.textField resetFontColorInRange:limitRange];
 	}
 
@@ -418,6 +459,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:sender.color inRange:selectedTextRange];
 }
 
+- (void)insertSpoilerCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = self.textField.selectedRange;
+
+	[self applyEffectToTextBox:IRCTextFormatterSpoilerEffect withValue:@(YES) inRange:selectedTextRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:@(14) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:@(14) inRange:selectedTextRange];
+}
+
 #pragma mark -
 #pragma mark Remove Formatting
 
@@ -468,6 +519,16 @@ NS_ASSUME_NONNULL_BEGIN
 	NSRange selectedTextRange = self.textField.selectedRange;
 
 	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:nil inRange:selectedTextRange];
+}
+
+- (void)removeSpoilerCharFromTextBox:(id)sender
+{
+	NSRange selectedTextRange = self.textField.selectedRange;
+
+	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:nil inRange:selectedTextRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterSpoilerEffect withValue:nil inRange:selectedTextRange];
 }
 
 @end

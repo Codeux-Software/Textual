@@ -51,6 +51,7 @@ NSString * const IRCTextFormatterStrikethroughAttributeName = @"IRCTextFormatter
 NSString * const IRCTextFormatterUnderlineAttributeName = @"IRCTextFormatterUnderlineAttributeName";
 NSString * const IRCTextFormatterForegroundColorAttributeName = @"IRCTextFormatterForegroundColorAttributeName";
 NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatterBackgroundColorAttributeName";
+NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoilerAttributeName";
 
 @implementation NSAttributedString (IRCTextFormatterPrivate)
 
@@ -663,6 +664,18 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 				 break;
 			 }
+			 case IRCTextFormatterSpoilerEffect:
+			 {
+				 if ([attributes boolForKey:IRCTextFormatterSpoilerAttributeName] == NO) {
+					 return;
+				 }
+
+				 returnValue = YES;
+
+				 *stop = YES;
+
+				 break;
+			 }
 		 }
 	 }];
 
@@ -795,6 +808,12 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 				 break;
 			 }
+			 case IRCTextFormatterSpoilerEffect:
+			 {
+				 [self addAttribute:IRCTextFormatterSpoilerAttributeName value:value range:effectiveRange];
+
+				 break;
+			 }
 		 }
 	 }];
 }
@@ -882,6 +901,12 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 				 [self removeAttribute:NSBackgroundColorAttributeName range:effectiveRange];
 
 				 [self removeAttribute:IRCTextFormatterBackgroundColorAttributeName range:effectiveRange];
+
+				 break;
+			 }
+			 case IRCTextFormatterSpoilerEffect:
+			 {
+				 [self removeAttribute:IRCTextFormatterSpoilerAttributeName range:effectiveRange];
 
 				 break;
 			 }

@@ -46,7 +46,8 @@ typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
 	IRCTextFormatterStrikethroughEffect,
 	IRCTextFormatterUnderlineEffect,
 	IRCTextFormatterForegroundColorEffect,
-	IRCTextFormatterBackgroundColorEffect
+	IRCTextFormatterBackgroundColorEffect,
+	IRCTextFormatterSpoilerEffect,
 };
 
 TEXTUAL_EXTERN NSString * const IRCTextFormatterBoldAttributeName; // BOOL
@@ -56,6 +57,7 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterStrikethroughAttributeName; // B
 TEXTUAL_EXTERN NSString * const IRCTextFormatterUnderlineAttributeName; // BOOL
 TEXTUAL_EXTERN NSString * const IRCTextFormatterForegroundColorAttributeName; // NSNumber, 0-15 - or, NSColor
 TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; // NSNumber, 0-15 - or, NSColor
+TEXTUAL_EXTERN NSString * const IRCTextFormatterSpoilerAttributeName; // BOOL
 
 #define IRCTextFormatterColorAsDigitEffectCharacter		0x03
 #define IRCTextFormatterColorAsHexEffectCharacter		0x04

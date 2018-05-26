@@ -68,3 +68,12 @@ body[data-selected="false"] {
 body[data-selected="false"] #topicBar {
 	display: none;
 }
+
+/* Spoilers */
+/* !importmant must be used in this context because
+ when we have hex colors, those are set using the
+ style attribute which we must overpower. */
+.effect[data-is-spoiler='true']:hover {
+	color: inherit !important;
+	background-color: transparent !important;
+}
