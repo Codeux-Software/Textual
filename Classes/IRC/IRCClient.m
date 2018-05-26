@@ -3218,17 +3218,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case IRCPublicCommandClearallIndex: // Command: CLEARALL
 		{
-			if ([TPCPreferences clearAllOnlyOnActiveServer]) {
+			for (IRCClient *client in worldController().clientList) {
+				if (client != self && [TPCPreferences clearAllConnections] == NO) {
+					continue;
+				}
+
 				[mainWindow() clearContentsOfClient:self];
 
 				for (IRCChannel *channel in self.channelList) {
 					[mainWindow() clearContentsOfChannel:channel];
 				}
-
-				break;
 			}
-
-			[mainWindow() clearAllViews];
 
 			break;
 		}
