@@ -116,9 +116,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(client != nil);
 
+	__weak typeof(self) weakSelf = self;
+
 	self.timer =
 	[TLOTimer timerWithActionBlock:^(TLOTimer * _Nonnull sender) {
-		[client onTimedCommand:self];
+		[client onTimedCommand:weakSelf];
 	}];
 }
 
