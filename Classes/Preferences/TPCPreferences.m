@@ -176,7 +176,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"LogHighlights"];
 }
 
-+ (BOOL)clearAllOnlyOnActiveServer
++ (BOOL)clearAllConnections
 {
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
 }
