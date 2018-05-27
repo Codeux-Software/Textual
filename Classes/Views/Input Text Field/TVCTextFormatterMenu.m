@@ -80,33 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (item.tag) {
-		case 95005: // Foreground Color Missing
-		{
-			item.hidden = self.textHasForegroundColor;
-
-			return YES;
-		}
-		case 95004: // Foreground Color Set
-		{
-			item.hidden = (self.textHasForegroundColor == NO);
-
-			/* Do not enable menu item when there is spoiler */
-			return (self.textHasSpoiler == NO);
-		}
-		case 95007: // Background Color Missing
-		{
-			item.hidden = self.textHasBackgroundColor;
-
-			/* Require foreground color before background color can be set */
-			return self.textHasForegroundColor;
-		}
-		case 95006: // Background Color Set
-		{
-			item.hidden = (self.textHasBackgroundColor == NO);
-
-			return (self.textHasSpoiler == NO);
-		}
-		case 95001: // Bold
+		case 100: // Bold
 		{
 			BOOL boldText = self.textIsBold;
 
@@ -120,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95002: // Italics
+		case 101: // Italics
 		{
 			BOOL italicText = self.textIsItalicized;
 
@@ -134,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95009: // Monospace
+		case 102: // Monospace
 		{
 			BOOL monospaceText = self.textIsMonospace;
 
@@ -148,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95010: // Spoiler
+		case 103: // Spoiler
 		{
 			BOOL spoilerText = self.textHasSpoiler;
 
@@ -162,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95008: // Strikethrough
+		case 104: // Strikethrough
 		{
 			BOOL struckthroughText = self.textIsStruckthrough;
 
@@ -176,7 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 95003: // Underline
+		case 105: // Underline
 		{
 			BOOL underlineText = self.textIsUnderlined;
 
@@ -189,6 +163,32 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			return YES;
+		}
+		case 108: // Foreground Color Missing
+		{
+			item.hidden = self.textHasForegroundColor;
+
+			return YES;
+		}
+		case 107: // Foreground Color Set
+		{
+			item.hidden = (self.textHasForegroundColor == NO);
+
+			/* Do not enable menu item when there is spoiler */
+			return (self.textHasSpoiler == NO);
+		}
+		case 110: // Background Color Missing
+		{
+			item.hidden = self.textHasBackgroundColor;
+
+			/* Require foreground color before background color can be set */
+			return self.textHasForegroundColor;
+		}
+		case 109: // Background Color Set
+		{
+			item.hidden = (self.textHasBackgroundColor == NO);
+
+			return (self.textHasSpoiler == NO);
 		}
 		default:
 		{
