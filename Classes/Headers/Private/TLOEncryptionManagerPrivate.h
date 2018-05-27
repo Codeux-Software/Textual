@@ -45,12 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
-
-#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			1401 // "Start Private Conversation"
-#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		1402 // "Refresh Private Conversation"
-#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			1403 // "End Private Conversation"
-#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			1404 // "Authenticate Chat Partner"
-#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			1405 // "View List of Fingerprints"
 #endif
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
