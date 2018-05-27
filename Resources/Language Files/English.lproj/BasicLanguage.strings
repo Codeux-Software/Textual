@@ -52,9 +52,6 @@
 "BasicLanguage[1010]" = "Leave Channel";
 "BasicLanguage[1011]" = "Quit Textual 7";
 
-"BasicLanguage[1012]" = "Delete Channel";
-"BasicLanguage[1013]" = "Close Query";
-
 "BasicLanguage[1014][1]" = "Connect";
 "BasicLanguage[1014][2]" = "Connect Using IPv4";
 

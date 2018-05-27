@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([action isEqualToString:@"acknowledgements"])
 	{
-		[menuController() showAcknowledgements:nil];
+		[menuController() openAcknowledgements:nil];
 	}
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"contributors"])
 	{
-		[menuController() showAcknowledgements:nil];
+		[menuController() openAcknowledgements:nil];
 	}
 	else if ([action isEqualToString:@"custom-scripts-folder"] ||
 			 [action isEqualToString:@"unsupervised-script-folder"] ||
