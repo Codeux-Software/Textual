@@ -1180,6 +1180,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)textFormattingForegroundColor:(NSEvent *)e
 {
+	if (self.formattingMenu.textHasSpoiler) {
+		return;
+	}
+
 	if (self.formattingMenu.textHasForegroundColor) {
 		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 
@@ -1196,6 +1200,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)textFormattingBackgroundColor:(NSEvent *)e
 {
+	if (self.formattingMenu.textHasSpoiler) {
+		return;
+	}
+
 	if (self.formattingMenu.textHasForegroundColor == NO) {
 		return;
 	}
