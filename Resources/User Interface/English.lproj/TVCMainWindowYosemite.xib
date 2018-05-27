@@ -602,7 +602,7 @@
             <modifierMask key="keyEquivalentModifierMask"/>
             <menu key="submenu" title="IRC Formatting" id="tby-cl-t36">
                 <items>
-                    <menuItem title="Bold" tag="95001" id="ajV-SV-z21">
+                    <menuItem title="Bold" tag="100" id="ajV-SV-z21">
                         <attributedString key="attributedTitle">
                             <fragment content="Bold">
                                 <attributes>
@@ -655,7 +655,7 @@
                             <action selector="insertBoldCharIntoTextBox:" target="j7v-mc-UwU" id="FL2-d6-WTy"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Italics" tag="95002" id="MQM-6c-LVF">
+                    <menuItem title="Italics" tag="101" id="MQM-6c-LVF">
                         <attributedString key="attributedTitle">
                             <fragment content="Italics">
                                 <attributes>
@@ -709,7 +709,7 @@
                             <action selector="insertItalicCharIntoTextBox:" target="j7v-mc-UwU" id="ywY-c0-vnI"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Monospace" tag="95009" id="IRX-kV-qMN" userLabel="Monospace">
+                    <menuItem title="Monospace" tag="102" id="IRX-kV-qMN" userLabel="Monospace">
                         <attributedString key="attributedTitle">
                             <fragment content="Monospace">
                                 <attributes>
@@ -763,7 +763,7 @@
                             <action selector="insertMonospaceCharIntoTextBox:" target="j7v-mc-UwU" id="MlM-MK-kaM"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Spoiler" tag="95010" id="TKk-OM-x7h">
+                    <menuItem title="Spoiler" tag="103" id="TKk-OM-x7h">
                         <attributedString key="attributedTitle">
                             <fragment content="Spoiler">
                                 <attributes>
@@ -818,7 +818,7 @@
                             <action selector="insertSpoilerCharIntoTextBox:" target="j7v-mc-UwU" id="uf7-BY-Dc6"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Strikethrough" tag="95008" id="eHi-3i-hdN">
+                    <menuItem title="Strikethrough" tag="104" id="eHi-3i-hdN">
                         <attributedString key="attributedTitle">
                             <fragment content="Strikethrough">
                                 <attributes>
@@ -872,7 +872,7 @@
                             <action selector="insertStrikethroughCharIntoTextBox:" target="j7v-mc-UwU" id="PnJ-g6-Soe"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Underline" tag="95003" id="WEO-6i-cGf">
+                    <menuItem title="Underline" tag="105" id="WEO-6i-cGf">
                         <attributedString key="attributedTitle">
                             <fragment content="Underline">
                                 <attributes>
@@ -927,14 +927,14 @@
                             <action selector="insertUnderlineCharIntoTextBox:" target="j7v-mc-UwU" id="F1P-4u-Qi6"/>
                         </connections>
                     </menuItem>
-                    <menuItem isSeparatorItem="YES" id="2wB-PE-DHZ"/>
-                    <menuItem title="Text Color" state="on" tag="95004" hidden="YES" keyEquivalent="C" id="Ebt-RF-aBw">
+                    <menuItem isSeparatorItem="YES" tag="106" id="2wB-PE-DHZ"/>
+                    <menuItem title="Text Color" state="on" tag="107" hidden="YES" keyEquivalent="C" id="Ebt-RF-aBw">
                         <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                         <connections>
                             <action selector="removeForegroundColorCharFromTextBox:" target="j7v-mc-UwU" id="MfG-sK-ba9"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Text Color" tag="95005" id="zcK-F5-D5E">
+                    <menuItem title="Text Color" tag="108" id="zcK-F5-D5E">
                         <modifierMask key="keyEquivalentModifierMask"/>
                         <menu key="submenu" title="Text Color" id="nLk-Fl-2lR">
                             <items>
@@ -1038,7 +1038,7 @@
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="WrN-Zd-u4L"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem isSeparatorItem="YES" tag="99" id="592-9O-NaR"/>
+                                <menuItem isSeparatorItem="YES" id="592-9O-NaR"/>
                                 <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="yvr-bb-p4H">
                                     <attributedString key="attributedTitle">
                                         <fragment content=" R">
@@ -1376,7 +1376,7 @@
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="y6a-Uv-z5F"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem isSeparatorItem="YES" tag="99" id="hGo-0i-jYX"/>
+                                <menuItem isSeparatorItem="YES" id="hGo-0i-jYX"/>
                                 <menuItem title="Other…" tag="300" id="uyY-8y-tGv" userLabel="Other…">
                                     <attributedString key="attributedTitle"/>
                                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -1393,13 +1393,13 @@
                             <action selector="emptyAction:" target="j7v-mc-UwU" id="DhV-1G-B5s"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Background Color" state="on" tag="95006" hidden="YES" keyEquivalent="H" id="ePW-6F-Q1S">
+                    <menuItem title="Background Color" state="on" tag="109" hidden="YES" keyEquivalent="H" id="ePW-6F-Q1S">
                         <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                         <connections>
                             <action selector="removeBackgroundColorCharFromTextBox:" target="j7v-mc-UwU" id="vyg-et-Ooe"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Background Color" tag="95007" id="yrv-9t-LSZ">
+                    <menuItem title="Background Color" tag="110" id="yrv-9t-LSZ">
                         <modifierMask key="keyEquivalentModifierMask"/>
                         <menu key="submenu" title="Background Color" id="dMA-xy-EJU">
                             <items>
@@ -1503,7 +1503,7 @@
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="9Ot-er-ugQ"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem isSeparatorItem="YES" tag="99" id="Lkd-mt-5g7"/>
+                                <menuItem isSeparatorItem="YES" id="Lkd-mt-5g7"/>
                                 <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="YPx-ab-Cac">
                                     <attributedString key="attributedTitle">
                                         <fragment content=" R">
@@ -1834,7 +1834,7 @@
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="iBo-Ja-C2N"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem isSeparatorItem="YES" tag="99" id="P6H-kS-fFY"/>
+                                <menuItem isSeparatorItem="YES" id="P6H-kS-fFY"/>
                                 <menuItem title="Other…" tag="300" id="dKB-ut-N9M" userLabel="Other…">
                                     <attributedString key="attributedTitle"/>
                                     <modifierMask key="keyEquivalentModifierMask"/>
