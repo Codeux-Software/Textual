@@ -3261,7 +3261,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSString *serverAddress = stringIn.lowercaseGetToken;
 
-			if (serverAddress.length == 0) {
+			if (serverAddress.length > 0) {
 				if (serverAddress.isValidInternetAddress == NO) {
 					[self printDebugInformation:TXTLS(@"IRC[1135]")];
 					
