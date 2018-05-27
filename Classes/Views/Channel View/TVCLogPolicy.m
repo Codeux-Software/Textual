@@ -59,9 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define _WebKit2MenuItemTagLookupInDictionary		22
 #define _WebKit2MenuItemTagSearchWithGoogle			21
 
-#define _TextualMenuItemTagSearchWithGoogle			1601
-#define _TextualMenuItemTagLookupInDictionary		1602
-
 @implementation TVCLogPolicy
 
 - (NSArray<NSMenuItem *> *)constructContextMenuItemsForWebView:(TVCLogView *)webView defaultMenuItems:(NSArray<NSMenuItem *> *)defaultMenuItems
@@ -127,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else
 	{
-		NSMenu *menu = menuController().channelViewDefaultMenu;
+		NSMenu *menu = menuController().channelViewGeneralMenu;
 
 		NSMenuItem *inspectElementItem = nil;
 		NSMenuItem *lookupInDictionaryItem = nil;
@@ -152,13 +149,13 @@ NS_ASSUME_NONNULL_BEGIN
 		for (NSMenuItem *item in menu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
-			if (newItem.tag == _TextualMenuItemTagSearchWithGoogle) {
+			if (newItem.tag == MTWKGeneralSearchWithGoogle) {
 				if (searchWithGoogleItem != nil) {
 					[menuItems addObject:searchWithGoogleItem];
 
 					continue;
 				}
-			} else if (newItem.tag == _TextualMenuItemTagLookupInDictionary) {
+			} else if (newItem.tag == MTWKGeneralLookUpInDictionary) {
 				if (lookupInDictionaryItem != nil) {
 					[menuItems addObject:lookupInDictionaryItem];
 
