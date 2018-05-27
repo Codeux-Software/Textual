@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #import "TXMasterController.h"
+#import "TXMenuController.h"
 #import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
 #import "TVCMainWindow.h"
@@ -819,7 +820,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSUInteger menuItemTag = menuItem.tag;
 
-	if (menuItemTag == TLOEncryptionManagerMenuItemTagViewListOfFingerprints) {
+	if (menuItemTag == MTOTRStatusButtonViewListOfFingerprints) {
 		return YES;
 	}
 
@@ -830,23 +831,23 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL messageStateEncrypted = (currentMessageState == OTRKitMessageStateEncrypted);
 
 	switch (menuItemTag) {
-		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
+		case MTOTRStatusButtonStartPrivateConversation:
 		{
 			menuItem.hidden = messageStateEncrypted;
 
 			return YES;
 		}
-		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
+		case MTOTRStatusButtonRefreshPrivateConversation:
 		{
 			menuItem.hidden = (messageStateEncrypted == NO);
 
 			return YES;
 		}
-		case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
+		case MTOTRStatusButtonEndPrivateConversation:
 		{
 			return messageStateEncrypted;
 		}
-		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
+		case MTOTRStatusButtonAuthenticateChatPartner:
 		{
 			return messageStateEncrypted;
 		}
