@@ -54,9 +54,10 @@ enum
 	MTMainMenuView = 4,
 	MTMainMenuServer = 5,
 	MTMainMenuChannel = 6,
-	MTMainMenuNavigate = 7,
-	MTMainMenuWindow = 8,
-	MTMainMenuHelp = 9,
+	MTMainMenuQuery = 7,
+	MTMainMenuNavigate = 8,
+	MTMainMenuWindow = 9,
+	MTMainMenuHelp = 10,
 
 	/* Main menu - App menu */
 	MTMMAppAboutApp = 100, // "About Textual"
@@ -133,8 +134,8 @@ enum
 	MTMMChannelAddChannel = 603, // "Add Channel…"
 	MTMMChannelDeleteChannel = 604, // "Delete Channel"
 	MTMMChannelDeleteChannelSeparator = 605, // "-"
-	MTMMChannelQueryLogs = 606, // "Query Logs"
-	MTMMChannelViewLogs = 607, // "View Logs"
+	MTMMChannelViewLogs = 606, // "View Logs"
+	MTMMChannelViewLogsSeparator = 607, // "-"
 	MTMMChannelModifyTopic = 608, // "Modify Topic"
 	MTMMChannelModesMenu = 609, // "Modes"
 	MTMMChannelModesMenuAddModerated = 6090000, // "Moderated (+m)"
@@ -150,7 +151,12 @@ enum
 	MTMMChannelListOfQuietsSeparator = 615, // "-"
 	MTMMChannelChannelProperties = 616, // "Channel Properties…"
 	MTMMChannelChannelPropertiesSeparator = 617, // "-"
-	MTMMChannelCopyUniqueIdentifier = 618, // "Copy Unique Identifier"
+	MTMMChannelCopyUniqueIdentifier = 618, //
+
+	/* Main menu - Query menu */
+	MTMMQueryCloseQuery = 1800, // "Close Query"
+	MTMMQueryCloseQuerySeparator = 1801, // "-"
+	MTMMQueryQueryLogs = 1802, // "Query Logs"
 
 	/* Main menu - Navigation menu */
 	MTMMNavigationServersMenu = 700, // "Servers"
@@ -282,6 +288,9 @@ enum
 	MTOTRStatusButtonViewListOfFingerprints = 1508, // "View List of Fingerprints"
 
 	/* User context menu */
+	MTUserControlsLowestTag = 1600,
+	MTUserControlsHighestTag = 1699,
+
 	MTUserControlsAddIgnore = 1600, // "Add Ignore"
 	MTUserControlsModifyIgnore = 1601, // "Modify Ignore"
 	MTUserControlsRemoveIgnore = 1602, // "Remove Ignore"
@@ -330,7 +339,7 @@ enum
 
 @interface TXMenuController : NSObject
 @property (readonly, strong) NSMenu *channelViewChannelNameMenu;
-@property (readonly, strong) NSMenu *channelViewDefaultMenu;
+@property (readonly, strong) NSMenu *channelViewGeneralMenu;
 @property (readonly, strong) NSMenu *channelViewURLMenu;
 
 @property (readonly, strong) NSMenu *dockMenu;
@@ -340,20 +349,15 @@ enum
 #endif
 
 @property (readonly, weak) NSMenu *mainMenuNavigationChannelListMenu;
-@property (readonly, weak) NSMenuItem *mainMenuCloseWindowMenuItem;
 @property (readonly, weak) NSMenuItem *mainMenuChannelMenuItem;
+@property (readonly, weak) NSMenuItem *mainMenuQueryMenuItem;
 @property (readonly, weak) NSMenuItem *mainMenuServerMenuItem;
 
-@property (readonly, strong) NSMenu *mainWindowSegmentedControllerCell0Menu;
+@property (readonly, strong) NSMenu *mainWindowSegmentedControllerCellMenu;
 
 @property (readonly, strong) NSMenu *serverListNoSelectionMenu;
 
 @property (readonly, strong) NSMenu *userControlMenu;
-
-@property (readonly, weak) NSMenuItem *muteNotificationsDockMenuItem;
-@property (readonly, weak) NSMenuItem *muteNotificationsFileMenuItem;
-@property (readonly, weak) NSMenuItem *muteNotificationsSoundsDockMenuItem;
-@property (readonly, weak) NSMenuItem *muteNotificationsSoundsFileMenuItem;
 
 @property (readonly, weak) IRCClient *selectedClient;
 @property (readonly, weak) IRCChannel *selectedChannel;
@@ -451,8 +455,7 @@ enum
 - (IBAction)centerMainWindow:(id)sender;
 - (IBAction)resetMainWindowFrame:(id)sender;
 
-- (IBAction)showAcknowledgements:(id)sender;
-- (IBAction)showScriptingDocumentation:(id)sender;
+- (IBAction)openAcknowledgements:(id)sender;
 
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)showAddressBook:(id)sender;

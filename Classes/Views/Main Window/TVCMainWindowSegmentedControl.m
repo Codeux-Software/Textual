@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 				mainWindow.loadingScreen.viewIsVisible == NO);
 
 	// Cell 0
-	NSMenu *cell0Menu = menuController().mainWindowSegmentedControllerCell0Menu;
+	NSMenu *cell0Menu = menuController().mainWindowSegmentedControllerCellMenu;
 
 	[self setMenu:cell0Menu forSegment:0];
 

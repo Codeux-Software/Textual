@@ -1757,10 +1757,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	/* The right click menu follows selection so let's update
 	 the menu we will show depending on the selection. */
-	if (isClient == NO) {
+	if (isClient) {
+		self.serverList.menu = menuController().mainMenuServerMenuItem.submenu;
+	} else if (isChannel) {
 		self.serverList.menu = menuController().mainMenuChannelMenuItem.submenu;
 	} else {
-		self.serverList.menu = menuController().mainMenuServerMenuItem.submenu;
+		self.serverList.menu = menuController().mainMenuQueryMenuItem.submenu;
 	}
 
 	/* Update table view data sources */

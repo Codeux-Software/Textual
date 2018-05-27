@@ -97,21 +97,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _channelIsActive			(c && [c isActive])
-#define _channelIsntActive			(c && [c isActive] == NO)
-#define _clientIsConnected			(u && [u isConnected])
-#define _clientIsntConnected		(u && [u isConnected] == NO && [u isConnecting] == NO)
-#define _clientIsLoggedIn			(u && [u isConnected] && [u isLoggedIn])
-#define _clientIsntLoggedIn			(u && [u isConnected] == NO && [u isLoggedIn] == NO)
-#define _isClient					(u && c == nil)
-#define _isChannel					(c && [c isChannel])
-#define _isQuery					(c && [c isPrivateMessage])
-#define _isChannelOrQuery			(_isChannel || _isQuery)
-#define _isUtility					(c && [c isUtility])
-#define _noChannel					(c == nil)
-#define _noClient					(u == nil)
-#define _noClientOrChannel			(u == nil || c == nil)
-
 #define	_popWindowViewIfExists(c)	if ([windowController() maybeBringWindowForward:(c)]) {		\
 										return;													\
 									}
@@ -126,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, nullable) TVCLogView *selectedViewControllerBackingView;
 @property (readonly) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewChannelNameMenu;
-@property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewDefaultMenu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewGeneralMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *channelViewURLMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *dockMenu;
 
@@ -135,11 +120,11 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 @property (nonatomic, weak, readwrite) IBOutlet NSMenu *mainMenuNavigationChannelListMenu;
-@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuCloseWindowMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuChannelMenuItem;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuQueryMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuServerMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuWindowMenuItem;
-@property (nonatomic, strong, readwrite) IBOutlet NSMenu *mainWindowSegmentedControllerCell0Menu;
+@property (nonatomic, strong, readwrite) IBOutlet NSMenu *mainWindowSegmentedControllerCellMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *serverListNoSelectionMenu;
 @property (nonatomic, strong, readwrite) IBOutlet NSMenu *userControlMenu;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
@@ -158,6 +143,8 @@ NS_ASSUME_NONNULL_BEGIN
 		self.muteNotificationsSoundsDockMenuItem.state = NSOnState;
 		self.muteNotificationsSoundsFileMenuItem.state = NSOnState;
 	}
+
+	[self.channelViewGeneralMenu itemWithTag:MTWKGeneralChannelMenu].submenu = [self.mainMenuChannelMenuItem.submenu copy];
 
 	[self setupOtherServices];
 
@@ -189,42 +176,27 @@ NS_ASSUME_NONNULL_BEGIN
 	/* When the selection changes, menus that may be dynamic are force
 	 revalidated so that Command I (or other shortcuts) work with channel
 	 selected, but not for the server console. */
-	[self forceAllChildrenElementsOfMenuToValidate:self.mainMenuChannelMenuItem.menu recursively:YES];
-	[self forceAllChildrenElementsOfMenuToValidate:self.mainMenuServerMenuItem.menu recursively:YES];
+	[self _forceAllChildrenElementsOfMenuToValidate:[NSApp mainMenu]];
 }
 
-- (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
-{
-	[self forceAllChildrenElementsOfMenuToValidate:menu recursively:YES];
-}
-
-- (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu recursively:(BOOL)recursively
+- (void)_forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
 {
 	NSParameterAssert(menu != nil);
 
 	for (NSMenuItem *menuItem in menu.itemArray) {
 		id target = menuItem.target;
 
-		if ([target respondsToSelector:@selector(validateMenuItem:)]) {
-			(void)[target performSelector:@selector(validateMenuItem:) withObject:menuItem];
+		if (target == nil) {
+			continue;
 		}
 
-		if (recursively) {
-			if (menuItem.hasSubmenu == NO) {
-				continue;
-			}
-
-			[self forceAllChildrenElementsOfMenuToValidate:menuItem.submenu];
+		if ([target respondsToSelector:@selector(validateMenuItem:)]) {
+			(void)[target performSelector:@selector(validateMenuItem:) withObject:menuItem];
 		}
 	}
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-	return [self validateMenuItem:menuItem withTag:menuItem.tag];
-}
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem withTag:(NSUInteger)tag
 {
 	NSParameterAssert(menuItem != nil);
 
@@ -232,228 +204,175 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	BOOL appFinishedLaunching = masterController().applicationIsLaunched;
-#endif
+	/* Menu validation works in two passes:
+		 1. First -_validateMenuItem: is called which performs validation for
+		    the individual menu item including hiding it and related items.
+		 2. The result is then passed to the logic below which performs more
+		    specialized work such as disabling large group of menu items when
+		    the trial has expired.
+	 */
+	BOOL validationResult = [self _validateMenuItem:menuItem];
 
-	BOOL isMainWindowMain = mainWindow().mainWindow;
-	BOOL isMainWindowDisabled = mainWindow().disabled;
-	BOOL mainWindowHasSheet = (mainWindow().attachedSheet != nil);
-	BOOL frontmostWindowIsMainWindow = mainWindow().isBeneathMouse;
+	if (validationResult == NO) {
+		return NO;
+	}
 
-	BOOL returnValue = [self validateSpecificMenuItem:menuItem withTag:tag];
+	NSUInteger tag = menuItem.tag;
 
-	switch (tag)
-	{
-		/* 100 through 999 matches all main menu, menu items.
-		See TXMenuController.h for list of valid tags. */
-		case 100 ... 999:
-		case 1700 ... 1799:
+	/* The submenus of the main menu are all targets of the menu
+	 controller so that we can chose to hide or show some depending
+	 on context. For the top most submenus, we have nothing further
+	 to do after performing initial validation. */
+	switch (tag) {
+		case MTMainMenuApp:
+		case MTMainMenuFile:
+		case MTMainMenuEdit:
+		case MTMainMenuView:
+		case MTMainMenuServer:
+		case MTMainMenuChannel:
+		case MTMainMenuQuery:
+		case MTMainMenuNavigate:
+		case MTMainMenuWindow:
+		case MTMainMenuHelp:
 		{
-			/* Menu items part of the Window menu that should
-			 be hidden under certain conditions. */
-			if (tag >= 800 && tag <= 899) {
-				switch (tag) {
-					case 802: // "Toggle Visiblity of Member List"
-					case 803: // "Toggle Visiblity of Server List"
-					case 804: // "Toggle Window Appearance"
-					case 805: // "Sort Channel List"
-					case 806: // "Center Main Window"
-					case 807: // "Reset Window to Default Size"
-					case 808: // "Main Window"
-					case 809: // "Address Book"
-					case 810: // "Ignore List"
-					case 812: // "Highlight List"
-					{
-						/* Modify separator items for the first item in switch. */
-						if (tag == 802) {
-							if (isMainWindowMain == NO) {
-								menuItem.hidden = YES;
-
-								[menuItem.menu itemWithTag:816].hidden = YES; // Menu Separator
-								[menuItem.menu itemWithTag:817].hidden = YES; // Menu Separator
-								[menuItem.menu itemWithTag:818].hidden = YES; // Menu Separator
-							} else {
-								menuItem.hidden = NO;
-
-								[menuItem.menu itemWithTag:816].hidden = NO; // Menu Separator
-								[menuItem.menu itemWithTag:817].hidden = NO; // Menu Separator
-								[menuItem.menu itemWithTag:818].hidden = NO; // Menu Separator
-							}
-						}
-
-						/* Hide "Main Window" if Main Window is key. */
-						/* Hide all other items when Main Window is NOT key. */
-						if (tag == 808) { // "Main Window"
-							menuItem.enabled = (isMainWindowDisabled == NO);
-
-							menuItem.hidden = isMainWindowMain;
-						}
-						else // tag == 808
-						{
-							menuItem.hidden = (isMainWindowMain == NO);
-						}
-					}
-				} // switch
-			} // if 800 <> 899
-
-			/* When the main window is not the focused window or when we are
-			 in a sheet, most items can be disabled which means at this point
-			 we will default to disabled and allow the bottom logic to enable
-			 only the bare essentials. */
-			BOOL defaultToNoForSheet = (mainWindowHasSheet || (frontmostWindowIsMainWindow == NO && isMainWindowMain == NO));
-
-			if (defaultToNoForSheet) {
-				if (tag < 900) { // Do not disable "Help" menu
-					returnValue = NO;
-				}
-			}
-
-			/* If trial is expired, or app has not finished launching,
-			 then default everything to disabled. */
-			BOOL isTrialExpired = NO;
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1 || TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-			if (
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-				(TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired())
-#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-				appFinishedLaunching == NO
-#endif
-
-				)
-			{
-				/* Disable everything by default except for items that are considred
-				 helpful. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 ||
-					(tag >= 900 && tag <= 902) ||
-					(tag >= 960 && tag <= 965))
-				{
-					returnValue = NO;
-				}
-
-				/* Enable specific items after it has been disabled. */
-				/* Other always-required items are enabled further 
-				 below this switch statement. */
-				if (
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-					tag == 102 // "Manage license…"
-#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-					tag == 110 // "In-app Purchase…"
-#endif
-
-					)
-				{
-					menuItem.hidden = NO;
-
-					returnValue = YES;
-				}
-
-				isTrialExpired = YES;
-			}
-#endif
-
-			/* If certain items are hidden because of sheet but not because of
-			 the trial being expired, then enable additional items. */
-			if (returnValue == NO && defaultToNoForSheet && isTrialExpired == NO) {
-				switch (tag) {
-					case 100: // "About Textual"
-					case 101: // "Preferences…"
-					case 102: // "Manage license…"
-					case 110: // "In-app Purchase…"
-					case 109: // "Check for updates…"
-					{
-						returnValue = YES;
-					}
-				}
-			}
-
-			/* These are the bare minimium of menu items that must be enabled
-			 at all times because they are essential to the entire application. */
-			if (returnValue == NO && menuItem.enabled) {
-				switch (tag) {
-					case 100: // "About Textual"
-					case 104: // "Services"
-					case 105: // "Hide Textual"
-					case 106: // "Hide Others"
-					case 107: // "Show All"
-					case 108: // "Quit Textual & IRC"
-					case 202: // "Print"
-					case 203: // "Close Window"
-					case 300: // "Undo"
-					case 301: // "Redo"
-					case 302: // "Cut"
-					case 303: // "Copy"
-					case 304: // "Paste"
-					case 305: // "Delete"
-					case 306: // "Select All"
-					case 311: // "Spelling"
-					case 312: // "Spelling…"
-					case 313: // "Check Spelling"
-					case 314: // "Check Spelling as You Type"
-					case 407: // "Toggle Fullscreen"
-					case 800: // "Minimize"
-					case 801: // "Zoom"
-					case 808: // "Main Window"
-					case 814: // "Bring All to Front"
-					case 963: // "Export Preferences"
-					{
-						returnValue = YES;
-					} // case
-				} // switch
-			} // if returnValue == NO
-		} // case 100 ... 999
+			return YES;
+		}
 	} // switch
 
-	return returnValue;
+	/* When the main window is not the focused window or when we are
+	 in a sheet, most items can be disabled which means at this point
+	 we will default to disabled and allow the bottom logic to enable
+	 only the bare essentials. */
+	BOOL defaultToNoForSheet = ( mainWindow().attachedSheet != nil ||
+								(mainWindow().mainWindow == NO &&
+								 mainWindow().isBeneathMouse == NO));
+
+	if (defaultToNoForSheet) {
+		validationResult = NO;
+	}
+
+	/* If trial is expired, or app has not finished launching,
+	 then default everything to disabled. */
+	BOOL isTrialExpired = NO;
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1 || TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	if (
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+		(TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired())
+#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+		masterController().applicationIsLaunched == NO
+#endif
+
+		)
+	{
+		/* Set flag letting logic know trial expired */
+		isTrialExpired = YES;
+
+		/* Disable everything by default */
+		validationResult = NO;
+
+		/* Enable specific items after it has been disabled. */
+		/* Other always-required items are enabled further
+		 below this switch statement. */
+		if (
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+			tag == MTMMAppManageLicense // "Manage license…"
+#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+			tag == MTMMAppInAppPurchase // "In-app Purchase…"
+#endif
+
+			)
+		{
+			validationResult = YES;
+		} // if
+	} // if
+#endif
+
+	/* If certain items are hidden because of sheet but not because
+	 of the trial being expired, then enable additional items. */
+	if (validationResult == NO && defaultToNoForSheet && isTrialExpired == NO) {
+		switch (tag) {
+			case MTMMAppAboutApp: // "About Textual"
+			case MTMMAppPreferences: // "Preferences…"
+			case MTMMAppManageLicense: // "Manage license…"
+			case MTMMAppInAppPurchase: // "In-app Purchase…"
+			case MTMMAppCheckForUpdates: // "Check for updates…"
+			case MTMMHelpAdvancedMenuEnableDeveloperMode: // "Enable Developer Mode"
+			case MTMMHelpAdvancedMenuHiddenPreferences: // "Hidden Preferences…"
+			{
+				validationResult = YES;
+
+				break;
+			}
+		} // switch
+	} // if
+
+	/* These are the bare minimium of menu items that must be enabled
+	 at all times because they are essential to the entire application. */
+	/* This list may look incomplete but it isn't. Many menu items,
+	 such as Undo, Cut, Copy, Quit, etc. are not a target of the menu
+	 controller which means they never pass through this logic. */
+	if (validationResult == NO) {
+		switch (tag) {
+			case MTMMAppAboutApp: // "About Textual"
+			case MTMMAppQuitApp: // "Quit Textual & IRC"
+			case MTMMFilePrint: // "Print"
+			case MTMMFileCloseWindow: // "Close Window"
+			case MTMMEditPaste: // "Paste"
+			case MTMMViewToggleFullscreen: // "Toggle Fullscreen"
+			case MTMMWindowMainWindow: // "Main Window"
+			case MTMMHelpAcknowledgements: // "Acknowledgements"
+			case MTMMHelpLicenseAgreement: // "License Agreement"
+			case MTMMHelpPrivacyPolicy: // "Privacy Policy"
+			case MTMMHelpFrequentlyAskedQuestions: // "Frequently Asked Questions"
+			case MTMMHelpKnowledgeBaseMenu: // "Knowledge Base"
+			case MTMMHelpAdvancedMenu: // "Advanced"
+			case MTMMHelpAdvancedMenuExportPreferences: // "Export Preferences"
+			{
+				validationResult = YES;
+
+				break;
+			}
+			default:
+			{
+				if (menuItem.parentItem.tag == MTMMHelpKnowledgeBaseMenu) {
+					validationResult = YES;
+				}
+
+				break;
+			}
+		} // switch
+	} // if
+
+	return validationResult;
 }
 
-- (BOOL)validateSpecificMenuItem:(NSMenuItem *)menuItem withTag:(NSUInteger)tag
+- (BOOL)_validateMenuItem:(NSMenuItem *)menuItem
 {
 	NSParameterAssert(menuItem != nil);
+
+	NSUInteger tag = menuItem.tag;
 
 	IRCClient *u = mainWindow().selectedClient;
 	IRCChannel *c = mainWindow().selectedChannel;
 
-	/* Disable the entire user action menu for utility windows */
-	if (tag >= 1500 && tag <= 1599 && _isUtility) {
-		return NO;
-	}
-
 	switch (tag) {
-		case 006: // "Channel" (Main Menu)
-		case 1607: // "Channel" (WebView)
+		case MTMainMenuChannel: // "Channel"
 		{
-
-#define _channelMenuSeparatorTag_1			602 // below "Leave Channel"
-#define _channelMenuSeparatorTag_2			605 // below "Delete Channel"
-#define _channelMenuSeparatorTag_3			1605 // below "Paste"
-#define _channelWebkitMenuTag				1607
-
-			NSMenu *hostMenu = nil;
-
-			if (tag == _channelWebkitMenuTag) {
-				menuItem.hidden = (_isChannel == NO);
-
-				hostMenu = menuItem.menu;
-			} else {
-				hostMenu = menuItem.submenu;
-			}
-
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_1].hidden = (_isChannel == NO || _clientIsntLoggedIn);
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_2].hidden = (_isChannelOrQuery == NO);
-			[hostMenu itemWithTag:_channelMenuSeparatorTag_3].hidden = (_isChannelOrQuery == NO);
-
-#undef _channelMenuSeparatorTag_1
-#undef _channelMenuSeparatorTag_2
-#undef _channelMenuSeparatorTag_3
-#undef _channelWebkitMenuTag
+			menuItem.hidden = (c.isChannel == NO);
 
 			return YES;
 		}
-		case 102: // "Manage license…"
+		case MTMainMenuQuery: // "Query"
+		{
+			menuItem.hidden = (c.isPrivateMessage == NO && c.isUtility == NO);
+
+			return YES;
+		}
+
+		case MTMMAppManageLicense: // "Manage license…"
 		{
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 0
 			menuItem.hidden = YES;
@@ -461,7 +380,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 109: // "Check for Updates"
+		case MTMMAppCheckForUpdates: // "Check for Updates"
 		{
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
 			menuItem.hidden = YES;
@@ -469,7 +388,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 110: // "In-app Purchase…"
+		case MTMMAppInAppPurchase: // "In-app Purchase…"
 		{
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 0
 			menuItem.hidden = YES;
@@ -477,7 +396,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 203: // "Close Window"
+
+		case MTMMFileCloseWindow: // "Close Window"
 		{
 			TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
@@ -487,28 +407,28 @@ NS_ASSUME_NONNULL_BEGIN
 				return YES;
 			}
 
-			if (_noClient) {
+			if (u == nil) {
 				return NO;
 			}
 
 			switch (keyAction) {
 				case TXCommandWKeyPartChannelAction:
 				{
-					if (_noChannel) {
+					if (c == nil) {
 						menuItem.title = TXTLS(@"BasicLanguage[1008]");
 
 						return NO;
 					}
 
-					if (_isChannel) {
+					if (c.isChannel) {
 						menuItem.title = TXTLS(@"BasicLanguage[1010]");
 
-						if (_channelIsntActive) {
+						if (c.isActive == NO) {
 							return NO;
 						}
-					} else if (_isQuery) {
+					} else if (c.isPrivateMessage) {
 						menuItem.title = TXTLS(@"BasicLanguage[1007]");
-					} else if (_isUtility) {
+					} else if (c.isUtility) {
 						menuItem.title = TXTLS(@"BasicLanguage[1007]");
 					}
 
@@ -518,7 +438,7 @@ NS_ASSUME_NONNULL_BEGIN
 				{
 					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.networkNameAlt);
 
-					if (_clientIsntConnected) {
+					if (u.isConnected == NO) {
 						return NO;
 					}
 
@@ -538,8 +458,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 304: // "Paste"
-		case 1604: // "Paste" (WebView)
+
+		case MTMMEditPaste: // "Paste"
+		case MTWKGeneralPaste: // "Paste" (WebView)
 		{
 			NSString *currentPasteboard = RZPasteboard().stringContent;
 
@@ -559,105 +480,63 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return NO;
 		}
-		case 315: // "Search With Google"
-		case 1601: // "Search With Google"
-		{
-			TVCLogView *webView = self.selectedViewControllerBackingView;
 
-			if (webView == nil) {
-				return NO;
-			}
-
-			NSString *searchProviderName = [self searchProviderName];
-
-			menuItem.title = TXTLS(@"BasicLanguage[1020]", searchProviderName);
-
-			return webView.hasSelection;
-		}
-		case 400: // "Mark Scrollback"
-		case 401: // "Scrollback Marker"
-		case 402: // "Mark All as Read"
-		case 403: // "Clear Scrollback"
-		case 405: // "Increase Font Size"
-		case 406: // "Decrease Font Size"
+		case MTMMViewMarkScrollback: // "Mark Scrollback"
+		case MTMMViewScrollbackMarker: // "Scrollback Marker"
+		case MTMMViewMarkAllAsRead: // "Mark All as Read"
+		case MTMMViewClearScrollback: // "Clear Scrollback"
+		case MTMMViewIncreaseFontSize: // "Increase Font Size"
+		case MTMMViewDecreaseFontSize: // "Decrease Font Size"
+		case MTMMNavigationJumpToCurrentSession: // "Jump to Current Session"
+		case MTMMNavigationJumpToPresent: // "Jump to Present"
 		{
 			return (self.selectedViewController != nil);
 		}
-		case 500: // "Connect"
+		case MTMMViewToggleFullscreen:
 		{
-			if (_noClient) {
-				menuItem.hidden = NO;
+			NSWindowCollectionBehavior collectionBehavior = [NSApp keyWindow].collectionBehavior;
 
+			return ((collectionBehavior & NSWindowCollectionBehaviorFullScreenAuxiliary) == NSWindowCollectionBehaviorFullScreenAuxiliary ||
+					(collectionBehavior & NSWindowCollectionBehaviorFullScreenPrimary) == NSWindowCollectionBehaviorFullScreenPrimary);
+		}
+
+		case MTMMServerConnect: // "Connect"
+		{
+			if (u == nil) {
+				menuItem.hidden = NO;
+				
 				return NO;
 			}
 
-			BOOL condition = (_clientIsConnected || u.isConnecting);
-
-			menuItem.hidden = condition;
+			/* We do not return NO for the condition right away so
+			 that we can have time to update the title and action. */
+			BOOL connected = (u.isConnected || u.isConnecting);
+			
+			menuItem.hidden = connected;
 
 			BOOL prefersIPv4 = u.config.connectionPrefersIPv4;
-
+			
 			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
-
+			
 			if (flags == NSShiftKeyMask) {
 				if (prefersIPv4 == NO) {
 					prefersIPv4 = YES;
-
+					
 					menuItem.title = TXTLS(@"BasicLanguage[1014][2]");
 				}
 			} else {
 				menuItem.title = TXTLS(@"BasicLanguage[1014][1]");
 			}
-
+			
 			if (prefersIPv4) {
 				menuItem.action = @selector(connectPreferringIPv4:);
 			} else {
 				menuItem.action = @selector(connectPreferringIPv6:);
 			}
-
-			return (condition == NO && u.isQuitting == NO);
+			
+			return (connected == NO && u.isQuitting == NO);
 		}
-		case 501: // "Disconnect"
-		{
-			BOOL condition = (_clientIsConnected || u.isConnecting);
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-		}
-		case 502: // "Cancel Reconnect"
-		{
-			BOOL condition = u.isReconnecting;
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-		}
-		case 503: // "Change Nickname…"
-		case 504: // "Channel List…"
-		case 1600: // "Change Nickname…"
-		{
-			return _clientIsLoggedIn;
-		}
-		case 506: // "Duplicate Server"
-		case 509: // "Server Properties…"
-		case 809: // "Address Book"
-		case 810: // "Ignore List"
-		{
-			return (_noClient == NO);
-		}
-		case 507: // "Delete Server"
-		{
-			return _clientIsntConnected;
-		}
-		case 508: // "Add Channel…"
-		case 603: // "Add Channel…"
-		{
-			menuItem.hidden = (_isQuery || _isUtility);
-
-			return (_noClient == NO);
-		}
-		case 510: // "Connect Without Proxy"
+		case MTMMServerConnectWithoutProxy: // "Connect Without Proxy"
 		{
 			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
@@ -667,125 +546,57 @@ NS_ASSUME_NONNULL_BEGIN
 				return NO;
 			}
 
-			if (_noClient) {
+			if (u == nil) {
 				menuItem.hidden = YES;
 
 				return NO;
 			}
 
-			BOOL condition = (_clientIsConnected || u.isConnecting||
-							  u.config.proxyType == IRCConnectionSocketNoProxyType);
+			BOOL condition = (u.isConnected || u.isConnecting||
+					u.config.proxyType == IRCConnectionSocketNoProxyType);
 
 			menuItem.hidden = condition;
 
 			return (condition == NO && u.isQuitting == NO);
 		}
-		case 600: // "Join Channel"
+		case MTMMServerDisconnect: // "Disconnect"
 		{
-			BOOL condition = (_clientIsLoggedIn && _isChannel && _channelIsntActive);
-
-			if (_noChannel) {
-				menuItem.hidden = YES;
-			} else {
-				menuItem.hidden = (condition == NO);
-			}
-
-			return condition;
+			BOOL connected = (u.isConnected || u.isConnecting);
+			
+			menuItem.hidden = (connected == NO);
+			
+			return connected;
 		}
-		case 601: // "Leave Channel"
+		case MTMMServerCancelReconnect: // "Cancel Reconnect"
 		{
-			BOOL condition = (_clientIsLoggedIn && _isChannel && _channelIsActive);
-
-			if (_noChannel) {
-				menuItem.hidden = YES;
-			} else {
-				menuItem.hidden = (condition == NO);
-			}
-
-			return condition;
+			BOOL reconnecting = u.isReconnecting;
+			
+			menuItem.hidden = (reconnecting == NO);
+			
+			return reconnecting;
 		}
-		case 604: // "Delete Channel"
+		case MTMMServerChannelList: // "Channel List…"
 		{
-			menuItem.hidden = _noChannel;
-
-			if (_isChannel) {
-				menuItem.title = TXTLS(@"BasicLanguage[1012]");
-
-				return YES;
-			} else if (_isQuery) {
-				menuItem.title = TXTLS(@"BasicLanguage[1013]");
-
-				return YES;
-			} else if (_isUtility) {
-				/* Declared as different if statement in case
-				 I decide to set a different label later. */
-				menuItem.title = TXTLS(@"BasicLanguage[1013]");
-
-				return YES;
-			}
-
-			return NO;
+			return u.isLoggedIn;
 		}
-		case 606: // "Query Logs"
-		case 1606: // "Query Logs"
+		case MTMMServerChangeNickname: // "Change Nickname…"
+		case MTWKGeneralChangeNickname: // "Change Nickname…"
 		{
-			BOOL condition = _isQuery;
-
-			menuItem.hidden = (condition == NO);
-
-			return [TPCPreferences logToDiskIsEnabled];
+			return u.isConnected;
 		}
-		case 607: // "Channel Properties"
+		case MTMMServerDuplicateServer: // "Duplicate Server"
+		case MTMMServerAddChannel: // "Add Channel…"
+		case MTMMServerServerProperties: // "Server Properties…"
 		{
-			BOOL condition = _isChannel;
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
+			return (u != nil);
 		}
-		case 608: // "View Logs"
-		case 811: // "View Logs"
+		case MTMMServerDeleteServer: // "Delete Server…"
 		{
-			return [TPCPreferences logToDiskIsEnabled];
+			return (u && u.isConnected == NO);
 		}
-		case 609: // "Modify Topic"
-		case 611: // "Moderated (+m)"
-		case 612: // "Unmoderated (-m)"
-		case 613: // "Invite Only (+i)"
-		case 614: // "Anyone Can Join (-i)"
-		case 615: // "Manage All Modes"
-		case 616: // "List of Bans"
-		case 617: // "List of Ban Exceptions"
-		case 618: // "List of Invite Exceptions"
-		case 620: // "List of Quiets"
-		{
-			BOOL condition = _clientIsLoggedIn;
 
-			if (tag == 620) {
-				/* +q is used by some servers as the user mode for channel owner.
-				 If this mode is a user mode, then hide the menu item. */
-				menuItem.hidden = [u.supportInfo modeSymbolIsUserPrefix:@"q"];
-			}
-
-			return condition;
-		}
-		case 622: // "Copy Unique Identifier"
-		{
-
-#define _channelMenuSeparatorTag			621 // below "Channel Properties"
-
-			BOOL condition = ([TPCPreferences developerModeEnabled] == NO || _isChannel == NO);
-
-			menuItem.hidden = condition;
-
-			[menuItem.menu itemWithTag:_channelMenuSeparatorTag].hidden = condition;
-
-#undef _channelMenuSeparatorTag
-
-			return YES;
-		}
-		case 715: // "Next Highlight"
-		case 716: // "Previous Highlight"
+		case MTMMNavigationNextHighlight: // "Next Highlight"
+		case MTMMNavigationPreviousHighlight: // "Previous Highlight"
 		{
 			TVCLogController *viewController = self.selectedViewController;
 
@@ -793,263 +604,166 @@ NS_ASSUME_NONNULL_BEGIN
 				return NO;
 			}
 
-			return [viewController highlightAvailable:(tag == 716)];
+			return [viewController highlightAvailable:(tag == MTMMNavigationPreviousHighlight)];
 		}
-		case 718: // "Search channels…"
+		case MTMMNavigationSearchChannels: // "Search channels…"
 		{
 			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
 
 			return YES;
 		}
-		case 802: // "Toggle Visiblity of Member List"
+
+		case MTMMChannelJoinChannel: // "Join Channel"
 		{
-			return _isChannel;
+			menuItem.hidden = (u.isLoggedIn == NO || c.isActive);
+
+			return YES;
 		}
-		case 804: // "Toggle Window Appearance"
+		case MTMMChannelLeaveChannel: // "Leave Channel"
 		{
+			menuItem.hidden = (u.isLoggedIn == NO || c.isActive == NO);
+
+			NSMenuItem *joinChannel = [menuItem.menu itemWithTag:MTMMChannelJoinChannel];
+
+			[menuItem.menu itemWithTag:MTMMChannelLeaveChannelSeparator].hidden = (menuItem.hidden && joinChannel.hidden);
+
+			return YES;
+		}
+		case MTMMChannelAddChannel: // "Add Channel…"
+		{
+			return (u != nil);
+		}
+		case MTMMChannelViewLogs: // "View Logs"
+		{
+			return [TPCPreferences logToDiskIsEnabled];
+		}
+		case MTMMChannelModifyTopic: // "Modify Topic"
+		case MTMMChannelModesMenu: // "Modes"
+		case MTMMChannelListOfBans: // "List of Bans"
+		case MTMMChannelListOfBanExceptions: // "List of Ban Exceptions"
+		case MTMMChannelListOfInviteExceptions: // "List of Invite Exceptions"
+		case MTMMChannelListOfQuiets: // "List of Quiets"
+		{
+			return (u.isLoggedIn && c.isActive);
+		}
+
+		case MTMMQueryQueryLogs: // "Query Logs"
+		{
+			/* Query menu is used for utility windows too so we
+			 hide "Query Logs" for anything except private messages. */
+			BOOL isQuery = c.isPrivateMessage;
+
+			menuItem.hidden = (isQuery == NO);
+
+			[menuItem.menu itemWithTag:MTMMQueryCloseQuerySeparator].hidden = (isQuery == NO);
+
+			return [TPCPreferences logToDiskIsEnabled];
+		}
+
+		case MTMMWindowToggleVisibilityOfServerList: // "Toggle Visiblity of Server List"
+		case MTMMWindowSortChannelList: // "Sort Channel List"
+		case MTMMWindowCenterWindow: // "Center Window"
+		case MTMMWindowResetWindowToDefaultSize: // "Reset Window to Default Size"
+		{
+			BOOL isMainWindowMain = mainWindow().mainWindow;
+
+			menuItem.hidden = (isMainWindowMain == NO);
+
+			if (tag == MTMMWindowSortChannelList) {
+				[menuItem.menu itemWithTag:MTMMWindowSortChannelListSeparator].hidden = (isMainWindowMain = NO);
+			} else if (tag == MTMMWindowResetWindowToDefaultSize) {
+				[menuItem.menu itemWithTag:MTMMWindowResetWindowToDefaultSizeSeparator].hidden = (isMainWindowMain = NO);
+			}
+
+			return YES;
+		}
+		case MTMMWindowMainWindow: // "Main Window"
+		{
+			BOOL isMainWindowMain = mainWindow().mainWindow;
+			BOOL isMainWindowDisabled = mainWindow().disabled;
+
+			menuItem.hidden = isMainWindowMain;
+
+			return (isMainWindowDisabled == NO);
+		}
+		case MTMMWindowToggleVisibilityOfMemberList: // "Toggle Visiblity of Member List"
+		{
+			BOOL isMainWindowMain = mainWindow().mainWindow;
+
+			menuItem.hidden = (isMainWindowMain == NO);
+
+			return c.isChannel;
+		}
+		case MTMMWindowToggleWindowAppearance: // "Toggle Window Appearance"
+		{
+			BOOL isMainWindowMain = mainWindow().mainWindow;
+
+			menuItem.hidden = (isMainWindowMain == NO);
+
+			[menuItem.menu itemWithTag:MTMMWindowToggleWindowAppearanceSeparator].hidden = (isMainWindowMain == NO);
+
 			return [TPCPreferences invertSidebarColorsPreferenceUserConfigurable];
 		}
-		case 812: // "Highlight List"
+		case MTMMWindowAddressBook: // "Address Book"
+		case MTMMWindowIgnoreList: // "Ignore List"
 		{
-			if (_noClient) {
+			BOOL isMainWindowMain = mainWindow().mainWindow;
+
+			menuItem.hidden = (isMainWindowMain == NO);
+
+			return (u != nil);
+		}
+		case MTMMWindowViewLogs: // "View Logs"
+		{
+			return [TPCPreferences logToDiskIsEnabled];
+		}
+		case MTMMWindowHighlightList: // "Highlight List"
+		{
+			BOOL isMainWindowMain = mainWindow().mainWindow;
+
+			menuItem.hidden = (isMainWindowMain == NO);
+
+			if (u == nil) {
 				return NO;
 			}
 
 			return [TPCPreferences logHighlights];
 		}
-		case 815: // "Buddy List"
+		case MTMMWindowBuddyList: // "Buddy List"
 		{
 #ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
 			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
-#else 
+#else
 			menuItem.hidden = YES;
 #endif
 
 			return YES;
 		}
-		case 961: // Developer Mode
-		{
-			if ([TPCPreferences developerModeEnabled]) {
-				menuItem.state = NSOnState;
-			} else {
-				menuItem.state = NSOffState;
-			}
 
-			return YES;
-		}
-		case 965: // "Reset 'Don't Ask Me' Warnings"
-		{
-			BOOL condition = [TPCPreferences developerModeEnabled];
-
-			menuItem.hidden = (condition == NO);
-
-			return condition;
-
-		}
-		case 1201: // "Add Channel…" - Server Menu
-		{
-			return (_noClient == NO);
-		}
-		case 1608: // "Look Up in Dictionary"
-		{
-			TVCLogView *webView = self.selectedViewControllerBackingView;
-
-			if (webView == nil) {
-				return NO;
-			}
-
-			NSString *selection = webView.selection;
-
-			NSUInteger selectionLength = selection.length;
-
-			if (selectionLength == 0 || selectionLength > 40) {
-				menuItem.title = TXTLS(@"BasicLanguage[1018]");
-
-				return NO;
-			}
-
-			if (selectionLength > 25) {
-				selection = [selection substringToIndex:24];
-
-				selection = [NSString stringWithFormat:@"%@…", selection.trim];
-			}
-
-			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
-
-			return (selectionLength > 0);
-		}
-		case 1500: // "Invite To…"
-		{
-			if ([self checkSelectedMembers:menuItem] == NO) {
-				return NO;
-			}
-
-			NSUInteger channelCount = 0;
-
-			for (IRCChannel *e in u.channelList) {
-				if (c != e && e.isChannel) {
-					channelCount++;
-				}
-			}
-
-			return (channelCount > 0);
-		}
-		case 1502: // "Private Message (Query)"
-		case 1503: // "Give Op (+o)"
-		case 1504: // "Give Halfop (+h)"
-		case 1505: // "Give Voice (+v)"
-		case 1507: // "Take Op (-o)"
-		case 1508: // "Take Halfop (-h)"
-		case 1509: // "Take Voice (-v)"
-		{
-			if (_isChannel) {
-				return [self checkSelectedMembers:menuItem];
-			}
-
-			return NO;
-		}
-		case 1506: // "All Modes Given"
-		{
-			return NO;
-		}
-		case 1510: // "All Modes Taken"
-		{
-
-#define _userControlsMenuAllModesGivenMenuTag		1506
-#define _userControlsMenuAllModesTakenMenuTag		1510
-
-#define _userControlsMenuGiveModeOMenuTag			1503
-#define _userControlsMenuGiveModeHMenuTag			1504
-#define _userControlsMenuGiveModeVMenuTag			1505
-#define _userControlsMenuGiveModeSeparatorTag		1529
-
-#define _userControlsMenuTakeModeOMenuTag			1507
-#define _userControlsMenuTakeModeHMenuTag			1508
-#define _userControlsMenuTakeModeVMenuTag			1509
-#define _userControlsMenuTakeModeSeparatorTag		1530
-
-#define _ui(tag, value)				[[[menuItem menu] itemWithTag:(tag)] setHidden:(value)];
-
-			if (_isChannel == NO) {
-				_ui(_userControlsMenuAllModesTakenMenuTag, YES)
-				_ui(_userControlsMenuAllModesGivenMenuTag, YES)
-
-				_ui(_userControlsMenuGiveModeOMenuTag, YES)
-				_ui(_userControlsMenuGiveModeHMenuTag, YES)
-				_ui(_userControlsMenuGiveModeVMenuTag, YES)
-				_ui(_userControlsMenuTakeModeOMenuTag, YES)
-				_ui(_userControlsMenuTakeModeHMenuTag, YES)
-				_ui(_userControlsMenuTakeModeVMenuTag, YES)
-
-				_ui(_userControlsMenuGiveModeSeparatorTag, YES)
-				_ui(_userControlsMenuTakeModeSeparatorTag, YES)
-
-				return NO;
-			} else {
-				_ui(_userControlsMenuGiveModeSeparatorTag, NO)
-				_ui(_userControlsMenuTakeModeSeparatorTag, NO)
-			}
-
-			NSArray *nicknames = [self selectedMembers:menuItem];
-
-			if (nicknames.count == 1)
-			{
-				IRCChannelUser *user = nicknames[0];
-
-				IRCUserRank userRanks = user.ranks;
-
-				BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
-				BOOL UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
-				BOOL UserHasModeV = ((userRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
-
-				_ui(_userControlsMenuGiveModeOMenuTag, UserHasModeO)
-				_ui(_userControlsMenuGiveModeVMenuTag, UserHasModeV)
-				_ui(_userControlsMenuTakeModeOMenuTag, (UserHasModeO == NO))
-				_ui(_userControlsMenuTakeModeVMenuTag, (UserHasModeV == NO))
-
-				BOOL halfOpModeSupported = [u.supportInfo modeSymbolIsUserPrefix:@"h"];
-
-				if (halfOpModeSupported == NO) {
-					_ui(_userControlsMenuGiveModeHMenuTag, YES)
-					_ui(_userControlsMenuTakeModeHMenuTag, YES)
-				} else {
-					_ui(_userControlsMenuGiveModeHMenuTag,  UserHasModeH)
-					_ui(_userControlsMenuTakeModeHMenuTag, (UserHasModeH == NO))
-				}
-
-				BOOL hideTakeSepItem = (UserHasModeO == NO  || UserHasModeH == NO  || UserHasModeV == NO);
-				BOOL hideGiveSepItem = (UserHasModeO || UserHasModeH || UserHasModeV);
-
-				_ui(_userControlsMenuAllModesTakenMenuTag, hideGiveSepItem)
-				_ui(_userControlsMenuAllModesGivenMenuTag, hideTakeSepItem)
-			}
-			else
-			{
-				_ui(_userControlsMenuAllModesTakenMenuTag, YES)
-				_ui(_userControlsMenuAllModesGivenMenuTag, YES)
-
-				_ui(_userControlsMenuGiveModeOMenuTag, NO)
-				_ui(_userControlsMenuGiveModeHMenuTag, NO)
-				_ui(_userControlsMenuGiveModeVMenuTag, NO)
-				_ui(_userControlsMenuTakeModeOMenuTag, NO)
-				_ui(_userControlsMenuTakeModeHMenuTag, NO)
-				_ui(_userControlsMenuTakeModeVMenuTag, NO)
-			}
-
-			return NO;
-
-#undef _ui
-
-#undef _userControlsMenuAllModesTakenMenuTag
-#undef _userControlsMenuAllModesGivenMenuTag
-
-#undef _userControlsMenuGiveModeOMenuTag
-#undef _userControlsMenuGiveModeHMenuTag
-#undef _userControlsMenuGiveModeVMenuTag
-#undef _userControlsMenuGiveModeSeparatorTag
-
-#undef _userControlsMenuTakeModeOMenuTag
-#undef _userControlsMenuTakeModeHMenuTag
-#undef _userControlsMenuTakeModeVMenuTag
-#undef _userControlsMenuTakeModeSeparatorTag
-
-		}
-		case 1511: // "Ban"
-		case 1512: // "Kick"
-		case 1513: // "Ban and Kick"
-		{
-
-#define _userControlsBanKickSeparatorTag		1531
-
-			BOOL condition = _isChannel;
-
-			menuItem.hidden = (condition == NO);
-
-			[menuItem.menu itemWithTag:_userControlsBanKickSeparatorTag].hidden = (condition == NO);
-
-			if (condition) {
-				return [self checkSelectedMembers:menuItem];
-			}
-
-			return NO;
-
-#undef _userControlsBanKickSeparatorTag
-
-		}
-		case 1532: // "Add Ignore"
+		case MTUserControlsAddIgnore: // "Add Ignore"
 		{
 			/* To make it as efficient as possible, we only check for ignore
 			 for the "Add Ignore" menu item. When that menu item is validated,
 			 we validate "Modify Ignore" and "Remove Ignore" at the same time. */
-			NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:menuItem];
+			NSMenuItem *modifyIgnoreMenuItem = [menuItem.menu itemWithTag:MTUserControlsModifyIgnore];
+			NSMenuItem *removeIgnoreMenuItem = [menuItem.menu itemWithTag:MTUserControlsRemoveIgnore];
 
-			NSMenuItem *modifyIgnoreMenuItem = [menuItem.menu itemWithTag:1533];
-			NSMenuItem *removeIgnoreMenuItem = [menuItem.menu itemWithTag:1534];
+			if (c.isUtility) {
+				modifyIgnoreMenuItem.hidden = YES;
 
-			NSString *hostmask = nicknames.firstObject.user.hostmask;
+				removeIgnoreMenuItem.hidden = YES;
+
+				menuItem.hidden = NO;
+
+				return NO;
+			}
 
 			/* If less than or more than one user is selected, then hide all
 			 menu items except "Add Ignore" and disable the "Add Ignore" item. */
+			NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:menuItem];
+
+			NSString *hostmask = nicknames.firstObject.user.hostmask;
+
 			if (nicknames.count != 1 || hostmask == nil) {
 				modifyIgnoreMenuItem.hidden = YES;
 
@@ -1078,18 +792,153 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return YES;
 		}
-		case 1533: // "Modify Ignore"
-		case 1534: // "Remove Ignore"
+		case MTUserControlsModifyIgnore: // "Modify Ignore"
+		case MTUserControlsRemoveIgnore: // "Remove Ignore"
 		{
 			return YES;
 		}
+		case MTUserControlsInviteTo: // "Invite To…"
+		{
+			if (u.isLoggedIn == NO || c.isUtility) {
+				return NO;
+			}
+
+			NSUInteger channelCount = 0;
+
+			for (IRCChannel *e in u.channelList) {
+				if (c != e && e.isChannel) {
+					channelCount++;
+				}
+			}
+
+			return (channelCount > 0);
+		}
+		case MTUserControlsGetInfo: // "Get Info (Whois)"
+		case MTUserControlsClientToClientMenu: // "Client-to-Client"
+		{
+			return (u.isLoggedIn && c.isUtility == NO);
+		}
+		case MTUserControlsPrivateMessage: // "Private Message (Query)"
+		{
+			menuItem.hidden = (c.isChannel == NO);
+
+			return (u.isLoggedIn && c.isUtility == NO);
+		}
+		case MTUserControlsGiveOp: // "Give Op (+o)"
+		case MTUserControlsGiveHalfop: // "Give Halfop (+h)"
+		case MTUserControlsGiveVoice: // "Give Voice (+v)"
+		case MTUserControlsTakeOp: // "Take Op (-o)"
+		case MTUserControlsTakeHalfop: // "Take Halfop (-h)"
+		case MTUserControlsTakeVoice: // "Take Voice (-v)"
+		{
+			return (u.isLoggedIn && c.isActive);
+		}
+		case MTUserControlsAllModesGiven: // "All Modes Given"
+		{
+			return NO;
+		}
+		case MTUserControlsAllModesTaken: // "All Modes Taken"
+		{
+#define _setHidden(tag, value)		[menuItem.menu itemWithTag:(tag)].hidden = (value)
+
+			if (c.isChannel == NO) {
+				_setHidden(MTUserControlsGiveOp, YES);
+				_setHidden(MTUserControlsGiveHalfop, YES);
+				_setHidden(MTUserControlsGiveVoice, YES);
+				_setHidden(MTUserControlsTakeOp, YES);
+				_setHidden(MTUserControlsTakeHalfop, YES);
+				_setHidden(MTUserControlsTakeVoice, YES);
+
+				_setHidden(MTUserControlsAllModesGiven, YES);
+				_setHidden(MTUserControlsAllModesGivenSeparator, YES);
+				_setHidden(MTUserControlsAllModesTaken, YES);
+				_setHidden(MTUserControlsAllModesTakenSeparator, YES);
+
+				return NO;
+			}
+
+			_setHidden(MTUserControlsAllModesGivenSeparator, NO);
+			_setHidden(MTUserControlsAllModesTakenSeparator, NO);
+
+			NSArray *nicknames = [self selectedMembers:menuItem];
+
+			if (nicknames.count == 1)
+			{
+				IRCChannelUser *user = nicknames[0];
+
+				IRCUserRank userRanks = user.ranks;
+
+				BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+				BOOL UserHasModeH = NO;
+				BOOL UserHasModeV = ((userRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
+
+				_setHidden(MTUserControlsGiveOp, UserHasModeO);
+				_setHidden(MTUserControlsGiveVoice, UserHasModeV);
+				_setHidden(MTUserControlsTakeOp, (UserHasModeO == NO));
+				_setHidden(MTUserControlsTakeVoice, (UserHasModeV == NO));
+
+				BOOL halfOpModeSupported = [u.supportInfo modeSymbolIsUserPrefix:@"h"];
+
+				if (halfOpModeSupported == NO) {
+					_setHidden(MTUserControlsGiveHalfop, YES);
+					_setHidden(MTUserControlsTakeHalfop, YES);
+				} else {
+					UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+
+					_setHidden(MTUserControlsGiveHalfop, UserHasModeH);
+					_setHidden(MTUserControlsTakeHalfop, (UserHasModeH == NO));
+				}
+
+				BOOL hideGiveSepItem = ((UserHasModeO == NO || UserHasModeV == NO) || (UserHasModeH == NO && halfOpModeSupported));
+
+				_setHidden(MTUserControlsAllModesGiven, hideGiveSepItem);
+
+				BOOL hideTakenSepItem = (UserHasModeO || UserHasModeH || UserHasModeV);
+
+				_setHidden(MTUserControlsAllModesTaken, hideTakenSepItem);
+			}
+			else
+			{
+				_setHidden(MTUserControlsGiveOp, NO);
+				_setHidden(MTUserControlsGiveHalfop, NO);
+				_setHidden(MTUserControlsGiveVoice, NO);
+				_setHidden(MTUserControlsTakeOp, NO);
+				_setHidden(MTUserControlsTakeHalfop, NO);
+				_setHidden(MTUserControlsTakeVoice, NO);
+
+				_setHidden(MTUserControlsAllModesGiven, YES);
+				_setHidden(MTUserControlsAllModesTaken, YES);
+			}
+
+			return NO;
+
+#undef _setHidden
+		}
+		case MTUserControlsBan: // "Ban"
+		case MTUserControlsKick: // "Kick"
+		case MTUserControlsBanAndKick: // "Ban and Kick"
+		{
+			BOOL isChannel = c.isChannel;
+
+			menuItem.hidden = (isChannel == NO);
+
+			[menuItem.menu itemWithTag:MTUserControlsBanAndKickSeparator].hidden = (isChannel == NO);
+
+			return (u.isLoggedIn && isChannel && c.isActive);
+		}
+		case MTUserControlsIRCOperatorMenu: // "IRC Operator"
+		{
+			menuItem.hidden = (u.userIsIRCop == NO);
+
+			return (u.isLoggedIn && c.isUtility == NO);
+		}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
-		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
-		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
-		case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
-		case TLOEncryptionManagerMenuItemTagViewListOfFingerprints:
+		case MTOTRStatusButtonStartPrivateConversation:
+		case MTOTRStatusButtonRefreshPrivateConversation:
+		case MTOTRStatusButtonEndPrivateConversation:
+		case MTOTRStatusButtonAuthenticateChatPartner:
+		case MTOTRStatusButtonViewListOfFingerprints:
 		{
 			/* Even if we are not logged in, we still ask the encryption manager
 			 to validate the menu item first so that it can hide specific menu items.
@@ -1098,20 +947,62 @@ NS_ASSUME_NONNULL_BEGIN
 				return NO;
 			}
 
+			if (u.isLoggedIn == NO) {
+				return NO;
+			}
+
 			BOOL valid = [sharedEncryptionManager()
 						  validateMenuItem:menuItem
 						  withStateOf:[u encryptionAccountNameForUser:c.name]
 						  from:[u encryptionAccountNameForLocalUser]];
 
-			if (_clientIsntLoggedIn) {
-				return NO;
-			}
-
 			return valid;
 		}
 #endif
 
-		case 1603: // "Copy" (WebView)
+		case MTWKGeneralSearchWithGoogle: // "Search With Google"
+		{
+			TVCLogView *webView = self.selectedViewControllerBackingView;
+
+			if (webView == nil) {
+				return NO;
+			}
+
+			NSString *searchProviderName = [self searchProviderName];
+
+			menuItem.title = TXTLS(@"BasicLanguage[1020]", searchProviderName);
+
+			return webView.hasSelection;
+		}
+		case MTWKGeneralLookUpInDictionary: // "Look Up in Dictionary"
+		{
+			TVCLogView *webView = self.selectedViewControllerBackingView;
+
+			if (webView == nil) {
+				return NO;
+			}
+
+			NSString *selection = webView.selection;
+
+			NSUInteger selectionLength = selection.length;
+
+			if (selectionLength == 0 || selectionLength > 40) {
+				menuItem.title = TXTLS(@"BasicLanguage[1018]");
+
+				return NO;
+			}
+
+			if (selectionLength > 25) {
+				selection = [selection substringToIndex:24];
+
+				selection = [NSString stringWithFormat:@"%@…", selection.trim];
+			}
+
+			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
+
+			return (selectionLength > 0);
+		}
+		case MTWKGeneralCopy: // "Copy" (WebView)
 		{
 			TVCLogView *webView = self.selectedViewControllerBackingView;
 
@@ -1121,9 +1012,46 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return webView.hasSelection;
 		}
+		case MTWKGeneralQueryLogs: // "Query Logs" (WebKit)
+		{
+			menuItem.hidden = (c.isPrivateMessage == NO);
+
+			return [TPCPreferences logToDiskIsEnabled];
+		}
+		case MTWKGeneralChannelMenu: // "Channel" (WebKit)
+		{
+			menuItem.hidden = (c.isChannel == NO);
+
+			/* "Query Logs" will appear above this menu item,
+			 but if this is neitehr channel or query, then we
+			 have to hide the separator above that so it's not
+			 just sitting there with nothing beneath it. */
+			NSMenuItem *queryLogs = [menuItem.menu itemWithTag:MTWKGeneralQueryLogs];
+
+			[menuItem.menu itemWithTag:MTWKGeneralPasteSeparator].hidden = (menuItem.hidden && queryLogs.hidden);
+
+			return YES;
+		}
+
+		case MTMMHelpAdvancedMenuEnableDeveloperMode: // Developer Mode
+		{
+			if ([TPCPreferences developerModeEnabled]) {
+				menuItem.state = NSOnState;
+			} else {
+				menuItem.state = NSOffState;
+			}
+
+			return YES;
+		}
+
+		case MTMainWindowSegmentedControllerAddChannel: // "Add Channel…"
+		{
+			return (u != nil);
+		}
+
 		default:
 		{
-			return YES;
+			break;
 		}
 	}
 
@@ -1150,11 +1078,11 @@ NS_ASSUME_NONNULL_BEGIN
 	 main queue comes around. The action is performed on the current pass
 	 which means this prevents a race. */
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self menuClosedTimer];
+		[self _menuClosedTimer];
 	});
 }
 
-- (void)menuClosedTimer
+- (void)_menuClosedTimer
 {
 	if (self.menuPerformedActionLastOpen) {
 		return;
@@ -1186,15 +1114,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Properties
-
-- (TDCFileTransferDialog *)fileTransferController
-{
-	return [TXSharedApplication sharedFileTransferDialog];
-}
-
-#pragma mark -
-#pragma mark Selected Client and Selected Channel
+#pragma mark Selection
 
 - (void)resetSelectedItems
 {
@@ -1243,71 +1163,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Navigation Channel List
-
-- (void)populateNavigationChannelList
-{
-#define _channelNavigationMenuEntryMenuTag		717
-
-	[self.mainMenuNavigationChannelListMenu removeAllItems];
-
-	NSUInteger channelCount = 0;
-
-	for (IRCClient *u in worldController().clientList) {
-		NSMenu *channelSubmenu = [NSMenu new];
-
-		NSMenuItem *clientMenuItem = [NSMenuItem new];
-
-		clientMenuItem.title = TXTLS(@"BasicLanguage[1021]", u.name);
-
-		clientMenuItem.submenu = channelSubmenu;
-
-		[self.mainMenuNavigationChannelListMenu addItem:clientMenuItem];
-
-		for (IRCChannel *c in u.channelList) {
-			NSMenuItem *channelMenuItem = nil;
-
-			if (channelCount >= 10) {
-				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
-														 target:self
-														 action:@selector(navigateToChannelInNavigationList:)];
-			} else {
-				NSUInteger keyboardIndex = (channelCount + 1);
-
-				if (keyboardIndex == 10) {
-					keyboardIndex = 0; // Have 0 as the last item.
-				}
-
-				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
-														 target:self
-														 action:@selector(navigateToChannelInNavigationList:)
-												  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
-											  keyEquivalentMask:NSCommandKeyMask];
-			}
-
-			channelMenuItem.tag = _channelNavigationMenuEntryMenuTag;
-
-			channelMenuItem.userInfo = [worldController() pasteboardStringForItem:c];
-
-			[channelSubmenu addItem:channelMenuItem];
-
-			channelCount += 1;
-		}
-	}
-
-#undef _channelNavigationMenuEntryMenuTag
-}
-
-- (void)navigateToChannelInNavigationList:(NSMenuItem *)sender
-{
-	IRCTreeItem *treeItem = [worldController() findItemWithPasteboardString:sender.userInfo];
-
-	if (treeItem) {
-		[mainWindow() select:treeItem];
-	}
-}
-
-#pragma mark -
 #pragma mark Selected User(s)
 
 - (BOOL)checkSelectedMembers:(id)sender
@@ -1330,7 +1185,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || _clientIsntLoggedIn || _channelIsntActive) {
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isActive == NO) {
 		return @[];
 	}
 
@@ -1398,8 +1253,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_showFindPromptOpenDialog:(id)sender
 {
-	_popWindowViewIfExists(@"TXMenuControllerFindPrompt");
-
 	void (^promptCompletionBlock)(NSString *) = ^(NSString *resultString)
 	{
 		if ([self.currentSearchPhrase isEqualToString:resultString]) {
@@ -1430,10 +1283,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showFindPrompt:(id)sender
 {
-#define _findPromptOpenDialogMenuTag	308
-#define _findPromptMoveForwardMenuTag	309
+	NSParameterAssert(sender != nil);
 
-	if ([sender tag] == _findPromptOpenDialogMenuTag || self.currentSearchPhrase.length == 0) {
+	if (mainWindow().keyWindow == NO) {
+		return;
+	}
+
+	if ([sender tag] == MTMMEditFindMenuFind || self.currentSearchPhrase.length == 0) {
 		[self _showFindPromptOpenDialog:sender];
 
 		return;
@@ -1441,141 +1297,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCLogView *webView = self.selectedViewControllerBackingView;
 
-	if ([sender tag] == _findPromptMoveForwardMenuTag) {
+	if ([sender tag] == MTMMEditFindMenuFindNext) {
 		[webView findString:self.currentSearchPhrase movingForward:YES];
 	} else {
 		[webView findString:self.currentSearchPhrase movingForward:NO];
 	}
-
-#undef _findPromptOpenDialogMenuTag
-#undef _findPromptMoveForwardMenuTag
 }
+
 
 #pragma mark -
-#pragma mark Command + W Keyboard Shortcut
-
-- (void)closeWindow:(id)sender
-{
-	TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
-
-	if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
-		NSWindow *windowToClose = [NSApp keyWindow];
-
-		if (windowToClose == nil) {
-			windowToClose = [NSApp mainWindow];
-		}
-
-		if (windowToClose) {
-			[windowToClose performClose:sender];
-		}
-
-		return;
-	}
-
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClient) {
-		return;
-	}
-
-	switch (keyAction) {
-		case TXCommandWKeyPartChannelAction:
-		{
-			if (_noChannel) {
-				return;
-			}
-
-			if (_isChannel) {
-				if (_channelIsntActive) {
-					return;
-				}
-
-				[u partChannel:c];
-			} else {
-				[worldController() destroyChannel:c];
-			}
-
-			break;
-		}
-		case TXCommandWKeyDisconnectAction:
-		{
-			if (_clientIsntConnected) {
-				return;
-			}
-
-			[u quit];
-
-			break;
-		}
-		case TXCommandWKeyTerminateAction:
-		{
-			[NSApp terminate:nil];
-
-			break;
-		}
-		default:
-		{
-			break;
-		}
-	}
-}
-
-#pragma mark -
-#pragma mark File Transfers Dialog
-
-- (void)showFileTransfersWindow:(id)sender
-{
-	[self.fileTransferController show:YES restorePosition:YES];
-}
-
-#pragma mark -
-#pragma mark Preferences Dialog
-
-- (void)showPreferencesWindow:(id)sender
-{
-	[self showPreferencesWindowWithSelection:TDCPreferencesControllerDefaultNavigationSelection];
-}
-
-- (void)showStylePreferences:(id)sender
-{
-	[self showPreferencesWindowWithSelection:TDCPreferencesControllerStyleNavigationSelection];
-}
-
-- (void)showHiddenPreferences:(id)sender
-{
-	[self showPreferencesWindowWithSelection:TDCPreferencesControllerHiddenPreferencesNavigationSelection];
-}
-
-- (void)showPreferencesWindowWithSelection:(TDCPreferencesControllerNavigationSelection)selection
-{
-	_popWindowViewIfExists(@"TDCPreferencesController");
-
-	TDCPreferencesController *controller =
-	[TDCPreferencesController new];
-
-	controller.delegate = (id)self;
-
-	[controller show:selection];
-
-	[windowController() addWindowToWindowList:controller];
-}
-
-- (void)preferencesDialogWillClose:(TDCPreferencesController *)sender
-{
-	[TPCPreferences performReloadAction:(TPCPreferencesReloadHighlightKeywordsAction |
-										 TPCPreferencesReloadPreferencesChangedAction)];
-
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Menu Item Actions
-
-- (void)emptyAction:(id)sender
-{
-
-}
+#pragma mark Edit
 
 - (void)copy:(id)sender
 {
@@ -1624,21 +1355,80 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)centerMainWindow:(id)sender
+#pragma mark -
+#pragma mark Backing View
+
+- (void)copyLogAsHtml:(id)sender
 {
-	[mainWindow() exactlyCenterWindow];
+	TVCLogView *webView = self.selectedViewControllerBackingView;
+
+	if (webView == nil) {
+		return;
+	}
+
+	[webView copyContentString];
 }
 
-- (void)showAcknowledgements:(id)sender
+- (void)openWebInspector:(id)sender
 {
-	NSString *AcknowledgementsPath = [RZMainBundle() pathForResource:@"Acknowledgements" ofType:@"pdf" inDirectory:@"Documentation"];
+	TVCLogView *webView = self.selectedViewControllerBackingView;
 
-	(void)[RZWorkspace() openFile:AcknowledgementsPath];
+	if (webView == nil) {
+		return;
+	}
+
+	NSAssert(webView.isUsingWebKit2,
+		@"Missing implementation");
+
+	[(TVCLogViewInternalWK2 *)webView.webView openWebInspector];
 }
 
-- (void)showScriptingDocumentation:(id)sender
+- (void)markScrollback:(id)sender
 {
-	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Writing-Scripts.kb" inBackground:NO];
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController mark];
+}
+
+- (void)gotoScrollbackMarker:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController goToMark];
+}
+
+- (void)clearScrollback:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil) {
+		return;
+	}
+
+	if (c) {
+		[mainWindow() clearContentsOfChannel:c];
+	} else {
+		[mainWindow() clearContentsOfClient:u];
+	}
+}
+
+- (void)increaseLogFontSize:(id)sender
+{
+	[mainWindow() changeTextSize:YES];
+}
+
+- (void)decreaseLogFontSize:(id)sender
+{
+	[mainWindow() changeTextSize:NO];
 }
 
 - (NSString *)searchProviderName
@@ -1697,105 +1487,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[TLOpenLink openWithString:urlString];
 }
 
-- (void)copyLogAsHtml:(id)sender
-{
-	TVCLogView *webView = self.selectedViewControllerBackingView;
-
-	if (webView == nil) {
-		return;
-	}
-
-	[webView copyContentString];
-}
-
-- (void)openWebInspector:(id)sender
-{
-	TVCLogView *webView = self.selectedViewControllerBackingView;
-
-	if (webView == nil) {
-		return;
-	}
-
-	NSAssert(webView.isUsingWebKit2,
-		@"Missing implementation");
-
-	[(TVCLogViewInternalWK2 *)webView.webView openWebInspector];
-}
-
-- (void)markScrollback:(id)sender
-{
-	TVCLogController *viewController = self.selectedViewController;
-
-	if (viewController == nil) {
-		return;
-	}
-
-	[viewController mark];
-}
-
-- (void)gotoScrollbackMarker:(id)sender
-{
-	TVCLogController *viewController = self.selectedViewController;
-
-	if (viewController == nil) {
-		return;
-	}
-
-	[viewController goToMark];
-}
-
-- (void)jumpToCurrentSession:(id)sender
-{
-	TVCLogController *viewController = self.selectedViewController;
-
-	if (viewController == nil) {
-		return;
-	}
-
-	[viewController jumpToCurrentSession];
-}
-
-- (void)jumpToPresent:(id)sender
-{
-	TVCLogController *viewController = self.selectedViewController;
-
-	if (viewController == nil) {
-		return;
-	}
-
-	[viewController jumpToPresent];
-}
-
-- (void)clearScrollback:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClient) {
-		return;
-	}
-
-	if (c) {
-		[mainWindow() clearContentsOfChannel:c];
-	} else {
-		[mainWindow() clearContentsOfClient:u];
-	}
-}
-
-- (void)increaseLogFontSize:(id)sender
-{
-	[mainWindow() changeTextSize:YES];
-}
-
-- (void)decreaseLogFontSize:(id)sender
-{
-	[mainWindow() changeTextSize:NO];
-}
-
-- (void)markAllAsRead:(id)sender
-{
-	[mainWindow() markAllAsRead];
-}
+#pragma mark -
+#pragma mark Server
 
 - (void)connect:(id)sender
 {
@@ -1806,7 +1499,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient || _clientIsConnected || u.isQuitting) {
+	if (u == nil || u.isConnected || u.isQuitting) {
 		return;
 	}
 
@@ -1819,7 +1512,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient || _clientIsConnected || u.isQuitting) {
+	if (u == nil || u.isConnected || u.isQuitting) {
 		return;
 	}
 
@@ -1832,7 +1525,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient || _clientIsConnected || u.isQuitting) {
+	if (u == nil || u.isConnected || u.isQuitting) {
 		return;
 	}
 
@@ -1845,7 +1538,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient || _clientIsntConnected || u.isQuitting) {
+	if (u == nil || u.isConnected == NO || u.isQuitting) {
 		return;
 	}
 
@@ -1856,62 +1549,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient) {
+	if (u == nil) {
 		return;
 	}
 
 	[u cancelReconnect];
 }
 
-#pragma mark -
-#pragma mark Change Nickname Sheet
-
-- (void)showServerChangeNicknameSheet:(id)sender
-{
-	[windowController() popMainWindowSheetIfExists];
-
-	IRCClient *u = self.selectedClient;
-
-	if (_noClient || _clientIsntLoggedIn) {
-		return;
-	}
-
-	TDCServerChangeNicknameSheet *sheet =
-	[[TDCServerChangeNicknameSheet alloc] initWithClient:u];
-
-	sheet.delegate = (id)self;
-
-	sheet.window = mainWindow();
-
-	[sheet start];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
-{
-	IRCClient *u = sender.client;
-
-	if (_noClient || _clientIsntLoggedIn) {
-		return;
-	}
-
-	[u changeNickname:nickname];
-}
-
-- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Menu Item Actions
-
 - (void)showServerChannelList:(id)sender
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient || _clientIsntLoggedIn) {
+	if (u == nil || u.isLoggedIn == NO) {
 		return;
 	}
 
@@ -1940,7 +1589,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient) {
+	if (u == nil) {
 		return;
 	}
 
@@ -1961,7 +1610,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient || _clientIsConnected) {
+	if (u == nil || u.isConnected) {
 		return;
 	}
 
@@ -2009,82 +1658,14 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Server Properties
-
-- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
-{
-	NSParameterAssert(client != nil);
-
-	[windowController() popMainWindowSheetIfExists];
-
-	TDCServerPropertiesSheet *sheet = [[TDCServerPropertiesSheet alloc] initWithClient:client];
-
-	sheet.delegate = self;
-
-	sheet.window = mainWindow();
-
-	[sheet startWithSelection:selection context:context];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)showServerPropertiesSheet:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-
-	if (_noClient) {
-		return;
-	}
-
-	[self showServerPropertiesSheetForClient:u
-							   withSelection:TDCServerPropertiesSheetDefaultNavigationSelection
-									 context:nil];
-}
-
-- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender onOk:(IRCClientConfig *)config
-{
-	IRCClient *u = sender.client;
-
-	if (u == nil) {
-		u = [worldController() createClientWithConfig:config reload:YES];
-
-		return;
-	}
-
-	BOOL sameEncoding = (config.primaryEncoding == u.config.primaryEncoding);
-
-	[u updateConfig:config];
-
-	if (sameEncoding == NO) {
-		[mainWindow() reloadTheme];
-	}
-
-	[mainWindow() reloadTreeGroup:u];
-
-	[worldController() save];
-}
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender removeClientFromCloud:(NSString *)clientId
-{
-	[worldController() cloud_addClientToListOfDeletedClients:clientId];
-}
-#endif
-
-- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Menu Item Actions
+#pragma mark Channel
 
 - (void)joinChannel:(id)sender
 {
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO || _channelIsActive) {
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO || c.isActive) {
 		return;
 	}
 
@@ -2098,11 +1679,12 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || (_isChannel && (_clientIsntLoggedIn || _channelIsntActive))) {
+	/* Second boxed in condition is because this is used for queries too */
+	if (u == nil || c == nil || (c.isChannel && (u.isLoggedIn == NO || c.isActive == NO))) {
 		return;
 	}
 
-	if (_isChannel) {
+	if (c.isChannel) {
 		[u partChannel:c];
 
 		return;
@@ -2111,213 +1693,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[worldController() destroyChannel:c];
 }
 
-#pragma mark -
-#pragma mark Highlight Sheet
-
-- (void)showServerHighlightList:(id)sender
-{
-	[windowController() popMainWindowSheetIfExists];
-
-	IRCClient *u = self.selectedClient;
-
-	if (_noClient) {
-		return;
-	}
-
-	TDCServerHighlightListSheet *sheet =
-	[[TDCServerHighlightListSheet alloc] initWithClient:u];
-
-	sheet.delegate = (id)self;
-
-	sheet.window = mainWindow();
-
-	[sheet start];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Nickname Color Sheet
-
-- (void)memberChangeColor:(NSString *)nickname
-{
-	NSParameterAssert(nickname != nil);
-
-	[windowController() popMainWindowSheetIfExists];
-
-	IRCClient *u = self.selectedClient;
-
-	if (_noClient) {
-		return;
-	}
-
-	TDCNicknameColorSheet *sheet =
-	[[TDCNicknameColorSheet alloc] initWithNickname:nickname];
-
-	sheet.delegate = (id)self;
-
-	sheet.window = mainWindow();
-
-	[sheet start];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)nicknameColorSheetOnOk:(TDCNicknameColorSheet *)sneder
-{
-	[mainWindow() reloadTheme];
-}
-
-- (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Channel Topic Sheet
-
-- (void)showChannelModifyTopicSheet:(id)sender
-{
-	[windowController() popMainWindowSheetIfExists];
-
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _isChannel == NO) {
-		return;
-	}
-
-	TDCChannelModifyTopicSheet *sheet =
-	[[TDCChannelModifyTopicSheet alloc] initWithChannel:c];
-
-	sheet.delegate = (id)self;
-
-	sheet.window = mainWindow();
-
-	[sheet start];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)channelModifyTopicSheet:(TDCChannelModifyTopicSheet *)sender onOk:(NSString *)topic
-{
-	IRCClient *u = sender.client;
-	IRCChannel *c = sender.channel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	[u sendTopicTo:topic inChannel:c];
-}
-
-- (void)channelModifyTopicSheetWillClose:(TDCChannelModifyTopicSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Channel Mode Sheet
-
-- (void)showChannelModifyModesSheet:(id)sender
-{
-	[windowController() popMainWindowSheetIfExists];
-
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _isChannel == NO) {
-		return;
-	}
-
-	TDCChannelModifyModesSheet *sheet =
-	[[TDCChannelModifyModesSheet alloc] initWithChannel:c];
-
-	sheet.delegate = (id)self;
-
-	sheet.window = mainWindow();
-
-	[sheet start];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)channelModifyModesSheet:(TDCChannelModifyModesSheet *)sender onOk:(IRCChannelModeContainer *)modes
-{
-	IRCClient *u = sender.client;
-	IRCChannel *c = sender.channel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	NSString *changeString = [c.modeInfo getChangeCommand:modes];
-
-	if (changeString.length == 0) {
-		return;
-	}
-
-	[u sendModes:changeString withParameters:nil inChannel:c];
-}
-
-- (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Channel Spotlight
-
-- (void)showChannelSpotlightWindow:(id)sender
-{
-	NSAssert(TEXTUAL_RUNNING_ON(10.10, Yosemite),
-		@"This feature requires OS X Yosemite or later");
-
-	_popWindowViewIfExists(@"TDCChannelSpotlightController");
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired()) {
-		[[TXSharedApplication sharedInAppPurchaseDialog] showFeatureIsLimitedMessageInWindow:mainWindow()];
-
-		return;
-	}
-#endif
-
-	TDCChannelSpotlightController *dialog =
-	[[TDCChannelSpotlightController alloc] initWithParentWindow:mainWindow()];
-
-	dialog.delegate = (id)self;
-
-	[dialog show];
-
-	[windowController() addWindowToWindowList:dialog];
-}
-
-- (void)channelSpotlightController:(TDCChannelSpotlightController *)sender selectChannel:(IRCChannel *)channel
-{
-	[mainWindow() select:channel];
-}
-
-- (void)channelSpotlightControllerWillClose:(TDCChannelSpotlightController *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-
-#pragma mark -
-#pragma mark Menu Item Actions
-
 - (void)addChannel:(id)sender
 {
 	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient) {
+	if (u == nil) {
 		return;
 	}
 
@@ -2337,11 +1719,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noChannel) {
+	if (c == nil) {
 		return;
 	}
 
-	if (_isChannel) {
+	if (c.isChannel) {
 		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1103][2]")
 												title:TXTLS(@"Prompts[1103][1]")
 										defaultButton:TXTLS(@"Prompts[0001]")
@@ -2359,69 +1741,72 @@ NS_ASSUME_NONNULL_BEGIN
 	[worldController() save];
 }
 
-#pragma mark -
-#pragma mark Channel Properties
-
-- (void)showChannelPropertiesSheet:(id)sender
+- (void)copyUniqueIdentifier:(id)sender
 {
-	[windowController() popMainWindowSheetIfExists];
-
-	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || _isChannel == NO) {
-		return;
-	}
-
-	TDCChannelPropertiesSheet *sheet =
-	[[TDCChannelPropertiesSheet alloc] initWithChannel:c];
-
-	sheet.delegate = self;
-
-	sheet.window = mainWindow();
-
-	[sheet start];
-
-	[windowController() addWindowToWindowList:sheet];
-}
-
-- (void)channelPropertiesSheet:(TDCChannelPropertiesSheet *)sender onOk:(IRCChannelConfig *)config
-{
-	IRCClient *u = sender.client;
-
-	if (_noClient) {
-		return;
-	}
-
-	IRCChannel *c = sender.channel;
-
 	if (c == nil) {
-		c = [worldController() createChannelWithConfig:config onClient:u];
-
-		[mainWindow() expandClient:u];
-
 		return;
 	}
 
-	[c updateConfig:config];
-
-	[worldController() save];
-}
-
-- (void)channelPropertiesSheetWillClose:(TDCChannelPropertiesSheet *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
+	[RZPasteboard() setStringContent:c.uniqueIdentifier];
 }
 
 #pragma mark -
-#pragma mark Menu Item Actions
+#pragma mark Other Actions
+
+- (void)copyUrl:(id)sender
+{
+	NSString *pointedUrl = ((NSMenuItem *)sender).userInfo;
+
+	if (pointedUrl.length == 0) {
+		return;
+	}
+
+	RZPasteboard().stringContent = pointedUrl;
+}
+
+- (void)joinChannelClicked:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	NSString *pointedChannelName = nil;
+
+	if ([sender isKindOfClass:[NSMenuItem class]]) {
+		pointedChannelName = ((NSMenuItem *)sender).userInfo;
+	} else if ([sender isKindOfClass:[NSString class]]) {
+		pointedChannelName = sender;
+	}
+
+	if (pointedChannelName == nil) {
+		return;
+	}
+
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	u.inUserInvokedJoinRequest = YES;
+
+	[u joinUnlistedChannel:pointedChannelName];
+}
+
+- (void)emptyAction:(id)sender
+{
+	/* Empty action used to validate submenus */
+}
+
+#pragma mark -
+#pragma mark Ignores
 
 - (void)memberAddIgnore:(id)sender
 {
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel) {
+	if (u == nil || c == nil) {
 		return;
 	}
 
@@ -2443,7 +1828,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel) {
+	if (u == nil || c == nil) {
 		return;
 	}
 
@@ -2464,25 +1849,25 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient) {
+	if (u == nil) {
 		return;
 	}
 
 	NSArray<IRCChannelUser *> *nicknames = [self selectedMembers:sender];
 
 	[self deselectMembers:sender];
-	
+
 	/* User's hostmask and other information can change between the point
 	 the menu item is opened and the point the action is performed.
 	 We therefore perform a new query for ignores when performing action. */
 	NSString *hostmask = nicknames.firstObject.user.hostmask;
-	
+
 	if (nicknames.count != 1 || hostmask == nil) {
 		return;
 	}
-	
+
 	NSArray *userIgnores = [u findIgnoresForHostmask:hostmask];
-	
+
 	/* If we have more than one user ignore, then open
 	 the address book instead of a specific ignore. */
 	if (userIgnores.count == 1) {
@@ -2497,7 +1882,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Menu Item Actions
+#pragma mark Members
 
 - (void)memberInMemberListDoubleClicked:(id)sender
 {
@@ -2536,7 +1921,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel) {
+	if (u == nil || c == nil) {
 		return;
 	}
 
@@ -2557,7 +1942,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (selectedRange.location > 0) {
 		UniChar previousCharacter = [textView.stringValue characterAtIndex:(selectedRange.location - 1)];
 
-		if (previousCharacter != ' ') {
+		if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:previousCharacter] == NO) {
 			[stringToInsert appendString:@" "];
 		}
 	}
@@ -2589,7 +1974,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel) {
+	if (u == nil || c == nil) {
 		return;
 	}
 
@@ -2605,7 +1990,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel) {
+	if (u == nil || c == nil) {
 		return;
 	}
 
@@ -2618,6 +2003,1312 @@ NS_ASSUME_NONNULL_BEGIN
 	[self deselectMembers:sender];
 }
 
+- (void)memberSendCTCPPing:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPPing:nickname];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberSendCTCPFinger:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:@"FINGER" text:nil];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberSendCTCPTime:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:@"TIME" text:nil];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberSendCTCPVersion:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:@"VERSION" text:nil];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberSendCTCPUserinfo:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:@"USERINFO" text:nil];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberSendCTCPClientInfo:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:@"CLIENTINFO" text:nil];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)_processModeChange:(id)sender usingCommand:(NSString *)modeCommand
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
+
+	[self deselectMembers:sender];
+
+	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
+
+	NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, nicknamesString];
+
+	[u sendCommand:command completeTarget:YES target:c.name];
+}
+
+- (void)memberModeGiveOp:(id)sender
+{
+	[self _processModeChange:sender usingCommand:@"OP"];
+}
+
+- (void)memberModeTakeOp:(id)sender
+{ 
+	[self _processModeChange:sender usingCommand:@"DEOP"];
+}
+
+- (void)memberModeGiveHalfop:(id)sender
+{ 
+	[self _processModeChange:sender usingCommand:@"HALFOP"];
+}
+
+- (void)memberModeTakeHalfop:(id)sender
+{ 
+	[self _processModeChange:sender usingCommand:@"DEHALFOP"];
+}
+
+- (void)memberModeGiveVoice:(id)sender
+{ 
+	[self _processModeChange:sender usingCommand:@"VOICE"];
+}
+
+- (void)memberModeTakeVoice:(id)sender
+{ 
+	[self _processModeChange:sender usingCommand:@"DEVOICE"];
+}
+
+- (void)memberKickFromChannel:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u kick:nickname inChannel:c];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberBanFromChannel:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		NSString *command = [NSString stringWithFormat:@"BAN %@", nickname];
+
+		[u sendCommand:command completeTarget:YES target:c.name];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberKickbanFromChannel:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		NSString *command = [NSString stringWithFormat:@"KICKBAN %@ %@", nickname, [TPCPreferences defaultKickMessage]];
+
+		[u sendCommand:command completeTarget:YES target:c.name];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberKillFromServer:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		NSString *command = [NSString stringWithFormat:@"KILL %@ %@", nickname, [TPCPreferences IRCopDefaultKillMessage]];
+
+		[u sendCommand:command];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberBanFromServer:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		if ([u nicknameIsMyself:nickname]) {
+			[u printDebugInformation:TXTLS(@"IRC[1004]", u.serverAddress) inChannel:c];
+
+			continue;
+		}
+
+		NSString *command = [NSString stringWithFormat:@"GLINE %@ %@", nickname, [TPCPreferences IRCopDefaultGlineMessage]];
+
+		[u sendCommand:command];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)memberShunOnServer:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		NSString *command = [NSString stringWithFormat:@"SHUN %@ %@", nickname, [TPCPreferences IRCopDefaultShunMessage]];
+
+		[u sendCommand:command];
+	}
+
+	[self deselectMembers:sender];
+}
+
+- (void)_showSetVhostPromptOpenDialog:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
+
+	if (nicknames.count == 0) {
+		return;
+	}
+
+	[self deselectMembers:sender];
+
+	void (^promptCompletionBlock)(NSString *) = ^(NSString *resultString)
+	{
+		NSString *vhost = resultString.trimAndGetFirstToken;
+
+		if (vhost.length == 0) {
+			return;
+		}
+
+		for (NSString *nickname in nicknames) {
+			NSString *command = [NSString stringWithFormat:@"hs setall %@ %@", nickname, vhost];
+
+			[u sendCommand:command completeTarget:NO target:nil];
+		}
+	};
+
+	NSString *vhost = nil;
+
+	TVCAlertResponse response =
+	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1102][2]")
+								title:TXTLS(@"Prompts[1102][1]")
+						defaultButton:TXTLS(@"Prompts[0005]")
+					  alternateButton:TXTLS(@"Prompts[0004]")
+						prefillString:nil
+						 resultString:&vhost];
+
+	if (response == TVCAlertResponseFirstButton) {
+		promptCompletionBlock(vhost);
+	}
+}
+
+- (void)showSetVhostPrompt:(id)sender
+{
+	[self _showSetVhostPromptOpenDialog:sender];
+}
+
+#pragma mark -
+#pragma mark File Transfers
+
+- (TDCFileTransferDialog *)fileTransferController
+{
+	return [TXSharedApplication sharedFileTransferDialog];
+}
+
+- (void)showFileTransfersWindow:(id)sender
+{
+	[self.fileTransferController show:YES restorePosition:YES];
+}
+
+- (void)memberSendFileRequest:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	NSArray *nicknames = [self selectedMembersNicknames:sender];
+
+	if (nicknames.count == 0) {
+		return;
+	}
+
+	[self deselectMembers:sender];
+
+	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+
+	openPanel.allowsMultipleSelection = YES;
+	openPanel.canChooseDirectories = NO;
+	openPanel.canChooseFiles = YES;
+	openPanel.canCreateDirectories = NO;
+	openPanel.resolvesAliases = YES;
+
+	[openPanel beginSheetModalForWindow:mainWindow() completionHandler:^(NSInteger returnCode) {
+		if (returnCode != NSModalResponseOK) {
+			return;
+		}
+
+		[self.fileTransferController.fileTransferTable beginUpdates];
+
+		for (NSString *nickname in nicknames) {
+			for (NSURL *path in openPanel.URLs) {
+				(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:path.path autoOpen:YES];
+			}
+		}
+
+		[self.fileTransferController.fileTransferTable endUpdates];
+	}];
+}
+
+- (void)memberSendDroppedFilesToSelectedChannel:(NSArray<NSString *> *)files
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isPrivateMessage == NO) {
+		return;
+	}
+
+	[self memberSendDroppedFiles:files to:c.name];
+}
+
+- (void)memberSendDroppedFiles:(NSArray<NSString *> *)files row:(NSUInteger)row
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isPrivateMessage == NO) {
+		return;
+	}
+
+	IRCChannelUser *member = [mainWindowMemberList() itemAtRow:row];
+
+	[self memberSendDroppedFiles:files to:member.user.nickname];
+}
+
+- (void)memberSendDroppedFiles:(NSArray<NSString *> *)files to:(NSString *)nickname
+{
+	NSParameterAssert(files != nil);
+	NSParameterAssert(nickname != nil);
+
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	[self.fileTransferController.fileTransferTable beginUpdates];
+
+	for (NSString *file in files) {
+		BOOL isDirectory = NO;
+
+		if ([RZFileManager() fileExistsAtPath:file isDirectory:&isDirectory] == NO) {
+			continue;
+		} else if (isDirectory) {
+			continue;
+		}
+
+		(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:file autoOpen:YES];
+	}
+
+	[self.fileTransferController.fileTransferTable endUpdates];
+}
+
+#pragma mark -
+#pragma mark Logging
+
+- (void)openLogLocation:(id)sender
+{	
+	NSURL *path = [TPCPathInfo transcriptFolderURL];
+
+	if ([RZFileManager() fileExistsAtURL:path]) {
+		(void)[RZWorkspace() openURL:path];
+
+		return;
+	}
+
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
+							  title:TXTLS(@"Prompts[1104][1]")
+					  defaultButton:TXTLS(@"Prompts[0005]")
+					alternateButton:nil];
+}
+
+- (void)openChannelLogs:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil) {
+		return;
+	}
+
+	NSURL *path = c.logFilePath;
+
+	if ([RZFileManager() fileExistsAtURL:path]) {
+		(void)[RZWorkspace() openURL:path];
+
+		return;
+	}
+
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
+							  title:TXTLS(@"Prompts[1104][1]")
+					  defaultButton:TXTLS(@"Prompts[0005]")
+					alternateButton:nil];
+}
+
+#pragma mark -
+#pragma mark Help
+
+- (void)openAcknowledgements:(id)sender
+{
+	NSString *AcknowledgementsPath = [RZMainBundle() pathForResource:@"Acknowledgements" ofType:@"pdf" inDirectory:@"Documentation"];
+
+	(void)[RZWorkspace() openFile:AcknowledgementsPath];
+}
+
+- (void)openHelpMenuItem:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	NSDictionary *_helpMenuLinks = @{
+	   @(MTMMHelpLicenseAgreement) 					: @"https://help.codeux.com/textual/End-User-License-Agreement.kb",
+	   @(MTMMHelpPrivacyPolicy) 					: @"https://help.codeux.com/textual/Privacy-Policy.kb",
+	   @(MTMMHelpFrequentlyAskedQuestions) 			: @"https://help.codeux.com/textual/Frequently-Asked-Questions.kb",
+	   @(MTMMHelpKBMenuKnowledgeBaseHome) 			: @"https://help.codeux.com/textual/home.kb",
+	   @(MTMMHelpKBMenuUsingICloudWithApp) 			: @"https://help.codeux.com/textual/iCloud-Syncing.kb",
+	   @(MTMMHelpKBMenuChatEncryption) 				: @"https://help.codeux.com/textual/Off-the-Record-Messaging.kb",
+	   @(MTMMHelpKBMenuCommandReference) 			: @"https://help.codeux.com/textual/Command-Reference.kb",
+	   @(MTMMHelpKBMenuFeatureRequests) 			: @"https://help.codeux.com/textual/Support.kb",
+	   @(MTMMHelpKBMenuKeyboardShortcuts) 			: @"https://help.codeux.com/textual/Keyboard-Shortcuts.kb",
+	   @(MTMMHelpKBMenuMemoryManagement) 			: @"https://help.codeux.com/textual/Memory-Management.kb",
+	   @(MTMMHelpKBMenuTextFormatting) 				: @"https://help.codeux.com/textual/Text-Formatting.kb",
+	   @(MTMMHelpKBMenuStylingInformation) 			: @"https://help.codeux.com/textual/Styles.kb",
+	   @(MTMMHelpKBMenuConnectingWithCertificate) 	: @"https://help.codeux.com/textual/Using-CertFP.kb",
+	   @(MTMMHelpKBMenuConnectingToBouncer)			: @"https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb",
+	   @(MTMMHelpKBMenuDCCFileTransferInformation) 	: @"https://help.codeux.com/textual/DCC-File-Transfer-Information.kb"
+	};
+
+	NSString *link = _helpMenuLinks[@([sender tag])];
+
+	[TLOpenLink openWithString:link inBackground:NO];
+}
+
+- (void)openMacAppStoreWebpage:(id)sender
+{
+	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store" inBackground:NO];
+}
+
+- (void)openStandaloneStoreWebpage:(id)sender
+{
+	[TLOpenLink openWithString:@"https://www.textualapp.com/standalone-store" inBackground:NO];
+}
+
+- (void)contactSupport:(id)sender
+{
+	[TLOpenLink openWithString:@"https://contact.codeux.com/" inBackground:NO];
+}
+
+- (void)connectToTextualHelpChannel:(id)sender
+{
+	[IRCExtras createConnectionToServer:@"chat.freenode.net +6697" channelList:@"#textual" connectWhenCreated:YES mergeConnectionIfPossible:YES selectFirstChannelAdded:YES];
+}
+
+- (void)connectToTextualTestingChannel:(id)sender
+{
+	[IRCExtras createConnectionToServer:@"chat.freenode.net +6697" channelList:@"#textual-testing" connectWhenCreated:YES mergeConnectionIfPossible:YES selectFirstChannelAdded:YES];
+}
+
+#pragma mark -
+#pragma mark IRC
+
+- (void)showChannelBanList:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	[u createChannelBanListSheet];
+
+	[u sendModes:@"+b" withParameters:nil inChannel:c];
+}
+
+- (void)showChannelBanExceptionList:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	[u createChannelBanExceptionListSheet];
+
+	[u sendModes:@"+e" withParameters:nil inChannel:c];
+}
+
+- (void)showChannelInviteExceptionList:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	[u createChannelInviteExceptionListSheet];
+
+	[u sendModes:@"+I" withParameters:nil inChannel:c];
+}
+
+- (void)showChannelQuietList:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	[u createChannelQuietListSheet];
+
+	[u sendModes:@"+q" withParameters:nil inChannel:c];
+}
+
+- (void)toggleChannelModerationMode:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	NSString *modeSymbol = nil;
+
+	if ([sender tag] == MTMMChannelModesMenuRemvoeModerated) {
+		modeSymbol = @"-m";
+	} else {
+		modeSymbol = @"+m";
+	}
+
+	[u sendModes:modeSymbol withParameters:nil inChannel:c];
+}
+
+- (void)toggleChannelInviteMode:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	NSString *modeSymbol = nil;
+
+	if ([sender tag] == MTMMChannelModesMenuRemoveInviteOnly) {
+		modeSymbol = @"-i";
+	} else {
+		modeSymbol = @"+i";
+	}
+
+	[u sendModes:modeSymbol withParameters:nil inChannel:c];
+}
+
+#pragma mark -
+#pragma mark Window
+
+- (void)closeWindow:(id)sender
+{
+	TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
+
+	if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
+		NSWindow *windowToClose = [NSApp keyWindow];
+
+		if (windowToClose == nil) {
+			windowToClose = [NSApp mainWindow];
+		}
+
+		if (windowToClose) {
+			[windowToClose performClose:sender];
+		}
+
+		return;
+	}
+
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil) {
+		return;
+	}
+
+	switch (keyAction) {
+		case TXCommandWKeyPartChannelAction:
+		{
+			if (c == nil) {
+				return;
+			}
+
+			if (c.isChannel) {
+				if (c.isActive == NO) {
+					return;
+				}
+
+				[u partChannel:c];
+			} else {
+				[worldController() destroyChannel:c];
+			}
+
+			break;
+		}
+		case TXCommandWKeyDisconnectAction:
+		{
+			if (u.isConnected == NO) {
+				return;
+			}
+
+			[u quit];
+
+			break;
+		}
+		case TXCommandWKeyTerminateAction:
+		{
+			[NSApp terminate:sender];
+
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+}
+
+- (void)showMainWindow:(id)sender
+{
+	[mainWindow() makeKeyAndOrderFront:sender];
+}
+
+- (void)centerMainWindow:(id)sender
+{
+	[mainWindow() exactlyCenterWindow];
+}
+
+- (void)toggleFullscreen:(id)sender
+{
+	[[NSApp keyWindow] toggleFullScreen:sender];
+}
+
+- (void)resetMainWindowFrame:(id)sender
+{
+	if (mainWindow().inFullscreenMode) {
+		[mainWindow() toggleFullScreen:sender];
+	}
+
+	[mainWindow() setFrame:[mainWindow() defaultWindowFrame] display:YES animate:YES];
+
+	[mainWindow() exactlyCenterWindow];
+}
+
+- (void)sortChannelListNames:(id)sender
+{
+	for (IRCClient *u in worldController().clientList) {
+		NSMutableArray *channelList = [u.channelList mutableCopy];
+
+		[channelList sortUsingComparator:^NSComparisonResult(IRCChannel *channel1, IRCChannel *channel2) {
+			if (channel1.isChannel && channel2.isChannel == NO) {
+				return NSOrderedAscending;
+			}
+
+			NSString *name1 = channel1.name.lowercaseString;
+			NSString *name2 = channel2.name.lowercaseString;
+
+			return [name1 compare:name2];
+		}];
+
+		if ([channelList isEqualToArray:u.channelList]) {
+			continue;
+		}
+
+		u.channelList = channelList;
+
+		[u reloadServerListItems];
+	}
+
+	[worldController() save];
+}
+
+- (void)markAllAsRead:(id)sender
+{
+	[mainWindow() markAllAsRead];
+}
+
+#pragma mark -
+#pragma mark Preferences
+
+- (void)importPreferences:(id)sender
+{
+	[TPCPreferencesImportExport importInWindow:mainWindow()];
+}
+
+- (void)exportPreferences:(id)sender
+{
+	[TPCPreferencesImportExport exportInWindow:mainWindow()];
+}
+
+#pragma mark -
+#pragma mark Off-the-Record Messaging
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+#define _encryptionNotEnabled		([TPCPreferences textEncryptionIsEnabled] == NO)
+
+- (void)encryptionStartPrivateConversation:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_encryptionNotEnabled || u == nil || c == nil || u.isLoggedIn == NO || c.isPrivateMessage == NO) {
+		return;
+	}
+
+	[sharedEncryptionManager() beginConversationWith:[u encryptionAccountNameForUser:c.name]
+												from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionRefreshPrivateConversation:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_encryptionNotEnabled || u == nil || c == nil || u.isLoggedIn == NO || c.isPrivateMessage == NO) {
+		return;
+	}
+
+	[sharedEncryptionManager() refreshConversationWith:[u encryptionAccountNameForUser:c.name]
+												  from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionEndPrivateConversation:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_encryptionNotEnabled || u == nil || c == nil || u.isLoggedIn == NO || c.isPrivateMessage == NO) {
+		return;
+	}
+
+	[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:c.name]
+											  from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionAuthenticateChatPartner:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (_encryptionNotEnabled || u == nil || c == nil || u.isLoggedIn == NO || c.isPrivateMessage == NO) {
+		return;
+	}
+
+	[sharedEncryptionManager() authenticateUser:[u encryptionAccountNameForUser:c.name]
+										   from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionListFingerprints:(id)sender
+{
+	[sharedEncryptionManager() presentListOfFingerprints];
+}
+
+- (void)encryptionWhatIsThisInformation:(id)sender
+{
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Off-the-Record-Messaging.kb" inBackground:NO];
+}
+
+#undef _encryptionNotEnabled
+#endif
+
+#pragma mark -
+#pragma mark Notifications
+
+- (void)toggleMuteOnNotificationsShortcut:(NSInteger)state
+{
+	NSParameterAssert(state == NSOffState ||
+					  state == NSOnState);
+
+	sharedGrowlController().areNotificationsDisabled = (state == NSOnState);
+
+	self.muteNotificationsFileMenuItem.state = state;
+
+	self.muteNotificationsDockMenuItem.state = state;
+}
+
+- (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state
+{
+	NSParameterAssert(state == NSOffState ||
+					  state == NSOnState);
+
+	self.muteNotificationsSoundsDockMenuItem.state = state;
+
+	self.muteNotificationsSoundsFileMenuItem.state = state;
+}
+
+- (void)toggleMuteOnNotificationSounds:(id)sender
+{
+	if ([TPCPreferences soundIsMuted]) {
+		[self toggleMuteOnNotificationSoundsShortcut:NSOffState];
+	} else {
+		[self toggleMuteOnNotificationSoundsShortcut:NSOnState];
+	}
+}
+
+- (void)toggleMuteOnNotifications:(id)sender
+{
+	if (sharedGrowlController().areNotificationsDisabled) {
+		[self toggleMuteOnNotificationsShortcut:NSOffState];
+	} else {
+		[self toggleMuteOnNotificationsShortcut:NSOnState];
+	}
+}
+
+#pragma mark -
+#pragma mark Appearance
+
+- (void)toggleMainWindowAppearance:(id)sender
+{
+	[TPCPreferences setInvertSidebarColors:([TPCPreferences invertSidebarColors] == NO)];
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
+}
+
+- (void)toggleServerListVisibility:(id)sender
+{
+	[mainWindow().contentSplitView toggleServerListVisibility];
+}
+
+- (void)toggleMemberListVisibility:(id)sender
+{
+	mainWindowMemberList().isHiddenByUser = (mainWindowMemberList().isHiddenByUser == NO);
+
+	[mainWindow().contentSplitView toggleMemberListVisibility];
+}
+
+- (void)forceReloadTheme:(id)sender
+{
+	[mainWindow() reloadTheme];
+}
+
+#pragma mark -
+#pragma mark License Manager
+
+- (void)manageLicense:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	[self manageLicense:sender activateLicenseKey:nil licenseKeyPassedByArgument:NO];
+#endif
+}
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey
+{
+	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
+}
+
+- (void)manageLicense:(id)sender activateLicenseKeyWithURL:(NSURL *)licenseKeyURL
+{
+	NSParameterAssert(licenseKeyURL != nil);
+
+	NSString *path = licenseKeyURL.path;
+
+	if (path == nil) {
+		return;
+	}
+
+	NSCharacterSet *slashCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
+
+	NSString *licenseKey = [path stringByTrimmingCharactersInSet:slashCharacterSet];
+
+	if (licenseKey.length == 0) {
+		return;
+	}
+
+	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
+}
+
+- (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument
+{
+	TDCLicenseManagerDialog *licenseDialog = [TXSharedApplication sharedLicenseManagerDialog];
+
+	[licenseDialog show];
+
+	if (licenseKey) {
+		[licenseDialog activateLicenseKey:licenseKey silently:licenseKeyPassedByArgument];
+	}
+}
+#endif
+
+#pragma mark -
+#pragma mark In-app Purchase
+
+- (void)manageInAppPurchase:(id)sender
+{
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[[TXSharedApplication sharedInAppPurchaseDialog] show];
+#endif
+}
+
+#pragma mark -
+#pragma mark Developer
+
+- (void)simulateCrash:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
+	[[BITHockeyManager sharedHockeyManager].crashManager generateTestCrash];
+#endif
+}
+
+- (void)toggleDeveloperMode:(id)sender
+{
+	[TPCPreferences setDeveloperModeEnabled:([TPCPreferences developerModeEnabled] == NO)];
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadIRCCommandCacheAction];
+}
+
+- (void)resetDoNotAskMePopupWarnings:(id)sender
+{
+	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
+
+	for (NSString *key in settings) {
+		if ([key hasPrefix:TDCAlertSuppressionPrefix] == NO) {
+			continue;
+		}
+
+		[RZUserDefaults() setBool:NO forKey:key];
+	}
+}
+
+#pragma mark -
+#pragma mark Sparkle Framework
+
+- (void)checkForUpdates:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	[[SUUpdater sharedUpdater] checkForUpdates:sender];
+#endif
+}
+
+#pragma mark -
+#pragma mark Navigation
+
+- (void)navigateToTreeItemAtURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	NSString *path = url.path;
+	
+	if (path == nil) {
+		return;
+	}
+	
+	NSCharacterSet *slashCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
+	
+	NSString *identifier = [path stringByTrimmingCharactersInSet:slashCharacterSet];
+	
+	if (identifier.length == 0) {
+		return;
+	}
+	
+	[self navigateToTreeItemWithIdentifier:identifier];
+}
+
+- (void)navigateToTreeItemWithIdentifier:(NSString *)identifier
+{
+	NSParameterAssert(identifier != nil);
+	
+	/* Do not use assert for this condition so we
+	 don't crash user when we open a malformed URL. */
+	if (identifier.length != 36) {
+		return;
+	}
+	
+	IRCTreeItem *item = [worldController() findItemWithId:identifier];
+	
+	if (item == nil) {
+		return;
+	}
+	
+	[self navigateToTreeItem:item];
+}
+
+- (void)navigateToTreeItem:(IRCTreeItem *)item
+{
+	NSParameterAssert(item != nil);
+	
+	[mainWindow() select:item];
+}
+
+- (void)populateNavigationChannelList
+{
+	[self.mainMenuNavigationChannelListMenu removeAllItems];
+
+	NSUInteger channelCount = 0;
+
+	for (IRCClient *u in worldController().clientList) {
+		NSMenu *channelSubmenu = [NSMenu new];
+
+		NSMenuItem *clientMenuItem = [NSMenuItem new];
+
+		clientMenuItem.title = TXTLS(@"BasicLanguage[1021]", u.name);
+
+		clientMenuItem.submenu = channelSubmenu;
+
+		for (IRCChannel *c in u.channelList) {
+			NSMenuItem *channelMenuItem = nil;
+
+			if (channelCount >= 10) {
+				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
+														 target:self
+														 action:@selector(_navigateToChannelInNavigationList:)];
+			} else {
+				NSUInteger keyboardIndex = (channelCount + 1);
+
+				if (keyboardIndex == 10) {
+					keyboardIndex = 0; // Have 0 as the last item.
+				}
+
+				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
+														 target:self
+														 action:@selector(_navigateToChannelInNavigationList:)
+												  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
+											  keyEquivalentMask:NSCommandKeyMask];
+			}
+
+			channelMenuItem.userInfo = [worldController() pasteboardStringForItem:c];
+
+			[channelSubmenu addItem:channelMenuItem];
+
+			channelCount += 1;
+		}
+
+		[self.mainMenuNavigationChannelListMenu addItem:clientMenuItem];
+	}
+}
+
+- (void)_navigateToChannelInNavigationList:(NSMenuItem *)sender
+{
+	IRCTreeItem *treeItem = [worldController() findItemWithPasteboardString:sender.userInfo];
+
+	if (treeItem == nil) {
+		return;
+	}
+
+	[mainWindow() select:treeItem];
+}
+
+- (void)performNavigationAction:(id)sender
+{
+	NSParameterAssert(sender != nil);
+
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil) {
+		return;
+	}
+
+	switch ([sender tag]) {
+		case MTMMNavigationServersMenuNextServer:
+		{
+			[mainWindow() selectNextServer:sender];
+
+			break;
+		}
+		case MTMMNavigationServersMenuPreviousServer:
+		{
+			[mainWindow() selectPreviousServer:sender];
+
+			break;
+		}
+		case MTMMNavigationServersMenuNextActiveServer:
+		{
+			[mainWindow() selectNextActiveServer:sender];
+
+			break;
+		}
+		case MTMMNavigationServersMenuPreviousActiveServer:
+		{
+			[mainWindow() selectPreviousActiveServer:sender];
+
+			break;
+		}
+		case MTMMNavigationChannelsMenuNextChannel:
+		{
+			[mainWindow() selectNextChannel:sender];
+
+			break;
+		}
+		case MTMMNavigationChannelsMenuPreviousChannel:
+		{
+			[mainWindow() selectPreviousChannel:sender];
+
+			break;
+		}
+		case MTMMNavigationChannelsMenuNextActiveChannel:
+		{
+			[mainWindow() selectNextActiveChannel:sender];
+
+			break;
+		}
+		case MTMMNavigationChannelsMenuPreviousActiveChannel:
+		{
+			[mainWindow() selectPreviousActiveChannel:sender];
+
+			break;
+		}
+		case MTMMNavigationChannelsMenuNextUnreadChannel:
+		{
+			[mainWindow() selectNextUnreadChannel:sender];
+
+			break;
+		}
+		case MTMMNavigationChannelsMenuPreviousUnreadChannel:
+		{
+			[mainWindow() selectPreviousUnreadChannel:sender];
+
+			break;
+		}
+		case MTMMNavigationMoveBackward:
+		{
+			[mainWindow() selectPreviousWindow:sender];
+
+			break;
+		}
+		case MTMMNavigationMoveForward:
+		{
+			[mainWindow() selectNextWindow:sender];
+
+			break;
+		}
+		case MTMMNavigationPreviousSelection:
+		{
+			[mainWindow() selectPreviousSelection:sender];
+
+			break;
+		}
+	} // switch()
+}
+
+- (void)onNextHighlight:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController nextHighlight];
+}
+
+- (void)onPreviousHighlight:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController previousHighlight];
+}
+
+- (void)jumpToCurrentSession:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController jumpToCurrentSession];
+}
+
+- (void)jumpToPresent:(id)sender
+{
+	TVCLogController *viewController = self.selectedViewController;
+
+	if (viewController == nil) {
+		return;
+	}
+
+	[viewController jumpToPresent];
+}
+
+#pragma mark -
+#pragma mark Channel Properties Sheet
+
+- (void)showChannelPropertiesSheet:(id)sender
+{
+	[windowController() popMainWindowSheetIfExists];
+
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil || c == nil || c.isChannel == NO) {
+		return;
+	}
+
+	TDCChannelPropertiesSheet *sheet =
+	[[TDCChannelPropertiesSheet alloc] initWithChannel:c];
+
+	sheet.delegate = self;
+
+	sheet.window = mainWindow();
+
+	[sheet start];
+
+	[windowController() addWindowToWindowList:sheet];
+}
+
+- (void)channelPropertiesSheet:(TDCChannelPropertiesSheet *)sender onOk:(IRCChannelConfig *)config
+{
+	IRCClient *u = sender.client;
+
+	if (u == nil) {
+		return;
+	}
+
+	IRCChannel *c = sender.channel;
+
+	if (c == nil) {
+		c = [worldController() createChannelWithConfig:config onClient:u];
+
+		[mainWindow() expandClient:u];
+
+		return;
+	}
+
+	[c updateConfig:config];
+
+	[worldController() save];
+}
+
+- (void)channelPropertiesSheetWillClose:(TDCChannelPropertiesSheet *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
 #pragma mark -
 #pragma mark Channel Invite Sheet
 
@@ -2628,7 +3319,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO || _channelIsntActive) {
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO || c.isActive == NO) {
 		return;
 	}
 
@@ -2668,7 +3359,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = sender.client;
 
-	if (_noClient || _clientIsntLoggedIn) {
+	if (u == nil || u.isLoggedIn == NO) {
 		return;
 	}
 
@@ -2683,149 +3374,13 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Menu Item Actions
-
-- (void)memberSendCTCPPing:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPPing:nickname];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberSendCTCPFinger:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:@"FINGER" text:nil];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberSendCTCPTime:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:@"TIME" text:nil];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberSendCTCPVersion:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:@"VERSION" text:nil];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberSendCTCPUserinfo:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:@"USERINFO" text:nil];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberSendCTCPClientInfo:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u sendCTCPQuery:nickname command:@"CLIENTINFO" text:nil];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)copyUrl:(id)sender
-{
-	NSString *pointedUrl = ((NSMenuItem *)sender).userInfo;
-
-	if (pointedUrl.length == 0) {
-		return;
-	}
-
-	RZPasteboard().stringContent = pointedUrl;
-}
-
-- (void)joinChannelClicked:(id)sender
-{
-	NSParameterAssert(sender != nil);
-
-	NSString *pointedChannelName = nil;
-
-	if ([sender isKindOfClass:[NSMenuItem class]]) {
-		pointedChannelName = ((NSMenuItem *)sender).userInfo;
-	} else if ([sender isKindOfClass:[NSString class]]) {
-		pointedChannelName = sender;
-	} else {
-		NSAssert(NO, @"Bad data type");
-	}
-
-	if (pointedChannelName == nil) {
-		return;
-	}
-
-	IRCClient *u = self.selectedClient;
-
-	if (_noClient || _clientIsntLoggedIn) {
-		return;
-	}
-
-	u.inUserInvokedJoinRequest = YES;
-
-	[u joinUnlistedChannel:pointedChannelName];
-}
+#pragma mark Address Book Sheet
 
 - (void)showAddressBook:(id)sender
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient) {
+	if (u == nil) {
 		return;
 	}
 
@@ -2896,7 +3451,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Buddy List
+#pragma mark Buddy List Window
 
 - (void)showBuddyListWindow:(id)sender
 {
@@ -2921,921 +3476,365 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 #pragma mark -
-#pragma mark Menu Item Actions
+#pragma mark Server Properties Sheet
 
-- (void)processModeChange:(id)sender usingCommand:(NSString *)modeCommand
+- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
 {
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
+	NSParameterAssert(client != nil);
 
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
+	[windowController() popMainWindowSheetIfExists];
 
-	NSArray *nicknames = [self selectedMembersNicknames:sender];
+	TDCServerPropertiesSheet *sheet = [[TDCServerPropertiesSheet alloc] initWithClient:client];
 
-	[self deselectMembers:sender];
+	sheet.delegate = self;
 
-	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
+	sheet.window = mainWindow();
 
-	NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, nicknamesString];
+	[sheet startWithSelection:selection context:context];
 
-	[u sendCommand:command completeTarget:YES target:c.name];
+	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)memberModeGiveOp:(id)sender
-{
-	[self processModeChange:sender usingCommand:@"OP"];
-}
-
-- (void)memberModeTakeOp:(id)sender
-{ 
-	[self processModeChange:sender usingCommand:@"DEOP"];
-}
-
-- (void)memberModeGiveHalfop:(id)sender
-{ 
-	[self processModeChange:sender usingCommand:@"HALFOP"];
-}
-
-- (void)memberModeTakeHalfop:(id)sender
-{ 
-	[self processModeChange:sender usingCommand:@"DEHALFOP"];
-}
-
-- (void)memberModeGiveVoice:(id)sender
-{ 
-	[self processModeChange:sender usingCommand:@"VOICE"];
-}
-
-- (void)memberModeTakeVoice:(id)sender
-{ 
-	[self processModeChange:sender usingCommand:@"DEVOICE"];
-}
-
-- (void)memberKickFromChannel:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		[u kick:nickname inChannel:c];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberBanFromChannel:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"BAN %@", nickname];
-
-		[u sendCommand:command completeTarget:YES target:c.name];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberKickbanFromChannel:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"KICKBAN %@ %@", nickname, [TPCPreferences defaultKickMessage]];
-
-		[u sendCommand:command completeTarget:YES target:c.name];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberKillFromServer:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"KILL %@ %@", nickname, [TPCPreferences IRCopDefaultKillMessage]];
-
-		[u sendCommand:command];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberBanFromServer:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		if ([nickname isEqualIgnoringCase:u.userNickname]) {
-			[u printDebugInformation:TXTLS(@"IRC[1004]", u.serverAddress) inChannel:c];
-
-			continue;
-		}
-
-		NSString *command = [NSString stringWithFormat:@"GLINE %@ %@", nickname, [TPCPreferences IRCopDefaultGlineMessage]];
-
-		[u sendCommand:command];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberShunOnServer:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn) {
-		return;
-	}
-
-	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
-		NSString *command = [NSString stringWithFormat:@"SHUN %@ %@", nickname, [TPCPreferences IRCopDefaultShunMessage]];
-
-		[u sendCommand:command];
-	}
-
-	[self deselectMembers:sender];
-}
-
-- (void)memberSendFileRequest:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn) {
-		return;
-	}
-
-	NSArray *nicknames = [self selectedMembersNicknames:sender];
-
-	if (nicknames.count == 0) {
-		return;
-	}
-
-	[self deselectMembers:sender];
-
-	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-
-	openPanel.allowsMultipleSelection = YES;
-	openPanel.canChooseDirectories = NO;
-	openPanel.canChooseFiles = YES;
-	openPanel.canCreateDirectories = NO;
-	openPanel.resolvesAliases = YES;
-
-	[openPanel beginSheetModalForWindow:mainWindow() completionHandler:^(NSInteger returnCode) {
-		if (returnCode != NSModalResponseOK) {
-			return;
-		}
-
-		[self.fileTransferController.fileTransferTable beginUpdates];
-
-		for (NSString *nickname in nicknames) {
-			for (NSURL *path in openPanel.URLs) {
-				(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:path.path autoOpen:YES];
-			}
-		}
-
-		[self.fileTransferController.fileTransferTable endUpdates];
-	}];
-}
-
-- (void)memberSendDroppedFilesToSelectedChannel:(NSArray<NSString *> *)files
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
-		return;
-	}
-
-	[self memberSendDroppedFiles:files to:c.name];
-}
-
-- (void)memberSendDroppedFiles:(NSArray<NSString *> *)files row:(NSUInteger)row
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
-		return;
-	}
-
-	IRCChannelUser *member = [mainWindowMemberList() itemAtRow:row];
-
-	[self memberSendDroppedFiles:files to:member.user.nickname];
-}
-
-- (void)memberSendDroppedFiles:(NSArray<NSString *> *)files to:(NSString *)nickname
-{
-	NSParameterAssert(files != nil);
-	NSParameterAssert(nickname != nil);
-
-	IRCClient *u = self.selectedClient;
-
-	if (_noClient || _clientIsntLoggedIn) {
-		return;
-	}
-
-	[self.fileTransferController.fileTransferTable beginUpdates];
-
-	for (NSString *file in files) {
-		BOOL isDirectory = NO;
-
-		if ([RZFileManager() fileExistsAtPath:file isDirectory:&isDirectory] == NO) {
-			continue;
-		} else {
-			if (isDirectory) {
-				continue;
-			}
-		}
-
-		(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:file autoOpen:YES];
-	}
-
-	[self.fileTransferController.fileTransferTable endUpdates];
-}
-
-- (void)openLogLocation:(id)sender
-{	
-	NSURL *path = [TPCPathInfo transcriptFolderURL];
-
-	if ([RZFileManager() fileExistsAtURL:path]) {
-		(void)[RZWorkspace() openURL:path];
-
-		return;
-	}
-
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
-							  title:TXTLS(@"Prompts[1104][1]")
-					  defaultButton:TXTLS(@"Prompts[0005]")
-					alternateButton:nil];
-}
-
-- (void)openChannelLogs:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel) {
-		return;
-	}
-
-	NSURL *path = c.logFilePath;
-
-	if ([RZFileManager() fileExistsAtURL:path]) {
-		(void)[RZWorkspace() openURL:path];
-
-		return;
-	}
-
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
-							  title:TXTLS(@"Prompts[1104][1]")
-					  defaultButton:TXTLS(@"Prompts[0005]")
-					alternateButton:nil];
-}
-
-- (void)connectToTextualHelpChannel:(id)sender 
-{
-	[IRCExtras createConnectionToServer:@"chat.freenode.net +6697" channelList:@"#textual" connectWhenCreated:YES mergeConnectionIfPossible:YES selectFirstChannelAdded:YES];
-}
-
-- (void)connectToTextualTestingChannel:(id)sender
-{
-	[IRCExtras createConnectionToServer:@"chat.freenode.net +6697" channelList:@"#textual-testing" connectWhenCreated:YES mergeConnectionIfPossible:YES selectFirstChannelAdded:YES];
-}
-
-- (void)_showSetVhostPromptOpenDialog:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn) {
-		return;
-	}
-
-	NSArray *nicknames = [self selectedMembersNicknames:sender];
-
-	if (nicknames.count == 0) {
-		return;
-	}
-
-	[self deselectMembers:sender];
-
-	void (^promptCompletionBlock)(NSString *) = ^(NSString *resultString)
-	{
-		if (resultString.length == 0) {
-			return;
-		}
-
-		NSString *vhost = resultString.trimAndGetFirstToken;
-
-		for (NSString *nickname in nicknames) {
-			NSString *command = [NSString stringWithFormat:@"hs setall %@ %@", nickname, vhost];
-
-			[u sendCommand:command completeTarget:NO target:nil];
-		}
-	};
-
-	NSString *vhost = nil;
-
-	TVCAlertResponse response =
-	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1102][2]")
-								title:TXTLS(@"Prompts[1102][1]")
-						defaultButton:TXTLS(@"Prompts[0005]")
-					  alternateButton:TXTLS(@"Prompts[0004]")
-						prefillString:nil
-						 resultString:&vhost];
-
-	if (response == TVCAlertResponseFirstButton) {
-		promptCompletionBlock(vhost);
-	}
-}
-
-- (void)showSetVhostPrompt:(id)sender
-{
-	[self _showSetVhostPromptOpenDialog:sender];
-}
-
-- (void)showChannelBanList:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	[u createChannelBanListSheet];
-
-	[u sendModes:@"+b" withParameters:nil inChannel:c];
-}
-
-- (void)showChannelBanExceptionList:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	[u createChannelBanExceptionListSheet];
-
-	[u sendModes:@"+e" withParameters:nil inChannel:c];
-}
-
-- (void)showChannelInviteExceptionList:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	[u createChannelInviteExceptionListSheet];
-
-	[u sendModes:@"+I" withParameters:nil inChannel:c];
-}
-
-- (void)showChannelQuietList:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
-		return;
-	}
-
-	[u createChannelQuietListSheet];
-
-	[u sendModes:@"+q" withParameters:nil inChannel:c];
-}
-
-- (void)openHelpMenuItem:(id)sender
-{
-	NSDictionary *_helpMenuLinks = @{
-	   @(901) : @"https://help.codeux.com/textual/End-User-License-Agreement.kb",
-	   @(902) : @"https://help.codeux.com/textual/Privacy-Policy.kb",
-	   @(930) : @"https://help.codeux.com/textual/Frequently-Asked-Questions.kb",
-	   @(933) : @"https://help.codeux.com/textual/home.kb",
-	   @(934) : @"https://help.codeux.com/textual/iCloud-Syncing.kb",
-	   @(935) : @"https://help.codeux.com/textual/Off-the-Record-Messaging.kb",
-	   @(936) : @"https://help.codeux.com/textual/Command-Reference.kb",
-	   @(937) : @"https://help.codeux.com/textual/Support.kb",
-	   @(938) : @"https://help.codeux.com/textual/Keyboard-Shortcuts.kb",
-	   @(939) : @"https://help.codeux.com/textual/Memory-Management.kb",
-	   @(940) : @"https://help.codeux.com/textual/Text-Formatting.kb",
-	   @(941) : @"https://help.codeux.com/textual/Styles.kb",
-	   @(942) : @"https://help.codeux.com/textual/Using-CertFP.kb",
-	   @(943) : @"https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb",
-	   @(944) : @"https://help.codeux.com/textual/DCC-File-Transfer-Information.kb"
-	};
-
-	NSString *link = _helpMenuLinks[@([sender tag])];
-
-	[TLOpenLink openWithString:link inBackground:NO];
-}
-
-- (void)openMacAppStoreWebpage:(id)sender
-{
-	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store" inBackground:NO];
-}
-
-- (void)openStandaloneStoreWebpage:(id)sender
-{
-	[TLOpenLink openWithString:@"https://www.textualapp.com/standalone-store" inBackground:NO];
-}
-
-- (void)contactSupport:(id)sender
-{
-	[TLOpenLink openWithString:@"https://contact.codeux.com/" inBackground:NO];
-}
-
-- (void)performNavigationAction:(id)sender
+- (void)showServerPropertiesSheet:(id)sender
 {
 	IRCClient *u = self.selectedClient;
 
-	if (_noClient) {
+	if (u == nil) {
 		return;
 	}
 
-	switch ([sender tag]) {
-		case 701: { [mainWindow() selectNextServer:sender];					break; }
-		case 702: { [mainWindow() selectPreviousServer:sender];				break; }
-		case 703: { [mainWindow() selectNextActiveServer:sender];			break; }
-		case 704: { [mainWindow() selectPreviousActiveServer:sender];		break; }
-		case 706: { [mainWindow() selectNextChannel:sender];				break; }
-		case 707: { [mainWindow() selectPreviousChannel:sender];			break; }
-		case 708: { [mainWindow() selectNextActiveChannel:sender];			break; }
-		case 709: { [mainWindow() selectPreviousActiveChannel:sender];		break; }
-		case 710: { [mainWindow() selectNextUnreadChannel:sender];			break; }
-		case 711: { [mainWindow() selectPreviousUnreadChannel:sender];		break; }
-		case 712: { [mainWindow() selectPreviousWindow:sender];				break; }
-		case 713: { [mainWindow() selectNextWindow:sender];					break; }
-		case 714: { [mainWindow() selectPreviousSelection:sender];			break; }
-	}
+	[self showServerPropertiesSheetForClient:u
+							   withSelection:TDCServerPropertiesSheetDefaultNavigationSelection
+									 context:nil];
 }
 
-- (void)showMainWindow:(id)sender 
+- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender onOk:(IRCClientConfig *)config
 {
-	[mainWindow() makeKeyAndOrderFront:sender];
-}
+	IRCClient *u = sender.client;
 
-- (void)sortChannelListNames:(id)sender
-{
-	for (IRCClient *u in worldController().clientList) {
-		NSMutableArray *channelList = [u.channelList mutableCopy];
+	if (u == nil) {
+		u = [worldController() createClientWithConfig:config reload:YES];
 
-		[channelList sortUsingComparator:^NSComparisonResult(IRCChannel *channel1, IRCChannel *channel2) {
-			if (channel1.isChannel && channel2.isChannel == NO) {
-				return NSOrderedAscending;
-			}
+		[mainWindow() expandClient:u];
 
-			NSString *name1 = channel1.name.lowercaseString;
-			NSString *name2 = channel2.name.lowercaseString;
+		[worldController() save];
 
-			return [name1 compare:name2];
-		}];
-
-		if ([channelList isEqualToArray:u.channelList]) {
-			continue;
-		}
-
-		u.channelList = channelList;
-
-		[u reloadServerListItems];
+		return;
 	}
+
+	BOOL sameEncoding = (config.primaryEncoding == u.config.primaryEncoding);
+
+	[u updateConfig:config];
+
+	if (sameEncoding == NO) {
+		[mainWindow() reloadTheme];
+	}
+
+	[mainWindow() reloadTreeGroup:u];
 
 	[worldController() save];
 }
 
-- (void)resetMainWindowFrame:(id)sender
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender removeClientFromCloud:(NSString *)clientId
 {
-	if (mainWindow().inFullscreenMode) {
-		[mainWindow() toggleFullScreen:sender];
-	}
+	[worldController() cloud_addClientToListOfDeletedClients:clientId];
+}
+#endif
 
-	[mainWindow() setFrame:[mainWindow() defaultWindowFrame] display:YES animate:YES];
-
-	[mainWindow() exactlyCenterWindow];
+- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
 }
 
-- (void)forceReloadTheme:(id)sender
+#pragma mark -
+#pragma mark Highlight List Sheet
+
+- (void)showServerHighlightList:(id)sender
+{
+	[windowController() popMainWindowSheetIfExists];
+
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil) {
+		return;
+	}
+
+	TDCServerHighlightListSheet *sheet =
+	[[TDCServerHighlightListSheet alloc] initWithClient:u];
+
+	sheet.delegate = (id)self;
+
+	sheet.window = mainWindow();
+
+	[sheet start];
+
+	[windowController() addWindowToWindowList:sheet];
+}
+
+- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
+#pragma mark Nickname Color Sheet
+
+- (void)memberChangeColor:(NSString *)nickname
+{
+	NSParameterAssert(nickname != nil);
+
+	[windowController() popMainWindowSheetIfExists];
+
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil) {
+		return;
+	}
+
+	TDCNicknameColorSheet *sheet =
+	[[TDCNicknameColorSheet alloc] initWithNickname:nickname];
+
+	sheet.delegate = (id)self;
+
+	sheet.window = mainWindow();
+
+	[sheet start];
+
+	[windowController() addWindowToWindowList:sheet];
+}
+
+- (void)nicknameColorSheetOnOk:(TDCNicknameColorSheet *)sneder
 {
 	[mainWindow() reloadTheme];
 }
 
-- (void)toggleChannelModerationMode:(id)sender
+- (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender
 {
-#define _toggleChannelModerationModeOffTag		612
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
+#pragma mark Channel Topic Sheet
+
+- (void)showChannelModifyTopicSheet:(id)sender
+{
+	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
+	if (u == nil || c == nil || c.isChannel == NO) {
 		return;
 	}
 
-	NSString *modeSymbol = nil;
+	TDCChannelModifyTopicSheet *sheet =
+	[[TDCChannelModifyTopicSheet alloc] initWithChannel:c];
 
-	if ([sender tag] == _toggleChannelModerationModeOffTag) {
-		modeSymbol = @"-m";
-	} else {
-		modeSymbol = @"+m";
-	}
+	sheet.delegate = (id)self;
 
-	[u sendModes:modeSymbol withParameters:nil inChannel:c];
+	sheet.window = mainWindow();
 
-#undef _toggleChannelModerationModeOffTag
+	[sheet start];
+
+	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)toggleChannelInviteMode:(id)sender
+- (void)channelModifyTopicSheet:(TDCChannelModifyTopicSheet *)sender onOk:(NSString *)topic
 {
-#define _toggleChannelInviteStatusModeOffTag		614
+	IRCClient *u = sender.client;
+	IRCChannel *c = sender.channel;
+
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
+		return;
+	}
+
+	[u sendTopicTo:topic inChannel:c];
+}
+
+- (void)channelModifyTopicSheetWillClose:(TDCChannelModifyTopicSheet *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
+#pragma mark Channel Mode Sheet
+
+- (void)showChannelModifyModesSheet:(id)sender
+{
+	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if (_noClientOrChannel || _clientIsntLoggedIn || _isChannel == NO) {
+	if (u == nil || c == nil || c.isChannel == NO) {
 		return;
 	}
 
-	NSString *modeSymbol = nil;
+	TDCChannelModifyModesSheet *sheet =
+	[[TDCChannelModifyModesSheet alloc] initWithChannel:c];
 
-	if ([sender tag] == _toggleChannelInviteStatusModeOffTag) {
-		modeSymbol = @"-i";
-	} else {
-		modeSymbol = @"+i";
-	}
+	sheet.delegate = (id)self;
 
-	[u sendModes:modeSymbol withParameters:nil inChannel:c];
+	sheet.window = mainWindow();
 
-#undef _toggleChannelInviteStatusModeOffTag
+	[sheet start];
+
+	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)toggleDeveloperMode:(id)sender
+- (void)channelModifyModesSheet:(TDCChannelModifyModesSheet *)sender onOk:(IRCChannelModeContainer *)modes
 {
-	[TPCPreferences setDeveloperModeEnabled:([TPCPreferences developerModeEnabled] == NO)];
+	IRCClient *u = sender.client;
+	IRCChannel *c = sender.channel;
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadIRCCommandCacheAction];
-}
-
-- (void)resetDoNotAskMePopupWarnings:(id)sender
-{
-	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
-
-	for (NSString *key in settings) {
-		if ([key hasPrefix:TDCAlertSuppressionPrefix] == NO) {
-			continue;
-		}
-
-		[RZUserDefaults() setBool:NO forKey:key];
-	}
-}
-
-- (void)onNextHighlight:(id)sender
-{
-	TVCLogController *viewController = self.selectedViewController;
-
-	if (viewController) {
-		[viewController nextHighlight];
-	}
-}
-
-- (void)onPreviousHighlight:(id)sender
-{
-	TVCLogController *viewController = self.selectedViewController;
-
-	if (viewController) {
-		[viewController previousHighlight];
-	}
-}
-
-- (void)toggleFullscreen:(id)sender
-{
-	[[NSApp keyWindow] toggleFullScreen:sender];
-}
-
-#pragma mark -
-#pragma mark Import/Export
-
-- (void)importPreferences:(id)sender
-{
-	[TPCPreferencesImportExport importInWindow:mainWindow()];
-}
-
-- (void)exportPreferences:(id)sender
-{
-	[TPCPreferencesImportExport exportInWindow:mainWindow()];
-}
-
-#pragma mark -
-#pragma mark Encryption 
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-#define _encryptionNotEnabled		([TPCPreferences textEncryptionIsEnabled] == NO)
-
-- (void)encryptionStartPrivateConversation:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_encryptionNotEnabled || _noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
+	if (u == nil || c == nil || u.isLoggedIn == NO || c.isChannel == NO) {
 		return;
 	}
 
-	[sharedEncryptionManager() beginConversationWith:[u encryptionAccountNameForUser:c.name]
-												from:[u encryptionAccountNameForLocalUser]];
-}
+	NSString *changeString = [c.modeInfo getChangeCommand:modes];
 
-- (void)encryptionRefreshPrivateConversation:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_encryptionNotEnabled || _noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
+	if (changeString.length == 0) {
 		return;
 	}
 
-	[sharedEncryptionManager() refreshConversationWith:[u encryptionAccountNameForUser:c.name]
-												  from:[u encryptionAccountNameForLocalUser]];
+	[u sendModes:changeString withParameters:nil inChannel:c];
 }
 
-- (void)encryptionEndPrivateConversation:(id)sender
+- (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender
 {
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_encryptionNotEnabled || _noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
-		return;
-	}
-
-	[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:c.name]
-											  from:[u encryptionAccountNameForLocalUser]];
-}
-
-- (void)encryptionAuthenticateChatPartner:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
-
-	if (_encryptionNotEnabled || _noClientOrChannel || _clientIsntLoggedIn || _isQuery == NO) {
-		return;
-	}
-
-	[sharedEncryptionManager() authenticateUser:[u encryptionAccountNameForUser:c.name]
-										   from:[u encryptionAccountNameForLocalUser]];
-}
-
-- (void)encryptionListFingerprints:(id)sender
-{
-	[sharedEncryptionManager() presentListOfFingerprints];
-}
-
-- (void)encryptionWhatIsThisInformation:(id)sender
-{
-	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Off-the-Record-Messaging.kb" inBackground:NO];
-}
-
-#undef _encryptionNotEnabled
-#endif
-
-#pragma mark -
-#pragma mark Toggle Mute
-
-- (void)toggleMuteOnNotificationsShortcut:(NSInteger)state
-{
-	sharedGrowlController().areNotificationsDisabled = (state == NSOnState);
-
-	self.muteNotificationsFileMenuItem.state = state;
-
-	self.muteNotificationsDockMenuItem.state = state;
-}
-
-- (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state
-{
-	[TPCPreferences setSoundIsMuted:(state == NSOnState)];
-
-	self.muteNotificationsSoundsDockMenuItem.state = state;
-
-	self.muteNotificationsSoundsFileMenuItem.state = state;
-}
-
-- (void)toggleMuteOnNotificationSounds:(id)sender
-{
-	if ([TPCPreferences soundIsMuted]) {
-		[self toggleMuteOnNotificationSoundsShortcut:NSOffState];
-	} else {
-		[self toggleMuteOnNotificationSoundsShortcut:NSOnState];
-	}
-}
-
-- (void)toggleMuteOnNotifications:(id)sender
-{
-	if (sharedGrowlController().areNotificationsDisabled) {
-		[self toggleMuteOnNotificationsShortcut:NSOffState];
-	} else {
-		[self toggleMuteOnNotificationsShortcut:NSOnState];
-	}
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
-#pragma mark Splitview Toggles
+#pragma mark Channel Spotlight Window
 
-- (void)toggleServerListVisibility:(id)sender
+- (void)showChannelSpotlightWindow:(id)sender
 {
-	[mainWindow().contentSplitView toggleServerListVisibility];
-}
+	NSAssert(TEXTUAL_RUNNING_ON(10.10, Yosemite),
+		 @"This feature requires OS X Yosemite or later");
 
-- (void)toggleMemberListVisibility:(id)sender
-{
-	mainWindowMemberList().isHiddenByUser = (mainWindowMemberList().isHiddenByUser == NO);
+	_popWindowViewIfExists(@"TDCChannelSpotlightController");
 
-	[mainWindow().contentSplitView toggleMemberListVisibility];
-}
-
-#pragma mark -
-#pragma mark Appearance Toggle
-
-- (void)toggleMainWindowAppearance:(id)sender
-{
-	[TPCPreferences setInvertSidebarColors:([TPCPreferences invertSidebarColors] == NO)];
-
-	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
-}
-
-#pragma mark -
-#pragma mark License Manager
-
-- (void)manageLicense:(id)sender
-{
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-	[self manageLicense:sender activateLicenseKey:nil licenseKeyPassedByArgument:NO];
-#endif
-}
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-- (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey
-{
-	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
-}
-
-- (void)manageLicense:(id)sender activateLicenseKeyWithURL:(NSURL *)licenseKeyURL
-{
-	NSParameterAssert(licenseKeyURL != nil);
-
-	NSString *path = licenseKeyURL.path;
-
-	if (path == nil) {
-		return;
-	}
-
-	NSCharacterSet *slashCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-
-	NSString *licenseKey = [path stringByTrimmingCharactersInSet:slashCharacterSet];
-
-	if (licenseKey.length == 0) {
-		return;
-	}
-
-	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
-}
-
-- (void)manageLicense:(id)sender activateLicenseKey:(nullable NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument
-{
-	TDCLicenseManagerDialog *licenseDialog = [TXSharedApplication sharedLicenseManagerDialog];
-
-	[licenseDialog show];
-
-	if (licenseKey) {
-		[licenseDialog activateLicenseKey:licenseKey silently:licenseKeyPassedByArgument];
-	}
-}
-#endif
-
-#pragma mark -
-#pragma mark In-app Purchase
-
-- (void)manageInAppPurchase:(id)sender
-{
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[[TXSharedApplication sharedInAppPurchaseDialog] show];
+	if (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired()) {
+		[[TXSharedApplication sharedInAppPurchaseDialog] showFeatureIsLimitedMessageInWindow:mainWindow()];
+
+		return;
+	}
 #endif
+
+	TDCChannelSpotlightController *dialog =
+	[[TDCChannelSpotlightController alloc] initWithParentWindow:mainWindow()];
+
+	dialog.delegate = (id)self;
+
+	[dialog show];
+
+	[windowController() addWindowToWindowList:dialog];
+}
+
+- (void)channelSpotlightController:(TDCChannelSpotlightController *)sender selectChannel:(IRCChannel *)channel
+{
+	[mainWindow() select:channel];
+}
+
+- (void)channelSpotlightControllerWillClose:(TDCChannelSpotlightController *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
-#pragma mark Developer Tools
+#pragma mark Change Nickname Sheet
 
-- (void)simulateCrash:(id)sender
+- (void)showServerChangeNicknameSheet:(id)sender
 {
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	[[BITHockeyManager sharedHockeyManager].crashManager generateTestCrash];
-#endif
+	[windowController() popMainWindowSheetIfExists];
+
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
+	TDCServerChangeNicknameSheet *sheet =
+	[[TDCServerChangeNicknameSheet alloc] initWithClient:u];
+
+	sheet.delegate = (id)self;
+
+	sheet.window = mainWindow();
+
+	[sheet start];
+
+	[windowController() addWindowToWindowList:sheet];
+}
+
+- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
+{
+	IRCClient *u = sender.client;
+
+	if (u == nil || u.isConnected == NO) {
+		return;
+	}
+
+	[u changeNickname:nickname];
+}
+
+- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
-#pragma mark Sparkle Framework
+#pragma mark Preferences Dialog
 
-- (void)checkForUpdates:(id)sender
+- (void)showPreferencesWindow:(id)sender
 {
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	[[SUUpdater sharedUpdater] checkForUpdates:sender];
-#endif
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerDefaultNavigationSelection];
 }
 
-#pragma mark -
-#pragma mark Navigation
-
-- (void)copyUniqueIdentifier:(id)sender
+- (void)showStylePreferences:(id)sender
 {
-	IRCChannel *c = self.selectedChannel;
-
-	if (_noChannel) {
-		return;
-	}
-	
-	[RZPasteboard() setStringContent:c.uniqueIdentifier];
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerStyleNavigationSelection];
 }
 
-- (void)navigateToTreeItemAtURL:(NSURL *)url
+- (void)showHiddenPreferences:(id)sender
 {
-	NSParameterAssert(url != nil);
-
-	NSString *path = url.path;
-	
-	if (path == nil) {
-		return;
-	}
-	
-	NSCharacterSet *slashCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
-	
-	NSString *identifier = [path stringByTrimmingCharactersInSet:slashCharacterSet];
-	
-	if (identifier.length == 0) {
-		return;
-	}
-	
-	[self navigateToTreeItemWithIdentifier:identifier];
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerHiddenPreferencesNavigationSelection];
 }
 
-- (void)navigateToTreeItemWithIdentifier:(NSString *)identifier
+- (void)showPreferencesWindowWithSelection:(TDCPreferencesControllerNavigationSelection)selection
 {
-	NSParameterAssert(identifier != nil);
-	
-	/* Do not use assert for this condition so we
-	 don't crash user when we open a malformed URL. */
-	if (identifier.length != 36) {
+	TDCPreferencesController *openWindow = [windowController() windowFromWindowList:@"TDCPreferencesController"];
+
+	if (openWindow) {
+		[openWindow show:selection];
+
 		return;
 	}
-	
-	IRCTreeItem *item = [worldController() findItemWithId:identifier];
-	
-	if (item == nil) {
-		return;
-	}
-	
-	[self navigateToTreeItem:item];
+
+	TDCPreferencesController *controller =
+	[TDCPreferencesController new];
+
+	controller.delegate = (id)self;
+
+	[controller show:selection];
+
+	[windowController() addWindowToWindowList:controller];
 }
 
-- (void)navigateToTreeItem:(IRCTreeItem *)item
+- (void)preferencesDialogWillClose:(TDCPreferencesController *)sender
 {
-	NSParameterAssert(item != nil);
-	
-	[mainWindow() select:item];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadHighlightKeywordsAction |
+										 TPCPreferencesReloadPreferencesChangedAction)];
+
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 @end
 
 #pragma mark -
+#pragma mark Main Window Proxy
 
 @implementation TXMenuControllerMainWindowProxy
 

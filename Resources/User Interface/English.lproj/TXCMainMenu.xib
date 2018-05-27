@@ -21,16 +21,16 @@
         <customObject id="267" userLabel="MenuController" customClass="TXMenuController">
             <connections>
                 <outlet property="channelViewChannelNameMenu" destination="963" id="Apn-Xd-gl8"/>
-                <outlet property="channelViewDefaultMenu" destination="374" id="jud-oP-p2n"/>
+                <outlet property="channelViewGeneralMenu" destination="374" id="jud-oP-p2n"/>
                 <outlet property="channelViewURLMenu" destination="426" id="abE-mI-Ckx"/>
                 <outlet property="dockMenu" destination="Q9Y-E0-gAT" id="930-9r-xqt"/>
                 <outlet property="encryptionManagerStatusMenu" destination="edI-1l-81o" id="fSt-o4-bUU"/>
                 <outlet property="mainMenuChannelMenuItem" destination="276" id="ldF-c8-FMF"/>
-                <outlet property="mainMenuCloseWindowMenuItem" destination="1770" id="v1F-W5-HfU"/>
                 <outlet property="mainMenuNavigationChannelListMenu" destination="89a-J1-2zg" id="8Ju-VI-XQI"/>
+                <outlet property="mainMenuQueryMenuItem" destination="d6g-it-Teq" id="CkB-Te-iSZ"/>
                 <outlet property="mainMenuServerMenuItem" destination="286" id="OSj-f8-vqi"/>
                 <outlet property="mainMenuWindowMenuItem" destination="19" id="w4D-Ns-fa4"/>
-                <outlet property="mainWindowSegmentedControllerCell0Menu" destination="2953" id="oCb-R7-qbx"/>
+                <outlet property="mainWindowSegmentedControllerCellMenu" destination="2953" id="oCb-R7-qbx"/>
                 <outlet property="muteNotificationsDockMenuItem" destination="dnc-ku-aQ3" id="Af9-tD-wlC"/>
                 <outlet property="muteNotificationsFileMenuItem" destination="QNy-Fk-SRO" id="nHn-Ki-RJX"/>
                 <outlet property="muteNotificationsSoundsDockMenuItem" destination="5jG-1t-WG4" id="bTl-Aa-XkS"/>
@@ -226,9 +226,6 @@
                                         <outlet property="delegate" destination="267" id="o09-mK-KWY"/>
                                     </connections>
                                 </menu>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="4wK-mr-eRs"/>
-                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="108" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -413,9 +410,6 @@
                                         <outlet property="delegate" destination="267" id="tMw-ub-5XS"/>
                                     </connections>
                                 </menu>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="f2Y-Zd-p9d"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Substitutions" id="8Uq-G1-gb8">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -469,9 +463,6 @@
                                         <outlet property="delegate" destination="267" id="J4o-4q-5Sj"/>
                                     </connections>
                                 </menu>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="RQu-HH-Ovx"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Transformations" id="sv8-hw-0D2">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -500,9 +491,6 @@
                                         <outlet property="delegate" destination="267" id="K7C-cW-yT2"/>
                                     </connections>
                                 </menu>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="78k-cH-riq"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Speech" id="rKL-ND-sIh">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -525,9 +513,6 @@
                                         <outlet property="delegate" destination="267" id="FQR-pW-MwC"/>
                                     </connections>
                                 </menu>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="5uA-Bh-aFf"/>
-                                </connections>
                             </menuItem>
                         </items>
                         <connections>
@@ -712,15 +697,13 @@ CA
                             <menuItem isSeparatorItem="YES" tag="605" id="307">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Query Logs" tag="606" keyEquivalent="L" id="1515">
-                                <connections>
-                                    <action selector="openChannelLogs:" target="267" id="2573"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="View Logs" tag="607" keyEquivalent="L" id="DDm-Hi-7v1">
+                            <menuItem title="View Logs" tag="606" keyEquivalent="L" id="DDm-Hi-7v1">
                                 <connections>
                                     <action selector="openChannelLogs:" target="267" id="TNR-ht-cd7"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" tag="607" id="Q1f-qJ-qTF">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Modify Topic" tag="608" keyEquivalent="t" id="lTp-xg-gl9">
                                 <connections>
@@ -793,17 +776,30 @@ CA
                                     <action selector="showChannelQuietList:" target="267" id="BZ4-MY-byh"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" tag="615" id="1TT-ME-QAX"/>
-                            <menuItem title="Channel Properties…" tag="616" keyEquivalent="i" id="SNX-de-0ss">
+                            <menuItem isSeparatorItem="YES" tag="614" id="1TT-ME-QAX"/>
+                            <menuItem title="Channel Properties…" tag="615" keyEquivalent="i" id="SNX-de-0ss">
                                 <connections>
                                     <action selector="showChannelPropertiesSheet:" target="267" id="MBs-Cz-QKz"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" tag="617" id="Ps7-LA-2sD"/>
-                            <menuItem title="Copy Unique Identifier" tag="618" id="72G-h4-O52">
+                            <menuItem isSeparatorItem="YES" tag="616" id="Ps7-LA-2sD">
+                                <connections>
+                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="XoQ-Jy-EOq">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy Unique Identifier" tag="617" id="72G-h4-O52">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="copyUniqueIdentifier:" target="267" id="P8r-qZ-lGV"/>
+                                    <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="Nhe-Gn-dm1">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </menuItem>
                         </items>
@@ -815,7 +811,32 @@ CA
                         <action selector="emptyAction:" target="267" id="Agc-rV-LPJ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Navigation" tag="7" id="1542">
+                <menuItem title="Query" tag="7" id="d6g-it-Teq">
+                    <menu key="submenu" title="Query" id="hfh-O1-XP3">
+                        <items>
+                            <menuItem title="Close Query" tag="1800" id="eRN-cg-4Ai">
+                                <connections>
+                                    <action selector="leaveChannel:" target="267" id="33h-sI-afw"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" tag="1801" id="fmf-9Y-Ay5">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Query Logs" tag="1802" keyEquivalent="L" id="dkE-LS-8nA">
+                                <connections>
+                                    <action selector="openChannelLogs:" target="267" id="t5S-et-9nT"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="m25-SC-w3J"/>
+                        </connections>
+                    </menu>
+                    <connections>
+                        <action selector="emptyAction:" target="267" id="btc-wk-RoB"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Navigation" tag="8" id="1542">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Navigation" id="1543">
                         <items>
@@ -1004,7 +1025,7 @@ CQ
                         <action selector="emptyAction:" target="267" id="BVR-3b-g0j"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Window" tag="8" id="19">
+                <menuItem title="Window" tag="9" id="19">
                     <menu key="submenu" title="Window" systemMenu="window" id="24">
                         <items>
                             <menuItem title="Minimize" tag="800" keyEquivalent="m" id="23">
@@ -1115,14 +1136,14 @@ CQ
                         <action selector="emptyAction:" target="267" id="oft-RM-Sbj"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Help" tag="9" id="1384">
+                <menuItem title="Help" tag="10" id="1384">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="1385">
                         <items>
                             <menuItem title="Acknowledgements" tag="900" id="1796">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showAcknowledgements:" target="267" id="2556"/>
+                                    <action selector="openAcknowledgements:" target="267" id="2556"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="License Agreement" tag="901" id="BrC-PS-U3X">
@@ -1319,7 +1340,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-1177" y="-1736"/>
+            <point key="canvasLocation" x="-1240" y="-1750"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
             <items>
