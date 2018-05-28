@@ -38,6 +38,8 @@
 
 #import "NSObjectHelperPrivate.h"
 #import "TXGlobalModels.h"
+#import "TDCAlert.h"
+#import "TLOLanguagePreferences.h"
 #import "TPCPathInfoPrivate.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
@@ -45,6 +47,8 @@
 #import "TLOFileLoggerPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+#define _noSpaceLeftOnDeviceAlertInterval		300 // 5 minutes
 
 NSString * const TLOFileLoggerConsoleDirectoryName				= @"Console";
 NSString * const TLOFileLoggerChannelDirectoryName				= @"Channels";
@@ -136,12 +140,56 @@ ClassWithDesignatedInitializerInitMethod
 	NSData *dataToWrite = [stringToWrite dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 
 	if (dataToWrite) {
-		[self.fileHandle writeData:dataToWrite];
+		@try {
+			[self.fileHandle writeData:dataToWrite];
+		}
+		@catch (NSException *exception) {
+			LogToConsoleError("Caught exception: %@", exception.reason);
+			LogToConsoleCurrentStackTrace
+
+			if ([exception.reason contains:@"No space left on device"]) {
+				[self failWithNoSpaceLeftOnDevice];
+			}
+
+			[self close];
+		} // @catch
 	}
 }
 
 #pragma mark -
 #pragma mark File Handle Management
+
+- (void)failWithNoSpaceLeftOnDevice
+{
+	static BOOL alertVisible = NO;
+
+	if (alertVisible) {
+		return;
+	}
+
+	static NSTimeInterval lastFailTime = 0;
+
+	NSTimeInterval currentTime = [NSDate timeIntervalSince1970];
+
+	if (lastFailTime > 0) {
+		if ((currentTime - lastFailTime) < _noSpaceLeftOnDeviceAlertInterval) {
+			return;
+		}
+	}
+
+	lastFailTime = currentTime;
+
+	alertVisible = YES;
+
+	/* Present alert as non-blocking because there is no need for it to disrupt UI */
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1140][2]")
+						 title:TXTLS(@"Prompts[1140][1]")
+				 defaultButton:TXTLS(@"Prompts[0005]")
+			   alternateButton:nil
+			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+				   alertVisible = NO;
+			   }];
+}
 
 - (void)reset
 {
@@ -158,7 +206,14 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	[self.fileHandle synchronizeFile];
+	@try {
+		[self.fileHandle synchronizeFile];
+	}
+	@catch (NSException *exception) {
+		LogToConsoleError("Caught exception: %@", exception.reason);
+		LogToConsoleCurrentStackTrace
+	}
+
 	[self.fileHandle closeFile];
 
 	self.fileHandle = nil;
