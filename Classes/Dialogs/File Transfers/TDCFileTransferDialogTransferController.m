@@ -226,6 +226,11 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Error Handling
 
+- (void)failWithNoSpaceLeftOnDevice
+{
+	[self closeWithLocalizedError:TXTLS(@"TDCFileTransferDialog[1026]")];
+}
+
 - (void)closeWithLocalizedError:(NSString *)errorLocalization
 {
 	[self closeWithLocalizedError:errorLocalization description:nil isFatalError:NO];
@@ -1003,7 +1008,23 @@ ClassWithDesignatedInitializerInitMethod
 	self.processedFilesize += data.length;
 
 	if (data.length > 0) {
-		[self.fileHandle writeData:data];
+		@try {
+			[self.fileHandle writeData:data];
+		}
+		@catch (NSException *exception) {
+			LogToConsoleError("Caught exception: %@", exception.reason);
+			LogToConsoleCurrentStackTrace
+
+			if ([exception.reason contains:@"No space left on device"]) {
+				[self failWithNoSpaceLeftOnDevice];
+
+				return;
+			}
+
+			[self closeWithLocalizedError:TXTLS(@"TDCFileTransferDialog[1027]")];
+
+			return;
+		} // @catch
 	}
 
 	/* Send acknowledgement back to server */
