@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1140 */
+/* Next unusued key: 1141 */
 
 "Prompts[0001]" = "Yes";
 "Prompts[0002]" = "No";
@@ -174,3 +174,6 @@
 
 "Prompts[1139][1]" = "A query named “%@“ already exists. Do you want to delete this query?";
 "Prompts[1139][2]" = "There is no undo and all data related to this query, except for logs, will be erased.";
+
+"Prompts[1140][1]" = "Logging has been disabled because there is not enough space on your Mac";
+"Prompts[1140][2]" = "Logging will resume when there is free space available.";
