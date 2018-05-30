@@ -156,31 +156,31 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if (segmentValue) {
-			if ([segmentKey isEqualIgnoringCase:@"PREFIX"]) {
-				[self parseUserModeSymbols:segmentValue];
-			} else if ([segmentKey isEqualIgnoringCase:@"CHANMODES"]) {
+			if ([segmentKey isEqualIgnoringCase:@"CHANMODES"]) {
 				[self parseChannelModes:segmentValue];
-			} else if ([segmentKey isEqualIgnoringCase:@"MODES"]) {
-				NSInteger maximumModesCount = segmentValue.integerValue;
-
-				if (maximumModesCount > 0) {
-					self.maximumModeCount = maximumModesCount;
-				}
-			} else if ([segmentKey isEqualIgnoringCase:@"NICKLEN"]) {
-				NSInteger maximumNicknameLength = segmentValue.integerValue;
-
-				if (maximumNicknameLength > 0) {
-					self.maximumNicknameLength = maximumNicknameLength;
-				}
-			} else if ([segmentKey isEqualIgnoringCase:@"NETWORK"]) {
-				self.networkName = segmentValue;
-				self.networkNameFormatted = TXTLS(@"IRC[1067]", segmentValue);
 			} else if ([segmentKey isEqualIgnoringCase:@"CHANTYPES"]) {
 				NSArray *channelNamePrefixes = segmentValue.characterStringBuffer;
 
 				if (channelNamePrefixes.count > 0) {
 					self.channelNamePrefixes = channelNamePrefixes;
 				}
+			} else if ([segmentKey isEqualIgnoringCase:@"MODES"]) {
+				NSInteger maximumModesCount = segmentValue.integerValue;
+
+				if (maximumModesCount > 0) {
+					self.maximumModeCount = maximumModesCount;
+				}
+			} else if ([segmentKey isEqualIgnoringCase:@"NETWORK"]) {
+				self.networkName = segmentValue;
+				self.networkNameFormatted = TXTLS(@"IRC[1067]", segmentValue);
+			} else if ([segmentKey isEqualIgnoringCase:@"NICKLEN"]) {
+				NSInteger maximumNicknameLength = segmentValue.integerValue;
+
+				if (maximumNicknameLength > 0) {
+					self.maximumNicknameLength = maximumNicknameLength;
+				}
+			} else if ([segmentKey isEqualIgnoringCase:@"PREFIX"]) {
+				[self parseUserModeSymbols:segmentValue];
 			}
 		}
 
@@ -201,8 +201,6 @@ ClassWithDesignatedInitializerInitMethod
 			}
 
 			[client enableCapability:ClientIRCv3SupportedCapabilityMonitorCommand];
-		} else if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
-			[client enableCapability:ClientIRCv3SupportedCapabilityWatchCommand];
 		} else if ([segmentKey isEqualIgnoringCase:@"NAMESX"]) {
 			if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityMultiPreifx] == NO) {
 				[client sendLine:@"PROTOCTL NAMESX"];
@@ -215,6 +213,8 @@ ClassWithDesignatedInitializerInitMethod
 
 				[client enableCapability:ClientIRCv3SupportedCapabilityUserhostInNames];
 			}
+		} else if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
+			[client enableCapability:ClientIRCv3SupportedCapabilityWatchCommand];
 		}
 	} // while()
 
