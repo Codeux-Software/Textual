@@ -225,6 +225,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)reopenIfNeeded
 {
+#warning TODO: Fix handler not reopening when write path changes
+
 	if ([self.filename isEqualToString:self.filenameCached] && self.fileHandle != nil) {
 		return;
 	}
