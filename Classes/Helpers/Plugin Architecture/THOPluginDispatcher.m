@@ -164,7 +164,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	return returnValue;
 }
 
-+ (nullable id)interceptUserInput:(id)inputObject command:(IRCPrivateCommand)commandString
++ (nullable id)interceptUserInput:(id)inputObject command:(IRCRemoteCommand)commandString
 {
 	NSParameterAssert(inputObject != nil);
 

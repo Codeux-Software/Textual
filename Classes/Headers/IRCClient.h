@@ -286,8 +286,8 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 - (void)sendCommand:(NSString *)command toZNCModuleNamed:(NSString *)module;
 
-- (void)sendText:(NSAttributedString *)string asCommand:(IRCPrivateCommand)command toChannel:(IRCChannel *)channel;
-- (void)sendText:(NSAttributedString *)string asCommand:(IRCPrivateCommand)command toChannel:(IRCChannel *)channel withEncryption:(BOOL)encryptText;
+- (void)sendText:(NSAttributedString *)string asCommand:(IRCRemoteCommand)command toChannel:(IRCChannel *)channel;
+- (void)sendText:(NSAttributedString *)string asCommand:(IRCRemoteCommand)command toChannel:(IRCChannel *)channel withEncryption:(BOOL)encryptText;
 
 - (void)sendLine:(NSString *)string;
 - (void)send:(NSString *)string, ...;

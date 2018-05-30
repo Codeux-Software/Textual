@@ -182,7 +182,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @return The original and/or modified copy of input or `nil` to prevent the data from
  *  being processed altogether.
  */
-- (nullable id)interceptUserInput:(id)input command:(IRCPrivateCommand)command;
+- (nullable id)interceptUserInput:(id)input command:(IRCRemoteCommand)command;
 
 #pragma mark -
 #pragma mark Preferences Pane

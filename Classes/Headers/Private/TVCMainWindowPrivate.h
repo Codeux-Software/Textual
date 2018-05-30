@@ -105,7 +105,7 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
 
 - (void)redirectKeyDown:(NSEvent *)e;
 
-- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command;
+- (void)inputText:(id)string asCommand:(IRCRemoteCommand)command;
 
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem;
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView;
