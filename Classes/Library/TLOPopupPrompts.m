@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppression -> ";
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation TLOPopupPrompts
 
 #pragma mark -
@@ -245,5 +247,6 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 }
 
 @end
+#pragma clang diagnostic pop
 
 NS_ASSUME_NONNULL_END
