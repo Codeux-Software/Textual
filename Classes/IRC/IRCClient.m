@@ -8926,8 +8926,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
-			NSString *serverAddress = [m paramAt:0];
-			NSString *serverPort = [m paramAt:1];
+			NSString *serverAddress = [m paramAt:1];
+			NSString *serverPort = [m paramAt:2];
 
 			self.disconnectType = IRCClientDisconnectServerRedirectMode;
 
