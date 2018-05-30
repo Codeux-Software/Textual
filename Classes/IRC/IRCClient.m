@@ -2741,7 +2741,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Sending Text
 
-- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command
+- (void)inputText:(id)string asCommand:(IRCRemoteCommand)command
 {
 	IRCTreeItem *destination = mainWindow().selectedItem;
 
@@ -2750,10 +2750,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)inputText:(id)string destination:(IRCTreeItem *)destination
 {
-	[self inputText:string asCommand:IRCPrivateCommandPrivmsgIndex destination:destination];
+	[self inputText:string asCommand:IRCRemoteCommandPrivmsgIndex destination:destination];
 }
 
-- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command destination:(IRCTreeItem *)destination
+- (void)inputText:(id)string asCommand:(IRCRemoteCommand)command destination:(IRCTreeItem *)destination
 {
 	NSParameterAssert(string != nil);
 	NSParameterAssert(destination != nil);
@@ -2768,9 +2768,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSAssert(NO, @"'string' must be NSString or NSAttributedString");
 	}
 
-	if (command != IRCPrivateCommandPrivmsgIndex &&
-		command != IRCPrivateCommandPrivmsgActionIndex &&
-		command != IRCPrivateCommandNoticeIndex)
+	if (command != IRCRemoteCommandPrivmsgIndex &&
+		command != IRCRemoteCommandPrivmsgActionIndex &&
+		command != IRCRemoteCommandNoticeIndex)
 	{
 		NSAssert(NO, @"Bad 'command' value");
 	}
@@ -2837,12 +2837,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)sendText:(NSAttributedString *)string asCommand:(IRCPrivateCommand)command toChannel:(IRCChannel *)channel
+- (void)sendText:(NSAttributedString *)string asCommand:(IRCRemoteCommand)command toChannel:(IRCChannel *)channel
 {
 	[self sendText:string asCommand:command toChannel:channel withEncryption:YES];
 }
 
-- (void)sendText:(NSAttributedString *)string asCommand:(IRCPrivateCommand)command toChannel:(IRCChannel *)channel withEncryption:(BOOL)encryptText
+- (void)sendText:(NSAttributedString *)string asCommand:(IRCRemoteCommand)command toChannel:(IRCChannel *)channel withEncryption:(BOOL)encryptText
 {
 	NSParameterAssert(string != nil);
 	NSParameterAssert(channel != nil);
@@ -2861,15 +2861,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	TVCLogLineType lineType = TVCLogLineUndefinedType;
 
-	if (command == IRCPrivateCommandPrivmsgIndex) {
+	if (command == IRCRemoteCommandPrivmsgIndex) {
 		commandToSend = @"PRIVMSG";
 
 		lineType = TVCLogLinePrivateMessageType;
-	} else if (command == IRCPrivateCommandPrivmsgActionIndex) {
+	} else if (command == IRCRemoteCommandPrivmsgActionIndex) {
 		commandToSend = @"PRIVMSG";
 
 		lineType = TVCLogLineActionType;
-	} else if (command == IRCPrivateCommandNoticeIndex) {
+	} else if (command == IRCRemoteCommandNoticeIndex) {
 		commandToSend = @"NOTICE";
 
 		lineType = TVCLogLineNoticeType;
@@ -2932,7 +2932,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self performBlockOnMainThread:^{
 		[self sendText:[NSAttributedString attributedStringWithString:message]
-			 asCommand:IRCPrivateCommandPrivmsgIndex
+			 asCommand:IRCRemoteCommandPrivmsgIndex
 			 toChannel:channel];
 	}];
 }
@@ -2941,7 +2941,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self performBlockOnMainThread:^{
 		[self sendText:[NSAttributedString attributedStringWithString:message]
-			 asCommand:IRCPrivateCommandPrivmsgActionIndex
+			 asCommand:IRCRemoteCommandPrivmsgActionIndex
 			 toChannel:channel];
 	}];
 }
@@ -2950,7 +2950,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self performBlockOnMainThread:^{
 		[self sendText:[NSAttributedString attributedStringWithString:message]
-			 asCommand:IRCPrivateCommandNoticeIndex
+			 asCommand:IRCRemoteCommandNoticeIndex
 			 toChannel:channel];
 	}];
 }
@@ -3072,8 +3072,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	switch (commandNumeric) {
-		case IRCPublicCommandAmeIndex: // Command: AME
-		case IRCPublicCommandAmsgIndex: // Command: AMSG
+		case IRCLocalCommandAmeIndex: // Command: AME
+		case IRCLocalCommandAmsgIndex: // Command: AMSG
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3083,12 +3083,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			IRCPrivateCommand sendAsCommand = 0;
+			IRCRemoteCommand sendAsCommand = 0;
 
-			if (commandNumeric == IRCPublicCommandAmsgIndex) {
-				sendAsCommand = IRCPrivateCommandPrivmsgIndex;
+			if (commandNumeric == IRCLocalCommandAmsgIndex) {
+				sendAsCommand = IRCRemoteCommandPrivmsgIndex;
 			} else {
-				sendAsCommand = IRCPrivateCommandPrivmsgActionIndex;
+				sendAsCommand = IRCRemoteCommandPrivmsgActionIndex;
 			}
 
 			for (IRCClient *client in worldController().clientList) {
@@ -3109,8 +3109,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandAquoteIndex: // Command: AQUOTE
-		case IRCPublicCommandArawIndex: // Command: ARAW
+		case IRCLocalCommandAquoteIndex: // Command: AQUOTE
+		case IRCLocalCommandArawIndex: // Command: ARAW
 		{
 			NSAssertReturnLoopBreak(self.isConnected);
 
@@ -3126,7 +3126,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandAutojoinIndex: // Command: AUTOJOIN
+		case IRCLocalCommandAutojoinIndex: // Command: AUTOJOIN
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3134,7 +3134,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandAwayIndex: // Command: AWAY
+		case IRCLocalCommandAwayIndex: // Command: AWAY
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3148,7 +3148,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandBackIndex: // Command: BACK
+		case IRCLocalCommandBackIndex: // Command: BACK
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3162,8 +3162,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandCapIndex: // Command: CAP
-		case IRCPublicCommandCapsIndex: // Command: CAPS
+		case IRCLocalCommandCapIndex: // Command: CAP
+		case IRCLocalCommandCapsIndex: // Command: CAPS
 		{
 			NSString *capabilites = self.enabledCapabilitiesStringValue;
 
@@ -3175,7 +3175,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandCcbadgeIndex: // Command: CCBADGE
+		case IRCLocalCommandCcbadgeIndex: // Command: CCBADGE
 		{
 			NSString *channelName = stringIn.tokenAsString;
 			NSString *badgeCount = stringIn.tokenAsString;
@@ -3206,7 +3206,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandClearIndex: // Command: CLEAR
+		case IRCLocalCommandClearIndex: // Command: CLEAR
 		{
 			if (targetChannel) {
 				[mainWindow() clearContentsOfChannel:targetChannel];
@@ -3216,7 +3216,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandClearallIndex: // Command: CLEARALL
+		case IRCLocalCommandClearallIndex: // Command: CLEARALL
 		{
 			for (IRCClient *client in worldController().clientList) {
 				if (client != self && [TPCPreferences clearAllConnections] == NO) {
@@ -3232,8 +3232,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandCloseIndex: // Command: CLOSE
-		case IRCPublicCommandRemoveIndex: // Command: REMOVE
+		case IRCLocalCommandCloseIndex: // Command: CLOSE
+		case IRCLocalCommandRemoveIndex: // Command: REMOVE
 		{
 			NSString *channelName = stringIn.tokenAsString;
 			
@@ -3257,7 +3257,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandConnIndex: // Command: CONN
+		case IRCLocalCommandConnIndex: // Command: CONN
 		{
 			NSString *serverAddress = stringIn.lowercaseGetToken;
 
@@ -3287,8 +3287,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandCtcpIndex: // Command: CTCP
-		case IRCPublicCommandCtcpreplyIndex: // Command: CTCPREPLY
+		case IRCLocalCommandCtcpIndex: // Command: CTCP
+		case IRCLocalCommandCtcpreplyIndex: // Command: CTCPREPLY
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3306,7 +3306,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if (commandNumeric == IRCPublicCommandCtcpIndex) {
+			if (commandNumeric == IRCLocalCommandCtcpIndex) {
 				if ([subCommand isEqualToString:@"PING"]) {
 					[self sendCTCPPing:targetChannelName];
 				} else {
@@ -3318,9 +3318,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandCycleIndex: // Command: CYCLE
-		case IRCPublicCommandHopIndex: // Command: HOP
-		case IRCPublicCommandRejoinIndex: // Command: REJOIN
+		case IRCLocalCommandCycleIndex: // Command: CYCLE
+		case IRCLocalCommandHopIndex: // Command: HOP
+		case IRCLocalCommandRejoinIndex: // Command: REJOIN
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3336,26 +3336,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandDehalfopIndex: // Command: DEHALFOP
-		case IRCPublicCommandDeopIndex: // Command: DEOP
-		case IRCPublicCommandDevoiceIndex: // Command: DEVOICE
-		case IRCPublicCommandHalfopIndex: // Command: HALFOP
-		case IRCPublicCommandOpIndex: // Command: OP
-		case IRCPublicCommandVoiceIndex: // Command: VOICE
+		case IRCLocalCommandDehalfopIndex: // Command: DEHALFOP
+		case IRCLocalCommandDeopIndex: // Command: DEOP
+		case IRCLocalCommandDevoiceIndex: // Command: DEVOICE
+		case IRCLocalCommandHalfopIndex: // Command: HALFOP
+		case IRCLocalCommandOpIndex: // Command: OP
+		case IRCLocalCommandVoiceIndex: // Command: VOICE
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 			
-			BOOL modeIsSet = (commandNumeric == IRCPublicCommandOpIndex ||
-							  commandNumeric == IRCPublicCommandHalfopIndex ||
-							  commandNumeric == IRCPublicCommandVoiceIndex);
+			BOOL modeIsSet = (commandNumeric == IRCLocalCommandOpIndex ||
+							  commandNumeric == IRCLocalCommandHalfopIndex ||
+							  commandNumeric == IRCLocalCommandVoiceIndex);
 
 			NSString *modeSymbol = nil;
 
-			if (commandNumeric == IRCPublicCommandOpIndex || commandNumeric == IRCPublicCommandDeopIndex) {
+			if (commandNumeric == IRCLocalCommandOpIndex || commandNumeric == IRCLocalCommandDeopIndex) {
 				modeSymbol = @"o";
-			} else if (commandNumeric == IRCPublicCommandHalfopIndex || commandNumeric == IRCPublicCommandDehalfopIndex) {
+			} else if (commandNumeric == IRCLocalCommandHalfopIndex || commandNumeric == IRCLocalCommandDehalfopIndex) {
 				modeSymbol = @"h";
-			} else if (commandNumeric == IRCPublicCommandVoiceIndex || commandNumeric == IRCPublicCommandDevoiceIndex) {
+			} else if (commandNumeric == IRCLocalCommandVoiceIndex || commandNumeric == IRCLocalCommandDevoiceIndex) {
 				modeSymbol = @"v";
 			}
 
@@ -3396,8 +3396,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandDebugIndex: // Command: DEBUG
-		case IRCPublicCommandEchoIndex: // Command: ECHO
+		case IRCLocalCommandDebugIndex: // Command: DEBUG
+		case IRCLocalCommandEchoIndex: // Command: ECHO
 		{
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
@@ -3422,7 +3422,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandDefaultsIndex: // Command: DEFAULTS
+		case IRCLocalCommandDefaultsIndex: // Command: DEFAULTS
 		{
 			if (stringIn.length == 0) {
 				[self printDebugInformation:TXTLS(@"IRC[1012]")];
@@ -3525,7 +3525,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandEmptycachesIndex: // Command: EMPTY_CACHES
+		case IRCLocalCommandEmptycachesIndex: // Command: EMPTY_CACHES
 		{
 			XRPerformBlockAsynchronouslyOnGlobalQueue(^{
 				[TVCLogView emptyCaches];
@@ -3533,7 +3533,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandFakerawdataIndex: // Command: FAKERAWDATA
+		case IRCLocalCommandFakerawdataIndex: // Command: FAKERAWDATA
 		{
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
@@ -3545,17 +3545,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandGetscriptsIndex: // Command: GETSCRIPTS
+		case IRCLocalCommandGetscriptsIndex: // Command: GETSCRIPTS
 		{
 			[sharedPluginManager() extrasInstallerLaunchInstaller];
 
 			break;
 		}
-		case IRCPublicCommandGlineIndex: // Command: GLINE
-		case IRCPublicCommandGzlineIndex: // Command: GZLINE
-		case IRCPublicCommandShunIndex:  // Command: SHUN
-		case IRCPublicCommandTempshunIndex: // Command: TEMPSHUN
-		case IRCPublicCommandZlineIndex: // Command: ZLINE
+		case IRCLocalCommandGlineIndex: // Command: GLINE
+		case IRCLocalCommandGzlineIndex: // Command: GZLINE
+		case IRCLocalCommandShunIndex:  // Command: SHUN
+		case IRCLocalCommandTempshunIndex: // Command: TEMPSHUN
+		case IRCLocalCommandZlineIndex: // Command: ZLINE
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3566,7 +3566,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandGotoIndex: // Command: GOTO
+		case IRCLocalCommandGotoIndex: // Command: GOTO
 		{
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
@@ -3596,7 +3596,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandIcbadgeIndex: // Command: ICBADGE
+		case IRCLocalCommandIcbadgeIndex: // Command: ICBADGE
 		{
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
@@ -3617,8 +3617,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandIgnoreIndex: // Command: IGNORE
-		case IRCPublicCommandUnignoreIndex: // Command: UNIGNORE
+		case IRCLocalCommandIgnoreIndex: // Command: IGNORE
+		case IRCLocalCommandUnignoreIndex: // Command: UNIGNORE
 		{
 			BOOL isIgnoreCommand = (commandNumeric == 5029);
 
@@ -3720,7 +3720,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandInviteIndex: // Command: INVITE
+		case IRCLocalCommandInviteIndex: // Command: INVITE
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3756,7 +3756,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandIsonIndex: // Command: ISON
+		case IRCLocalCommandIsonIndex: // Command: ISON
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3772,8 +3772,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandJIndex: // Command: J
-		case IRCPublicCommandJoinIndex:  // Command: JOIN
+		case IRCLocalCommandJIndex: // Command: J
+		case IRCLocalCommandJoinIndex:  // Command: JOIN
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3805,7 +3805,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandJoinRandomIndex: // Command: JOIN_RANDOM
+		case IRCLocalCommandJoinRandomIndex: // Command: JOIN_RANDOM
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3829,13 +3829,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandBanIndex: // Command: BAN
-		case IRCPublicCommandKbIndex: // Command: KB
-		case IRCPublicCommandKickIndex: // Command: KICK
-		case IRCPublicCommandKickbanIndex: // Command: KICKBAN
-		case IRCPublicCommandUnbanIndex: // Command: UNBAN
-		case IRCPublicCommandUnquietIndex: // Command: UNQUIET
-		case IRCPublicCommandQuietIndex: // Command: QUIET
+		case IRCLocalCommandBanIndex: // Command: BAN
+		case IRCLocalCommandKbIndex: // Command: KB
+		case IRCLocalCommandKickIndex: // Command: KICK
+		case IRCLocalCommandKickbanIndex: // Command: KICKBAN
+		case IRCLocalCommandUnbanIndex: // Command: UNBAN
+		case IRCLocalCommandUnquietIndex: // Command: UNQUIET
+		case IRCLocalCommandQuietIndex: // Command: QUIET
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3863,12 +3863,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if (commandNumeric == IRCPublicCommandKickbanIndex ||
-				commandNumeric == IRCPublicCommandKbIndex ||
-				commandNumeric == IRCPublicCommandBanIndex ||
-				commandNumeric == IRCPublicCommandUnbanIndex ||
-				commandNumeric == IRCPublicCommandQuietIndex ||
-				commandNumeric == IRCPublicCommandUnquietIndex)
+			if (commandNumeric == IRCLocalCommandKickbanIndex ||
+				commandNumeric == IRCLocalCommandKbIndex ||
+				commandNumeric == IRCLocalCommandBanIndex ||
+				commandNumeric == IRCLocalCommandUnbanIndex ||
+				commandNumeric == IRCLocalCommandQuietIndex ||
+				commandNumeric == IRCLocalCommandUnquietIndex)
 			{
 				IRCChannelUser *member = [targetChannel findMember:nickname];
 
@@ -3880,8 +3880,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				NSString *modeSymbol = nil;
 
-				if (commandNumeric == IRCPublicCommandQuietIndex ||
-					commandNumeric == IRCPublicCommandUnquietIndex)
+				if (commandNumeric == IRCLocalCommandQuietIndex ||
+					commandNumeric == IRCLocalCommandUnquietIndex)
 				{
 					modeSymbol = @"q";
 				} else {
@@ -3894,8 +3894,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					break;
 				}
 
-				if (commandNumeric == IRCPublicCommandUnbanIndex ||
-					commandNumeric == IRCPublicCommandUnquietIndex)
+				if (commandNumeric == IRCLocalCommandUnbanIndex ||
+					commandNumeric == IRCLocalCommandUnquietIndex)
 				{
 					[self send:@"MODE", targetChannelName, [@"-" stringByAppendingString:modeSymbol], banMask, nil];
 				} else {
@@ -3903,9 +3903,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
-			if (commandNumeric == IRCPublicCommandKbIndex ||
-				commandNumeric == IRCPublicCommandKickIndex ||
-				commandNumeric == IRCPublicCommandKickbanIndex)
+			if (commandNumeric == IRCLocalCommandKbIndex ||
+				commandNumeric == IRCLocalCommandKickIndex ||
+				commandNumeric == IRCLocalCommandKickbanIndex)
 			{
 				NSString *reason = stringIn.string;
 
@@ -3918,7 +3918,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandKillIndex: // Command: KILL
+		case IRCLocalCommandKillIndex: // Command: KILL
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3940,8 +3940,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandLagcheckIndex: // Command: LAGCHECK
-		case IRCPublicCommandMylagIndex: // Command: MYLAG
+		case IRCLocalCommandLagcheckIndex: // Command: LAGCHECK
+		case IRCLocalCommandMylagIndex: // Command: MYLAG
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -3954,7 +3954,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			lagCheckContext[@"time"] = @([NSDate timeIntervalSince1970]);
 
-			if (commandNumeric == IRCPublicCommandMylagIndex) {
+			if (commandNumeric == IRCLocalCommandMylagIndex) {
 				IRCChannel *selectedChannel = [mainWindow() selectedChannelOn:self];
 				
 				if (selectedChannel) {
@@ -3972,8 +3972,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandLeaveIndex: // Command: LEAVE
-		case IRCPublicCommandPartIndex: // Command: PART
+		case IRCLocalCommandLeaveIndex: // Command: LEAVE
+		case IRCLocalCommandPartIndex: // Command: PART
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4001,7 +4001,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandListIndex: // Command: LIST
+		case IRCLocalCommandListIndex: // Command: LIST
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4015,8 +4015,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandMIndex:
-		case IRCPublicCommandModeIndex:
+		case IRCLocalCommandMIndex:
+		case IRCLocalCommandModeIndex:
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4047,7 +4047,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandMuteIndex: // Command: MUTE
+		case IRCLocalCommandMuteIndex: // Command: MUTE
 		{
 			if ([TPCPreferences soundIsMuted]) {
 				[self printDebugInformation:TXTLS(@"IRC[1097]")];
@@ -4059,7 +4059,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandMyversionIndex: // Command: MYVERSION
+		case IRCLocalCommandMyversionIndex: // Command: MYVERSION
 		{
 			NSString *applicationName = [TPCApplicationInfo applicationNameWithoutVersion];
 			NSString *versionLong = [TPCApplicationInfo applicationVersion];
@@ -4086,7 +4086,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandNickIndex: // Command: NICK
+		case IRCLocalCommandNickIndex: // Command: NICK
 		{
 			/* Use -isConnected instead of -isLoggedIn so that
 			 user can change their nickname during registration
@@ -4111,7 +4111,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandNotifybubble: // Command: NOTIFYBUBBLE
+		case IRCLocalCommandNotifybubble: // Command: NOTIFYBUBBLE
 		{
 			if ([self stringIsChannelName:stringIn.string]) {
 				targetChannel = [self findChannel:stringIn.tokenAsString];
@@ -4143,7 +4143,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandNotifysound: // Command: NOTIFYSOUND
+		case IRCLocalCommandNotifysound: // Command: NOTIFYSOUND
 		{
 			NSString *soundName = stringIn.tokenAsString;
 			
@@ -4157,7 +4157,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandNotifyspeak: // Command: NOTIFYSPEAK
+		case IRCLocalCommandNotifyspeak: // Command: NOTIFYSPEAK
 		{
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
@@ -4169,7 +4169,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandQueryIndex: // Command: QUERY
+		case IRCLocalCommandQueryIndex: // Command: QUERY
 		{
 			NSString *nickname = stringIn.tokenAsString;
 			
@@ -4191,8 +4191,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandQuoteIndex: // Command: QUOTE
-		case IRCPublicCommandRawIndex: // Command: RAW
+		case IRCLocalCommandQuoteIndex: // Command: QUOTE
+		case IRCLocalCommandRawIndex: // Command: RAW
 		{
 			NSAssertReturnLoopBreak(self.isConnected);
 			
@@ -4206,7 +4206,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandQuitIndex: // Command: QUIT
+		case IRCLocalCommandQuitIndex: // Command: QUIT
 		{
 			NSAssertReturnLoopBreak(self.isConnected);
 
@@ -4218,7 +4218,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandNamesIndex: // Command: NAMES
+		case IRCLocalCommandNamesIndex: // Command: NAMES
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4234,7 +4234,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandSetcolorIndex: // Command: SETCOLOR
+		case IRCLocalCommandSetcolorIndex: // Command: SETCOLOR
 		{
 			if ([TPCPreferences disableNicknameColorHashing]) {
 				[self printDebugInformation:TXTLS(@"IRC[1108]")];
@@ -4260,7 +4260,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandSetquerynameIndex: // Command: SETQUERYNAME
+		case IRCLocalCommandSetquerynameIndex: // Command: SETQUERYNAME
 		{
 			if (targetChannel == nil || targetChannel.isPrivateMessage == NO) {
 				[self printDebugInformation:TXTLS(@"IRC[1134]")];
@@ -4306,7 +4306,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandServerIndex: // Command: SERVER
+		case IRCLocalCommandServerIndex: // Command: SERVER
 		{
 			if (stringIn.length == 0) {
 				[self printInvalidSyntaxMessageForCommand:command];
@@ -4318,13 +4318,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandSslcontextIndex: // Command: SSLCONTEXT
+		case IRCLocalCommandSslcontextIndex: // Command: SSLCONTEXT
 		{
 			[self presentCertificateTrustInformation];
 
 			break;
 		}
-		case IRCPublicCommandTageIndex: // Command: TAGE
+		case IRCLocalCommandTageIndex: // Command: TAGE
 		{
 			NSTimeInterval timePassed = [NSDate timeIntervalSinceNow:[TPCApplicationInfo applicationBirthday]];
 
@@ -4338,7 +4338,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandTimerIndex: // Command: TIMER
+		case IRCLocalCommandTimerIndex: // Command: TIMER
 		{
 			if (stringIn.length == 0) {
 				[self printDebugInformation:TXTLS(@"IRC[1138]")];
@@ -4646,8 +4646,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandTIndex: // Command: T
-		case IRCPublicCommandTopicIndex: // Command: TOPIC
+		case IRCLocalCommandTIndex: // Command: T
+		case IRCLocalCommandTopicIndex: // Command: TOPIC
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4671,7 +4671,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandUmodeIndex: // Command: UMODE
+		case IRCLocalCommandUmodeIndex: // Command: UMODE
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4683,7 +4683,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandUnmuteIndex: // Command: UNMUTE
+		case IRCLocalCommandUnmuteIndex: // Command: UNMUTE
 		{
 			if ([TPCPreferences soundIsMuted] == NO) {
 				[self printDebugInformation:TXTLS(@"IRC[1099]")];
@@ -4695,7 +4695,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandWallopsIndex: // Command: WALLOPS
+		case IRCLocalCommandWallopsIndex: // Command: WALLOPS
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4709,8 +4709,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandMonitorIndex: // Command: MONITOR
-		case IRCPublicCommandWatchIndex: // Command: WATCH
+		case IRCLocalCommandMonitorIndex: // Command: MONITOR
+		case IRCLocalCommandWatchIndex: // Command: WATCH
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4732,7 +4732,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandWhoIndex: // Command: WHO
+		case IRCLocalCommandWhoIndex: // Command: WHO
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4748,7 +4748,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandWhoisIndex: // Command: WHOIS
+		case IRCLocalCommandWhoisIndex: // Command: WHOIS
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
@@ -4774,16 +4774,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandMeIndex: // Command: ME
-		case IRCPublicCommandMsgIndex: // Command: MSG
-		case IRCPublicCommandNoticeIndex: // Command: NOTICE
-		case IRCPublicCommandOmsgIndex: // Command: OMSG
-		case IRCPublicCommandOnoticeIndex: // Command: ONOTICE
-		case IRCPublicCommandSmeIndex: // Command: SME
-		case IRCPublicCommandSmsgIndex: // Command: SMSG
-		case IRCPublicCommandUmeIndex: // Command: UME
-		case IRCPublicCommandUmsgIndex: // Command: UMSG
-		case IRCPublicCommandUnoticeIndex: // Command: UNOTICE
+		case IRCLocalCommandMeIndex: // Command: ME
+		case IRCLocalCommandMsgIndex: // Command: MSG
+		case IRCLocalCommandNoticeIndex: // Command: NOTICE
+		case IRCLocalCommandOmsgIndex: // Command: OMSG
+		case IRCLocalCommandOnoticeIndex: // Command: ONOTICE
+		case IRCLocalCommandSmeIndex: // Command: SME
+		case IRCLocalCommandSmsgIndex: // Command: SMSG
+		case IRCLocalCommandUmeIndex: // Command: UME
+		case IRCLocalCommandUmsgIndex: // Command: UMSG
+		case IRCLocalCommandUnoticeIndex: // Command: UNOTICE
 		{
 			/* Where would se send data to? */
 			if (self.isLoggedIn == NO) {
@@ -4803,40 +4803,40 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			TVCLogLineType lineType = TVCLogLineUndefinedType;
 
-			if (commandNumeric == IRCPublicCommandMsgIndex ||
-				commandNumeric == IRCPublicCommandOmsgIndex ||
-				commandNumeric == IRCPublicCommandSmsgIndex ||
-				commandNumeric == IRCPublicCommandUmsgIndex)
+			if (commandNumeric == IRCLocalCommandMsgIndex ||
+				commandNumeric == IRCLocalCommandOmsgIndex ||
+				commandNumeric == IRCLocalCommandSmsgIndex ||
+				commandNumeric == IRCLocalCommandUmsgIndex)
 			{
 				commandToSend = @"PRIVMSG";
 
 				lineType = TVCLogLinePrivateMessageType;
 
-				isOperatorMessage = (commandNumeric == IRCPublicCommandOmsgIndex);
-				isSecretMessage = (commandNumeric == IRCPublicCommandSmsgIndex);
-				isUnencryptedMessag = (commandNumeric == IRCPublicCommandUmsgIndex);
+				isOperatorMessage = (commandNumeric == IRCLocalCommandOmsgIndex);
+				isSecretMessage = (commandNumeric == IRCLocalCommandSmsgIndex);
+				isUnencryptedMessag = (commandNumeric == IRCLocalCommandUmsgIndex);
 			}
-			else if (commandNumeric == IRCPublicCommandMeIndex ||
-					 commandNumeric == IRCPublicCommandSmeIndex ||
-					 commandNumeric == IRCPublicCommandUmeIndex)
+			else if (commandNumeric == IRCLocalCommandMeIndex ||
+					 commandNumeric == IRCLocalCommandSmeIndex ||
+					 commandNumeric == IRCLocalCommandUmeIndex)
 			{
 				commandToSend = @"PRIVMSG";
 
 				lineType = TVCLogLineActionType;
 
-				isSecretMessage = (commandNumeric == IRCPublicCommandSmeIndex);
-				isUnencryptedMessag = (commandNumeric == IRCPublicCommandUmeIndex);
+				isSecretMessage = (commandNumeric == IRCLocalCommandSmeIndex);
+				isUnencryptedMessag = (commandNumeric == IRCLocalCommandUmeIndex);
 			}
-			else if (commandNumeric == IRCPublicCommandNoticeIndex || // Command: NOTICE
-					 commandNumeric == IRCPublicCommandOnoticeIndex || // Command: ONOTICE
-					 commandNumeric == IRCPublicCommandUnoticeIndex)   // Command: UNOTICE
+			else if (commandNumeric == IRCLocalCommandNoticeIndex || // Command: NOTICE
+					 commandNumeric == IRCLocalCommandOnoticeIndex || // Command: ONOTICE
+					 commandNumeric == IRCLocalCommandUnoticeIndex)   // Command: UNOTICE
 			{
 				commandToSend = @"NOTICE";
 
 				lineType = TVCLogLineNoticeType;
 
-				isOperatorMessage = (commandNumeric == IRCPublicCommandOnoticeIndex);
-				isUnencryptedMessag = (commandNumeric == IRCPublicCommandUnoticeIndex);
+				isOperatorMessage = (commandNumeric == IRCLocalCommandOnoticeIndex);
+				isUnencryptedMessag = (commandNumeric == IRCLocalCommandUnoticeIndex);
 			}
 
 			if (isOperatorMessage) {
@@ -4992,7 +4992,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCPublicCommandReloadICLIndex: // Command: RELOADICL
+		case IRCLocalCommandReloadICLIndex: // Command: RELOADICL
 		{
 			[TVCLogControllerInlineMediaSharedInstance() reloadService];
 
@@ -6008,87 +6008,87 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSUInteger commandNumeric = [IRCCommandIndex indexOfRemoteCommand:message.command];
 
 		switch (commandNumeric) {
-			case IRCPrivateCommandNoticeIndex: // Command: NOTICE
-			case IRCPrivateCommandPrivmsgIndex: // Command: PRIVMSG
+			case IRCRemoteCommandNoticeIndex: // Command: NOTICE
+			case IRCRemoteCommandPrivmsgIndex: // Command: PRIVMSG
 			{
 				[self receivePrivmsgAndNotice:message];
 
 				break;
 			}
-			case IRCPrivateCommandErrorIndex: // Command: ERROR
+			case IRCRemoteCommandErrorIndex: // Command: ERROR
 			{
 				[self receiveError:message];
 
 				break;
 			}
-			case IRCPrivateCommandInviteIndex: // Command: INVITE
+			case IRCRemoteCommandInviteIndex: // Command: INVITE
 			{
 				[self receiveInvite:message];
 
 				break;
 			}
-			case IRCPrivateCommandJoinIndex: // Command: JOIN
+			case IRCRemoteCommandJoinIndex: // Command: JOIN
 			{
 				[self receiveJoin:message];
 
 				break;
 			}
-			case IRCPrivateCommandKickIndex: // Command: KICK
+			case IRCRemoteCommandKickIndex: // Command: KICK
 			{
 				[self receiveKick:message];
 
 				break;
 			}
-			case IRCPrivateCommandKillIndex: // Command: KILL
+			case IRCRemoteCommandKillIndex: // Command: KILL
 			{
 				[self receiveKill:message];
 
 				break;
 			}
-			case IRCPrivateCommandModeIndex: // Command: MODE
+			case IRCRemoteCommandModeIndex: // Command: MODE
 			{
 				[self receiveMode:message];
 
 				break;
 			}
-			case IRCPrivateCommandNickIndex: // Command: NICK
+			case IRCRemoteCommandNickIndex: // Command: NICK
 			{
 				[self receiveNick:message];
 
 				break;
 			}
-			case IRCPrivateCommandPartIndex: // Command: PART
+			case IRCRemoteCommandPartIndex: // Command: PART
 			{
 				[self receivePart:message];
 
 				break;
 			}
-			case IRCPrivateCommandPingIndex: // Command: PING
+			case IRCRemoteCommandPingIndex: // Command: PING
 			{
 				[self receivePing:message];
 
 				break;
 			}
-			case IRCPrivateCommandQuitIndex: // Command: QUIT
+			case IRCRemoteCommandQuitIndex: // Command: QUIT
 			{
 				[self receiveQuit:message];
 
 				break;
 			}
-			case IRCPrivateCommandTopicIndex: // Command: TOPIC
+			case IRCRemoteCommandTopicIndex: // Command: TOPIC
 			{
 				[self receiveTopic:message];
 
 				break;
 			}
-			case IRCPrivateCommandWallopsIndex: // Command: WALLOPS
+			case IRCRemoteCommandWallopsIndex: // Command: WALLOPS
 			{
 				[self receiveWallops:message];
 
 				break;
 			}
-			case IRCPrivateCommandAuthenticateIndex: // Command: AUTHENTICATE
-			case IRCPrivateCommandCapIndex: // Command: CAP
+			case IRCRemoteCommandAuthenticateIndex: // Command: AUTHENTICATE
+			case IRCRemoteCommandCapIndex: // Command: CAP
 			{
 				[self updateConnectedToZNCPropertyWithMessage:message];
 
@@ -6096,25 +6096,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				break;
 			}
-			case IRCPrivateCommandAwayIndex: // Command: AWAY (away-notify CAP)
+			case IRCRemoteCommandAwayIndex: // Command: AWAY (away-notify CAP)
 			{
 				[self receiveAwayNotifyCapability:message];
 
 				break;
 			}
-			case IRCPrivateCommandBatchIndex: // BATCH
+			case IRCRemoteCommandBatchIndex: // BATCH
 			{
 				[self receiveBatch:message];
 
 				break;
 			}
-			case IRCPrivateCommandCertinfoIndex: // CERTINFO
+			case IRCRemoteCommandCertinfoIndex: // CERTINFO
 			{
 				[self receiveCertInfo:message];
 
 				break;
 			}
-			case IRCPrivateCommandChghostIndex:
+			case IRCRemoteCommandChghostIndex:
 			{
 				[self receiveChangeHost:message];
 

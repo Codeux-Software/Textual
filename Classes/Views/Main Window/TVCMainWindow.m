@@ -1079,7 +1079,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)sendMessageAsAction:(NSEvent *)e
 {
 	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
-		[self inputTextAsCommand:IRCPrivateCommandPrivmsgActionIndex];
+		[self inputTextAsCommand:IRCRemoteCommandPrivmsgActionIndex];
 
 		return;
 	}
@@ -1260,10 +1260,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)textEntered
 {
-	[self inputTextAsCommand:IRCPrivateCommandPrivmsgIndex];
+	[self inputTextAsCommand:IRCRemoteCommandPrivmsgIndex];
 }
 
-- (void)inputTextAsCommand:(IRCPrivateCommand)command
+- (void)inputTextAsCommand:(IRCRemoteCommand)command
 {
 	[self.nicknameCompletionStatus clear];
 
@@ -1280,7 +1280,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self inputText:stringValue asCommand:command];
 }
 
-- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command
+- (void)inputText:(id)string asCommand:(IRCRemoteCommand)command
 {
 	NSParameterAssert(string != nil);
 

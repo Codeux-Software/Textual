@@ -90,8 +90,8 @@ enum {
 
 - (void)inputText:(id)string destination:(IRCTreeItem *)destination;
 
-- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command;
-- (void)inputText:(id)string asCommand:(IRCPrivateCommand)command destination:(IRCTreeItem *)destination;
+- (void)inputText:(id)string asCommand:(IRCRemoteCommand)command;
+- (void)inputText:(id)string asCommand:(IRCRemoteCommand)command destination:(IRCTreeItem *)destination;
 
 - (void)enableCapability:(ClientIRCv3SupportedCapabilities)capability;
 - (void)disableCapability:(ClientIRCv3SupportedCapabilities)capability;
