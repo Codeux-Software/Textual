@@ -40,6 +40,7 @@
 #import "TLOLanguagePreferences.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "IRCISupportInfo.h"
 #import "TVCBasicTableView.h"
 #import "TDCChannelBanListSheetPrivate.h"
 
@@ -71,9 +72,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
-- (instancetype)initWithEntryType:(TDCChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel
+- (nullable instancetype)initWithEntryType:(TDCChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
+
+	if ([self.class channel:channel supportsEntryType:entryType] == NO) {
+		return nil;
+	}
 
 	if ((self = [super init])) {
 		self.entryType = entryType;
@@ -146,21 +151,6 @@ ClassWithDesignatedInitializerInitMethod
 	[self didChangeValueForKey:@"entryCount"];
 }
 
-- (NSString *)modeSymbol
-{
-	if (self.entryType == TDCChannelBanListSheetBanEntryType) {
-		return @"b";
-	} else if (self.entryType == TDCChannelBanListSheetBanExceptionEntryType) {
-		return @"e";
-	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
-		return @"I";
-	} else if (self.entryType == TDCChannelBanListSheetQuietEntryType) {
-		return @"q";
-	}
-
-	return nil;
-}
-
 - (NSNumber *)entryCount
 {
 	return @([self.entryTableController.arrangedObjects count]);
@@ -196,6 +186,21 @@ ClassWithDesignatedInitializerInitMethod
 										modeParameters:selectedEntries];
 
 	[super cancel:nil];
+}
+
+#pragma mark -
+#pragma mark Utilities
+
++ (BOOL)channel:(IRCChannel *)channel supportsEntryType:(TDCChannelBanListSheetEntryType)entryType
+{
+	return [channel.associatedClient.supportInfo isListSupported:(IRCISupportInfoListType)entryType];
+}
+
+- (NSString *)modeSymbol
+{
+	/* -modeSymbolForList: is nullable but because we only allow this class to be
+	 created if the mode is already supported, then we can advertise it here as non-nil */
+	return [self.client.supportInfo modeSymbolForList:(IRCISupportInfoListType)self.entryType];
 }
 
 #pragma mark -

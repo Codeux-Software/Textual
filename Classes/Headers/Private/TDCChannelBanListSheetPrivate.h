@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "IRCISupportInfo.h"
 #import "TDCSharedProtocolDefinitionsPrivate.h"
 #import "TDCSheetBase.h"
 
@@ -43,10 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCChannel;
 
 typedef NS_ENUM(NSUInteger, TDCChannelBanListSheetEntryType) {
-	TDCChannelBanListSheetBanEntryType,
-	TDCChannelBanListSheetBanExceptionEntryType,
-	TDCChannelBanListSheetInviteExceptionEntryType,
-	TDCChannelBanListSheetQuietEntryType
+	TDCChannelBanListSheetBanEntryType = IRCISupportInfoBanListType,
+	TDCChannelBanListSheetBanExceptionEntryType = IRCISupportInfoBanExceptionListType,
+	TDCChannelBanListSheetInviteExceptionEntryType = IRCISupportInfoInviteExceptionListType,
+	TDCChannelBanListSheetQuietEntryType = IRCISupportInfoQuietListType
 };
 
 @interface TDCChannelBanListSheet : TDCSheetBase <TDCChannelPrototype>
@@ -55,7 +56,8 @@ typedef NS_ENUM(NSUInteger, TDCChannelBanListSheetEntryType) {
 @property (readonly, copy, nullable) NSArray<NSString *> *listOfChanges;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
 
-- (instancetype)initWithEntryType:(TDCChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+/* Returns nil if entry type is not supported by client */
+- (nullable instancetype)initWithEntryType:(TDCChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 

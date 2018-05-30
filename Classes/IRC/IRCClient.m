@@ -13017,6 +13017,10 @@ present_error:
 
 	TDCChannelBanListSheet *listSheet = [[TDCChannelBanListSheet alloc] initWithEntryType:entryType inChannel:c];
 
+	if (listSheet == nil) {
+		return;
+	}
+
 	listSheet.delegate = (id)self;
 
 	listSheet.window = mainWindow();
