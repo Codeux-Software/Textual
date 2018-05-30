@@ -52,6 +52,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @interface IRCISupportInfo ()
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, copy) NSArray<NSDictionary *> *cachedConfiguration;
+@property (nonatomic, assign, readwrite) NSUInteger maximumAwayLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumNicknameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumModeCount;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *channelNamePrefixes;
@@ -156,7 +157,13 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if (segmentValue) {
-			if ([segmentKey isEqualIgnoringCase:@"CHANMODES"]) {
+			if ([segmentKey isEqualIgnoringCase:@"AWAYLEN"]) {
+				NSInteger awayLength = segmentValue.integerValue;
+
+				if (awayLength > 0) {
+					self.maximumAwayLength = awayLength;
+				}
+			} else if ([segmentKey isEqualIgnoringCase:@"CHANMODES"]) {
 				[self parseChannelModes:segmentValue];
 			} else if ([segmentKey isEqualIgnoringCase:@"CHANTYPES"]) {
 				NSArray *channelNamePrefixes = segmentValue.characterStringBuffer;

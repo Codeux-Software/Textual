@@ -3131,7 +3131,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					continue;
 				}
 
-				[client toggleAwayStatusWithComment:stringIn.string];
+				NSString *comment = stringIn.string;
+
+				/* We enforce the maximum away length here instead of
+				 -toggleAwayStatusWithComment: so that we have an easier
+				 way to know when it is truncated so the user can be informed. */
+				NSUInteger maximumCommentLength = client.supportInfo.maximumAwayLength;
+
+				if (maximumCommentLength > 0 && comment.length > maximumCommentLength) {
+					comment = [comment substringToIndex:maximumCommentLength];
+
+					[client printDebugInformation:TXTLS(@"IRC[1165]", maximumCommentLength)];
+				}
+
+				[client toggleAwayStatusWithComment:comment];
 			}
 
 			break;
