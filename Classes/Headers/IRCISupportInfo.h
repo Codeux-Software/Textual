@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCISupportInfo : NSObject
 @property (readonly) BOOL configurationReceived;
+@property (readonly) NSUInteger maximumAwayLength; // 0 = no limit
 @property (readonly) NSUInteger maximumNicknameLength;
 @property (readonly) NSUInteger maximumModeCount;
 @property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;
