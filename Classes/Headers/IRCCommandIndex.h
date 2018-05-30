@@ -156,6 +156,7 @@ typedef NS_ENUM(NSUInteger, IRCPrivateCommand) {
 	IRCPrivateCommandCapIndex = 1004,
 	IRCPrivateCommandCertinfoIndex = 1055,
 	IRCPrivateCommandChatopsIndex = 1006,
+	IRCPrivateCommandChghostIndex = 1057,
 	IRCPrivateCommandErrorIndex = 1016,
 	IRCPrivateCommandGlineIndex = 1047,
 	IRCPrivateCommandGlobopsIndex = 1017,

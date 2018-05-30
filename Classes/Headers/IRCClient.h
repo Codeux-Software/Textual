@@ -81,7 +81,8 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapabilities) {
 	ClientIRCv3SupportedCapabilityUserhostInNames		= 1 << 11, // YES if userhost-in-names CAP supported
 	ClientIRCv3SupportedCapabilityWatchCommand			= 1 << 12, // YES if the WATCH command is supported
 	ClientIRCv3SupportedCapabilityZNCCertInfoModule		= 1 << 13, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapabilityZNCSelfMessage		= 1 << 14  // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityZNCSelfMessage		= 1 << 14, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityChangeHost			= 1 << 15  // YES if the CHGHOST CAP supported
 };
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
