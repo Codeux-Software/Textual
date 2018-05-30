@@ -59,7 +59,6 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @property (nonatomic, copy, readwrite) NSDictionary<NSString *, NSArray *> *userModeSymbols;
 @property (nonatomic, copy, readwrite, nullable) NSString *networkName;
 @property (nonatomic, copy, readwrite, nullable) NSString *networkNameFormatted;
-@property (nonatomic, copy, readwrite, nullable) NSString *privateMessageNicknamePrefix;
 @end
 
 @implementation IRCISupportInfo
@@ -109,8 +108,6 @@ ClassWithDesignatedInitializerInitMethod
 		@"o" : @(_channelUserModeValue),
 		@"v" : @(_channelUserModeValue)
 	};
-
-	self.privateMessageNicknamePrefix = nil;
 }
 
 - (void)processConfigurationData:(NSString *)configurationData
@@ -184,8 +181,6 @@ ClassWithDesignatedInitializerInitMethod
 				if (channelNamePrefixes.count > 0) {
 					self.channelNamePrefixes = channelNamePrefixes;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"ZNCPREFIX"]) {
-				self.privateMessageNicknamePrefix = segmentValue;
 			}
 		}
 

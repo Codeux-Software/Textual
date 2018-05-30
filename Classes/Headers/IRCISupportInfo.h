@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSString *serverAddress;
 @property (readonly, copy, nullable) NSString *networkName;
 @property (readonly, copy, nullable) NSString *networkNameFormatted;
-@property (readonly, copy, nullable) NSString *privateMessageNicknamePrefix;
+@property (readonly, copy, nullable) NSString *privateMessageNicknamePrefix TEXTUAL_DEPRECATED("This feature was never merged into ZNC. It is considered abandoned. Value will always return nil. Reference: https://github.com/znc/znc/pull/660");
 
 - (nullable NSString *)modeSymbolForUserPrefix:(NSString *)character;
 - (nullable NSString *)userPrefixForModeSymbol:(NSString *)modeSymbol;

@@ -2260,12 +2260,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return NO;
 	}
 
-	NSString *prefix = self.supportInfo.privateMessageNicknamePrefix;
-
-	if (prefix) {
-		return [nickname hasPrefix:prefix];
-	}
-
 	return [nickname hasPrefix:@"*"];
 }
 
@@ -2283,12 +2277,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (self.isConnectedToZNC == NO) {
 		return nil;
-	}
-
-	NSString *prefix = self.supportInfo.privateMessageNicknamePrefix;
-
-	if (prefix) {
-		return [prefix stringByAppendingString:nickname];
 	}
 
 	return [@"*" stringByAppendingString:nickname];
