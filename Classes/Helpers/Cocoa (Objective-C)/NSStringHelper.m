@@ -732,6 +732,15 @@ return_method:
 	return [bob copy];
 }
 
+- (BOOL)isModeSymbol
+{
+	if (self.length != 1) {
+		return NO;
+	}
+
+	return [[NSCharacterSet AtoZCharacterSet] characterIsMember:[self characterAtIndex:0]];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
