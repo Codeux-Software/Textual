@@ -10241,6 +10241,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case 901: // RPL_LOGGEDOUT
+		{
+			NSAssertReturn([m paramsCount] == 3);
+
+			[self disableCapability:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL];
+
+			if (printMessage) {
+				[self print:[m sequence:2]
+						 by:nil
+				  inChannel:nil
+					 asType:TVCLogLineDebugType
+					command:m.command
+				 receivedAt:m.receivedAt];
+			}
+
+			break;
+		}
 		case 903: // RPL_SASLSUCCESS
 		case 904: // ERR_SASLFAIL
 		case 905: // ERR_SASLTOOLONG
