@@ -218,6 +218,14 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		return NO;
 	}
 
+	/* A maximum length is not current imposed on channel names,
+	 even though we have that information, because -isChannelNameOn:
+	 is called in -[IRCClient sendCommand:...] to check whether the
+	 the input string for a command begins with a channel name before
+	 we perform tokenizing. During that time, the input string can be
+	 any possible length. We therefore only check if the string begins
+	 with known channel name prefixes and allow server to perform
+	 extensive validation on the channel name. */
 	NSArray *channelNamePrefixes = client.supportInfo.channelNamePrefixes;
 
 	if (self.length == 1) {
