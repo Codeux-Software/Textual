@@ -186,6 +186,16 @@ ClassWithDesignatedInitializerInitMethod
 
 		if ([segmentKey isEqualIgnoringCase:@"MONITOR"]) {
 			// freenode advertises support for MONITOR but does not respond to command
+			/*
+			 Update as of May 30, 2018:
+
+			 [17:25:55]  <milky>	Back in 2016 I hard coded MONITOR support disabled on freenode in
+			 						my client because back then the network advertised it but didn't
+			 						actually respond to it. Has that since changed?
+			 [17:26:53]  <@Unit193>	milky: Depends on the server unfortunately.
+			 [17:27:24]  <milky>	Unit193 so just keep it disabled, you think?
+			 [17:27:39]  <@Unit193>	milky: Yeah, the server I'm on claims support.
+			 */
 			if ([self.serverAddress hasSuffix:@".freenode.net"]) {
 				continue;
 			}
