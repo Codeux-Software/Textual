@@ -1140,9 +1140,9 @@
 		4C8AF6D0158E99520026668C /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
 		4C8AF6D1158E99520026668C /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
 		4C8AF6D2158E99520026668C /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
-		4C8C72AC1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; };
-		4C8C72AD1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; };
-		4C8C72AE1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; };
+		4C8C72AC1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-Wno-implicit-retain-self"; }; };
+		4C8C72AD1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-Wno-implicit-retain-self"; }; };
+		4C8C72AE1F12058000ED72DB /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72A91F12058000ED72DB /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-Wno-implicit-retain-self"; }; };
 		4C8C72B81F1205B600ED72DB /* RCMConnectionManagerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72B61F1205B600ED72DB /* RCMConnectionManagerProtocol.h */; };
 		4C8C72B91F1205B600ED72DB /* RCMConnectionManagerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72B61F1205B600ED72DB /* RCMConnectionManagerProtocol.h */; };
 		4C8C72BA1F1205B600ED72DB /* RCMConnectionManagerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72B61F1205B600ED72DB /* RCMConnectionManagerProtocol.h */; };
