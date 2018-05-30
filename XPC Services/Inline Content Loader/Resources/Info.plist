@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>CFBundleDisplayName</key>
 	<string>Inline Content Loader</string>
 	<key>CFBundleExecutable</key>
@@ -14,11 +19,8 @@
 	<string>XPC!</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2017, 2018 Codeux Software, LLC. All rights reserved.</string>
 	<key>XPCService</key>
 	<dict>
 		<key>ServiceType</key>
