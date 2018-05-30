@@ -104,6 +104,8 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 @property (readonly, copy) NSString *encodedMessageTagString;
 @property (readonly, copy) NSString *decodedMessageTagString;
+
+@property (getter=isModeSymbol, readonly) BOOL modeSymbol;
 @end
 
 NS_ASSUME_NONNULL_END
