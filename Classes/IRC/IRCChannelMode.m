@@ -263,7 +263,16 @@ ClassWithDesignatedInitializerInitMethod
 
 - (NSArray<NSString *> *)unwantedModes
 {
-	return @[@"b", @"e", @"I", @"q"];
+	IRCISupportInfo *supportInfo = self.supportInfo;
+
+	/* Using some random value in place of mode if there is none
+	 is easier than creating a mutable array with four if statements. */
+	return @[
+		 /* ban */			 	(([supportInfo modeSymbolForList:IRCISupportInfoBanListType]) ?: @"not supported: b"),
+		 /* ban exception */	(([supportInfo modeSymbolForList:IRCISupportInfoBanExceptionListType]) ?: @"not supported: e"),
+		 /* invite exception */	(([supportInfo modeSymbolForList:IRCISupportInfoInviteExceptionListType]) ?: @"not supported: I"),
+		 /* quiet */			(([supportInfo modeSymbolForList:IRCISupportInfoQuietListType]) ?: @"not supported: q")
+	];
 }
 
 - (BOOL)modeIsPermitted:(NSString *)modeSymbol

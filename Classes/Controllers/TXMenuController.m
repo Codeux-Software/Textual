@@ -640,10 +640,25 @@ NS_ASSUME_NONNULL_BEGIN
 		case MTMMChannelModifyTopic: // "Modify Topic"
 		case MTMMChannelModesMenu: // "Modes"
 		case MTMMChannelListOfBans: // "List of Bans"
+		{
+			return (u.isLoggedIn && c.isActive);
+		}
 		case MTMMChannelListOfBanExceptions: // "List of Ban Exceptions"
+		{
+			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoBanExceptionListType] == NO);
+
+			return (u.isLoggedIn && c.isActive);
+		}
 		case MTMMChannelListOfInviteExceptions: // "List of Invite Exceptions"
+		{
+			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoInviteExceptionListType] == NO);
+
+			return (u.isLoggedIn && c.isActive);
+		}
 		case MTMMChannelListOfQuiets: // "List of Quiets"
 		{
+			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoQuietListType] == NO);
+
 			return (u.isLoggedIn && c.isActive);
 		}
 

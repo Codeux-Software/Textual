@@ -37,6 +37,7 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
+#import "NSStringHelper.h"
 #import "TLOLanguagePreferences.h"
 #import "IRC.h"
 #import "IRCClientPrivate.h"
@@ -59,6 +60,8 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *channelNamePrefixes;
 @property (nonatomic, copy, readwrite) NSDictionary<NSString *, NSNumber *> *channelModes;
 @property (nonatomic, copy, readwrite) NSDictionary<NSString *, NSArray *> *userModeSymbols;
+@property (nonatomic, copy, readwrite, nullable) NSString *banExceptionModeSymbol;
+@property (nonatomic, copy, readwrite, nullable) NSString *inviteExceptionModeSymbol;
 @property (nonatomic, copy, readwrite, nullable) NSString *networkName;
 @property (nonatomic, copy, readwrite, nullable) NSString *networkNameFormatted;
 @end
@@ -198,7 +201,19 @@ ClassWithDesignatedInitializerInitMethod
 			}
 		}
 
-		if ([segmentKey isEqualIgnoringCase:@"MONITOR"]) {
+		if ([segmentKey isEqualIgnoringCase:@"EXCEPTS"]) {
+			if (segmentValue.isModeSymbol) {
+				self.banExceptionModeSymbol = segmentValue;
+			} else {
+				self.banExceptionModeSymbol = @"e";
+			}
+		} else if ([segmentKey isEqualIgnoringCase:@"INVEX"]) {
+			if (segmentValue.isModeSymbol) {
+				self.inviteExceptionModeSymbol = segmentValue;
+			} else {
+				self.inviteExceptionModeSymbol = @"I";
+			}
+		} else if ([segmentKey isEqualIgnoringCase:@"MONITOR"]) {
 			// freenode advertises support for MONITOR but does not respond to command
 			/*
 			 Update as of May 30, 2018:
@@ -536,6 +551,43 @@ ClassWithDesignatedInitializerInitMethod
 - (BOOL)configurationReceived
 {
 	return (self.cachedConfiguration.count > 0);
+}
+
+- (BOOL)isListSupported:(IRCISupportInfoListType)listType
+{
+	return ([self modeSymbolForList:listType] != nil);
+}
+
+- (nullable NSString *)modeSymbolForList:(IRCISupportInfoListType)listType
+{
+	switch (listType) {
+		case IRCISupportInfoBanListType:
+		{
+			return @"b";
+		}
+		case IRCISupportInfoBanExceptionListType:
+		{
+			return self.banExceptionModeSymbol;
+		}
+		case IRCISupportInfoInviteExceptionListType:
+		{
+			return self.inviteExceptionModeSymbol;
+		}
+		case IRCISupportInfoQuietListType:
+		{
+			/* +q is used by some servers as the user mode for channel owner.
+			 If this mode is a user mode, then hide the menu item. */
+			if ([self modeSymbolIsUserPrefix:@"q"]) {
+				return nil;
+			}
+
+			return @"q";
+		}
+		default:
+		{
+			return nil;
+		}
+	} // switch
 }
 
 @end

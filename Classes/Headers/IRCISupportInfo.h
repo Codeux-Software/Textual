@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class IRCModeInfo;
 
+typedef NS_ENUM(NSUInteger, IRCISupportInfoListType)
+{
+	IRCISupportInfoBanListType,
+	IRCISupportInfoBanExceptionListType,
+	IRCISupportInfoInviteExceptionListType,
+	IRCISupportInfoQuietListType
+};
+
 #define IRCISupportInfoHighestUserPrefixRank			100
 
 #define IRCISupportUserModeSymbolsSymbolsKey			@"modeSymbols"
@@ -54,6 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;
 @property (readonly, copy) NSDictionary<NSString *, NSNumber *> *channelModes;
 @property (readonly, copy) NSDictionary<NSString *, NSArray *> *userModeSymbols;
+@property (readonly, copy, nullable) NSString *banExceptionModeSymbol;
+@property (readonly, copy, nullable) NSString *inviteExceptionModeSymbol;
 @property (readonly, copy, nullable) NSString *serverAddress;
 @property (readonly, copy, nullable) NSString *networkName;
 @property (readonly, copy, nullable) NSString *networkNameFormatted;
@@ -71,6 +81,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol;
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter;
+
+- (BOOL)isListSupported:(IRCISupportInfoListType)listType;
+
+- (nullable NSString *)modeSymbolForList:(IRCISupportInfoListType)listType;
 @end
 
 NS_ASSUME_NONNULL_END
