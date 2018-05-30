@@ -14,6 +14,8 @@
 	<string>XPC!</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2016 - 2018 Codeux Software, LLC. All rights reserved.</string>
 	<key>XPCService</key>
 	<dict>
 		<key>ServiceType</key>
