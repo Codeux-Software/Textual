@@ -6339,7 +6339,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSParameterAssert(text != nil);
 
-	NSAssertReturn([m paramsCount] > 0);
+	NSAssertReturn([m paramsCount] > 1);
 
 	/* Allow empty actions but no other type */
 	if (text.length == 0) {
@@ -7590,7 +7590,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(m != nil);
 
-	NSAssertReturn([m paramsCount] > 0);
+	NSAssertReturn([m paramsCount] == 1);
 
 	/* Print only messages target specific channels which means
 	 the index of incoming data will be different */
@@ -8910,7 +8910,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 5: // RPL_ISUPPORT
 		{
-			NSAssertReturn([m paramsCount] >= 2);
+			NSAssertReturn([m paramsCount] >= 4);
 
 			[self.supportInfo processConfigurationData:[m sequence:1]];
 
@@ -8924,7 +8924,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 10: // RPL_REDIR
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 4);
 
 			NSString *serverAddress = [m paramAt:0];
 			NSString *serverPort = [m paramAt:1];
@@ -9037,7 +9037,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 290: // RPL_CAPAB (freenode)
 		{
-			NSAssertReturn([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] == 2);
 
 			NSString *kind = [m paramAt:1];
 
@@ -9055,7 +9055,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 301: // RPL_AWAY
 		{
-			NSAssertReturn([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSString *awayNickname = [m paramAt:1];
 			NSString *awayComment = [m paramAt:2];
@@ -9225,7 +9225,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 312: // RPL_WHOISSERVER
 		{
-			NSAssertReturn([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] == 4);
 
 			NSAssertReturn(printMessage);
 
@@ -9258,7 +9258,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 317: // RPL_WHOISIDLE
 		{
-			NSAssertReturn([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] == 4);
 
 			NSAssertReturn(printMessage);
 
@@ -9285,7 +9285,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 319: // RPL_WHOISCHANNELS
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSAssertReturn(printMessage);
 
@@ -9355,7 +9355,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 332: // RPL_TOPIC
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSString *channelName = [m paramAt:1];
 			NSString *topic = [m paramAt:2];
@@ -9383,7 +9383,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 333: // RPL_TOPICWHOTIME
 		{
-			NSAssertReturn([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] == 4);
 
 			NSString *channelName = [m paramAt:1];
 
@@ -9421,7 +9421,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 341: // RPL_INVITING
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSAssertReturn(printMessage);
 
@@ -9782,7 +9782,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 366: // RPL_ENDOFNAMES
 		{
-			NSAssertReturn([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSString *channelName = [m paramAt:1];
 
@@ -9816,7 +9816,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 320: // RPL_WHOISSPECIAL
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSAssertReturn(printMessage);
 
@@ -9880,7 +9880,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 330: // RPL_WHOISACCOUNT (ircu)
 		{
-			NSAssertReturn([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] == 4);
 
 			NSAssertReturn(printMessage);
 
@@ -10017,7 +10017,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 328: // RPL_CHANNEL_URL
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSAssertReturn(printMessage);
 
@@ -10226,7 +10226,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case 900: // RPL_LOGGEDIN
 		{
-			NSAssertReturn([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] == 4);
 
 			[self enableCapability:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL];
 
