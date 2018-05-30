@@ -109,10 +109,13 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return [self.class sharedUserDefaults];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (nullable instancetype)initWithUser:(NSString *)username
 {
 	return [self.class sharedUserDefaults];
 }
+#pragma clang diagnostic pop
 #pragma clang diagnostic pop
 
 - (void)_setObject:(nullable id)value forKey:(NSString *)defaultName
