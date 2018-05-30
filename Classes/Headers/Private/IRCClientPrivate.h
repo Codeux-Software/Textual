@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 enum {
 	ClientIRCv3SupportedCapabilitySASLGeneric			= 1 << 22,
-	ClientIRCv3SupportedCapabilitySASLPlainText		= 1 << 23, // YES if SASL=plain CAP is supported
-	ClientIRCv3SupportedCapabilitySASLExternal		= 1 << 24, // YES if SASL=external CAP is supported
-	ClientIRCv3SupportedCapabilityZNCServerTime		= 1 << 25, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapabilityZNCServerTimeISO	= 1 << 26, // YES if the ZNC vendor specific CAP supported
-	ClientIRCv3SupportedCapabilityZNCPlaybackModule	= 1 << 27, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilitySASLPlainText			= 1 << 23, // YES if SASL=plain CAP is supported
+	ClientIRCv3SupportedCapabilitySASLExternal			= 1 << 24, // YES if SASL=external CAP is supported
+	ClientIRCv3SupportedCapabilityZNCServerTime			= 1 << 25, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityZNCServerTimeISO		= 1 << 26, // YES if the ZNC vendor specific CAP supported
+	ClientIRCv3SupportedCapabilityZNCPlaybackModule		= 1 << 27, // YES if the ZNC vendor specific CAP supported
 	ClientIRCv3SupportedCapabilityPlanioPlayback		= 1 << 28  // YES if the plan.io vendor specific CAP supported.
 };
 

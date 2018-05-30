@@ -6114,6 +6114,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				break;
 			}
+			case IRCPrivateCommandChghostIndex:
+			{
+				[self receiveChangeHost:message];
+
+				break;
+			}
 		} // switch
 	}
 
@@ -8069,6 +8075,36 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
+- (void)receiveChangeHost:(IRCMessage *)m
+{
+	NSParameterAssert(m != nil);
+
+	NSAssertReturn([m paramsCount] == 2);
+
+	NSString *username = [m paramAt:0];
+
+	if ([username isHostmaskUsernameOn:self] == NO) {
+		LogToConsole("Username ('%@') received from CHGHOST command is improperly formatted", username);
+
+		return;
+	}
+
+	NSString *address = [m paramAt:1];
+
+	if ([address isHostmaskAddressOn:self] == NO) {
+		LogToConsole("Address ('%@') received from CHGHOST command is improperly formatted", address);
+
+		return;
+	}
+
+	NSString *nickname = m.senderNickname;
+
+	[self modifyUserUserWithNickname:nickname withBlock:^(IRCUserMutable *userMutable) {
+		userMutable.username = username;
+		userMutable.address = address;
+	}];
+}
+
 #pragma mark -
 #pragma mark BATCH Command
 
@@ -8187,6 +8223,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case ClientIRCv3SupportedCapabilityChangeHost:
+		{
+			stringValue = @"chghost";
+
+			break;
+		}
 		case ClientIRCv3SupportedCapabilityEchoMessage:
 		{
 			stringValue = @"echo-message";
@@ -8302,6 +8344,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return ClientIRCv3SupportedCapabilityAwayNotify;
 	} else if ([capabilityString isEqualIgnoringCase:@"batch"]) {
 		return ClientIRCv3SupportedCapabilityBatch;
+	} else if ([capabilityString isEqualIgnoringCase:@"chghost"]) {
+		return ClientIRCv3SupportedCapabilityChangeHost;
 	} else if ([capabilityString isEqualIgnoringCase:@"echo-message"]) {
 		return ClientIRCv3SupportedCapabilityEchoMessage;
 	} else if ([capabilityString isEqualIgnoringCase:@"multi-prefix"]) {
@@ -8351,6 +8395,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	appendValue(ClientIRCv3SupportedCapabilityAwayNotify);
 	appendValue(ClientIRCv3SupportedCapabilityBatch);
+	appendValue(ClientIRCv3SupportedCapabilityChangeHost);
 	appendValue(ClientIRCv3SupportedCapabilityEchoMessage);
 	appendValue(ClientIRCv3SupportedCapabilityIdentifyCTCP);
 	appendValue(ClientIRCv3SupportedCapabilityIdentifyMsg);
@@ -8388,6 +8433,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			return
 			(capability == ClientIRCv3SupportedCapabilityAwayNotify				||
 			 capability == ClientIRCv3SupportedCapabilityBatch					||
+			 capability == ClientIRCv3SupportedCapabilityChangeHost				||
 			 capability == ClientIRCv3SupportedCapabilityEchoMessage			||
 			 capability == ClientIRCv3SupportedCapabilityIdentifyCTCP			||
 			 capability == ClientIRCv3SupportedCapabilityIdentifyMsg			||
@@ -8446,17 +8492,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	return
-	([capabilityString isEqualIgnoringCase:@"away-notify"]			||
+	([capabilityString isEqualIgnoringCase:@"away-notify"]				||
 	 [capabilityString isEqualIgnoringCase:@"batch"]					||
+	 [capabilityString isEqualIgnoringCase:@"chghost"]					||
 	 [capabilityString isEqualIgnoringCase:@"identify-ctcp"]			||
-	 [capabilityString isEqualIgnoringCase:@"identify-msg"]			||
-	 [capabilityString isEqualIgnoringCase:@"multi-prefix"]			||
-	 [capabilityString isEqualIgnoringCase:@"sasl"]					||
-	 [capabilityString isEqualIgnoringCase:@"server-time"]			||
+	 [capabilityString isEqualIgnoringCase:@"identify-msg"]				||
+	 [capabilityString isEqualIgnoringCase:@"multi-prefix"]				||
+	 [capabilityString isEqualIgnoringCase:@"sasl"]						||
+	 [capabilityString isEqualIgnoringCase:@"server-time"]				||
 	 [capabilityString isEqualIgnoringCase:@"userhost-in-names"]		||
-	 [capabilityString isEqualIgnoringCase:@"plan.io/playback"]		||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/playback"]		||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/self-message"]	||
+	 [capabilityString isEqualIgnoringCase:@"plan.io/playback"]			||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/playback"]			||
+	 [capabilityString isEqualIgnoringCase:@"znc.in/self-message"]		||
 	 [capabilityString isEqualIgnoringCase:@"znc.in/server-time"]		||
 	 [capabilityString isEqualIgnoringCase:@"znc.in/server-time-iso"]	||
 	 [capabilityString isEqualIgnoringCase:@"znc.in/tlsinfo"]);

@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>1057</real>
+		<real>1058</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -55,6 +55,13 @@
 		<integer>1006</integer>
 		<key>outgoingColonIndex</key>
 		<integer>0</integer>
+	</dict>
+	<key>chghost</key>
+	<dict>
+		<key>indexValue</key>
+		<real>1057</real>
+		<key>outgoingColonIndex</key>
+		<integer>999</integer>
 	</dict>
 	<key>error</key>
 	<dict>
