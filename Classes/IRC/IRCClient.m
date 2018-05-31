@@ -4841,7 +4841,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (isOperatorMessage) {
-				channelNamePrefix = [self.supportInfo userPrefixForModeSymbol:@"o"];
+				channelNamePrefix = [self.supportInfo statusMessagePrefixForModeSymbol:@"o"];
 
 				/* If the user is sending an operator message and the user mode +o does 
 				 not exist, then fail here. The user may be trying to send something 
@@ -4901,7 +4901,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 of users, then we first have to remove that prefix to perform
 				 our own processing of the target. When it comes time to send 
 				 the message, then the prefix is added back to the target name. */
-				NSString *destinationNamePrefix = [self.supportInfo extractUserPrefixFromChannelNamed:destinationName];
+				NSString *destinationNamePrefix = [self.supportInfo extractStatusMessagePrefixFromChannelNamed:destinationName];
 
 				if (destinationNamePrefix.length == 0) {
 					destinationNamePrefix = channelNamePrefix;
@@ -6366,7 +6366,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 addressed to only the voiced users of #channel. We don't care about this
 	 mode but we still have to remove it while also taking into account
 	 channels who use a character other than the pound symbol as their prefix. */
-	NSString *targetPrefix = [self.supportInfo extractUserPrefixFromChannelNamed:target];
+	NSString *targetPrefix = [self.supportInfo extractStatusMessagePrefixFromChannelNamed:target];
 
 	if (targetPrefix.length == 1) {
 		target = [target substringFromIndex:1];

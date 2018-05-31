@@ -60,6 +60,7 @@ typedef NS_ENUM(NSUInteger, IRCISupportInfoListType)
 @property (readonly) NSUInteger maximumNicknameLength;
 @property (readonly) NSUInteger maximumModeCount;
 @property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;
+@property (readonly, copy) NSArray<NSString *> *statusMessageModeSymbols;
 @property (readonly, copy) NSDictionary<NSString *, NSNumber *> *channelModes;
 @property (readonly, copy) NSDictionary<NSString *, NSArray *> *userModeSymbols;
 @property (readonly, copy, nullable) NSString *banExceptionModeSymbol;
@@ -75,9 +76,12 @@ typedef NS_ENUM(NSUInteger, IRCISupportInfoListType)
 - (BOOL)characterIsUserPrefix:(NSString *)character;
 - (BOOL)modeSymbolIsUserPrefix:(NSString *)modeSymbol;
 
+- (nullable NSString *)statusMessagePrefixForModeSymbol:(NSString *)modeSymbol;
+- (NSString *)extractStatusMessagePrefixFromChannelNamed:(NSString *)channel;
+
 - (NSUInteger)rankForUserPrefixWithMode:(NSString *)modeSymbol; // Starts at 100; 100 = highest rank
 
-- (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel;
+- (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel TEXTUAL_DEPRECATED("Use -extractStatusMessagePrefixFromChannelNamed: instead");
 
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol;
 - (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParameter:(nullable NSString *)modeParameter;

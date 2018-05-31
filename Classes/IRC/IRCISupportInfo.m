@@ -58,6 +58,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @property (nonatomic, assign, readwrite) NSUInteger maximumNicknameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumModeCount;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *channelNamePrefixes;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *statusMessageModeSymbols;
 @property (nonatomic, copy, readwrite) NSDictionary<NSString *, NSNumber *> *channelModes;
 @property (nonatomic, copy, readwrite) NSDictionary<NSString *, NSArray *> *userModeSymbols;
 @property (nonatomic, copy, readwrite, nullable) NSString *banExceptionModeSymbol;
@@ -113,6 +114,8 @@ ClassWithDesignatedInitializerInitMethod
 		@"o" : @(_channelUserModeValue),
 		@"v" : @(_channelUserModeValue)
 	};
+
+	self.statusMessageModeSymbols = @[];
 }
 
 - (void)processConfigurationData:(NSString *)configurationData
@@ -198,6 +201,8 @@ ClassWithDesignatedInitializerInitMethod
 				}
 			} else if ([segmentKey isEqualIgnoringCase:@"PREFIX"]) {
 				[self parseUserModeSymbols:segmentValue];
+			} else if ([segmentKey isEqualIgnoringCase:@"STATUSMSG"]) {
+				self.statusMessageModeSymbols = segmentValue.characterStringBuffer;
 			}
 		}
 
@@ -507,8 +512,23 @@ ClassWithDesignatedInitializerInitMethod
 	return (IRCISupportInfoHighestUserPrefixRank - modeSymbolIndex);
 }
 
+- (NSString *)extractStatusMessagePrefixFromChannelNamed:(NSString *)channel
+{
+	NSArray *characters = self.statusMessageModeSymbols;
+
+	return [self _extractCharacters:characters fromChannelNamed:channel];
+}
+
 - (NSString *)extractUserPrefixFromChannelNamed:(NSString *)channel
 {
+	NSArray *characters = self.userModeSymbols[@"characters"];
+
+	return [self _extractCharacters:characters fromChannelNamed:channel];
+}
+
+- (NSString *)_extractCharacters:(NSArray<NSString *> *)characters fromChannelNamed:(NSString *)channel
+{
+	NSParameterAssert(characters != nil);
 	NSParameterAssert(channel != nil);
 
 	if (channel.length < 2) {
@@ -516,8 +536,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	NSArray *channelNamePrefixes = self.channelNamePrefixes;
-
-	NSArray *characters = self.userModeSymbols[@"characters"];
 
 	for (NSString *character in characters) {
 		if ([channel hasPrefix:character] == NO) {
@@ -588,6 +606,23 @@ ClassWithDesignatedInitializerInitMethod
 			return nil;
 		}
 	} // switch
+}
+
+- (nullable NSString *)statusMessagePrefixForModeSymbol:(NSString *)modeSymbol
+{
+	NSParameterAssert(modeSymbol != nil);
+
+	NSString *character = [self userPrefixForModeSymbol:modeSymbol];
+
+	if (character == nil) {
+		return nil;
+	}
+
+	if ([self.statusMessageModeSymbols containsObject:character] == NO) {
+		return nil;
+	}
+
+	return character;
 }
 
 @end
