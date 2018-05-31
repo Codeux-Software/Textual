@@ -3222,7 +3222,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					continue;
 				}
 
-				[mainWindow() clearContentsOfClient:self];
+				[mainWindow() clearContentsOfClient:client];
 
 				for (IRCChannel *channel in client.channelList) {
 					[mainWindow() clearContentsOfChannel:channel];
