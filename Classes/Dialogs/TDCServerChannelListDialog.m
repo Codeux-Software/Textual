@@ -240,13 +240,17 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSIndexSet *selectedRows = self.channelListTable.selectedRowIndexes;
 
+	NSMutableArray<NSString *> *channelNames = [NSMutableArray arrayWithCapacity:selectedRows.count];
+
 	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 		TDCServerChannelListDialogEntry *channelEntry = self.channelListController.arrangedObjects[index];
 
-		if ([self.delegate respondsToSelector:@selector(serverChannelListDialog:joinChannel:)]) {
-			[self.delegate serverChannelListDialog:self joinChannel:channelEntry.channelName];
-		}
+		[channelNames addObject:channelEntry.channelName];
 	}];
+
+	if ([self.delegate respondsToSelector:@selector(serverChannelListDialog:joinChannels:)]) {
+		[self.delegate serverChannelListDialog:self joinChannels:[channelNames copy]];
+	}
 
 	[self.channelListTable deselectAll:nil];
 }

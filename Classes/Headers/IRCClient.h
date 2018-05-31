@@ -118,13 +118,13 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 @property (readonly) BOOL userIsIdentifiedWithNickServ; // YES if NickServ identification was successful
 @property (readonly) BOOL isWaitingForNickServ;			// YES if NickServ identification is pending
 @property (readonly) BOOL serverHasNickServ;			// YES if NickServ service was found on server
-@property (readonly) BOOL inUserInvokedJoinRequest;
 @property (readonly) BOOL inUserInvokedIsonRequest;
 @property (readonly) BOOL inUserInvokedNamesRequest;
 @property (readonly) BOOL inUserInvokedWhoRequest;
 @property (readonly) BOOL inUserInvokedWhowasRequest;
 @property (readonly) BOOL inUserInvokedWatchRequest;
 @property (readonly) BOOL inUserInvokedModeRequest;
+@property (readonly) BOOL inUserInvokedJoinRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
 @property (readonly) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received
 @property (readonly) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP
 @property (readonly) NSUInteger channelCount;
