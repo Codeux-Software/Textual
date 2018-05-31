@@ -106,6 +106,9 @@
 /* Message buffer session indicator */
 "IRC[1127]" = "Current Session";
 
+/* /away/ command */
+"IRC[1165]" = "You have exceeded the maximum away message length for %1$@ which is %2$ld characters. The end of your away message may have been cut off.";
+
 /* /defaults/ command */
 "IRC[1012]" = "Invalid Syntax. Type “/defaults help” for more information.";
 
@@ -327,4 +330,3 @@
 "IRC[1114]" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
 "IRC[1120]" = "Server closed read stream";
 "IRC[1122]" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
-"IRC[1165]" = "Your away message has been automatically truncated to fit the maximum allowance of %ld characters.";
