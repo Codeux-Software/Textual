@@ -3790,17 +3790,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if ([self stringIsChannelNameOrZero:targetChannelName] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
-				
-				targetChannel = [self findChannel:targetChannelName];
 			}
 
-			if (targetChannel.isActive) {
-				[mainWindow() select:targetChannel];
-			} else {
-				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
-				
-				[self send:@"JOIN", targetChannelName, stringIn.string, nil];
-			}
+			[self joinUnlistedChannelsWithStringAndSelectBestMatch:targetChannelName passwords:stringIn.string];
 
 			break;
 		}
@@ -5616,7 +5608,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.connectDelay = 0;
 
-	self.inUserInvokedJoinRequest = NO;
 	self.inUserInvokedModeRequest = NO;
 	self.inUserInvokedNamesRequest = NO;
 	self.inUserInvokedWatchRequest = NO;
@@ -7181,14 +7172,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 
 		self.userHostmask = m.senderHostmask;
-
-		if (self.isAutojoining == NO && self.inUserInvokedJoinRequest) {
-			[mainWindow() expandClient:self];
-
-			[mainWindow() select:channel];
-		}
-
-		[self disableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
 
 		[mainWindow() reloadTreeItem:channel];
 	}
@@ -11617,6 +11600,64 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self send:@"JOIN", channel, password, nil];
 }
 
+- (void)joinUnlistedChannelsWithStringAndSelectBestMatch:(NSString *)channels
+{
+	[self joinUnlistedChannelsWithStringAndSelectBestMatch:channels passwords:nil];
+}
+
+- (void)joinUnlistedChannelsWithStringAndSelectBestMatch:(NSString *)channels passwords:(nullable NSString *)passwords
+{
+	NSParameterAssert(channels != nil);
+
+	if (channels.length == 0) {
+		return;
+	}
+
+	NSArray *targets = [channels componentsSeparatedByString:@","];
+
+	[self joinUnlistedChannelsAndSelectBestMatch:targets passwords:passwords];
+}
+
+- (void)joinUnlistedChannelsAndSelectBestMatch:(NSArray<NSString *> *)channels
+{
+	[self joinUnlistedChannelsAndSelectBestMatch:channels passwords:nil];
+}
+
+- (void)joinUnlistedChannelsAndSelectBestMatch:(NSArray<NSString *> *)channels passwords:(nullable NSString *)passwords
+{
+	NSParameterAssert(channels != nil);
+
+	if (self.isLoggedIn == NO) {
+		return;
+	}
+
+	if (channels.count == 0) {
+		return;
+	}
+
+	__block BOOL performJoin = YES;
+
+	__block IRCChannel *channelToSelect = nil;
+
+	for (NSString *channel in channels) {
+		if (channelToSelect == nil && [self stringIsChannelName:channel]) {
+			channelToSelect = [self findChannelOrCreate:channel];
+
+			performJoin = (channelToSelect.isActive == NO || channels.count > 1);
+
+			break;
+		}
+	}
+
+	if (performJoin) {
+		[self send:@"JOIN", [channels componentsJoinedByString:@","], passwords, nil];
+	}
+
+	if (channelToSelect) {
+		[mainWindow() select:channelToSelect];
+	}
+}
+
 - (void)joinChannels:(NSArray<IRCChannel *> *)channels
 {
 	NSParameterAssert(channels != nil);
@@ -13107,11 +13148,9 @@ present_error:
 	[self requestChannelList];
 }
 
-- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannel:(NSString *)channel
+- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannels:(NSArray<NSString *> *)channels
 {
-	[self enableInUserInvokedCommandProperty:&self->_inUserInvokedJoinRequest];
-
-	[self joinUnlistedChannel:channel];
+	[self joinUnlistedChannelsAndSelectBestMatch:channels];
 }
 
 - (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender

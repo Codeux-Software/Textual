@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 - (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender;
-- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannel:(NSString *)channel;
+- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannels:(NSArray<NSString *> *)channels;
 - (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender;
 @end
 

@@ -1684,9 +1684,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	u.inUserInvokedJoinRequest = YES;
-
 	[u joinChannel:c];
+
+	[mainWindow() select:c];
 }
 
 - (void)leaveChannel:(id)sender
@@ -1785,6 +1785,12 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(sender != nil);
 
+	IRCClient *u = self.selectedClient;
+
+	if (u == nil || u.isLoggedIn == NO) {
+		return;
+	}
+
 	NSString *pointedChannelName = nil;
 
 	if ([sender isKindOfClass:[NSMenuItem class]]) {
@@ -1793,19 +1799,15 @@ NS_ASSUME_NONNULL_BEGIN
 		pointedChannelName = sender;
 	}
 
-	if (pointedChannelName == nil) {
+	if ([u stringIsChannelName:pointedChannelName] == NO) {
 		return;
 	}
 
-	IRCClient *u = self.selectedClient;
+	IRCChannel *c = [u findChannelOrCreate:pointedChannelName];
 
-	if (u == nil || u.isLoggedIn == NO) {
-		return;
-	}
+	[u joinChannel:c];
 
-	u.inUserInvokedJoinRequest = YES;
-
-	[u joinUnlistedChannel:pointedChannelName];
+	[mainWindow() select:c];
 }
 
 - (void)emptyAction:(id)sender
