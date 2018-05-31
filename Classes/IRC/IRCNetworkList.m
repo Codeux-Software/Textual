@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCNetwork *network =
 	[self.listOfNetworks objectPassingTest:^BOOL(IRCNetwork *network, NSUInteger index, BOOL *stop) {
-		return [network.networkName isEqualIgnoringCase:networkName];
+		return [network.networkName isEqualToStringIgnoringCase:networkName];
 	}];
 
 	return network;
@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCNetwork *network =
 	[self.listOfNetworks objectPassingTest:^BOOL(IRCNetwork *network, NSUInteger index, BOOL *stop) {
-		return [network.serverAddress isEqualIgnoringCase:serverAddress];
+		return [network.serverAddress isEqualToStringIgnoringCase:serverAddress];
 	}];
 
 	return network;

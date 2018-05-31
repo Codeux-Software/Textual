@@ -255,7 +255,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			BOOL isLastObject = ((index + 1) == dataSectionsCount);
 
-			if (isLastObject && [section isEqualIgnoringCase:@"needssl"]) {
+			if (isLastObject && [section isEqualToStringIgnoringCase:@"needssl"]) {
 				connectSecurely = YES;
 
 				return;
@@ -324,8 +324,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *tempStore = serverInfoMutable.token;
 
 	/* Secure Socket Layer? */
-	if ([tempStore isEqualIgnoringCase:@"-SSL"] ||
-		[tempStore isEqualIgnoringCase:@"-TLS"])
+	if ([tempStore isEqualToStringIgnoringCase:@"-SSL"] ||
+		[tempStore isEqualToStringIgnoringCase:@"-TLS"])
 	{
 		connectSecurely = YES;
 

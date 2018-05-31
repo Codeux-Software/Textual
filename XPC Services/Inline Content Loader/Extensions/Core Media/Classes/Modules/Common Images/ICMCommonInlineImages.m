@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *p1 = components[0];
 		NSString *p2 = components[1];
 
-		if ([p1 isEqualIgnoringCase:@"image"]) {
+		if ([p1 isEqualToStringIgnoringCase:@"image"]) {
 			return [NSString stringWithFormat:@"http://cl.ly/%@/content", p2];
 		}
 	}

@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
 
-	if ([objectValue isEqualIgnoringCase:@"dark"]) {
+	if ([objectValue isEqualToStringIgnoringCase:@"dark"]) {
 		return YES;
 	} else {
 		return NO;
