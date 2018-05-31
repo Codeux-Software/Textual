@@ -4042,8 +4042,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case IRCLocalCommandMIndex:
-		case IRCLocalCommandModeIndex:
+		case IRCLocalCommandMIndex: // Command: M
+		case IRCLocalCommandModeIndex: // Command: MODE
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
