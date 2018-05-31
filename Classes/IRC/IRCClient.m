@@ -1105,6 +1105,30 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [listOfChanges copy];
 }
 
+- (void)separateTargetsInString:(NSString *)targetString withCompletionBlock:(void (NS_NOESCAPE ^)(NSArray<NSString *> *targets))completionBlock
+{
+	NSParameterAssert(targetString != nil);
+	NSParameterAssert(completionBlock != nil);
+
+	NSArray *targets = [targetString componentsSeparatedByString:@","];
+
+	completionBlock(targets);
+}
+
+- (void)enumerateTargetsInString:(NSString *)targetString withBlock:(void (^)(NSString *target, NSUInteger atIndex, NSUInteger ofTotal, BOOL *stop))block
+{
+	NSParameterAssert(targetString != nil);
+	NSParameterAssert(block != nil);
+
+	NSArray *targets = [targetString componentsSeparatedByString:@","];
+
+	NSUInteger targetsCount = targets.count;
+
+	[targets enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		block(object, index, targetsCount, stop);
+	}];
+}
+
 #pragma mark -
 #pragma mark Highlights
 
