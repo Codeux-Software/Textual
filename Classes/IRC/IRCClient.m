@@ -3912,6 +3912,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					reason = [TPCPreferences defaultKickMessage];
 				}
 
+				NSUInteger reasonMaximumLength = self.supportInfo.maximumKickLength;
+
+				if (reasonMaximumLength > 0 && reason.length > reasonMaximumLength) {
+					[self printDebugInformation:TXTLS(@"IRC[1167]", self.networkNameAlt, reasonMaximumLength)];
+				}
+
 				[self send:@"KICK", targetChannelName, nickname, reason, nil];
 			}
 

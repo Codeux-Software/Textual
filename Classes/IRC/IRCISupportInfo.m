@@ -56,6 +56,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @property (nonatomic, assign, readwrite) NSUInteger maximumAwayLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumChannelNameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumKeyLength;
+@property (nonatomic, assign, readwrite) NSUInteger maximumKickLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumNicknameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumTopicLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumModeCount;
@@ -191,6 +192,12 @@ ClassWithDesignatedInitializerInitMethod
 
 				if (maximumKeyLength > 0) {
 					self.maximumKeyLength = maximumKeyLength;
+				}
+			} else if ([segmentKey isEqualIgnoringCase:@"KICKLEN"]) {
+				NSInteger maximumKickLength = segmentValue.integerValue;
+
+				if (maximumKickLength > 0) {
+					self.maximumKickLength = maximumKickLength;
 				}
 			} else if ([segmentKey isEqualIgnoringCase:@"MODES"]) {
 				NSInteger maximumModesCount = segmentValue.integerValue;
