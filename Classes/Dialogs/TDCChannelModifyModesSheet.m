@@ -37,10 +37,13 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "IRCChannelMode.h"
+#import "IRCISupportInfo.h"
 #import "IRCModeInfo.h"
+#import "TDCAlert.h"
 #import "TDCChannelModifyModesSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -62,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTextField *kText;
 @property (nonatomic, weak) IBOutlet NSTextField *lText;
 @property (nonatomic, copy) NSString *channelUserLimitMode;
+@property (nonatomic, assign) BOOL secretKeyLengthAlertDisplayed;
 
 - (IBAction)onChangeCheck:(id)sender;
 @end
@@ -166,6 +170,44 @@ ClassWithDesignatedInitializerInitMethod
 			self.sCheck.state = NSOffState;
 		}
 	}
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+	if (aNotification.object == self.kText) {
+		[self updateSecretKeyLengthAlert];
+	}
+}
+
+- (void)updateSecretKeyLengthAlert
+{
+	NSUInteger maximumKeyLength = self.client.supportInfo.maximumKeyLength;
+
+	if (maximumKeyLength == 0) {
+		return;
+	}
+
+	NSUInteger currentKeyLength = self.kText.stringValue.length;
+
+	if (currentKeyLength <= maximumKeyLength) {
+		return;
+	}
+
+	if (self.secretKeyLengthAlertDisplayed == NO) {
+		self.secretKeyLengthAlertDisplayed = YES;
+	} else {
+		return;
+	}
+
+	[TDCAlert alertSheetWithWindow:self.sheet
+							  body:TXTLS(@"TDCChannelModifyModesSheet[1000][2]")
+							 title:TXTLS(@"TDCChannelModifyModesSheet[1000][1]", self.client.networkNameAlt, maximumKeyLength)
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil
+					suppressionKey:@"maximum_secret_key_length"
+				   suppressionText:nil
+				   completionBlock:nil];
 }
 
 - (void)ok:(id)sender
