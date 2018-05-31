@@ -40,6 +40,7 @@
 #import "NSViewHelper.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "IRCISupportInfo.h"
 #import "TPCPreferencesLocal.h"
 #import "TLOLanguagePreferences.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
@@ -57,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite, nullable) NSString *clientId;
 @property (nonatomic, copy, readwrite, nullable) NSString *channelId;
 @property (nonatomic, assign) BOOL isNewConfiguration;
+@property (nonatomic, assign) BOOL secretKeyLengthAlertDisplayed;
 @property (nonatomic, copy) NSArray *navigationTree;
 @property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
 @property (nonatomic, weak) IBOutlet NSButton *disableInlineMediaCheck;
@@ -299,6 +301,44 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
 	[self updateOkButton];
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+	if (aNotification.object == self.secretKeyTextField) {
+		[self updateSecretKeyLengthAlert];
+	}
+}
+
+- (void)updateSecretKeyLengthAlert
+{
+	NSUInteger maximumKeyLength = self.client.supportInfo.maximumKeyLength;
+
+	if (maximumKeyLength == 0) {
+		return;
+	}
+
+	NSUInteger currentKeyLength = self.secretKeyTextField.stringValue.length;
+
+	if (currentKeyLength <= maximumKeyLength) {
+		return;
+	}
+
+	if (self.secretKeyLengthAlertDisplayed == NO) {
+		self.secretKeyLengthAlertDisplayed = YES;
+	} else {
+		return;
+	}
+
+	[TDCAlert alertSheetWithWindow:self.sheet
+							  body:TXTLS(@"TDCChannelPropertiesSheet[1000][2]")
+							 title:TXTLS(@"TDCChannelPropertiesSheet[1000][1]", self.client.networkNameAlt, maximumKeyLength)
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil
+					suppressionKey:@"maximum_secret_key_length"
+				   suppressionText:nil
+				   completionBlock:nil];
 }
 
 - (void)addConfigurationDidChangeObserver

@@ -636,6 +636,12 @@
 		4C5C6C2520BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2320BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings */; };
 		4C5C6C2620BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2320BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings */; };
 		4C5C6C2720BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2320BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings */; };
+		4C5C6C2A20BF83650037C0B8 /* TDCChannelPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2820BF83640037C0B8 /* TDCChannelPropertiesSheet.strings */; };
+		4C5C6C2B20BF83650037C0B8 /* TDCChannelPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2820BF83640037C0B8 /* TDCChannelPropertiesSheet.strings */; };
+		4C5C6C2C20BF83650037C0B8 /* TDCChannelPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2820BF83640037C0B8 /* TDCChannelPropertiesSheet.strings */; };
+		4C5C6C2F20BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */; };
+		4C5C6C3020BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */; };
+		4C5C6C3120BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */; };
 		4C5CCDD71D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */; };
 		4C5CCDD81D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */; };
 		4C5CCDD91D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */; };
@@ -2252,6 +2258,8 @@
 		4C5B42331D59439C00B7C72A /* IRCUserRelations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCUserRelations.m; path = Classes/IRC/IRCUserRelations.m; sourceTree = "<group>"; };
 		4C5BA4E616F1302F00A96CA2 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5C6C2420BF79BE0037C0B8 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCChannelModifyTopicSheet.strings"; sourceTree = "<group>"; };
+		4C5C6C2920BF83640037C0B8 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCChannelPropertiesSheet.strings"; sourceTree = "<group>"; };
+		4C5C6C2E20BF85380037C0B8 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCChannelModifyModesSheet.strings"; sourceTree = "<group>"; };
 		4C5CCDD61D3D3BEE00D7E19D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCChannelSpotlightController.xib"; sourceTree = SOURCE_ROOT; };
 		4C5DD5041D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCContentNavigationOutlineViewPrivate.h; path = Classes/Headers/Private/TVCContentNavigationOutlineViewPrivate.h; sourceTree = "<group>"; };
 		4C5DD5051D1E098600F2E1AE /* TVCDockIconPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCDockIconPrivate.h; path = Classes/Headers/Private/TVCDockIconPrivate.h; sourceTree = "<group>"; };
@@ -3253,7 +3261,9 @@
 				4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */,
 				4CBC769F1CC72B5100484A13 /* TDCChannelBanListSheet.strings */,
 				4CBC76A11CC72B5100484A13 /* TDCChannelInviteSheet.strings */,
+				4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */,
 				4C5C6C2320BF79BE0037C0B8 /* TDCChannelModifyTopicSheet.strings */,
+				4C5C6C2820BF83640037C0B8 /* TDCChannelPropertiesSheet.strings */,
 				4CA20914200EA97E00FD9B80 /* TDCChannelSpotlightController.strings */,
 				4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */,
 				4C25334F1F44393C0003A3F4 /* TDCInAppPurchaseDialog.strings */,
@@ -5371,6 +5381,7 @@
 				4CF40F621AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
 				4C2F6AEB1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */,
 				4C0BA54F1990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
+				4C5C6C2F20BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */,
 				4C0A90101D54D24300B64244 /* TDCBuddyListDialog.xib in Resources */,
 				4C0BA5511990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4CCFA66A1ABCF36A0083620F /* TPWTB_Controls@2x.png in Resources */,
@@ -5403,6 +5414,7 @@
 				4CF40F3A1AC1A59500A26BE0 /* TDCServerChannelListDialog.xib in Resources */,
 				4C0BA56A1990798800857343 /* encryptionLockIconDark.tif in Resources */,
 				4C0BA56B1990798800857343 /* Styles in Resources */,
+				4C5C6C2A20BF83650037C0B8 /* TDCChannelPropertiesSheet.strings in Resources */,
 				4CF40F2A1AC1A59500A26BE0 /* TDCChannelPropertiesSheet.xib in Resources */,
 				4C0BA56C1990798800857343 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
 				4CF40ECE1AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */,
@@ -5427,6 +5439,7 @@
 				4CCFA6681ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F341AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
 				4CE424981F60C3F900CAB5B3 /* TemplateLineTypes.plist in Resources */,
+				4C5C6C2C20BF83650037C0B8 /* TDCChannelPropertiesSheet.strings in Resources */,
 				4CB229261978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
 				4C46F4791943A654004CA8BA /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CC164B01943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */,
@@ -5526,6 +5539,7 @@
 				4CB2294A1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4511943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
+				4C5C6C3120BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */,
 				4CCFA67C1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
 				4CF40F141AC1A59500A26BE0 /* TDCAboutDialog.xib in Resources */,
 				4CB229321978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
@@ -5630,6 +5644,7 @@
 				4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CF40F4B1AC1A59500A26BE0 /* TDCProgressIndicatorSheet.xib in Resources */,
 				4CCDC69F1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings in Resources */,
+				4C5C6C3020BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */,
 				4CF40F1B1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
 				4C46F4621943A654004CA8BA /* FormattingColor_13.png in Resources */,
 				4C77664D1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
@@ -5645,6 +5660,7 @@
 				4C46F4781943A654004CA8BA /* FormattingColor_Rainbow.tif in Resources */,
 				4CCFA6931ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
 				4C092B5C1D7E00CB006C8079 /* RegisteredUserDefaultsInContainer.plist in Resources */,
+				4C5C6C2B20BF83650037C0B8 /* TDCChannelPropertiesSheet.strings in Resources */,
 				4C7766471978CECA00759774 /* MavericksDarkServerListViewDisclosureUp.tif in Resources */,
 				4CBC76CF1CC72B5100484A13 /* TDCPreferencesController.strings in Resources */,
 				4C46F4661943A654004CA8BA /* FormattingColor_15.png in Resources */,
@@ -6568,6 +6584,22 @@
 				4C5C6C2420BF79BE0037C0B8 /* English */,
 			);
 			name = TDCChannelModifyTopicSheet.strings;
+			sourceTree = "<group>";
+		};
+		4C5C6C2820BF83640037C0B8 /* TDCChannelPropertiesSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C5C6C2920BF83640037C0B8 /* English */,
+			);
+			name = TDCChannelPropertiesSheet.strings;
+			sourceTree = "<group>";
+		};
+		4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C5C6C2E20BF85380037C0B8 /* English */,
+			);
+			name = TDCChannelModifyModesSheet.strings;
 			sourceTree = "<group>";
 		};
 		4C5CCDD51D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib */ = {

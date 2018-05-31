@@ -55,6 +55,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @property (nonatomic, copy) NSArray<NSDictionary *> *cachedConfiguration;
 @property (nonatomic, assign, readwrite) NSUInteger maximumAwayLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumChannelNameLength;
+@property (nonatomic, assign, readwrite) NSUInteger maximumKeyLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumNicknameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumTopicLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumModeCount;
@@ -184,6 +185,12 @@ ClassWithDesignatedInitializerInitMethod
 
 				if (channelNamePrefixes.count > 0) {
 					self.channelNamePrefixes = channelNamePrefixes;
+				}
+			} else if ([segmentKey isEqualIgnoringCase:@"KEYLEN"]) {
+				NSInteger maximumKeyLength = segmentValue.integerValue;
+
+				if (maximumKeyLength > 0) {
+					self.maximumKeyLength = maximumKeyLength;
 				}
 			} else if ([segmentKey isEqualIgnoringCase:@"MODES"]) {
 				NSInteger maximumModesCount = segmentValue.integerValue;
