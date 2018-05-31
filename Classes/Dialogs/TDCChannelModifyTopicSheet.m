@@ -37,9 +37,12 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
+#import "TLOLanguagePreferences.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "IRCISupportInfo.h"
 #import "TVCTextViewWithIRCFormatterPrivate.h"
+#import "TDCAlert.h"
 #import "TDCChannelModifyTopicSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -51,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *channelId;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, strong) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
+@property (nonatomic, assign) BOOL topicLengthAlertDisplayed;
 @end
 
 @implementation TDCChannelModifyTopicSheet
@@ -102,6 +106,39 @@ ClassWithDesignatedInitializerInitMethod
 - (void)textDidChange:(NSNotification *)aNotification
 {
 	[self.topicValueTextField textDidChange:aNotification];
+
+	[self updateTopicLengthAlert];
+}
+
+- (void)updateTopicLengthAlert
+{
+	NSUInteger maximumTopicLength = self.client.supportInfo.maximumTopicLength;
+
+	if (maximumTopicLength == 0) {
+		return;
+	}
+
+	NSUInteger currentTopicLength = self.topicValueTextField.stringLength;
+
+	if (currentTopicLength <= maximumTopicLength) {
+		return;
+	}
+
+	if (self.topicLengthAlertDisplayed == NO) {
+		self.topicLengthAlertDisplayed = YES;
+	} else {
+		return;
+	}
+
+	[TDCAlert alertSheetWithWindow:self.sheet
+							  body:TXTLS(@"TDCChannelModifyTopicSheet[1000][2]")
+							 title:TXTLS(@"TDCChannelModifyTopicSheet[1000][1]", self.client.networkNameAlt, maximumTopicLength)
+					 defaultButton:TXTLS(@"Prompts[0005]")
+				   alternateButton:nil
+					   otherButton:nil
+					suppressionKey:@"maximum_topic_length"
+				   suppressionText:nil
+				   completionBlock:nil];
 }
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector

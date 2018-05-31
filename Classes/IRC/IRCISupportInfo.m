@@ -56,6 +56,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 @property (nonatomic, assign, readwrite) NSUInteger maximumAwayLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumChannelNameLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumNicknameLength;
+@property (nonatomic, assign, readwrite) NSUInteger maximumTopicLength;
 @property (nonatomic, assign, readwrite) NSUInteger maximumModeCount;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *channelNamePrefixes;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *statusMessageModeSymbols;
@@ -203,6 +204,12 @@ ClassWithDesignatedInitializerInitMethod
 				[self parseUserModeSymbols:segmentValue];
 			} else if ([segmentKey isEqualIgnoringCase:@"STATUSMSG"]) {
 				self.statusMessageModeSymbols = segmentValue.characterStringBuffer;
+			} else if ([segmentKey isEqualIgnoringCase:@"TOPICLEN"]) {
+				NSInteger maximumTopicLength = segmentValue.integerValue;
+
+				if (maximumTopicLength > 0) {
+					self.maximumTopicLength = maximumTopicLength;
+				}
 			}
 		}
 

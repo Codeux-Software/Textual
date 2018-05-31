@@ -4664,11 +4664,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *topic = stringIn.attributedStringToASCIIFormatting;
 
-			if (topic.length == 0) {
+			NSUInteger topicLength = topic.length;
+
+			if (topicLength == 0) {
 				[self send:@"TOPIC", targetChannelName, nil];
-			} else {
-				[self send:@"TOPIC", targetChannelName, topic, nil];
+
+				return;
 			}
+
+			NSUInteger topicLenghtMaximum = self.supportInfo.maximumTopicLength;
+
+			if (topicLenghtMaximum > 0 && topicLength > topicLenghtMaximum) {
+				[self printDebugInformation:TXTLS(@"IRC[1166]", self.networkNameAlt, topicLenghtMaximum)];
+			}
+
+			[self send:@"TOPIC", targetChannelName, topic, nil];
 
 			break;
 		}
