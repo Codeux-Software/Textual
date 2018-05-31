@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1167 */
+/* Next unusued key: 1168 */
 
 /* Script errors */
 "IRC[1001]" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
@@ -133,6 +133,9 @@
 "IRC[1117]" = "No ignores could be found that matches \002%@\002";
 "IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
 "IRC[1129]" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* /kick/ command */
+"IRC[1167]" = "You have exceeded the maximum kick message length for %1$@ which is %2$ld characters. The end of your kick message may have been cut off.";
 
 /* /lagcheck/ command */
 "IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.0f milliseconds. (Rating: %3$@)";
