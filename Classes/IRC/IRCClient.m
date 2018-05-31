@@ -3811,6 +3811,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			} else {
 				targetChannelName = stringIn.tokenAsString;
 
+				if (targetChannelName.length == 0) {
+					[self printInvalidSyntaxMessageForCommand:command];
+
+					break;
+				}
+
 				if ([self stringIsChannelNameOrZero:targetChannelName] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
