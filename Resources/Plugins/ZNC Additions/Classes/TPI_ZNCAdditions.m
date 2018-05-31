@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Process commands */
-	if ([commandString isEqualIgnoringCase:@"ZNCCERT"])
+	if ([commandString isEqualToStringIgnoringCase:@"ZNCCERT"])
 	{
 		/* Textual is designed not to import partial content. It will either
 		 return the complete certificate chain at this point, or nil. */
@@ -148,8 +148,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* ------ */
 
-	else if ([commandString isEqualIgnoringCase:@"DETACH"] ||
-			 [commandString isEqualIgnoringCase:@"ATTACH"])
+	else if ([commandString isEqualToStringIgnoringCase:@"DETACH"] ||
+			 [commandString isEqualToStringIgnoringCase:@"ATTACH"])
 	{
 		messageString = messageString.trim;
 
@@ -165,7 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		BOOL isAttachEvent = [commandString isEqualIgnoringCase:@"ATTACH"];
+		BOOL isAttachEvent = [commandString isEqualToStringIgnoringCase:@"ATTACH"];
 
 		matchedChannel.autoJoin = isAttachEvent;
 

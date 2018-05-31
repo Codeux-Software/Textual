@@ -120,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		NSString *comparisonValue2 = textAuthor.nickname;
 
-		if ([comparisonValue1 isEqualIgnoringCase:comparisonValue2] == NO) {
+		if ([comparisonValue1 isEqualToStringIgnoringCase:comparisonValue2] == NO) {
 			return NO;
 		}
 

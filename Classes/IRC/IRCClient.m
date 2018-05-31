@@ -1010,7 +1010,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(nickname != nil);
 
-	return [self.userNickname isEqualIgnoringCase:nickname];
+	return [self.userNickname isEqualToStringIgnoringCase:nickname];
 }
 
 - (BOOL)stringIsNickname:(NSString *)string
@@ -2428,7 +2428,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 							  passingTest:^BOOL(IRCChannel *channel, NSUInteger index, BOOL *stop) {
 								  NSString *channelName = channel.name;
 
-								  return [withName isEqualIgnoringCase:channelName];
+								  return [withName isEqualToStringIgnoringCase:channelName];
 							  }];
 
 	if (channelIndex != NSNotFound) {
@@ -3430,11 +3430,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			
 			NSString *stringInString = stringIn.string;
 
-			if ([stringInString isEqualIgnoringCase:@"raw on"])
+			if ([stringInString isEqualToStringIgnoringCase:@"raw on"])
 			{
 				[self createRawDataLogQuery];
 			}
-			else if ([stringInString isEqualIgnoringCase:@"raw off"])
+			else if ([stringInString isEqualToStringIgnoringCase:@"raw off"])
 			{
 				[self destroyRawDataLogQuery];
 			}
@@ -4374,7 +4374,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			{
 				NSString *topic = stringIn.tokenAsString;
 
-				if ([topic isEqualIgnoringCase:@"add"])
+				if ([topic isEqualToStringIgnoringCase:@"add"])
 				{
 					[self printDebugInformation:TXTLS(@"IRC[1163]")];
 					[self printDebugInformation:TXTLS(@"IRC[1158][01]")];
@@ -4396,7 +4396,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					[self printDebugInformation:TXTLS(@"IRC[1158][17]")];
 
 				}
-				else if ([topic isEqualIgnoringCase:@"remove"])
+				else if ([topic isEqualToStringIgnoringCase:@"remove"])
 				{
 					[self printDebugInformation:TXTLS(@"IRC[1163]")];
 					[self printDebugInformation:TXTLS(@"IRC[1162][01]")];
@@ -4407,14 +4407,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					[self printDebugInformation:TXTLS(@"IRC[1162][06]")];
 					[self printDebugInformation:TXTLS(@"IRC[1162][07]")];
 				}
-				else if ([topic isEqualIgnoringCase:@"list"])
+				else if ([topic isEqualToStringIgnoringCase:@"list"])
 				{
 					[self printDebugInformation:TXTLS(@"IRC[1163]")];
 					[self printDebugInformation:TXTLS(@"IRC[1159][01]")];
 					[self printDebugInformation:TXTLS(@"IRC[1159][02]")];
 					[self printDebugInformation:TXTLS(@"IRC[1159][03]")];
 				}
-				else if ([topic isEqualIgnoringCase:@"stop"])
+				else if ([topic isEqualToStringIgnoringCase:@"stop"])
 				{
 					[self printDebugInformation:TXTLS(@"IRC[1163]")];
 					[self printDebugInformation:TXTLS(@"IRC[1160][01]")];
@@ -4423,7 +4423,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					[self printDebugInformation:TXTLS(@"IRC[1160][04]")];
 					[self printDebugInformation:TXTLS(@"IRC[1160][05]")];
 				}
-				else if ([topic isEqualIgnoringCase:@"restart"])
+				else if ([topic isEqualToStringIgnoringCase:@"restart"])
 				{
 					[self printDebugInformation:TXTLS(@"IRC[1163]")];
 					[self printDebugInformation:TXTLS(@"IRC[1161][01]")];
@@ -4522,7 +4522,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					break;
 				}
 
-				if ([identifier isEqualIgnoringCase:@"all"]) {
+				if ([identifier isEqualToStringIgnoringCase:@"all"]) {
 					[self removeTimedCommands];
 
 					[self printDebugInformation:TXTLS(@"IRC[1164]")];
@@ -6622,9 +6622,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* Logic for notices */
 
 		/* Process services */
-		if ([sender isEqualIgnoringCase:@"ChanServ"]) {
+		if ([sender isEqualToStringIgnoringCase:@"ChanServ"]) {
 			[self _receiveText_PrivateNoticeFromChanServ:&query text:&text];
-		} else if ([sender isEqualIgnoringCase:@"NickServ"]) {
+		} else if ([sender isEqualToStringIgnoringCase:@"NickServ"]) {
 			[self _receiveText_PrivateNoticeFromNickServ:&query text:&text];
 		}
 
@@ -7519,7 +7519,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 				case IRCChannelPrivateMessageType:
 				{
-					if ([sender isEqualIgnoringCase:channel.name] == NO) {
+					if ([sender isEqualToStringIgnoringCase:channel.name] == NO) {
 						return;
 					}
 
@@ -7728,7 +7728,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				case IRCChannelPrivateMessageType:
 				{
 					/* Rename private message if one with old name is found */
-					if ([oldNickname isEqualIgnoringCase:channel.name] == NO) {
+					if ([oldNickname isEqualToStringIgnoringCase:channel.name] == NO) {
 						return;
 					}
 
@@ -8362,37 +8362,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(capabilityString != nil);
 
-	if ([capabilityString isEqualIgnoringCase:@"away-notify"]) {
+	if ([capabilityString isEqualToStringIgnoringCase:@"away-notify"]) {
 		return ClientIRCv3SupportedCapabilityAwayNotify;
-	} else if ([capabilityString isEqualIgnoringCase:@"batch"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"batch"]) {
 		return ClientIRCv3SupportedCapabilityBatch;
-	} else if ([capabilityString isEqualIgnoringCase:@"chghost"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"chghost"]) {
 		return ClientIRCv3SupportedCapabilityChangeHost;
-	} else if ([capabilityString isEqualIgnoringCase:@"echo-message"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"echo-message"]) {
 		return ClientIRCv3SupportedCapabilityEchoMessage;
-	} else if ([capabilityString isEqualIgnoringCase:@"multi-prefix"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"multi-prefix"]) {
 		return ClientIRCv3SupportedCapabilityMultiPreifx;
-	} else if ([capabilityString isEqualIgnoringCase:@"identify-msg"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"identify-msg"]) {
 		return ClientIRCv3SupportedCapabilityIdentifyMsg;
-	} else if ([capabilityString isEqualIgnoringCase:@"identify-ctcp"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"identify-ctcp"]) {
 		return ClientIRCv3SupportedCapabilityIdentifyCTCP;
-	} else if ([capabilityString isEqualIgnoringCase:@"sasl"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"sasl"]) {
 		return ClientIRCv3SupportedCapabilitySASLGeneric;
-	} else if ([capabilityString isEqualIgnoringCase:@"server-time"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"server-time"]) {
 		return ClientIRCv3SupportedCapabilityServerTime;
-	} else if ([capabilityString isEqualIgnoringCase:@"userhost-in-names"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"userhost-in-names"]) {
 		return ClientIRCv3SupportedCapabilityUserhostInNames;
-	} else if ([capabilityString isEqualIgnoringCase:@"plan.io/playback"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"plan.io/playback"]) {
 		return ClientIRCv3SupportedCapabilityPlanioPlayback;
-	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/playback"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"znc.in/playback"]) {
 		return ClientIRCv3SupportedCapabilityZNCPlaybackModule;
-	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/self-message"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"znc.in/self-message"]) {
 		return ClientIRCv3SupportedCapabilityZNCSelfMessage;
-	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/server-time"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"znc.in/server-time"]) {
 		return ClientIRCv3SupportedCapabilityZNCServerTime;
-	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/server-time-iso"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"znc.in/server-time-iso"]) {
 		return ClientIRCv3SupportedCapabilityZNCServerTimeISO;
-	} else if ([capabilityString isEqualIgnoringCase:@"znc.in/tlsinfo"]) {
+	} else if ([capabilityString isEqualToStringIgnoringCase:@"znc.in/tlsinfo"]) {
 		return ClientIRCv3SupportedCapabilityZNCCertInfoModule;
 	}
 
@@ -8509,26 +8509,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	// Information about several of these supported CAP
 	// extensions can be found at: http://ircv3.atheme.org
 
-	if ([capabilityString isEqualIgnoringCase:@"echo-message"]) {
+	if ([capabilityString isEqualToStringIgnoringCase:@"echo-message"]) {
 		return [TPCPreferences enableEchoMessageCapability];
 	}
 
 	return
-	([capabilityString isEqualIgnoringCase:@"away-notify"]				||
-	 [capabilityString isEqualIgnoringCase:@"batch"]					||
-	 [capabilityString isEqualIgnoringCase:@"chghost"]					||
-	 [capabilityString isEqualIgnoringCase:@"identify-ctcp"]			||
-	 [capabilityString isEqualIgnoringCase:@"identify-msg"]				||
-	 [capabilityString isEqualIgnoringCase:@"multi-prefix"]				||
-	 [capabilityString isEqualIgnoringCase:@"sasl"]						||
-	 [capabilityString isEqualIgnoringCase:@"server-time"]				||
-	 [capabilityString isEqualIgnoringCase:@"userhost-in-names"]		||
-	 [capabilityString isEqualIgnoringCase:@"plan.io/playback"]			||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/playback"]			||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/self-message"]		||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/server-time"]		||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/server-time-iso"]	||
-	 [capabilityString isEqualIgnoringCase:@"znc.in/tlsinfo"]);
+	([capabilityString isEqualToStringIgnoringCase:@"away-notify"]				||
+	 [capabilityString isEqualToStringIgnoringCase:@"batch"]					||
+	 [capabilityString isEqualToStringIgnoringCase:@"chghost"]					||
+	 [capabilityString isEqualToStringIgnoringCase:@"identify-ctcp"]			||
+	 [capabilityString isEqualToStringIgnoringCase:@"identify-msg"]				||
+	 [capabilityString isEqualToStringIgnoringCase:@"multi-prefix"]				||
+	 [capabilityString isEqualToStringIgnoringCase:@"sasl"]						||
+	 [capabilityString isEqualToStringIgnoringCase:@"server-time"]				||
+	 [capabilityString isEqualToStringIgnoringCase:@"userhost-in-names"]		||
+	 [capabilityString isEqualToStringIgnoringCase:@"plan.io/playback"]			||
+	 [capabilityString isEqualToStringIgnoringCase:@"znc.in/playback"]			||
+	 [capabilityString isEqualToStringIgnoringCase:@"znc.in/self-message"]		||
+	 [capabilityString isEqualToStringIgnoringCase:@"znc.in/server-time"]		||
+	 [capabilityString isEqualToStringIgnoringCase:@"znc.in/server-time-iso"]	||
+	 [capabilityString isEqualToStringIgnoringCase:@"znc.in/tlsinfo"]);
 }
 
 - (void)toggleCapability:(NSString *)capabilityString enabled:(BOOL)enabled
@@ -8540,7 +8540,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(capabilityString != nil);
 
-	if ([capabilityString isEqualIgnoringCase:@"sasl"]) {
+	if ([capabilityString isEqualToStringIgnoringCase:@"sasl"]) {
 		if (enabled) {
 			if ([self sendSASLIdentificationRequest]) {
 				[self pauseCapabilityNegotiation];
@@ -8630,33 +8630,33 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *subcommand = [m paramAt:1];
 	NSString *actions = [m sequence:2];
 
-	if ([command isEqualIgnoringCase:@"CAP"])
+	if ([command isEqualToStringIgnoringCase:@"CAP"])
 	{
-		if ([subcommand isEqualIgnoringCase:@"LS"]) {
+		if ([subcommand isEqualToStringIgnoringCase:@"LS"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
 				[self processPendingCapability:cap];
 			}
-		} else if ([subcommand isEqualIgnoringCase:@"ACK"]) {
+		} else if ([subcommand isEqualToStringIgnoringCase:@"ACK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
 				[self toggleCapability:cap enabled:YES isUpdateRequest:NO];
 			}
-		} else if ([subcommand isEqualIgnoringCase:@"NAK"]) {
+		} else if ([subcommand isEqualToStringIgnoringCase:@"NAK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
 				[self toggleCapability:cap enabled:NO isUpdateRequest:NO];
 			}
-		} else if ([subcommand isEqualIgnoringCase:@"NEW"]) {
+		} else if ([subcommand isEqualToStringIgnoringCase:@"NEW"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
 				[self toggleCapability:cap enabled:YES isUpdateRequest:YES];
 			}
-		} else if ([subcommand isEqualIgnoringCase:@"DEL"]) {
+		} else if ([subcommand isEqualToStringIgnoringCase:@"DEL"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
@@ -8666,7 +8666,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		[self sendNextCapability];
 	}
-	else if ([command isEqualIgnoringCase:@"AUTHENTICATE"])
+	else if ([command isEqualToStringIgnoringCase:@"AUTHENTICATE"])
 	{
 		if ([modifier isEqualToString:@"+"]) {
 			[self sendSASLIdentificationInformation];
@@ -9063,9 +9063,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *kind = [m paramAt:1];
 
-			if ([kind isEqualIgnoringCase:@"identify-msg"]) {
+			if ([kind isEqualToStringIgnoringCase:@"identify-msg"]) {
 				[self enableCapability:ClientIRCv3SupportedCapabilityIdentifyMsg];
-			} else if ([kind isEqualIgnoringCase:@"identify-ctcp"]) {
+			} else if ([kind isEqualToStringIgnoringCase:@"identify-ctcp"]) {
 				[self enableCapability:ClientIRCv3SupportedCapabilityIdentifyCTCP];
 			}
 
@@ -13032,7 +13032,7 @@ present_error:
 	BOOL ison = (trackingStatus == IRCAddressBookUserTrackingIsAvailalbeStatus);
 
 	/* Notification Type: JOIN Command */
-	if ([message.command isEqualIgnoringCase:@"JOIN"]) {
+	if ([message.command isEqualToStringIgnoringCase:@"JOIN"]) {
 		if (ison == NO) {
 			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
 		}
@@ -13041,7 +13041,7 @@ present_error:
 	}
 
 	/* Notification Type: QUIT Command */
-	if ([message.command isEqualIgnoringCase:@"QUIT"]) {
+	if ([message.command isEqualToStringIgnoringCase:@"QUIT"]) {
 		if (ison) {
 			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
 		}
@@ -13050,7 +13050,7 @@ present_error:
 	}
 
 	/* Notification Type: NICK Command */
-	if ([message.command isEqualIgnoringCase:@"NICK"]) {
+	if ([message.command isEqualToStringIgnoringCase:@"NICK"]) {
 		if (ison) {
 			[self statusOfTrackedNickname:message.senderNickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
 		} else {

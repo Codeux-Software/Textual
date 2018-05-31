@@ -167,58 +167,58 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		if (segmentValue) {
-			if ([segmentKey isEqualIgnoringCase:@"AWAYLEN"]) {
+			if ([segmentKey isEqualToStringIgnoringCase:@"AWAYLEN"]) {
 				NSInteger awayLength = segmentValue.integerValue;
 
 				if (awayLength > 0) {
 					self.maximumAwayLength = awayLength;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"CHANMODES"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"CHANMODES"]) {
 				[self parseChannelModes:segmentValue];
-			} else if ([segmentKey isEqualIgnoringCase:@"CHANNELLEN"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"CHANNELLEN"]) {
 				NSInteger channelNameLength = segmentValue.integerValue;
 
 				if (channelNameLength > 0) {
 					self.maximumChannelNameLength = channelNameLength;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"CHANTYPES"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"CHANTYPES"]) {
 				NSArray *channelNamePrefixes = segmentValue.characterStringBuffer;
 
 				if (channelNamePrefixes.count > 0) {
 					self.channelNamePrefixes = channelNamePrefixes;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"KEYLEN"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"KEYLEN"]) {
 				NSInteger maximumKeyLength = segmentValue.integerValue;
 
 				if (maximumKeyLength > 0) {
 					self.maximumKeyLength = maximumKeyLength;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"KICKLEN"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"KICKLEN"]) {
 				NSInteger maximumKickLength = segmentValue.integerValue;
 
 				if (maximumKickLength > 0) {
 					self.maximumKickLength = maximumKickLength;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"MODES"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"MODES"]) {
 				NSInteger maximumModesCount = segmentValue.integerValue;
 
 				if (maximumModesCount > 0) {
 					self.maximumModeCount = maximumModesCount;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"NETWORK"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"NETWORK"]) {
 				self.networkName = segmentValue;
 				self.networkNameFormatted = TXTLS(@"IRC[1067]", segmentValue);
-			} else if ([segmentKey isEqualIgnoringCase:@"NICKLEN"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"NICKLEN"]) {
 				NSInteger maximumNicknameLength = segmentValue.integerValue;
 
 				if (maximumNicknameLength > 0) {
 					self.maximumNicknameLength = maximumNicknameLength;
 				}
-			} else if ([segmentKey isEqualIgnoringCase:@"PREFIX"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"PREFIX"]) {
 				[self parseUserModeSymbols:segmentValue];
-			} else if ([segmentKey isEqualIgnoringCase:@"STATUSMSG"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"STATUSMSG"]) {
 				self.statusMessageModeSymbols = segmentValue.characterStringBuffer;
-			} else if ([segmentKey isEqualIgnoringCase:@"TOPICLEN"]) {
+			} else if ([segmentKey isEqualToStringIgnoringCase:@"TOPICLEN"]) {
 				NSInteger maximumTopicLength = segmentValue.integerValue;
 
 				if (maximumTopicLength > 0) {
@@ -227,19 +227,19 @@ ClassWithDesignatedInitializerInitMethod
 			}
 		}
 
-		if ([segmentKey isEqualIgnoringCase:@"EXCEPTS"]) {
+		if ([segmentKey isEqualToStringIgnoringCase:@"EXCEPTS"]) {
 			if (segmentValue.isModeSymbol) {
 				self.banExceptionModeSymbol = segmentValue;
 			} else {
 				self.banExceptionModeSymbol = @"e";
 			}
-		} else if ([segmentKey isEqualIgnoringCase:@"INVEX"]) {
+		} else if ([segmentKey isEqualToStringIgnoringCase:@"INVEX"]) {
 			if (segmentValue.isModeSymbol) {
 				self.inviteExceptionModeSymbol = segmentValue;
 			} else {
 				self.inviteExceptionModeSymbol = @"I";
 			}
-		} else if ([segmentKey isEqualIgnoringCase:@"MONITOR"]) {
+		} else if ([segmentKey isEqualToStringIgnoringCase:@"MONITOR"]) {
 			// freenode advertises support for MONITOR but does not respond to command
 			/*
 			 Update as of May 30, 2018:
@@ -256,19 +256,19 @@ ClassWithDesignatedInitializerInitMethod
 			}
 
 			[client enableCapability:ClientIRCv3SupportedCapabilityMonitorCommand];
-		} else if ([segmentKey isEqualIgnoringCase:@"NAMESX"]) {
+		} else if ([segmentKey isEqualToStringIgnoringCase:@"NAMESX"]) {
 			if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityMultiPreifx] == NO) {
 				[client sendLine:@"PROTOCTL NAMESX"];
 
 				[client enableCapability:ClientIRCv3SupportedCapabilityMultiPreifx];
 			}
-		} else if ([segmentKey isEqualIgnoringCase:@"UHNAMES"]) {
+		} else if ([segmentKey isEqualToStringIgnoringCase:@"UHNAMES"]) {
 			if ([client isCapabilityEnabled:ClientIRCv3SupportedCapabilityUserhostInNames] == NO) {
 				[client sendLine:@"PROTOCTL UHNAMES"];
 
 				[client enableCapability:ClientIRCv3SupportedCapabilityUserhostInNames];
 			}
-		} else if ([segmentKey isEqualIgnoringCase:@"WATCH"]) {
+		} else if ([segmentKey isEqualToStringIgnoringCase:@"WATCH"]) {
 			[client enableCapability:ClientIRCv3SupportedCapabilityWatchCommand];
 		}
 	} // while()

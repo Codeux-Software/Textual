@@ -367,23 +367,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary *)change context:(nullable void *)context
 {
-	if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCheck"]) {
+	if ([keyPath isEqualToStringIgnoringCase:@"TextFieldAutomaticSpellCheck"]) {
 		self.continuousSpellCheckingEnabled = [TPCPreferences textFieldAutomaticSpellCheck];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticGrammarCheck"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldAutomaticGrammarCheck"]) {
 		self.grammarCheckingEnabled = [TPCPreferences textFieldAutomaticGrammarCheck];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCorrection"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldAutomaticSpellCorrection"]) {
 		self.automaticSpellingCorrectionEnabled = [TPCPreferences textFieldAutomaticSpellCorrection];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartCopyPaste"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldSmartCopyPaste"]) {
 		self.smartInsertDeleteEnabled = [TPCPreferences textFieldSmartCopyPaste];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartQuotes"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldSmartQuotes"]) {
 		self.automaticQuoteSubstitutionEnabled = [TPCPreferences textFieldSmartQuotes];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartDashes"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldSmartDashes"]) {
 		self.automaticDashSubstitutionEnabled = [TPCPreferences textFieldSmartDashes];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartLinks"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldSmartLinks"]) {
 		self.automaticLinkDetectionEnabled = [TPCPreferences textFieldSmartLinks];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldDataDetectors"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldDataDetectors"]) {
 		self.automaticDataDetectionEnabled = [TPCPreferences textFieldDataDetectors];
-	} else if ([keyPath isEqualIgnoringCase:@"TextFieldTextReplacement"]) {
+	} else if ([keyPath isEqualToStringIgnoringCase:@"TextFieldTextReplacement"]) {
 		self.automaticTextReplacementEnabled = [TPCPreferences textFieldTextReplacement];
 	} else if ([super respondsToSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]) {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

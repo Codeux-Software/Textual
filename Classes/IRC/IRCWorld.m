@@ -462,7 +462,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 {
 	for (IRCClient *u in self.clientList) {
 		for (IRCServer *s in u.config.serverList) {
-			if ([s.serverAddress isEqualIgnoringCase:serverAddress]) {
+			if ([s.serverAddress isEqualToStringIgnoringCase:serverAddress]) {
 				return u;
 			}
 		}
