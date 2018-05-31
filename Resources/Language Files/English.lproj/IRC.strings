@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1165 */
+/* Next unusued key: 1167 */
 
 /* Script errors */
 "IRC[1001]" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
@@ -252,6 +252,9 @@
 
 /* /monitor/ command errors */
 "IRC[1137]" = "Please use the \002Address Book\002 to add or remove tracked users. Open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* /topic/ command errors */
+"IRC[1166]" = "You have exceeded the maximum topic length for %1$@ which is %2$ld characters. The end of your topic may have been cut off.";
 
 /* Common command errors */
 "IRC[1130]" = "Invalid syntax: “%@“";
