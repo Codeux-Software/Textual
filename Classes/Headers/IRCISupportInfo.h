@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, IRCISupportInfoListType)
 @property (readonly) NSUInteger maximumChannelNameLength; // 0 = no limit - unused
 @property (readonly) NSUInteger maximumKeyLength; // 0 = no limit
 @property (readonly) NSUInteger maximumNicknameLength;
-@property (readonly) NSUInteger maximumTopicLength;
+@property (readonly) NSUInteger maximumTopicLength; // 0 = no limit
 @property (readonly) NSUInteger maximumModeCount;
 @property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;
 @property (readonly, copy) NSArray<NSString *> *statusMessageModeSymbols;
