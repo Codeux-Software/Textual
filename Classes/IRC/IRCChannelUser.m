@@ -341,6 +341,28 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [NSString stringWithFormat:@"<IRCChannelUser %@%@>", self.mark, self.user.nickname];
 }
 
+- (BOOL)isEqual:(id)object
+{
+	if (object == nil) {
+		return NO;
+	}
+
+	if (object == self) {
+		return YES;
+	}
+
+	if ([object isKindOfClass:[IRCChannelUser class]] == NO) {
+		return NO;
+	}
+
+	IRCChannelUser *objectCast = (IRCChannelUser *)object;
+
+	return (self.user == objectCast.user &&
+
+			((self.modes == nil && objectCast.modes == nil) ||
+			 [self.modes isEqualToString:objectCast.modes]));
+}
+
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	IRCChannelUser *object = [[IRCChannelUser alloc] initWithUser:self.user];
