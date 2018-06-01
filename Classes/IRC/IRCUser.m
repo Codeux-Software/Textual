@@ -208,6 +208,40 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [NSString stringWithFormat:@"<IRCUser %@>", self.nickname];
 }
 
+- (BOOL)isEqual:(id)object
+{
+	if (object == nil) {
+		return NO;
+	}
+
+	if (object == self) {
+		return YES;
+	}
+
+	if ([object isKindOfClass:[IRCUser class]] == NO) {
+		return NO;
+	}
+
+	IRCUser *objectCast = (IRCUser *)object;
+
+	return (self.client == objectCast.client &&
+
+			((self.nickname == nil && objectCast.nickname == nil) ||
+			 [self.nickname isEqualToString:objectCast.nickname]) &&
+
+			((self.username == nil && objectCast.username == nil) ||
+			 [self.username isEqualToString:objectCast.username]) &&
+
+			((self.address == nil && objectCast.address == nil) ||
+			 [self.address isEqualToString:objectCast.address]) &&
+
+			((self.realName == nil && objectCast.realName == nil) ||
+			 [self.realName isEqualToString:objectCast.realName]) &&
+
+			self.isAway == objectCast.isAway &&
+			self.isIRCop == objectCast.isIRCop);
+}
+
 - (id)copyWithZone:(nullable NSZone *)zone
 {
 	  IRCUser *object =
