@@ -208,7 +208,6 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 - (void)sendCapability:(NSString *)subcommand data:(nullable NSString *)data;
 
 - (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames;
-- (void)sendIsonForNicknamesString:(NSString *)nicknames;
 
 - (void)modifyWatchListBy:(BOOL)adding nicknames:(NSArray<NSString *> *)nicknames;
 
