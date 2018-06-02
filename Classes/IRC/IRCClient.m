@@ -200,12 +200,6 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign, readwrite) BOOL userIsIdentifiedWithNickServ;
 @property (nonatomic, assign, readwrite) BOOL isWaitingForNickServ;
 @property (nonatomic, assign, readwrite) BOOL serverHasNickServ;
-@property (nonatomic, assign, readwrite) BOOL inUserInvokedIsonRequest;
-@property (nonatomic, assign, readwrite) BOOL inUserInvokedNamesRequest;
-@property (nonatomic, assign, readwrite) BOOL inUserInvokedWhoRequest;
-@property (nonatomic, assign, readwrite) BOOL inUserInvokedWhowasRequest;
-@property (nonatomic, assign, readwrite) BOOL inUserInvokedWatchRequest;
-@property (nonatomic, assign, readwrite) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign, readwrite) NSTimeInterval lastMessageReceived;
 @property (nonatomic, assign, readwrite) NSTimeInterval lastMessageServerTime;
 @property (nonatomic, assign, readwrite) ClientIRCv3SupportedCapabilities capabilities;
@@ -5637,12 +5631,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.batchMessages dequeueEntries];
 
 	self.connectDelay = 0;
-
-	self.inUserInvokedModeRequest = NO;
-	self.inUserInvokedNamesRequest = NO;
-	self.inUserInvokedWatchRequest = NO;
-	self.inUserInvokedWhoRequest = NO;
-	self.inUserInvokedWhowasRequest = NO;
 
 	self.invokingISONCommandForFirstTime = NO;
 

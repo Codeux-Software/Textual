@@ -118,13 +118,6 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 @property (readonly) BOOL userIsIdentifiedWithNickServ; // YES if NickServ identification was successful
 @property (readonly) BOOL isWaitingForNickServ;			// YES if NickServ identification is pending
 @property (readonly) BOOL serverHasNickServ;			// YES if NickServ service was found on server
-@property (readonly) BOOL inUserInvokedIsonRequest;
-@property (readonly) BOOL inUserInvokedNamesRequest;
-@property (readonly) BOOL inUserInvokedWhoRequest;
-@property (readonly) BOOL inUserInvokedWhowasRequest;
-@property (readonly) BOOL inUserInvokedWatchRequest;
-@property (readonly) BOOL inUserInvokedModeRequest;
-@property (readonly) BOOL inUserInvokedJoinRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
 @property (readonly) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received
 @property (readonly) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP
 @property (readonly) NSUInteger channelCount;
@@ -358,6 +351,18 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
  * configuration periodically. This method will force it to perform
  * a save if you need to rely on most recent version. */
 - (void)updateStoredConfiguration;
+@end
+
+#pragma mark -
+
+@interface IRCClient (Deprecated)
+@property (readonly) BOOL inUserInvokedIsonRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
+@property (readonly) BOOL inUserInvokedJoinRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
+@property (readonly) BOOL inUserInvokedModeRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
+@property (readonly) BOOL inUserInvokedNamesRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
+@property (readonly) BOOL inUserInvokedWatchRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
+@property (readonly) BOOL inUserInvokedWhoRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
+@property (readonly) BOOL inUserInvokedWhowasRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
 @end
 
 NS_ASSUME_NONNULL_END
