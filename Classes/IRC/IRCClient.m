@@ -12081,16 +12081,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(nicknames != nil);
 
-	if (nicknames.count == 0) {
-		return;
-	}
-
-	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
-
-	[self sendIsonForNicknamesString:nicknamesString];
+	/* Split nicknames into fixed number per-command in case there are a lot or are long. */
+	[nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
+		[self _sendIsonForNicknames:objects];
+	}];
 }
 
-- (void)sendIsonForNicknamesString:(NSString *)nicknames
+- (void)_sendIsonForNicknames:(NSArray<NSString *> *)nicknames
 {
 	NSParameterAssert(nicknames != nil);
 
@@ -12098,11 +12095,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	if (nicknames.length == 0) {
+	if (nicknames.count == 0) {
 		return;
 	}
 
-	[self send:@"ISON", nicknames, nil];
+	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
+
+	[self send:@"ISON", nicknamesString, nil];
 }
 
 - (void)requestChannelList
@@ -12130,6 +12129,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 - (void)modifyWatchListBy:(BOOL)adding nicknames:(NSArray<NSString *> *)nicknames
+{
+	NSParameterAssert(nicknames != nil);
+
+	/* Split nicknames into fixed number per-command in case there are a lot or are long. */
+	[nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
+		[self _modifyWatchListBy:adding nicknames:objects];
+	}];
+}
+
+- (void)_modifyWatchListBy:(BOOL)adding nicknames:(NSArray<NSString *> *)nicknames
 {
 	NSParameterAssert(nicknames != nil);
 
