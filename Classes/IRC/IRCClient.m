@@ -5496,16 +5496,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)printReply:(IRCMessage *)message
 {
+	[self printReply:message inChannel:nil];
+}
+
+- (void)printReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel
+{
 	NSParameterAssert(message != nil);
 
-	[self print:[message sequence:1] by:nil inChannel:nil asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
+	[self print:[message sequence:1] by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
 }
 
 - (void)printUnknownReply:(IRCMessage *)message
 {
+	[self printUnknownReply:message inChannel:nil];
+}
+
+- (void)printUnknownReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel
+{
 	NSParameterAssert(message != nil);
 
-	[self print:[message sequence:1] by:nil inChannel:nil asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
+	[self print:[message sequence:1] by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
 }
 
 - (void)printErrorReply:(IRCMessage *)message
