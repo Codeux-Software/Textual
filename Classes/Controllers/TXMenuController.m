@@ -438,7 +438,7 @@ NS_ASSUME_NONNULL_BEGIN
 				{
 					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.networkNameAlt);
 
-					if (u.isConnected == NO) {
+					if (u.isConnecting == NO && u.isConnected == NO) {
 						return NO;
 					}
 
@@ -592,7 +592,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case MTMMServerDeleteServer: // "Delete Server…"
 		{
-			return (u && u.isConnected == NO);
+			return (u && u.isConnecting == NO && u.isConnected == NO);
 		}
 
 		case MTMMNavigationNextHighlight: // "Next Highlight"
@@ -1514,7 +1514,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (u == nil || u.isConnected || u.isQuitting) {
+	if (u == nil || u.isConnecting || u.isConnected || u.isQuitting) {
 		return;
 	}
 
@@ -1527,7 +1527,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (u == nil || u.isConnected || u.isQuitting) {
+	if (u == nil || u.isConnecting || u.isConnected || u.isQuitting) {
 		return;
 	}
 
@@ -1540,7 +1540,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (u == nil || u.isConnected || u.isQuitting) {
+	if (u == nil || u.isConnecting || u.isConnected || u.isQuitting) {
 		return;
 	}
 
@@ -1553,7 +1553,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (u == nil || u.isConnected == NO || u.isQuitting) {
+	if (u == nil || (u.isConnecting == NO && u.isConnected == NO) || u.isQuitting) {
 		return;
 	}
 
@@ -1625,7 +1625,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCClient *u = self.selectedClient;
 
-	if (u == nil || u.isConnected) {
+	if (u == nil || u.isConnecting || u.isConnected) {
 		return;
 	}
 
@@ -2695,7 +2695,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case TXCommandWKeyDisconnectAction:
 		{
-			if (u.isConnected == NO) {
+			if (u.isConnecting == NO && u.isConnected == NO) {
 				return;
 			}
 
