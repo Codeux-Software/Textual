@@ -3288,7 +3288,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				self.temporaryServerAddressOverride = serverAddress;
 			}
 
-			if (self.isConnected) {
+			if (self.isConnecting || self.isConnected) {
 				__weak IRCClient *weakSelf = self;
 
 				self.disconnectCallback = ^{
