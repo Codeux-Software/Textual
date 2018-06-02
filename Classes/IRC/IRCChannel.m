@@ -407,6 +407,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	self.channelModesReceived = NO;
+	self.channelNamesReceived = NO;
 	self.errorOnLastJoinAttempt = NO;
 	self.sentInitialWhoRequest = NO;
 

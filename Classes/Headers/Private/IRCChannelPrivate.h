@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL sentInitialWhoRequest;
 @property (nonatomic, assign) BOOL channelModesReceived;
+@property (nonatomic, assign) BOOL channelNamesReceived;
 @property (nonatomic, assign, readwrite) BOOL errorOnLastJoinAttempt;
 
 - (instancetype)initWithConfig:(IRCChannelConfig *)config NS_DESIGNATED_INITIALIZER;
