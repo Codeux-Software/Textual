@@ -4264,8 +4264,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[self createHiddenCommandResponses];
 
-			[self.requestedCommands recordNamesRequestOpenedAsVisible];
-
 			[self send:@"NAMES", stringIn.string, nil];
 
 			break;
