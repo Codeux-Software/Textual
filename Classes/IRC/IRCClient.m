@@ -6230,7 +6230,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.rawDataLogQuery = query;
 
-	[mainWindow() select:self.rawDataLogQuery];
+	[mainWindow() select:query];
 
 	[self rawDataLog:TXTLS(@"IRC[1092]")];
 }
