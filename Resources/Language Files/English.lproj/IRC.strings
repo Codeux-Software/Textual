@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1168 */
+/* Next unusued key: 1171 */
 
 /* Script errors */
 "IRC[1001]" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
@@ -336,3 +336,5 @@
 "IRC[1114]" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
 "IRC[1120]" = "Server closed read stream";
 "IRC[1122]" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
+"IRC[1168]" = "%1$@ is connected from %2$@ (%3$@)";
+"IRC[1169]" = "%1$@ was connected from %2$@ (%3$@)";
