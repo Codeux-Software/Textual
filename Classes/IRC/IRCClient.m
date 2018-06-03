@@ -5536,9 +5536,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)printReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel
 {
+	[self printReply:message inChannel:channel withSequence:1];
+}
+
+- (void)printReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel withSequence:(NSUInteger)sequence
+{
 	NSParameterAssert(message != nil);
 
-	[self print:[message sequence:1] by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
+	[self print:[message sequence:sequence] by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
 }
 
 - (void)printUnknownReply:(IRCMessage *)message
@@ -5548,9 +5553,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)printUnknownReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel
 {
+	[self printUnknownReply:message inChannel:channel withSequence:1];
+}
+
+- (void)printUnknownReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel withSequence:(NSUInteger)sequence
+{
 	NSParameterAssert(message != nil);
 
-	[self print:[message sequence:1] by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
+	[self print:[message sequence:sequence] by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command receivedAt:message.receivedAt];
 }
 
 - (void)printErrorReply:(IRCMessage *)message
@@ -5560,9 +5570,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)printErrorReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel
 {
+	[self printErrorReply:message inChannel:channel withSequence:NSNotFound];
+}
+
+- (void)printErrorReply:(IRCMessage *)message inChannel:(nullable IRCChannel *)channel withSequence:(NSUInteger)sequence
+{
 	NSParameterAssert(message != nil);
 
-	NSString *errorMessage = TXTLS(@"IRC[1055]", message.commandNumeric, message.sequence);
+	NSString *sequenceMessage = nil;
+
+	if (sequence == NSNotFound) {
+		sequenceMessage = message.sequence;
+	} else {
+		sequenceMessage = [message sequence:sequence];
+	}
+
+	NSString *errorMessage = TXTLS(@"IRC[1055]", message.commandNumeric, sequenceMessage);
 
 	[self print:errorMessage by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command];
 }
@@ -10466,7 +10489,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	BOOL printMessage = [self postReceivedMessage:m];
 
 	switch (numeric) {
-		case 401: // ERR_NOSUCHNICK
+		case ERR_NOSUCHNICK:
 		{
 			NSAssertReturn(printMessage);
 
@@ -10474,35 +10497,29 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			IRCChannel *channel = [self findChannel:channelName];
 
-			if (channel.isActive) {
-				[self printErrorReply:m inChannel:channel];
+			if (channel) {
+				[self printErrorReply:m inChannel:channel withSequence:2];
 			} else {
 				[self printErrorReply:m];
 			}
 
 			break;
 		}
-		case 402: // ERR_NOSUCHSERVER
+		case ERR_NOSUCHSERVER:
+		case ERR_NOSUCHCHANNEL:
 		{
-			NSAssertReturn(printMessage);
-
-			NSString *message = TXTLS(@"IRC[1055]", numeric, [m sequence:1]);
-
-			[self print:message
-					 by:nil
-			  inChannel:nil
-				 asType:TVCLogLineDebugType
-				command:m.command
-			 receivedAt:m.receivedAt];
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
 
 			break;
 		}
-		case 433: // ERR_NICKNAMEINUSE
-		case 437: // ERR_NICKCHANGETOOFAST
+		case ERR_NICKNAMEINUSE:
+		case ERR_ERRONEUSNICKNAME:
 		{
 			if (self.isLoggedIn) {
 				if (printMessage) {
-					[self printReply:m];
+					[self printErrorReply:m];
 				}
 
 				break;
@@ -10512,7 +10529,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 404: // ERR_CANNOTSENDTOCHAN
+		case ERR_UNAVAILRESOURCE:
+		{
+			NSString *target = [m paramAt:1];
+
+			if (self.isLoggedIn || [self stringIsNickname:target] == NO) {
+				if (printMessage) {
+					[self printErrorReply:m];
+				}
+
+				break;
+			}
+
+			[self receiveNicknameCollisionError:m];
+
+			break;
+		}
+		case ERR_CANNOTSENDTOCHAN:
 		{
 			NSAssertReturn(printMessage);
 
@@ -10520,25 +10553,33 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			IRCChannel *channel = [self findChannel:channelName];
 
-			NSString *message = TXTLS(@"IRC[1055]", numeric, [m sequence:2]);
-
-			[self print:message
-					 by:nil
-			  inChannel:channel
-				 asType:TVCLogLineDebugType
-				command:m.command
-			 receivedAt:m.receivedAt];
+			if (channel) {
+				[self printErrorReply:m inChannel:channel withSequence:2];
+			} else {
+				[self printErrorReply:m];
+			}
 
 			break;
 		}
-		case 403: // ERR_NOSUCHCHANNEL
-		case 405: // ERR_TOOMANYCHANNELS
-		case 471: // ERR_CHANNELISFULL
-		case 473: // ERR_INVITEONLYCHAN
-		case 474: // ERR_BANNEDFROMCHAN
-		case 475: // ERR_BADCHANNEL
-		case 476: // ERR_BADCHANMASK
-		case 477: // ERR_NEEDREGGEDNICK
+		case ERR_ADMONLY:
+		case ERR_BADCHANMASK:
+		case ERR_BADCHANNAME:
+		case ERR_BADCHANNEL:
+		case ERR_BADCHANNELKEY:
+		case ERR_BANNEDFROMCHAN:
+		case ERR_CHANNELISFULL:
+		case ERR_DELAYREJOIN:
+		case ERR_FORBIDDENCHANNEL:
+		case ERR_INVITEONLYCHAN:
+		case ERR_LINKCHANNEL:
+		case ERR_NEEDREGGEDNICK:
+		case ERR_NOHIDING:
+		case ERR_OPERONLY:
+		case ERR_OPERSPVERIFY:
+		case ERR_SECUREONLYCHAN:
+		case ERR_THROTTLE:
+		case ERR_TOOMANYCHANNELS:
+		case ERR_TOOMANYJOINS:
 		{
 			NSString *channelName = [m paramAt:1];
 
@@ -10546,6 +10587,42 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (channel) {
 				channel.errorOnLastJoinAttempt = YES;
+
+				/* In addition to the console, print join errors in
+				 the channel itself because user might check there. */
+				if (printMessage) {
+					[self printErrorReply:m inChannel:channel withSequence:2];
+				}
+			}
+
+			/* Print to console */
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
+
+			break;
+		}
+		case ERR_WHOSYNTAX:
+		case ERR_WHOLIMEXCEED:
+		{
+			[self.requestedCommands recordWhoRequestClosed];
+
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
+
+			break;
+		}
+		case ERR_DISABLED:
+		case ERR_UNKNOWNCOMMAND:
+		case ERR_NEEDMOREPARAMS:
+		{
+			NSString *command = [m paramAt:1];
+
+			if ([command isEqualToString:@"ISON"]) {
+				[self.requestedCommands recordIsonRequestClosed];
+			} else if ([command isEqualToString:@"WHO"]) {
+				[self.requestedCommands recordWhoRequestClosed];
 			}
 
 			if (printMessage) {
@@ -10574,6 +10651,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	NSArray *alternateNicknames = self.config.alternateNicknames;
+
+	NSString *tryingNickname = self.tryingNicknameSentNickname;
+
+	[self printDebugInformationToConsole:TXTLS(@"IRC[1171]", tryingNickname)];
 
 	NSUInteger tryingNicknameNumber = self.tryingNicknameNumber;
 
