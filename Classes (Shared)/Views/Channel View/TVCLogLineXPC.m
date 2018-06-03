@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *uniqueIdentifier;
 @property (nonatomic, copy, readwrite) NSString *viewIdentifier;
 @property (nonatomic, assign, readwrite) NSUInteger sessionIdentifier;
+@property (nonatomic, assign, readwrite) NSTimeInterval creationDate;
 @end
 
 @implementation TVCLogLineXPC
@@ -78,6 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.uniqueIdentifier = [managedObject valueForKey:@"logLineUniqueIdentifier"];
 		self.viewIdentifier = [managedObject valueForKey:@"logLineViewIdentifier"];
 		self.sessionIdentifier = [[managedObject valueForKey:@"sessionIdentifier"] integerValue];
+		self.creationDate = [[managedObject valueForKey:@"entryCreationDate"] doubleValue];
 
 		return self;
 	}
@@ -106,6 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self->_uniqueIdentifier = [aDecoder decodeStringForKey:@"uniqueIdentifier"];
 	self->_viewIdentifier = [aDecoder decodeStringForKey:@"viewIdentifier"];
 	self->_sessionIdentifier = [aDecoder decodeIntegerForKey:@"sessionIdentifier"];
+	self->_creationDate = [aDecoder decodeDoubleForKey:@"entryCreationDate"];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -116,11 +119,17 @@ NS_ASSUME_NONNULL_BEGIN
 	[aCoder encodeObject:self.uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[aCoder encodeObject:self.viewIdentifier forKey:@"viewIdentifier"];
 	[aCoder encodeInteger:self.sessionIdentifier forKey:@"sessionIdentifier"];
+	[aCoder encodeDouble:self.creationDate forKey:@"entryCreationDate"];
 }
 
 + (BOOL)supportsSecureCoding
 {
 	return YES;
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<TVCLogLineXPC %@ - %f>", self.uniqueIdentifier, self.creationDate];
 }
 
 @end
