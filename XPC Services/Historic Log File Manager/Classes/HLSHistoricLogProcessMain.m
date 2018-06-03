@@ -169,6 +169,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		fetchRequest.fetchLimit = fetchLimit;
 	}
 
+	fetchRequest.returnsObjectsAsFaults = NO;
+
 	fetchRequest.resultType = resultType;
 
 	fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"entryCreationDate" ascending:ascending]];
@@ -773,6 +775,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	[self.managedObjectModel fetchRequestFromTemplateWithName:@"Truncate"
 										substitutionVariables:substitutionVariables];
 
+	fetchRequest.returnsObjectsAsFaults = NO;
+
 	NSUInteger rowsDeleted =
 	[self _deleteDataInViewContext:viewContext withFetchRequest:fetchRequest performOnQueue:NO];
 
@@ -1068,6 +1072,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSFetchRequest *fetchRequest =
 		[self.managedObjectModel fetchRequestFromTemplateWithName:@"UniqueIdToEntryId"
 											substitutionVariables:substitutionVariables];
+
+		fetchRequest.returnsObjectsAsFaults = NO;
 
 		NSError *fetchRequestError = nil;
 
