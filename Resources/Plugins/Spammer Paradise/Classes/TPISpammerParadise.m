@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(channel != nil);
 	NSParameterAssert(client != nil);
 
-	BOOL hasSearchCondition = NSObjectIsNotEmpty(matchString);
+	BOOL hasSearchCondition = (matchString.length > 0);
 
 	NSArray *memberList = channel.memberList;
 
