@@ -8836,7 +8836,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	BOOL away = NSObjectIsNotEmpty(m.sequence);
+	BOOL away = (m.sequence.length > 0);
 
 	NSString *nickname = m.senderNickname;
 
