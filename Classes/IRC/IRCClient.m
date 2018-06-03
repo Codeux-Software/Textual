@@ -145,6 +145,7 @@
 #import "IRCMessagePrivate.h"
 #import "IRCMessageBatchPrivate.h"
 #import "IRCModeInfo.h"
+#import "IRCNumerics.h"
 #import "IRCSendingMessage.h"
 #import "IRCServerPrivate.h"
 #import "IRCTimerCommandPrivate.h"
@@ -226,6 +227,8 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) BOOL capabilityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
+@property (nonatomic, assign) BOOL inWhoisResponse;
+@property (nonatomic, assign) BOOL inWhowasResponse;
 @property (nonatomic, assign) BOOL reconnectEnabled;
 @property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
@@ -5689,6 +5692,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.isQuitting = NO;
 	self.isDisconnecting = NO;
 
+	self.inWhoisResponse = NO;
+	self.inWhowasResponse = NO;
+
 	self.isWaitingForNickServ = NO;
 	self.serverHasNickServ = NO;
 	self.userIsIdentifiedWithNickServ = NO;
@@ -8934,7 +8940,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSInteger numeric = m.commandNumeric;
 
-	if (numeric > 400 && numeric < 597 && numeric != 403 && numeric != 422) {
+	if (numeric > 400 && numeric < 597 && numeric != ERR_NOMOTD) {
 		[self receiveErrorNumericReply:m];
 
 		return;
@@ -8942,15 +8948,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	BOOL printMessage = YES;
 
-	if (numeric != 324 &&
-		numeric != 332 &&
-		numeric != 333)
+	/* These numerics are treated differently below which is why the exception exists.
+	 For example, for channel topic, only the contents of the topic are sent to the filter. */
+	if (numeric != RPL_UMODEIS &&
+		numeric != RPL_CHANNELMODEIS &&
+		numeric != RPL_TOPIC &&
+		numeric != RPL_TOPICWHOTIME)
 	{
 		printMessage = [self postReceivedMessage:m];
 	}
 
 	switch (numeric) {
-		case 1: // RPL_WELCOME
+		case RPL_WELCOME:
 		{
 			[self receiveInit:m];
 
@@ -8960,9 +8969,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 2: // RPL_YOURHOST
-		case 3: // RPL_CREATED
-		case 4: // RPL_MYINFO
+		case RPL_YOURHOST:
+		case RPL_CREATED:
+		case RPL_MYINFO:
 		{
 			if (printMessage) {
 				[self printReply:m];
@@ -8970,21 +8979,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 5: // RPL_ISUPPORT
+		case RPL_ISUPPORT:
 		{
 			NSAssertReturn([m paramsCount] >= 3);
 
-			[self.supportInfo processConfigurationData:[m sequence:1]];
+			NSString *configuration = [m sequence:1];
+
+			[self.supportInfo processConfigurationData:configuration];
 
 			if (printMessage) {
-				NSString *configString = self.supportInfo.stringValueForLastUpdate;
+				NSString *configurationFormatted = self.supportInfo.stringValueForLastUpdate;
 
-				[self printDebugInformationToConsole:configString asCommand:m.command];
+				[self printDebugInformationToConsole:configurationFormatted asCommand:m.command];
 			}
 
 			break;
 		}
-		case 10: // RPL_REDIR
+		case RPL_REDIR:
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
@@ -9019,9 +9030,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 20: // RPL_(?????) — Legacy code. What goes here?
-		case 42: // RPL_(?????) — Legacy code. What goes here?
-		case 250 ... 255: // RPL_STATSCONN, RPL_LUSERCLIENT, RPL_LUSERHOP, RPL_LUSERUNKNOWN, RPL_LUSERCHANNELS, RPL_LUSERME
+		case RPL_STATSCONN:
+		case RPL_LUSERCLIENT:
+		case RPL_LUSERHOP:
+		case RPL_LUSERUNKNOWN:
+		case RPL_LUSERCHANNELS:
+		case RPL_LUSERME:
 		{
 			if (printMessage) {
 				[self printReply:m];
@@ -9029,11 +9043,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 222: // RPL_(?????) — Legacy code. What goes here?
-		{
-			break;
-		}
-		case 265 ... 266: // RPL_LOCALUSERS, RPL_GLOBALUSERS
+		case RPL_LOCALUSERS:
+		case RPL_GLOBALUSERS:
 		{
 			NSAssertReturn(printMessage);
 
@@ -9057,10 +9068,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 372: // RPL_MOTD
-		case 375: // RPL_MOTDSTART
-		case 376: // RPL_ENDOFMOTD
-		case 422: // ERR_NOMOTD
+		case RPL_MOTD:
+		case RPL_MOTDSTART:
+		case RPL_ENDOFMOTD:
+		case ERR_NOMOTD:
 		{
 			NSAssertReturn(printMessage);
 
@@ -9068,7 +9079,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if (numeric == 422) {
+			if (numeric == ERR_NOMOTD) {
 				[self printErrorReply:m];
 			} else {
 				[self printReply:m];
@@ -9076,11 +9087,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 221: // RPL_UMODES
+		case RPL_UMODEIS:
 		{
 			NSAssertReturn([m paramsCount] > 1);
 
-			NSAssertReturn(printMessage);
+			NSString *nickname = [m paramAt:0];
 
 			NSString *modeString = [m paramAt:1];
 
@@ -9088,34 +9099,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			[self print:TXTLS(@"IRC[1072]", self.userNickname, modeString)
-					 by:nil
-			  inChannel:nil
-				 asType:TVCLogLineDebugType
-				command:m.command
-			 receivedAt:m.receivedAt];
-
-			break;
-		}
-		case 290: // RPL_CAPAB (freenode)
-		{
-			NSAssertReturn([m paramsCount] == 2);
-
-			NSString *kind = [m paramAt:1];
-
-			if ([kind isEqualToStringIgnoringCase:@"identify-msg"]) {
-				[self enableCapability:ClientIRCv3SupportedCapabilityIdentifyMsg];
-			} else if ([kind isEqualToStringIgnoringCase:@"identify-ctcp"]) {
-				[self enableCapability:ClientIRCv3SupportedCapabilityIdentifyCTCP];
-			}
+			printMessage = [self postReceivedMessage:m withText:modeString destinedFor:nil];
 
 			if (printMessage) {
-				[self printReply:m];
+				[self print:TXTLS(@"IRC[1072]", nickname, modeString)
+						 by:nil
+				  inChannel:nil
+					 asType:TVCLogLineDebugType
+					command:m.command
+				 receivedAt:m.receivedAt];
 			}
 
 			break;
 		}
-		case 301: // RPL_AWAY
+		case RPL_AWAY:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -9153,78 +9150,66 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 305: // RPL_UNAWAY
-		case 306: // RPL_NOWAWAY
+		case RPL_UNAWAY:
+		case RPL_NOWAWAY:
 		{
-			self.userIsAway = (numeric == 306);
+			BOOL away = (numeric == RPL_NOWAWAY);
+
+			self.userIsAway = away;
 			
 			[mainWindow() updateTitleFor:self];
 
 			if (printMessage) {
-				[self printUnknownReply:m];
+				[self printReply:m];
 			}
 
 			/* Update our own status. This has to only be done with away-notify CAP enabled.
 			 Old, WHO based information requests will still show our own status. */
-			if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityAwayNotify] == NO) {
-				break;
-			}
-
 			IRCUser *myself = self.myself;
 
 			if (myself == nil) {
 				break;
 			}
-			
-			BOOL away = (numeric == 306);
 
 			[self modifyUser:myself asAway:away];
 
 			break;
 		}
-		case 275: // RPL_WHOISSECURE (bahamut)
-		case 276: // RPL_WHOIS? — (is using a client certificate, hybrid)
-		case 307: // RPL_WHOISREGNICK
-		case 310: // RPL_WHOISHELPOP
-		case 313: // RPL_WHOISOPERATOR
-		case 335: // RPL_WHOISBOT
-		case 336: // RPL_WHOIS? — (is on private/secret channels..., InspIRCd)
-		case 378: // RPL_WHOISHOST
-		case 379: // RPL_WHOISMODES
-		case 616: // RPL_WHOISHOST
-		case 671: // RPL_WHOISSECURE
-		case 672: // RPL_WHOIS? — (is a CGI:IRC client from..., hybrid)
-		case 727: // RPL_WHOIS? — (is captured, hybrid)
+		case RPL_CHANNELSMSG:
+		case RPL_WHOISBOT:
+		case RPL_WHOISHELPOP:
+		case RPL_WHOISHOST:
+		case RPL_WHOISMODES:
+		case RPL_WHOISOPERATOR:
+		case RPL_WHOISREALIP:
+		case RPL_WHOISREGNICK:
+		case RPL_WHOISSECURE:
+		case RPL_WHOISSPECIAL:
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
-			NSAssertReturn(printMessage);
-
-			NSString *message = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
-
-			[self print:message
-					 by:nil
-			  inChannel:[mainWindow() selectedChannelOn:self]
-				 asType:TVCLogLineDebugType
-				command:m.command
-			 receivedAt:m.receivedAt];
+			if (printMessage) {
+				[self printReply:m inChannel:[mainWindow() selectedChannelOn:self]];
+			}
 
 			break;
 		}
-		case 338: // RPL_WHOISACTUALLY (ircu, Bahamut)
+		case RPL_WHOISACTUALLY:
 		{
-			NSAssertReturn([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] == 5);
 
 			NSAssertReturn(printMessage);
 
+			NSString *nickname = [m paramAt:1];
+			NSString *hostmask = [m paramAt:2];
+			NSString *ipAddress = [m paramAt:3];
+
 			NSString *message = nil;
 
-			if (m.paramsCount == 3) {
-				message = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
+			if (self.inWhowasResponse) { // bahamut sends RPL_WHOISACTUALLY in WHOWAS
+				message = TXTLS(@"IRC[1169]", nickname, hostmask, ipAddress);
 			} else {
-				/* I am not sure in what context this variant is used. It is legacy code from 
-				 earlier versions of Textual so it is better to keep it here. */
-				message = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
+				message = TXTLS(@"IRC[1168]", nickname, hostmask, ipAddress);
 			}
 
 			[self print:message
@@ -9236,8 +9221,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 311: // RPL_WHOISUSER
-		case 314: // RPL_WHOWASUSER
+		case RPL_WHOISUSER:
+		case RPL_WHOWASUSER:
 		{
 			NSAssertReturn([m paramsCount] >= 6);
 
@@ -9250,27 +9235,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				realName = [realName substringFromIndex:1];
 			}
 
-			if (numeric == 314) {
-				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWhowasRequest];
-			}
+			self.inWhoisResponse = (numeric == RPL_WHOISUSER);
+			self.inWhowasResponse = (numeric == RPL_WHOWASUSER);
 
 			NSString *message = nil;
 
-			if (self.inUserInvokedWhowasRequest) {
+			if (self.inWhowasResponse) {
 				if (printMessage) {
 					message = TXTLS(@"IRC[1086]", nickname, username, address, realName);
 				}
 			} else {
+				if (printMessage) {
+					message = TXTLS(@"IRC[1083]", nickname, username, address, realName);
+				}
+
 				/* Update local cache of our hostmask */
 				if ([self nicknameIsMyself:nickname]) {
 					NSString *hostmask = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, address];
 
 					self.userHostmask = hostmask;
-				}
-
-				/* Continue normal WHOIS event */
-				if (printMessage) {
-					message = TXTLS(@"IRC[1083]", nickname, username, address, realName);
 				}
 			}
 
@@ -9285,7 +9268,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 312: // RPL_WHOISSERVER
+		case RPL_WHOISSERVER:
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
@@ -9297,7 +9280,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *message = nil;
 
-			if (self.inUserInvokedWhowasRequest) {
+			if (self.inWhowasResponse) { // bahamut sends RPL_WHOISSERVER in WHOWAS
 				NSString *timeInfo = TXFormatDateLongStyle(serverInfo, YES);
 
 				if (timeInfo == nil) {
@@ -9318,7 +9301,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 317: // RPL_WHOISIDLE
+		case RPL_WHOISIDLE:
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
@@ -9345,7 +9328,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 319: // RPL_WHOISCHANNELS
+		case RPL_WHOISCHANNELS:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -9365,12 +9348,49 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 324: // RPL_CHANNELMODES
+		case RPL_WHOISACCOUNT:
+		{
+			NSAssertReturn([m paramsCount] == 4);
 
+			NSAssertReturn(printMessage);
+
+			NSString *message = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
+
+			[self print:message
+					 by:nil
+			  inChannel:[mainWindow() selectedChannelOn:self]
+				 asType:TVCLogLineDebugType
+				command:m.command
+			 receivedAt:m.receivedAt];
+
+			break;
+		}
+		case RPL_ENDOFWHOIS:
+		{
+			self.inWhoisResponse = NO;
+
+/*			if (printMessage) {
+				[self printReply:m inChannel:[mainWindow() selectedChannelOn:self]];
+			} */
+
+			break;
+		}
+		case RPL_ENDOFWHOWAS:
+		{
+			self.inWhowasResponse = NO;
+
+/*			if (printMessage) {
+				[self printReply:m inChannel:[mainWindow() selectedChannelOn:self]];
+			} */
+
+			break;
+		}
+		case RPL_CHANNELMODEIS:
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *channelName = [m paramAt:1];
+
 			NSString *modeString = [m sequence:2];
 
 			if ([modeString isEqualToString:@"+"]) {
@@ -9389,18 +9409,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				[channel.modeInfo updateModes:modeString];
 			}
 
-			/* Do not check after if statement so that filters can interact with
-			 input regardless of whether the value was manually invoked. */
 			printMessage = [self postReceivedMessage:m withText:modeString destinedFor:channel];
 
+			/* We perform this check after printMessage is defined so that
+			 filters have a chance to act on the input. */
+			/* IRCClient perform mdoe requests for channels without the user
+			 asking for it so we must check that here. */
 			if (channel.channelModesReceived == NO) {
 				channel.channelModesReceived = YES;
-			} else {
-				if (self.inUserInvokedModeRequest) {
-					[self disableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
-				} else {
-					break;
-				}
 			}
 
 			if (printMessage) {
@@ -9416,7 +9432,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 332: // RPL_TOPIC
+		case RPL_TOPIC:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -9444,7 +9460,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 333: // RPL_TOPICWHOTIME
+		case RPL_TOPICWHOTIME:
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
@@ -9482,7 +9498,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 341: // RPL_INVITING
+		case RPL_CREATIONTIME:
+		{
+			break; // Ignore
+		}
+		case RPL_INVITING:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -9506,17 +9526,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 303: // RPL_ISON
+		case RPL_ISON:
 		{
-			/* If the user requested ISON records, then present the
-			 result to the user but do no further processing. */
-			if (self.inUserInvokedIsonRequest) {
+			/* Present reply to the user if we have destination */
+			BOOL visibleIsonRequest = self.requestedCommands.visibleIsonRequest;
+
+			[self.requestedCommands recordIsonRequestClosed];
+
+			if (visibleIsonRequest) {
 				if (printMessage) {
-					[self printErrorReply:m];
+					[self printReplyToHiddenCommandResponsesQuery:m];
 				}
 
-				[self disableInUserInvokedCommandProperty:&self->_inUserInvokedIsonRequest];
-
+				/* It is important that we don't process logic for visible
+				 requests because if user does ISON for people that aren't
+				 on the tracked list and the logic belows sees the response
+				 missing those, then it will think everyone tracked went offline. */
 				break;
 			}
 
@@ -9591,30 +9616,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 315: // RPL_ENDOFWHO
-		{
-			if (self.inUserInvokedWhoRequest) {
-				if (printMessage) {
-					[self printUnknownReply:m];
-				}
-
-				[self disableInUserInvokedCommandProperty:&self->_inUserInvokedWhoRequest];
-			}
-
-			break;
-		}
-		case 352: // RPL_WHOREPLY
+		case RPL_WHOREPLY:
 		{
 			NSAssertReturn([m paramsCount] > 6);
 
-			BOOL inUserInvokedWhoRequest = self.inUserInvokedWhoRequest;
-
-			if (inUserInvokedWhoRequest) {
+			/* Present reply to the user if we have destination */
+			if (self.requestedCommands.visibleWhoRequest) {
 				if (printMessage) {
-					[self printUnknownReply:m];
+					[self printReplyToHiddenCommandResponsesQuery:m];
 				}
+
+				/* We could remove this and be fine, but it's a lot
+				 over overhead to process WHO responses so let's just
+				 wait until the next auotmated one. */
+				break;
 			}
 
+			/* Process reply */
 			NSString *channelName = [m paramAt:1];
 
 			IRCChannel *channel = [self findChannel:channelName];
@@ -9641,20 +9659,39 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
-			if (inUserInvokedWhoRequest == NO) {
-				if ([flags hasPrefix:@"G"]) {
-					if (self.monitorAwayStatus) {
-						isAway = YES;
-					}
-				}
+			if ([flags hasPrefix:@"G"]) {
+				isAway = self.monitorAwayStatus;
 			}
 
 			flags = [flags substringFromIndex:1];
 
-			if ([flags contains:@"*"]) {
+			if ([flags hasPrefix:@"*"]) {
 				flags = [flags substringFromIndex:1];
 
 				isIRCop = YES;
+			}
+
+			/* Parse user modes */
+			NSMutableString *userModes = [NSMutableString string];
+
+			for (NSUInteger i = 0; i < flags.length; i++) {
+				NSString *prefix = [flags stringCharacterAtIndex:i];
+
+				NSString *modeSymbol = [self.supportInfo modeSymbolForUserPrefix:prefix];
+
+				if (modeSymbol == nil) {
+					break;
+				}
+
+				[userModes appendString:modeSymbol];
+			}
+
+			/* Parameter 7 includes the hop count and real name because it begins with a :
+			 Therefore, we cut after the first space to get the real, real name value. */
+			NSInteger realNameFirstSpace = [realName stringPosition:@" "];
+
+			if (realNameFirstSpace > 0 && realNameFirstSpace < realName.length) {
+				realName = [realName substringAfterIndex:realNameFirstSpace];
 			}
 
 			/* Find global user and create mutable copy */
@@ -9675,18 +9712,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			userMutable.isAway = isAway;
 			userMutable.isIRCop = isIRCop;
 
-			/* Parameter 7 includes the hop count and real name because it begins with a :
-			 Therefore, we cut after the first space to get the real, real name value. */
-			NSInteger realNameFirstSpace = [realName stringPosition:@" "];
-
-			if (realNameFirstSpace > 0 && realNameFirstSpace < realName.length) {
-				realName = [realName substringAfterIndex:realNameFirstSpace];
-			}
-
 			userMutable.realName = realName;
 
 			/* Insert the user into the client and return the final copy that was */
-			IRCUser *userAdded = [self addUserAndReturn:userMutable];
+			BOOL userChanged = (user != nil && [user isEqual:userMutable] == NO);
+
+			IRCUser *userAdded = nil;
+
+			if (user == nil || userChanged) {
+				userAdded = [self addUserAndReturn:userMutable];
+			} else {
+				userAdded = user;
+			}
 
 			/* Find the user associated with this channel and create mutable copy */
 			IRCChannelUser *member = [user userAssociatedWithChannel:channel];
@@ -9699,40 +9736,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				memberMutable = [member mutableCopy];
 			}
 
-			/* Update user modes */
-			NSMutableString *userModes = [NSMutableString string];
+			memberMutable.modes = userModes;
 
-			for (NSUInteger i = 0; i < flags.length; i++) {
-				NSString *prefix = [flags stringCharacterAtIndex:i];
-
-				NSString *modeSymbol = [self.supportInfo modeSymbolForUserPrefix:prefix];
-
-				if (modeSymbol == nil) {
-					break;
-				}
-
-				[userModes appendString:modeSymbol];
-			}
-
-			if (userModes.length > 0) {
-				memberMutable.modes = userModes;
-			}
+			BOOL memberChanged = (member != nil && [member isEqual:memberMutable] == NO);
 
 			/* Write out changed user to channel */
-			if (member == nil) {
+			if (member == nil)
+			{
 				[channel addMember:memberMutable];
-			} else {
+			}
+			else if (userChanged || memberChanged)
+			{
 				/* Dtermine whether the users were modified in such a way that
 				 they require their cell in the user list be resorted. */
 				/* We do not want to resort unless absolutely necessary because
-				 sorting a user with a few hundred users has overhead. */
-				BOOL IRCopStatusChanged = (user.isIRCop != userMutable.isIRCop);
+				 sorting a channel with a few hundred users has overhead. */
+				BOOL IRCopStatusChanged = (user.isIRCop != userAdded.isIRCop);
+				
+				BOOL resortMember = (IRCopStatusChanged || memberChanged);
 
-				BOOL resortMember =
-				(IRCopStatusChanged || [member.modes isEqualToString:memberMutable.modes] == NO);
-
-				BOOL replaceInAllChannels =
-				(IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);
+				BOOL replaceInAllChannels = (IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);
 
 				[channel replaceMember:member
 							withMember:memberMutable
@@ -9749,24 +9772,33 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 353: // RPL_NAMEREPLY
+		case RPL_ENDOFWHO:
+		{
+			BOOL visibleWhoRequest = self.requestedCommands.visibleWhoRequest;
+
+			[self.requestedCommands recordWhoRequestClosed];
+
+			if (visibleWhoRequest && printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			break;
+		}
+		case RPL_NAMEREPLY:
 		{
 			NSAssertReturn([m paramsCount] > 3);
 
-			if (self.inUserInvokedNamesRequest) {
-				if (printMessage) {
-					[self printUnknownReply:m];
-				}
-
-				/* Do not process input if user invokes command */
-				break;
+			/* Present reply to the user if we have destination */
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
 			}
 
+			/* Process reply */
 			NSString *channelName = [m paramAt:2];
 
 			IRCChannel *channel = [self findChannel:channelName];
 
-			if (channel == nil) {
+			if (channel == nil || channel.channelNamesReceived) {
 				break;
 			}
 
@@ -9810,30 +9842,38 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					nicknameInt = newNickname;
 				}
 
-				/* If we are connected to a bouncer, then we may receive a NAMES reply
-				 multiple times, even after first joining channels. Because of this, 
-				 we create a mutable copy of the user if they already exist, similiar
-				 to how WHO replies are handled, so that we do not lose any state. */
+				/* Find global user */
+				/* An instance of IRCUser may already exist from a NAMES
+				 reply for another channel. If one already exist, then
+				 we don't make an effort to change it's credentials. */
+				IRCUser *userAdded = nil;
 
-				/* Create global user */
-				IRCUserMutable *userMutable = [self mutableCopyOfUserWithNickname:nicknameInt];
+				IRCUser *user = [self findUser:nicknameInt];
 
-				userMutable.nickname = nicknameInt;
-				userMutable.username = usernameInt;
-				userMutable.address = addressInt;
+				if (user == nil) {
+					IRCUserMutable *userMutable = [[IRCUserMutable alloc] initWithNickname:nicknameInt onClient:self];
 
-				IRCUser *userAdded = [self addUserAndReturn:userMutable];
+					userMutable.nickname = nicknameInt;
+					userMutable.username = usernameInt;
+					userMutable.address = addressInt;
 
-				/* Create local user */
-				IRCChannelUser *member = [userMutable userAssociatedWithChannel:channel];
-
-				IRCChannelUserMutable *memberMutable = nil;
-
-				if (member == nil) {
-					memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
+					userAdded = [self addUserAndReturn:userMutable];
 				} else {
-					memberMutable = [member mutableCopy];
+					userAdded = user;
 				}
+
+				/* Find channel user */
+				IRCChannelUser *member = [userAdded userAssociatedWithChannel:channel];
+
+				/* If a user with this name already exists in the channel,
+				 then we do not continue. While this should never be possible,
+				 there have been weirder edge cases. */
+				if (member != nil) {
+					continue;
+				}
+
+				/* Create channel user */
+				IRCChannelUserMutable *memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
 
 				memberMutable.modes = memberModes;
 
@@ -9843,58 +9883,49 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 366: // RPL_ENDOFNAMES
+		case RPL_ENDOFNAMES:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
+			/* Present reply to the user if we have destination */
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			/* Process reply */
 			NSString *channelName = [m paramAt:1];
 
 			IRCChannel *channel = [self findChannel:channelName];
 
-			if (channel == nil) {
+			if (channel == nil || channel.channelNamesReceived) {
 				break;
 			}
 
-			if (self.inUserInvokedNamesRequest == NO && self.isBrokenIRCd_aka_Twitch == NO) {
-				if (channel.numberOfMembers == 1) {
-					NSString *defaultModes = channel.config.defaultModes;
+			channel.channelNamesReceived = YES;
 
-					if (defaultModes.length > 0) {
-						[self sendModes:defaultModes withParametersString:nil inChannel:channel];
-					}
+			/* We have to wait until names are processed before populating
+			 defaults for a channel so that we are certain there is actually
+			 only one user, which is us. */
+			if (channel.numberOfMembers == 1 && self.isBrokenIRCd_aka_Twitch == NO) {
+				NSString *defaultModes = channel.config.defaultModes;
 
-					NSString *defaultTopic = channel.config.defaultTopic;
+				if (defaultModes.length > 0) {
+					[self sendModes:defaultModes withParametersString:nil inChannel:channel];
+				}
 
-					if (defaultTopic.length > 0) {
-						[self sendTopicTo:defaultTopic inChannel:channel];
-					}
+				NSString *defaultTopic = channel.config.defaultTopic;
+
+				if (defaultTopic.length > 0) {
+					[self sendTopicTo:defaultTopic inChannel:channel];
 				}
 			}
 
-			[self disableInUserInvokedCommandProperty:&self->_inUserInvokedNamesRequest];
-
+			/* Update user count in title */
 			[mainWindow() updateTitleFor:channel];
 
 			break;
 		}
-		case 320: // RPL_WHOISSPECIAL
-		{
-			NSAssertReturn([m paramsCount] == 3);
-
-			NSAssertReturn(printMessage);
-
-			NSString *message = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
-
-			[self print:message
-					 by:nil
-			  inChannel:[mainWindow() selectedChannelOn:self]
-				 asType:TVCLogLineDebugType
-				command:m.command
-			 receivedAt:m.receivedAt];
-
-			break;
-		}
-		case 321: // RPL_LISTSTART
+		case RPL_LISTSTART:
 		{
 			TDCServerChannelListDialog *channelListDialog = [self channelListDialog];
 
@@ -9906,7 +9937,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 322: // RPL_LIST
+		case RPL_LIST:
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
@@ -9926,7 +9957,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 323: // RPL_LISTEND
+		case RPL_LISTEND:
 		{
 			TDCServerChannelListDialog *channelListDialog = [self channelListDialog];
 
@@ -9936,38 +9967,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 329: // RPL_CREATIONTIME
-		case 318: // RPL_ENDOFWHOIS
-		{
-			break; // Ignored numerics.
-		}
-		case 330: // RPL_WHOISACCOUNT (ircu)
-		{
-			NSAssertReturn([m paramsCount] == 4);
-
-			NSAssertReturn(printMessage);
-
-			NSString *message = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
-
-			[self print:message
-					 by:nil
-			  inChannel:[mainWindow() selectedChannelOn:self]
-				 asType:TVCLogLineDebugType
-				command:m.command
-			 receivedAt:m.receivedAt];
-
-			break;
-		}
-		case 367: // RPL_BANLIST
-		case 346: // RPL_INVITELIST
-		case 348: // RPL_EXCEPTLIST
-		case 728: // RPL_QUIETLIST
+		case RPL_BANLIST:
+		case RPL_INVITELIST:
+		case RPL_EXCEPTLIST:
+		case RPL_QUIETLIST:
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
 			NSUInteger paramsOffset = 0;
 
-			if (numeric == 728 && m.paramsCount == 6) { // server author was like "fuck you"
+			/* Quiet list has an extra argument which is the string "q" */
+			if (numeric == RPL_QUIETLIST && m.paramsCount == 6)	{
 				paramsOffset = 1;
 			}
 
@@ -10007,13 +10017,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *localization = nil;
 
-			if (numeric == 367) { // RPL_BANLIST
+			if (numeric == RPL_BANLIST) {
 				localization = @"1102";
-			} else if (numeric == 346) { // RPL_INVITELIST
+			} else if (numeric == RPL_INVITELIST) {
 				localization = @"1103";
-			} else if (numeric == 348) { // RPL_EXCEPTLIST
+			} else if (numeric == RPL_EXCEPTLIST) {
 				localization = @"1104";
-			} else if (numeric == 728) { // RPL_QUIETLIST
+			} else if (numeric == RPL_QUIETLIST) {
 				localization = @"1119";
 			}
 
@@ -10040,10 +10050,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 368: // RPL_ENDOFBANLIST
-		case 347: // RPL_ENDOFINVITELIST
-		case 349: // RPL_ENDOFEXCEPTLIST
-		case 729: // RPL_ENDOFQUIETLIST
+		case RPL_ENDOFBANLIST:
+		case RPL_ENDOFINVITELIST:
+		case RPL_ENDOFEXCEPTLIST:
+		case RPL_ENDOFQUIETLIST:
 		{
 			TDCChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDCChannelBanListSheet"];
 
@@ -10059,7 +10069,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 381: // RPL_YOUREOPER
+		case RPL_YOUREOPER:
 		{
 			if (self.userIsIRCop == NO) {
 				self.userIsIRCop = YES;
@@ -10078,7 +10088,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 328: // RPL_CHANNEL_URL
+		case RPL_CHANNEL_URL:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -10102,59 +10112,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 369: // RPL_ENDOFWHOWAS
+		case RPL_WATCHSTAT:
+		case RPL_WATCHLIST:
 		{
-			[self disableInUserInvokedCommandProperty:&self->_inUserInvokedWhowasRequest];
-
 			if (printMessage) {
-				[self print:m.sequence
-						 by:nil
-				  inChannel:[mainWindow() selectedChannelOn:self]
-					 asType:TVCLogLineDebugType
-					command:m.command
-				 receivedAt:m.receivedAt];
+				[self printReplyToHiddenCommandResponsesQuery:m];
 			}
 
 			break;
 		}
-		case 602: // RPL_WATCHOFF
-		case 606: // RPL_WATCHLIST
-		case 607: // RPL_ENDOFWATCHLIST
-		case 608: // RPL_CLEARWATCH
-		case 732: // RPL_MONLIST
-		case 733: // RPL_ENDOFMONLIST
-		case 734: // ERR_MONLISTFULL
-		{
-			if (self.inUserInvokedWatchRequest) {
-				if (printMessage) {
-					[self printUnknownReply:m];
-				}
-			}
-
-			if (numeric == 608 || numeric == 607 || numeric == 733) {
-				[self disableInUserInvokedCommandProperty:&self->_inUserInvokedWatchRequest];
-			}
-
-			break;
-		}
-		case 597: // RPL_REAWAY
-		case 598: // RPL_GONEAWAY
-		case 599: // RPL_NOTAWAY
-		case 600: // RPL_LOGON
-		case 601: // RPL_LOGOFF
-		case 604: // RPL_NOWON
-		case 605: // RPL_NOWOFF
+		case RPL_REAWAY:
+		case RPL_GONEAWAY:
+		case RPL_NOTAWAY:
 		{
 			NSAssertReturn([m paramsCount] > 4);
 
-			if (self.inUserInvokedWatchRequest) {
-				if (printMessage) {
-					[self printUnknownReply:m];
-				}
-
-				break;
+			/* Present reply to the user if we have destination */
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
 			}
 
+			/* Process reply */
 			NSString *nickname = [m paramAt:1];
 
 			IRCAddressBookEntry *addressBookEntry =	[self findUserTrackingAddressBookEntryForNickname:nickname];
@@ -10164,40 +10142,96 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			switch (numeric) {
-				case 600: // logged online
+				case RPL_REAWAY:
+				case RPL_GONEAWAY: // is away
+				{
+					[self modifyUserWithNickname:nickname asAway:YES];
+
+					break;
+				}
+				case RPL_NOTAWAY: // is no longer away
+				{
+					[self modifyUserWithNickname:nickname asAway:NO];
+
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			} // switch()
+
+			break;
+		}
+		case RPL_LOGON:
+		case RPL_LOGOFF:
+		{
+			NSAssertReturn([m paramsCount] > 4);
+
+			/* Present reply to the user if we have destination */
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			 /* Process reply */
+			NSString *nickname = [m paramAt:1];
+
+			IRCAddressBookEntry *addressBookEntry =	[self findUserTrackingAddressBookEntryForNickname:nickname];
+
+			if (addressBookEntry == nil) {
+				break;
+			}
+
+			switch (numeric) {
+				case RPL_LOGON: // logged online
 				{
 					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
-					
+
 					break;
 				}
-				case 601: // logged offline
+				case RPL_LOGOFF: // logged offline
 				{
 					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
-					
+
 					break;
 				}
-				case 604: // is online
+				default:
+				{
+					break;
+				}
+			} // switch()
+
+			break;
+		}
+		case RPL_NOWON:
+		case RPL_NOWOFF:
+		{
+			NSAssertReturn([m paramsCount] > 4);
+
+			/* Present reply to the user if we have destination */
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			/* Process reply */
+			NSString *nickname = [m paramAt:1];
+
+			IRCAddressBookEntry *addressBookEntry =	[self findUserTrackingAddressBookEntryForNickname:nickname];
+
+			if (addressBookEntry == nil) {
+				break;
+			}
+
+			switch (numeric) {
+				case RPL_NOWON: // is online
 				{
 					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsAvailalbeStatus notify:NO];
 					
 					break;
 				}
-				case 605: // is offline
+				case RPL_NOWOFF: // is offline
 				{
 					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingIsNotAvailalbeStatus notify:NO];
-					
-					break;
-				}
-				case 597:
-				case 598: // is away
-				{
-					[self modifyUserWithNickname:nickname asAway:YES];
-					
-					break;
-				}
-				case 599: // is no longer away
-				{
-					[self modifyUserWithNickname:nickname asAway:NO];
 					
 					break;
 				}
@@ -10209,19 +10243,54 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 730: // RPL_MONONLINE
-		case 731: // RPL_MONOFFLINE
+		case RPL_WATCHOFF:
+		{
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			break;
+		}
+		case ERR_TOOMANYWATCH:
+		{
+			/* This message is always printed because Textual does not
+			 make an effort to check the maximum allowance for this
+			 command. We therefore want a user to know why tracking
+			 breaks in Textual instead of blaming it on a bug. */
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
+
+			break;
+		}
+//		case RPL_CLEARWATCH: /* Not implemented by any IRCd */
+		case RPL_ENDOFWATCHLIST:
+		{
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			break;
+		}
+		case RPL_MONLIST:
+		{
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			break;
+		}
+		case RPL_MONONLINE:
+		case RPL_MONOFFLINE:
 		{
 			NSAssertReturn([m paramsCount] == 2);
 
-			if (self.inUserInvokedWatchRequest) {
-				if (printMessage) {
-					[self printUnknownReply:m];
-				}
-
-				break;
+			/* Present reply to the user if we have destination */
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
 			}
 
+			/* Process reply */
 			NSString *changedUsersString = [m paramAt:1];
 
 			NSArray *changedUsers = [changedUsersString componentsSeparatedByString:@","];
@@ -10239,7 +10308,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					continue;
 				}
 
-				if (numeric == 730) { // logged online
+				if (numeric == RPL_MONONLINE) { // logged online
 					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOnStatus notify:YES];
 				} else {
 					[self statusOfTrackedNickname:nickname changedTo:IRCAddressBookUserTrackingSignedOffStatus notify:YES];
@@ -10248,13 +10317,30 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 716: // RPL_TARGUMODEG
+		case ERR_MONLISTFULL:
 		{
-			// Ignore, 717 will take care of notification.
+			/* See ERR_TOOMANYWATCH for reason we always print this. */
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
 
 			break;
 		}
-		case 717: // RPL_TARGNOTIFY
+		case RPL_ENDOFMONLIST:
+		{
+			if (printMessage) {
+				[self printReplyToHiddenCommandResponsesQuery:m];
+			}
+
+			break;
+		}
+		case RPL_TARGUMODEG:
+		{
+			// Ignore. 717 will take care of notification.
+
+			break;
+		}
+		case RPL_TARGNOTIFY:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -10266,7 +10352,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 718:
+		case RPL_UMODEGMSG:
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
@@ -10275,19 +10361,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *nickname = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 
+			IRCChannel *channel = nil;
+
 			if ([TPCPreferences locationToSendNotices] == TXNoticeSendSelectedChannelType) {
-				IRCChannel *channel = [mainWindow() selectedChannelOn:self];
-
-				[self printDebugInformation:TXTLS(@"IRC[1089]", nickname, hostmask) inChannel:channel];
-
-				break;
+				channel = [mainWindow() selectedChannelOn:self];
 			}
 
-			[self printDebugInformationToConsole:TXTLS(@"IRC[1089]", nickname, hostmask)];
+			[self printDebugInformation:TXTLS(@"IRC[1089]", nickname, hostmask) inChannel:channel];
 
 			break;
 		}
-		case 900: // RPL_LOGGEDIN
+		case RPL_LOGGEDIN:
 		{
 			NSAssertReturn([m paramsCount] == 4);
 
@@ -10304,7 +10388,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 901: // RPL_LOGGEDOUT
+		case RPL_LOGGEDOUT:
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
@@ -10321,23 +10405,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-		case 902: // ERR_NICKLOCKED
-		case 903: // RPL_SASLSUCCESS
-		case 904: // ERR_SASLFAIL
-		case 905: // ERR_SASLTOOLONG
-		case 906: // ERR_SASLABORTED
-		case 907: // ERR_SASLALREADY
+		case RPL_SASLSUCCESS:
+		case ERR_NICKLOCKED:
+		case ERR_SASLFAIL:
+		case ERR_SASLTOOLONG:
+		case ERR_SASLABORTED:
+		case ERR_SASLALREADY:
+		case RPL_SASLMECHS: /* Treated as error */
 		{
 			if (printMessage) {
-				if (numeric == 903) { // success
-					[self print:[m sequence:1]
-							 by:nil
-					  inChannel:nil
-						 asType:TVCLogLineDebugType
-						command:m.command
-					 receivedAt:m.receivedAt];
-				} else {
+				if (numeric == RPL_SASLSUCCESS) { // success
 					[self printReply:m];
+				} else {
+					[self printErrorReply:m];
 				}
 			}
 
@@ -10351,6 +10431,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		default:
 		{
+			/* We will handle custom WHOIS responses here because there
+			 are so many that it is impossible to cover them all above. */
+			/* For those that we don't handle, give a plugin a chance first. */
 			NSString *numericString = [NSString stringWithUnsignedInteger:numeric];
 
 			if ([sharedPluginManager().supportedServerInputCommands containsObject:numericString]) {
@@ -10358,12 +10441,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (printMessage) {
+				/* Output custom WHOIS response to proper target */
+				if (self.inWhoisResponse && m.paramsCount > 2) {
+					[self printUnknownReply:m inChannel:[mainWindow() selectedChannelOn:self]];
+
+					break;
+				}
+
+				/* Output unknown result */
 				[self printUnknownReply:m];
 			}
 
 			break;
 		}
-	}
+	} // switch()
 }
 
 - (void)receiveErrorNumericReply:(IRCMessage *)m
@@ -10411,7 +10502,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			if (self.isLoggedIn) {
 				if (printMessage) {
-					[self printUnknownReply:m];
+					[self printReply:m];
 				}
 
 				break;
@@ -10471,7 +10562,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
-	}
+	} // switch()
 }
 
 - (void)receiveNicknameCollisionError:(IRCMessage *)m
