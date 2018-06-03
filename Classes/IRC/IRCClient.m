@@ -134,6 +134,7 @@
 #import "IRCChannelUserPrivate.h"
 #import "IRCChannelPrivate.h"
 #import "IRCClientConfigPrivate.h"
+#import "IRCClientRequestedCommandsPrivate.h"
 #import "IRCColorFormatPrivate.h"
 #import "IRCConnectionPrivate.h"
 #import "IRCConnectionConfig.h"
@@ -242,6 +243,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong, nullable) NSMutableArray<IRCChannel *> *channelsToAutojoin;
 @property (nonatomic, strong) IRCAddressBookMatchCache *addressBookMatchCache;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
+@property (nonatomic, strong) IRCClientRequestedCommands *requestedCommands;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCTimedCommand *> *timedCommands;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, IRCUser *> *userListPrivate;
 @property (nonatomic, strong, nullable) NSMutableString *zncBouncerCertificateChainDataMutable;
@@ -253,6 +255,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedNeedIdentificationTokens;
 @property (readonly, copy) NSArray<NSString *> *nickServSupportedSuccessfulIdentificationTokens;
 @property (nonatomic, strong, nullable) IRCChannel *rawDataLogQuery;
+@property (nonatomic, strong, nullable) IRCChannel *hiddenCommandResponsesQuery;
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 @property (nonatomic, strong, nullable) TLOTimer *softwareTrialTimer;
@@ -316,6 +319,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.addressBookMatchCache = [[IRCAddressBookMatchCache alloc] initWithClient:self];
 	
 	self.trackedUsers = [[IRCAddressBookUserTrackingContainer alloc] initWithClient:self];
+
+	self.requestedCommands = [IRCClientRequestedCommands new];
 
 	self.lastMessageServerTime = self.config.lastMessageServerTime;
 
@@ -405,6 +410,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.supportInfo = nil;
 	self.timedCommands = nil;
 	self.trackedUsers = nil;
+	self.requestedCommands = nil;
 	self.userListPrivate = nil;
 
 	[self cancelPerformRequests];
@@ -804,6 +810,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self zncPlaybackClearChannel:channel];
+
+	if (self.hiddenCommandResponsesQuery == channel) {
+		self.hiddenCommandResponsesQuery = channel;
+	}
 
 	if (self.rawDataLogQuery == channel) {
 		self.rawDataLogQuery = nil;
@@ -3783,7 +3793,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedIsonRequest];
+			[self createHiddenCommandResponses];
+
+			[self.requestedCommands recordIsonRequestOpenedAsVisible];
 
 			[self send:@"ISON", stringIn.string, nil];
 
@@ -4059,8 +4071,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (modeString.length == 0) {
-				[self enableInUserInvokedCommandProperty:&self->_inUserInvokedModeRequest];
-
 				[self send:@"MODE", targetChannelName, nil];
 			} else {
 				[self send:@"MODE", targetChannelName, modeString, nil];
@@ -4249,7 +4259,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedNamesRequest];
+			[self createHiddenCommandResponses];
+
+			[self.requestedCommands recordNamesRequestOpenedAsVisible];
 
 			[self send:@"NAMES", stringIn.string, nil];
 
@@ -4751,13 +4763,33 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			if ([stringIn.string hasSuffix:@"-"] || [stringIn.string hasSuffix:@"+"] ) {
+			BOOL isClearCommand = NO;
+			BOOL isModifierCommand = NO;
+
+			/* UnrealIRCd splits arguments using space and loops through all of them
+			 which means a modifier or clear command can appear at the same time. */
+			NSArray *arguments = [stringIn.string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			for (NSString *argument in arguments) {
+				if ([argument hasPrefix:@"-"] || [stringIn.string hasPrefix:@"+"] ) {
+					isModifierCommand = YES;
+
+					break;
+				} else if ([argument isEqualIgnoringCase:@"c"]) {
+					isClearCommand = YES;
+				}
+			}
+
+			if (isModifierCommand) {
 				[self printDebugInformation:TXTLS(@"IRC[1137]")];
 
 				break;
 			}
 
-			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWatchRequest];
+			/* The clear command doesn't produce a result */
+			if (isClearCommand == NO) {
+				[self createHiddenCommandResponses];
+			}
 
 			[self sendCommand:uppercaseCommand withData:stringIn.string];
 
@@ -4773,7 +4805,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			[self enableInUserInvokedCommandProperty:&self->_inUserInvokedWhoRequest];
+			[self createHiddenCommandResponses];
+
+			[self.requestedCommands recordWhoRequestOpenedAsVisible];
 
 			[self send:@"WHO", stringIn.string, nil];
 
@@ -5708,6 +5742,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	self.socket = nil;
 
 	[self removeTimedCommands];
+
+	[self removeRequestedCommands];
 
 	[self stopAutojoinTimer];
 	[self stopAutojoinDelayedWarningTimer];
@@ -9330,6 +9366,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			break;
 		}
 		case 324: // RPL_CHANNELMODES
+
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
@@ -10932,57 +10969,41 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #endif
 
 #pragma mark -
-#pragma mark User Invoked Command Controls
+#pragma mark Requested Commands
 
-/* Textual sends IRC many commands such as WHO, which the user may not care about when
- the response is received. So that we only show responses to the user when they care,
- IRCClient has many -inUserInvoked*Command properties. Because IRC is stupid and many
- IRCd do not follow the RFC, unsetting these properties when an error is received or
- a valid response is received is not foolproof because IRCd tend to invent their own
- responses sometimes, which Textual has no knowledge of. */
-/* So that we can guarantee out properties are reset, we place a timer on the property
- by invoking -enableInUserInvokedCommandProperty:, then if
- -disableInUserInvokedCommandProperty: is not invoked, we time the property out
- and reset it in -timeoutInUserInvokedCommandProperty: */
-/* That's why this ridiculous logic exists here. */
-- (void)enableInUserInvokedCommandProperty:(BOOL *)property
+- (void)removeRequestedCommands
 {
-	NSParameterAssert(property != NULL);
-
-#define _inUserInvokedCommandTimeoutInterval		10.0
-
-	if (*property == NO) {
-		*property = YES;
-
-		[self performSelectorInCommonModes:@selector(timeoutInUserInvokedCommandProperty:)
-								withObject:[NSValue valueWithPointer:property]
-								afterDelay:_inUserInvokedCommandTimeoutInterval];
-	}
-
-#undef _inUserInvokedCommandTimeoutInterval
+	[self.requestedCommands removeCommands];
 }
 
-- (void)disableInUserInvokedCommandProperty:(BOOL *)property
+- (void)createHiddenCommandResponses
 {
-	NSParameterAssert(property != NULL);
-
-	if (*property != NO) {
-		*property = NO;
-
-		[self cancelPerformRequestsWithSelector:@selector(timeoutInUserInvokedCommandProperty:)
-										 object:[NSValue valueWithPointer:property]];
+	if (self.isTerminating) {
+		return;
 	}
+
+	if (self.rawDataLogQuery != nil) {
+		return;
+	}
+
+	IRCChannel *query = [self findChannelOrCreate:@"Hidden Responses" isUtility:YES];
+
+	self.hiddenCommandResponsesQuery = query;
+
+	[mainWindow() select:query];
+
+	[self printDebugInformation:TXTLS(@"IRC[1170]") inChannel:query];
 }
 
-- (void)timeoutInUserInvokedCommandProperty:(NSValue *)propertyPointerValue
+- (void)printReplyToHiddenCommandResponsesQuery:(IRCMessage *)message
 {
-	NSParameterAssert(propertyPointerValue != nil);
+	IRCChannel *query = self.hiddenCommandResponsesQuery;
 
-	BOOL *propertyPointer = propertyPointerValue.pointerValue;
-
-	if (propertyPointer != NO) {
-		*propertyPointer = NO;
+	if (query == nil) {
+		return;
 	}
+
+	[self printReply:message inChannel:query];
 }
 
 #pragma mark -
@@ -11794,16 +11815,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)sendWhoToChannel:(IRCChannel *)channel
 {
+	[self sendWhoToChannel:channel hideResponse:NO];
+}
+
+- (void)sendWhoToChannel:(IRCChannel *)channel hideResponse:(BOOL)hideResponse
+{
 	NSParameterAssert(channel != nil);
 
 	if (channel.isChannel == NO) {
 		return;
 	}
 
-	[self sendWhoToChannelNamed:channel.name];
+	[self sendWhoToChannelNamed:channel.name hideResponse:hideResponse];
 }
 
 - (void)sendWhoToChannelNamed:(NSString *)channel
+{
+	[self sendWhoToChannelNamed:channel hideResponse:NO];
+}
+
+- (void)sendWhoToChannelNamed:(NSString *)channel hideResponse:(BOOL)hideResponse
 {
 	NSParameterAssert(channel != nil);
 
@@ -11813,6 +11844,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (channel.length == 0) {
 		return;
+	}
+
+	if (hideResponse == NO) {
+		[self.requestedCommands recordWhoRequestOpenedAsVisible];
+	} else {
+		[self.requestedCommands recordWhoRequestOpened];
 	}
 
 	[self send:@"WHO", channel, nil];
@@ -12077,15 +12114,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames
 {
+	[self sendIsonForNicknames:nicknames hideResponse:NO];
+}
+
+- (void)sendIsonForNicknames:(NSArray<NSString *> *)nicknames hideResponse:(BOOL)hideResponse
+{
 	NSParameterAssert(nicknames != nil);
 
 	/* Split nicknames into fixed number per-command in case there are a lot or are long. */
 	[nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
-		[self _sendIsonForNicknames:objects];
+		[self _sendIsonForNicknames:objects hideResponse:hideResponse];
 	}];
 }
 
-- (void)_sendIsonForNicknames:(NSArray<NSString *> *)nicknames
+- (void)_sendIsonForNicknames:(NSArray<NSString *> *)nicknames hideResponse:(BOOL)hideResponse
 {
 	NSParameterAssert(nicknames != nil);
 
@@ -12095,6 +12137,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (nicknames.count == 0) {
 		return;
+	}
+
+	if (hideResponse == NO) {
+		[self.requestedCommands recordIsonRequestOpenedAsVisible];
+	} else {
+		[self.requestedCommands recordIsonRequestOpened];
 	}
 
 	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
@@ -12891,7 +12939,7 @@ present_error:
 		}
 	}
 
-	[self sendIsonForNicknames:nicknames];
+	[self sendIsonForNicknames:nicknames hideResponse:YES];
 }
 
 - (void)startWhoTimer
@@ -13019,7 +13067,7 @@ present_error:
 	}
 
 	for (IRCChannel *channel in channelsToQuery) {
-		[self sendWhoToChannel:channel];
+		[self sendWhoToChannel:channel hideResponse:YES];
 	}
 
 #undef _maximumChannelCountPerWhoBatchRequest

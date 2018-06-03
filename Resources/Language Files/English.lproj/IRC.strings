@@ -76,6 +76,9 @@
 /* Raw mode messages */
 "IRC[1092]" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
 
+/* Hidden command responses messages */
+"IRC[1170]" = "⍅ Command responses which are normally hidden will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
+
 /* Log file session headers */
 "IRC[1095]" = "------------- Begin Session -------------";
 "IRC[1096]" = "------------- End Session -------------";
