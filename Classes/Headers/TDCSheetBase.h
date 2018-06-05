@@ -38,6 +38,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCValidatedComboBox, TVCValidatedTextField;
+
 @interface TDCSheetBase : NSObject
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, weak) NSWindow *window;
@@ -54,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)cancel:(id)sender;
 
 - (void)close;
+
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField;
+- (BOOL)okOrErrorForComboBox:(TVCValidatedComboBox *)comboBox;
 @end
 
 NS_ASSUME_NONNULL_END

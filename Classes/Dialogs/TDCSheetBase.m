@@ -36,6 +36,8 @@
  *
  *********************************************************************** */
 
+#import "TVCValidatedComboBox.h"
+#import "TVCValidatedTextField.h"
 #import "TDCSheetBase.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -82,6 +84,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)ok:(id)sender
 {
 	[self endSheet];
+}
+
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField
+{
+	NSParameterAssert(textField != nil);
+
+	return ([textField showValidationErrorPopover] == NO);
+}
+
+- (BOOL)okOrErrorForComboBox:(TVCValidatedComboBox *)comboBox
+{
+	NSParameterAssert(comboBox != nil);
+
+	return ([comboBox showValidationErrorPopover] == NO);
 }
 
 - (void)cancel:(id)sender
