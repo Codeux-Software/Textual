@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL updateWindowFrameWhileOffscreen;
 @property (nonatomic, assign) BOOL expandParentOnDoubleClick;
 
-- (void)startAtSelectionIndex:(NSUInteger)startingSelection;
+- (void)navigateTo:(NSUInteger)selectionIndex;
 @end
 
 NS_ASSUME_NONNULL_END

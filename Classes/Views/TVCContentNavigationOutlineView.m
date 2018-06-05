@@ -61,9 +61,25 @@ NS_ASSUME_NONNULL_BEGIN
 	self.doubleAction = @selector(outlineViewDoubleClicked:);
 }
 
-- (void)startAtSelectionIndex:(NSUInteger)startingSelection
+- (void)navigateTo:(NSUInteger)selectionIndex
 {
-	[self selectItemAtIndex:startingSelection];
+	for (id groupItem in self.groupItems) {
+		NSArray *childItems = [self itemsFromParentGroup:groupItem];
+
+		id childItem = [childItems objectPassingTest:^BOOL(NSDictionary<NSString *, id> *attributes, NSUInteger index, BOOL *stop) {
+			return (selectionIndex == [attributes[@"index"] integerValue]);
+		}];
+
+		if (childItem == nil) {
+			continue;
+		}
+
+		[self expandItem:groupItem];
+
+		[self selectItemAtIndex:[self rowForItem:childItem]];
+
+		return;
+	}
 }
 
 #pragma mark -
