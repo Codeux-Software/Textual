@@ -893,8 +893,8 @@
 		4C7B038E1D1210A100295E82 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03921D1210A100295E82 /* TVCMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58D158E99520026668C /* TVCMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03991D1210A100295E82 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B039E1D1210A100295E82 /* TVCComboBoxWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCComboBoxWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B039F1D1210A100295E82 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7B039E1D1210A100295E82 /* TVCValidatedComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCValidatedComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7B039F1D1210A100295E82 /* TVCValidatedTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCValidatedTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03A11D1210A100295E82 /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03A21D1210A100295E82 /* TXGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF595158E99520026668C /* TXGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03A31D1210A100295E82 /* TXMasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF596158E99520026668C /* TXMasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -944,8 +944,8 @@
 		4C7B040F1D1210A800295E82 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04131D1210A800295E82 /* TVCMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58D158E99520026668C /* TVCMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B041F1D1210A800295E82 /* TVCComboBoxWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCComboBoxWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04201D1210A800295E82 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7B041F1D1210A800295E82 /* TVCValidatedComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCValidatedComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7B04201D1210A800295E82 /* TVCValidatedTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCValidatedTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04221D1210A800295E82 /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04231D1210A800295E82 /* TXGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF595158E99520026668C /* TXGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04241D1210A800295E82 /* TXMasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF596158E99520026668C /* TXMasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -995,8 +995,8 @@
 		4C7B04901D1210B000295E82 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04941D1210B000295E82 /* TVCMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58D158E99520026668C /* TVCMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04A01D1210B000295E82 /* TVCComboBoxWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCComboBoxWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04A11D1210B000295E82 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7B04A01D1210B000295E82 /* TVCValidatedComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCValidatedComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7B04A11D1210B000295E82 /* TVCValidatedTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCValidatedTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04A31D1210B000295E82 /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04A41D1210B000295E82 /* TXGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF595158E99520026668C /* TXGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04A51D1210B000295E82 /* TXMasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF596158E99520026668C /* TXMasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1752,12 +1752,12 @@
 		4CF40E061AC1A4AC00A26BE0 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */; };
 		4CF40E071AC1A4AC00A26BE0 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */; };
 		4CF40E081AC1A4AC00A26BE0 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */; };
-		4CF40E161AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC11AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m */; };
-		4CF40E171AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC11AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m */; };
-		4CF40E181AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC11AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m */; };
-		4CF40E1A1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC21AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m */; };
-		4CF40E1B1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC21AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m */; };
-		4CF40E1C1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC21AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m */; };
+		4CF40E161AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC11AC1A4AC00A26BE0 /* TVCValidatedComboBox.m */; };
+		4CF40E171AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC11AC1A4AC00A26BE0 /* TVCValidatedComboBox.m */; };
+		4CF40E181AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC11AC1A4AC00A26BE0 /* TVCValidatedComboBox.m */; };
+		4CF40E1A1AC1A4AC00A26BE0 /* TVCValidatedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC21AC1A4AC00A26BE0 /* TVCValidatedTextField.m */; };
+		4CF40E1B1AC1A4AC00A26BE0 /* TVCValidatedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC21AC1A4AC00A26BE0 /* TVCValidatedTextField.m */; };
+		4CF40E1C1AC1A4AC00A26BE0 /* TVCValidatedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC21AC1A4AC00A26BE0 /* TVCValidatedTextField.m */; };
 		4CF40E1E1AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC31AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m */; };
 		4CF40E1F1AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC31AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m */; };
 		4CF40E201AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DC31AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m */; };
@@ -2095,7 +2095,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C001C09197A10E80061C2C5 /* TVCComboBoxWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCComboBoxWithValueValidation.h; path = Classes/Headers/TVCComboBoxWithValueValidation.h; sourceTree = "<group>"; };
+		4C001C09197A10E80061C2C5 /* TVCValidatedComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCValidatedComboBox.h; path = Classes/Headers/TVCValidatedComboBox.h; sourceTree = "<group>"; };
 		4C00959B1952A9E7008A81C7 /* TPCPathInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPathInfo.h; path = Classes/Headers/TPCPathInfo.h; sourceTree = "<group>"; };
 		4C0095A11952AA0F008A81C7 /* TPCApplicationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCApplicationInfo.h; path = Classes/Headers/TPCApplicationInfo.h; sourceTree = "<group>"; };
 		4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSyncExtension.h; path = Classes/Headers/TPCPreferencesCloudSyncExtension.h; sourceTree = "<group>"; };
@@ -2215,7 +2215,7 @@
 		4C35DC731F2EBD5300FDE01E /* TDCLicenseUpgradeDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseUpgradeDialog.m; path = Classes/Dialogs/TDCLicenseUpgradeDialog.m; sourceTree = "<group>"; };
 		4C35DC761F2EBD7F00FDE01E /* TDCLicenseUpgradeDialogPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCLicenseUpgradeDialogPrivate.h; path = Classes/Headers/Private/TDCLicenseUpgradeDialogPrivate.h; sourceTree = "<group>"; };
 		4C35F7A51D8D6F54004B7E15 /* IRCUserRelations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCUserRelations.h; path = Classes/Headers/IRCUserRelations.h; sourceTree = "<group>"; };
-		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCTextFieldWithValueValidation.h; path = Classes/Headers/TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
+		4C36091918B4E89500243B3A /* TVCValidatedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCValidatedTextField.h; path = Classes/Headers/TVCValidatedTextField.h; sourceTree = "<group>"; };
 		4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerMigrateAppStoreSheet.m; path = Classes/Dialogs/TDCLicenseManagerMigrateAppStoreSheet.m; sourceTree = "<group>"; };
 		4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldPrivateCloudExtension.h; path = Classes/Headers/Private/IRCWorldPrivateCloudExtension.h; sourceTree = "<group>"; };
 		4C3A3DD61D41750200569BA8 /* IRCNetworkList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCNetworkList.h; path = Classes/Headers/IRCNetworkList.h; sourceTree = "<group>"; };
@@ -2715,8 +2715,8 @@
 		4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogRenderer.m; path = "Classes/Views/Channel View/TVCLogRenderer.m"; sourceTree = "<group>"; };
 		4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogScriptEventSink.m; path = "Classes/Views/Channel View/TVCLogScriptEventSink.m"; sourceTree = "<group>"; };
 		4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogView.m; path = "Classes/Views/Channel View/TVCLogView.m"; sourceTree = "<group>"; };
-		4CF40DC11AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCComboBoxWithValueValidation.m; path = "Classes/Views/Input Text Field/TVCComboBoxWithValueValidation.m"; sourceTree = "<group>"; };
-		4CF40DC21AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCTextFieldWithValueValidation.m; path = "Classes/Views/Input Text Field/TVCTextFieldWithValueValidation.m"; sourceTree = "<group>"; };
+		4CF40DC11AC1A4AC00A26BE0 /* TVCValidatedComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCValidatedComboBox.m; path = "Classes/Views/Input Text Field/TVCValidatedComboBox.m"; sourceTree = "<group>"; };
+		4CF40DC21AC1A4AC00A26BE0 /* TVCValidatedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCValidatedTextField.m; path = "Classes/Views/Input Text Field/TVCValidatedTextField.m"; sourceTree = "<group>"; };
 		4CF40DC31AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCTextFormatterMenu.m; path = "Classes/Views/Input Text Field/TVCTextFormatterMenu.m"; sourceTree = "<group>"; };
 		4CF40DC41AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCTextViewWithIRCFormatter.m; path = "Classes/Views/Input Text Field/TVCTextViewWithIRCFormatter.m"; sourceTree = "<group>"; };
 		4CF40DC61AC1A4AC00A26BE0 /* TVCMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindow.m; path = "Classes/Views/Main Window/TVCMainWindow.m"; sourceTree = "<group>"; };
@@ -3694,10 +3694,10 @@
 			children = (
 				4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */,
 				4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */,
-				4CF40DC11AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m */,
-				4CF40DC21AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m */,
 				4CF40DC31AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m */,
 				4CF40DC41AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m */,
+				4CF40DC11AC1A4AC00A26BE0 /* TVCValidatedComboBox.m */,
+				4CF40DC21AC1A4AC00A26BE0 /* TVCValidatedTextField.m */,
 			);
 			name = "Text Fields";
 			sourceTree = "<group>";
@@ -3911,7 +3911,6 @@
 				4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */,
 				4C8AF585158E99520026668C /* TVCBasicTableView.h */,
 				4C1A5C7A1E03FB340020C3DE /* TVCChannelSelectionViewController.h */,
-				4C001C09197A10E80061C2C5 /* TVCComboBoxWithValueValidation.h */,
 				4C8AF586158E99520026668C /* TVCLogController.h */,
 				4C8AF587158E99520026668C /* TVCLogLine.h */,
 				4C8AF589158E99520026668C /* TVCLogRenderer.h */,
@@ -3922,8 +3921,9 @@
 				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
-				4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */,
 				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
+				4C001C09197A10E80061C2C5 /* TVCValidatedComboBox.h */,
+				4C36091918B4E89500243B3A /* TVCValidatedTextField.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
 				4C8AF596158E99520026668C /* TXMasterController.h */,
 				4C8AF597158E99520026668C /* TXMenuController.h */,
@@ -4595,9 +4595,9 @@
 				4CB17EBC1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C7B05071D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
 				4CBC54251D2B26FC0067242C /* IRCMessageInternal.h in Headers */,
-				4C7B039E1D1210A100295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
+				4C7B039E1D1210A100295E82 /* TVCValidatedComboBox.h in Headers */,
 				4C2C52D51F130A24009701E0 /* GCDAsyncSocketExtensions.h in Headers */,
-				4C7B039F1D1210A100295E82 /* TVCTextFieldWithValueValidation.h in Headers */,
+				4C7B039F1D1210A100295E82 /* TVCValidatedTextField.h in Headers */,
 				4C7B03A11D1210A100295E82 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C5B42301D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */,
 				4C7B03A21D1210A100295E82 /* TXGlobalModels.h in Headers */,
@@ -4823,7 +4823,7 @@
 				4CB2D1C220C13BA800E07C30 /* IRCNumerics.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
 				4CCDC6B01EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */,
-				4C7B041F1D1210A800295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
+				4C7B041F1D1210A800295E82 /* TVCValidatedComboBox.h in Headers */,
 				4CEA29C91D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4C2B1D821EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
 				4CB17EBD1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
@@ -4831,7 +4831,7 @@
 				4CC215D51D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */,
 				4C5DD5231D1E1CB700F2E1AE /* TVCMainWindowTitlebarAccessoryViewPrivate.h in Headers */,
 				4CB17EC01D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
-				4C7B04201D1210A800295E82 /* TVCTextFieldWithValueValidation.h in Headers */,
+				4C7B04201D1210A800295E82 /* TVCValidatedTextField.h in Headers */,
 				4C7B05081D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
 				4CEA29B41D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */,
 				4C620E891D3E618B0037F35E /* TDCChannelSpotlightSearchResultPrivate.h in Headers */,
@@ -5076,7 +5076,7 @@
 				4CB2D1C320C13BA800E07C30 /* IRCNumerics.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
 				4CCDC6B11EC4EA32001DDE9A /* TDCPreferencesNotificationConfigurationPrivate.h in Headers */,
-				4C7B04A01D1210B000295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
+				4C7B04A01D1210B000295E82 /* TVCValidatedComboBox.h in Headers */,
 				4CEA29CA1D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4C2B1D831EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
 				4CB17EBE1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
@@ -5084,7 +5084,7 @@
 				4CC215D61D23181400FCD0F5 /* TDCPreferencesControllerPrivate.h in Headers */,
 				4C5DD5241D1E1CB700F2E1AE /* TVCMainWindowTitlebarAccessoryViewPrivate.h in Headers */,
 				4CB17EC11D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
-				4C7B04A11D1210B000295E82 /* TVCTextFieldWithValueValidation.h in Headers */,
+				4C7B04A11D1210B000295E82 /* TVCValidatedTextField.h in Headers */,
 				4C7B05091D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
 				4CEA29B51D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */,
 				4C620E8A1D3E618B0037F35E /* TDCChannelSpotlightSearchResultPrivate.h in Headers */,
@@ -6047,7 +6047,7 @@
 				4C696A1C20C5D04A00640AB1 /* TVCErrorMessagePopover.m in Sources */,
 				4CFC40E01969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C1EAB271F89F6B800A4E647 /* TPCPreferences.m in Sources */,
-				4CF40E171AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m in Sources */,
+				4CF40E171AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */,
 				4CF40DFF1AC1A4AC00A26BE0 /* TVCLogRenderer.m in Sources */,
 				4CB17ED51D125E0100FAEAD4 /* IRCHighlightMatchCondition.m in Sources */,
 				4C0445A916F1603C00EBB665 /* IRCSendingMessage.m in Sources */,
@@ -6094,7 +6094,7 @@
 				4CCDC6B41EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
 				4CC31D681EC93FD400FBDC69 /* TVCServerList.m in Sources */,
 				4CEFF3A71DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
-				4CF40E1B1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
+				4CF40E1B1AC1A4AC00A26BE0 /* TVCValidatedTextField.m in Sources */,
 				4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */,
 				4CF40E031AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m in Sources */,
 				4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */,
@@ -6231,7 +6231,7 @@
 				4C620E751D3E607A0037F35E /* TDCChannelSpotlightController.m in Sources */,
 				4C696A1F20C5F71B00640AB1 /* TVCErrorMessagePopoverController.m in Sources */,
 				4C9F51221CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */,
-				4CF40E161AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m in Sources */,
+				4CF40E161AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */,
 				4C673F191D10FB6500979B60 /* TPCPreferencesReload.m in Sources */,
 				4C7B05141D12171900295E82 /* THOPluginDispatcher.m in Sources */,
 				4CC31D701EC93FD400FBDC69 /* TVCServerListMavericksLightUserInterface.m in Sources */,
@@ -6284,7 +6284,7 @@
 				4C0BA69F1990798800857343 /* TDCFileTransferDialog.m in Sources */,
 				4C0BA6A21990798800857343 /* TPCThemeSettings.m in Sources */,
 				4CF40E621AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
-				4CF40E1A1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
+				4CF40E1A1AC1A4AC00A26BE0 /* TVCValidatedTextField.m in Sources */,
 				4C0BA6A31990798800857343 /* TPCThemeController.m in Sources */,
 				4C0BA6A51990798800857343 /* TPCPreferences.m in Sources */,
 				4CF40E021AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m in Sources */,
@@ -6433,7 +6433,7 @@
 				4C8083271B43911100746327 /* TLOLicenseManagerDownloader.m in Sources */,
 				4C1EAB261F89F6B700A4E647 /* TPCPreferences.m in Sources */,
 				4C8AF6B0158E99520026668C /* IRCTreeItem.m in Sources */,
-				4CF40E181AC1A4AC00A26BE0 /* TVCComboBoxWithValueValidation.m in Sources */,
+				4CF40E181AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */,
 				4CF40E001AC1A4AC00A26BE0 /* TVCLogRenderer.m in Sources */,
 				4CB17ED61D125E0100FAEAD4 /* IRCHighlightMatchCondition.m in Sources */,
 				4C8AF6B1158E99520026668C /* IRCChannelUser.m in Sources */,
@@ -6479,7 +6479,7 @@
 				4CCDC6B51EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
 				4CC31D691EC93FD400FBDC69 /* TVCServerList.m in Sources */,
 				4CEFF3A81DF6F59B00EE975E /* TVCWK1AutoScroller.m in Sources */,
-				4CF40E1C1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
+				4CF40E1C1AC1A4AC00A26BE0 /* TVCValidatedTextField.m in Sources */,
 				4C8AF6D1158E99520026668C /* TPCThemeController.m in Sources */,
 				4C8AF6D2158E99520026668C /* TPCPreferences.m in Sources */,
 				4CF40E041AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m in Sources */,

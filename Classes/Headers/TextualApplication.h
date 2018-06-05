@@ -124,7 +124,6 @@
 	#import "TVCAutoExpandingTokenField.h"
 	#import "TVCBasicTableView.h"
 	#import "TVCChannelSelectionViewController.h"
-	#import "TVCComboBoxWithValueValidation.h"
 	#import "TVCLogController.h"
 	#import "TVCLogLine.h"
 	#import "TVCLogRenderer.h"
@@ -135,7 +134,8 @@
 	#import "TVCMainWindowTextView.h"
 	#import "TVCMemberList.h"
 	#import "TVCServerList.h"
-	#import "TVCTextFieldWithValueValidation.h"
+	#import "TVCValidatedComboBox.h"
+	#import "TVCValidatedTextField.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 
 	/* Master Controllers — Root */
