@@ -44,10 +44,24 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCClient, IRCClientConfig;
 
 typedef NS_ENUM(NSUInteger, TDCServerPropertiesSheetNavigationSelection) {
-	TDCServerPropertiesSheetDefaultNavigationSelection = 0,
-	TDCServerPropertiesSheetAddressBookNavigationSelection,
-	TDCServerPropertiesSheetFloodControlNavigationSelection,
-	TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
+	TDCServerPropertiesSheetDefaultSelection = 0,
+
+	TDCServerPropertiesSheetAddressBookSelection = 1,
+	TDCServerPropertiesSheetAutojoinSelection = 2,
+	TDCServerPropertiesSheetConnectCommandsSelection = 3,
+	TDCServerPropertiesSheetEncodingSelection = 4,
+	TDCServerPropertiesSheetGeneralSelection = 5,
+	TDCServerPropertiesSheetIdentitySelection = 6,
+	TDCServerPropertiesSheetHighlightsSelection = 7,
+	TDCServerPropertiesSheetDisconnectMessagesSelection = 8,
+	TDCServerPropertiesSheetZncBouncerSelection = 10,
+	TDCServerPropertiesSheetClientCertificateSelection = 12,
+	TDCServerPropertiesSheetFloodControlSelection = 13,
+	TDCServerPropertiesSheetNetworkSocketSelection = 14,
+	TDCServerPropertiesSheetProxyServerSelection = 15,
+	TDCServerPropertiesSheetRedundancySelection = 16,
+
+	TDCServerPropertiesSheetNewIgnoreEntrySelection = 200
 };
 
 @protocol TDCServerPropertiesSheetDelegate;

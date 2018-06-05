@@ -3654,9 +3654,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (stringIn.length == 0 || targetChannel == nil) {
 				if (isIgnoreCommand) {
-					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:@""];
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntrySelection context:@""];
 				} else {
-					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection context:nil];
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookSelection context:nil];
 				}
 
 				break;
@@ -3668,9 +3668,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (member == nil) {
 				if (isIgnoreCommand) {
-					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:nickname];
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntrySelection context:nickname];
 				} else {
-					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection context:nil];
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookSelection context:nil];
 				}
 
 				break;
