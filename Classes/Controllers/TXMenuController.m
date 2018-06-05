@@ -1597,7 +1597,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	sheet.window = mainWindow();
 
-	[sheet startWithSelection:TDCServerPropertiesSheetDefaultNavigationSelection context:nil];
+	[sheet startWithSelection:TDCServerPropertiesSheetDefaultSelection context:nil];
 
 	[windowController() addWindowToWindowList:sheet];
 }
@@ -1891,11 +1891,11 @@ NS_ASSUME_NONNULL_BEGIN
 	 the address book instead of a specific ignore. */
 	if (userIgnores.count == 1) {
 		[self showServerPropertiesSheetForClient:u
-								   withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
+								   withSelection:TDCServerPropertiesSheetNewIgnoreEntrySelection
 										 context:userIgnores[0]];
 	} else {
 		[self showServerPropertiesSheetForClient:u
-								   withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection
+								   withSelection:TDCServerPropertiesSheetAddressBookSelection
 										 context:nil];
 	}
 }
@@ -3404,7 +3404,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self showServerPropertiesSheetForClient:u
-							   withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection
+							   withSelection:TDCServerPropertiesSheetAddressBookSelection
 									 context:nil];
 }
 
@@ -3523,7 +3523,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self showServerPropertiesSheetForClient:u
-							   withSelection:TDCServerPropertiesSheetDefaultNavigationSelection
+							   withSelection:TDCServerPropertiesSheetDefaultSelection
 									 context:nil];
 }
 
