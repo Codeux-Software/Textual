@@ -35,21 +35,18 @@
  *
  *********************************************************************** */
 
+#import "TVCValidatedTextField.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-/* Keep the validation block as fast as possible as it is called every time 
- that the value of the text field is changed. */
-typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
-
-@interface TVCTextFieldWithValueValidation : NSTextField
-@property (nonatomic, copy, nullable) TVCTextFieldWithValueValidationBlock validationBlock;
-@property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
+@interface TVCValidatedComboBox : NSComboBox
+@property (nonatomic, copy, nullable) TVCValidatedTextFieldValidationBlock validationBlock;
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
-@property (nonatomic, assign) BOOL stringValueIsTrimmed; // Returned value is trimmed of whitespaces and newlines when returned. The value is returned trimmed by -value. It is also sent to the validation block as trimmed.
+@property (nonatomic, assign) BOOL stringValueIsTrimmed; // -stringValueUsesOnlyFirstToken returns a trimmed value of newlines and spaces. However, if you want mroe than first token, then specify this.
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, assign) BOOL performValidationWhenEmpty;
 @property (nonatomic, weak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
-@property (nonatomic, assign) BOOL doNotInformCallbackOfNextChange;
+@property (nonatomic, assign) BOOL caseInsensitiveComplete; // Whether completions are case insensitive. Default NO.
 @property (nonatomic, copy, nullable) NSString *defaultValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
 
 @property (readonly, copy) NSString *value; /* The current value. */
@@ -58,11 +55,17 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 
 @property (readonly) BOOL valueIsEmpty;
 @property (readonly) BOOL valueIsValid;
+@property (readonly) BOOL valueIsPredefined;
+
+@property (readonly, copy, nullable) NSString *lastValidationErrorDescription;
+
+- (BOOL)showValidationErrorPopover;
+- (void)closeValidationErrorPopover;
 
 - (void)performValidation; /* Force the text field to clear cache and validate value */
 @end
 
-@interface TVCTextFieldWithValueValidationCell : NSTextFieldCell
+@interface TVCValidatedComboBoxCell : NSComboBoxCell
 @end
 
 NS_ASSUME_NONNULL_END
