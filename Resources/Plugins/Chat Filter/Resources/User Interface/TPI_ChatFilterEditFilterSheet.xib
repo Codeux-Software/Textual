@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -54,11 +54,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="cNB-Gy-yOO">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="cNB-Gy-yOO">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="283" y="305" width="589" height="563"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="alB-sv-LJa">
                 <rect key="frame" x="0.0" y="0.0" width="589" height="563"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,7 +100,7 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Match:" id="a2n-La-LMB">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TYu-Qh-WKq">
@@ -110,7 +110,7 @@ Gw
                                             </constraints>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="0BP-Zx-Fdt">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
@@ -123,11 +123,11 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Action:" id="3HI-Ry-Pmd">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ahe-EZ-5US">
-                                            <rect key="frame" x="486" y="385" width="25" height="25"/>
+                                            <rect key="frame" x="486" y="384" width="25" height="25"/>
                                             <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SoU-I7-Ehd">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -137,7 +137,7 @@ Gw
                                             </connections>
                                         </button>
                                         <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b1E-IB-AAD">
-                                            <rect key="frame" x="486" y="235" width="25" height="25"/>
+                                            <rect key="frame" x="486" y="234" width="25" height="25"/>
                                             <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ebt-DO-KSD">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -149,11 +149,11 @@ Gw
                                         <box autoresizesSubviews="NO" borderType="line" title="Filter Action Tokens" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4wE-6t-SLO">
                                             <rect key="frame" x="31" y="21" width="481" height="96"/>
                                             <view key="contentView" id="aRg-yo-qrI">
-                                                <rect key="frame" x="1" y="1" width="479" height="94"/>
+                                                <rect key="frame" x="3" y="3" width="475" height="90"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tokenField verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hub-7d-YOP">
-                                                        <rect key="frame" x="22" y="65" width="132" height="17"/>
+                                                        <rect key="frame" x="22" y="61" width="132" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" tag="1" title="Network Name" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="9By-pk-GTz">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -164,7 +164,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="7" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hz3-ib-naL">
-                                                        <rect key="frame" x="157" y="65" width="149" height="17"/>
+                                                        <rect key="frame" x="157" y="61" width="149" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Nickname" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="WZD-Zm-lha">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -175,7 +175,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="8" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEr-mb-T5p">
-                                                        <rect key="frame" x="306" y="65" width="151" height="17"/>
+                                                        <rect key="frame" x="306" y="61" width="151" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Username" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Swn-qj-488">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -186,7 +186,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xNC-RA-OVo">
-                                                        <rect key="frame" x="22" y="40" width="131" height="17"/>
+                                                        <rect key="frame" x="22" y="36" width="132" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Channel Name" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="w2K-np-UI4">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -197,7 +197,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="5" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3G-9I-Qxd">
-                                                        <rect key="frame" x="157" y="40" width="139" height="17"/>
+                                                        <rect key="frame" x="157" y="36" width="139" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Address" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="IWY-vb-65R">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -208,7 +208,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="6" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IC3-dU-HTg">
-                                                        <rect key="frame" x="306" y="40" width="150" height="17"/>
+                                                        <rect key="frame" x="306" y="36" width="151" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Hostmask" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Foq-12-BzJ">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -219,7 +219,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="9" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jah-Fc-rje">
-                                                        <rect key="frame" x="22" y="15" width="135" height="17"/>
+                                                        <rect key="frame" x="22" y="11" width="135" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Server Address" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Xrk-zW-D9B">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -230,7 +230,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="2" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dbl-MS-g0g">
-                                                        <rect key="frame" x="157" y="15" width="124" height="17"/>
+                                                        <rect key="frame" x="157" y="11" width="124" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="My Nickname" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="8op-NH-aty">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -241,7 +241,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="4" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTf-Zo-2fg">
-                                                        <rect key="frame" x="306" y="15" width="147" height="17"/>
+                                                        <rect key="frame" x="306" y="11" width="147" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Original Message" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Lw0-nm-IeG">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -253,33 +253,29 @@ Gw
                                                     </tokenField>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="k3G-9I-Qxd" firstAttribute="leading" secondItem="hz3-ib-naL" secondAttribute="leading" id="5EH-EM-Slq"/>
-                                                    <constraint firstItem="xNC-RA-OVo" firstAttribute="leading" secondItem="aRg-yo-qrI" secondAttribute="leading" constant="24" id="5Z6-3f-BFQ"/>
-                                                    <constraint firstAttribute="trailing" secondItem="bEr-mb-T5p" secondAttribute="trailing" constant="24" id="A5c-bl-asK"/>
-                                                    <constraint firstItem="hTf-Zo-2fg" firstAttribute="top" secondItem="IC3-dU-HTg" secondAttribute="bottom" constant="8" id="ANi-ds-5ac"/>
-                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="leading" secondItem="aRg-yo-qrI" secondAttribute="leading" constant="24" id="Dq6-ii-6wL"/>
-                                                    <constraint firstItem="bEr-mb-T5p" firstAttribute="top" secondItem="aRg-yo-qrI" secondAttribute="top" constant="12" id="Eid-CN-mZu"/>
-                                                    <constraint firstItem="Dbl-MS-g0g" firstAttribute="leading" secondItem="k3G-9I-Qxd" secondAttribute="leading" id="Ff4-iX-Yh8"/>
-                                                    <constraint firstItem="Dbl-MS-g0g" firstAttribute="leading" secondItem="Jah-Fc-rje" secondAttribute="trailing" constant="4" id="MWl-kr-ZUP"/>
-                                                    <constraint firstItem="Jah-Fc-rje" firstAttribute="top" secondItem="xNC-RA-OVo" secondAttribute="bottom" constant="8" id="P7P-1i-bIG"/>
-                                                    <constraint firstItem="IC3-dU-HTg" firstAttribute="top" secondItem="bEr-mb-T5p" secondAttribute="bottom" constant="8" id="Rds-89-JDo"/>
-                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="top" secondItem="aRg-yo-qrI" secondAttribute="top" constant="12" id="XIi-nx-qxw"/>
-                                                    <constraint firstItem="Dbl-MS-g0g" firstAttribute="top" secondItem="k3G-9I-Qxd" secondAttribute="bottom" constant="8" id="Zvw-th-nVK"/>
-                                                    <constraint firstAttribute="trailing" secondItem="IC3-dU-HTg" secondAttribute="trailing" constant="25" id="bIA-zH-7A6"/>
-                                                    <constraint firstItem="hz3-ib-naL" firstAttribute="top" secondItem="aRg-yo-qrI" secondAttribute="top" constant="12" id="d56-mE-NyO"/>
-                                                    <constraint firstAttribute="trailing" secondItem="hTf-Zo-2fg" secondAttribute="trailing" constant="28" id="hRk-JG-wZu"/>
-                                                    <constraint firstItem="hTf-Zo-2fg" firstAttribute="leading" secondItem="IC3-dU-HTg" secondAttribute="leading" id="ig2-jx-c9h"/>
-                                                    <constraint firstItem="Jah-Fc-rje" firstAttribute="leading" secondItem="aRg-yo-qrI" secondAttribute="leading" constant="24" id="jWT-Rn-WCb"/>
-                                                    <constraint firstItem="IC3-dU-HTg" firstAttribute="leading" secondItem="k3G-9I-Qxd" secondAttribute="trailing" constant="14" id="kep-rq-RLh"/>
-                                                    <constraint firstItem="k3G-9I-Qxd" firstAttribute="leading" secondItem="xNC-RA-OVo" secondAttribute="trailing" constant="8" id="nDb-mv-1Tx"/>
-                                                    <constraint firstItem="k3G-9I-Qxd" firstAttribute="top" secondItem="hz3-ib-naL" secondAttribute="bottom" constant="8" id="nvt-Sl-1VM"/>
-                                                    <constraint firstItem="xNC-RA-OVo" firstAttribute="top" secondItem="hub-7d-YOP" secondAttribute="bottom" constant="8" id="pFG-Cu-1Hb"/>
-                                                    <constraint firstItem="hz3-ib-naL" firstAttribute="leading" secondItem="hub-7d-YOP" secondAttribute="trailing" constant="7" id="rIn-gg-di7"/>
-                                                    <constraint firstItem="hTf-Zo-2fg" firstAttribute="leading" secondItem="Dbl-MS-g0g" secondAttribute="trailing" constant="29" id="sse-0s-Oy9"/>
-                                                    <constraint firstItem="Jah-Fc-rje" firstAttribute="leading" secondItem="xNC-RA-OVo" secondAttribute="leading" id="t0f-jd-Bwk"/>
-                                                    <constraint firstItem="bEr-mb-T5p" firstAttribute="leading" secondItem="hz3-ib-naL" secondAttribute="trailing" constant="4" id="vpl-iy-hIN"/>
-                                                    <constraint firstItem="xNC-RA-OVo" firstAttribute="leading" secondItem="hub-7d-YOP" secondAttribute="leading" id="vqT-Cv-4cu"/>
-                                                    <constraint firstItem="IC3-dU-HTg" firstAttribute="leading" secondItem="bEr-mb-T5p" secondAttribute="leading" id="ypI-Q0-axN"/>
+                                                    <constraint firstItem="bEr-mb-T5p" firstAttribute="leading" secondItem="hz3-ib-naL" secondAttribute="trailing" constant="4" id="1lz-1y-isD"/>
+                                                    <constraint firstItem="Jah-Fc-rje" firstAttribute="baseline" secondItem="Dbl-MS-g0g" secondAttribute="baseline" id="7sl-Zf-kF0"/>
+                                                    <constraint firstItem="k3G-9I-Qxd" firstAttribute="baseline" secondItem="IC3-dU-HTg" secondAttribute="baseline" id="AW0-2a-6OP"/>
+                                                    <constraint firstItem="bEr-mb-T5p" firstAttribute="leading" secondItem="IC3-dU-HTg" secondAttribute="leading" id="Fkz-mS-Lef"/>
+                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="baseline" secondItem="hz3-ib-naL" secondAttribute="baseline" id="HzR-em-WLw"/>
+                                                    <constraint firstItem="hz3-ib-naL" firstAttribute="leading" secondItem="hub-7d-YOP" secondAttribute="trailing" constant="7" id="IAi-EW-ZB7"/>
+                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="leading" secondItem="xNC-RA-OVo" secondAttribute="leading" id="J1Z-bu-bG6"/>
+                                                    <constraint firstItem="bEr-mb-T5p" firstAttribute="centerX" secondItem="IC3-dU-HTg" secondAttribute="centerX" id="N64-z9-KZq"/>
+                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="centerX" secondItem="xNC-RA-OVo" secondAttribute="centerX" id="NeB-XK-JvS"/>
+                                                    <constraint firstItem="Jah-Fc-rje" firstAttribute="top" secondItem="xNC-RA-OVo" secondAttribute="bottom" constant="8" symbolic="YES" id="PTN-7E-url"/>
+                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="leading" secondItem="aRg-yo-qrI" secondAttribute="leading" constant="24" id="ZgT-Kk-66p"/>
+                                                    <constraint firstItem="xNC-RA-OVo" firstAttribute="top" secondItem="hub-7d-YOP" secondAttribute="bottom" constant="8" symbolic="YES" id="enB-XX-KNe"/>
+                                                    <constraint firstItem="xNC-RA-OVo" firstAttribute="baseline" secondItem="k3G-9I-Qxd" secondAttribute="baseline" id="hBR-JT-89i"/>
+                                                    <constraint firstItem="Dbl-MS-g0g" firstAttribute="leading" secondItem="Jah-Fc-rje" secondAttribute="trailing" constant="4" id="iLh-v9-mKj"/>
+                                                    <constraint firstItem="hz3-ib-naL" firstAttribute="leading" secondItem="k3G-9I-Qxd" secondAttribute="leading" id="jbZ-fY-srT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="bEr-mb-T5p" secondAttribute="trailing" constant="20" symbolic="YES" id="ljp-hB-FU1"/>
+                                                    <constraint firstItem="Dbl-MS-g0g" firstAttribute="baseline" secondItem="hTf-Zo-2fg" secondAttribute="baseline" id="lu8-0d-z1H"/>
+                                                    <constraint firstItem="k3G-9I-Qxd" firstAttribute="leading" secondItem="Dbl-MS-g0g" secondAttribute="leading" id="nbj-Dv-bRj"/>
+                                                    <constraint firstItem="hub-7d-YOP" firstAttribute="top" secondItem="aRg-yo-qrI" secondAttribute="top" constant="12" id="nux-k4-rab"/>
+                                                    <constraint firstItem="hz3-ib-naL" firstAttribute="baseline" secondItem="bEr-mb-T5p" secondAttribute="baseline" id="q2N-hg-JF3"/>
+                                                    <constraint firstItem="IC3-dU-HTg" firstAttribute="leading" secondItem="hTf-Zo-2fg" secondAttribute="leading" id="qGr-aS-oqu"/>
+                                                    <constraint firstItem="xNC-RA-OVo" firstAttribute="leading" secondItem="Jah-Fc-rje" secondAttribute="leading" id="rxb-tB-veu"/>
+                                                    <constraint firstItem="bEr-mb-T5p" firstAttribute="leading" secondItem="hz3-ib-naL" secondAttribute="trailing" constant="4" id="wua-Pk-Qif"/>
                                                 </constraints>
                                             </view>
                                         </box>
@@ -288,14 +284,14 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Title:" id="GOZ-2v-y7k">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sfN-Ws-FW8">
                                             <rect key="frame" x="107" y="427" width="402" height="22"/>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="5yS-lv-oc5">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
@@ -347,7 +343,6 @@ Gw
                                         <constraint firstItem="4wE-6t-SLO" firstAttribute="top" secondItem="wGy-N2-oQL" secondAttribute="bottom" constant="8" id="wpP-K2-mjD"/>
                                     </constraints>
                                 </view>
-                                <accessibility description="General"/>
                             </tabViewItem>
                             <tabViewItem label="Channels" identifier="1" id="8ZK-wU-gg2">
                                 <view key="view" id="oIh-tI-HKB">
@@ -359,25 +354,25 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit Filter to:" id="ewY-OS-bvC">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="gTG-wG-y2s">
-                                            <rect key="frame" x="24" y="11" width="494" height="350"/>
+                                            <rect key="frame" x="24" y="11" width="495" height="350"/>
                                             <subviews>
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="UY2-pC-A0V">
-                                                    <rect key="frame" x="12" y="337" width="470" height="5"/>
+                                                    <rect key="frame" x="12" y="337" width="471" height="5"/>
                                                 </box>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogw-Wl-ucj">
                                                     <rect key="frame" x="18" y="310" width="251" height="17"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select one or more items to limit filter to:" id="xeZ-GM-gcw">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
                                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="akH-fU-k99">
-                                                    <rect key="frame" x="20" y="15" width="454" height="287"/>
+                                                    <rect key="frame" x="20" y="15" width="455" height="287"/>
                                                 </customView>
                                             </subviews>
                                             <constraints>
@@ -454,7 +449,6 @@ Gw
                                         <constraint firstItem="gTG-wG-y2s" firstAttribute="top" secondItem="bT2-rB-pWP" secondAttribute="bottom" constant="8" symbolic="YES" id="zA1-Su-3Bw"/>
                                     </constraints>
                                 </view>
-                                <accessibility description="Channels"/>
                             </tabViewItem>
                             <tabViewItem label="Events" identifier="2" id="Wmc-xM-y3O">
                                 <view key="view" id="g73-Zu-4Qw">
@@ -466,8 +460,8 @@ Gw
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="mDU-Qi-dI8">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Select the event(s) that this filter will respond to. Some events are matched based on sender information and do not contain text. See documentation for examples.</string>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
@@ -475,11 +469,11 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Others:" id="hII-je-7Zh">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fJz-XV-6oT">
-                                            <rect key="frame" x="41" y="220" width="460" height="5"/>
+                                            <rect key="frame" x="42" y="220" width="460" height="5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="460" id="vn4-Df-jhz"/>
                                             </constraints>
@@ -491,7 +485,7 @@ Gw
                                             </constraints>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="INVITE, 001, 002, 003, …" id="xLg-Zy-ggt" customClass="TVCValidatedTextFieldCell">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <accessibility description="List of Numerics"/>
@@ -505,7 +499,7 @@ Gw
                                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Comma-separated list of named commands and/or numerics (1 through 999) which are not defined as a checkbox up above." id="gqg-Wn-ped">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="BD9-9Q-U3q">
@@ -684,7 +678,6 @@ Gw
                                         <constraint firstAttribute="bottom" secondItem="Vry-Tf-Odq" secondAttribute="bottom" constant="91" id="yPp-8v-vPB"/>
                                     </constraints>
                                 </view>
-                                <accessibility description="Events"/>
                             </tabViewItem>
                             <tabViewItem label="Sender" identifier="3" id="zzu-Mn-V6O">
                                 <view key="view" id="Sbg-tS-i4H">
@@ -710,7 +703,7 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sender Match:" id="efZ-aQ-jSL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Vj-YR-p2q">
@@ -718,14 +711,14 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="uMI-RE-rQe">
                                                 <font key="font" metaFont="miniSystem"/>
                                                 <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ovl-ei-0Qj">
                                             <rect key="frame" x="155" y="335" width="301" height="22"/>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="3UV-cQ-6XT">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
@@ -782,7 +775,6 @@ Gw
                                         <constraint firstItem="X5X-m4-re0" firstAttribute="top" secondItem="1Ft-El-Wak" secondAttribute="bottom" constant="14" id="ypU-Is-03h"/>
                                     </constraints>
                                 </view>
-                                <accessibility description="Sender"/>
                             </tabViewItem>
                             <tabViewItem label="Notes" identifier="4" id="G3J-4c-NKh">
                                 <view key="view" id="EWz-Am-gtB">
@@ -794,8 +786,8 @@ Gw
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="JCT-z8-69i">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Enter a brief description of this filter or other type of information. This information is optional and will not effect the behavior of the filter itself.</string>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Poo-f2-StF">
@@ -805,7 +797,7 @@ Gw
                                             </constraints>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="AxR-JW-tjB">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <accessibility description="Description of filter (optional)"/>
@@ -824,7 +816,6 @@ Gw
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="top" secondItem="gXn-wi-BH2" secondAttribute="bottom" constant="8" symbolic="YES" id="zwB-fj-66k"/>
                                     </constraints>
                                 </view>
-                                <accessibility description="Notes"/>
                             </tabViewItem>
                             <tabViewItem label="Advanced" identifier="5" id="qOp-7g-85h">
                                 <view key="view" id="hsJ-a5-uAO">
@@ -865,7 +856,7 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Forward to:" id="rsF-qW-N0y">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZVP-ho-Ddx">
@@ -873,7 +864,7 @@ Gw
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="60g-lP-t8x">
                                                 <font key="font" metaFont="miniSystem"/>
                                                 <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="muN-88-pns" customClass="TVCValidatedTextField">
@@ -883,7 +874,7 @@ Gw
                                             </constraints>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" id="Vqv-i7-xCm" customClass="TVCValidatedTextFieldCell">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -904,8 +895,8 @@ Gw
                                             <rect key="frame" x="59" y="274" width="308" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Do not perform Filter Action more than once every" id="y97-oT-WNv">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jAQ-A0-0fz">
@@ -915,7 +906,7 @@ Gw
                                             </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" drawsBackground="YES" id="4gr-RI-ABh">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
@@ -926,16 +917,16 @@ Gw
                                             <rect key="frame" x="427" y="274" width="56" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="4O9-2v-odd">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cG-xA-EzB">
                                             <rect key="frame" x="69" y="252" width="351" height="14"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Change value to zero (0) to disable limitations." id="cvx-mI-PZ4">
                                                 <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="Preference Description Text Color"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
@@ -975,7 +966,6 @@ Gw
                                         <accessibilityConnection property="title" destination="1Dp-RH-HQY" id="jkj-QM-QCY"/>
                                     </connections>
                                 </view>
-                                <accessibility description="Advanced"/>
                             </tabViewItem>
                         </tabViewItems>
                         <accessibility description="Edit Filter Navigation Bar"/>
@@ -1004,4 +994,9 @@ Gw
             <real key="maximum" value="1296000"/>
         </numberFormatter>
     </objects>
+    <resources>
+        <namedColor name="Preference Description Text Color">
+            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
 </document>
