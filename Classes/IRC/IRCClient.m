@@ -2642,7 +2642,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self renameUser:user to:toNickname];
 }
 
-- (void)modifyUser:(IRCUser *)user withBlock:(void(^)(IRCUserMutable *userMutable))block
+- (void)modifyUser:(IRCUser *)user withBlock:(void(NS_NOESCAPE ^)(IRCUserMutable *userMutable))block
 {
 	NSParameterAssert(user != nil);
 	NSParameterAssert(block != nil);
@@ -2658,7 +2658,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self addUser:userMutable];
 }
 
-- (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void(^)(IRCUserMutable *userMutable))block
+- (void)modifyUserUserWithNickname:(NSString *)nickname withBlock:(void(NS_NOESCAPE ^)(IRCUserMutable *userMutable))block
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(block != nil);
