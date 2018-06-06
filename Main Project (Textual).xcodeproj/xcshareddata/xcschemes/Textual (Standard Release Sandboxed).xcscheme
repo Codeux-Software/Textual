@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4C47314220C7599800713C91"
-               BuildableName = "Textual (Standard Release with Sandboxed).app"
+               BuildableName = "Textual.app"
                BlueprintName = "Textual (Standard Release with Sandboxed)"
                ReferencedContainer = "container:Main Project (Textual).xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C47314220C7599800713C91"
-            BuildableName = "Textual (Standard Release with Sandboxed).app"
+            BuildableName = "Textual.app"
             BlueprintName = "Textual (Standard Release with Sandboxed)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C47314220C7599800713C91"
-            BuildableName = "Textual (Standard Release with Sandboxed).app"
+            BuildableName = "Textual.app"
             BlueprintName = "Textual (Standard Release with Sandboxed)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C47314220C7599800713C91"
-            BuildableName = "Textual (Standard Release with Sandboxed).app"
+            BuildableName = "Textual.app"
             BlueprintName = "Textual (Standard Release with Sandboxed)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
