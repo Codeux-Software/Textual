@@ -12,13 +12,12 @@
 		4C58C6D81E15374700934680 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6D71E15374700934680 /* CocoaExtensions.framework */; };
 		4C58C6E01E15427F00934680 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6DF1E15427F00934680 /* Foundation.framework */; };
 		4C58C6E21E15428300934680 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C58C6E11E15428300934680 /* CoreData.framework */; };
-		4C6EF2E81F44331400A80A7B /* HistoricLogFileStorageModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 4C6EF2E61F44330F00A80A7B /* HistoricLogFileStorageModel.xcdatamodeld */; };
 		4C8C72D01F1208BF00ED72DB /* TVCLogLineXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72CF1F1208BF00ED72DB /* TVCLogLineXPC.m */; };
 		4C9215EF1E3E7D8B0029E369 /* HLSHistoricLogViewContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9215EE1E3E7D8B0029E369 /* HLSHistoricLogViewContext.m */; };
 		4CB0FB301E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0FB2F1E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m */; };
+		4CD5D09120C72BB1008ADBA4 /* HistoricLogFileStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C6EF2E61F44330F00A80A7B /* HistoricLogFileStorageModel.xcdatamodeld */; };
 		4CD92F591F542B4700F78EA6 /* HistoricLogFileStorageModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4CD92F581F542B4700F78EA6 /* HistoricLogFileStorageModel.xcmappingmodel */; };
 		4CD92F5D1F542CF700F78EA6 /* HLSHistoricLogLineEntityMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD92F5C1F542CF700F78EA6 /* HLSHistoricLogLineEntityMigration.m */; };
-		4CD92F5E1F5433FA00F78EA6 /* HistoricLogFileStorageModel.xcmappingmodel in Resources */ = {isa = PBXBuildFile; fileRef = 4CD92F581F542B4700F78EA6 /* HistoricLogFileStorageModel.xcmappingmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -304,8 +303,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C6EF2E81F44331400A80A7B /* HistoricLogFileStorageModel.xcdatamodeld in Resources */,
-				4CD92F5E1F5433FA00F78EA6 /* HistoricLogFileStorageModel.xcmappingmodel in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +317,7 @@
 				4CD92F5D1F542CF700F78EA6 /* HLSHistoricLogLineEntityMigration.m in Sources */,
 				4C8C72D01F1208BF00ED72DB /* TVCLogLineXPC.m in Sources */,
 				4CB0FB301E13CFF6001E2E3B /* HSLHistoricLogProcessDelegate.m in Sources */,
+				4CD5D09120C72BB1008ADBA4 /* HistoricLogFileStorageModel.xcdatamodeld in Sources */,
 				4CD92F591F542B4700F78EA6 /* HistoricLogFileStorageModel.xcmappingmodel in Sources */,
 				4C442CB61E13B5FC00B187F4 /* HLSHistoricLogProcessMain.m in Sources */,
 				4C9215EF1E3E7D8B0029E369 /* HLSHistoricLogViewContext.m in Sources */,
