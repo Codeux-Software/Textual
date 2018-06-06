@@ -32,7 +32,7 @@
 
 #import "TPIBlowfishEncryption.h"
 
-#import "TextualApplicationPrivate.h"
+#import "TVCLogControllerPrivate.h"
 
 #define TXExchangeRequestPrefix				@"DH1080_INIT "
 #define TXExchangeResponsePrefix			@"DH1080_FINISH "
@@ -109,12 +109,12 @@
 
 - (void)preferencesChanged:(id)sender
 {
-	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-									  body:TPILocalizedString(@"BasicLanguage[1027][2]")
-									 title:TPILocalizedString(@"BasicLanguage[1027][1]")
-							 defaultButton:TPILocalizedString(@"BasicLanguage[1027][3]")
-						   alternateButton:nil
-							   otherButton:nil];
+	[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
+							  body:TPILocalizedString(@"BasicLanguage[1027][2]")
+							 title:TPILocalizedString(@"BasicLanguage[1027][1]")
+					 defaultButton:TPILocalizedString(@"BasicLanguage[1027][3]")
+				   alternateButton:nil
+					   otherButton:nil];
 }
 
 - (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
@@ -170,12 +170,12 @@
 {
 	[self performBlockOnMainThread:^{
 		if ([self isPluginEnabled] == NO) {
-			(void)[TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"BasicLanguage[1030][2]", [commandString lowercaseString])
-													 title:TPILocalizedString(@"BasicLanguage[1030][1]")
-											 defaultButton:TPILocalizedString(@"BasicLanguage[1030][3]")
-										   alternateButton:nil
-											suppressionKey:nil
-										   suppressionText:nil];
+			[TDCAlert alertWithMessage:TPILocalizedString(@"BasicLanguage[1030][2]", [commandString lowercaseString])
+								 title:TPILocalizedString(@"BasicLanguage[1030][1]")
+						 defaultButton:TPILocalizedString(@"BasicLanguage[1030][3]")
+					   alternateButton:nil
+						suppressionKey:nil
+					   suppressionText:nil];
 
 			return; // Cancel operation...
 		}
@@ -594,12 +594,11 @@
 		id request = requestData[0];
 		id channel = requestData[1];
 
-		if ([requestData count] == 2												&& // Array count is equal to 2.
-			PointerIsNotEmpty( request )											&& // Pointer are not empty.
-			PointerIsNotEmpty( channel )											&& // Pointer are not empty.
-			PointerIsNotEmpty([channel associatedClient])							&& // Pointer are not empty.
-			[request isKindOfClass:[EKBlowfishEncryptionKeyExchange class]]			&& // Type of class is correct.
-			[channel isKindOfClass:[IRCChannel class]]) {							   // Type of class is correct.
+		if ([requestData count] == 2											&& 	// Array count is equal to 2.
+			request != nil														&& 	// Pointer are not empty.
+			channel != nil														&& 	// Pointer are not empty.
+			[request isKindOfClass:[EKBlowfishEncryptionKeyExchange class]]		&& 	// Type of class is correct.
+			[channel isKindOfClass:[IRCChannel class]]) {							// Type of class is correct.
 
 			return requestData;
 		}
@@ -610,7 +609,7 @@
 
 - (NSString *)keyExchangeDictionaryKey:(IRCChannel *)channel
 {
-	if (PointerIsEmpty(channel) || [channel isPrivateMessage] == NO) {
+	if (channel == nil || [channel isPrivateMessage] == NO) {
 		return nil;
 	}
 	

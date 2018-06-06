@@ -233,7 +233,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 				TargetAttributes = {
 					8D57630D048677EA00EA77CD = {
 						ProvisioningStyle = Manual;
@@ -299,6 +299,15 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Frameworks/Static Libraries/Headers/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Frameworks/Static Libraries/Libraries/**\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -311,6 +320,15 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Frameworks/Static Libraries/Headers/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Frameworks/Static Libraries/Libraries/**\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -350,6 +368,15 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Frameworks/Static Libraries/Headers/**\"",
+					"\"${TEXTUAL_PROJECT_DIR}/Classes/Headers/Private/**\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${inherited}",
+					"\"${TEXTUAL_PROJECT_DIR}/Frameworks/Static Libraries/Libraries/**\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
