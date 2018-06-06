@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -434,7 +433,7 @@
                     <rect key="frame" x="38" y="55" width="250" height="160"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -491,7 +490,7 @@
                     <rect key="frame" x="301" y="55" width="250" height="160"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -718,7 +717,7 @@
                     <tabViewItems>
                         <tabViewItem label="Alerts" identifier="1" id="geW-mJ-8Ef">
                             <view key="view" id="KFW-OS-9of">
-                                <rect key="frame" x="10" y="25" width="543" height="225"/>
+                                <rect key="frame" x="10" y="29" width="543" height="221"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </view>
                         </tabViewItem>
@@ -974,11 +973,11 @@
                     <tabViewItems>
                         <tabViewItem label="Keyboard &amp; Mouse" identifier="1" id="SL3-8G-t51">
                             <view key="view" id="4ZT-mV-qxZ">
-                                <rect key="frame" x="10" y="25" width="543" height="414"/>
+                                <rect key="frame" x="10" y="29" width="543" height="410"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="nsU-oF-11h">
-                                        <rect key="frame" x="30" y="221" width="213" height="18"/>
+                                        <rect key="frame" x="30" y="217" width="213" height="18"/>
                                         <buttonCell key="cell" type="check" title="Connect to server on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="HyM-B2-IjQ">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -992,7 +991,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Qqp-Rw-jY7">
-                                        <rect key="frame" x="30" y="193" width="244" height="18"/>
+                                        <rect key="frame" x="30" y="189" width="244" height="18"/>
                                         <buttonCell key="cell" type="check" title="Disconnect from server on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Lsg-37-h0b">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1002,7 +1001,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="YRR-9J-n7G">
-                                        <rect key="frame" x="31" y="86" width="206" height="18"/>
+                                        <rect key="frame" x="31" y="82" width="206" height="18"/>
                                         <buttonCell key="cell" type="check" title="Automatically copy selected text" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uSz-ME-EyF">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1012,7 +1011,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="TIz-dH-HBF">
-                                        <rect key="frame" x="31" y="356" width="311" height="18"/>
+                                        <rect key="frame" x="31" y="352" width="311" height="18"/>
                                         <buttonCell key="cell" type="check" title="Channel navigation is limited to the selected server" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="beH-aC-ScW">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1022,7 +1021,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="sGF-Q4-JiC">
-                                        <rect key="frame" x="30" y="165" width="183" height="18"/>
+                                        <rect key="frame" x="30" y="161" width="183" height="18"/>
                                         <buttonCell key="cell" type="check" title="Join channel on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0Jk-qA-tn1">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1032,10 +1031,10 @@
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="JFd-1Y-9jH">
-                                        <rect key="frame" x="33" y="118" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="114" width="478" height="5"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykv-44-sRE">
-                                        <rect key="frame" x="64" y="276" width="153" height="16"/>
+                                        <rect key="frame" x="64" y="272" width="153" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Command + W key action:" id="4oC-Tr-qfm">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1043,16 +1042,16 @@
                                         </textFieldCell>
                                     </textField>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZHD-P3-6vN">
-                                        <rect key="frame" x="33" y="337" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="333" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="Z0N-Sg-SRX"/>
                                         </constraints>
                                     </box>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="INb-El-pAB">
-                                        <rect key="frame" x="49" y="67" width="385" height="13"/>
+                                        <rect key="frame" x="49" y="63" width="385" height="13"/>
                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Hold the Option key (⌥) while selecting text to temporarily disable this feature." id="8Nk-L2-mjZ">
                                             <font key="font" metaFont="system" size="10"/>
-                                            <color key="textColor" name="Preference Description Text Color"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
@@ -1060,7 +1059,7 @@
                                         </connections>
                                     </textField>
                                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfq-lx-1BD">
-                                        <rect key="frame" x="220" y="300" width="282" height="22"/>
+                                        <rect key="frame" x="220" y="296" width="282" height="22"/>
                                         <popUpButtonCell key="cell" type="push" title="Open Query" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="200" imageScaling="proportionallyDown" inset="2" selectedItem="Lfz-k6-aUF" id="FX8-ei-qeg">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
@@ -1080,7 +1079,7 @@
                                         </connections>
                                     </popUpButton>
                                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-afW">
-                                        <rect key="frame" x="220" y="271" width="282" height="22"/>
+                                        <rect key="frame" x="220" y="267" width="282" height="22"/>
                                         <popUpButtonCell key="cell" type="push" title="Close Main Window" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="WSZ-ji-Ch7" id="qna-h9-Sw2">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
@@ -1103,7 +1102,7 @@
                                         </connections>
                                     </popUpButton>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="tem-fj-U6Q">
-                                        <rect key="frame" x="30" y="137" width="192" height="18"/>
+                                        <rect key="frame" x="30" y="133" width="192" height="18"/>
                                         <buttonCell key="cell" type="check" title="Leave channel on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="qbS-rY-mJ8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1113,7 +1112,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rd9-Tz-a8b">
-                                        <rect key="frame" x="84" y="305" width="133" height="16"/>
+                                        <rect key="frame" x="84" y="301" width="133" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Double clicking a user:" id="NhJ-3F-Unb">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1121,7 +1120,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dJl-5C-foA">
-                                        <rect key="frame" x="33" y="253" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="249" width="478" height="5"/>
                                     </box>
                                 </subviews>
                                 <constraints>
@@ -1476,11 +1475,11 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="cUA-Ui-lzO">
                             <view key="view" id="Ht3-ub-Duo">
-                                <rect key="frame" x="10" y="25" width="543" height="360"/>
+                                <rect key="frame" x="10" y="29" width="543" height="356"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lQi-te-LwT">
-                                        <rect key="frame" x="457" y="224" width="18" height="11"/>
+                                        <rect key="frame" x="457" y="220" width="18" height="11"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="TsQ-VK-5QG">
                                             <font key="font" metaFont="miniSystem"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1488,7 +1487,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
-                                        <rect key="frame" x="58" y="115" width="319" height="18"/>
+                                        <rect key="frame" x="58" y="111" width="319" height="18"/>
                                         <buttonCell key="cell" type="check" title="Use “x” to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8DQ-Jg-CgL">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1499,13 +1498,13 @@
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="pbE-2M-fRW">
-                                        <rect key="frame" x="50" y="283" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="279" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="j6u-I9-5T5"/>
                                         </constraints>
                                     </box>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-sn-QgS">
-                                        <rect key="frame" x="58" y="87" width="317" height="18"/>
+                                        <rect key="frame" x="58" y="83" width="317" height="18"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="egC-El-gcj">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1516,7 +1515,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
-                                        <rect key="frame" x="228" y="224" width="24" height="11"/>
+                                        <rect key="frame" x="228" y="220" width="24" height="11"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="etq-xm-HYN">
                                             <font key="font" metaFont="miniSystem"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1524,7 +1523,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="tNs-id-cdg">
-                                        <rect key="frame" x="58" y="59" width="276" height="18"/>
+                                        <rect key="frame" x="58" y="55" width="276" height="18"/>
                                         <buttonCell key="cell" type="check" title="User list info popover updates while scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0ZL-Zz-8el">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1534,7 +1533,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="hDx-CA-NhV">
-                                        <rect key="frame" x="58" y="251" width="177" height="18"/>
+                                        <rect key="frame" x="58" y="247" width="177" height="18"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RdW-uj-Mh1">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1546,7 +1545,7 @@
                                         </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
-                                        <rect key="frame" x="255" y="222" width="196" height="15"/>
+                                        <rect key="frame" x="255" y="218" width="196" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="196" id="vvo-4g-75D"/>
                                         </constraints>
@@ -1559,7 +1558,7 @@
                                         </connections>
                                     </slider>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wa5-Rg-5aD">
-                                        <rect key="frame" x="64" y="223" width="159" height="16"/>
+                                        <rect key="frame" x="64" y="219" width="159" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Main window transparency:" id="Pab-0Z-VAE">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1567,7 +1566,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kad-3P-XnO">
-                                        <rect key="frame" x="58" y="302" width="114" height="18"/>
+                                        <rect key="frame" x="58" y="298" width="114" height="18"/>
                                         <buttonCell key="cell" type="check" title="Right to left text" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4PT-nq-SYL">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -1583,10 +1582,10 @@
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-aO-cik">
-                                        <rect key="frame" x="50" y="147" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="143" width="443" height="5"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iWl-Y8-qXs">
-                                        <rect key="frame" x="58" y="170" width="156" height="16"/>
+                                        <rect key="frame" x="58" y="166" width="156" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Arrange multiple channels:" id="aNN-WN-TzZ">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1594,7 +1593,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dG4-2O-lpO">
-                                        <rect key="frame" x="217" y="165" width="130" height="22"/>
+                                        <rect key="frame" x="217" y="161" width="130" height="22"/>
                                         <popUpButtonCell key="cell" type="push" title="Top to bottom" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="5M2-Hy-cjn" id="2Va-c1-ec9">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
@@ -1611,7 +1610,7 @@
                                         </connections>
                                     </popUpButton>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="RZ1-8W-O04">
-                                        <rect key="frame" x="50" y="202" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="198" width="443" height="5"/>
                                     </box>
                                 </subviews>
                                 <constraints>
@@ -1960,11 +1959,11 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="yKL-ON-PSA">
                             <view key="view" id="bCO-56-p1h">
-                                <rect key="frame" x="10" y="25" width="543" height="256"/>
+                                <rect key="frame" x="10" y="29" width="543" height="252"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
-                                        <rect key="frame" x="128" y="159" width="33" height="16"/>
+                                        <rect key="frame" x="128" y="155" width="33" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Font:" id="Rms-5m-RLS">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1972,7 +1971,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
-                                        <rect key="frame" x="167" y="157" width="180" height="19"/>
+                                        <rect key="frame" x="167" y="153" width="180" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="rq9-Y9-W1h"/>
                                         </constraints>
@@ -1997,7 +1996,7 @@
                                         </connections>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                        <rect key="frame" x="355" y="156" width="58" height="19"/>
+                                        <rect key="frame" x="355" y="152" width="58" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Change" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Oyi-xz-dDf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -2019,7 +2018,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
-                                        <rect key="frame" x="121" y="104" width="234" height="18"/>
+                                        <rect key="frame" x="121" y="100" width="234" height="18"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="imb-ex-Fq2">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2029,7 +2028,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
-                                        <rect key="frame" x="121" y="76" width="194" height="18"/>
+                                        <rect key="frame" x="121" y="72" width="194" height="18"/>
                                         <buttonCell key="cell" type="check" title="Show general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="toP-T2-dv6">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
@@ -2039,10 +2038,10 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
-                                        <rect key="frame" x="139" y="56" width="350" height="14"/>
+                                        <rect key="frame" x="139" y="52" width="350" height="14"/>
                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="Preference Description Text Color"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
@@ -2050,7 +2049,7 @@
                                         </connections>
                                     </textField>
                                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-wc-PBy">
-                                        <rect key="frame" x="122" y="212" width="214" height="22"/>
+                                        <rect key="frame" x="122" y="208" width="214" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="208" id="wld-Y2-GTP"/>
                                         </constraints>
@@ -2070,7 +2069,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="inL-ss-ERr">
-                                        <rect key="frame" x="82" y="216" width="37" height="16"/>
+                                        <rect key="frame" x="82" y="212" width="37" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="33" id="VBj-ex-Msv"/>
                                         </constraints>
@@ -2081,7 +2080,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="341" y="214" width="118" height="19"/>
+                                        <rect key="frame" x="341" y="210" width="118" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gtM-zH-PMU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -2097,13 +2096,13 @@
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="j2v-v4-NVg">
-                                        <rect key="frame" x="50" y="192" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="188" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="gAc-Es-zlZ"/>
                                         </constraints>
                                     </box>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="FAp-of-4TG">
-                                        <rect key="frame" x="50" y="136" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="132" width="443" height="5"/>
                                     </box>
                                 </subviews>
                                 <constraints>
@@ -2157,26 +2156,26 @@
                                         <rect key="frame" x="103" y="189" width="350" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="KAw-Vj-iII">
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="ZRn-G5-YfE">
                                                     <rect key="frame" x="0.0" y="0.0" width="350" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="Preference Description Text Color"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="350" height="27"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="A reload will occur if any file with extension ">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content=".css">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <font key="NSOriginalFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -2184,14 +2183,14 @@
                                                         </fragment>
                                                         <fragment content=" or ">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content=".js">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <font key="NSOriginalFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -2199,7 +2198,7 @@
                                                         </fragment>
                                                         <fragment content=" is modified within the root directory of the active style.">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -2284,7 +2283,7 @@
                                             <string key="title">The maximum number of messages, per-channel, that are accessible through the scrollback.
 
 Messages are not saved between app launches unless “Restore scrollback from previous session” in the Behavior section of Preferences is enabled.</string>
-                                            <color key="textColor" name="Preference Description Text Color"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -2359,21 +2358,21 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="Preference Description Text Color"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="296" height="17"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Symbols:">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="  %@ = User mode; %n = User nickname">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -2413,21 +2412,21 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="Preference Description Text Color"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="340" height="17"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="A list of formatting symbols can be found at ">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="OpenGroup.org">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <url key="NSLink" string="http://opengroup.org/onlinepubs/007908799/xsh/strftime.html"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -2587,7 +2586,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="59" y="128" width="471" height="210"/>
                     <clipView key="contentView" id="AXK-zU-57a">
                         <rect key="frame" x="1" y="1" width="469" height="208"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="rGf-Ih-C97">
                                 <rect key="frame" x="0.0" y="0.0" width="469" height="208"/>
@@ -2776,7 +2775,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="75" y="115" width="365" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When used in the context of a hostmask, an asterisk (*) represents a wildcard character that is matched by any possible value. " id="lyl-DA-xkL">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2902,7 +2901,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="78" y="229" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9lZ-9k-jqr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="1u5-gL-g0d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -2949,7 +2948,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="78" y="201" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="lmN-R7-tw0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="72N-cr-Sqw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -2996,7 +2995,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="78" y="122" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="DqJ-lp-N4v">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="DYY-sZ-cVa">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3060,7 +3059,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="78" y="257" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="QkK-PM-KFq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="wpc-xg-MzG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3128,7 +3127,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="78" y="173" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="I6u-3p-MbT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="SUi-M8-HBn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3269,7 +3268,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="34" y="175" width="197" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Delay in seconds between each join when automatically joining channels." id="SKh-K9-i5D">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -3325,7 +3324,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Textual must periodically poll the channels that you are in to find out when the away status of each user changes. This preference defines the maximum number of users a channel can contain before the channel is skipped over.</string>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -3412,14 +3411,14 @@ Messages are not saved between app launches unless “Restore scrollback from pr
             <point key="canvasLocation" x="401.5" y="-851.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="KpN-mD-prv" userLabel="Incoming Data">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="243"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="244"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="30" affinity="minY"/>
             </userGuides>
             <subviews>
-                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qfG-DF-6ev">
-                    <rect key="frame" x="110" y="196" width="333" height="18"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="qfG-DF-6ev">
+                    <rect key="frame" x="110" y="198" width="333" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically reply to Client-to-Client (CTCP) requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MT3-bO-x65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -3428,8 +3427,8 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReplyUnignoredExternalCTCPRequests" id="F3h-Qb-l6T"/>
                     </connections>
                 </button>
-                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSb-WR-Mph">
-                    <rect key="frame" x="110" y="168" width="225" height="18"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="uSb-WR-Mph">
+                    <rect key="frame" x="110" y="170" width="225" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically ignore highlight spam" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9iB-R9-pX3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -3438,19 +3437,19 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyDetectHighlightSpam" id="Frv-8s-0eY"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyl-Dm-Tsm">
-                    <rect key="frame" x="128" y="134" width="350" height="28"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nyl-Dm-Tsm">
+                    <rect key="frame" x="128" y="136" width="350" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not notify you of a highlight if 75% of a message consists of ten or more nicknames." id="34J-sn-YZe">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="link" destination="uSb-WR-Mph" id="9gI-fO-CqF"/>
                     </connections>
                 </textField>
-                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RP8-vi-u0X">
-                    <rect key="frame" x="110" y="64" width="270" height="18"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="RP8-vi-u0X">
+                    <rect key="frame" x="110" y="66" width="270" height="18"/>
                     <buttonCell key="cell" type="check" title="Replace Combining Diacritical Marks with �" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="nGd-LX-rxu">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -3460,18 +3459,18 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPo-O3-udJ">
-                    <rect key="frame" x="128" y="30" width="350" height="28"/>
+                    <rect key="frame" x="128" y="32" width="350" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These characters are often combined to form “Zalgo text”, which is used by some users to disrupt chatrooms." id="1Vl-Us-7KM">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="link" destination="uSb-WR-Mph" id="fxn-N4-SjE"/>
                     </connections>
                 </textField>
-                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="McB-sS-fgg">
-                    <rect key="frame" x="110" y="108" width="274" height="18"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="McB-sS-fgg">
+                    <rect key="frame" x="110" y="110" width="274" height="18"/>
                     <buttonCell key="cell" type="check" title="Remove formatting from incoming messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="TQw-6D-bCG">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -3480,94 +3479,45 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RemoveIRCTextFormatting" id="djG-dx-r2c"/>
                     </connections>
                 </button>
-                <scrollView ambiguous="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqa-tv-bpf">
-                    <rect key="frame" x="126" y="88" width="350" height="14"/>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqa-tv-bpf">
+                    <rect key="frame" x="126" y="90" width="350" height="14"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="MeX-O6-c8G">
                         <rect key="frame" x="0.0" y="0.0" width="350" height="14"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ijO-xj-OPG">
-                                <rect key="frame" x="0.0" y="0.0" width="350" height="14.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="350" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" name="Preference Description Text Color"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <size key="minSize" width="350" height="14"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Removes formatting such as ">
                                         <attributes>
-                                            <color key="NSColor" name="Preference Description Text Color"/>
+                                            <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="bold">
                                         <attributes>
-                                            <color key="NSColor" name="Preference Description Text Color"/>
+                                            <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
                                             <font key="NSOriginalFont" size="11" name=".AppleSystemUIFontBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=", ">
+                                    <fragment content=", colors, ">
                                         <attributes>
-                                            <color key="NSColor" name="Preference Description Text Color"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="c">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="0.050000000000000003" blue="0.040000000000000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="o">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="0.54000000000000004" blue="0.089999999999999997" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="l">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="0.14999999999999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="o">
-                                        <attributes>
-                                            <color key="NSColor" red="0.0" green="0.54000000000000004" blue="0.080000000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="r">
-                                        <attributes>
-                                            <color key="NSColor" red="0.070000000000000007" green="0.0" blue="0.97999999999999998" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="s">
-                                        <attributes>
-                                            <color key="NSColor" red="0.040000000000000001" green="0.0" blue="0.52000000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=", ">
-                                        <attributes>
-                                            <color key="NSColor" name="Preference Description Text Color"/>
+                                            <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="underline">
                                         <attributes>
-                                            <color key="NSColor" name="Preference Description Text Color"/>
+                                            <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                             <integer key="NSUnderline" value="1"/>
@@ -3575,7 +3525,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                     </fragment>
                                     <fragment content=", etc.">
                                         <attributes>
-                                            <color key="NSColor" name="Preference Description Text Color"/>
+                                            <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
@@ -3614,7 +3564,6 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                 <constraint firstItem="gPo-O3-udJ" firstAttribute="leading" secondItem="RP8-vi-u0X" secondAttribute="leading" constant="18" id="ZSy-lq-aUu"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="McB-sS-fgg" secondAttribute="trailing" constant="20" id="aBg-id-Ck2"/>
                 <constraint firstItem="uSb-WR-Mph" firstAttribute="top" secondItem="qfG-DF-6ev" secondAttribute="bottom" constant="14" id="awP-qH-37v"/>
-                <constraint firstAttribute="bottom" secondItem="gPo-O3-udJ" secondAttribute="bottom" constant="30" id="bCA-oi-ARR"/>
                 <constraint firstItem="qfG-DF-6ev" firstAttribute="top" secondItem="KpN-mD-prv" secondAttribute="top" constant="30" id="hlP-eP-8Eb"/>
                 <constraint firstItem="uSb-WR-Mph" firstAttribute="leading" secondItem="qfG-DF-6ev" secondAttribute="leading" id="lc3-td-PS8"/>
                 <constraint firstItem="nyl-Dm-Tsm" firstAttribute="leading" secondItem="uSb-WR-Mph" secondAttribute="leading" constant="18" id="oFi-Xd-wUB"/>
@@ -3720,7 +3669,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="81" y="88" width="350" height="28"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You will be asked where to save downloaded files each time you start a file transfer if you do not define a destination here." id="L4v-zR-ZZa">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -3917,26 +3866,26 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="103" y="203" width="350" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0hr-p6-n5d">
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="dQz-IA-wZV">
                                                     <rect key="frame" x="0.0" y="0.0" width="350" height="27"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="Preference Description Text Color"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="350" height="27"/>
                                                     <size key="maxSize" width="464" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="This preference can be enabled or disabled for individual channels in ">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="Channel Properties">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <font key="NSOriginalFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -3944,7 +3893,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                                         </fragment>
                                                         <fragment content=".">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -4068,26 +4017,26 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="65" y="189" width="420" height="16"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fLL-jK-jtT">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" spellingCorrection="YES" id="upu-Ej-zfD">
                                                     <rect key="frame" x="0.0" y="42" width="420" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="Preference Description Text Color"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="420" height="16"/>
                                                     <size key="maxSize" width="476" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Change the value of this preference to ">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="zero (0)">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <font key="NSOriginalFont" size="11" name=".AppleSystemUIFontEmphasized"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -4095,7 +4044,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                                         </fragment>
                                                         <fragment content=" to disable height checks.">
                                                             <attributes>
-                                                                <color key="NSColor" name="Preference Description Text Color"/>
+                                                                <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -4160,7 +4109,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="105" y="46" width="350" height="28"/>
                                         <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Load the contents of every URL posted in a channel to determine which are images or videos." id="Udl-QC-wcp">
                                             <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="Preference Description Text Color"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -4248,7 +4197,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             <string key="title">This preference works by disabling certain services.
 It doesn't know whether a specific image or video is safe.
 You should therefore not rely solely on this preference.</string>
-                                            <color key="textColor" name="Preference Description Text Color"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -4266,7 +4215,7 @@ You should therefore not rely solely on this preference.</string>
                                         <rect key="frame" x="105" y="82" width="350" height="28"/>
                                         <textFieldCell key="cell" controlSize="mini" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Safe sources are services that don't inject HTML nor load external JavaScript resoures to inline media." id="Ygv-nr-zSp">
                                             <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="Preference Description Text Color"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -4315,7 +4264,7 @@ You should therefore not rely solely on this preference.</string>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2rT-lJ-27T">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">iCloud Drive is not allowed as a logging location because there is no way to avoid file collision from another copy of Textual that may be logging at the same time.</string>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -4491,7 +4440,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="189" y="81" width="47" height="11"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="XrP-5S-ciu">
                         <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -4605,7 +4554,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="411" y="202" width="120" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="WL8-Lc-POK">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -4621,7 +4570,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="411" y="103" width="120" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="10O-F4-8BP">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -4675,7 +4624,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="102" y="145" width="324" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Disabling this preference, disables all features, including the ability to start an Off-the-Record conversation manually." id="dGa-dE-wl9">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
@@ -4716,7 +4665,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="102" y="30" width="350" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not allow messages to be sent unless an Off-the-Record conversation is active." id="Pzt-74-0SL">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
@@ -4740,6 +4689,7 @@ You should therefore not rely solely on this preference.</string>
                 <constraint firstItem="yGO-On-ZvN" firstAttribute="top" secondItem="lYh-JG-BN5" secondAttribute="bottom" constant="8" symbolic="YES" id="ix3-hc-LpM"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c2f-dF-OoT" secondAttribute="trailing" constant="20" id="jJg-oA-7Xh"/>
                 <constraint firstItem="lVR-sX-Fvg" firstAttribute="centerX" secondItem="ZYk-23-zvA" secondAttribute="centerX" id="s4o-ck-4fB"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lYh-JG-BN5" secondAttribute="trailing" constant="20" id="vSL-I5-Epi"/>
                 <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="86" id="xRe-qX-3ze"/>
             </constraints>
             <point key="canvasLocation" x="691" y="-3944"/>
@@ -4799,7 +4749,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="102" y="144" width="350" height="14"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Do not synchronize anything other than connections" id="8GI-9E-vxD">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -4947,7 +4897,7 @@ You should therefore not rely solely on this preference.</string>
                             <rect key="frame" x="-2" y="16" width="59" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Warning:" id="rGr-Kp-IJJ">
                                 <font key="font" metaFont="systemBold" size="12"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
@@ -4993,7 +4943,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="130" y="30" width="329" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Some of these preference may require a restart to take effect." id="uly-It-UKM">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -5038,7 +4988,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="303" y="71" width="109" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0 = use default limit" id="wMl-wz-NsN">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -5095,20 +5045,5 @@ You should therefore not rely solely on this preference.</string>
         <image name="TPWTB_Notifications" width="32" height="32"/>
         <image name="TPWTB_Style" width="32" height="32"/>
         <image name="applicationIconYosemite" width="512" height="512"/>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
     </resources>
 </document>

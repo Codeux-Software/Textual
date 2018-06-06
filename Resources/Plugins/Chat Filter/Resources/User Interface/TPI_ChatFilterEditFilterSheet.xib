@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -498,7 +497,7 @@ Gw
                                             <rect key="frame" x="49" y="91" width="448" height="28"/>
                                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Comma-separated list of named commands and/or numerics (1 through 999) which are not defined as a checkbox up above." id="gqg-Wn-ped">
                                                 <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -710,7 +709,7 @@ Gw
                                             <rect key="frame" x="102" y="329" width="47" height="11"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="uMI-RE-rQe">
                                                 <font key="font" metaFont="miniSystem"/>
-                                                <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -863,7 +862,7 @@ Gw
                                             <rect key="frame" x="92" y="330" width="47" height="11"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="60g-lP-t8x">
                                                 <font key="font" metaFont="miniSystem"/>
-                                                <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -925,7 +924,7 @@ Gw
                                             <rect key="frame" x="69" y="252" width="351" height="14"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Change value to zero (0) to disable limitations." id="cvx-mI-PZ4">
                                                 <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="Preference Description Text Color"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -994,9 +993,4 @@ Gw
             <real key="maximum" value="1296000"/>
         </numberFormatter>
     </objects>
-    <resources>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-    </resources>
 </document>
