@@ -195,8 +195,8 @@ typedef NS_ENUM(NSUInteger, IRCRemoteCommand) {
 };
 
 /* Command index */
-TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey) TEXTUAL_DEPRECATED("Use strings instead");
-TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey) TEXTUAL_DEPRECATED("Use strings instead");
+TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey) TEXTUAL_SYMBOL_USED TEXTUAL_DEPRECATED("Use strings instead");
+TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey) TEXTUAL_SYMBOL_USED TEXTUAL_DEPRECATED("Use strings instead");
 
 /* Controlling class */
 @interface IRCCommandIndex : NSObject

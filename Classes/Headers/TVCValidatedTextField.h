@@ -70,4 +70,13 @@ typedef NSString * _Nullable (^TVCValidatedTextFieldValidationBlock)(NSString *c
 @interface TVCValidatedTextFieldCell : NSTextFieldCell
 @end
 
+TEXTUAL_DEPRECATED("Use TVCValidatedTextField instead")
+@interface TVCTextFieldWithValueValidation : TVCValidatedTextField
+@property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs;
+@end
+
+TEXTUAL_DEPRECATED("Use TVCValidatedTextFieldCell instead")
+@interface TVCTextFieldWithValueValidationCell : TVCValidatedTextFieldCell
+@end
+
 NS_ASSUME_NONNULL_END

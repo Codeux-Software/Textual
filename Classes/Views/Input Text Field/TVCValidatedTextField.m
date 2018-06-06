@@ -266,4 +266,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark -
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+@implementation TVCTextFieldWithValueValidation
+@end
+
+@implementation TVCTextFieldWithValueValidationCell
+@end
+#pragma clang diagnostic pop
+
 NS_ASSUME_NONNULL_END

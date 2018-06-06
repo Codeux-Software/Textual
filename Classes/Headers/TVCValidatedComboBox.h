@@ -68,4 +68,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCValidatedComboBoxCell : NSComboBoxCell
 @end
 
+TEXTUAL_DEPRECATED("Use TVCValidatedComboBox instead")
+@interface TVCComboBoxWithValueValidation : TVCValidatedComboBox
+@property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs;
+@end
+
+TEXTUAL_DEPRECATED("Use TVCValidatedComboBoxCell instead")
+@interface TVCComboBoxWithValueValidationCell : TVCValidatedComboBoxCell
+@end
+
 NS_ASSUME_NONNULL_END
