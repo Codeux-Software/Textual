@@ -244,6 +244,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self closeValidationErrorPopover];
 
 	[self informCallbackTextDidChange];
+
+	[self setNeedsDisplay:YES];
 }
 
 - (void)informCallbackTextDidChange
