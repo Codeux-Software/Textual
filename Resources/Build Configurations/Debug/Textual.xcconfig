@@ -11,3 +11,5 @@ TEXTUAL_BUILD_SCHEME_TOKEN = debug
 TEXTUAL_EXTENSION_BUILD_SCHEME = Debug
 TEXTUAL_FRAMEWORK_BUILD_SCHEME = Release // Frameworks don't have a Debug scheme
 TEXTUAL_XPC_SERVICE_BUILD_SCHEME = Debug
+
+CODE_SIGN_ENTITLEMENTS = ${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualDebug.entitlements

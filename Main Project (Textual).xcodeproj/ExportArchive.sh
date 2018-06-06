@@ -43,3 +43,5 @@ echo "</ul>" >> buildLog.txt
 mv -f "./buildLog.txt" ~/Desktop
 
 rm -rf "${EXPORT_PATH}"
+
+exit 0;

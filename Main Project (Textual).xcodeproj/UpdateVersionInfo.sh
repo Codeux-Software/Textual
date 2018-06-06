@@ -18,29 +18,6 @@ else
 	cp "${PROJECT_DIR}/Resources/Property Lists/Application Properties/Info.plist" "${PROJECT_DIR}/.tmp/Info.plist"
 fi
 
-# Make a copy of the appropriate entitlements file.
-if [ -f "${CODE_SIGN_ENTITLEMENTS}" ]; then
-	rm -f "${CODE_SIGN_ENTITLEMENTS}"
-fi
-
-if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
-	cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualAppStore.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
-else
-	if [[ "${GCC_PREPROCESSOR_DEFINITIONS}" == *"TEXTUAL_BUILT_INSIDE_SANDBOX=1"* ]]; then
-		# While we are here, check to make sure that the user
-		# performed the necessary configuration changes
-		if [ "${TEXTUAL_BUNDLE_IDENTIFIER}" != "com.codeux.apps.textual-mas" ] || [ "${TEXTUAL_GROUP_CONTAINER_IDENTIFIER}" != "8482Q6EPL6.com.codeux.irc.textual" ]; then
-			echo "Before changing TEXTUAL_BULIT_INSIDE_SANDBOX to 1, make the changes noted in the comments of the configuration file.";
-
-			exit 1;
-		fi
-
-		cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
-	else
-		cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
-	fi
-fi
-
 cd "${PROJECT_DIR}/.tmp/"
 
 # Write the version information to the Info.plist file
@@ -84,3 +61,5 @@ echo "#define TXBundleBuildDate								@\"$(date +%s)\"" >> BuildConfig.h
 if [ -z "$CODE_SIGN_IDENTITY" ]; then
 echo "#define TXBundleBuiltWithoutCodeSigning				1" >> BuildConfig.h
 fi
+
+exit 0;
