@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1011 */
+/* Next unusued key: 1021 */
 
 /* Server properties Address Book entry types */
 "TDCServerPropertiesSheet[1000]" = "User Ignore";
@@ -70,17 +70,16 @@
 "TDCServerPropertiesSheet[1006][17]" = "Redundancy";
 
 /* Error localizations */
-"TDCServerPropertiesSheet[1007][01]" = "Misconfigured value in Identity section";
-"TDCServerPropertiesSheet[1007][02]" = "Misconfigured value in Identity section";
-"TDCServerPropertiesSheet[1007][03]" = "Misconfigured value in Identity section";
-"TDCServerPropertiesSheet[1007][04]" = "Misconfigured value in Identity section";
-"TDCServerPropertiesSheet[1007][05]" = "Misconfigured value in General section";
-"TDCServerPropertiesSheet[1007][06]" = "Misconfigured value in General section";
-"TDCServerPropertiesSheet[1007][07]" = "Misconfigured value in General section";
-"TDCServerPropertiesSheet[1007][08]" = "Misconfigured value in Proxy Server section";
-"TDCServerPropertiesSheet[1007][09]" = "Misconfigured value in Proxy Server section";
-"TDCServerPropertiesSheet[1007][10]" = "Misconfigured value in Messages section";
-"TDCServerPropertiesSheet[1007][11]" = "Misconfigured value in Messages section";
+"TDCServerPropertiesSheet[1011]" = "Please enter a properly formatted nickname.";
+"TDCServerPropertiesSheet[1012]" = "Please enter a properly formatted username.";
+"TDCServerPropertiesSheet[1013]" = "Message cannot contain more than one line.";
+"TDCServerPropertiesSheet[1014]" = "Please enter a shorter message.\n\nMaximum length is %ld characters.";
+"TDCServerPropertiesSheet[1015]" = "Please enter a properly formatted server address or pick from the list of preconfigured networks.";
+"TDCServerPropertiesSheet[1016]" = "Please enter a whole number between 1 and 65,535.";
+"TDCServerPropertiesSheet[1017]" = "Please enter a properly formatted proxy address.";
+"TDCServerPropertiesSheet[1018]" = "Connection name cannot contain more than one line.";
+"TDCServerPropertiesSheet[1019]" = "Real name cannot contain more than one line.";
+"TDCServerPropertiesSheet[1020]" = "Please enter a list of properly formatted nicknames.\n\nFailed on nickname: “%@“\n\nList of nicknames should be space separated.\nFor example: “Guest1 Guest2 Guest3“";
 
 /* Custom client-side certificate selection */
 "TDCServerPropertiesSheet[1008]" = "No Certificate Selected";
