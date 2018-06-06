@@ -51,24 +51,23 @@
 "TDCServerPropertiesSheet[1005]" = "Match";
 
 /* Server properties navigation menu */
-"TDCServerPropertiesSheet[1006][01]" = "Channel List";
-"TDCServerPropertiesSheet[1006][02]" = "Connect Commands";
-"TDCServerPropertiesSheet[1006][03]" = "Encoding";
-"TDCServerPropertiesSheet[1006][04]" = "Flood Control";
-"TDCServerPropertiesSheet[1006][05]" = "General";
-"TDCServerPropertiesSheet[1006][06]" = "Identity";
-"TDCServerPropertiesSheet[1006][07]" = "Address Book";
-"TDCServerPropertiesSheet[1006][08]" = "Messages";
-"TDCServerPropertiesSheet[1006][09]" = "Miscellaneous";
-"TDCServerPropertiesSheet[1006][10]" = "Proxy Server";
-"TDCServerPropertiesSheet[1006][11]" = "Client Certificate";
-"TDCServerPropertiesSheet[1006][12]" = "Highlights";
-"TDCServerPropertiesSheet[1006][13]" = "Network Socket";
-"TDCServerPropertiesSheet[1006][14]" = "ZNC Bouncer";
-"TDCServerPropertiesSheet[1006][15]" = "Basic Settings";
-"TDCServerPropertiesSheet[1006][16]" = "Vendor Specific";
-"TDCServerPropertiesSheet[1006][17]" = "Advanced";
-"TDCServerPropertiesSheet[1006][18]" = "Redundancy";
+"TDCServerPropertiesSheet[1006][01]" = "Server Properties";
+"TDCServerPropertiesSheet[1006][02]" = "Vendor Specific";
+"TDCServerPropertiesSheet[1006][03]" = "Advanced";
+"TDCServerPropertiesSheet[1006][04]" = "Address Book";
+"TDCServerPropertiesSheet[1006][05]" = "Channel List";
+"TDCServerPropertiesSheet[1006][06]" = "Connect Commands";
+"TDCServerPropertiesSheet[1006][07]" = "Encoding";
+"TDCServerPropertiesSheet[1006][08]" = "General";
+"TDCServerPropertiesSheet[1006][09]" = "Identity";
+"TDCServerPropertiesSheet[1006][10]" = "Highlights";
+"TDCServerPropertiesSheet[1006][11]" = "Messages";
+"TDCServerPropertiesSheet[1006][12]" = "ZNC Bouncer";
+"TDCServerPropertiesSheet[1006][13]" = "Client Certificate";
+"TDCServerPropertiesSheet[1006][14]" = "Flood Control";
+"TDCServerPropertiesSheet[1006][15]" = "Network Socket";
+"TDCServerPropertiesSheet[1006][16]" = "Proxy Server";
+"TDCServerPropertiesSheet[1006][17]" = "Redundancy";
 
 /* Error localizations */
 "TDCServerPropertiesSheet[1007][01]" = "Misconfigured value in Identity section";

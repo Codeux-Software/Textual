@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
 #import "NSViewHelper.h"
 #import "TVCContentNavigationOutlineViewPrivate.h"
 
@@ -44,8 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
-@property (nonatomic, weak) id lastSelectionWeakRef;
-@property (readonly, nullable) id parentOfSelectedItem;
+@property (nonatomic, weak, nullable, readwrite) TVCContentNavigationOutlineViewItem *selectedItem;
+@property (nonatomic, weak, nullable) TVCContentNavigationOutlineViewItem *lastSelection;
+@property (readonly, nullable) TVCContentNavigationOutlineViewItem *parentOfLastSelection;
 @end
 
 @implementation TVCContentNavigationOutlineView
@@ -61,40 +63,58 @@ NS_ASSUME_NONNULL_BEGIN
 	self.doubleAction = @selector(outlineViewDoubleClicked:);
 }
 
-- (void)navigateTo:(NSUInteger)selectionIndex
+- (void)setNavigationTreeMatrix:(NSArray<TVCContentNavigationOutlineViewItem *> *)navigationTreeMatrix
 {
-	for (id groupItem in self.groupItems) {
-		NSArray *childItems = [self itemsFromParentGroup:groupItem];
+	NSParameterAssert(navigationTreeMatrix != nil);
 
-		id childItem = [childItems objectPassingTest:^BOOL(NSDictionary<NSString *, id> *attributes, NSUInteger index, BOOL *stop) {
-			return (selectionIndex == [attributes[@"index"] integerValue]);
-		}];
+	if (self->_navigationTreeMatrix != navigationTreeMatrix) {
+		self->_navigationTreeMatrix = navigationTreeMatrix;
 
-		if (childItem == nil) {
-			continue;
+		[self resetOutlineView];
+	}
+}
+
+- (void)resetOutlineView
+{
+	self.lastSelection = nil;
+
+	self.selectedItem = nil;
+
+	[self reloadData];
+}
+
+- (void)navigateToItemWithIdentifier:(NSUInteger)identifier
+{
+	for (TVCContentNavigationOutlineViewItem *groupItem in self.groupItems) {
+		if (groupItem.identifier == identifier) {
+			[self selectItemAtIndex:[self rowForItem:groupItem]];
+
+			return;
 		}
 
-		[self expandItem:groupItem];
+		for (TVCContentNavigationOutlineViewItem *childItem in groupItem.children) {
+			if (childItem.identifier == identifier) {
+				[self selectItemAtIndex:[self rowForItem:childItem]];
 
-		[self selectItemAtIndex:[self rowForItem:childItem]];
+				return;
+			}
+		} // children
+	} // parents
+}
 
-		return;
+- (nullable TVCContentNavigationOutlineViewItem *)parentOfLastSelection
+{
+	TVCContentNavigationOutlineViewItem *selectedItem = self.lastSelection;
+
+	if (selectedItem == nil) {
+		return nil;
 	}
+
+	return [self parentForItem:selectedItem];
 }
 
 #pragma mark -
 #pragma mark Collapse/Expand Logic
-
-- (nullable id)parentOfSelectedItem
-{
-	if (self.lastSelectionWeakRef == nil) {
-		return nil;
-	}
-
-	id parentItem = [self parentForItem:self.lastSelectionWeakRef];
-
-	return parentItem;
-}
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
@@ -108,9 +128,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	id itemAtRow = [self itemAtRow:clickedRow];
+	TVCContentNavigationOutlineViewItem *itemAtRow = [self itemAtRow:clickedRow];
 
-	if ([self isGroupItem:itemAtRow] == NO) {
+	if (itemAtRow.isGroupItem == NO) {
 		return;
 	}
 
@@ -120,63 +140,59 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark NSOutlineViewDelegate Delegates
 
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(nullable id)item
+- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(nullable TVCContentNavigationOutlineViewItem *)item
 {
-	if (item) {
-		return [item[@"children"] count];
+	if (item.isGroupItem) {
+		return item.children.count;
 	}
 
 	return self.navigationTreeMatrix.count;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable TVCContentNavigationOutlineViewItem *)item
 {
-	if (item) {
-		return item[@"children"][index];
+	if (item.isGroupItem) {
+		return item.children[index];
 	}
 
 	return self.navigationTreeMatrix[index];
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(TVCContentNavigationOutlineViewItem *)item
 {
-	return ([item boolForKey:@"blockCollapse"] == NO);
+	return YES;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
+- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(TVCContentNavigationOutlineViewItem *)item
 {
-	return [item containsKey:@"children"];
+	return item.isGroupItem;
 }
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
-	id parentItem = self.parentOfSelectedItem;
+	TVCContentNavigationOutlineViewItem *parentItem = self.parentOfLastSelection;
 
-	id itemCrushed = notification.userInfo[@"NSObject"];
+	TVCContentNavigationOutlineViewItem *itemExpanded = notification.userInfo[@"NSObject"];
 
-	if (itemCrushed != parentItem) {
+	if (parentItem == nil || parentItem != itemExpanded) {
 		return;
 	}
 
-	if ([self isItemExpanded:parentItem] == NO) {
-		return;
-	}
-
-	NSInteger childIndex = [self rowForItem:self.lastSelectionWeakRef];
+	NSInteger childIndex = [self rowForItem:self.lastSelection];
 
 	if (childIndex >= 0) {
 		[self selectItemAtIndex:childIndex];
 	}
 }
 
-- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
+- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable TVCContentNavigationOutlineViewItem *)item
 {
-	return item[@"name"];
+	return item.label;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(TVCContentNavigationOutlineViewItem *)item
 {
-	return ([item containsKey:@"children"] == NO);
+	return (item.view != nil);
 }
 
 - (nullable id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
@@ -191,16 +207,23 @@ NS_ASSUME_NONNULL_BEGIN
 	NSInteger selectedRow = self.selectedRow;
 
 	if (selectedRow < 0) {
+		/* We do not reset -lastSelection because that is used
+		 to restore selection to item when the group item that
+		 was collapsed is expanded. */
+		self.selectedItem = nil;
+
 		return;
 	}
 
-	NSDictionary *navigationItem = [self itemAtRow:selectedRow];
+	TVCContentNavigationOutlineViewItem *item = [self itemAtRow:selectedRow];
 
-	self.lastSelectionWeakRef = navigationItem;
+	self.selectedItem = item;
 
-	[self presentView:navigationItem[@"view"]];
+	self.lastSelection = item;
 
-	id firstResponder = navigationItem[@"firstResponder"];
+	[self presentView:item.view];
+
+	id firstResponder = item.firstResponder;
 
 	if (firstResponder) {
 		[self.window makeFirstResponder:firstResponder];
@@ -212,6 +235,54 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.contentView attachSubview:newView
 			adjustedWidthConstraint:self.contentViewWidthConstraint
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Item Parent
+
+@interface TVCContentNavigationOutlineViewItem ()
+@property (nonatomic, copy, readwrite) NSString *label;
+@property (nonatomic, assign, readwrite) NSUInteger identifier;
+@property (nonatomic, weak, nullable, readwrite) NSView *view;
+@property (nonatomic, weak, nullable, readwrite) NSControl *firstResponder;
+@property (nonatomic, copy, nullable, readwrite) NSArray<TVCContentNavigationOutlineViewItem *> *children;
+@end
+
+@implementation TVCContentNavigationOutlineViewItem
+
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithLabel:(NSString *)label identifier:(NSUInteger)identifier view:(NSView *)view firstResponder:(nullable NSControl *)firstResponder
+{
+	NSParameterAssert(label != nil);
+	NSParameterAssert(view != nil);
+
+	return [self initWithLabel:label identifier:identifier view:view firstResponder:firstResponder children:nil];
+}
+
+- (instancetype)initWithLabel:(NSString *)label identifier:(NSUInteger)identifier view:(nullable NSView *)view firstResponder:(nullable NSControl *)firstResponder children:(nullable NSArray<TVCContentNavigationOutlineViewItem *> *)children
+{
+	NSParameterAssert(label != nil);
+	NSParameterAssert(view != nil || children != nil);
+
+	if ((self = [super init])) {
+		self.label = label;
+		self.identifier = identifier;
+		self.view = view;
+		self.firstResponder = firstResponder;
+		self.children = children;
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (BOOL)isGroupItem
+{
+	return (self.children != nil);
 }
 
 @end
