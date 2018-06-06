@@ -51,9 +51,9 @@
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCBasicTableView.h"
-#import "TVCComboBoxWithValueValidation.h"
+#import "TVCValidatedComboBox.h"
 #import "TVCContentNavigationOutlineViewPrivate.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TVCValidatedTextField.h"
 #import "TDCAddressBookSheetPrivate.h"
 #import "TDCAlert.h"
 #import "TDCChannelPropertiesSheetPrivate.h"
@@ -126,19 +126,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *zncIgnoreConfiguredAutojoinCheck;
 @property (nonatomic, weak) IBOutlet NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *zncOnlyPlaybackLatestCheck;
-@property (nonatomic, weak) IBOutlet NSImageView *erroneousInputErrorImageView;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *fallbackEncodingButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *primaryEncodingButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *preferredCipherSuitesButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *proxyTypeButton;
 @property (nonatomic, weak) IBOutlet NSSlider *floodControlDelayTimerSlider;
 @property (nonatomic, weak) IBOutlet NSSlider *floodControlMessageCountSlider;
-@property (nonatomic, weak) IBOutlet NSTextField *alternateNicknamesTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateCommonNameField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateMD5FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA1FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA2FingerprintField;
-@property (nonatomic, weak) IBOutlet NSTextField *erroneousInputErrorTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *nicknamePasswordTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *proxyPasswordTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *proxyUsernameTextField;
@@ -146,18 +143,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *addressBookTable;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelListTable;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightsTable;
-@property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
+@property (nonatomic, weak) IBOutlet TVCValidatedComboBox *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCContentNavigationOutlineView *navigationOutlineView;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *awayNicknameTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *connectionNameTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *normalLeavingCommentTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *proxyAddressTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *proxyPortTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *realNameTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *serverPortTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *sleepModeQuitMessageTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *usernameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *alternateNicknamesTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *awayNicknameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *connectionNameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *nicknameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *normalLeavingCommentTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *proxyAddressTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *proxyPortTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *realNameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *serverPortTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *sleepModeQuitMessageTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *usernameTextField;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextView *connectCommandsField;
 @property (nonatomic, assign) NSUInteger floodControlDelayTimerSliderTempValue;
 @property (nonatomic, assign) NSUInteger floodControlMessageCountSliderTempValue;
@@ -261,127 +259,169 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.connectCommandsField.textContainerInset = NSMakeSize(1, 3);
 
+	/* Alternate nicknameS */
+	self.alternateNicknamesTextField.textDidChangeCallback = self;
+
+	self.alternateNicknamesTextField.stringValueIsInvalidOnEmpty = NO;
+	self.alternateNicknamesTextField.stringValueIsTrimmed = YES;
+
+	self.alternateNicknamesTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		NSArray *nicknames = [currentValue componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+		for (NSString *nickname in nicknames) {
+			if (nickname.isHostmaskNickname == NO) {
+				return TXTLS(@"TDCServerPropertiesSheet[1020]", nickname);
+			}
+		}
+
+		return nil;
+	};
+
 	/* Away nickname */
 	self.awayNicknameTextField.textDidChangeCallback = self;
-
-	self.awayNicknameTextField.onlyShowStatusIfErrorOccurs = YES;
 
 	self.awayNicknameTextField.stringValueIsInvalidOnEmpty = NO;
 	self.awayNicknameTextField.stringValueIsTrimmed = YES;
 	self.awayNicknameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.awayNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isHostmaskNickname;
+	self.awayNicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isHostmaskNickname == NO) {
+			return TXTLS(@"TDCServerPropertiesSheet[1011]");
+		}
+
+		return nil;
 	};
 
 	/* Nickname */
 	self.nicknameTextField.textDidChangeCallback = self;
 
-	self.nicknameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.nicknameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.nicknameTextField.stringValueIsTrimmed = YES;
 	self.nicknameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.nicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isHostmaskNickname;
+	self.nicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isHostmaskNickname == NO) {
+			return TXTLS(@"TDCServerPropertiesSheet[1011]");
+		}
+
+		return nil;
 	};
 
 	/* Username */
 	self.usernameTextField.textDidChangeCallback = self;
 
-	self.usernameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.usernameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.usernameTextField.stringValueIsTrimmed = YES;
 	self.usernameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.usernameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isHostmaskUsername;
+	self.usernameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isHostmaskUsername == NO) {
+			return TXTLS(@"TDCServerPropertiesSheet[1012]");
+		}
+
+		return nil;
 	};
 
 	/* Real name */
 	self.realNameTextField.textDidChangeCallback = self;
 
-	self.realNameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.realNameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.realNameTextField.stringValueIsTrimmed = YES;
 	self.realNameTextField.stringValueUsesOnlyFirstToken = NO;
 
+	self.realNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
+			return TXTLS(@"TDCServerPropertiesSheet[1019]");
+		}
+
+		return nil;
+	};
+
 	/* Normal leaving comment */
 	self.normalLeavingCommentTextField.textDidChangeCallback = self;
-
-	self.normalLeavingCommentTextField.onlyShowStatusIfErrorOccurs = YES;
 
 	self.normalLeavingCommentTextField.stringValueIsInvalidOnEmpty = NO;
 	self.normalLeavingCommentTextField.stringValueIsTrimmed = YES;
 	self.normalLeavingCommentTextField.stringValueUsesOnlyFirstToken = NO;
 
-	self.normalLeavingCommentTextField.validationBlock = ^BOOL(NSString *currentValue) {
+	self.normalLeavingCommentTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return NO;
+			return TXTLS(@"TDCServerPropertiesSheet[1013]");
 		}
 
-		return (currentValue.length < 390);
+		if (currentValue.length > 390) {
+			return TXTLS(@"TDCServerPropertiesSheet[1014]", 390);
+		}
+
+		return nil;
 	};
 
 	/* Sleep mode leaving comment */
 	self.sleepModeQuitMessageTextField.textDidChangeCallback = self;
 
-	self.sleepModeQuitMessageTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.sleepModeQuitMessageTextField.stringValueIsInvalidOnEmpty = NO;
 	self.sleepModeQuitMessageTextField.stringValueIsTrimmed = YES;
 	self.sleepModeQuitMessageTextField.stringValueUsesOnlyFirstToken = NO;
 
-	self.sleepModeQuitMessageTextField.validationBlock = ^BOOL(NSString *currentValue) {
+	self.sleepModeQuitMessageTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return NO;
+			return TXTLS(@"TDCServerPropertiesSheet[1013]");
 		}
 
-		return (currentValue.length < 390);
+		if (currentValue.length > 390) {
+			return TXTLS(@"TDCServerPropertiesSheet[1014]", 390);
+		}
+
+		return nil;
 	};
 
 	/* Connection name */
 	self.connectionNameTextField.textDidChangeCallback = self;
 
-	self.connectionNameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.connectionNameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.connectionNameTextField.stringValueIsTrimmed = YES;
 	self.connectionNameTextField.stringValueUsesOnlyFirstToken = NO;
 
+	self.connectionNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
+			return TXTLS(@"TDCServerPropertiesSheet[1018]");
+		}
+
+		return nil;
+	};
+
 	/* Server address */
 	self.serverAddressComboBox.textDidChangeCallback = self;
-
-	self.serverAddressComboBox.onlyShowStatusIfErrorOccurs = YES;
 
 	self.serverAddressComboBox.stringValueIsInvalidOnEmpty = YES;
 	self.serverAddressComboBox.stringValueIsTrimmed = YES;
 	self.serverAddressComboBox.stringValueUsesOnlyFirstToken = YES;
 
-	self.serverAddressComboBox.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isValidInternetAddress;
+	self.serverAddressComboBox.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isValidInternetAddress == NO) {
+			return TXTLS(@"TDCServerPropertiesSheet[1015]");
+		}
+
+		return nil;
 	};
 
 	/* Server port */
 	self.serverPortTextField.textDidChangeCallback = self;
 
-	self.serverPortTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.serverPortTextField.stringValueIsInvalidOnEmpty = YES;
 	self.serverPortTextField.stringValueIsTrimmed = YES;
 	self.serverPortTextField.stringValueUsesOnlyFirstToken = NO;
 
-	self.serverPortTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isValidInternetPort;
+	self.serverPortTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isValidInternetPort == NO) {
+			return TXTLS(@"TDCServerPropertiesSheet[1016]");
+		}
+
+		return nil;
 	};
 
 	/* Proxy address */
 	self.proxyAddressTextField.textDidChangeCallback = self;
-
-	self.proxyAddressTextField.onlyShowStatusIfErrorOccurs = YES;
 
 	self.proxyAddressTextField.stringValueIsInvalidOnEmpty = NO;
 	self.proxyAddressTextField.stringValueIsTrimmed = YES;
@@ -389,7 +429,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.proxyAddressTextField.performValidationWhenEmpty = YES;
 
-	self.proxyAddressTextField.validationBlock = ^BOOL(NSString *currentValue) {
+	self.proxyAddressTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
 
 		if (proxyType == IRCConnectionSocketSocks4ProxyType ||
@@ -397,16 +437,16 @@ NS_ASSUME_NONNULL_BEGIN
 			proxyType == IRCConnectionSocketHTTPProxyType ||
 			proxyType == IRCConnectionSocketHTTPSProxyType)
 		{
-			return currentValue.isValidInternetAddress;
+			if (currentValue.isValidInternetAddress == NO) {
+				return TXTLS(@"TDCServerPropertiesSheet[1017]");
+			}
 		}
 
-		return YES;
+		return nil;
 	};
 
 	/* Proxy port */
 	self.proxyPortTextField.textDidChangeCallback = self;
-
-	self.proxyPortTextField.onlyShowStatusIfErrorOccurs = YES;
 
 	self.proxyPortTextField.stringValueIsInvalidOnEmpty = NO;
 	self.proxyPortTextField.stringValueIsTrimmed = YES;
@@ -416,7 +456,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.proxyPortTextField.defaultValue = [NSString stringWithUnsignedInteger:IRCConnectionDefaultProxyPort];
 
-	self.proxyPortTextField.validationBlock = ^BOOL(NSString *currentValue) {
+	self.proxyPortTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
 
 		if (proxyType == IRCConnectionSocketSocks4ProxyType ||
@@ -424,10 +464,12 @@ NS_ASSUME_NONNULL_BEGIN
 			proxyType == IRCConnectionSocketHTTPProxyType ||
 			proxyType == IRCConnectionSocketHTTPSProxyType)
 		{
-			return currentValue.isValidInternetPort;
+			if (currentValue.isValidInternetPort == NO) {
+				return TXTLS(@"TDCServerPropertiesSheet[1016]");
+			}
 		}
 
-		return YES;
+		return nil;
 	};
 
 	/* Setup others */
@@ -643,6 +685,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	[self removeConfigurationDidChangeObserver];
 
 	[self closeChildSheets];
@@ -664,6 +710,131 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 	[super ok:nil];
+}
+
+- (BOOL)okOrError
+{
+	TDCServerPropertiesSheetNavigationSelection selection = self.navigationOutlineView.selectedItem.identifier;
+
+	if ([self okOrErrorForSelection:selection] == NO) {
+		return NO;
+	}
+
+	/* We want to show the error for the visible viw first so that
+	 the user isn't jerked around. To accomplish this, we keep an
+	 array of views in which error occurs. Check error in visible
+	 view, remove that from array, then enumerate the rest. */
+	NSMutableArray *remainingSelections =
+	[@[
+	   @(TDCServerPropertiesSheetGeneralSelection),
+	   @(TDCServerPropertiesSheetIdentitySelection),
+	   @(TDCServerPropertiesSheetDisconnectMessagesSelection),
+	   @(TDCServerPropertiesSheetProxyServerSelection),
+	   ] mutableCopy];
+
+	[remainingSelections removeObject:@(selection)];
+
+	for (NSNumber *selectionRemaining in remainingSelections) {
+		if ([self okOrErrorForSelection:selectionRemaining.integerValue] == NO) {
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)okOrErrorForSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+{
+	switch (selection) {
+		case TDCServerPropertiesSheetGeneralSelection:
+		{
+			if ([self okOrErrorForTextField:self.connectionNameTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForComboBox:self.serverAddressComboBox inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.serverPortTextField inSelection:selection] == NO) {
+				return NO;
+			}
+
+			break;
+		}
+
+		case TDCServerPropertiesSheetIdentitySelection:
+		{
+			if ([self okOrErrorForTextField:self.nicknameTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.awayNicknameTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.alternateNicknamesTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.usernameTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.realNameTextField inSelection:selection] == NO) {
+				return NO;
+			}
+
+			break;
+		}
+
+		case TDCServerPropertiesSheetDisconnectMessagesSelection:
+		{
+			if ([self okOrErrorForTextField:self.normalLeavingCommentTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.sleepModeQuitMessageTextField inSelection:selection] == NO) {
+				return NO;
+			}
+
+			break;
+		}
+
+		case TDCServerPropertiesSheetProxyServerSelection:
+		{
+			if ([self okOrErrorForTextField:self.proxyAddressTextField inSelection:selection] == NO) {
+				return NO;
+			} else if ([self okOrErrorForTextField:self.proxyPortTextField inSelection:selection] == NO) {
+				return NO;
+			}
+
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	} // switch()
+
+	return YES;
+}
+
+- (BOOL)okOrErrorForComboBox:(TVCValidatedComboBox *)comboBox inSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+{
+	if (comboBox.valueIsValid) {
+		return YES;
+	}
+
+	[self navigateToSelection:selection];
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[comboBox showValidationErrorPopover];
+	});
+
+	return NO;
+}
+
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+{
+	if (textField.valueIsValid) {
+		return YES;
+	}
+
+	[self navigateToSelection:selection];
+
+	/* Give navigation time to settle before trying to attach popover */
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[textField showValidationErrorPopover];
+	});
+
+	return NO;
 }
 
 - (void)cancel:(id)sender
@@ -873,7 +1044,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self updateAddressBookPage];
 	[self updateChannelListPage];
 	[self updateClientCertificatePage];
-	[self updateConnectionPage];
 	[self updateHighlightsPage];
 	[self updateIdentityPage];
 
@@ -926,7 +1096,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.hideAutojoinDelayedWarnings = (self.hideAutojoinDelayedWarningsCheck.state != NSOnState);
 
 	/* Alternate nicknames */
-	NSString *alternateNicknamesString = self.alternateNicknamesTextField.stringValue;
+	NSString *alternateNicknamesString = self.alternateNicknamesTextField.value;
 
 	NSArray *alternateNicknames = [alternateNicknamesString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
@@ -1023,53 +1193,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.serverPortTextField.integerValue = network.serverPort;
 
 	self.prefersSecuredConnectionCheck.state = network.prefersSecuredConnection;
-}
-
-- (void)updateConnectionPage
-{
-	/* This array is not saved as static because it would 
-	 have to be cleared out anytime that the sheet closes. */
-	NSArray *fieldsToValidate = @[
-	   @{@"field" : self.nicknameTextField,					@"errorLocalizationNumeric" : @"01"},
-	   @{@"field" : self.awayNicknameTextField,				@"errorLocalizationNumeric" : @"02"},
-	   @{@"field" : self.usernameTextField,					@"errorLocalizationNumeric" : @"03"},
-	   @{@"field" : self.realNameTextField,					@"errorLocalizationNumeric" : @"04"},
-	   @{@"field" : self.connectionNameTextField,			@"errorLocalizationNumeric" : @"05"},
-	   @{@"field" : self.serverAddressComboBox,				@"errorLocalizationNumeric" : @"06"},
-	   @{@"field" : self.serverPortTextField,				@"errorLocalizationNumeric" : @"07"},
-	   @{@"field" : self.proxyAddressTextField,				@"errorLocalizationNumeric" : @"08"},
-	   @{@"field" : self.proxyPortTextField,				@"errorLocalizationNumeric" : @"09"},
-	   @{@"field" : self.normalLeavingCommentTextField,		@"errorLocalizationNumeric" : @"10"},
-	   @{@"field" : self.sleepModeQuitMessageTextField,		@"errorLocalizationNumeric" : @"11"}
-	];
-
-	NSString *errorReason = nil;
-
-	for (NSDictionary *fieldToValidate in fieldsToValidate) {
-		id field = fieldToValidate[@"field"];
-
-		if ([field valueIsValid] == NO) {
-			errorReason = [NSString stringWithFormat:@"TDCServerPropertiesSheet[1007][%@]", fieldToValidate[@"errorLocalizationNumeric"]];
-
-			break;
-		}
-	}
-
-	if (errorReason) {
-		self.okButton.enabled = NO;
-
-		self.erroneousInputErrorImageView.hidden = NO;
-		self.erroneousInputErrorTextField.hidden = NO;
-
-		self.erroneousInputErrorTextField.stringValue = TXTLS(errorReason);
-	} else {
-		self.okButton.enabled = YES;
-
-		self.erroneousInputErrorImageView.hidden = YES;
-		self.erroneousInputErrorTextField.hidden = YES;
-
-		self.erroneousInputErrorTextField.stringValue = @"";
-	}
 }
 
 - (void)updateChannelListPage
@@ -1178,11 +1301,6 @@ NS_ASSUME_NONNULL_BEGIN
 						  alternateButton:nil];
 }
 
-- (void)serverAddressChanged:(id)sender
-{
-	[self updateConnectionPage];
-}
-
 - (void)preferredCipherSuitesChanged:(id)sender
 {
 	NSInteger cipherSuites = self.preferredCipherSuitesButton.selectedTag;
@@ -1235,8 +1353,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self.proxyAddressTextField performValidation];
 	[self.proxyPortTextField performValidation];
-
-	[self updateConnectionPage];
 }
 
 - (void)openProxySettingsInSystemPreferences:(id)sender
