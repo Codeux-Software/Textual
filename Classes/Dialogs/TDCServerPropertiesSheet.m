@@ -586,28 +586,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start
 {
-	[self startWithSelection:TDCServerPropertiesSheetDefaultNavigationSelection context:nil];
+	[self startWithSelection:TDCServerPropertiesSheetDefaultSelection context:nil];
 }
 
 - (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
 {
+	[self startSheet];
+
+	[self navigateToSelection:selection];
+
 	switch (selection) {
-		case TDCServerPropertiesSheetFloodControlNavigationSelection:
+		case TDCServerPropertiesSheetNewIgnoreEntrySelection:
 		{
-			[self startWithViewAtIndex:_navigationIndexForFloodControl];
-
-			break;
-		}
-		case TDCServerPropertiesSheetAddressBookNavigationSelection:
-		{
-			[self startWithViewAtIndex:_navigationIndexForAddressBook];
-
-			break;
-		}
-		case TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection:
-		{
-			[self startWithViewAtIndex:_navigationIndexForAddressBook];
-
 			if ([context isKindOfClass:[NSString class]]) {
 				[self addIgnoreAddressBookEntryWithHostmask:context];
 			} else if ([context isKindOfClass:[IRCAddressBookEntry class]]) {
@@ -618,16 +608,20 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		default:
 		{
-			[self startWithViewAtIndex:_navigationIndexForGeneral];
+			break;
 		}
 	}
 }
 
-- (void)startWithViewAtIndex:(NSUInteger)viewIndex
+- (void)navigateToSelection:(TDCServerPropertiesSheetNavigationSelection)selection
 {
-	[self.navigationOutlineView startAtSelectionIndex:viewIndex];
+	if (selection == TDCServerPropertiesSheetDefaultSelection) {
+		selection = TDCServerPropertiesSheetGeneralSelection;
+	} else if (selection == TDCServerPropertiesSheetNewIgnoreEntrySelection) {
+		selection = TDCServerPropertiesSheetAddressBookSelection;
+	}
 
-	[self startSheet];
+	[self.navigationOutlineView navigateToItemWithIdentifier:selection];
 
 	[self.sheet recalculateKeyViewLoop];
 }
