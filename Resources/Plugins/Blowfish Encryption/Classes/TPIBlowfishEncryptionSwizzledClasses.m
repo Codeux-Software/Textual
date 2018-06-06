@@ -258,12 +258,12 @@
 			static dispatch_once_t onceToken;
 
 			dispatch_once(&onceToken, ^{
-				[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-												  body:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][2]")
-												 title:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][1]")
-										 defaultButton:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][3]")
-									   alternateButton:nil
-										   otherButton:nil];
+				[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
+										  body:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][2]")
+										 title:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][1]")
+								 defaultButton:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][3]")
+							   alternateButton:nil
+								   otherButton:nil];
 			});
 
 			return; // Cancel operation...
