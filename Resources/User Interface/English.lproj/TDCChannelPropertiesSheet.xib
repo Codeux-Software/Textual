@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -39,7 +38,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="1103" y="493" width="325" height="384"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="325" height="384"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -221,7 +220,7 @@ DQ
                     <rect key="frame" x="37" y="206" width="47" height="11"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="136">
                         <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="Preference Description Text Color"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -361,9 +360,4 @@ DQ
         </customView>
         <customObject id="9qT-tK-TGk" customClass="TVCNotificationConfigurationViewController"/>
     </objects>
-    <resources>
-        <namedColor name="Preference Description Text Color">
-            <color red="0.16500000655651093" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-    </resources>
 </document>

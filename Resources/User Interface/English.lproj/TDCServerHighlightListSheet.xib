@@ -59,9 +59,8 @@
                                                     <rect key="frame" x="1" y="1" width="100" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2j-l0-XuC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="97" height="17"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="a2j-l0-XuC">
+                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="81x-z5-fVG">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -73,6 +72,11 @@
                                                             </connections>
                                                         </textField>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="a2j-l0-XuC" firstAttribute="leading" secondItem="PzI-yP-71o" secondAttribute="leading" constant="2" id="3Gq-t8-OjU"/>
+                                                        <constraint firstItem="a2j-l0-XuC" firstAttribute="top" secondItem="PzI-yP-71o" secondAttribute="top" id="Jbt-6A-PUw"/>
+                                                        <constraint firstAttribute="trailing" secondItem="a2j-l0-XuC" secondAttribute="trailing" constant="2" id="i4Q-5d-zjv"/>
+                                                    </constraints>
                                                     <connections>
                                                         <outlet property="textField" destination="a2j-l0-XuC" id="hua-YF-yl6"/>
                                                     </connections>
@@ -224,7 +228,7 @@ Gw
                         <rect key="frame" x="18" y="13" width="348" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Messages that begin with a bullet (•) represent an action" id="278">
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
