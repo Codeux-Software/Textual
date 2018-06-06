@@ -37,14 +37,38 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCContentNavigationOutlineViewItem;
+
 @interface TVCContentNavigationOutlineView : NSOutlineView <NSOutlineViewDelegate, NSOutlineViewDataSource>
 @property (nonatomic, assign) NSUInteger contentViewPreferredWidth;
 @property (nonatomic, assign) NSUInteger contentViewPreferredHeight;
-@property (nonatomic, copy) NSArray *navigationTreeMatrix;
-@property (nonatomic, assign) BOOL updateWindowFrameWhileOffscreen;
+@property (nonatomic, copy) NSArray<TVCContentNavigationOutlineViewItem *> *navigationTreeMatrix;
 @property (nonatomic, assign) BOOL expandParentOnDoubleClick;
 
-- (void)navigateTo:(NSUInteger)selectionIndex;
+@property (readonly, weak, nullable) TVCContentNavigationOutlineViewItem *selectedItem;
+
+- (void)navigateToItemWithIdentifier:(NSUInteger)identifier;
+@end
+
+@interface TVCContentNavigationOutlineViewItem : NSObject
+@property (readonly, copy) NSString *label;
+@property (readonly) NSUInteger identifier;
+@property (readonly, weak, nullable) NSView *view;
+@property (readonly, weak, nullable) NSControl *firstResponder;
+@property (readonly, copy, nullable) NSArray<TVCContentNavigationOutlineViewItem *> *children;
+@property (readonly) BOOL isGroupItem;
+
+- (instancetype)initWithLabel:(NSString *)label
+				   identifier:(NSUInteger)identifier
+						 view:(NSView *)view
+			   firstResponder:(nullable NSControl *)firstResponder;
+
+/* view and children cannot both be nil or an exception is raised */
+- (instancetype)initWithLabel:(NSString *)label
+				   identifier:(NSUInteger)identifier
+						 view:(nullable NSView *)view
+			   firstResponder:(nullable NSControl *)firstResponder
+					 children:(nullable NSArray<TVCContentNavigationOutlineViewItem *> *)children NS_DESIGNATED_INITIALIZER;
 @end
 
 NS_ASSUME_NONNULL_END

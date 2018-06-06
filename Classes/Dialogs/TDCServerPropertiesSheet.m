@@ -460,46 +460,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateTabViewList
 {
-#define _navigationIndexForAddressBook				1
-#define _navigationIndexForConnectCommands			3
-#define _navigationIndexForDisconnectMessages		8
-#define _navigationIndexForFloodControl				13
-#define _navigationIndexForGeneral					5
-#define _navigationIndexForIdentity					6
+#define _groupItem(_label_, _children_) 	\
+	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:0 view:nil firstResponder:nil children:(_children_)]
 
-	NSMutableArray *navigationTreeMatrix = [NSMutableArray array];
+#define _childItem(_label_, _identifier_) 	\
+	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:TDCServerPropertiesSheet ##_identifier_## Selection view:self.contentView ##_identifier_ firstResponder:nil]
 
-	[navigationTreeMatrix addObject:@{
-		@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][15]"),
-		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][07]"),	@"view" : self.contentViewAddressBook},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][01]"),	@"view" : self.contentViewAutojoin},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][02]"),	@"view" : self.contentViewConnectCommands},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][03]"),	@"view" : self.contentViewEncoding},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][05]"),	@"view" : self.contentViewGeneral},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][06]"),	@"view" : self.contentViewIdentity},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][12]"),	@"view" : self.contentViewHighlights},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][08]"),	@"view" : self.contentViewDisconnectMessages},
-		]
-	}];
+	NSArray *generalSectionChildren = @[
+		_childItem(@"TDCServerPropertiesSheet[1006][04]", AddressBook),
+		_childItem(@"TDCServerPropertiesSheet[1006][05]", Autojoin),
+		_childItem(@"TDCServerPropertiesSheet[1006][06]", ConnectCommands),
+		_childItem(@"TDCServerPropertiesSheet[1006][07]", Encoding),
+		_childItem(@"TDCServerPropertiesSheet[1006][08]", General),
+		_childItem(@"TDCServerPropertiesSheet[1006][09]", Identity),
+		_childItem(@"TDCServerPropertiesSheet[1006][10]", Highlights),
+		_childItem(@"TDCServerPropertiesSheet[1006][11]", DisconnectMessages),
+	];
 
-	[navigationTreeMatrix addObject:@{
-		@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][16]"),
-		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][14]"),	@"view" : self.contentViewZncBouncer},
-		]
-	}];
+	NSArray *vendorSectionChildren = @[
+		_childItem(@"TDCServerPropertiesSheet[1006][12]", ZncBouncer)
+	];
 
-	[navigationTreeMatrix addObject:@{
-		@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][17]"),
-		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][11]"),	@"view" : self.contentViewClientCertificate},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][04]"),	@"view" : self.contentViewFloodControl},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][13]"),	@"view" : self.contentViewNetworkSocket},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][10]"),	@"view" : self.contentViewProxyServer},
-			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1006][18]"),	@"view" : self.contentViewRedundancy},
-		]
-	}];
+	NSArray *advancedSectionChildren = @[
+		_childItem(@"TDCServerPropertiesSheet[1006][13]", ClientCertificate),
+		_childItem(@"TDCServerPropertiesSheet[1006][14]", FloodControl),
+		_childItem(@"TDCServerPropertiesSheet[1006][15]", NetworkSocket),
+		_childItem(@"TDCServerPropertiesSheet[1006][16]", ProxyServer),
+		_childItem(@"TDCServerPropertiesSheet[1006][17]", Redundancy)
+	];
+
+	NSArray *navigationTreeMatrix = @[
+		_groupItem(@"TDCServerPropertiesSheet[1006][01]", generalSectionChildren),
+		_groupItem(@"TDCServerPropertiesSheet[1006][02]", vendorSectionChildren),
+		_groupItem(@"TDCServerPropertiesSheet[1006][03]", advancedSectionChildren)
+	];
+
+#undef _groupItem
+#undef _childItem
 
 	self.navigationOutlineView.navigationTreeMatrix = navigationTreeMatrix;
 
@@ -509,8 +506,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.navigationOutlineView.contentViewPreferredHeight = 100;
 
 	self.navigationOutlineView.expandParentOnDoubleClick = YES;
-
-	[self.navigationOutlineView reloadData];
 
 	[self.navigationOutlineView expandItem:navigationTreeMatrix[0]];
 }
