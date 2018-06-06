@@ -39,7 +39,8 @@
 #import "NSObjectHelperPrivate.h"
 #import "NSStringHelper.h"
 #import "IRCClient.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TLOLanguagePreferences.h"
+#import "TVCValidatedTextField.h"
 #import "TDCServerChangeNicknameSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -47,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDCServerChangeNicknameSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, copy, readwrite) NSString *clientId;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *tnewNicknameTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *toldNicknameTextField;
 @end
 
@@ -78,12 +79,14 @@ ClassWithDesignatedInitializerInitMethod
 	self.tnewNicknameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.tnewNicknameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.tnewNicknameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.tnewNicknameTextField.textDidChangeCallback = self;
 
-	self.tnewNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return [currentValue isHostmaskNicknameOn:self.client];
+	self.tnewNicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([currentValue isHostmaskNicknameOn:self.client] == NO) {
+			return TXTLS(@"TDCServerChangeNicknameSheet[0001]");
+		}
+
+		return nil;
 	};
 
 	NSString *nickname = self.client.userNickname;
@@ -100,13 +103,12 @@ ClassWithDesignatedInitializerInitMethod
 	[self.sheet makeFirstResponder:self.tnewNicknameTextField];
 }
 
-- (void)validatedTextFieldTextDidChange:(id)sender
-{
-	self.okButton.enabled = self.tnewNicknameTextField.valueIsValid;
-}
-
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	if ([self.delegate respondsToSelector:@selector(serverChangeNicknameSheet:didInputNickname:)]) {
 		NSString *newNickname = self.tnewNicknameTextField.value;
 
@@ -114,6 +116,11 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[super ok:sender];
+}
+
+- (BOOL)okOrError
+{
+	return [self okOrErrorForTextField:self.tnewNicknameTextField];
 }
 
 #pragma mark -

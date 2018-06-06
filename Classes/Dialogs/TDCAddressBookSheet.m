@@ -37,7 +37,8 @@
 
 #import "NSObjectHelperPrivate.h"
 #import "NSStringHelper.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TLOLanguagePreferences.h"
+#import "TVCValidatedTextField.h"
 #import "TDCAddressBookSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -57,8 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSButton *trackUserActivityCheck;
 @property (nonatomic, strong) IBOutlet NSButton *ignoreEntrySaveButton;
 @property (nonatomic, strong) IBOutlet NSButton *userTrackingEntrySaveButton;
-@property (nonatomic, strong) IBOutlet TVCTextFieldWithValueValidation *ignoreEntryHostmaskTextField;
-@property (nonatomic, strong) IBOutlet TVCTextFieldWithValueValidation *userTrackingEntryNicknameTextField;
+@property (nonatomic, strong) IBOutlet TVCValidatedTextField *ignoreEntryHostmaskTextField;
+@property (nonatomic, strong) IBOutlet TVCValidatedTextField *userTrackingEntryNicknameTextField;
 @property (nonatomic, strong) IBOutlet NSWindow *ignoreEntryView;
 @property (nonatomic, strong) IBOutlet NSWindow *userTrackingEntryView;
 @end
@@ -119,21 +120,25 @@ ClassWithDesignatedInitializerInitMethod
 	self.ignoreEntryHostmaskTextField.stringValueIsInvalidOnEmpty = YES;
 	self.ignoreEntryHostmaskTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.ignoreEntryHostmaskTextField.textDidChangeCallback = self;
-
-	self.ignoreEntryHostmaskTextField.validationBlock = ^BOOL(NSString *currentValue) {
+	self.ignoreEntryHostmaskTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		NSString *valueWithoutWildcard = [currentValue stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
 
-		return valueWithoutWildcard.isHostmask;
+		if (valueWithoutWildcard.isHostmask == NO) {
+			return TXTLS(@"TDCAddressBookSheet[0001]");
+		}
+
+		return nil;
 	};
 
 	self.userTrackingEntryNicknameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.userTrackingEntryNicknameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.userTrackingEntryNicknameTextField.textDidChangeCallback = self;
+	self.userTrackingEntryNicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isHostmaskNickname == NO) {
+			return TXTLS(@"TDCAddressBookSheet[0002]");
+		}
 
-	self.userTrackingEntryNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isHostmaskNickname;
+		return nil;
 	};
 }
 
@@ -181,6 +186,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	if (self.entryType == IRCAddressBookIgnoreEntryType)
 	{
 		self.config.hostmask = self.ignoreEntryHostmaskTextField.value;
@@ -209,16 +218,18 @@ ClassWithDesignatedInitializerInitMethod
 	[super ok:nil];
 }
 
-- (void)validatedTextFieldTextDidChange:(id)sender
+- (BOOL)okOrError
 {
 	if (self.entryType == IRCAddressBookIgnoreEntryType)
 	{
-		self.ignoreEntrySaveButton.enabled = self.ignoreEntryHostmaskTextField.valueIsValid;
+		return [self okOrErrorForTextField:self.ignoreEntryHostmaskTextField];
 	}
 	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
 	{
-		self.userTrackingEntrySaveButton.enabled = self.userTrackingEntryNicknameTextField.valueIsValid;
+		return [self okOrErrorForTextField:self.userTrackingEntryNicknameTextField];
 	}
+
+	return NO;
 }
 
 #pragma mark -

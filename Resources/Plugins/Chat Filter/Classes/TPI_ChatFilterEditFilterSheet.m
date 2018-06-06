@@ -39,15 +39,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
+{
+	TPI_ChatFilterEditFilterSheetGeneralSelection = 0,
+	TPI_ChatFilterEditFilterSheetChannelsSelection = 1,
+	TPI_ChatFilterEditFilterSheetEventsSelection = 2,
+	TPI_ChatFilterEditFilterSheetSenderSelection = 3,
+	TPI_ChatFilterEditFilterSheetNotesSelection = 4,
+	TPI_ChatFilterEditFilterSheetAdvancedSelection = 5
+};
+
 @interface TPI_ChatFilterEditFilterSheet ()
 @property (nonatomic, strong) TPI_ChatFilterMutable *filter;
+@property (nonatomic, weak) IBOutlet NSTabView *contentViewTabView;
 @property (nonatomic, weak) IBOutlet NSTextField *filterMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterSenderMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterTitleTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterNotesTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterActionFloodControlIntervalTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterEventNumericTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterForwardToDestinationTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *filterEventNumericTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *filterForwardToDestinationTextField;
 @property (nonatomic, weak) IBOutlet TVCAutoExpandingTokenField *filterActionTokenField;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenChannelName;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenLocalNickname;
@@ -369,6 +380,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	[self saveFilter];
 
 	if ([self.delegate respondsToSelector:@selector(chatFilterEditFilterSheet:onOk:)]) {
@@ -376,6 +391,44 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[super ok:nil];
+}
+
+- (BOOL)okOrError
+{
+	if ([self okOrErrorForTextField:self.filterEventNumericTextField inSelection:TPI_ChatFilterEditFilterSheetEventsSelection] == NO) {
+		return NO;
+	}
+
+	if ([self okOrErrorForTextField:self.filterForwardToDestinationTextField inSelection:TPI_ChatFilterEditFilterSheetAdvancedSelection] == NO) {
+		return NO;
+	}
+
+	return YES;
+}
+
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TPI_ChatFilterEditFilterSheetNavigationSelection)selection
+{
+	if (textField.valueIsValid) {
+		return YES;
+	}
+
+	[self navigateToSelection:selection];
+
+	/* Give navigation time to settle before trying to attach popover */
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[textField showValidationErrorPopover];
+	});
+
+	return NO;
+}
+
+- (void)navigateToSelection:(TPI_ChatFilterEditFilterSheetNavigationSelection)selection
+{
+	if (self.contentViewTabView.indexOfSelectedItem == selection) {
+		return;
+	}
+
+	[self.contentViewTabView selectTabViewItemAtIndex:selection];
 }
 
 - (void)windowWillClose:(NSNotification *)note
@@ -613,14 +666,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (disabled == NO) {
-		if (self.filterEventNumericTextField.valueIsValid == NO) {
-			disabled = YES;
-		} else if (self.filterForwardToDestinationTextField.valueIsValid == NO) {
-			disabled = YES;
-		}
-	}
-
-	if (disabled == NO) {
 		if (self.filterIgnoreContentCheck.state == NSOffState &&
 			self.filterForwardToDestinationTextField.stringValue.length == 0)
 		{
@@ -640,22 +685,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.filterForwardToDestinationTextField.performValidationWhenEmpty = NO;
 
-	self.filterForwardToDestinationTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.filterForwardToDestinationTextField.stringValueIsInvalidOnEmpty = NO;
 	self.filterForwardToDestinationTextField.stringValueIsTrimmed = YES;
 	self.filterForwardToDestinationTextField.stringValueUsesOnlyFirstToken = NO;
 
-	self.filterForwardToDestinationTextField.validationBlock = ^BOOL(NSString *currentValue) {
+	self.filterForwardToDestinationTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.length > 125) {
-			return NO;
+			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0011]");
 		}
 
 		if ([XRRegularExpression string:currentValue isMatchedByRegex:@"^([a-zA-Z0-9\\-\\_\\s]+)$"] == NO) {
-			return NO;
+			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0012]");
 		}
 
-		return YES;
+		return nil;
 	};
 
 	/* "Numerics" text field */
@@ -663,14 +706,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.filterEventNumericTextField.performValidationWhenEmpty = NO;
 
-	self.filterEventNumericTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.filterEventNumericTextField.stringValueIsInvalidOnEmpty = NO;
 	self.filterEventNumericTextField.stringValueIsTrimmed = NO;
 	self.filterEventNumericTextField.stringValueUsesOnlyFirstToken = NO;
 
-	self.filterEventNumericTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return ([self compileFilterEventsNumerics] != nil);
+	self.filterEventNumericTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([self compileFilterEventsNumerics] == nil) {
+			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0013]");
+		}
+
+		return nil;
 	};
 }
 

@@ -37,7 +37,5 @@
 
 /* Next unusued key: 1003 */
 
-"TDCChannelPropertiesSheet[1001][1]" = "You have exceeded the secret key length defined by %1$@ which is %2$ld characters";
-"TDCChannelPropertiesSheet[1001][2]" = "If you continue typing, the end of your secret key may be cut off.";
-
-"TDCChannelPropertiesSheet[1002]" = "Please enter a properly formatted channel name.";
+"TDCAddressBookSheet[0001]" = "Please enter a properly formatted ignore mask.";
+"TDCAddressBookSheet[0002]" = "Please enter a properly formatted nickname.";

@@ -374,6 +374,10 @@
 		4C12C37C1ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12C3631ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m */; };
 		4C12C37D1ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12C3631ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m */; };
 		4C12C37E1ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12C3631ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m */; };
+		4C13442B20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C13442920C76DFB00343AB7 /* TDCWelcomeSheet.strings */; };
+		4C13442C20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C13442920C76DFB00343AB7 /* TDCWelcomeSheet.strings */; };
+		4C13442D20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C13442920C76DFB00343AB7 /* TDCWelcomeSheet.strings */; };
+		4C13442E20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C13442920C76DFB00343AB7 /* TDCWelcomeSheet.strings */; };
 		4C1383221AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C1383211AA9F9C90099F887 /* applicationIconYosemite.icns */; };
 		4C1383231AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C1383211AA9F9C90099F887 /* applicationIconYosemite.icns */; };
 		4C1383241AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C1383211AA9F9C90099F887 /* applicationIconYosemite.icns */; };
@@ -1794,6 +1798,22 @@
 		4C8C72BF1F1205C300ED72DB /* TVCLogLineXPCPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72BE1F1205C300ED72DB /* TVCLogLineXPCPrivate.h */; };
 		4C8C72C01F1205C300ED72DB /* TVCLogLineXPCPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72BE1F1205C300ED72DB /* TVCLogLineXPCPrivate.h */; };
 		4C8C72C11F1205C300ED72DB /* TVCLogLineXPCPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8C72BE1F1205C300ED72DB /* TVCLogLineXPCPrivate.h */; };
+		4C8E8F2520C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1D20C8004B002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings */; };
+		4C8E8F2620C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1D20C8004B002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings */; };
+		4C8E8F2720C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1D20C8004B002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings */; };
+		4C8E8F2820C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1D20C8004B002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings */; };
+		4C8E8F2920C8004C002B791C /* TDCAddressBookSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1F20C8004B002B791C /* TDCAddressBookSheet.strings */; };
+		4C8E8F2A20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1F20C8004B002B791C /* TDCAddressBookSheet.strings */; };
+		4C8E8F2B20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1F20C8004B002B791C /* TDCAddressBookSheet.strings */; };
+		4C8E8F2C20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F1F20C8004B002B791C /* TDCAddressBookSheet.strings */; };
+		4C8E8F2D20C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2120C8004B002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings */; };
+		4C8E8F2E20C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2120C8004B002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings */; };
+		4C8E8F2F20C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2120C8004B002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings */; };
+		4C8E8F3020C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2120C8004B002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings */; };
+		4C8E8F3120C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2320C8004B002B791C /* TDCServerChangeNicknameSheet.strings */; };
+		4C8E8F3220C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2320C8004B002B791C /* TDCServerChangeNicknameSheet.strings */; };
+		4C8E8F3320C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2320C8004B002B791C /* TDCServerChangeNicknameSheet.strings */; };
+		4C8E8F3420C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8E8F2320C8004B002B791C /* TDCServerChangeNicknameSheet.strings */; };
 		4C8F2F5F1AAE6467007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
 		4C8F2F601AAE6467007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
 		4C8F2F621AAE647D007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
@@ -2839,6 +2859,7 @@
 		4C12C3621ED1812700E98CA4 /* TVCMemberListYosemiteDarkUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMemberListYosemiteDarkUserInterface.m; path = "Classes/Views/User List/TVCMemberListYosemiteDarkUserInterface.m"; sourceTree = "<group>"; };
 		4C12C3631ED1812700E98CA4 /* TVCMemberListYosemiteLightUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMemberListYosemiteLightUserInterface.m; path = "Classes/Views/User List/TVCMemberListYosemiteLightUserInterface.m"; sourceTree = "<group>"; };
 		4C13442220C75C3600343AB7 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Textual.xcconfig; path = "Resources/Build Configurations/Standard Release Sandboxed/Textual.xcconfig"; sourceTree = "<group>"; };
+		4C13442A20C76DFB00343AB7 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCWelcomeSheet.strings"; sourceTree = "<group>"; };
 		4C1383211AA9F9C90099F887 /* applicationIconYosemite.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = applicationIconYosemite.icns; path = Resources/Images/Application/Yosemite/applicationIconYosemite.icns; sourceTree = "<group>"; };
 		4C1383261AA9F9CF0099F887 /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = "<group>"; };
 		4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCLogViewInternalWK1.m; path = "Classes/Views/Channel View/TVCLogViewInternalWK1.m"; sourceTree = "<group>"; };
@@ -3173,6 +3194,10 @@
 		4C8C72B61F1205B600ED72DB /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/RCMConnectionManagerProtocol.h"; sourceTree = "<group>"; };
 		4C8C72B71F1205B600ED72DB /* HLSHistoricLogProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLSHistoricLogProtocol.h; path = "Classes (Shared)/Headers/XPC Protocols/HLSHistoricLogProtocol.h"; sourceTree = "<group>"; };
 		4C8C72BE1F1205C300ED72DB /* TVCLogLineXPCPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCLogLineXPCPrivate.h; path = "Classes (Shared)/Headers/Private/TVCLogLineXPCPrivate.h"; sourceTree = "<group>"; };
+		4C8E8F1E20C8004B002B791C /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCLicenseManagerMigrateAppStoreSheet.strings"; sourceTree = "<group>"; };
+		4C8E8F2020C8004B002B791C /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCAddressBookSheet.strings"; sourceTree = "<group>"; };
+		4C8E8F2220C8004B002B791C /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCLicenseManagerRecoverLostLicenseSheet.strings"; sourceTree = "<group>"; };
+		4C8E8F2420C8004B002B791C /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCServerChangeNicknameSheet.strings"; sourceTree = "<group>"; };
 		4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = Classes/Headers/TVCMainWindowLoadingScreen.h; sourceTree = SOURCE_ROOT; };
 		4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EncryptionKit.framework; path = ".tmp/SharedBuildResults-Frameworks/EncryptionKit.framework"; sourceTree = "<group>"; };
 		4C90F6281E54F28A00DF5190 /* TXApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXApplication.m; path = Classes/Controllers/TXApplication.m; sourceTree = "<group>"; };
@@ -3998,6 +4023,7 @@
 				4CBC76951CC72B5100484A13 /* OffTheRecord.strings */,
 				4CBC76971CC72B5100484A13 /* Prompts.strings */,
 				4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */,
+				4C8E8F1F20C8004B002B791C /* TDCAddressBookSheet.strings */,
 				4CBC769F1CC72B5100484A13 /* TDCChannelBanListSheet.strings */,
 				4CBC76A11CC72B5100484A13 /* TDCChannelInviteSheet.strings */,
 				4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */,
@@ -4007,11 +4033,15 @@
 				4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */,
 				4C25334F1F44393C0003A3F4 /* TDCInAppPurchaseDialog.strings */,
 				4C2533511F44393C0003A3F4 /* TDCInAppPurchaseUpgradeEligibilitySheet.strings */,
+				4C8E8F1D20C8004B002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings */,
+				4C8E8F2120C8004B002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings */,
 				4C2533531F44393C0003A3F4 /* TDCLicenseUpgradeEligibilitySheet.strings */,
 				4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */,
+				4C8E8F2320C8004B002B791C /* TDCServerChangeNicknameSheet.strings */,
 				4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */,
 				4C0D460B1EC2B11E00256D58 /* TDCServerEndpointListSheet.strings */,
 				4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */,
+				4C13442920C76DFB00343AB7 /* TDCWelcomeSheet.strings */,
 				4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */,
 				4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */,
 				4CCDC69C1EC4E075001DDE9A /* TVCNotificationConfigurationView.strings */,
@@ -6305,6 +6335,7 @@
 				4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */,
 				4C0BA5051990798800857343 /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4C0BA5061990798800857343 /* DIGreenBadgeLeftMavericks.png in Resources */,
+				4C8E8F2520C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */,
 				4CF40F661AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */,
 				4C0BA5071990798800857343 /* channelRoomStatusIconYosemiteLightActive@2x.tif in Resources */,
 				4CF40F5E1AC1A59500A26BE0 /* TVCMainWindowMavericks.xib in Resources */,
@@ -6327,6 +6358,7 @@
 				4C0BA5101990798800857343 /* FormattingColor_0.png in Resources */,
 				4C1A5C801E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */,
 				4C0BA5111990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
+				4C8E8F2D20C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */,
 				4C0BA5121990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
 				4CCFA66E1ABCF36A0083620F /* TPWTB_General.png in Resources */,
 				4CBC76C51CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */,
@@ -6350,6 +6382,7 @@
 				4C2533481F4439140003A3F4 /* TDCInAppPurchaseUpgradeEligibilitySheet.xib in Resources */,
 				4CF40F361AC1A59500A26BE0 /* TDCChannelInviteSheet.xib in Resources */,
 				4CBD03C61D5537CE0057D5B5 /* BuddyListDropArea.png in Resources */,
+				4C13442B20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */,
 				4CCFA68E1ABCF36A0083620F /* TPWTB_Style.png in Resources */,
 				4C0BA51F1990798800857343 /* DIGreenBadgeCenterYosemite.png in Resources */,
 				4CBC76C21CC72B5100484A13 /* TDCAboutDialog.strings in Resources */,
@@ -6365,6 +6398,7 @@
 				4C0BA5261990798800857343 /* FormattingColor_14.png in Resources */,
 				4CF40ED61AC1A57800A26BE0 /* IRCNetworks.plist in Resources */,
 				4C0BA5291990798800857343 /* encryptionLockIconLight.tif in Resources */,
+				4C8E8F2920C8004C002B791C /* TDCAddressBookSheet.strings in Resources */,
 				4C0BA52C1990798800857343 /* MavericksDarkChannelCellSelection.tif in Resources */,
 				4C0BA52D1990798800857343 /* channelRoomStatusIconMavericksLightActive.tif in Resources */,
 				4C0BA52E1990798800857343 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */,
@@ -6414,6 +6448,7 @@
 				4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
 				4CBC76B61CC72B5100484A13 /* Notifications.strings in Resources */,
 				4CF40F621AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
+				4C8E8F3120C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */,
 				4C2F6AEB1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */,
 				4C0BA54F1990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C5C6C2F20BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */,
@@ -6463,6 +6498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8E8F2F20C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */,
 				4CC475FE1B57F72500AFD3E5 /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C7766381978CECA00759774 /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4CF621D61C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
@@ -6499,6 +6535,7 @@
 				4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CCFA6701ABCF36A0083620F /* TPWTB_General.png in Resources */,
 				4CCC6B61158E8C48003A102B /* Scripts in Resources */,
+				4C8E8F2720C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */,
 				4CBC76D61CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */,
 				4CDBF72A1EC11CAA00F846A6 /* TDCServerEndpointListSheet.xib in Resources */,
 				4CBC76B81CC72B5100484A13 /* Notifications.strings in Resources */,
@@ -6546,6 +6583,7 @@
 				4CC164C01943B17100B0D4B6 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C46F4691943A654004CA8BA /* FormattingColor_3.png in Resources */,
 				4CF40EDC1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
+				4C8E8F2B20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */,
 				4C7A21971979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229281978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4CCD93FF1CA7291300335381 /* JavaScript in Resources */,
@@ -6563,6 +6601,7 @@
 				4C1A5C821E03FF750020C3DE /* TVCChannelSelectionView.xib in Resources */,
 				4CB229441978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
 				4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
+				4C8E8F3320C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CBC76BE1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4CBD03CB1D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */,
@@ -6614,6 +6653,7 @@
 				4C7A21991979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
 				4CBC76D91CC72B5100484A13 /* TLOLicenseManager.strings in Resources */,
 				4C5CCDD91D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib in Resources */,
+				4C13442D20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */,
 				4C77663A1978CECA00759774 /* MavericksDarkServerCellSelection.tif in Resources */,
 				4CBC76C41CC72B5100484A13 /* TDCAboutDialog.strings in Resources */,
 				4CBC76D01CC72B5100484A13 /* TDCPreferencesController.strings in Resources */,
@@ -6637,6 +6677,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8E8F3020C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */,
 				4C47314620C7599800713C91 /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C47314720C7599800713C91 /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4C47314820C7599800713C91 /* TDCNicknameColorSheet.xib in Resources */,
@@ -6673,6 +6714,7 @@
 				4C47316720C7599800713C91 /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4C47316820C7599800713C91 /* TPWTB_General.png in Resources */,
 				4C47316920C7599800713C91 /* Scripts in Resources */,
+				4C8E8F2820C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */,
 				4C47316A20C7599800713C91 /* TDCServerPropertiesSheet.strings in Resources */,
 				4C47316B20C7599800713C91 /* TDCServerEndpointListSheet.xib in Resources */,
 				4C47316C20C7599800713C91 /* Notifications.strings in Resources */,
@@ -6720,6 +6762,7 @@
 				4C47319620C7599800713C91 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C47319720C7599800713C91 /* FormattingColor_3.png in Resources */,
 				4C47319820C7599800713C91 /* RegisteredUserDefaults.plist in Resources */,
+				4C8E8F2C20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */,
 				4C47319920C7599800713C91 /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C47319A20C7599800713C91 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4C47319B20C7599800713C91 /* JavaScript in Resources */,
@@ -6737,6 +6780,7 @@
 				4C4731A720C7599800713C91 /* TVCChannelSelectionView.xib in Resources */,
 				4C4731A820C7599800713C91 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
 				4C4731A920C7599800713C91 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
+				4C8E8F3420C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */,
 				4C4731AA20C7599800713C91 /* FormattingColor_5.png in Resources */,
 				4C4731AB20C7599800713C91 /* Prompts.strings in Resources */,
 				4C4731AC20C7599800713C91 /* BuddyListDropArea@2x.png in Resources */,
@@ -6788,6 +6832,7 @@
 				4C4731DA20C7599800713C91 /* VibrantDarkServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
 				4C4731DB20C7599800713C91 /* TLOLicenseManager.strings in Resources */,
 				4C4731DC20C7599800713C91 /* TDCChannelSpotlightController.xib in Resources */,
+				4C13442E20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */,
 				4C4731DD20C7599800713C91 /* MavericksDarkServerCellSelection.tif in Resources */,
 				4C4731DE20C7599800713C91 /* TDCAboutDialog.strings in Resources */,
 				4C4731DF20C7599800713C91 /* TDCPreferencesController.strings in Resources */,
@@ -6836,6 +6881,7 @@
 				4CBC76BA1CC72B5100484A13 /* OffTheRecord.strings in Resources */,
 				4C77663D1978CECA00759774 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
 				4CBC76D21CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */,
+				4C8E8F2E20C8004C002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings in Resources */,
 				4CCFA67F1ABCF36A0083620F /* TPWTB_Interface.png in Resources */,
 				4CF40F531AC1A59500A26BE0 /* TDCChannelModifyTopicSheet.xib in Resources */,
 				4CC164BF1943B17100B0D4B6 /* DIRedBadgeRightMavericks.png in Resources */,
@@ -6875,6 +6921,7 @@
 				4C46F4661943A654004CA8BA /* FormattingColor_15.png in Resources */,
 				4CBC76BD1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4C77664B1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
+				4C8E8F2A20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */,
 				4C46F4641943A654004CA8BA /* FormattingColor_14.png in Resources */,
 				4C5CCDD81D3D3BEE00D7E19D /* TDCChannelSpotlightController.xib in Resources */,
 				4CF40ED71AC1A57800A26BE0 /* IRCNetworks.plist in Resources */,
@@ -6934,6 +6981,7 @@
 				4C2F6AEC1EBBB390002246A7 /* TVCNotificationConfigurationView.xib in Resources */,
 				4CCFA66B1ABCF36A0083620F /* TPWTB_Controls@2x.png in Resources */,
 				4C46F4561943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
+				4C8E8F2620C8004C002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings in Resources */,
 				4C7766491978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4CF40EE31AC1A57800A26BE0 /* StaticStore.plist in Resources */,
 				4CC164B31943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png in Resources */,
@@ -6973,7 +7021,9 @@
 				4CF40F2B1AC1A59500A26BE0 /* TDCChannelPropertiesSheet.xib in Resources */,
 				4CB229371978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
 				4CF40ECF1AC1A57800A26BE0 /* IRCCommandIndexRemoteData.plist in Resources */,
+				4C8E8F3220C8004C002B791C /* TDCServerChangeNicknameSheet.strings in Resources */,
 				4CB229251978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
+				4C13442C20C76DFC00343AB7 /* TDCWelcomeSheet.strings in Resources */,
 				4C7766411978CECA00759774 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
 				4CBC76D81CC72B5100484A13 /* TLOLicenseManager.strings in Resources */,
 			);
@@ -7912,6 +7962,14 @@
 			path = "Resources/Language Files";
 			sourceTree = "<group>";
 		};
+		4C13442920C76DFB00343AB7 /* TDCWelcomeSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C13442A20C76DFB00343AB7 /* English */,
+			);
+			name = TDCWelcomeSheet.strings;
+			sourceTree = "<group>";
+		};
 		4C1A5C7E1E03FF750020C3DE /* TVCChannelSelectionView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -8051,6 +8109,38 @@
 			);
 			name = TDCLicenseManagerMigrateAppStoreSheet.xib;
 			path = "Resources/User Interface";
+			sourceTree = "<group>";
+		};
+		4C8E8F1D20C8004B002B791C /* TDCLicenseManagerMigrateAppStoreSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C8E8F1E20C8004B002B791C /* English */,
+			);
+			name = TDCLicenseManagerMigrateAppStoreSheet.strings;
+			sourceTree = "<group>";
+		};
+		4C8E8F1F20C8004B002B791C /* TDCAddressBookSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C8E8F2020C8004B002B791C /* English */,
+			);
+			name = TDCAddressBookSheet.strings;
+			sourceTree = "<group>";
+		};
+		4C8E8F2120C8004B002B791C /* TDCLicenseManagerRecoverLostLicenseSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C8E8F2220C8004B002B791C /* English */,
+			);
+			name = TDCLicenseManagerRecoverLostLicenseSheet.strings;
+			sourceTree = "<group>";
+		};
+		4C8E8F2320C8004B002B791C /* TDCServerChangeNicknameSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C8E8F2420C8004B002B791C /* English */,
+			);
+			name = TDCServerChangeNicknameSheet.strings;
 			sourceTree = "<group>";
 		};
 		4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */ = {

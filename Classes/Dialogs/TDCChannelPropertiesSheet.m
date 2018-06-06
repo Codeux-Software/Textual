@@ -44,13 +44,20 @@
 #import "TPCPreferencesLocal.h"
 #import "TLOLanguagePreferences.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TVCValidatedTextField.h"
 #import "TDCAlert.h"
 #import "TDCPreferencesControllerPrivate.h"
 #import "TDCChannelPropertiesNotificationConfigurationPrivate.h"
 #import "TDCChannelPropertiesSheetInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_ENUM(NSUInteger, TDCChannelPropertiesSheetNavigationSelection)
+{
+	TDCChannelPropertiesSheetGeneralSelection = 0,
+	TDCChannelPropertiesSheetDefaultsSelection = 1,
+	TDCChannelPropertiesSheetNotificationsSelection = 2
+};
 
 @interface TDCChannelPropertiesSheet ()
 @property (nonatomic, strong, readwrite, nullable) IRCClient *client;
@@ -68,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *ignoreHighlightsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
 @property (nonatomic, weak) IBOutlet NSSegmentedControl *contentViewTabView;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *channelNameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *channelNameTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultModesTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultTopicTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *secretKeyTextField;
@@ -191,15 +198,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		@[self.contentViewNotifications,		[NSNull null]],
 	];
 
-	self.channelNameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.channelNameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.channelNameTextField.stringValueUsesOnlyFirstToken = YES;
 
 	self.channelNameTextField.textDidChangeCallback = self;
 
-	self.channelNameTextField.validationBlock = ^(NSString *currentValue) {
-		return currentValue.isChannelName;
+	self.channelNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isChannelName == NO) {
+			return TXTLS(@"TDCChannelPropertiesSheet[1002]");
+		}
+
+		return nil;
 	};
 
 	[self addConfigurationDidChangeObserver];
@@ -233,15 +242,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)updateNavigationEnabledState
 {
-	#define _navigationIndexForNotifications			2
-
 	[self.contentViewTabView setEnabled:(self.pushNotificationsCheck.state == NSOnState)
-							 forSegment:_navigationIndexForNotifications];
+							 forSegment:TDCChannelPropertiesSheetNotificationsSelection];
 }
 
 - (void)loadConfig
 {
 	self.channelNameTextField.stringValue = self.config.channelName;
+	self.channelNameTextField.editable = (self.config.channelName.length == 0);
 
 	self.defaultModesTextField.stringValue = self.config.defaultModes;
 	self.defaultTopicTextField.stringValue = self.config.defaultTopic;
@@ -263,14 +271,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)onMenuBarItemChanged:(id)sender
 {
-	[self navigateToIndex:[sender indexOfSelectedItem]];
+	[self _navigateToSelection:[sender indexOfSelectedItem]];
 }
 
-- (void)navigateToIndex:(NSUInteger)row
+- (void)navigateToSelection:(TDCChannelPropertiesSheetNavigationSelection)selection
 {
-	[self selectPane:self.navigationTree[row][0]];
+	if (self.contentViewTabView.indexOfSelectedItem == selection) {
+		return;
+	}
 
-	id firstResponder = self.navigationTree[row][1];
+	[self.contentViewTabView selectSegmentWithTag:selection];
+
+	[self _navigateToSelection:selection];
+}
+
+- (void)_navigateToSelection:(TDCChannelPropertiesSheetNavigationSelection)selection
+{
+	[self selectPane:self.navigationTree[selection][0]];
+
+	id firstResponder = self.navigationTree[selection][1];
 
 	if ([firstResponder isKindOfClass:[NSControl class]]) {
 		[self.sheet makeFirstResponder:firstResponder];
@@ -286,21 +305,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)start
 {
-	[self navigateToIndex:0];
-
 	[self startSheet];
-}
 
-- (void)updateOkButton
-{
-	self.okButton.enabled = self.channelNameTextField.valueIsValid;
-
-	self.channelNameTextField.editable = (self.config.channelName.length == 0);
-}
-
-- (void)validatedTextFieldTextDidChange:(id)sender
-{
-	[self updateOkButton];
+	[self _navigateToSelection:TDCChannelPropertiesSheetGeneralSelection];
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
@@ -331,8 +338,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[TDCAlert alertSheetWithWindow:self.sheet
-							  body:TXTLS(@"TDCChannelPropertiesSheet[1000][2]")
-							 title:TXTLS(@"TDCChannelPropertiesSheet[1000][1]", self.client.networkNameAlt, maximumKeyLength)
+							  body:TXTLS(@"TDCChannelPropertiesSheet[1001][2]")
+							 title:TXTLS(@"TDCChannelPropertiesSheet[1001][1]", self.client.networkNameAlt, maximumKeyLength)
 					 defaultButton:TXTLS(@"Prompts[0005]")
 				   alternateButton:nil
 					   otherButton:nil
@@ -413,6 +420,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	[self removeConfigurationDidChangeObserver];
 
 	self.config.channelName = self.channelNameTextField.value;
@@ -437,6 +448,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[super ok:nil];
+}
+
+- (BOOL)okOrError
+{
+	return [self okOrErrorForTextField:self.channelNameTextField inSelection:TDCChannelPropertiesSheetGeneralSelection];
+}
+
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TDCChannelPropertiesSheetNavigationSelection)selection
+{
+	if (textField.valueIsValid) {
+		return YES;
+	}
+
+	[self navigateToSelection:selection];
+
+	/* Give navigation time to settle before trying to attach popover */
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[textField showValidationErrorPopover];
+	});
+
+	return NO;
 }
 
 #pragma mark -
