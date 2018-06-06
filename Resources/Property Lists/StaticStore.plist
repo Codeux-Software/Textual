@@ -214,11 +214,11 @@
 	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
 	<dict>
 		<key>com.codeux.app-extensions.textual-BlowfishEncryption</key>
-		<string>1.0.11</string>
+		<string>1.0.12</string>
 		<key>com.codeux.app-extensions.textual-Caffeine</key>
-		<string>1.0.4</string>
+		<string>1.0.5</string>
 		<key>com.codeux.app-extensions.textual-WikiStyleLinkParser</key>
-		<string>1.0.4</string>
+		<string>1.0.5</string>
 	</dict>
 </dict>
 </plist>
