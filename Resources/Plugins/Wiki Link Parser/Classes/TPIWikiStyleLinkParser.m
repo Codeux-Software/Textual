@@ -50,7 +50,7 @@
 @property (nonatomic, copy) NSArray *linkPrefixes;
 @property (nonatomic, strong) IBOutlet NSView *preferencePane;
 @property (nonatomic, strong) IBOutlet NSWindow *rnewConditionWindow;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *rnewConditionLinkPrefixField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *rnewConditionLinkPrefixField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *rnewConditionChannelPopup;
 @property (nonatomic, weak) IBOutlet NSButton *rnewConditionSaveButton;
 @property (nonatomic, weak) IBOutlet NSButton *rnewConditionCancelButton;
@@ -79,15 +79,18 @@
 
 		[TPIBundleFromClass() loadNibNamed:@"TPIWikiStyleLinkParser" owner:self topLevelObjects:nil];
 
-		[self.rnewConditionLinkPrefixField setOnlyShowStatusIfErrorOccurs:YES];
 		[self.rnewConditionLinkPrefixField setStringValueIsInvalidOnEmpty:YES];
 
 		[self.rnewConditionLinkPrefixField setTextDidChangeCallback:self];
 
-		[self.rnewConditionLinkPrefixField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.rnewConditionLinkPrefixField setValidationBlock:^NSString *(NSString *currentValue) {
 			NSURL *URLValue = [NSURL URLWithString:currentValue];
 
-			return (URLValue != nil);
+			if (URLValue == nil) {
+				return TPILocalizedString(@"BasicLanguage[1002]");
+			}
+
+			return nil;
 		}];
 
 		[self updateRemoveConditionButton];
@@ -330,6 +333,10 @@
 
 - (void)saveNewCondition:(id)sender
 {
+	if ([self validateLinkPrefix] == NO) {
+		return;
+	}
+
 	NSMutableArray *linkPrefixes = [self.linkPrefixes mutableCopy];
 
 	NSString *linkPrefix = [self.rnewConditionLinkPrefixField stringValue];
@@ -360,11 +367,22 @@
 
 - (void)updateNewConditionWindowSaveButton:(id)sender
 {
-	BOOL condition1 = [self.rnewConditionLinkPrefixField valueIsValid];
-
 	BOOL condition2 = [[self.rnewConditionChannelPopup selectedItem] isEnabled];
 
-	[self.rnewConditionSaveButton setEnabled:(condition1 && condition2)];
+	[self.rnewConditionSaveButton setEnabled:condition2];
+}
+
+- (BOOL)validateLinkPrefix
+{
+	BOOL condition1 = [self.rnewConditionLinkPrefixField valueIsValid];
+
+	if (condition1 == NO) {
+		[self.rnewConditionLinkPrefixField showValidationErrorPopover];
+
+		return NO;
+	}
+
+	return YES;
 }
 
 #pragma mark -
