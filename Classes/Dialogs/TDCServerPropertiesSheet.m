@@ -36,8 +36,6 @@
  *
  *********************************************************************** */
 
-#warning TODO: Fix server address auto completion only saving what is typed.
-
 #import <SecurityInterface/SFChooseIdentityPanel.h>
 
 #import "NSStringHelper.h"
@@ -169,6 +167,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSArray<IRCHighlightMatchCondition *> *highlightList;
 @property (readonly, copy) NSArray<IRCServer *> *serverList;
 @property (nonatomic, assign) BOOL populatingPrimaryServer;
+@property (nonatomic, assign) BOOL primaryServerIsPredefined;
+@property (nonatomic, copy, nullable) NSString *lastServerAddressValue;
+@property (nonatomic, copy, nullable) IRCServer *previousPrimaryServer;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign) BOOL requestRemovalFromCloudOnClose;
@@ -1143,56 +1144,99 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.serverList = self.serverListArrayController.arrangedObjects;
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj
+- (void)restorePreviousValuesForPrimaryServer
 {
-	NSControl *sender = obj.object;
+	IRCServer *previousServer = self.previousPrimaryServer;
 
-	if (sender == self.serverPasswordTextField) {
-		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	if (previousServer == nil) {
+		return;
 	}
+
+	self.populatingPrimaryServer = YES;
+
+	self.serverPortTextField.integerValue = previousServer.serverPort;
+
+	self.prefersSecuredConnectionCheck.state = previousServer.prefersSecuredConnection;
+
+	self.previousPrimaryServer = nil;
+
+	self.populatingPrimaryServer = NO;
 }
 
-- (void)validatedTextFieldTextDidChange:(id)sender
+- (void)saveCurrentValuesForPrimaryServer
 {
-	[self updateConnectionPage];
-
-	if (sender == self.serverAddressComboBox) {
-		[self populateDefaultsForPreconfiguredNetwork];
-
-		[self rebuildMutableServerEndpointListIfNeeded:sender];
-	} else if (sender == self.serverPortTextField) {
-		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	/* Do not change the previous primary server between predefined servers. */
+	if (self.previousPrimaryServer != nil) {
+		return;
 	}
+
+	IRCServer *server = self.serverList.firstObject;
+
+	if (server) {
+		self.previousPrimaryServer = server;
+
+		return;
+	}
+
+	IRCServerMutable *serverMutable = [IRCServerMutable new];
+
+	serverMutable.serverPort = self.serverPortTextField.integerValue;
+
+	serverMutable.prefersSecuredConnection = (self.prefersSecuredConnectionCheck.state == NSOnState);
+
+	self.previousPrimaryServer = serverMutable;
 }
 
 - (void)populateDefaultsForPreconfiguredNetwork
 {
+	if (self.populatingPrimaryServer) {
+		return;
+	}
+
 	NSString *serverAddress = self.serverAddressComboBox.value;
 
-	IRCNetwork *network = [self.networkList networkNamed:serverAddress];
+	if ([serverAddress isEqualToString:self.lastServerAddressValue]) {
+		return;
+	}
 
-	BOOL networkSetFromServerAddress = YES;
+	self.lastServerAddressValue = serverAddress;
+
+	IRCNetwork *network = [self.networkList networkNamed:serverAddress];
 
 	if (network == nil) {
 		network = [self.networkList networkWithServerAddress:serverAddress];
 	}
 
 	if (network == nil) {
+		[self restorePreviousValuesForPrimaryServer];
+
 		return;
 	}
 
-	/* If the combo box is set to a server address that matches a known
-	 server address, then replace the combox box value with network name. */
-	if (networkSetFromServerAddress) {
-		self.serverAddressComboBox.doNotInformCallbackOfNextChange = YES;
+	self.populatingPrimaryServer = YES;
 
-		self.serverAddressComboBox.stringValue = network.networkName;
+	/* The predefined list in the combo box is only the network name.
+	 IRCNetwork is also capable of matching known server addresses.
+	 If we have a known network but it's not a predefined value,
+	 then it very might be a server address. */
+	/* Let's replace the given input that matches a network with the
+	 network name itself. */
+	if (self.serverAddressComboBox.valueIsPredefined == NO) {
+		NSString *networkName = network.networkName;
+
+		self.serverAddressComboBox.stringValue = networkName;
+
+		self.lastServerAddressValue = networkName;
 	}
 
 	/* Populate other defaults */
+	[self saveCurrentValuesForPrimaryServer];
+
 	self.serverPortTextField.integerValue = network.serverPort;
 
-	self.prefersSecuredConnectionCheck.state = network.prefersSecuredConnection;
+	self.prefersSecuredConnectionCheck.state = (network.prefersSecuredConnection == NSOnState);
+
+	self.populatingPrimaryServer = NO;
 }
 
 - (void)updateChannelListPage
@@ -1276,6 +1320,29 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<IRCServer *> *)serverList
 {
 	return self.serverListArrayController.arrangedObjects;
+}
+
+#pragma mark -
+#pragma mark Delegates
+
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+	NSControl *sender = notification.object;
+
+	if (sender == self.serverPasswordTextField) {
+		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	}
+}
+
+- (void)validatedTextFieldTextDidChange:(id)sender
+{
+	if (sender == self.serverAddressComboBox) {
+		[self populateDefaultsForPreconfiguredNetwork];
+
+		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	} else if (sender == self.serverPortTextField) {
+		[self rebuildMutableServerEndpointListIfNeeded:sender];
+	}
 }
 
 #pragma mark -
