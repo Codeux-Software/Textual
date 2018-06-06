@@ -174,7 +174,6 @@
 		4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229081978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif */; };
 		4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3EC1943A654004CA8BA /* FormattingColor_5.png */; };
 		4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
-		4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */; };
 		4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3F01943A654004CA8BA /* FormattingColor_9.png */; };
 		4C0BA54D1990798800857343 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DD1943A654004CA8BA /* encryptionLockIconDark@2x.tif */; };
 		4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */; };
@@ -692,7 +691,6 @@
 		4C4731AF20C7599800713C91 /* TDCChannelModifyModesSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EFC1AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib */; };
 		4C4731B020C7599800713C91 /* TPWTB_Highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA64E1ABCF36A0083620F /* TPWTB_Highlights.png */; };
 		4C4731B120C7599800713C91 /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
-		4C4731B220C7599800713C91 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */; };
 		4C4731B320C7599800713C91 /* FormattingColor_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3F01943A654004CA8BA /* FormattingColor_9.png */; };
 		4C4731B420C7599800713C91 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DD1943A654004CA8BA /* encryptionLockIconDark@2x.tif */; };
 		4C4731B520C7599800713C91 /* TDCChannelModifyModesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C6C2D20BF85380037C0B8 /* TDCChannelModifyModesSheet.strings */; };
@@ -1996,8 +1994,6 @@
 		4CB229471978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290A1978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf */; };
 		4CB229481978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290C1978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif */; };
 		4CB229491978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290C1978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif */; };
-		4CB2294A1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */; };
-		4CB2294B1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */; };
 		4CB229621978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2291C1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif */; };
 		4CB229631978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2291C1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif */; };
 		4CB229641978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2291D1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif */; };
@@ -3282,7 +3278,6 @@
 		4CB229081978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIconYosemiteLightInactive@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIconYosemiteLightInactive@2x.tif"; sourceTree = "<group>"; };
 		4CB2290A1978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = MainWindowSegmentedControlUserTemplate.pdf; path = "Resources/Images/User Interface/MainWindowSegmentedControlUserTemplate.pdf"; sourceTree = "<group>"; };
 		4CB2290C1978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ErroneousTextFieldValueIndicator.tif; path = "Resources/Images/User Interface/Miscellaneous/ErroneousTextFieldValueIndicator.tif"; sourceTree = "<group>"; };
-		4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ProperlyFormattedTextFieldValueIndicator.tif; path = "Resources/Images/User Interface/Miscellaneous/ProperlyFormattedTextFieldValueIndicator.tif"; sourceTree = "<group>"; };
 		4CB2291C1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = VibrantLightServerListViewPrivateMessageUserIconActive.tif; path = "Resources/Images/User Interface/Server List/Glass/VibrantLightServerListViewPrivateMessageUserIconActive.tif"; sourceTree = "<group>"; };
 		4CB2291D1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif"; path = "Resources/Images/User Interface/Server List/Glass/VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif"; sourceTree = "<group>"; };
 		4CB2291E1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = VibrantLightServerListViewPrivateMessageUserIconInactive.tif; path = "Resources/Images/User Interface/Server List/Glass/VibrantLightServerListViewPrivateMessageUserIconInactive.tif"; sourceTree = "<group>"; };
@@ -4806,7 +4801,6 @@
 			isa = PBXGroup;
 			children = (
 				4CB2290C1978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif */,
-				4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -6439,7 +6433,6 @@
 				4CCFA6761ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CBC76D11CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */,
-				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4CCD93FD1CA7291300335381 /* JavaScript in Resources */,
 				4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */,
 				4C0BA54D1990798800857343 /* encryptionLockIconDark@2x.tif in Resources */,
@@ -6610,7 +6603,6 @@
 				4CF40F401AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib in Resources */,
 				4CCFA6781ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6581ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
-				4CB2294A1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4511943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
 				4C5C6C3120BF85390037C0B8 /* TDCChannelModifyModesSheet.strings in Resources */,
@@ -6789,7 +6781,6 @@
 				4C4731AF20C7599800713C91 /* TDCChannelModifyModesSheet.xib in Resources */,
 				4C4731B020C7599800713C91 /* TPWTB_Highlights.png in Resources */,
 				4C4731B120C7599800713C91 /* TPWTB_Addons.png in Resources */,
-				4C4731B220C7599800713C91 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C4731B320C7599800713C91 /* FormattingColor_9.png in Resources */,
 				4C4731B420C7599800713C91 /* encryptionLockIconDark@2x.tif in Resources */,
 				4C4731B520C7599800713C91 /* TDCChannelModifyModesSheet.strings in Resources */,
@@ -6967,7 +6958,6 @@
 				4CCFA6771ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6571ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CBC76C61CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */,
-				4CB2294B1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F4761943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4521943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67B1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
