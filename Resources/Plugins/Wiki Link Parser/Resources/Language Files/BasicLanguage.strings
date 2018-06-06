@@ -35,5 +35,8 @@
  *
  *********************************************************************** */
 
+/* Next unused key: 1004 */
+
 "BasicLanguage[1000]" = "Wiki-style Link Parser";
 "BasicLanguage[1001]" = "Channel Does Not Exist";
+"BasicLanguage[1002]" = "Please enter a properly formatted URL.";
