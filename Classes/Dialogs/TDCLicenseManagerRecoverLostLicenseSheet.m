@@ -35,14 +35,17 @@
  *
  *********************************************************************** */
 
-#import "TVCTextFieldWithValueValidation.h"
+#import "TLOLanguagePreferences.h"
+#import "TVCValidatedTextField.h"
 #import "TDCLicenseManagerRecoverLostLicenseSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#define _licenseOwnerContactAddressMaximumLength			2000
+
 @interface TDCLicenseManagerRecoverLostLicenseSheet ()
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *contactAddressTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *contactAddressTextField;
 @end
 
 @implementation TDCLicenseManagerRecoverLostLicenseSheet
@@ -68,27 +71,41 @@ NS_ASSUME_NONNULL_BEGIN
 	self.contactAddressTextField.stringValueIsInvalidOnEmpty = YES;
 	self.contactAddressTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.contactAddressTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.contactAddressTextField.textDidChangeCallback = self;
 
 	self.contactAddressTextField.stringValue = [XRAddressBook myEmailAddress];
 
-	[self startSheet];
-}
+	self.contactAddressTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
+			return TXTLS(@"TDCLicenseManagerRecoverLostLicenseSheet[0001]");
+		}
 
-- (void)validatedTextFieldTextDidChange:(id)sender
-{
-	self.okButton.enabled = self.contactAddressTextField.valueIsValid;
+		if (currentValue.length > _licenseOwnerContactAddressMaximumLength) {
+			return TXTLS(@"TDCLicenseManagerRecoverLostLicenseSheet[0002]");
+		}
+
+		return nil;
+	};
+
+	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	NSString *contactAddress = self.contactAddressTextField.value;
 
 	[self.delegate licenseManagerRecoverLostLicenseSheet:self onOk:contactAddress];
 
 	[super ok:sender];
+}
+
+- (BOOL)okOrError
+{
+	return [self okOrErrorForTextField:self.contactAddressTextField];
 }
 
 #pragma mark -

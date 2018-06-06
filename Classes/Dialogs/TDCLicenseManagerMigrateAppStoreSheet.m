@@ -39,7 +39,7 @@
 
 #import "TPCPathInfo.h"
 #import "TLOLanguagePreferences.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TVCValidatedTextField.h"
 #import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -51,12 +51,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#define _licenseOwnerNameMaximumLength						125
-#define _licenseOwnerContactAddressMaximumLength			125
+#define _licenseOwnerNameMaximumLength						255
+#define _licenseOwnerContactAddressMaximumLength			2000
 
 @interface TDCLicenseManagerMigrateAppStoreSheet ()
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *licenseOwnerNameTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *licenseOwnerContactAddressTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *licenseOwnerNameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *licenseOwnerContactAddressTextField;
 @property (nonatomic, copy) NSString *cachedReceiptData;
 @end
 
@@ -87,38 +87,44 @@ NS_ASSUME_NONNULL_BEGIN
 	self.licenseOwnerContactAddressTextField.stringValueIsInvalidOnEmpty = YES;
 	self.licenseOwnerContactAddressTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.licenseOwnerContactAddressTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.licenseOwnerContactAddressTextField.textDidChangeCallback = self;
 
 	self.licenseOwnerContactAddressTextField.stringValue = [XRAddressBook myEmailAddress];
 
-	self.licenseOwnerContactAddressTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return (currentValue.length < _licenseOwnerContactAddressMaximumLength);
+	self.licenseOwnerContactAddressTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
+			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0003]");
+		}
+
+		if (currentValue.length > _licenseOwnerContactAddressMaximumLength) {
+			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0004]");
+		}
+
+		return nil;
 	};
 
 	/* First & last name text field configuration */
 	self.licenseOwnerNameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.licenseOwnerNameTextField.stringValueUsesOnlyFirstToken = NO;
 
-	self.licenseOwnerNameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.licenseOwnerNameTextField.textDidChangeCallback = self;
 
 	self.licenseOwnerNameTextField.stringValue = [XRAddressBook myName];
 
-	self.licenseOwnerNameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return (currentValue.length < _licenseOwnerNameMaximumLength);
+	self.licenseOwnerNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
+			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0001]");
+		}
+
+		if (currentValue.length > _licenseOwnerNameMaximumLength) {
+			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0002]");
+		}
+
+		return nil;
 	};
 
 	/* Begin sheet... */
 	[self startSheet];
-}
-
-- (void)validatedTextFieldTextDidChange:(id)sender
-{
-	self.okButton.enabled = (self.licenseOwnerNameTextField.valueIsValid &&
-							 self.licenseOwnerContactAddressTextField.valueIsValid);
 }
 
 - (void)start
@@ -128,6 +134,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	NSString *receiptData = self.cachedReceiptData;
 
 	NSString *licenseOwnerName = self.licenseOwnerNameTextField.value;
@@ -140,6 +150,19 @@ NS_ASSUME_NONNULL_BEGIN
 						   licenseOwnerContactAddress:licenseOwnerContactAddress];
 
 	[super ok:sender];
+}
+
+- (BOOL)okOrError
+{
+	if ([self okOrErrorForTextField:self.licenseOwnerNameTextField] == NO) {
+		return NO;
+	}
+
+	if ([self okOrErrorForTextField:self.licenseOwnerContactAddressTextField] == NO) {
+		return NO;
+	}
+
+	return YES;
 }
 
 #pragma mark -

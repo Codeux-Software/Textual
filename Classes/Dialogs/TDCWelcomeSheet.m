@@ -41,10 +41,11 @@
 #import "IRCClientConfig.h"
 #import "IRCNetworkList.h"
 #import "IRCServer.h"
+#import "TLOLanguagePreferences.h"
 #import "TPCPreferencesLocal.h"
 #import "TVCBasicTableView.h"
-#import "TVCComboBoxWithValueValidation.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TVCValidatedComboBox.h"
+#import "TVCValidatedTextField.h"
 #import "TDCWelcomeSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -53,8 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *autoConnectCheck;
 @property (nonatomic, weak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteChannelButton;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
-@property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *nicknameTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedComboBox *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray<NSString *> *channelList;
 @property (nonatomic, strong) IRCNetworkList *networkList;
@@ -95,27 +96,31 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Nickname */
 	self.nicknameTextField.textDidChangeCallback = self;
 
-	self.nicknameTextField.onlyShowStatusIfErrorOccurs = YES;
-
 	self.nicknameTextField.stringValueIsInvalidOnEmpty = YES;
 	self.nicknameTextField.stringValueIsTrimmed = YES;
 	self.nicknameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	self.nicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isHostmaskNickname;
+	self.nicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isHostmaskNickname == NO) {
+			return TXTLS(@"TDCWelcomeSheet[0002]");
+		}
+
+		return nil;
 	};
 
 	/* Server address */
 	self.serverAddressComboBox.textDidChangeCallback = self;
 
-	self.serverAddressComboBox.onlyShowStatusIfErrorOccurs = YES;
-
 	self.serverAddressComboBox.stringValueIsInvalidOnEmpty = YES;
 	self.serverAddressComboBox.stringValueIsTrimmed = YES;
 	self.serverAddressComboBox.stringValueUsesOnlyFirstToken = YES;
 
-	self.serverAddressComboBox.validationBlock = ^BOOL(NSString *currentValue) {
-		return currentValue.isValidInternetAddress;
+	self.serverAddressComboBox.validationBlock = ^NSString *(NSString *currentValue) {
+		if (currentValue.isValidInternetAddress == NO) {
+			return TXTLS(@"TDCWelcomeSheet[0001]");
+		}
+
+		return nil;
 	};
 
 	/* Setup others */
@@ -124,8 +129,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.channelTable.textEditingDelegate = self;
 
 	[self updateDeleteChannelButton];
-
-	[self updateOkButton];
 
 	self.nicknameTextField.stringValue = [TPCPreferences defaultNickname];
 }
@@ -145,6 +148,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	IRCClientConfigMutable *config = nil;
 
 	NSString *serverAddress = self.serverAddressComboBox.value;
@@ -210,6 +217,19 @@ NS_ASSUME_NONNULL_BEGIN
 	[super ok:nil];
 }
 
+- (BOOL)okOrError
+{
+	if ([self okOrErrorForComboBox:self.serverAddressComboBox] == NO) {
+		return NO;
+	}
+
+	if ([self okOrErrorForTextField:self.nicknameTextField] == NO) {
+		return NO;
+	}
+
+	return YES;
+}
+
 - (void)onAddChannel:(id)sender
 {
 	[self.channelList addObject:@""];
@@ -246,17 +266,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self updateDeleteChannelButton];
-}
-
-- (void)validatedTextFieldTextDidChange:(id)sender
-{
-	[self updateOkButton];
-}
-
-- (void)updateOkButton
-{
-	self.okButton.enabled = (self.nicknameTextField.valueIsValid &&
-							 self.serverAddressComboBox.valueIsValid);
 }
 
 - (void)updateDeleteChannelButton

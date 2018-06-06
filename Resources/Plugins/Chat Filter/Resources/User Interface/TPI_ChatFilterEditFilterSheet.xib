@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,6 +10,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterEditFilterSheet">
             <connections>
                 <outlet property="cancelButton" destination="dLf-X5-R1o" id="fzG-QP-wnn"/>
+                <outlet property="contentViewTabView" destination="T01-Nx-QhV" id="Ele-u7-gVH"/>
                 <outlet property="filterActionFloodControlIntervalTextField" destination="jAQ-A0-0fz" id="YzK-Du-rLx"/>
                 <outlet property="filterActionTokenChannelName" destination="xNC-RA-OVo" id="Ond-3l-FcE"/>
                 <outlet property="filterActionTokenField" destination="wGy-N2-oQL" id="iLb-xy-pZz"/>
@@ -89,7 +90,7 @@ Gw
                         <rect key="frame" x="13" y="51" width="563" height="506"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Filter" identifier="1" id="Rvw-xI-QhN">
+                            <tabViewItem label="Filter" identifier="0" id="Rvw-xI-QhN">
                                 <view key="view" id="8Ux-sm-Alm">
                                     <rect key="frame" x="10" y="33" width="543" height="460"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -348,7 +349,7 @@ Gw
                                 </view>
                                 <accessibility description="General"/>
                             </tabViewItem>
-                            <tabViewItem label="Channels" identifier="2" id="8ZK-wU-gg2">
+                            <tabViewItem label="Channels" identifier="1" id="8ZK-wU-gg2">
                                 <view key="view" id="oIh-tI-HKB">
                                     <rect key="frame" x="10" y="33" width="543" height="460"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -455,7 +456,7 @@ Gw
                                 </view>
                                 <accessibility description="Channels"/>
                             </tabViewItem>
-                            <tabViewItem label="Events" identifier="" id="Wmc-xM-y3O">
+                            <tabViewItem label="Events" identifier="2" id="Wmc-xM-y3O">
                                 <view key="view" id="g73-Zu-4Qw">
                                     <rect key="frame" x="10" y="33" width="543" height="460"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -483,12 +484,12 @@ Gw
                                                 <constraint firstAttribute="width" constant="460" id="vn4-Df-jhz"/>
                                             </constraints>
                                         </box>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qe2-po-Vne" customClass="TVCTextFieldWithValueValidation">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qe2-po-Vne" customClass="TVCValidatedTextField">
                                             <rect key="frame" x="51" y="127" width="444" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="iMP-AJ-ctu"/>
                                             </constraints>
-                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="INVITE, 001, 002, 003, …" id="xLg-Zy-ggt" customClass="TVCTextFieldWithValueValidationCell">
+                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="INVITE, 001, 002, 003, …" id="xLg-Zy-ggt" customClass="TVCValidatedTextFieldCell">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -685,7 +686,7 @@ Gw
                                 </view>
                                 <accessibility description="Events"/>
                             </tabViewItem>
-                            <tabViewItem label="Sender" identifier="" id="zzu-Mn-V6O">
+                            <tabViewItem label="Sender" identifier="3" id="zzu-Mn-V6O">
                                 <view key="view" id="Sbg-tS-i4H">
                                     <rect key="frame" x="10" y="33" width="543" height="460"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -783,7 +784,7 @@ Gw
                                 </view>
                                 <accessibility description="Sender"/>
                             </tabViewItem>
-                            <tabViewItem label="Notes" identifier="" id="G3J-4c-NKh">
+                            <tabViewItem label="Notes" identifier="4" id="G3J-4c-NKh">
                                 <view key="view" id="EWz-Am-gtB">
                                     <rect key="frame" x="10" y="33" width="543" height="460"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -825,7 +826,7 @@ Gw
                                 </view>
                                 <accessibility description="Notes"/>
                             </tabViewItem>
-                            <tabViewItem label="Advanced" identifier="" id="qOp-7g-85h">
+                            <tabViewItem label="Advanced" identifier="5" id="qOp-7g-85h">
                                 <view key="view" id="hsJ-a5-uAO">
                                     <rect key="frame" x="10" y="33" width="543" height="460"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -875,12 +876,12 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="muN-88-pns" customClass="TVCTextFieldWithValueValidation">
+                                        <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="muN-88-pns" customClass="TVCValidatedTextField">
                                             <rect key="frame" x="145" y="335" width="301" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="22" id="f6r-Lf-gam"/>
                                             </constraints>
-                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" id="Vqv-i7-xCm" customClass="TVCTextFieldWithValueValidationCell">
+                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" id="Vqv-i7-xCm" customClass="TVCValidatedTextFieldCell">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -995,7 +996,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="rly-7V-5kS"/>
             </connections>
-            <point key="canvasLocation" x="-232" y="218.5"/>
+            <point key="canvasLocation" x="27" y="229"/>
         </window>
         <customObject id="TdM-lk-raw" customClass="TVCChannelSelectionViewController"/>
         <numberFormatter formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="vGQ-Aw-wDg" customClass="TPI_NumberOnlyTextFieldFormatter">

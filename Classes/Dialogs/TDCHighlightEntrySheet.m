@@ -39,7 +39,7 @@
 #import "NSObjectHelperPrivate.h"
 #import "IRCChannelConfig.h"
 #import "IRCHighlightMatchCondition.h"
-#import "TVCTextFieldWithValueValidation.h"
+#import "TVCValidatedTextField.h"
 #import "TDCHighlightEntrySheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDCHighlightEntrySheet ()
 @property (nonatomic, strong) IRCHighlightMatchConditionMutable *config;
 @property (nonatomic, copy) NSArray<IRCChannelConfig *> *channelList;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
+@property (nonatomic, weak) IBOutlet TVCValidatedTextField *matchKeywordTextField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *matchTypePopupButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *matchChannelPopupButton;
 @end
@@ -78,8 +78,6 @@ ClassWithDesignatedInitializerInitMethod
 - (void)prepareInitialState
 {
 	(void)[RZMainBundle() loadNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
-
-	self.matchKeywordTextField.onlyShowStatusIfErrorOccurs = YES;
 
 	self.matchKeywordTextField.stringValueUsesOnlyFirstToken = NO;
 	self.matchKeywordTextField.stringValueIsInvalidOnEmpty = YES;
@@ -132,6 +130,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)ok:(id)sender
 {
+	if ([self okOrError] == NO) {
+		return;
+	}
+
 	self.config.matchIsExcluded = (self.matchTypePopupButton.selectedTag == 2);
 
 	self.config.matchKeyword = self.matchKeywordTextField.value;
@@ -155,14 +157,9 @@ ClassWithDesignatedInitializerInitMethod
 	[super ok:sender];
 }
 
-- (void)validatedTextFieldTextDidChange:(id)sender
+- (BOOL)okOrError
 {
-	[self updateSaveButton];
-}
-
-- (void)updateSaveButton
-{
-	self.okButton.enabled = self.matchKeywordTextField.valueIsValid;
+	return [self okOrErrorForTextField:self.matchKeywordTextField];
 }
 
 #pragma mark -

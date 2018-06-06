@@ -35,6 +35,8 @@
  *
  *********************************************************************** */
 
+/* Next unused key: 1014 */
+
 "TPI_ChatFilterEditFilterSheet[0001]" = "Channel Name";
 "TPI_ChatFilterEditFilterSheet[0002]" = "My Nickname";
 "TPI_ChatFilterEditFilterSheet[0003]" = "Network Name";
@@ -54,3 +56,8 @@
 "TPI_ChatFilterEditFilterSheet[0010][07]" = "Parameter #7";
 "TPI_ChatFilterEditFilterSheet[0010][08]" = "Parameter #8";
 "TPI_ChatFilterEditFilterSheet[0010][09]" = "Parameter #9";
+
+"TPI_ChatFilterEditFilterSheet[0011]" = "Please enter a shorter destination";
+"TPI_ChatFilterEditFilterSheet[0012]" = "Please enter a properly formatted destination.\n\nAccepted characters: a-z, A-Z, 0-9, dashes (-), underscores (_), and spaces.";
+
+"TPI_ChatFilterEditFilterSheet[0013]" = "Please enter a properly formatted list of commands.\n\n• Commands must be a comma (,) separated list.\n• Commands must only contain the characters: a-z, A-Z, 0-9\n• Numerics must be whole numbers that are greater than zero (0) and less than or equal to 999.";
