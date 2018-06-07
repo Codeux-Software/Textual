@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		IRCChannel *channel = (IRCChannel *)cellItem;
 
-		BOOL isInverted = [TPCPreferences invertSidebarColors];
+		BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
 
 		NSImage *icon = nil;
 
@@ -274,7 +274,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		IRCChannel *channel = (IRCChannel *)cellItem;
 
-		BOOL isInverted = [TPCPreferences invertSidebarColors];
+		BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
 
 		NSImage *icon = nil;
 
@@ -860,7 +860,7 @@ NS_ASSUME_NONNULL_BEGIN
 		 @"isActiveWindow"		: @(mainWindow.isActiveForDrawing),
 		 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
 		 @"isGroupItem"			: @([self isKindOfClass:[TVCServerListCellGroupItem class]]),
-		 @"isInverted"			: @([TPCPreferences invertSidebarColors]),
+		 @"isInverted"			: @(mainWindow.usingDarkAppearance),
 		 @"isSelected"			: @([serverList isRowSelected:rowIndex]),
 		 @"isSelectedFrontmost"	: @([mainWindow isItemSelected:cellItem]),
 		 @"rowIndex"			: @(rowIndex)
@@ -898,7 +898,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 		{
-			if ([TPCPreferences invertSidebarColors]) {
+			if (self.mainWindow.usingDarkAppearance) {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 			} else {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
@@ -906,7 +906,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		else
 		{
-			if ([TPCPreferences invertSidebarColors]) {
+			if (self.mainWindow.usingDarkAppearance) {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 			} else {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
@@ -1026,7 +1026,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)fontSmoothingBackgroundColor
 {
-	if ([TPCPreferences invertSidebarColors]) {
+	if (self.mainWindow.usingDarkAppearance) {
 		return [NSColor grayColor];
 	} else {
 		return [NSColor whiteColor];

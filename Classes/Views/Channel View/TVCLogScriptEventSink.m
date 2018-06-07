@@ -53,6 +53,7 @@
 #import "IRCChannel.h"
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 #import "IRCWorld.h"
+#import "TVCMainWindow.h"
 #import "TVCLogControllerPrivate.h"
 #import "TVCLogPolicyPrivate.h"
 #import "TVCLogRenderer.h"
@@ -1483,7 +1484,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
 {
-	context.completionBlock( @([TPCPreferences invertSidebarColors]) );
+	TVCMainWindow *attachedWindow = context.viewController.attachedWindow;
+
+	context.completionBlock( @(attachedWindow.usingDarkAppearance) );
 }
 
 - (void)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context

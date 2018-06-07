@@ -1541,7 +1541,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
 
-	templateTokens[@"sidebarInversionIsEnabled"] = @([TPCPreferences invertSidebarColors]);
+	templateTokens[@"sidebarInversionIsEnabled"] = @(self.attachedWindow.usingDarkAppearance);
 
 	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.associatedClient.config.primaryEncoding];
 

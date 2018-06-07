@@ -105,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateBackgroundColorOnYosemite
 {
-	if (self.mainWindow.usingVibrantDarkAppearance) {
+	if (self.mainWindow.usingDarkAppearance) {
 		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 	} else {
 		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
@@ -733,7 +733,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-	return self.mainWindow.usingVibrantDarkAppearance;
+	return self.mainWindow.usingDarkAppearance;
 }
 
 - (BOOL)windowIsActive
@@ -804,7 +804,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	if (mainWindow.isUsingVibrantDarkAppearance == NO) {
+	if (mainWindow.isUsingDarkAppearance == NO) {
 		return;
 	}
 
@@ -831,7 +831,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)backgroundColor
 {
-	if (self.mainWindow.usingVibrantDarkAppearance) {
+	if (self.mainWindow.usingDarkAppearance) {
 		return [self vibrantDarkBackgroundColor];
 	} else {
 		return [self vibrantLightBackgroundColor];
@@ -840,7 +840,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)dividerColor
 {
-	if (self.mainWindow.usingVibrantDarkAppearance) {
+	if (self.mainWindow.usingDarkAppearance) {
 		return [self vibrantDarkDividerColor];
 	} else {
 		return [self vibrantLightDividerColor];

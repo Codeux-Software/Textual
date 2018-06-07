@@ -115,6 +115,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @property (nonatomic, assign, readwrite) BOOL reloadingTheme;
 @property (nonatomic, assign, readwrite) BOOL channelSpotlightPanelAttached;
+@property (nonatomic, assign, readwrite, getter=isUsingDarkAppearance) BOOL usingDarkAppearance;
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 @property (nonatomic, assign) BOOL disabledByLackOfInAppPurchase;
@@ -287,10 +288,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self updateBackgroundColor];
 }
 
+- (BOOL)isUsingVibrantDarkAppearance
+{
+	return self.usingDarkAppearance;
+}
+
 - (void)updateBackgroundColorOnYosemite
 {
-	self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
-
 	if (themeSettings().underlyingWindowColorIsDark) {
 		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 	} else {
@@ -302,6 +306,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)updateBackgroundColor
 {
+	self.usingDarkAppearance = [TPCPreferences invertSidebarColors];
+
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateBackgroundColorOnYosemite];
 	}

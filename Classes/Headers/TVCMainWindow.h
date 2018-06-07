@@ -111,7 +111,8 @@ TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
-@property (getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO
+@property (getter=isUsingDarkAppearance, readonly) BOOL usingDarkAppearance;
+@property (getter=isUsingVibrantDarkAppearance, readonly) BOOL usingVibrantDarkAppearance TEXTUAL_DEPRECATED("Use -usingDarkAppearance instead");
 
 @property (readonly) double textSizeMultiplier;
 

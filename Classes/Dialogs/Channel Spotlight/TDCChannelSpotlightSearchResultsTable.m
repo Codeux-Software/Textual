@@ -40,6 +40,7 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "TDCChannelSpotlightControllerInternal.h"
+#import "TDCChannelSpotlightControllerPanelPrivate.h"
 #import "TDCChannelSpotlightSearchResultPrivate.h"
 #import "TDCChannelSpotlightSearchResultsTablePrivate.h"
 
@@ -258,7 +259,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)appearsVibrantDark
 {
-	return [TDCChannelSpotlightController appearsVibrantDark];
+	TDCChannelSpotlightControllerPanel *panel = (TDCChannelSpotlightControllerPanel *)self.window;
+
+	return panel.usingDarkAppearance;
 }
 
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle

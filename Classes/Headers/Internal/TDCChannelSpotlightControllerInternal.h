@@ -55,8 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResultsFiltered;
 @property (readonly) NSUInteger searchResultsCount;
 @property (nonatomic, strong) id mouseEventMonitor;
-
-+ (BOOL)appearsVibrantDark;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return TPILocalizedString(@"BasicLanguage[1033]",
 			  themeName,
 			  storageLocationLabel,
-			  StringFromBOOL([TPCPreferences invertSidebarColors]),
+			  StringFromBOOL(mainWindow().usingDarkAppearance),
 			  StringFromBOOL([TPCPreferences webKit2Enabled]));
 }
 
