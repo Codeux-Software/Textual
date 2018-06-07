@@ -141,7 +141,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSAppearance *appearance = nil;
 
-	if ([TPCPreferences invertSidebarColors]) {
+	if ([self appearsVibrantDark]) {
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 	} else {
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
@@ -159,7 +159,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)updateControlsAppearance
 {
-	if ([self.class appearsVibrantDark]) {
+	if ([self appearsVibrantDark]) {
 		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantDark];
 	} else {
 		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantLight];
@@ -209,9 +209,9 @@ ClassWithDesignatedInitializerInitMethod
 	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
-+ (BOOL)appearsVibrantDark
+- (BOOL)appearsVibrantDark
 {
-	return [TPCPreferences invertSidebarColors];
+	return ((TDCChannelSpotlightControllerPanel *)self.window).usingDarkAppearance;
 }
 
 #pragma mark -

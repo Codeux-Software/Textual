@@ -647,7 +647,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return @{
 		 @"isActiveWindow"		: @(mainWindow.isActiveForDrawing),
 		 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
-		 @"isInverted"			: @([TPCPreferences invertSidebarColors]),
+		 @"isInverted"			: @(mainWindow.usingDarkAppearance),
 		 @"isRetina"			: @(mainWindow.runningInHighResolutionMode),
 		 @"isSelected"			: @([memberList isRowSelected:rowIndex]),
 		 @"rowIndex"			: @(rowIndex)
@@ -674,7 +674,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 		{
-			if ([TPCPreferences invertSidebarColors]) {
+			if (self.mainWindow.usingDarkAppearance) {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 			} else {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
@@ -682,7 +682,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		else
 		{
-			if ([TPCPreferences invertSidebarColors]) {
+			if (self.mainWindow.usingDarkAppearance) {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 			} else {
 				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
@@ -767,7 +767,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)fontSmoothingBackgroundColor
 {
-	if ([TPCPreferences invertSidebarColors]) {
+	if (self.mainWindow.usingDarkAppearance) {
 		return [NSColor grayColor];
 	} else {
 		return [NSColor whiteColor];

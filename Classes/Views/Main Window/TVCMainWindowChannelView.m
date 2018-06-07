@@ -291,7 +291,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 {
 	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
 
-	if ([TPCPreferences invertSidebarColors]) {
+	if (self.mainWindow.usingDarkAppearance) {
 		dividerColor = dividerColor.invertedColor;
 	}
 

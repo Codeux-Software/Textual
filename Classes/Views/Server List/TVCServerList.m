@@ -228,7 +228,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
 	{
-		if ([TPCPreferences invertSidebarColors]) {
+		if (self.mainWindow.usingDarkAppearance) {
 			newObjects = [TVCServerListDarkYosemiteUserInterface class];
 		} else {
 			newObjects = [TVCServerListLightYosemiteUserInterface class];
@@ -236,7 +236,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	}
 	else
 	{
-		if ([TPCPreferences invertSidebarColors]) {
+		if (self.mainWindow.usingDarkAppearance) {
 			newObjects = [TVCServerListMavericksDarkUserInterface class];
 		} else {
 			newObjects = [TVCServerListMavericksLightUserInterface class];
@@ -250,7 +250,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 {
 	NSAppearance *appearance = nil;
 
-	if ([TPCPreferences invertSidebarColors]) {
+	if (self.mainWindow.usingDarkAppearance) {
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 	} else {
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
@@ -290,7 +290,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	[self reloadUserInterfaceObjects];
 
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
-		if ([TPCPreferences invertSidebarColors]) {
+		if (self.mainWindow.usingDarkAppearance) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;

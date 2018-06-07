@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "TVCMainWindow.h"
 #import "TDCChannelSpotlightControllerPanelPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -80,6 +81,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)canBecomeMainWindow
 {
 	return YES;
+}
+
+- (BOOL)isUsingDarkAppearance
+{
+	return ((TVCMainWindow *)self.parentWindow).usingDarkAppearance;
 }
 
 @end
