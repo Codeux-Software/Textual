@@ -839,6 +839,7 @@ BOOL TLOLicenseManagerLicenseKeyBlacklisted(NSString *licenseKey)
 			@"cheerful-turquoise-zebra-81864329409734131515",
 			@"many-wavy-fly-7043700524134077492967431288170",
 			@"helpful-jade-quelea-7403506199409693779877124",
+			@"obnoxious-onyx-bear-9755065646001620521415702",
 		];
 	}
 
