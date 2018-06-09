@@ -903,10 +903,12 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.selected = selected;
 
-	[self postSelectionChangeNeedsDisplay];
+	[self modifySelectionHighlightStyle];
+
+	[self setNeedsDisplayOnChild];
 }
 
-- (void)postSelectionChangeNeedsDisplay
+- (void)modifySelectionHighlightStyle
 {
 	if (self.disableQuirks) {
 		return;
@@ -924,8 +926,6 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 	}
-
-	[self setNeedsDisplayOnChild];
 }
 
 - (void)setNeedsDisplayOnChild
