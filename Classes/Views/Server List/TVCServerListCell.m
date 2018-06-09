@@ -43,8 +43,8 @@
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "TVCMainWindow.h"
+#import "TVCServerListAppearancePrivate.h"
 #import "TVCServerListPrivate.h"
-#import "TVCServerListSharedUserInterfacePrivate.h"
 #import "TVCServerListCellPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCServerListRowCell ()
 @property (nonatomic, weak) __kindof TVCServerListCell *childCell;
 @property (readonly) BOOL isGroupItem;
+@property (nonatomic, assign) BOOL disableQuirks;
 @end
 
 @interface TVCServerListCell ()
@@ -83,25 +84,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)tx_updateConstraints
 {
-	id interfaceObjects = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
-		[self updateConstraintsForYosemite:interfaceObjects];
+	if (appearance.isModernAppearance) {
+		[self updateConstraintsForYosemite:appearance];
 	}
 }
 
-- (void)updateConstraintsForYosemite:(id)interfaceObjects
+- (void)updateConstraintsForYosemite:(TVCServerListAppearance *)appearance
 {
 	NSDictionary *drawingContext = self.drawingContext;
 
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 
 	if (isGroupItem) {
-		self.textFieldTopConstraint.constant = [interfaceObjects serverCellTextTopOffset];
+		self.textFieldTopConstraint.constant = appearance.serverTopOffset;
 	} else {
-		self.textFieldTopConstraint.constant = [interfaceObjects channelCellTextTopOffset];
+		self.textFieldTopConstraint.constant = appearance.channelTopOffset;
 
-		self.messageCountBadgeTopConstraint.constant = [interfaceObjects messageCountBadgeTopOffset];
+		self.messageCountBadgeTopConstraint.constant = appearance.unreadBadgeTopOffset;
 	}
 }
 
@@ -122,19 +123,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateDrawing
 {
-	id interfaceObjects = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
-	[self updateDrawing:interfaceObjects];
+	[self updateDrawing:appearance];
 }
 
-- (void)updateDrawing:(id)interfaceObjects
+- (void)updateDrawing:(TVCServerListAppearance *)appearance
 {
 	[self updateTextFieldValue];
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
-		[self updateDrawingForYosemite:interfaceObjects];
+	if (appearance.isModernAppearance) {
+		[self updateDrawingForYosemite:appearance];
 	} else {
-		[self updateDrawingForMavericks:interfaceObjects];
+		[self updateDrawingForMavericks:appearance];
 	}
 
 	[self populateAccessibilityDescriptions];
@@ -147,29 +148,31 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 
+	NSTextFieldCell *textFieldCell = self.cellTextField.cell;
+
 	IRCTreeItem *cellItem = self.cellItem;
+
+	NSString *cellItemLabel = cellItem.label;
 
 	if (isGroupItem) {
 		if (isActive) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][1]", cellItem.label) forObject:self.cellTextField.cell];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][1]", cellItemLabel) forObject:textFieldCell];
 		} else {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", cellItem.label) forObject:self.cellTextField.cell];
-		}
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", cellItemLabel) forObject:textFieldCell];
+		} // isActive
 	} else {
-		IRCChannel *channel = (IRCChannel *)cellItem;
-
-		if (channel.isChannel == NO) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", channel.label) forObject:self.cellTextField.cell];
+		if (((IRCChannel *)cellItem).isChannel == NO) {
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", cellItemLabel) forObject:textFieldCell];
 		} else {
 			if (isActive) {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", channel.label) forObject:self.cellTextField.cell];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", cellItemLabel) forObject:textFieldCell];
 			} else {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", channel.label) forObject:self.cellTextField.cell];
-			}
-		}
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", cellItemLabel) forObject:textFieldCell];
+			} // isActive
+		} // isChannel
 
 		[XRAccessibility setAccessibilityLabel:nil forObject:self.imageView.cell];
-	}
+	} // isGroupItem
 }
 
 - (void)updateTextFieldValue
@@ -187,7 +190,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)updateDrawingForYosemite:(id)interfaceObjects
+- (void)updateDrawingForYosemite:(TVCServerListAppearance *)appearance
 {
 	NSDictionary *drawingContext = self.drawingContext;
 
@@ -201,71 +204,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 		IRCChannel *channel = (IRCChannel *)cellItem;
 
-		BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
+		NSString *iconName = nil;
 
-		NSImage *icon = nil;
+		BOOL iconIsTemplate = NO;
 
-		BOOL iconIsTemplate = (isInverted == NO);
-
-		if (channel.isChannel == NO) {
-			NSString *queryIcon = [interfaceObjects privateMessageStatusIconFilename:isActive];
-
-			icon = [NSImage imageNamed:queryIcon];
+		if (channel.isChannel) {
+			iconName = [appearance statusIconForActiveChannel:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
 		} else {
-			/* When the window is not in focus, when this item is selected, and when we are not
-			 using vibrant dark mode; the outline view does not turn our icon to a light variant
-			 like it would do if the window was in focus and used as a template. To workaround
-			 this oddity that Apple does, we fudge the icon by using another variant of it. */
-			if (isActiveWindow == NO) {
-				if (isInverted == NO) {
-					if (isSelected) {
-						iconIsTemplate = NO;
+			iconName = [appearance statusIconForActiveQuery:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
+		} // isChannel
 
-						if (isActive) {
-							icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
-						} else {
-							icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
-						}
-					}
-				}
-			}
-
-			if (icon == nil) {
-				if (isActive) {
-					if (isInverted) {
-						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
-					} else {
-						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightActive"];
-					}
-				} else {
-					if (isInverted) {
-						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
-					} else {
-						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightInactive"];
-					}
-				}
-			}
-		}
+		NSImage *icon = [NSImage imageNamed:iconName];
 
 		icon.template = iconIsTemplate;
 
 		self.imageView.image = icon;
 	}
 
-	NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:interfaceObjects inContext:drawingContext];
+	NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:appearance inContext:drawingContext];
 
 	self.cellTextField.attributedStringValue = newValue;
 
 	if (isGroupItem == NO) {
-		[self populateMessageCountBadge:interfaceObjects inContext:drawingContext];
+		[self populateMessageCountBadge:appearance inContext:drawingContext];
 	}
 }
 
-- (void)updateDrawingForMavericks:(id)interfaceObjects
+- (void)updateDrawingForMavericks:(TVCServerListAppearance *)appearance
 {
 	NSDictionary *drawingContext = self.drawingContext;
 
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
+	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 
@@ -274,46 +244,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 		IRCChannel *channel = (IRCChannel *)cellItem;
 
-		BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
+		NSString *iconName = nil;
 
-		NSImage *icon = nil;
+		BOOL iconIsTemplate = NO;
 
-		if (channel.isChannel == NO) {
-			NSString *queryIcon = [interfaceObjects privateMessageStatusIconFilename:isActive selected:isSelected];
-
-			icon = [NSImage imageNamed:queryIcon];
+		if (channel.isChannel) {
+			iconName = [appearance statusIconForActiveChannel:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
 		} else {
-			if (isActive) {
-				if (isInverted) {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkActive"];
-				} else {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightActive"];
-				}
-			} else {
-				if (isInverted) {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkInactive"];
-				} else {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightInactive"];
-				}
-			}
-		}
+			iconName = [appearance statusIconForActiveQuery:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
+		} // isChannel
+
+		NSImage *icon = [NSImage imageNamed:iconName];
+
+		icon.template = iconIsTemplate;
 
 		self.imageView.image = icon;
 	}
 
-	NSAttributedString *newValue = [self attributedTextFieldValueForMavericks:interfaceObjects inContext:drawingContext];
+	NSAttributedString *newValue = [self attributedTextFieldValueForMavericks:appearance inContext:drawingContext];
 
 	self.cellTextField.attributedStringValue = newValue;
 
 	if (isGroupItem == NO) {
-		[self populateMessageCountBadge:interfaceObjects inContext:drawingContext];
+		[self populateMessageCountBadge:appearance inContext:drawingContext];
 	}
 }
 
-- (NSAttributedString *)attributedTextFieldValueForMavericks:(id)interfaceObjects inContext:(NSDictionary<NSString *, id> *)drawingContext
+- (NSAttributedString *)attributedTextFieldValueForMavericks:(TVCServerListAppearance *)appearance inContext:(NSDictionary<NSString *, id> *)drawingContext
 {
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isGraphite = [drawingContext boolForKey:@"isGraphite"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
@@ -323,100 +282,142 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSAttributedString *stringValue = textField.attributedStringValue;
 
-	NSRange stringValueRange = stringValue.range;
-
 	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
 
 	[mutableStringValue beginEditing];
 
+	NSFont *controlFont = nil;
+
+	NSColor *controlColor = nil;
+
+	NSShadow *itemShadow = nil;
+
 	if (isGroupItem)
 	{
-		NSColor *controlColor = nil;
-
-		if (isActive) {
-			controlColor = [interfaceObjects serverCellNormalTextColor];
+		if (isSelected) {
+			if (isWindowActive) {
+				controlFont = appearance.serverFontSelectedActiveWindow;
+			} else {
+				controlFont = appearance.serverFontSelectedInactiveWindow;
+			} // isWindowActive
 		} else {
-			controlColor = [interfaceObjects serverCellDisabledTextColor];
-		}
+			if (isWindowActive) {
+				controlFont = appearance.serverFontActiveWindow;
+			} else {
+				controlFont = appearance.serverFontInactiveWindow;
+			} // isWindowActive
+		} // isSelected
 
-		NSShadow *itemShadow = [NSShadow new];
-
-		itemShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
-
-		if (isInverted) {
-			itemShadow.shadowBlurRadius = 1.0;
-		}
+		NSColor *shadowColor = nil;
 
 		if (isSelected) {
 			if (isWindowActive) {
-				controlColor = [interfaceObjects serverCellSelectedTextColorForActiveWindow];
+				controlColor = appearance.serverSelectedTextColorActiveWindow;
+				shadowColor = appearance.serverSelectedTextShadowColorActiveWindow;
 			} else {
-				controlColor = [interfaceObjects serverCellSelectedTextColorForInactiveWindow];
-			}
-
+				controlColor = appearance.serverSelectedTextColorInactiveWindow;
+				shadowColor = appearance.serverSelectedTextShadowColorInactiveWindow;
+			} // isWindowActive
+		} else if (isActive) {
 			if (isWindowActive) {
-				itemShadow.shadowColor = [interfaceObjects serverCellSelectedTextShadowColorForActiveWindow];
+				controlColor = appearance.serverTextColorActiveWindow;
+				shadowColor = appearance.serverTextShadowColorActiveWindow;
 			} else {
-				itemShadow.shadowColor = [interfaceObjects serverCellSelectedTextShadowColorForInactiveWindow];
-			}
+				controlColor = appearance.serverTextColorInactiveWindow;
+				shadowColor = appearance.serverTextShadowColorInactiveWindow;
+			} // isWindowActive
 		} else {
 			if (isWindowActive) {
-				itemShadow.shadowColor = [interfaceObjects serverCellNormalTextShadowColorForActiveWindow];
+				controlColor = appearance.serverDisabledTextColorActiveWindow;
+				shadowColor = appearance.serverDisabledTextShadowColorActiveWindow;
 			} else {
-				itemShadow.shadowColor = [interfaceObjects serverCellNormalTextShadowColorForInactiveWindow];
+				controlColor = appearance.serverDisabledTextColorInactiveWindow;
+				shadowColor = appearance.serverDisabledTextShadowColorInactiveWindow;
+			} // isWindowActive
+		} // isActive
+
+		if (shadowColor) {
+			itemShadow = [NSShadow new];
+
+			itemShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
+
+			if (isInverted) {
+				itemShadow.shadowBlurRadius = 1.0;
 			}
-		}
 
-		[mutableStringValue addAttribute:NSShadowAttributeName value:itemShadow range:stringValueRange];
-
-		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:controlColor	range:stringValueRange];
-
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects serverCellFont] range:stringValueRange];
+			itemShadow.shadowColor = shadowColor;
+		} // shadowColor
 	}
-	else
+	else // isGroupItem
 	{
-		NSShadow *itemShadow = [NSShadow new];
-
-		itemShadow.shadowBlurRadius = 1.0;
-
-		itemShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
-
-		if (isSelected == NO) {
-			itemShadow.shadowColor = [interfaceObjects channelCellNormalTextShadowColor];
+		if (isSelected) {
+			if (isWindowActive) {
+				controlFont = appearance.channelFontSelectedActiveWindow;
+			} else {
+				controlFont = appearance.channelFontSelectedInactiveWindow;
+			} // isWindowActive
 		} else {
-			if (isInverted == NO) {
+			if (isWindowActive) {
+				controlFont = appearance.channelFontActiveWindow;
+			} else {
+				controlFont = appearance.channelFontInactiveWindow;
+			} // isWindowActive
+		} // isSelected
+
+		NSColor *shadowColor = nil;
+
+		if (isSelected) {
+			if (isWindowActive) {
+				controlColor = appearance.channelSelectedTextColorActiveWindow;
+				shadowColor = appearance.channelSelectedTextShadowColorActiveWindow;
+			} else {
+				controlColor = appearance.channelSelectedTextColorInactiveWindow;
+				shadowColor = appearance.channelSelectedTextShadowColorInactiveWindow;
+			} // isWindowActive
+		} else if (isActive) {
+			if (isWindowActive) {
+				controlColor = appearance.channelTextColorActiveWindow;
+				shadowColor = appearance.channelTextShadowColorActiveWindow;
+			} else {
+				controlColor = appearance.channelTextColorInactiveWindow;
+				shadowColor = appearance.channelTextShadowColorInactiveWindow;
+			} // isWindowActive
+		} else {
+			if (isWindowActive) {
+				controlColor = appearance.channelDisabledTextColorActiveWindow;
+				shadowColor = appearance.channelDisabledTextShadowColorActiveWindow;
+			} else {
+				controlColor = appearance.channelDisabledTextColorInactiveWindow;
+				shadowColor = appearance.channelDisabledTextShadowColorInactiveWindow;
+			} // isWindowActive
+		} // isActive
+
+		if (shadowColor) {
+			itemShadow = [NSShadow new];
+
+			itemShadow.shadowBlurRadius = 1.0;
+
+			itemShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
+
+			if (isSelected && isInverted == NO) {
 				itemShadow.shadowBlurRadius = 2.0;
 			}
 
-			if (isWindowActive) {
-				if (isGraphite && isWindowActive == NO) {
-					itemShadow.shadowColor = [interfaceObjects graphiteTextSelectionShadowColor];
-				} else {
-					itemShadow.shadowColor = [interfaceObjects channelCellSelectedTextShadowColorForActiveWindow];
-				}
-			} else {
-				itemShadow.shadowColor = [interfaceObjects channelCellSelectedTextShadowColorForInactiveWindow];
-			}
-		}
+			itemShadow.shadowColor = shadowColor;
+		} // shadowColor
+	} // isGroupItem
 
-		if (isSelected) {
-			[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects selectedChannelCellFont] range:stringValueRange];
+	NSRange stringValueRange = stringValue.range;
 
-			if (isWindowActive) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellSelectedTextColorForActiveWindow] range:stringValueRange];
-			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellSelectedTextColorForInactiveWindow] range:stringValueRange];
-			}
-		} else {
-			if (isActive) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellNormalTextColor] range:stringValueRange];
-			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellDisabledTextColor] range:stringValueRange];
-			}
+	if (controlFont) {
+		[mutableStringValue addAttribute:NSFontAttributeName value:controlFont range:stringValueRange];
+	}
 
-			[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects normalChannelCellFont] range:stringValueRange];
-		}
+	if (controlColor) {
+		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:controlColor	range:stringValueRange];
+	}
 
+	if (itemShadow) {
 		[mutableStringValue addAttribute:NSShadowAttributeName value:itemShadow range:stringValueRange];
 	}
 
@@ -425,7 +426,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return mutableStringValue;
 }
 
-- (NSAttributedString *)attributedTextFieldValueForYosemite:(id)interfaceObjects inContext:(NSDictionary<NSString *, id> *)drawingContext
+- (NSAttributedString *)attributedTextFieldValueForYosemite:(TVCServerListAppearance *)appearance inContext:(NSDictionary<NSString *, id> *)drawingContext
 {
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
@@ -450,84 +451,113 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSAttributedString *stringValue = textField.attributedStringValue;
 
-	NSRange stringValueRange = stringValue.range;
-
 	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
 
 	[mutableStringValue beginEditing];
 
-	if (isSelected == NO) {
-		if (isGroupItem == NO) {
-			if (isActive) {
-				if (isHighlight) {
-					NSColor *customColor = [interfaceObjects userConfiguredMessageCountHighlightedBadgeBackgroundColor];
+	NSFont *controlFont = nil;
 
-					if (customColor == nil || [customColor isEqual:[NSColor clearColor]]) {
-						if (isWindowActive == NO) {
-							customColor = [interfaceObjects channelCellHighlightedItemTextColorForInactiveWindow];
-						} else {
-							customColor = [interfaceObjects channelCellHighlightedItemTextColorForActiveWindow];
-						}
-					}
+	NSColor *controlColor = nil;
 
-					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:customColor range:stringValueRange];
-				} else {
-					if (isWindowActive == NO) {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellNormalItemTextColorForInactiveWindow] range:stringValueRange];
-					} else {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellNormalItemTextColorForActiveWindow] range:stringValueRange];
-					}
-				}
-			} else {
-				if (isErroneous) {
-					if (isWindowActive == NO) {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellErroneousItemTextColorForInactiveWindow] range:stringValueRange];
-					} else {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellErroneousItemTextColorForActiveWindow] range:stringValueRange];
-					}
-				} else {
-					if (isWindowActive == NO) {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellDisabledItemTextColorForInactiveWindow] range:stringValueRange];
-					} else {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellDisabledItemTextColorForActiveWindow] range:stringValueRange];
-					}
-				}
-			}
-		} else {
-			if (isActive) {
-				if (isWindowActive == NO) {
-					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects serverCellNormalItemTextColorForInactiveWindow] range:stringValueRange];
-				} else {
-					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects serverCellNormalItemTextColorForActiveWindow] range:stringValueRange];
-				}
-			} else {
-				if (isWindowActive == NO) {
-					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects serverCellDisabledItemTextColorForInactiveWindow] range:stringValueRange];
-				} else {
-					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects serverCellDisabledItemTextColorForActiveWindow] range:stringValueRange];
-				}
-			}
-		}
-	} else {
-		if (isGroupItem == NO) {
+	if (isGroupItem)
+	{
+		if (isSelected) {
 			if (isWindowActive) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellSelectedTextColorForActiveWindow] range:stringValueRange];
+				controlFont = appearance.serverFontSelectedActiveWindow;
 			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects channelCellSelectedTextColorForInactiveWindow] range:stringValueRange];
-			}
+				controlFont = appearance.serverFontSelectedInactiveWindow;
+			} // isWindowActive
 		} else {
 			if (isWindowActive) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects serverCellSelectedTextColorForActiveWindow] range:stringValueRange];
+				controlFont = appearance.serverFontActiveWindow;
 			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObjects serverCellSelectedTextColorForInactiveWindow] range:stringValueRange];
-			}
+				controlFont = appearance.serverFontInactiveWindow;
+			} // isWindowActive
+		} // isSelected
+
+		if (isSelected) {
+			if (isWindowActive) {
+				controlColor = appearance.serverSelectedTextColorActiveWindow;
+			} else {
+				controlColor = appearance.serverSelectedTextColorInactiveWindow;
+			} // isWindowActive
+		} else if (isActive) {
+			if (isWindowActive) {
+				controlColor = appearance.serverTextColorActiveWindow;
+			} else {
+				controlColor = appearance.serverTextColorInactiveWindow;
+			} // isWindowActive
+		} else {
+			if (isWindowActive) {
+				controlColor = appearance.serverDisabledTextColorActiveWindow;
+			} else {
+				controlColor = appearance.serverDisabledTextColorInactiveWindow;
+			} // isWindowActive
 		}
 	}
+	else // isGroupItem
+	{
+		if (isSelected) {
+			if (isWindowActive) {
+				controlFont = appearance.channelFontSelectedActiveWindow;
+			} else {
+				controlFont = appearance.channelFontSelectedInactiveWindow;
+			} // isWindowActive
+		} else {
+			if (isWindowActive) {
+				controlFont = appearance.channelFontActiveWindow;
+			} else {
+				controlFont = appearance.channelFontInactiveWindow;
+			} // isWindowActive
+		} // isSelected
 
-	if (isGroupItem == NO) {
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects channelCellFont] range:stringValueRange];
-	} else {
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObjects serverCellFont] range:stringValueRange];
+		if (isSelected) {
+			if (isWindowActive) {
+				controlColor = appearance.channelSelectedTextColorActiveWindow;
+			} else {
+				controlColor = appearance.channelSelectedTextColorInactiveWindow;
+			} // isWindowActive
+		} else if (isActive && isHighlight) {
+			NSColor *customColor = appearance.unreadBadgeHighlightBackgroundColorByUser;
+
+			if (customColor && [customColor isEqual:[NSColor clearColor]] == NO) {
+				controlColor = customColor;
+			} else {
+				if (isWindowActive) {
+					controlColor = appearance.channelHighlightTextColorActiveWindow;
+				} else {
+					customColor = appearance.channelHighlightTextColorInactiveWindow;
+				} // isWindowActive
+			} // custom color set
+		} else if (isActive) {
+			if (isWindowActive) {
+				controlColor = appearance.channelTextColorActiveWindow;
+			} else {
+				controlColor = appearance.channelTextColorInactiveWindow;
+			} // isWindowActive
+		} else if (isErroneous) {
+			if (isWindowActive) {
+				controlColor = appearance.channelErroneousTextColorActiveWindow;
+			} else {
+				controlColor = appearance.channelErroneousTextColorInactiveWindow;
+			} // isWindowActive
+		} else {
+			if (isWindowActive) {
+				controlColor = appearance.channelDisabledTextColorActiveWindow;
+			} else {
+				controlColor = appearance.channelDisabledTextColorInactiveWindow;
+			} // isWindowActive
+		}
+	} // isGroupItem
+
+	NSRange stringValueRange = stringValue.range;
+
+	if (controlFont) {
+		[mutableStringValue addAttribute:NSFontAttributeName value:controlFont range:stringValueRange];
+	}
+
+	if (controlColor) {
+		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:controlColor	range:stringValueRange];
 	}
 
 	[mutableStringValue endEditing];
@@ -540,14 +570,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateMessageCountBadge
 {
-	id interfaceObjects = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
 	NSDictionary *drawingContext = self.drawingContext;
 
-	[self populateMessageCountBadge:interfaceObjects inContext:drawingContext];
+	[self populateMessageCountBadge:appearance inContext:drawingContext];
 }
 
-- (void)populateMessageCountBadge:(id)interfaceObjects inContext:(NSDictionary<NSString *, id> *)drawingContext
+- (void)populateMessageCountBadge:(TVCServerListAppearance *)appearance inContext:(NSDictionary<NSString *, id> *)drawingContext
 {
 	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
 
@@ -572,7 +602,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (associatedChannel.config.showTreeBadgeCount == NO) {
-		if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+		if (appearance.isModernAppearance) {
 			drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
 		} else {
 			if (isHighlight) {
@@ -591,7 +621,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self drawMessageCountBadge:stringToDraw inRect:badgeRect isHighlight:isHighlight isSelected:isSelected];
 
-		self.messageCountBadgeTrailingConstraint.constant = [interfaceObjects messageCountBadgeRightMargin];
+		self.messageCountBadgeTrailingConstraint.constant = appearance.unreadBadgeRightMargin;
 		self.messageCountBadgeWidthConstraint.constant = NSWidth(badgeRect);
 	} else {
 		self.messageCountBadgeTrailingConstraint.constant = 0.0;
@@ -605,33 +635,51 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCMainWindow *mainWindow = self.mainWindow;
 
-	id interfaceObjects = mainWindow.serverList.userInterfaceObjects;
+	BOOL isWindowActive = mainWindow.isActiveForDrawing;
+
+	TVCServerListAppearance *appearance = mainWindow.serverList.userInterfaceObjects;
 
 	NSString *messageCountString = TXFormattedNumber(messageCount);
 
-	NSFont *textFont = [interfaceObjects messageCountBadgeFont];
+	NSFont *controlFont = nil;
 
-	NSColor *textColor = nil;
-
-	if (isHighlight) {
-		textColor = [interfaceObjects messageCountHighlightedBadgeTextColor];
-	} else {
-		if (isSelected) {
-			if (mainWindow.activeForDrawing) {
-				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForActiveWindow];
-			} else {
-				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
-			}
+	if (isSelected) {
+		if (isWindowActive) {
+			controlFont = appearance.unreadBadgeFontSelectedActiveWindow;
 		} else {
-			if (mainWindow.activeForDrawing) {
-				textColor = [interfaceObjects messageCountNormalBadgeTextColorForActiveWindow];
-			} else {
-				textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
-			}
-		}
+			controlFont = appearance.unreadBadgeFontSelectedInactiveWindow;
+		} // isWindowActive
+	} else {
+		if (isWindowActive) {
+			controlFont = appearance.unreadBadgeFontActiveWindow;
+		} else {
+			controlFont = appearance.unreadBadgeFontInactiveWindow;
+		} // isWindowActive
+	} // isSelected
+
+	NSColor *controlColor = nil;
+
+	if (isSelected) {
+		if (isWindowActive) {
+			controlColor = appearance.unreadBadgeSelectedTextColorActiveWindow;
+		} else {
+			controlColor = appearance.unreadBadgeSelectedTextColorInactiveWindow;
+		} // isWindowActive
+	} else if (isHighlight) {
+		if (isWindowActive) {
+			controlColor = appearance.unreadBadgeHighlightTextColorActiveWindow;
+		} else {
+			controlColor = appearance.unreadBadgeHighlightTextColorInactiveWindow;
+		} // isWindowActive
+	} else {
+		if (isWindowActive) {
+			controlColor = appearance.unreadBadgeTextColorActiveWindow;
+		} else {
+			controlColor = appearance.unreadBadgeTextColorInactiveWindow;
+		} // isWindowActive
 	}
 
-	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
+	NSDictionary *attributes = @{NSForegroundColorAttributeName : controlColor, NSFontAttributeName : controlFont};
 
 	NSAttributedString *stringToDraw = [NSAttributedString attributedStringWithString:messageCountString attributes:attributes];
 
@@ -640,14 +688,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSRect)messageCountBadgeRectWithText:(NSAttributedString *)stringToDraw
 {
-	id interfaceObjects = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
-	CGFloat messageCountWidth = (stringToDraw.size.width + ([interfaceObjects messageCountBadgePadding] * 2.0));
+	CGFloat messageCountWidth = (stringToDraw.size.width + (appearance.unreadBadgePadding * 2.0));
 
-	NSRect badgeFrame = NSMakeRect(0.0, 0.0, messageCountWidth, [interfaceObjects messageCountBadgeHeight]);
+	NSRect badgeFrame = NSMakeRect(0.0, 0.0, messageCountWidth, appearance.unreadBadgeHeight);
 
-	if (badgeFrame.size.width < [interfaceObjects messageCountBadgeMinimumWidth]) {
-		CGFloat widthDiff  = ([interfaceObjects messageCountBadgeMinimumWidth] - badgeFrame.size.width);
+	CGFloat minimumWidth = appearance.unreadBadgeMinimumWidth;
+
+	if (badgeFrame.size.width < minimumWidth) {
+		CGFloat widthDiff  = (minimumWidth - badgeFrame.size.width);
 
 		badgeFrame.size.width += widthDiff;
 
@@ -661,12 +711,14 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCMainWindow *mainWindow = self.mainWindow;
 
-	id interfaceObjects = mainWindow.serverList.userInterfaceObjects;
+	BOOL isWindowActive = mainWindow.isActiveForDrawing;
 
-	BOOL isDrawingOnMavericks = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
+	TVCServerListAppearance *appearance = mainWindow.serverList.userInterfaceObjects;
+
+	BOOL isDrawingOnMavericks = (appearance.isModernAppearance == NO);
 
 	/* Create image that we will draw into. If we are drawing for Mavericks,
-	 then the frame of our image is one pixel greater because we draw a shadow. */
+	 then the frame of our image is one point greater because we draw a shadow. */
 	NSImage *badgeImage = nil;
 
 	NSRect badgeFrame = NSZeroRect;
@@ -679,50 +731,40 @@ NS_ASSUME_NONNULL_BEGIN
 		badgeFrame = NSMakeRect(0.0, 0.0, NSWidth(rectToDraw), NSHeight(rectToDraw));
 
 		badgeImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(rectToDraw),  NSHeight(rectToDraw))];
-	}
+	} // isDrawingOnMavericks
 
 	[badgeImage lockFocus];
 
 	/* Draw the background color. */
 	NSColor *backgroundColor = nil;
 
-	if (isHighlight) {
-		NSColor *customColor = [interfaceObjects userConfiguredMessageCountHighlightedBadgeBackgroundColor];
-
-		if (customColor == nil || [customColor isEqual:[NSColor clearColor]]) {
-			if (mainWindow.activeForDrawing == NO) {
-				customColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
-			} else {
-				customColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
-			}
-		}
-
-		backgroundColor = customColor;
-	} else {
-		if (isSelected) {
-			if (mainWindow.activeForDrawing) {
-				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForActiveWindow];
-			} else {
-				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForInactiveWindow];
-			}
+	if (isSelected) {
+		if (isWindowActive) {
+			backgroundColor = appearance.unreadBadgeSelectedBackgroundColorActiveWindow;
 		} else {
-			if (isDrawingOnMavericks) {
-				if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-					backgroundColor = [interfaceObjects messageCountBadgeGraphiteBackgroundColor];
-				} else {
-					backgroundColor = [interfaceObjects messageCountBadgeAquaBackgroundColor];
-				}
+			backgroundColor = appearance.unreadBadgeSelectedBackgroundColorInactiveWindow;
+		} // isWindowActive
+	} else if (isHighlight) {
+		NSColor *customColor = appearance.unreadBadgeHighlightBackgroundColorByUser;
+
+		if (customColor && [customColor isEqual:[NSColor clearColor]] == NO) {
+			backgroundColor = customColor;
+		} else {
+			if (isWindowActive) {
+				backgroundColor = appearance.unreadBadgeHighlightBackgroundColorActiveWindow;
 			} else {
-				if (mainWindow.activeForDrawing) {
-					backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForActiveWindow];
-				} else {
-					backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForInactiveWindow];
-				}
-			}
-		}
+				backgroundColor = appearance.unreadBadgeHighlightBackgroundColorInactiveWindow;
+			} // isWindowActive
+		} // custom color set
+	} else {
+		if (isWindowActive) {
+			backgroundColor = appearance.unreadBadgeBackgroundColorActiveWindow;
+		} else {
+			backgroundColor = appearance.unreadBadgeBackgroundColorActiveWindow;
+		} // isWindowActive
 	}
 
-	/* Frame is dropped by 1 to make room for shadow */
+	/* Frame is dropped by 1 point to make room for shadow */
 	if (isDrawingOnMavericks) {
 		if (isSelected == NO) {
 			NSRect shadowFrame = badgeFrame;
@@ -734,13 +776,19 @@ NS_ASSUME_NONNULL_BEGIN
 			 appearance of a drop shadow. */
 			NSBezierPath *shadowPath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:7.0 yRadius:7.0];
 
-			NSColor *shadowColor = [interfaceObjects messageCountBadgeShadowColor];
+			NSColor *shadowColor = nil;
+
+			if (isWindowActive) {
+				shadowColor = appearance.unreadBadgeShadowColorActiveWindow;
+			} else {
+				shadowColor = appearance.unreadBadgeShadowColorInactiveWindow;
+			} // isWindowActive
 
 			[shadowColor set];
 
 			[shadowPath fill];
-		}
-	}
+		} // isSelected
+	} // isDrawingOnMavericks
 
 	/* Draw the background of the badge */
 	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame xRadius:7.0 yRadius:7.0];
@@ -754,7 +802,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMakePoint((NSMidX(badgeFrame) - (stringToDraw.size.width  / 2.0)),
 				(NSMidY(badgeFrame) - (stringToDraw.size.height / 2.0)));
 
-	badgeTextPoint.y += [interfaceObjects messageCountBadgeTextCenterYOffset];
+	badgeTextPoint.y += appearance.unreadBadgeTextCenterYOffset;
 
 	/* Perform draw and set image */
 	[stringToDraw drawAtPoint:badgeTextPoint];
@@ -788,15 +836,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent isSelected:(BOOL)isSelected setNeedsDisplay:(BOOL)setNeedsDisplay
 {
-	id interfaceObjects = self.mainWindow.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.mainWindow.serverList.userInterfaceObjects;
 
 	NSButtonCell *theButton = theButtonParent.cell;
 
-	[interfaceObjects setOutlineViewDefaultDisclosureTriangle:theButton.image];
-	[interfaceObjects setOutlineViewAlternateDisclosureTriangle:theButton.alternateImage];
+	[appearance setOutlineViewDefaultDisclosureTriangle:theButton.image];
+	[appearance setOutlineViewAlternateDisclosureTriangle:theButton.alternateImage];
 
-	NSImage *primaryImage = [interfaceObjects disclosureTriangleInContext:YES selected:isSelected];
-	NSImage *alternateImage = [interfaceObjects disclosureTriangleInContext:NO selected:isSelected];
+	NSImage *primaryImage = [appearance disclosureTriangleInContext:YES selected:isSelected];
+	NSImage *alternateImage = [appearance disclosureTriangleInContext:NO selected:isSelected];
 
 	// If the images are not nullified before setting the new,
 	// then NSImageView has some weird behavior on OS X Mountain Lion and
@@ -807,7 +855,7 @@ NS_ASSUME_NONNULL_BEGIN
 	theButton.alternateImage = nil;
 	theButton.alternateImage = alternateImage;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (appearance.isModernAppearance) {
 		theButton.highlightsBy = NSNoCellMask;
 	} else {
 		if (isSelected) {
@@ -858,7 +906,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return @{
 		 @"isActive"			: @(cellItem.isActive),
 		 @"isActiveWindow"		: @(mainWindow.isActiveForDrawing),
-		 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
 		 @"isGroupItem"			: @([self isKindOfClass:[TVCServerListCellGroupItem class]]),
 		 @"isInverted"			: @(mainWindow.usingDarkAppearance),
 		 @"isSelected"			: @([serverList isRowSelected:rowIndex]),
@@ -880,6 +927,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCServerListRowCell
 
+- (void)viewWillMoveToWindow:(nullable NSWindow *)newWindow
+{
+	[super viewWillMoveToWindow:newWindow];
+
+	self.disableQuirks = TEXTUAL_RUNNING_ON(10.14, Mojave);
+}
+
 - (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
 {
 	; // Do nothing for this...
@@ -894,23 +948,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)postSelectionChangeNeedsDisplay
 {
+	if (self.disableQuirks) {
+		return;
+	}
+
 	if (self.isSelected)
 	{
-		if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
-		{
-			if (self.mainWindow.usingDarkAppearance) {
-				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
-			} else {
-				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
-			}
-		}
-		else
-		{
-			if (self.mainWindow.usingDarkAppearance) {
-				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
-			} else {
-				self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
-			}
+		TVCMainWindow *mainWindow = self.mainWindow;
+
+		BOOL isWindowActive = mainWindow.isActiveForDrawing;
+
+		if (isWindowActive) {
+			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
+		} else {
+			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
 		}
 	}
 	else
@@ -950,17 +1001,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCMainWindow *mainWindow = self.mainWindow;
 
-	id interfaceObjects = mainWindow.serverList.userInterfaceObjects;
+	BOOL isWindowActive = mainWindow.isActiveForDrawing;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
+	TVCServerListAppearance *appearance = mainWindow.serverList.userInterfaceObjects;
+
+	if (appearance.isModernAppearance)
 	{
 		NSColor *selectionColor = nil;
 
-		if (mainWindow.isActiveForDrawing) {
-			selectionColor = [interfaceObjects rowSelectionColorForActiveWindow];
+		if (isWindowActive) {
+			selectionColor = appearance.rowSelectionColorActiveWindow;
 		} else {
-			selectionColor = [interfaceObjects rowSelectionColorForInactiveWindow];
-		}
+			selectionColor = appearance.rowSelectionColorInactiveWindow;
+		} // isWindowActive
 
 		if (selectionColor) {
 			[selectionColor set];
@@ -970,25 +1023,25 @@ NS_ASSUME_NONNULL_BEGIN
 			NSRectFill(selectionRect);
 		} else {
 			[super drawSelectionInRect:dirtyRect];
-		}
+		} // selectionColor
 	}
-	else
+	else // Yosemite or later
 	{
 		NSImage *selectionImage = nil;
 
 		if (self.isGroupItem) {
-			if (mainWindow.isActiveForDrawing) {
-				selectionImage = [interfaceObjects serverRowSelectionImageForActiveWindow];
+			if (isWindowActive) {
+				selectionImage = appearance.serverSelectionImageActiveWindow;
 			} else {
-				selectionImage = [interfaceObjects serverRowSelectionImageForInactiveWindow];
-			}
+				selectionImage = appearance.serverSelectionImageInactiveWindow;
+			} // isWindowActive
 		} else {
-			if (mainWindow.isActiveForDrawing) {
-				selectionImage = [interfaceObjects channelRowSelectionImageForActiveWindow];
+			if (isWindowActive) {
+				selectionImage = appearance.channelSelectionImageActiveWindow;
 			} else {
-				selectionImage = [interfaceObjects channelRowSelectionImageForInactiveWindow];
-			}
-		}
+				selectionImage = appearance.channelSelectionImageInactiveWindow;
+			} // isWindowActive
+		} // isGroupItem
 
 		if (selectionImage) {
 			NSRect selectionRect = self.bounds;
@@ -1001,8 +1054,8 @@ NS_ASSUME_NONNULL_BEGIN
 								 hints:nil];
 		} else {
 			[super drawSelectionInRect:dirtyRect];
-		}
-	}
+		} // selectionImage
+	} // Yosemite or later
 }
 
 - (void)didAddSubview:(NSView *)subview
@@ -1021,11 +1074,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isEmphasized
 {
+	if (self.disableQuirks) {
+		/* Default behavior is to return YES when the table
+		 is the first responder, but because the main window
+		 will force the first responder back to the main text
+		 field, we fudge the results a little bit. */
+
+		return self.window.isKeyWindow;
+	}
+
 	return YES;
 }
 
-- (NSColor *)fontSmoothingBackgroundColor
+- (nullable NSColor *)fontSmoothingBackgroundColor
 {
+	if (self.disableQuirks) {
+		return nil;
+	}
+
 	if (self.mainWindow.usingDarkAppearance) {
 		return [NSColor grayColor];
 	} else {

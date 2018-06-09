@@ -40,8 +40,8 @@
 #import "TXMenuControllerPrivate.h"
 #import "TVCMainWindowPrivate.h"
 #import "TPCPreferencesLocal.h"
+#import "TVCServerListAppearancePrivate.h"
 #import "TVCServerListCellPrivate.h"
-#import "TVCServerListSharedUserInterfacePrivate.h"
 #import "TVCServerListPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -49,9 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 @interface TVCServerList ()
-@property (nonatomic, strong, readwrite) id userInterfaceObjects;
+@property (nonatomic, strong, readwrite) TVCServerListAppearance *userInterfaceObjects;
 @property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak, readwrite) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
+@property (nonatomic, weak, readwrite) IBOutlet TVCServerListMavericksBackgroundBox *backgroundView;
 @property (nonatomic, assign, readwrite) BOOL leftMouseIsDownInView;
 @end
 
@@ -224,26 +224,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 - (void)reloadUserInterfaceObjects
 {
-	Class newObjects = NULL;
-
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
-	{
-		if (self.mainWindow.usingDarkAppearance) {
-			newObjects = [TVCServerListDarkYosemiteUserInterface class];
-		} else {
-			newObjects = [TVCServerListLightYosemiteUserInterface class];
-		}
-	}
-	else
-	{
-		if (self.mainWindow.usingDarkAppearance) {
-			newObjects = [TVCServerListMavericksDarkUserInterface class];
-		} else {
-			newObjects = [TVCServerListMavericksLightUserInterface class];
-		}
-	}
-
-	self.userInterfaceObjects = [[newObjects alloc] initWithServerList:self];
+	self.userInterfaceObjects = [[TVCServerListAppearance alloc] initWithServerList:self];
 }
 
 - (void)updateVibrancy
@@ -267,6 +248,10 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	} else {
 		visaulEffectView.state = NSVisualEffectStateFollowsWindowActiveState;
 	}
+
+#ifdef TXSystemIsOSXMojaveOrLater
+	visaulEffectView.material = NSVisualEffectMaterialSidebar;
+#endif
 }
 
 - (void)updateBackgroundColor

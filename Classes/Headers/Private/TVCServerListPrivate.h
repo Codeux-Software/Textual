@@ -39,16 +39,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCServerListMavericksUserInterfaceBackground;
+@class TVCServerListAppearance;
+@class TVCServerListMavericksBackgroundBox;
 
 @interface TVCServerList ()
 @property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, copy, nullable) NSImage *outlineViewDefaultDisclosureTriangle;
 @property (nonatomic, copy, nullable) NSImage *outlineViewAlternateDisclosureTriangle;
 
-- (id)userInterfaceObjects;
+- (TVCServerListAppearance *)userInterfaceObjects;
 - (nullable NSVisualEffectView *)visualEffectView;
-- (nullable TVCServerListMavericksUserInterfaceBackground *)backgroundView;
+- (nullable TVCServerListMavericksBackgroundBox *)backgroundView;
 
 - (BOOL)leftMouseIsDownInView;
 
