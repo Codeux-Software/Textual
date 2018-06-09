@@ -263,23 +263,20 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 											name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification
 										  object:nil];
 
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(systemColorsDidChange:)
-								   name:NSControlTintDidChangeNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(systemColorsDidChange:)
-								   name:NSSystemColorsDidChangeNotification
-								 object:nil];
-
-	[NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:NULL];
+	if (TEXTUAL_RUNNING_ON_MOJAVE == NO) {
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(systemColorsDidChange:)
+									   name:NSControlTintDidChangeNotification
+									 object:nil];
+	} else {
+		[NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:NULL];
+	}
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
 {
 	if ([keyPath isEqualToString:@"effectiveAppearance"]) {
-		[self systemColorsDidChange:nil];
+		[self applicationAppearanceChanged];
 	}
 }
 
@@ -301,6 +298,16 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	[self toggleFullScreen:nil];
+}
+
+- (void)applicationAppearanceChanged
+{
+	/* Wait until next pass of the run loop to perform
+	 update because the effective appearance may not
+	 be propegated to all subviews when this is called. */
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self updateBackgroundColor];
+	});
 }
 
 - (void)systemColorsDidChange:(NSNotification *)aNote
