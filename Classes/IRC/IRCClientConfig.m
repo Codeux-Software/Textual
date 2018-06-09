@@ -55,6 +55,13 @@ NS_ASSUME_NONNULL_BEGIN
 #define IRCClientConfigFloodControlDefaultDelayIntervalLimited		2
 #define IRCClientConfigFloodControlDefaultMessageCountLimited		2 // freenode gets a special case 'cause they are strict about flood control
 
+@interface IRCClientConfig ()
+@property (readonly) BOOL prefersSecuredConnection_;
+@property (readonly) uint16_t serverPort_;
+@property (readonly, copy, nullable) NSString *serverAddress_;
+@property (readonly) BOOL connectionPrefersModernCiphers_;
+@end
+
 @implementation IRCClientConfig
 
 #pragma mark -
@@ -796,13 +803,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* These values are inserted here for backwards compatibility 
 	 with earlier versions of Textual */
 TEXTUAL_IGNORE_DEPRECATION_BEGIN
-	[dic maybeSetObject:self.serverAddress forKey:@"serverAddress"];
+	[dic maybeSetObject:self.serverAddress_ forKey:@"serverAddress"];
 
-	[dic setBool:self.connectionPrefersModernCiphers forKey:@"connectionPrefersModernCiphers"];
+	[dic setBool:self.connectionPrefersModernCiphers_ forKey:@"connectionPrefersModernCiphers"];
 
-	[dic setBool:self.prefersSecuredConnection forKey:@"prefersSecuredConnection"];
+	[dic setBool:self.prefersSecuredConnection_ forKey:@"prefersSecuredConnection"];
 
-	[dic setUnsignedShort:self.serverPort forKey:@"serverPort"];
+	[dic setUnsignedShort:self.serverPort_ forKey:@"serverPort"];
 TEXTUAL_IGNORE_DEPRECATION_END
 
 	/* Channel List */
@@ -1013,6 +1020,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	TEXTUAL_DEPRECATED_WARNING
 
+	return self.serverAddress_;
+}
+
+- (nullable NSString *)serverAddress_
+{
 	IRCServer *server = self.serverList.firstObject;
 
 	if (server == nil) {
@@ -1026,6 +1038,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	TEXTUAL_DEPRECATED_WARNING
 
+	return self.serverPort_;
+}
+
+- (uint16_t)serverPort_
+{
 	IRCServer *server = self.serverList.firstObject;
 
 	if (server == nil) {
@@ -1039,6 +1056,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	TEXTUAL_DEPRECATED_WARNING
 
+	return self.prefersSecuredConnection_;
+}
+
+- (BOOL)prefersSecuredConnection_
+{
 	IRCServer *server = self.serverList.firstObject;
 
 	if (server == nil) {
@@ -1078,6 +1100,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	TEXTUAL_DEPRECATED_WARNING
 
+	return self.connectionPrefersModernCiphers_;
+}
+
+- (BOOL)connectionPrefersModernCiphers_
+{
 	return (self.cipherSuites != GCDAsyncSocketCipherSuiteNonePreferred);
 }
 
