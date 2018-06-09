@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *appearanceName;
 @property (nonatomic, assign, readwrite) TVCMainWindowAppearanceType appearanceType;
 @property (nonatomic, strong, readwrite) TVCServerListAppearance *serverList;
+@property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSColor *splitViewDividerColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
 @end
@@ -170,6 +173,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	self.serverList = [[TVCServerListAppearance alloc] initWithServerList:self.mainWindow.serverList parentAppearance:self];
+
+	self.channelViewOverlayDefaultBackgroundColorActiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:YES];
+	self.channelViewOverlayDefaultBackgroundColorInactiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:NO];
+
+	self.splitViewDividerColor = [self colorForKey:@"splitViewDividerColor"];
 
 	self.titlebarAccessoryViewBackgroundColorActiveWindow = [self colorForKey:@"titlebarAccessoryViewBackgroundColor" forActiveWindow:YES];
 	self.titlebarAccessoryViewBackgroundColorInactiveWindow = [self colorForKey:@"titlebarAccessoryViewBackgroundColor" forActiveWindow:NO];

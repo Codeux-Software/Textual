@@ -42,6 +42,7 @@
 #import "IRCTreeItem.h"
 #import "TVCLogController.h"
 #import "TVCLogView.h"
+#import "TVCMainWindowAppearance.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSplitViewPrivate.h"
 #import "TVCMainWindowChannelViewPrivate.h"
@@ -289,13 +290,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 - (NSColor *)dividerColor
 {
-	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
-
-	if (self.mainWindow.usingDarkAppearance) {
-		dividerColor = dividerColor.invertedColor;
-	}
-
-	return dividerColor;
+	return self.mainWindow.contentSplitView.dividerColor;
 }
 
 - (void)updateArrangement
@@ -562,12 +557,23 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	}
 
 	if (backgroundColor == nil) {
-		backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.3];
+		backgroundColor = [self defaultBackgroundColor];
 	}
 
 	[backgroundColor set];
 
 	[NSBezierPath fillRect:dirtyRect];
+}
+
+- (NSColor *)defaultBackgroundColor
+{
+	TVCMainWindow *mainWindow = self.mainWindow;
+
+	if (mainWindow.isActiveForDrawing) {
+		return mainWindow.userInterfaceObjects.channelViewOverlayDefaultBackgroundColorActiveWindow;
+	} else {
+		return mainWindow.userInterfaceObjects.channelViewOverlayDefaultBackgroundColorInactiveWindow;
+	}
 }
 
 - (nullable NSView *)hitTest:(NSPoint)aPoint
