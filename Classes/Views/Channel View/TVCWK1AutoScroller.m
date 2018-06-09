@@ -196,8 +196,8 @@ static CGFloat _userScrolledMinimum = 25.0;
 
 	dispatch_once(&onceToken, ^{
 		_performForceRedraw =
-		(TEXTUAL_RUNNING_ON(10.10, Yosemite) &&
-		 TEXTUAL_RUNNING_ON(10.11, ElCapitan) == NO);
+		(TEXTUAL_RUNNING_ON_YOSEMITE &&
+		 TEXTUAL_RUNNING_ON_ELCAPITAN == NO);
 	});
 
 	if (_performForceRedraw == NO) {

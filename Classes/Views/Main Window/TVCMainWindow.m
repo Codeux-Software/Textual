@@ -254,7 +254,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 								 object:nil];
 #endif
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
 		return;
 	}
 
@@ -338,7 +338,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithWindow:self];
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self updateBackgroundColorOnYosemite];
 	}
 
@@ -2142,7 +2142,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)addAccessoryViewsToTitlebar
 {
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self addAccessoryViewsToTitlebarOnYosemite];
 	} else {
 		[self addAccessoryViewsToTitlebarOnMavericks];
@@ -2876,7 +2876,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
-	BOOL onMojave = TEXTUAL_RUNNING_ON(10.14, Mojave);
+	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
 
 	NSString *viewIdentifier = nil;
 

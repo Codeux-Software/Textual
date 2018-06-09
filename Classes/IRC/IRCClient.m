@@ -1358,7 +1358,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		usesUppercaseLabel = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
+		usesUppercaseLabel = (TEXTUAL_RUNNING_ON_YOSEMITE == NO);
 	});
 
 	if (usesUppercaseLabel) {

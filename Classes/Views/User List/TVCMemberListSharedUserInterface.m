@@ -165,7 +165,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSColor *defaultColor = [RZUserDefaults() colorForKey:defaultsKey];
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		return [defaultColor colorWithAlphaComponent:0.7];
 	} else {
 		return  defaultColor;

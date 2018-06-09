@@ -78,13 +78,13 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 
 		_sharedWebViewConfiguration.processPool = _sharedProcessPool;
 
-		BOOL runningOnSierra = TEXTUAL_RUNNING_ON(10.12, Sierra);
+		BOOL runningOnSierra = TEXTUAL_RUNNING_ON_SIERRA;
 
 		if (runningOnSierra) {
 			_sharedWebViewConfiguration._allowUniversalAccessFromFileURLs = YES;
 		}
 
-		if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
+		if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
 			WKPreferences *preferences = _sharedWebViewConfiguration.preferences;
 
 			preferences._allowFileAccessFromFileURLs = YES;
@@ -210,7 +210,7 @@ create_normal_pool:
 
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 
-	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
+	if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
 		self.allowsLinkPreview = [TPCPreferences webKit2PreviewLinks];
 
 		self.customUserAgent = TVCLogViewCommonUserAgentString;
@@ -308,9 +308,9 @@ create_normal_pool:
 {
 	WKPageRef pageRef = NULL;
 
-	if (TEXTUAL_RUNNING_ON(10.12, Sierra)) {
+	if (TEXTUAL_RUNNING_ON_SIERRA) {
 		pageRef = [self _pageForTesting];
-	} else if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
+	} else if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
 		WKView *webViewParent = (id)self.subviews[0];
 
 		pageRef = [webViewParent pageRef];
@@ -552,7 +552,7 @@ create_normal_pool:
 
 + (void)load
 {
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
 		return;
 	}
 

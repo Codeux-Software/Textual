@@ -525,7 +525,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	context.completionBlock = completionBlock;
 
 	/* Pop alert */
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
 			[self _alsertSheetResponseCallback_stage2:alert returnCode:returnCode contextInfo:context];
 		}];

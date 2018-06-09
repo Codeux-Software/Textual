@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateBackgroundColor
 {
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self updateBackgroundColorOnYosemite];
 	}
 
@@ -184,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.attributedStringValue = attributedStringValue;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self updateAllFontColorsToMatchTheDefaultFont];
 	}
 }
@@ -323,7 +323,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	CGFloat contentBorderPadding = 0;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		contentBorderPadding = _WindowContentBorderTotalPaddingYosemite;
 	} else {
 		contentBorderPadding = _WindowContentBorderTotalPaddingMavericks;
@@ -347,7 +347,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.textViewHeightConstraint.constant = backgroundHeight;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
 		[window setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 	}
 
@@ -698,7 +698,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSFont *)systemSpecificFontWithSize:(CGFloat)fontSize
 {
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		return [NSFont systemFontOfSize:fontSize];
 	} else {
 		return [NSFont fontWithName:@"Helvetica" size:fontSize];
@@ -707,7 +707,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)systemSpecificFontColor
 {
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [TVCMainWindowTextViewYosemiteUserInterface blackInputTextFieldPlaceholderTextColor];
 		} else {
@@ -720,7 +720,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)systemSpecificPlaceholderStringFontColor
 {
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [TVCMainWindowTextViewYosemiteUserInterface blackInputTextFieldPrimaryTextColor];
 		} else {
@@ -747,7 +747,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self drawControllerForYosemite];
 	} else {
 		[self drawControllerForMavericks];

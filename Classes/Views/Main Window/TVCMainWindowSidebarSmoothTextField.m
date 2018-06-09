@@ -159,8 +159,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	/* Mojave no longer performs subpixel antialiasing */
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO ||
-		TEXTUAL_RUNNING_ON(10.14, Mojave))
+	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO ||
+		TEXTUAL_RUNNING_ON_MOJAVE)
 	{
 		[super drawWithFrame:cellFrame inView:controlView];
 
