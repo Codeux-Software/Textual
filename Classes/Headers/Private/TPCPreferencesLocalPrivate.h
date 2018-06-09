@@ -67,7 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
 
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors;
-+ (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable;
 
 + (void)setThemeName:(NSString *)value;
 + (void)setThemeNameWithExistenceCheck:(NSString *)value;

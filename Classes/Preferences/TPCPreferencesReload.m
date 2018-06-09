@@ -165,9 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Main window appearance */
-	if ([keys containsObject:@"InvertSidebarColors"] ||
-		[keys containsObject:@"Theme -> Invert Sidebar Colors Preference Enabled"])
-	{
+	if ([keys containsObject:@"InvertSidebarColors"]) {
 		reloadAction |= TPCPreferencesReloadMainWindowAppearanceAction;
 	}
 

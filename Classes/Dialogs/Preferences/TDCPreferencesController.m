@@ -1191,12 +1191,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[forcedValuesMutable appendString:@"\n"];
 	}
 
-	if ([TPCPreferences invertSidebarColorsPreferenceUserConfigurable] == NO) {
-		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][3]")];
-
-		[forcedValuesMutable appendString:@"\n"];
-	}
-
 	NSString *forcedValues = forcedValuesMutable.trim;
 
 	if (forcedValues.length == 0) {

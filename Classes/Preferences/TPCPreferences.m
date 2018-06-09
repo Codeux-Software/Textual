@@ -525,16 +525,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark Theme
 
-+ (BOOL)invertSidebarColorsPreferenceUserConfigurable
-{
-	return [RZUserDefaults() boolForKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
-}
-
-+ (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable
-{
-	[RZUserDefaults() registerDefault:@(invertSidebarColorsPreferenceUserConfigurable) forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
-}
-
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors
 {
 	[RZUserDefaults() setBool:invertSidebarColors forKey:@"InvertSidebarColors"];
@@ -542,10 +532,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)invertSidebarColors
 {
-	if (themeSettings().invertSidebarColors) {
-		return YES;
-	}
-
 	return [RZUserDefaults() boolForKey:@"InvertSidebarColors"];
 }
 

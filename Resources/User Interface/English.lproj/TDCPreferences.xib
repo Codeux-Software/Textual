@@ -59,7 +59,7 @@
         <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="367" y="318" width="589" height="240"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="4930">
                 <rect key="frame" x="0.0" y="0.0" width="589" height="240"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -107,7 +107,7 @@
                             <action selector="onPrefPaneSelected:" target="-2" id="waW-CS-aPJ"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="CB2072E5-5461-4254-B1A1-48CAB8F724D3" explicitItemIdentifier="106" label="Style" paletteLabel="Style" tag="106" image="TPWTB_Style" selectable="YES" id="Ggd-0D-rbs">
+                    <toolbarItem implicitItemIdentifier="35A7A8DC-0CE6-4D72-9808-0A2CF2014FA4" explicitItemIdentifier="106" label="Style" paletteLabel="Style" tag="106" image="TPWTB_Style" selectable="YES" id="Ggd-0D-rbs">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="Ia1-Hq-C1G"/>
                         </connections>
@@ -1541,7 +1541,6 @@
                                         <connections>
                                             <action selector="onChangedSidebarColorInversion:" target="-2" id="xwq-pk-PVQ"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InvertSidebarColors" id="Hm4-ld-te3"/>
-                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="1tV-gb-bDM"/>
                                         </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
@@ -2353,7 +2352,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="156" y="198" width="296" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mPp-b5-RuW">
                                             <rect key="frame" x="0.0" y="0.0" width="296" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
@@ -2407,7 +2406,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="107" y="146" width="340" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYd-WC-meI">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
