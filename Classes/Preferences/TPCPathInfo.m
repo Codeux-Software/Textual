@@ -319,7 +319,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSURL *baseURL = self.applicationResourcesURL;
 
-	return [baseURL URLByAppendingPathComponent:@"/Extensions/"];
+	return [baseURL URLByAppendingPathComponent:@"/Bundled Extensions/"];
 }
 
 + (NSString *)bundledScripts
@@ -331,7 +331,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSURL *baseURL = self.applicationResourcesURL;
 
-	return [baseURL URLByAppendingPathComponent:@"/Scripts/"];
+	return [baseURL URLByAppendingPathComponent:@"/Bundled Scripts/"];
 }
 
 + (NSString *)bundledThemes
@@ -343,7 +343,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSURL *baseURL = self.applicationResourcesURL;
 
-	return [baseURL URLByAppendingPathComponent:@"/Styles/"];
+	return [baseURL URLByAppendingPathComponent:@"/Bundled Styles/"];
 }
 
 + (nullable NSString *)customExtensions
