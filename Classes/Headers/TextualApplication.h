@@ -120,6 +120,7 @@
 
 	/* View Controllers */
 	#import "TVCAlert.h"
+	#import "TVCAppearance.h";
 	#import "TVCAutoExpandingTextField.h"
 	#import "TVCAutoExpandingTokenField.h"
 	#import "TVCBasicTableView.h"
