@@ -42,6 +42,7 @@
 #import "TVCServerList.h"
 #import "TVCMemberList.h"
 #import "TVCMainWindow.h"
+#import "TVCMainWindowAppearance.h"
 #import "TVCMainWindowSplitViewPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -60,9 +61,11 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (NSColor *)dividerColor
 {
-	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
+	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
 
-	if (self.mainWindow.usingDarkAppearance) {
+	NSColor *dividerColor = appearance.splitViewDividerColor;
+
+	if (appearance.isDarkAppearance) {
 		dividerColor = dividerColor.invertedColor;
 	}
 
