@@ -2850,12 +2850,14 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
+	BOOL onMojave = TEXTUAL_RUNNING_ON(10.14, Mojave);
+
 	NSString *viewIdentifier = nil;
 
 	if (item == nil || [item isClient]) {
-		viewIdentifier = @"GroupView";
+		viewIdentifier = ((onMojave) ? @"GroupViewMojave" : @"GroupView");
 	} else {
-		viewIdentifier = @"ChildView";
+		viewIdentifier = ((onMojave) ? @"ChildViewMojave" : @"ChildView");
 	}
 
 	NSView *newView = [outlineView makeViewWithIdentifier:viewIdentifier owner:self];
