@@ -719,7 +719,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			[menuItem.menu itemWithTag:MTMMWindowToggleWindowAppearanceSeparator].hidden = (isMainWindowMain == NO);
 
-			return [TPCPreferences invertSidebarColorsPreferenceUserConfigurable];
+			return YES;
 		}
 		case MTMMWindowAddressBook: // "Address Book"
 		case MTMMWindowIgnoreList: // "Ignore List"

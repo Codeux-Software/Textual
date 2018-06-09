@@ -194,8 +194,6 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 
 + (BOOL)invertSidebarColors;
 
-+ (BOOL)invertSidebarColorsPreferenceUserConfigurable;
-
 + (BOOL)disableSidebarTranslucency;
 + (BOOL)hideMainWindowSegmentedController;
 

@@ -48,7 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define _templateEngineVersionMinimum			4
 
 @interface TPCThemeSettings ()
-@property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
 @property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
 @property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
 @property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
@@ -348,8 +347,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.settingsKeyValueStoreName = nil;
 
-	self.invertSidebarColors = NO;
-
 	self.underlyingWindowColor = nil;
 
 	self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
@@ -368,8 +365,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.themeNicknameFormat = [self _stringForKey:@"Nickname Format" fromDictionary:styleSettings];
 		self.themeTimestampFormat = [self _stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
-
-		self.invertSidebarColors = [styleSettings boolForKey:@"Force Invert Sidebars"];
 
 		self.channelViewOverlayColor = [self _colorForKey:@"Channel View Overlay Color" fromDictionary:styleSettings];
 		self.underlyingWindowColor = [self _colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
@@ -448,8 +443,6 @@ NS_ASSUME_NONNULL_BEGIN
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 
 	 window that the active theme has overrode a few user configurable options. The window then 
 	 blanks out the options specified to prevent the user from modifying. */
-	[TPCPreferences setInvertSidebarColorsPreferenceUserConfigurable:(self.invertSidebarColors == NO)];
-
 	[TPCPreferences setThemeChannelViewFontPreferenceUserConfigurable:(self.themeChannelViewFont == nil)];
 
 	[TPCPreferences setThemeNicknameFormatPreferenceUserConfigurable:(self.themeNicknameFormat.length == 0)];
