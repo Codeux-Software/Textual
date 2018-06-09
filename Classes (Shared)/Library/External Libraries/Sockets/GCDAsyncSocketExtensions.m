@@ -50,66 +50,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode
 {
-	NSUInteger positiveErrorCode = (errorCode * (-1));
-
-	if ((positiveErrorCode >= 9800) && (positiveErrorCode <= 9850)) {
-		/* Request the heading for the formatted error message. */
-		NSString *headingFormat =
-		[[NSBundle mainBundle] localizedStringForKey:@"heading"
-											   value:@""
-											   table:@"SecureTransportErrorCodes"];
-
-		/* Request the reason for the formatting error message. */
-		NSString *lookupKey = [NSString stringWithUnsignedInteger:positiveErrorCode];
-
-		NSString *localizedError =
-		[[NSBundle mainBundle] localizedStringForKey:lookupKey
-											   value:@""
-											   table:@"SecureTransportErrorCodes"];
-
-		/* Maybe format the error message. */
-		return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
+	if (errorCode > (-9800) || errorCode < (-9865)) {
+		return nil;
 	}
 
-	return nil;
+	/* Request the heading for the formatted error message. */
+	NSString *headingFormat =
+	[[NSBundle mainBundle] localizedStringForKey:@"heading"
+										   value:@""
+										   table:@"SecureTransportErrorCodes"];
+
+	/* Request the reason for the formatting error message. */
+	NSString *lookupKey = [NSString stringWithInteger:errorCode];
+
+	NSString *localizedError =
+	[[NSBundle mainBundle] localizedStringForKey:lookupKey
+										   value:@""
+										   table:@"SecureTransportErrorCodes"];
+
+	/* Maybe format the error message. */
+	return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
 }
 
 + (BOOL)isBadSSLCertificateError:(NSError *)error
 {
 	NSParameterAssert(error != nil);
 
-	if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
-		BOOL isBadCertError = NO;
-
-		switch (error.code) {
-			case errSSLBadCert:
-			case errSSLNoRootCert:
-			case errSSLCertExpired:
-			case errSSLPeerBadCert:
-			case errSSLPeerCertRevoked:
-			case errSSLPeerCertExpired:
-			case errSSLPeerCertUnknown:
-			case errSSLUnknownRootCert:
-			case errSSLCertNotYetValid:
-			case errSSLXCertChainInvalid:
-			case errSSLPeerUnsupportedCert:
-			case errSSLPeerUnknownCA:
-			case errSSLHostNameMismatch:
-			{
-				isBadCertError = YES;
-
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
-
-		return isBadCertError;
-	}
-
-	return NO;
+	return [error.domain isEqualToString:@"kCFStreamErrorDomainSSL"];
 }
 
 - (SSLProtocol)sslNegotiatedProtocolVersion
