@@ -386,7 +386,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	NSString *errorMessage = nil;
 
-	if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
+	if ([GCDAsyncSocket isBadSSLCertificateError:error]) {
 		errorMessage = [GCDAsyncSocket sslHandshakeErrorStringFromError:error.code];
 	}
 
