@@ -10,37 +10,17 @@
 			<integer>22</integer>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemBold</string>
+				<key>size</key>
+				<integer>13</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemBold</string>
+				<key>size</key>
+				<integer>13</integer>
 			</dict>
 			<key>topOffset</key>
 			<integer>2</integer>
@@ -51,37 +31,17 @@
 			<integer>20</integer>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>12</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>12</integer>
 			</dict>
 			<key>topOffset</key>
 			<integer>2</integer>
@@ -92,37 +52,17 @@
 		<dict>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemMonospace</string>
+				<key>size</key>
+				<integer>11</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemMonospace</string>
+				<key>size</key>
+				<integer>11</integer>
 			</dict>
 			<key>minimumWidth</key>
 			<integer>22</integer>
@@ -648,37 +588,17 @@
 			<integer>22</integer>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemBold</string>
+				<key>size</key>
+				<integer>13</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemBold</string>
-					<key>size</key>
-					<integer>13</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemBold</string>
+				<key>size</key>
+				<integer>13</integer>
 			</dict>
 			<key>topOffset</key>
 			<integer>3</integer>
@@ -689,37 +609,17 @@
 			<integer>20</integer>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>12</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>12</integer>
 			</dict>
 			<key>topOffset</key>
 			<integer>3</integer>
@@ -730,37 +630,17 @@
 		<dict>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemMonospace</string>
+				<key>size</key>
+				<integer>11</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>SystemMonospace</string>
-					<key>size</key>
-					<integer>11</integer>
-				</dict>
+				<key>name</key>
+				<string>SystemMonospace</string>
+				<key>size</key>
+				<integer>11</integer>
 			</dict>
 			<key>minimumWidth</key>
 			<integer>22</integer>
@@ -1303,45 +1183,21 @@
 			<real>21</real>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-					<key>weight</key>
-					<integer>15</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-					<key>weight</key>
-					<integer>15</integer>
-				</dict>
+				<key>name</key>
+				<string>Lucida Grande</string>
+				<key>size</key>
+				<integer>12</integer>
+				<key>weight</key>
+				<integer>15</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-					<key>weight</key>
-					<integer>15</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-					<key>weight</key>
-					<integer>15</integer>
-				</dict>
+				<key>name</key>
+				<string>Lucida Grande</string>
+				<key>size</key>
+				<integer>12</integer>
+				<key>weight</key>
+				<integer>15</integer>
 			</dict>
 		</dict>
 		<key>Channel Cell</key>
@@ -1350,86 +1206,40 @@
 			<real>20</real>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-				</dict>
+				<key>name</key>
+				<string>Lucida Grande</string>
+				<key>size</key>
+				<integer>12</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-					<key>weight</key>
-					<integer>15</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Lucida Grande</string>
-					<key>size</key>
-					<integer>12</integer>
-					<key>weight</key>
-					<integer>15</integer>
-				</dict>
+				<key>name</key>
+				<string>Lucida Grande</string>
+				<key>size</key>
+				<integer>12</integer>
+				<key>weight</key>
+				<integer>15</integer>
 			</dict>
 		</dict>
 		<key>Unread Badge</key>
 		<dict>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Helvetica</string>
-					<key>size</key>
-					<real>10.5</real>
-					<key>weight</key>
-					<integer>9</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Helvetica</string>
-					<key>size</key>
-					<real>10.5</real>
-					<key>weight</key>
-					<integer>9</integer>
-				</dict>
+				<key>name</key>
+				<string>Helvetica</string>
+				<key>size</key>
+				<real>10.5</real>
+				<key>weight</key>
+				<integer>9</integer>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Helvetica</string>
-					<key>size</key>
-					<real>10.5</real>
-					<key>weight</key>
-					<integer>9</integer>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>Helvetica</string>
-					<key>size</key>
-					<real>10.5</real>
-					<key>weight</key>
-					<integer>9</integer>
-				</dict>
+				<key>name</key>
+				<string>Helvetica</string>
+				<key>size</key>
+				<real>10.5</real>
+				<key>weight</key>
+				<integer>9</integer>
 			</dict>
 			<key>minimumWidth</key>
 			<integer>22</integer>

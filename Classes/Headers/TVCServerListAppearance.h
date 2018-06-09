@@ -63,10 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSColor *serverSelectedTextColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *serverSelectedTextShadowColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *serverSelectedTextShadowColorInactiveWindow;
-@property (readonly, copy, nullable) NSFont *serverFontActiveWindow;
-@property (readonly, copy, nullable) NSFont *serverFontInactiveWindow;
-@property (readonly, copy, nullable) NSFont *serverFontSelectedActiveWindow;
-@property (readonly, copy, nullable) NSFont *serverFontSelectedInactiveWindow;
+@property (readonly, copy, nullable) NSFont *serverFont;
+@property (readonly, copy, nullable) NSFont *serverFontSelected;
 @property (readonly) CGFloat serverTopOffset;
 
 #pragma mark -
@@ -91,10 +89,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSColor *channelErroneousTextColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *channelHighlightTextColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *channelHighlightTextColorInactiveWindow;
-@property (readonly, copy, nullable) NSFont *channelFontActiveWindow;
-@property (readonly, copy, nullable) NSFont *channelFontInactiveWindow;
-@property (readonly, copy, nullable) NSFont *channelFontSelectedActiveWindow;
-@property (readonly, copy, nullable) NSFont *channelFontSelectedInactiveWindow;
+@property (readonly, copy, nullable) NSFont *channelFont;
+@property (readonly, copy, nullable) NSFont *channelFontSelected;
 @property (readonly) CGFloat channelTopOffset;
 
 #pragma mark -
@@ -115,10 +111,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSColor *unreadBadgeHighlightTextColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *unreadBadgeShadowColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *unreadBadgeShadowColorInactiveWindow;
-@property (readonly, copy, nullable) NSFont *unreadBadgeFontActiveWindow;
-@property (readonly, copy, nullable) NSFont *unreadBadgeFontInactiveWindow;
-@property (readonly, copy, nullable) NSFont *unreadBadgeFontSelectedActiveWindow;
-@property (readonly, copy, nullable) NSFont *unreadBadgeFontSelectedInactiveWindow;
+@property (readonly, copy, nullable) NSFont *unreadBadgeFont;
+@property (readonly, copy, nullable) NSFont *unreadBadgeFontSelected;
 @property (readonly) CGFloat unreadBadgeMinimumWidth;
 @property (readonly) CGFloat unreadBadgeHeight;
 @property (readonly) CGFloat unreadBadgePadding;
