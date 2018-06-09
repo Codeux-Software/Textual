@@ -954,11 +954,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (self.isSelected)
 	{
-		TVCMainWindow *mainWindow = self.mainWindow;
-
-		BOOL isWindowActive = mainWindow.isActiveForDrawing;
-
-		if (isWindowActive) {
+		if (self.mainWindow.usingDarkAppearance) {
 			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
