@@ -35,22 +35,34 @@
  *
  *********************************************************************** */
 
-#import "TVCAppearance.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCAppearance ()
-/* TVCListAppearance will take care of all the hard work such as
- inheritance and retina. You only need to specify "MavericksDark"
- for example, not "MavericksDarkRetina" */
-- (nullable instancetype)initWithAppearanceNamed:(NSString *)appearanceName
-										   atURL:(NSURL *)appearanceLocation
-								forRetinaDisplay:(BOOL)forRetinaDisplay NS_DESIGNATED_INITIALIZER;
+@interface TVCAppearance : NSObject
+/* Top level group */
+/* Nonnull until -flushAppearanceProperties is called. */
+@property (readonly, copy, nullable) NSDictionary<NSString *, id> *appearanceProperties;
 
-/* When a subclass finishes applying all appearance values to properties,
- it can flush the top level group which will cause it to disappear from
- memory, thus reducing overall memory use. */
-- (void)flushAppearanceProperties;
+/* Properties */
+@property (readonly) BOOL isHighResolutionAppearance;
+
+/* Accessors */
+- (nullable NSColor *)colorForKey:(NSString *)key; // forActiveWindow = YES
+- (nullable NSColor *)colorForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key; // forActiveWindow = YES
+- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+
+- (nullable NSFont *)fontForKey:(NSString *)key; // forActiveWindow = YES
+- (nullable NSFont *)fontForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key; // forActiveWindow = YES
+- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+
+- (nullable NSImage *)imageForKey:(NSString *)key; // forActiveWindow = YES
+- (nullable NSImage *)imageForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key; // forActiveWindow = YES
+- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+
+- (CGFloat)measurementForKey:(NSString *)key;
+- (CGFloat)measurementInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
 @end
 
 NS_ASSUME_NONNULL_END
