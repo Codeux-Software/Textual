@@ -9326,7 +9326,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		case RPL_WHOISIDLE:
 		{
-			NSAssertReturn([m paramsCount] == 4);
+			NSAssertReturn([m paramsCount] == 5);
 
 			NSAssertReturn(printMessage);
 
