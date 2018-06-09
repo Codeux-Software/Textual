@@ -54,6 +54,7 @@
 #import "TVCMainWindowTextViewPrivate.h"
 #import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
 #import "TVCServerListPrivate.h"
+#import "TVCServerListAppearancePrivate.h"
 #import "TVCServerListCellPrivate.h"
 #import "TVCServerListSharedUserInterfacePrivate.h"
 #import "TVCMemberListPrivate.h"
@@ -2824,13 +2825,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	id interfaceObjects = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
 	if (item == nil || [item isClient]) {
-		return [interfaceObjects serverCellRowHeight];
+		return appearance.serverRowHeight;
 	}
 
-	return [interfaceObjects channelCellRowHeight];
+	return appearance.channelRowHeight;
 }
 
 - (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
