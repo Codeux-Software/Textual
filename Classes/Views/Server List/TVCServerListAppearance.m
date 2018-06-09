@@ -39,6 +39,7 @@
 #import "NSObjectHelperPrivate.h"
 #import "NSViewHelperPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
+#import "TVCAppearancePrivate.h"
 #import "TVCMainWindow.h"
 #import "TVCServerListPrivate.h"
 #import "TVCServerListAppearancePrivate.h"
