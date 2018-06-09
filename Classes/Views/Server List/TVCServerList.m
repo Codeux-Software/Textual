@@ -224,7 +224,10 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 - (void)reloadUserInterfaceObjects
 {
-	self.userInterfaceObjects = [[TVCServerListAppearance alloc] initWithServerList:self];
+	/* We assign a strong reference to these instead of returning the original
+	 value every time so that there are no race conditions for when it changes. */
+
+	self.userInterfaceObjects = self.mainWindow.userInterfaceObjects.serverList;
 }
 
 - (void)updateVibrancy

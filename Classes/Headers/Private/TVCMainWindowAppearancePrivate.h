@@ -35,20 +35,14 @@
  *
  *********************************************************************** */
 
-#import "TVCServerListAppearance.h"
+#import "TVCMainWindowAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCServerList, TVCMainWindowAppearance;
+@class TVCMainWindow;
 
-@interface TVCServerListAppearance ()
-- (nullable instancetype)initWithServerList:(TVCServerList *)serverList parentAppearance:(TVCMainWindowAppearance *)appearance;
-
-- (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image;
-- (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image;
-@end
-
-@interface TVCServerListMavericksBackgroundBox : NSBox
+@interface TVCMainWindowAppearance ()
+- (nullable instancetype)initWithWindow:(TVCMainWindow *)mainWindow;
 @end
 
 NS_ASSUME_NONNULL_END

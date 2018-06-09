@@ -39,7 +39,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class IRCClient, IRCChannel, IRCTreeItem;
-@class TVCMainWindowLoadingScreenView, TVCMainWindowSplitView, TVCMainWindowTextView;
+@class TVCMainWindowAppearance, TVCMainWindowLoadingScreenView;
+@class TVCMainWindowSplitView, TVCMainWindowTextView;
 @class TVCServerList, TVCMemberList;
 @class TVCLogController;
 
@@ -64,6 +65,8 @@ TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 
 @interface TVCMainWindow : NSWindow
 @property (readonly, getter=isDisabled) BOOL disabled;
+
+@property (readonly) TVCMainWindowAppearance *userInterfaceObjects;
 
 @property (readonly, weak) TVCMainWindowLoadingScreenView *loadingScreen;
 @property (readonly, weak) TVCMainWindowSplitView *contentSplitView;
