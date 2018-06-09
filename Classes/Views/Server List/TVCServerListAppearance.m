@@ -76,10 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable, readwrite) NSColor *serverSelectedTextColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *serverSelectedTextShadowColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *serverSelectedTextShadowColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *serverFontActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *serverFontInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *serverFontSelectedActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *serverFontSelectedInactiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSFont *serverFont;
+@property (nonatomic, copy, nullable, readwrite) NSFont *serverFontSelected;
 @property (nonatomic, assign, readwrite) CGFloat serverTopOffset;
 
 #pragma mark -
@@ -104,10 +102,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelErroneousTextColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelHighlightTextColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelHighlightTextColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *channelFontActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *channelFontInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *channelFontSelectedActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *channelFontSelectedInactiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSFont *channelFont;
+@property (nonatomic, copy, nullable, readwrite) NSFont *channelFontSelected;
 @property (nonatomic, assign, readwrite) CGFloat channelTopOffset;
 
 #pragma mark -
@@ -127,10 +123,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable, readwrite) NSColor *unreadBadgeHighlightTextColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *unreadBadgeShadowColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *unreadBadgeShadowColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *unreadBadgeFontActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *unreadBadgeFontInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *unreadBadgeFontSelectedActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSFont *unreadBadgeFontSelectedInactiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSFont *unreadBadgeFont;
+@property (nonatomic, copy, nullable, readwrite) NSFont *unreadBadgeFontSelected;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeMinimumWidth;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeHeight;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgePadding;
@@ -201,10 +195,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.serverSelectedTextColorInactiveWindow = [self colorInGroup:serverCell withKey:@"selectedTextColor" forActiveWindow:NO];
 	self.serverSelectedTextShadowColorActiveWindow = [self colorInGroup:serverCell withKey:@"selectedTextShadowColor" forActiveWindow:YES];
 	self.serverSelectedTextShadowColorInactiveWindow = [self colorInGroup:serverCell withKey:@"selectedTextShadowColor" forActiveWindow:NO];
-	self.serverFontActiveWindow = [self fontInGroup:serverCell withKey:@"font" forActiveWindow:YES];
-	self.serverFontInactiveWindow = [self fontInGroup:serverCell withKey:@"font" forActiveWindow:NO];
-	self.serverFontSelectedActiveWindow = [self fontInGroup:serverCell withKey:@"fontSelected" forActiveWindow:YES];
-	self.serverFontSelectedInactiveWindow = [self fontInGroup:serverCell withKey:@"fontSelected" forActiveWindow:NO];
+	self.serverFont = [self fontInGroup:serverCell withKey:@"font"];
+	self.serverFontSelected = [self fontInGroup:serverCell withKey:@"fontSelected"];
 	self.serverTopOffset = [self measurementInGroup:serverCell withKey:@"topOffset"];
 
 	NSDictionary *channelCell = properties[@"Channel Cell"];
@@ -228,10 +220,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.channelErroneousTextColorInactiveWindow = [self colorInGroup:channelCell withKey:@"erroneousTextColor" forActiveWindow:NO];
 	self.channelHighlightTextColorActiveWindow = [self colorInGroup:channelCell withKey:@"highlightTextColor" forActiveWindow:YES];
 	self.channelHighlightTextColorInactiveWindow = [self colorInGroup:channelCell withKey:@"highlightTextColor" forActiveWindow:NO];
-	self.channelFontActiveWindow = [self fontInGroup:channelCell withKey:@"font" forActiveWindow:YES];
-	self.channelFontInactiveWindow = [self fontInGroup:channelCell withKey:@"font" forActiveWindow:NO];
-	self.channelFontSelectedActiveWindow = [self fontInGroup:channelCell withKey:@"fontSelected" forActiveWindow:YES];
-	self.channelFontSelectedInactiveWindow = [self fontInGroup:channelCell withKey:@"fontSelected" forActiveWindow:NO];
+	self.channelFont = [self fontInGroup:channelCell withKey:@"font"];
+	self.channelFontSelected = [self fontInGroup:channelCell withKey:@"fontSelected"];
 	self.channelTopOffset = [self measurementInGroup:channelCell withKey:@"topOffset"];
 
 	NSDictionary *unreadBadge = properties[@"Unread Badge"];
@@ -250,10 +240,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.unreadBadgeHighlightTextColorInactiveWindow = [self colorInGroup:unreadBadge withKey:@"highlightTextColor" forActiveWindow:NO];
 	self.unreadBadgeShadowColorActiveWindow = [self colorInGroup:unreadBadge withKey:@"shadowColor" forActiveWindow:YES];
 	self.unreadBadgeShadowColorInactiveWindow = [self colorInGroup:unreadBadge withKey:@"shadowColor" forActiveWindow:NO];
-	self.unreadBadgeFontActiveWindow = [self fontInGroup:unreadBadge withKey:@"font" forActiveWindow:YES];
-	self.unreadBadgeFontInactiveWindow = [self fontInGroup:unreadBadge withKey:@"font" forActiveWindow:NO];
-	self.unreadBadgeFontSelectedActiveWindow = [self fontInGroup:unreadBadge withKey:@"fontSelected" forActiveWindow:YES];
-	self.unreadBadgeFontSelectedInactiveWindow = [self fontInGroup:unreadBadge withKey:@"fontSelected" forActiveWindow:NO];
+	self.unreadBadgeFont = [self fontInGroup:unreadBadge withKey:@"font"];
+	self.unreadBadgeFontSelected = [self fontInGroup:unreadBadge withKey:@"fontSelected"];
 	self.unreadBadgeMinimumWidth = [self measurementInGroup:unreadBadge withKey:@"minimumWidth"];
 	self.unreadBadgeHeight = [self measurementInGroup:unreadBadge withKey:@"height"];
 	self.unreadBadgePadding = [self measurementInGroup:unreadBadge withKey:@"padding"];

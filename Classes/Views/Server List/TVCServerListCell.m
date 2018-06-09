@@ -295,17 +295,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isGroupItem)
 	{
 		if (isSelected) {
-			if (isWindowActive) {
-				controlFont = appearance.serverFontSelectedActiveWindow;
-			} else {
-				controlFont = appearance.serverFontSelectedInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.serverFontSelected;
 		} else {
-			if (isWindowActive) {
-				controlFont = appearance.serverFontActiveWindow;
-			} else {
-				controlFont = appearance.serverFontInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.serverFont;
 		} // isSelected
 
 		NSColor *shadowColor = nil;
@@ -351,17 +343,9 @@ NS_ASSUME_NONNULL_BEGIN
 	else // isGroupItem
 	{
 		if (isSelected) {
-			if (isWindowActive) {
-				controlFont = appearance.channelFontSelectedActiveWindow;
-			} else {
-				controlFont = appearance.channelFontSelectedInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.channelFontSelected;
 		} else {
-			if (isWindowActive) {
-				controlFont = appearance.channelFontActiveWindow;
-			} else {
-				controlFont = appearance.channelFontInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.channelFont;
 		} // isSelected
 
 		NSColor *shadowColor = nil;
@@ -462,17 +446,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isGroupItem)
 	{
 		if (isSelected) {
-			if (isWindowActive) {
-				controlFont = appearance.serverFontSelectedActiveWindow;
-			} else {
-				controlFont = appearance.serverFontSelectedInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.serverFontSelected;
 		} else {
-			if (isWindowActive) {
-				controlFont = appearance.serverFontActiveWindow;
-			} else {
-				controlFont = appearance.serverFontInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.serverFont;
 		} // isSelected
 
 		if (isSelected) {
@@ -498,17 +474,9 @@ NS_ASSUME_NONNULL_BEGIN
 	else // isGroupItem
 	{
 		if (isSelected) {
-			if (isWindowActive) {
-				controlFont = appearance.channelFontSelectedActiveWindow;
-			} else {
-				controlFont = appearance.channelFontSelectedInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.channelFontSelected;
 		} else {
-			if (isWindowActive) {
-				controlFont = appearance.channelFontActiveWindow;
-			} else {
-				controlFont = appearance.channelFontInactiveWindow;
-			} // isWindowActive
+			controlFont = appearance.channelFont;
 		} // isSelected
 
 		if (isSelected) {
@@ -644,17 +612,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSFont *controlFont = nil;
 
 	if (isSelected) {
-		if (isWindowActive) {
-			controlFont = appearance.unreadBadgeFontSelectedActiveWindow;
-		} else {
-			controlFont = appearance.unreadBadgeFontSelectedInactiveWindow;
-		} // isWindowActive
+		controlFont = appearance.unreadBadgeFontSelected;
 	} else {
-		if (isWindowActive) {
-			controlFont = appearance.unreadBadgeFontActiveWindow;
-		} else {
-			controlFont = appearance.unreadBadgeFontInactiveWindow;
-		} // isWindowActive
+		controlFont = appearance.unreadBadgeFont;
 	} // isSelected
 
 	NSColor *controlColor = nil;
