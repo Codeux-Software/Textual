@@ -918,14 +918,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	return kcPassword;
 }
 
-- (void)writeItemsToKeychain
-{
-	TEXTUAL_DEPRECATED_WARNING
-
-	[self writeNicknamePasswordToKeychain];
-	[self writeProxyPasswordToKeychain];
-}
-
 - (void)writeNicknamePasswordToKeychain
 {
 	if (self->_nicknamePassword == nil) {
@@ -958,11 +950,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 							serviceName:proxyPasswordServiceName];
 
 	self->_proxyPassword = nil;
-}
-
-- (void)writeServerPasswordToKeychain
-{
-	TEXTUAL_DEPRECATED_WARNING
 }
 
 - (void)destroyNicknamePasswordKeychainItem
@@ -1003,14 +990,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:serverPasswordServiceName];
-}
-
-- (void)destroyKeychainItems
-{
-	TEXTUAL_DEPRECATED_WARNING
-
-	[self destroyNicknamePasswordKeychainItem];
-	[self destroyProxyPasswordKeychainItem];
 }
 
 #pragma mark -

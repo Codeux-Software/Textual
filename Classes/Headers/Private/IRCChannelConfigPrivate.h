@@ -47,10 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)writeSecretKeyToKeychain;
 
 - (void)destroySecretKeyKeychainItem;
-
-/* Deprecated */
-- (void)writeItemsToKeychain TEXTUAL_DEPRECATED("Use one or more -write*ToKeychain methods to avoid confusion on what is actually written.");
-- (void)destroyKeychainItems TEXTUAL_DEPRECATED("Use one or more -destroy*KeychainItem methods to avoid confusion on what is actually destroyed.");
 @end
 
 NS_ASSUME_NONNULL_END
