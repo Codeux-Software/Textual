@@ -262,6 +262,25 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 										selector:@selector(accessibilityDisplayOptionsDidChange:)
 											name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification
 										  object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(systemColorsDidChange:)
+								   name:NSControlTintDidChangeNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(systemColorsDidChange:)
+								   name:NSSystemColorsDidChangeNotification
+								 object:nil];
+
+	[NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+{
+	if ([keyPath isEqualToString:@"effectiveAppearance"]) {
+		[self systemColorsDidChange:nil];
+	}
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
@@ -282,6 +301,11 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	[self toggleFullScreen:nil];
+}
+
+- (void)systemColorsDidChange:(NSNotification *)aNote
+{
+	[self updateBackgroundColor];
 }
 
 - (void)accessibilityDisplayOptionsDidChange:(NSNotification *)aNote
@@ -370,6 +394,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)prepareForApplicationTermination
 {
 	[RZNotificationCenter() removeObserver:self];
+
+	[NSApp removeObserver:self forKeyPath:@"effectiveAppearance"];
 
 	[self saveWindowState];
 
