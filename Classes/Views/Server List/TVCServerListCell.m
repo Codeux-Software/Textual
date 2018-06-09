@@ -494,7 +494,7 @@ NS_ASSUME_NONNULL_BEGIN
 				if (isWindowActive) {
 					controlColor = appearance.channelHighlightTextColorActiveWindow;
 				} else {
-					customColor = appearance.channelHighlightTextColorInactiveWindow;
+					controlColor = appearance.channelHighlightTextColorInactiveWindow;
 				} // isWindowActive
 			} // custom color set
 		} else if (isActive) {
