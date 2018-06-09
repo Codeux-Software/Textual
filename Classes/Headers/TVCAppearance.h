@@ -45,24 +45,52 @@ NS_ASSUME_NONNULL_BEGIN
 /* Properties */
 @property (readonly) BOOL isHighResolutionAppearance;
 
-/* Accessors */
-- (nullable NSColor *)colorForKey:(NSString *)key; // forActiveWindow = YES
-- (nullable NSColor *)colorForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
-- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key; // forActiveWindow = YES
-- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+/* Stateless Accessors */
+- (nullable NSColor *)colorForKey:(NSString *)key;
+- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
 
-- (nullable NSFont *)fontForKey:(NSString *)key; // forActiveWindow = YES
-- (nullable NSFont *)fontForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
-- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key; // forActiveWindow = YES
-- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSFont *)fontForKey:(NSString *)key;
+- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
 
-- (nullable NSImage *)imageForKey:(NSString *)key; // forActiveWindow = YES
-- (nullable NSImage *)imageForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
-- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key; // forActiveWindow = YES
-- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSImage *)imageForKey:(NSString *)key;
+- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
 
 - (CGFloat)measurementForKey:(NSString *)key;
 - (CGFloat)measurementInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
+
+/* Stateful Accessors */
+/* Stateful appearance properties require the properties to have a
+ "activeWindow" and "inactiveWindow" dictionary value which contains
+ the value of the property itself. */
+/*
+ Example:
+
+ <key>exampleStatefulColor</key>
+ <dict>
+	 <key>activeWindow</key>
+	 <dict>
+		 <key>type</key>
+		 <integer>1</integer>
+		 <key>value</key>
+		 <string>0.0 0.3</string>
+	 </dict>
+	 <key>inactiveWindow</key>
+	 <dict>
+		 <key>type</key>
+		 <integer>1</integer>
+		 <key>value</key>
+		 <string>1.0</string>
+	 </dict>
+ </dict>
+*/
+- (nullable NSColor *)colorForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+
+- (nullable NSFont *)fontForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+
+- (nullable NSImage *)imageForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
 @end
 
 NS_ASSUME_NONNULL_END

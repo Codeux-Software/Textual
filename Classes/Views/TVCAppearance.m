@@ -162,80 +162,80 @@ ClassWithDesignatedInitializerInitMethod
 		 return appearanceIn;
 	 }
 
+	 /* Blocks used for combining properties */
+	 /* I may over engineered this */
+	 typedef void (^mergingLogicType)(NSMutableDictionary *, NSDictionary *);
+	 __weak __block mergingLogicType mergingLogicWeak = nil;
+
+	 NSDictionary *(^mergeImmutableDictionary)(NSDictionary *, NSDictionary *) =
+	 ^NSDictionary *(NSDictionary *firstDictionary, NSDictionary *secondDictionary)
+	 {
+		 NSMutableDictionary *mutableFirstDictionary = [firstDictionary mutableCopy];
+
+		 mergingLogicWeak(mutableFirstDictionary, secondDictionary);
+
+		 return [mutableFirstDictionary copy];
+	 }; // mergeImmutableDictionary
+
+	 mergingLogicType mergingLogic =
+	 ^(NSMutableDictionary *localDictionary, NSDictionary *remoteDictionary)
+	 {
+		 [remoteDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id remoteObject, BOOL *stop) {
+			 id localObject = localDictionary[key];
+
+			 if (localObject == nil) {
+				 [localDictionary setObject:remoteObject forKey:key];
+
+				 return;
+			 }
+
+			 /* I tried to be clever by checking checking if localObject
+			  is kind of class NSMutableDictionary so we can call this
+			  block recursively on it instead of creating new mutable copy.
+			  Yeah, I will never make that mistake. Cluster classes take a
+			  crap on -isKindOfClass: */
+			 if ([remoteObject isKindOfClass:[NSDictionary class]] &&
+				 [localObject isKindOfClass:[NSDictionary class]])
+			 {
+				 localObject = mergeImmutableDictionary(localObject, remoteObject);
+			 } else {
+				 localObject = remoteObject;
+			 }
+
+			 [localDictionary setObject:localObject forKey:key];
+		 }];
+	 }; // mergingLogic
+
+	 mergingLogicWeak = mergingLogic;
+
 	 /* Combine properties */
 	 NSMutableDictionary *appearanceOut = [NSMutableDictionary dictionary];
 
 	 for (NSDictionary *properties in inheritedProperties) {
-		 [self.class _deepMergeEntriesFromDictionary:appearanceOut withDictionary:properties];
+		 mergingLogic(appearanceOut, properties);
 	 }
 
 	 /* Add top most appearance as final combination. */
-	 [self.class _deepMergeEntriesFromDictionary:appearanceOut withDictionary:appearanceIn];
+	 mergingLogic(appearanceOut, appearanceIn);
 
 	 [appearanceOut removeObjectForKey:@"inheritFrom"];
 
 	 return [appearanceOut copy];
  }
 
-+ (void)_deepMergeEntriesFromDictionary:(NSMutableDictionary *)dictionaryIn1 withDictionary:(NSDictionary *)dictionaryIn2
-{
-	NSParameterAssert(dictionaryIn1 != nil);
-	NSParameterAssert(dictionaryIn2 != nil);
-
-	if (dictionaryIn2.count == 0) {
-		return;
-	}
-
-	/* I may over engineered this */
-	typedef void (^mergingLogicType)(NSMutableDictionary *, NSDictionary *);
-	__weak __block mergingLogicType mergingLogicWeak = nil;
-
-	NSDictionary *(^mergeImmutableDictionary)(NSDictionary *, NSDictionary *) =
-	^NSDictionary *(NSDictionary *firstDictionary, NSDictionary *secondDictionary)
-	{
-		NSMutableDictionary *mutableFirstDictionary = [firstDictionary mutableCopy];
-
-		mergingLogicWeak(mutableFirstDictionary, secondDictionary);
-
-		return [mutableFirstDictionary copy];
-	}; // mergeImmutableDictionary
-
-	mergingLogicType mergingLogic =
-	^(NSMutableDictionary *localDictionary, NSDictionary *remoteDictionary)
-	{
-		[remoteDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id remoteObject, BOOL *stop) {
-			id localObject = localDictionary[key];
-
-			if (localObject == nil) {
-				[localDictionary setObject:remoteObject forKey:key];
-
-				return;
-			}
-
-			BOOL remoteObjectIsDictionary = ([remoteObject isKindOfClass:[NSDictionary class]]);
-
-			/* I tried to be clever by checking checking if localObject
-			 is kind of class NSMutableDictionary so we can call this
-			 block recursively on it instead of creating new mutable copy.
-			 Yeah, I will never make that mistake. Cluster classes take a
-			 crap on -isKindOfClass: */
-			if (remoteObjectIsDictionary && [localObject isKindOfClass:[NSDictionary class]]) {
-				localObject = mergeImmutableDictionary(localObject, remoteObject);
-			} else {
-				localObject = remoteObject;
-			}
-
-			[localDictionary setObject:localObject forKey:key];
-		}];
-	}; // mergingLogic
-
-	mergingLogicWeak = mergingLogic;
-
-	mergingLogic(dictionaryIn1, dictionaryIn2);
-}
-
 #pragma mark -
 #pragma mark Utilities
+
+- (nullable id)_valueForKey:(NSString *)key expectedType:(Class)expectedType
+{
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return nil;
+	}
+
+	return [self _valueInGroup:group withKey:key expectedType:expectedType];
+}
 
 - (nullable id)_valueInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key expectedType:(Class)expectedType
 {
@@ -264,7 +264,29 @@ ClassWithDesignatedInitializerInitMethod
 
 - (nullable NSColor *)colorForKey:(NSString *)key
 {
-	return [self colorForKey:key forActiveWindow:YES];
+	NSParameterAssert(key != nil);
+
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return nil;
+	}
+
+	return [self colorInGroup:group withKey:key];
+}
+
+- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
+{
+	NSParameterAssert(group != nil);
+	NSParameterAssert(key != nil);
+
+	NSDictionary *colorProperties = [self _valueInGroup:group withKey:key expectedType:[NSDictionary class]];
+
+	if (colorProperties == nil) {
+		return nil;
+	}
+
+	return [self _colorWithProperties:colorProperties];
 }
 
 - (nullable NSColor *)colorForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
@@ -278,11 +300,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	return [self colorInGroup:group withKey:key forActiveWindow:forActiveWindow];
-}
-
-- (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
-{
-	return [self colorInGroup:group withKey:key forActiveWindow:YES];
 }
 
 - (nullable NSColor *)colorInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
@@ -303,6 +320,13 @@ ClassWithDesignatedInitializerInitMethod
 	if (colorProperties == nil) {
 		return nil;
 	}
+
+	return [self _colorWithProperties:colorProperties];
+}
+
+- (nullable NSColor *)_colorWithProperties:(NSDictionary<NSString *, id> *)colorProperties
+{
+	NSParameterAssert(colorProperties != nil);
 
 	NSString *colorValue = [colorProperties stringForKey:@"value"];
 
@@ -373,7 +397,29 @@ ClassWithDesignatedInitializerInitMethod
 
 - (nullable NSFont *)fontForKey:(NSString *)key
 {
-	return [self fontForKey:key forActiveWindow:YES];
+	NSParameterAssert(key != nil);
+
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return nil;
+	}
+
+	return [self fontInGroup:group withKey:key];
+}
+
+- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
+{
+	NSParameterAssert(group != nil);
+	NSParameterAssert(key != nil);
+
+	NSDictionary *fontProperties = [self _valueInGroup:group withKey:key expectedType:[NSDictionary class]];
+
+	if (fontProperties == nil) {
+		return nil;
+	}
+
+	return [self _fontWithProperties:fontProperties];
 }
 
 - (nullable NSFont *)fontForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
@@ -387,11 +433,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	return [self fontInGroup:group withKey:key forActiveWindow:forActiveWindow];
-}
-
-- (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
-{
-	return [self fontInGroup:group withKey:key forActiveWindow:YES];
 }
 
 - (nullable NSFont *)fontInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
@@ -412,6 +453,13 @@ ClassWithDesignatedInitializerInitMethod
 	if (fontProperties == nil) {
 		return nil;
 	}
+
+	return [self _fontWithProperties:fontProperties];
+}
+
+- (nullable NSFont *)_fontWithProperties:(NSDictionary<NSString *, id> *)fontProperties
+{
+	NSParameterAssert(fontProperties != nil);
 
 	NSString *name = [fontProperties stringForKey:@"name"];
 
@@ -471,7 +519,29 @@ ClassWithDesignatedInitializerInitMethod
 
 - (nullable NSImage *)imageForKey:(NSString *)key
 {
-	return [self imageForKey:key forActiveWindow:YES];
+	NSParameterAssert(key != nil);
+
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return nil;
+	}
+
+	return [self imageInGroup:group withKey:key];
+}
+
+- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
+{
+	NSParameterAssert(group != nil);
+	NSParameterAssert(key != nil);
+
+	NSDictionary *imageProperties = [self _valueInGroup:group withKey:key expectedType:[NSDictionary class]];
+
+	if (imageProperties == nil) {
+		return nil;
+	}
+
+	return [self _imageWithProperties:imageProperties];
 }
 
 - (nullable NSImage *)imageForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
@@ -485,11 +555,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	return [self imageInGroup:group withKey:key forActiveWindow:forActiveWindow];
-}
-
-- (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
-{
-	return [self imageInGroup:group withKey:key forActiveWindow:YES];
 }
 
 - (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
@@ -510,6 +575,13 @@ ClassWithDesignatedInitializerInitMethod
 	if (imageProperties == nil) {
 		return nil;
 	}
+
+	return [self _imageWithProperties:imageProperties];
+}
+
+- (nullable NSImage *)_imageWithProperties:(NSDictionary<NSString *, id> *)imageProperties
+{
+	NSParameterAssert(imageProperties != nil);
 
 	id imageValue = [imageProperties stringForKey:@"value"];
 
