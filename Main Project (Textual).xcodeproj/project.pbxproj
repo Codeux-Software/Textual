@@ -525,6 +525,10 @@
 		4C3333F520CBEFA700ACB9AD /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F320CBEFA700ACB9AD /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3333F620CBEFA700ACB9AD /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F320CBEFA700ACB9AD /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3333F720CBEFA700ACB9AD /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F320CBEFA700ACB9AD /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3333F920CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3333FA20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3333FB20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3333FC20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C34F34D1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
 		4C34F34E1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
 		4C34F34F1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
@@ -2917,6 +2921,7 @@
 		4C312D5420AE0A8000874D04 /* TVCAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCAlert.h; path = Classes/Headers/TVCAlert.h; sourceTree = "<group>"; };
 		4C312D5920AE125A00874D04 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCAlert.xib"; sourceTree = "<group>"; };
 		4C3333F320CBEFA700ACB9AD /* TVCAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCAppearance.h; path = Classes/Headers/TVCAppearance.h; sourceTree = "<group>"; };
+		4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListAppearance.h; path = Classes/Headers/TVCServerListAppearance.h; sourceTree = "<group>"; };
 		4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionOutlineCellView.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionOutlineCellView.m"; sourceTree = "<group>"; };
 		4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionViewController.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionViewController.m"; sourceTree = "<group>"; };
 		4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewCellPrivate.h; path = Classes/Headers/Private/TVCChannelSelectionOutlineViewCellPrivate.h; sourceTree = "<group>"; };
@@ -4668,6 +4673,7 @@
 				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
+				4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */,
 				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
 				4C001C09197A10E80061C2C5 /* TVCValidatedComboBox.h */,
 				4C36091918B4E89500243B3A /* TVCValidatedTextField.h */,
@@ -5301,6 +5307,7 @@
 				4CCDC6B81EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
 				4C7B037B1D1210A100295E82 /* TVCBasicTableView.h in Headers */,
 				4CEA29C81D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
+				4C3333F920CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */,
 				4C2B1D811EBA48790093C629 /* TLONotificationConfigurationPrivate.h in Headers */,
 				4C558DD21D24055C00628B47 /* TDCServerChangeNicknameSheetPrivate.h in Headers */,
 				4CB17EC51D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
@@ -5423,6 +5430,7 @@
 				4C47320620C7599800713C91 /* TDCChannelSpotlightControllerPrivate.h in Headers */,
 				4C47320720C7599800713C91 /* TVCServerListCellPrivate.h in Headers */,
 				4C47320820C7599800713C91 /* GCDAsyncSocketCipherNames.h in Headers */,
+				4C3333FC20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */,
 				4C47320920C7599800713C91 /* TPCPreferencesLocal.h in Headers */,
 				4C47320A20C7599800713C91 /* TPCPreferencesImportExport.h in Headers */,
 				4C47320B20C7599800713C91 /* IRCChannelConfigInternal.h in Headers */,
@@ -5679,6 +5687,7 @@
 				4CAC2A291F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C7B03001D12105D00295E82 /* TPCPreferencesLocal.h in Headers */,
 				4C7B03031D12105D00295E82 /* TPCPreferencesImportExport.h in Headers */,
+				4C3333FA20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */,
 				4CF642F21D2DC34100CB9165 /* IRCChannelConfigInternal.h in Headers */,
 				4CE474381D2F3CE400909766 /* IRCClientConfigInternal.h in Headers */,
 				4C7B03041D12105D00295E82 /* TPCPreferencesUserDefaultsLocal.h in Headers */,
@@ -5935,6 +5944,7 @@
 				4CFEE14B1D3AEEF70052709F /* TDCChannelSpotlightControllerPrivate.h in Headers */,
 				4C2D6AC01D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */,
 				4CAC2A2A1F12D86200D06046 /* GCDAsyncSocketCipherNames.h in Headers */,
+				4C3333FB20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */,
 				4C7B030F1D12106300295E82 /* TPCPreferencesLocal.h in Headers */,
 				4C7B03121D12106300295E82 /* TPCPreferencesImportExport.h in Headers */,
 				4CF642F31D2DC34100CB9165 /* IRCChannelConfigInternal.h in Headers */,
