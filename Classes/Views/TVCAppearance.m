@@ -470,7 +470,7 @@ ClassWithDesignatedInitializerInitMethod
 		return nil;
 	}
 
-	BOOL onElCapitan = TEXTUAL_RUNNING_ON(10.11, ElCapitan);
+	BOOL onElCapitan = TEXTUAL_RUNNING_ON_ELCAPITAN;
 
 	CGFloat weight = [fontProperties doubleForKey:@"weight"];
 

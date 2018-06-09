@@ -199,7 +199,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
-	if (TEXTUAL_RUNNING_ON(10.11, ElCapitan)) {
+	if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
 		[TVCLogViewInternalWK2 emptyCaches:^{
 			dispatch_semaphore_signal(semaphore);
 		}];

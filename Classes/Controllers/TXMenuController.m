@@ -610,7 +610,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case MTMMNavigationSearchChannels: // "Search channels…"
 		{
-			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
+			menuItem.hidden = (TEXTUAL_RUNNING_ON_YOSEMITE == NO);
 
 			return YES;
 		}
@@ -749,7 +749,7 @@ NS_ASSUME_NONNULL_BEGIN
 		case MTMMWindowBuddyList: // "Buddy List"
 		{
 #ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
-			menuItem.hidden = (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO);
+			menuItem.hidden = (TEXTUAL_RUNNING_ON_YOSEMITE == NO);
 #else
 			menuItem.hidden = YES;
 #endif
@@ -3730,7 +3730,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showChannelSpotlightWindow:(id)sender
 {
-	NSAssert(TEXTUAL_RUNNING_ON(10.10, Yosemite),
+	NSAssert(TEXTUAL_RUNNING_ON_YOSEMITE,
 		 @"This feature requires OS X Yosemite or later");
 
 	_popWindowViewIfExists(@"TDCChannelSpotlightController");

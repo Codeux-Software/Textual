@@ -96,13 +96,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL darkMode = [TPCPreferences invertSidebarColors];
 
-	if (TEXTUAL_RUNNING_ON(10.14, Mojave)) {
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
 		if (darkMode) {
 			return TVCMainWindowAppearanceMojaveDarkType;
 		} else {
 			return TVCMainWindowAppearanceMojaveLightType;
 		}
-	} else if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	} else if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		if (darkMode) {
 			return TVCMainWindowAppearanceYosemiteDarkType;
 		} else {

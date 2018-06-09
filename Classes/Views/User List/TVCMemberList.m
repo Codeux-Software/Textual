@@ -407,7 +407,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 {
 	Class newObjects = NULL;
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite))
+	if (TEXTUAL_RUNNING_ON_YOSEMITE)
 	{
 		if (self.mainWindow.usingDarkAppearance) {
 			newObjects = [TVCMemberListDarkYosemiteUserInterface class];
@@ -462,13 +462,13 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 	[self deselectAll:nil];
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self updateVibrancy];
 	}
 
 	[self reloadUserInterfaceObjects];
 
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite) == NO) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
 		if (self.mainWindow.usingDarkAppearance) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {

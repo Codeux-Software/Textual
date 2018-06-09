@@ -160,7 +160,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	NSString *appStoreIconPath = nil;
 
-	if (TEXTUAL_RUNNING_ON(10.12, Sierra)) {
+	if (TEXTUAL_RUNNING_ON_SIERRA) {
 		appStoreIconPath = [appStoreApplication pathForResource:@"AppIcon" ofType:@"icns"];
 	} else {
 		appStoreIconPath = [appStoreApplication pathForResource:@"appStore" ofType:@"icns"];

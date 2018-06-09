@@ -891,7 +891,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[super viewWillMoveToWindow:newWindow];
 
-	self.disableQuirks = TEXTUAL_RUNNING_ON(10.14, Mojave);
+	self.disableQuirks = TEXTUAL_RUNNING_ON_MOJAVE;
 }
 
 - (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect

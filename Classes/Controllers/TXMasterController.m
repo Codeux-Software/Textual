@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 #ifdef TXSystemIsOSXSierraOrLater
-	if (TEXTUAL_RUNNING_ON(10.12, Sierra)) {
+	if (TEXTUAL_RUNNING_ON_SIERRA) {
 		LogToConsoleSetDefaultSubsystem(os_log_create(TXBundleBuildProductIdentifierCString, "General"));
 	}
 #endif
@@ -155,7 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* We wait until -awakeFromNib to wake the window so that the menu
 	 controller created by the main nib has time to load. */
-	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[RZMainBundle() loadNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
 	} else {
 		[RZMainBundle() loadNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
