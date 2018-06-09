@@ -341,14 +341,14 @@
 					<key>type</key>
 					<integer>3</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>secondaryLabelColor</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
 					<integer>3</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>secondaryLabelColor</string>
 				</dict>
 			</dict>
 			<key>disabledTextColor</key>
@@ -356,16 +356,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.65</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.65</string>
 				</dict>
 			</dict>
 			<key>selectedTextColor</key>
@@ -395,14 +395,14 @@
 					<key>type</key>
 					<integer>3</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>secondaryLabelColor</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
 					<integer>3</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>secondaryLabelColor</string>
 				</dict>
 			</dict>
 			<key>disabledTextColor</key>
@@ -410,16 +410,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.62</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.62</string>
 				</dict>
 			</dict>
 			<key>selectedTextColor</key>
@@ -1005,16 +1005,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>2</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>0.0 0.0 0.0 0.5</string>
+					<string>0.0 0.5</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>2</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>0.0 0.0 0.0 0.5</string>
+					<string>0.0 0.5</string>
 				</dict>
 			</dict>
 			<key>selectedTextColor</key>
