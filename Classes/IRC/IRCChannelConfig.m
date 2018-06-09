@@ -382,13 +382,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return kcPassword;
 }
 
-- (void)writeItemsToKeychain
-{
-	TEXTUAL_DEPRECATED_WARNING
-
-	[self writeSecretKeyToKeychain];
-}
-
 - (void)writeSecretKeyToKeychain
 {
 	if (self->_secretKey == nil) {
@@ -417,13 +410,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Reset temporary value */
 	self->_secretKey = nil;
-}
-
-- (void)destroyKeychainItems
-{
-	TEXTUAL_DEPRECATED_WARNING
-
-	[self destroySecretKeyKeychainItem];
 }
 
 #pragma mark -

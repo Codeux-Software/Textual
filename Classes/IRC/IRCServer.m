@@ -221,13 +221,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return kcPassword;
 }
 
-- (void)writeItemsToKeychain
-{
-	TEXTUAL_DEPRECATED_WARNING
-
-	[self writeServerPasswordToKeychain];
-}
-
 - (void)writeServerPasswordToKeychain
 {
 	if (self->_serverPassword == nil) {
@@ -255,13 +248,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					   serviceName:serverPasswordServiceName];
 
 	self->_serverPassword = nil;
-}
-
-- (void)destroyKeychainItems
-{
-	TEXTUAL_DEPRECATED_WARNING
-
-	[self destroyServerPasswordKeychainItem];
 }
 
 @end
