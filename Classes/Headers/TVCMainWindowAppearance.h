@@ -35,20 +35,45 @@
  *
  *********************************************************************** */
 
-#import "TVCServerListAppearance.h"
+#import "TVCAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCServerList, TVCMainWindowAppearance;
+typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
+{
+	TVCMainWindowAppearanceMavericksAquaLightType,
+	TVCMainWindowAppearanceMavericksAquaDarkType,
+	TVCMainWindowAppearanceMavericksGraphiteLightType,
+	TVCMainWindowAppearanceMavericksGraphiteDarkType,
+	TVCMainWindowAppearanceYosemiteLightType,
+	TVCMainWindowAppearanceYosemiteDarkType,
+	TVCMainWindowAppearanceMojaveLightType,
+	TVCMainWindowAppearanceMojaveDarkType,
+};
 
-@interface TVCServerListAppearance ()
-- (nullable instancetype)initWithServerList:(TVCServerList *)serverList parentAppearance:(TVCMainWindowAppearance *)appearance;
+@class TVCServerListAppearance, TVCMainWindowAppearance;
 
-- (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image;
-- (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image;
+/* TVCMainWindowAppearanceProperties is offered as a protocl so that
+ childen appearances can return the same proeprties without whoever
+ is accessing the child having to call up the chain.
+ The child will do that for it so the call is shorter. */
+@protocol TVCMainWindowAppearanceProperties <NSObject>
+@property (readonly, weak) TVCMainWindowAppearance *parentAppearance;
+
+@property (readonly) TVCMainWindowAppearanceType appearanceType;
+
+@property (readonly) BOOL isDarkAppearance;
+@property (readonly) BOOL isHighResolutionAppearance;
+@property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
 @end
 
-@interface TVCServerListMavericksBackgroundBox : NSBox
+@interface TVCMainWindowAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@property (readonly, copy) NSString *appearanceName;
+
+@property (readonly) TVCServerListAppearance *serverList;
+
+@property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;
+@property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
 @end
 
 NS_ASSUME_NONNULL_END

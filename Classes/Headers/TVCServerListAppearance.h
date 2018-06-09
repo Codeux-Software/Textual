@@ -35,25 +35,11 @@
  *
  *********************************************************************** */
 
-#import "TVCAppearance.h"
+#import "TVCMainWindowAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCServerList;
-
-typedef NS_ENUM(NSUInteger, TVCServerListAppearanceType)
-{
-	TVCServerListAppearanceMavericksAquaLightType,
-	TVCServerListAppearanceMavericksAquaDarkType,
-	TVCServerListAppearanceMavericksGraphiteLightType,
-	TVCServerListAppearanceMavericksGraphiteDarkType,
-	TVCServerListAppearanceYosemiteLightType,
-	TVCServerListAppearanceYosemiteDarkType,
-	TVCServerListAppearanceMojaveLightType,
-	TVCServerListAppearanceMojaveDarkType,
-};
-
-@interface TVCServerListAppearance : TVCAppearance
+@interface TVCServerListAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
 @property (readonly, copy, nullable) NSColor *backgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *backgroundColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *rowSelectionColorActiveWindow;
@@ -141,11 +127,7 @@ typedef NS_ENUM(NSUInteger, TVCServerListAppearanceType)
 @property (readonly) CGFloat unreadBadgeRightMargin;
 
 #pragma mark -
-#pragma mark Everything Else
-
-@property (readonly) TVCServerListAppearanceType appearanceType;
-
-@property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
+#pragma mark Accessors
 
 - (nullable NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 

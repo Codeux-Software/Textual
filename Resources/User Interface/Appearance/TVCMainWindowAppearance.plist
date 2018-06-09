@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Mojave</key>
+	<dict>
+		<key>titlebarAccessoryViewBackgroundColor</key>
+		<dict>
+			<key>activeWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.462 0.462 0.462</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>MojaveDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Mojave</string>
+	</dict>
+	<key>MojaveLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Mojave</string>
+	</dict>
+	<key>Yosemite</key>
+	<dict>
+		<key>titlebarAccessoryViewBackgroundColor</key>
+		<dict>
+			<key>activeWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.462 0.462 0.462</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>YosemiteDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Yosemite</string>
+	</dict>
+	<key>YosemiteLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Yosemite</string>
+	</dict>
+	<key>Mavericks</key>
+	<dict/>
+	<key>MavericksDarkAqua</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Mavericks</string>
+	</dict>
+	<key>MavericksLightAqua</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Mavericks</string>
+	</dict>
+	<key>MavericksDarkGraphite</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>MavericksDarkAqua</string>
+	</dict>
+	<key>MavericksLightGraphite</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>MavericksLightAqua</string>
+	</dict>
+</dict>
+</plist>

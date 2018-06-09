@@ -48,6 +48,7 @@
 #import "TVCDockIconPrivate.h"
 #import "TVCLogControllerPrivate.h"
 #import "TVCLogViewPrivate.h"
+#import "TVCMainWindowAppearancePrivate.h"
 #import "TVCMainWindowChannelViewPrivate.h"
 #import "TVCMainWindowLoadingScreen.h"
 #import "TVCMainWindowSplitViewPrivate.h"
@@ -105,6 +106,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 @property (nonatomic, weak, readwrite) IBOutlet TVCServerList *serverList;
 @property (nonatomic, strong) TLOInputHistory *inputHistoryManager;
 @property (nonatomic, strong) TLONicknameCompletionStatus *nicknameCompletionStatus;
+@property (nonatomic, strong, readwrite) TVCMainWindowAppearance *userInterfaceObjects;
 @property (nonatomic, readwrite, copy) NSArray *selectedItems;
 @property (nonatomic, readwrite, strong, nullable) IRCTreeItem *selectedItem;
 @property (nonatomic, copy, nullable) NSArray *previousSelectedItemsId;
@@ -116,7 +118,6 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @property (nonatomic, assign, readwrite) BOOL reloadingTheme;
 @property (nonatomic, assign, readwrite) BOOL channelSpotlightPanelAttached;
-@property (nonatomic, assign, readwrite, getter=isUsingDarkAppearance) BOOL usingDarkAppearance;
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 @property (nonatomic, assign) BOOL disabledByLackOfInAppPurchase;
@@ -289,9 +290,14 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self updateBackgroundColor];
 }
 
+- (BOOL)isUsingDarkAppearance
+{
+	return self.userInterfaceObjects.isDarkAppearance;
+}
+
 - (BOOL)isUsingVibrantDarkAppearance
 {
-	return self.usingDarkAppearance;
+	return self.userInterfaceObjects.isDarkAppearance;
 }
 
 - (void)updateBackgroundColorOnYosemite
@@ -307,7 +313,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)updateBackgroundColor
 {
-	self.usingDarkAppearance = [TPCPreferences invertSidebarColors];
+	self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithWindow:self];
 
 	if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
 		[self updateBackgroundColorOnYosemite];

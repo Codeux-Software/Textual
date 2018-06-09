@@ -529,6 +529,22 @@
 		4C3333FA20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3333FB20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3333FC20CBF0D300ACB9AD /* TVCServerListAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3333FE20CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3333FD20CBF1E000ACB9AD /* TVCMainWindowAppearance.m */; };
+		4C3333FF20CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3333FD20CBF1E000ACB9AD /* TVCMainWindowAppearance.m */; };
+		4C33340020CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3333FD20CBF1E000ACB9AD /* TVCMainWindowAppearance.m */; };
+		4C33340120CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3333FD20CBF1E000ACB9AD /* TVCMainWindowAppearance.m */; };
+		4C33340320CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340220CBF20600ACB9AD /* TVCMainWindowAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C33340420CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340220CBF20600ACB9AD /* TVCMainWindowAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C33340520CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340220CBF20600ACB9AD /* TVCMainWindowAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C33340620CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340220CBF20600ACB9AD /* TVCMainWindowAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C33340820CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4C33340920CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4C33340A20CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4C33340B20CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		4C33340D20CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C33340C20CC015500ACB9AD /* TVCMainWindowAppearance.plist */; };
+		4C33340E20CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C33340C20CC015500ACB9AD /* TVCMainWindowAppearance.plist */; };
+		4C33340F20CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C33340C20CC015500ACB9AD /* TVCMainWindowAppearance.plist */; };
+		4C33341020CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C33340C20CC015500ACB9AD /* TVCMainWindowAppearance.plist */; };
 		4C34F34D1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
 		4C34F34E1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
 		4C34F34F1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */; };
@@ -2922,6 +2938,10 @@
 		4C312D5920AE125A00874D04 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCAlert.xib"; sourceTree = "<group>"; };
 		4C3333F320CBEFA700ACB9AD /* TVCAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCAppearance.h; path = Classes/Headers/TVCAppearance.h; sourceTree = "<group>"; };
 		4C3333F820CBF0D200ACB9AD /* TVCServerListAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListAppearance.h; path = Classes/Headers/TVCServerListAppearance.h; sourceTree = "<group>"; };
+		4C3333FD20CBF1E000ACB9AD /* TVCMainWindowAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowAppearance.m; path = "Classes/Views/Main Window/TVCMainWindowAppearance.m"; sourceTree = "<group>"; };
+		4C33340220CBF20600ACB9AD /* TVCMainWindowAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowAppearance.h; path = Classes/Headers/TVCMainWindowAppearance.h; sourceTree = "<group>"; };
+		4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowAppearancePrivate.h; path = Classes/Headers/Private/TVCMainWindowAppearancePrivate.h; sourceTree = "<group>"; };
+		4C33340C20CC015500ACB9AD /* TVCMainWindowAppearance.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TVCMainWindowAppearance.plist; path = "Resources/User Interface/Appearance/TVCMainWindowAppearance.plist"; sourceTree = "<group>"; };
 		4C34F34B1E051523006E1004 /* TVCChannelSelectionOutlineCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionOutlineCellView.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionOutlineCellView.m"; sourceTree = "<group>"; };
 		4C34F34C1E051523006E1004 /* TVCChannelSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCChannelSelectionViewController.m; path = "Classes/Views/Channel Selection Table/TVCChannelSelectionViewController.m"; sourceTree = "<group>"; };
 		4C34F3581E0515CD006E1004 /* TVCChannelSelectionOutlineViewCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionOutlineViewCellPrivate.h; path = Classes/Headers/Private/TVCChannelSelectionOutlineViewCellPrivate.h; sourceTree = "<group>"; };
@@ -3597,6 +3617,8 @@
 			isa = PBXGroup;
 			children = (
 				4CF40DC61AC1A4AC00A26BE0 /* TVCMainWindow.m */,
+				4C3333FD20CBF1E000ACB9AD /* TVCMainWindowAppearance.m */,
+				4C33340C20CC015500ACB9AD /* TVCMainWindowAppearance.plist */,
 				4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */,
 				4CF40DC71AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m */,
 				4CF40DC81AC1A4AC00A26BE0 /* TVCMainWindowSegmentedControl.m */,
@@ -4231,6 +4253,7 @@
 				4C7B48F31D131A2A008D7926 /* TVCLogViewInternalWK2.h */,
 				4C7B48F41D131A2A008D7926 /* TVCLogViewPrivate.h */,
 				4C5DD5251D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h */,
+				4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */,
 				4C673EE31D10FB5000979B60 /* TVCMainWindowPrivate.h */,
 				4C5DD5151D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h */,
 				4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */,
@@ -4668,6 +4691,7 @@
 				4C8AF589158E99520026668C /* TVCLogRenderer.h */,
 				4C8AF58B158E99520026668C /* TVCLogView.h */,
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
+				4C33340220CBF20600ACB9AD /* TVCMainWindowAppearance.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */,
 				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
@@ -5318,6 +5342,7 @@
 				4C5DD5221D1E1CB700F2E1AE /* TVCMainWindowTitlebarAccessoryViewPrivate.h in Headers */,
 				4C7B03851D1210A100295E82 /* TVCLogRenderer.h in Headers */,
 				4C5DD5071D1E098600F2E1AE /* TVCContentNavigationOutlineViewPrivate.h in Headers */,
+				4C33340820CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C7B03871D1210A100295E82 /* TVCLogView.h in Headers */,
 				4CCD4CA31D2448CE0004DAC3 /* TDCServerChannelListDialogPrivate.h in Headers */,
 				4C7B03881D1210A100295E82 /* TVCMainWindow.h in Headers */,
@@ -5374,6 +5399,7 @@
 				4C7B04EA1D1210E300295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04EB1D1210E300295E82 /* NSTableVIewHelperPrivate.h in Headers */,
 				4C7B04EC1D1210E300295E82 /* NSViewHelperPrivate.h in Headers */,
+				4C33340320CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */,
 				4C2D6AC41D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */,
 				4C7B04ED1D1210E300295E82 /* TextualApplicationPrivate.h in Headers */,
 				4C7B04EE1D1210E300295E82 /* THOPluginProtocolPrivate.h in Headers */,
@@ -5439,6 +5465,7 @@
 				4C47320E20C7599800713C91 /* TDCChannelPropertiesSheetPrivate.h in Headers */,
 				4C47320F20C7599800713C91 /* IRCUserRelationsPrivate.h in Headers */,
 				4C47321020C7599800713C91 /* TPCResourceManager.h in Headers */,
+				4C33340620CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */,
 				4C47321120C7599800713C91 /* IRCClientPrivate.h in Headers */,
 				4C47321220C7599800713C91 /* TPCThemeController.h in Headers */,
 				4C47321320C7599800713C91 /* IRCHighlightMatchConditionInternal.h in Headers */,
@@ -5612,6 +5639,7 @@
 				4C4732B920C7599800713C91 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4C4732BA20C7599800713C91 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C4732BB20C7599800713C91 /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
+				4C33340B20CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C4732BC20C7599800713C91 /* IRCWorldPrivate.h in Headers */,
 				4C4732BD20C7599800713C91 /* NSObjectHelperPrivate.h in Headers */,
 				4C4732BE20C7599800713C91 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -5696,6 +5724,7 @@
 				4C5B42311D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */,
 				4CE474451D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C7B03071D12105D00295E82 /* TPCThemeController.h in Headers */,
+				4C33340420CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */,
 				4CB17EC91D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
 				4C7B03081D12105D00295E82 /* TPCThemeSettings.h in Headers */,
 				4CD9FF821D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */,
@@ -5869,6 +5898,7 @@
 				4CB17EC61D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4CEA29C51D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C5DD51A1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
+				4C33340920CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C7B04B61D1210DA00295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04B81D1210DA00295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04B91D1210DA00295E82 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -5953,6 +5983,7 @@
 				4C6CCF071D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h in Headers */,
 				4C5B42321D59438B00B7C72A /* IRCUserRelationsPrivate.h in Headers */,
 				4C7B03151D12106300295E82 /* TPCResourceManager.h in Headers */,
+				4C33340520CBF20600ACB9AD /* TVCMainWindowAppearance.h in Headers */,
 				4CE474461D2F3D0100909766 /* IRCClientPrivate.h in Headers */,
 				4C7B03161D12106300295E82 /* TPCThemeController.h in Headers */,
 				4CB17ECA1D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
@@ -6126,6 +6157,7 @@
 				4CB17EC71D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4CEA29C61D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C5DD51B1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
+				4C33340A20CBF30A00ACB9AD /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C7B04CF1D1210E000295E82 /* IRCWorldPrivate.h in Headers */,
 				4C7B04D11D1210E000295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04D21D1210E000295E82 /* NSTableVIewHelperPrivate.h in Headers */,
@@ -6437,6 +6469,7 @@
 				4C0BA5341990798800857343 /* YosemiteDarkServerListViewDisclosureDown.tif in Resources */,
 				4CBD03C91D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */,
 				4C2533551F4439400003A3F4 /* TDCInAppPurchaseDialog.strings in Resources */,
+				4C33340D20CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */,
 				4C0BA5371990798800857343 /* channelRoomStatusIconMavericksDarkInactive@2x.tif in Resources */,
 				4C0BA5381990798800857343 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C0BA5391990798800857343 /* FormattingColor_3.png in Resources */,
@@ -6607,6 +6640,7 @@
 				4CC164C01943B17100B0D4B6 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C46F4691943A654004CA8BA /* FormattingColor_3.png in Resources */,
 				4CF40EDC1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
+				4C33340F20CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */,
 				4C8E8F2B20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */,
 				4C7A21971979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229281978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
@@ -6786,6 +6820,7 @@
 				4C47319620C7599800713C91 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C47319720C7599800713C91 /* FormattingColor_3.png in Resources */,
 				4C47319820C7599800713C91 /* RegisteredUserDefaults.plist in Resources */,
+				4C33341020CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */,
 				4C8E8F2C20C8004C002B791C /* TDCAddressBookSheet.strings in Resources */,
 				4C47319920C7599800713C91 /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C47319A20C7599800713C91 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
@@ -6984,6 +7019,7 @@
 				4CB229451978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
 				4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
 				4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */,
+				4C33340E20CC015500ACB9AD /* TVCMainWindowAppearance.plist in Resources */,
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F1F1AC1A59500A26BE0 /* TDCChannelBanListSheet.xib in Resources */,
 				4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -7275,6 +7311,7 @@
 				4CC2DC5C1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
 				4CC935001DE0BFA7003FF1B4 /* TLOSpokenNotification.m in Sources */,
 				4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */,
+				4C3333FF20CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */,
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
 				4C23C55020C9D10200335353 /* TVCServerListAppearance.m in Sources */,
 				4C25335B1F443A020003A3F4 /* TVCLogLineXPC.m in Sources */,
@@ -7491,6 +7528,7 @@
 				4C3A3DE01D4187B100569BA8 /* IRCNetworkList.m in Sources */,
 				4C992DC91AB5138A0072AB0B /* TLOEncryptionManager.m in Sources */,
 				4C116BD61D5CC5AE00787223 /* IRCUserPersistentStore.m in Sources */,
+				4C3333FE20CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */,
 				4CB17ED41D125E0100FAEAD4 /* IRCHighlightMatchCondition.m in Sources */,
 				4C12C3731ED1812700E98CA4 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4CCDC6B31EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
@@ -7652,6 +7690,7 @@
 				4CC2DC5D1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
 				4CC935011DE0BFA7003FF1B4 /* TLOSpokenNotification.m in Sources */,
 				4C8AF6A9158E99520026668C /* IRCConnection.m in Sources */,
+				4C33340020CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */,
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
 				4C23C55120C9D10200335353 /* TVCServerListAppearance.m in Sources */,
 				4C25335A1F443A010003A3F4 /* TVCLogLineXPC.m in Sources */,
@@ -7841,6 +7880,7 @@
 				4C47335820C7599800713C91 /* NSTableViewHelper.m in Sources */,
 				4C47335920C7599800713C91 /* TLOSpokenNotification.m in Sources */,
 				4C47335A20C7599800713C91 /* IRCConnection.m in Sources */,
+				4C33340120CBF1E100ACB9AD /* TVCMainWindowAppearance.m in Sources */,
 				4C47335B20C7599800713C91 /* IRCExtras.m in Sources */,
 				4C23C55220C9D10200335353 /* TVCServerListAppearance.m in Sources */,
 				4C47335C20C7599800713C91 /* TVCLogLineXPC.m in Sources */,

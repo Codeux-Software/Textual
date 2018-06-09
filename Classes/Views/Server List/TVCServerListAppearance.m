@@ -137,7 +137,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeTextCenterYOffset;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeTopOffset;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeRightMargin;
-@property (nonatomic, assign, readwrite) TVCServerListAppearanceType appearanceType;
+
+@property (nonatomic, weak, readwrite) TVCMainWindowAppearance *parentAppearance;
 @end
 
 @implementation TVCServerListAppearance
@@ -145,24 +146,21 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWithServerList:(TVCServerList *)serverList
+- (nullable instancetype)initWithServerList:(TVCServerList *)serverList parentAppearance:(TVCMainWindowAppearance *)appearance
 {
 	NSParameterAssert(serverList != nil);
+	NSParameterAssert(appearance != nil);
 
-	TVCServerListAppearanceType appearanceType = [self.class bestAppearanceForServerList:serverList];
-
-	NSString *appearanceName = [self.class appearanceNameForType:appearanceType];
-
-	LogToConsoleDebug("Best appearance: %@", appearanceName);
+	NSString *appearanceName = appearance.appearanceName;
 
 	NSURL *appearanceLocation = [self.class appearanceLocation];
 
-	BOOL forRetinaDisplay = [self.class serverListRunningInHighResolutionMode:serverList];
+	BOOL forRetinaDisplay = appearance.isHighResolutionAppearance;
 
 	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
 		self.serverList = serverList;
 
-		self.appearanceType = appearanceType;
+		self.parentAppearance = appearance;
 
 		[self prepareInitialState];
 
@@ -172,92 +170,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
-+ (TVCServerListAppearanceType)bestAppearanceForServerList:(TVCServerList *)serverList
-{
-	NSParameterAssert(serverList != nil);
-
-	BOOL darkMode = serverList.mainWindow.usingDarkAppearance;
-
-	if (TEXTUAL_RUNNING_ON(10.14, Mojave)) {
-		if (darkMode) {
-			return TVCServerListAppearanceMojaveDarkType;
-		} else {
-			return TVCServerListAppearanceMojaveLightType;
-		}
-	} else if (TEXTUAL_RUNNING_ON(10.10, Yosemite)) {
-		if (darkMode) {
-			return TVCServerListAppearanceYosemiteDarkType;
-		} else {
-			return TVCServerListAppearanceYosemiteLightType;
-		}
-	}
-
-	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-		if (darkMode) {
-			return TVCServerListAppearanceMavericksGraphiteDarkType;
-		} else {
-			return TVCServerListAppearanceMavericksGraphiteLightType;
-		}
-	} else {
-		if (darkMode) {
-			return TVCServerListAppearanceMavericksAquaDarkType;
-		} else {
-			return TVCServerListAppearanceMavericksAquaLightType;
-		}
-	}
-
-}
-
-+ (nullable NSString *)appearanceNameForType:(TVCServerListAppearanceType)type
-{
-	switch (type) {
-		case TVCServerListAppearanceMavericksAquaLightType:
-		{
-			return @"MavericksLightAqua";
-		}
-		case TVCServerListAppearanceMavericksAquaDarkType:
-		{
-			return @"MavericksDarkAqua";
-		}
-		case TVCServerListAppearanceMavericksGraphiteLightType:
-		{
-			return @"MavericksLightGraphite";
-		}
-		case TVCServerListAppearanceMavericksGraphiteDarkType:
-		{
-			return @"MavericksDarkGraphite";
-		}
-		case TVCServerListAppearanceYosemiteLightType:
-		{
-			return @"YosemiteLight";
-		}
-		case TVCServerListAppearanceYosemiteDarkType:
-		{
-			return @"YosemiteDark";
-		}
-		case TVCServerListAppearanceMojaveLightType:
-		{
-			return @"MojaveLight";
-		}
-		case TVCServerListAppearanceMojaveDarkType:
-		{
-			return @"MojaveDark";
-		}
-	}
-
-	return nil;
-}
-
 + (NSURL *)appearanceLocation
 {
 	return [RZMainBundle() URLForResource:@"TVCServerListAppearance" withExtension:@"plist"];
-}
-
-+ (BOOL)serverListRunningInHighResolutionMode:(TVCServerList *)serverList
-{
-	NSParameterAssert(serverList != nil);
-
-	return serverList.mainWindow.runningInHighResolutionMode;
 }
 
 - (void)prepareInitialState
@@ -350,17 +265,30 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Everything Else
+#pragma mark Properties
+
+- (TVCMainWindowAppearanceType)appearanceType
+{
+	return self.parentAppearance.appearanceType;
+}
+
+- (BOOL)isDarkAppearance
+{
+	return self.parentAppearance.isDarkAppearance;
+}
+
+- (BOOL)isHighResolutionAppearance
+{
+	return self.parentAppearance.isHighResolutionAppearance;
+}
 
 - (BOOL)isModernAppearance
 {
-	TVCServerListAppearanceType appearanceType = self.appearanceType;
-
-	return (appearanceType != TVCServerListAppearanceMavericksAquaLightType &&
-			appearanceType != TVCServerListAppearanceMavericksAquaDarkType &&
-			appearanceType != TVCServerListAppearanceMavericksGraphiteLightType &&
-			appearanceType != TVCServerListAppearanceMavericksGraphiteDarkType);
+	return self.parentAppearance.isModernAppearance;
 }
+
+#pragma mark -
+#pragma mark Everything Else
 
 - (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
 {
@@ -378,11 +306,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
-	TVCServerListAppearanceType appearanceType = self.appearanceType;
+	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TVCServerListAppearanceMavericksAquaDarkType:
-		case TVCServerListAppearanceMavericksGraphiteDarkType:
+		case TVCMainWindowAppearanceMavericksAquaDarkType:
+		case TVCMainWindowAppearanceMavericksGraphiteDarkType:
 		{
 			if (up) {
 				if (selected) {
@@ -398,8 +326,8 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 			}
 		} // Mavericks
-		case TVCServerListAppearanceYosemiteDarkType:
-		case TVCServerListAppearanceMojaveDarkType:
+		case TVCMainWindowAppearanceYosemiteDarkType:
+		case TVCMainWindowAppearanceMojaveDarkType:
 		{
 			if (up) {
 				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureUp"];
@@ -424,11 +352,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(treatAsTemplate != NULL);
 
-	TVCServerListAppearanceType appearanceType = self.appearanceType;
+	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TVCServerListAppearanceMavericksAquaLightType:
-		case TVCServerListAppearanceMavericksGraphiteLightType:
+		case TVCMainWindowAppearanceMavericksAquaLightType:
+		case TVCMainWindowAppearanceMavericksGraphiteLightType:
 		{
 			if (isActive) {
 				return @"channelRoomStatusIconMavericksLightActive";
@@ -436,8 +364,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconMavericksLightInactive";
 			}
 		}
-		case TVCServerListAppearanceMavericksAquaDarkType:
-		case TVCServerListAppearanceMavericksGraphiteDarkType:
+		case TVCMainWindowAppearanceMavericksAquaDarkType:
+		case TVCMainWindowAppearanceMavericksGraphiteDarkType:
 		{
 			if (isActive) {
 				return @"channelRoomStatusIconMavericksDarkActive";
@@ -445,8 +373,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconMavericksDarkInactive";
 			}
 		} // Mavericks
-		case TVCServerListAppearanceYosemiteLightType:
-		case TVCServerListAppearanceMojaveLightType:
+		case TVCMainWindowAppearanceYosemiteLightType:
+		case TVCMainWindowAppearanceMojaveLightType:
 		{
 			/* When the window is not in focus, when this item is selected, and when we are not
 			 using vibrant dark mode; the outline view does not turn our icon to a light variant
@@ -470,8 +398,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconYosemiteLightInactive";
 			}
 		} // Yosemite, Mojave
-		case TVCServerListAppearanceYosemiteDarkType:
-		case TVCServerListAppearanceMojaveDarkType:
+		case TVCMainWindowAppearanceYosemiteDarkType:
+		case TVCMainWindowAppearanceMojaveDarkType:
 		{
 			*treatAsTemplate = NO;
 
@@ -488,13 +416,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(treatAsTemplate != NULL);
 
-	TVCServerListAppearanceType appearanceType = self.appearanceType;
+	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TVCServerListAppearanceMavericksAquaLightType:
-		case TVCServerListAppearanceMavericksAquaDarkType:
-		case TVCServerListAppearanceMavericksGraphiteLightType:
-		case TVCServerListAppearanceMavericksGraphiteDarkType:
+		case TVCMainWindowAppearanceMavericksAquaLightType:
+		case TVCMainWindowAppearanceMavericksAquaDarkType:
+		case TVCMainWindowAppearanceMavericksGraphiteLightType:
+		case TVCMainWindowAppearanceMavericksGraphiteDarkType:
 		{
 			if (isSelected) {
 				return @"NSUser";
@@ -506,8 +434,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"MavericksDarkServerListViewSelectedPrivateMessageUserInactive";
 			}
 		} // Mavericks
-		case TVCServerListAppearanceYosemiteLightType:
-		case TVCServerListAppearanceMojaveLightType:
+		case TVCMainWindowAppearanceYosemiteLightType:
+		case TVCMainWindowAppearanceMojaveLightType:
 		{
 			*treatAsTemplate = YES;
 
@@ -517,8 +445,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"VibrantLightServerListViewPrivateMessageUserIconInactive";
 			}
 		} // Yosemite, Mojave
-		case TVCServerListAppearanceYosemiteDarkType:
-		case TVCServerListAppearanceMojaveDarkType:
+		case TVCMainWindowAppearanceYosemiteDarkType:
+		case TVCMainWindowAppearanceMojaveDarkType:
 		{
 			*treatAsTemplate = NO;
 

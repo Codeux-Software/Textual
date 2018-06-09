@@ -37,6 +37,7 @@
 
 #import "NSViewHelperPrivate.h"
 #import "TVCMainWindow.h"
+#import "TVCMainWindowAppearance.h"
 #import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -169,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	controllerFrame.size.height -= 1.0;
 
-	NSColor *controllerBackgroundColor = self.controlBackgroundColorActiveWindowOnYosemite;
+	NSColor *controllerBackgroundColor = [self controlBackgroundColorActiveWindow];
 
 	NSBezierPath *drawingPath = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
 
@@ -178,9 +179,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[drawingPath fill];
 }
 
-- (NSColor *)controlBackgroundColorActiveWindowOnYosemite
+- (NSColor *)controlBackgroundColorActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.462 green:0.462 blue:0.462 alpha:1.0];
+	return self.mainWindow.userInterfaceObjects.titlebarAccessoryViewBackgroundColorActiveWindow;
 }
 
 @end
