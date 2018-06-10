@@ -36,6 +36,7 @@
  *
  *********************************************************************** */
 
+#import "NSColorHelper.h"
 #import "NSObjectHelperPrivate.h"
 #import "NSStringHelper.h"
 #import "TXGlobalModels.h"
@@ -138,7 +139,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSAttributedString *topicFormatted =
 		[topic attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont]
-							  preferredFontColor:[NSColor blackColor]];
+							  preferredFontColor:[NSColor labelColorBackwardsCompat]];
 
 		newEntry.channelTopicFormatted = topicFormatted;
 	}

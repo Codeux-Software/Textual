@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	// The following serve as defaults and are supposed to be replaced
 	self.preferredFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-	self.preferredFontColor = [NSColor blackColor];
+	self.preferredFontColor = [NSColor textColor];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent

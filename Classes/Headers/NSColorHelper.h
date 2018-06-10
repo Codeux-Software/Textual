@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSColor *)formatterNormalGrayColor;
 + (NSColor *)formatterLightGrayColor;
 
++ (NSColor *)labelColorBackwardsCompat;
+
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
 @end

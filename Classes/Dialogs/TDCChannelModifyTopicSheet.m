@@ -89,7 +89,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.headerTitleTextField.stringValue = headerTitle;
 
 	self.topicValueTextField.preferredFont = [NSFont systemFontOfSize:13.0];
-	self.topicValueTextField.preferredFontColor = [NSColor blackColor];
+	self.topicValueTextField.preferredFontColor = [NSColor textColor];
 
 	NSString *topic = self.channel.topic;
 
