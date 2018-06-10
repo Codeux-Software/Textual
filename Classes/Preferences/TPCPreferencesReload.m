@@ -265,7 +265,7 @@ NS_ASSUME_NONNULL_BEGIN
 		 drawings related to this preference. The member list automatically
 		 invalidates its caches when passing a recognized key. */ 
 		if (reloadAction == TPCPreferencesReloadMemberListUserBadgesAction && key != nil) {
-			[mainWindowMemberList() updateDrawingForChangesToPreference:key];
+			[mainWindowMemberList() refreshDrawingForChangesToPreference:key];
 		} else {
 			[mainWindowMemberList().userInterfaceObjects invalidateUserMarkBadgeCaches];
 		}
@@ -338,7 +338,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ((reloadAction & TPCPreferencesReloadMemberListAction) == TPCPreferencesReloadMemberListAction) {
 		/* Sort order will redraw these for us */
 		if (didReloadMemberListSortOrder == NO) {
-			[mainWindowMemberList() reloadAllDrawings];
+			[mainWindowMemberList() refreshAllDrawings];
 		}
 	}
 

@@ -1258,7 +1258,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	[mainWindowMemberList() updateDrawingForRow:row];
+	[mainWindowMemberList() refreshDrawingForRow:row];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard

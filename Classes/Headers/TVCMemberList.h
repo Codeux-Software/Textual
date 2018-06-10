@@ -44,8 +44,8 @@ TEXTUAL_EXTERN NSString * const TVCMemberListDragType;
 @interface TVCMemberList : NSOutlineView
 @property (nonatomic, assign) BOOL isHiddenByUser;
 
-- (void)updateDrawingForMember:(IRCChannelUser *)cellItem;
-- (void)updateDrawingForRow:(NSInteger)rowIndex;
+- (void)refreshDrawingForMember:(IRCChannelUser *)cellItem;
+- (void)refreshDrawingForRow:(NSInteger)rowIndex;
 @end
 
 NS_ASSUME_NONNULL_END

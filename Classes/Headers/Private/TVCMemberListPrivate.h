@@ -51,14 +51,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable TVCMemberListMavericksBackgroundBox *)backgroundView;
 - (TVCMemberListUserInfoPopover *)memberListUserInfoPopover;
 
-- (void)updateDrawingForChangesToPreference:(NSString *)preferenceKey;
-
 - (void)addItemToList:(NSUInteger)rowIndex;
 
 - (void)removeItemFromList:(id)object;
 - (void)removeItemFromListAtIndex:(NSUInteger)rowIndex;
 
-- (void)reloadAllDrawings;
+- (void)refreshAllDrawings;
+
+- (void)refreshDrawingForChangesToPreference:(NSString *)preferenceKey;
 
 - (void)updateBackgroundColor;
 

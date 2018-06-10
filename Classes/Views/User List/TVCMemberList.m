@@ -354,28 +354,61 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 #pragma mark -
 #pragma mark Drawing Updates
 
-- (void)reloadAllDrawings
+- (void)refreshAllDrawings
 {
-	[self reloadAllDrawings:NO];
+	[self refreshAllDrawings:NO];
 }
 
-- (void)reloadAllDrawings:(BOOL)skipOcclusionCheck
+- (void)refreshAllDrawings:(BOOL)skipOcclusionCheck
 {
 	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
-		[self updateDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
+		[self refreshDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
 	}
 }
+- (void)refreshDrawingForRows:(NSIndexSet *)rowIndexes
+{
+	[self refreshDrawingForRows:rowIndexes skipOcclusionCheck:NO];
+}
 
-- (void)updateDrawingForMember:(IRCChannelUser *)cellItem
+- (void)refreshDrawingForRows:(NSIndexSet *)rowIndexes skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	NSParameterAssert(rowIndexes != nil);
+
+	[rowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		[self refreshDrawingForRow:index skipOcclusionCheck:skipOcclusionCheck];
+	}];
+}
+
+- (void)refreshDrawingForRow:(NSInteger)rowIndex
+{
+	[self refreshDrawingForRow:rowIndex skipOcclusionCheck:NO];
+}
+
+- (void)refreshDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	if (rowIndex < 0) {
+		return;
+	}
+
+	if (skipOcclusionCheck == NO && self.mainWindow.occluded) {
+		return;
+	}
+
+	TVCMemberListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+
+	rowView.needsDisplay = YES;
+}
+
+- (void)refreshDrawingForMember:(IRCChannelUser *)cellItem
 {
 	NSParameterAssert(cellItem != nil);
 
 	NSInteger rowIndex = [self rowForItem:cellItem];
 
-	[self updateDrawingForRow:rowIndex];
+	[self refreshDrawingForRow:rowIndex];
 }
 
-- (void)updateDrawingForChangesToPreference:(NSString *)preferenceKey
+- (void)refreshDrawingForChangesToPreference:(NSString *)preferenceKey
 {
 	static NSDictionary<NSString *, NSNumber *> *preferenceMap = nil;
 
@@ -401,10 +434,10 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 	IRCUserRank rankEnum = rank.unsignedIntegerValue;
 
-	[self updateDrawingForMembersWithRank:rankEnum isIRCop:(rankEnum == IRCUserIRCopByModeRank)];
+	[self refreshDrawingForMembersWithRank:rankEnum isIRCop:(rankEnum == IRCUserIRCopByModeRank)];
 }
 
-- (void)updateDrawingForMembersWithRank:(IRCUserRank)rank isIRCop:(BOOL)isIRCop
+- (void)refreshDrawingForMembersWithRank:(IRCUserRank)rank isIRCop:(BOOL)isIRCop
 {
 	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
@@ -417,29 +450,10 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 		[appearance invalidateUserMarkBadgeCacheForSymbol:member.mark rank:rank];
 
-		[self updateDrawingForRow:i];
+		[self refreshDrawingForRow:i];
 	}
 }
 
-- (void)updateDrawingForRow:(NSInteger)rowIndex
-{
-	[self updateDrawingForRow:rowIndex skipOcclusionCheck:NO];
-}
-
-- (void)updateDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
-{
-	if (rowIndex < 0) {
-		return;
-	}
-
-	if (skipOcclusionCheck == NO && self.mainWindow.occluded) {
-		return;
-	}
-
-	TVCMemberListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-
-	rowView.needsDisplay = YES;
-}
 
 - (void)drawContextMenuHighlightForRow:(int)row
 {
@@ -516,7 +530,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 		self.backgroundView.needsDisplay = YES;
 	}
 
-	[self reloadAllDrawings:YES];
+	[self refreshAllDrawings:YES];
 }
 
 #pragma mark -
