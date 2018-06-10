@@ -87,16 +87,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>0.9</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>0.9</string>
 				</dict>
 			</dict>
 			<key>disabledTextColor</key>
@@ -104,16 +104,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.4</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.4</string>
 				</dict>
 			</dict>
 			<key>selectedTextColor</key>
@@ -121,16 +121,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>1.0</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>1.0</string>
 				</dict>
 			</dict>
 		</dict>
@@ -141,16 +141,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>0.9</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>0.9</string>
 				</dict>
 			</dict>
 			<key>disabledTextColor</key>
@@ -158,16 +158,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.4</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>secondaryLabelColor</string>
+					<string>0.4</string>
 				</dict>
 			</dict>
 			<key>selectedTextColor</key>
@@ -175,16 +175,16 @@
 				<key>activeWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>1.0</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>3</integer>
+					<integer>1</integer>
 					<key>value</key>
-					<string>labelColor</string>
+					<string>1.0</string>
 				</dict>
 			</dict>
 			<key>erroneousTextColor</key>
@@ -684,14 +684,14 @@
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>0.9</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>0.9</string>
 				</dict>
 			</dict>
 			<key>disabledTextColor</key>
@@ -718,14 +718,14 @@
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>1.0</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>1.0</string>
 				</dict>
 			</dict>
 		</dict>
@@ -738,14 +738,14 @@
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>0.9</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>0.9</string>
 				</dict>
 			</dict>
 			<key>disabledTextColor</key>
@@ -772,14 +772,14 @@
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>1.0</string>
 				</dict>
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
 					<integer>1</integer>
 					<key>value</key>
-					<string>0.8</string>
+					<string>1.0</string>
 				</dict>
 			</dict>
 			<key>erroneousTextColor</key>
