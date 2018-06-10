@@ -63,11 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWithWindow:(TVCMainWindow *)mainWindow
+- (nullable instancetype)initWithAppearance:(TVCMainWindowAppearanceType)appearanceType inWindow:(TVCMainWindow *)mainWindow
 {
 	NSParameterAssert(mainWindow != nil);
-
-	TVCMainWindowAppearanceType appearanceType = [self.class bestAppearanceForWindow:mainWindow];
 
 	NSString *appearanceName = [self.class appearanceNameForType:appearanceType];
 
