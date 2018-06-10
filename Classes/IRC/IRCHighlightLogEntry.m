@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "NSColorHelper.h"
 #import "NSStringHelper.h"
 #import "NSTableVIewHelperPrivate.h"
 #import "TXGlobalModels.h"
@@ -116,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 	messageBody = [NSString stringWithFormat:messageBody, nicknameBody, logLine.messageBody];
 
 	return [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont]
-									   preferredFontColor:[NSColor blackColor]];
+									   preferredFontColor:[NSColor labelColorBackwardsCompat]];
 }
 
 - (NSString *)lineNumber
