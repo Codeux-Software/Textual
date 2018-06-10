@@ -42,8 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 
 @interface TVCServerList : NSOutlineView
-- (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
-- (void)updateDrawingForRow:(NSInteger)rowIndex;
+- (void)refreshDrawingForItem:(IRCTreeItem *)cellItem;
+- (void)refreshDrawingForRow:(NSInteger)rowIndex;
 @end
 
 NS_ASSUME_NONNULL_END
