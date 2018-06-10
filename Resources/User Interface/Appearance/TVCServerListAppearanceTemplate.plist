@@ -163,37 +163,17 @@
 			</dict>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<real>10</real>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<real>10</real>
 			</dict>
 			<key>topOffset</key>
 			<integer>0</integer>
@@ -357,37 +337,17 @@
 			</dict>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<real>10</real>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<real>10</real>
 			</dict>
 			<key>topOffset</key>
 			<integer>0</integer>
@@ -515,37 +475,17 @@
 			</dict>
 			<key>font</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<real>10</real>
 			</dict>
 			<key>fontSelected</key>
 			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>name</key>
-					<string>System</string>
-					<key>size</key>
-					<real>10</real>
-				</dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<real>10</real>
 			</dict>
 			<key>minimumWidth</key>
 			<integer>0</integer>

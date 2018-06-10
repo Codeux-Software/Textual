@@ -4,6 +4,30 @@
 <dict>
 	<key>TEMPLATE APPEARANCE (NOT USED BY ANYTHING)</key>
 	<dict>
+		<key>channelViewOverlayDefaultBackgroundColor</key>
+		<dict>
+			<key>activeWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.0 0.0 0.0</string>
+			</dict>
+			<key>inactiveWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.0 0.0 0.0</string>
+			</dict>
+		</dict>
+		<key>splitViewDividerColor</key>
+		<dict>
+			<key>type</key>
+			<integer>2</integer>
+			<key>value</key>
+			<string>0.0 0.0 0.0</string>
+		</dict>
 		<key>titlebarAccessoryViewBackgroundColor</key>
 		<dict>
 			<key>activeWindow</key>
