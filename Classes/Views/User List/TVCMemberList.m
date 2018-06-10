@@ -491,6 +491,12 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	} else {
 		visaulEffectView.state = NSVisualEffectStateFollowsWindowActiveState;
 	}
+
+#ifdef TXSystemIsOSXMojaveOrLater
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+		visaulEffectView.material = NSVisualEffectMaterialSidebar;
+	}
+#endif
 }
 
 - (void)updateAppearance
