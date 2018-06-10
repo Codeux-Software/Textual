@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 	messageBody = [NSString stringWithFormat:messageBody, nicknameBody, logLine.messageBody];
 
 	return [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont]
-									   preferredFontColor:[NSColor labelColorBackwardsCompat]];
+									   preferredFontColor:[NSColor controlTextColor]];
 }
 
 - (NSString *)lineNumber
