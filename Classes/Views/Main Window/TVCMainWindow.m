@@ -184,6 +184,8 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 	self.alphaValue = [TPCPreferences mainWindowTransparency];
 
+	[self updateAppearance];
+
 	(void)[self reloadLoadingScreen];
 
 	[self makeMainWindow];
@@ -203,8 +205,6 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 	[self registerKeyHandlers];
 
 	[worldController() setupConfiguration];
-
-	[self updateAppearance];
 
 	[self setupTrees];
 
