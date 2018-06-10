@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TVCContentNavigationOutlineViewItem;
 
-@interface TVCContentNavigationOutlineView : NSOutlineView <NSOutlineViewDelegate, NSOutlineViewDataSource>
+@interface TVCContentNavigationOutlineView : NSOutlineView
 @property (nonatomic, assign) NSUInteger contentViewPreferredWidth;
 @property (nonatomic, assign) NSUInteger contentViewPreferredHeight;
 @property (nonatomic, copy) NSArray<TVCContentNavigationOutlineViewItem *> *navigationTreeMatrix;

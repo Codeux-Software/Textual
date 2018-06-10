@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
 	TPI_ChatFilterEditFilterSheetAdvancedSelection = 5
 };
 
-@interface TPI_ChatFilterEditFilterSheet ()
+@interface TPI_ChatFilterEditFilterSheet () <NSTokenFieldDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, strong) TPI_ChatFilterMutable *filter;
 @property (nonatomic, weak) IBOutlet NSTabView *contentViewTabView;
 @property (nonatomic, weak) IBOutlet NSTextField *filterMatchTextField;

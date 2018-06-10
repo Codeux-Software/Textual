@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _filterListUserDefaultsKey		@"Textual Chat Filter Extension -> Filters"
 
-@interface TPI_ChatFilterExtension ()
+@interface TPI_ChatFilterExtension () <NSTableViewDataSource, NSTableViewDelegate>
 @property (nonatomic, strong) IBOutlet NSView *preferencesPaneView;
 @property (nonatomic, strong) IBOutlet NSMenu *filterAddMenu;
 @property (nonatomic, weak) IBOutlet NSButton *filterAddButton;
