@@ -237,6 +237,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction
 {
+	[self performReloadAction:reloadAction forKey:nil];
+}
+
++ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction forKey:(nullable NSString *)key
+{
 	/* Update dock icon */
 	if ((reloadAction & TPCPreferencesReloadDockIconBadgesAction) == TPCPreferencesReloadDockIconBadgesAction) {
 		[TVCDockIcon updateDockIcon];
@@ -250,10 +255,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Member list appearance */
 	if ((reloadAction & TPCPreferencesReloadMemberListUserBadgesAction) == TPCPreferencesReloadMemberListUserBadgesAction) {
-		/* This call will only invalidate the cache for the badges. It does not
-		 reload the user interface. This call should be paired with one of the
-		 actions for reloading the user interface. */
-		[mainWindowMemberList().userInterfaceObjects invalidateAllUserMarkBadgeCaches];
+		/* We invalidate this early because a separate action may
+		 which is attached to our mask may reload the drawings for
+		 us so until we know if that happened, we wait. */
+
+		/* If we know FOR CERTAIN we only are ONLY reloading the user badges
+		 and we have a key for context, then be more efficient by only updating
+		 drawings related to this preference. The member list automatically
+		 invalidates its caches when passing a recognized key. */ 
+		if (reloadAction == TPCPreferencesReloadMemberListUserBadgesAction && key != nil) {
+			[mainWindowMemberList() updateDrawingForChangesToPreference:key];
+		} else {
+			[mainWindowMemberList().userInterfaceObjects invalidateUserMarkBadgeCaches];
+		}
 	}
 
 	/* Window appearance */

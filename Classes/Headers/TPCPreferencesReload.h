@@ -76,6 +76,7 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
 @interface TPCPreferences (TPCPreferencesReload)
 + (void)performReloadActionForKeys:(NSArray<NSString *> *)keys;
 + (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction;
++ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction forKey:(nullable NSString *)key; // key is only used for context
 @end
 
 NS_ASSUME_NONNULL_END

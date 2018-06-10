@@ -1505,7 +1505,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedUserListModeColor:(id)sender
 {
-	[TPCPreferences performReloadAction:(TPCPreferencesReloadMemberListUserBadgesAction | TPCPreferencesReloadMemberListAction)];
+	static NSDictionary<NSNumber *, NSString *> *preferenceMap = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		preferenceMap = @{
+			@(10) 	: @"User List Mode Badge Colors -> +y",
+			@(9) 	: @"User List Mode Badge Colors -> +q",
+			@(8) 	: @"User List Mode Badge Colors -> +a",
+			@(7) 	: @"User List Mode Badge Colors -> +o",
+			@(6) 	: @"User List Mode Badge Colors -> +h",
+			@(5) 	: @"User List Mode Badge Colors -> +v"
+		};
+	});
+
+	NSString *preferenceKey = preferenceMap[@([sender tag])];
+
+	/* -onResetUserListModeColorsToDefaults: passes nil sender */
+	if (preferenceKey == nil) {
+		[TPCPreferences performReloadAction:(TPCPreferencesReloadMemberListUserBadgesAction | TPCPreferencesReloadMemberListAction)];
+	} else {
+		[TPCPreferences performReloadAction:TPCPreferencesReloadMemberListUserBadgesAction forKey:preferenceKey];
+	}
 }
 
 - (void)onChangedMainInputTextViewFontSize:(id)sender
