@@ -98,6 +98,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSColor *markBadgeBackgroundColor_Q;
 @property (readonly, copy) NSColor *markBadgeBackgroundColor_V;
 
+/* -markBadgeBackgroundColorByUser is the no mode ("x") background color
+ defined by user. This value can be nil. Use the activeWindow or inactiveWindow
+ background colors defined above when this is nil. */
+@property (readonly, copy, nullable) NSColor *markBadgeBackgroundColorByUser;
+
 #pragma mark -
 #pragma mark Accessors
 

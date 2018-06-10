@@ -388,7 +388,8 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 			@"User List Mode Badge Colors -> +a" : @(IRCUserSuperOperatorRank),
 			@"User List Mode Badge Colors -> +o" : @(IRCUserNormalOperatorRank),
 			@"User List Mode Badge Colors -> +h" : @(IRCUserHalfOperatorRank),
-			@"User List Mode Badge Colors -> +v" : @(IRCUserVoicedRank)
+			@"User List Mode Badge Colors -> +v" : @(IRCUserVoicedRank),
+			@"User List Mode Badge Colors -> no mode" : @(IRCUserNoRank)
 		};
 	});
 
