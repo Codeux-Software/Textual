@@ -373,6 +373,51 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	[self updateDrawingForRow:rowIndex];
 }
 
+- (void)updateDrawingForChangesToPreference:(NSString *)preferenceKey
+{
+	static NSDictionary<NSString *, NSNumber *> *preferenceMap = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		preferenceMap = @{
+			@"User List Mode Badge Colors -> +y" : @(IRCUserIRCopByModeRank),
+			@"User List Mode Badge Colors -> +q" : @(IRCUserChannelOwnerRank),
+			@"User List Mode Badge Colors -> +a" : @(IRCUserSuperOperatorRank),
+			@"User List Mode Badge Colors -> +o" : @(IRCUserNormalOperatorRank),
+			@"User List Mode Badge Colors -> +h" : @(IRCUserHalfOperatorRank),
+			@"User List Mode Badge Colors -> +v" : @(IRCUserVoicedRank)
+		};
+	});
+
+	NSNumber *rank = preferenceMap[preferenceKey];
+
+	if (rank == nil) {
+		return;
+	}
+
+	IRCUserRank rankEnum = rank.unsignedIntegerValue;
+
+	[self updateDrawingForMembersWithRank:rankEnum isIRCop:(rankEnum == IRCUserIRCopByModeRank)];
+}
+
+- (void)updateDrawingForMembersWithRank:(IRCUserRank)rank isIRCop:(BOOL)isIRCop
+{
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
+
+	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
+		IRCChannelUser *member = [self itemAtRow:i];
+
+		if ((member.ranks & rank) == 0 && (isIRCop && isIRCop != member.user.isIRCop)) {
+			continue;
+		}
+
+		[appearance invalidateUserMarkBadgeCacheForSymbol:member.mark rank:rank];
+
+		[self updateDrawingForRow:i];
+	}
+}
+
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
 	[self updateDrawingForRow:rowIndex skipOcclusionCheck:NO];

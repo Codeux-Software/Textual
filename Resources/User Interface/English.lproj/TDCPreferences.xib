@@ -59,7 +59,7 @@
         <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="367" y="318" width="589" height="240"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="4930">
                 <rect key="frame" x="0.0" y="0.0" width="589" height="240"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -232,7 +232,7 @@
                         <popUpButton key="view" tag="109" id="yuI-3m-esZ">
                             <rect key="frame" x="0.0" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -1738,7 +1738,7 @@
                                             <action selector="onResetUserListModeColorsToDefaults:" target="-2" id="aNk-h8-cQO"/>
                                         </connections>
                                     </button>
-                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="JhD-ZF-Sav">
+                                    <colorWell tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="JhD-ZF-Sav">
                                         <rect key="frame" x="288" y="247" width="44" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="KFT-hK-wkl"/>
@@ -1762,7 +1762,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="JXn-pJ-hWs">
+                                    <colorWell tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="JXn-pJ-hWs">
                                         <rect key="frame" x="288" y="216" width="44" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="mUG-qo-xa9"/>
@@ -1786,7 +1786,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="YGS-3n-rXC">
+                                    <colorWell tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="YGS-3n-rXC">
                                         <rect key="frame" x="288" y="185" width="44" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="I1b-hS-txS"/>
@@ -1810,7 +1810,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="O44-GT-9T4">
+                                    <colorWell tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="O44-GT-9T4">
                                         <rect key="frame" x="288" y="154" width="44" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="PCx-T7-Fxc"/>
@@ -1834,7 +1834,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="4Ej-1Y-15S">
+                                    <colorWell tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="4Ej-1Y-15S">
                                         <rect key="frame" x="288" y="123" width="44" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="8M9-r9-F9O"/>
@@ -1858,7 +1858,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="CIN-D3-YPG">
+                                    <colorWell tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="CIN-D3-YPG">
                                         <rect key="frame" x="288" y="92" width="44" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="66G-gS-RNp"/>
