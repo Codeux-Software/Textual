@@ -39,31 +39,31 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSColor (TXColorHelper)
-+ (NSColor *)formatterWhiteColor;
-+ (NSColor *)formatterBlackColor;
-+ (NSColor *)formatterNavyBlueColor;
-+ (NSColor *)formatterDarkGreenColor;
-+ (NSColor *)formatterRedColor;
-+ (NSColor *)formatterBrownColor;
-+ (NSColor *)formatterPurpleColor;
-+ (NSColor *)formatterOrangeColor;
-+ (NSColor *)formatterYellowColor;
-+ (NSColor *)formatterLimeGreenColor;
-+ (NSColor *)formatterTealColor;
-+ (NSColor *)formatterAquaCyanColor;
-+ (NSColor *)formatterLightBlueColor;
-+ (NSColor *)formatterFuchsiaPinkColor;
-+ (NSColor *)formatterNormalGrayColor;
-+ (NSColor *)formatterLightGrayColor;
+@property (class, readonly) NSColor *formatterWhiteColor;
+@property (class, readonly) NSColor *formatterBlackColor;
+@property (class, readonly) NSColor *formatterNavyBlueColor;
+@property (class, readonly) NSColor *formatterDarkGreenColor;
+@property (class, readonly) NSColor *formatterRedColor;
+@property (class, readonly) NSColor *formatterBrownColor;
+@property (class, readonly) NSColor *formatterPurpleColor;
+@property (class, readonly) NSColor *formatterOrangeColor;
+@property (class, readonly) NSColor *formatterYellowColor;
+@property (class, readonly) NSColor *formatterLimeGreenColor;
+@property (class, readonly) NSColor *formatterTealColor;
+@property (class, readonly) NSColor *formatterAquaCyanColor;
+@property (class, readonly) NSColor *formatterLightBlueColor;
+@property (class, readonly) NSColor *formatterFuchsiaPinkColor;
+@property (class, readonly) NSColor *formatterNormalGrayColor;
+@property (class, readonly) NSColor *formatterLightGrayColor;
 
-+ (NSColor *)labelColorBackwardsCompat;
+@property (class, readonly) NSColor *labelColorBackwardsCompat;
 
-+ (NSColor *)outlineViewHeaderTextColor;
-+ (NSColor *)outlineViewHeaderDisabledTextColor;
+@property (class, readonly) NSColor *outlineViewHeaderTextColor;
+@property (class, readonly) NSColor *outlineViewHeaderDisabledTextColor;
 @end
 
 @interface NSGradient (TXGradientHelper)
-+ (nullable NSGradient *)sourceListBackgroundGradientColor;
+@property (class, readonly) NSGradient *sourceListBackgroundGradientColor;
 @end
 
 NS_ASSUME_NONNULL_END
