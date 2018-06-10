@@ -50,6 +50,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation TVCMemberListUserInfoPopover
+
+- (void)mouseDown:(NSEvent *)event
+{
+	[self close];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
