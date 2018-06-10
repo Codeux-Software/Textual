@@ -9682,28 +9682,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
-			if ([flags hasPrefix:@"G"]) {
-				isAway = self.monitorAwayStatus;
-			}
-
-			flags = [flags substringFromIndex:1];
-
-			if ([flags hasPrefix:@"*"]) {
-				flags = [flags substringFromIndex:1];
-
-				isIRCop = YES;
-			}
-
-			/* Parse user modes */
 			NSMutableString *userModes = [NSMutableString string];
 
 			for (NSUInteger i = 0; i < flags.length; i++) {
-				NSString *prefix = [flags stringCharacterAtIndex:i];
+				NSString *character = [flags stringCharacterAtIndex:i];
 
-				NSString *modeSymbol = [self.supportInfo modeSymbolForUserPrefix:prefix];
+				if ([character isEqualToString:@"G"]) {
+					isAway = self.monitorAwayStatus;
+
+					continue;
+				} else if ([character isEqualToString:@"*"]) {
+					isIRCop = YES;
+
+					continue;
+				}
+
+				NSString *modeSymbol = [self.supportInfo modeSymbolForUserPrefix:character];
 
 				if (modeSymbol == nil) {
-					break;
+					continue;
 				}
 
 				[userModes appendString:modeSymbol];
