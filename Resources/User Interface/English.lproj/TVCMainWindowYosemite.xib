@@ -16,7 +16,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="515" y="206" width="800" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" wantsLayer="YES" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -344,7 +344,7 @@
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="GroupView" width="147" minWidth="40" maxWidth="1000" id="GQk-WB-FLe">
+                                                        <tableColumn width="147" minWidth="40" maxWidth="1000" id="GQk-WB-FLe">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -357,7 +357,7 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="4Z2-vV-4x2" customClass="TVCMemberListCell">
+                                                                <tableCellView identifier="GroupView" id="4Z2-vV-4x2" customClass="TVCMemberListCell">
                                                                     <rect key="frame" x="1" y="0.0" width="147" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -394,6 +394,43 @@
                                                                         <outlet property="userMarkBadgeWidthConstraint" destination="Afi-aM-W9W" id="uzd-7v-AS3"/>
                                                                     </connections>
                                                                 </tableCellView>
+                                                                <tableCellView identifier="GroupViewMojave" id="F1u-6X-WUC" userLabel="Member List Cell (Mojave)" customClass="TVCMemberListCell">
+                                                                    <rect key="frame" x="1" y="17" width="147" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="637-tM-6QB">
+                                                                            <rect key="frame" x="2" y="1" width="20" height="15"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="20" id="dIj-xh-PEq"/>
+                                                                            </constraints>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="FormattingColor_2" id="1FR-6u-wNP"/>
+                                                                        </imageView>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="itj-FJ-IhQ">
+                                                                            <rect key="frame" x="26" y="0.0" width="118" height="16"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="XnA-bS-Ibw">
+                                                                                <font key="font" metaFont="cellTitle"/>
+                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="bottom" secondItem="637-tM-6QB" secondAttribute="bottom" constant="1" id="9e0-3V-eFL"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="itj-FJ-IhQ" secondAttribute="bottom" id="Aui-K5-Un9"/>
+                                                                        <constraint firstItem="637-tM-6QB" firstAttribute="top" secondItem="F1u-6X-WUC" secondAttribute="top" constant="1" id="Kj5-sp-Ot7"/>
+                                                                        <constraint firstItem="637-tM-6QB" firstAttribute="leading" secondItem="F1u-6X-WUC" secondAttribute="leading" constant="2" id="NDQ-nN-mjb"/>
+                                                                        <constraint firstItem="itj-FJ-IhQ" firstAttribute="top" secondItem="F1u-6X-WUC" secondAttribute="top" constant="1" id="X0Q-GD-2Lz"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="itj-FJ-IhQ" secondAttribute="trailing" constant="5" id="YxJ-sx-G4g"/>
+                                                                        <constraint firstItem="itj-FJ-IhQ" firstAttribute="leading" secondItem="637-tM-6QB" secondAttribute="trailing" constant="6" id="qj8-K8-77p"/>
+                                                                    </constraints>
+                                                                    <connections>
+                                                                        <outlet property="cellTextField" destination="itj-FJ-IhQ" id="iHo-RK-wJl"/>
+                                                                        <outlet property="imageView" destination="637-tM-6QB" id="fEV-9r-9ID"/>
+                                                                        <outlet property="textFieldTopConstraint" destination="X0Q-GD-2Lz" id="BXa-UA-O7u"/>
+                                                                        <outlet property="userMarkBadgeTopConstraint" destination="Kj5-sp-Ot7" id="pn1-ea-1iZ"/>
+                                                                        <outlet property="userMarkBadgeWidthConstraint" destination="dIj-xh-PEq" id="sXW-c2-jgs"/>
+                                                                    </connections>
+                                                                </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
@@ -404,7 +441,6 @@
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
-                                            <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="n7L-yI-VW6">
                                             <rect key="frame" x="1" y="119" width="223" height="15"/>

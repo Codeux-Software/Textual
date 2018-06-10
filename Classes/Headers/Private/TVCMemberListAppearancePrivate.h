@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,50 +35,17 @@
  *
  *********************************************************************** */
 
-#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListMavericksUserInterface : TVCMemberListSharedUserInterface
-@property (readonly) CGFloat cellRowHeight;
+@class TVCMemberList, TVCMainWindowAppearance;
 
-@property (readonly, copy, nullable) NSImage *rowSelectionImageForActiveWindow;
-@property (readonly, copy, nullable) NSImage *rowSelectionImageForInactiveWindow;
-
-@property (readonly, copy) NSFont *userMarkBadgeFont;
-@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
-
-@property (readonly) CGFloat userMarkBadgeHeight;
-@property (readonly) CGFloat userMarkBadgeWidth;
-
-@property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForAqua;
-@property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForGraphite;
-
-@property (readonly, copy) NSColor *userMarkBadgeSelectedBackgroundColor;
-
-@property (readonly, copy) NSColor *userMarkBadgeNormalTextColor;
-@property (readonly, copy) NSColor *userMarkBadgeSelectedTextColor;
-
-@property (readonly, copy) NSColor *userMarkBadgeShadowColor;
-
-@property (readonly, copy) NSFont *normalCellTextFont;
-@property (readonly, copy) NSFont *selectedCellTextFont;
-
-@property (readonly, copy) NSColor *normalCellTextColor;
-@property (readonly, copy) NSColor *awayUserCellTextColor;
-@property (readonly, copy) NSColor *selectedCellTextColor;
-
-@property (readonly, copy) NSColor *normalCellTextShadowColor;
-
-@property (readonly, copy) NSColor *normalSelectedCellTextShadowColorForActiveWindow;
-@property (readonly, copy) NSColor *normalSelectedCellTextShadowColorForInactiveWindow;
-@property (readonly, copy) NSColor *graphiteSelectedCellTextShadowColorForActiveWindow;
+@interface TVCMemberListAppearance ()
+- (nullable instancetype)initWithMemberList:(TVCMemberList *)MemberList parentAppearance:(TVCMainWindowAppearance *)appearance;
 @end
 
-@interface TVCMemberListMavericksLightUserInterface : TVCMemberListMavericksUserInterface
-@end
-
-@interface TVCMemberListMavericksDarkUserInterface : TVCMemberListMavericksUserInterface
+@interface TVCMemberListMavericksBackgroundBox : NSBox
 @end
 
 NS_ASSUME_NONNULL_END

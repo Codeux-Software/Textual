@@ -39,15 +39,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCMemberListMavericksUserInterfaceBackground;
+@class TVCMemberListAppearance;
+@class TVCMemberListMavericksBackgroundBox;
 @class TVCMemberListUserInfoPopover;
 
 @interface TVCMemberList ()
 @property (nonatomic, weak) id keyDelegate;
 
-- (id)userInterfaceObjects;
+- (TVCMemberListAppearance *)userInterfaceObjects;
 - (nullable NSVisualEffectView *)visualEffectView;
-- (nullable TVCMemberListMavericksUserInterfaceBackground *)backgroundView;
+- (nullable TVCMemberListMavericksBackgroundBox *)backgroundView;
 - (TVCMemberListUserInfoPopover *)memberListUserInfoPopover;
 
 - (void)updateDrawingForChangesToPreference:(NSString *)preferenceKey;

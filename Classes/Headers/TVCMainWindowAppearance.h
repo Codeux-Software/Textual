@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 	TVCMainWindowAppearanceMojaveDarkType,
 };
 
-@class TVCServerListAppearance, TVCMainWindowAppearance;
+@class TVCServerListAppearance, TVCMemberListAppearance, TVCMainWindowAppearance;
 
 /* TVCMainWindowAppearanceProperties is offered as a protocl so that
  childen appearances can return the same proeprties without whoever
@@ -71,6 +71,7 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 @property (readonly, copy) NSString *appearanceName;
 
 @property (readonly) TVCServerListAppearance *serverList;
+@property (readonly) TVCMemberListAppearance *memberList;
 
 @property (readonly, copy, nullable) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
