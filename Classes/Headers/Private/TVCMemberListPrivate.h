@@ -35,11 +35,11 @@
  *
  *********************************************************************** */
 
+#import "TVCMainWindowAppearance.h"
 #import "TVCMemberList.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCMemberListAppearance;
 @class TVCMemberListMavericksBackgroundBox;
 @class TVCMemberListUserInfoPopover;
 
@@ -60,7 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)refreshDrawingForChangesToPreference:(NSString *)preferenceKey;
 
-- (void)updateBackgroundColor;
+- (void)updateAppearance; // update everything
+- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType;
 
 - (void)windowDidChangeKeyState;
 @end
