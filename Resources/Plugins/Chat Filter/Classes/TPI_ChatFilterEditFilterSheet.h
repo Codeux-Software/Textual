@@ -55,7 +55,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterActionTokenTag) {
 
 @protocol TPI_ChatFilterEditFilterSheetDelegate;
 
-@interface TPI_ChatFilterEditFilterSheet : TDCSheetBase <NSTokenFieldDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface TPI_ChatFilterEditFilterSheet : TDCSheetBase
 - (instancetype)initWithFilter:(nullable TPI_ChatFilter *)filter NS_DESIGNATED_INITIALIZER;
 
 - (void)start;

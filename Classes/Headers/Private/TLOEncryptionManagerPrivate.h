@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-@interface TLOEncryptionManager : NSObject <OTRKitDelegate, OTRKitFingerprintManagerDialogDelegate>
+@interface TLOEncryptionManager : NSObject
 /* Returns unique "account name" used for messageFrom and messageTo parameters */
 - (NSString *)accountNameForUser:(NSString *)nickname onClient:(IRCClient *)client;
 

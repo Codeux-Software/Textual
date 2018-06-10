@@ -41,7 +41,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCContentNavigationOutlineView ()
+@interface TVCContentNavigationOutlineView () <NSOutlineViewDelegate, NSOutlineViewDataSource>
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
