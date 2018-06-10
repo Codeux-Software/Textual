@@ -51,7 +51,7 @@
 #import "TVCMainWindowTextViewPrivate.h"
 #import "TVCServerListPrivate.h"
 #import "TVCMemberListPrivate.h"
-#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListAppearance.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
 #import "TPCPreferencesReload.h"
 

@@ -35,13 +35,15 @@
  *
  *********************************************************************** */
 
+#import "IRCUser.h"
+#import "IRCChannelUser.h"
 #import "NSViewHelperPrivate.h"
 #import "TXMasterController.h"
 #import "TXMenuControllerPrivate.h"
 #import "TVCMainWindow.h"
 #import "TPCPreferencesLocal.h"
 #import "TVCMemberListCellPrivate.h"
-#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListAppearancePrivate.h"
 #import "TVCMemberListUserInfoPopoverPrivate.h"
 #import "TVCMemberListPrivate.h"
 
@@ -55,9 +57,9 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 @property (nonatomic, assign) BOOL userPopoverTimerIsActive;
 @property (nonatomic, assign) NSPoint userPopoverLastKnownLocalPoint;
 @property (nonatomic, assign) NSInteger lastRowShownUserInfoPopover;
-@property (nonatomic, strong, readwrite) id userInterfaceObjects;
+@property (nonatomic, strong, readwrite) TVCMemberListAppearance *userInterfaceObjects;
 @property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak, readwrite) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMemberListMavericksBackgroundBox *backgroundView;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @end
 
@@ -450,28 +452,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 - (void)reloadUserInterfaceObjects
 {
-	Class newObjects = NULL;
-
-	if (TEXTUAL_RUNNING_ON_YOSEMITE)
-	{
-		if (self.mainWindow.usingDarkAppearance) {
-			newObjects = [TVCMemberListDarkYosemiteUserInterface class];
-		} else {
-			newObjects = [TVCMemberListLightYosemiteUserInterface class];
-		}
-	}
-	else
-	{
-		if (self.mainWindow.usingDarkAppearance) {
-			newObjects = [TVCMemberListMavericksDarkUserInterface class];
-		} else {
-			newObjects = [TVCMemberListMavericksLightUserInterface class];
-		}
-	}
-
-	[self.userInterfaceObjects invalidateAllUserMarkBadgeCaches];
-
-	self.userInterfaceObjects = [[newObjects alloc] initWithMemberList:self];
+	self.userInterfaceObjects = self.mainWindow.userInterfaceObjects.memberList;
 }
 
 - (void)updateVibrancy

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TEMPLATE APPEARANCE (NOT USED BY ANYTHING)</key>
+	<dict>
+		<key>backgroundColor</key>
+		<dict>
+			<key>activeWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.0 0.0 0.0</string>
+			</dict>
+			<key>inactiveWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.0 0.0 0.0</string>
+			</dict>
+		</dict>
+		<key>selectionColor</key>
+		<dict>
+			<key>activeWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.0 0.0 0.0</string>
+			</dict>
+			<key>inactiveWindow</key>
+			<dict>
+				<key>type</key>
+				<integer>2</integer>
+				<key>value</key>
+				<string>0.0 0.0 0.0</string>
+			</dict>
+		</dict>
+		<key>User Cell</key>
+		<dict>
+			<key>rowHeight</key>
+			<integer>0</integer>
+			<key>selectionImage</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>1</integer>
+					<key>value</key>
+					<string></string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>1</integer>
+					<key>value</key>
+					<string></string>
+				</dict>
+			</dict>
+			<key>normalTextColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>normalTextShadowColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>awayTextColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>awayTextShadowColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>selectedTextColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>selectedTextShadowColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>font</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+			</dict>
+			<key>fontSelected</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+			</dict>
+			<key>topOffset</key>
+			<integer>0</integer>
+		</dict>
+		<key>Mark Badge</key>
+		<dict>
+			<key>normalBackgroundColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>selectedBackgroundColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>normalTextColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>selectedTextColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>shadowColor</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>type</key>
+					<integer>2</integer>
+					<key>value</key>
+					<string>0.0 0.0 0.0</string>
+				</dict>
+			</dict>
+			<key>font</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+			</dict>
+			<key>fontSelected</key>
+			<dict>
+				<key>activeWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+				<key>inactiveWindow</key>
+				<dict>
+					<key>name</key>
+					<string>System</string>
+					<key>size</key>
+					<real>10</real>
+				</dict>
+			</dict>
+			<key>width</key>
+			<integer>0</integer>
+			<key>height</key>
+			<integer>0</integer>
+			<key>topOffset</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+</dict>
+</plist>

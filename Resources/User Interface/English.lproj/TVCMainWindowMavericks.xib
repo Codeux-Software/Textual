@@ -276,7 +276,7 @@
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="03i-f2-qEP" customClass="TVCMemberListMavericksUserInterfaceBackground">
+                                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="03i-f2-qEP" customClass="TVCMemberListMavericksBackgroundBox">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <view key="contentView" id="HTR-d7-zSK">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>

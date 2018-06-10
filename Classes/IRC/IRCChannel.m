@@ -42,9 +42,9 @@
 #import "TXMasterController.h"
 #import "TXWindowControllerPrivate.h"
 #import "TVCMainWindowPrivate.h"
+#import "TVCMemberListAppearance.h"
 #import "TVCMemberListPrivate.h"
 #import "TVCMemberListCellPrivate.h"
-#import "TVCMemberListSharedUserInterfacePrivate.h"
 #import "TVCLogControllerPrivate.h"
 #import "TDCSharedProtocolDefinitionsPrivate.h"
 #import "TDCSheetBase.h"
@@ -1225,9 +1225,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	TVCMemberListAppearance *appearance = mainWindowMemberList().userInterfaceObjects;
 
-	return [userInterfaceObjects cellRowHeight];
+	return appearance.cellRowHeight;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
@@ -1242,7 +1242,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
-	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
+	NSString *viewIdentifier = ((TEXTUAL_RUNNING_ON_MOJAVE) ? @"GroupViewMojave" : @"GroupView");
+
+	NSView *newView = [outlineView makeViewWithIdentifier:viewIdentifier owner:self];
 
 	return newView;
 }
