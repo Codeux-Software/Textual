@@ -91,6 +91,8 @@ NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowApp
 NSString * const TVCMainWindowWillReloadThemeNotification = @"TVCMainWindowWillReloadThemeNotification";
 NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidReloadThemeNotification";
 
+const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
+
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
@@ -202,7 +204,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[worldController() setupConfiguration];
 
-	[self updateBackgroundColor];
+	[self updateAppearance];
 
 	[self setupTrees];
 
@@ -306,18 +308,18 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	 update because the effective appearance may not
 	 be propegated to all subviews when this is called. */
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self updateBackgroundColor];
+		[self updateAppearanceBySystemChange];
 	});
 }
 
 - (void)systemColorsDidChange:(NSNotification *)aNote
 {
-	[self updateBackgroundColor];
+	[self updateAppearanceBySystemChange];
 }
 
 - (void)accessibilityDisplayOptionsDidChange:(NSNotification *)aNote
 {
-	[self updateBackgroundColor];
+	[self updateAppearanceBySystemChange];
 }
 
 - (BOOL)isUsingDarkAppearance
@@ -330,7 +332,26 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	return self.userInterfaceObjects.isDarkAppearance;
 }
 
-- (void)updateBackgroundColorOnYosemite
+- (TVCMainWindowAppearanceType)desiredAppearance
+{
+	TVCMainWindowAppearanceType desiredAppearance = [TVCMainWindowAppearance bestAppearanceForWindow:self];
+
+	TVCMainWindowAppearance *appearance = self.userInterfaceObjects;
+
+	if (appearance == nil) {
+		return desiredAppearance;
+	}
+
+	if (appearance.appearanceType == desiredAppearance &&
+		appearance.isHighResolutionAppearance == self.runningInHighResolutionMode)
+	{
+		return TVCMainWindowAppearanceNoChangetType;
+	}
+
+	return desiredAppearance;
+}
+
+- (void)updateVibrancy
 {
 	if (themeSettings().underlyingWindowColorIsDark) {
 		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
@@ -341,25 +362,47 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	self.contentSplitView.needsDisplay = YES;
 }
 
-- (void)updateBackgroundColor
+- (void)updateAppearance
 {
-	TVCMainWindowAppearanceType appearanceType = [TVCMainWindowAppearance bestAppearanceForWindow:self];
+	[self updateAppearanceBySystemChange:NO];
+}
 
-	if (self.userInterfaceObjects.appearanceType == appearanceType) {
-		return;
-	}
+- (void)updateAppearanceBySystemChange
+{
+	[self updateAppearanceBySystemChange:YES];
+}
 
-	self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithAppearance:appearanceType inWindow:self];
+- (void)updateAppearanceBySystemChange:(BOOL)systemChanged
+{
+	TVCMainWindowAppearanceUpdateType updateType = TVCMainWindowAppearanceEverythingUpdateType;
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateBackgroundColorOnYosemite];
+	TVCMainWindowAppearanceType desiredAppearance = [self desiredAppearance];
+
+	BOOL changeAppearance = (desiredAppearance != TVCMainWindowAppearanceNoChangetType);
+
+	if (changeAppearance == NO) {
+		/* Even if the desired appearance hasn't changed, we still
+		 signal views to perform selection update so that vibrant
+		 views can draw correctly when the system changes. */
+
+		if (systemChanged == NO) {
+			return;
+		}
+
+		updateType = TVCMainWindowAppearanceSelectionUpdateType;
+	} else {
+		self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithAppearance:desiredAppearance inWindow:self];
+
+		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
+			[self updateVibrancy];
+		}
 	}
 
 	[self.inputTextField updateBackgroundColor];
 
-	[self.memberList updateBackgroundColor];
+	[self.serverList updateAppearanceWithType:updateType];
 
-	[self.serverList updateBackgroundColor];
+	[self.memberList updateAppearanceWithType:updateType];
 
 	self.contentView.needsDisplay = YES;
 
@@ -443,7 +486,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[TVCDockIcon updateDockIcon];
 
-	[self updateBackgroundColor];
+	[self updateAppearance];
 }
 
 - (void)resetSelectedItemState
@@ -1045,7 +1088,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	if (reloadUserInterface) {
-		[self updateBackgroundColor];
+		[self updateAppearance];
 	}
 
 	self.reloadingTheme = NO;
@@ -2947,7 +2990,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView
 {
 	/* Allow rows to be deselected during redrawing */
-	/* See logic in -updateBackgroundColor in TVCServerList */
+	/* See logic in -updateAppearance in TVCServerList */
 	if (outlineView.allowsEmptySelection) {
 		return YES;
 	}

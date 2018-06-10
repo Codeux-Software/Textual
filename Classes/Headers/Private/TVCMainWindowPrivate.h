@@ -101,7 +101,7 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
 - (void)updateChannelViewBoxContentViewSelection;
 - (void)updateChannelViewArrangement;
 
-- (void)updateBackgroundColor;
+- (void)updateAppearance;
 
 - (void)redirectKeyDown:(NSEvent *)e;
 
