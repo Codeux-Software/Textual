@@ -139,7 +139,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSAttributedString *topicFormatted =
 		[topic attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont]
-							  preferredFontColor:[NSColor labelColorBackwardsCompat]];
+							  preferredFontColor:[NSColor controlTextColor]];
 
 		newEntry.channelTopicFormatted = topicFormatted;
 	}
