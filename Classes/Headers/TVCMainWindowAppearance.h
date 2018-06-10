@@ -51,12 +51,6 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 	TVCMainWindowAppearanceMojaveDarkType,
 };
 
-typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceUpdateType)
-{
-	TVCMainWindowAppearanceEverythingUpdateType,
-	TVCMainWindowAppearanceSelectionUpdateType
-};
-
 @class TVCServerListAppearance, TVCMemberListAppearance, TVCMainWindowAppearance;
 
 /* TVCMainWindowAppearanceProperties is offered as a protocl so that
@@ -86,6 +80,17 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceUpdateType)
 
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
+@end
+
+typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceUpdateType)
+{
+	TVCMainWindowAppearanceEverythingUpdateType,
+	TVCMainWindowAppearanceSelectionUpdateType
+};
+
+@protocol TVCMainWindowAppearanceUpdateTarget <NSObject>
+- (void)updateAppearance;
+- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType;
 @end
 
 NS_ASSUME_NONNULL_END
