@@ -49,7 +49,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _groupItemLeadingConstraintQuirkCorrectedConstraint		5.0
+@class TVCServerListCellDrawingContext;
 
 @interface TVCServerListRowCell ()
 @property (nonatomic, weak) __kindof TVCServerListCell *childCell;
@@ -64,10 +64,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *textFieldTopConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTopConstraint;
+@property (readonly) BOOL isGroupItem;
 @property (readonly) TVCServerList *serverList;
 @property (readonly) __kindof TVCServerListRowCell *rowCell;
 @property (readonly) IRCTreeItem *cellItem;
-@property (readonly, copy) NSDictionary<NSString *, id> *drawingContext;
+@property (readonly, copy) TVCServerListCellDrawingContext *drawingContext;
+@end
+
+@interface TVCServerListCellDrawingContext : NSObject
+@property (nonatomic, assign) BOOL isActive;
+@property (nonatomic, assign) BOOL isGroupItem;
+@property (nonatomic, assign) BOOL isInverted;
+@property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, assign) BOOL isSelectedFrontmost;
+@property (nonatomic, assign) BOOL isWindowActive;
 @end
 
 @implementation TVCServerListCell
@@ -87,17 +97,15 @@ NS_ASSUME_NONNULL_BEGIN
 	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
 	if (appearance.isModernAppearance) {
-		[self updateConstraintsForYosemite:appearance];
+		[self updateConstraintsForYosemiteWithAppearance:appearance];
 	}
 }
 
-- (void)updateConstraintsForYosemite:(TVCServerListAppearance *)appearance
+- (void)updateConstraintsForYosemiteWithAppearance:(TVCServerListAppearance *)appearance
 {
-	NSDictionary *drawingContext = self.drawingContext;
+	NSParameterAssert(appearance != nil);
 
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-
-	if (isGroupItem) {
+	if (self.isGroupItem) {
 		self.textFieldTopConstraint.constant = appearance.serverTopOffset;
 	} else {
 		self.textFieldTopConstraint.constant = appearance.channelTopOffset;
@@ -123,60 +131,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateDrawing
 {
+	TVCServerListCellDrawingContext *drawingContext = self.drawingContext;
+
+	[self updateTextFieldInContext:drawingContext];
+
 	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
-	[self updateDrawing:appearance];
-}
-
-- (void)updateDrawing:(TVCServerListAppearance *)appearance
-{
-	[self updateTextFieldValue];
-
 	if (appearance.isModernAppearance) {
-		[self updateDrawingForYosemite:appearance];
+		[self updateDrawingForYosemiteWithAppearance:appearance inContext:drawingContext];
 	} else {
-		[self updateDrawingForMavericks:appearance];
+		[self updateDrawingForMavericksWithAppearance:appearance inContext:drawingContext];
 	}
-
-	[self populateAccessibilityDescriptions];
 }
 
-- (void)populateAccessibilityDescriptions
+- (void)updateTextFieldInContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	NSDictionary *drawingContext = self.drawingContext;
+	NSParameterAssert(drawingContext != nil);
 
-	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-
-	NSTextFieldCell *textFieldCell = self.cellTextField.cell;
-
-	IRCTreeItem *cellItem = self.cellItem;
-
-	NSString *cellItemLabel = cellItem.label;
-
-	if (isGroupItem) {
-		if (isActive) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][1]", cellItemLabel) forObject:textFieldCell];
-		} else {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", cellItemLabel) forObject:textFieldCell];
-		} // isActive
-	} else {
-		if (((IRCChannel *)cellItem).isChannel == NO) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", cellItemLabel) forObject:textFieldCell];
-		} else {
-			if (isActive) {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", cellItemLabel) forObject:textFieldCell];
-			} else {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", cellItemLabel) forObject:textFieldCell];
-			} // isActive
-		} // isChannel
-
-		[XRAccessibility setAccessibilityLabel:nil forObject:self.imageView.cell];
-	} // isGroupItem
-}
-
-- (void)updateTextFieldValue
-{
+	/* Update string value */
 	IRCTreeItem *cellItem = self.cellItem;
 
 	NSString *stringValueNew = cellItem.label;
@@ -185,19 +157,48 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *stringValueOld = textField.stringValue;
 
-	if ([stringValueOld isEqualTo:stringValueNew] == NO) {
-		textField.stringValue = stringValueNew;
+	if ([stringValueOld isEqualTo:stringValueNew]) {
+		return;
 	}
+
+	textField.stringValue = stringValueNew;
+
+	/* Update accessibility */
+	BOOL isActive = drawingContext.isActive;
+	BOOL isGroupItem = drawingContext.isGroupItem;
+
+	NSTextFieldCell *textFieldCell = textField.cell;
+
+	if (isGroupItem) {
+		if (isActive) {
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][1]", stringValueNew) forObject:textFieldCell];
+		} else {
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", stringValueNew) forObject:textFieldCell];
+		} // isActive
+	} else {
+		if (((IRCChannel *)cellItem).isChannel == NO) {
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", stringValueNew) forObject:textFieldCell];
+		} else {
+			if (isActive) {
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", stringValueNew) forObject:textFieldCell];
+			} else {
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", stringValueNew) forObject:textFieldCell];
+			} // isActive
+		} // isChannel
+
+		[XRAccessibility setAccessibilityLabel:nil forObject:self.imageView.cell];
+	} // isGroupItem
 }
 
-- (void)updateDrawingForYosemite:(TVCServerListAppearance *)appearance
+- (void)updateDrawingForYosemiteWithAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	NSDictionary *drawingContext = self.drawingContext;
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
 
-	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	BOOL isActive = drawingContext.isActive;
+	BOOL isGroupItem = drawingContext.isGroupItem;
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isWindowActive = drawingContext.isWindowActive;
 
 	if (isGroupItem == NO) {
 		IRCTreeItem *cellItem = self.cellItem;
@@ -209,9 +210,9 @@ NS_ASSUME_NONNULL_BEGIN
 		BOOL iconIsTemplate = NO;
 
 		if (channel.isChannel) {
-			iconName = [appearance statusIconForActiveChannel:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
+			iconName = [appearance statusIconForActiveChannel:isActive selected:isSelected activeWindow:isWindowActive treatAsTemplate:&iconIsTemplate];
 		} else {
-			iconName = [appearance statusIconForActiveQuery:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
+			iconName = [appearance statusIconForActiveQuery:isActive selected:isSelected activeWindow:isWindowActive treatAsTemplate:&iconIsTemplate];
 		} // isChannel
 
 		NSImage *icon = [NSImage imageNamed:iconName];
@@ -221,23 +222,24 @@ NS_ASSUME_NONNULL_BEGIN
 		self.imageView.image = icon;
 	}
 
-	NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:appearance inContext:drawingContext];
+	NSAttributedString *newValue = [self attributedTextFieldValueForYosemiteWithAppearance:appearance inContext:drawingContext];
 
 	self.cellTextField.attributedStringValue = newValue;
 
 	if (isGroupItem == NO) {
-		[self populateMessageCountBadge:appearance inContext:drawingContext];
+		[self populateMessageCountBadgeWithAppearance:appearance inContext:drawingContext];
 	}
 }
 
-- (void)updateDrawingForMavericks:(TVCServerListAppearance *)appearance
+- (void)updateDrawingForMavericksWithAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	NSDictionary *drawingContext = self.drawingContext;
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
 
-	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
+	BOOL isActive = drawingContext.isActive;
+	BOOL isWindowActive = drawingContext.isWindowActive;
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isGroupItem = drawingContext.isGroupItem;
 
 	if (isGroupItem == NO) {
 		IRCTreeItem *cellItem = self.cellItem;
@@ -249,9 +251,9 @@ NS_ASSUME_NONNULL_BEGIN
 		BOOL iconIsTemplate = NO;
 
 		if (channel.isChannel) {
-			iconName = [appearance statusIconForActiveChannel:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
+			iconName = [appearance statusIconForActiveChannel:isActive selected:isSelected activeWindow:isWindowActive treatAsTemplate:&iconIsTemplate];
 		} else {
-			iconName = [appearance statusIconForActiveQuery:isActive selected:isSelected activeWindow:isActiveWindow treatAsTemplate:&iconIsTemplate];
+			iconName = [appearance statusIconForActiveQuery:isActive selected:isSelected activeWindow:isWindowActive treatAsTemplate:&iconIsTemplate];
 		} // isChannel
 
 		NSImage *icon = [NSImage imageNamed:iconName];
@@ -261,22 +263,25 @@ NS_ASSUME_NONNULL_BEGIN
 		self.imageView.image = icon;
 	}
 
-	NSAttributedString *newValue = [self attributedTextFieldValueForMavericks:appearance inContext:drawingContext];
+	NSAttributedString *newValue = [self attributedTextFieldValueForMavericksWithAppearance:appearance inContext:drawingContext];
 
 	self.cellTextField.attributedStringValue = newValue;
 
 	if (isGroupItem == NO) {
-		[self populateMessageCountBadge:appearance inContext:drawingContext];
+		[self populateMessageCountBadgeWithAppearance:appearance inContext:drawingContext];
 	}
 }
 
-- (NSAttributedString *)attributedTextFieldValueForMavericks:(TVCServerListAppearance *)appearance inContext:(NSDictionary<NSString *, id> *)drawingContext
+- (NSAttributedString *)attributedTextFieldValueForMavericksWithAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
+
+	BOOL isActive = drawingContext.isActive;
+	BOOL isGroupItem = drawingContext.isGroupItem;
+	BOOL isInverted = drawingContext.isInverted;
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isWindowActive = drawingContext.isWindowActive;
 
 	NSTextField *textField = self.cellTextField;
 
@@ -410,12 +415,15 @@ NS_ASSUME_NONNULL_BEGIN
 	return mutableStringValue;
 }
 
-- (NSAttributedString *)attributedTextFieldValueForYosemite:(TVCServerListAppearance *)appearance inContext:(NSDictionary<NSString *, id> *)drawingContext
+- (NSAttributedString *)attributedTextFieldValueForYosemiteWithAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
+
+	BOOL isActive = drawingContext.isActive;
+	BOOL isGroupItem = drawingContext.isGroupItem;
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isWindowActive = drawingContext.isWindowActive;
 
 	IRCTreeItem *cellItem = self.cellItem;
 
@@ -540,25 +548,26 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
 
-	NSDictionary *drawingContext = self.drawingContext;
+	TVCServerListCellDrawingContext *drawingContext = self.drawingContext;
 
-	[self populateMessageCountBadge:appearance inContext:drawingContext];
+	[self populateMessageCountBadgeWithAppearance:appearance inContext:drawingContext];
 }
 
-- (void)populateMessageCountBadge:(TVCServerListAppearance *)appearance inContext:(NSDictionary<NSString *, id> *)drawingContext
+- (void)populateMessageCountBadgeWithAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	BOOL isActiveWindow = [drawingContext boolForKey:@"isActiveWindow"];
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
 
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	BOOL isSelectedFrontmost = [drawingContext boolForKey:@"isSelectedFrontmost"];
-
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isSelectedFrontmost = drawingContext.isSelectedFrontmost;
+	BOOL isWindowActive = drawingContext.isWindowActive;
 	BOOL multipleRowsSelected = (self.serverList.numberOfSelectedRows > 1);
 
 	IRCChannel *associatedChannel = (id)self.cellItem;
 
 	BOOL drawMessageBadge = (isSelected == NO ||
 							(isSelectedFrontmost == NO && isSelected && multipleRowsSelected) ||
-							(isActiveWindow == NO && isSelected));
+							(isWindowActive == NO && isSelected));
 
 	NSUInteger treeUnreadCount = associatedChannel.treeUnreadCount;
 	NSUInteger nicknameHighlightCount = associatedChannel.nicknameHighlightCount;
@@ -583,11 +592,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Begin draw if we want to. */
 	if (treeUnreadCount > 0 && drawMessageBadge) {
-		NSAttributedString *stringToDraw = [self messageCountBadgeText:treeUnreadCount isSelected:isSelected isHighlight:isHighlight];
+		NSAttributedString *stringToDraw = [self messageCountBadgeTextForCount:treeUnreadCount isHighlight:isHighlight withAppearance:appearance inContext:drawingContext];
 
-		NSRect badgeRect = [self messageCountBadgeRectWithText:stringToDraw];
+		NSRect badgeRect = [self messageCountBadgeRectForText:stringToDraw withAppearance:appearance inContext:drawingContext];
 
-		[self drawMessageCountBadge:stringToDraw inRect:badgeRect isHighlight:isHighlight isSelected:isSelected];
+		[self drawMessageCountBadgeWithString:stringToDraw inRect:badgeRect isHighlight:isHighlight withAppearance:appearance inContext:drawingContext];
 
 		self.messageCountBadgeTrailingConstraint.constant = appearance.unreadBadgeRightMargin;
 		self.messageCountBadgeWidthConstraint.constant = NSWidth(badgeRect);
@@ -599,13 +608,13 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (NSAttributedString *)messageCountBadgeText:(NSUInteger)messageCount isSelected:(BOOL)isSelected isHighlight:(BOOL)isHighlight
+- (NSAttributedString *)messageCountBadgeTextForCount:(NSUInteger)messageCount isHighlight:(BOOL)isHighlight withAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	TVCMainWindow *mainWindow = self.mainWindow;
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
 
-	BOOL isWindowActive = mainWindow.isActiveForDrawing;
-
-	TVCServerListAppearance *appearance = mainWindow.serverList.userInterfaceObjects;
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isWindowActive = drawingContext.isWindowActive;
 
 	NSString *messageCountString = TXFormattedNumber(messageCount);
 
@@ -646,9 +655,10 @@ NS_ASSUME_NONNULL_BEGIN
 	return stringToDraw;
 }
 
-- (NSRect)messageCountBadgeRectWithText:(NSAttributedString *)stringToDraw
+- (NSRect)messageCountBadgeRectForText:(NSAttributedString *)stringToDraw withAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
 
 	CGFloat messageCountWidth = (stringToDraw.size.width + (appearance.unreadBadgePadding * 2.0));
 
@@ -667,15 +677,14 @@ NS_ASSUME_NONNULL_BEGIN
 	return badgeFrame;
 }
 
-- (void)drawMessageCountBadge:(NSAttributedString *)stringToDraw inRect:(NSRect)rectToDraw isHighlight:(BOOL)isHighlight isSelected:(BOOL)isSelected
+- (void)drawMessageCountBadgeWithString:(NSAttributedString *)stringToDraw inRect:(NSRect)rectToDraw isHighlight:(BOOL)isHighlight withAppearance:(TVCServerListAppearance *)appearance inContext:(TVCServerListCellDrawingContext *)drawingContext
 {
-	TVCMainWindow *mainWindow = self.mainWindow;
-
-	BOOL isWindowActive = mainWindow.isActiveForDrawing;
-
-	TVCServerListAppearance *appearance = mainWindow.serverList.userInterfaceObjects;
+	NSParameterAssert(appearance != nil);
+	NSParameterAssert(drawingContext != nil);
 
 	BOOL isDrawingOnMavericks = (appearance.isModernAppearance == NO);
+	BOOL isSelected = drawingContext.isSelected;
+	BOOL isWindowActive = drawingContext.isWindowActive;
 
 	/* Create image that we will draw into. If we are drawing for Mavericks,
 	 then the frame of our image is one point greater because we draw a shadow. */
@@ -833,6 +842,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Cell Information
 
+- (BOOL)isGroupItem
+{
+	return [self isKindOfClass:[TVCServerListCellGroupItem class]];
+}
+
 - (IRCTreeItem *)cellItem
 {
 	return self.objectValue;
@@ -848,30 +862,28 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.mainWindow.serverList;
 }
 
-- (NSInteger)rowIndex
-{
-	return [self.serverList rowForItem:self.cellItem];
-}
-
-- (NSDictionary<NSString *, id> *)drawingContext
+- (TVCServerListCellDrawingContext *)drawingContext
 {
 	TVCMainWindow *mainWindow = self.mainWindow;
 
 	TVCServerList *serverList = mainWindow.serverList;
 
+	TVCServerListAppearance *appearance = serverList.userInterfaceObjects;
+
 	IRCTreeItem *cellItem = self.cellItem;
 
 	NSInteger rowIndex = [serverList rowForItem:cellItem];
 
-	return @{
-		 @"isActive"			: @(cellItem.isActive),
-		 @"isActiveWindow"		: @(mainWindow.isActiveForDrawing),
-		 @"isGroupItem"			: @([self isKindOfClass:[TVCServerListCellGroupItem class]]),
-		 @"isInverted"			: @(mainWindow.usingDarkAppearance),
-		 @"isSelected"			: @([serverList isRowSelected:rowIndex]),
-		 @"isSelectedFrontmost"	: @([mainWindow isItemSelected:cellItem]),
-		 @"rowIndex"			: @(rowIndex)
-	};
+	TVCServerListCellDrawingContext *drawingContext = [TVCServerListCellDrawingContext new];
+
+	drawingContext.isActive = cellItem.isActive;
+	drawingContext.isGroupItem = self.isGroupItem;
+	drawingContext.isInverted = appearance.isDarkAppearance;
+	drawingContext.isSelected = [serverList isRowSelected:rowIndex];
+	drawingContext.isSelectedFrontmost = [mainWindow isItemSelected:cellItem];
+	drawingContext.isWindowActive = mainWindow.isActiveForDrawing;
+
+	return drawingContext;
 }
 
 @end
@@ -880,6 +892,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation TVCServerListCellChildItem
+@end
+
+@implementation TVCServerListCellDrawingContext
 @end
 
 #pragma mark -
