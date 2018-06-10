@@ -772,6 +772,27 @@ NS_ASSUME_NONNULL_BEGIN
 						forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 }
 
+- (NSColor *)userListNoModeColor
+{
+	NSColor *value = [RZUserDefaults() colorForKey:@"User List Mode Badge Colors -> no mode"];
+
+	if (value == nil) {
+		value = [NSColor clearColor];
+	}
+
+	return value;
+}
+
+- (void)setUserListNoModeColor:(NSColor *)userListNoModeColor
+{
+	if ([userListNoModeColor isEqual:[NSColor clearColor]]) {
+		userListNoModeColor = nil;
+	}
+
+	[RZUserDefaults() setColor:userListNoModeColor
+						forKey:@"User List Mode Badge Colors -> no mode"];
+}
+
 - (BOOL)logTranscript
 {
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
@@ -1434,6 +1455,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +o"];
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +h"];
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +v"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> no mode"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +y"];
@@ -1442,6 +1464,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +o"];
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +h"];
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +v"];
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> no mode"];
 #endif
 
 	[self onChangedUserListModeColor:nil];
@@ -1516,7 +1539,8 @@ NS_ASSUME_NONNULL_BEGIN
 			@(8) 	: @"User List Mode Badge Colors -> +a",
 			@(7) 	: @"User List Mode Badge Colors -> +o",
 			@(6) 	: @"User List Mode Badge Colors -> +h",
-			@(5) 	: @"User List Mode Badge Colors -> +v"
+			@(5) 	: @"User List Mode Badge Colors -> +v",
+			@(4) 	: @"User List Mode Badge Colors -> no mode"
 		};
 	});
 

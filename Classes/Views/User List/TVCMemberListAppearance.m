@@ -283,9 +283,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[cache removeAllObjects];
 }
 
-+ (NSColor *)_userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
++ (nullable NSColor *)_userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
 {
 	NSColor *defaultColor = [RZUserDefaults() colorForKey:defaultsKey];
+
+	if (defaultColor == nil) {
+		return nil;
+	}
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		return [defaultColor colorWithAlphaComponent:0.7];
@@ -322,6 +326,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSColor *)markBadgeBackgroundColor_V
 {
 	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +v"];
+}
+
+- (nullable NSColor *)markBadgeBackgroundColorByUser
+{
+	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> no mode"];
 }
 
 @end

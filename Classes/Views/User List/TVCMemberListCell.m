@@ -468,11 +468,17 @@ NS_ASSUME_NONNULL_BEGIN
 	} else if (userRank == IRCUserVoicedRank) {
 		backgroundColor = appearance.markBadgeBackgroundColor_V;
 	} else {
-		if (isWindowActive) {
-			backgroundColor = appearance.markBadgeBackgroundColorActiveWindow;
+		NSColor *customColor = appearance.markBadgeBackgroundColorByUser;
+
+		if (customColor && [customColor isEqual:[NSColor clearColor]] == NO) {
+			backgroundColor = customColor;
 		} else {
-			backgroundColor = appearance.markBadgeBackgroundColorInactiveWindow;
-		} // isWindowActive
+			if (isWindowActive) {
+				backgroundColor = appearance.markBadgeBackgroundColorActiveWindow;
+			} else {
+				backgroundColor = appearance.markBadgeBackgroundColorInactiveWindow;
+			} // isWindowActive
+		} // custom color set
 	}
 
 	/* Set "x" if the user has no modes set */

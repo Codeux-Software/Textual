@@ -181,7 +181,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[keys containsObject:@"User List Mode Badge Colors -> +a"] ||
 		[keys containsObject:@"User List Mode Badge Colors -> +o"] ||
 		[keys containsObject:@"User List Mode Badge Colors -> +h"] ||
-		[keys containsObject:@"User List Mode Badge Colors -> +v"])
+		[keys containsObject:@"User List Mode Badge Colors -> +v"] ||
+		[keys containsObject:@"User List Mode Badge Colors -> no mode"])
 	{
 		reloadAction |= TPCPreferencesReloadMemberListAction;
 		reloadAction |= TPCPreferencesReloadMemberListUserBadgesAction;

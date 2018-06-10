@@ -613,6 +613,7 @@ NS_ASSUME_NONNULL_BEGIN
 			@"1ceffaa7b5291aa3b15e7e229a50e272" : @"User List Mode Badge Colors -> +o",
 			@"4f8e8414604e9ccb757d980991d576a1" : @"User List Mode Badge Colors -> +h",
 			@"76248ae19d477d639cb821f1e0a6dae2" : @"User List Mode Badge Colors -> +v",
+			@"2a95c3cfc017173e986e24d536d517a4" : @"User List Mode Badge Colors -> no mode",
 			@"051baac72009cc4914d1815916e1ed49" : @"Server List Unread Message Count Badge Colors -> Highlight"
 		};
 	});
@@ -632,6 +633,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[key isEqualToString:@"User List Mode Badge Colors -> +o"] ||
 			[key isEqualToString:@"User List Mode Badge Colors -> +h"] ||
 			[key isEqualToString:@"User List Mode Badge Colors -> +v"] ||
+			[key isEqualToString:@"User List Mode Badge Colors -> no mode"] ||
 			[key isEqualToString:@"Server List Unread Message Count Badge Colors -> Highlight"]);
 }
 
