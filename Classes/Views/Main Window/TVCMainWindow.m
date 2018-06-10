@@ -402,7 +402,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	[RZNotificationCenter() removeObserver:self];
 
-	[NSApp removeObserver:self forKeyPath:@"effectiveAppearance"];
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+		[NSApp removeObserver:self forKeyPath:@"effectiveAppearance"];
+	}
 
 	[self saveWindowState];
 
