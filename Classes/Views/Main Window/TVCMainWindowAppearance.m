@@ -172,11 +172,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	TVCMainWindow *mainWindow = self.mainWindow;
-
-	self.serverList = [[TVCServerListAppearance alloc] initWithServerList:mainWindow.serverList parentAppearance:self];
-	self.memberList = [[TVCMemberListAppearance alloc] initWithMemberList:mainWindow.memberList parentAppearance:self];
-
 	self.channelViewOverlayDefaultBackgroundColorActiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:YES];
 	self.channelViewOverlayDefaultBackgroundColorInactiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:NO];
 
@@ -184,6 +179,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.titlebarAccessoryViewBackgroundColorActiveWindow = [self colorForKey:@"titlebarAccessoryViewBackgroundColor" forActiveWindow:YES];
 	self.titlebarAccessoryViewBackgroundColorInactiveWindow = [self colorForKey:@"titlebarAccessoryViewBackgroundColor" forActiveWindow:NO];
+
+	TVCMainWindow *mainWindow = self.mainWindow;
+
+	self.serverList = [[TVCServerListAppearance alloc] initWithServerList:mainWindow.serverList parentAppearance:self];
+	self.memberList = [[TVCMemberListAppearance alloc] initWithMemberList:mainWindow.memberList parentAppearance:self];
 
 	[self flushAppearanceProperties];
 }
