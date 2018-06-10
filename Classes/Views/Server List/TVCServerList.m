@@ -281,7 +281,9 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	}
 
 #ifdef TXSystemIsOSXMojaveOrLater
-	visaulEffectView.material = NSVisualEffectMaterialSidebar;
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+		visaulEffectView.material = NSVisualEffectMaterialSidebar;
+	}
 #endif
 }
 
