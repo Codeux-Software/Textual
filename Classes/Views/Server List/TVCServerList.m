@@ -285,8 +285,15 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 #endif
 }
 
-- (void)updateBackgroundColor
+- (void)updateAppearance
 {
+	[self updateAppearanceWithType:TVCMainWindowAppearanceEverythingUpdateType];
+}
+
+- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType
+{
+	BOOL updateEverything = (updateType == TVCMainWindowAppearanceEverythingUpdateType);
+
 	/* When changing from vibrant light to vibrant dark we must deselect all
 	 rows, change the appearance, and reselect them. If we don't do this, the
 	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
@@ -299,11 +306,13 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 	[self deselectAll:nil];
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateVibrancy];
-	}
+	if (updateEverything) {
+		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
+			[self updateVibrancy];
+		}
 
-	[self reloadUserInterfaceObjects];
+		[self reloadUserInterfaceObjects];
+	}
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
 		if (self.mainWindow.usingDarkAppearance) {
@@ -321,7 +330,9 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 	self.mainWindow.ignoreOutlineViewSelectionChanges = NO;
 
-	[self reloadAllDrawings:YES];
+	if (updateEverything) {
+		[self refreshAllDrawings:YES];
+	}
 }
 
 - (void)windowDidChangeKeyState

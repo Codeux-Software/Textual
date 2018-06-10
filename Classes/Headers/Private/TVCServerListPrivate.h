@@ -35,11 +35,11 @@
  *
  *********************************************************************** */
 
+#import "TVCMainWindowAppearance.h"
 #import "TVCServerList.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCServerListAppearance;
 @class TVCServerListMavericksBackgroundBox;
 
 @interface TVCServerList ()
@@ -63,7 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)refreshMessageCountForItem:(IRCTreeItem *)cellItem;
 - (void)refreshMessageCountForRow:(NSInteger)rowIndex;
 
-- (void)updateBackgroundColor;
+- (void)updateAppearance; // update everything
+- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType;
 
 - (void)windowDidChangeKeyState;
 @end
