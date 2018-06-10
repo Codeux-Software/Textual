@@ -2295,7 +2295,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		return;
 	}
 
-	[self.memberList updateDrawingForMember:channelUser];
+	[self.memberList refreshDrawingForMember:channelUser];
 }
 
 #pragma mark -
