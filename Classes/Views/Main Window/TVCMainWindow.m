@@ -343,7 +343,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)updateBackgroundColor
 {
-	self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithWindow:self];
+	TVCMainWindowAppearanceType appearanceType = [TVCMainWindowAppearance bestAppearanceForWindow:self];
+
+	if (self.userInterfaceObjects.appearanceType == appearanceType) {
+		return;
+	}
+
+	self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithAppearance:appearanceType inWindow:self];
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 		[self updateBackgroundColorOnYosemite];

@@ -42,7 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCMainWindow;
 
 @interface TVCMainWindowAppearance ()
-- (nullable instancetype)initWithWindow:(TVCMainWindow *)mainWindow;
+- (nullable instancetype)initWithAppearance:(TVCMainWindowAppearanceType)appearanceType inWindow:(TVCMainWindow *)mainWindow;
+
++ (TVCMainWindowAppearanceType)bestAppearanceForWindow:(TVCMainWindow *)mainWindow;
 @end
 
 NS_ASSUME_NONNULL_END
