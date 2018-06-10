@@ -2418,7 +2418,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	// a count. It's passed so that we can know whether the option to
 	// show badge count should be ignored when performing update.
 	if (isHighlight || channel.config.showTreeBadgeCount) {
-		[mainWindowServerList() updateMessageCountForItem:channel];
+		[mainWindowServerList() refreshMessageCountForItem:channel];
 	}
 }
 

@@ -115,88 +115,38 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 #pragma mark -
 #pragma mark Drawing Updates
 
-- (void)reloadAllDrawings
+- (void)refreshAllDrawings
 {
-	[self reloadAllDrawings:NO];
+	[self refreshAllDrawings:NO];
 }
 
-- (void)reloadAllUnreadMessageCountBadges
-{
-	[self reloadAllUnreadMessageCountBadges:NO];
-}
-
-- (void)updateDrawingForItem:(IRCTreeItem *)cellItem
-{
-	[self updateDrawingForItem:cellItem skipOcclusionCheck:NO];
-}
-
-- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem
-{
-	[self updateMessageCountForItem:cellItem skipOcclusionCheck:NO];
-}
-
-- (void)updateMessageCountForRow:(NSInteger)rowIndex
-{
-	[self updateMessageCountForRow:rowIndex skipOcclusionCheck:NO];
-}
-
-- (void)updateDrawingForRow:(NSInteger)rowIndex
-{
-	[self updateDrawingForRow:rowIndex skipOcclusionCheck:NO];
-}
-
-- (void)reloadAllDrawings:(BOOL)skipOcclusionCheck
+- (void)refreshAllDrawings:(BOOL)skipOcclusionCheck
 {
 	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
-		[self updateDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
+		[self refreshDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
 	}
 }
 
-- (void)reloadAllUnreadMessageCountBadges:(BOOL)skipOcclusionCheck
+- (void)refreshDrawingForRows:(NSIndexSet *)rowIndexes
 {
-	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
-		[self updateMessageCountForRow:i skipOcclusionCheck:skipOcclusionCheck];
-	}
+	[self refreshDrawingForRows:rowIndexes skipOcclusionCheck:NO];
 }
 
-- (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
+- (void)refreshDrawingForRows:(NSIndexSet *)rowIndexes skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
-	NSParameterAssert(cellItem != nil);
+	NSParameterAssert(rowIndexes != nil);
 
-	NSInteger rowIndex = [self rowForItem:cellItem];
-
-	[self updateDrawingForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
+	[rowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		[self refreshDrawingForRow:index skipOcclusionCheck:skipOcclusionCheck];
+	}];
 }
 
-- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
+- (void)refreshDrawingForRow:(NSInteger)rowIndex
 {
-	NSParameterAssert(cellItem != nil);
-
-	NSInteger rowIndex = [self rowForItem:cellItem];
-
-	[self updateMessageCountForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
+	[self refreshDrawingForRow:rowIndex skipOcclusionCheck:NO];
 }
 
-- (void)updateMessageCountForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
-{
-	if (rowIndex < 0) {
-		return;
-	}
-
-	if (skipOcclusionCheck == NO && self.mainWindow.occluded) {
-		return;
-	}
-
-	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-
-	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-
-	if (isChildItem) {
-		[rowView populateMessageCountBadge];
-	}
-}
-
-- (void)updateDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
+- (void)refreshDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
 	if (rowIndex < 0) {
 		return;
@@ -214,6 +164,84 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 		[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
 	} else {
 		rowView.needsDisplay = YES;
+	}
+}
+
+- (void)refreshDrawingForItem:(IRCTreeItem *)cellItem
+{
+	[self refreshDrawingForItem:cellItem skipOcclusionCheck:NO];
+}
+
+- (void)refreshDrawingForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	NSParameterAssert(cellItem != nil);
+
+	NSInteger rowIndex = [self rowForItem:cellItem];
+
+	[self refreshDrawingForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
+}
+
+- (void)refreshMessageCountForItem:(IRCTreeItem *)cellItem
+{
+	[self refreshMessageCountForItem:cellItem skipOcclusionCheck:NO];
+}
+
+- (void)refreshMessageCountForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	NSParameterAssert(cellItem != nil);
+
+	NSInteger rowIndex = [self rowForItem:cellItem];
+
+	[self refreshMessageCountForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
+}
+
+- (void)refreshAllUnreadMessageCountBadges
+{
+	[self refreshAllUnreadMessageCountBadges:NO];
+}
+
+- (void)refreshAllUnreadMessageCountBadges:(BOOL)skipOcclusionCheck
+{
+	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
+		[self refreshMessageCountForRow:i skipOcclusionCheck:skipOcclusionCheck];
+	}
+}
+
+- (void)refreshMessageCountForRows:(NSIndexSet *)rowIndexes
+{
+	[self refreshMessageCountForRows:rowIndexes skipOcclusionCheck:NO];
+}
+
+- (void)refreshMessageCountForRows:(NSIndexSet *)rowIndexes skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	NSParameterAssert(rowIndexes != nil);
+
+	[rowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		[self refreshMessageCountForRow:index skipOcclusionCheck:skipOcclusionCheck];
+	}];
+}
+
+- (void)refreshMessageCountForRow:(NSInteger)rowIndex
+{
+	[self refreshMessageCountForRow:rowIndex skipOcclusionCheck:NO];
+}
+
+- (void)refreshMessageCountForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	if (rowIndex < 0) {
+		return;
+	}
+
+	if (skipOcclusionCheck == NO && self.mainWindow.occluded) {
+		return;
+	}
+
+	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+
+	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+
+	if (isChildItem) {
+		[rowView populateMessageCountBadge];
 	}
 }
 
@@ -302,7 +330,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 		self.backgroundView.needsDisplay = YES;
 	}
 
-	[self reloadAllDrawings:YES];
+	[self refreshAllDrawings:YES];
 }
 
 #pragma mark -

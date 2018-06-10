@@ -1786,7 +1786,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	if (itemChangedTo) {
 		if (self.multipleItemsSelected) {
-			[self.serverList updateMessageCountForItem:itemChangedTo];
+			[self.serverList refreshMessageCountForItem:itemChangedTo];
 		}
 
 		[itemChangedTo resetState];
@@ -2444,7 +2444,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	NSParameterAssert(item != nil);
 
-	[self.serverList updateDrawingForItem:item];
+	[self.serverList refreshDrawingForItem:item];
 }
 
 - (void)reloadTreeGroup:(IRCTreeItem *)item
@@ -2464,7 +2464,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)reloadTree
 {
-	[self.serverList reloadAllDrawings];
+	[self.serverList refreshAllDrawings];
 }
 
 - (void)expandClient:(IRCClient *)client
@@ -2908,7 +2908,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	[self.serverList updateDrawingForRow:row];
+	[self.serverList refreshDrawingForRow:row];
 }
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
