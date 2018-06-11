@@ -109,9 +109,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWithMemberList:(TVCMemberList *)MemberList parentAppearance:(TVCMainWindowAppearance *)appearance
+- (nullable instancetype)initWithMemberList:(TVCMemberList *)memberList parentAppearance:(TVCMainWindowAppearance *)appearance
 {
-	NSParameterAssert(MemberList != nil);
+	NSParameterAssert(memberList != nil);
 	NSParameterAssert(appearance != nil);
 
 	NSString *appearanceName = appearance.appearanceName;
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL forRetinaDisplay = appearance.isHighResolutionAppearance;
 
 	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
-		self.memberList = MemberList;
+		self.memberList = memberList;
 
 		self.parentAppearance = appearance;
 
