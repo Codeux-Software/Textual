@@ -43,11 +43,25 @@
 	<dict>
 		<key>inheritFrom</key>
 		<string>Mojave</string>
+		<key>loadingScreenBackgroundColor</key>
+		<dict>
+			<key>type</key>
+			<integer>3</integer>
+			<key>value</key>
+			<string>windowBackgroundColor</string>
+		</dict>
 	</dict>
 	<key>MojaveLight</key>
 	<dict>
 		<key>inheritFrom</key>
 		<string>Mojave</string>
+		<key>loadingScreenBackgroundColor</key>
+		<dict>
+			<key>type</key>
+			<integer>1</integer>
+			<key>value</key>
+			<string>1.0</string>
+		</dict>
 	</dict>
 	<key>Yosemite</key>
 	<dict>
@@ -67,6 +81,13 @@
 				<key>value</key>
 				<string>0.0 0.3</string>
 			</dict>
+		</dict>
+		<key>loadingScreenBackgroundColor</key>
+		<dict>
+			<key>type</key>
+			<integer>1</integer>
+			<key>value</key>
+			<string>1.0</string>
 		</dict>
 		<key>splitViewDividerColor</key>
 		<dict>
@@ -114,6 +135,13 @@
 				<key>value</key>
 				<string>0.0 0.3</string>
 			</dict>
+		</dict>
+		<key>loadingScreenBackgroundColor</key>
+		<dict>
+			<key>type</key>
+			<integer>1</integer>
+			<key>value</key>
+			<string>1.0</string>
 		</dict>
 		<key>splitViewDividerColor</key>
 		<dict>

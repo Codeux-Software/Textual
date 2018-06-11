@@ -21,6 +21,13 @@
 				<string>0.0 0.0 0.0</string>
 			</dict>
 		</dict>
+		<key>loadingScreenBackgroundColor</key>
+		<dict>
+			<key>type</key>
+			<integer>2</integer>
+			<key>value</key>
+			<string>0.0 0.0 0.0</string>
+		</dict>
 		<key>splitViewDividerColor</key>
 		<dict>
 			<key>type</key>

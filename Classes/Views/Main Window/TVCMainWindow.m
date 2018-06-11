@@ -50,7 +50,7 @@
 #import "TVCLogViewPrivate.h"
 #import "TVCMainWindowAppearancePrivate.h"
 #import "TVCMainWindowChannelViewPrivate.h"
-#import "TVCMainWindowLoadingScreen.h"
+#import "TVCMainWindowLoadingScreenPrivate.h"
 #import "TVCMainWindowSplitViewPrivate.h"
 #import "TVCMainWindowTextViewPrivate.h"
 #import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
@@ -399,6 +399,8 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 	}
 
 	[self.inputTextField updateBackgroundColor];
+
+	[self.loadingScreen updateAppearanceWithType:updateType];
 
 	[self.serverList updateAppearanceWithType:updateType];
 
