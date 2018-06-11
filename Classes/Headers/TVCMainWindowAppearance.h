@@ -76,6 +76,8 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 @property (readonly, copy, nullable) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
 
+@property (readonly, copy, nullable) NSColor *loadingScreenBackgroundColor;
+
 @property (readonly, copy, nullable) NSColor *splitViewDividerColor;
 
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;

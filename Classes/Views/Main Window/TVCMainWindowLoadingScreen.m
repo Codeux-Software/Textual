@@ -39,7 +39,7 @@
 #import "TVCMainWindowSplitView.h"
 #import "TVCMainWindowTextViewPrivate.h"
 #import "TVCMainWindowPrivate.h"
-#import "TVCMainWindowLoadingScreen.h"
+#import "TVCMainWindowLoadingScreenPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -245,6 +245,23 @@ NS_ASSUME_NONNULL_BEGIN
 	textField.selectable = YES;
 
 	[textField updateSegmentedController];
+}
+
+#pragma mark -
+#pragma mark Appearance
+
+- (void)updateAppearance
+{
+	[self updateAppearanceWithType:TVCMainWindowAppearanceEverythingUpdateType];
+}
+
+- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType
+{
+	if (updateType != TVCMainWindowAppearanceEverythingUpdateType) {
+		return;
+	}
+
+	self.fillColor = self.mainWindow.userInterfaceObjects.loadingScreenBackgroundColor;
 }
 
 @end

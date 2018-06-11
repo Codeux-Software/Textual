@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite) TVCMemberListAppearance *memberList;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSColor *loadingScreenBackgroundColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *splitViewDividerColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
@@ -174,6 +175,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.channelViewOverlayDefaultBackgroundColorActiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:YES];
 	self.channelViewOverlayDefaultBackgroundColorInactiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:NO];
+
+	self.loadingScreenBackgroundColor = [self colorForKey:@"loadingScreenBackgroundColor"];
 
 	self.splitViewDividerColor = [self colorForKey:@"splitViewDividerColor"];
 

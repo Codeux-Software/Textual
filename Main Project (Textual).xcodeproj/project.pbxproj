@@ -1311,6 +1311,10 @@
 		4C645F5F1CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */; };
 		4C645F601CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */; };
 		4C645F611CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */; };
+		4C65B39120CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C65B39020CDEE660047155D /* TVCMainWindowLoadingScreenPrivate.h */; };
+		4C65B39220CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C65B39020CDEE660047155D /* TVCMainWindowLoadingScreenPrivate.h */; };
+		4C65B39320CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C65B39020CDEE660047155D /* TVCMainWindowLoadingScreenPrivate.h */; };
+		4C65B39420CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C65B39020CDEE660047155D /* TVCMainWindowLoadingScreenPrivate.h */; };
 		4C673F191D10FB6500979B60 /* TPCPreferencesReload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C673F181D10FB6500979B60 /* TPCPreferencesReload.m */; };
 		4C673F1A1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C673F181D10FB6500979B60 /* TPCPreferencesReload.m */; };
 		4C673F1B1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C673F181D10FB6500979B60 /* TPCPreferencesReload.m */; };
@@ -2991,6 +2995,7 @@
 		4C620E8B1D3E61C20037F35E /* TDCChannelSpotlightSearchResultsTablePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelSpotlightSearchResultsTablePrivate.h; path = Classes/Headers/Private/TDCChannelSpotlightSearchResultsTablePrivate.h; sourceTree = SOURCE_ROOT; };
 		4C635EE21D27F4DA00B64A0C /* IRCTimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCTimerCommand.m; path = Classes/IRC/IRCTimerCommand.m; sourceTree = "<group>"; };
 		4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowChannelView.m; path = "Classes/Views/Main Window/TVCMainWindowChannelView.m"; sourceTree = "<group>"; };
+		4C65B39020CDEE660047155D /* TVCMainWindowLoadingScreenPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreenPrivate.h; path = Classes/Headers/Private/TVCMainWindowLoadingScreenPrivate.h; sourceTree = "<group>"; };
 		4C673ED61D10FB5000979B60 /* IRCWorldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldPrivate.h; path = Classes/Headers/Private/IRCWorldPrivate.h; sourceTree = "<group>"; };
 		4C673ED71D10FB5000979B60 /* THOPluginProtocolPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THOPluginProtocolPrivate.h; path = Classes/Headers/Private/THOPluginProtocolPrivate.h; sourceTree = "<group>"; };
 		4C673ED81D10FB5000979B60 /* TPCApplicationInfoPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCApplicationInfoPrivate.h; path = Classes/Headers/Private/TPCApplicationInfoPrivate.h; sourceTree = "<group>"; };
@@ -4214,6 +4219,7 @@
 				4C7B48F41D131A2A008D7926 /* TVCLogViewPrivate.h */,
 				4C33340720CBF30900ACB9AD /* TVCMainWindowAppearancePrivate.h */,
 				4C5DD5251D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h */,
+				4C65B39020CDEE660047155D /* TVCMainWindowLoadingScreenPrivate.h */,
 				4C673EE31D10FB5000979B60 /* TVCMainWindowPrivate.h */,
 				4C5DD5151D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h */,
 				4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */,
@@ -5263,6 +5269,7 @@
 				4C620E841D3E614E0037F35E /* TDCChannelSpotlightControllerPanelPrivate.h in Headers */,
 				4CF642F41D2DC34100CB9165 /* IRCChannelUserInternal.h in Headers */,
 				4C7B48FB1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
+				4C65B39120CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */,
 				4CB17EC81D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
 				4C7B03721D1210A100295E82 /* TLOpenLink.h in Headers */,
 				4C7B03731D1210A100295E82 /* TLOPopupPrompts.h in Headers */,
@@ -5589,6 +5596,7 @@
 				4C4732BF20C7599800713C91 /* NSViewHelperPrivate.h in Headers */,
 				4C4732C020C7599800713C91 /* TextualApplicationPrivate.h in Headers */,
 				4C4732C120C7599800713C91 /* THOPluginProtocolPrivate.h in Headers */,
+				4C65B39420CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */,
 				4C4732C220C7599800713C91 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4C4732C320C7599800713C91 /* TVCTextFormatterMenuPrivate.h in Headers */,
 				4C4732C420C7599800713C91 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -5844,6 +5852,7 @@
 				4C7B04BA1D1210DA00295E82 /* NSViewHelperPrivate.h in Headers */,
 				4C7B04BB1D1210DA00295E82 /* TextualApplicationPrivate.h in Headers */,
 				4C7B04BC1D1210DA00295E82 /* THOPluginProtocolPrivate.h in Headers */,
+				4C65B39220CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */,
 				4C0D97921D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4C76CC971D1DC6ED005CDDA9 /* TVCTextFormatterMenuPrivate.h in Headers */,
 				4C558DD61D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -6099,6 +6108,7 @@
 				4C7B04D31D1210E000295E82 /* NSViewHelperPrivate.h in Headers */,
 				4C7B04D41D1210E000295E82 /* TextualApplicationPrivate.h in Headers */,
 				4C7B04D51D1210E000295E82 /* THOPluginProtocolPrivate.h in Headers */,
+				4C65B39320CDEE670047155D /* TVCMainWindowLoadingScreenPrivate.h in Headers */,
 				4C0D97931D363953001CD6D9 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4C76CC981D1DC6ED005CDDA9 /* TVCTextFormatterMenuPrivate.h in Headers */,
 				4C558DD71D24055C00628B47 /* TDCServerHighlightListSheetPrivate.h in Headers */,
