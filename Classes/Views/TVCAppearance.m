@@ -393,6 +393,98 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark Gradient
+
+- (nullable NSGradient *)gradientForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return nil;
+	}
+
+	return [self gradientInGroup:group withKey:key];
+}
+
+- (nullable NSGradient *)gradientInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
+{
+	NSParameterAssert(group != nil);
+	NSParameterAssert(key != nil);
+
+	NSArray *gradientColors = [self _valueInGroup:group withKey:key expectedType:[NSArray class]];
+
+	if (gradientColors == nil) {
+		return nil;
+	}
+
+	return [self _gradientWithColors:gradientColors];
+}
+
+- (nullable NSGradient *)gradientForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
+{
+	NSParameterAssert(key != nil);
+
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return nil;
+	}
+
+	return [self gradientInGroup:group withKey:key forActiveWindow:forActiveWindow];
+}
+
+- (nullable NSGradient *)gradientInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow
+{
+	NSParameterAssert(group != nil);
+	NSParameterAssert(key != nil);
+
+	NSDictionary *referenceObject = [self _valueInGroup:group withKey:key expectedType:[NSDictionary class]];
+
+	if (referenceObject == nil) {
+		return nil;
+	}
+
+	NSString *gradientKey = ((forActiveWindow) ? @"activeWindow" : @"inactiveWindow");
+
+	NSArray *gradientColors = [referenceObject arrayForKey:gradientKey];
+
+	if (gradientColors == nil) {
+		return nil;
+	}
+
+	return [self _gradientWithColors:gradientColors];
+}
+
+- (nullable NSGradient *)_gradientWithColors:(NSArray<NSDictionary<NSString *, id> *> *)gradientColorsIn
+{
+	NSParameterAssert(gradientColorsIn != nil);
+
+	NSMutableArray<NSColor *> *gradientColorsOut = nil;
+
+	for (NSDictionary<NSString *, id> *color in gradientColorsIn) {
+		NSColor *colorObject = [self _colorWithProperties:color];
+
+		if (colorObject == nil) {
+			continue;
+		}
+
+		if (gradientColorsOut == nil) {
+			gradientColorsOut = [NSMutableArray array];
+		}
+
+		[gradientColorsOut addObject:colorObject];
+	}
+
+	if (gradientColorsOut == nil || gradientColorsOut.count < 2) {
+		return nil;
+	}
+
+	return [[NSGradient alloc] initWithColors:gradientColorsOut];
+}
+
+#pragma mark -
 #pragma mark Font
 
 - (nullable NSFont *)fontForKey:(NSString *)key
