@@ -677,28 +677,28 @@
 			<key>font</key>
 			<dict>
 				<key>name</key>
-				<string>System</string>
+				<string>Helvetica</string>
 				<key>size</key>
 				<integer>12</integer>
 			</dict>
 			<key>fontLarge</key>
 			<dict>
 				<key>name</key>
-				<string>System</string>
+				<string>Helvetica</string>
 				<key>size</key>
 				<integer>14</integer>
 			</dict>
 			<key>fontExtraLarge</key>
 			<dict>
 				<key>name</key>
-				<string>System</string>
+				<string>Helvetica</string>
 				<key>size</key>
 				<integer>16</integer>
 			</dict>
 			<key>fontHumongous</key>
 			<dict>
 				<key>name</key>
-				<string>System</string>
+				<string>Helvetica</string>
 				<key>size</key>
 				<integer>24</integer>
 			</dict>
