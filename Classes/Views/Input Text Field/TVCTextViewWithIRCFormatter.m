@@ -293,86 +293,69 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Line Counting
 
-- (BOOL)isAtBottomOfView
-{
-	return (self.selectedLineNumber == self.numberOfLines);
-}
-
-- (BOOL)isAtTopOfView
-{
-	return (self.selectedLineNumber == 1);
-}
-
-- (NSUInteger)selectedLineNumber
+- (NSRect)selectedRect
 {
 	NSLayoutManager *layoutManager = self.layoutManager;
 
-	NSRange selectionRange = self.selectedRange;
+	NSRange glyphRange = [layoutManager glyphRangeForCharacterRange:self.selectedRange actualCharacterRange:NULL];
+	NSRect boundingRect = [layoutManager boundingRectForGlyphRange:glyphRange inTextContainer:self.textContainer];
 
-	NSRange selectionLineRange;
+	NSPoint containerOrigin = [self textContainerOrigin];
 
-	(void)[layoutManager lineFragmentRectForGlyphAtIndex:selectionRange.location effectiveRange:&selectionLineRange];
-
-	/* Loop through the range of each line in our text view using
-	 the same technique we use for counting our total number of
-	 lines. If a range matches our base while looping, then that
-	 is our selected line number. */
-	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
-
-	NSUInteger numberOfLines = 0;
-
-	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
-		NSRange lineRange;
-
-		(void)[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
-
-		if (NSEqualRanges(selectionLineRange, lineRange)) {
-			return (numberOfLines + 1);
-		}
-
-		i = NSMaxRange(lineRange);
-	}
-
-	return self.numberOfLines;
+	return NSInsetRect(boundingRect, containerOrigin.x, containerOrigin.y);
 }
 
-- (NSUInteger)numberOfLines
+- (TVCTextViewCaretLocation)caretLocation
 {
+	NSUInteger stringLength = self.stringLength;
+
+	if (stringLength == 0) {
+		return TVCTextViewCaretInOnlyLine;
+	}
+
+	NSRange selectedRange = self.selectedRange;
+
 	NSLayoutManager *layoutManager = self.layoutManager;
 
-	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
+	/* Check first line */
+	BOOL inFirstLine = (selectedRange.location == 0);
 
-	NSUInteger numberOfLines = 0;
+	if (inFirstLine == NO) {
+		NSRange firstLineRange;
 
-	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
-		NSRange lineRange;
+		(void)[layoutManager lineFragmentRectForGlyphAtIndex:0 effectiveRange:&firstLineRange];
 
-		(void)[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
-
-		i = NSMaxRange(lineRange);
+		inFirstLine = (selectedRange.location <= NSMaxRange(firstLineRange));
 	}
 
-	/* The method used above for counting the number of lines in
-	 our text view does not take into consideration blank lines at
-	 the end of our field. Therefore, we must manually check if the
-	 last line of our input is a blank newline. If it is, then
-	 increase our count by one. */
-	NSInteger lastIndex = (self.stringLength - 1);
+	/* Check last line */
+	BOOL inLastLine = (NSMaxRange(selectedRange) == stringLength);
 
-	UniChar lastCharacter = [self.stringValue characterAtIndex:lastIndex];
+	if (inLastLine == NO) {
+		NSRange lastLineRange;
 
-	if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastCharacter]) {
-		numberOfLines += 1;
+		(void)[layoutManager lineFragmentRectForGlyphAtIndex:(stringLength - 1) effectiveRange:&lastLineRange];
+
+		inLastLine = (selectedRange.location >= lastLineRange.location);
 	}
 
-	return numberOfLines;
+	/* Process results */
+	if (inFirstLine && inLastLine) {
+		return TVCTextViewCaretInOnlyLine;
+	} else if (inFirstLine) {
+		return TVCTextViewCaretInFirstLine;
+	} else if (inLastLine) {
+		return TVCTextViewCaretInLastLine;
+	}
+
+	return TVCTextViewCaretInMiddle;
 }
 
 - (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding
 {
 	NSLayoutManager *layoutManager = self.layoutManager;
 
-	BOOL skipNewlineSymbolCheck = NO;
+	BOOL skipLastFragmentCheck = NO;
 
 	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
 
@@ -386,9 +369,9 @@ NS_ASSUME_NONNULL_BEGIN
 		NSRect rect = [layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
 
 		if ((totalLineHeight +  rect.size.height) <= maximumHeight) {
-			 totalLineHeight += rect.size.height;
+			totalLineHeight  += rect.size.height;
 		} else {
-			skipNewlineSymbolCheck = YES;
+			skipLastFragmentCheck = YES;
 
 			break;
 		}
@@ -396,18 +379,14 @@ NS_ASSUME_NONNULL_BEGIN
 		i = NSMaxRange(lineRange);
 	}
 
-	if (skipNewlineSymbolCheck == NO) {
-		NSInteger lastIndex = (self.stringLength - 1);
+	if (skipLastFragmentCheck) {
+		return totalLineHeight;
+	}
 
-		UniChar lastCharacter = [self.stringValue characterAtIndex:lastIndex];
+	NSRect lastFragmentRect = layoutManager.extraLineFragmentRect;
 
-		if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastCharacter]) {
-			CGFloat defaultHeight = [layoutManager defaultLineHeightForFont:self.preferredFont];
-
-			if ((totalLineHeight +  defaultHeight) <= maximumHeight) {
-				 totalLineHeight += defaultHeight;
-			}
-		}
+	if ((totalLineHeight +  lastFragmentRect.size.height) <= maximumHeight) {
+		totalLineHeight  += lastFragmentRect.size.height;
 	}
 
 	return totalLineHeight;

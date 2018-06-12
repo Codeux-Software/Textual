@@ -1188,11 +1188,11 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 - (void)moveInputHistory:(BOOL)movingUp checkScroller:(BOOL)checkScroller event:(NSEvent *)event
 {
 	if (checkScroller) {
-		NSUInteger numberOfLines = self.inputTextField.numberOfLines;
+		TVCTextViewCaretLocation caretLocation = self.inputTextField.caretLocation;
 
-		if (numberOfLines >= 2) {
-			BOOL atTop = self.inputTextField.atTopOfView;
-			BOOL atBottom = self.inputTextField.atBottomOfView;
+		if (caretLocation != TVCTextViewCaretInOnlyLine) {
+			BOOL atTop = (caretLocation == TVCTextViewCaretInFirstLine);
+			BOOL atBottom = (caretLocation == TVCTextViewCaretInLastLine);
 
 			if ((atTop			&& event.keyCode == TXKeyDownArrowCode) ||
 				(atBottom		&& event.keyCode == TXKeyUpArrowCode) ||
@@ -1213,10 +1213,16 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 		stringValue = [self.inputHistoryManager down:stringValue];
 	}
 
-	if (stringValue) {
-		self.inputTextField.attributedStringValue = stringValue;
+	if (stringValue == nil) {
+		return;
+	}
 
-		[self.inputTextField focus];
+	self.inputTextField.attributedStringValue = stringValue;
+
+	[self.inputTextField focus];
+
+	if (movingUp == NO) {
+		self.inputTextField.selectedRange = NSMakeRange(0, 0);
 	}
 }
 
