@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,21 +35,14 @@
  *
  *********************************************************************** */
 
+#import "TVCMainWindowTextViewAppearance.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowTextViewMavericksUserInterface : NSObject
-+ (NSColor *)inputTextFieldPrimaryTextColor;
-+ (NSColor *)inputTextFieldPlaceholderTextColor;
+@class TVCMainWindowAppearance;
 
-+ (NSColor *)inputTextFieldOutlineColorForActiveWindow;
-+ (NSColor *)inputTextFieldOutlineColorForInactiveWindow;
-
-+ (NSColor *)inputTextFieldBackgroundColor;
-
-+ (NSColor *)inputTextFieldInsideShadowColorForActiveWindow;
-+ (NSColor *)inputTextFieldInsideShadowColorForInactiveWindow;
-
-+ (NSColor *)inputTextFieldOutsideShadowColor;
+@interface TVCMainWindowTextViewAppearance ()
+- (nullable instancetype)initWitParentAppearance:(TVCMainWindowAppearance *)appearance;
 @end
 
 NS_ASSUME_NONNULL_END

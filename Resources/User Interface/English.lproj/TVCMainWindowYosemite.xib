@@ -97,6 +97,9 @@
                                     <constraint firstItem="xnK-JZ-PNd" firstAttribute="top" secondItem="nbK-l5-9k5" secondAttribute="top" constant="3" id="lXH-1e-q4x"/>
                                     <constraint firstAttribute="trailing" secondItem="xnK-JZ-PNd" secondAttribute="trailing" constant="10" id="xYw-C2-alv"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="textView" destination="Ub5-no-pBU" id="bkZ-AY-i7H"/>
+                                </connections>
                             </customView>
                         </subviews>
                         <constraints>
@@ -110,6 +113,7 @@
                         </constraints>
                         <connections>
                             <outlet property="segmentedController" destination="Q9x-Ny-Yn4" id="tS5-QF-8za"/>
+                            <outlet property="textView" destination="Ub5-no-pBU" id="tIm-bm-cE5"/>
                         </connections>
                     </customView>
                     <splitView autosaveName="" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-2U-X51" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">

@@ -40,6 +40,7 @@
 #import "TVCAppearancePrivate.h"
 #import "TVCServerListAppearancePrivate.h"
 #import "TVCMemberListAppearancePrivate.h"
+#import "TVCMainWindowTextViewAppearancePrivate.h"
 #import "TVCMainWindow.h"
 #import "TVCMainWindowAppearancePrivate.h"
 
@@ -51,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) TVCMainWindowAppearanceType appearanceType;
 @property (nonatomic, strong, readwrite) TVCServerListAppearance *serverList;
 @property (nonatomic, strong, readwrite) TVCMemberListAppearance *memberList;
+@property (nonatomic, strong, readwrite) TVCMainWindowTextViewAppearance *textView;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *loadingScreenBackgroundColor;
@@ -187,6 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.serverList = [[TVCServerListAppearance alloc] initWithServerList:mainWindow.serverList parentAppearance:self];
 	self.memberList = [[TVCMemberListAppearance alloc] initWithMemberList:mainWindow.memberList parentAppearance:self];
+	self.textView = [[TVCMainWindowTextViewAppearance alloc] initWitParentAppearance:self];
 
 	[self flushAppearanceProperties];
 }
