@@ -68,6 +68,9 @@
                                     <constraint firstAttribute="bottom" secondItem="fM6-4m-qZc" secondAttribute="bottom" constant="3" id="WZ3-cl-4oi"/>
                                     <constraint firstItem="fM6-4m-qZc" firstAttribute="leading" secondItem="Jl3-QW-y8e" secondAttribute="leading" id="eN2-SM-AOM"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="textView" destination="AbN-7J-waj" id="qdX-Gj-Ga0"/>
+                                </connections>
                             </customView>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ijw-SU-h2Z" customClass="TVCMainWindowSegmentedController">
                                 <rect key="frame" x="10" y="6" width="150" height="23"/>
