@@ -35,13 +35,14 @@
  *
  *********************************************************************** */
 
+#import "TVCMainWindowAppearance.h"
 #import "TVCMainWindowTextView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class TVCMainWindowSegmentedController, TVCMainWindowSegmentedControllerCell;
 
-@interface TVCMainWindowTextView ()
+@interface TVCMainWindowTextView () <TVCMainWindowAppearanceUpdateTarget>
 - (TVCMainWindowSegmentedController *)segmentedController;
 - (TVCMainWindowSegmentedControllerCell *)segmentedControllerCell;
 
@@ -50,8 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateTextBasedOnPreferredFontSize;
 
 - (void)updateSegmentedController;
-
-- (void)updateBackgroundColor;
 
 - (void)windowDidChangeKeyState;
 
@@ -62,15 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)recalculateTextViewSizeForced;
 @end
 
-@class TVCMainWindowTextViewContentView;
-
 @interface TVCMainWindowTextViewBackground : NSView
-@property (readonly, weak) TVCMainWindowTextViewContentView *contentView;
-
-@property (readonly, copy) NSColor *systemSpecificFontColor;
-@property (readonly, copy) NSColor *systemSpecificPlaceholderStringFontColor;
-
-- (NSFont *)systemSpecificFontWithSize:(CGFloat)fontSize;
 @end
 
 @interface TVCMainWindowTextViewContentView : NSView

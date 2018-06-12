@@ -398,13 +398,13 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 		}
 	}
 
-	[self.inputTextField updateBackgroundColor];
-
 	[self.loadingScreen updateAppearanceWithType:updateType];
 
 	[self.serverList updateAppearanceWithType:updateType];
 
 	[self.memberList updateAppearanceWithType:updateType];
+
+	[self.inputTextField updateAppearanceWithType:updateType];
 
 	self.contentView.needsDisplay = YES;
 
