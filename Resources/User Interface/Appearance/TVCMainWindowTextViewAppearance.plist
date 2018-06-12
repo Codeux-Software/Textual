@@ -674,6 +674,34 @@
 					<string>1.0 0.70</string>
 				</dict>
 			</dict>
+			<key>font</key>
+			<dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>12</integer>
+			</dict>
+			<key>fontLarge</key>
+			<dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>14</integer>
+			</dict>
+			<key>fontExtraLarge</key>
+			<dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>16</integer>
+			</dict>
+			<key>fontHumongous</key>
+			<dict>
+				<key>name</key>
+				<string>System</string>
+				<key>size</key>
+				<integer>24</integer>
+			</dict>
 		</dict>
 	</dict>
 	<key>MavericksDarkAqua</key>
