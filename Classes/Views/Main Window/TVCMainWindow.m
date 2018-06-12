@@ -408,7 +408,9 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 	self.contentView.needsDisplay = YES;
 
-	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification object:self];
+	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification
+										  object:self
+										userInfo:@{@"updateType" : @(updateType)}];
 }
 
 - (void)updateAlphaValueToReflectPreferences
