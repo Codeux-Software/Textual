@@ -58,6 +58,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSImage *)imageForKey:(NSString *)key;
 - (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
 
+- (NSSize)sizeForKey:(NSString *)key;
+- (NSSize)sizeInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
+
 - (CGFloat)measurementForKey:(NSString *)key;
 - (CGFloat)measurementInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key;
 
