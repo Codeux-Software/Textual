@@ -12291,9 +12291,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(nicknames != nil);
 
 	/* Split nicknames into fixed number per-command in case there are a lot or are long. */
-	[nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
-		[self _sendIsonForNicknames:objects hideResponse:hideResponse];
-	}];
+	/* June 11, 2018: Disabled this because Textual expects nicknames to appear in ISON
+	 response or they are considered offline. If we chunk out results, then user may
+	 disappear in one ISON response and then appear in another. The long term solution
+	 is to stop relying on ISON but no idea when that will come. */
+//	[nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
+		[self _sendIsonForNicknames:nicknames hideResponse:hideResponse];
+//	}];
 }
 
 - (void)_sendIsonForNicknames:(NSArray<NSString *> *)nicknames hideResponse:(BOOL)hideResponse
