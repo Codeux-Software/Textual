@@ -39,14 +39,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCTextViewWithIRCFormatter : NSTextView <NSTextDelegate, TLOKeyEventHandlerPrototype>
-@property (getter=isAtTopOfView, readonly) BOOL atTopOfView;
-@property (getter=isAtBottomOfView, readonly) BOOL atBottomOfView;
+typedef NS_ENUM(NSUInteger, TVCTextViewCaretLocation)
+{
+	TVCTextViewCaretInOnlyLine, // There isn't more than one line
+	TVCTextViewCaretInFirstLine,
+	TVCTextViewCaretInMiddle,
+	TVCTextViewCaretInLastLine,
+};
 
-@property (readonly) NSUInteger selectedLineNumber;
-@property (readonly) NSUInteger numberOfLines;
+@interface TVCTextViewWithIRCFormatter : NSTextView <NSTextDelegate, TLOKeyEventHandlerPrototype>
+@property (readonly) TVCTextViewCaretLocation caretLocation;
 
 - (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding;
+
+@property (readonly) NSRect selectedRect;
 
 @property (nonatomic, copy) NSString *stringValue;
 @property (nonatomic, copy) NSString *stringValueWithIRCFormatting;
