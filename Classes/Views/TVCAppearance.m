@@ -694,6 +694,36 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark Size
+
+- (NSSize)sizeForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSDictionary *group = self.appearanceProperties;
+
+	if (group == nil) {
+		return NSZeroSize;
+	}
+
+	return [self sizeInGroup:group withKey:key];
+}
+
+- (NSSize)sizeInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key
+{
+	NSDictionary *referenceObject = [self _valueInGroup:group withKey:key expectedType:[NSDictionary class]];
+
+	if (referenceObject == nil) {
+		return NSZeroSize;
+	}
+
+	CGFloat width = [referenceObject doubleForKey:@"width"];
+	CGFloat height = [referenceObject doubleForKey:@"height"];
+
+	return NSMakeSize(width, height);
+}
+
+#pragma mark -
 #pragma mark Measurement
 
 - (CGFloat)measurementForKey:(NSString *)key
