@@ -223,6 +223,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+
 	NSMutableArray *notifications = [NSMutableArray array];
 
 	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationAddressBookMatchType]];
