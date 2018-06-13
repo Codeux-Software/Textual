@@ -35,11 +35,52 @@
  *
  *********************************************************************** */
 
+#import "TDCAlert.h"
+#import "TLOLanguagePreferences.h"
+#import "TPCApplicationInfo.h"
 #import "TXApplicationPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXApplication
+
+- (instancetype)init
+{
+#ifndef DEBUG
+	if ([self.class checkForOtherCopiesOfTextualRunning] == NO) {
+		exit(0);
+	}
+#endif
+
+	return [super init];
+}
+
++ (BOOL)checkForOtherCopiesOfTextualRunning
+{
+	pid_t ourProcessIdentifier = [[NSProcessInfo processInfo] processIdentifier];
+
+	for (NSRunningApplication *application in RZWorkspace().runningApplications) {
+		if ([application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual-mas"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"])
+		{
+			if (application.processIdentifier == ourProcessIdentifier) {
+				continue;
+			}
+
+			BOOL continueLaunch = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1115][2]")
+															title:TXTLS(@"Prompts[1115][1]")
+													defaultButton:TXTLS(@"Prompts[0001]")
+												  alternateButton:TXTLS(@"Prompts[0002]")];
+
+			if (continueLaunch == NO) {
+				return NO;
+			}
+		}
+	}
+
+	return YES;
+}
 
 - (void)sendEvent:(NSEvent *)event
 {

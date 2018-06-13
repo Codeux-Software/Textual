@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)performAwakeningBeforeMainWindowDidLoad
+- (void)applicationWakeStepOne
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Cloud files are synced regardless of user preference
@@ -173,15 +173,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.world = [IRCWorld new];
 }
 
-- (void)performAwakeningAfterMainWindowDidLoad
+- (void)applicationWakeStepTwo
 {
-#ifndef DEBUG
-	/* This check can take a few cycles which means its performed
-	 after the main window has loaded so the user has that to
-	 stare at while its wound up. */
-	[self checkForOtherCopiesOfTextualRunning];
-#endif
-
 	[IRCCommandIndex populateCommandIndex];
 
 	[self prepareNetworkReachabilityNotifier];
@@ -214,6 +207,8 @@ NS_ASSUME_NONNULL_BEGIN
 	 then the app is considered launched. */
 	/* 1 is default value because we want plugins to be loaded
 	 before we are finished launching. */
+	[self addObserver:self forKeyPath:@"applicationLaunchRemainder" options:NSKeyValueObservingOptionNew context:NULL];
+
 	self.applicationLaunchRemainder = 1;
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
@@ -231,12 +226,10 @@ NS_ASSUME_NONNULL_BEGIN
 	[sharedPluginManager() loadPlugins];
 }
 
-- (void)setApplicationLaunchRemainder:(NSUInteger)applicationLaunchRemainder
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
 {
-	if (self->_applicationLaunchRemainder != applicationLaunchRemainder) {
-		self->_applicationLaunchRemainder = applicationLaunchRemainder;
-
-		if (self->_applicationLaunchRemainder == 0) {
+	if ([keyPath isEqualToString:@"applicationLaunchRemainder"]) {
+		if (self.applicationLaunchRemainder == 0) {
 			[self applicationDidFinishLaunching];
 		}
 	}
@@ -341,43 +334,13 @@ NS_ASSUME_NONNULL_BEGIN
 }
 #endif
 
-- (void)checkForOtherCopiesOfTextualRunning
-{
-	BOOL foundOneMatchForSelf = NO;
-
-	for (NSRunningApplication *application in RZWorkspace().runningApplications) {
-		if ([application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual-mas"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual"] ||
-			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"])
-		{
-			if ([application.bundleIdentifier isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
-				if (foundOneMatchForSelf == NO) {
-					foundOneMatchForSelf = YES;
-
-					continue;
-				}
-			}
-
-			BOOL continueLaunch = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1115][2]")
-															title:TXTLS(@"Prompts[1115][1]")
-													defaultButton:TXTLS(@"Prompts[0001]")
-												  alternateButton:TXTLS(@"Prompts[0002]")];
-
-			if (continueLaunch == NO) {
-				[self forceTerminate];
-			}
-
-			break;
-		}
-	}
-}
-
 #pragma mark -
 #pragma mark NSApplication Delegate
 
 - (void)applicationDidFinishLaunching
 {
+	[self removeObserver:self forKeyPath:@"applicationLaunchRemainder"];
+
 	self.applicationIsLaunched = YES;
 
 	if ([self.mainWindow reloadLoadingScreen]) {
@@ -588,18 +551,11 @@ NS_ASSUME_NONNULL_BEGIN
 	[NSApp replyToApplicationShouldTerminate:YES];
 }
 
-- (void)forceTerminate
+- (void)terminateGracefully
 {
 	self.applicationIsTerminating = YES;
 
 	[RZSharedApplication() terminate:nil];
-}
-
-- (void)forceTerminateWithoutSave
-{
-	self.skipTerminateSave = YES;
-
-	[self forceTerminate];
 }
 
 #pragma mark -
@@ -654,7 +610,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)computerWillPowerOff:(NSNotification *)note
 {
-	[self forceTerminate];
+	[self terminateGracefully];
 }
 
 #pragma mark -
