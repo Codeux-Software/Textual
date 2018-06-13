@@ -177,8 +177,6 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 - (void)_awakeFromNib
 {
-	[masterController() performAwakeningBeforeMainWindowDidLoad];
-
 	self.delegate = (id)self;
 
 	self.allowsConcurrentViewDrawing = NO;
@@ -199,6 +197,8 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 	[self updateChannelViewArrangement];
 
+	[masterController() applicationWakeStepOne];
+
 	[themeController() prepareInitialState];
 
 	[menuController() prepareInitialState];
@@ -213,7 +213,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 	[self observeNotifications];
 
-	[masterController() performAwakeningAfterMainWindowDidLoad];
+	[masterController() applicationWakeStepTwo];
 }
 
 - (void)observeNotifications

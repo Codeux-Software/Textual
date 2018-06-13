@@ -42,8 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TXMasterController ()
 @property (nonatomic, assign) NSUInteger terminatingClientCount;
 
-- (void)performAwakeningBeforeMainWindowDidLoad;
-- (void)performAwakeningAfterMainWindowDidLoad;
+- (void)applicationWakeStepOne;
+- (void)applicationWakeStepTwo;
 
 - (void)prepareThirdPartyServiceSparkleFramework;
 @end
