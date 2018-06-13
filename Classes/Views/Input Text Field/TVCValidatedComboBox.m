@@ -65,6 +65,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+
 	self.cachedValidValue = NO;
 
 	[RZNotificationCenter() addObserver:self
