@@ -57,6 +57,34 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 @implementation TVCServerList
 
+- (void)viewDidMoveToWindow
+{
+	[super viewDidMoveToWindow];
+
+	TVCMainWindow *mainWindow = self.mainWindow;
+
+	if (mainWindow == nil) {
+		[RZNotificationCenter() removeObserver:self];
+
+		return;
+	}
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(windowDidBecomeKey:)
+								   name:NSWindowDidBecomeKeyNotification
+								 object:mainWindow];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(windowDidResignKey:)
+								   name:NSWindowDidResignKeyNotification
+								 object:mainWindow];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(mainWindowRequiresRedraw:)
+								   name:TVCMainWindowRedrawSubviewsNotification
+								 object:mainWindow];
+}
+
 #pragma mark -
 #pragma mark Additions/Removal
 
@@ -250,14 +278,6 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	return YES;
 }
 
-- (void)reloadUserInterfaceObjects
-{
-	/* We assign a strong reference to these instead of returning the original
-	 value every time so that there are no race conditions for when it changes. */
-
-	self.userInterfaceObjects = self.mainWindow.userInterfaceObjects.serverList;
-}
-
 - (void)updateVibrancy
 {
 	NSAppearance *appearance = nil;
@@ -287,14 +307,21 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 #endif
 }
 
-- (void)updateAppearance
+- (void)mainWindowAppearanceChanged
 {
-	[self updateAppearanceWithType:TVCMainWindowAppearanceEverythingUpdateType];
+	TVCServerListAppearance *appearance = self.mainWindow.userInterfaceObjects.serverList;
+
+	[self _updateAppearance:appearance];
 }
 
-- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType
+- (void)systemAppearanceChanged
 {
-	BOOL updateEverything = (updateType == TVCMainWindowAppearanceEverythingUpdateType);
+	[self _updateAppearance:nil];
+}
+
+- (void)_updateAppearance:(nullable TVCServerListAppearance *)appearance
+{
+	BOOL updateEverything = (appearance != nil);
 
 	/* When changing from vibrant light to vibrant dark we must deselect all
 	 rows, change the appearance, and reselect them. If we don't do this, the
@@ -309,15 +336,17 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	[self deselectAll:nil];
 
 	if (updateEverything) {
+		/* We assign a strong reference to these instead of returning the original
+		 value every time so that there are no race conditions for when it changes. */
+		self.userInterfaceObjects = appearance;
+
 		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 			[self updateVibrancy];
 		}
-
-		[self reloadUserInterfaceObjects];
 	}
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		if (self.mainWindow.usingDarkAppearance) {
+		if (appearance.isDarkAppearance) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
@@ -337,7 +366,27 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	}
 }
 
-- (void)windowDidChangeKeyState
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	[self windowKeyStateChanged:notification];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	[self windowKeyStateChanged:notification];
+}
+
+- (void)windowKeyStateChanged:(NSNotification *)notification
+{
+	[self respondToRequiresRedraw];
+}
+
+- (void)mainWindowRequiresRedraw:(NSNotification *)notification
+{
+	[self respondToRequiresRedraw];
+}
+
+- (void)respondToRequiresRedraw
 {
 	if (self.backgroundView) {
 		self.backgroundView.needsDisplay = YES;

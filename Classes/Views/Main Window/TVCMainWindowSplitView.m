@@ -59,6 +59,11 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 @implementation TVCMainWindowSplitView
 
+- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
+{
+	return YES;
+}
+
 - (NSColor *)dividerColor
 {
 	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
@@ -74,6 +79,8 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+
 	self.delegate = (id)self;
 }
 

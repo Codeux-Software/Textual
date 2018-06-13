@@ -95,6 +95,8 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+
 	self.delegate = (id)self;
 }
 
@@ -298,6 +300,11 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	TXChannelViewArrangement arrangement = [TPCPreferences channelViewArrangement];
 
 	self.vertical = (arrangement == TXChannelViewArrangedVertically);
+}
+
+- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
+{
+	return YES;
 }
 
 @end
@@ -545,13 +552,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	NSColor *backgroundColor = nil;
 
 	if (subview.backingViewIsLoading) {
-		NSColor *windowColor = themeSettings().underlyingWindowColor;
-
-		if (windowColor == nil) {
-			windowColor = [NSColor blackColor];
-		}
-
-		backgroundColor = windowColor;
+		backgroundColor = themeSettings().underlyingWindowColor;
 	} else {
 		backgroundColor = themeSettings().channelViewOverlayColor;
 	}
@@ -569,10 +570,16 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 {
 	TVCMainWindow *mainWindow = self.mainWindow;
 
+	TVCMainWindowAppearance *appearance = mainWindow.userInterfaceObjects;
+
+	if (appearance == nil) {
+		return [NSColor blackColor];
+	}
+
 	if (mainWindow.isActiveForDrawing) {
-		return mainWindow.userInterfaceObjects.channelViewOverlayDefaultBackgroundColorActiveWindow;
+		return appearance.channelViewOverlayDefaultBackgroundColorActiveWindow;
 	} else {
-		return mainWindow.userInterfaceObjects.channelViewOverlayDefaultBackgroundColorInactiveWindow;
+		return appearance.channelViewOverlayDefaultBackgroundColorInactiveWindow;
 	}
 }
 

@@ -85,25 +85,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)awakeFromNib
 {
-	for (NSString *key in _KeyObservingArray) {
-		[RZUserDefaults() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
-	}
+	[super awakeFromNib];
 
 	self.backgroundColor = [NSColor clearColor];
-
-	[self reloadOriginPointsAndRecalculateSize];
 
 	[self updateTextDirection];
 }
 
-- (void)dealloc
+- (void)viewDidMoveToWindow
 {
-	for (NSString *key in _KeyObservingArray) {
-		[RZUserDefaults() removeObserver:self forKeyPath:key];
+	[super viewDidMoveToWindow];
+
+	NSWindow *window = self.window;
+
+	if (window)
+	{
+		for (NSString *key in _KeyObservingArray) {
+			[RZUserDefaults() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
+		}
+	}
+	else // window
+	{
+		for (NSString *key in _KeyObservingArray) {
+			[RZUserDefaults() removeObserver:self forKeyPath:key];
+		}
 	}
 }
 
-- (void)updateAppearanceOnYosemite
+- (void)updateVibrancy
 {
 	if (self.mainWindow.usingDarkAppearance) {
 		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
@@ -116,39 +125,41 @@ NS_ASSUME_NONNULL_BEGIN
 	self.contentView.needsDisplay = YES;
 }
 
-- (void)updateAppearance
+- (void)mainWindowAppearanceChanged
 {
-	[self updateAppearanceWithType:TVCMainWindowAppearanceEverythingUpdateType];
+	TVCMainWindowTextViewAppearance *appearance = self.mainWindow.userInterfaceObjects.textView;
+
+	[self _updateAppearance:appearance];
 }
 
-- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType
+/*
+- (void)systemAppearanceChanged
 {
-	if (updateType != TVCMainWindowAppearanceEverythingUpdateType) {
-		return;
-	}
 
-	TVCMainWindowTextViewAppearance *appearance = self.mainWindow.userInterfaceObjects.textView;
+}
+*/
+
+- (void)_updateAppearance:(TVCMainWindowTextViewAppearance *)appearance
+{
+	NSParameterAssert(appearance != nil);
 
 	self.userInterfaceObjects = appearance;
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateAppearanceOnYosemite];
+		[self updateVibrancy];
 	}
 
 	self.textContainerInset = appearance.textViewInset;
 
 	self.preferredFontColor = appearance.textViewTextColor;
 
+	[self reloadOriginPoints];
+
 	[self updateTextBoxCachedPreferredFontSize];
 
 	[self resetTypeSetterAttributes];
 
 	[self updateAllFontColorsToMatchTheDefaultFont];
-}
-
-- (void)windowDidChangeKeyState
-{
-	; // Nothing to do here...
 }
 
 #pragma mark -
@@ -473,9 +484,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Mavericks UI Drawing
 
-- (void)drawControllerForMavericks
+- (void)drawControllerForMavericksWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
 {
-	TVCMainWindowTextViewAppearance *appearance = self.textView.userInterfaceObjects;
+	NSParameterAssert(appearance != nil);
 
 	BOOL isWindowActive = self.mainWindow.activeForDrawing;
 
@@ -576,9 +587,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Yosemite UI Drawing
 
-- (void)drawControllerForYosemite
+- (void)drawControllerForYosemiteWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
 {
-	TVCMainWindowTextViewAppearance *appearance = self.textView.userInterfaceObjects;
+	NSParameterAssert(appearance != nil);
 
 	if (appearance.isDarkAppearance == NO) {
 		[self drawLightControllerForYosemiteWithAppearance:appearance];
@@ -752,10 +763,16 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	TVCMainWindowTextViewAppearance *appearance = self.textView.userInterfaceObjects;
+
+	if (appearance == nil) {
+		return;
+	}
+
 	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self drawControllerForYosemite];
+		[self drawControllerForYosemiteWithAppearance:appearance];
 	} else {
-		[self drawControllerForMavericks];
+		[self drawControllerForMavericksWithAppearance:appearance];
 	}
 }
 
@@ -776,6 +793,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	TVCMainWindowTextViewAppearance *appearance = self.textView.userInterfaceObjects;
+
+	if (appearance == nil) {
+		return;
+	}
 
 	/* Draw background color */
 	NSColor *backgroundColor = appearance.backgroundViewBackgroundColor;

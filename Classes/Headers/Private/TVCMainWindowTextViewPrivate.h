@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TVCMainWindowSegmentedController, TVCMainWindowSegmentedControllerCell;
 
-@interface TVCMainWindowTextView () <TVCMainWindowAppearanceUpdateTarget>
+@interface TVCMainWindowTextView ()
 - (TVCMainWindowSegmentedController *)segmentedController;
 - (TVCMainWindowSegmentedControllerCell *)segmentedControllerCell;
 
@@ -51,8 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateTextBasedOnPreferredFontSize;
 
 - (void)updateSegmentedController;
-
-- (void)windowDidChangeKeyState;
 
 - (void)reloadOriginPoints;
 - (void)reloadOriginPointsAndRecalculateSize;

@@ -224,4 +224,50 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark -
+#pragma mark NSView Category
+
+@implementation NSView (TVCMainWindowAppearance)
+
+- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
+{
+	return NO;
+}
+
+- (void)mainWindowAppearanceChanged
+{
+	if (self.needsDisplayWhenMainWindowAppearanceChanges) {
+		self.needsDisplay = YES;
+	}
+}
+
+- (void)systemAppearanceChanged
+{
+
+}
+
+@end
+
+@implementation NSView (TVCMainWindowAppearancePrivate)
+
+- (void)notifyMainWindowAppearanceChanged
+{
+	[self mainWindowAppearanceChanged];
+
+	for (NSView *view in self.subviews) {
+		[view notifyMainWindowAppearanceChanged];
+	}
+}
+
+- (void)notifySystemAppearanceChanged
+{
+	[self systemAppearanceChanged];
+
+	for (NSView *view in self.subviews) {
+		[view notifySystemAppearanceChanged];
+	}
+}
+
+@end
+
 NS_ASSUME_NONNULL_END

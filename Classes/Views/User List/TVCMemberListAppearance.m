@@ -343,12 +343,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* The following is specialized drawing for the normal source list
 	 background when inside a backed layer view. */
+	TVCMemberListAppearance *appearance = self.memberList.userInterfaceObjects;
+
+	if (appearance == nil) {
+		return;
+	}
+
 	NSColor *backgroundColor = nil;
 
 	if (self.mainWindow.isActiveForDrawing) {
-		backgroundColor = self.memberList.userInterfaceObjects.backgroundColorActiveWindow;
+		backgroundColor = appearance.backgroundColorActiveWindow;
 	} else {
-		backgroundColor = self.memberList.userInterfaceObjects.backgroundColorInactiveWindow;
+		backgroundColor = appearance.backgroundColorInactiveWindow;
 	}
 
 	if ( backgroundColor) {

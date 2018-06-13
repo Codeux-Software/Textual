@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TVCServerListMavericksBackgroundBox;
 
-@interface TVCServerList () <TVCMainWindowAppearanceUpdateTarget>
+@interface TVCServerList ()
 @property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, copy, nullable) NSImage *outlineViewDefaultDisclosureTriangle;
 @property (nonatomic, copy, nullable) NSImage *outlineViewAlternateDisclosureTriangle;
@@ -62,8 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)refreshMessageCountForItem:(IRCTreeItem *)cellItem;
 - (void)refreshMessageCountForRow:(NSInteger)rowIndex;
-
-- (void)windowDidChangeKeyState;
 @end
 
 @protocol TVCServerListDelegate <NSObject>

@@ -250,18 +250,20 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Appearance
 
-- (void)updateAppearance
+- (void)mainWindowAppearanceChanged
 {
-	[self updateAppearanceWithType:TVCMainWindowAppearanceEverythingUpdateType];
+	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
+
+	[self _updateAppearance:appearance];
 }
 
-- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType
+- (void)_updateAppearance:(TVCMainWindowAppearance *)appearance
 {
-	if (updateType != TVCMainWindowAppearanceEverythingUpdateType) {
-		return;
-	}
+	NSParameterAssert(appearance != nil);
 
-	self.fillColor = self.mainWindow.userInterfaceObjects.loadingScreenBackgroundColor;
+	self.fillColor = appearance.loadingScreenBackgroundColor;
+
+	self.needsDisplay = YES;
 }
 
 @end

@@ -40,7 +40,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowLoadingScreenView () <TVCMainWindowAppearanceUpdateTarget>
+@interface TVCMainWindowLoadingScreenView ()
 @end
 
 NS_ASSUME_NONNULL_END

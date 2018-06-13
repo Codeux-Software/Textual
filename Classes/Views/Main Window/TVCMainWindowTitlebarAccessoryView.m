@@ -93,6 +93,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+
 	[self disableDrawingCustomBackgroundColor];
 }
 
@@ -157,20 +159,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)drawInteriorOnYosemite
 {
-	if (self.mainWindow.isActiveForDrawing) {
-		[self drawInteriorForActiveWindowOnYosemite];
+	if (self.mainWindow.isActiveForDrawing == NO) {
+		return;
 	}
+
+	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
+
+	if (appearance == nil) {
+		return;
+	}
+
+	[self drawInteriorForActiveWindowOnYosemiteWithAppearance:appearance];
 }
 
-- (void)drawInteriorForActiveWindowOnYosemite
+- (void)drawInteriorForActiveWindowOnYosemiteWithAppearance:(TVCMainWindowAppearance *)appearance
 {
+	NSParameterAssert(appearance != nil);
+
 	/* On Yosemite, we get the bounds of the object and tweak it just slighly to match what
 	 it actually is. After that, we draw our color in behind it to fake the background. */
 	NSRect controllerFrame = self.bounds;
 
 	controllerFrame.size.height -= 1.0;
 
-	NSColor *controllerBackgroundColor = [self controlBackgroundColorActiveWindow];
+	NSColor *controllerBackgroundColor = appearance.titlebarAccessoryViewBackgroundColorActiveWindow;
 
 	NSBezierPath *drawingPath = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
 
@@ -179,9 +191,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[drawingPath fill];
 }
 
-- (NSColor *)controlBackgroundColorActiveWindow
+- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
 {
-	return self.mainWindow.userInterfaceObjects.titlebarAccessoryViewBackgroundColorActiveWindow;
+	return YES;
 }
 
 @end
