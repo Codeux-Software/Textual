@@ -57,6 +57,7 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 };
 
 TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
+TEXTUAL_EXTERN NSString * const TVCMainWindowRedrawSubviewsNotification;
 
 TEXTUAL_EXTERN NSString * const TVCMainWindowWillReloadThemeNotification;
 TEXTUAL_EXTERN NSString * const TVCMainWindowDidReloadThemeNotification;
