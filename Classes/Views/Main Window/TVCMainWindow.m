@@ -87,6 +87,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TVCMainWindowAppearanceChangedNotification = @"TVCMainWindowAppearanceChangedNotification";
+NSString * const TVCMainWindowRedrawSubviewsNotification = @"TVCMainWindowRedrawSubviewsNotification";
 
 NSString * const TVCMainWindowWillReloadThemeNotification = @"TVCMainWindowWillReloadThemeNotification";
 NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidReloadThemeNotification";
@@ -515,6 +516,8 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 	[self.memberList windowDidChangeKeyState];
 
 	[self.serverList windowDidChangeKeyState];
+
+	[RZNotificationCenter() postNotificationName:TVCMainWindowRedrawSubviewsNotification object:self];
 }
 
 - (void)reloadViewControllerDrawings
