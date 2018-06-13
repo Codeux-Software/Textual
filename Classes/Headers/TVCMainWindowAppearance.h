@@ -86,15 +86,18 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
 @end
 
-typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceUpdateType)
-{
-	TVCMainWindowAppearanceEverythingUpdateType,
-	TVCMainWindowAppearanceSelectionUpdateType
-};
+@interface NSView (TVCMainWindowAppearance)
+/* Posted when the main window appearance changes */
+/* The default implementation does nothing nor is super required */
+- (void)mainWindowAppearanceChanged;
 
-@protocol TVCMainWindowAppearanceUpdateTarget <NSObject>
-- (void)updateAppearance;
-- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType;
+/* Can return YES to change default implementation of
+ -mainWindowAppearanceChanged to set needsDisplay to YES. */
+@property (readonly) BOOL needsDisplayWhenMainWindowAppearanceChanges;
+
+/* Posted when the system appearance changes */
+/* The default implementation does nothing nor is super required */
+- (void)systemAppearanceChanged;
 @end
 
 NS_ASSUME_NONNULL_END

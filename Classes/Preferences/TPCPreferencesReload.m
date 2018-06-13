@@ -298,7 +298,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Server list */
 	if ((reloadAction & TPCPreferencesReloadServerListAction) == TPCPreferencesReloadServerListAction) {
 		if (didReloadUserInterface == NO) {
-			[mainWindowServerList() updateAppearance];
+			[mainWindowServerList() mainWindowAppearanceChanged];
 		}
 	} else if ((reloadAction & TPCPreferencesReloadServerListUnreadBadgesAction) == TPCPreferencesReloadServerListUnreadBadgesAction) {
 		if (didReloadUserInterface == NO) {
@@ -315,7 +315,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Member list appearance */
 	if ((reloadAction & TPCPreferencesReloadMemberListAction) == TPCPreferencesReloadMemberListAction) {
 		if (didReloadUserInterface == NO) {
-			[mainWindowMemberList() updateAppearance];
+			[mainWindowMemberList() mainWindowAppearanceChanged];
 		}
 	}
 

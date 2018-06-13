@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCMemberListMavericksBackgroundBox;
 @class TVCMemberListUserInfoPopover;
 
-@interface TVCMemberList () <TVCMainWindowAppearanceUpdateTarget>
+@interface TVCMemberList ()
 @property (nonatomic, weak) id keyDelegate;
 
 - (TVCMemberListAppearance *)userInterfaceObjects;
@@ -59,8 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)refreshAllDrawings;
 
 - (void)refreshDrawingForChangesToPreference:(NSString *)preferenceKey;
-
-- (void)windowDidChangeKeyState;
 @end
 
 @protocol TVCMemberListDelegate <NSObject>

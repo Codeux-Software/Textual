@@ -92,7 +92,7 @@ NSString * const TVCMainWindowRedrawSubviewsNotification = @"TVCMainWindowRedraw
 NSString * const TVCMainWindowWillReloadThemeNotification = @"TVCMainWindowWillReloadThemeNotification";
 NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidReloadThemeNotification";
 
-const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
+const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
@@ -165,6 +165,8 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 - (void)awakeFromNib
 {
+	[super awakeFromNib];
+
 	/* -awakeFromNib is called multiple times because of reloads */
 	static BOOL _awakeFromNibCalled = NO;
 
@@ -346,7 +348,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 	if (appearance.appearanceType == desiredAppearance &&
 		appearance.isHighResolutionAppearance == self.runningInHighResolutionMode)
 	{
-		return TVCMainWindowAppearanceNoChangetType;
+		return TVCMainWindowAppearanceNoChangeType;
 	}
 
 	return desiredAppearance;
@@ -359,8 +361,6 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 	} else {
 		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 	}
-
-	self.contentSplitView.needsDisplay = YES;
 }
 
 - (void)updateAppearance
@@ -375,11 +375,9 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 - (void)updateAppearanceBySystemChange:(BOOL)systemChanged
 {
-	TVCMainWindowAppearanceUpdateType updateType = TVCMainWindowAppearanceEverythingUpdateType;
-
 	TVCMainWindowAppearanceType desiredAppearance = [self desiredAppearance];
 
-	BOOL changeAppearance = (desiredAppearance != TVCMainWindowAppearanceNoChangetType);
+	BOOL changeAppearance = (desiredAppearance != TVCMainWindowAppearanceNoChangeType);
 
 	if (changeAppearance == NO) {
 		/* Even if the desired appearance hasn't changed, we still
@@ -389,29 +387,37 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 		if (systemChanged == NO) {
 			return;
 		}
-
-		updateType = TVCMainWindowAppearanceSelectionUpdateType;
 	} else {
 		self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithAppearance:desiredAppearance inWindow:self];
 
 		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 			[self updateVibrancy];
 		}
+
+		systemChanged = NO;
 	}
-
-	[self.loadingScreen updateAppearanceWithType:updateType];
-
-	[self.serverList updateAppearanceWithType:updateType];
-
-	[self.memberList updateAppearanceWithType:updateType];
-
-	[self.inputTextField updateAppearanceWithType:updateType];
 
 	self.contentView.needsDisplay = YES;
 
-	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification
-										  object:self
-										userInfo:@{@"updateType" : @(updateType)}];
+	if (systemChanged == NO) {
+		[self notifyMainWindowAppearanceChanged];
+	} else {
+		[self notifySystemAppearanceChanged];
+	}
+}
+
+- (void)notifyMainWindowAppearanceChanged
+{
+	/* Notify superview to pass message onto titlebar without
+	 having to add a special exception for that area of window. */
+	[self.contentView.superview notifyMainWindowAppearanceChanged];
+
+	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification object:self];
+}
+
+- (void)notifySystemAppearanceChanged
+{
+	[self.contentView.superview notifySystemAppearanceChanged];
 }
 
 - (void)updateAlphaValueToReflectPreferences
@@ -511,12 +517,6 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangetType = 1000;
 
 - (void)reloadSubviewDrawings
 {
-	[self.inputTextField windowDidChangeKeyState];
-
-	[self.memberList windowDidChangeKeyState];
-
-	[self.serverList windowDidChangeKeyState];
-
 	[RZNotificationCenter() postNotificationName:TVCMainWindowRedrawSubviewsNotification object:self];
 }
 

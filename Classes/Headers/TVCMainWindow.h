@@ -36,10 +36,12 @@
  *
  *********************************************************************** */
 
+#import "TVCMainWindowAppearance.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class IRCClient, IRCChannel, IRCTreeItem;
-@class TVCMainWindowAppearance, TVCMainWindowLoadingScreenView;
+@class TVCMainWindowLoadingScreenView;
 @class TVCMainWindowSplitView, TVCMainWindowTextView;
 @class TVCServerList, TVCMemberList;
 @class TVCLogController;

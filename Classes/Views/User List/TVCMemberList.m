@@ -65,38 +65,46 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 @implementation TVCMemberList
 
-- (nullable instancetype)initWithCoder:(NSCoder *)coder
+- (void)awakeFromNib
 {
-	if ((self = [super initWithCoder:coder])) {
-		[self prepareInitialState];
+	[super awakeFromNib];
 
-		return self;
-	}
-
-	return nil;
-}
-
-- (instancetype)initWithFrame:(NSRect)frame
-{
-	if ((self = [super initWithFrame:frame])) {
-		[self prepareInitialState];
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (void)prepareInitialState
-{
 	[self updateTrackingAreas];
 
-	[RZNotificationCenter() addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:nil];
+	[self registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
-- (void)dealloc
+- (void)viewDidMoveToWindow
 {
-	[RZNotificationCenter() removeObserver:self];
+	[super viewDidMoveToWindow];
+
+	TVCMainWindow *mainWindow = self.mainWindow;
+
+	if (mainWindow == nil) {
+		[RZNotificationCenter() removeObserver:self];
+
+		return;
+	}
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(windowDidBecomeKey:)
+								   name:NSWindowDidBecomeKeyNotification
+								 object:mainWindow];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(windowDidResignKey:)
+								   name:NSWindowDidResignKeyNotification
+								 object:mainWindow];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(mainWindowRequiresRedraw:)
+								   name:TVCMainWindowRedrawSubviewsNotification
+								 object:mainWindow];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(scrollViewBoundsDidChangeNotification:)
+								   name:NSViewBoundsDidChangeNotification
+								 object:[self scrollViewContentView]];
 }
 
 #pragma mark -
@@ -145,6 +153,8 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 - (void)updateTrackingAreas
 {
+	[super updateTrackingAreas];
+
 	if (self.userPopoverTrackingArea) {
 		[self removeTrackingArea:self.userPopoverTrackingArea];
 	}
@@ -188,15 +198,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 		[self performSelector:@selector(popDelayedUserInfoExpansionFrame) withObject:nil afterDelay:1.0];
 	}
-}
-
-- (void)windowDidResignKey:(NSNotification *)notification
-{
-	if (notification.object != self.window) {
-		return;
-	}
-
-	[self destroyUserInfoPopoverOnWindowKeyChange];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
@@ -259,16 +260,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 #pragma mark -
 #pragma mark Scroll View
-
-- (void)awakeFromNib
-{
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(scrollViewBoundsDidChangeNotification:)
-								   name:NSViewBoundsDidChangeNotification
-								 object:[self scrollViewContentView]];
-
-	[self registerForDraggedTypes:@[NSFilenamesPboardType]];
-}
 
 - (void)scrollViewBoundsDidChangeNotification:(NSNotification *)notification
 {
@@ -454,7 +445,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	}
 }
 
-
 - (void)drawContextMenuHighlightForRow:(int)row
 {
 	// Do not draw focus ring ...
@@ -463,11 +453,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 - (BOOL)allowsVibrancy
 {
 	return YES;
-}
-
-- (void)reloadUserInterfaceObjects
-{
-	self.userInterfaceObjects = self.mainWindow.userInterfaceObjects.memberList;
 }
 
 - (void)updateVibrancy
@@ -499,14 +484,21 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 #endif
 }
 
-- (void)updateAppearance
+- (void)mainWindowAppearanceChanged
 {
-	[self updateAppearanceWithType:TVCMainWindowAppearanceEverythingUpdateType];
+	TVCMemberListAppearance *appearance = self.mainWindow.userInterfaceObjects.memberList;
+
+	[self _updateAppearance:appearance];
 }
 
-- (void)updateAppearanceWithType:(TVCMainWindowAppearanceUpdateType)updateType
+- (void)systemAppearanceChanged
 {
-	BOOL updateEverything = (updateType == TVCMainWindowAppearanceEverythingUpdateType);
+	[self _updateAppearance:nil];
+}
+
+- (void)_updateAppearance:(nullable TVCMemberListAppearance *)appearance
+{
+	BOOL updateEverything = (appearance != nil);
 
 	/* When changing from vibrant light to vibrant dark we must deselect all
 	 rows, change the appearance, and reselect them. If we don't do this, the
@@ -517,15 +509,15 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	[self deselectAll:nil];
 
 	if (updateEverything) {
+		self.userInterfaceObjects = appearance;
+
 		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
 			[self updateVibrancy];
 		}
-
-		[self reloadUserInterfaceObjects];
 	}
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		if (self.mainWindow.usingDarkAppearance) {
+		if (appearance.isDarkAppearance) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
@@ -541,7 +533,29 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	}
 }
 
-- (void)windowDidChangeKeyState
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	[self windowKeyStateChanged:notification];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	[self destroyUserInfoPopoverOnWindowKeyChange];
+
+	[self windowKeyStateChanged:notification];
+}
+
+- (void)windowKeyStateChanged:(NSNotification *)notification
+{
+	[self respondToRequiresRedraw];
+}
+
+- (void)mainWindowRequiresRedraw:(NSNotification *)notification
+{
+	[self respondToRequiresRedraw];
+}
+
+- (void)respondToRequiresRedraw
 {
 	if (self.backgroundView) {
 		self.backgroundView.needsDisplay = YES;

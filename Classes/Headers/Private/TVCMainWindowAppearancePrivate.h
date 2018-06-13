@@ -47,4 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (TVCMainWindowAppearanceType)bestAppearanceForWindow:(TVCMainWindow *)mainWindow;
 @end
 
+@interface NSView (TVCMainWindowAppearancePrivate)
+/* These methods are recursive into all subviews so only give it the content view. */
+- (void)notifyMainWindowAppearanceChanged;
+- (void)notifySystemAppearanceChanged;
+@end
+
 NS_ASSUME_NONNULL_END
