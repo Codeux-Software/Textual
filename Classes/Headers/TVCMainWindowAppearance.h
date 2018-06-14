@@ -97,9 +97,21 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
  -mainWindowAppearanceChanged to set needsDisplay to YES. */
 @property (readonly) BOOL needsDisplayWhenMainWindowAppearanceChanges;
 
+/* Returns YES by default. If NO, -mainWindowAppearanceChanged
+ will not be sent beyond the view that returned NO. */
+@property (readonly) BOOL sendMainWindowAppearanceChangedToSubviews;
+
 /* Posted when the system appearance changes */
 /* The default implementation does nothing nor is super required */
 - (void)systemAppearanceChanged;
+
+/* Can return YES to change default implementation of
+ -systemAppearanceChanged to set needsDisplay to YES. */
+@property (readonly) BOOL needsDisplayWhenSystemAppearanceChanges;
+
+/* Returns YES by default. If NO, -systemAppearanceChanged
+ will not be sent beyond the view that returned NO. */
+@property (readonly) BOOL sendSystemAppearanceChangedToSubviews;
 @end
 
 NS_ASSUME_NONNULL_END
