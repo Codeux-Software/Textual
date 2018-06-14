@@ -1661,8 +1661,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 {
 	NSRect windowFrame = self.frame;
 
-	windowFrame.size.width = TVCMainWindowDefaultFrameWidth;
-	windowFrame.size.height = TVCMainWindowDefaultFrameHeight;
+	windowFrame.size = self.userInterfaceObjects.defaultWindowSize;
 
 	return windowFrame;
 }

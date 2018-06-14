@@ -21,6 +21,13 @@
 				<string>0.0 0.3</string>
 			</dict>
 		</dict>
+		<key>defaultWindowSize</key>
+		<dict>
+			<key>width</key>
+			<real>800</real>
+			<key>height</key>
+			<real>474</real>
+		</dict>
 		<key>splitViewDividerColor</key>
 		<dict>
 			<key>type</key>

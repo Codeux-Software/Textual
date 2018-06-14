@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite) TVCServerListAppearance *serverList;
 @property (nonatomic, strong, readwrite) TVCMemberListAppearance *memberList;
 @property (nonatomic, strong, readwrite) TVCMainWindowTextViewAppearance *textView;
+@property (nonatomic, assign, readwrite) NSSize defaultWindowSize;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *loadingScreenBackgroundColor;
@@ -175,6 +176,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+	self.defaultWindowSize = [self sizeForKey:@"defaultWindowSize"];
+
 	self.channelViewOverlayDefaultBackgroundColorActiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:YES];
 	self.channelViewOverlayDefaultBackgroundColorInactiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:NO];
 
