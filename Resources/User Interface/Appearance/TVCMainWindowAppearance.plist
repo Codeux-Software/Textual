@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Mojave</key>
+	<key>Common</key>
 	<dict>
 		<key>channelViewOverlayDefaultBackgroundColor</key>
 		<dict>
@@ -28,6 +28,11 @@
 			<key>value</key>
 			<string>0.65</string>
 		</dict>
+	</dict>
+	<key>Mojave</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>Common</string>
 		<key>titlebarAccessoryViewBackgroundColor</key>
 		<dict>
 			<key>activeWindow</key>
@@ -65,36 +70,14 @@
 	</dict>
 	<key>Yosemite</key>
 	<dict>
-		<key>channelViewOverlayDefaultBackgroundColor</key>
-		<dict>
-			<key>activeWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>1</integer>
-				<key>value</key>
-				<string>0.0 0.3</string>
-			</dict>
-			<key>inactiveWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>1</integer>
-				<key>value</key>
-				<string>0.0 0.3</string>
-			</dict>
-		</dict>
+		<key>inheritFrom</key>
+		<string>Common</string>
 		<key>loadingScreenBackgroundColor</key>
 		<dict>
 			<key>type</key>
 			<integer>1</integer>
 			<key>value</key>
 			<string>1.0</string>
-		</dict>
-		<key>splitViewDividerColor</key>
-		<dict>
-			<key>type</key>
-			<integer>1</integer>
-			<key>value</key>
-			<string>0.65</string>
 		</dict>
 		<key>titlebarAccessoryViewBackgroundColor</key>
 		<dict>
@@ -119,36 +102,14 @@
 	</dict>
 	<key>Mavericks</key>
 	<dict>
-		<key>channelViewOverlayDefaultBackgroundColor</key>
-		<dict>
-			<key>activeWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>1</integer>
-				<key>value</key>
-				<string>0.0 0.3</string>
-			</dict>
-			<key>inactiveWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>1</integer>
-				<key>value</key>
-				<string>0.0 0.3</string>
-			</dict>
-		</dict>
+		<key>inheritFrom</key>
+		<string>Common</string>
 		<key>loadingScreenBackgroundColor</key>
 		<dict>
 			<key>type</key>
 			<integer>1</integer>
 			<key>value</key>
 			<string>1.0</string>
-		</dict>
-		<key>splitViewDividerColor</key>
-		<dict>
-			<key>type</key>
-			<integer>1</integer>
-			<key>value</key>
-			<string>0.65</string>
 		</dict>
 	</dict>
 	<key>MavericksDarkAqua</key>
