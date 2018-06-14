@@ -1113,7 +1113,7 @@
 				<key>inactiveWindow</key>
 				<dict>
 					<key>type</key>
-					<integer>2</integer>
+					<integer>1</integer>
 					<key>value</key>
 					<string>1.0</string>
 				</dict>
