@@ -39,12 +39,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define TVCMainWindowSplitViewMaximumDividerPosition			300.0
-#define TVCMainWindowSplitViewMinimumDividerPosition			120.0
-
-#define TVCMainWindowSplitViewServerListDefaultPosition			190.0
-#define TVCMainWindowSplitViewMemberListDefaultPosition			120.0
-
 @interface TVCMainWindowSplitView ()
 - (void)restorePositions;
 @end

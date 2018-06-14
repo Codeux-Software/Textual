@@ -2,8 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Common</key>
+	<dict>
+		<key>defaultWidth</key>
+		<integer>190</integer>
+		<key>minimumWidth</key>
+		<integer>120</integer>
+		<key>maximumWidth</key>
+		<integer>300</integer>
+	</dict>
 	<key>Mojave</key>
 	<dict>
+		<key>inheritFrom</key>
+		<string>Common</string>
 		<key>Server Cell</key>
 		<dict>
 			<key>rowHeight</key>
@@ -582,6 +593,8 @@
 	</dict>
 	<key>Yosemite</key>
 	<dict>
+		<key>inheritFrom</key>
+		<string>Common</string>
 		<key>Server Cell</key>
 		<dict>
 			<key>rowHeight</key>
@@ -1177,6 +1190,8 @@
 	</dict>
 	<key>Mavericks</key>
 	<dict>
+		<key>inheritFrom</key>
+		<string>Common</string>
 		<key>Server Cell</key>
 		<dict>
 			<key>rowHeight</key>
