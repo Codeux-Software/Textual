@@ -75,6 +75,8 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 @property (readonly) TVCMemberListAppearance *memberList;
 @property (readonly) TVCMainWindowTextViewAppearance *textView;
 
+@property (readonly) NSSize defaultWindowSize;
+
 @property (readonly, copy, nullable) NSColor *channelViewOverlayDefaultBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *channelViewOverlayDefaultBackgroundColorInactiveWindow;
 

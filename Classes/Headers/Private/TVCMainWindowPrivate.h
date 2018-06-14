@@ -49,9 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCTextViewIRCFormattingMenu;
 @class TXMenuControllerMainWindowProxy;
 
-#define TVCMainWindowDefaultFrameWidth		800.0
-#define TVCMainWindowDefaultFrameHeight		474.0
-
 typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 	TVCMainWindowShiftSelectionMaintainGroupingFlag			= 1 << 0,
 	TVCMainWindowShiftSelectionPerformDeselectFlag			= 1 << 1, // deselect previous selection
