@@ -484,6 +484,16 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 #endif
 }
 
+- (BOOL)sendMainWindowAppearanceChangedToSubviews
+{
+	return NO;
+}
+
+- (BOOL)sendSystemAppearanceChangedToSubviews
+{
+	return NO;
+}
+
 - (void)mainWindowAppearanceChanged
 {
 	TVCMemberListAppearance *appearance = self.mainWindow.userInterfaceObjects.memberList;

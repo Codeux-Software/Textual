@@ -237,6 +237,21 @@ NS_ASSUME_NONNULL_BEGIN
 	return NO;
 }
 
+- (BOOL)needsDisplayWhenSystemAppearanceChanges
+{
+	return NO;
+}
+
+- (BOOL)sendMainWindowAppearanceChangedToSubviews
+{
+	return YES;
+}
+
+- (BOOL)sendSystemAppearanceChangedToSubviews
+{
+	return YES;
+}
+
 - (void)mainWindowAppearanceChanged
 {
 	if (self.needsDisplayWhenMainWindowAppearanceChanges) {
@@ -246,7 +261,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)systemAppearanceChanged
 {
-
+	if (self.needsDisplayWhenSystemAppearanceChanges) {
+		self.needsDisplay = YES;
+	}
 }
 
 @end
@@ -257,6 +274,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self mainWindowAppearanceChanged];
 
+	if (self.sendMainWindowAppearanceChangedToSubviews == NO) {
+		return;
+	}
+
 	for (NSView *view in self.subviews) {
 		[view notifyMainWindowAppearanceChanged];
 	}
@@ -265,6 +286,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifySystemAppearanceChanged
 {
 	[self systemAppearanceChanged];
+
+	if (self.sendSystemAppearanceChangedToSubviews == NO) {
+		return;
+	}
 
 	for (NSView *view in self.subviews) {
 		[view notifySystemAppearanceChanged];
