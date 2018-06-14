@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start
 {
-	[self findTextualUsingLaucnhServices];
+	[self findTextualUsingLaunchServices];
 }
 
 - (void)ok:(id)sender
@@ -191,7 +191,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (void)findTextualUsingLaucnhServices
+- (void)findTextualUsingLaunchServices
 {
 	CFURLRef searchScopeURL = (__bridge CFURLRef)[NSURL URLWithString:@"textual://knowledge-base"];
 
