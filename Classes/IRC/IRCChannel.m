@@ -839,9 +839,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(member1 != nil);
 	NSParameterAssert(member2 != nil);
 
-	[member1 disassociateWithChannel:self];
+	if (member1 != member2) {
+		[member1 disassociateWithChannel:self];
 
-	[member2 associateWithChannel:self];
+		[member2 associateWithChannel:self];
+	}
 
 	__block NSInteger sortedIndex = (-1);
 
