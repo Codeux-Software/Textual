@@ -9180,7 +9180,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			self.userIsAway = away;
 			
-			[mainWindow() updateTitleFor:self];
+			[mainWindow() updateTitle];
 
 			if (printMessage) {
 				[self printReply:m];
