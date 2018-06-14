@@ -163,7 +163,7 @@
 		4C0BA5451990798800857343 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229071978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif */; };
 		4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229081978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif */; };
 		4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3EC1943A654004CA8BA /* FormattingColor_5.png */; };
-		4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
+		4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif */; };
 		4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3F01943A654004CA8BA /* FormattingColor_9.png */; };
 		4C0BA54D1990798800857343 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DD1943A654004CA8BA /* encryptionLockIconDark@2x.tif */; };
 		4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */; };
@@ -700,7 +700,7 @@
 		4C4731AB20C7599800713C91 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76971CC72B5100484A13 /* Prompts.strings */; };
 		4C4731AC20C7599800713C91 /* BuddyListDropArea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD03C51D5537CE0057D5B5 /* BuddyListDropArea@2x.png */; };
 		4C4731AD20C7599800713C91 /* TDCChannelBanListSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EEC1AC1A59500A26BE0 /* TDCChannelBanListSheet.xib */; };
-		4C4731AE20C7599800713C91 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
+		4C4731AE20C7599800713C91 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif */; };
 		4C4731AF20C7599800713C91 /* TDCChannelModifyModesSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EFC1AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib */; };
 		4C4731B020C7599800713C91 /* TPWTB_Highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA64E1ABCF36A0083620F /* TPWTB_Highlights.png */; };
 		4C4731B120C7599800713C91 /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
@@ -1983,8 +1983,8 @@
 		4CB229311978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FE1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif */; };
 		4CB229321978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */; };
 		4CB229331978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */; };
-		4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
-		4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
+		4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif */; };
+		4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif */; };
 		4CB229361978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229011978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif */; };
 		4CB229371978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229011978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif */; };
 		4CB229381978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229021978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif */; };
@@ -3264,7 +3264,7 @@
 		4CB228FD1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIconMavericksLightActive.tif; path = "Resources/Images/Status Badges/channelRoomStatusIconMavericksLightActive.tif"; sourceTree = "<group>"; };
 		4CB228FE1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIconMavericksLightActive@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIconMavericksLightActive@2x.tif"; sourceTree = "<group>"; };
 		4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIconMavericksLightInactive.tif; path = "Resources/Images/Status Badges/channelRoomStatusIconMavericksLightInactive.tif"; sourceTree = "<group>"; };
-		4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIconMavericksLightInctive@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIconMavericksLightInctive@2x.tif"; sourceTree = "<group>"; };
+		4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIconMavericksLightInactive@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIconMavericksLightInactive@2x.tif"; sourceTree = "<group>"; };
 		4CB229011978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIconYosemiteDarkActive.tif; path = "Resources/Images/Status Badges/channelRoomStatusIconYosemiteDarkActive.tif"; sourceTree = "<group>"; };
 		4CB229021978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIconYosemiteDarkActive@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIconYosemiteDarkActive@2x.tif"; sourceTree = "<group>"; };
 		4CB229031978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIconYosemiteDarkInactive.tif; path = "Resources/Images/Status Badges/channelRoomStatusIconYosemiteDarkInactive.tif"; sourceTree = "<group>"; };
@@ -4312,7 +4312,7 @@
 				4CB228FD1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif */,
 				4CB228FE1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif */,
 				4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */,
-				4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */,
+				4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif */,
 				4CB229011978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif */,
 				4CB229021978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif */,
 				4CB229031978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive.tif */,
@@ -6449,7 +6449,7 @@
 				4CF40F1E1AC1A59500A26BE0 /* TDCChannelBanListSheet.xib in Resources */,
 				4CBC76B31CC72B5100484A13 /* IRC.strings in Resources */,
 				4C7B095720CCB2A5004776AD /* TVCMemberListAppearance.plist in Resources */,
-				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
+				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */,
 				4CF40F3E1AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib in Resources */,
 				4CCFA6761ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
@@ -6622,7 +6622,7 @@
 				4CBC76BE1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4CBD03CB1D5537CE0057D5B5 /* BuddyListDropArea@2x.png in Resources */,
 				4CF40F201AC1A59500A26BE0 /* TDCChannelBanListSheet.xib in Resources */,
-				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
+				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */,
 				4CF40F401AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib in Resources */,
 				4C7B095920CCB2A5004776AD /* TVCMemberListAppearance.plist in Resources */,
 				4CCFA6781ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
@@ -6804,7 +6804,7 @@
 				4C4731AB20C7599800713C91 /* Prompts.strings in Resources */,
 				4C4731AC20C7599800713C91 /* BuddyListDropArea@2x.png in Resources */,
 				4C4731AD20C7599800713C91 /* TDCChannelBanListSheet.xib in Resources */,
-				4C4731AE20C7599800713C91 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
+				4C4731AE20C7599800713C91 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */,
 				4C4731AF20C7599800713C91 /* TDCChannelModifyModesSheet.xib in Resources */,
 				4C7B095A20CCB2A5004776AD /* TVCMemberListAppearance.plist in Resources */,
 				4C4731B020C7599800713C91 /* TPWTB_Highlights.png in Resources */,
@@ -6984,7 +6984,7 @@
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F1F1AC1A59500A26BE0 /* TDCChannelBanListSheet.xib in Resources */,
 				4C7B095820CCB2A5004776AD /* TVCMemberListAppearance.plist in Resources */,
-				4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
+				4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive@2x.tif in Resources */,
 				4CA20917200EAA1A00FD9B80 /* TDCChannelSpotlightController.strings in Resources */,
 				4CF40F3F1AC1A59500A26BE0 /* TDCChannelModifyModesSheet.xib in Resources */,
 				4CCFA6771ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,

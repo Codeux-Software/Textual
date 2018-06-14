@@ -99,7 +99,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	/* Combine any appearances it may inherit from */
-	appearance = [self.class _combineAppearance:appearance withOhterApperances:appearances];
+	appearance = [self.class _combineAppearance:appearance withOtherAppearances:appearances];
 
 	if (appearance == nil) {
 		return NO;
@@ -124,11 +124,11 @@ ClassWithDesignatedInitializerInitMethod
 /* For eample: 	AppearanceDarkRetina ->
  				AppearanceDarkBase ->
  				AppearanceBase */
-/* -_combineAppearance:withOhterApperances: is the staging ground for
+/* -_combineAppearance:withOtherAppearances: is the staging ground for
  this logic. The first argument is the properties for the appearance
  that was specified in -init. The second argument is the contents of
  the file that appearance originated from. */
-+ (nullable NSDictionary *)_combineAppearance:(NSDictionary<NSString *, id> *)appearanceIn withOhterApperances:(NSDictionary<NSString *, id> *)otherAppearances
++ (nullable NSDictionary *)_combineAppearance:(NSDictionary<NSString *, id> *)appearanceIn withOtherAppearances:(NSDictionary<NSString *, id> *)otherAppearances
  {
 	 NSParameterAssert(appearanceIn != nil);
 	 NSParameterAssert(otherAppearances != nil);
