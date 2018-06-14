@@ -40,7 +40,9 @@
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCServerList.h"
+#import "TVCServerListAppearance.h"
 #import "TVCMemberList.h"
+#import "TVCMemberListAppearance.h"
 #import "TVCMainWindow.h"
 #import "TVCMainWindowAppearance.h"
 #import "TVCMainWindowSplitViewPrivate.h"
@@ -53,15 +55,27 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 @property (nonatomic, assign) BOOL restoredPositions;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForServerList;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForMemberList;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthMinConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthMaxConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthMinConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthMaxConstraint;
 @end
 
 @implementation TVCMainWindowSplitView
 
-- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
+- (void)mainWindowAppearanceChanged
 {
-	return YES;
+	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
+
+	TVCServerListAppearance *serverList = appearance.serverList;
+
+	self.serverListWidthMinConstraint.constant = serverList.minimumWidth;
+	self.serverListWidthMaxConstraint.constant = serverList.maximumWidth;
+
+	TVCMemberListAppearance *memberList = appearance.memberList;
+
+	self.memberListWidthMinConstraint.constant = memberList.minimumWidth;
+	self.memberListWidthMaxConstraint.constant = memberList.maximumWidth;
 }
 
 - (NSColor *)dividerColor
@@ -136,7 +150,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	[self setPosition:[self positionToRestoreServerListAt] ofDividerAtIndex:0];
 
-	[self.serverListWidthConstraint restoreArchivedConstant];
+	[self.serverListWidthMinConstraint restoreArchivedConstant];
 
 	self.stopFrameUpdatesForServerList = NO;
 }
@@ -153,7 +167,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	[self setPosition:[self positionToRestoreMemberListAt] ofDividerAtIndex:1];
 
-	[self.memberListWidthConstraint restoreArchivedConstant];
+	[self.memberListWidthMinConstraint restoreArchivedConstant];
 
 	self.stopFrameUpdatesForMemberList = NO;
 }
@@ -162,7 +176,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForServerList = YES;
 
-	[self.serverListWidthConstraint archiveConstantAndZeroOut];
+	[self.serverListWidthMinConstraint archiveConstantAndZeroOut];
 
 	NSScrollView *scrollView = self.mainWindow.serverList.enclosingScrollView;
 
@@ -179,7 +193,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForMemberList = YES;
 
-	[self.memberListWidthConstraint archiveConstantAndZeroOut];
+	[self.memberListWidthMinConstraint archiveConstantAndZeroOut];
 
 	NSView *subview = self.subviews[2];
 
@@ -227,10 +241,12 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	CGFloat position = [frames doubleForKey:@"serverList"];
 
-	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
-		position = TVCMainWindowSplitViewServerListDefaultPosition;
-	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
-		position = TVCMainWindowSplitViewServerListDefaultPosition;
+	TVCServerListAppearance *appearance = self.mainWindow.userInterfaceObjects.serverList;
+
+	if (position < appearance.minimumWidth) {
+		position = appearance.defaultWidth;
+	} else if (position > appearance.maximumWidth) {
+		position = appearance.defaultWidth;
 	}
 
 	return position;
@@ -247,10 +263,12 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	CGFloat position = [frames doubleForKey:@"memberList"];
 
-	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
-		position = TVCMainWindowSplitViewMemberListDefaultPosition;
-	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
-		position = TVCMainWindowSplitViewMemberListDefaultPosition;
+	TVCMemberListAppearance *appearance = self.mainWindow.userInterfaceObjects.memberList;
+
+	if (position < appearance.minimumWidth) {
+		position = appearance.defaultWidth;
+	} else if (position > appearance.maximumWidth) {
+		position = appearance.defaultWidth;
 	}
 
 	if (correctedFrame) {
@@ -266,10 +284,12 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	CGFloat position = [self positionForDividerAtIndex:0];
 
-	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
-		position = TVCMainWindowSplitViewServerListDefaultPosition;
-	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
-		position = TVCMainWindowSplitViewServerListDefaultPosition;
+	TVCServerListAppearance *appearance = self.mainWindow.userInterfaceObjects.serverList;
+
+	if (position < appearance.minimumWidth) {
+		position = appearance.defaultWidth;
+	} else if (position > appearance.maximumWidth) {
+		position = appearance.defaultWidth;
 	}
 
 	return position;
@@ -283,10 +303,12 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	position = ((position - NSWidth(windowFrame)) * (-1));
 
-	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
-		position = TVCMainWindowSplitViewMemberListDefaultPosition;
-	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
-		position = TVCMainWindowSplitViewMemberListDefaultPosition;
+	TVCMemberListAppearance *appearance = self.mainWindow.userInterfaceObjects.memberList;
+
+	if (position < appearance.minimumWidth) {
+		position = appearance.defaultWidth;
+	} else if (position > appearance.maximumWidth) {
+		position = appearance.defaultWidth;
 	}
 
 	return position;

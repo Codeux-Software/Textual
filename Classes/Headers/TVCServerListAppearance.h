@@ -40,6 +40,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@property (readonly) CGFloat defaultWidth;
+@property (readonly) CGFloat minimumWidth;
+@property (readonly) CGFloat maximumWidth;
+
 @property (readonly, copy, nullable) NSColor *backgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *backgroundColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *rowSelectionColorActiveWindow;

@@ -402,8 +402,10 @@
                             <real value="355"/>
                         </holdingPriorities>
                         <connections>
-                            <outlet property="memberListWidthConstraint" destination="wR4-2T-o8C" id="q7F-Ba-hma"/>
-                            <outlet property="serverListWidthConstraint" destination="Shw-gN-4CR" id="5TQ-3F-4Lt"/>
+                            <outlet property="memberListWidthMaxConstraint" destination="JlD-4o-tpf" id="T6C-Rf-F51"/>
+                            <outlet property="memberListWidthMinConstraint" destination="wR4-2T-o8C" id="Fy8-Sb-F8Z"/>
+                            <outlet property="serverListWidthMaxConstraint" destination="Ca9-ju-phm" id="MH4-lZ-127"/>
+                            <outlet property="serverListWidthMinConstraint" destination="Shw-gN-4CR" id="c5n-ZQ-w8V"/>
                         </connections>
                     </splitView>
                     <box autoresizesSubviews="NO" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fcA-DA-hcd" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">

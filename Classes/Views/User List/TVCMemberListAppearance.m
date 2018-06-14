@@ -53,6 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVCMemberListAppearance ()
 @property (nonatomic, weak, readwrite) TVCMemberList *memberList;
 
+@property (nonatomic, assign, readwrite) CGFloat defaultWidth;
+@property (nonatomic, assign, readwrite) CGFloat minimumWidth;
+@property (nonatomic, assign, readwrite) CGFloat maximumWidth;
+
 @property (nonatomic, copy, nullable, readwrite) NSColor *backgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *backgroundColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *rowSelectionColorActiveWindow;
@@ -141,6 +145,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	NSDictionary *properties = self.appearanceProperties;
+
+	self.defaultWidth = [self measurementForKey:@"defaultWidth"];
+	self.minimumWidth = [self measurementForKey:@"minimumWidth"];
+	self.maximumWidth = [self measurementForKey:@"maximumWidth"];
 
 	self.rowSelectionColorActiveWindow = [self colorForKey:@"selectionColor" forActiveWindow:YES];
 	self.rowSelectionColorInactiveWindow = [self colorForKey:@"selectionColor" forActiveWindow:NO];

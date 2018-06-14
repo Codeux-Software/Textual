@@ -4,6 +4,12 @@
 <dict>
 	<key>TEMPLATE APPEARANCE (NOT USED BY ANYTHING)</key>
 	<dict>
+		<key>defaultWidth</key>
+		<integer>0</integer>
+		<key>minimumWidth</key>
+		<integer>0</integer>
+		<key>maximumWidth</key>
+		<integer>0</integer>
 		<key>backgroundColor</key>
 		<dict>
 			<key>activeWindow</key>
