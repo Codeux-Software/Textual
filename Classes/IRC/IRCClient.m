@@ -9745,27 +9745,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				userAdded = user;
 			}
 
-			/* Find the user associated with this channel and create mutable copy */
+			/* Find the user associated with this channel  */
 			IRCChannelUser *member = [user userAssociatedWithChannel:channel];
 
-			IRCChannelUserMutable *memberMutable = nil;
-
-			if (member == nil) {
-				memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
-			} else {
-				memberMutable = [member mutableCopy];
-			}
-
-			memberMutable.modes = userModes;
-
-			BOOL memberChanged = (member != nil && [member isEqual:memberMutable] == NO);
-
-			/* Write out changed user to channel */
 			if (member == nil)
 			{
+				IRCChannelUserMutable *memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
+
+				memberMutable.modes = userModes;
+
 				[channel addMember:memberMutable];
 			}
-			else if (userChanged || memberChanged)
+			else if (userChanged)
 			{
 				/* Dtermine whether the users were modified in such a way that
 				 they require their cell in the user list be resorted. */
@@ -9773,14 +9764,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 sorting a channel with a few hundred users has overhead. */
 				BOOL IRCopStatusChanged = (user.isIRCop != userAdded.isIRCop);
 				
-				BOOL resortMember = (IRCopStatusChanged || memberChanged);
+				BOOL resortMember = IRCopStatusChanged;
 
 				BOOL replaceInAllChannels = (IRCopStatusChanged && [TPCPreferences memberListSortFavorsServerStaff]);
 
-				[channel replaceMember:member
-							withMember:memberMutable
-								resort:resortMember
-				  replaceInAllChannels:replaceInAllChannels];
+				if (resortMember) {
+					[channel replaceMember:member
+								withMember:member
+									resort:resortMember
+					  replaceInAllChannels:replaceInAllChannels];
+				}
+				else if (user.isAway != userAdded.isAway)
+				{
+					[mainWindow() updateDrawingForUserInUserList:userAdded];
+				}
 			}
 
 			/* Update local cache of our hostmask */
