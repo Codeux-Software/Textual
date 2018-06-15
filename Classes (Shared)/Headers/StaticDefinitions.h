@@ -111,6 +111,11 @@
 
 #define TEXTUAL_IGNORE_DEPRECATION_END			_Pragma("clang diagnostic pop")
 
+#define TEXTUAL_IGNORE_AVAILABILITY_BEGIN		_Pragma("clang diagnostic push")									\
+												_Pragma("clang diagnostic ignored \"-Wpartial-availability\"")
+
+#define TEXTUAL_IGNORE_AVAILABILITY_END			_Pragma("clang diagnostic pop")
+
 /* Helper function */
 #define StringFromBOOL(value) ((value) ? @"YES" : @"NO")
 
