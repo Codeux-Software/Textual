@@ -41,14 +41,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXUserInterface
 
-+ (BOOL)systemWideDarkModeEnabledOnYosemite
++ (BOOL)systemWideDarkModeEnabled
 {
 	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
 
-	if ([objectValue isEqualToStringIgnoringCase:@"dark"]) {
-		return YES;
+	return [objectValue isEqualToStringIgnoringCase:@"dark"];
+}
+
++ (NSAppearance *)appKitDarkAppearance
+{
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+TEXTUAL_IGNORE_AVAILABILITY_BEGIN
+		return [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];
+TEXTUAL_IGNORE_AVAILABILITY_END
 	} else {
-		return NO;
+		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+	}
+}
+
++ (NSAppearance *)appKitLightAppearance
+{
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+		return [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+	} else {
+		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 	}
 }
 
