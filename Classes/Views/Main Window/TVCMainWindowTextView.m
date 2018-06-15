@@ -112,12 +112,14 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)updateVibrancy
+- (void)updateVibrancyWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
 {
-	if (self.mainWindow.usingDarkAppearance) {
-		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-	} else {
-		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	NSParameterAssert(appearance != nil);
+
+	NSAppearance *appKitAppearance = appearance.appKitAppearance;
+
+	if (appKitAppearance) {
+		self.segmentedController.appearance = appKitAppearance;
 	}
 
 	self.backgroundView.needsDisplay = YES;
@@ -146,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.userInterfaceObjects = appearance;
 
 	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateVibrancy];
+		[self updateVibrancyWithAppearance:appearance];
 	}
 
 	self.textContainerInset = appearance.textViewInset;

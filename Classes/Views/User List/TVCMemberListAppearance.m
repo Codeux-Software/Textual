@@ -220,6 +220,16 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.parentAppearance.isModernAppearance;
 }
 
+- (BOOL)appKitAppearanceInherited
+{
+	return self.parentAppearance.appKitAppearanceInherited;
+}
+
+- (nullable NSAppearance *)appKitAppearance
+{
+	return self.parentAppearance.appKitAppearance;
+}
+
 #pragma mark -
 #pragma mark Everything Else
 

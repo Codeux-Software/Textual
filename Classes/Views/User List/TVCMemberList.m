@@ -455,21 +455,19 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	return YES;
 }
 
-- (void)updateVibrancy
+- (void)updateVibrancyWithAppearance:(TVCMemberListAppearance *)appearance
 {
-	NSAppearance *appearance = nil;
-
-	if (self.mainWindow.usingDarkAppearance) {
-		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-	} else {
-		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-	}
-
-	self.appearance = appearance;
+	NSParameterAssert(appearance != nil);
 
 	NSVisualEffectView *visaulEffectView = self.visualEffectView;
 
-	visaulEffectView.appearance = appearance;
+	NSAppearance *appKitAppearance = appearance.appKitAppearance;
+
+	if (appKitAppearance) {
+		self.appearance = appKitAppearance;
+
+		visaulEffectView.appearance = appKitAppearance;
+	}
 
 	if ([TPCPreferences disableSidebarTranslucency]) {
 		visaulEffectView.state = NSVisualEffectStateInactive;
@@ -518,15 +516,17 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 	[self deselectAll:nil];
 
+	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
+
 	if (updateEverything) {
 		self.userInterfaceObjects = appearance;
 
-		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-			[self updateVibrancy];
+		if (onYosemite) {
+			[self updateVibrancyWithAppearance:appearance];
 		}
 	}
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
+	if (onYosemite == NO) {
 		if (appearance.isDarkAppearance) {
 			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {

@@ -66,6 +66,10 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 @property (readonly) BOOL isDarkAppearance;
 @property (readonly) BOOL isHighResolutionAppearance;
 @property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
+
+/* nil on Mojave and later which acts as an indicator that it should be inherited. */
+@property (readonly, nullable) NSAppearance *appKitAppearance;
+@property (readonly) BOOL appKitAppearanceInherited;
 @end
 
 @interface TVCMainWindowAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
