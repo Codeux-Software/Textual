@@ -100,6 +100,20 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	self.delegate = (id)self;
 }
 
+- (void)viewDidMoveToWindow
+{
+	if (self.window == nil) {
+		[themeSettings() removeObserver:self forKeyPath:@"underlyingWindowColorIsDark"];
+
+		return;
+	}
+
+	[themeSettings() addObserver:self
+					  forKeyPath:@"underlyingWindowColorIsDark"
+						 options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
+						 context:NULL];
+}
+
 - (void)resetSubviews
 {
 	NSArray *subviews = [self.subviews copy];
@@ -300,6 +314,26 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	TXChannelViewArrangement arrangement = [TPCPreferences channelViewArrangement];
 
 	self.vertical = (arrangement == TXChannelViewArrangedVertically);
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+{
+	if ([keyPath isEqualToString:@"underlyingWindowColorIsDark"]) {
+		[self updateVibrancy];
+	}
+}
+
+- (void)updateVibrancy
+{
+	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
+		return;
+	}
+
+	if (themeSettings().underlyingWindowColorIsDark) {
+		self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+	} else {
+		self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	}
 }
 
 - (BOOL)needsDisplayWhenMainWindowAppearanceChanges

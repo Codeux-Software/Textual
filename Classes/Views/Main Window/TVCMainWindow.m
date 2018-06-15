@@ -354,15 +354,6 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 	return desiredAppearance;
 }
 
-- (void)updateVibrancy
-{
-	if (themeSettings().underlyingWindowColorIsDark) {
-		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-	} else {
-		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-	}
-}
-
 - (void)updateAppearance
 {
 	[self updateAppearanceBySystemChange:NO];
