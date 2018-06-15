@@ -40,6 +40,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCThemeController ()
+/* -load is called when app first launches to do first
+ load with some extra saftey checks. Use -reload if you
+ want to reload the theme, not -load or use -reloadTheme
+ in the main window which is best option. */
+- (void)load;
 - (void)reload;
 
 - (void)reloadMonitoringActiveThemePath;

@@ -92,18 +92,20 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 @implementation TPCThemeController
 
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
 - (void)prepareInitialState
 {
 	self.customSettings = [TPCThemeSettings new];
-
-	[self startMonitoringActiveThemePath];
-
-	/* resetPreferencesForPreferredTheme is called for the configured
-	 theme before the first ever -reload is called to recover from a
-	 style being deleted while the app was closed. */
-	[self resetPreferencesForPreferredTheme];
-
-	[self reload];
 }
 
 - (void)prepareForApplicationTermination
@@ -242,6 +244,18 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 
 	return nil;
+}
+
+- (void)load
+{
+	[self startMonitoringActiveThemePath];
+
+	/* resetPreferencesForPreferredTheme is called for the configured
+	 theme before the first ever -reload is called to recover from a
+	 style being deleted while the app was closed. */
+	[self resetPreferencesForPreferredTheme];
+
+	[self reload];
 }
 
 - (void)reload

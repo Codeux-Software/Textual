@@ -58,6 +58,11 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 	TPCThemeControllerStorageCloudLocation
 };
 
+/* Theme is not loaded until main window is woken which means
+ while you could in theory access this object before then,
+ objects below that are marked non-nil will actually be nil. */
+/* Theme settings are allocated when the controller is which
+ means that can be observed for changes before theme is loaded. */
 @interface TPCThemeController : NSObject
 @property (readonly, copy) NSURL *baseURL;
 @property (readonly) TPCThemeSettings *customSettings;

@@ -201,7 +201,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 
 	[masterController() applicationWakeStepOne];
 
-	[themeController() prepareInitialState];
+	[themeController() load];
 
 	[menuController() prepareInitialState];
 
