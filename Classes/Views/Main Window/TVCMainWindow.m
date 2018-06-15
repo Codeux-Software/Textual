@@ -379,10 +379,12 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 			return;
 		}
 	} else {
-		self.userInterfaceObjects = [[TVCMainWindowAppearance alloc] initWithAppearance:desiredAppearance inWindow:self];
+		TVCMainWindowAppearance *appearance = [[TVCMainWindowAppearance alloc] initWithAppearance:desiredAppearance inWindow:self];
+
+		self.userInterfaceObjects = appearance;
 
 		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-			[self updateVibrancy];
+			[self updateVibrancyWithAppearance:appearance];
 		}
 
 		systemChanged = NO;
@@ -409,6 +411,17 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 - (void)notifySystemAppearanceChanged
 {
 	[self.contentView.superview notifySystemAppearanceChanged];
+}
+
+- (void)updateVibrancyWithAppearance:(TVCMainWindowAppearance *)appearance
+{
+	NSParameterAssert(appearance != nil);
+
+	if (appearance.appKitAppearanceInherited == NO) {
+		return;
+	}
+
+	self.appearance = appearance.appKitAppearanceToInherit;
 }
 
 - (void)updateAlphaValueToReflectPreferences

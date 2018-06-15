@@ -50,6 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) TVCMainWindow *mainWindow;
 @property (nonatomic, copy, readwrite) NSString *appearanceName;
 @property (nonatomic, assign, readwrite) TVCMainWindowAppearanceType appearanceType;
+@property (nonatomic, assign, readwrite) BOOL isDarkAppearance;
+@property (nonatomic, assign, readwrite) BOOL isModernAppearance;;
+@property (nonatomic, assign, readwrite) BOOL appKitAppearanceInherited;
 @property (nonatomic, strong, readwrite) TVCServerListAppearance *serverList;
 @property (nonatomic, strong, readwrite) TVCMemberListAppearance *memberList;
 @property (nonatomic, strong, readwrite) TVCMainWindowTextViewAppearance *textView;
@@ -176,6 +179,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+	self.isDarkAppearance = [self isDarkAppearance_];
+	self.isModernAppearance = [self isModernAppearance_];
+
+	self.appKitAppearanceInherited = [self appKitAppearanceInherited_];
+
 	self.defaultWindowSize = [self sizeForKey:@"defaultWindowSize"];
 
 	self.channelViewOverlayDefaultBackgroundColorActiveWindow = [self colorForKey:@"channelViewOverlayDefaultBackgroundColor" forActiveWindow:YES];
@@ -205,7 +213,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return self;
 }
 
-- (BOOL)isDarkAppearance
+- (BOOL)isDarkAppearance_
 {
 	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
 
@@ -215,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 			appearanceType == TVCMainWindowAppearanceMojaveDarkType);
 }
 
-- (BOOL)isModernAppearance
+- (BOOL)isModernAppearance_
 {
 	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
 
@@ -223,6 +231,35 @@ NS_ASSUME_NONNULL_BEGIN
 			appearanceType != TVCMainWindowAppearanceMavericksAquaDarkType &&
 			appearanceType != TVCMainWindowAppearanceMavericksGraphiteLightType &&
 			appearanceType != TVCMainWindowAppearanceMavericksGraphiteDarkType);
+}
+
+- (BOOL)appKitAppearanceInherited_
+{
+	/* On Mojave and later, we set the appearance on the main window
+	 and allow subviews to inherit from that instead of setting them
+	 for each individual subview. */
+	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
+
+	return (appearanceType == TVCMainWindowAppearanceMojaveLightType ||
+			appearanceType == TVCMainWindowAppearanceMojaveDarkType);
+}
+
+- (NSAppearance *)appKitAppearanceToInherit
+{
+	if (self.isDarkAppearance) {
+		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+	} else {
+		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	}
+}
+
+- (nullable NSAppearance *)appKitAppearance
+{
+	if (self.appKitAppearanceInherited) {
+		return nil;
+	}
+
+	return self.appKitAppearanceToInherit;
 }
 
 @end
