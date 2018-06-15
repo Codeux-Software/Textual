@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "TXUserInterface.h"
 #import "NSObjectHelperPrivate.h"
 #import "TPCPreferencesLocal.h"
 #import "TVCAppearancePrivate.h"
@@ -247,9 +248,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAppearance *)appKitAppearanceToInherit
 {
 	if (self.isDarkAppearance) {
-		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		return [TXUserInterface appKitDarkAppearance];
 	} else {
-		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+		return [TXUserInterface appKitLightAppearance];
 	}
 }
 
