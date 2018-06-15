@@ -339,6 +339,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesPathURL];
 
+	/* KVO start */
+	[self willChangeValueForKey:@"underlyingWindowColorIsDark"];
+
 	/* Reset properties */
 	self.themeChannelViewFont = nil;
 
@@ -433,6 +436,9 @@ NS_ASSUME_NONNULL_BEGIN
 	if (templateEngineVersion == 0) {
 		templateEngineVersion = _templateEngineVersionMaximum;
 	}
+
+	/* KVO end */
+	[self didChangeValueForKey:@"underlyingWindowColorIsDark"];
 
 	/* Fall back to the default repository */
 	self.templateEngineVersion = templateEngineVersion;
