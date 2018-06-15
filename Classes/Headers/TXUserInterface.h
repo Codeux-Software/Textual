@@ -38,7 +38,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TXUserInterface : NSObject
-+ (BOOL)systemWideDarkModeEnabledOnYosemite;
++ (BOOL)systemWideDarkModeEnabled;
+
++ (NSAppearance *)appKitDarkAppearance;
++ (NSAppearance *)appKitLightAppearance;
 @end
 
 NS_ASSUME_NONNULL_END
