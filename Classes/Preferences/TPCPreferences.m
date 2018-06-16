@@ -525,9 +525,14 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark Theme
 
-+ (void)setInvertSidebarColors:(BOOL)invertSidebarColors
++ (void)setMainWindowAppearance:(TXMainWindowAppearanceType)mainWindowAppearance
 {
-	[RZUserDefaults() setBool:invertSidebarColors forKey:@"InvertSidebarColors"];
+	[RZUserDefaults() setUnsignedInteger:mainWindowAppearance forKey:@"MainWindowAppearance"];
+}
+
++ (TXMainWindowAppearanceType)mainWindowAppearance
+{
+	return (TXMainWindowAppearanceType)[RZUserDefaults() unsignedIntegerForKey:@"MainWindowAppearance"];
 }
 
 + (BOOL)invertSidebarColors

@@ -2909,7 +2909,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)toggleMainWindowAppearance:(id)sender
 {
-	[TPCPreferences setInvertSidebarColors:([TPCPreferences invertSidebarColors] == NO)];
+	TXMainWindowAppearanceType appearance = [TPCPreferences mainWindowAppearance];
+
+	switch (appearance) {
+		case TXMainWindowInheritAppearanceType:
+		{
+			TVCMainWindowAppearance *mwAppearance = mainWindow().userInterfaceObjects;
+
+			if (mwAppearance.isDarkAppearance == NO) {
+				appearance = TXMainWindowDarkAppearanceType;
+			} else {
+				appearance = TXMainWindowLightAppearanceType;
+			}
+
+			break;
+		}
+		case TXMainWindowLightAppearanceType:
+		{
+			appearance = TXMainWindowDarkAppearanceType;
+
+			break;
+		}
+		case TXMainWindowDarkAppearanceType:
+		{
+			appearance = TXMainWindowLightAppearanceType;
+
+			break;
+		}
+	} // switch()
+
+	[TPCPreferences setMainWindowAppearance:appearance];
 
 	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
 }
