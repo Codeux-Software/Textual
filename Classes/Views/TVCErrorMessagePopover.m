@@ -90,16 +90,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	popoverView.translatesAutoresizingMaskIntoConstraints = NO;
 
-	[popoverView addConstraint:
-	 [NSLayoutConstraint constraintWithItem:popoverView
-								  attribute:NSLayoutAttributeWidth
-								  relatedBy:NSLayoutRelationLessThanOrEqual
-									 toItem:nil
-								  attribute:NSLayoutAttributeNotAnAttribute
-								 multiplier:1.0
-								   constant:_messageMaximumWidth]
-	 ];
-
 	viewController.view = popoverView;
 
 	/* Create image view */
@@ -166,6 +156,8 @@ ClassWithDesignatedInitializerInitMethod
 	errorMessage.stringValue = self.message;
 
 	errorMessage.cell.wraps = YES;
+
+	errorMessage.preferredMaxLayoutWidth = _messageMaximumWidth;
 
 	/* Add message */
 	[popoverView addSubview:errorMessage];
