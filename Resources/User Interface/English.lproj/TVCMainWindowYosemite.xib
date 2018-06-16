@@ -331,7 +331,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="mtt-4n-lrH"/>
                                 </constraints>
                             </splitView>
-                            <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="2k7-ax-6YE">
+                            <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="2k7-ax-6YE">
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
