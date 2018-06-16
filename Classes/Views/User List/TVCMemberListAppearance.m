@@ -301,7 +301,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[cache removeAllObjects];
 }
 
-+ (nullable NSColor *)_userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
+- (nullable NSColor *)_userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
 {
 	NSColor *defaultColor = [RZUserDefaults() colorForKey:defaultsKey];
 
@@ -309,7 +309,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
+	if (self.isModernAppearance) {
 		return [defaultColor colorWithAlphaComponent:0.7];
 	} else {
 		return  defaultColor;
@@ -318,37 +318,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSColor *)markBadgeBackgroundColor_Y // InspIRCd-2.0
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +y"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +y"];
 }
 
 - (NSColor *)markBadgeBackgroundColor_Q
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +q"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +q"];
 }
 
 - (NSColor *)markBadgeBackgroundColor_A
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +a"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +a"];
 }
 
 - (NSColor *)markBadgeBackgroundColor_O
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +o"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +o"];
 }
 
 - (NSColor *)markBadgeBackgroundColor_H
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +h"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +h"];
 }
 
 - (NSColor *)markBadgeBackgroundColor_V
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +v"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> +v"];
 }
 
 - (nullable NSColor *)markBadgeBackgroundColorByUser
 {
-	return [self.class _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> no mode"];
+	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> no mode"];
 }
 
 @end
