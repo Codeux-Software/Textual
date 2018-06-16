@@ -1275,7 +1275,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <box appearanceType="aqua" horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="AAZ-jr-pf8">
+                                    <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="AAZ-jr-pf8">
                                         <rect key="frame" x="245" y="27" width="5" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="PyT-1w-baG"/>
@@ -2887,10 +2887,10 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.FocusSelectionOnMessageCommandExecution" id="O7w-61-9Do"/>
                     </connections>
                 </button>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nlA-Ew-LSZ">
+                <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="nlA-Ew-LSZ">
                     <rect key="frame" x="74" y="103" width="442" height="5"/>
                 </box>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="vT0-4B-zbA">
+                <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="vT0-4B-zbA">
                     <rect key="frame" x="74" y="154" width="442" height="5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="442" id="hZx-yo-MDQ"/>

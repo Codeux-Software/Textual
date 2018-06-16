@@ -38,7 +38,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="221"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="OYV-WK-xFr">
+                    <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="OYV-WK-xFr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="221"/>
                         <subviews>
                             <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1E4-kg-4iF">
