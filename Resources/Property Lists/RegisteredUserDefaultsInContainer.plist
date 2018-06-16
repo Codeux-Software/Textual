@@ -138,6 +138,8 @@
 	<integer>1</integer>
 	<key>Main Input Text Field -&gt; Focus When Changing Views</key>
 	<true/>
+	<key>MainWindowAppearance</key>
+	<integer>0</integer>
 	<key>MainWindowTransparencyLevel</key>
 	<real>1</real>
 	<key>NicknameHighlightMatchingType</key>
