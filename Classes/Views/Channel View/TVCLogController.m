@@ -1541,6 +1541,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
 
+#warning TODO: Expand WebView to understand changes to appearance
 	templateTokens[@"sidebarInversionIsEnabled"] = @(self.attachedWindow.usingDarkAppearance);
 
 	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.associatedClient.config.primaryEncoding];
