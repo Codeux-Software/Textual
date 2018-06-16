@@ -102,15 +102,39 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(mainWindow != nil);
 
-	BOOL darkMode = [TPCPreferences invertSidebarColors];
+	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
+	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
 
-	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+	BOOL darkMode = NO;
+
+	switch ([TPCPreferences mainWindowAppearance]) {
+		case TXMainWindowInheritAppearanceType:
+		{
+			if (onMojave)
+			{
+				/* We only inherit from the system on Mojave.
+				 On earlier operating systems, user is expected
+				 to set an appearance of their own. */
+				darkMode = [TXUserInterface systemWideDarkModeEnabled];
+			}
+		}
+		case TXMainWindowDarkAppearanceType:
+		{
+			darkMode = YES;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	if (onMojave) {
 		if (darkMode) {
 			return TVCMainWindowAppearanceMojaveDarkType;
 		} else {
 			return TVCMainWindowAppearanceMojaveLightType;
 		}
-	} else if (TEXTUAL_RUNNING_ON_YOSEMITE) {
+	} else if (onYosemite) {
 		if (darkMode) {
 			return TVCMainWindowAppearanceYosemiteDarkType;
 		} else {
