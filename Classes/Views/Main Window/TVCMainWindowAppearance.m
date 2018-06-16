@@ -263,6 +263,15 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.appKitAppearanceToInherit;
 }
 
+- (NSString *)shortAppearanceDescription
+{
+	if (self.isDarkAppearance == NO) {
+		return @"light";
+	} else {
+		return @"dark";
+	}
+}
+
 @end
 
 #pragma mark -

@@ -75,6 +75,8 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 @interface TVCMainWindowAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
 @property (readonly, copy) NSString *appearanceName;
 
+@property (readonly, copy) NSString *shortAppearanceDescription; // e.g. "light", "dark"
+
 @property (readonly) TVCServerListAppearance *serverList;
 @property (readonly) TVCMemberListAppearance *memberList;
 @property (readonly) TVCMainWindowTextViewAppearance *textView;
