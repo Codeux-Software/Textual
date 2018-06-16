@@ -43,6 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)systemWideDarkModeEnabled
 {
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
+TEXTUAL_IGNORE_AVAILABILITY_BEGIN
+		return ([[NSApp effectiveAppearance] bestMatchFromAppearancesWithNames:@[NSAppearanceNameDarkAqua]] != nil);
+TEXTUAL_IGNORE_AVAILABILITY_END
+	}
+
 	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
 
 	return [objectValue isEqualToStringIgnoringCase:@"dark"];
