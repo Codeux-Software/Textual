@@ -117,10 +117,14 @@ NS_ASSUME_NONNULL_BEGIN
 				 to set an appearance of their own. */
 				darkMode = [TXUserInterface systemWideDarkModeEnabled];
 			}
+
+			break;
 		}
 		case TXMainWindowDarkAppearanceType:
 		{
 			darkMode = YES;
+
+			break;
 		}
 		default:
 		{
