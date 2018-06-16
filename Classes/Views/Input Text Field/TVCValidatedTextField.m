@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Maintain cached value so that the drawing does not call
  the validaton block every time that it is called. */
 @property (nonatomic, assign) BOOL cachedValidValue;
+@property (nonatomic, assign) BOOL validationPerformed;
 @property (nonatomic, copy, nullable, readwrite) NSString *lastValidationErrorDescription;
 @end
 
@@ -186,10 +187,16 @@ NS_ASSUME_NONNULL_BEGIN
 	self.cachedValidValue = (errorDescription == nil);
 
 	self.lastValidationErrorDescription = errorDescription;
+
+	self.validationPerformed = YES;
 }
 
 - (BOOL)showValidationErrorPopover
 {
+	if (self.validationPerformed == NO) {
+		[self performValidation];
+	}
+
 	NSString *errorDescription = self.lastValidationErrorDescription;
 
 	if (errorDescription == nil) {

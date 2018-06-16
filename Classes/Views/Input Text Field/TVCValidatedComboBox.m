@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
  the validaton block every time that it is called. */
 @property (nonatomic, assign) BOOL cachedValidValue;
 @property (nonatomic, assign, readwrite) BOOL valueIsPredefined;
+@property (nonatomic, assign) BOOL validationPerformed;
 @property (nonatomic, assign) BOOL listVisible;
 @property (nonatomic, assign) BOOL selectionChangedWhileListVisible;
 @property (nonatomic, assign) BOOL selectionChangedWhileSetting;
@@ -282,10 +283,16 @@ NS_ASSUME_NONNULL_BEGIN
 	self.cachedValidValue = (errorDescription == nil);
 
 	self.lastValidationErrorDescription = errorDescription;
+
+	self.validationPerformed = YES;
 }
 
 - (BOOL)showValidationErrorPopover
 {
+	if (self.validationPerformed == NO) {
+		[self performValidation];
+	}
+
 	NSString *errorDescription = self.lastValidationErrorDescription;
 
 	if (errorDescription == nil) {
