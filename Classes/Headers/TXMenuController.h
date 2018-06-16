@@ -490,6 +490,7 @@ enum
 - (IBAction)toggleFullscreen:(id)sender;
 
 - (IBAction)toggleMainWindowAppearance:(id)sender;
+- (IBAction)resetMainWindowAppearance:(id)sender;
 
 - (IBAction)toggleDeveloperMode:(id)sender;
 

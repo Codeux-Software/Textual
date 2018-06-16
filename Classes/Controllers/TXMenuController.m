@@ -2907,6 +2907,13 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Appearance
 
+- (void)resetMainWindowAppearance:(id)sender
+{
+	[TPCPreferences setMainWindowAppearance:TXMainWindowInheritAppearanceType];
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
+}
+
 - (void)toggleMainWindowAppearance:(id)sender
 {
 	TXMainWindowAppearanceType appearance = [TPCPreferences mainWindowAppearance];
