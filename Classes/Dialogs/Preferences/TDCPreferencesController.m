@@ -175,11 +175,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedInlineMediaOption:(id)sender;
 - (IBAction)onChangedInputHistoryScheme:(id)sender;
 - (IBAction)onChangedMainInputTextViewFontSize:(id)sender; // changed
+- (IBAction)onChangedMainWindowAppearance:(id)sender;
 - (IBAction)onChangedMainWindowSegmentedController:(id)sender;
 - (IBAction)onChangedScrollbackSaveLimit:(id)sender;
 - (IBAction)onChangedScrollbackVisibleLimit:(id)sender;
 - (IBAction)onChangedServerListUnreadBadgeColor:(id)sender;
-- (IBAction)onChangedSidebarColorInversion:(id)sender;
 - (IBAction)onChangedTheme:(id)sender;
 - (IBAction)onChangedThemeSelection:(id)sender;  // changed
 - (IBAction)onChangedTranscriptFolder:(id)sender;
@@ -1492,7 +1492,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences performReloadAction:TPCPreferencesReloadInputHistoryScopeAction];
 }
 
-- (void)onChangedSidebarColorInversion:(id)sender
+- (void)onChangedMainWindowAppearance:(id)sender
 {
 	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
 }
