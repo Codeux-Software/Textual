@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCThemeSettings ()
 @property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
+@property (nonatomic, assign, readwrite) BOOL js_postAppearanceChangesNotification;
 @property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
 @property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
 @property (nonatomic, copy, readwrite, nullable) NSFont *themeChannelViewFont;
@@ -375,6 +376,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.settingsKeyValueStoreName = [self _stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
 
 		self.js_postHandleEventNotifications = [styleSettings boolForKey:@"Post Textual.handleEvent() Notifications"];
+		self.js_postAppearanceChangesNotification = [styleSettings boolForKey:@"Post Textual.appearanceDidChange() Notifications"];
 		self.js_postPreferencesDidChangesNotifications = [styleSettings boolForKey:@"Post Textual.preferencesDidChange() Notifications"];
 
 		/* Disable indentation? */

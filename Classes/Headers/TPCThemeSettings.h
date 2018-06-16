@@ -55,6 +55,7 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 
 @interface TPCThemeSettings : NSObject
 @property (readonly) BOOL js_postHandleEventNotifications;
+@property (readonly) BOOL js_postAppearanceChangesNotification;
 @property (readonly) BOOL js_postPreferencesDidChangesNotifications;
 @property (readonly) BOOL usesIncompatibleTemplateEngineVersion;
 @property (readonly, copy, nullable) NSFont *themeChannelViewFont;

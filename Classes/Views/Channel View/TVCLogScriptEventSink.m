@@ -871,6 +871,14 @@ ClassWithDesignatedInitializerInitMethod
 			  withSelector:@selector(_sidebarInversionIsEnabled:)];
 }
 
+- (void)appearance:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 forCaller:@"app.appearance()"
+				 inWebView:webView
+			  withSelector:@selector(_appearance:)];
+}
+
 - (void)styleSettingsRetrieveValue:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -1484,9 +1492,16 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
 {
-	TVCMainWindow *attachedWindow = context.viewController.attachedWindow;
+	TVCMainWindowAppearance *appearance = context.viewController.attachedWindow.userInterfaceObjects;
 
-	context.completionBlock( @(attachedWindow.usingDarkAppearance) );
+	context.completionBlock( @(appearance.isDarkAppearance) );
+}
+
+- (void)_appearance:(TVCLogScriptEventSinkContext *)context
+{
+	TVCMainWindowAppearance *appearance = context.viewController.attachedWindow.userInterfaceObjects;
+
+	context.completionBlock( appearance.shortAppearanceDescription );
 }
 
 - (void)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context

@@ -139,6 +139,8 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	[RZNotificationCenter() addObserver:self selector:@selector(dateChanged:) name:NSSystemClockDidChangeNotification object:nil];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(mainWindowAppearanceChanged:) name:TVCMainWindowAppearanceChangedNotification object:nil];
 }
 
 - (NSArray *)clientConfigurations
@@ -197,6 +199,22 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	self.preferencesDidChangeTimerIsActive = NO;
 
 	[self evaluateFunctionOnAllViews:@"preferencesDidChange" arguments:nil onQueue:YES];
+}
+
+- (void)mainWindowAppearanceChanged:(NSNotification *)notification
+{
+	if (themeSettings().js_postAppearanceChangesNotification == NO) {
+		return;
+	}
+
+	[self informAllViewsMainWindowAppearanceChanged];
+}
+
+- (void)informAllViewsMainWindowAppearanceChanged
+{
+	TVCMainWindowAppearance *appearance = mainWindow().userInterfaceObjects;
+
+	[self evaluateFunctionOnAllViews:@"Textual.appearanceDidChange" arguments:@[appearance.shortAppearanceDescription] onQueue:YES];
 }
 
 #pragma mark -
