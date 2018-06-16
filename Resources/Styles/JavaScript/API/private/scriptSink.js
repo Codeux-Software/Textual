@@ -490,6 +490,8 @@ app.inlineMediaEnabledForView = function(callbackFunction)
 
 app.sidebarInversionIsEnabled = function(callbackFunction)
 {
+	console.warn("app.sidebarInversionIsEnabled() is deprecated. Use app.appearance() instead.");
+
 	var promiseIndex = appInternal.makePromise(callbackFunction);
 
 	var dataValue = {"promiseIndex" : promiseIndex};
@@ -498,6 +500,19 @@ app.sidebarInversionIsEnabled = function(callbackFunction)
 		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(dataValue);
 	} else {
 		TextualScriptSink.sidebarInversionIsEnabled(dataValue);
+	}
+};
+
+app.appearance = function(callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
+	if (app.isWebKit2()) {
+		window.webkit.messageHandlers.appearance.postMessage(dataValue);
+	} else {
+		TextualScriptSink.appearance(dataValue);
 	}
 };
 

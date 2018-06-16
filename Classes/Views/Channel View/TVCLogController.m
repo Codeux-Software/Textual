@@ -1551,8 +1551,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
 
-#warning TODO: Expand WebView to understand changes to appearance
-	templateTokens[@"sidebarInversionIsEnabled"] = @(self.attachedWindow.usingDarkAppearance);
+	TVCMainWindowAppearance *appearance = self.attachedWindow.userInterfaceObjects;
+
+	templateTokens[@"appearanceDescription"] = appearance.shortAppearanceDescription;
+	templateTokens[@"sidebarInversionIsEnabled"] = @(appearance.isDarkAppearance);
 
 	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.associatedClient.config.primaryEncoding];
 

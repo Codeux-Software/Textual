@@ -100,10 +100,10 @@ Textual.viewBodyDidLoad						= function() {};
 /*						Textual Specific Preferences					   */
 /* *********************************************************************** */
 
-/*	No key is supplied to preferencesDidChange() because it is preferred that the style maintain
-	a cached state of any values that they wish to monitor and update accordingly. */
-/*	A boolean entry with key name "Post Textual.preferencesDidChange() Notifications" must be 
-	added to styleSettings.plist in order to enable the use of this callback. */
+/*	No key is supplied to preferencesDidChange() because it is preferred that the style
+    maintain a cached state of any values that they wish to monitor and update accordingly. */
+/*	A boolean entry with key name "Post Textual.preferencesDidChange() Notifications" must
+    be added to styleSettings.plist in order to enable the use of this callback. */
 /*	This callback is rate-limit at one call per-second, per-view. */
 Textual.preferencesDidChange						= function() {};
 
@@ -156,13 +156,9 @@ Textual.handleEvent                            = function(eventToken) {};
 		)
 */
 
-/* Checks whether inline media are enabled for this particular view. Inline media can be enabled and 
-   on a per-view basis so querying preferences alone for the value will only give the global value. */
+/* Checks whether inline media are enabled for this particular view. Inline media can be enabled on
+   a per-view basis so querying preferences alone for the value will only give the global value. */
 // app.inlineMediaEnabledForView(callbackFunction)
-
-/* Returns true if the sidebar colors are inverted (dark mode). The preferencesDidChange() callback 
-   can be used to monitor changes to the value of this function. */
-// app.sidebarInversionIsEnabled(callbackFunction)
 
 // app.serverIsConnected(callbackFunction)		- true if associated server is connected.
 // app.channelIsJoined(callbackFunction)		— true if associated channel is joined.
@@ -184,6 +180,19 @@ Textual.handleEvent                            = function(eventToken) {};
 
 // app.localUserNickname(callbackFunction)		— Nickname of the local user.
 // app.localUserHostmask(callbackFunction)		— Hostmask of the local user obtained during join.
+
+/* *********************************************************************** */
+/*						         Appearance								   */
+/* *********************************************************************** */
+
+/*  app.appearance() can be used to determine the current appearance of the main window.
+    The return value is a string. For example: "light" or "dark" */
+/*  Textual.appearanceDidChange() can be used to observe changes to the appearance. */
+// app.appearance(callbackFunction);
+
+/*	A boolean entry with key name "Post Textual.appearanceDidChange() Notifications" must be
+ added to styleSettings.plist in order to enable the use of this callback. */
+Textual.appearanceDidChange					= function(changedTo) {};
 
 /* *********************************************************************** */
 /*						Print Debug Messages							   */
