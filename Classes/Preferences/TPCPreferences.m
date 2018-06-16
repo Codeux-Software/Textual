@@ -1205,6 +1205,31 @@ static NSArray<NSString *> *_matchKeywords = nil;
 }
 #endif
 
++ (void)_migrateAppearanceToVersion7011
+{
+
+#define _defaultsKey @"TPCPreferences -> Migration -> Appearance (7011)"
+
+	BOOL appearanceMigrated = [RZUserDefaults() boolForKey:_defaultsKey];
+
+	if (appearanceMigrated) {
+		return;
+	}
+
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
+	BOOL invertSidebarColors = [self invertSidebarColors];
+TEXTUAL_IGNORE_DEPRECATION_END
+
+	if (invertSidebarColors) {
+		[self setMainWindowAppearance:TXMainWindowDarkAppearanceType];
+	}
+
+	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+
+#undef _defaultsKey
+
+}
+
 + (void)_migratePreferencesToVersion602
 {
 	/* This method removes keys that are obsolete. Obsolete keys include those
@@ -1365,6 +1390,8 @@ static NSArray<NSString *> *_matchKeywords = nil;
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	[self _migrateSparkleConfigurationToVersion601];
 #endif
+
+	[self _migrateAppearanceToVersion7011];
 
 	[TPCPathInfo startUsingTranscriptFolderURL];
 
