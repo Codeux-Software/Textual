@@ -260,10 +260,12 @@ ClassWithDesignatedInitializerInitMethod
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
+	IRCChannel *channel = self.associatedChannel;
+
 	if (
 		/* 1 */ [TPCPreferences reloadScrollbackOnLaunch] == NO ||
-		/* 2 */  self.associatedChannel.isUtility ||
-		/* 3 */ (self.associatedChannel.isPrivateMessage &&
+		/* 2 */  channel.isUtility ||
+		/* 3 */ (channel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO) ||
 		/* 4 */ self.encrypted)
 	{
@@ -306,12 +308,16 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)inlineMediaEnabledForView
 {
-	if (self.associatedChannel == nil) {
+	IRCChannel *channel = self.associatedChannel;
+
+	if (channel == nil) {
 		return NO;
 	}
 
-	return (([TPCPreferences showInlineMedia]		&& self.associatedChannel.config.inlineMediaDisabled == NO) ||
-			([TPCPreferences showInlineMedia] == NO	&& self.associatedChannel.config.inlineMediaEnabled));
+	IRCChannelConfig *config = channel.config;
+
+	return (([TPCPreferences showInlineMedia]		&& config.inlineMediaDisabled == NO) ||
+			([TPCPreferences showInlineMedia] == NO	&& config.inlineMediaEnabled));
 }
 
 - (BOOL)viewIsSelected
@@ -321,8 +327,10 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)viewIsVisible
 {
-	if (self.associatedChannel) {
-		return [self.attachedWindow isItemVisible:self.associatedChannel];
+	IRCChannel *channel = self.associatedChannel;
+
+	if (channel) {
+		return [self.attachedWindow isItemVisible:channel];
 	} else {
 		return [self.attachedWindow isItemVisible:self.associatedClient];
 	}
@@ -551,13 +559,15 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL firstTimeLoadingHistory = (self.historyLoadedForFirstTime == NO);
 
+	IRCChannel *channel = self.associatedChannel;
+
 	if (
 		/* 1 */ self.encrypted ||
 		/* 2 */ (firstTimeLoadingHistory &&
 				 [TPCPreferences reloadScrollbackOnLaunch] == NO) ||
-		/* 3 */  self.associatedChannel.isUtility ||
+		/* 3 */  channel.isUtility ||
 		/* 4 */ (firstTimeLoadingHistory &&
-				 self.associatedChannel.isPrivateMessage &&
+				 channel.isPrivateMessage &&
 				 [TPCPreferences rememberServerListQueryStates] == NO))
 	{
 		self.historyLoadedForFirstTime = YES;
@@ -1548,14 +1558,16 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateTokens[@"usesCustomScrollers"] = @([self usesCustomScrollers]);
 
-	if (self.associatedChannel) {
-		templateTokens[@"isChannelView"] = @(self.associatedChannel.isChannel);
-		templateTokens[@"isPrivateMessageView"] = @(self.associatedChannel.isPrivateMessage);
-		templateTokens[@"isUtilityView"] = @(self.associatedChannel.isUtility);
+	IRCChannel *channel = self.associatedChannel;
 
-		templateTokens[@"channelName"] = self.associatedChannel.name;
+	if (channel) {
+		templateTokens[@"isChannelView"] = @(channel.isChannel);
+		templateTokens[@"isPrivateMessageView"] = @(channel.isPrivateMessage);
+		templateTokens[@"isUtilityView"] = @(channel.isUtility);
 
-		templateTokens[@"viewTypeToken"] = self.associatedChannel.channelTypeString;
+		templateTokens[@"channelName"] = channel.name;
+
+		templateTokens[@"viewTypeToken"] = channel.channelTypeString;
 	} else {
 		templateTokens[@"viewTypeToken"] = @"server";
 	}
@@ -1630,10 +1642,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.viewLoadedTimestamp = [NSDate timeIntervalSince1970];
 
+	IRCChannel *channel = self.associatedChannel;
+
 	NSString *viewType = nil;
 
-	if (self.associatedChannel) {
-		viewType = self.associatedChannel.channelTypeString;
+	if (channel) {
+		viewType = channel.channelTypeString;
 	} else {
 		viewType = @"server";
 	}
@@ -1641,8 +1655,8 @@ ClassWithDesignatedInitializerInitMethod
 	[self _evaluateFunction:@"Textual.viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
 		 NSDictionaryNilValue(self.associatedClient.uniqueIdentifier),
-		 NSDictionaryNilValue(self.associatedChannel.uniqueIdentifier),
-		 NSDictionaryNilValue(self.associatedChannel.name)
+		 NSDictionaryNilValue(channel.uniqueIdentifier),
+		 NSDictionaryNilValue(channel.name)
 	]];
 
 	double textSizeMultiplier = self.attachedWindow.textSizeMultiplier;
