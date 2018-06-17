@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,20 +35,29 @@
  *
  *********************************************************************** */
 
-#import "TDCChannelSpotlightControllerPrivate.h"
+#import "TVCMainWindowAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TDCChannelSpotlightAppearance, TDCChannelSpotlightSearchResult;
+@interface TDCChannelSpotlightAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@property (readonly) CGFloat defaultWindowHeight;
 
-@interface TDCChannelSpotlightController ()
-- (TDCChannelSpotlightAppearance *)userInterfaceObjects;
+#pragma mark -
+#pragma mark Search Field
 
-@property (readonly, copy) NSString *searchString;
-@property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResults;
-@property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResultsFiltered;
-@property (readonly) NSUInteger searchResultsCount;
-@property (readonly) NSInteger selectedSearchResult; // -1 = none selected
+@property (readonly, copy, nullable) NSColor *searchFieldTextColor;
+@property (readonly, copy, nullable) NSColor *searchFieldCompletionTextColor;
+@property (readonly, copy, nullable) NSColor *searchFieldNoResultsTextColor;
+
+#pragma mark -
+#pragma mark Search Result
+
+@property (readonly, copy, nullable) NSColor *searchResultChannelNameTextColor;
+@property (readonly, copy, nullable) NSColor *searchResultChannelDescriptionTextColor;
+@property (readonly, copy, nullable) NSColor *searchResultKeyboardShortcutTextColor;
+@property (readonly) CGFloat searchResultKeyboardShortcutDeselectedTopOffset;
+@property (readonly) CGFloat searchResultKeyboardShortcutSelectedTopOffset;
+@property (readonly, copy, nullable) NSColor *searchResultSelectedTextColor;
 @end
 
 NS_ASSUME_NONNULL_END
