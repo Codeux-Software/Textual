@@ -123,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TDCChannelSpotlightController *controller = searchResult.controller;
 
-	NSString *searchString = controller.searchField.stringValue;
+	NSString *searchString = controller.searchString;
 
 	[resultString.string
 	 enumerateFirstOccurrenceOfCharactersInString:searchString
@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSUInteger searchResultIndex = [searchResults indexOfObjectIdenticalTo:searchResult];
 
-	if (searchResultIndex == controller.searchResultsTable.selectedRow) {
+	if (searchResultIndex == controller.selectedSearchResult) {
 		return @"↩︎";
 	}
 

@@ -50,6 +50,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define WindowDefaultHeight								221.0
+@interface TDCChannelSpotlightController ()
+@property (nonatomic, weak) TVCMainWindow *parentWindow;
+@property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, weak) IBOutlet NSTextField *noResultsLabel;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *noResultsLabelLeadingConstraint;
+@property (nonatomic, weak) IBOutlet NSView *searchResultsView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *searchResultsViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSTextField *searchField;
+@property (nonatomic, weak) IBOutlet NSTableView *searchResultsTable;
+@property (nonatomic, strong) IBOutlet NSArrayController *searchResultsController;
+@property (nonatomic, strong) id mouseEventMonitor;
+@end
 
 @implementation TDCChannelSpotlightController
 
@@ -456,6 +468,14 @@ ClassWithDesignatedInitializerInitMethod
 }
 
 #pragma mark -
+#pragma mark Search Field
+
+- (NSString *)searchString
+{
+	return self.searchField.stringValue;
+}
+
+#pragma mark -
 #pragma mark Search Results
 
 - (void)selectFirstSearchResultIfNecessary
@@ -480,6 +500,11 @@ ClassWithDesignatedInitializerInitMethod
 - (NSUInteger)searchResultsCount
 {
 	return ((NSArray *)self.searchResultsController.arrangedObjects).count;
+}
+
+- (NSInteger)selectedSearchResult
+{
+	return self.searchResultsTable.selectedRow;
 }
 
 - (void)recalculateDistanceForSearchResults

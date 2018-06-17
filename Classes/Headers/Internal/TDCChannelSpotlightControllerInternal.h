@@ -42,19 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 @class TDCChannelSpotlightSearchResult;
 
 @interface TDCChannelSpotlightController ()
-@property (nonatomic, weak) TVCMainWindow *parentWindow;
-@property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak) IBOutlet NSTextField *noResultsLabel;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *noResultsLabelLeadingConstraint;
-@property (nonatomic, weak) IBOutlet NSView *searchResultsView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *searchResultsViewHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSTextField *searchField;
-@property (nonatomic, weak) IBOutlet NSTableView *searchResultsTable;
-@property (nonatomic, strong) IBOutlet NSArrayController *searchResultsController;
+@property (readonly, copy) NSString *searchString;
 @property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResults;
 @property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResultsFiltered;
 @property (readonly) NSUInteger searchResultsCount;
-@property (nonatomic, strong) id mouseEventMonitor;
+@property (readonly) NSInteger selectedSearchResult; // -1 = none selected
 @end
 
 NS_ASSUME_NONNULL_END
