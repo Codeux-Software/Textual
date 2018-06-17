@@ -37,6 +37,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TVCServerList;
+
+@interface TVCServerListRowCell : NSTableRowView
+- (instancetype)initWithServerList:(TVCServerList *)serverList;
+@end
+
+@interface TVCServerListGroupRowCell : TVCServerListRowCell
+@end
+
+@interface TVCServerListChildRowCell : TVCServerListRowCell
+@end
+
 @interface TVCServerListCell : NSTableCellView
 - (void)populateMessageCountBadge;
 
@@ -47,15 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCServerListCellGroupItem : TVCServerListCell
-@end
-
-@interface TVCServerListRowCell : NSTableRowView
-@end
-
-@interface TVCServerListGroupRowCell : TVCServerListRowCell
-@end
-
-@interface TVCServerListChildRowCell : TVCServerListRowCell
 @end
 
 NS_ASSUME_NONNULL_END

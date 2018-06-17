@@ -37,11 +37,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListCell : NSTableCellView
-- (void)drawWithExpansionFrame;
-@end
+@class TVCMemberList;
 
 @interface TVCMemberListRowCell : NSTableRowView
+- (instancetype)initWithMemberList:(TVCMemberList *)memberList;
+@end
+
+@interface TVCMemberListCell : NSTableCellView
+- (void)drawWithExpansionFrame;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -2942,9 +2942,9 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 - (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
 	if (item == nil || [item isClient]) {
-		return [[TVCServerListGroupRowCell alloc] initWithFrame:NSZeroRect];
+		return [[TVCServerListGroupRowCell alloc] initWithServerList:(id)outlineView];
 	} else {
-		return [[TVCServerListChildRowCell alloc] initWithFrame:NSZeroRect];
+		return [[TVCServerListChildRowCell alloc] initWithServerList:(id)outlineView];
 	}
 }
 
