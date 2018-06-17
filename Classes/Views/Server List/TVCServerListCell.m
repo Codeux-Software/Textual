@@ -52,7 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCServerListCellDrawingContext;
 
 @interface TVCServerListRowCell ()
+@property (nonatomic, weak) TVCServerList *serverList;
 @property (nonatomic, weak) __kindof TVCServerListCell *childCell;
+@property (readonly) TVCServerListAppearance *userInterfaceObjects;
 @property (readonly) BOOL isGroupItem;
 @property (nonatomic, assign) BOOL disableQuirks;
 @end
@@ -67,8 +69,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isGroupItem;
 @property (readonly) TVCServerList *serverList;
 @property (readonly) __kindof TVCServerListRowCell *rowCell;
+@property (readonly) TVCServerListAppearance *userInterfaceObjects;
+@property (readonly) TVCServerListCellDrawingContext *drawingContext;
 @property (readonly) IRCTreeItem *cellItem;
-@property (readonly, copy) TVCServerListCellDrawingContext *drawingContext;
 @end
 
 @interface TVCServerListCellDrawingContext : NSObject
@@ -94,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)tx_updateConstraints
 {
-	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
 	if (appearance.isModernAppearance) {
 		[self updateConstraintsForYosemiteWithAppearance:appearance];
@@ -135,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self updateTextFieldInContext:drawingContext];
 
-	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
 	if (appearance.isModernAppearance) {
 		[self updateDrawingForYosemiteWithAppearance:appearance inContext:drawingContext];
@@ -546,7 +549,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateMessageCountBadge
 {
-	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
 	TVCServerListCellDrawingContext *drawingContext = self.drawingContext;
 
@@ -805,7 +808,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent isSelected:(BOOL)isSelected setNeedsDisplay:(BOOL)setNeedsDisplay
 {
-	TVCServerListAppearance *appearance = self.mainWindow.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
 	NSButtonCell *theButton = theButtonParent.cell;
 
@@ -847,32 +850,37 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self isKindOfClass:[TVCServerListCellGroupItem class]];
 }
 
-- (IRCTreeItem *)cellItem
-{
-	return self.objectValue;
-}
-
 - (__kindof TVCServerListRowCell *)rowCell
 {
 	return (id)self.superview;
 }
 
+- (IRCTreeItem *)cellItem
+{
+	return self.objectValue;
+}
+
 - (TVCServerList *)serverList
 {
-	return self.mainWindow.serverList;
+	return self.rowCell.serverList;
+}
+
+- (TVCServerListAppearance *)userInterfaceObjects
+{
+	return self.rowCell.userInterfaceObjects;
 }
 
 - (TVCServerListCellDrawingContext *)drawingContext
 {
-	TVCMainWindow *mainWindow = self.mainWindow;
+	TVCServerList *serverList = self.serverList;
 
-	TVCServerList *serverList = mainWindow.serverList;
-
-	TVCServerListAppearance *appearance = serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
 	IRCTreeItem *cellItem = self.cellItem;
 
 	NSInteger rowIndex = [serverList rowForItem:cellItem];
+
+	TVCMainWindow *mainWindow = self.mainWindow;
 
 	TVCServerListCellDrawingContext *drawingContext = [TVCServerListCellDrawingContext new];
 
@@ -901,6 +909,17 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Row Cell
 
 @implementation TVCServerListRowCell
+
+- (instancetype)initWithServerList:(TVCServerList *)serverList
+{
+	if ((self = [super initWithFrame:NSZeroRect])) {
+		self.serverList = serverList;
+
+		return self;
+	}
+
+	return nil;
+}
 
 - (void)viewWillMoveToWindow:(nullable NSWindow *)newWindow
 {
@@ -931,7 +950,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (self.isSelected)
 	{
-		if (self.mainWindow.usingDarkAppearance) {
+		TVCServerListAppearance *appearance = self.userInterfaceObjects;
+
+		if (appearance.isDarkAppearance) {
 			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
@@ -970,11 +991,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	TVCMainWindow *mainWindow = self.mainWindow;
+	BOOL isWindowActive = self.mainWindow.isActiveForDrawing;
 
-	BOOL isWindowActive = mainWindow.isActiveForDrawing;
-
-	TVCServerListAppearance *appearance = mainWindow.serverList.userInterfaceObjects;
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
 	if (appearance.isModernAppearance)
 	{
@@ -1063,7 +1082,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	if (self.mainWindow.usingDarkAppearance) {
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
+
+	if (appearance.isDarkAppearance) {
 		return [NSColor grayColor];
 	} else {
 		return [NSColor whiteColor];
@@ -1081,6 +1102,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return self->_childCell;
+}
+
+- (TVCServerListAppearance *)userInterfaceObjects
+{
+	return self.serverList.userInterfaceObjects;
 }
 
 - (BOOL)isGroupItem

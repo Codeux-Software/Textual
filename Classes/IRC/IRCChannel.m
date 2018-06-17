@@ -1253,7 +1253,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
-	TVCMemberListRowCell *rowView = [[TVCMemberListRowCell alloc] initWithFrame:NSZeroRect];
+	TVCMemberListRowCell *rowView = [[TVCMemberListRowCell alloc] initWithMemberList:(id)outlineView];
 
 	return rowView;
 }

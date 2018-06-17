@@ -35,7 +35,6 @@
  *
  *********************************************************************** */
 
-
 #import "NSStringHelper.h"
 #import "NSTableVIewHelperPrivate.h"
 #import "NSViewHelperPrivate.h"
@@ -54,7 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCMemberListCellDrawingContext;
 
 @interface TVCMemberListRowCell ()
+@property (nonatomic, weak) TVCMemberList *memberList;
 @property (nonatomic, weak) TVCMemberListCell *childCell;
+@property (readonly) TVCMemberListAppearance *userInterfaceObjects;
 @property (nonatomic, assign) BOOL disableQuirks;
 @end
 
@@ -66,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) TVCMemberListCellDrawingContext *drawingContext;
 @property (readonly) TVCMemberList *memberList;
 @property (readonly) TVCMemberListRowCell *rowCell;
+@property (readonly) TVCMemberListAppearance *userInterfaceObjects;
 @property (readonly) IRCChannelUser *cellItem;
 @property (readonly) NSInteger rowIndex;
 @end
@@ -90,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)tx_updateConstraints
 {
-	TVCMemberListAppearance *appearance = self.memberList.userInterfaceObjects;
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
 	if (appearance.isModernAppearance) {
 		[self updateConstraintsForYosemiteWithAppearance:appearance];
@@ -129,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self updateTextFieldInContext:drawingContext];
 
-	TVCMemberListAppearance *appearance = self.memberList.userInterfaceObjects;
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
 	if (appearance.isModernAppearance) {
 		[self updateDrawingForYosemiteWithAppearance:appearance inContext:drawingContext];
@@ -699,19 +701,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-	NSRect cellFrame = [memberList frameOfCellAtColumn:0 row:self.rowIndex];
+	NSInteger rowIndex = [memberList rowForItem:cellItem];
+
+	NSRect cellFrame = [memberList frameOfCellAtColumn:0 row:rowIndex];
 
 	/* Presenting the popover will steal focus. To workaround this,
 	 we record the active first responder then set it back. */
-	TVCMainWindow *mainWindow = self.mainWindow;
+	NSWindow *window = self.window;
 
-	NSResponder *activeFirstResponder = mainWindow.firstResponder;
+	NSResponder *activeFirstResponder = window.firstResponder;
 
 	[userInfoPopover showRelativeToRect:cellFrame
 								 ofView:memberList
 						  preferredEdge:NSMaxXEdge];
 
-	[mainWindow makeFirstResponder:activeFirstResponder];
+	[window makeFirstResponder:activeFirstResponder];
+}
+
+- (TVCMemberListRowCell *)rowCell
+{
+	return (id)self.superview;
 }
 
 - (IRCChannelUser *)cellItem
@@ -721,25 +730,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (TVCMemberList *)memberList
 {
-	return self.mainWindow.memberList;
+	return self.rowCell.memberList;
 }
 
-- (NSInteger)rowIndex
+- (TVCMemberListAppearance *)userInterfaceObjects
 {
-	return [self.memberList rowForItem:self.cellItem];
+	return self.rowCell.userInterfaceObjects;
 }
 
 - (TVCMemberListCellDrawingContext *)drawingContext
 {
-	TVCMainWindow *mainWindow = self.mainWindow;
+	TVCMemberList *memberList = self.memberList;
 
-	TVCMemberList *memberList = mainWindow.memberList;
+	NSInteger rowIndex = [memberList rowForItem:self.objectValue];
 
-	TVCMemberListAppearance *appearance = memberList.userInterfaceObjects;
-
-	NSInteger rowIndex = self.rowIndex;
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
 	TVCMemberListCellDrawingContext *drawingContext = [TVCMemberListCellDrawingContext new];
+
+	TVCMainWindow *mainWindow = self.mainWindow;
 
 	drawingContext.isInverted = appearance.isDarkAppearance;
 	drawingContext.isSelected = [memberList isRowSelected:rowIndex];
@@ -757,6 +766,19 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Row View Cell
 
 @implementation TVCMemberListRowCell
+
+- (instancetype)initWithMemberList:(TVCMemberList *)memberList
+{
+	NSParameterAssert(memberList != nil);
+
+	if ((self = [super initWithFrame:NSZeroRect])) {
+		self.memberList = memberList;
+
+		return self;
+	}
+
+	return nil;
+}
 
 - (void)viewWillMoveToWindow:(nullable NSWindow *)newWindow
 {
@@ -782,7 +804,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (self.isSelected)
 	{
-		if (self.mainWindow.usingDarkAppearance) {
+		TVCMemberListAppearance *appearance = self.userInterfaceObjects;
+
+		if (appearance.isDarkAppearance) {
 			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
@@ -805,11 +829,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	TVCMainWindow *mainWindow = self.mainWindow;
+	BOOL isWindowActive = self.mainWindow.isActiveForDrawing;
 
-	BOOL isWindowActive = mainWindow.isActiveForDrawing;
-
-	TVCMemberListAppearance *appearance = mainWindow.memberList.userInterfaceObjects;
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
 	if (appearance.isModernAppearance)
 	{
@@ -879,7 +901,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	if (self.mainWindow.usingDarkAppearance) {
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
+
+	if (appearance.isDarkAppearance) {
 		return [NSColor grayColor];
 	} else {
 		return [NSColor whiteColor];
@@ -897,6 +921,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return self->_childCell;
+}
+
+- (TVCMemberListAppearance *)userInterfaceObjects
+{
+	return self.memberList.userInterfaceObjects;
 }
 
 @end
