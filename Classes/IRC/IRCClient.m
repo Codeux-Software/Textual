@@ -9882,16 +9882,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				/* Find channel user */
 				IRCChannelUser *member = [userAdded userAssociatedWithChannel:channel];
 
-				/* If a user with this name already exists in the channel,
-				 then we do not continue. While this should never be possible,
-				 there have been weirder edge cases. */
-				if (member != nil) {
-					continue;
+				IRCChannelUserMutable *memberMutable = nil;
+
+				if (member == nil) {
+					memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
+				} else if ([self nicknameIsMyself:nicknameInt]) {
+					memberMutable = [member mutableCopy];
+				} else {
+					/* If a user with this name already exists in the channel,
+					 then we do not continue unless its us. We are added to the
+					 channel when the JOIN is received, but we still need modes. */
+
+					return;
 				}
 
 				/* Create channel user */
-				IRCChannelUserMutable *memberMutable = [[IRCChannelUserMutable alloc] initWithUser:userAdded];
-
 				memberMutable.modes = memberModes;
 
 				/* Add user to channel */
