@@ -35,13 +35,45 @@
  *
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "TDCChannelSpotlightSearchResultPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface TDCChannelSpotlightSearchResult ()
+@property (nonatomic, strong, readwrite) TDCChannelSpotlightController *controller;
+@property (nonatomic, strong, readwrite) IRCChannel *channel;
+@property (nonatomic, copy, readwrite) NSNumber *distance;
+@end
+
 @implementation TDCChannelSpotlightSearchResult
+
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithChannel:(IRCChannel *)channel inController:(TDCChannelSpotlightController *)controller
+{
+	NSParameterAssert(channel != nil);
+	NSParameterAssert(controller != nil);
+
+	if ((self = [super init])) {
+		self.controller = controller;
+
+		self.channel = channel;
+
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.distance = @(0.0);
+}
 
 - (NSComparisonResult)compare:(TDCChannelSpotlightSearchResult *)other
 {
@@ -58,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return NSOrderedSame;
 }
 
-- (void)calculateDistanceComparedTo:(NSString *)searchString
+- (void)recalculateDistanceWith:(NSString *)searchString
 {
 	NSParameterAssert(searchString != nil);
 

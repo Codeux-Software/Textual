@@ -489,7 +489,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSArray<TDCChannelSpotlightSearchResult *> *searchResults = self.searchResults;
 
 	for (TDCChannelSpotlightSearchResult *searchResult in searchResults) {
-		[searchResult calculateDistanceComparedTo:searchString];
+		[searchResult recalculateDistanceWith:searchString];
 	}
 
 	[self updateControlsState];
@@ -509,7 +509,7 @@ ClassWithDesignatedInitializerInitMethod
 		for (IRCChannel *channel in client.channelList) {
 			TDCChannelSpotlightSearchResult *searchResult = [self searchResultForChannel:channel];
 
-			[searchResult calculateDistanceComparedTo:searchString];
+			[searchResult recalculateDistanceWith:searchString];
 
 			[searchResults addObject:searchResult];
 		}
@@ -526,11 +526,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(channel != nil);
 
-	TDCChannelSpotlightSearchResult *searchResult = [TDCChannelSpotlightSearchResult new];
-
-	searchResult.channel = channel;
-
-	searchResult.controller = self;
+	TDCChannelSpotlightSearchResult *searchResult = [[TDCChannelSpotlightSearchResult alloc] initWithChannel:channel inController:self];
 
 	return searchResult;
 }
