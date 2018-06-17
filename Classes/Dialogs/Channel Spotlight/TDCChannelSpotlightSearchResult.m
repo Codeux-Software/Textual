@@ -43,8 +43,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelSpotlightSearchResult ()
-@property (nonatomic, strong, readwrite) TDCChannelSpotlightController *controller;
-@property (nonatomic, strong, readwrite) IRCChannel *channel;
+@property (nonatomic, weak, readwrite) IRCChannel *channel;
 @property (nonatomic, copy, readwrite) NSNumber *distance;
 @end
 
@@ -52,14 +51,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 ClassWithDesignatedInitializerInitMethod
 
-- (instancetype)initWithChannel:(IRCChannel *)channel inController:(TDCChannelSpotlightController *)controller
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)initWithChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
-	NSParameterAssert(controller != nil);
 
 	if ((self = [super init])) {
-		self.controller = controller;
-
 		self.channel = channel;
 
 		[self prepareInitialState];
@@ -69,6 +66,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	return nil;
 }
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)prepareInitialState
 {
