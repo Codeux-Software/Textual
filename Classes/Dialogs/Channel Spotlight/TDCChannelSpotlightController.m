@@ -553,7 +553,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSParameterAssert(channel != nil);
 
-	TDCChannelSpotlightSearchResult *searchResult = [[TDCChannelSpotlightSearchResult alloc] initWithChannel:channel inController:self];
+	TDCChannelSpotlightSearchResult *searchResult = [[TDCChannelSpotlightSearchResult alloc] initWithChannel:channel];
 
 	return searchResult;
 }
