@@ -1342,6 +1342,18 @@
 		4C699C641B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */; };
 		4C699C701B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */ = {isa = PBXBuildFile; fileRef = 4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */; };
 		4C699C711B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */ = {isa = PBXBuildFile; fileRef = 4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */; };
+		4C6AD0B320D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B220D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h */; };
+		4C6AD0B420D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B220D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h */; };
+		4C6AD0B520D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B220D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h */; };
+		4C6AD0B620D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B220D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h */; };
+		4C6AD0B820D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B720D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h */; };
+		4C6AD0B920D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B720D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h */; };
+		4C6AD0BA20D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B720D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h */; };
+		4C6AD0BB20D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6AD0B720D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h */; };
+		4C6AD0CC20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6AD0CB20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m */; };
+		4C6AD0CD20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6AD0CB20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m */; };
+		4C6AD0CE20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6AD0CB20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m */; };
+		4C6AD0CF20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6AD0CB20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m */; };
 		4C6B219A1D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6B21991D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h */; };
 		4C6B219B1D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6B21991D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h */; };
 		4C6B219C1D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6B21991D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h */; };
@@ -3022,6 +3034,9 @@
 		4C696A2220C5F73D00640AB1 /* TVCErrorMessagePopoverControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCErrorMessagePopoverControllerPrivate.h; path = Classes/Headers/TVCErrorMessagePopoverControllerPrivate.h; sourceTree = "<group>"; };
 		4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLicenseManager.m; path = Classes/Library/TLOLicenseManager.m; sourceTree = "<group>"; };
 		4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RemoteLicenseSystemPublicKey.pub; path = "Resources/License Manager/RemoteLicenseSystemPublicKey.pub"; sourceTree = SOURCE_ROOT; };
+		4C6AD0B220D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelSpotlightAppearancePrivate.h; path = Classes/Headers/Private/TDCChannelSpotlightAppearancePrivate.h; sourceTree = "<group>"; };
+		4C6AD0B720D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelSpotlightAppearanceInternal.h; path = Classes/Headers/Internal/TDCChannelSpotlightAppearanceInternal.h; sourceTree = "<group>"; };
+		4C6AD0CB20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCChannelSpotlightAppearance.m; path = "Classes/Dialogs/Channel Spotlight/TDCChannelSpotlightAppearance.m"; sourceTree = "<group>"; };
 		4C6B21991D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelSpotlightControllerInternal.h; path = Classes/Headers/Internal/TDCChannelSpotlightControllerInternal.h; sourceTree = "<group>"; };
 		4C6CCEFF1D29EF5700EADD8E /* TDCAddressBookSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCAddressBookSheetPrivate.h; path = Classes/Headers/Private/TDCAddressBookSheetPrivate.h; sourceTree = "<group>"; };
 		4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDCChannelPropertiesSheetPrivate.h; path = Classes/Headers/Private/TDCChannelPropertiesSheetPrivate.h; sourceTree = "<group>"; };
@@ -4086,9 +4101,10 @@
 		4C620E721D3E607A0037F35E /* Channel Spotlight */ = {
 			isa = PBXGroup;
 			children = (
+				4C6AD0CB20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m */,
 				4C620E731D3E607A0037F35E /* TDCChannelSpotlightController.m */,
-				4C620E7F1D3E60B50037F35E /* TDCChannelSpotlightSearchResult.m */,
 				4C620E7B1D3E60A00037F35E /* TDCChannelSpotlightControllerPanel.m */,
+				4C620E7F1D3E60B50037F35E /* TDCChannelSpotlightSearchResult.m */,
 				4C620E741D3E607A0037F35E /* TDCChannelSpotlightSearchResultsTable.m */,
 			);
 			name = "Channel Spotlight";
@@ -4139,6 +4155,7 @@
 				4C558DCC1D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h */,
 				4CCDC6B71EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h */,
 				4C6CCF001D29EF5700EADD8E /* TDCChannelPropertiesSheetPrivate.h */,
+				4C6AD0B220D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h */,
 				4C620E831D3E614E0037F35E /* TDCChannelSpotlightControllerPanelPrivate.h */,
 				4CFEE1481D3AEEF70052709F /* TDCChannelSpotlightControllerPrivate.h */,
 				4C620E871D3E618B0037F35E /* TDCChannelSpotlightSearchResultPrivate.h */,
@@ -4792,6 +4809,7 @@
 				4C52EF9B1D58BF930003AA1C /* IRCUserInternal.h */,
 				4CEFD5281D57EF9E0017AFAF /* TDCBuddyListDialogInternal.h */,
 				4CCDC6BB1EC5011C001DDE9A /* TDCChannelPropertiesSheetInternal.h */,
+				4C6AD0B720D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h */,
 				4C6B21991D3D6A6B006A1359 /* TDCChannelSpotlightControllerInternal.h */,
 				4CC8E10E1D36979D00C88311 /* TDCFileTransferDialogInternal.h */,
 				4C7B49161D131A7B008D7926 /* TVCLogLineInternal.h */,
@@ -5139,6 +5157,7 @@
 				4CD98D671F12A20100D9ADC4 /* IRCConnectionConfig.h in Headers */,
 				4C1A5C7B1E03FB340020C3DE /* TVCChannelSelectionViewController.h in Headers */,
 				4C52EFA01D58C24C0003AA1C /* IRCUser.h in Headers */,
+				4C6AD0B320D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */,
 				4C35F7A61D8D6F54004B7E15 /* IRCUserRelations.h in Headers */,
 				4CC3C4C620BFD78F00E6D1DD /* IRCClientRequestedCommandsPrivate.h in Headers */,
 				4C0FDE2F1D550F9E00966BEA /* TDCBuddyListDialogPrivate.h in Headers */,
@@ -5216,6 +5235,7 @@
 				4C7B03401D1210A100295E82 /* IRCClient.h in Headers */,
 				4C7B03411D1210A100295E82 /* IRCClientConfig.h in Headers */,
 				4C23C55420C9D16000335353 /* TVCServerListAppearancePrivate.h in Headers */,
+				4C6AD0B820D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */,
 				4C7B03421D1210A100295E82 /* IRCColorFormat.h in Headers */,
 				4CB2D1C120C13BA800E07C30 /* IRCNumerics.h in Headers */,
 				4C7B03431D1210A100295E82 /* IRCCommandIndex.h in Headers */,
@@ -5437,6 +5457,7 @@
 				4C47321520C7599800713C91 /* IRCMessagePrivate.h in Headers */,
 				4C47321620C7599800713C91 /* TDCChannelSpotlightControllerPanelPrivate.h in Headers */,
 				4C47321720C7599800713C91 /* THOPluginManagerPrivate.h in Headers */,
+				4C6AD0B620D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */,
 				4C47321820C7599800713C91 /* GCDAsyncSocket.h in Headers */,
 				4C47321920C7599800713C91 /* IRCUserPersistentStorePrivate.h in Headers */,
 				4C47321A20C7599800713C91 /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
@@ -5486,6 +5507,7 @@
 				4C47324620C7599800713C91 /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C47324720C7599800713C91 /* IRCChannelUser.h in Headers */,
 				4C47324820C7599800713C91 /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
+				4C6AD0BB20D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */,
 				4C47324920C7599800713C91 /* IRCWorld.h in Headers */,
 				4C47324A20C7599800713C91 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C47324B20C7599800713C91 /* TDCChannelModifyTopicSheetPrivate.h in Headers */,
@@ -5693,6 +5715,7 @@
 				4C620E851D3E614E0037F35E /* TDCChannelSpotlightControllerPanelPrivate.h in Headers */,
 				4C7B03A81D1210A800295E82 /* GCDAsyncSocket.h in Headers */,
 				4C116BE01D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
+				4C6AD0B420D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */,
 				4CCDC6B91EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
 				4CEA29BD1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4CB2FAA11D21A677004736D2 /* TLOInputHistoryPrivate.h in Headers */,
@@ -5742,6 +5765,7 @@
 				4C7B03CE1D1210A800295E82 /* IRCChannelUser.h in Headers */,
 				4CCDC69A1EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C038F541D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
+				4C6AD0B920D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */,
 				4C7B03CF1D1210A800295E82 /* IRCWorld.h in Headers */,
 				4CEA29CD1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C558DD01D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h in Headers */,
@@ -5949,6 +5973,7 @@
 				4CD9FF831D2C435C002E8A2E /* IRCMessagePrivate.h in Headers */,
 				4C620E861D3E614E0037F35E /* TDCChannelSpotlightControllerPanelPrivate.h in Headers */,
 				4C7B050F1D12168C00295E82 /* THOPluginManagerPrivate.h in Headers */,
+				4C6AD0B520D5C77A0031F3BB /* TDCChannelSpotlightAppearancePrivate.h in Headers */,
 				4C7B04291D1210B000295E82 /* GCDAsyncSocket.h in Headers */,
 				4C116BE11D5CC5D200787223 /* IRCUserPersistentStorePrivate.h in Headers */,
 				4CCDC6BA1EC4FF0A001DDE9A /* TDCChannelPropertiesNotificationConfigurationPrivate.h in Headers */,
@@ -5998,6 +6023,7 @@
 				4CCDC69B1EC4DA3A001DDE9A /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C7B044F1D1210B000295E82 /* IRCChannelUser.h in Headers */,
 				4C038F551D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
+				4C6AD0BA20D5C7DF0031F3BB /* TDCChannelSpotlightAppearanceInternal.h in Headers */,
 				4C7B04501D1210B000295E82 /* IRCWorld.h in Headers */,
 				4CEA29CE1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C558DD11D24055C00628B47 /* TDCChannelModifyTopicSheetPrivate.h in Headers */,
@@ -7296,6 +7322,7 @@
 				4CF40E171AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */,
 				4CF40DFF1AC1A4AC00A26BE0 /* TVCLogRenderer.m in Sources */,
 				4CB17ED51D125E0100FAEAD4 /* IRCHighlightMatchCondition.m in Sources */,
+				4C6AD0CD20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */,
 				4C0445A916F1603C00EBB665 /* IRCSendingMessage.m in Sources */,
 				4C0445AA16F1603C00EBB665 /* IRCTreeItem.m in Sources */,
 				4C3A3DE11D4187B100569BA8 /* IRCNetworkList.m in Sources */,
@@ -7487,6 +7514,7 @@
 				4CCDC6B31EC4FE97001DDE9A /* TDCChannelPropertiesNotificationConfiguration.m in Sources */,
 				4C65B3A520CE04F60047155D /* TVCMainWindowTextViewAppearance.m in Sources */,
 				4C0BA6891990798800857343 /* TLOFileLogger.m in Sources */,
+				4C6AD0CC20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */,
 				4C0BA68B1990798800857343 /* IRCWorldCloudExtension.m in Sources */,
 				4C1EAB281F89F6B800A4E647 /* TPCPreferences.m in Sources */,
 				4C2DBBFE1F13207B0096654E /* GCDAsyncSocketTrustPanel.m in Sources */,
@@ -7663,6 +7691,7 @@
 				4C8AF6B0158E99520026668C /* IRCTreeItem.m in Sources */,
 				4CF40E181AC1A4AC00A26BE0 /* TVCValidatedComboBox.m in Sources */,
 				4CF40E001AC1A4AC00A26BE0 /* TVCLogRenderer.m in Sources */,
+				4C6AD0CE20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */,
 				4CB17ED61D125E0100FAEAD4 /* IRCHighlightMatchCondition.m in Sources */,
 				4C8AF6B1158E99520026668C /* IRCChannelUser.m in Sources */,
 				4C8AF6B2158E99520026668C /* IRCWorld.m in Sources */,
@@ -7847,6 +7876,7 @@
 				4C47337020C7599800713C91 /* IRCTreeItem.m in Sources */,
 				4C47337120C7599800713C91 /* TVCValidatedComboBox.m in Sources */,
 				4C47337220C7599800713C91 /* TVCLogRenderer.m in Sources */,
+				4C6AD0CF20D5C88F0031F3BB /* TDCChannelSpotlightAppearance.m in Sources */,
 				4C47337320C7599800713C91 /* IRCHighlightMatchCondition.m in Sources */,
 				4C47337420C7599800713C91 /* IRCChannelUser.m in Sources */,
 				4C47337520C7599800713C91 /* IRCWorld.m in Sources */,

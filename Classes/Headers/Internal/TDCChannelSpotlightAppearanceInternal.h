@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,20 +35,14 @@
  *
  *********************************************************************** */
 
-#import "TDCChannelSpotlightControllerPrivate.h"
+#import "TDCChannelSpotlightAppearancePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TDCChannelSpotlightAppearance, TDCChannelSpotlightSearchResult;
+@class TVCMainWindowAppearance;
 
-@interface TDCChannelSpotlightController ()
-- (TDCChannelSpotlightAppearance *)userInterfaceObjects;
-
-@property (readonly, copy) NSString *searchString;
-@property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResults;
-@property (readonly) NSArray<TDCChannelSpotlightSearchResult *> *searchResultsFiltered;
-@property (readonly) NSUInteger searchResultsCount;
-@property (readonly) NSInteger selectedSearchResult; // -1 = none selected
+@interface TDCChannelSpotlightAppearance ()
+- (nullable instancetype)initWithParentAppearance:(TVCMainWindowAppearance *)appearance;
 @end
 
 NS_ASSUME_NONNULL_END

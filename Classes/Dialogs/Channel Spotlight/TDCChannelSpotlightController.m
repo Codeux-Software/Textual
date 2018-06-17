@@ -42,6 +42,7 @@
 #import "IRCWorld.h"
 #import "TPCPreferencesLocal.h"
 #import "TVCMainWindowPrivate.h"
+#import "TDCChannelSpotlightAppearanceInternal.h"
 #import "TDCChannelSpotlightSearchResultPrivate.h"
 #import "TDCChannelSpotlightSearchResultsTablePrivate.h"
 #import "TDCChannelSpotlightControllerPanelPrivate.h"
@@ -52,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define WindowDefaultHeight								221.0
 @interface TDCChannelSpotlightController ()
 @property (nonatomic, weak) TVCMainWindow *parentWindow;
+@property (nonatomic, strong, readwrite) TDCChannelSpotlightAppearance *userInterfaceObjects;
 @property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
 @property (nonatomic, weak) IBOutlet NSTextField *noResultsLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *noResultsLabelLeadingConstraint;
