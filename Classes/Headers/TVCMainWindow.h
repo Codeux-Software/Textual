@@ -128,7 +128,7 @@ TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 - (void)markAllAsReadInGroup:(nullable IRCTreeItem *)item;
 
 - (void)reloadTheme; // reloaded asynchronously
-- (void)reloadThemeAndUserInterface; // ^
+- (void)reloadThemeAndUserInterface TEXTUAL_DEPRECATED("Use -reloadTheme instead");
 
 - (void)clearContentsOfClient:(IRCClient *)client;
 - (void)clearContentsOfChannel:(IRCChannel *)channel;

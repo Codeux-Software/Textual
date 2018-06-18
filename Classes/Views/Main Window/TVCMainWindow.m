@@ -955,22 +955,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 }
 
-- (void)reloadTheme
-{
-	[self reloadThemeAndUserInterface:NO];
-}
-
 - (void)reloadThemeAndUserInterface
 {
-	[self reloadThemeAndUserInterface:YES];
+	[self reloadTheme];
 }
 
-- (void)reloadThemeAndUserInterface:(BOOL)reloadUserInterface
-{
-	[self _reloadThemeAndUserInterface_preflight:reloadUserInterface];
-}
-
-- (void)_reloadThemeAndUserInterface_preflight:(BOOL)reloadUserInterface
+- (void)reloadTheme
 {
 	if (self.reloadingTheme == NO) {
 		self.reloadingTheme = YES;
@@ -992,12 +982,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				return;
 			}
 
-			[self _reloadThemeAndUserInterface_performReload:reloadUserInterface];
+			[self _reloadTheme_performReload];
 		});
 	}, DISPATCH_QUEUE_PRIORITY_HIGH);
 }
 
-- (void)_reloadThemeAndUserInterface_performReload:(BOOL)reloadUserInterface
+- (void)_reloadTheme_performReload
 {
 	[themeController() reload];
 
@@ -1007,11 +997,6 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		for (IRCChannel *c in u.channelList) {
 			[c.viewController reloadTheme];
 		}
-	}
-
-	if (reloadUserInterface) {
-#warning TODO: Is this still required?
-		[self updateAppearance];
 	}
 
 	self.reloadingTheme = NO;

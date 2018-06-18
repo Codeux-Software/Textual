@@ -1499,7 +1499,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedTheme:(id)sender
 {
-	[TPCPreferences performReloadAction:(TPCPreferencesReloadStyleWithTableViewsAction | TPCPreferencesReloadTextDirectionAction)];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadStyleAction | TPCPreferencesReloadTextDirectionAction)];
 }
 
 - (void)onThemeWillReload:(NSNotification *)notification

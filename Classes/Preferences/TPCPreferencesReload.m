@@ -284,16 +284,6 @@ NS_ASSUME_NONNULL_BEGIN
 		[mainWindow() reloadTheme];
 
 		didReloadActiveStyle = YES;
-	} else if ((reloadAction & TPCPreferencesReloadStyleWithTableViewsAction) == TPCPreferencesReloadStyleWithTableViewsAction) {
-		if (didReloadUserInterface == NO) {
-			didReloadUserInterface = YES;
-
-			[mainWindow() reloadThemeAndUserInterface];
-		} else {
-			[mainWindow() reloadTheme];
-		}
-
-		didReloadActiveStyle = YES;
 	}
 
 	/* Server list */

@@ -58,7 +58,7 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
 	TPCPreferencesReloadServerListAction							= 1 << 15,
 	TPCPreferencesReloadServerListUnreadBadgesAction				= 1 << 16,
 	TPCPreferencesReloadStyleAction									= 1 << 17,
-	TPCPreferencesReloadStyleWithTableViewsAction					= 1 << 18,
+//	TPCPreferencesReloadStyleWithTableViewsAction					= 1 << 18,
 	TPCPreferencesReloadTextDirectionAction							= 1 << 19,
 	TPCPreferencesReloadTextFieldFontSizeAction						= 1 << 20,
 	TPCPreferencesReloadTextFieldSegmentedControllerOriginAction	= 1 << 21,
