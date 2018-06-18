@@ -46,6 +46,8 @@
 		</dict>
 		<key>Server Cell</key>
 		<dict>
+			<key>rowEmphasized</key>
+			<false/>
 			<key>rowHeight</key>
 			<integer>0</integer>
 			<key>selectionImage</key>
@@ -186,6 +188,8 @@
 		</dict>
 		<key>Channel Cell</key>
 		<dict>
+			<key>rowEmphasized</key>
+			<false/>
 			<key>rowHeight</key>
 			<integer>0</integer>
 			<key>selectionImage</key>

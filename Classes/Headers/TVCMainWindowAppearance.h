@@ -39,44 +39,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
-{
-	TVCMainWindowAppearanceMavericksAquaLightType,
-	TVCMainWindowAppearanceMavericksAquaDarkType,
-	TVCMainWindowAppearanceMavericksGraphiteLightType,
-	TVCMainWindowAppearanceMavericksGraphiteDarkType,
-	TVCMainWindowAppearanceYosemiteLightType,
-	TVCMainWindowAppearanceYosemiteDarkType,
-	TVCMainWindowAppearanceMojaveLightType,
-	TVCMainWindowAppearanceMojaveDarkType,
-};
+@class TVCServerListAppearance, TVCMemberListAppearance, TVCMainWindowTextViewAppearance;
 
-@class TVCServerListAppearance, TVCMemberListAppearance;
-@class TVCMainWindowAppearance, TVCMainWindowTextViewAppearance;
-
-/* TVCMainWindowAppearanceProperties is offered as a protocl so that
- childen appearances can return the same proeprties without whoever
- is accessing the child having to call up the chain.
- The child will do that for it so the call is shorter. */
-@protocol TVCMainWindowAppearanceProperties <NSObject>
-@property (readonly, weak) TVCMainWindowAppearance *parentAppearance;
-
-@property (readonly) TVCMainWindowAppearanceType appearanceType;
-
-@property (readonly) BOOL isDarkAppearance;
-@property (readonly) BOOL isHighResolutionAppearance;
-@property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
-
-/* nil on Mojave and later which acts as an indicator that it should be inherited. */
-@property (readonly, nullable) NSAppearance *appKitAppearance;
-@property (readonly) BOOL appKitAppearanceInherited;
-@end
-
-@interface TVCMainWindowAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
-@property (readonly, copy) NSString *appearanceName;
-
-@property (readonly, copy) NSString *shortAppearanceDescription; // e.g. "light", "dark"
-
+@interface TVCMainWindowAppearance : TVCApplicationAppearance
 @property (readonly) TVCServerListAppearance *serverList;
 @property (readonly) TVCMemberListAppearance *memberList;
 @property (readonly) TVCMainWindowTextViewAppearance *textView;
@@ -92,32 +57,6 @@ typedef NS_ENUM(NSUInteger, TVCMainWindowAppearanceType)
 
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
-@end
-
-@interface NSView (TVCMainWindowAppearance)
-/* Posted when the main window appearance changes */
-/* The default implementation does nothing nor is super required */
-- (void)mainWindowAppearanceChanged;
-
-/* Can return YES to change default implementation of
- -mainWindowAppearanceChanged to set needsDisplay to YES. */
-@property (readonly) BOOL needsDisplayWhenMainWindowAppearanceChanges;
-
-/* Returns YES by default. If NO, -mainWindowAppearanceChanged
- will not be sent beyond the view that returned NO. */
-@property (readonly) BOOL sendMainWindowAppearanceChangedToSubviews;
-
-/* Posted when the system appearance changes */
-/* The default implementation does nothing nor is super required */
-- (void)systemAppearanceChanged;
-
-/* Can return YES to change default implementation of
- -systemAppearanceChanged to set needsDisplay to YES. */
-@property (readonly) BOOL needsDisplayWhenSystemAppearanceChanges;
-
-/* Returns YES by default. If NO, -systemAppearanceChanged
- will not be sent beyond the view that returned NO. */
-@property (readonly) BOOL sendSystemAppearanceChangedToSubviews;
 @end
 
 NS_ASSUME_NONNULL_END

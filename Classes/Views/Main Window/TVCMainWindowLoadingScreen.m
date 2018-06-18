@@ -250,7 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Appearance
 
-- (void)mainWindowAppearanceChanged
+- (void)applicationAppearanceChanged
 {
 	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
 

@@ -153,6 +153,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[TPCPreferences initPreferences];
 
+	/* Call shared instance to warm it */
+	(void)[TXSharedApplication sharedAppearance];
+
 	/* We wait until -awakeFromNib to wake the window so that the menu
 	 controller created by the main nib has time to load. */
 	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
@@ -455,6 +458,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performApplicationTerminationStepOne
 {
 	self.applicationIsTerminating = YES;
+
+	[[TXSharedApplication sharedAppearance] prepareForApplicationTermination];
 
 	[self.mainWindow prepareForApplicationTermination];
 

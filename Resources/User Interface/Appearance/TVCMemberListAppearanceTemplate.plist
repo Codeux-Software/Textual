@@ -46,6 +46,8 @@
 		</dict>
 		<key>User Cell</key>
 		<dict>
+			<key>rowEmphasized</key>
+			<false/>
 			<key>rowHeight</key>
 			<integer>0</integer>
 			<key>selectionImage</key>

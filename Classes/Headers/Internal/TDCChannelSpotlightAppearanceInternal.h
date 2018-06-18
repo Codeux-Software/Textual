@@ -39,10 +39,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCMainWindowAppearance;
+@class TDCChannelSpotlightPanel;
 
 @interface TDCChannelSpotlightAppearance ()
-- (nullable instancetype)initWithParentAppearance:(TVCMainWindowAppearance *)appearance;
+- (nullable instancetype)initWithWindow:(TDCChannelSpotlightPanel *)window;
 @end
 
 NS_ASSUME_NONNULL_END

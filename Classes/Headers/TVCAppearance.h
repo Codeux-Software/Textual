@@ -35,6 +35,8 @@
  *
  *********************************************************************** */
 
+#import "TXAppearance.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCAppearance : NSObject
@@ -100,6 +102,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSImage *)imageForKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
 - (nullable NSImage *)imageInGroup:(NSDictionary<NSString *, id> *)group withKey:(NSString *)key forActiveWindow:(BOOL)forActiveWindow;
+@end
+
+/* TVCApplicationAppearance keeps a copy of TXAppearance proeprties.
+ The properties it keeps are those that were set when the object was created.
+ To update to the latest properties, create a new instance of the object. */
+@interface TVCApplicationAppearance : TVCAppearance <TXAppearanceProperties>
 @end
 
 NS_ASSUME_NONNULL_END

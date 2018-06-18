@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
+ *     Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,28 +35,50 @@
  *
  *********************************************************************** */
 
-#import "TVCAppearance.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCAppearance ()
-/* TVCListAppearance will take care of all the hard work such as
- inheritance and retina. You only need to specify "MavericksDark"
- for example, not "MavericksDarkRetina" */
-- (nullable instancetype)initWithAppearanceNamed:(NSString *)appearanceName
-										   atURL:(NSURL *)appearanceLocation
-								forRetinaDisplay:(BOOL)forRetinaDisplay NS_DESIGNATED_INITIALIZER;
+@interface NSView (TXAppearance)
+/* Posted when the application appearance changes */
+/* The default implementation does nothing nor is super required */
+- (void)applicationAppearanceChanged;
 
-/* When a subclass finishes applying all appearance values to properties,
- it can flush the top level group which will cause it to disappear from
- memory, thus reducing overall memory use. */
-- (void)flushAppearanceProperties;
+/* Can return YES to change default implementation of
+ -applicationAppearanceChanged to set needsDisplay to YES. */
+@property (readonly) BOOL needsDisplayWhenApplicationAppearanceChanges;
+
+/* Returns YES by default. If NO, -applicationAppearanceChanged
+ will not be sent beyond the view that returned NO. */
+@property (readonly) BOOL sendApplicationAppearanceChangedToSubviews;
+
+/* Performs -applicationAppearanceChanged on view and all subviews
+ if -sendApplicationAppearanceChangedToSubviews doesn't return NO. */
+- (void)notifyApplicationAppearanceChanged;
+
+/* Posted when the system appearance changes */
+/* The default implementation does nothing nor is super required */
+- (void)systemAppearanceChanged;
+
+/* Can return YES to change default implementation of
+ -systemAppearanceChanged to set needsDisplay to YES. */
+@property (readonly) BOOL needsDisplayWhenSystemAppearanceChanges;
+
+/* Returns YES by default. If NO, -systemAppearanceChanged
+ will not be sent beyond the view that returned NO. */
+@property (readonly) BOOL sendSystemAppearanceChangedToSubviews;
+
+/* Performs -systemAppearanceChanged on view and all subviews
+ if -sendSystemAppearanceChangedToSubviews doesn't return NO. */
+- (void)notifySystemAppearanceChanged;
 @end
 
-@interface TVCApplicationAppearance ()
-/* Appearance name is inherited from TXApplication */
-- (nullable instancetype)initWithAppearanceAtURL:(NSURL *)appearanceLocation
-								forRetinaDisplay:(BOOL)forRetinaDisplay NS_DESIGNATED_INITIALIZER;
+@interface NSWindow (TXApplication)
+/* Performs -applicationAppearanceChanged on window beginning
+ with the window frame which contains title and content view. */
+- (void)notifyApplicationAppearanceChanged;
+
+/* Performs -systemAppearanceChanged on window beginning
+ with the window frame which contains title and content view. */
+- (void)notifySystemAppearanceChanged;
 @end
 
 NS_ASSUME_NONNULL_END

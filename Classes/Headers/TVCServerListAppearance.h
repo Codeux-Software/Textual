@@ -39,7 +39,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCServerListAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@interface TVCServerListAppearance : TVCApplicationAppearance
 @property (readonly) CGFloat defaultWidth;
 @property (readonly) CGFloat minimumWidth;
 @property (readonly) CGFloat maximumWidth;
@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Server Cell
 
+@property (readonly) BOOL serverRowEmphasized;
 @property (readonly) CGFloat serverRowHeight;
 @property (readonly, copy, nullable) NSImage *serverSelectionImageActiveWindow;
 @property (readonly, copy, nullable) NSImage *serverSelectionImageInactiveWindow;
@@ -74,6 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Channel Cell
 
+@property (readonly) BOOL channelRowEmphasized;
 @property (readonly) CGFloat channelRowHeight;
 @property (readonly, copy, nullable) NSImage *channelSelectionImageActiveWindow;
 @property (readonly, copy, nullable) NSImage *channelSelectionImageInactiveWindow;

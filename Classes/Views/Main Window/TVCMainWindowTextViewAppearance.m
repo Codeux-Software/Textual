@@ -35,14 +35,14 @@
  *
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
+#import "TVCMainWindow.h"
 #import "TVCAppearancePrivate.h"
 #import "TVCMainWindowTextViewAppearancePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowTextViewAppearance ()
-@property (nonatomic, weak, readwrite) TVCMainWindowAppearance *parentAppearance;
-
 #pragma mark -
 #pragma mark Text View
 
@@ -68,7 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign, readwrite) TVCMainWindowTextViewFontSize textViewPreferredFontSize;
 
-
 #pragma mark -
 #pragma mark Background View
 
@@ -82,19 +81,15 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWitParentAppearance:(TVCMainWindowAppearance *)appearance
+- (nullable instancetype)initWithWindow:(TVCMainWindow *)mainWindow
 {
-	NSParameterAssert(appearance != nil);
-
-	NSString *appearanceName = appearance.appearanceName;
+	NSParameterAssert(mainWindow != nil);
 
 	NSURL *appearanceLocation = [self.class appearanceLocation];
 
-	BOOL forRetinaDisplay = appearance.isHighResolutionAppearance;
+	BOOL forRetinaDisplay = mainWindow.runningInHighResolutionMode;
 
-	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
-		self.parentAppearance = appearance;
-
+	if ((self = [super initWithAppearanceAtURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
 		[self prepareInitialState];
 
 		return self;
@@ -141,39 +136,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.backgroundViewContentBorderPadding = [self measurementInGroup:backgroundView withKey:@"contentBorderPadding"];
 
 	[self flushAppearanceProperties];
-}
-
-#pragma mark -
-#pragma mark Properties
-
-- (TVCMainWindowAppearanceType)appearanceType
-{
-	return self.parentAppearance.appearanceType;
-}
-
-- (BOOL)isDarkAppearance
-{
-	return self.parentAppearance.isDarkAppearance;
-}
-
-- (BOOL)isHighResolutionAppearance
-{
-	return self.parentAppearance.isHighResolutionAppearance;
-}
-
-- (BOOL)isModernAppearance
-{
-	return self.parentAppearance.isModernAppearance;
-}
-
-- (BOOL)appKitAppearanceInherited
-{
-	return self.parentAppearance.appKitAppearanceInherited;
-}
-
-- (nullable NSAppearance *)appKitAppearance
-{
-	return self.parentAppearance.appKitAppearance;
 }
 
 #pragma mark -

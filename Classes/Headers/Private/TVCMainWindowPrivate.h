@@ -98,8 +98,6 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {
 - (void)updateChannelViewBoxContentViewSelection;
 - (void)updateChannelViewArrangement;
 
-- (void)updateAppearance;
-
 - (void)redirectKeyDown:(NSEvent *)e;
 
 - (void)inputText:(id)string asCommand:(IRCRemoteCommand)command;

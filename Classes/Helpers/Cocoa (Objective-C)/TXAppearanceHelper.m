@@ -35,43 +35,90 @@
  *
  *********************************************************************** */
 
-#import "TXUserInterface.h"
+#import "TXAppearanceHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TXUserInterface
+#pragma mark -
+#pragma mark NSView Category
 
-+ (BOOL)systemWideDarkModeEnabled
+@implementation NSView (TXAppearance)
+
+- (BOOL)needsDisplayWhenApplicationAppearanceChanges
 {
-	if (TEXTUAL_RUNNING_ON_MOJAVE) {
-TEXTUAL_IGNORE_AVAILABILITY_BEGIN
-		return ([[NSApp effectiveAppearance] bestMatchFromAppearancesWithNames:@[NSAppearanceNameDarkAqua]] != nil);
-TEXTUAL_IGNORE_AVAILABILITY_END
-	}
-
-	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
-
-	return [objectValue isEqualToStringIgnoringCase:@"dark"];
+	return NO;
 }
 
-+ (NSAppearance *)appKitDarkAppearance
+- (BOOL)needsDisplayWhenSystemAppearanceChanges
 {
-	if (TEXTUAL_RUNNING_ON_MOJAVE) {
-TEXTUAL_IGNORE_AVAILABILITY_BEGIN
-		return [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];
-TEXTUAL_IGNORE_AVAILABILITY_END
-	} else {
-		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+	return NO;
+}
+
+- (BOOL)sendApplicationAppearanceChangedToSubviews
+{
+	return YES;
+}
+
+- (BOOL)sendSystemAppearanceChangedToSubviews
+{
+	return YES;
+}
+
+- (void)applicationAppearanceChanged
+{
+	if (self.needsDisplayWhenApplicationAppearanceChanges) {
+		self.needsDisplay = YES;
 	}
 }
 
-+ (NSAppearance *)appKitLightAppearance
+- (void)systemAppearanceChanged
 {
-	if (TEXTUAL_RUNNING_ON_MOJAVE) {
-		return [NSAppearance appearanceNamed:NSAppearanceNameAqua];
-	} else {
-		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	if (self.needsDisplayWhenSystemAppearanceChanges) {
+		self.needsDisplay = YES;
 	}
+}
+
+- (void)notifyApplicationAppearanceChanged
+{
+	[self applicationAppearanceChanged];
+
+	if (self.sendApplicationAppearanceChangedToSubviews == NO) {
+		return;
+	}
+
+	for (NSView *view in self.subviews) {
+		[view notifyApplicationAppearanceChanged];
+	}
+}
+
+- (void)notifySystemAppearanceChanged
+{
+	[self systemAppearanceChanged];
+
+	if (self.sendSystemAppearanceChangedToSubviews == NO) {
+		return;
+	}
+
+	for (NSView *view in self.subviews) {
+		[view notifySystemAppearanceChanged];
+	}
+}
+
+@end
+
+#pragma mark -
+#pragma mark NSWindow Category
+
+@implementation NSWindow (TXApplication)
+
+- (void)notifyApplicationAppearanceChanged
+{
+	[self.contentView.superview notifyApplicationAppearanceChanged];
+}
+
+- (void)notifySystemAppearanceChanged
+{
+	[self.contentView.superview notifySystemAppearanceChanged];
 }
 
 @end

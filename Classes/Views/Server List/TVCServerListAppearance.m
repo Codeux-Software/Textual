@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Server Cell
 
+@property (nonatomic, assign, readwrite) BOOL serverRowEmphasized;
 @property (nonatomic, assign, readwrite) CGFloat serverRowHeight;
 @property (nonatomic, copy, nullable, readwrite) NSImage *serverSelectionImageActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSImage *serverSelectionImageInactiveWindow;
@@ -87,6 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Channel Cell
 
+@property (nonatomic, assign, readwrite) BOOL channelRowEmphasized;
 @property (nonatomic, assign, readwrite) CGFloat channelRowHeight;
 @property (nonatomic, copy, nullable, readwrite) NSImage *channelSelectionImageActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSImage *channelSelectionImageInactiveWindow;
@@ -135,8 +137,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeTextCenterYOffset;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeTopOffset;
 @property (nonatomic, assign, readwrite) CGFloat unreadBadgeRightMargin;
-
-@property (nonatomic, weak, readwrite) TVCMainWindowAppearance *parentAppearance;
 @end
 
 @implementation TVCServerListAppearance
@@ -144,21 +144,19 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWithServerList:(TVCServerList *)serverList parentAppearance:(TVCMainWindowAppearance *)appearance
+- (nullable instancetype)initWithServerList:(TVCServerList *)serverList inWindow:(TVCMainWindow *)mainWindow
 {
 	NSParameterAssert(serverList != nil);
-	NSParameterAssert(appearance != nil);
-
-	NSString *appearanceName = appearance.appearanceName;
+	NSParameterAssert(mainWindow != nil);
 
 	NSURL *appearanceLocation = [self.class appearanceLocation];
 
-	BOOL forRetinaDisplay = appearance.isHighResolutionAppearance;
+	/* Don't access -mainWindow in serverList to get this value
+	 because it may not be on a window at the time this is called. */
+	BOOL forRetinaDisplay = mainWindow.runningInHighResolutionMode;
 
-	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
+	if ((self = [super initWithAppearanceAtURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
 		self.serverList = serverList;
-
-		self.parentAppearance = appearance;
 
 		[self prepareInitialState];
 
@@ -188,6 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *serverCell = properties[@"Server Cell"];
 
+	self.serverRowEmphasized = [serverCell boolForKey:@"rowEmphasized"];
 	self.serverRowHeight = [self measurementInGroup:serverCell withKey:@"rowHeight"];
 	self.serverSelectionImageActiveWindow = [self imageInGroup:serverCell withKey:@"selectionImage" forActiveWindow:YES];
 	self.serverSelectionImageInactiveWindow = [self imageInGroup:serverCell withKey:@"selectionImage" forActiveWindow:NO];
@@ -209,6 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *channelCell = properties[@"Channel Cell"];
 
+	self.channelRowEmphasized = [channelCell boolForKey:@"rowEmphasized"];
 	self.channelRowHeight = [self measurementInGroup:channelCell withKey:@"rowHeight"];
 	self.channelSelectionImageActiveWindow = [self imageInGroup:channelCell withKey:@"selectionImage" forActiveWindow:YES];
 	self.channelSelectionImageInactiveWindow = [self imageInGroup:channelCell withKey:@"selectionImage" forActiveWindow:NO];
@@ -261,39 +261,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Properties
-
-- (TVCMainWindowAppearanceType)appearanceType
-{
-	return self.parentAppearance.appearanceType;
-}
-
-- (BOOL)isDarkAppearance
-{
-	return self.parentAppearance.isDarkAppearance;
-}
-
-- (BOOL)isHighResolutionAppearance
-{
-	return self.parentAppearance.isHighResolutionAppearance;
-}
-
-- (BOOL)isModernAppearance
-{
-	return self.parentAppearance.isModernAppearance;
-}
-
-- (BOOL)appKitAppearanceInherited
-{
-	return self.parentAppearance.appKitAppearanceInherited;
-}
-
-- (nullable NSAppearance *)appKitAppearance
-{
-	return self.parentAppearance.appKitAppearance;
-}
-
-#pragma mark -
 #pragma mark Everything Else
 
 - (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
@@ -312,11 +279,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
-	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
+	TXAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TVCMainWindowAppearanceMavericksAquaDarkType:
-		case TVCMainWindowAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceMavericksAquaDarkType:
+		case TXAppearanceMavericksGraphiteDarkType:
 		{
 			if (up) {
 				if (selected) {
@@ -332,8 +299,8 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 			}
 		} // Mavericks
-		case TVCMainWindowAppearanceYosemiteDarkType:
-		case TVCMainWindowAppearanceMojaveDarkType:
+		case TXAppearanceYosemiteDarkType:
+		case TXAppearanceMojaveDarkType:
 		{
 			if (up) {
 				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureUp"];
@@ -358,11 +325,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(treatAsTemplate != NULL);
 
-	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
+	TXAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TVCMainWindowAppearanceMavericksAquaLightType:
-		case TVCMainWindowAppearanceMavericksGraphiteLightType:
+		case TXAppearanceMavericksAquaLightType:
+		case TXAppearanceMavericksGraphiteLightType:
 		{
 			if (isActive) {
 				return @"channelRoomStatusIconMavericksLightActive";
@@ -370,8 +337,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconMavericksLightInactive";
 			}
 		}
-		case TVCMainWindowAppearanceMavericksAquaDarkType:
-		case TVCMainWindowAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceMavericksAquaDarkType:
+		case TXAppearanceMavericksGraphiteDarkType:
 		{
 			if (isActive) {
 				return @"channelRoomStatusIconMavericksDarkActive";
@@ -379,8 +346,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconMavericksDarkInactive";
 			}
 		} // Mavericks
-		case TVCMainWindowAppearanceYosemiteLightType:
-		case TVCMainWindowAppearanceMojaveLightType:
+		case TXAppearanceYosemiteLightType:
+		case TXAppearanceMojaveLightType:
 		{
 			/* When the window is not in focus, when this item is selected, and when we are not
 			 using vibrant dark mode; the outline view does not turn our icon to a light variant
@@ -404,8 +371,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconYosemiteLightInactive";
 			}
 		} // Yosemite, Mojave
-		case TVCMainWindowAppearanceYosemiteDarkType:
-		case TVCMainWindowAppearanceMojaveDarkType:
+		case TXAppearanceYosemiteDarkType:
+		case TXAppearanceMojaveDarkType:
 		{
 			*treatAsTemplate = NO;
 
@@ -422,13 +389,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(treatAsTemplate != NULL);
 
-	TVCMainWindowAppearanceType appearanceType = self.appearanceType;
+	TXAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TVCMainWindowAppearanceMavericksAquaLightType:
-		case TVCMainWindowAppearanceMavericksAquaDarkType:
-		case TVCMainWindowAppearanceMavericksGraphiteLightType:
-		case TVCMainWindowAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceMavericksAquaLightType:
+		case TXAppearanceMavericksAquaDarkType:
+		case TXAppearanceMavericksGraphiteLightType:
+		case TXAppearanceMavericksGraphiteDarkType:
 		{
 			if (isSelected) {
 				return @"NSUser";
@@ -440,8 +407,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"MavericksDarkServerListViewSelectedPrivateMessageUserInactive";
 			}
 		} // Mavericks
-		case TVCMainWindowAppearanceYosemiteLightType:
-		case TVCMainWindowAppearanceMojaveLightType:
+		case TXAppearanceYosemiteLightType:
+		case TXAppearanceMojaveLightType:
 		{
 			*treatAsTemplate = YES;
 
@@ -451,8 +418,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"VibrantLightServerListViewPrivateMessageUserIconInactive";
 			}
 		} // Yosemite, Mojave
-		case TVCMainWindowAppearanceYosemiteDarkType:
-		case TVCMainWindowAppearanceMojaveDarkType:
+		case TXAppearanceYosemiteDarkType:
+		case TXAppearanceMojaveDarkType:
 		{
 			*treatAsTemplate = NO;
 

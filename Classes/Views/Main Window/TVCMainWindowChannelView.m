@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TXUserInterface.h"
+#import "TXAppearance.h"
 #import "NSViewHelperPrivate.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"
@@ -331,13 +331,13 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	}
 
 	if (themeSettings().underlyingWindowColorIsDark) {
-		self.appearance = [TXUserInterface appKitDarkAppearance];
+		self.appearance = [TXAppearancePropertyCollection appKitDarkAppearance];
 	} else {
-		self.appearance = [TXUserInterface appKitLightAppearance];
+		self.appearance = [TXAppearancePropertyCollection appKitLightAppearance];
 	}
 }
 
-- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
+- (BOOL)needsDisplayWhenApplicationAppearanceChanges
 {
 	return YES;
 }

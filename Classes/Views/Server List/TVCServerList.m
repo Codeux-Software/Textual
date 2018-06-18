@@ -284,9 +284,9 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 	NSVisualEffectView *visaulEffectView = self.visualEffectView;
 
-	NSAppearance *appKitAppearance = appearance.appKitAppearance;
+	if (appearance.appKitAppearanceInherited == NO) {
+		NSAppearance *appKitAppearance = appearance.appKitAppearance;
 
-	if (appKitAppearance) {
 		self.appearance = appKitAppearance;
 
 		visaulEffectView.appearance = appKitAppearance;
@@ -305,7 +305,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 #endif
 }
 
-- (BOOL)sendMainWindowAppearanceChangedToSubviews
+- (BOOL)sendApplicationAppearanceChangedToSubviews
 {
 	return NO;
 }
@@ -315,44 +315,34 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	return NO;
 }
 
-- (void)mainWindowAppearanceChanged
+- (void)applicationAppearanceChanged
 {
 	TVCServerListAppearance *appearance = self.mainWindow.userInterfaceObjects.serverList;
 
 	[self _updateAppearance:appearance];
+
+	[self invalidateBackgroundForSelection];
+
+	[self refreshAllDrawings:YES];
 }
 
 - (void)systemAppearanceChanged
 {
-	[self _updateAppearance:nil];
+//	[self invalidateBackgroundForSelection];
 }
 
-- (void)_updateAppearance:(nullable TVCServerListAppearance *)appearance
+- (void)_updateAppearance:(TVCServerListAppearance *)appearance
 {
-	BOOL updateEverything = (appearance != nil);
-
-	/* When changing from vibrant light to vibrant dark we must deselect all
-	 rows, change the appearance, and reselect them. If we don't do this, the
-	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
-	 forever leaving blue on selected rows no matter how hard we try to draw. */
-	self.mainWindow.ignoreOutlineViewSelectionChanges = YES;
-
-	self.allowsEmptySelection = YES;
-
-	NSIndexSet *selectedRows = self.selectedRowIndexes;
-
-	[self deselectAll:nil];
+	NSParameterAssert(appearance != nil);
 
 	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
 
-	if (updateEverything) {
-		/* We assign a strong reference to these instead of returning the original
-		 value every time so that there are no race conditions for when it changes. */
-		self.userInterfaceObjects = appearance;
+	/* We assign a strong reference to these instead of returning the original
+	 value every time so that there are no race conditions for when it changes. */
+	self.userInterfaceObjects = appearance;
 
-		if (onYosemite) {
-			[self updateVibrancyWithAppearance:appearance];
-		}
+	if (onYosemite) {
+		[self updateVibrancyWithAppearance:appearance];
 	}
 
 	if (onYosemite == NO) {
@@ -364,16 +354,6 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 	}
 
 	self.needsDisplay = YES;
-
-	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
-
-	self.allowsEmptySelection = NO;
-
-	self.mainWindow.ignoreOutlineViewSelectionChanges = NO;
-
-	if (updateEverything) {
-		[self refreshAllDrawings:YES];
-	}
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification

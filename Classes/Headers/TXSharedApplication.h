@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TXMasterController, TPCThemeController;
+@class TXAppearance, TXMasterController, TPCThemeController;
 
 #define masterController()			[self masterController]
 #define menuController()			[masterController() menuController]
@@ -57,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 TEXTUAL_EXTERN NSString * const TXErrorDomain;
 
 @interface TXSharedApplication : NSObject
++ (TXAppearance *)sharedAppearance;
 + (TPCThemeController *)sharedThemeController;
 @end
 

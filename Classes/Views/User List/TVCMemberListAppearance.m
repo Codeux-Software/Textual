@@ -65,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Member Cell
 
+@property (nonatomic, assign, readwrite) BOOL cellRowEmphasized;
 @property (nonatomic, assign, readwrite) CGFloat cellRowHeight;
 @property (nonatomic, copy, nullable, readwrite) NSImage *cellSelectionImageActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSImage *cellSelectionImageInactiveWindow;
@@ -103,8 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) CGFloat markBadgeHeight;
 @property (nonatomic, assign, readwrite) CGFloat markBadgeTopOffset;
 
-@property (nonatomic, weak, readwrite) TVCMainWindowAppearance *parentAppearance;
-
 @property (nonatomic, strong, nullable) NSCache *cachedUserMarkBadges;
 @end
 
@@ -113,21 +112,19 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWithMemberList:(TVCMemberList *)memberList parentAppearance:(TVCMainWindowAppearance *)appearance
+- (nullable instancetype)initWithMemberList:(TVCMemberList *)memberList inWindow:(TVCMainWindow *)mainWindow
 {
 	NSParameterAssert(memberList != nil);
-	NSParameterAssert(appearance != nil);
-
-	NSString *appearanceName = appearance.appearanceName;
+	NSParameterAssert(mainWindow != nil);
 
 	NSURL *appearanceLocation = [self.class appearanceLocation];
 
-	BOOL forRetinaDisplay = appearance.isHighResolutionAppearance;
+	/* Don't access -mainWindow in serverList to get this value
+	 because it may not be on a window at the time this is called. */
+	BOOL forRetinaDisplay = mainWindow.runningInHighResolutionMode;
 
-	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
+	if ((self = [super initWithAppearanceAtURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
 		self.memberList = memberList;
-
-		self.parentAppearance = appearance;
 
 		[self prepareInitialState];
 
@@ -157,6 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *memberCell = properties[@"Member Cell"];
 
+	self.cellRowEmphasized = [memberCell boolForKey:@"rowEmphasized"];
 	self.cellRowHeight = [self measurementInGroup:memberCell withKey:@"rowHeight"];
 	self.cellSelectionImageActiveWindow = [self imageInGroup:memberCell withKey:@"selectionImage" forActiveWindow:YES];
 	self.cellSelectionImageInactiveWindow = [self imageInGroup:memberCell withKey:@"selectionImage" forActiveWindow:NO];
@@ -195,39 +193,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.markBadgeTopOffset = [self measurementInGroup:markBadge withKey:@"topOffset"];
 
 	[self flushAppearanceProperties];
-}
-
-#pragma mark -
-#pragma mark Properties
-
-- (TVCMainWindowAppearanceType)appearanceType
-{
-	return self.parentAppearance.appearanceType;
-}
-
-- (BOOL)isDarkAppearance
-{
-	return self.parentAppearance.isDarkAppearance;
-}
-
-- (BOOL)isHighResolutionAppearance
-{
-	return self.parentAppearance.isHighResolutionAppearance;
-}
-
-- (BOOL)isModernAppearance
-{
-	return self.parentAppearance.isModernAppearance;
-}
-
-- (BOOL)appKitAppearanceInherited
-{
-	return self.parentAppearance.appKitAppearanceInherited;
-}
-
-- (nullable NSAppearance *)appKitAppearance
-{
-	return self.parentAppearance.appKitAppearance;
 }
 
 #pragma mark -

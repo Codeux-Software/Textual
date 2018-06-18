@@ -40,7 +40,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@interface TVCMemberListAppearance : TVCApplicationAppearance
 @property (readonly) CGFloat defaultWidth;
 @property (readonly) CGFloat minimumWidth;
 @property (readonly) CGFloat maximumWidth;
@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Member Cell
 
+@property (readonly) BOOL cellRowEmphasized;
 @property (readonly) CGFloat cellRowHeight;
 @property (readonly, copy, nullable) NSImage *cellSelectionImageActiveWindow;
 @property (readonly, copy, nullable) NSImage *cellSelectionImageInactiveWindow;

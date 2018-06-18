@@ -755,4 +755,76 @@ ClassWithDesignatedInitializerInitMethod
 
 @end
 
+#pragma mark -
+#pragma mark Application Appearance
+
+@interface TVCApplicationAppearance ()
+@property (nonatomic, strong) TXAppearancePropertyCollection *applicationProperties;
+@end
+
+@implementation TVCApplicationAppearance
+
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (nullable instancetype)initWithAppearanceNamed:(NSString *)appearanceName atURL:(NSURL *)appearanceLocation forRetinaDisplay:(BOOL)forRetinaDisplay
+{
+	NSAssert(NO, @"Use -initWithAppearanceAtURL:forRetinaDisplay: instead");
+
+	return nil;
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (nullable instancetype)initWithAppearanceAtURL:(NSURL *)appearanceLocation forRetinaDisplay:(BOOL)forRetinaDisplay
+{
+	NSParameterAssert(appearanceLocation != nil);
+
+	TXAppearancePropertyCollection *applicationProperties = [TXSharedApplication sharedAppearance].properties;
+
+	NSString *appearanceName = applicationProperties.appearanceName;
+
+	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
+		self.applicationProperties = applicationProperties;
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (NSString *)appearanceName
+{
+	return self.applicationProperties.appearanceName;
+}
+
+- (TXAppearanceType)appearanceType
+{
+	return self.applicationProperties.appearanceType;
+}
+
+- (NSString *)shortAppearanceDescription
+{
+	return self.applicationProperties.shortAppearanceDescription;
+}
+
+- (BOOL)isDarkAppearance
+{
+	return self.applicationProperties.isDarkAppearance;
+}
+
+- (BOOL)isModernAppearance
+{
+	return self.applicationProperties.isModernAppearance;
+}
+
+- (NSAppearance *)appKitAppearance
+{
+	return self.applicationProperties.appKitAppearance;
+}
+
+- (BOOL)appKitAppearanceInherited
+{
+	return self.applicationProperties.appKitAppearanceInherited;
+}
+
+@end
+
 NS_ASSUME_NONNULL_END

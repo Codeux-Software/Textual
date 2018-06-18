@@ -35,11 +35,11 @@
  *
  *********************************************************************** */
 
-#import "TVCMainWindowAppearance.h"
+#import "TVCAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCChannelSpotlightAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@interface TDCChannelSpotlightAppearance : TVCApplicationAppearance
 @property (readonly) CGFloat defaultWindowHeight;
 
 #pragma mark -
@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Search Result
 
+@property (readonly) BOOL searchResultRowEmphasized;
 @property (readonly, copy, nullable) NSColor *searchResultChannelNameTextColor;
 @property (readonly, copy, nullable) NSColor *searchResultChannelDescriptionTextColor;
 @property (readonly, copy, nullable) NSColor *searchResultKeyboardShortcutTextColor;

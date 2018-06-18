@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #import "OELReachability.h"
+#import "TXAppearance.h"
 #import "TXMasterController.h"
 #import "TXMenuController.h"
 #import "TXWindowControllerPrivate.h"
@@ -71,6 +72,8 @@ NSString * const TXErrorDomain = @"TextualErrorDomain";
 			}
 
 @implementation TXSharedApplication
+
+_defineSharedInstance(sharedAppearance, TXAppearance, new)
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 _defineSharedInstance(sharedCloudSyncManager, TPCPreferencesCloudSync, new)
