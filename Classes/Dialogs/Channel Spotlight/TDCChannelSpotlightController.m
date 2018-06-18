@@ -41,6 +41,7 @@
 #import "IRCClient.h"
 #import "IRCWorld.h"
 #import "TPCPreferencesLocal.h"
+#import "TLOLicenseManagerPrivate.h"
 #import "TLOLanguagePreferences.h"
 #import "TVCMainWindowPrivate.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
@@ -111,17 +112,12 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZNotificationCenter() addObserver:self selector:@selector(applicationAppearanceChanged:) name:TXApplicationAppearanceChangedNotification object:nil];
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(licenseManagerTrialExpired:)
-								   name:TDCLicenseManagerTrialExpiredNotification
-								 object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(licenseManagerDeactivatedLicense:) name:TDCLicenseManagerDeactivatedLicenseNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(licenseManagerTrialExpired:) name:TDCLicenseManagerTrialExpiredNotification object:nil];
 #endif
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(onInAppPurchaseTrialExpired:)
-								   name:TDCInAppPurchaseDialogTrialExpiredNotification
-								 object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(onInAppPurchaseTrialExpired:) name:TDCInAppPurchaseDialogTrialExpiredNotification object:nil];
 #endif
 
 	[self populateArrayController];
@@ -516,6 +512,15 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)licenseManagerDeactivatedLicense:(NSNotification *)notification
+{
+	if (TLOLicenseManagerIsTrialExpired() == NO) {
+		return;
+	}
+
+	[self close];
+}
+
 - (void)licenseManagerTrialExpired:(NSNotification *)notification
 {
 	[self close];
