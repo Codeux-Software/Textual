@@ -224,6 +224,8 @@ enum {
 
 - (void)onTrialTimer
 {
+	[self stopTrialTimer];
+
 	[self show];
 
 	[self refreshTrialInformationView];
