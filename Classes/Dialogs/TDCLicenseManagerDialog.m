@@ -428,7 +428,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 			[weakSelf toggleTrialTimer];
 
-			[RZNotificationCenter() postNotificationName:TDCLicenseManagerActivatedLicenseNotification object:self];
+			[RZNotificationCenter() postNotificationName:TDCLicenseManagerActivatedLicenseNotification object:weakSelf];
 
 			/* We close the upgrade dialog if a key is activated because
 			 why would we keep it around under that condition? */
@@ -725,7 +725,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 		[weakSelf toggleTrialTimer];
 
-		[RZNotificationCenter() postNotificationName:TDCLicenseManagerDeactivatedLicenseNotification object:self];
+		[RZNotificationCenter() postNotificationName:TDCLicenseManagerDeactivatedLicenseNotification object:weakSelf];
 	};
 
 	licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
