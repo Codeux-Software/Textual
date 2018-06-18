@@ -100,7 +100,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 
 	[TPCPreferences setThemeName:remoteValue]; // Will reset the BOOL
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadStyleAction];
 
 	[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeThemeNameNotification object:nil];
 }

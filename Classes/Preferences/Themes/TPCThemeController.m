@@ -364,7 +364,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	if ([self resetPreferencesForActiveTheme]) {
 		LogToConsoleInfo("Reloading theme because it failed validation");
 
-		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
+		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleAction];
 
 		return YES;
 	} else {
@@ -798,7 +798,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		else if (activeThemeContentsWereModified)
 		{
 			if ([TPCPreferences automaticallyReloadCustomThemesWhenTheyChange]) {
-				[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
+				[TPCPreferences performReloadAction:TPCPreferencesReloadStyleAction];
 			}
 		}
 
@@ -1082,7 +1082,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 		[TPCPreferences setThemeName:newThemeName];
 
-		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleWithTableViewsAction];
+		[TPCPreferences performReloadAction:TPCPreferencesReloadStyleAction];
 	}
 
 	/* Close progress indicator */
