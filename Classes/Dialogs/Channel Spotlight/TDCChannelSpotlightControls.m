@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	self.styleMask = (self.styleMask | NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskFullSizeContentView);
+	self.styleMask = (self.styleMask | NSWindowStyleMaskFullSizeContentView);
 
 	self.titlebarAppearsTransparent = YES;
 
