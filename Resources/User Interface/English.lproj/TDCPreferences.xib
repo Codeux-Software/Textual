@@ -1626,7 +1626,7 @@
                                         </popUpButtonCell>
                                         <connections>
                                             <action selector="onChangedAppearance:" target="-2" id="EIC-vs-75R"/>
-                                            <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.MainWindowAppearance" id="Nbc-EC-0Ac"/>
+                                            <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.Appearance" id="nfE-87-3lM"/>
                                         </connections>
                                     </popUpButton>
                                 </subviews>
