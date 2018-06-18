@@ -889,13 +889,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
-	if (appearance.cellRowEmphasized) {
-		return YES;
-	}
-
 	NSWindow *window = self.window;
 
-	return (window == nil || window.isKeyWindow);
+	return (appearance.cellRowEmphasized &&
+			(window == nil || window.isKeyWindow));
 }
 
 - (nullable NSColor *)fontSmoothingBackgroundColor
