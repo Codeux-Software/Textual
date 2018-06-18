@@ -1070,19 +1070,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
+	BOOL emphasized = NO;
+
 	if (self.isGroupItem) {
-		if (appearance.serverRowEmphasized) {
-			return YES;
-		}
+		emphasized = appearance.serverRowEmphasized;
 	} else {
-		if (appearance.channelRowEmphasized) {
-			return YES;
-		}
+		emphasized = appearance.channelRowEmphasized;
 	}
 
 	NSWindow *window = self.window;
 
-	return (window == nil || window.isKeyWindow);
+	return (emphasized &&
+			(window == nil || window.isKeyWindow));
 }
 
 - (nullable NSColor *)fontSmoothingBackgroundColor

@@ -103,6 +103,8 @@
 		<string>Mojave</string>
 		<key>Server Cell</key>
 		<dict>
+			<key>rowEmphasized</key>
+			<false/>
 			<key>normalTextColor</key>
 			<dict>
 				<key>activeWindow</key>
@@ -157,6 +159,8 @@
 		</dict>
 		<key>Channel Cell</key>
 		<dict>
+			<key>rowEmphasized</key>
+			<false/>
 			<key>normalTextColor</key>
 			<dict>
 				<key>activeWindow</key>
@@ -952,8 +956,6 @@
 		<string>Yosemite</string>
 		<key>Server Cell</key>
 		<dict>
-			<key>rowEmphasized</key>
-			<false/>
 			<key>normalTextColor</key>
 			<dict>
 				<key>activeWindow</key>
@@ -1008,8 +1010,6 @@
 		</dict>
 		<key>Channel Cell</key>
 		<dict>
-			<key>rowEmphasized</key>
-			<false/>
 			<key>normalTextColor</key>
 			<dict>
 				<key>activeWindow</key>
