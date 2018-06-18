@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "TXAppearancePrivate.h"
 #import "NSObjectHelperPrivate.h"
 #import "TXMasterControllerPrivate.h"
 #import "TPCPreferencesLocalPrivate.h"
@@ -165,8 +166,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Main window appearance */
-	if ([keys containsObject:@"MainWindowAppearance"]) {
-		reloadAction |= TPCPreferencesReloadMainWindowAppearanceAction;
+	if ([keys containsObject:@"Appearance"]) {
+		reloadAction |= TPCPreferencesReloadAppearanceAction;
 	}
 
 	/* Member list sort order */
@@ -272,8 +273,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Window appearance */
-	if ((reloadAction & TPCPreferencesReloadMainWindowAppearanceAction) == TPCPreferencesReloadMainWindowAppearanceAction) {
-		[mainWindow() updateAppearance];
+	if ((reloadAction & TPCPreferencesReloadAppearanceAction) == TPCPreferencesReloadAppearanceAction) {
+		[[TXSharedApplication sharedAppearance] updateAppearance];
 
 		didReloadUserInterface = YES;
 	}
@@ -298,7 +299,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Server list */
 	if ((reloadAction & TPCPreferencesReloadServerListAction) == TPCPreferencesReloadServerListAction) {
 		if (didReloadUserInterface == NO) {
-			[mainWindowServerList() mainWindowAppearanceChanged];
+			[mainWindowServerList() applicationAppearanceChanged];
 		}
 	} else if ((reloadAction & TPCPreferencesReloadServerListUnreadBadgesAction) == TPCPreferencesReloadServerListUnreadBadgesAction) {
 		if (didReloadUserInterface == NO) {
@@ -315,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Member list appearance */
 	if ((reloadAction & TPCPreferencesReloadMemberListAction) == TPCPreferencesReloadMemberListAction) {
 		if (didReloadUserInterface == NO) {
-			[mainWindowMemberList() mainWindowAppearanceChanged];
+			[mainWindowMemberList() applicationAppearanceChanged];
 		}
 	}
 

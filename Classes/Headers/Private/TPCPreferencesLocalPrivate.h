@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
 
-+ (void)setMainWindowAppearance:(TXMainWindowAppearanceType)mainWindowAppearance;
++ (void)setAppearance:(TXPreferredAppearanceType)appearance;
 
 + (void)setThemeName:(NSString *)value;
 + (void)setThemeNameWithExistenceCheck:(NSString *)value;

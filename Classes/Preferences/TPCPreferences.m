@@ -525,14 +525,14 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark Theme
 
-+ (void)setMainWindowAppearance:(TXMainWindowAppearanceType)mainWindowAppearance
++ (void)setAppearance:(TXPreferredAppearanceType)appearance
 {
-	[RZUserDefaults() setUnsignedInteger:mainWindowAppearance forKey:@"MainWindowAppearance"];
+	[RZUserDefaults() setUnsignedInteger:appearance forKey:@"Appearance"];
 }
 
-+ (TXMainWindowAppearanceType)mainWindowAppearance
++ (TXPreferredAppearanceType)appearance
 {
-	return (TXMainWindowAppearanceType)[RZUserDefaults() unsignedIntegerForKey:@"MainWindowAppearance"];
+	return (TXPreferredAppearanceType)[RZUserDefaults() unsignedIntegerForKey:@"Appearance"];
 }
 
 + (BOOL)invertSidebarColors
@@ -1221,7 +1221,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 TEXTUAL_IGNORE_DEPRECATION_END
 
 	if (invertSidebarColors) {
-		[self setMainWindowAppearance:TXMainWindowDarkAppearanceType];
+		[self setAppearance:TXPreferredAppearanceDarkType];
 	}
 
 	[RZUserDefaults() setBool:YES forKey:_defaultsKey];

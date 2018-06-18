@@ -1625,7 +1625,7 @@
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <action selector="onChangedMainWindowAppearance:" target="-2" id="Miq-fL-p2F"/>
+                                            <action selector="onChangedAppearance:" target="-2" id="EIC-vs-75R"/>
                                             <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.MainWindowAppearance" id="Nbc-EC-0Ac"/>
                                         </connections>
                                     </popUpButton>

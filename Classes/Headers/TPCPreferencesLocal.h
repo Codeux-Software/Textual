@@ -114,11 +114,11 @@ typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
 	TXChannelViewArrangedVertically 		= 1
 };
 
-typedef NS_ENUM(NSUInteger, TXMainWindowAppearanceType)
+typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
 {
-	TXMainWindowInheritAppearanceType 	= 0,
-	TXMainWindowLightAppearanceType 	= 1,
-	TXMainWindowDarkAppearanceType		= 2
+	TXPreferredAppearanceInheritedType 	= 0,
+	TXPreferredAppearanceLightType 	= 1,
+	TXPreferredAppearanceDarkType		= 2
 };
 
 @interface TPCPreferences (TPCPreferencesLocal)
@@ -199,8 +199,8 @@ typedef NS_ENUM(NSUInteger, TXMainWindowAppearanceType)
 
 + (NSUInteger)trackUserAwayStatusMaximumChannelSize;
 
-+ (BOOL)invertSidebarColors TEXTUAL_DEPRECATED("Use -mainWindowAppearance instead");
-+ (TXMainWindowAppearanceType)mainWindowAppearance;
++ (BOOL)invertSidebarColors TEXTUAL_DEPRECATED("Use -appearance instead");
++ (TXPreferredAppearanceType)appearance;
 
 + (BOOL)disableSidebarTranslucency;
 + (BOOL)hideMainWindowSegmentedController;
