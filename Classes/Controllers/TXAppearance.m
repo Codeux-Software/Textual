@@ -321,7 +321,7 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 
 	/* Notify observers */
 	if (systemChanged == NO) {
-		[self notifyTextualAppearanceChanged];
+		[self notifyApplicationAppearanceChanged];
 	} else {
 		[self notifySystemAppearanceChanged];
 	}
@@ -347,7 +347,7 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 	self.properties = properties;
 }
 
-- (void)notifyTextualAppearanceChanged
+- (void)notifyApplicationAppearanceChanged
 {
 	[RZNotificationCenter() postNotificationName:TXApplicationAppearanceChangedNotification object:self];
 }
