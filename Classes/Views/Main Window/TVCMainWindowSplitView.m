@@ -63,7 +63,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 @implementation TVCMainWindowSplitView
 
-- (void)mainWindowAppearanceChanged
+- (void)applicationAppearanceChanged
 {
 	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
 

@@ -92,8 +92,6 @@ NSString * const TVCMainWindowRedrawSubviewsNotification = @"TVCMainWindowRedraw
 NSString * const TVCMainWindowWillReloadThemeNotification = @"TVCMainWindowWillReloadThemeNotification";
 NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidReloadThemeNotification";
 
-const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
-
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
@@ -259,30 +257,15 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 								 object:nil];
 #endif
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(applicationAppearanceChanged:)
+								   name:TXApplicationAppearanceChangedNotification
+								 object:nil];
 
-	[RZWorkspaceNotificationCenter() addObserver:self
-										selector:@selector(accessibilityDisplayOptionsDidChange:)
-											name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification
-										  object:nil];
-
-	if (TEXTUAL_RUNNING_ON_MOJAVE == NO) {
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(systemColorsDidChange:)
-									   name:NSControlTintDidChangeNotification
-									 object:nil];
-	} else {
-		[NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:NULL];
-	}
-}
-
-- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
-{
-	if ([keyPath isEqualToString:@"effectiveAppearance"]) {
-		[self applicationAppearanceChanged];
-	}
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(systemAppearanceChanged:)
+								   name:TXSystemAppearanceChangedNotification
+								 object:nil];
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
@@ -305,24 +288,14 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 	[self toggleFullScreen:nil];
 }
 
-- (void)applicationAppearanceChanged
+- (void)applicationAppearanceChanged:(NSNotification *)notification
 {
-	/* Wait until next pass of the run loop to perform
-	 update because the effective appearance may not
-	 be propegated to all subviews when this is called. */
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self updateAppearanceBySystemChange];
-	});
+	[self updateAppearance];
 }
 
-- (void)systemColorsDidChange:(NSNotification *)aNote
+- (void)systemAppearanceChanged:(NSNotification *)notification
 {
-	[self updateAppearanceBySystemChange];
-}
-
-- (void)accessibilityDisplayOptionsDidChange:(NSNotification *)aNote
-{
-	[self updateAppearanceBySystemChange];
+	[self notifySystemAppearanceChanged];
 }
 
 - (BOOL)isUsingDarkAppearance
@@ -335,82 +308,17 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 	return self.userInterfaceObjects.isDarkAppearance;
 }
 
-- (TVCMainWindowAppearanceType)desiredAppearance
-{
-	TVCMainWindowAppearanceType desiredAppearance = [TVCMainWindowAppearance bestAppearanceForWindow:self];
-
-	TVCMainWindowAppearance *appearance = self.userInterfaceObjects;
-
-	if (appearance == nil) {
-		return desiredAppearance;
-	}
-
-	if (appearance.appearanceType == desiredAppearance &&
-		appearance.isHighResolutionAppearance == self.runningInHighResolutionMode)
-	{
-		return TVCMainWindowAppearanceNoChangeType;
-	}
-
-	return desiredAppearance;
-}
-
 - (void)updateAppearance
 {
-	[self updateAppearanceBySystemChange:NO];
-}
+	TVCMainWindowAppearance *appearance = [[TVCMainWindowAppearance alloc] initWithWindow:self];
 
-- (void)updateAppearanceBySystemChange
-{
-	[self updateAppearanceBySystemChange:YES];
-}
+	self.userInterfaceObjects = appearance;
 
-- (void)updateAppearanceBySystemChange:(BOOL)systemChanged
-{
-	TVCMainWindowAppearanceType desiredAppearance = [self desiredAppearance];
-
-	BOOL changeAppearance = (desiredAppearance != TVCMainWindowAppearanceNoChangeType);
-
-	if (changeAppearance == NO) {
-		/* Even if the desired appearance hasn't changed, we still
-		 signal views to perform selection update so that vibrant
-		 views can draw correctly when the system changes. */
-
-		if (systemChanged == NO) {
-			return;
-		}
-	} else {
-		TVCMainWindowAppearance *appearance = [[TVCMainWindowAppearance alloc] initWithAppearance:desiredAppearance inWindow:self];
-
-		self.userInterfaceObjects = appearance;
-
-		if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-			[self updateVibrancyWithAppearance:appearance];
-		}
-
-		systemChanged = NO;
+	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
+		[self updateVibrancyWithAppearance:appearance];
 	}
 
-	self.contentView.needsDisplay = YES;
-
-	if (systemChanged == NO) {
-		[self notifyMainWindowAppearanceChanged];
-	} else {
-		[self notifySystemAppearanceChanged];
-	}
-}
-
-- (void)notifyMainWindowAppearanceChanged
-{
-	/* Notify superview to pass message onto titlebar without
-	 having to add a special exception for that area of window. */
-	[self.contentView.superview notifyMainWindowAppearanceChanged];
-
-	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification object:self];
-}
-
-- (void)notifySystemAppearanceChanged
-{
-	[self.contentView.superview notifySystemAppearanceChanged];
+	[self notifyApplicationAppearanceChanged];
 }
 
 - (void)updateVibrancyWithAppearance:(TVCMainWindowAppearance *)appearance
@@ -421,7 +329,14 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 		return;
 	}
 
-	self.appearance = appearance.appKitAppearanceToInherit;
+	self.appearance = appearance.appKitAppearance;
+}
+
+- (void)notifyApplicationAppearanceChanged
+{
+	[super notifyApplicationAppearanceChanged];
+
+	[RZNotificationCenter() postNotificationName:TVCMainWindowAppearanceChangedNotification object:self];
 }
 
 - (void)updateAlphaValueToReflectPreferences
@@ -465,10 +380,6 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 - (void)prepareForApplicationTermination
 {
 	[RZNotificationCenter() removeObserver:self];
-
-	if (TEXTUAL_RUNNING_ON_MOJAVE) {
-		[NSApp removeObserver:self forKeyPath:@"effectiveAppearance"];
-	}
 
 	[self saveWindowState];
 
@@ -1099,6 +1010,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 	}
 
 	if (reloadUserInterface) {
+#warning TODO: Is this still required?
 		[self updateAppearance];
 	}
 
@@ -2930,7 +2842,9 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	TVCServerListAppearance *appearance = self.serverList.userInterfaceObjects;
+	TVCServerList *serverList = (id)outlineView;
+
+	TVCServerListAppearance *appearance = serverList.userInterfaceObjects;
 
 	if (item == nil || [item isClient]) {
 		return appearance.serverRowHeight;
@@ -3005,9 +2919,11 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 
 - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView
 {
+	TVCServerList *serverList = (id)outlineView;
+
 	/* Allow rows to be deselected during redrawing */
 	/* See logic in -updateAppearance in TVCServerList */
-	if (outlineView.allowsEmptySelection) {
+	if (serverList.invalidatingBackgroundForSelection) {
 		return YES;
 	}
 
@@ -3017,7 +2933,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 	}
 
 	/* If the server list does not have a mouse down event, allow change. */
-	if (self.serverList.leftMouseIsDownInView == NO) {
+	if (serverList.leftMouseIsDownInView == NO) {
 		return YES;
 	}
 
@@ -3062,8 +2978,14 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 #undef _maximumSelectedRows
 }
 
-- (void)outlineViewSelectionDidChange:(NSNotification *)note
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
+	TVCServerList *serverList = (id)((notification.object) ?: self.serverList);
+
+	if (serverList.invalidatingBackgroundForSelection) {
+		return;
+	}
+
 	if (self.ignoreNextOutlineViewSelectionChange) {
 		self.ignoreNextOutlineViewSelectionChange = NO;
 
@@ -3074,17 +2996,17 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 		return;
 	}
 
-	NSIndexSet *selectedRows = self.serverList.selectedRowIndexes;
+	NSIndexSet *selectedRows = serverList.selectedRowIndexes;
 
 	IRCTreeItem *selectedItem = nil;
 
 	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
 	if (keyboardKeys == NSCommandKeyMask) {
-		NSInteger rowBeneathMouse = self.serverList.rowBeneathMouse;
+		NSInteger rowBeneathMouse = serverList.rowBeneathMouse;
 
 		if (rowBeneathMouse >= 0 && [selectedRows containsIndex:rowBeneathMouse]) {
-			selectedItem = [self.serverList itemAtRow:rowBeneathMouse];
+			selectedItem = [serverList itemAtRow:rowBeneathMouse];
 		}
 	}
 
@@ -3201,6 +3123,8 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 		return NSDragOperationNone;
 	}
 
+	TVCServerList *serverList = (id)outlineView;
+
 	if (draggedItem.isClient)
 	{
 		NSArray *clientList = worldController().clientList;
@@ -3213,7 +3137,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 
 		worldController().clientList = clientListMutable;
 
-		[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex:index inParent:nil];
+		[serverList moveItemAtIndex:originalIndex inParent:nil toIndex:index inParent:nil];
 	}
 	else
 	{
@@ -3233,7 +3157,7 @@ const TVCMainWindowAppearanceType TVCMainWindowAppearanceNoChangeType = 1000;
 
 		client.channelList = channelListMutable;
 
-		[self.serverList moveItemAtIndex:originalIndex inParent:client toIndex:index inParent:client];
+		[serverList moveItemAtIndex:originalIndex inParent:client toIndex:index inParent:client];
 	}
 
 	[menuController() populateNavigationChannelList];

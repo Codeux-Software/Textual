@@ -10,6 +10,11 @@
 		<integer>120</integer>
 		<key>maximumWidth</key>
 		<integer>300</integer>
+		<key>Member Cell</key>
+		<dict>
+			<key>rowEmphasized</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>Mojave</key>
 	<dict>
@@ -72,6 +77,8 @@
 		<string>Mojave</string>
 		<key>Member Cell</key>
 		<dict>
+			<key>rowEmphasized</key>
+			<false/>
 			<key>normalTextColor</key>
 			<dict>
 				<key>activeWindow</key>

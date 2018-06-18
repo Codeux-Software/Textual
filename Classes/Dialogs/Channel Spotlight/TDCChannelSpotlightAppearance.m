@@ -37,7 +37,7 @@
 
 #import "NSObjectHelperPrivate.h"
 #import "TVCAppearancePrivate.h"
-#import "TVCMainWindowAppearance.h"
+#import "TDCChannelSpotlightControlsPrivate.h"
 #import "TDCChannelSpotlightAppearanceInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -55,14 +55,13 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Search Result
 
+@property (nonatomic, assign, readwrite) BOOL searchResultRowEmphasized;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultChannelNameTextColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultChannelDescriptionTextColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultKeyboardShortcutTextColor;
 @property (nonatomic, assign, readwrite) CGFloat searchResultKeyboardShortcutDeselectedTopOffset;
 @property (nonatomic, assign, readwrite) CGFloat searchResultKeyboardShortcutSelectedTopOffset;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultSelectedTextColor;
-
-@property (nonatomic, weak, readwrite) TVCMainWindowAppearance *parentAppearance;
 @end
 
 @implementation TDCChannelSpotlightAppearance
@@ -70,19 +69,15 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-- (nullable instancetype)initWithParentAppearance:(TVCMainWindowAppearance *)appearance
+- (nullable instancetype)initWithWindow:(TDCChannelSpotlightPanel *)window
 {
-	NSParameterAssert(appearance != nil);
-
-	NSString *appearanceName = appearance.appearanceName;
+	NSParameterAssert(window != nil);
 
 	NSURL *appearanceLocation = [self.class appearanceLocation];
 
-	BOOL forRetinaDisplay = appearance.isHighResolutionAppearance;
+	BOOL forRetinaDisplay = window.runningInHighResolutionMode;
 
-	if ((self = [super initWithAppearanceNamed:appearanceName atURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
-		self.parentAppearance = appearance;
-
+	if ((self = [super initWithAppearanceAtURL:appearanceLocation forRetinaDisplay:forRetinaDisplay])) {
 		[self prepareInitialState];
 
 		return self;
@@ -110,6 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *searchResult = properties[@"Search Result"];
 
+	self.searchResultRowEmphasized = [searchResult boolForKey:@"rowEmphasized"];
 	self.searchResultChannelNameTextColor = [self colorInGroup:searchResult withKey:@"channelNameTextColor"];
 	self.searchResultChannelDescriptionTextColor = [self colorInGroup:searchResult withKey:@"channelDescriptionTextColor"];
 	self.searchResultKeyboardShortcutTextColor = [self colorInGroup:searchResult withKey:@"keyboardShortcutTextColor"];
@@ -118,39 +114,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.searchResultSelectedTextColor = [self colorInGroup:searchResult withKey:@"selectedTextColor"];
 
 	[self flushAppearanceProperties];
-}
-
-#pragma mark -
-#pragma mark Properties
-
-- (TVCMainWindowAppearanceType)appearanceType
-{
-	return self.parentAppearance.appearanceType;
-}
-
-- (BOOL)isDarkAppearance
-{
-	return self.parentAppearance.isDarkAppearance;
-}
-
-- (BOOL)isHighResolutionAppearance
-{
-	return self.parentAppearance.isHighResolutionAppearance;
-}
-
-- (BOOL)isModernAppearance
-{
-	return self.parentAppearance.isModernAppearance;
-}
-
-- (BOOL)appKitAppearanceInherited
-{
-	return self.parentAppearance.appKitAppearanceInherited;
-}
-
-- (nullable NSAppearance *)appKitAppearance
-{
-	return self.parentAppearance.appKitAppearance;
 }
 
 @end

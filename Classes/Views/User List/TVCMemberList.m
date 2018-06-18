@@ -461,9 +461,9 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 	NSVisualEffectView *visaulEffectView = self.visualEffectView;
 
-	NSAppearance *appKitAppearance = appearance.appKitAppearance;
+	if (appearance.appKitAppearanceInherited == NO) {
+		NSAppearance *appKitAppearance = appearance.appKitAppearance;
 
-	if (appKitAppearance) {
 		self.appearance = appKitAppearance;
 
 		visaulEffectView.appearance = appKitAppearance;
@@ -482,7 +482,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 #endif
 }
 
-- (BOOL)sendMainWindowAppearanceChangedToSubviews
+- (BOOL)sendApplicationAppearanceChangedToSubviews
 {
 	return NO;
 }
@@ -492,38 +492,34 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	return NO;
 }
 
-- (void)mainWindowAppearanceChanged
+- (void)applicationAppearanceChanged
 {
 	TVCMemberListAppearance *appearance = self.mainWindow.userInterfaceObjects.memberList;
 
 	[self _updateAppearance:appearance];
+
+	[self invalidateBackgroundForSelection];
+
+	[self refreshAllDrawings:YES];
 }
 
 - (void)systemAppearanceChanged
 {
-	[self _updateAppearance:nil];
+//	[self invalidateBackgroundForSelection];
 }
 
-- (void)_updateAppearance:(nullable TVCMemberListAppearance *)appearance
+- (void)_updateAppearance:(TVCMemberListAppearance *)appearance
 {
-	BOOL updateEverything = (appearance != nil);
-
-	/* When changing from vibrant light to vibrant dark we must deselect all
-	 rows, change the appearance, and reselect them. If we don't do this, the
-	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
-	 forever leaving blue on selected rows no matter how hard we try to draw. */
-	NSIndexSet *selectedRows = self.selectedRowIndexes;
-
-	[self deselectAll:nil];
+	NSParameterAssert(appearance != nil);
 
 	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
 
-	if (updateEverything) {
-		self.userInterfaceObjects = appearance;
+	/* We assign a strong reference to these instead of returning the original
+	 value every time so that there are no race conditions for when it changes. */
+	self.userInterfaceObjects = appearance;
 
-		if (onYosemite) {
-			[self updateVibrancyWithAppearance:appearance];
-		}
+	if (onYosemite) {
+		[self updateVibrancyWithAppearance:appearance];
 	}
 
 	if (onYosemite == NO) {
@@ -535,12 +531,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 	}
 
 	self.needsDisplay = YES;
-
-	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
-
-	if (updateEverything) {
-		[self refreshAllDrawings:YES];
-	}
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification

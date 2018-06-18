@@ -140,11 +140,11 @@
 	#import "TVCTextViewWithIRCFormatter.h"
 
 	/* Master Controllers — Root */
+	#import "TXAppearance.h"
 	#import "TXGlobalModels.h"
 	#import "TXMasterController.h"
 	#import "TXMenuController.h"
 	#import "TXSharedApplication.h"
-	#import "TXUserInterface.h"
 #endif
 
 /* @end */

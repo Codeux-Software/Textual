@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ *     Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,11 +37,55 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TXUserInterface : NSObject
-+ (BOOL)systemWideDarkModeEnabled;
+typedef NS_ENUM(NSUInteger, TXAppearanceType)
+{
+	TXAppearanceMavericksAquaLightType,
+	TXAppearanceMavericksAquaDarkType,
+	TXAppearanceMavericksGraphiteLightType,
+	TXAppearanceMavericksGraphiteDarkType,
+	TXAppearanceYosemiteLightType,
+	TXAppearanceYosemiteDarkType,
+	TXAppearanceMojaveLightType,
+	TXAppearanceMojaveDarkType,
+};
 
-+ (NSAppearance *)appKitDarkAppearance;
-+ (NSAppearance *)appKitLightAppearance;
+/* None of these proeprties are observable.
+ See -[TXAppearance properties] for information about observing. */
+@protocol TXAppearanceProperties <NSObject>
+@property (readonly, copy) NSString *appearanceName;
+
+@property (readonly) TXAppearanceType appearanceType;
+
+@property (readonly, copy) NSString *shortAppearanceDescription; // e.g. "light", "dark"
+
+@property (readonly) BOOL isDarkAppearance;
+@property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
+
+/* Do not set -appKitAppearance on a view when -appKitAppearanceInherited is YES.
+ When it is YES, set it on the window itself. */
+@property (readonly) BOOL appKitAppearanceInherited;
+@property (readonly) NSAppearance *appKitAppearance;
 @end
 
+@interface TXAppearancePropertyCollection : NSObject <TXAppearanceProperties>
+@property (readonly, class) BOOL systemWideDarkModeEnabled;
+
+@property (readonly, class) NSAppearance *appKitDarkAppearance;
+@property (readonly, class) NSAppearance *appKitLightAppearance;
+@end
+
+/* Access through +[TXSharedApplication sharedAppearance] */
+@interface TXAppearance : NSObject
+/* TXAppearance replaces the property collection object whenever the
+ appearance changes so that there is no delay from when one proeprty
+ is set and another is set. Observe changes to the proeprties collection
+ object and not an idividual property. Latter will not work. */
+@property (readonly, strong) TXAppearancePropertyCollection *properties;
+@end
+
+TEXTUAL_EXTERN NSString * const TXApplicationAppearanceChangedNotification;
+TEXTUAL_EXTERN NSString * const TXSystemAppearanceChangedNotification;
+
 NS_ASSUME_NONNULL_END
+
+#import "TXAppearanceHelper.h"

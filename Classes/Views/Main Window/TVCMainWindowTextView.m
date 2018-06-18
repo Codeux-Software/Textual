@@ -116,10 +116,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(appearance != nil);
 
-	NSAppearance *appKitAppearance = appearance.appKitAppearance;
-
-	if (appKitAppearance) {
-		self.segmentedController.appearance = appKitAppearance;
+	if (appearance.appKitAppearanceInherited == NO) {
+		self.segmentedController.appearance = appearance.appKitAppearance;
 	}
 
 	self.backgroundView.needsDisplay = YES;
@@ -127,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.contentView.needsDisplay = YES;
 }
 
-- (void)mainWindowAppearanceChanged
+- (void)applicationAppearanceChanged
 {
 	TVCMainWindowTextViewAppearance *appearance = self.mainWindow.userInterfaceObjects.textView;
 

@@ -35,12 +35,12 @@
  *
  *********************************************************************** */
 
+#import "TVCAppearance.h"
 #import "TPCPreferencesLocal.h"
-#import "TVCMainWindowAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowTextViewAppearance : TVCAppearance <TVCMainWindowAppearanceProperties>
+@interface TVCMainWindowTextViewAppearance : TVCApplicationAppearance
 #pragma mark -
 #pragma mark Text View
 

@@ -937,6 +937,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.selected = selected;
 
+	if (selected == NO && self.invalidatingBackgroundForSelection) {
+		return;
+	}
+
 	[self modifySelectionHighlightStyle];
 
 	[self setNeedsDisplayOnChild];
@@ -1064,16 +1068,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isEmphasized
 {
-	if (self.disableQuirks) {
-		/* Default behavior is to return YES when the table
-		 is the first responder, but because the main window
-		 will force the first responder back to the main text
-		 field, we fudge the results a little bit. */
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
-		return self.window.isKeyWindow;
+	if (self.isGroupItem) {
+		if (appearance.serverRowEmphasized) {
+			return YES;
+		}
+	} else {
+		if (appearance.channelRowEmphasized) {
+			return YES;
+		}
 	}
 
-	return YES;
+	NSWindow *window = self.window;
+
+	return (window == nil || window.isKeyWindow);
 }
 
 - (nullable NSColor *)fontSmoothingBackgroundColor

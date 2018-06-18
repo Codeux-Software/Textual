@@ -42,21 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCMainWindow;
 
 @interface TVCMainWindowAppearance ()
-- (nullable instancetype)initWithAppearance:(TVCMainWindowAppearanceType)appearanceType inWindow:(TVCMainWindow *)mainWindow;
-
-+ (TVCMainWindowAppearanceType)bestAppearanceForWindow:(TVCMainWindow *)mainWindow;
-
-/* -appKitAppearance returns nil on Mojave so that children appearances do not apply
- an AppKit appearance and instead allow it to be inherited.
- -appKitAppearanceToInherit always has a value, regardless of operating system.
- It is used by the main window to set its appearance. */
-@property (readonly) NSAppearance *appKitAppearanceToInherit;
-@end
-
-@interface NSView (TVCMainWindowAppearancePrivate)
-/* These methods are recursive into all subviews so only give it the content view. */
-- (void)notifyMainWindowAppearanceChanged;
-- (void)notifySystemAppearanceChanged;
+- (nullable instancetype)initWithWindow:(TVCMainWindow *)mainWindow;
 @end
 
 NS_ASSUME_NONNULL_END

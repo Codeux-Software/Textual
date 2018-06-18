@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
+ *     Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,28 +35,12 @@
  *
  *********************************************************************** */
 
-#import "TVCAppearance.h"
+#import "TXAppearance.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCAppearance ()
-/* TVCListAppearance will take care of all the hard work such as
- inheritance and retina. You only need to specify "MavericksDark"
- for example, not "MavericksDarkRetina" */
-- (nullable instancetype)initWithAppearanceNamed:(NSString *)appearanceName
-										   atURL:(NSURL *)appearanceLocation
-								forRetinaDisplay:(BOOL)forRetinaDisplay NS_DESIGNATED_INITIALIZER;
-
-/* When a subclass finishes applying all appearance values to properties,
- it can flush the top level group which will cause it to disappear from
- memory, thus reducing overall memory use. */
-- (void)flushAppearanceProperties;
-@end
-
-@interface TVCApplicationAppearance ()
-/* Appearance name is inherited from TXApplication */
-- (nullable instancetype)initWithAppearanceAtURL:(NSURL *)appearanceLocation
-								forRetinaDisplay:(BOOL)forRetinaDisplay NS_DESIGNATED_INITIALIZER;
+@interface TXAppearance ()
+- (void)updateAppearance;
 @end
 
 NS_ASSUME_NONNULL_END
