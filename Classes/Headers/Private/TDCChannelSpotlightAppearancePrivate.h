@@ -40,8 +40,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelSpotlightAppearance : TVCApplicationAppearance
-@property (readonly) CGFloat defaultWindowHeight;
-
 #pragma mark -
 #pragma mark Search Field
 
@@ -52,6 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Search Result
 
+@property (readonly, copy, nullable) NSColor *searchResultRowSelectionColorActiveWindow;
+@property (readonly, copy, nullable) NSColor *searchResultRowSelectionColorInactiveWindow;
 @property (readonly) BOOL searchResultRowEmphasized;
 @property (readonly, copy, nullable) NSColor *searchResultChannelNameTextColor;
 @property (readonly, copy, nullable) NSColor *searchResultChannelDescriptionTextColor;
