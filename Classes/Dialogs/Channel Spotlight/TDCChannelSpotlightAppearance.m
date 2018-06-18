@@ -43,8 +43,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCChannelSpotlightAppearance ()
-@property (nonatomic, assign, readwrite) CGFloat defaultWindowHeight;
-
 #pragma mark -
 #pragma mark Search Field
 
@@ -55,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Search Result
 
+@property (nonatomic, copy, nullable, readwrite) NSColor *searchResultRowSelectionColorActiveWindow;
+@property (nonatomic, copy, nullable, readwrite) NSColor *searchResultRowSelectionColorInactiveWindow;
 @property (nonatomic, assign, readwrite) BOOL searchResultRowEmphasized;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultChannelNameTextColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultChannelDescriptionTextColor;
@@ -95,8 +95,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSDictionary *properties = self.appearanceProperties;
 
-	self.defaultWindowHeight = [self measurementForKey:@"defaultWindowHeight"];
-
 	NSDictionary *searchField = properties[@"Search Field"];
 
 	self.searchFieldTextColor = [self colorInGroup:searchField withKey:@"controlTextColor"];
@@ -105,6 +103,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *searchResult = properties[@"Search Result"];
 
+	self.searchResultRowSelectionColorActiveWindow = [self colorInGroup:searchResult withKey:@"selectionColor" forActiveWindow:YES];
+	self.searchResultRowSelectionColorInactiveWindow = [self colorInGroup:searchResult withKey:@"selectionColor" forActiveWindow:NO];
 	self.searchResultRowEmphasized = [searchResult boolForKey:@"rowEmphasized"];
 	self.searchResultChannelNameTextColor = [self colorInGroup:searchResult withKey:@"channelNameTextColor"];
 	self.searchResultChannelDescriptionTextColor = [self colorInGroup:searchResult withKey:@"channelDescriptionTextColor"];
