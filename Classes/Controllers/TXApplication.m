@@ -44,17 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXApplication
 
-- (instancetype)init
-{
-#ifndef DEBUG
-	if ([self.class checkForOtherCopiesOfTextualRunning] == NO) {
-		exit(0);
-	}
-#endif
-
-	return [super init];
-}
-
 + (BOOL)checkForOtherCopiesOfTextualRunning
 {
 	pid_t ourProcessIdentifier = [[NSProcessInfo processInfo] processIdentifier];
