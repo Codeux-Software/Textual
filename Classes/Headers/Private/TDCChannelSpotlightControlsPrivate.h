@@ -37,8 +37,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCChannelSpotlightControllerPanel : NSPanel
-@property (readonly, getter=isUsingDarkAppearance) BOOL usingDarkAppearance;
+@interface TDCChannelSpotlightPanel : NSPanel
+@end
+
+@interface TDCChannelSpotlightTextField : NSTextField
+@end
+
+@interface TDCChannelSpotlightImageView : NSImageView
 @end
 
 NS_ASSUME_NONNULL_END

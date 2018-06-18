@@ -30,23 +30,23 @@
                 <string key="libraryAssetSourceID">Xcode.InterfaceBuilderKit.ClassDescriptions.Cocoa:IBLibrary-ArrayController</string>
             </metadata>
         </arrayController>
-        <window title="Channel Spotlight" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="BfF-sG-KJr" customClass="TDCChannelSpotlightControllerPanel">
+        <window title="Channel Spotlight" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="BfF-sG-KJr" customClass="TDCChannelSpotlightPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="272" y="172" width="600" height="221"/>
+            <rect key="contentRect" x="272" y="172" width="600" height="253"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="ibD-GT-hsB">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="221"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="194"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="OYV-WK-xFr">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="221"/>
+                    <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="OYV-WK-xFr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="194"/>
                         <subviews>
-                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1E4-kg-4iF">
-                                <rect key="frame" x="51" y="177" width="490" height="32"/>
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1E4-kg-4iF" customClass="TDCChannelSpotlightTextField">
+                                <rect key="frame" x="51" y="150" width="490" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="twL-Dm-bZc"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Search for channel" usesSingleLineMode="YES" id="xLW-8e-ask">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" placeholderString="Search for channel" usesSingleLineMode="YES" id="xLW-8e-ask">
                                     <font key="font" metaFont="systemLight" size="26"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -55,8 +55,8 @@
                                     <outlet property="delegate" destination="-2" id="qhU-a5-YhW"/>
                                 </connections>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Diu-wk-ZgA">
-                                <rect key="frame" x="14" y="180" width="25" height="25"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Diu-wk-ZgA" customClass="TDCChannelSpotlightImageView">
+                                <rect key="frame" x="14" y="153" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="5AB-sj-ZrA"/>
                                     <constraint firstAttribute="width" constant="25" id="r7j-gN-RHB"/>
@@ -64,16 +64,16 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="MainWindowSpotlightIconTemplate" id="p4S-0R-m2Y"/>
                             </imageView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="bUM-jd-4A3">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="165"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="138"/>
                                 <subviews>
                                     <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="46" horizontalPageScroll="10" verticalLineScroll="46" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DH2-Zr-hDS">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="164"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="137"/>
                                         <clipView key="contentView" drawsBackground="NO" id="42o-5K-A7n">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="164"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="137"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="46" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="tt4-3F-bvy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="164"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="137"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                                     <color key="gridColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -95,7 +95,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-0z-qfJ">
+                                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-0z-qfJ">
                                                                             <rect key="frame" x="8" y="21" width="255" height="19"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="#channel on freenode IRC network" id="KNo-4X-COi">
                                                                                 <font key="font" metaFont="system" size="16"/>
@@ -106,7 +106,7 @@
                                                                                 <binding destination="G8b-ye-mjd" name="value" keyPath="self.channelName" id="1l0-Lg-xo1"/>
                                                                             </connections>
                                                                         </textField>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Js1-ti-O0L">
+                                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Js1-ti-O0L">
                                                                             <rect key="frame" x="8" y="6" width="172" height="16"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1 unread message, 1 highlight" id="P1U-vp-d2N">
                                                                                 <font key="font" metaFont="cellTitle"/>
@@ -117,8 +117,11 @@
                                                                                 <binding destination="G8b-ye-mjd" name="value" keyPath="self.unreadCountDescription" id="F6Q-hG-sKu"/>
                                                                             </connections>
                                                                         </textField>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-YI-lSG">
-                                                                            <rect key="frame" x="561" y="11" width="31" height="24"/>
+                                                                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-YI-lSG">
+                                                                            <rect key="frame" x="548" y="11" width="44" height="24"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="40" id="vsC-LL-p4Z"/>
+                                                                            </constraints>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="⌘1" id="wPt-pE-DBY">
                                                                                 <font key="font" metaFont="system" size="20"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -134,10 +137,10 @@
                                                                         <constraint firstAttribute="trailing" secondItem="ipN-YI-lSG" secondAttribute="trailing" constant="10" id="GR1-o1-WxB"/>
                                                                         <constraint firstItem="Js1-ti-O0L" firstAttribute="leading" secondItem="d8V-0z-qfJ" secondAttribute="leading" id="HsT-0R-vWV"/>
                                                                         <constraint firstItem="d8V-0z-qfJ" firstAttribute="top" secondItem="G8b-ye-mjd" secondAttribute="top" constant="6" id="Pez-e3-n1I"/>
-                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Js1-ti-O0L" secondAttribute="trailing" constant="20" id="RDu-yd-Q5y"/>
+                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Js1-ti-O0L" secondAttribute="trailing" constant="15" id="RDu-yd-Q5y"/>
                                                                         <constraint firstItem="Js1-ti-O0L" firstAttribute="top" secondItem="d8V-0z-qfJ" secondAttribute="bottom" constant="-1" id="bds-0C-hYT"/>
                                                                         <constraint firstItem="d8V-0z-qfJ" firstAttribute="leading" secondItem="G8b-ye-mjd" secondAttribute="leading" constant="10" id="jsX-oK-3kx"/>
-                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d8V-0z-qfJ" secondAttribute="trailing" constant="20" id="vNH-SU-jCE"/>
+                                                                        <constraint firstItem="ipN-YI-lSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d8V-0z-qfJ" secondAttribute="trailing" constant="15" id="vNH-SU-jCE"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="channelNameField" destination="d8V-0z-qfJ" id="i8T-hL-mg0"/>
@@ -170,11 +173,11 @@
                                         </scroller>
                                     </scrollView>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="eKu-PE-56L">
-                                        <rect key="frame" x="0.0" y="162" width="600" height="5"/>
+                                        <rect key="frame" x="0.0" y="135" width="600" height="5"/>
                                     </box>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="165" id="Cw6-e1-FPi"/>
+                                    <constraint firstAttribute="height" constant="138" id="Cw6-e1-FPi"/>
                                     <constraint firstAttribute="bottom" secondItem="DH2-Zr-hDS" secondAttribute="bottom" id="KVE-3A-wD9"/>
                                     <constraint firstAttribute="trailing" secondItem="eKu-PE-56L" secondAttribute="trailing" id="Kco-5g-pnb"/>
                                     <constraint firstItem="eKu-PE-56L" firstAttribute="leading" secondItem="bUM-jd-4A3" secondAttribute="leading" id="Oly-I7-X0w"/>
@@ -184,8 +187,8 @@
                                     <constraint firstItem="DH2-Zr-hDS" firstAttribute="leading" secondItem="bUM-jd-4A3" secondAttribute="leading" id="vok-8D-7qu"/>
                                 </constraints>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gag-Uy-6zA">
-                                <rect key="frame" x="551" y="184" width="37" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gag-Uy-6zA" customClass="TDCChannelSpotlightTextField">
+                                <rect key="frame" x="551" y="157" width="37" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="hR8-rl-k0H">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>

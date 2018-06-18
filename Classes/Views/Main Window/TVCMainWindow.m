@@ -79,8 +79,6 @@
 #import "TLONicknameCompletionStatusPrivate.h"
 #import "TLOSpeechSynthesizerPrivate.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
-#import "TDCChannelSpotlightControllerInternal.h"
-#import "TDCChannelSpotlightControllerPanelPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TVCMainWindowPrivate.h"
 
@@ -117,7 +115,6 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 @property (nonatomic, copy, nullable) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @property (nonatomic, assign, readwrite) BOOL reloadingTheme;
-@property (nonatomic, assign, readwrite) BOOL channelSpotlightPanelAttached;
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 @property (nonatomic, assign) BOOL disabledByLackOfInAppPurchase;
@@ -1507,27 +1504,27 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 }
 
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 - (BOOL)canBecomeKeyWindow
 {
-	return (self.channelSpotlightPanelAttached == NO
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-			&&
-			self.disabledByLackOfInAppPurchase == NO
-#endif
-			);
+	return (self.disabledByLackOfInAppPurchase == NO);
 }
 
 - (BOOL)canBecomeMainWindow
 {
-	return (self.channelSpotlightPanelAttached == NO
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-			&&
-			self.disabledByLackOfInAppPurchase == NO
-#endif
-			);
+	return (self.disabledByLackOfInAppPurchase == NO);
 }
+#else
+- (BOOL)canBecomeKeyWindow
+{
+	return YES;
+}
+
+- (BOOL)canBecomeMainWindow
+{
+	return YES;
+}
+#endif
 
 - (BOOL)isDisabled
 {
@@ -1565,31 +1562,6 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	windowFrame.size = self.userInterfaceObjects.defaultWindowSize;
 
 	return windowFrame;
-}
-
-#pragma mark -
-#pragma mark Child Window Management
-
-- (void)addChildWindow:(NSWindow *)childWindow ordered:(NSWindowOrderingMode)order
-{
-	[super addChildWindow:childWindow ordered:order];
-
-	if (self.channelSpotlightPanelAttached == NO) {
-		if ([childWindow isMemberOfClass:[TDCChannelSpotlightControllerPanel class]]) {
-			self.channelSpotlightPanelAttached = YES;
-		}
-	}
-}
-
-- (void)removeChildWindow:(NSWindow *)childWindow
-{
-	[super removeChildWindow:childWindow];
-
-	if (self.channelSpotlightPanelAttached) {
-		if ([childWindow isMemberOfClass:[TDCChannelSpotlightControllerPanel class]]) {
-			self.channelSpotlightPanelAttached = NO;
-		}
-	}
 }
 
 #pragma mark -

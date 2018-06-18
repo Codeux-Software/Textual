@@ -35,12 +35,11 @@
  *
  *********************************************************************** */
 
-#import "TVCMainWindow.h"
-#import "TDCChannelSpotlightControllerPanelPrivate.h"
+#import "TDCChannelSpotlightControlsPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TDCChannelSpotlightControllerPanel
+@implementation TDCChannelSpotlightPanel
 #ifdef TXSystemIsOSXSierraOrLater
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 #else
@@ -56,13 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	self.movable = NO;
-
-#ifdef TXSystemIsOSXSierraOrLater
-	self.styleMask = (self.styleMask | NSWindowStyleMaskFullSizeContentView);
-#else
-	self.styleMask = (self.styleMask | NSFullSizeContentViewWindowMask);
-#endif
+	self.styleMask = (self.styleMask | NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskFullSizeContentView);
 
 	self.titlebarAppearsTransparent = YES;
 
@@ -71,6 +64,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[self standardWindowButton:NSWindowCloseButton].hidden = YES;
 	[self standardWindowButton:NSWindowMiniaturizeButton].hidden = YES;
 	[self standardWindowButton:NSWindowZoomButton].hidden = YES;
+}
+
+- (BOOL)isMovable
+{
+	return YES;
+}
+
+- (BOOL)isMovableByWindowBackground
+{
+	return YES;
 }
 
 - (BOOL)canBecomeKeyWindow
@@ -83,9 +86,26 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (BOOL)isUsingDarkAppearance
+@end
+
+#pragma mark -
+
+@implementation TDCChannelSpotlightTextField
+
+- (BOOL)mouseDownCanMoveWindow
 {
-	return ((TVCMainWindow *)self.parentWindow).usingDarkAppearance;
+	return YES;
+}
+
+@end
+
+#pragma mark -
+
+@implementation TDCChannelSpotlightImageView
+
+- (BOOL)mouseDownCanMoveWindow
+{
+	return YES;
 }
 
 @end

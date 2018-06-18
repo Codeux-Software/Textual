@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1008 */
+/* Next unusued key: 1009 */
 
 "TDCChannelSpotlightController[1001]" = "%@";
 "TDCChannelSpotlightController[1007]" = " on %@";
@@ -45,3 +45,5 @@
 "TDCChannelSpotlightController[1004]" = "%@ highlight";
 "TDCChannelSpotlightController[1005]" = "%@ highlights";
 "TDCChannelSpotlightController[1006]" = "%1$@, %2$@";
+
+"TDCChannelSpotlightController[1008]" = "No Results";

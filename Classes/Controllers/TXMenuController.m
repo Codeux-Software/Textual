@@ -3779,8 +3779,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 #endif
 
-	TDCChannelSpotlightController *dialog =
-	[[TDCChannelSpotlightController alloc] initWithParentWindow:mainWindow()];
+	TDCChannelSpotlightController *dialog = [TDCChannelSpotlightController new];
 
 	dialog.delegate = (id)self;
 

@@ -39,12 +39,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCChannel, TVCMainWindow;
+@class IRCChannel;
 
 @protocol TDCChannelSpotlightControllerDelegate;
 
 @interface TDCChannelSpotlightController : TDCWindowBase
-- (instancetype)initWithParentWindow:(TVCMainWindow *)parentWindow NS_DESIGNATED_INITIALIZER;
 @end
 
 @protocol TDCChannelSpotlightControllerDelegate <NSObject>
