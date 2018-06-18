@@ -252,6 +252,8 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 - (void)onTrialTimer
 {
+	[self stopTrialTimer];
+
 	[RZNotificationCenter() postNotificationName:TDCLicenseManagerTrialExpiredNotification object:self];
 }
 
