@@ -2909,45 +2909,45 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetMainWindowAppearance:(id)sender
 {
-	[TPCPreferences setMainWindowAppearance:TXMainWindowInheritAppearanceType];
+	[TPCPreferences setAppearance:TXPreferredAppearanceInheritedType];
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
 }
 
 - (void)toggleMainWindowAppearance:(id)sender
 {
-	TXMainWindowAppearanceType appearance = [TPCPreferences mainWindowAppearance];
+	TXPreferredAppearanceType appearance = [TPCPreferences appearance];
 
 	switch (appearance) {
-		case TXMainWindowInheritAppearanceType:
+		case TXPreferredAppearanceInheritedType:
 		{
-			TVCMainWindowAppearance *mwAppearance = mainWindow().userInterfaceObjects;
+			TXAppearance *appAppearance = [TXSharedApplication sharedAppearance];
 
-			if (mwAppearance.isDarkAppearance == NO) {
-				appearance = TXMainWindowDarkAppearanceType;
+			if (appAppearance.properties.isDarkAppearance == NO) {
+				appearance = TXPreferredAppearanceDarkType;
 			} else {
-				appearance = TXMainWindowLightAppearanceType;
+				appearance = TXPreferredAppearanceLightType;
 			}
 
 			break;
 		}
-		case TXMainWindowLightAppearanceType:
+		case TXPreferredAppearanceLightType:
 		{
-			appearance = TXMainWindowDarkAppearanceType;
+			appearance = TXPreferredAppearanceDarkType;
 
 			break;
 		}
-		case TXMainWindowDarkAppearanceType:
+		case TXPreferredAppearanceDarkType:
 		{
-			appearance = TXMainWindowLightAppearanceType;
+			appearance = TXPreferredAppearanceLightType;
 
 			break;
 		}
 	} // switch()
 
-	[TPCPreferences setMainWindowAppearance:appearance];
+	[TPCPreferences setAppearance:appearance];
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
 }
 
 - (void)toggleServerListVisibility:(id)sender

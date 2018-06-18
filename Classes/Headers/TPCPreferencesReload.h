@@ -40,36 +40,35 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
-	TPCPreferencesReloadDockIconBadgesAction						= 1 << 0,
-	TPCPreferencesReloadHighlightKeywordsAction						= 1 << 1,
-	TPCPreferencesReloadHighlightLoggingAction						= 1 << 2,
-	TPCPreferencesReloadInputHistoryScopeAction						= 1 << 3,
-	TPCPreferencesReloadMainWindowAppearanceAction					= 1 << 4,
-	TPCPreferencesReloadMainWindowTransparencyLevelAction			= 1 << 5,
-	TPCPreferencesReloadMemberListAction							= 1 << 6,
-	TPCPreferencesReloadMemberListSortOrderAction					= 1 << 7,
-	TPCPreferencesReloadMemberListUserBadgesAction					= 1 << 8,
-	TPCPreferencesReloadPreferencesChangedAction					= 1 << 9,
-	TPCPreferencesReloadServerListAction							= 1 << 10,
-	TPCPreferencesReloadServerListUnreadBadgesAction				= 1 << 11,
-	TPCPreferencesReloadStyleAction									= 1 << 12,
-	TPCPreferencesReloadStyleWithTableViewsAction					= 1 << 13,
-	TPCPreferencesReloadTextDirectionAction							= 1 << 14,
-	TPCPreferencesReloadTextFieldFontSizeAction						= 1 << 15,
-	TPCPreferencesReloadTextFieldSegmentedControllerOriginAction	= 1 << 16,
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	TPCPreferencesReloadSparkleFrameworkFeedURLAction				= 1 << 17,
-#endif
-
-	TPCPreferencesReloadIRCCommandCacheAction						= 1 << 19,
-	TPCPreferencesReloadLogTranscriptsAction						= 1 << 21,
-	TPCPreferencesReloadScrollbackSaveLimitAction					= 1 << 22,
-	TPCPreferencesReloadScrollbackVisibleLimitAction				= 1 << 22,
-	TPCPreferencesReloadChannelViewArrangementAction				= 1 << 23,
+	TPCPreferencesReloadAppearanceAction							= 1 << 0,
+	TPCPreferencesReloadChannelViewArrangementAction				= 1 << 1,
+	TPCPreferencesReloadDockIconBadgesAction						= 1 << 2,
+	TPCPreferencesReloadHighlightKeywordsAction						= 1 << 3,
+	TPCPreferencesReloadHighlightLoggingAction						= 1 << 4,
+	TPCPreferencesReloadIRCCommandCacheAction						= 1 << 5,
+	TPCPreferencesReloadInputHistoryScopeAction						= 1 << 6,
+	TPCPreferencesReloadLogTranscriptsAction						= 1 << 7,
+	TPCPreferencesReloadMainWindowTransparencyLevelAction			= 1 << 8,
+	TPCPreferencesReloadMemberListAction							= 1 << 9,
+	TPCPreferencesReloadMemberListSortOrderAction					= 1 << 10,
+	TPCPreferencesReloadMemberListUserBadgesAction					= 1 << 11,
+	TPCPreferencesReloadPreferencesChangedAction					= 1 << 12,
+	TPCPreferencesReloadScrollbackSaveLimitAction					= 1 << 13,
+	TPCPreferencesReloadScrollbackVisibleLimitAction				= 1 << 14,
+	TPCPreferencesReloadServerListAction							= 1 << 15,
+	TPCPreferencesReloadServerListUnreadBadgesAction				= 1 << 16,
+	TPCPreferencesReloadStyleAction									= 1 << 17,
+	TPCPreferencesReloadStyleWithTableViewsAction					= 1 << 18,
+	TPCPreferencesReloadTextDirectionAction							= 1 << 19,
+	TPCPreferencesReloadTextFieldFontSizeAction						= 1 << 20,
+	TPCPreferencesReloadTextFieldSegmentedControllerOriginAction	= 1 << 21,
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	TPCPreferencesReloadEncryptionPolicyAction						= 1 << 24,
+	TPCPreferencesReloadEncryptionPolicyAction						= 1 << 22,
+#endif
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	TPCPreferencesReloadSparkleFrameworkFeedURLAction				= 1 << 23,
 #endif
 };
 

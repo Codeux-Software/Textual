@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Appearance</key>
+	<integer>0</integer>
 	<key>ApplyCommandToAllConnections -&gt; amsg</key>
 	<false/>
 	<key>ApplyCommandToAllConnections -&gt; away</key>
@@ -136,8 +138,6 @@
 	<integer>1</integer>
 	<key>Main Input Text Field -&gt; Focus When Changing Views</key>
 	<true/>
-	<key>MainWindowAppearance</key>
-	<integer>0</integer>
 	<key>MainWindowTransparencyLevel</key>
 	<real>1</real>
 	<key>NicknameHighlightMatchingType</key>

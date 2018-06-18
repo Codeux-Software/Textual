@@ -164,6 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)onAddExcludeKeyword:(id)sender;
 - (IBAction)onAddHighlightKeyword:(id)sender; // changed
+- (IBAction)onChangedAppearance:(id)sender;
 - (IBAction)onChangedCheckForUpdates:(id)sender;
 - (IBAction)onChangedCheckForBetaUpdates:(id)sender;
 - (IBAction)onChangedChannelViewArrangement:(id)sender;
@@ -175,7 +176,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedInlineMediaOption:(id)sender;
 - (IBAction)onChangedInputHistoryScheme:(id)sender;
 - (IBAction)onChangedMainInputTextViewFontSize:(id)sender; // changed
-- (IBAction)onChangedMainWindowAppearance:(id)sender;
 - (IBAction)onChangedMainWindowSegmentedController:(id)sender;
 - (IBAction)onChangedScrollbackSaveLimit:(id)sender;
 - (IBAction)onChangedScrollbackVisibleLimit:(id)sender;
@@ -1492,9 +1492,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences performReloadAction:TPCPreferencesReloadInputHistoryScopeAction];
 }
 
-- (void)onChangedMainWindowAppearance:(id)sender
+- (void)onChangedAppearance:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
 }
 
 - (void)onChangedTheme:(id)sender
