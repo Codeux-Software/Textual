@@ -41,18 +41,19 @@
 #import "IRCClient.h"
 #import "IRCWorld.h"
 #import "TPCPreferencesLocal.h"
+#import "TLOLanguagePreferences.h"
 #import "TVCMainWindowPrivate.h"
+#import "TDCInAppPurchaseDialogPrivate.h"
+#import "TDCLicenseManagerDialogPrivate.h"
 #import "TDCChannelSpotlightAppearanceInternal.h"
 #import "TDCChannelSpotlightSearchResultPrivate.h"
 #import "TDCChannelSpotlightSearchResultsTablePrivate.h"
-#import "TDCChannelSpotlightControllerPanelPrivate.h"
+#import "TDCChannelSpotlightControlsPrivate.h"
 #import "TDCChannelSpotlightControllerInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define WindowDefaultHeight								221.0
-@interface TDCChannelSpotlightController ()
-@property (nonatomic, weak) TVCMainWindow *parentWindow;
+@interface TDCChannelSpotlightController () <NSTableViewDataSource, NSTableViewDelegate>
 @property (nonatomic, strong, readwrite) TDCChannelSpotlightAppearance *userInterfaceObjects;
 @property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
 @property (nonatomic, weak) IBOutlet NSTextField *noResultsLabel;
@@ -70,15 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Initialization
 
-ClassWithDesignatedInitializerInitMethod
-
-- (instancetype)initWithParentWindow:(TVCMainWindow *)parentWindow
+- (instancetype)init
 {
-	NSParameterAssert(parentWindow != nil);
-
 	if ((self = [super init])) {
-		self.parentWindow = parentWindow;
-
 		[self prepareInitialState];
 
 		return self;
@@ -94,13 +89,9 @@ ClassWithDesignatedInitializerInitMethod
 	self.searchResultsTable.doubleAction = @selector(delegatePostSelectChannelForDoubleClickedRow:);
 
 	self.mouseEventMonitor =
-	[NSEvent addLocalMonitorForEventsMatchingMask:(NSLeftMouseDownMask |
-												   NSOtherMouseDownMask |
-												   NSRightMouseDownMask |
-												   NSMouseEnteredMask |
-												   NSKeyDownMask)
+	[NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask
 										  handler:^NSEvent *(NSEvent *event) {
-											  return [self respondToLocalEvent:event];
+											  return [self respondToKeyDownEvent:event];
 										  }];
 
 	if ([TPCPreferences channelNavigationIsServerSpecific]) {
@@ -116,17 +107,26 @@ ClassWithDesignatedInitializerInitMethod
 	];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(clientListChanged:) name:IRCWorldClientListWasModifiedNotification object:nil];
-
 	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCClientChannelListWasModifiedNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(applicationAppearanceChanged:) name:TXApplicationAppearanceChangedNotification object:nil];
 
-	[RZNotificationCenter() addObserver:self selector:@selector(parentWindowAppearanceChanged:) name:TVCMainWindowAppearanceChangedNotification object:self.parentWindow];
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(licenseManagerTrialExpired:)
+								   name:TDCLicenseManagerTrialExpiredNotification
+								 object:nil];
+#endif
 
-//	[RZNotificationCenter() addObserver:self selector:@selector(parentWindowMoved:) name:NSWindowDidMoveNotification object:self.parentWindow];
-	[RZNotificationCenter() addObserver:self selector:@selector(parentWindowResized:) name:NSWindowDidResizeNotification object:self.parentWindow];
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onInAppPurchaseTrialExpired:)
+								   name:TDCInAppPurchaseDialogTrialExpiredNotification
+								 object:nil];
+#endif
 
 	[self populateArrayController];
 
-	[self updateBackgroundColor];
+	[self applicationAppearanceChanged];
 
 	[self.noResultsLabelLeadingConstraint archiveConstant];
 
@@ -138,46 +138,46 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Appearance
 
-- (void)resetWindowFrame
+- (void)applicationAppearanceChanged:(NSNotification *)notification
 {
-	NSRect remoteFrame = self.parentWindow.frame;
-
-	NSRect localFrame = self.window.frame;
-
-	localFrame.size.height = WindowDefaultHeight;
-
-	localFrame = NSRectCenteredInRect(localFrame, remoteFrame);
-
-	[self.window setFrame:localFrame display:NO animate:NO];
+	[self applicationAppearanceChanged];
 }
 
-- (void)updateVibrancy
+- (void)applicationAppearanceChanged
 {
-	NSAppearance *appearance = nil;
+	TDCChannelSpotlightAppearance *appearance = [[TDCChannelSpotlightAppearance alloc] initWithWindow:(id)self.window];
 
-	if ([self appearsVibrantDark]) {
-		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-	} else {
-		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	self.userInterfaceObjects = appearance;
+
+	[self updateVibrancyWithAppearance:appearance];
+
+	[self updateControlsWithAppearance:appearance];
+
+	[self updateSearchResultsSelection];
+}
+
+- (void)updateVibrancyWithAppearance:(TDCChannelSpotlightAppearance *)appearance
+{
+	NSParameterAssert(appearance != nil);
+
+	NSAppearance *appKitAppearance = appearance.appKitAppearance;
+
+	if (appearance.appKitAppearanceInherited == NO) {
+		self.visualEffectView.appearance = appKitAppearance;
+
+		return;
 	}
 
-	self.visualEffectView.appearance = appearance;
+	self.window.appearance = appKitAppearance;
 }
 
-- (void)updateBackgroundColor
+- (void)updateControlsWithAppearance:(TDCChannelSpotlightAppearance *)appearance
 {
-	[self updateVibrancy];
+	NSParameterAssert(appearance != nil);
 
-	[self updateControlsAppearance];
-}
+	self.searchField.textColor = appearance.searchFieldTextColor;
 
-- (void)updateControlsAppearance
-{
-	if ([self appearsVibrantDark]) {
-		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantDark];
-	} else {
-		self.noResultsLabel.textColor = [self noResultsLabelTextColorVibrantLight];
-	}
+	self.noResultsLabel.textColor = appearance.searchFieldNoResultsTextColor;
 }
 
 - (void)updateControlsState
@@ -195,7 +195,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	if (self.searchResultsCount == 0) {
-		self.noResultsLabel.stringValue = @"No Results";
+		self.noResultsLabel.stringValue = TXTLS(@"TDCChannelSpotlightController[1008]");
 
 		[self.noResultsLabelLeadingConstraint restoreArchivedConstant];
 
@@ -213,114 +213,23 @@ ClassWithDesignatedInitializerInitMethod
 	[self selectFirstSearchResultIfNecessary];
 }
 
-- (NSColor *)noResultsLabelTextColorVibrantLight
+- (void)updateSearchResultsSelection
 {
-	return [NSColor secondaryLabelColor];
-}
+	NSTableView *table = self.searchResultsTable;
 
-- (NSColor *)noResultsLabelTextColorVibrantDark
-{
-	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
-}
-
-- (BOOL)appearsVibrantDark
-{
-	return ((TDCChannelSpotlightControllerPanel *)self.window).usingDarkAppearance;
+	[table invalidateBackgroundForSelection];
 }
 
 #pragma mark -
-#pragma mark Appearance 
-
-- (nullable NSEvent *)respondToLocalEvent:(NSEvent *)event
-{
-	switch (event.type) {
-		case NSKeyDown:
-		{
-			return [self respondToKeyDownEvent:event];
-		}
-		case NSLeftMouseDown:
-		case NSOtherMouseDown:
-		case NSRightMouseDown:
-		{
-			return [self respondToMouseDownEvent:event];
-		}
-		default:
-		{
-			return nil;
-		}
-	}
-}
-
-- (nullable NSEvent *)respondToMouseDownEvent:(NSEvent *)event
-{
-	/* Allow out of focus window to reappear by passing event */
-	if (self.window.isKeyWindow == NO && event.type == NSLeftMouseDown) {
-		[self.window makeKeyWindow];
-
-		return event;
-	}
-
-	/* Allow any event that occurs within child window */
-	NSPoint mouseLocation = [NSEvent mouseLocation];
-
-	NSRect windowFrame = self.window.frame;
-
-	if (NSPointInRect(mouseLocation, windowFrame)) {
-		return event;
-	}
-
-	/* Process events that occur outside of child window */
-	return [self respondToMouseDownEventOutOfBounds:event atLocation:mouseLocation];
-}
-
-- (nullable NSEvent *)respondToMouseDownEventOutOfBounds:(NSEvent *)event atLocation:(NSPoint)mouseLocation
-{
-	TVCMainWindowMouseLocation parentWindowMouseLocation = [self.parentWindow locationOfMouse:mouseLocation];
-
-	BOOL mouseIsOverParenWindow = ((parentWindowMouseLocation & TVCMainWindowMouseLocationInsideWindow) == TVCMainWindowMouseLocationInsideWindow);
-	BOOL mouseIsOverParentTitle = ((parentWindowMouseLocation & TVCMainWindowMouseLocationInsideWindowTitle) == TVCMainWindowMouseLocationInsideWindowTitle);
-	BOOL mouseIsOverParentTitleControl = ((parentWindowMouseLocation & TVCMainWindowMouseLocationOnTopOfWindowTitleControl) == TVCMainWindowMouseLocationOnTopOfWindowTitleControl);
-
-	/* If the event is occurring outside the bounds of the parent window,
-	 then allow the event to proceed uninterrupted */
-	if (mouseIsOverParenWindow == NO) {
-		return event;
-	}
-
-	/* If the event is occurring inside the title of the parent window,
-	 but not on a button (close, miniaturize, zoom), then allow the event
-	 to proceed uninterrupted. This allow uses to drag the parent window
-	 around without allowing the user to access controls. */
-	if (mouseIsOverParentTitle) {
-		if (mouseIsOverParentTitleControl) {
-			return nil;
-		}
-
-		return event;
-	}
-
-	/* Close window and allow event to proceed */
-	[self close];
-
-	return event;
-}
+#pragma mark Appearance
 
 - (nullable NSEvent *)respondToKeyDownEvent:(NSEvent *)event
 {
+	if (self.window.isKeyWindow == NO) {
+		return event;
+	}
+
 	switch (event.keyCode) {
-		case 2: // d
-		{
-			/* Close dialog using keyboard shortcut used to open it */
-			NSUInteger keyboardKeys = (event.modifierFlags & NSDeviceIndependentModifierFlagsMask);
-
-			if (keyboardKeys == NSCommandKeyMask) {
-				[self close];
-
-				return nil;
-			}
-
-			return event;
-		}
 		case 18 ... 23: // 0-9 (top row)
 		case 25 ... 26:
 		case 28 ... 29:
@@ -345,7 +254,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 		case 53: // escape
 		{
-			[self close];
+			[self clearSearchStringOrClose];
 
 			return nil;
 		}
@@ -453,6 +362,21 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Window Management
 
+- (void)clearSearchStringOrClose
+{
+	/* Mimic Spotlight behavior by clearing search string
+	 on first escape and closing on second escape. */
+	if (self.searchField.stringValue.length > 0) {
+		self.searchField.stringValue = @"";
+
+		[self searchStringChanged];
+
+		return;
+	}
+
+	[self close];
+}
+
 - (void)close
 {
 	[self.window close];
@@ -460,13 +384,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)show
 {
-	if (self.window.parentWindow == nil) { // allow -show to be called multiple times
-		[self.parentWindow addChildWindow:self.window ordered:NSWindowAbove];
-	}
+#warning TODO: Remember window position
 
-	[self.window makeKeyWindow];
-
-	[self resetWindowFrame];
+	[self.window makeKeyAndOrderFront:nil];
 }
 
 #pragma mark -
@@ -558,12 +478,17 @@ ClassWithDesignatedInitializerInitMethod
 	return searchResult;
 }
 
+- (void)searchStringChanged
+{
+	[self recalculateDistanceForSearchResults];
+}
+
 #pragma mark -
 #pragma mark Table View Delegate
 
 - (nullable NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
-	return [[TDCChannelSpotlightSearchResultRowView alloc] initWithFrame:NSZeroRect];
+	return [[TDCChannelSpotlightSearchResultRowView alloc] initWithController:self];
 }
 
 #pragma mark -
@@ -572,36 +497,37 @@ ClassWithDesignatedInitializerInitMethod
 - (void)clientListChanged:(id)sender
 {
 	[self populateArrayController];
+
+	[self updateControlsState];
 }
 
 - (void)channelListChanged:(id)sender
 {
 	[self populateArrayController];
+
+	[self updateControlsState];
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification
 {
 	if (notification.object == self.searchField) {
-		[self recalculateDistanceForSearchResults];
+		[self searchStringChanged];
 	}
 }
 
-- (void)parentWindowAppearanceChanged:(NSNotification *)notification
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)licenseManagerTrialExpired:(NSNotification *)notification
 {
-	[self updateBackgroundColor];
+	[self close];
 }
+#endif
 
-/*
-- (void)parentWindowMoved:(NSNotification *)notification
+#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
+- (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
 {
-	[self resetWindowFrame];
+	[self close];
 }
-*/
-
-- (void)parentWindowResized:(NSNotification *)notification
-{
-	[self resetWindowFrame];
-}
+#endif
 
 - (void)windowWillClose:(NSNotification *)notification
 {
@@ -610,8 +536,6 @@ ClassWithDesignatedInitializerInitMethod
 	self.mouseEventMonitor = nil;
 
 	[RZNotificationCenter() removeObserver:self];
-
-	[self.parentWindow removeChildWindow:self.window];
 
 	if ([self.delegate respondsToSelector:@selector(channelSpotlightControllerWillClose:)]) {
 		[self.delegate channelSpotlightControllerWillClose:self];

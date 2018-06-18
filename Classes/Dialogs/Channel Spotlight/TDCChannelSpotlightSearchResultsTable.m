@@ -36,18 +36,37 @@
  *********************************************************************** */
 
 #import "TXGlobalModels.h"
+#import "NSViewHelper.h"
 #import "TLOLanguagePreferences.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
+#import "TDCChannelSpotlightAppearancePrivate.h"
 #import "TDCChannelSpotlightControllerInternal.h"
-#import "TDCChannelSpotlightControllerPanelPrivate.h"
 #import "TDCChannelSpotlightSearchResultPrivate.h"
 #import "TDCChannelSpotlightSearchResultsTablePrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define KeyboardShortcutFieldTopConstraintSelected				13.0
-#define KeyboardShortcutFieldTopConstraintDeselected			11.0
+@interface TDCChannelSpotlightSearchResultRowView ()
+@property (nonatomic, weak) TDCChannelSpotlightController *controller;
+@property (nonatomic, weak) TDCChannelSpotlightSearchResultCellView *childCell;
+@property (readonly) TDCChannelSpotlightAppearance *userInterfaceObjects;
+@property (nonatomic, assign) BOOL disableQuirks;
+@end
+
+@interface TDCChannelSpotlightSearchResultCellView ()
+@property (readonly, copy) NSAttributedString *channelName;
+@property (readonly, copy) NSString *keyboardShortcut;
+@property (readonly, copy) NSString *unreadCountDescription;
+@property (nonatomic, weak) IBOutlet NSTextField *channelNameField;
+@property (nonatomic, weak) IBOutlet NSTextField *keyboardShortcutField;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *keyboardShortcutFieldTopConstraint;
+@property (nonatomic, weak) IBOutlet NSTextField *unreadCountDescriptionField;
+@property (nonatomic, assign) BOOL staticLabelsPopulated;
+@property (readonly) TDCChannelSpotlightAppearance *userInterfaceObjects;
+@property (readonly) TDCChannelSpotlightController *controller;
+@property (readonly) TDCChannelSpotlightSearchResultRowView *rowCell;
+@end
 
 @implementation TDCChannelSpotlightSearchResultCellView
 
@@ -61,35 +80,48 @@ NS_ASSUME_NONNULL_BEGIN
 	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
 }
 
+- (void)setInitialValues
+{
+	[self channelNameChanged];
+}
+
 - (void)updateLayer
 {
-	TDCChannelSpotlightSearchResultRowView *rowView = (id)self.superview;
+	[self updateAppearance];
 
-	[self updateTextFieldTextColorIsSelected:rowView.isSelected];
+	[self keyboardShortcutChanged];
+}
 
-	[self willChangeValueForKey:@"keyboardShortcut"];
-	[self didChangeValueForKey:@"keyboardShortcut"];
+- (void)updateAppearance
+{
+	TDCChannelSpotlightSearchResultRowView *rowCell = self.rowCell;
+
+	[self updateTextFieldTextColorIsSelected:rowCell.isSelected];
 }
 
 - (void)updateTextFieldTextColorIsSelected:(BOOL)isSelected
 {
+	TDCChannelSpotlightAppearance *appearance = self.userInterfaceObjects;
+	
 	if (isSelected == NO)
 	{
-		self.channelNameField.textColor = [self channelNameTextColorDeselected];
+		self.channelNameField.textColor = appearance.searchResultChannelNameTextColor;
 
-		self.keyboardShortcutField.textColor = [self keyboardShortcutTextColorDeselected];
-		self.keyboardShortcutFieldTopConstraint.constant = KeyboardShortcutFieldTopConstraintDeselected;
+		self.unreadCountDescriptionField.textColor = appearance.searchResultChannelDescriptionTextColor;
 
-		self.unreadCountDescriptionField.textColor = [self unreadCountDescriptionTextColorDeselected];
+		self.keyboardShortcutField.textColor = appearance.searchResultKeyboardShortcutTextColor;
+		self.keyboardShortcutFieldTopConstraint.constant = appearance.searchResultKeyboardShortcutDeselectedTopOffset;
 	}
 	else
 	{
-		self.channelNameField.textColor = [self channelNameTextColorSelected];
+		NSColor *selectedTextColor = appearance.searchResultSelectedTextColor;
 
-		self.keyboardShortcutField.textColor = [self keyboardShortcutTextColorSelected];
-		self.keyboardShortcutFieldTopConstraint.constant = KeyboardShortcutFieldTopConstraintSelected;
+		self.channelNameField.textColor = selectedTextColor;
 
-		self.unreadCountDescriptionField.textColor = [self unreadCountDescriptionTextColorSelected];
+		self.unreadCountDescriptionField.textColor = selectedTextColor;
+
+		self.keyboardShortcutField.textColor = selectedTextColor;
+		self.keyboardShortcutFieldTopConstraint.constant = appearance.searchResultKeyboardShortcutSelectedTopOffset;
 	}
 }
 
@@ -121,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 								NSParagraphStyleAttributeName : paragraphStyle
 							}];
 
-	TDCChannelSpotlightController *controller = searchResult.controller;
+	TDCChannelSpotlightController *controller = self.controller;
 
 	NSString *searchString = controller.searchString;
 
@@ -140,14 +172,10 @@ NS_ASSUME_NONNULL_BEGIN
 	return resultString;
 }
 
-- (NSColor *)channelNameTextColorSelected
+- (void)channelNameChanged
 {
-	return [NSColor whiteColor];
-}
-
-- (NSColor *)channelNameTextColorDeselected
-{
-	return [NSColor labelColor];
+	[self willChangeValueForKey:@"channelName"];
+	[self didChangeValueForKey:@"channelName"];
 }
 
 - (NSString *)keyboardShortcut
@@ -158,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return @"";
 	}
 
-	TDCChannelSpotlightController *controller = searchResult.controller;
+	TDCChannelSpotlightController *controller = self.controller;
 
 	NSArray *searchResults = controller.searchResultsFiltered;
 
@@ -181,14 +209,10 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSString stringWithFormat:@"⌘%lu", keyboardShortcutIndex];
 }
 
-- (NSColor *)keyboardShortcutTextColorSelected
+- (void)keyboardShortcutChanged
 {
-	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
-}
-
-- (NSColor *)keyboardShortcutTextColorDeselected
-{
-	return [NSColor secondaryLabelColor];
+	[self willChangeValueForKey:@"keyboardShortcut"];
+	[self didChangeValueForKey:@"keyboardShortcut"];
 }
 
 - (NSString *)unreadCountDescription
@@ -222,33 +246,56 @@ NS_ASSUME_NONNULL_BEGIN
 	return TXTLS(@"TDCChannelSpotlightController[1006]", nicknameHighlightCountDescription, unreadCountDescription);
 }
 
-- (NSColor *)unreadCountDescriptionTextColorSelected
+- (void)unreadCountDescriptionChanged
 {
-	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
-}
-
-- (NSColor *)unreadCountDescriptionTextColorDeselected
-{
-	return [NSColor secondaryLabelColor];
-}
-
-- (void)setObjectValue:(nullable id)objectValue
-{
-	super.objectValue = objectValue;
-
-	[self reloadKeyValues];
-}
-
-- (void)reloadKeyValues
-{
-	[self willChangeValueForKey:@"channelName"];
-	[self didChangeValueForKey:@"channelName"];
-
-	[self willChangeValueForKey:@"keyboardShortcut"];
-	[self didChangeValueForKey:@"keyboardShortcut"];
-
 	[self willChangeValueForKey:@"unreadCountDescription"];
 	[self didChangeValueForKey:@"unreadCountDescription"];
+}
+
+- (TDCChannelSpotlightSearchResultRowView *)rowCell
+{
+	return (id)self.superview;
+}
+
+- (TDCChannelSpotlightAppearance *)userInterfaceObjects
+{
+	return self.rowCell.userInterfaceObjects;
+}
+
+- (TDCChannelSpotlightController *)controller
+{
+	return self.rowCell.controller;
+}
+
+- (void)viewDidMoveToWindow
+{
+	[super viewDidMoveToWindow];
+
+	TDCChannelSpotlightSearchResult *searchResult = self.objectValue;
+
+	IRCChannel *channel = searchResult.channel;
+
+	if (self.window == nil)
+	{
+		[channel removeObserver:self forKeyPath:@"nicknameHighlightCount"];
+		[channel removeObserver:self forKeyPath:@"treeUnreadCount"];
+	}
+	else
+	{
+		[channel addObserver:self forKeyPath:@"nicknameHighlightCount" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:nil];
+		[channel addObserver:self forKeyPath:@"treeUnreadCount" options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:nil];
+
+		[self setInitialValues];
+	}
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+{
+	if ([keyPath isEqualToString:@"nicknameHighlightCount"] ||
+		[keyPath isEqualToString:@"treeUnreadCount"])
+	{
+		[self unreadCountDescriptionChanged];
+	}
 }
 
 @end
@@ -257,34 +304,64 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCChannelSpotlightSearchResultRowView
 
-- (BOOL)appearsVibrantDark
+- (instancetype)initWithController:(TDCChannelSpotlightController *)controller;
 {
-	TDCChannelSpotlightControllerPanel *panel = (TDCChannelSpotlightControllerPanel *)self.window;
+	NSParameterAssert(controller != nil);
 
-	return panel.usingDarkAppearance;
+	if ((self = [super initWithFrame:NSZeroRect])) {
+		self.controller = controller;
+
+		return self;
+	}
+
+	return nil;
 }
 
-- (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
+- (void)viewWillMoveToWindow:(nullable NSWindow *)newWindow
 {
-	if ([self appearsVibrantDark]) {
-		return NSTableViewSelectionHighlightStyleRegular;
-	} else {
-		return NSTableViewSelectionHighlightStyleSourceList;
-	}
+	[super viewWillMoveToWindow:newWindow];
+
+	self.disableQuirks = TEXTUAL_RUNNING_ON_MOJAVE;
 }
 
 - (void)setSelected:(BOOL)selected
 {
 	super.selected = selected;
 
-	[self redrawSubviews];
+	if (selected == NO && self.invalidatingBackgroundForSelection) {
+		return;
+	}
+
+	[self modifySelectionHighlightStyle];
+
+	[self setNeedsDisplayOnChild];
 }
 
-- (void)redrawSubviews
+- (void)modifySelectionHighlightStyle
 {
-	for (NSView *subview in self.subviews) {
-		[subview setNeedsDisplay:YES];
+	if (self.disableQuirks) {
+		return;
 	}
+
+	if (self.isSelected)
+	{
+		TDCChannelSpotlightAppearance *appearance = self.userInterfaceObjects;
+
+		if (appearance.isDarkAppearance) {
+			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
+		} else {
+			self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
+		}
+	}
+	else
+	{
+		self.selectionHighlightStyle = NSTableViewSelectionHighlightStyleRegular;
+	}
+}
+
+- (void)setNeedsDisplayOnChild
+{
+	self.childCell.needsDisplay = YES;
 }
 
 - (void)drawSelectionInRect:(NSRect)dirtyRect
@@ -293,17 +370,19 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	BOOL isWindowActive = self.window.isActiveForDrawing;
+
+	TDCChannelSpotlightAppearance *appearance = self.userInterfaceObjects;
+
 	NSColor *selectionColor = nil;
 
-	if ([self appearsVibrantDark]) {
-		if (self.window.isActiveForDrawing) {
-			selectionColor = [self selectionColorVibrantDarkActiveWindow];
-		} else {
-			selectionColor = [self selectionColorVibrantDarkInactiveWindow];
-		}
-	}
+	if (isWindowActive) {
+		selectionColor = appearance.searchResultRowSelectionColorActiveWindow;
+	} else {
+		selectionColor = appearance.searchResultRowSelectionColorInactiveWindow;
+	} // isWindowActive
 
-	if (selectionColor != nil) {
+	if (selectionColor) {
 		[selectionColor set];
 
 		NSRect selectionRect = self.bounds;
@@ -311,22 +390,35 @@ NS_ASSUME_NONNULL_BEGIN
 		NSRectFill(selectionRect);
 	} else {
 		[super drawSelectionInRect:dirtyRect];
-	}
+	} // selectionColor
 }
 
 - (BOOL)isEmphasized
 {
-	return ([self appearsVibrantDark] == NO);
+	TDCChannelSpotlightAppearance *appearance = self.userInterfaceObjects;
+
+	NSWindow *window = self.window;
+
+	return (appearance.searchResultRowEmphasized &&
+			(window == nil || window.isKeyWindow));
 }
 
-- (NSColor *)selectionColorVibrantDarkActiveWindow
+- (nullable TDCChannelSpotlightSearchResultCellView *)childCell
 {
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+	if (self->_childCell == nil) {
+		if (self.numberOfColumns == 0) {
+			return nil;
+		}
+
+		self->_childCell = [self viewAtColumn:0];
+	}
+
+	return self->_childCell;
 }
 
-- (NSColor *)selectionColorVibrantDarkInactiveWindow
+- (TDCChannelSpotlightAppearance *)userInterfaceObjects
 {
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+	return self.controller.userInterfaceObjects;
 }
 
 @end

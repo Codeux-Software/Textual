@@ -37,19 +37,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class TDCChannelSpotlightController;
+
 @interface TDCChannelSpotlightSearchResultRowView : NSTableRowView
+- (instancetype)initWithController:(TDCChannelSpotlightController *)controller;
 @end
 
-#pragma mark -
-
 @interface TDCChannelSpotlightSearchResultCellView : NSTableCellView
-@property (readonly, copy) NSAttributedString *channelName;
-@property (readonly, copy) NSString *keyboardShortcut;
-@property (readonly, copy) NSString *unreadCountDescription;
-@property (nonatomic, weak) IBOutlet NSTextField *channelNameField;
-@property (nonatomic, weak) IBOutlet NSTextField *keyboardShortcutField;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *keyboardShortcutFieldTopConstraint;
-@property (nonatomic, weak) IBOutlet NSTextField *unreadCountDescriptionField;
 @end
 
 NS_ASSUME_NONNULL_END
