@@ -815,14 +815,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.applicationProperties.isModernAppearance;
 }
 
-- (NSAppearance *)appKitAppearance
+- (TXAppKitAppearanceTarget)appKitAppearanceTarget
 {
-	return self.applicationProperties.appKitAppearance;
+	return self.applicationProperties.appKitAppearanceTarget;
 }
 
-- (BOOL)appKitAppearanceInherited
+- (nullable NSAppearance *)appKitAppearance
 {
-	return self.applicationProperties.appKitAppearanceInherited;
+	return self.applicationProperties.appKitAppearance;
 }
 
 @end

@@ -44,14 +44,12 @@ NS_ASSUME_NONNULL_BEGIN
 NSString * const TXApplicationAppearanceChangedNotification = @"TXApplicationAppearanceChangedNotification";
 NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceChangedNotification";
 
-const TXAppearanceType TXAppearanceNoChangeType = 1000;
-
 @interface TXAppearancePropertyCollection ()
 @property (nonatomic, copy, readwrite) NSString *appearanceName;
 @property (nonatomic, assign, readwrite) TXAppearanceType appearanceType;
 @property (nonatomic, assign, readwrite) BOOL isDarkAppearance;
-@property (nonatomic, assign, readwrite) BOOL isModernAppearance;;
-@property (nonatomic, assign, readwrite) BOOL appKitAppearanceInherited;
+@property (nonatomic, assign, readwrite) BOOL isModernAppearance;
+@property (nonatomic, assign, readwrite) TXAppKitAppearanceTarget appKitAppearanceTarget;
 @end
 
 @interface TXAppearance ()
@@ -111,79 +109,7 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 }
 
 #pragma mark -
-#pragma mark Best Appearance
-
-- (TXAppearanceType)recommendedAppearance
-{
-	TXAppearanceType recommendedAppearance = [self.class recommendedAppearance];
-
-	if (self.properties.appearanceType == recommendedAppearance) {
-		return TXAppearanceNoChangeType;
-	}
-
-	return recommendedAppearance;
-}
-
-+ (TXAppearanceType)recommendedAppearance
-{
-	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
-	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
-
-	BOOL darkMode = NO;
-
-	switch ([TPCPreferences appearance]) {
-		case TXPreferredAppearanceInheritedType:
-		{
-			if (onMojave)
-			{
-				/* We only inherit from the system on Mojave.
-				 On earlier operating systems, user is expected
-				 to set an appearance of their own. */
-				darkMode = [TXAppearancePropertyCollection systemWideDarkModeEnabled];
-			}
-
-			break;
-		}
-		case TXPreferredAppearanceDarkType:
-		{
-			darkMode = YES;
-
-			break;
-		}
-		default:
-		{
-			break;
-		}
-	}
-
-	if (onMojave) {
-		if (darkMode) {
-			return TXAppearanceMojaveDarkType;
-		} else {
-			return TXAppearanceMojaveLightType;
-		}
-	} else if (onYosemite) {
-		if (darkMode) {
-			return TXAppearanceYosemiteDarkType;
-		} else {
-			return TXAppearanceYosemiteLightType;
-		}
-	}
-
-	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-		if (darkMode) {
-			return TXAppearanceMavericksGraphiteDarkType;
-		} else {
-			return TXAppearanceMavericksGraphiteLightType;
-		}
-	} else {
-		if (darkMode) {
-			return TXAppearanceMavericksAquaDarkType;
-		} else {
-			return TXAppearanceMavericksAquaLightType;
-		}
-	}
-}
+#pragma mark Properties
 
 + (nullable NSString *)appearanceNameForType:(TXAppearanceType)type
 {
@@ -223,34 +149,6 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 	}
 
 	return nil;
-}
-
-#pragma mark -
-#pragma mark Properties
-
-+ (BOOL)isDarkAppearance:(TXAppearanceType)appearanceType
-{
-	return (appearanceType == TXAppearanceMavericksAquaDarkType ||
-			appearanceType == TXAppearanceMavericksGraphiteDarkType ||
-			appearanceType == TXAppearanceYosemiteDarkType ||
-			appearanceType == TXAppearanceMojaveDarkType);
-}
-
-+ (BOOL)isModernAppearance:(TXAppearanceType)appearanceType
-{
-	return (appearanceType != TXAppearanceMavericksAquaLightType &&
-			appearanceType != TXAppearanceMavericksAquaDarkType &&
-			appearanceType != TXAppearanceMavericksGraphiteLightType &&
-			appearanceType != TXAppearanceMavericksGraphiteDarkType);
-}
-
-+ (BOOL)appKitAppearanceInherited:(TXAppearanceType)appearanceType
-{
-	/* On Mojave and later, we set the appearance on the main window
-	 and allow subviews to inherit from that instead of setting them
-	 for each individual subview. */
-	return (appearanceType == TXAppearanceMojaveLightType ||
-			appearanceType == TXAppearanceMojaveDarkType);
 }
 
 #pragma mark -
@@ -295,9 +193,105 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 
 - (void)updateAppearanceBySystemChange:(BOOL)systemChanged
 {
-	TXAppearanceType recommendedAppearance = [self recommendedAppearance];
+	TXAppearanceType appearanceType;
 
-	BOOL changeAppearance = (recommendedAppearance != TXAppearanceNoChangeType);
+	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
+	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
+
+	BOOL isAppearanceDark = NO;
+	BOOL isAppearanceModern = YES; // good default
+
+	TXPreferredAppearanceType preferredAppearance = [TPCPreferences appearance];
+
+	/* Determine user's preference */
+	switch (preferredAppearance) {
+		case TXPreferredAppearanceInheritedType:
+		{
+			if (onMojave)
+			{
+				/* We only inherit from the system on Mojave.
+				 On earlier operating systems, user is expected
+				 to set an appearance of their own. */
+				isAppearanceDark = [TXAppearancePropertyCollection systemWideDarkModeEnabled];
+			}
+
+			break;
+		}
+		case TXPreferredAppearanceDarkType:
+		{
+			isAppearanceDark = YES;
+
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	/* Determine best appearance and define other properties */
+	TXAppKitAppearanceTarget appKitAppearanceTarget = TXAppKitAppearanceTargetNone;
+
+	if (onMojave)
+	{
+		if (isAppearanceDark) {
+			appearanceType = TXAppearanceMojaveDarkType;
+		} else {
+			appearanceType = TXAppearanceMojaveLightType;
+		} // isAppearanceDark
+
+		/* On Mojave, if the user doesn't select a specific appearance,
+		 then we don't set an NSAppearance object on anything. */
+		/* When the user selects a specific appearance, we set the
+		 prefer the NSAppearance object be set on the window because
+		 visual effect views have correct inheritance as of Mojave
+		 which means they don't need to set the object on individual
+		 views, unlike earlier versions of macOS. */
+		if (preferredAppearance != TXPreferredAppearanceInheritedType) {
+			appKitAppearanceTarget = TXAppKitAppearanceTargetWindow;
+		}
+	}
+	else if (onYosemite)
+	{
+		if (isAppearanceDark) {
+			appearanceType = TXAppearanceYosemiteDarkType;
+		} else {
+			appearanceType = TXAppearanceYosemiteLightType;
+		} // isAppearanceDark
+
+		/* On Yosemite through to High Sierra, we set the NSAppearance
+		 object on individual views. We do this for dark and light
+		 appearance because we want to set vibrant light. Not aqua. */
+		appKitAppearanceTarget = TXAppKitAppearanceTargetView;
+	}
+	else
+	{
+		isAppearanceModern = NO;
+
+		if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+			if (isAppearanceDark) {
+				appearanceType = TXAppearanceMavericksGraphiteDarkType;
+			} else {
+				appearanceType = TXAppearanceMavericksGraphiteLightType;
+			} // isAppearanceDark
+		} else {
+			if (isAppearanceDark) {
+				appearanceType = TXAppearanceMavericksAquaDarkType;
+			} else {
+				appearanceType = TXAppearanceMavericksAquaLightType;
+			} // isAppearanceDark
+		} // Graphite
+
+		/* Mavericks doesn't have vibrancy or dark which means there
+		 is no need to change the AppKit appearance target for it. */
+	} // macOS Version
+
+	/* Test for changes */
+	TXAppearancePropertyCollection *oldProperties = self.properties;
+
+	BOOL changeAppearance = (oldProperties == nil ||
+							 (oldProperties.appearanceType != appearanceType) ||
+							 (oldProperties.appKitAppearanceTarget != appKitAppearanceTarget));
 
 	if (changeAppearance == NO)
 	{
@@ -309,15 +303,20 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 			return;
 		}
 	}
-	else
-	{
-		/* If a sytem change triggers an appearance change,
-		 then treat it as an appearance change. */
-		systemChanged = NO;
 
-		/* Change appearance */
-		[self changeAppearanceTo:recommendedAppearance];
-	}
+	/* Assign new properties */
+	TXAppearancePropertyCollection *newProperties = [TXAppearancePropertyCollection new];
+
+	newProperties.appearanceName = [self.class appearanceNameForType:appearanceType];
+
+	newProperties.appearanceType = appearanceType;
+
+	newProperties.isDarkAppearance = isAppearanceDark;
+	newProperties.isModernAppearance = isAppearanceModern;
+
+	newProperties.appKitAppearanceTarget = appKitAppearanceTarget;
+
+	self.properties = newProperties;
 
 	/* Notify observers */
 	if (systemChanged == NO) {
@@ -325,26 +324,6 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 	} else {
 		[self notifySystemAppearanceChanged];
 	}
-}
-
-- (void)changeAppearanceTo:(TXAppearanceType)appearanceType
-{
-	NSParameterAssert(appearanceType != TXAppearanceNoChangeType);
-
-	Class selfClass = self.class; /* Define as variable. We access multiple times. */
-
-	TXAppearancePropertyCollection *properties = [TXAppearancePropertyCollection new];
-
-	properties.appearanceName = [selfClass appearanceNameForType:appearanceType];
-
-	properties.appearanceType = appearanceType;
-
-	properties.isDarkAppearance = [selfClass isDarkAppearance:appearanceType];
-	properties.isModernAppearance = [selfClass isModernAppearance:appearanceType];
-
-	properties.appKitAppearanceInherited = [selfClass appKitAppearanceInherited:appearanceType];
-
-	self.properties = properties;
 }
 
 - (void)notifyApplicationAppearanceChanged
@@ -364,8 +343,12 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 
 @implementation TXAppearancePropertyCollection
 
-- (NSAppearance *)appKitAppearance
+- (nullable NSAppearance *)appKitAppearance
 {
+	if (self.appKitAppearanceTarget == TXAppKitAppearanceTargetNone) {
+		return nil;
+	}
+
 	if (self.isDarkAppearance) {
 		return [self.class appKitDarkAppearance];
 	} else {
@@ -397,7 +380,7 @@ TEXTUAL_IGNORE_AVAILABILITY_END
 	return [objectValue isEqualToStringIgnoringCase:@"dark"];
 }
 
-+ (NSAppearance *)appKitDarkAppearance
++ (nullable NSAppearance *)appKitDarkAppearance
 {
 #ifdef TXSystemIsOSXMojaveOrLater
 	if (TEXTUAL_RUNNING_ON_MOJAVE) {
@@ -414,7 +397,7 @@ TEXTUAL_IGNORE_AVAILABILITY_END
 #endif
 }
 
-+ (NSAppearance *)appKitLightAppearance
++ (nullable NSAppearance *)appKitLightAppearance
 {
 	if (TEXTUAL_RUNNING_ON_MOJAVE) {
 		return [NSAppearance appearanceNamed:NSAppearanceNameAqua];

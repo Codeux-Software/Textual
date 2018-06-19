@@ -49,6 +49,20 @@ typedef NS_ENUM(NSUInteger, TXAppearanceType)
 	TXAppearanceMojaveDarkType,
 };
 
+/* TXAppKitAppearanceTarget defines which items the NSAppearance
+ object returned by -appKitAppearance should be assigned to. */
+typedef NS_ENUM(NSUInteger, TXAppKitAppearanceTarget)
+{
+	/* The NSAppearance object should be assigned to individual views. */
+	TXAppKitAppearanceTargetView,
+
+	/* The NSAppearance object should be assigned to the window. */
+	TXAppKitAppearanceTargetWindow,
+
+	/* The NSAppearance object shouldn't be assigned to anything. */
+	TXAppKitAppearanceTargetNone
+};
+
 /* None of these proeprties are observable.
  See -[TXAppearance properties] for information about observing. */
 @protocol TXAppearanceProperties <NSObject>
@@ -61,17 +75,15 @@ typedef NS_ENUM(NSUInteger, TXAppearanceType)
 @property (readonly) BOOL isDarkAppearance;
 @property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
 
-/* Do not set -appKitAppearance on a view when -appKitAppearanceInherited is YES.
- When it is YES, set it on the window itself. */
-@property (readonly) BOOL appKitAppearanceInherited;
-@property (readonly) NSAppearance *appKitAppearance;
+@property (readonly) TXAppKitAppearanceTarget appKitAppearanceTarget;
+@property (readonly, nullable) NSAppearance *appKitAppearance; // nil when -appKitAppearanceTarget = none
 @end
 
 @interface TXAppearancePropertyCollection : NSObject <TXAppearanceProperties>
 @property (readonly, class) BOOL systemWideDarkModeEnabled;
 
-@property (readonly, class) NSAppearance *appKitDarkAppearance;
-@property (readonly, class) NSAppearance *appKitLightAppearance;
+@property (readonly, class, nullable) NSAppearance *appKitLightAppearance;
+@property (readonly, class, nullable) NSAppearance *appKitDarkAppearance;
 @end
 
 /* Access through +[TXSharedApplication sharedAppearance] */

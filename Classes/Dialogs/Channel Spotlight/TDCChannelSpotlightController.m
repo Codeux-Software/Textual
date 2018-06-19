@@ -41,6 +41,7 @@
 #import "IRCClient.h"
 #import "IRCWorld.h"
 #import "TPCPreferencesLocal.h"
+#import "TPCPreferencesUserDefaults.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLOLanguagePreferences.h"
 #import "TVCMainWindowPrivate.h"
@@ -159,13 +160,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSAppearance *appKitAppearance = appearance.appKitAppearance;
 
-	if (appearance.appKitAppearanceInherited == NO) {
-		self.visualEffectView.appearance = appKitAppearance;
+	switch (appearance.appKitAppearanceTarget) {
+		case TXAppKitAppearanceTargetView:
+		{
+			self.visualEffectView.appearance = appKitAppearance;
 
-		return;
-	}
+			break;
+		}
+		case TXAppKitAppearanceTargetWindow:
+		{
+			self.window.appearance = appKitAppearance;
 
-	self.window.appearance = appKitAppearance;
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	} // switch()
 }
 
 - (void)updateControlsWithAppearance:(TDCChannelSpotlightAppearance *)appearance

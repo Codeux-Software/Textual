@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(appearance != nil);
 
-	if (appearance.appKitAppearanceInherited == NO) {
+	if (appearance.appKitAppearanceTarget == TXAppKitAppearanceTargetView) {
 		self.segmentedController.appearance = appearance.appKitAppearance;
 	}
 
