@@ -235,6 +235,8 @@ NS_ASSUME_NONNULL_BEGIN
 		/* If predefined selection, then the value is valid
 		 no matter what because it is a value WE defined. */
 		self.cachedValidValue = YES;
+
+		self.lastValidationErrorDescription = nil;
 	} else {
 		[self performValidation];
 	}
