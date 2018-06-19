@@ -384,11 +384,13 @@ const TXAppearanceType TXAppearanceNoChangeType = 1000;
 
 + (BOOL)systemWideDarkModeEnabled
 {
+#ifdef TXSystemIsOSXMojaveOrLater
 	if (TEXTUAL_RUNNING_ON_MOJAVE) {
 TEXTUAL_IGNORE_AVAILABILITY_BEGIN
 		return ([[NSApp effectiveAppearance] bestMatchFromAppearancesWithNames:@[NSAppearanceNameDarkAqua]] != nil);
 TEXTUAL_IGNORE_AVAILABILITY_END
 	}
+#endif
 
 	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
 
@@ -397,13 +399,19 @@ TEXTUAL_IGNORE_AVAILABILITY_END
 
 + (NSAppearance *)appKitDarkAppearance
 {
+#ifdef TXSystemIsOSXMojaveOrLater
 	if (TEXTUAL_RUNNING_ON_MOJAVE) {
 TEXTUAL_IGNORE_AVAILABILITY_BEGIN
 		return [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];
 TEXTUAL_IGNORE_AVAILABILITY_END
 	} else {
+#endif
+
 		return [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+
+#ifdef TXSystemIsOSXMojaveOrLater
 	}
+#endif
 }
 
 + (NSAppearance *)appKitLightAppearance
