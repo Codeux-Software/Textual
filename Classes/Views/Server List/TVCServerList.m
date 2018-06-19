@@ -284,7 +284,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 	NSVisualEffectView *visaulEffectView = self.visualEffectView;
 
-	if (appearance.appKitAppearanceInherited == NO) {
+	if (appearance.appKitAppearanceTarget == TXAppKitAppearanceTargetView) {
 		NSAppearance *appKitAppearance = appearance.appKitAppearance;
 
 		self.appearance = appKitAppearance;
