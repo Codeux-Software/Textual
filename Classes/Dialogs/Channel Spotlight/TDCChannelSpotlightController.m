@@ -95,6 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 											  return [self respondToKeyDownEvent:event];
 										  }];
 
+#warning TODO: Predicate needs to be updated when selection changes
 	if ([TPCPreferences channelNavigationIsServerSpecific]) {
 		NSString *clientId = mainWindow().selectedClient.uniqueIdentifier;
 
