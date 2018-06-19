@@ -218,7 +218,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Appearance
+#pragma mark Events
 
 - (nullable NSEvent *)respondToKeyDownEvent:(NSEvent *)event
 {
