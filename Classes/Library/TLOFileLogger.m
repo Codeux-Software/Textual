@@ -40,7 +40,9 @@
 #import "TXGlobalModels.h"
 #import "TDCAlert.h"
 #import "TLOLanguagePreferences.h"
+#import "TLOTimer.h"
 #import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesLocal.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "TVCLogLinePrivate.h"
@@ -60,14 +62,31 @@ NSString * const TLOFileLoggerNoticeNicknameFormat		= @"-%n-";
 
 NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"; // 2008-07-09T16:13:30+12:00
 
+NSString * const TLOFileLoggerIdleTimerNotification		= @"TLOFileLoggerIdleTimerNotification";
+
 @interface TLOFileLogger ()
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, weak) IRCChannel *channel;
 @property (nonatomic, strong, nullable) NSFileHandle *fileHandle;
-@property (nonatomic, copy, readwrite, nullable) NSString *writePath;
-@property (nonatomic, copy, nullable) NSString *filenameCached;
-@property (readonly, copy) NSString *filename;
+@property (nonatomic, copy, readwrite, nullable) NSString *filePath;
+
+/* Properties that end in an underscore are the live
+ (uncached) values for their counterpart. */
+@property (readonly, copy) NSString *fileName_;
+
+/* The file path hash is the hash of the configured save
+ location combined with the dated file name. When the hash
+ changes, it signals to TLOFileLogger that the file handler
+ has to be reopened. */
+@property (nonatomic, assign) NSUInteger filePathHash;
+@property (readonly) NSUInteger filePathHash_;
+
+@property (nonatomic, assign) NSTimeInterval lastWriteTime;
+@property (readonly) BOOL fileHandleIdle;
+@property (readonly, class) TLOTimer *idleTimer;
 @end
+
+static NSUInteger _numberOfOpenFileHandles = 0;
 
 @implementation TLOFileLogger
 
@@ -135,12 +154,14 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	NSString *stringToWrite = [string stringByAppendingString:@"\x0a"];
+	NSString *stringToWrite = [string stringByAppendingString:@"\n"];
 
 	NSData *dataToWrite = [stringToWrite dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 
 	if (dataToWrite) {
 		@try {
+			self.lastWriteTime = [NSDate timeIntervalSince1970];
+
 			[self.fileHandle writeData:dataToWrite];
 		}
 		@catch (NSException *exception) {
@@ -218,16 +239,17 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.fileHandle = nil;
 
-	self.filenameCached = nil;
+	self.filePath = nil;
+	self.filePathHash = 0;
 
-	self.writePath = nil;
+	self.lastWriteTime = 0;
+
+	[self removeIdleTimerObserver];
 }
 
 - (void)reopenIfNeeded
 {
-#warning TODO: Fix handler not reopening when write path changes
-
-	if ([self.filename isEqualToString:self.filenameCached] && self.fileHandle != nil) {
+	if (self.fileHandle != nil && self.filePathHash == self.filePathHash_) {
 		return;
 	}
 
@@ -249,18 +271,18 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	if ([self buildWritePath] == NO) {
+	if ([self buildFilePath] == NO) {
 		return;
 	}
 
-	NSString *path = self.writePath;
+	NSString *filePath = self.filePath;
 
-	NSString *pathLeading = path.stringByDeletingLastPathComponent;
+	NSString *writePath = filePath.stringByDeletingLastPathComponent;
 
-	if ([RZFileManager() fileExistsAtPath:pathLeading] == NO) {
+	if ([RZFileManager() fileExistsAtPath:writePath] == NO) {
 		NSError *createDirectoryError = nil;
 
-		if ([RZFileManager() createDirectoryAtPath:pathLeading withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
+		if ([RZFileManager() createDirectoryAtPath:writePath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
 			LogToConsoleError("Error Creating Folder: %{public}@",
 				 createDirectoryError.localizedDescription);
 
@@ -268,10 +290,10 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	}
 
-	if ([RZFileManager() fileExistsAtPath:path] == NO) {
+	if ([RZFileManager() fileExistsAtPath:filePath] == NO) {
 		NSError *writeFileError = nil;
 
-		if ([@"" writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
+		if ([@"" writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
 			LogToConsoleError("Error Creating File: %{public}@",
 				  writeFileError.localizedDescription);
 
@@ -279,36 +301,159 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	}
 
-	self.fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
+	NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
 
-	if ( self.fileHandle) {
-		[self.fileHandle seekToEndOfFile];
+	if (fileHandle == nil) {
+		LogToConsoleError("Failed to open file handle at path '%{public}@'", filePath);
 
 		return;
 	}
 
-	LogToConsoleError("Failed to open file handle at path '%{public}@'", path);
+	[fileHandle seekToEndOfFile];
+
+	self.fileHandle = fileHandle;
+
+	[self addIdleTimerObserver];
 }
 
 #pragma mark -
-#pragma mark File Handler Path
+#pragma mark Idle Timer
+
+- (BOOL)fileHandleIdle
+{
+#define _fileHandleIdleLimit		1200 // 20 minutes
+
+	NSTimeInterval lastWriteTime = self.lastWriteTime;
+
+	NSTimeInterval currentTime = [NSDate timeIntervalSince1970];
+
+	if (lastWriteTime > 0) {
+		if ((currentTime - lastWriteTime) > _fileHandleIdleLimit) {
+			return YES;
+		}
+	}
+
+	return NO;
+
+#undef _fileHandleIdleTime
+}
+
++ (TLOTimer *)idleTimer
+{
+	static TLOTimer *idleTimer = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		idleTimer = [TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+			[self idleTimerFired];
+		} onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];
+	});
+
+	return idleTimer;
+}
+
++ (void)idleTimerFired
+{
+	if (_numberOfOpenFileHandles == 0) {
+		[self stopIdleTimer];
+
+		return;
+	}
+
+	[RZNotificationCenter() postNotificationName:TLOFileLoggerIdleTimerNotification object:nil];
+}
+
++ (void)startIdleTimer
+{
+	TLOTimer *idleTimer = self.idleTimer;
+
+	if (idleTimer.timerIsActive) {
+		return;
+	}
+
+#define _idleTimerInterval			600 // 10 minutes
+
+	[idleTimer start:_idleTimerInterval onRepeat:YES];
+
+#undef _idleTimerInterval
+}
+
++ (void)stopIdleTimer
+{
+	TLOTimer *idleTimer = self.idleTimer;
+
+	if (idleTimer.timerIsActive == NO) {
+		return;
+	}
+
+	[idleTimer stop];
+}
+
+- (void)idleTimerFired:(NSNotification *)notification
+{
+	if (self.fileHandleIdle == NO) {
+		return;
+	}
+
+	[self close];
+}
+
+- (void)updateIdleTimer
+{
+	if (_numberOfOpenFileHandles == 0) {
+		[self.class stopIdleTimer];
+	} else {
+		[self.class startIdleTimer];
+	}
+}
+
+- (void)addIdleTimerObserver
+{
+	_numberOfOpenFileHandles += 1;
+
+	[RZNotificationCenter() addObserver:self selector:@selector(idleTimerFired:) name:TLOFileLoggerIdleTimerNotification object:nil];
+
+	[self updateIdleTimer];
+}
+
+- (void)removeIdleTimerObserver
+{
+	_numberOfOpenFileHandles -= 1;
+
+	[RZNotificationCenter() removeObserver:self name:TLOFileLoggerIdleTimerNotification object:nil];
+
+	[self updateIdleTimer];
+}
+
+#pragma mark -
+#pragma mark Paths
 
 + (nullable NSString *)writePathForItem:(IRCTreeItem *)item
 {
 	NSParameterAssert(item != nil);
-	
-	return [self writePathWithUniqueIdentifier:YES forItem:item];
-}
 
-+ (nullable NSString *)writePathWithUniqueIdentifier:(BOOL)withUniqueIdentifier forItem:(IRCTreeItem *)item
-{
-	NSParameterAssert(item != nil);
+	NSString *sourcePath = [TPCPathInfo transcriptFolder];
 
-	NSURL *sourcePath = [TPCPathInfo transcriptFolderURL];
-	
 	if (sourcePath == nil) {
 		return nil;
 	}
+
+	return [self writePathForItem:item relativeTo:sourcePath];
+}
+
++ (NSString *)writePathForItem:(IRCTreeItem *)item relativeTo:(NSString *)sourcePath
+{
+	NSParameterAssert(sourcePath != nil);
+	NSParameterAssert(item != nil);
+
+	return [self writePathForItem:item relativeTo:sourcePath withUniqueIdentifier:YES];
+}
+
++ (NSString *)writePathForItem:(IRCTreeItem *)item relativeTo:(NSString *)sourcePath withUniqueIdentifier:(BOOL)withUniqueIdentifier
+{
+	NSParameterAssert(sourcePath != nil);
+	NSParameterAssert(item != nil);
 	
 	IRCClient *client = item.associatedClient;
 	
@@ -321,7 +466,7 @@ ClassWithDesignatedInitializerInitMethod
 	 our write path. This makes the transition to the new naming scheme seamless
 	 for the end user. */
 	if (withUniqueIdentifier) {
-		NSString *pathWithoutIdentifier = [self writePathWithUniqueIdentifier:NO forItem:item];
+		NSString *pathWithoutIdentifier = [self writePathForItem:item relativeTo:sourcePath withUniqueIdentifier:NO];
 		
 		if ([RZFileManager() fileExistsAtPath:pathWithoutIdentifier]) {
 			return pathWithoutIdentifier;
@@ -346,41 +491,76 @@ ClassWithDesignatedInitializerInitMethod
 		basePath = [NSString stringWithFormat:@"/%@/%@/%@/", clientName.safeFilename, TLOFileLoggerPrivateMessageDirectoryName, channel.name.safeFilename];
 	}
 	
-	return [sourcePath.path stringByAppendingPathComponent:basePath];
+	return [sourcePath stringByAppendingPathComponent:basePath];
 }
 
-- (nullable NSString *)writePathLeading
+- (nullable NSString *)writePath
 {
+	return self.filePath.stringByDeletingLastPathComponent;
+}
+
+- (NSString *)writePathRelativeTo:(NSString *)sourcePath
+{
+	NSParameterAssert(sourcePath != nil);
+
 	IRCClient *client = self.client;
 	IRCChannel *channel = self.channel;
-	
-	IRCTreeItem *item = ((channel) ? : client);
 
-	return [self.class writePathForItem:item];
+	IRCTreeItem *item = ((channel) ?: client);
+
+	return [self.class writePathForItem:item relativeTo:sourcePath];
 }
 
-- (NSString *)filename
+- (nullable NSString *)fileName
+{
+	return self.filePath.lastPathComponent;
+}
+
+- (NSString *)fileName_
 {
 	NSString *dateTime = TXFormattedTimestamp([NSDate date], @"%Y-%m-%d");
 
-	NSString *filename = [NSString stringWithFormat:@"%@.txt", dateTime];
+	NSString *fileName = [NSString stringWithFormat:@"%@.txt", dateTime];
 
-	return filename;
+	return fileName;
 }
 
-- (BOOL)buildWritePath
+- (BOOL)buildFilePath
 {
-	NSString *sourcePath = [self writePathLeading];
+	NSString *sourcePath = [TPCPathInfo transcriptFolder];
 
 	if (sourcePath == nil) {
 		return NO;
 	}
 
-	self.filenameCached = self.filename;
+	NSString *writePath = [self writePathRelativeTo:sourcePath];
 
-	self.writePath = [sourcePath stringByAppendingPathComponent:self.filenameCached];
+	NSString *fileName = self.fileName_;
+
+	NSString *filePath = [writePath stringByAppendingPathComponent:fileName];
+
+	self.filePath = filePath;
+
+	NSString *filePathHash = [sourcePath stringByAppendingString:fileName];
+
+	self.filePathHash = filePathHash.hash;
 
 	return YES;
+}
+
+- (NSUInteger)filePathHash_
+{
+	NSString *sourcePath = [TPCPathInfo transcriptFolder];
+
+	if (sourcePath == nil) {
+		return 0;
+	}
+
+	NSString *fileName = self.fileName_;
+
+	NSString *filePathHash = [sourcePath stringByAppendingString:fileName];
+
+	return filePathHash.hash;
 }
 
 @end
