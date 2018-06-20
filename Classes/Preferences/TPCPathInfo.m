@@ -642,6 +642,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 static NSURL * _Nullable _transcriptFolderURL = nil;
 
++ (nullable NSString *)transcriptFolder
+{
+	return _transcriptFolderURL.path;
+}
+
 + (nullable NSURL *)transcriptFolderURL
 {
 	return _transcriptFolderURL;

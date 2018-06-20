@@ -45,7 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TPCPathInfo (TPCPathInfoTranscriptFolderExtension)
-+ (nullable NSURL *)transcriptFolderURL;
+@property (class, readonly, copy, nullable) NSString *transcriptFolder;
+@property (class, readonly, copy, nullable) NSURL *transcriptFolderURL;
+
 + (void)setTranscriptFolderURL:(nullable NSData *)transcriptFolderURL;
 
 + (void)startUsingTranscriptFolderURL;
