@@ -303,6 +303,12 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 			return;
 		}
 	}
+	else
+	{
+		/* When appearance changes as a result of a system change, then we
+		 treat it as an application change as that's more specialized. */
+		systemChanged = NO;
+	}
 
 	/* Assign new properties */
 	TXAppearancePropertyCollection *newProperties = [TXAppearancePropertyCollection new];
