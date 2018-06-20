@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -423,7 +423,7 @@
             <constraints>
                 <constraint firstItem="7FC-io-wmx" firstAttribute="centerX" secondItem="Oku-xz-Fxe" secondAttribute="centerX" id="2rH-GU-gtN"/>
                 <constraint firstAttribute="width" constant="500" id="30C-6G-tnq"/>
-                <constraint firstAttribute="height" constant="270" id="EFT-5k-gzW"/>
+                <constraint firstAttribute="bottom" secondItem="7FC-io-wmx" secondAttribute="bottom" constant="66" id="4Rc-20-tQp"/>
                 <constraint firstItem="OXT-Ee-aMq" firstAttribute="top" secondItem="fXK-tP-ATQ" secondAttribute="top" constant="67" id="NYP-VP-QdL"/>
                 <constraint firstItem="7FC-io-wmx" firstAttribute="top" secondItem="Oku-xz-Fxe" secondAttribute="bottom" constant="20" id="b6Z-rN-W3h"/>
                 <constraint firstItem="OXT-Ee-aMq" firstAttribute="centerX" secondItem="fXK-tP-ATQ" secondAttribute="centerX" id="hbS-SF-gVL"/>
@@ -466,7 +466,6 @@
                 <constraint firstItem="gTa-O0-6Lc" firstAttribute="centerX" secondItem="lkd-lf-FMT" secondAttribute="centerX" constant="21" id="iLf-pc-Zte"/>
                 <constraint firstItem="b03-92-7hd" firstAttribute="centerY" secondItem="gTa-O0-6Lc" secondAttribute="centerY" id="jrJ-mX-tzB"/>
                 <constraint firstAttribute="trailing" secondItem="mVu-QC-HVJ" secondAttribute="trailing" constant="50" id="pDT-E9-JUg"/>
-                <constraint firstAttribute="height" constant="350" id="pHW-lW-vUf"/>
                 <constraint firstItem="mVu-QC-HVJ" firstAttribute="leading" secondItem="lkd-lf-FMT" secondAttribute="leading" constant="50" id="vvI-pc-9qC"/>
             </constraints>
             <point key="canvasLocation" x="207" y="236"/>

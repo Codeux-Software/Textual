@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -288,6 +288,9 @@ Gw
                 </textField>
                 <textField toolTip="Password to be sent using the PASS command. This is NOT your password for NickServ." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1543" customClass="NSSecureTextField">
                     <rect key="frame" x="210" y="131" width="232" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="I7v-GZ-Epi"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="1554">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -316,6 +319,9 @@ Gw
                 </textField>
                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1548" customClass="TVCValidatedComboBox">
                     <rect key="frame" x="210" y="195" width="235" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="8k6-8p-srA"/>
+                    </constraints>
                     <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="1549" customClass="TVCValidatedComboBoxCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -342,6 +348,9 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1539" customClass="TVCValidatedTextField">
                     <rect key="frame" x="210" y="231" width="232" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="3i3-EI-V9G"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Example IRC Network" id="1558" customClass="TVCValidatedTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -378,6 +387,7 @@ Gw
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1541" customClass="TVCValidatedTextField">
                     <rect key="frame" x="210" y="165" width="99" height="22"/>
                     <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="CPN-Xz-PcT"/>
                         <constraint firstAttribute="height" constant="22" id="dUI-LW-1ay"/>
                         <constraint firstAttribute="width" constant="99" id="dYx-Mj-ixL"/>
                     </constraints>
@@ -469,6 +479,9 @@ Gw
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1595" customClass="TVCValidatedTextField">
                     <rect key="frame" x="231" y="333" width="187" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="nag-Vc-9tt"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" usesSingleLineMode="YES" id="1619" customClass="TVCValidatedTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -489,6 +502,9 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1597" customClass="TVCValidatedTextField">
                     <rect key="frame" x="231" y="187" width="188" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="kbJ-iI-I2h"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="textual" usesSingleLineMode="YES" id="1617" customClass="TVCValidatedTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -508,6 +524,9 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1599" customClass="TVCValidatedTextField">
                     <rect key="frame" x="231" y="153" width="188" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="0d1-x8-qiU"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Textual User" usesSingleLineMode="YES" id="1615" customClass="TVCValidatedTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -519,6 +538,9 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1602" customClass="TVCValidatedTextField">
                     <rect key="frame" x="231" y="265" width="187" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="kER-ij-bd2"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest_ Guest__ Guest___" usesSingleLineMode="YES" id="1612" customClass="TVCValidatedTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -557,6 +579,9 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2335" customClass="TVCValidatedTextField">
                     <rect key="frame" x="231" y="299" width="187" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="VYY-nq-syV"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest[away]" usesSingleLineMode="YES" id="2342" customClass="TVCValidatedTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -584,6 +609,9 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1601" customClass="NSSecureTextField">
                     <rect key="frame" x="231" y="90" width="187" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="W6I-0c-I84"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="NickServ or SASL Password" drawsBackground="YES" id="1613">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1585,6 +1613,9 @@ Gw
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1901" customClass="TVCValidatedTextField">
                             <rect key="frame" x="146" y="127" width="220" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="CHb-rL-Cpx"/>
+                            </constraints>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="proxy.example.com" usesSingleLineMode="YES" id="1916" customClass="TVCValidatedTextFieldCell">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1597,6 +1628,7 @@ Gw
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1903" customClass="TVCValidatedTextField">
                             <rect key="frame" x="146" y="95" width="120" height="22"/>
                             <constraints>
+                                <constraint firstAttribute="height" constant="22" id="JB6-id-AgS"/>
                                 <constraint firstAttribute="width" constant="120" id="PcF-N1-nHy"/>
                             </constraints>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1080" usesSingleLineMode="YES" id="1914" customClass="TVCValidatedTextFieldCell">
@@ -1610,6 +1642,9 @@ Gw
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1904">
                             <rect key="frame" x="146" y="63" width="220" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="jly-CJ-SHw"/>
+                            </constraints>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="admin" drawsBackground="YES" usesSingleLineMode="YES" id="1913">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1621,6 +1656,9 @@ Gw
                         </textField>
                         <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1902">
                             <rect key="frame" x="146" y="31" width="220" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="EPx-uC-UQ3"/>
+                            </constraints>
                             <secureTextFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="1915">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -1931,10 +1931,10 @@
             <point key="canvasLocation" x="2481" y="982"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="JIk-pR-b6c" userLabel="Loading Screen: Welcome, Add Server">
-            <rect key="frame" x="0.0" y="0.0" width="482" height="320"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="331"/>
             <subviews>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="o7h-U2-V2Y">
-                    <rect key="frame" x="165" y="153" width="152" height="152"/>
+                    <rect key="frame" x="174" y="159" width="152" height="152"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="152" id="84v-Nt-1a2"/>
                         <constraint firstAttribute="width" constant="152" id="hdm-GZ-fZh"/>
@@ -1942,7 +1942,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="oLJ-9e-Jtc"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kq0-5d-sEo">
-                    <rect key="frame" x="102" y="109" width="278" height="36"/>
+                    <rect key="frame" x="111" y="115" width="278" height="36"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to Textual 7" id="Ufb-Xe-N0L">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1950,7 +1950,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QuH-Gd-Jrb">
-                    <rect key="frame" x="33" y="50" width="416" height="51"/>
+                    <rect key="frame" x="42" y="56" width="416" height="51"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="rPd-kz-DSl">
                         <font key="font" metaFont="system"/>
                         <string key="title">Textual is a powerful, yet lightweight, IRC client built exclusively for the Mac. To get started, Textual will walk you through adding your first server. Click the button below to continue.</string>
@@ -1959,7 +1959,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nOm-7I-ttA">
-                    <rect key="frame" x="194" y="7" width="95" height="32"/>
+                    <rect key="frame" x="203" y="13" width="95" height="32"/>
                     <buttonCell key="cell" type="push" title="Continue" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="oHF-Zz-cjP">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -1971,27 +1971,25 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="width" constant="482" id="3Q8-06-q12"/>
+                <constraint firstAttribute="width" constant="500" id="3Q8-06-q12"/>
                 <constraint firstItem="o7h-U2-V2Y" firstAttribute="centerX" secondItem="JIk-pR-b6c" secondAttribute="centerX" id="BAy-nm-LJN"/>
-                <constraint firstAttribute="height" constant="320" id="Dke-My-XkD"/>
                 <constraint firstItem="kq0-5d-sEo" firstAttribute="top" secondItem="o7h-U2-V2Y" secondAttribute="bottom" constant="8" id="HFe-x2-o7i"/>
-                <constraint firstItem="QuH-Gd-Jrb" firstAttribute="centerX" secondItem="kq0-5d-sEo" secondAttribute="centerX" id="Ivz-MM-Z3W"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QuH-Gd-Jrb" secondAttribute="trailing" constant="35" id="J7v-iU-JMZ"/>
                 <constraint firstItem="kq0-5d-sEo" firstAttribute="centerX" secondItem="o7h-U2-V2Y" secondAttribute="centerX" id="Jco-Zo-blm"/>
-                <constraint firstAttribute="bottom" secondItem="nOm-7I-ttA" secondAttribute="bottom" constant="14" id="NlT-i6-p6k"/>
                 <constraint firstItem="QuH-Gd-Jrb" firstAttribute="top" secondItem="kq0-5d-sEo" secondAttribute="bottom" constant="8" id="Px9-Go-Lre"/>
                 <constraint firstItem="nOm-7I-ttA" firstAttribute="top" secondItem="QuH-Gd-Jrb" secondAttribute="bottom" constant="15" id="RW3-5k-aKk"/>
                 <constraint firstItem="nOm-7I-ttA" firstAttribute="centerX" secondItem="QuH-Gd-Jrb" secondAttribute="centerX" id="Re0-gO-hHp"/>
-                <constraint firstItem="o7h-U2-V2Y" firstAttribute="top" secondItem="JIk-pR-b6c" secondAttribute="top" constant="15" id="TJa-zu-Ofa"/>
-                <constraint firstItem="QuH-Gd-Jrb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JIk-pR-b6c" secondAttribute="leading" constant="35" id="xLb-Fp-Oa7"/>
+                <constraint firstItem="o7h-U2-V2Y" firstAttribute="top" secondItem="JIk-pR-b6c" secondAttribute="top" constant="20" id="TJa-zu-Ofa"/>
+                <constraint firstItem="QuH-Gd-Jrb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JIk-pR-b6c" secondAttribute="leading" constant="44" id="mE4-wf-bYY"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QuH-Gd-Jrb" secondAttribute="trailing" constant="44" id="ofc-wN-Eyi"/>
+                <constraint firstAttribute="bottom" secondItem="nOm-7I-ttA" secondAttribute="bottom" constant="20" id="pWD-b7-6Ai"/>
             </constraints>
-            <point key="canvasLocation" x="138" y="584"/>
+            <point key="canvasLocation" x="-10" y="468"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="87U-6U-CXs" userLabel="Loading Screen: Progress Message">
-            <rect key="frame" x="0.0" y="0.0" width="400" height="250"/>
+            <rect key="frame" x="0.0" y="0.0" width="400" height="259"/>
             <subviews>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zJy-aD-GWq">
-                    <rect key="frame" x="61" y="40" width="278" height="36"/>
+                    <rect key="frame" x="61" y="45" width="278" height="36"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual 7" id="F83-QX-Ifv">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1999,7 +1997,7 @@
                     </textFieldCell>
                 </textField>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="VEi-CX-Bgx">
-                    <rect key="frame" x="125" y="84" width="150" height="150"/>
+                    <rect key="frame" x="125" y="89" width="150" height="150"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="YgZ-yo-D3A"/>
                         <constraint firstAttribute="width" constant="150" id="gW9-Ix-aGO"/>
@@ -2007,7 +2005,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="hsg-x0-w6u"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XbN-Lh-kvY">
-                    <rect key="frame" x="111" y="15" width="152" height="17"/>
+                    <rect key="frame" x="111" y="20" width="152" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Loading Configuration …" id="fFM-Jc-saN">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2022,42 +2020,31 @@
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g06-q9-i7d" secondAttribute="trailing" constant="20" id="ABY-JX-zhO"/>
                 <constraint firstItem="zJy-aD-GWq" firstAttribute="centerX" secondItem="VEi-CX-Bgx" secondAttribute="centerX" id="CgH-BS-NaH"/>
                 <constraint firstItem="zJy-aD-GWq" firstAttribute="top" secondItem="VEi-CX-Bgx" secondAttribute="bottom" constant="8" id="IAL-8d-ah7"/>
-                <constraint firstAttribute="height" constant="250" id="a3V-Xj-5T9"/>
+                <constraint firstItem="VEi-CX-Bgx" firstAttribute="top" secondItem="87U-6U-CXs" secondAttribute="top" constant="20" id="VQe-Ln-8U2"/>
                 <constraint firstItem="XbN-Lh-kvY" firstAttribute="centerX" secondItem="zJy-aD-GWq" secondAttribute="centerX" constant="-13" id="aP9-KU-111"/>
                 <constraint firstAttribute="width" constant="400" id="aoM-Gb-JbS"/>
                 <constraint firstItem="XbN-Lh-kvY" firstAttribute="top" secondItem="zJy-aD-GWq" secondAttribute="bottom" constant="8" id="dj2-rg-iAu"/>
                 <constraint firstItem="VEi-CX-Bgx" firstAttribute="centerX" secondItem="87U-6U-CXs" secondAttribute="centerX" id="gMs-jL-En0"/>
                 <constraint firstItem="g06-q9-i7d" firstAttribute="leading" secondItem="XbN-Lh-kvY" secondAttribute="trailing" constant="10" id="ho0-VV-4WN"/>
-                <constraint firstAttribute="bottom" secondItem="XbN-Lh-kvY" secondAttribute="bottom" constant="15" id="jMP-T6-pmz"/>
+                <constraint firstAttribute="bottom" secondItem="XbN-Lh-kvY" secondAttribute="bottom" constant="20" id="jMP-T6-pmz"/>
                 <constraint firstItem="XbN-Lh-kvY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="87U-6U-CXs" secondAttribute="leading" constant="20" id="m6E-Cn-jh5"/>
                 <constraint firstAttribute="bottom" secondItem="g06-q9-i7d" secondAttribute="bottom" constant="15" id="vJa-XH-TQr"/>
             </constraints>
-            <point key="canvasLocation" x="179" y="444"/>
+            <point key="canvasLocation" x="51" y="428"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="UGU-ki-IAj" userLabel="Loading Screen: Trial Expired">
-            <rect key="frame" x="0.0" y="0.0" width="490" height="400"/>
+            <rect key="frame" x="0.0" y="0.0" width="550" height="418"/>
             <subviews>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aC6-pa-oS9">
-                    <rect key="frame" x="29" y="193" width="432" height="36"/>
+                    <rect key="frame" x="59" y="202" width="432" height="36"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your trial of Textual 7 has expired!" id="plu-S8-Umu">
                         <font key="font" metaFont="system" size="30"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-Wg-mnW">
-                    <rect key="frame" x="71" y="134" width="348" height="51"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="OkG-Uf-DGo">
-                        <font key="font" metaFont="system"/>
-                        <string key="title">Thank you for trying Textual 7 for the past 30 days. 
-
-To continue using Textual 7, you will need to purchase it.</string>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AMz-QF-O2B">
-                    <rect key="frame" x="182" y="91" width="127" height="32"/>
+                    <rect key="frame" x="212" y="100" width="127" height="32"/>
                     <buttonCell key="cell" type="push" title="Purchase Now" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="p3l-SA-uyY">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2068,7 +2055,7 @@ To continue using Textual 7, you will need to purchase it.</string>
                     </connections>
                 </button>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="9y6-54-sMF">
-                    <rect key="frame" x="169" y="237" width="152" height="152"/>
+                    <rect key="frame" x="199" y="246" width="152" height="152"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="152" id="0BC-NC-xRi"/>
                         <constraint firstAttribute="width" constant="152" id="o1K-YX-CCy"/>
@@ -2076,14 +2063,14 @@ To continue using Textual 7, you will need to purchase it.</string>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="nGM-qO-QXN"/>
                 </imageView>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="YWb-p9-CO9">
-                    <rect key="frame" x="38" y="78" width="414" height="4"/>
+                    <rect key="frame" x="68" y="87" width="414" height="4"/>
                     <constraints>
                         <constraint firstAttribute="height" id="3us-lk-XE9"/>
                         <constraint firstAttribute="width" constant="414" id="Ag9-0p-7t0"/>
                     </constraints>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKc-si-bgQ">
-                    <rect key="frame" x="144" y="47" width="203" height="17"/>
+                    <rect key="frame" x="174" y="56" width="203" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual 7?" id="yHC-IC-42Y">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2091,7 +2078,7 @@ To continue using Textual 7, you will need to purchase it.</string>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c06-w7-EdL">
-                    <rect key="frame" x="177" y="4" width="136" height="32"/>
+                    <rect key="frame" x="207" y="13" width="136" height="32"/>
                     <buttonCell key="cell" type="push" title="Activate Textual" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="QKb-kS-1Nn">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2100,31 +2087,39 @@ To continue using Textual 7, you will need to purchase it.</string>
                         <action selector="manageLicense:" target="oRw-Te-R5j" id="uWz-1D-rzy"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-Wg-mnW">
+                    <rect key="frame" x="101" y="143" width="348" height="51"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="OkG-Uf-DGo">
+                        <font key="font" metaFont="system"/>
+                        <string key="title">Thank you for trying Textual 7 for the past 30 days. 
+
+To continue using Textual 7, you will need to purchase it.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
+                <constraint firstItem="wSh-Wg-mnW" firstAttribute="centerX" secondItem="aC6-pa-oS9" secondAttribute="centerX" id="0VI-Zp-ECJ"/>
+                <constraint firstItem="wSh-Wg-mnW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UGU-ki-IAj" secondAttribute="leading" constant="60" id="1J5-Kg-tUg"/>
                 <constraint firstItem="YWb-p9-CO9" firstAttribute="top" secondItem="AMz-QF-O2B" secondAttribute="bottom" constant="18" id="4mu-4b-g6R"/>
+                <constraint firstAttribute="bottom" secondItem="c06-w7-EdL" secondAttribute="bottom" constant="20" id="9C3-Qw-3FJ"/>
                 <constraint firstItem="aC6-pa-oS9" firstAttribute="centerX" secondItem="9y6-54-sMF" secondAttribute="centerX" id="A1A-Zw-d4N"/>
-                <constraint firstAttribute="height" constant="400" id="APj-kC-GzY"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aC6-pa-oS9" secondAttribute="trailing" constant="20" id="EAH-MC-wtm"/>
                 <constraint firstItem="rKc-si-bgQ" firstAttribute="centerX" secondItem="YWb-p9-CO9" secondAttribute="centerX" id="EHA-lr-rPL"/>
                 <constraint firstItem="YWb-p9-CO9" firstAttribute="centerX" secondItem="AMz-QF-O2B" secondAttribute="centerX" id="G4z-SP-cf4"/>
-                <constraint firstItem="wSh-Wg-mnW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UGU-ki-IAj" secondAttribute="leading" constant="20" id="GLL-5O-T0U"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wSh-Wg-mnW" secondAttribute="trailing" constant="20" id="Ilz-m8-Oee"/>
                 <constraint firstItem="AMz-QF-O2B" firstAttribute="top" secondItem="wSh-Wg-mnW" secondAttribute="bottom" constant="15" id="Q3Z-UZ-hQF"/>
-                <constraint firstAttribute="bottom" secondItem="c06-w7-EdL" secondAttribute="bottom" constant="11" id="Tvg-jx-VFb"/>
                 <constraint firstItem="wSh-Wg-mnW" firstAttribute="top" secondItem="aC6-pa-oS9" secondAttribute="bottom" constant="8" id="VDQ-nd-bqJ"/>
                 <constraint firstItem="rKc-si-bgQ" firstAttribute="top" secondItem="YWb-p9-CO9" secondAttribute="bottom" constant="16" id="WtQ-Uj-e2y"/>
+                <constraint firstItem="AMz-QF-O2B" firstAttribute="centerX" secondItem="wSh-Wg-mnW" secondAttribute="centerX" id="Wzx-6O-0Fs"/>
                 <constraint firstItem="c06-w7-EdL" firstAttribute="top" secondItem="rKc-si-bgQ" secondAttribute="bottom" constant="15" id="dLH-xZ-T3Q"/>
                 <constraint firstItem="9y6-54-sMF" firstAttribute="centerX" secondItem="UGU-ki-IAj" secondAttribute="centerX" id="e51-Ab-Wu1"/>
-                <constraint firstAttribute="width" constant="490" id="fHG-Dv-4kt"/>
-                <constraint firstItem="9y6-54-sMF" firstAttribute="top" secondItem="UGU-ki-IAj" secondAttribute="top" constant="11" id="fPh-Sh-hW7"/>
+                <constraint firstAttribute="width" constant="550" id="fHG-Dv-4kt"/>
+                <constraint firstItem="9y6-54-sMF" firstAttribute="top" secondItem="UGU-ki-IAj" secondAttribute="top" constant="20" id="fPh-Sh-hW7"/>
                 <constraint firstItem="aC6-pa-oS9" firstAttribute="top" secondItem="9y6-54-sMF" secondAttribute="bottom" constant="8" id="nmv-zU-rQV"/>
-                <constraint firstItem="aC6-pa-oS9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UGU-ki-IAj" secondAttribute="leading" constant="20" id="rcf-Gg-QGf"/>
                 <constraint firstItem="c06-w7-EdL" firstAttribute="centerX" secondItem="rKc-si-bgQ" secondAttribute="centerX" id="reh-Ri-2Ez"/>
-                <constraint firstItem="AMz-QF-O2B" firstAttribute="centerX" secondItem="wSh-Wg-mnW" secondAttribute="centerX" id="tJZ-9F-lR1"/>
-                <constraint firstItem="wSh-Wg-mnW" firstAttribute="centerX" secondItem="aC6-pa-oS9" secondAttribute="centerX" id="xJp-cJ-jB0"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wSh-Wg-mnW" secondAttribute="trailing" constant="60" id="tAP-oP-z1A"/>
             </constraints>
-            <point key="canvasLocation" x="10" y="643"/>
+            <point key="canvasLocation" x="26" y="722"/>
         </customView>
     </objects>
     <resources>

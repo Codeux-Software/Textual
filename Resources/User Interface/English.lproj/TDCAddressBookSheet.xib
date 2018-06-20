@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -161,6 +161,9 @@ DQ
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="540" customClass="TVCValidatedTextField">
                         <rect key="frame" x="88" y="249" width="265" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="Og3-X2-Mmk"/>
+                        </constraints>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter any nickname to track" drawsBackground="YES" usesSingleLineMode="YES" id="543" customClass="TVCValidatedTextFieldCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -217,6 +220,9 @@ DQ
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCValidatedTextField">
                         <rect key="frame" x="93" y="330" width="413" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="6zr-Z7-gda"/>
+                        </constraints>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter a hostmask to ignore" drawsBackground="YES" usesSingleLineMode="YES" id="299" customClass="TVCValidatedTextFieldCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -442,7 +448,6 @@ DQ
                     <constraint firstItem="484" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="CZs-hP-N3y"/>
                     <constraint firstItem="304" firstAttribute="baseline" secondItem="302" secondAttribute="baseline" id="Dgq-fR-czw"/>
                     <constraint firstItem="594" firstAttribute="top" secondItem="298" secondAttribute="bottom" constant="15" id="G1Q-Vh-L5K"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PQp-5W-SVj" secondAttribute="trailing" constant="20" id="GCA-AI-WKb"/>
                     <constraint firstItem="DZg-Rc-DxS" firstAttribute="top" secondItem="PQp-5W-SVj" secondAttribute="bottom" constant="16" id="HfF-WD-d1r"/>
                     <constraint firstItem="594" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="95" id="Hvh-Fb-dKn"/>
                     <constraint firstItem="296" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="JST-eo-Rn2"/>
@@ -451,7 +456,6 @@ DQ
                     <constraint firstAttribute="trailing" secondItem="298" secondAttribute="trailing" constant="20" symbolic="YES" id="Ney-ZY-meW"/>
                     <constraint firstItem="485" firstAttribute="baseline" secondItem="484" secondAttribute="baseline" id="Q90-dv-YnK"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="306" secondAttribute="trailing" constant="20" id="QT3-bc-W3J"/>
-                    <constraint firstItem="PQp-5W-SVj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="Qun-SE-Bxd"/>
                     <constraint firstItem="302" firstAttribute="top" secondItem="594" secondAttribute="bottom" constant="2" id="TCq-bu-JyI"/>
                     <constraint firstItem="298" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" id="Tp0-o5-sPM"/>
                     <constraint firstAttribute="bottom" secondItem="485" secondAttribute="bottom" constant="20" id="Vqm-7m-i3s"/>
