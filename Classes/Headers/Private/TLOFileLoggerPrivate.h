@@ -59,13 +59,29 @@ TEXTUAL_EXTERN NSString * const TLOFileLoggerISOStandardClockFormat;
 - (void)reopenIfNeeded;
 - (void)close;
 
-- (void)reset;
-
-@property (readonly, copy, nullable) NSString *writePath;
+- (void)reset; // does nothing if file isn't open
 
 - (void)writeLogLine:(TVCLogLine *)logLine;
 - (void)writePlainText:(NSString *)string;
 
+#pragma mark -
+#pragma mark Paths
+
+/* All path information is nullable because path information
+ is not cached until log file is opened */
+
+/* File path is the path to the log file for the day */
+@property (readonly, copy, nullable) NSString *filePath;
+
+/* The last path component (file name) of file path */
+@property (readonly, copy, nullable) NSString *fileName;
+
+/* Write path is the path to the folder in which log files
+ for the channel or client are written to. */
+@property (readonly, copy, nullable) NSString *writePath;
+
+/* -writePathForItem: only returns nil when there is no
+ log location configured in Preferences. */
 + (nullable NSString *)writePathForItem:(IRCTreeItem *)item;
 @end
 
