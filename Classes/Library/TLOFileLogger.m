@@ -396,6 +396,8 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
+	LogToConsoleDebug("Closing %@ because it's idle.", self);
+
 	[self close];
 }
 
