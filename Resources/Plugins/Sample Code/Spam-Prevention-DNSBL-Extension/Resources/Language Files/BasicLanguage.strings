@@ -1,7 +1,0 @@
-
-"BasicLanguage[1000]" = "Blacklist entry found for %1$@ in %2$@ with a resolved IP address of %3$@ — This entry was found on the %4$@ blacklist with the reason: “%5$@”";
-
-"BasicLanguage[1001]" = "Blacklist Warnings";
-
-"BasicLanguage[1002]" = "Blacklist entry not found for %@";
-"BasicLanguage[1003]" = "Blacklist lookup cannot be performed for %@ because of an unknown address.";
