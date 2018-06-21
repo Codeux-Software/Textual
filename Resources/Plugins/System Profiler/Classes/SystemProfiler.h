@@ -1,7 +1,7 @@
 
 #import <IOKit/IOKitLib.h>
 
-#import "TextualApplication.h"
+#import "Textual.h"
 
 #include <mach/mach.h>
 #include <mach/mach_host.h>

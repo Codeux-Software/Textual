@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "Textual.h"
 
 #import "TPI_ChatFilter.h"
 
