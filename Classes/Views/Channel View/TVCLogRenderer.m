@@ -313,7 +313,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 	NSMutableDictionary<NSString *, NSString *> *linksMapped = [NSMutableDictionary dictionary];
 
-	NSArray *links = [TLOLinkParser locatedLinksForString:self->_body];
+	NSArray *links = [TLOLinkParser locateLinksInString:self->_body];
 
 	for (AHHyperlinkScannerResult *link in links) {
 		NSRange linkRange = link.range;

@@ -5,8 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,44 +35,10 @@
  *
  *********************************************************************** */
 
+#import "TextualPrivate.h"
+
+// TLOpenLink.swift
+#import "TPCPreferencesLocal.h"
+
+// TLOLinkParser.swift
 #import "TVCLogLine.h"
-#import "TLOLinkParser.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@implementation TLOLinkParser
-
-+ (NSArray<AHHyperlinkScannerResult *> *)locatedLinksForString:(NSString *)string
-{
-	NSParameterAssert(string != nil);
-
-	AHHyperlinkScanner *scanner = [AHHyperlinkScanner new];
-
-	NSArray *result = [scanner matchesForString:string];
-
-	scanner = nil;
-
-	return result;
-}
-
-+ (NSArray<NSString *> *)bannedLineTypes
-{
-	__block NSArray<NSString *> *cachedValues = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		cachedValues = @[
-			[TVCLogLine stringForLineType:TVCLogLineModeType],
-			[TVCLogLine stringForLineType:TVCLogLineJoinType],
-			[TVCLogLine stringForLineType:TVCLogLineNickType],
-			[TVCLogLine stringForLineType:TVCLogLineInviteType]
-		];
-	});
-
-	return cachedValues;
-}
-
-@end
-
-NS_ASSUME_NONNULL_END
