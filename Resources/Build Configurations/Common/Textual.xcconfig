@@ -12,6 +12,8 @@ SWIFT_OBJC_BRIDGING_HEADER = ${PROJECT_DIR}/Classes/Headers/Private/SwiftBridgin
 
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 
+LD_RUNPATH_SEARCH_PATHS = @executable_path/../Frameworks
+
 // It is important to preserve symbols and code that is
 // not directly used so that plugins can use them.
 DEAD_CODE_STRIPPING = NO
