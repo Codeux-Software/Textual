@@ -3124,7 +3124,6 @@
 		4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreHockeyAppFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreHockeyAppFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreSparkleFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreSparkleFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ChatFilterExtension.bundle; path = ".tmp/SharedBuildProducts-Extensions/ChatFilterExtension.bundle"; sourceTree = SOURCE_ROOT; };
-		4C8634DE20AE6872004BF20E /* TLOAlertController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TLOAlertController.m; path = Classes/Library/TLOAlertController.m; sourceTree = "<group>"; };
 		4C8634E320AE689E004BF20E /* TDCAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCAlert.h; path = Classes/Headers/TDCAlert.h; sourceTree = "<group>"; };
 		4C8634E720AE6B00004BF20E /* TDCAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCAlert.m; path = Classes/Dialogs/TDCAlert.m; sourceTree = "<group>"; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXGlobalModels.m; path = Classes/Controllers/TXGlobalModels.m; sourceTree = "<group>"; };
@@ -4583,7 +4582,6 @@
 		4C8AF5C9158E99520026668C /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4C8634DE20AE6872004BF20E /* TLOAlertController.m */,
 				4C8AF5D4158E99520026668C /* Sockets */,
 			);
 			name = "External Libraries";
