@@ -36,6 +36,7 @@
  *
  *********************************************************************** */
 
+#import "TXAppearance.h"
 #import "TXGlobalModels.h"
 #import "TXMasterController.h"
 #import "TXMenuController.h"
@@ -282,7 +283,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	[self createTemporaryCopyOfTheme];
 
-	[self maybePresentCompatibilityWarningDialog];
+	[self presentCompatibilityAlert];
+
+	[self presentInvertSidebarColorsAlert];
 }
 
 - (void)recreateTemporaryCopyOfThemeIfNecessary
@@ -333,7 +336,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 				moveDestinationToTrash:NO];
 }
 
-- (void)maybePresentCompatibilityWarningDialog
+- (void)presentCompatibilityAlert
 {
 	if (self.customSettings.usesIncompatibleTemplateEngineVersion == NO) {
 		return;
@@ -356,6 +359,38 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 				   }
 
 				   [menuController() showStylePreferences:nil];
+			   }];
+}
+
+- (void)presentInvertSidebarColorsAlert
+{
+	if (self.customSettings.invertSidebarColors == NO) {
+		return;
+	}
+
+	if ([TXSharedApplication sharedAppearance].properties.isDarkAppearance == NO) {
+		return;
+	}
+
+	NSUInteger themeNameHash = self.cachedThemeName.hash;
+
+	NSString *suppressionKey = [NSString stringWithFormat:
+								@"theme_appearance_dialog_%lu", themeNameHash];
+
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1141][2]")
+						 title:TXTLS(@"Prompts[1141][1]", self.name)
+				 defaultButton:TXTLS(@"Prompts[1141][3]")
+			   alternateButton:TXTLS(@"Prompts[1141][4]")
+				suppressionKey:suppressionKey
+			   suppressionText:nil
+			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+				   if (buttonClicked == TDCAlertResponseDefaultButton) {
+					   return;
+				   }
+
+				   [TPCPreferences setAppearance:TXPreferredAppearanceDarkType];
+
+				   [TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
 			   }];
 }
 
