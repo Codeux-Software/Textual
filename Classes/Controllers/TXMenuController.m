@@ -36,8 +36,6 @@
  *
  *********************************************************************** */
 
-#warning TODO: Fix "Close Query" missing keyboard shortcut.
-
 #import "NSObjectHelperPrivate.h"
 #import "IRCClientConfig.h"
 #import "IRCClientPrivate.h"
@@ -178,23 +176,39 @@ NS_ASSUME_NONNULL_BEGIN
 	/* When the selection changes, menus that may be dynamic are force
 	 revalidated so that Command I (or other shortcuts) work with channel
 	 selected, but not for the server console. */
-	[self _forceAllChildrenElementsOfMenuToValidate:[NSApp mainMenu]];
+	NSMenuItem *channelMenu = self.mainMenuChannelMenuItem;
+
+	[self _forceMenuItemValidation:channelMenu];
+	[self _forceMenuItemValidation:[channelMenu.submenu itemWithTag:MTMMChannelDeleteChannel]];
+
+	NSMenuItem *queryMenu = self.mainMenuQueryMenuItem;
+
+	[self _forceMenuItemValidation:queryMenu];
+	[self _forceMenuItemValidation:[queryMenu.submenu itemWithTag:MTMMQueryCloseQuery]];
+
 }
 
-- (void)_forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
+- (void)_forceMenuValidation:(NSMenu *)menu
 {
 	NSParameterAssert(menu != nil);
 
 	for (NSMenuItem *menuItem in menu.itemArray) {
-		id target = menuItem.target;
+		[self _forceMenuItemValidation:menuItem];
+	}
+}
 
-		if (target == nil) {
-			continue;
-		}
+- (void)_forceMenuItemValidation:(NSMenuItem *)menuItem
+{
+	NSParameterAssert(menuItem != nil);
 
-		if ([target respondsToSelector:@selector(validateMenuItem:)]) {
-			(void)[target performSelector:@selector(validateMenuItem:) withObject:menuItem];
-		}
+	id target = menuItem.target;
+
+	if (target == nil) {
+		return;
+	}
+
+	if ([target respondsToSelector:@selector(validateMenuItem:)]) {
+		(void)[target performSelector:@selector(validateMenuItem:) withObject:menuItem];
 	}
 }
 
@@ -634,6 +648,43 @@ NS_ASSUME_NONNULL_BEGIN
 		case MTMMChannelAddChannel: // "Add Channel…"
 		{
 			return (u != nil);
+		}
+		case MTMMChannelDeleteChannel: // "Delete Channel"
+		case MTMMQueryCloseQuery: // "Close Query"
+		{
+			/*
+			 These two keyboard shortcuts share the same keyboard shortcut.
+			 Only one menu item can have a keyboard shortcut, so we have two
+			 options:
+
+			 1):
+
+			 Return to only having one menu item and change the title when
+			 performing validation. I don't want to do this because I think
+			 the main menu looks cleaner with a separate menu for channels
+			 and querieis.
+
+			 2):
+
+			 Shuffle the keyboard shortcut during validation.
+			 This is the solution I went with.
+			 When selection changes, we perform validation again on these
+			 two menu items. If its parent is hidden, then we archive its
+			 current keyboard shortcut then restore it when it's visible.
+			 Only one of these can ever be visible, so this works.
+			*/
+
+			if (menuItem.parentItem.hidden) {
+				if (menuItem.keyboardShortcutArchived == NO) {
+					[menuItem archiveKeyboardShortcutAndUnset];
+				}
+			} else {
+				[menuItem restoreKeyboardShorcut];
+
+				[menuItem unsetArchivedKeyboardShortcut];
+			}
+
+			return YES;
 		}
 		case MTMMChannelViewLogs: // "View Logs"
 		{
