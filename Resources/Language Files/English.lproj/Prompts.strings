@@ -181,4 +181,4 @@
 "Prompts[1141][1]" = "The style named “%@” wants to enable dark mode but styles are no longer allowed to change that preference";
 "Prompts[1141][2]" = "Do you want to keep Textual's light appearance or switch to dark mode?";
 "Prompts[1141][3]" = "Keep It Light";
-"Prompts[1141][4]" = "Turn It Dark";
+"Prompts[1141][4]" = "Paint It Black";
