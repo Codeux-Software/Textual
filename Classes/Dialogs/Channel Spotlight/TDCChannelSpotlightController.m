@@ -388,14 +388,41 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)close
 {
+	[self saveWindowFrame];
+
 	[self.window close];
 }
 
 - (void)show
 {
-#warning TODO: Remember window position
+	[self restoreWindowFrame];
 
 	[self.window makeKeyAndOrderFront:nil];
+}
+
+- (void)restoreWindowFrame
+{
+	NSWindow *window = self.window;
+
+	[window saveSizeAsDefault];
+
+	[window restoreWindowStateForClass:self.class];
+}
+
+- (void)saveWindowFrame
+{
+	/* Reset search back to none before closing so
+	 that the frame we save is same we open. */
+	[self resetSearch];
+
+	NSWindow *window = self.window;
+
+	/* We call -restoreDefaultSizeAndDisplay: before saving
+	 the frame because the window wont register the changes
+	 to the constants in -resetSearch until next layout pass. */
+	[window restoreDefaultSizeAndDisplay:NO];
+
+	[window saveWindowStateForClass:self.class];
 }
 
 #pragma mark -
@@ -408,6 +435,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Search Results
+
+- (void)resetSearch
+{
+	self.searchField.stringValue = @"";
+
+	[self searchStringChanged];
+}
 
 - (void)selectFirstSearchResultIfNecessary
 {
