@@ -321,6 +321,8 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 	[self.contentViewGeneral layoutSubtreeIfNeeded];
+
+	[self restoreWindowFrame];
 }
 
 #pragma mark -
@@ -357,8 +359,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_showPane:(NSView *)view selectedItem:(NSInteger)selectedItem
 {
-	[self.window restoreWindowStateForClass:self.class];
-
 	[self firstPane:view selectedItem:selectedItem];
 
 	[super show];
@@ -459,24 +459,30 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)resetWindowFrameToDefault
+- (void)restoreWindowFrame
 {
-	NSRect windowFrame = self.window.frame;
+	NSWindow *window = self.window;
 
-	NSRect contentViewFrame = self.contentView.frame;
-	NSRect contentViewGeneralFrame = self.contentViewGeneral.frame;
+	[window saveSizeAsDefault];
 
-	for (NSView *subview in self.contentView.subviews) {
-		[subview removeFromSuperview];
-	}
+	[window restoreWindowStateForClass:self.class];
+}
 
-	CGFloat contentViewHeightDifference = (NSHeight(contentViewFrame) - NSHeight(contentViewGeneralFrame));
+- (void)saveWindowFrame
+{
+	/* When saving the final window frame, we remove the content view
+	 before doing so then manually set the frame because if we were
+	 to restore the original constant to the content view's height,
+	 that will require a layout pass before window registers it.
+	 We have no use for the content view or its constraints once
+	 we know the height difference, so let's just discard it and go. */
+	[self.contentView removeFromSuperview];
 
-	windowFrame.size.height -= contentViewHeightDifference;
+	NSWindow *window = self.window;
 
-	windowFrame.origin.y += contentViewHeightDifference;
+	[window restoreDefaultSizeAndDisplay:NO];
 
-	[self.window setFrame:windowFrame display:NO];
+	[window saveWindowStateForClass:self.class];
 }
 
 #pragma mark -
@@ -1803,11 +1809,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[RZNotificationCenter() removeObserver:self];
 
-	self.window.alphaValue = 0.0;
-
-	[self resetWindowFrameToDefault];
-
-	[self.window saveWindowStateForClass:self.class];
+	[self saveWindowFrame];
 
 	if ([self.delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[self.delegate preferencesDialogWillClose:self];
