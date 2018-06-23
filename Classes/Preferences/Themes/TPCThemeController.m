@@ -368,7 +368,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		return;
 	}
 
-	if ([TXSharedApplication sharedAppearance].properties.isDarkAppearance == NO) {
+	if ([TXSharedApplication sharedAppearance].properties.isDarkAppearance) {
 		return;
 	}
 
