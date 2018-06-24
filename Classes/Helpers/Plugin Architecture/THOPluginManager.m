@@ -388,10 +388,10 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	NSString *bundlesName = [bundleNames componentsJoinedByString:@", "];
 
-	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1112][2]")
-						 title:TXTLS(@"Prompts[1112][1]", bundlesName)
-				 defaultButton:TXTLS(@"Prompts[1112][3]")
-			   alternateButton:TXTLS(@"Prompts[1112][4]")
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[x4w-is]")
+						 title:TXTLS(@"Prompts[9mb-o5]", bundlesName)
+				 defaultButton:TXTLS(@"Prompts[ece-dd]")
+			   alternateButton:TXTLS(@"Prompts[ioq-nf]")
 				suppressionKey:suppressionKey
 			   suppressionText:nil
 			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id  _Nullable underlyingAlert) {
@@ -488,10 +488,10 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 {
 	NSParameterAssert(command != nil);
 
-	BOOL download = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1113][2]")
-											  title:TXTLS(@"Prompts[1113][1]", command)
-									  defaultButton:TXTLS(@"Prompts[1113][3]")
-									alternateButton:TXTLS(@"Prompts[0004]")
+	BOOL download = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[bpb-vv]")
+											  title:TXTLS(@"Prompts[o9p-4n]", command)
+									  defaultButton:TXTLS(@"Prompts[6lr-02]")
+									alternateButton:TXTLS(@"Prompts[qso-2g]")
 									 suppressionKey:@"plugin_manager_reserved_command_dialog"
 									suppressionText:nil];
 

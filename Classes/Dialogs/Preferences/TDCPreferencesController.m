@@ -963,9 +963,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 			userInfo[NSURLErrorKey] = url;
 
-			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TDCPreferencesController[1010][1]");
+			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TDCPreferencesController[x3n-to]");
 
-			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TDCPreferencesController[1010][2]");
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TDCPreferencesController[gz8-dt]");
 
 			*outError = [NSError errorWithDomain:TXErrorDomain code:27984 userInfo:userInfo];
 		}
@@ -987,7 +987,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (path == nil) {
 		item.image = nil;
 
-		item.title = TXTLS(@"TDCPreferencesController[1003]");
+		item.title = TXTLS(@"TDCPreferencesController[721-ie]");
 	} else {
 		NSImage *icon = [RZWorkspace() iconForFile:path.path];
 
@@ -1014,7 +1014,7 @@ NS_ASSUME_NONNULL_BEGIN
 		d.canCreateDirectories = YES;
 		d.resolvesAliases = YES;
 
-		d.prompt = TXTLS(@"Prompts[0006]");
+		d.prompt = TXTLS(@"Prompts[xne-79]");
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
@@ -1064,7 +1064,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (path == nil) {
 		item.image = nil;
 
-		item.title = TXTLS(@"TDCPreferencesController[1002]");
+		item.title = TXTLS(@"TDCPreferencesController[70s-c6]");
 	} else {
 		NSImage *icon = [RZWorkspace() iconForFile:path.path];
 
@@ -1089,7 +1089,7 @@ NS_ASSUME_NONNULL_BEGIN
 		d.canCreateDirectories = YES;
 		d.resolvesAliases = YES;
 
-		d.prompt = TXTLS(@"Prompts[0006]");
+		d.prompt = TXTLS(@"Prompts[xne-79]");
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItemAtIndex:0];
@@ -1203,19 +1203,19 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableString *forcedValuesMutable = [NSMutableString string];
 
 	if ([TPCPreferences themeNicknameFormatPreferenceUserConfigurable] == NO) {
-		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][1]")];
+		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[77t-de]")];
 
 		[forcedValuesMutable appendString:@"\n"];
 	}
 
 	if ([TPCPreferences themeTimestampFormatPreferenceUserConfigurable] == NO) {
-		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][2]")];
+		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[ddh-hr]")];
 
 		[forcedValuesMutable appendString:@"\n"];
 	}
 
 	if ([TPCPreferences themeChannelViewFontPreferenceUserConfigurable] == NO) {
-		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[1009][4]")];
+		[forcedValuesMutable appendString:TXTLS(@"TDCPreferencesController[we8-i8]")];
 
 		[forcedValuesMutable appendString:@"\n"];
 	}
@@ -1231,9 +1231,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *themeName = [TPCThemeController extractThemeName:currentTheme];
 
 	[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
-							  body:TXTLS(@"TDCPreferencesController[1008][2]", themeName, forcedValues)
-							 title:TXTLS(@"TDCPreferencesController[1008][1]")
-					 defaultButton:TXTLS(@"Prompts[0005]")
+							  body:TXTLS(@"TDCPreferencesController[q4o-2f]", themeName, forcedValues)
+							 title:TXTLS(@"TDCPreferencesController[uc0-z7]")
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:nil
 					   otherButton:nil
 					suppressionKey:@"theme_override_info"
@@ -1411,10 +1411,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	BOOL clickResult =
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1111][2]")
-							  title:TXTLS(@"Prompts[1111][1]")
-					  defaultButton:TXTLS(@"Prompts[0005]")
-					alternateButton:TXTLS(@"Prompts[1111][3]")];
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[vcq-sz]")
+							  title:TXTLS(@"Prompts[82q-zi]")
+					  defaultButton:TXTLS(@"Prompts[c7s-dq]")
+					alternateButton:TXTLS(@"Prompts[x3e-ur]")];
 
 	if (clickResult == NO) {
 		[self openProxySettingsInSystemPreferences];
@@ -1672,10 +1672,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
-							  body:TXTLS(@"TDCPreferencesController[1001][2]")
-							 title:TXTLS(@"TDCPreferencesController[1001][1]")
-					 defaultButton:TXTLS(@"Prompts[0001]")
-				   alternateButton:TXTLS(@"Prompts[0002]")
+							  body:TXTLS(@"TDCPreferencesController[t8v-w8]")
+							 title:TXTLS(@"TDCPreferencesController[r62-4k]")
+					 defaultButton:TXTLS(@"Prompts[mvh-ms]")
+				   alternateButton:TXTLS(@"Prompts[99q-gg]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   [self onPurgeOfCloudDataRequestedCallback:buttonClicked];
@@ -1714,10 +1714,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if (themeController().bundledTheme) {
 		[TDCAlert alertSheetWithWindow:NSApp.keyWindow
-								  body:TXTLS(@"TDCPreferencesController[1007][2]")
-								 title:TXTLS(@"TDCPreferencesController[1007][1]")
-						 defaultButton:TXTLS(@"Prompts[0001]")
-					   alternateButton:TXTLS(@"Prompts[0002]")
+								  body:TXTLS(@"TDCPreferencesController[ojj-ap]")
+								 title:TXTLS(@"TDCPreferencesController[5jv-aw]")
+						 defaultButton:TXTLS(@"Prompts[mvh-ms]")
+					   alternateButton:TXTLS(@"Prompts[99q-gg]")
 						   otherButton:nil
 					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 						   [self openPathToThemesCallback:buttonClicked withOriginalAlert:underlyingAlert];

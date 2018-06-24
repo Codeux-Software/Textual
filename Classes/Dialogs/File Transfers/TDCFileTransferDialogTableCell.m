@@ -164,9 +164,9 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferStoppedStatus:
 		{
 			if (self.isReceiving) {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1009]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[jvh-u7]", self.peerNickname);
 			} else {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1001]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[w3h-p8]", self.peerNickname);
 			}
 
 			break;
@@ -174,9 +174,9 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferMappingListeningPortStatus:
 		{
 			if (self.isReceiving) {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1010]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[495-90]", self.peerNickname);
 			} else {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1002]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[j1z-88]", self.peerNickname);
 			}
 
 			break;
@@ -184,9 +184,9 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus:
 		{
 			if (self.isReceiving) {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1011]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[6t1-mb]", self.peerNickname);
 			} else {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1003]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[onl-av]", self.peerNickname);
 			}
 
 			break;
@@ -194,22 +194,22 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferInitializingStatus:
 		{
 			if (self.isReceiving) {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1013]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[42z-mg]", self.peerNickname);
 			} else {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1004]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[pcv-kg]", self.peerNickname);
 			}
 
 			break;
 		}
 		case TDCFileTransferDialogTransferIsListeningAsSenderStatus:
 		{
-			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1005]", self.peerNickname);
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[ca5-2v]", self.peerNickname);
 
 			break;
 		}
 		case TDCFileTransferDialogTransferIsListeningAsReceiverStatus:
 		{
-			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1014]", self.peerNickname);
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[pip-z6]", self.peerNickname);
 
 			break;
 		}
@@ -223,9 +223,9 @@ NS_ASSUME_NONNULL_BEGIN
 		case TDCFileTransferDialogTransferCompleteStatus:
 		{
 			if (self.isReceiving) {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1015]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[6gu-za]", self.peerNickname);
 			} else {
-				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1006]", self.peerNickname);
+				self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[rx7-xy]", self.peerNickname);
 			}
 
 			break;
@@ -258,15 +258,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (self.isReceiving) {
 				if (timeRemainingString) {
-					statusString = TXTLS(@"TDCFileTransferDialog[1008][2]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname, timeRemainingString);
+					statusString = TXTLS(@"TDCFileTransferDialog[9xn-7j]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname, timeRemainingString);
 				} else {
-					statusString = TXTLS(@"TDCFileTransferDialog[1008][1]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
+					statusString = TXTLS(@"TDCFileTransferDialog[7dk-lp]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
 				}
 			} else {
 				if (timeRemainingString) {
-					statusString = TXTLS(@"TDCFileTransferDialog[1000][2]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname, timeRemainingString);
+					statusString = TXTLS(@"TDCFileTransferDialog[u17-ql]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname, timeRemainingString);
 				} else {
-					statusString = TXTLS(@"TDCFileTransferDialog[1000][1]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
+					statusString = TXTLS(@"TDCFileTransferDialog[nvm-nd]", processedFilesizeString, totalFilesizeString, currentSpeedString, self.peerNickname);
 				}
 			}
 
@@ -276,19 +276,19 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case TDCFileTransferDialogTransferConnectingStatus:
 		{
-			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1016]", self.peerNickname);
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[7nf-fr]", self.peerNickname);
 
 			break;
 		}
 		case TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus:
 		{
-			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1007]", self.peerNickname);
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[cku-24]", self.peerNickname);
 
 			break;
 		}
 		case TDCFileTransferDialogTransferWaitingForResumeAcceptStatus:
 		{
-			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[1012]", self.peerNickname);
+			self.transferProgressTextField.stringValue = TXTLS(@"TDCFileTransferDialog[gxq-zu]", self.peerNickname);
 
 			break;
 		}

@@ -122,7 +122,7 @@
 	NSString *encodedString = [EKBlowfishEncryption encodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding];
 
 	if ([encodedString length] < 5) {
-		[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1023]") inChannel:targetChannel];
+		[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1ve-yc]") inChannel:targetChannel];
 
 		return;
 	}
@@ -182,13 +182,13 @@
 	NSString *decodedString = [EKBlowfishEncryption decodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding lostBytes:&lostBytes];
 
 	if (decodedString == nil) {
-		[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]") inChannel:targetChannel];
+		[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[np3-3g]") inChannel:targetChannel];
 
 		return;
 	}
 
 	if (lostBytes > 0) {
-		[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1031]", lostBytes) inChannel:targetChannel];
+		[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[4mm-6d]", lostBytes) inChannel:targetChannel];
 
 		/* Do not return for this. This is not a fatal error. */
 	}
@@ -259,9 +259,9 @@
 
 			dispatch_once(&onceToken, ^{
 				[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
-										  body:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][2]")
-										 title:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][1]")
-								 defaultButton:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][3]")
+										  body:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[alk-c6]")
+										 title:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[d2x-dh]")
+								 defaultButton:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[tv1-4l]")
 							   alternateButton:nil
 								   otherButton:nil];
 			});

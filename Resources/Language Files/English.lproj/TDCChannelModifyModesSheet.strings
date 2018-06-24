@@ -35,7 +35,5 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1001 */
-
-"TDCChannelModifyModesSheet[1000][1]" = "You have exceeded the secret key length defined by %1$@ which is %2$ld characters";
-"TDCChannelModifyModesSheet[1000][2]" = "If you continue typing, the end of your secret key may be cut off.";
+"7m9-39" = "You have exceeded the secret key length defined by %1$@ which is %2$ld characters";
+"lir-ra" = "If you continue typing, the end of your secret key may be cut off.";

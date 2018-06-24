@@ -35,10 +35,8 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1002 */
+"iis-gr" = "The value you entered is not a properly formatted server address";
+"k0c-3u" = "";
 
-"TDCServerEndpointListSheet[1000][1]" = "The value you entered is not a properly formatted server address";
-"TDCServerEndpointListSheet[1000][2]" = "";
-
-"TDCServerEndpointListSheet[1001][1]" = "The value you entered is not a properly formatted server port";
-"TDCServerEndpointListSheet[1001][2]" = "Enter a whole number between 1 and 65,535.";
+"qeb-ip" = "The value you entered is not a properly formatted server port";
+"ox2-od" = "Enter a whole number between 1 and 65,535.";

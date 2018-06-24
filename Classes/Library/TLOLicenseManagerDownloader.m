@@ -285,9 +285,9 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				}
 
 				if (self.isSilentOnSuccess == NO) {
-					(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1006][2]")
-													title:TXTLS(@"TLOLicenseManager[1006][1]")
-											defaultButton:TXTLS(@"Prompts[0005]")
+					(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[k39-7l]")
+													title:TXTLS(@"TLOLicenseManager[jbs-64]")
+											defaultButton:TXTLS(@"Prompts[c7s-dq]")
 										  alternateButton:nil];
 				}
 			}
@@ -314,9 +314,9 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				}
 
 				if (self.isSilentOnSuccess == NO) {
-					(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1005][2]", licenseOwnerContactAddress)
-													title:TXTLS(@"TLOLicenseManager[1005][1]", licenseOwnerContactAddress)
-											defaultButton:TXTLS(@"Prompts[0005]")
+					(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[fxj-s6]", licenseOwnerContactAddress)
+													title:TXTLS(@"TLOLicenseManager[m4q-ul]", licenseOwnerContactAddress)
+											defaultButton:TXTLS(@"Prompts[c7s-dq]")
 										  alternateButton:nil];
 				}
 			}
@@ -343,9 +343,9 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 				}
 
 				if (self.isSilentOnSuccess == NO) {
-					(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1010][2]", licenseOwnerContactAddress)
-													title:TXTLS(@"TLOLicenseManager[1010][1]", licenseOwnerContactAddress)
-											defaultButton:TXTLS(@"Prompts[0005]")
+					(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[yxk-ej]", licenseOwnerContactAddress)
+													title:TXTLS(@"TLOLicenseManager[vxq-oa]", licenseOwnerContactAddress)
+											defaultButton:TXTLS(@"Prompts[c7s-dq]")
 										  alternateButton:nil];
 				}
 			}
@@ -389,9 +389,9 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			/* Errors related to license activation. */
 			if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500000)
 			{
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1004][2]")
-												title:TXTLS(@"TLOLicenseManager[1004][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[wc7-mn]")
+												title:TXTLS(@"TLOLicenseManager[fg6-gf]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestActivationType && statusCode == 6500001)
@@ -410,10 +410,10 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					goto present_fatal_error;
 				}
 
-				BOOL userResponse = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1002][2]")
-															  title:TXTLS(@"TLOLicenseManager[1002][1]", licenseKey.prettyLicenseKey)
-													  defaultButton:TXTLS(@"Prompts[0005]")
-													alternateButton:TXTLS(@"TLOLicenseManager[1002][3]")];
+				BOOL userResponse = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[w1n-n0]")
+															  title:TXTLS(@"TLOLicenseManager[u8h-qv]", licenseKey.prettyLicenseKey)
+													  defaultButton:TXTLS(@"Prompts[c7s-dq]")
+													alternateButton:TXTLS(@"TLOLicenseManager[vgp-j6]")];
 
 				if (userResponse == NO) { // NO = alternate button
 					[self contactSupport];
@@ -437,18 +437,18 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				NSInteger licenseKeyActivationLimit = [statusContext integerForKey:@"licenseKeyActivationLimit"];
 
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1014][2]", licenseKeyActivationLimit)
-												title:TXTLS(@"TLOLicenseManager[1014][1]", licenseKey.prettyLicenseKey)
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[6aa-ow]", licenseKeyActivationLimit)
+												title:TXTLS(@"TLOLicenseManager[o66-ox]", licenseKey.prettyLicenseKey)
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 
 			/* Errors related to lost license recovery. */
 			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == 6400000)
 			{
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1003][2]")
-												title:TXTLS(@"TLOLicenseManager[1003][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[dio-y9]")
+												title:TXTLS(@"TLOLicenseManager[ocm-03]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType && statusCode == 6400001)
@@ -467,18 +467,18 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					goto present_fatal_error;
 				}
 
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1013][2]", originalInput)
-												title:TXTLS(@"TLOLicenseManager[1013][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[6zh-jr]", originalInput)
+												title:TXTLS(@"TLOLicenseManager[r87-jw]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 
 			/* Error messages related to Mac App Store migration. */
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600002)
 			{
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1012][2]")
-												title:TXTLS(@"TLOLicenseManager[1012][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[bu4-zk]")
+												title:TXTLS(@"TLOLicenseManager[ztd-5y]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600003)
@@ -501,30 +501,30 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 				LogToConsoleError("Receipt validation failed:\n%{public}@", errorMessage);
 
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1019][2]", errorMessage)
-												title:TXTLS(@"TLOLicenseManager[1019][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[ujo-cd]", errorMessage)
+												title:TXTLS(@"TLOLicenseManager[p9s-ak]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600004)
 			{
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1011][2]")
-												title:TXTLS(@"TLOLicenseManager[1011][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[36y-49]")
+												title:TXTLS(@"TLOLicenseManager[enb-hw]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600006)
 			{
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1018][2]")
-												title:TXTLS(@"TLOLicenseManager[1018][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[do9-8x]")
+												title:TXTLS(@"TLOLicenseManager[f49-rk]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType && statusCode == 6600007)
 			{
-				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1023][2]")
-												title:TXTLS(@"TLOLicenseManager[1023][1]")
-										defaultButton:TXTLS(@"Prompts[0005]")
+				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[4n2-ps]")
+												title:TXTLS(@"TLOLicenseManager[t28-j9]")
+										defaultButton:TXTLS(@"Prompts[c7s-dq]")
 									  alternateButton:nil];
 			}
 
@@ -548,10 +548,10 @@ perform_return:
 
 - (void)presentTryAgainLaterErrorDialog
 {
-	BOOL userResponse = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1001][2]")
-												  title:TXTLS(@"TLOLicenseManager[1001][1]")
-										  defaultButton:TXTLS(@"Prompts[0005]")
-										alternateButton:TXTLS(@"TLOLicenseManager[1001][3]")];
+	BOOL userResponse = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1cv-0v]")
+												  title:TXTLS(@"TLOLicenseManager[nhh-ts]")
+										  defaultButton:TXTLS(@"Prompts[c7s-dq]")
+										alternateButton:TXTLS(@"TLOLicenseManager[bqw-cv]")];
 
 	if (userResponse == NO) { // NO = alternate button
 		[self contactSupport];

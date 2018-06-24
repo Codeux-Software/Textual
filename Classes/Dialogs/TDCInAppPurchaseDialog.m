@@ -242,12 +242,12 @@ enum {
 	NSTimeInterval timeLeft = TLOAppStoreTimeReaminingInTrial();
 
 	if (timeLeft >= 0) {
-		return TXTLS(@"TDCInAppPurchaseDialog[0018]");
+		return TXTLS(@"TDCInAppPurchaseDialog[ouj-7m]");
 	}
 
 	NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
 
-	return TXTLS(@"TDCInAppPurchaseDialog[0017]", formattedTimeRemainingString);
+	return TXTLS(@"TDCInAppPurchaseDialog[z2z-l6]", formattedTimeRemainingString);
 }
 
 #pragma mark -
@@ -290,10 +290,10 @@ enum {
 	NSParameterAssert(window != nil);
 
 	[TDCAlert alertSheetWithWindow:window.deepestWindow
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0015][2]")
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0015][1]")
-					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0015][3]")
-				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0015][4]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[cvb-30]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[92e-sa]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[abg-mv]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[bt3-h3]")
 					   otherButton:TXTLS(@"Prompts[0008]")
 					suppressionKey:@"trial_is_expired_mas"
 				   suppressionText:nil
@@ -315,10 +315,10 @@ enum {
 	NSParameterAssert(window != nil);
 
 	[TDCAlert alertSheetWithWindow:window.deepestWindow
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0014][2]")
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0014][1]")
-					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0014][3]")
-				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0014][4]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[pan-12]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[doy-jd]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[wsb-3b]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[wl7-9j]")
 					   otherButton:TXTLS(@"Prompts[0008]")
 					suppressionKey:@"trial_is_expired_mas"
 				   suppressionText:nil
@@ -464,8 +464,8 @@ enum {
 					}
 
 					[TDCAlert alertSheetWithWindow:self.window
-											  body:TXTLS(@"TDCInAppPurchaseDialog[0012][2]", transationError.localizedDescription)
-											 title:TXTLS(@"TDCInAppPurchaseDialog[0012][1]")
+											  body:TXTLS(@"TDCInAppPurchaseDialog[cco-a9]", transationError.localizedDescription)
+											 title:TXTLS(@"TDCInAppPurchaseDialog[qmn-og]")
 									 defaultButton:TXTLS(@"Prompts[0005]")
 								   alternateButton:nil
 									   otherButton:nil];
@@ -543,8 +543,8 @@ enum {
 	}
 
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0016][2]")
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0016][1]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[get-1i]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[2g7-u2]")
 					 defaultButton:TXTLS(@"Prompts[0005]")
 				   alternateButton:nil
 					   otherButton:nil];
@@ -869,9 +869,9 @@ enum {
 
 	tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
 
-	tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][1]");
-	tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0003][2]");
-	tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0003][3]");
+	tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[gaw-8q]");
+	tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[e1e-6i]");
+	tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[nf3-6r]");
 
 	tableEntry.target = self;
 	tableEntry.action = @selector(checkUpgradeEligibility:);
@@ -902,9 +902,9 @@ enum {
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
 
-			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
-			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0001][2]");
-			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][3]");
+			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[20h-oi]");
+			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[4ad-nr]");
+			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[xpq-66]");
 
 			break;
 		}
@@ -912,9 +912,9 @@ enum {
 		{
 			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
 
-			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
-			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0002][2]");
-			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][3]");
+			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[yrh-s6]");
+			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[2xq-43]");
+			tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[k0r-mf]");
 
 			break;
 		}
@@ -933,15 +933,15 @@ enum {
 
 			if (productType == TLOAppStoreIAPUpgradeFromV6Product)
 			{
-				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
-				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0004][2]");
-				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][3]");
+				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[ako-hb]");
+				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[pnz-0z]");
+				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[xdz-gd]");
 			}
 			else if (productType == TLOAppStoreIAPUpgradeFromV6FreeProduct)
 			{
-				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][1]");
-				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[0005][2]");
-				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][3]");
+				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[7g1-nd]");
+				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[877-q1]");
+				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[j44-8p]");
 			}
 
 			break;
@@ -986,25 +986,25 @@ enum {
 	switch (productType) {
 		case TLOAppStoreIAPFreeTrialProduct:
 		{
-			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0001][1]");
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[20h-oi]");
 
 			break;
 		}
 		case TLOAppStoreIAPStandardEditionProduct:
 		{
-			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0002][1]");
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[yrh-s6]");
 
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6Product:
 		{
-			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0004][1]");
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[ako-hb]");
 
 			break;
 		}
 		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
 		{
-			productTitle = TXTLS(@"TDCInAppPurchaseDialog[0005][1]");
+			productTitle = TXTLS(@"TDCInAppPurchaseDialog[7g1-nd]");
 
 			break;
 		}
@@ -1041,8 +1041,8 @@ enum {
 		NSString *productTitle = [self localizedTitleForProductIdentifier:productIdentifier];
 
 		[TDCAlert alertSheetWithWindow:self.window
-								  body:TXTLS(@"TDCInAppPurchaseDialog[0006][2]")
-								 title:TXTLS(@"TDCInAppPurchaseDialog[0006][1]", productTitle)
+								  body:TXTLS(@"TDCInAppPurchaseDialog[ej5-pi]")
+								 title:TXTLS(@"TDCInAppPurchaseDialog[ziy-5r]", productTitle)
 						 defaultButton:TXTLS(@"Prompts[0005]")
 					   alternateButton:nil
 						   otherButton:nil];
@@ -1067,7 +1067,7 @@ enum {
 
 	LogToConsoleDebug("Paying for product '%@'", product.productIdentifier);
 
-	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0009]")];
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[jpv-e7]")];
 
 	SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
 
@@ -1084,8 +1084,8 @@ enum {
 	 We intercept that event below. */
 	if (TLOAppStoreTextualIsRegistered()) {
 		[TDCAlert alertSheetWithWindow:self.window
-								  body:TXTLS(@"TDCInAppPurchaseDialog[0025][2]")
-								 title:TXTLS(@"TDCInAppPurchaseDialog[0025][1]")
+								  body:TXTLS(@"TDCInAppPurchaseDialog[be0-0g]")
+								 title:TXTLS(@"TDCInAppPurchaseDialog[bgq-1w]")
 						 defaultButton:TXTLS(@"Prompts[0005]")
 					   alternateButton:nil
 						   otherButton:nil];
@@ -1194,7 +1194,7 @@ enum {
 
 	LogToConsoleDebug("Receipt refresh start");
 
-	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0007]")];
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[uyd-ja]")];
 
 	SKReceiptRefreshRequest *receiptRefreshRequest = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
 
@@ -1212,10 +1212,10 @@ enum {
 	LogToConsoleDebug("Receipt refresh error: %@", error.localizedDescription);
 
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0021][2]", error.localizedDescription)
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0021][1]")
-					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0021][3]")
-				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0021][4]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[3q4-qb]", error.localizedDescription)
+							 title:TXTLS(@"TDCInAppPurchaseDialog[dkh-er]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[3rs-ji]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[ywm-0b]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked == TDCAlertResponseAlternateButton) {
@@ -1250,7 +1250,7 @@ enum {
 			error = [NSError errorWithDomain:TXErrorDomain
 										code:3001
 									userInfo:@{
-						NSLocalizedDescriptionKey : TXTLS(@"TDCInAppPurchaseDialog[0023]")
+						NSLocalizedDescriptionKey : TXTLS(@"TDCInAppPurchaseDialog[ftc-vw]")
 					}];
 		} else {
 			/* If we do have a product list, then we can safely dismiss
@@ -1266,7 +1266,7 @@ enum {
 		error = [NSError errorWithDomain:TXErrorDomain
 									code:3002
 								userInfo:@{
-					NSLocalizedDescriptionKey : TXTLS(@"TDCInAppPurchaseDialog[0024]")
+					NSLocalizedDescriptionKey : TXTLS(@"TDCInAppPurchaseDialog[5ga-lv]")
 				}];
 	}
 
@@ -1321,7 +1321,7 @@ enum {
 
 	LogToConsoleDebug("Products request start");
 
-	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[0008]")];
+	[self attachProgressViewWithReason:TXTLS(@"TDCInAppPurchaseDialog[703-d3]")];
 
 	NSSet *productIdentifiers =
 	[NSSet setWithArray:
@@ -1367,10 +1367,10 @@ enum {
 	LogToConsoleDebug("Products request error: %@", error.localizedDescription);
 
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0019][2]")
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0019][1]")
-					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[0019][3]")
-				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[0019][4]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[h2w-2l]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[qaj-hh]")
+					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[4n7-1e]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[iot-5w]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked == TDCAlertResponseAlternateButton) {
@@ -1384,8 +1384,8 @@ enum {
 - (void)onRequestProductsEmptyProductListError
 {
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0022][2]")
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0022][1]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[n09-d1]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[dg7-y2]")
 					 defaultButton:TXTLS(@"Prompts[0003]")
 				   alternateButton:nil
 					   otherButton:nil
@@ -1469,8 +1469,8 @@ enum {
 - (void)showPleaseSelectItemError
 {
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseDialog[0013][2]")
-							 title:TXTLS(@"TDCInAppPurchaseDialog[0013][1]")
+							  body:TXTLS(@"TDCInAppPurchaseDialog[zyf-bl]")
+							 title:TXTLS(@"TDCInAppPurchaseDialog[e15-d5]")
 					 defaultButton:TXTLS(@"Prompts[0005]")
 				   alternateButton:nil
 					   otherButton:nil];

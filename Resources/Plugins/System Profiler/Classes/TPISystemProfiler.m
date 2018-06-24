@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizedString(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[dff-13]");
 }
 
 - (void)didChangePreferenceToUseRemoteRequestForModelID:(id)sender

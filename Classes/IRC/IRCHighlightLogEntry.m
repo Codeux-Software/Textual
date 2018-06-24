@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *formattedTimeInterval = TXHumanReadableTimeInterval(timeInterval, YES, 0);
 
-	return TXTLS(@"BasicLanguage[1025]", formattedTimeInterval);
+	return TXTLS(@"BasicLanguage[4um-w4]", formattedTimeInterval);
 }
 
 - (nullable IRCChannel *)channel
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return channel.name;
 	}
 
-	return TXTLS(@"BasicLanguage[1002]");
+	return TXTLS(@"BasicLanguage[vbl-xi]");
 }
 
 - (NSAttributedString *)renderedMessage

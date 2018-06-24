@@ -35,31 +35,37 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1024 */
+"tjj-z2" = "No Privileges";
+"ya1-sk" = "Voice";
+"0nn-te" = "Half-op";
+"0kn-s5" = "Operator";
+"som-zo" = "Super Admin";
+"p1z-sc" = "Channel Owner";
+"i8t-vb" = "Server Staff Member (IRC Operator)";
+"jkr-ed" = "User is away";
+"gi6-wf" = "User is not away";
 
-"TVCMainWindow[1001]" = "No Privileges";
-"TVCMainWindow[1002]" = "Voice";
-"TVCMainWindow[1003]" = "Half-op";
-"TVCMainWindow[1004]" = "Operator";
-"TVCMainWindow[1005]" = "Super Admin";
-"TVCMainWindow[1006]" = "Channel Owner";
-"TVCMainWindow[1007]" = "Server Staff Member (IRC Operator)";
-"TVCMainWindow[1008]" = "User is away";
-"TVCMainWindow[1009]" = "User is not away";
+"d85-9n" = "Information Not Available";
 
-"TVCMainWindow[1010]" = "Information Not Available";
+"8r3-ih" = "Send message…";
 
-"TVCMainWindow[1011]" = "Send message…";
+"jqk-ha" = " — ";
+"cyg-g9" = " (%@)";
+"v6i-zb" = " (%@ users)";
+"19v-bc" = "%1$@%2$@ on %3$@";
+"q42-an" = "Disconnected — ";
+"xqd-h9" = "Disconnecting… — ";
+"8eu-c7" = "Connecting… — ";
+"wcb-y8" = "Logging on… — ";
+"s23-zd" = "Reconnecting… — ";
+"3yn-wd" = "Waiting to reconnect… — ";
+"nxz-l9" = " (away)";
+"6wz-pd" = "%1$@ (%2$@)";
 
-"TVCMainWindow[1012]" = " — ";
-"TVCMainWindow[1013]" = " (%@)";
-"TVCMainWindow[1014]" = " (%@ users)";
-"TVCMainWindow[1015]" = "%1$@%2$@ on %3$@";
-"TVCMainWindow[1016]" = "Disconnected — ";
-"TVCMainWindow[1017]" = "Disconnecting… — ";
-"TVCMainWindow[1018]" = "Connecting… — ";
-"TVCMainWindow[1019]" = "Logging on… — ";
-"TVCMainWindow[1020]" = "Reconnecting… — ";
-"TVCMainWindow[1021]" = "Waiting to reconnect… — ";
-"TVCMainWindow[1022]" = " (away)";
-"TVCMainWindow[1023]" = "%1$@ (%2$@)";
+"iph-a9" = "Loading configuration…";
+"8ek-hm" = "Waiting for in-app purchase…";
+"5g1-i9" = "Importing preferences…";
+
+"4yo-mk" = "Current Session";
+
+"vi3-23" = "(No Topic)";

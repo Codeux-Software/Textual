@@ -135,9 +135,9 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 		NSString *languageKey = nil;
 
 		if (unitValue == 1) { // plurals
-			languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", unit];
+			languageKey = [NSString stringWithFormat:@"fko-64-%@", unit];
 		} else {
-			languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", unit];
+			languageKey = [NSString stringWithFormat:@"eoq-pr-%@", unit];
 		}
 
 		/* shortValue returns only the first time component */
@@ -161,7 +161,7 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BO
 	}
 
 	/* Return "0 seconds" when there are no results. */
-	return [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][128]")];
+	return [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[eoq-pr-128]")];
 }
 
 NSString * _Nullable TXFormatDateLongStyle(id dateObject, BOOL relativeOutput)

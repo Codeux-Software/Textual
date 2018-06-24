@@ -418,7 +418,7 @@ NS_ASSUME_NONNULL_BEGIN
 			TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
 			if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
-				menuItem.title = TXTLS(@"BasicLanguage[1008]");
+				menuItem.title = TXTLS(@"BasicLanguage[1f6-bg]");
 
 				return YES;
 			}
@@ -431,28 +431,28 @@ NS_ASSUME_NONNULL_BEGIN
 				case TXCommandWKeyPartChannelAction:
 				{
 					if (c == nil) {
-						menuItem.title = TXTLS(@"BasicLanguage[1008]");
+						menuItem.title = TXTLS(@"BasicLanguage[1f6-bg]");
 
 						return NO;
 					}
 
 					if (c.isChannel) {
-						menuItem.title = TXTLS(@"BasicLanguage[1010]");
+						menuItem.title = TXTLS(@"BasicLanguage[5td-3f]");
 
 						if (c.isActive == NO) {
 							return NO;
 						}
 					} else if (c.isPrivateMessage) {
-						menuItem.title = TXTLS(@"BasicLanguage[1007]");
+						menuItem.title = TXTLS(@"BasicLanguage[hri-l0]");
 					} else if (c.isUtility) {
-						menuItem.title = TXTLS(@"BasicLanguage[1007]");
+						menuItem.title = TXTLS(@"BasicLanguage[hri-l0]");
 					}
 
 					break;
 				}
 				case TXCommandWKeyDisconnectAction:
 				{
-					menuItem.title = TXTLS(@"BasicLanguage[1009]", u.networkNameAlt);
+					menuItem.title = TXTLS(@"BasicLanguage[w3a-je]", u.networkNameAlt);
 
 					if (u.isConnecting == NO && u.isConnected == NO) {
 						return NO;
@@ -462,7 +462,7 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 				case TXCommandWKeyTerminateAction:
 				{
-					menuItem.title = TXTLS(@"BasicLanguage[1011]");
+					menuItem.title = TXTLS(@"BasicLanguage[x97-ro]");
 
 					break;
 				}
@@ -538,10 +538,10 @@ NS_ASSUME_NONNULL_BEGIN
 				if (prefersIPv4 == NO) {
 					prefersIPv4 = YES;
 					
-					menuItem.title = TXTLS(@"BasicLanguage[1014][2]");
+					menuItem.title = TXTLS(@"BasicLanguage[op8-64]");
 				}
 			} else {
-				menuItem.title = TXTLS(@"BasicLanguage[1014][1]");
+				menuItem.title = TXTLS(@"BasicLanguage[3mf-zx]");
 			}
 			
 			if (prefersIPv4) {
@@ -1038,7 +1038,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			NSString *searchProviderName = [self searchProviderName];
 
-			menuItem.title = TXTLS(@"BasicLanguage[1020]", searchProviderName);
+			menuItem.title = TXTLS(@"BasicLanguage[1ll-h9]", searchProviderName);
 
 			return webView.hasSelection;
 		}
@@ -1055,7 +1055,7 @@ NS_ASSUME_NONNULL_BEGIN
 			NSUInteger selectionLength = selection.length;
 
 			if (selectionLength == 0 || selectionLength > 40) {
-				menuItem.title = TXTLS(@"BasicLanguage[1018]");
+				menuItem.title = TXTLS(@"BasicLanguage[o5l-4s]");
 
 				return NO;
 			}
@@ -1066,7 +1066,7 @@ NS_ASSUME_NONNULL_BEGIN
 				selection = [NSString stringWithFormat:@"%@…", selection.trim];
 			}
 
-			menuItem.title = TXTLS(@"BasicLanguage[1019]", selection);
+			menuItem.title = TXTLS(@"BasicLanguage[zxs-yy]", selection);
 
 			return (selectionLength > 0);
 		}
@@ -1337,10 +1337,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *resultString = nil;
 
 	TVCAlertResponse response =
-	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1106][2]")
-								title:TXTLS(@"Prompts[1106][1]")
-						defaultButton:TXTLS(@"Prompts[1106][3]")
-					  alternateButton:TXTLS(@"Prompts[0004]")
+	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[d2w-4o]")
+								title:TXTLS(@"Prompts[akr-eh]")
+						defaultButton:TXTLS(@"Prompts[q5h-xx]")
+					  alternateButton:TXTLS(@"Prompts[qso-2g]")
 						prefillString:self.currentSearchPhrase
 						 resultString:&resultString];
 
@@ -1693,15 +1693,15 @@ NS_ASSUME_NONNULL_BEGIN
 		if (u.config.excludedFromCloudSyncing == NO) {
 			deleteFromCloudCheckboxShown = YES;
 
-			suppressionText = TXTLS(@"Prompts[1107][3]");
+			suppressionText = TXTLS(@"Prompts[5zs-h0]");
 		}
 	}
 #endif
 
-	BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1107][2]")
-											title:TXTLS(@"Prompts[1107][1]")
-									defaultButton:TXTLS(@"Prompts[0001]")
-								  alternateButton:TXTLS(@"Prompts[0002]")
+	BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[etl-ss]")
+											title:TXTLS(@"Prompts[0kz-wd]")
+									defaultButton:TXTLS(@"Prompts[mvh-ms]")
+								  alternateButton:TXTLS(@"Prompts[99q-gg]")
 								   suppressionKey:nil
 								  suppressionText:suppressionText
 							  suppressionResponse:&suppressionResult];
@@ -1792,10 +1792,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (c.isChannel) {
-		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1103][2]")
-												title:TXTLS(@"Prompts[1103][1]")
-										defaultButton:TXTLS(@"Prompts[0001]")
-									  alternateButton:TXTLS(@"Prompts[0002]")
+		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[516-ms]")
+												title:TXTLS(@"Prompts[i8o-7z]")
+										defaultButton:TXTLS(@"Prompts[mvh-ms]")
+									  alternateButton:TXTLS(@"Prompts[99q-gg]")
 									   suppressionKey:@"delete_channel"
 									  suppressionText:nil];
 
@@ -2300,7 +2300,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 		if ([u nicknameIsMyself:nickname]) {
-			[u printDebugInformation:TXTLS(@"IRC[1004]", u.serverAddress) inChannel:c];
+			[u printDebugInformation:TXTLS(@"IRC[0r1-5l]", u.serverAddress) inChannel:c];
 
 			continue;
 		}
@@ -2366,10 +2366,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *vhost = nil;
 
 	TVCAlertResponse response =
-	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[1102][2]")
-								title:TXTLS(@"Prompts[1102][1]")
-						defaultButton:TXTLS(@"Prompts[0005]")
-					  alternateButton:TXTLS(@"Prompts[0004]")
+	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[2mx-jf]")
+								title:TXTLS(@"Prompts[7gr-e4]")
+						defaultButton:TXTLS(@"Prompts[c7s-dq]")
+					  alternateButton:TXTLS(@"Prompts[qso-2g]")
 						prefillString:nil
 						 resultString:&vhost];
 
@@ -2505,9 +2505,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
-							  title:TXTLS(@"Prompts[1104][1]")
-					  defaultButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[f05-hu]")
+							  title:TXTLS(@"Prompts[k55-19]")
+					  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 					alternateButton:nil];
 }
 
@@ -2528,9 +2528,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1104][2]")
-							  title:TXTLS(@"Prompts[1104][1]")
-					  defaultButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[f05-hu]")
+							  title:TXTLS(@"Prompts[k55-19]")
+					  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 					alternateButton:nil];
 }
 
@@ -3178,7 +3178,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		NSMenuItem *clientMenuItem = [NSMenuItem new];
 
-		clientMenuItem.title = TXTLS(@"BasicLanguage[1021]", u.name);
+		clientMenuItem.title = u.name;
 
 		clientMenuItem.submenu = channelSubmenu;
 
@@ -3186,7 +3186,7 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMenuItem *channelMenuItem = nil;
 
 			if (channelCount >= 10) {
-				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
+				channelMenuItem = [NSMenuItem menuItemWithTitle:c.name
 														 target:self
 														 action:@selector(_navigateToChannelInNavigationList:)];
 			} else {
@@ -3196,7 +3196,7 @@ NS_ASSUME_NONNULL_BEGIN
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 
-				channelMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", c.name)
+				channelMenuItem = [NSMenuItem menuItemWithTitle:c.name
 														 target:self
 														 action:@selector(_navigateToChannelInNavigationList:)
 												  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]

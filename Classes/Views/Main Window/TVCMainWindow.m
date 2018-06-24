@@ -1886,7 +1886,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	self.disabledByLackOfInAppPurchase = YES;
 
-	[self setLoadingScreenProgressViewReason:TXTLS(@"BasicLanguage[1028]")];
+	[self setLoadingScreenProgressViewReason:TXTLS(@"TVCMainWindow[8ek-hm]")];
 
 	[self close];
 }
@@ -1943,7 +1943,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	if (masterController().applicationIsLaunched == NO) {
-		[self.loadingScreen showProgressViewWithReason:TXTLS(@"BasicLanguage[1027]")];
+		[self.loadingScreen showProgressViewWithReason:TXTLS(@"TVCMainWindow[iph-a9]")];
 
 		return NO;
 	}
@@ -2120,25 +2120,25 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	if (u.isConnected == NO && u.isConnecting == NO) {
 		if (u.isReconnecting) {
-			[title appendString:TXTLS(@"TVCMainWindow[1021]")];
+			[title appendString:TXTLS(@"TVCMainWindow[3yn-wd]")];
 		} else {
-			[title appendString:TXTLS(@"TVCMainWindow[1016]")];
+			[title appendString:TXTLS(@"TVCMainWindow[q42-an]")];
 		}
 	} else if (u.isConnecting && u.isLoggedIn == NO) {
 		if (u.connectType == IRCClientConnectRetryMode || u.connectType == IRCClientConnectReconnectMode) {
-			[title appendString:TXTLS(@"TVCMainWindow[1020]")];
+			[title appendString:TXTLS(@"TVCMainWindow[s23-zd]")];
 		} else {
-			[title appendString:TXTLS(@"TVCMainWindow[1018]")];
+			[title appendString:TXTLS(@"TVCMainWindow[8eu-c7]")];
 		}
 	} else if (u.isConnected && u.isLoggedIn == NO) {
-		[title appendString:TXTLS(@"TVCMainWindow[1019]")];
+		[title appendString:TXTLS(@"TVCMainWindow[wcb-y8]")];
 	} else if (u.isQuitting) {
-		[title appendString:TXTLS(@"TVCMainWindow[1017]")];
+		[title appendString:TXTLS(@"TVCMainWindow[xqd-h9]")];
 	}
 	
-	NSString *awayStatus = ((u.userIsAway) ? TXTLS(@"TVCMainWindow[1022]") : @"");
+	NSString *awayStatus = ((u.userIsAway) ? TXTLS(@"TVCMainWindow[nxz-l9]") : @"");
 
-	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.userNickname, awayStatus, u.networkNameAlt)];
+	[title appendString:TXTLS(@"TVCMainWindow[19v-bc]", u.userNickname, awayStatus, u.networkNameAlt)];
 
 	if (c == nil) // = Client
 	{
@@ -2147,14 +2147,14 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		NSString *serverAddress = u.serverAddress;
 
 		if (serverAddress) {
-			[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
+			[title appendString:TXTLS(@"TVCMainWindow[jqk-ha]")]; // divider
 
 			[title appendString:serverAddress];
 		}
 	}
 	else
 	{
-		[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
+		[title appendString:TXTLS(@"TVCMainWindow[jqk-ha]")]; // divider
 
 		NSString *channelName = c.name;
 
@@ -2165,12 +2165,12 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 				NSString *userCount = TXFormattedNumber(c.numberOfMembers);
 
-				[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
+				[title appendString:TXTLS(@"TVCMainWindow[v6i-zb]", userCount)];
 
 				NSString *modeSymbols = c.modeInfo.stringWithMaskedPassword;
 
 				if (modeSymbols.length > 1) {
-					[title appendString:TXTLS(@"TVCMainWindow[1013]", modeSymbols)];
+					[title appendString:TXTLS(@"TVCMainWindow[cyg-g9]", modeSymbols)];
 				}
 
 				break;
@@ -2185,7 +2185,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				NSString *hostmask = user.hostmaskFragment;
 
 				if (hostmask) {
-					[title appendString:TXTLS(@"TVCMainWindow[1023]", channelName, hostmask)];
+					[title appendString:TXTLS(@"TVCMainWindow[6wz-pd]", channelName, hostmask)];
 				} else {
 					[title appendString:channelName];
 				}
@@ -2203,7 +2203,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	self.title = title;
 
-	[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[1004]") forObject:self];
+	[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[k79-1a]") forObject:self];
 }
 
 #pragma mark -

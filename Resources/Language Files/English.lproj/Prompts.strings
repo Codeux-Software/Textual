@@ -35,150 +35,128 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1141 */
+"mvh-ms" = "Yes";
+"99q-gg" = "No";
+"zjw-bd" = "Continue";
+"qso-2g" = "Cancel";
+"c7s-dq" = "OK";
+"xne-79" = "Select";
+"ce6-o1" = "Choose";
+"aqw-q1" = "Close";
+"qpv-go" = "Accept";
+"0sy-uc" = "Deny";
+"u09-hg" = "Trust";
+"tlp-8e" = "Delete";
+"71s-kb" = "Open";
 
-"Prompts[0001]" = "Yes";
-"Prompts[0002]" = "No";
-"Prompts[0003]" = "Continue";
-"Prompts[0004]" = "Cancel";
-"Prompts[0005]" = "OK";
-"Prompts[0006]" = "Select";
-"Prompts[0007]" = "Choose";
-"Prompts[0008]" = "Close";
-"Prompts[0009]" = "Accept";
-"Prompts[0010]" = "Deny";
-"Prompts[0011]" = "Trust";
-"Prompts[0012]" = "Delete";
-"Prompts[0013]" = "Open";
+"68u-z9" = "Do not show this message again";
 
-"Prompts[1040]" = "Do not show this message again";
+"6vj-2p" = "Are you sure you want to quit Textual?";
+"77u-vp" = "Quitting will disconnect you from any server that you are connected to until you restart Textual.";
+"1bf-k0" = "Quit";
 
-"Prompts[1101][1]" = "Are you sure you want to quit Textual?";
-"Prompts[1101][2]" = "Quitting will disconnect you from any server that you are connected to until you restart Textual.";
-"Prompts[1101][3]" = "Quit";
+"7gr-e4" = "Set User vHost";
+"2mx-jf" = "Please enter desired vHost (e.g. “apple.vhost”)";
 
-"Prompts[1102][1]" = "Set User vHost";
-"Prompts[1102][2]" = "Please enter desired vHost (e.g. “apple.vhost”)";
+"akr-eh" = "Enter some text to search for";
+"d2w-4o" = "The keyboard shortcut ⌘G can be used to continue to the next search result. ⌘⇧G can be used to return to the previous search result.";
+"q5h-xx" = "Search";
 
-"Prompts[1103][1]" = "Do you want to delete the selection?";
-"Prompts[1103][2]" = "There is no undo and all data related to this channel, except for logs, will be erased.";
+"i8o-7z" = "Do you want to delete the selection?";
+"516-ms" = "There is no undo and all data related to this channel, except for logs, will be erased.";
 
-"Prompts[1104][1]" = "No logs were found";
-"Prompts[1104][2]" = "";
+"0kz-wd" = "Do you want to delete the selection?";
+"etl-ss" = "There is no undo and all data related to this server, except for logs, will be erased.";
+"5zs-h0" = "Only delete server on this device";
 
-"Prompts[1105][1]" = "Unable to access iCloud";
-"Prompts[1105][2]" = "Make sure you're logged in and that “iCloud Drive” or “Documents & Data” is enabled.";
+"3l6-3z" = "You have clicked a link that will connect you to “%1$@“ and join the channel %2$@";
+"mx1-qz" = "The connection named “%1$@“ is already configured to connect to this server address.\n\nDo you want to add this channel to that connection or would you rather create a new connection?";
+"sl5-rf" = "Use Existing Connection";
+"xca-5h" = "Create New Connection";
 
-"Prompts[1106][1]" = "Enter some text to search for";
-"Prompts[1106][2]" = "The keyboard shortcut ⌘G can be used to continue to the next search result. ⌘⇧G can be used to return to the previous search result.";
-"Prompts[1106][3]" = "Search";
+"pnc-ew" = "You have clicked a link that will connect you to “%1$@“ and join the channels: %2$@";
+"a9z-9f" = "The connection named “%1$@“ is already configured to connect to this server address.\n\nDo you want to add these channels to that connection or would you rather create a new connection?";
+"0hh-sl" = "Use Existing Connection";
+"sv9-8s" = "Create New Connection";
 
-"Prompts[1107][1]" = "Do you want to delete the selection?";
-"Prompts[1107][2]" = "There is no undo and all data related to this server, except for logs, will be erased.";
-"Prompts[1107][3]" = "Only delete server on this device";
+"82q-zi" = "WARNING: The inline media feature may leak your IP address if you do not have a system-wide proxy setup";
+"vcq-sz" = "Click “Configure Proxy” to open System Preferences.";
+"x3e-ur" = "Configure Proxy";
 
-"Prompts[1108][1]" = "The message that you are sending is very large which means it will be split up into multiple messages. Sending too many messages at once is often considered disruptive and may result in a ban.";
-"Prompts[1108][2]" = "Are you sure you want to send this message?";
+"9mb-o5" = "An update is available for these addons: %@";
+"x4w-is" = "Would you like to open the “Textual Extras” installer to perform an update?";
+"ece-dd" = "Remind Me Later";
+"ioq-nf" = "Open Installer";
 
-"Prompts[1109][1]" = "You have clicked a link that will connect you to “%1$@“ and join the channel %2$@";
-"Prompts[1109][2]" = "The connection named “%1$@“ is already configured to connect to this server address.\n\nDo you want to add this channel to that connection or would you rather create a new connection?";
-"Prompts[1109][3]" = "Use Existing Connection";
-"Prompts[1109][4]" = "Create New Connection";
+"o9p-4n" = "The “Textual Extras” package must be installed to perform the command “%@”";
+"bpb-vv" = "Would you like to open the installer?";
+"6lr-02" = "Open Installer";
 
-"Prompts[1110][1]" = "You have clicked a link that will connect you to “%1$@“ and join the channels: %2$@";
-"Prompts[1110][2]" = "The connection named “%1$@“ is already configured to connect to this server address.\n\nDo you want to add these channels to that connection or would you rather create a new connection?";
-"Prompts[1110][3]" = "Use Existing Connection";
-"Prompts[1110][4]" = "Create New Connection";
+"2ul-cl" = "You have clicked on a link that will open the application “%@”";
+"5oq-vv" = "Are you sure you want to open “%@” with this application?";
 
-"Prompts[1111][1]" = "WARNING: The inline media feature may leak your IP address if you do not have a system-wide proxy setup";
-"Prompts[1111][2]" = "Click “Configure Proxy” to open System Preferences.";
-"Prompts[1111][3]" = "Configure Proxy";
+"hcb-3i" = "Preferences may become corrupted if you have more than one copy of Textual open";
+"kx4-q8" = "Are you sure you want to continue?";
 
-"Prompts[1112][1]" = "An update is available for these addons: %@";
-"Prompts[1112][2]" = "Would you like to open the “Textual Extras” installer to perform an update?";
-"Prompts[1112][3]" = "Remind Me Later";
-"Prompts[1112][4]" = "Open Installer";
+"py0-cr" = "The style named “%@” is not designed to work with this version of Textual";
+"76t-pn" = "Some features will not work correctly with this style selected.";
+"2a3-5s" = "Change Style";
 
-"Prompts[1113][1]" = "The “Textual Extras” package must be installed to perform the command “%@”";
-"Prompts[1113][2]" = "Would you like to open the installer?";
-"Prompts[1113][3]" = "Open Installer";
+"ezn-rm" = "The style named “%@” wants to enable dark mode but styles are no longer allowed to change that preference";
+"193-6o" = "Do you want to keep Textual's light appearance or switch to dark mode?";
+"hf0-w3" = "Keep It Light";
+"hv0-79" = "Paint It Black";
 
-"Prompts[1114][1]" = "You have clicked on a link that will open the application “%@”";
-"Prompts[1114][2]" = "Are you sure you want to open “%@” with this application?";
+"1fm-up" = "This action will save a copy of your configuration to a location of your choice";
+"syp-al" = "Please note that the following items cannot be exported: custom addons, file transfer download location, log location, and passwords.";
+"vun-f0" = "Save File";
 
-"Prompts[1115][1]" = "Preferences may become corrupted if you have more than one copy of Textual open";
-"Prompts[1115][2]" = "Are you sure you want to continue?";
+"itb-3x" = "This action will overwrite your configuration with the contents of a file you choose";
+"jsh-1a" = "Please note that the following items cannot be imported: custom addons, file transfer download location, log location, and passwords.";
+"502-6h" = "Choose File";
 
-"Prompts[1116][1]" = "This connection's configuration has changed. Do you want to reload the Server Properties dialog?";
-"Prompts[1116][2]" = "You will loose unsaved changes if you click “Yes”";
+"6hx-ni" = "Save";
+"0bj-ic" = "To install this script, save it inside the folder:\n[home folder] \U279C Library \U279C Application Scripts \U279C %@\n\nCreate this folder if it does not exist.";
 
-"Prompts[1117][1]" = "This channel's configuration has changed. Do you want to reload the Channel Properties dialog?";
-"Prompts[1117][2]" = "You will loose unsaved changes if you click “Yes”";
+"m2r-gv" = "A script cannot be saved here";
+"ztu-nv" = "";
 
-"Prompts[1118][1]" = "The style named “%@” is not designed to work with this version of Textual";
-"Prompts[1118][2]" = "Some features will not work correctly with this style selected.";
-"Prompts[1118][3]" = "Change Style";
+"4ua-v5" = "The script named “%@” has been successfully installed";
+"3ze-xh" = "Type “/%@” into the main input text field to perform this script.";
 
-"Prompts[1121][1]" = "Textual is using an encrypted connection to “%@“";
-"Prompts[1121][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
-"Prompts[1121][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
+"xek-0t" = "The extension named “%@” has been successfully installed";
+"k69-q0" = "Restart Textual to load this extension.";
 
-"Prompts[1122][1]" = "%1$@ with the cipher suite: %2$@";
-"Prompts[1122][2]" = "%1$@ with the cipher suite: %2$@ (deprecated)";
+"xfl-8e" = "Are you sure you want to open the file named “%@” with Textual?";
+"6tj-yp" = "";
 
-"Prompts[1123][1]" = "This action will save a copy of your configuration to a location of your choice";
-"Prompts[1123][2]" = "Please note that the following items cannot be exported: custom addons, file transfer download location, log location, and passwords.";
-"Prompts[1123][3]" = "Save File";
+"k55-19" = "No logs were found";
+"f05-hu" = "";
 
-"Prompts[1124][1]" = "This action will overwrite your configuration with the contents of a file you choose";
-"Prompts[1124][2]" = "Please note that the following items cannot be imported: custom addons, file transfer download location, log location, and passwords.";
-"Prompts[1124][3]" = "Choose File";
+"b7o-v4" = "Textual is unable to access the folder that's configured for your log location because the resource is 'stale'";
+"atn-1c" = "Navigate to Preferences \U279C Advanced \U279C Log Location to repair this preference";
 
-"Prompts[1125][1]" = "Save";
-"Prompts[1125][2]" = "To install this script, save it inside the folder:\n[home folder] \U279C Library \U279C Application Scripts \U279C %@\n\nCreate this folder if it does not exist.";
+"h99-3q" = "The process responsible for managing scrollback is not working correctly. Please report this problem to support@codeux.com";
+"nlz-um" = "Last known error message: %@";
 
-"Prompts[1126][1]" = "A script cannot be saved here";
-"Prompts[1126][2]" = "";
+"xz5-6j" = "Your preferences could not be migrated. They have NOT been lost. Textual does not have access to them.";
+"oh6-ke" = "Please report this problem to support@codeux.com";
 
-"Prompts[1127][1]" = "The script named “%@” has been successfully installed";
-"Prompts[1127][2]" = "Type “/%@” into the main input text field to perform this script.";
+"d22-76" = "A query named “%@“ already exists. Do you want to delete this query?";
+"61s-jc" = "There is no undo and all data related to this query, except for logs, will be erased.";
 
-"Prompts[1128][1]" = "The extension named “%@” has been successfully installed";
-"Prompts[1128][2]" = "Restart Textual to load this extension.";
+"bi7-ah" = "Logging has been disabled because there is not enough space on your Mac";
+"v9e-jy" = "Logging will resume when there is free space available.";
 
-"Prompts[1130][1]" = "Are you sure you want to open the file named “%@” with Textual?";
-"Prompts[1130][2]" = "";
+"m8b-58" = "Textual can’t verify the identity of the server “%@”";
+"85z-qw" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@”, which could put your confidential information at risk. Would you like to connect to the server anyway?";
 
-"Prompts[1131][1]" = "Textual can’t verify the identity of the server “%@”";
-"Prompts[1131][2]" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@”, which could put your confidential information at risk. Would you like to connect to the server anyway?";
+"sfx-xx" = "Textual is using an encrypted connection to “%@“";
+"ihy-mz" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
+"iun-45" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
 
-"Prompts[1132][1]" = "Are you sure you want to transfer the file named “%@“?";
-"Prompts[1132][2]" = "This file will be sent without encryption.";
-"Prompts[1132][3]" = "Transfer File";
+"2jq-t5" = "%1$@ with the cipher suite: %2$@";
+"8ou-pu" = "%1$@ with the cipher suite: %2$@ (deprecated)";
 
-"Prompts[1133][1]" = "Are you sure you want to transfer the file named “%1$@“ to %2$@?";
-"Prompts[1133][2]" = "This file will be sent without encryption.";
-"Prompts[1133][3]" = "Transfer File";
-
-"Prompts[1134][1]" = "Textual is unable to access the folder that's configured for your log location because the resource is 'stale'";
-"Prompts[1134][2]" = "Navigate to Preferences \U279C Advanced \U279C Log Location to repair this preference";
-
-"Prompts[1136][1]" = "The preference you have enabled will not work correctly because you do not have a password set";
-"Prompts[1136][2]" = "Enter your NickServ password into the field labeled “Personal Password”";
-
-"Prompts[1137][1]" = "The process responsible for managing historic logs is not working correctly. Please report this problem to support@codeux.com";
-"Prompts[1137][2]" = "Last known error message: %@";
-
-"Prompts[1138][1]" = "Your preferences could not be migrated. They have NOT been lost. Textual does not have access to them.";
-"Prompts[1138][2]" = "Please report this problem to support@codeux.com";
-
-"Prompts[1139][1]" = "A query named “%@“ already exists. Do you want to delete this query?";
-"Prompts[1139][2]" = "There is no undo and all data related to this query, except for logs, will be erased.";
-
-"Prompts[1140][1]" = "Logging has been disabled because there is not enough space on your Mac";
-"Prompts[1140][2]" = "Logging will resume when there is free space available.";
-
-"Prompts[1141][1]" = "The style named “%@” wants to enable dark mode but styles are no longer allowed to change that preference";
-"Prompts[1141][2]" = "Do you want to keep Textual's light appearance or switch to dark mode?";
-"Prompts[1141][3]" = "Keep It Light";
-"Prompts[1141][4]" = "Paint It Black";
+"rn7-08" = "Unable to access iCloud";
+"wjn-f1" = "Make sure you're logged in and that “iCloud Drive” or “Documents & Data” is enabled.";

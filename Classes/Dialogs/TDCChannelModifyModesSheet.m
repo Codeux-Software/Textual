@@ -200,9 +200,9 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	[TDCAlert alertSheetWithWindow:self.sheet
-							  body:TXTLS(@"TDCChannelModifyModesSheet[1000][2]")
-							 title:TXTLS(@"TDCChannelModifyModesSheet[1000][1]", self.client.networkNameAlt, maximumKeyLength)
-					 defaultButton:TXTLS(@"Prompts[0005]")
+							  body:TXTLS(@"TDCChannelModifyModesSheet[lir-ra]")
+							 title:TXTLS(@"TDCChannelModifyModesSheet[7m9-39]", self.client.networkNameAlt, maximumKeyLength)
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:nil
 					   otherButton:nil
 					suppressionKey:@"maximum_secret_key_length"

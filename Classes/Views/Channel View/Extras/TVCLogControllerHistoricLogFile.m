@@ -240,12 +240,12 @@ NS_ASSUME_NONNULL_BEGIN
 	if (lastErrorMessage == nil) {
 		lastErrorMessage = @"";
 	} else {
-		lastErrorMessage = TXTLS(@"Prompts[1137][2]", lastErrorMessage);
+		lastErrorMessage = TXTLS(@"Prompts[nlz-um]", lastErrorMessage);
 	}
 
 	[TDCAlert alertWithMessage:lastErrorMessage
-						 title:TXTLS(@"Prompts[1137][1]")
-				 defaultButton:TXTLS(@"Prompts[0005]")
+						 title:TXTLS(@"Prompts[h99-3q]")
+				 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 			   alternateButton:nil];
 }
 

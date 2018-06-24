@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[self appendPluralOrSingular:resultString valueToken:1001 value:networkCount];
 
 		if (powerOverCount == 0) {
-			[resultString appendString:TPILocalizedString(@"BasicLanguage[1007]")];
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[jpi-po]")];
 		} else {
 			[self appendPluralOrSingular:resultString valueToken:1002 value:operCount];
 			[self appendPluralOrSingular:resultString valueToken:1003 value:channelOpCount];

@@ -170,7 +170,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ((self.isConnecting || self.isConnected) &&
 		self.connectionInvalidatedVoluntarily == NO)
 	{
-		[self ircConnectionDidError:TXTLS(@"IRC[1124]")];
+		[self ircConnectionDidError:TXTLS(@"IRC[vdy-jk]")];
 
 		[self _ircConnectionDidDisconnectWithError:nil];
 	}
@@ -277,21 +277,21 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *protocolSummary = nil;
 
 		if ([GCDAsyncSocket isCipherSuiteDeprecated:cipherSuites] == NO) {
-			protocolSummary = TXTLS(@"Prompts[1122][1]", protocolDescription, cipherDescription);
+			protocolSummary = TXTLS(@"Prompts[2jq-t5]", protocolDescription, cipherDescription);
 		} else {
-			protocolSummary = TXTLS(@"Prompts[1122][2]", protocolDescription, cipherDescription);
+			protocolSummary = TXTLS(@"Prompts[8ou-pu]", protocolDescription, cipherDescription);
 		}
 
-		NSString *defaultButtonTitle = TXTLS(@"Prompts[0008]");
+		NSString *defaultButtonTitle = TXTLS(@"Prompts[aqw-q1]");
 		NSString *alternateButtonTitle = nil;
 
-		NSString *promptTitleText = TXTLS(@"Prompts[1121][1]", policyName);
+		NSString *promptTitleText = TXTLS(@"Prompts[sfx-xx]", policyName);
 		NSString *promptInformativeText = nil;
 
 		if (protocolSummary == nil) {
-			promptInformativeText = TXTLS(@"Prompts[1121][2]", policyName);
+			promptInformativeText = TXTLS(@"Prompts[ihy-mz]", policyName);
 		} else {
-			promptInformativeText = TXTLS(@"Prompts[1121][3]", policyName, protocolSummary);
+			promptInformativeText = TXTLS(@"Prompts[iun-45]", policyName, protocolSummary);
 		}
 
 		(void)
@@ -324,11 +324,11 @@ ClassWithDesignatedInitializerInitMethod
 			return;
 		}
 
-		NSString *defaultButtonTitle = TXTLS(@"Prompts[0003]");
-		NSString *alternateButtonTitle = TXTLS(@"Prompts[0004]");
+		NSString *defaultButtonTitle = TXTLS(@"Prompts[zjw-bd]");
+		NSString *alternateButtonTitle = TXTLS(@"Prompts[qso-2g]");
 
-		NSString *promptTitleText = TXTLS(@"Prompts[1131][1]", policyName);
-		NSString *promptInformativeText = TXTLS(@"Prompts[1131][2]", policyName);
+		NSString *promptTitleText = TXTLS(@"Prompts[m8b-58]", policyName);
+		NSString *promptInformativeText = TXTLS(@"Prompts[85z-qw]", policyName);
 
 		__weak typeof(self) weakSelf = self;
 

@@ -37,26 +37,22 @@
 
 /* Next unusued key: 1006 */
 
-"TDCInAppPurchaseUpgradeEligibilitySheet[1001]" = "Select a copy of Textual 5 or Textual 6 downloaded from the Mac App Store.";
+"gnb-rv" = "Select a copy of Textual 5 or Textual 6 downloaded from the Mac App Store.";
 
-"TDCInAppPurchaseUpgradeEligibilitySheet[1002][1]" = "The application “%@“ cannot be used to check upgrade eligibility";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1002][2]" = "This application is not Textual 5 or Textual 6, or was not downloaded from the Mac App Store.";
+"c9r-kh" = "The application “%@“ cannot be used to check upgrade eligibility";
+"2g4-8m" = "This application is not Textual 5 or Textual 6, or was not downloaded from the Mac App Store.";
 
-"TDCInAppPurchaseUpgradeEligibilitySheet[1003][1]" = "A problem was encountered when checking upgrade eligibility";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1003][2]" = "%@\n\nTry again in a few minutes then contact support if the problem persists.";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1003][3]" = "Contact Support";
+"i3q-j0" = "A problem was encountered when checking upgrade eligibility";
+"967-f3" = "%@\n\nTry again in a few minutes then contact support if the problem persists.";
+"uyy-qm" = "Contact Support";
 
-"TDCInAppPurchaseUpgradeEligibilitySheet[1003][1]" = "A problem was encountered when checking upgrade eligibility";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1003][2]" = "%@\n\nTry again in a few minutes then contact support if the problem persists.";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1003][3]" = "Contact Support";
+"i83-gw" = "A problem was encountered when checking upgrade eligibility";
+"lum-et" = "The copy of Textual that you selected failed validation.\n\nThe most common reason validation fails is that you copied Textual from one Mac to another.\n\nTo continue, download a new copy of Textual from the Mac App Store, then try again.";
+"on9-6e" = "Contact Support";
 
-"TDCInAppPurchaseUpgradeEligibilitySheet[1004][1]" = "A problem was encountered when checking upgrade eligibility";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1004][2]" = "The copy of Textual that you selected failed validation.\n\nThe most common reason validation fails is that you copied Textual from one Mac to another.\n\nTo continue, download a new copy of Textual from the Mac App Store, then try again.";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1004][3]" = "Contact Support";
-
-"TDCInAppPurchaseUpgradeEligibilitySheet[1005][1]" = "Service returned a non-zero response code: %ld";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1005][2]" = "Service returned an empty status context.";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1005][3]" = "Service returned an malformed status context.";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1005][4]" = "Service returned an unusual eligibility: %ld";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1005][5]" = "Cannot read contents of receipt file.";
-"TDCInAppPurchaseUpgradeEligibilitySheet[1005][6]" = "Request cannot be completed at this time.";
+"ssd-4w" = "Service returned a non-zero response code: %ld";
+"afn-16" = "Service returned an empty status context.";
+"md6-e1" = "Service returned an malformed status context.";
+"bdh-bw" = "Service returned an unusual eligibility: %ld";
+"5zo-ap" = "Cannot read contents of receipt file.";
+"e7n-ta" = "Request cannot be completed at this time.";

@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSArray *memberList = channel.memberList;
 
 	if (memberList.count == 0) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]", channel.name) inChannel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[5dx-rs]", channel.name) inChannel:channel];
 
 		return;
 	}
@@ -140,9 +140,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (memberList.count == 0) {
 		if (hasSearchCondition) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", channel.name, matchString) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[n1j-tp]", channel.name, matchString) inChannel:channel];
 		} else {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", channel.name) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1ab-27]", channel.name) inChannel:channel];
 		}
 
 		return;
@@ -168,18 +168,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (membersMatched.count <= 0) {
 		if (hasSearchCondition) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", channel.name, matchString) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[n1j-tp]", channel.name, matchString) inChannel:channel];
 		} else {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", channel.name) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1ab-27]", channel.name) inChannel:channel];
 		}
 
 		return;
 	}
 
 	if (hasSearchCondition) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", membersMatched.count, channel.name, matchString) inChannel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[oq7-mg]", membersMatched.count, channel.name, matchString) inChannel:channel];
 	} else {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]", membersMatched.count, channel.name) inChannel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[nn7-6s]", membersMatched.count, channel.name) inChannel:channel];
 	}
 
 	[membersMatched sortUsingComparator:^NSComparisonResult(IRCChannelUser *member1, IRCChannelUser *member2) {
@@ -237,13 +237,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* No cloes found */
 	if (members.count == 0) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]") inChannel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[gxq-47]") inChannel:channel];
 
 		return;
 	}
 
 	/* Build result string */
-	[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]", members.count, channel.name) inChannel:channel];
+	[client printDebugInformation:TPILocalizedString(@"BasicLanguage[iaa-5v]", members.count, channel.name) inChannel:channel];
 
 	for (NSString *memberHost in members) {
 		NSArray *clones = [members arrayForKey:memberHost];

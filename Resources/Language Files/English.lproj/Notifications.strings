@@ -35,8 +35,6 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1082 */
-
 /* Notification spoken text */
 /* Address Book spoken text uses the actual notification message for that
  notification type. It is not defined here */
@@ -44,96 +42,96 @@
 /* Channel messages */
 /* Channel messages are broken up into multiple components so that they
  can be reassembled based on user preference. */
-"Notifications[1001]" = "Channel Message";
-"Notifications[1002]" = "Channel Notice";
-"Notifications[1003]" = "Highlight";
-"Notifications[1061]" = " in %@";
-"Notifications[1062]" = " in Private Message";
-"Notifications[1063]" = " by %@";
-"Notifications[1064]" = " from %@";
-"Notifications[1065]" = ", "; // separator
+"tao-i2" = "Channel Message";
+"kk4-68" = "Channel Notice";
+"qld-sa" = "Highlight";
+"ke8-17" = " in %@";
+"6nw-ec" = " in Private Message";
+"qy9-86" = " by %@";
+"a7i-pu" = " from %@";
+"g9t-bt" = ", "; // separator
 
 /* Other spoken text */
-"Notifications[1004]" = "Invited to %1$@ by %2$@";
-"Notifications[1005]" = "Kicked from %1$@ by %2$@";
-"Notifications[1006]" = "New Private Message from %1$@, %2$@";
-"Notifications[1007]" = "Private Message from %1$@, %2$@";
-"Notifications[1008]" = "Private Notice from %1$@, %2$@";
-"Notifications[1009]" = "Connected to %@";
-"Notifications[1010]" = "Disconnected from %@";
-"Notifications[1011]" = "File transfer to %@ completed";
-"Notifications[1012]" = "File transfer from %@ completed";
-"Notifications[1013]" = "File transfer to %@ failed";
-"Notifications[1014]" = "File transfer from %@ failed";
-"Notifications[1015]" = "Received file transfer request from %@";
-"Notifications[1066]" = "%1$@ joined %2$@";
-"Notifications[1067]" = "%1$@ joined"; // join without channel name (unused)
-"Notifications[1068]" = "%1$@ parted %2$@";
-"Notifications[1069]" = "%1$@ parted"; // part without channel name (unused)
-"Notifications[1081]" = "%1$@ disconnected"; // disconnect
+"l5i-at" = "Invited to %1$@ by %2$@";
+"5yu-bf" = "Kicked from %1$@ by %2$@";
+"rvb-9l" = "New Private Message from %1$@, %2$@";
+"2bu-ep" = "Private Message from %1$@, %2$@";
+"6jl-vh" = "Private Notice from %1$@, %2$@";
+"z4p-yr" = "Connected to %@";
+"fd0-f8" = "Disconnected from %@";
+"5e4-vg" = "File transfer to %@ completed";
+"4cd-p3" = "File transfer from %@ completed";
+"f0u-32" = "File transfer to %@ failed";
+"mak-bj" = "File transfer from %@ failed";
+"at0-vi" = "Received file transfer request from %@";
+"bwu-ps" = "%1$@ joined %2$@";
+"vhl-5u" = "%1$@ joined"; // join without channel name (unused)
+"4aq-hz" = "%1$@ parted %2$@";
+"nsn-du" = "%1$@ parted"; // part without channel name (unused)
+"sqf-4y" = "%1$@ disconnected"; // disconnect
 
 /* Notification bubble titles */
-"Notifications[1016]" = "Address Book Notification";
-"Notifications[1017]" = "Channel Message: %@";
-"Notifications[1018]" = "Channel Notice: %@";
-"Notifications[1019]" = "Connected: %@";
-"Notifications[1020]" = "Disconnected: %@";
-"Notifications[1021]" = "Highlight: %@";
-"Notifications[1022]" = "Invited: %@";
-"Notifications[1023]" = "Kicked: %@";
-"Notifications[1024]" = "New Private Message";
-"Notifications[1025]" = "Private Message";
-"Notifications[1026]" = "Private Notice";
-"Notifications[1027]" = "Successful File Transfer: %@";
-"Notifications[1028]" = "Successful File Transfer: %@";
-"Notifications[1029]" = "File Transfer Failed: %@";
-"Notifications[1030]" = "File Transfer Failed: %@";
-"Notifications[1031]" = "File Transfer Request: %@";
-"Notifications[1070]" = "User Joined: %@";
-"Notifications[1071]" = "User Parted: %@";
-"Notifications[1072]" = "User Disconnected: %@";
+"niq-32" = "Address Book Notification";
+"ep5-de" = "Channel Message: %@";
+"chi-km" = "Channel Notice: %@";
+"mo1-vn" = "Connected: %@";
+"7xe-ig" = "Disconnected: %@";
+"qka-f3" = "Highlight: %@";
+"g4s-cq" = "Invited: %@";
+"u30-ia" = "Kicked: %@";
+"ltn-hf" = "New Private Message";
+"69i-dy" = "Private Message";
+"7hn-dg" = "Private Notice";
+"l5y-sx" = "Successful File Transfer: %@";
+"hc9-7n" = "Successful File Transfer: %@";
+"het-vh" = "File Transfer Failed: %@";
+"hm4-ze" = "File Transfer Failed: %@";
+"nqz-7v" = "File Transfer Request: %@";
+"keq-ts" = "User Joined: %@";
+"im4-p0" = "User Parted: %@";
+"20x-32" = "User Disconnected: %@";
 
 /* Notification bubble descriptions.
  These are only notifications that require locali	zation. Many notifications
  just send the raw message received so they are not localized here */
-"Notifications[1032]" = "Connection successful";
-"Notifications[1033]" = "Disconnection successful";
-"Notifications[1034]" = "%1$@ invited you to join %2$@";
-"Notifications[1035]" = "%1$@ kicked you from %2$@ with reason: %3$@";
-"Notifications[1036]" = "%1$@ (%2$qi bytes)";
-"Notifications[1037]" = "%1$@ (%2$qi bytes)";
-"Notifications[1038]" = "%@";
-"Notifications[1039]" = "%@";
-"Notifications[1040]" = "%1$@ (%2$qi bytes)";
-"Notifications[1041]" = "User with nickname “%1$@” is available";
-"Notifications[1042]" = "User with nickname “%1$@” is no longer available";
-"Notifications[1043]" = "User with nickname “%1$@” is now available";
-"Notifications[1073]" = "%1$@ joined %2$@";
-"Notifications[1074]" = "%1$@ parted %2$@";
-"Notifications[1075]" = "%1$@ parted %2$@ with reason: %3$@";
-"Notifications[1076]" = "%1$@ disconnected";
-"Notifications[1077]" = "%1$@ disconnected with reason: %2$@";
+"88k-kl" = "Connection successful";
+"bif-2c" = "Disconnection successful";
+"xl5-dn" = "%1$@ invited you to join %2$@";
+"fkt-p3" = "%1$@ kicked you from %2$@ with reason: %3$@";
+"fhn-dd" = "%1$@ (%2$qi bytes)";
+"oqh-pn" = "%1$@ (%2$qi bytes)";
+"9r4-cq" = "%@";
+"cqq-ci" = "%@";
+"wik-wq" = "%1$@ (%2$qi bytes)";
+"97r-0l" = "User with nickname “%1$@” is available";
+"rif-9r" = "User with nickname “%1$@” is no longer available";
+"xk2-1l" = "User with nickname “%1$@” is now available";
+"yas-us" = "%1$@ joined %2$@";
+"bu2-9m" = "%1$@ parted %2$@";
+"3ur-i8" = "%1$@ parted %2$@ with reason: %3$@";
+"7ao-n8" = "%1$@ disconnected";
+"ssw-m6" = "%1$@ disconnected with reason: %2$@";
 
 /* Notification bubble reply button placeholders */
-"Notifications[1044]" = "Enter message to reply to this private message";
+"do4-2e" = "Enter message to reply to this private message";
 
 /* Notification type titles */
-"Notifications[1045]" = "Address Book Notification";
-"Notifications[1046]" = "Channel Message";
-"Notifications[1047]" = "Channel Notice";
-"Notifications[1048]" = "Connected";
-"Notifications[1049]" = "Disconnected";
-"Notifications[1050]" = "Highlight (Mention)";
-"Notifications[1051]" = "Channel Invitation";
-"Notifications[1052]" = "Kicked from Channel";
-"Notifications[1053]" = "Private Message (new)";
-"Notifications[1054]" = "Private Message";
-"Notifications[1055]" = "Private Notice";
-"Notifications[1056]" = "Successful File Transfer (Sending)";
-"Notifications[1057]" = "Successful File Transfer (Receiving)";
-"Notifications[1058]" = "Failed File Transfer (Sending)";
-"Notifications[1059]" = "Failed File Transfer (Receiving)";
-"Notifications[1060]" = "File Transfer Request";
-"Notifications[1078]" = "User Joined Channel";
-"Notifications[1079]" = "User Parted Channel";
-"Notifications[1080]" = "User Disconnected";
+"kx3-xk" = "Address Book Notification";
+"qnz-k4" = "Channel Message";
+"vuq-jp" = "Channel Notice";
+"4lr-ej" = "Connected";
+"wjv-yb" = "Disconnected";
+"cs4-x9" = "Highlight (Mention)";
+"eiu-8q" = "Channel Invitation";
+"2nk-lg" = "Kicked from Channel";
+"5yi-gu" = "Private Message (new)";
+"00b-nx" = "Private Message";
+"nhz-io" = "Private Notice";
+"0x2-3h" = "Successful File Transfer (Sending)";
+"qle-7v" = "Successful File Transfer (Receiving)";
+"sc0-1n" = "Failed File Transfer (Sending)";
+"we9-1b" = "Failed File Transfer (Receiving)";
+"st5-0n" = "File Transfer Request";
+"25q-af" = "User Joined Channel";
+"k3s-by" = "User Parted Channel";
+"0fo-bt" = "User Disconnected";

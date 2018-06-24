@@ -305,7 +305,7 @@ NS_ASSUME_NONNULL_BEGIN
 	};
 
 	self.placeholderAttributedString =
-	[NSAttributedString attributedStringWithString:TXTLS(@"TVCMainWindow[1011]") attributes:placeholderStringAttributes];
+	[NSAttributedString attributedStringWithString:TXTLS(@"TVCMainWindow[8r3-ih]") attributes:placeholderStringAttributes];
 
 	self.needsDisplay = YES;
 }

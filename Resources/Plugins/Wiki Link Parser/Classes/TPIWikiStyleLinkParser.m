@@ -87,7 +87,7 @@
 			NSURL *URLValue = [NSURL URLWithString:currentValue];
 
 			if (URLValue == nil) {
-				return TPILocalizedString(@"BasicLanguage[1002]");
+				return TPILocalizedString(@"BasicLanguage[535-5j]");
 			}
 
 			return nil;
@@ -162,7 +162,7 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-    return TPILocalizedString(@"BasicLanguage[1000]");
+    return TPILocalizedString(@"BasicLanguage[0vq-yu]");
 }
 
 - (NSView *)pluginPreferencesPaneView
@@ -193,7 +193,7 @@
 		NSString *entryName = [self channelNameFromId:entryInfo[_indexChannelId]];
 
 		if (entryName == nil) {
-			return TPILocalizedString(@"BasicLanguage[1001]");
+			return TPILocalizedString(@"BasicLanguage[sb5-c9]");
 		}
 
 		return entryName;

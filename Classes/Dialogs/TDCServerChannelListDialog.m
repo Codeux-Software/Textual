@@ -104,7 +104,7 @@ ClassWithDesignatedInitializerInitMethod
 		[NSSortDescriptor sortDescriptorWithKey:@"channelMemberCount" ascending:NO selector:@selector(compare:)]
 	];
 
-	self.networkNameTextField.stringValue = TXTLS(@"TDCServerChannelListDialog[1000]", self.client.networkNameAlt);
+	self.networkNameTextField.stringValue = TXTLS(@"TDCServerChannelListDialog[7qf-r0]", self.client.networkNameAlt);
 }
 
 - (void)show
@@ -210,7 +210,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *arrangedObjectsCount = TXFormattedNumber([arrangedObjects count]);
 
-	self.window.title = TXTLS(@"TDCServerChannelListDialog[1001]", arrangedObjectsCount);
+	self.window.title = TXTLS(@"TDCServerChannelListDialog[ct4-wh]", arrangedObjectsCount);
 }
 
 #pragma mark -

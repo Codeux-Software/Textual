@@ -60,8 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 				*outError = [NSError errorWithDomain:TXErrorDomain
 												 code:71013
 											userInfo:@{
-					NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1000][1]"),
-					NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1000][2]")}
+					NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[iis-gr]"),
+					NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[k0c-3u]")}
 							 ];
 			}
 
@@ -73,8 +73,8 @@ NS_ASSUME_NONNULL_BEGIN
 				*outError = [NSError errorWithDomain:TXErrorDomain
 												code:71014
 											userInfo:@{
-						NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[1001][1]"),
-						NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[1001][2]")}
+						NSLocalizedDescriptionKey : TXTLS(@"TDCServerEndpointListSheet[qeb-ip]"),
+						NSLocalizedRecoverySuggestionErrorKey : TXTLS(@"TDCServerEndpointListSheet[ox2-od]")}
 							 ];
 			}
 

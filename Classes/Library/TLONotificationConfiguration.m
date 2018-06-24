@@ -70,12 +70,12 @@ ClassWithDesignatedInitializerInitMethod
 
 + (NSString *)localizedAlertDefaultSoundTitle
 {
-	return TXTLS(@"TVCNotificationConfigurationView[1004]");
+	return TXTLS(@"TVCNotificationConfigurationView[0rs-8l]");
 }
 
 + (NSString *)localizedAlertNoSoundTitle
 {
-	return TXTLS(@"TVCNotificationConfigurationView[1003]");
+	return TXTLS(@"TVCNotificationConfigurationView[vje-9n]");
 }
 
 - (NSString *)displayName

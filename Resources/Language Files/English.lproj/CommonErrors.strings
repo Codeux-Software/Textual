@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2017, 2018 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,15 +35,10 @@
  *
  *********************************************************************** */
 
-"BasicLanguage[1000][1]" = "Textual can’t verify the identity of the server “%@”";
-"BasicLanguage[1000][2]" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@”, which could put your confidential information at risk. Would you like to connect to the server anyway?";
-
-"BasicLanguage[1001][1]" = "Textual is using an encrypted connection to “%@“";
-"BasicLanguage[1001][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
-"BasicLanguage[1001][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
-
-"BasicLanguage[1002][1]" = "%1$@ with the cipher suite: %2$@";
-"BasicLanguage[1002][2]" = "%1$@ with the cipher suite: %2$@ (deprecated)";
-
-"BasicLanguage[1003]" = "Close";
-"BasicLanguage[1004]" = "Trust";
+"yyx-l3" = "Please enter a properly formatted server address or pick from the list of preconfigured networks.";
+"l0c-nb" = "Please enter a whole number between 1 and 65,535.";
+"och-j5" = "Please enter a properly formatted nickname.";
+"pgl-zg" = "Please enter a properly formatted e-mail address.";
+"gas-v8" = "Cannot contain more than one line.";
+"2cb-af" = "Maximum length is %ld characters.";
+"qi9-i8" = "Minimum length is %ld characters.";

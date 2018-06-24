@@ -35,23 +35,21 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1012 */
+"r62-4k" = "Are you sure you want to delete everything uploaded to iCloud thats related to Textual?";
+"t8v-w8" = "This action will not effect the configuration of this device or others.";
 
-"TDCPreferencesController[1001][1]" = "Are you sure you want to delete everything uploaded to iCloud thats related to Textual?";
-"TDCPreferencesController[1001][2]" = "This action will not effect the configuration of this device or others.";
+"70s-c6" = "No Log Location Selected";
+"721-ie" = "No Location Selected";
 
-"TDCPreferencesController[1002]" = "No Log Location Selected";
-"TDCPreferencesController[1003]" = "No Location Selected";
+"5jv-aw" = "Are you opening this style because you are interested in modifying it?";
+"ojj-ap" = "Click “Yes” to create a copy of this style specifically for that purpose.";
 
-"TDCPreferencesController[1007][1]" = "Are you opening this style because you are interested in modifying it?";
-"TDCPreferencesController[1007][2]" = "Click “Yes” to create a copy of this style specifically for that purpose.";
+"uc0-z7" = "Preferred Selection";
+"q4o-2f" = "The style named “%1$@” has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
 
-"TDCPreferencesController[1008][1]" = "Preferred Selection";
-"TDCPreferencesController[1008][2]" = "The style named “%1$@” has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
+"77t-de" = "• Nickname Format";
+"ddh-hr" = "• Timestamp Format";
+"we8-i8" = "• Channel View Font";
 
-"TDCPreferencesController[1009][1]" = "• Nickname Format";
-"TDCPreferencesController[1009][2]" = "• Timestamp Format";
-"TDCPreferencesController[1009][4]" = "• Channel View Font";
-
-"TDCPreferencesController[1010][1]" = "Please choose a location other than iCloud Drive to save data to";
-"TDCPreferencesController[1010][2]" = "";
+"x3n-to" = "Please choose a location other than iCloud Drive to save data to";
+"gz8-dt" = "";

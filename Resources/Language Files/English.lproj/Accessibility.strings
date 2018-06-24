@@ -35,20 +35,16 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1007 */
+"alq-6s" = "User %@ in User List";
 
-"Accessibility[1000]" = "User %@ in User List";
+"bmy-d2" = "Connection %@, Connected";
+"tu4-8u" = "Connection %@, Disconnected";
 
-"Accessibility[1001][1]" = "Connection %@, Connected";
-"Accessibility[1001][2]" = "Connection %@, Disconnected";
+"75f-og" = "Channel %@, Channel Joined";
+"edc-7o" = "Channel %@, Channel Not Joined";
 
-"Accessibility[1002][1]" = "Channel %@, Channel Joined";
-"Accessibility[1002][2]" = "Channel %@, Channel Not Joined";
+"9sn-xp" = "Query with User %@";
 
-"Accessibility[1003]" = "Query with User %@";
+"k79-1a" = "Main Window"; // Main window title description
 
-"Accessibility[1004]" = "Main Window"; // Main window title description
-
-"Accessibility[1005]" = "Chat View";
-
-"Accessibility[1006]" = "Alert dialog %@";
+"wbj-gr" = "Alert dialog %@";

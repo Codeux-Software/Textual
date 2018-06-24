@@ -606,9 +606,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (sharedCloudManager().ubiquitousContainerIsAvailable == NO) {
 		[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
-								  body:TXTLS(@"Prompts[1105][2]")
-								 title:TXTLS(@"Prompts[1105][1]")
-						 defaultButton:TXTLS(@"Prompts[1040]")
+								  body:TXTLS(@"Prompts[wjn-f1]")
+								 title:TXTLS(@"Prompts[rn7-08]")
+						 defaultButton:TXTLS(@"Prompts[68u-z9]")
 					   alternateButton:nil
 						   otherButton:nil];
 
@@ -672,9 +672,9 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 		return;
 	}
 	
-	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1134][2]")
-						 title:TXTLS(@"Prompts[1134][1]")
-				 defaultButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[atn-1c]")
+						 title:TXTLS(@"Prompts[b7o-v4]")
+				 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 			   alternateButton:nil];
 }
 

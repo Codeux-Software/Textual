@@ -205,7 +205,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.channelNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isChannelName == NO) {
-			return TXTLS(@"TDCChannelPropertiesSheet[1002]");
+			return TXTLS(@"TDCChannelPropertiesSheet[1nd-7x]");
 		}
 
 		return nil;
@@ -338,9 +338,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[TDCAlert alertSheetWithWindow:self.sheet
-							  body:TXTLS(@"TDCChannelPropertiesSheet[1001][2]")
-							 title:TXTLS(@"TDCChannelPropertiesSheet[1001][1]", self.client.networkNameAlt, maximumKeyLength)
-					 defaultButton:TXTLS(@"Prompts[0005]")
+							  body:TXTLS(@"TDCChannelPropertiesSheet[op4-gg]")
+							 title:TXTLS(@"TDCChannelPropertiesSheet[zf2-r7]", self.client.networkNameAlt, maximumKeyLength)
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:nil
 					   otherButton:nil
 					suppressionKey:@"maximum_secret_key_length"
@@ -372,10 +372,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSWindow *window = self.sheet;
 	
 	[TDCAlert alertSheetWithWindow:window
-							  body:TXTLS(@"Prompts[1117][2]")
-							 title:TXTLS(@"Prompts[1117][1]")
-					 defaultButton:TXTLS(@"Prompts[0001]")
-				   alternateButton:TXTLS(@"Prompts[0002]")
+							  body:TXTLS(@"TDCChannelPropertiesSheet[qby-hi]")
+							 title:TXTLS(@"TDCChannelPropertiesSheet[mvl-r5]")
+					 defaultButton:TXTLS(@"Prompts[mvh-ms]")
+				   alternateButton:TXTLS(@"Prompts[99q-gg]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked != TDCAlertResponseDefaultButton) {

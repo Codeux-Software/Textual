@@ -412,10 +412,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ([TPCPreferences confirmQuit]) {
-		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1101][2]")
-												title:TXTLS(@"Prompts[1101][1]")
-										defaultButton:TXTLS(@"Prompts[1101][3]")
-									  alternateButton:TXTLS(@"Prompts[0004]")];
+		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[77u-vp]")
+												title:TXTLS(@"Prompts[6vj-2p]")
+										defaultButton:TXTLS(@"Prompts[1bf-k0]")
+									  alternateButton:TXTLS(@"Prompts[qso-2g]")];
 
 		return result;
 	}

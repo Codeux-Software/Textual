@@ -124,7 +124,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *valueWithoutWildcard = [currentValue stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
 
 		if (valueWithoutWildcard.isHostmask == NO) {
-			return TXTLS(@"TDCAddressBookSheet[0001]");
+			return TXTLS(@"TDCAddressBookSheet[csu-bv]");
 		}
 
 		return nil;
@@ -135,7 +135,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.userTrackingEntryNicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isHostmaskNickname == NO) {
-			return TXTLS(@"TDCAddressBookSheet[0002]");
+			return TXTLS(@"CommonErrors[och-j5]");
 		}
 
 		return nil;

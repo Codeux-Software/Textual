@@ -57,10 +57,10 @@ NS_ASSUME_NONNULL_BEGIN
 				continue;
 			}
 
-			BOOL continueLaunch = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1115][2]")
-															title:TXTLS(@"Prompts[1115][1]")
-													defaultButton:TXTLS(@"Prompts[0001]")
-												  alternateButton:TXTLS(@"Prompts[0002]")];
+			BOOL continueLaunch = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[kx4-q8]")
+															title:TXTLS(@"Prompts[hcb-3i]")
+													defaultButton:TXTLS(@"Prompts[mvh-ms]")
+												  alternateButton:TXTLS(@"Prompts[99q-gg]")];
 
 			if (continueLaunch == NO) {
 				return NO;

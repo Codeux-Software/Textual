@@ -207,7 +207,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizedString(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[xqp-6g]");
 }
 
 - (NSView *)pluginPreferencesPaneView

@@ -486,15 +486,15 @@ NS_ASSUME_NONNULL_BEGIN
 		if (channelListCount > 1) {
 			NSString *channelListFormatted = [channelList componentsJoinedByString:@", "];
 
-			mergeConnection = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1110][2]", existingClient.name)
-														title:TXTLS(@"Prompts[1110][1]", serverAddress, channelListFormatted)
-												defaultButton:TXTLS(@"Prompts[1110][3]")
-											  alternateButton:TXTLS(@"Prompts[1110][4]")];
+			mergeConnection = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[a9z-9f]", existingClient.name)
+														title:TXTLS(@"Prompts[pnc-ew]", serverAddress, channelListFormatted)
+												defaultButton:TXTLS(@"Prompts[0hh-sl]")
+											  alternateButton:TXTLS(@"Prompts[sv9-8s]")];
 		} else {
-			mergeConnection = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1109][2]", existingClient.name)
-														title:TXTLS(@"Prompts[1109][1]", serverAddress, channelList.firstObject)
-												defaultButton:TXTLS(@"Prompts[1109][3]")
-											  alternateButton:TXTLS(@"Prompts[1109][4]")];
+			mergeConnection = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[mx1-qz]", existingClient.name)
+														title:TXTLS(@"Prompts[3l6-3z]", serverAddress, channelList.firstObject)
+												defaultButton:TXTLS(@"Prompts[sl5-rf]")
+											  alternateButton:TXTLS(@"Prompts[xca-5h]")];
 		}
 
 		// YES = default button (create new connection)

@@ -228,7 +228,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)failWithNoSpaceLeftOnDevice
 {
-	[self closeWithLocalizedError:TXTLS(@"TDCFileTransferDialog[1026]")];
+	[self closeWithLocalizedError:TXTLS(@"TDCFileTransferDialog[79f-s0]")];
 }
 
 - (void)closeWithLocalizedError:(NSString *)errorLocalization
@@ -407,7 +407,7 @@ ClassWithDesignatedInitializerInitMethod
 			LogToConsoleError("DCC Connect Error: %{public}@", connectionError.localizedDescription);
 		}
 
-		[self closeWithLocalizedError:@"TDCFileTransferDialog[1017]"];
+		[self closeWithLocalizedError:@"TDCFileTransferDialog[fn8-sx]"];
 
 		return;
 	}
@@ -433,7 +433,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.hostPort += 1;
 
 		if (self.hostPort > [TPCPreferences fileTransferPortRangeEnd]) {
-			[self closeWithLocalizedError:@"TDCFileTransferDialog[1018]"];
+			[self closeWithLocalizedError:@"TDCFileTransferDialog[vxc-sd]"];
 
 			return;
 		}
@@ -498,7 +498,7 @@ ClassWithDesignatedInitializerInitMethod
 	LogToConsoleError("Port mapping failed with error code: %{public}i", self.portMapping.error);
 
 	if (self.isReversed) {
-		[self closeWithLocalizedError:@"TDCFileTransferDialog[1018]"];
+		[self closeWithLocalizedError:@"TDCFileTransferDialog[vxc-sd]"];
 
 		return;
 	}
@@ -592,7 +592,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)noteIPAddressLookupFailed
 {
-	[self closeWithLocalizedError:@"TDCFileTransferDialog[1020]"];
+	[self closeWithLocalizedError:@"TDCFileTransferDialog[47s-1s]"];
 }
 
 - (void)didReceiveResumeRequest:(uint64_t)proposedPosition
@@ -617,7 +617,7 @@ ClassWithDesignatedInitializerInitMethod
 	uint64_t currentFilesize = self.currentFilesize;
 
 	if (currentFilesize != proposedPosition) {
-		[self closeWithLocalizedError:@"TDCFileTransferDialog[1022]" isFatalError:YES];
+		[self closeWithLocalizedError:@"TDCFileTransferDialog[0ov-tr]" isFatalError:YES];
 
 		return;
 	}
@@ -757,7 +757,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_closeWithClientDisconnectedError
 {
-	[self closeWithLocalizedError:@"TDCFileTransferDialog[1025]" isFatalError:NO];
+	[self closeWithLocalizedError:@"TDCFileTransferDialog[12p-0v]" isFatalError:NO];
 }
 
 - (void)close
@@ -894,7 +894,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
 
 	if (fileHandle == nil) {
-		[self closeWithLocalizedError:@"TDCFileTransferDialog[1019]"];
+		[self closeWithLocalizedError:@"TDCFileTransferDialog[nab-dx]"];
 
 		return NO;
 	}
@@ -990,7 +990,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	if (error) {
-		[self closeWithLocalizedError:@"TDCFileTransferDialog[1024]" description:error.localizedDescription];
+		[self closeWithLocalizedError:@"TDCFileTransferDialog[s79-3a]" description:error.localizedDescription];
 	} else {
 		[self close];
 	}
@@ -1021,7 +1021,7 @@ ClassWithDesignatedInitializerInitMethod
 				return;
 			}
 
-			[self closeWithLocalizedError:TXTLS(@"TDCFileTransferDialog[1027]")];
+			[self closeWithLocalizedError:TXTLS(@"TDCFileTransferDialog[05g-c8]")];
 
 			return;
 		} // @catch

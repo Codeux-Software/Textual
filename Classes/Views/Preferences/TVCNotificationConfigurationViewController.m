@@ -96,9 +96,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[self updateAvailableSounds];
 
 	if ([GrowlApplicationBridge isGrowlRunning]) {
-		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TVCNotificationConfigurationView[1000]");
+		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TVCNotificationConfigurationView[gyw-h4]");
 	} else {
-		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TVCNotificationConfigurationView[1001]");
+		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TVCNotificationConfigurationView[br6-di]");
 	}
 }
 

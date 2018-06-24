@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.nicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isHostmaskNickname == NO) {
-			return TXTLS(@"TDCWelcomeSheet[0002]");
+			return TXTLS(@"CommonErrors[och-j5]");
 		}
 
 		return nil;
@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.serverAddressComboBox.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isValidInternetAddress == NO) {
-			return TXTLS(@"TDCWelcomeSheet[0001]");
+			return TXTLS(@"CommonErrors[yyx-l3]");
 		}
 
 		return nil;
