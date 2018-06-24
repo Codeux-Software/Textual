@@ -5041,7 +5041,7 @@ You should therefore not rely solely on this preference.</string>
                 </textField>
                 <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q3y-Yb-Su8">
                     <rect key="frame" x="38" y="78" width="248" height="16"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="User list no mode badge background color:" id="MDs-d0-Vsf">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="User list no mode badge background color:" id="MDs-d0-Vsf">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
