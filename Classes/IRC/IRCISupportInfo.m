@@ -207,7 +207,7 @@ ClassWithDesignatedInitializerInitMethod
 				}
 			} else if ([segmentKey isEqualToStringIgnoringCase:@"NETWORK"]) {
 				self.networkName = segmentValue;
-				self.networkNameFormatted = TXTLS(@"IRC[1067]", segmentValue);
+				self.networkNameFormatted = TXTLS(@"IRC[8hg-7k]", segmentValue);
 			} else if ([segmentKey isEqualToStringIgnoringCase:@"NICKLEN"]) {
 				NSInteger maximumNicknameLength = segmentValue.integerValue;
 

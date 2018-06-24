@@ -453,9 +453,9 @@ NS_ASSUME_NONNULL_BEGIN
 	openDialog.canCreateDirectories = YES;
 	openDialog.resolvesAliases = YES;
 
-	openDialog.message = TXTLS(@"TDCFileTransferDialog[1023]");
+	openDialog.message = TXTLS(@"TDCFileTransferDialog[dcm-w7]");
 
-	openDialog.prompt = TXTLS(@"Prompts[0006]");
+	openDialog.prompt = TXTLS(@"Prompts[xne-79]");
 
 	[openDialog beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 		if (result != NSModalResponseOK) {

@@ -77,11 +77,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.contactAddressTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCLicenseManagerRecoverLostLicenseSheet[0001]");
+			return TXTLS(@"CommonErrors[gas-v8]");
 		}
 
 		if (currentValue.length > _licenseOwnerContactAddressMaximumLength) {
-			return TXTLS(@"TDCLicenseManagerRecoverLostLicenseSheet[0002]");
+			return TXTLS(@"CommonErrors[2cb-af]", _licenseOwnerContactAddressMaximumLength);
 		}
 
 		return nil;

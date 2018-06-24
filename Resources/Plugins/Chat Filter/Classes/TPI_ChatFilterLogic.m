@@ -222,7 +222,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (filterForwardToDestination.length > 0 && text.length > 0) {
 				IRCChannel *destinationChannel = [client findChannelOrCreate:filterForwardToDestination isPrivateMessage:YES];
 
-				NSString *message = TPILocalizedString(@"TPI_ChatFilterLogic[0001]", command, text);
+				NSString *message = TPILocalizedString(@"TPI_ChatFilterLogic[dct-7h]", command, text);
 
 				[client print:message
 						   by:nil
@@ -452,9 +452,9 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *formattedMessage = nil;
 
 		if (textDestination == nil) {
-			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0002]", filter.filterTitle, textAuthor.nickname);
+			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[yla-he]", filter.filterTitle, textAuthor.nickname);
 		} else {
-			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0003]", filter.filterTitle, textAuthor.nickname, textDestination.name);
+			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[jcm-xj]", filter.filterTitle, textAuthor.nickname, textDestination.name);
 		}
 
 		[client print:formattedMessage

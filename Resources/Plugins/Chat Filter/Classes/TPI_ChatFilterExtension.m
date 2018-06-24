@@ -188,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizedString(@"TPI_ChatFilterExtension[0001]");
+	return TPILocalizedString(@"TPI_ChatFilterExtension[jq1-6r]");
 }
 
 - (void)awakeFromNib
@@ -208,10 +208,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)filterRemove:(id)sender
 {
-	BOOL performRemove = [TDCAlert modalAlertWithMessage:TPILocalizedString(@"TPI_ChatFilterExtension[0005][2]")
-												   title:TPILocalizedString(@"TPI_ChatFilterExtension[0005][1]")
-										   defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0005][3]")
-										 alternateButton:TPILocalizedString(@"TPI_ChatFilterExtension[0005][4]")];
+	BOOL performRemove = [TDCAlert modalAlertWithMessage:TPILocalizedString(@"TPI_ChatFilterExtension[dj6-fn]")
+												   title:TPILocalizedString(@"TPI_ChatFilterExtension[c0k-xj]")
+										   defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[jvu-m7]")
+										 alternateButton:TPILocalizedString(@"TPI_ChatFilterExtension[p5s-ff]")];
 
 	if (performRemove == NO) {
 		return;
@@ -319,9 +319,9 @@ NS_ASSUME_NONNULL_BEGIN
 	openDialog.canCreateDirectories = NO;
 	openDialog.resolvesAliases = YES;
 
-	openDialog.message = TPILocalizedString(@"TPI_ChatFilterExtension[0006][1]");
+	openDialog.message = TPILocalizedString(@"TPI_ChatFilterExtension[i9c-s3]");
 
-	openDialog.prompt = TPILocalizedString(@"TPI_ChatFilterExtension[0006][2]");
+	openDialog.prompt = TPILocalizedString(@"TPI_ChatFilterExtension[2tc-m7]");
 
 	[openDialog beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
 		if (returnCode != NSModalResponseOK) {
@@ -336,8 +336,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (filter == nil) {
 			(void)[TDCAlert modalAlertWithMessage:@""
-											title:TPILocalizedString(@"TPI_ChatFilterExtension[0007][1]")
-									defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[0007][2]")
+											title:TPILocalizedString(@"TPI_ChatFilterExtension[eqr-7t]")
+									defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[ybz-7i]")
 								  alternateButton:nil];
 
 			return;

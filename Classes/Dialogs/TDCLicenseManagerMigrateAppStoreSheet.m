@@ -93,11 +93,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.licenseOwnerContactAddressTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0003]");
+			return TXTLS(@"CommonErrors[gas-v8]");
 		}
 
 		if (currentValue.length > _licenseOwnerContactAddressMaximumLength) {
-			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0004]");
+			return TXTLS(@"CommonErrors[2cb-af]", _licenseOwnerContactAddressMaximumLength);
 		}
 
 		return nil;
@@ -113,11 +113,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.licenseOwnerNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0001]");
+			return TXTLS(@"CommonErrors[gas-v8]");
 		}
 
 		if (currentValue.length > _licenseOwnerNameMaximumLength) {
-			return TXTLS(@"TDCLicenseManagerMigrateAppStoreSheet[0002]");
+			return TXTLS(@"CommonErrors[2cb-af]", _licenseOwnerNameMaximumLength);
 		}
 
 		return nil;
@@ -178,9 +178,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 			userInfo[NSURLErrorKey] = url;
 
-			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TLOLicenseManager[1009][1]", applicationName);
+			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TLOLicenseManager[b6l-ka]", applicationName);
 
-			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TLOLicenseManager[1009][2]");
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TLOLicenseManager[sdj-xd]");
 
 			*outError = [NSError errorWithDomain:TXErrorDomain code:27984 userInfo:userInfo];
 		}
@@ -237,9 +237,9 @@ NS_ASSUME_NONNULL_BEGIN
 	d.canCreateDirectories = NO;
 	d.resolvesAliases = YES;
 
-	d.message = TXTLS(@"TLOLicenseManager[1008]");
+	d.message = TXTLS(@"TLOLicenseManager[vft-qo]");
 
-	d.prompt = TXTLS(@"Prompts[0006]");
+	d.prompt = TXTLS(@"Prompts[xne-79]");
 
 	[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 		if (result == NSModalResponseOK) {

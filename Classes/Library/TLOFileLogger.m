@@ -203,9 +203,9 @@ ClassWithDesignatedInitializerInitMethod
 	alertVisible = YES;
 
 	/* Present alert as non-blocking because there is no need for it to disrupt UI */
-	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1140][2]")
-						 title:TXTLS(@"Prompts[1140][1]")
-				 defaultButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[v9e-jy]")
+						 title:TXTLS(@"Prompts[bi7-ah]")
+				 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 			   alternateButton:nil
 			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 				   alertVisible = NO;

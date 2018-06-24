@@ -691,11 +691,11 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
 
 	self.filterForwardToDestinationTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.length > 125) {
-			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0011]");
+			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[m0u-tw]");
 		}
 
 		if ([XRRegularExpression string:currentValue isMatchedByRegex:@"^([a-zA-Z0-9\\-\\_\\s]+)$"] == NO) {
-			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0012]");
+			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[5kd-jt]");
 		}
 
 		return nil;
@@ -712,7 +712,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
 
 	self.filterEventNumericTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([self compileFilterEventsNumerics] == nil) {
-			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0013]");
+			return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[9ri-sd]");
 		}
 
 		return nil;
@@ -889,24 +889,24 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
 
 	if (tokens == nil) {
 		tokens = @[
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0001]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0002]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0003]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0004]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0007]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0008]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0005]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0006]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0009]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][01]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][02]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][03]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][04]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][05]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][06]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][07]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][08]"),
-		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][09]")
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[90e-tj]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[tbc-wc]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[840-f9]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[sch-hi]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[k82-6i]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[2sk-ui]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[xt2-bv]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[je5-u2]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[9xy-vf]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[kph-dc]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[8bd-nt]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[4vk-v8]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[kvz-ej]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[2pa-ju]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[jen-7o]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[t5v-4o]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[vyf-el]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0x4-ib]")
 		];
 	}
 

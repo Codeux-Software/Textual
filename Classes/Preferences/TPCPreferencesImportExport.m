@@ -59,10 +59,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(window != nil);
 
 	[TDCAlert alertSheetWithWindow:window
-							  body:TXTLS(@"Prompts[1124][2]")
-							 title:TXTLS(@"Prompts[1124][1]")
-					 defaultButton:TXTLS(@"Prompts[1124][3]")
-				   alternateButton:TXTLS(@"Prompts[0004]")
+							  body:TXTLS(@"Prompts[jsh-1a]")
+							 title:TXTLS(@"Prompts[itb-3x]")
+					 defaultButton:TXTLS(@"Prompts[502-6h]")
+				   alternateButton:TXTLS(@"Prompts[qso-2g]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   [self importPreflight:buttonClicked];
@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* The loading screen is a generic way to show something during import */
-	[mainWindowLoadingScreen() showProgressViewWithReason:TXTLS(@"BasicLanguage[1029]")];
+	[mainWindowLoadingScreen() showProgressViewWithReason:TXTLS(@"TVCMainWindow[5g1-i9]")];
 
 	[worldController() setIsImportingConfiguration:YES];
 
@@ -332,10 +332,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(window != nil);
 
 	[TDCAlert alertSheetWithWindow:window
-							  body:TXTLS(@"Prompts[1123][2]")
-							 title:TXTLS(@"Prompts[1123][1]")
-					 defaultButton:TXTLS(@"Prompts[1123][3]")
-				   alternateButton:TXTLS(@"Prompts[0004]")
+							  body:TXTLS(@"Prompts[syp-al]")
+							 title:TXTLS(@"Prompts[1fm-up]")
+					 defaultButton:TXTLS(@"Prompts[vun-f0]")
+				   alternateButton:TXTLS(@"Prompts[qso-2g]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   [self exportPreflight:buttonClicked];

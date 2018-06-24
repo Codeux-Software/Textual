@@ -35,25 +35,25 @@
  *
  *********************************************************************** */
 
-"BasicLanguage[1000][0]" = "I am in %ld channel while connected to ";
-"BasicLanguage[1000][1]" = "I am in %ld channels while connected to ";
+"0o0-v5" = "I am in %ld channel while connected to ";
+"30l-sx" = "I am in %ld channels while connected to ";
 
-"BasicLanguage[1001][0]" = "%ld network. ";
-"BasicLanguage[1001][1]" = "%ld networks. ";
+"t4z-lg" = "%ld network. ";
+"rks-0t" = "%ld networks. ";
 
-"BasicLanguage[1002][0]" = "I have %ld o:line, ";
-"BasicLanguage[1002][1]" = "I have %ld o:lines, ";
+"xzp-xm" = "I have %ld o:line, ";
+"614-ac" = "I have %ld o:lines, ";
 
-"BasicLanguage[1003][0]" = "%ld op, ";
-"BasicLanguage[1003][1]" = "%ld ops, ";
+"7vs-i8" = "%ld op, ";
+"qne-b5" = "%ld ops, ";
 
-"BasicLanguage[1004][0]" = "%ld halfop, ";
-"BasicLanguage[1004][1]" = "%ld halfops, ";
+"7lp-mb" = "%ld halfop, ";
+"431-yv" = "%ld halfops, ";
 
-"BasicLanguage[1005][0]" = "and %ld voice ";
-"BasicLanguage[1005][1]" = "and %ld voices ";
+"71o-kq" = "and %ld voice ";
+"x1m-jp" = "and %ld voices ";
 
-"BasicLanguage[1006][0]" = "with power over %ld user.";
-"BasicLanguage[1006][1]" = "with power over %ld individual users.";
+"lif-u5" = "with power over %ld user.";
+"ny4-wd" = "with power over %ld individual users.";
 
-"BasicLanguage[1007]" = "I have no power whatsoever.";
+"jpi-po" = "I have no power whatsoever.";

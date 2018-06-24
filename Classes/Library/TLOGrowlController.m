@@ -91,25 +91,25 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 #define _df(key, num)			case (key): { return TXTLS((num)); }
 
 	switch (event) {
-			_df(TXNotificationAddressBookMatchType, @"Notifications[1045]")
-			_df(TXNotificationChannelMessageType, @"Notifications[1046]")
-			_df(TXNotificationChannelNoticeType, @"Notifications[1047]")
-			_df(TXNotificationConnectType, @"Notifications[1048]")
-			_df(TXNotificationDisconnectType, @"Notifications[1049]")
-			_df(TXNotificationInviteType, @"Notifications[1051]")
-			_df(TXNotificationKickType, @"Notifications[1052]")
-			_df(TXNotificationNewPrivateMessageType, @"Notifications[1053]")
-			_df(TXNotificationPrivateMessageType, @"Notifications[1054]")
-			_df(TXNotificationPrivateNoticeType, @"Notifications[1055]")
-			_df(TXNotificationHighlightType, @"Notifications[1050]")
-			_df(TXNotificationFileTransferSendSuccessfulType, @"Notifications[1056]")
-			_df(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[1057]")
-			_df(TXNotificationFileTransferSendFailedType, @"Notifications[1058]")
-			_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[1059]")
-			_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1060]")
-			_df(TXNotificationUserJoinedType, @"Notifications[1078]")
-			_df(TXNotificationUserPartedType, @"Notifications[1079]")
-			_df(TXNotificationUserDisconnectedType, @"Notifications[1080]")
+			_df(TXNotificationAddressBookMatchType, @"Notifications[kx3-xk]")
+			_df(TXNotificationChannelMessageType, @"Notifications[qnz-k4]")
+			_df(TXNotificationChannelNoticeType, @"Notifications[vuq-jp]")
+			_df(TXNotificationConnectType, @"Notifications[4lr-ej]")
+			_df(TXNotificationDisconnectType, @"Notifications[wjv-yb]")
+			_df(TXNotificationInviteType, @"Notifications[eiu-8q]")
+			_df(TXNotificationKickType, @"Notifications[2nk-lg]")
+			_df(TXNotificationNewPrivateMessageType, @"Notifications[5yi-gu]")
+			_df(TXNotificationPrivateMessageType, @"Notifications[00b-nx]")
+			_df(TXNotificationPrivateNoticeType, @"Notifications[nhz-io]")
+			_df(TXNotificationHighlightType, @"Notifications[cs4-x9]")
+			_df(TXNotificationFileTransferSendSuccessfulType, @"Notifications[0x2-3h]")
+			_df(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[qle-7v]")
+			_df(TXNotificationFileTransferSendFailedType, @"Notifications[sc0-1n]")
+			_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[we9-1b]")
+			_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[st5-0n]")
+			_df(TXNotificationUserJoinedType, @"Notifications[25q-af]")
+			_df(TXNotificationUserPartedType, @"Notifications[k3s-by]")
+			_df(TXNotificationUserDisconnectedType, @"Notifications[0fo-bt]")
 	}
 
 #undef _df
@@ -126,7 +126,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		{
 			eventPriority = 1;
 
-			eventTitle = TXTLS(@"Notifications[1021]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[qka-f3]", eventTitle);
 
 			break;
 		}
@@ -134,113 +134,113 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		{
 			eventPriority = 1;
 
-			eventTitle = TXTLS(@"Notifications[1024]");
+			eventTitle = TXTLS(@"Notifications[ltn-hf]");
 
 			break;
 		}
 		case TXNotificationChannelMessageType:
 		{
-			eventTitle = TXTLS(@"Notifications[1017]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[ep5-de]", eventTitle);
 
 			break;
 		}
 		case TXNotificationChannelNoticeType:
 		{
-			eventTitle = TXTLS(@"Notifications[1018]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[chi-km]", eventTitle);
 
 			break;
 		}
 		case TXNotificationPrivateMessageType:
 		{
-			eventTitle = TXTLS(@"Notifications[1025]");
+			eventTitle = TXTLS(@"Notifications[69i-dy]");
 
 			break;
 		}
 		case TXNotificationPrivateNoticeType:
 		{
-			eventTitle = TXTLS(@"Notifications[1026]");
+			eventTitle = TXTLS(@"Notifications[7hn-dg]");
 
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			eventTitle = TXTLS(@"Notifications[1023]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[u30-ia]", eventTitle);
 
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			eventTitle = TXTLS(@"Notifications[1022]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[g4s-cq]", eventTitle);
 
 			break;
 		}
 		case TXNotificationConnectType:
 		{
-			eventTitle = TXTLS(@"Notifications[1019]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[mo1-vn]", eventTitle);
 
-			eventDescription = TXTLS(@"Notifications[1032]");
+			eventDescription = TXTLS(@"Notifications[88k-kl]");
 
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
-			eventTitle = TXTLS(@"Notifications[1020]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[7xe-ig]", eventTitle);
 
-			eventDescription = TXTLS(@"Notifications[1033]");
+			eventDescription = TXTLS(@"Notifications[bif-2c]");
 
 			break;
 		}
 		case TXNotificationAddressBookMatchType:
 		{
-			eventTitle = TXTLS(@"Notifications[1016]");
+			eventTitle = TXTLS(@"Notifications[niq-32]");
 
 			break;
 		}
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			eventTitle = TXTLS(@"Notifications[1027]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[l5y-sx]", eventTitle);
 
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			eventTitle = TXTLS(@"Notifications[1027]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[hc9-7n]", eventTitle);
 
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			eventTitle = TXTLS(@"Notifications[1029]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[het-vh]", eventTitle);
 
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			eventTitle = TXTLS(@"Notifications[1030]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[hm4-ze]", eventTitle);
 
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			eventTitle = TXTLS(@"Notifications[1031]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[nqz-7v]", eventTitle);
 
 			break;
 		}
 		case TXNotificationUserJoinedType:
 		{
-			eventTitle = TXTLS(@"Notifications[1070]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[keq-ts]", eventTitle);
 
 			break;
 		}
 		case TXNotificationUserPartedType:
 		{
-			eventTitle = TXTLS(@"Notifications[1071]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[im4-p0]", eventTitle);
 
 			break;
 		}
 		case TXNotificationUserDisconnectedType:
 		{
-			eventTitle = TXTLS(@"Notifications[1072]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[20x-32]", eventTitle);
 
 			break;
 		}
@@ -262,7 +262,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 			/* sshhhh... you didn't see nothing. */
 			[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-			notification.actionButtonTitle = TXTLS(@"Prompts[0009]");
+			notification.actionButtonTitle = TXTLS(@"Prompts[qpv-go]");
 		}
 
 		/* These are the only event types we want to support for now */
@@ -271,7 +271,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		{
 			notification.hasReplyButton = YES;
 
-			notification.responsePlaceholder = TXTLS(@"Notifications[1044]");
+			notification.responsePlaceholder = TXTLS(@"Notifications[do4-2e]");
 		}
 
 		[RZUserNotificationCenter() scheduleNotification:notification];
@@ -348,25 +348,25 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 - (NSDictionary<NSString *, NSArray<NSString *> *> *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
-	  TXTLS(@"Notifications[1045]"),
-	  TXTLS(@"Notifications[1046]"),
-	  TXTLS(@"Notifications[1047]"),
-	  TXTLS(@"Notifications[1048]"),
-	  TXTLS(@"Notifications[1049]"),
-	  TXTLS(@"Notifications[1050]"),
-	  TXTLS(@"Notifications[1051]"),
-	  TXTLS(@"Notifications[1052]"),
-	  TXTLS(@"Notifications[1053]"),
-	  TXTLS(@"Notifications[1054]"),
-	  TXTLS(@"Notifications[1055]"),
-	  TXTLS(@"Notifications[1056]"),
-	  TXTLS(@"Notifications[1057]"),
-	  TXTLS(@"Notifications[1058]"),
-	  TXTLS(@"Notifications[1059]"),
-	  TXTLS(@"Notifications[1060]"),
-	  TXTLS(@"Notifications[1078]"),
-	  TXTLS(@"Notifications[1079]"),
-	  TXTLS(@"Notifications[1080]"),
+	  TXTLS(@"Notifications[kx3-xk]"),
+	  TXTLS(@"Notifications[qnz-k4]"),
+	  TXTLS(@"Notifications[vuq-jp]"),
+	  TXTLS(@"Notifications[4lr-ej]"),
+	  TXTLS(@"Notifications[wjv-yb]"),
+	  TXTLS(@"Notifications[cs4-x9]"),
+	  TXTLS(@"Notifications[eiu-8q]"),
+	  TXTLS(@"Notifications[2nk-lg]"),
+	  TXTLS(@"Notifications[5yi-gu]"),
+	  TXTLS(@"Notifications[00b-nx]"),
+	  TXTLS(@"Notifications[nhz-io]"),
+	  TXTLS(@"Notifications[0x2-3h]"),
+	  TXTLS(@"Notifications[qle-7v]"),
+	  TXTLS(@"Notifications[sc0-1n]"),
+	  TXTLS(@"Notifications[we9-1b]"),
+	  TXTLS(@"Notifications[st5-0n]"),
+	  TXTLS(@"Notifications[25q-af]"),
+	  TXTLS(@"Notifications[k3s-by]"),
+	  TXTLS(@"Notifications[0fo-bt]"),
 	];
 
 	return @{

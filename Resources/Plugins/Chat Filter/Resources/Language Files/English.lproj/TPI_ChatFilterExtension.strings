@@ -35,20 +35,20 @@
  *
  *********************************************************************** */
 
-"TPI_ChatFilterExtension[0001]" = "Chat Filter";
+"jq1-6r" = "Chat Filter";
 
-"TPI_ChatFilterExtension[0002]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“";
-"TPI_ChatFilterExtension[0003]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“ in the channel “%3$@“";
+"yla-he" = "Performing action defined by the filter “%1$@“ against the user “%2$@“";
+"jcm-xj" = "Performing action defined by the filter “%1$@“ against the user “%2$@“ in the channel “%3$@“";
 
-"TPI_ChatFilterExtension[0004]" = "Filter “%@“";
+"dka-bx" = "Filter “%@“";
 
-"TPI_ChatFilterExtension[0005][1]" = "Are you sure that you want to delete this filter?";
-"TPI_ChatFilterExtension[0005][2]" = "There is no undo and all data related to this filter will be erased.";
-"TPI_ChatFilterExtension[0005][3]" = "Yes";
-"TPI_ChatFilterExtension[0005][4]" = "No";
+"c0k-xj" = "Are you sure that you want to delete this filter?";
+"dj6-fn" = "There is no undo and all data related to this filter will be erased.";
+"jvu-m7" = "Yes";
+"p5s-ff" = "No";
 
-"TPI_ChatFilterExtension[0006][1]" = "Select filter configuration file to import";
-"TPI_ChatFilterExtension[0006][2]" = "Select";
+"i9c-s3" = "Select filter configuration file to import";
+"2tc-m7" = "Select";
 
-"TPI_ChatFilterExtension[0007][1]" = "Configuration file is in format that cannot be read";
-"TPI_ChatFilterExtension[0007][2]" = "OK";
+"eqr-7t" = "Configuration file is in format that cannot be read";
+"ybz-7i" = "OK";

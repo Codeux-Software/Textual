@@ -147,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableAttributedString *resultString =
 	[NSMutableAttributedString
-	 mutableAttributedStringWithString:TXTLS(@"TDCChannelSpotlightController[1001]", channelName)
+	 mutableAttributedStringWithString:TXTLS(@"TDCChannelSpotlightController[jpw-cj]", channelName)
 							attributes:@{
 								NSFontAttributeName : channelNameFieldFont,
 								NSParagraphStyleAttributeName : paragraphStyle
@@ -167,7 +167,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *networkName = searchResult.channel.associatedClient.networkNameAlt;
 
-	[resultString appendString:TXTLS(@"TDCChannelSpotlightController[1007]", networkName)];
+	[resultString appendString:TXTLS(@"TDCChannelSpotlightController[z68-5q]", networkName)];
 
 	return resultString;
 }
@@ -228,9 +228,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *nicknameHighlightCountDescription = nil;
 
 	if (nicknameHighlightCount == 1) {
-		nicknameHighlightCountDescription = TXTLS(@"TDCChannelSpotlightController[1004]",TXFormattedNumber(nicknameHighlightCount));
+		nicknameHighlightCountDescription = TXTLS(@"TDCChannelSpotlightController[0lz-oh]",TXFormattedNumber(nicknameHighlightCount));
 	} else {
-		nicknameHighlightCountDescription = TXTLS(@"TDCChannelSpotlightController[1005]", TXFormattedNumber(nicknameHighlightCount));
+		nicknameHighlightCountDescription = TXTLS(@"TDCChannelSpotlightController[c4u-21]", TXFormattedNumber(nicknameHighlightCount));
 	}
 
 	NSUInteger unreadCount = searchResult.channel.treeUnreadCount;
@@ -238,12 +238,12 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *unreadCountDescription = nil;
 
 	if (unreadCount == 1) {
-		unreadCountDescription = TXTLS(@"TDCChannelSpotlightController[1002]", TXFormattedNumber(unreadCount));
+		unreadCountDescription = TXTLS(@"TDCChannelSpotlightController[43s-x4]", TXFormattedNumber(unreadCount));
 	} else {
-		unreadCountDescription = TXTLS(@"TDCChannelSpotlightController[1003]", TXFormattedNumber(unreadCount));
+		unreadCountDescription = TXTLS(@"TDCChannelSpotlightController[vzj-30]", TXFormattedNumber(unreadCount));
 	}
 
-	return TXTLS(@"TDCChannelSpotlightController[1006]", nicknameHighlightCountDescription, unreadCountDescription);
+	return TXTLS(@"TDCChannelSpotlightController[et7-c5]", nicknameHighlightCountDescription, unreadCountDescription);
 }
 
 - (void)unreadCountDescriptionChanged

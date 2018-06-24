@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Throw error if user tries to invoke a command that requires the
 	 user to be connected to a ZNC bouncer */
 	if (client.isConnectedToZNC == NO) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]")];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[xex-nl]")];
 
 		return;
 	}
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSData *certificateData = client.zncBouncerCertificateChainData;
 
 		if (certificateData == nil) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]")];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[moh-hg]")];
 
 			return;
 		}
@@ -123,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Display an error or hand the certificate chain off 
 		 to Apple's own APIs to display them in a dialog. */
 		if (operationStatus != noErr) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]")];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[wco-zv]")];
 
 			return;
 		}
@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[self performBlockOnMainThread:^{
 			SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-			[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
+			[panel setDefaultButtonTitle:TXTLS(@"Prompts[aqw-q1]")];
 
 			[panel setAlternateButtonTitle:nil];
 
@@ -174,7 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, matchedChannel.name]];
 
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", matchedChannel.name) inChannel:matchedChannel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[0fr-kb]", matchedChannel.name) inChannel:matchedChannel];
 		}
 	}
 }

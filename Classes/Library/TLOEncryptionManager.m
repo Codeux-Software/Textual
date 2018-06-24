@@ -211,7 +211,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"OffTheRecord[1006]")];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"OffTheRecord[aii-2q]")];
 }
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
@@ -228,13 +228,13 @@ NS_ASSUME_NONNULL_BEGIN
 												   accountName:messageFrom
 													  protocol:[self otrKitProtocol]];
 	} else {
-		[self presentErrorMessage:TXTLS(@"OffTheRecord[1009]") withAccountName:messageTo];
+		[self presentErrorMessage:TXTLS(@"OffTheRecord[g9p-8r]") withAccountName:messageTo];
 	}
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"OffTheRecord[1005]")];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"OffTheRecord[f59-3b]")];
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom presentMessage:(NSString *)message
@@ -278,7 +278,7 @@ NS_ASSUME_NONNULL_BEGIN
 														 accountName:messageFrom
 															protocol:[self otrKitProtocol]];
 	} else {
-		[self presentErrorMessage:TXTLS(@"OffTheRecord[1008]") withAccountName:messageTo];
+		[self presentErrorMessage:TXTLS(@"OffTheRecord[jrv-gq]") withAccountName:messageTo];
 	}
 }
 
@@ -364,10 +364,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (currentState == OTRKitMessageStateEncrypted) {
 		if (isIncomingFileTransfer) {
-			BOOL continueop = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1132][2]")
-														title:TXTLS(@"Prompts[1132][1]", filename)
-												defaultButton:TXTLS(@"Prompts[0004]")
-											  alternateButton:TXTLS(@"Prompts[1132][3]")];
+			BOOL continueop = [TDCAlert modalAlertWithMessage:TXTLS(@"OffTheRecord[nuo-8s]")
+														title:TXTLS(@"OffTheRecord[mnw-qt]", filename)
+												defaultButton:TXTLS(@"Prompts[qso-2g]")
+											  alternateButton:TXTLS(@"OffTheRecord[ng0-5q]")];
 
 			return (continueop == NO);
 		}
@@ -375,10 +375,10 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			NSString *nickname = [self nicknameFromAccountName:messageTo];
 
-			BOOL continueop = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1133][2]")
-														title:TXTLS(@"Prompts[1133][1]", filename, nickname)
-												defaultButton:TXTLS(@"Prompts[0004]")
-											  alternateButton:TXTLS(@"Prompts[1133][3]")];
+			BOOL continueop = [TDCAlert modalAlertWithMessage:TXTLS(@"OffTheRecord[7he-76]")
+														title:TXTLS(@"OffTheRecord[gcg-tv]", filename, nickname)
+												defaultButton:TXTLS(@"Prompts[qso-2g]")
+											  alternateButton:TXTLS(@"OffTheRecord[0v0-ix]")];
 
 			return (continueop == NO);
 		}
@@ -403,18 +403,18 @@ NS_ASSUME_NONNULL_BEGIN
 																					 protocol:[self otrKitProtocol]];
 
 		if (hasVerifiedKey) {
-			button.title = TXTLS(@"OffTheRecord[1011][3]");
+			button.title = TXTLS(@"OffTheRecord[l9n-p9]");
 
 			[button setIconAsLocked];
 		} else {
-			button.title = TXTLS(@"OffTheRecord[1011][2]");
+			button.title = TXTLS(@"OffTheRecord[w34-mg]");
 
 			/* Even though we are encrypted, our icon is still set to unlocked because
 			 the identity of messageTo still has not been authenticated. */
 			[button setIconAsUnlocked];
 		}
 	} else {
-		button.title = TXTLS(@"OffTheRecord[1011][1]");
+		button.title = TXTLS(@"OffTheRecord[anu-ky]");
 
 		[button setIconAsUnlocked];
 	}
@@ -455,21 +455,21 @@ NS_ASSUME_NONNULL_BEGIN
 #define _dv(event, localInt)		case (event): { localeKey = (localInt); break; }
 
 	switch (event) {
-		_dv(OTRKitMessageEventEncryptionRequired,				@"01")
-		_dv(OTRKitMessageEventEncryptionError,					@"02")
-		_dv(OTRKitMessageEventConnectionEnded,					@"03")
-		_dv(OTRKitMessageEventSetupError,						@"04")
-		_dv(OTRKitMessageEventMessageReflected,					@"05")
-		_dv(OTRKitMessageEventMessageResent,					@"06")
-		_dv(OTRKitMessageEventReceivedMessageNotInPrivate,		@"07")
-		_dv(OTRKitMessageEventReceivedMessageUnreadable,		@"08")
-		_dv(OTRKitMessageEventReceivedMessageMalformed,			@"09")
-		_dv(OTRKitMessageEventLogHeartbeatReceived,				@"10")
-		_dv(OTRKitMessageEventLogHeartbeatSent,					@"11")
-		_dv(OTRKitMessageEventReceivedMessageGeneralError,		@"12")
-		_dv(OTRKitMessageEventReceivedMessageUnencrypted,		@"13")
-		_dv(OTRKitMessageEventReceivedMessageUnrecognized,		@"14")
-		_dv(OTRKitMessageEventReceivedMessageForOtherInstance,	@"15")
+		_dv(OTRKitMessageEventEncryptionRequired,				@"jww-e0")
+		_dv(OTRKitMessageEventEncryptionError,					@"jvt-fi")
+		_dv(OTRKitMessageEventConnectionEnded,					@"c5o-2l")
+		_dv(OTRKitMessageEventSetupError,						@"uhy-85")
+		_dv(OTRKitMessageEventMessageReflected,					@"bl0-5i")
+		_dv(OTRKitMessageEventMessageResent,					@"c49-q0")
+		_dv(OTRKitMessageEventReceivedMessageNotInPrivate,		@"6v9-w3")
+		_dv(OTRKitMessageEventReceivedMessageUnreadable,		@"9if-xp")
+		_dv(OTRKitMessageEventReceivedMessageMalformed,			@"auo-n0")
+		_dv(OTRKitMessageEventLogHeartbeatReceived,				@"nl1-nf")
+		_dv(OTRKitMessageEventLogHeartbeatSent,					@"iwt-9f")
+		_dv(OTRKitMessageEventReceivedMessageGeneralError,		@"2zx-p6")
+		_dv(OTRKitMessageEventReceivedMessageUnencrypted,		@"1lf-f0")
+		_dv(OTRKitMessageEventReceivedMessageUnrecognized,		@"4by-8j")
+		_dv(OTRKitMessageEventReceivedMessageForOtherInstance,	@"c7t-vi")
 
 		default:
 		{
@@ -480,7 +480,7 @@ NS_ASSUME_NONNULL_BEGIN
 #undef _dv
 
 	if (localeKey) {
-		localeKey = [NSString stringWithFormat:@"OffTheRecord[1007][%@]", localeKey];
+		localeKey = [NSString stringWithFormat:@"OffTheRecord[%@]", localeKey];
 
 		return TXTLS(localeKey);
 	}
@@ -562,9 +562,9 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		if (isVerified) {
-			[self printMessage:TXTLS(@"OffTheRecord[1002]", nickname) inChannel:channel onClient:client];
+			[self printMessage:TXTLS(@"OffTheRecord[rj0-ys]", nickname) inChannel:channel onClient:client];
 		} else {
-			[self printMessage:TXTLS(@"OffTheRecord[1003]", nickname) inChannel:channel onClient:client];
+			[self printMessage:TXTLS(@"OffTheRecord[ufr-mh]", nickname) inChannel:channel onClient:client];
 		}
 
 		[channel noteEncryptionStateDidChange];
@@ -621,7 +621,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (numberOfMatches == 1) {
 		NSArray *messageComponents = [message componentsSeparatedByString:@"\n"];
 
-		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"OffTheRecord[1010]")];
+		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"OffTheRecord[8hr-8l]")];
 	}
 
 	return message;
@@ -695,14 +695,14 @@ NS_ASSUME_NONNULL_BEGIN
 																				 protocol:[self otrKitProtocol]];
 
 		if (isVerified) {
-			[self presentMessage:TXTLS(@"OffTheRecord[1001][02]") withAccountName:username];
+			[self presentMessage:TXTLS(@"OffTheRecord[r3w-fj]") withAccountName:username];
 		} else {
-			[self presentMessage:TXTLS(@"OffTheRecord[1001][01]") withAccountName:username escapeMessage:NO];
+			[self presentMessage:TXTLS(@"OffTheRecord[l49-9y]") withAccountName:username escapeMessage:NO];
 		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
 	{
-		[self presentMessage:TXTLS(@"OffTheRecord[1004]") withAccountName:username];
+		[self presentMessage:TXTLS(@"OffTheRecord[m1z-eb]") withAccountName:username];
 
 		/* When policy is changed to never, all open conversations are
 		 closed. Because user probably wont intend to use authenication
@@ -737,7 +737,7 @@ NS_ASSUME_NONNULL_BEGIN
 		/* We print this message unescaped to include an anchor in the HTML
 		 that the user can click to authenticate the user.
 		 We are passing outside input to it, which we do escape. */
-		[self printMessage:TXTLS(@"OffTheRecord[1011]",
+		[self printMessage:TXTLS(@"OffTheRecord[67n-6j]",
 								 [TVCLogRenderer escapeHTML:nickname],
 								 [TVCLogRenderer escapeHTML:theirHash])
 				 inChannel:channel

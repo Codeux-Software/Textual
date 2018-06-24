@@ -35,307 +35,303 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1172 */
-
 /* Script errors */
-"IRC[1001]" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
+"d3c-9b" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
 
-"IRC[1002]" = "Script Execution Failure: %@";
-"IRC[1003]" = "Script Execution Failure (%1$@: %2$@): %3$@";
+"ax0-mt" = "Script Execution Failure: %@";
+"2mc-h0" = "Script Execution Failure (%1$@: %2$@): %3$@";
 
 /* Generic messages */
-"IRC[1004]" = "Textual has prevented you from banning yourself on %@";
+"0r1-5l" = "Textual has prevented you from banning yourself on %@";
 
-"IRC[1005]" = "Failed to send data to server. Not connected.";
+"6rj-2r" = "Failed to send data to server. Not connected.";
 
 /* Default G:Line reason */
-"IRC[1006]" = "35d Your behavior is not conducive to the desired environment";
-"IRC[1007]" = "Your behavior is not conducive to the desired environment";
-"IRC[1008]" = "Your behavior is not conducive to the desired environment";
-"IRC[1009]" = "1d Shunned";
+"56r-wn" = "35d Your behavior is not conducive to the desired environment";
+"2aw-rf" = "Your behavior is not conducive to the desired environment";
+"yy6-fx" = "Your behavior is not conducive to the desired environment";
+"80c-i8" = "1d Shunned";
 
 /* Network not available messages */
-"IRC[1010]" = "Delaying auto connect for %lu seconds";
+"3s6-e6" = "Delaying auto connect for %lu seconds";
 
 /* File transfer server console messages */
-"IRC[1018]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
-"IRC[1019]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
-"IRC[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
+"ags-s8" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
+"snf-45" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
+"y3w-la" = "Textual has received a DCC request from %@ that could not be processed.";
 
 /* Version info */
-"IRC[1026]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
+"vzu-u7" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
 
 /* Software trial (Mac App Store) */
-"IRC[1125]" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
-"IRC[1126]" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
+"t8r-ak" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
+"v4t-zw" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
 
 /* Specific IRC related, app-specific errors */
-"IRC[1121]" = "Messages cannot be sent to this window.";
-"IRC[1123]" = "There are no servers configured to connect to.";
+"z2r-sd" = "Messages cannot be sent to this window.";
+"iaa-0u" = "There are no servers configured to connect to.";
 
 /* Raw mode messages */
-"IRC[1092]" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
+"ik6-dl" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
 
 /* Hidden command responses messages */
-"IRC[1170]" = "⍅ Command responses which are normally hidden will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
+"yem-td" = "⍅ Command responses which are normally hidden will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
 
 /* Log file session headers */
-"IRC[1095]" = "------------- Begin Session -------------";
-"IRC[1096]" = "------------- End Session -------------";
+"qrg-ua" = "------------- Begin Session -------------";
+"d5d-uy" = "------------- End Session -------------";
 
 /* Ban list */
-"IRC[1102][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1102][2]" = "Ban in %1$@: %2$@";
+"c04-d0-1" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
+"c04-d0-2" = "Ban in %1$@: %2$@";
 
 /* Invite exception list */
-"IRC[1103][1]" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1103][2]" = "Invite Exception in %1$@: %2$@";
+"py2-qh-1" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
+"py2-qh-2" = "Invite Exception in %1$@: %2$@";
 
 /* Ban exception list */
-"IRC[1104][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1104][2]" = "Ban exception in %1$@: %2$@";
+"ov2-ci-1" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
+"ov2-ci-2" = "Ban exception in %1$@: %2$@";
 
 /* Quiet list */
-"IRC[1119][1]" = "Quiet in %1$@: %2$@ set by %3$@ on %4$@";
-"IRC[1119][2]" = "Quiet in %1$@: %2$@";
+"u5z-az-1" = "Quiet in %1$@: %2$@ set by %3$@ on %4$@";
+"u5z-az-2" = "Quiet in %1$@: %2$@";
 
 /* Cipher suite information */
-"IRC[1112][1]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
-"IRC[1112][2]" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
+"uyz-4r" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
+"xwj-xy" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
 
 /* XPC errors */
-"IRC[1124]" = "Connection service closed unexpectedly";
+"vdy-jk" = "Connection service closed unexpectedly";
 
-/* Message buffer session indicator */
-"IRC[1127]" = "Current Session";
+/* Large messages warning */
+"u4c-7i" = "The message that you are sending is very large which means it will be split up into multiple messages. Sending too many messages at once is often considered disruptive and may result in a ban.";
+"lql-8i" = "Are you sure you want to send this message?";
 
 /* /away/ command */
-"IRC[1165]" = "You have exceeded the maximum away message length for %1$@ which is %2$ld characters. The end of your away message may have been cut off.";
+"41y-p2" = "You have exceeded the maximum away message length for %1$@ which is %2$ld characters. The end of your away message may have been cut off.";
 
 /* /defaults/ command */
-"IRC[1012]" = "Invalid Syntax. Type “/defaults help” for more information.";
+"1dz-jb" = "Invalid Syntax. Type “/defaults help” for more information.";
 
-"IRC[1013][01]" = "The \002defaults\002 command can be used to toggle very specific, rarely used features.";
-"IRC[1013][02]" = " ";
-"IRC[1013][03]" = "Usage:";
-"IRC[1013][04]" = "\t“/defaults enable <token>” — Enables the feature defined by \002<token>\002";
-"IRC[1013][05]" = "\t“/defaults disable <token>” — Disables the feature defined by \002<token>\002";
-"IRC[1013][06]" = "\t“/defaults features” — View list of supported features";
-"IRC[1013][07]" = " ";
-"IRC[1013][08]" = "Surround \002<token>\002 with double quotes (\") if it contains a space.";
+"bkk-lo" = "The \002defaults\002 command can be used to toggle very specific, rarely used features.";
+"znw-02" = " ";
+"xw4-rr" = "Usage:";
+"0g8-7m" = "\t“/defaults enable <token>” — Enables the feature defined by \002<token>\002";
+"wag-2j" = "\t“/defaults disable <token>” — Disables the feature defined by \002<token>\002";
+"hob-ky" = "\t“/defaults features” — View list of supported features";
+"8mk-t8" = " ";
+"whg-ky" = "Surround \002<token>\002 with double quotes (\") if it contains a space.";
 
-"IRC[1014]" = "Cannot enable the feature “%@” because it is not supported";
-"IRC[1015]" = "Cannot disable the feature “%@” because it is not supported";
+"pc4-67" = "Cannot enable the feature “%@” because it is not supported";
+"d7y-pv" = "Cannot disable the feature “%@” because it is not supported";
 
-"IRC[1016]" = "Enabled Feature: %@";
-"IRC[1017]" = "Disabled Feature: %@";
+"5ke-18" = "Enabled Feature: %@";
+"0gn-cb" = "Disabled Feature: %@";
 
 /* /ignore/ command */
-"IRC[1115]" = "Added ignore that matches \002%1$@\002 with pattern: %2$@";
-"IRC[1116]" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
-"IRC[1117]" = "No ignores could be found that matches \002%@\002";
-"IRC[1118]" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
-"IRC[1129]" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+"ret-20" = "Added ignore that matches \002%1$@\002 with pattern: %2$@";
+"jzg-g8" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
+"wu0-jp" = "No ignores could be found that matches \002%@\002";
+"5ix-zn" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+"vrx-1f" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
 
 /* /kick/ command */
-"IRC[1167]" = "You have exceeded the maximum kick message length for %1$@ which is %2$ld characters. The end of your kick message may have been cut off.";
+"59a-ir" = "You have exceeded the maximum kick message length for %1$@ which is %2$ld characters. The end of your kick message may have been cut off.";
 
 /* /lagcheck/ command */
-"IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.0f milliseconds. (Rating: %3$@)";
-"IRC[1023]" = "Waiting for response from lag check…";
-"IRC[1024]" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
+"5bf-jp" = "Received lag check reply from %1$@. Time elapsed: %2$1.0f milliseconds. (Rating: %3$@)";
+"qoh-kt" = "Waiting for response from lag check…";
 
-"IRC[1025][00]" = "Yeah, okay…";
-"IRC[1025][01]" = "Are you plugged into the server?";
-"IRC[1025][02]" = "Pretty good";
-"IRC[1025][03]" = "Not bad";
-"IRC[1025][04]" = "Okay";
-"IRC[1025][05]" = "Needs work";
-"IRC[1025][06]" = "Slow";
-"IRC[1025][07]" = "Very Slow";
+"58g-m9" = "Yeah, okay…";
+"0jp-93" = "Are you plugged into the server?";
+"yym-8y" = "Pretty good";
+"mic-qe" = "Not bad";
+"mqg-wi" = "Okay";
+"ut8-7s" = "Needs work";
+"8fo-ss" = "Slow";
+"4oc-p2" = "Very Slow";
 
 /* /mode/ command */
-"IRC[1021]" = "The mode \002+%@\002 is not supported on this server";
+"dwi-d1" = "The mode \002+%@\002 is not supported on this server";
 
 /* /monitor/ command errors */
-"IRC[1137]" = "Please use the \002Address Book\002 to add or remove tracked users. Open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+"khw-4y" = "Please use the \002Address Book\002 to add or remove tracked users. Open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
 
 /* /msg/ command errors */
-"IRC[1136]" = "Cannot send operator message because the mode \002+o\002 is not supported by this server.";
+"54l-h7" = "Cannot send operator message because the mode \002+o\002 is not supported by this server.";
 
 /* /mute/ command */
-"IRC[1097]" = "Sound is already muted";
-"IRC[1098]" = "Sound is no longer muted";
-"IRC[1099]" = "Sound is not muted";
-"IRC[1100]" = "Sound has been muted";
+"sdn-yr" = "Sound is already muted";
+"190-f2" = "Sound is no longer muted";
+"5rf-mj" = "Sound is not muted";
+"u48-aa" = "Sound has been muted";
 
 /* /myversion/ command */
-"IRC[1027]" = "%1$@ %2$@ (Build %3$@) (%4$@)";
-"IRC[1028]" = "Mac App Store";
-"IRC[1029]" = "Standalone Version";
-"IRC[1030]" = "I am using %@";
+"ccb-ur" = "%1$@ %2$@ (Build %3$@) (%4$@)";
+"9fp-8h" = "Mac App Store";
+"b8p-44" = "Standalone Version";
+"pqj-1y" = "I am using %@";
 
 /* /timer/ command */
-"IRC[1138]" = "Invalid Syntax. Type “/timer help” for more information.";
-"IRC[1139]" = "Timer interval must be a whole number that is grater than zero (0). Type “/timer help” for more information.";
-"IRC[1140]" = "Timer repeat count must be a whole number that is grater than or equal to zero (0). Type “/timer help” for more information.";
-"IRC[1141]" = "Timer identifier is not properly formatted. Type “/timer list“ for a list of timers.";
-"IRC[1142]" = "Timer with identifier “%@“ does not exist. Type “/timer list“ for a list of timers.";
-"IRC[1143]" = "Timer with identifier “%@“ can't be stopped";
-"IRC[1144]" = "Timer with identifier “%@“ is already stopped";
-"IRC[1145]" = "Timer with identifier “%@“ stopped";
-"IRC[1146]" = "Timer with identifier “%@“ can't be restarted. Add a new timer.";
-"IRC[1147]" = "Timer with identifier “%@“ restarted";
-"IRC[1148]" = "Timer with identifier “%@“ removed";
-"IRC[1164]" = "All timers removed";
-"IRC[1149]" = "Timer with identifier “%@“ added"; // unused
-"IRC[1150]" = "There are no timers";
-"IRC[1151]" = "There are %ld timers:";
-"IRC[1152]" = "There is %ld timer:";
+"jj9-94" = "Invalid Syntax. Type “/timer help” for more information.";
+"327-pv" = "Timer interval must be a whole number that is grater than zero (0). Type “/timer help” for more information.";
+"eud-kc" = "Timer repeat count must be a whole number that is grater than or equal to zero (0). Type “/timer help” for more information.";
+"p6l-o4" = "Timer identifier is not properly formatted. Type “/timer list“ for a list of timers.";
+"vzu-xh" = "Timer with identifier “%@“ does not exist. Type “/timer list“ for a list of timers.";
+"uiz-32" = "Timer with identifier “%@“ can't be stopped";
+"ax6-n9" = "Timer with identifier “%@“ is already stopped";
+"hs0-up" = "Timer with identifier “%@“ stopped";
+"dgp-d4" = "Timer with identifier “%@“ can't be restarted. Add a new timer.";
+"qb7-mi" = "Timer with identifier “%@“ restarted";
+"p7s-is" = "Timer with identifier “%@“ removed";
+"808-bs" = "All timers removed";
+"jef-tp" = "Timer with identifier “%@“ added"; // unused
+"pqk-5k" = "There are no timers";
+"q1m-1e" = "There are %ld timers:";
+"6ts-oi" = "There is %ld timer:";
 
-"IRC[1153]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Command:\002 “%5$@“";
-"IRC[1154]" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Repeat:\002 Yes • \002Repeat Limit:\002 %5$@ • \002Iteration:\002 %6$ld • \002Command:\002 “%7$@“";
-"IRC[1155][01]" = "Active";
-"IRC[1155][02]" = "Stopped";
-"IRC[1156]" = "No Limit";
+"4n6-2x" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Command:\002 “%5$@“";
+"uw0-v2" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Repeat:\002 Yes • \002Repeat Limit:\002 %5$@ • \002Iteration:\002 %6$ld • \002Command:\002 “%7$@“";
+"bhz-9e" = "Active";
+"ww4-sn" = "Stopped";
+"o26-ae" = "No Limit";
 
-"IRC[1157][01]" = "The timer command can be used to perform a command after a specific amount of time and optionally repeat it.";
-"IRC[1157][02]" = " ";
-"IRC[1157][03]" = "To learn more, type:";
-"IRC[1157][04]" = " ";
-"IRC[1157][05]" = "“/timer help <topic>“";
-"IRC[1157][06]" = " ";
-"IRC[1157][07]" = "Available topics: ADD, REMOVE, LIST, STOP, RESTART";
+"xkq-rt" = "The timer command can be used to perform a command after a specific amount of time and optionally repeat it.";
+"ohr-m0" = " ";
+"ham-fp" = "To learn more, type:";
+"lbg-dy" = " ";
+"lbh-46" = "“/timer help <topic>“";
+"9dz-b4" = " ";
+"s3r-ve" = "Available topics: ADD, REMOVE, LIST, STOP, RESTART";
 
-"IRC[1158][01]" = "“/timer <seconds> <repeat> <command>“";
-"IRC[1158][02]" = " ";
-"IRC[1158][03]" = "\002<seconds>\002 is the interval of the timer.";
-"IRC[1158][04]" = "The interval must be a \002whole number that is greater than zero (0)\002.";
-"IRC[1158][05]" = " ";
-"IRC[1158][06]" = "\002<repeat>\002 is the repeat count for the timer.";
-"IRC[1158][07]" = "• To perform the timer only once, use one (1) as the repeat count.";
-"IRC[1158][08]" = "• To repeat the timer until manually stopped, use zero (0) as the repeat count.";
-"IRC[1158][09]" = "• To repeat the timer X number of times, use that number as the repeat count.";
-"IRC[1158][10]" = " ";
-"IRC[1158][11]" = "\002<command>\002 is the command to perform when the timer fires.";
-"IRC[1158][12]" = "\002Example:\002 “msg #textual-testing Hey everyone!”";
-"IRC[1158][13]" = "\002Scope:\002 The channel or query that is selected when a timer is added is used as the target for commands that do not take a channel name as an argument.";
-"IRC[1158][14]" = " ";
-"IRC[1158][15]" = "\002Example #1:\002 “/timer 10 1 <command>” — perform command one time, after ten seconds.";
-"IRC[1158][16]" = "\002Example #2:\002 “/timer 10 20 <command>” — perform command twenty times, once every ten seconds.";
-"IRC[1158][17]" = "\002Example #3:\002 “/timer 10 0 <command>” — perform command every ten seconds until the heat death of the universe.";
+"6r0-il" = "“/timer <seconds> <repeat> <command>“";
+"ohz-iz" = " ";
+"dxi-nz" = "\002<seconds>\002 is the interval of the timer.";
+"uah-l1" = "The interval must be a \002whole number that is greater than zero (0)\002.";
+"382-83" = " ";
+"9j0-3p" = "\002<repeat>\002 is the repeat count for the timer.";
+"g55-ap" = "• To perform the timer only once, use one (1) as the repeat count.";
+"90m-qy" = "• To repeat the timer until manually stopped, use zero (0) as the repeat count.";
+"my0-q6" = "• To repeat the timer X number of times, use that number as the repeat count.";
+"goz-y6" = " ";
+"e0a-99" = "\002<command>\002 is the command to perform when the timer fires.";
+"9qu-ho" = "\002Example:\002 “msg #textual-testing Hey everyone!”";
+"yds-m4" = "\002Scope:\002 The channel or query that is selected when a timer is added is used as the target for commands that do not take a channel name as an argument.";
+"jik-p7" = " ";
+"1p8-a7" = "\002Example #1:\002 “/timer 10 1 <command>” — perform command one time, after ten seconds.";
+"h1a-gx" = "\002Example #2:\002 “/timer 10 20 <command>” — perform command twenty times, once every ten seconds.";
+"vwi-10" = "\002Example #3:\002 “/timer 10 0 <command>” — perform command every ten seconds until the heat death of the universe.";
 
-"IRC[1159][01]" = "“/timer list“";
-"IRC[1159][02]" = " ";
-"IRC[1159][03]" = "List timers";
+"x1n-ve" = "“/timer list“";
+"3ks-34" = " ";
+"96w-fo" = "List timers";
 
-"IRC[1160][01]" = "“/timer stop <identifier>“";
-"IRC[1160][02]" = " ";
-"IRC[1160][03]" = "Stop the timer assigned to \002<identifier>\002.";
-"IRC[1160][04]" = " ";
-"IRC[1160][05]" = "The identifier for a timer can be found using “/timer list”";
+"bx2-n1" = "“/timer stop <identifier>“";
+"t6t-x2" = " ";
+"i3c-vz" = "Stop the timer assigned to \002<identifier>\002.";
+"8h4-ac" = " ";
+"a5z-ot" = "The identifier for a timer can be found using “/timer list”";
 
-"IRC[1161][01]" = "“/timer restart <identifier>“";
-"IRC[1161][02]" = " ";
-"IRC[1161][03]" = "Restart the timer assigned to \002<identifier>\002.";
-"IRC[1161][04]" = " ";
-"IRC[1161][05]" = "The identifier for a timer can be found using “/timer list”";
-"IRC[1161][06]" = " ";
-"IRC[1161][07]" = "When restarting a timer, the iteration count is reset";
-"IRC[1161][08]" = "which means a timer that is setup to repeat X number";
-"IRC[1161][09]" = "of times will start over from the beginning.";
+"r27-tv" = "“/timer restart <identifier>“";
+"zrf-v2" = " ";
+"wd8-v9" = "Restart the timer assigned to \002<identifier>\002.";
+"6xo-al" = " ";
+"g69-sc" = "The identifier for a timer can be found using “/timer list”";
+"mjg-bn" = " ";
+"xd3-g1" = "When restarting a timer, the iteration count is reset";
+"77t-x9" = "which means a timer that is setup to repeat X number";
+"6bp-ft" = "of times will start over from the beginning.";
 
-"IRC[1162][01]" = "“/timer remove <identifier>“";
-"IRC[1162][02]" = " ";
-"IRC[1162][03]" = "Remove the timer assigned to \002<identifier>\002.";
-"IRC[1162][04]" = " ";
-"IRC[1162][05]" = "To remove all timers, pass “all” as \002<identifier>\002.";
-"IRC[1162][06]" = " ";
-"IRC[1162][07]" = "The identifier for a timer can be found using “/timer list”";
+"i2d-x5" = "“/timer remove <identifier>“";
+"ip5-lz" = " ";
+"t5d-hd" = "Remove the timer assigned to \002<identifier>\002.";
+"mkz-fb" = " ";
+"7dp-ew" = "To remove all timers, pass “all” as \002<identifier>\002.";
+"0m7-9k" = " ";
+"qa0-8e" = "The identifier for a timer can be found using “/timer list”";
 
-"IRC[1163]" = "---------------------------------------";
+"aox-zz" = "---------------------------------------";
 
 /* /setcolor/ command */
-"IRC[1108]" = "This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
-"IRC[1110]" = "Cannot set color for “%@“ because that does not appear to be a valid nickname.";
+"026-qv" = "This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
+"8dy-6f" = "Cannot set color for “%@“ because that does not appear to be a valid nickname.";
 
 /* /tage/ command */
-"IRC[1101]" = "\002Time Since First Commit:\002 %@";
+"v9x-18" = "\002Time Since First Commit:\002 %@";
 
 /* /topic/ command errors */
-"IRC[1166]" = "You have exceeded the maximum topic length for %1$@ which is %2$ld characters. The end of your topic may have been cut off.";
+"1oo-3b" = "You have exceeded the maximum topic length for %1$@ which is %2$ld characters. The end of your topic may have been cut off.";
 
 /* Common command errors */
-"IRC[1130]" = "Invalid syntax: “%@“";
-"IRC[1131]" = "Cannot find channel named “%@“";
-"IRC[1132]" = "Cannot find query named “%@“";
-"IRC[1133]" = "This command can only be used with a channel.";
-"IRC[1134]" = "This command can only be used with a query.";
-"IRC[1135]" = "One or more arguments are not properly formatted for this command.";
+"atq-93" = "Invalid syntax: “%@“";
+"pxa-ox" = "Cannot find channel named “%@“";
+"1fc-vl" = "Cannot find query named “%@“";
+"g01-qn" = "This command can only be used with a channel.";
+"m6o-z1" = "This command can only be used with a query.";
+"zef-q9" = "One or more arguments are not properly formatted for this command.";
 
 /* Miscellaneous messages related to IRC events */
-"IRC[1031]" = "Be back later";
-"IRC[1032]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
-"IRC[1033]" = "away-notify multi-prefix userhost-in-names sasl server-time";
-"IRC[1034]" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
-"IRC[1035]" = "Stop fingering me pervert!";
-"IRC[1036]" = "There are no capabilities that are enabled";
-"IRC[1037]" = "The following capabilities are currently enabled: %@";
-"IRC[1038]" = "(No Topic)";
-"IRC[1039]" = "Mode is \002%@\002";
-"IRC[1040]" = "Topic is \002%@\002";
-"IRC[1041]" = "Set by \002%1$@\002 on %2$@";
-"IRC[1042]" = "Website is \002%@\002";
-"IRC[1043]" = "Attempting to rejoin channel in three seconds";
-"IRC[1044]" = "\002%1$@\002 changed the topic to \002%2$@\002";
-"IRC[1045]" = "Connection to host established";
-"IRC[1046]" = "Connection to host at [%@] established";
-"IRC[1047]" = "Connection secured using %@";
-"IRC[1048]" = "Disconnected for Sleep Mode";
-"IRC[1049]" = "Disconnected for server redirect";
-"IRC[1050]" = "Disconnected from server because of an untrusted certificate";
-"IRC[1051]" = "Disconnected from server because the Internet is not reachable";
-"IRC[1052]" = "Disconnected";
-"IRC[1053]" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
-"IRC[1054]" = "%.0f minutes have elapsed since last response from this connection. It's possible the connection is timing out.";
-"IRC[1055]" = "Message(%1$d): %2$@";
-"IRC[1056]" = "Connecting to [%1$@] on port %2$hu";
-"IRC[1057]" = "Connecting using SOCKS4 proxy [%1$@] on port %2$hu";
-"IRC[1058]" = "Connecting using SOCKS5 proxy [%1$@] on port %2$hu";
-"IRC[1059]" = "Connecting using HTTP proxy [%1$@] on port %2$hu";
-"IRC[1060]" = "Reconnecting…";
-"IRC[1061]" = "Retrying…";
-"IRC[1062]" = "\002%1$@\002 sets mode \002%2$@\002";
-"IRC[1063]" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
-"IRC[1064]" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
-"IRC[1065]" = "\002-CTCP-\002 %1$@ from %2$@";
-"IRC[1066]" = "%1$@ (%2$@)";
-"IRC[1067]" = "%@ IRC Network";
-"IRC[1068][0]" = "%1$@ is now known as \002%2$@\002";
-"IRC[1068][1]" = "You're now known as \002%2$@\002";
-"IRC[1069]" = "\002%1$@\002 (%2$@@%3$@) left IRC";
-"IRC[1070]" = "\002%1$@\002 left the query by disconnecting from IRC";
-"IRC[1071]" = "\002%1$@\002 joined the query by connecting to IRC";
-"IRC[1072]" = "%@, your user modes are \002%@\002";
-"IRC[1073]" = "Inviting %1$@ to join %2$@";
-"IRC[1074]" = "%1$@!%2$@@%3$@ invited you to join %4$@";
-"IRC[1075]" = "%1$@ is away (%2$@)";
-"IRC[1076]" = "You are now an IRC Operator on %@";
-"IRC[1077]" = "\002%1$@\002 (%2$@@%3$@) joined the channel";
-"IRC[1078]" = "\002%1$@\002 kicked \002%2$@\002 from the channel (%3$@)";
-"IRC[1079]" = "\002%1$@\002 (%2$@@%3$@) left the channel";
-"IRC[1080]" = "%1$@ (%2$@)";
-"IRC[1081]" = "%1$@ is in %2$@";
-"IRC[1082]" = "%1$@ is connected on %2$@ (%3$@)";
-"IRC[1083]" = "%1$@ has userhost %2$@@%3$@ and real name “%4$@”";
-"IRC[1084]" = "%1$@ signed on at %2$@ and has been idle for %3$@";
-"IRC[1085]" = "%1$@ was connected to %2$@ on %3$@";
-"IRC[1086]" = "%1$@ had userhost %2$@@%3$@ and real name “%4$@”";
-"IRC[1088]" = "You cannot send private messages to %@. Anything that you send to them will be ignored until you are added to their list of recognized users.";
-"IRC[1089]" = "%1$@ (%2$@) tried to send you a private message, but it was ignored due to \002umode +g\002. Perform “/accept %1$@” to allow this user to communicate with you.";
-"IRC[1114]" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
-"IRC[1120]" = "Server closed read stream";
-"IRC[1122]" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
-"IRC[1168]" = "%1$@ is connected from %2$@ (%3$@)";
-"IRC[1169]" = "%1$@ was connected from %2$@ (%3$@)";
-"IRC[1171]" = "Cannot use nickname “%@“ — Trying another…";
+"xog-in" = "Be back later";
+"bg3-h2" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
+"jer-ju" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
+"en6-mw" = "Stop fingering me pervert!";
+"5wa-lb" = "There are no capabilities that are enabled";
+"7p9-rs" = "The following capabilities are currently enabled: %@";
+"obp-ww" = "Mode is \002%@\002";
+"7nm-7v" = "Topic is \002%@\002";
+"y7s-3e" = "Set by \002%1$@\002 on %2$@";
+"8tq-g6" = "Website is \002%@\002";
+"zzj-2h" = "Attempting to rejoin channel in three seconds";
+"qq2-66" = "\002%1$@\002 changed the topic to \002%2$@\002";
+"4vt-ow" = "Connection to host established";
+"l21-p7" = "Connection to host at [%@] established";
+"ex4-f8" = "Connection secured using %@";
+"drg-b7" = "Disconnected for Sleep Mode";
+"wcl-po" = "Disconnected for server redirect";
+"zro-bg" = "Disconnected from server because of an untrusted certificate";
+"isx-fi" = "Disconnected from server because the Internet is not reachable";
+"9b4-10" = "Disconnected";
+"bps-la" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
+"gzo-54" = "%.0f minutes have elapsed since last response from this connection. It's possible the connection is timing out.";
+"3yo-gw" = "Message(%1$d): %2$@";
+"o77-ls" = "Connecting to [%1$@] on port %2$hu";
+"p7h-un" = "Connecting using SOCKS4 proxy [%1$@] on port %2$hu";
+"ni5-cy" = "Connecting using SOCKS5 proxy [%1$@] on port %2$hu";
+"oby-av" = "Connecting using HTTP proxy [%1$@] on port %2$hu";
+"xxb-y2" = "Reconnecting…";
+"ky3-36" = "Retrying…";
+"v5d-ix" = "\002%1$@\002 sets mode \002%2$@\002";
+"vy7-pk" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
+"dri-l7" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
+"6o8-eu" = "\002-CTCP-\002 %1$@ from %2$@";
+"tok-st" = "%1$@ (%2$@)";
+"8hg-7k" = "%@ IRC Network";
+"fxw-5s" = "%1$@ is now known as \002%2$@\002";
+"rr6-yo" = "You're now known as \002%2$@\002";
+"53b-dm" = "\002%1$@\002 (%2$@@%3$@) left IRC";
+"8bk-mx" = "\002%1$@\002 left the query by disconnecting from IRC";
+"q0q-ch" = "\002%1$@\002 joined the query by connecting to IRC";
+"ipj-34" = "%@, your user modes are \002%@\002";
+"wk4-rv" = "Inviting %1$@ to join %2$@";
+"qw4-t3" = "%1$@!%2$@@%3$@ invited you to join %4$@";
+"c1h-fq" = "%1$@ is away (%2$@)";
+"6bh-br" = "You are now an IRC Operator on %@";
+"ziu-p9" = "\002%1$@\002 (%2$@@%3$@) joined the channel";
+"9aj-bd" = "\002%1$@\002 kicked \002%2$@\002 from the channel (%3$@)";
+"nkr-kf" = "\002%1$@\002 (%2$@@%3$@) left the channel";
+"ozy-6i" = "%1$@ (%2$@)";
+"onk-l5" = "%1$@ is in %2$@";
+"h19-n2" = "%1$@ is connected on %2$@ (%3$@)";
+"plg-lr" = "%1$@ has userhost %2$@@%3$@ and real name “%4$@”";
+"6hn-o6" = "%1$@ signed on at %2$@ and has been idle for %3$@";
+"cdu-ed" = "%1$@ was connected to %2$@ on %3$@";
+"32c-87" = "%1$@ had userhost %2$@@%3$@ and real name “%4$@”";
+"11i-ev" = "You cannot send private messages to %@. Anything that you send to them will be ignored until you are added to their list of recognized users.";
+"3yj-in" = "%1$@ (%2$@) tried to send you a private message, but it was ignored due to \002umode +g\002. Perform “/accept %1$@” to allow this user to communicate with you.";
+"5i4-qq" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
+"5h5-sl" = "Server closed read stream";
+"r5h-fj" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
+"3oa-mv" = "%1$@ is connected from %2$@ (%3$@)";
+"x69-rz" = "%1$@ was connected from %2$@ (%3$@)";
+"js3-9v" = "Cannot use nickname “%@“ — Trying another…";

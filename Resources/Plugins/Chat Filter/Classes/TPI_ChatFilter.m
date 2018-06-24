@@ -285,7 +285,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSString *)filterDescription
 {
-	return TPILocalizedString(@"TPI_ChatFilterExtension[0004]", self.filterTitle);
+	return TPILocalizedString(@"TPI_ChatFilterExtension[dka-bx]", self.filterTitle);
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone

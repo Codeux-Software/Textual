@@ -35,11 +35,8 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1005 */
+"gyw-h4" = "Growl is running. Notifications will be forwarded to it.";
+"br6-di" = "Notifications will be shown using Notification Center.";
 
-"TVCNotificationConfigurationView[1000]" = "Growl is running. Notifications will be forwarded to it.";
-"TVCNotificationConfigurationView[1001]" = "Notifications will be shown using Notification Center.";
-"TVCNotificationConfigurationView[1002]" = "Growl is not running. Notifications will not be shown."; /* For Lion. It does not have NC */
-
-"TVCNotificationConfigurationView[1003]" = "No Sound";
-"TVCNotificationConfigurationView[1004]" = "Default Sound";
+"vje-9n" = "No Sound";
+"0rs-8l" = "Default Sound";

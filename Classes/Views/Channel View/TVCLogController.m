@@ -401,7 +401,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *topicString = nil;
 
 		if (topic == nil || topic.length == 0) {
-			topicString = TXTLS(@"IRC[1038]");
+			topicString = TXTLS(@"TVCMainWindow[vi3-23]");
 		} else {
 			topicString = topic;
 		}
@@ -501,7 +501,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		/* Add "Current Session" message */
 		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
-			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"IRC[1127]")];
+			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"TVCMainWindow[4yo-mk]")];
 
 			[patchedAppend appendString:html];
 		}
@@ -1166,7 +1166,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		/* Add "Current Session" message */
 		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
-			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"IRC[1127]")];
+			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"TVCMainWindow[4yo-mk]")];
 
 			[renderedLogLines addObject:@{
 				  @"html" : html

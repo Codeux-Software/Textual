@@ -35,7 +35,5 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1001 */
-
-"TDCChannelModifyTopicSheet[1000][1]" = "You have exceeded the maximum topic length defined by %1$@ which is %2$ld characters";
-"TDCChannelModifyTopicSheet[1000][2]" = "If you continue typing, the end of your topic may be cut off.";
+"27l-qx" = "You have exceeded the maximum topic length defined by %1$@ which is %2$ld characters";
+"zm4-cr" = "If you continue typing, the end of your topic may be cut off.";

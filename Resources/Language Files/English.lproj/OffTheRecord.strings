@@ -35,42 +35,48 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1012 */
+"l49-9y" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user. <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>.";
+"r3w-fj" = "Off-the-Record Messaging: Private conversation started with a recognized user.";
 
-"OffTheRecord[1001][01]" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user. <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>.";
-"OffTheRecord[1001][02]" = "Off-the-Record Messaging: Private conversation started with a recognized user.";
+"rj0-ys" = "Off-the-Record Messaging: %@ was successful in confirming their identity.";
+"ufr-mh" = "Off-the-Record Messaging: %@ FAILED to confirm their identity.";
 
-"OffTheRecord[1002]" = "Off-the-Record Messaging: %@ was successful in confirming their identity.";
-"OffTheRecord[1003]" = "Off-the-Record Messaging: %@ FAILED to confirm their identity.";
+"m1z-eb" = "Off-the-Record Messaging: Private conversation has ended.";
 
-"OffTheRecord[1004]" = "Off-the-Record Messaging: Private conversation has ended.";
+"f59-3b" = "Off-the-Record Messaging: Refreshing the private conversation…";
+"aii-2q" = "Off-the-Record Messaging: Starting a private conversation…";
 
-"OffTheRecord[1005]" = "Off-the-Record Messaging: Refreshing the private conversation…";
-"OffTheRecord[1006]" = "Off-the-Record Messaging: Starting a private conversation…";
+"jww-e0" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message. The message visible on your screen will be sent once a private conversation has started.";
+"jvt-fi" = "Off-the-Record Messaging: An error occurred while encrypting a message. The message was not sent.";
+"c5o-2l" = "Off-the-Record Messaging: Message has not been sent because the other user has closed the conversation.";
+"uhy-85" = "Off-the-Record Messaging: A private conversation could not be started.";
+"bl0-5i" = "Off-the-Record Messaging: Our original message has been sent back to us.";
+"c49-q0" = "Off-the-Record Messaging: The previous message was resent.";
+"6v9-w3" = "Off-the-Record Messaging: Received an encrypted message but cannot read it because a private conversation has not been started.";
+"9if-xp" = "Off-the-Record Messaging: Cannot read the message received.";
+"auo-n0" = "Off-the-Record Messaging: The message received contains malformed data.";
+"nl1-nf" = "Off-the-Record Messaging: Received a heartbeat";
+"iwt-9f" = "Off-the-Record Messaging: Sent a heartbeat";
+"2zx-p6" = "Off-the-Record Messaging: Received a generic error from the Off-the-Record Messaging library.";
+"1lf-f0" = "Off-the-Record Messaging: Received an unencrypted message.";
+"4by-8j" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized.";
+"c7t-vi" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
-"OffTheRecord[1007][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message. The message visible on your screen will be sent once a private conversation has started.";
-"OffTheRecord[1007][02]" = "Off-the-Record Messaging: An error occurred while encrypting a message. The message was not sent.";
-"OffTheRecord[1007][03]" = "Off-the-Record Messaging: Message has not been sent because the other user has closed the conversation.";
-"OffTheRecord[1007][04]" = "Off-the-Record Messaging: A private conversation could not be started.";
-"OffTheRecord[1007][05]" = "Off-the-Record Messaging: Our original message has been sent back to us.";
-"OffTheRecord[1007][06]" = "Off-the-Record Messaging: The previous message was resent.";
-"OffTheRecord[1007][07]" = "Off-the-Record Messaging: Received an encrypted message but cannot read it because a private conversation has not been started.";
-"OffTheRecord[1007][08]" = "Off-the-Record Messaging: Cannot read the message received.";
-"OffTheRecord[1007][09]" = "Off-the-Record Messaging: The message received contains malformed data.";
-"OffTheRecord[1007][10]" = "Off-the-Record Messaging: Received a heartbeat";
-"OffTheRecord[1007][11]" = "Off-the-Record Messaging: Sent a heartbeat";
-"OffTheRecord[1007][12]" = "Off-the-Record Messaging: Received a generic error from the Off-the-Record Messaging library.";
-"OffTheRecord[1007][13]" = "Off-the-Record Messaging: Received an unencrypted message.";
-"OffTheRecord[1007][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized.";
-"OffTheRecord[1007][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
+"jrv-gq" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not active.";
+"g9p-8r" = "Off-the-Record Messaging: Cannot end private conversation because there is not one that's active.";
 
-"OffTheRecord[1008]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not active.";
-"OffTheRecord[1009]" = "Off-the-Record Messaging: Cannot end private conversation because there is not one that's active.";
+"8hr-8l" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
-"OffTheRecord[1010]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
+"anu-ky" = "Not Encrypted";
+"w34-mg" = "Encrypted & Unverified";
+"l9n-p9" = "Encrypted & Verified";
 
-"OffTheRecord[1011][1]" = "Not Encrypted";
-"OffTheRecord[1011][2]" = "Encrypted & Unverified";
-"OffTheRecord[1011][3]" = "Encrypted & Verified";
+"67n-6j" = "Off-the-Record Messaging: The fingerprint for %1$@ is “%2$@” — <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>";
 
-"OffTheRecord[1011]" = "Off-the-Record Messaging: The fingerprint for %1$@ is “%2$@” — <a href='#' onclick='appPrivate.encryptionAuthenticateUser(); return false;'>Perform authentication</a>";
+"mnw-qt" = "Are you sure you want to transfer the file named “%@“?";
+"nuo-8s" = "This file will be sent without encryption.";
+"ng0-5q" = "Transfer File";
+
+"gcg-tv" = "Are you sure you want to transfer the file named “%1$@“ to %2$@?";
+"7he-76" = "This file will be sent without encryption.";
+"0v0-ix" = "Transfer File";

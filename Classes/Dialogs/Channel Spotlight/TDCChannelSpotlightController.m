@@ -204,7 +204,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (self.searchResultsCount == 0) {
-		self.noResultsLabel.stringValue = TXTLS(@"TDCChannelSpotlightController[1008]");
+		self.noResultsLabel.stringValue = TXTLS(@"TDCChannelSpotlightController[tyv-p6]");
 
 		[self.noResultsLabelLeadingConstraint restoreArchivedConstant];
 

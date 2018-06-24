@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 			viewController.associatedChannel.isUtility)
 		{
 			NSMenuItem *noActionMenuItem =
-			[[NSMenuItem alloc] initWithTitle:TXTLS(@"BasicLanguage[1026]")
+			[[NSMenuItem alloc] initWithTitle:TXTLS(@"BasicLanguage[7kc-mo]")
 									   action:nil
 								keyEquivalent:@""];
 
@@ -170,19 +170,19 @@ NS_ASSUME_NONNULL_BEGIN
 			[menuItems addObject:[NSMenuItem separatorItem]];
 
 			[menuItems addObject:
-			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1015]")
+			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[6cw-ni]")
 									target:menuController()
 									action:@selector(copyLogAsHtml:)]];
 
 			[menuItems addObject:
-			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1016]")
+			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[ngd-ms]")
 									target:menuController()
 									action:@selector(forceReloadTheme:)]];
 
 			if (inspectElementItem == nil) {
 				if (isWebKit2) {
 					[menuItems addObject:
-					 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1017]")
+					 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[tfj-m9]")
 											target:menuController()
 											action:@selector(openWebInspector:)]];
 				}
@@ -369,10 +369,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *applicationName = [RZWorkspace() nameOfApplicationToOpenURL:webpageURL];
 
 	BOOL openLink =
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1114][2]", webpageURL.absoluteString)
-							  title:TXTLS(@"Prompts[1114][1]", applicationName)
-					  defaultButton:TXTLS(@"Prompts[0001]")
-					alternateButton:TXTLS(@"Prompts[0002]")
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[5oq-vv]", webpageURL.absoluteString)
+							  title:TXTLS(@"Prompts[2ul-cl]", applicationName)
+					  defaultButton:TXTLS(@"Prompts[mvh-ms]")
+					alternateButton:TXTLS(@"Prompts[99q-gg]")
 					 suppressionKey:@"open_non_http_url_warning"
 					suppressionText:nil];
 

@@ -227,9 +227,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 			userInfo[NSURLErrorKey] = url;
 
-			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1002][1]", applicationName);
+			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[c9r-kh]", applicationName);
 
-			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1002][2]");
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[2g4-8m]");
 
 			*outError = [NSError errorWithDomain:TXErrorDomain code:29852 userInfo:userInfo];
 		}
@@ -260,7 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
 	d.canCreateDirectories = NO;
 	d.resolvesAliases = YES;
 
-	d.message = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1001]");
+	d.message = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[gnb-rv]");
 
 	d.prompt = TXTLS(@"Prompts[0006]");
 
@@ -281,10 +281,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(errorMessage != nil);
 
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][2]", errorMessage)
-							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][1]")
+							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[967-f3]", errorMessage)
+							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[i3q-j0]")
 					 defaultButton:TXTLS(@"Prompts[0005]")
-				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1003][3]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[uyy-qm]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked == TDCAlertResponseAlternateButton) {
@@ -298,10 +298,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_presentReceiptFailedValidationSheet
 {
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][2]")
-							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][1]")
+							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[lum-et]")
+							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[i83-gw]")
 					 defaultButton:TXTLS(@"Prompts[0005]")
-				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][3]")
+				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[on9-6e]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked == TDCAlertResponseAlternateButton) {
@@ -348,7 +348,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *receiptData = [self receiptDataForApplicationAtURL:applicationURL];
 
 	if (receiptData == nil) {
-		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1004][5]");
+		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[5zo-ap]");
 
 		[self _presentEligibilityCheckFailedSheetWithError:errorMessage];
 
@@ -410,9 +410,9 @@ NS_ASSUME_NONNULL_BEGIN
 		NSString *errorMessage = nil;
 
 		if (statusCode == TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater) {
-			errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1005][6]");
+			errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[e7n-ta]");
 		} else {
-			errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1005][1]", statusCode);
+			errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[ssd-4w]", statusCode);
 		}
 
 		_presentEligibilityCheckFailedSheet
@@ -420,7 +420,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* There is never a time a status context should be nil for this check. */
 	if (statusContext == nil) {
-		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1005][2]");
+		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[afn-16]");
 
 		_presentEligibilityCheckFailedSheet
 	}
@@ -431,7 +431,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (eligibilityObject == nil || [eligibilityObject isKindOfClass:[NSNumber class]] == NO) {
 		LogToConsoleError("'receiptUpgradeEligibility' is nil or not of kind 'NSNumber'");
 
-		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1005][3]");
+		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[md6-e1]");
 
 		_presentEligibilityCheckFailedSheet
 	}
@@ -444,7 +444,7 @@ NS_ASSUME_NONNULL_BEGIN
 		eligibility != TLOInAppPurchaseUpgradeNotEligible &&
 		eligibility != TLOInAppPurchaseUpgradeAlreadyUpgraded)
 	{
-		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[1005][4]", eligibility);
+		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[bdh-bw]", eligibility);
 
 		_presentEligibilityCheckFailedSheet
 	}

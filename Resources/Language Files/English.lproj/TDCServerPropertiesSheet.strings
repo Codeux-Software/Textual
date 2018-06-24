@@ -35,58 +35,58 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1021 */
-
 /* Server properties Address Book entry types */
-"TDCServerPropertiesSheet[1000]" = "User Ignore";
-"TDCServerPropertiesSheet[1001]" = "User Tracking";
+"f7o-x4" = "User Ignore";
+"b0g-0x" = "User Tracking";
 
 /* Server properties iCloud options */
-"TDCServerPropertiesSheet[1002][1]" = "Do you want to remove this server from devices it has been shared with?";
-"TDCServerPropertiesSheet[1002][2]" = "";
+"x08-ko" = "Do you want to remove this server from devices it has been shared with?";
+"sqc-nw" = "";
 
 /* Server specific highlight entry things */
-"TDCServerPropertiesSheet[1003]" = "All Channels";
-"TDCServerPropertiesSheet[1004]" = "Exclude";
-"TDCServerPropertiesSheet[1005]" = "Match";
+"61f-6b" = "All Channels";
+"qcc-b4" = "Exclude";
+"tet-dk" = "Match";
 
 /* Server properties navigation menu */
-"TDCServerPropertiesSheet[1006][01]" = "Server Properties";
-"TDCServerPropertiesSheet[1006][02]" = "Vendor Specific";
-"TDCServerPropertiesSheet[1006][03]" = "Advanced";
-"TDCServerPropertiesSheet[1006][04]" = "Address Book";
-"TDCServerPropertiesSheet[1006][05]" = "Channel List";
-"TDCServerPropertiesSheet[1006][06]" = "Connect Commands";
-"TDCServerPropertiesSheet[1006][07]" = "Encoding";
-"TDCServerPropertiesSheet[1006][08]" = "General";
-"TDCServerPropertiesSheet[1006][09]" = "Identity";
-"TDCServerPropertiesSheet[1006][10]" = "Highlights";
-"TDCServerPropertiesSheet[1006][11]" = "Messages";
-"TDCServerPropertiesSheet[1006][12]" = "ZNC Bouncer";
-"TDCServerPropertiesSheet[1006][13]" = "Client Certificate";
-"TDCServerPropertiesSheet[1006][14]" = "Flood Control";
-"TDCServerPropertiesSheet[1006][15]" = "Network Socket";
-"TDCServerPropertiesSheet[1006][16]" = "Proxy Server";
-"TDCServerPropertiesSheet[1006][17]" = "Redundancy";
+"lww-pc" = "Server Properties";
+"v27-8w" = "Vendor Specific";
+"8uw-tz" = "Advanced";
+"8zc-6y" = "Address Book";
+"5oz-07" = "Channel List";
+"hip-13" = "Connect Commands";
+"8ug-ka" = "Encoding";
+"ehx-4d" = "General";
+"8ik-qo" = "Identity";
+"jtx-hn" = "Highlights";
+"j34-yr" = "Messages";
+"fsj-7f" = "ZNC Bouncer";
+"ce7-kc" = "Client Certificate";
+"fcr-w8" = "Flood Control";
+"ffy-xt" = "Network Socket";
+"t52-7a" = "Proxy Server";
+"36n-u9" = "Redundancy";
 
 /* Error localizations */
-"TDCServerPropertiesSheet[1011]" = "Please enter a properly formatted nickname.";
-"TDCServerPropertiesSheet[1012]" = "Please enter a properly formatted username.";
-"TDCServerPropertiesSheet[1013]" = "Message cannot contain more than one line.";
-"TDCServerPropertiesSheet[1014]" = "Please enter a shorter message.\n\nMaximum length is %ld characters.";
-"TDCServerPropertiesSheet[1015]" = "Please enter a properly formatted server address or pick from the list of preconfigured networks.";
-"TDCServerPropertiesSheet[1016]" = "Please enter a whole number between 1 and 65,535.";
-"TDCServerPropertiesSheet[1017]" = "Please enter a properly formatted proxy address.";
-"TDCServerPropertiesSheet[1018]" = "Connection name cannot contain more than one line.";
-"TDCServerPropertiesSheet[1019]" = "Real name cannot contain more than one line.";
-"TDCServerPropertiesSheet[1020]" = "Please enter a list of properly formatted nicknames.\n\nFailed on nickname: “%@“\n\nList of nicknames should be space separated.\nFor example: “Guest1 Guest2 Guest3“";
+"8iw-q8" = "Please enter a properly formatted username.";
+"agy-bp" = "Please enter a properly formatted real name.";
+"tlo-b6" = "Please enter a properly formatted proxy address.";
+"wlz-tb" = "Please enter a list of properly formatted nicknames.\n\nFailed on nickname: “%@“\n\nList of nicknames should be space separated.\nFor example: “Guest1 Guest2 Guest3“";
 
 /* Custom client-side certificate selection */
-"TDCServerPropertiesSheet[1008]" = "No Certificate Selected";
+"6xz-ec" = "No Certificate Selected";
 
-"TDCServerPropertiesSheet[1009][1]" = "Choose An Identity";
-"TDCServerPropertiesSheet[1009][2]" = "Select a certificate to send when you connect securely.";
+"6wq-i4" = "Choose An Identity";
+"mi4-fd" = "Select a certificate to send when you connect securely.";
 
 /* Cipher suites */
-"TDCServerPropertiesSheet[1010][1]" = "The “%@” includes the following cipher suites:";
-"TDCServerPropertiesSheet[1010][2]" = "%@\n\nThese cipher suites are ordered by preference with the most preferred at the top.";
+"yko-5g" = "The “%@” includes the following cipher suites:";
+"k50-8n" = "%@\n\nThese cipher suites are ordered by preference with the most preferred at the top.";
+
+/* Enabling wait for NickServ without a password */
+"94r-eq" = "The preference you have enabled will not work correctly because you do not have a password set";
+"26u-j8" = "Enter your NickServ password into the field labeled “Personal Password”";
+
+/* Cloud changes */
+"bzh-il" = "This connection's configuration has changed. Do you want to reload the Server Properties dialog?";
+"oz4-kb" = "You will loose unsaved changes if you click “Yes”";

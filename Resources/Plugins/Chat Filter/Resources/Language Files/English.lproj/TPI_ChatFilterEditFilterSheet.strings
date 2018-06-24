@@ -37,27 +37,27 @@
 
 /* Next unused key: 1014 */
 
-"TPI_ChatFilterEditFilterSheet[0001]" = "Channel Name";
-"TPI_ChatFilterEditFilterSheet[0002]" = "My Nickname";
-"TPI_ChatFilterEditFilterSheet[0003]" = "Network Name";
-"TPI_ChatFilterEditFilterSheet[0004]" = "Original Message";
-"TPI_ChatFilterEditFilterSheet[0005]" = "Sender Address";
-"TPI_ChatFilterEditFilterSheet[0006]" = "Sender Hostmask";
-"TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
-"TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
-"TPI_ChatFilterEditFilterSheet[0009]" = "Server Address";
+"90e-tj" = "Channel Name";
+"tbc-wc" = "My Nickname";
+"840-f9" = "Network Name";
+"sch-hi" = "Original Message";
+"xt2-bv" = "Sender Address";
+"je5-u2" = "Sender Hostmask";
+"k82-6i" = "Sender Nickname";
+"2sk-ui" = "Sender Username";
+"9xy-vf" = "Server Address";
 
-"TPI_ChatFilterEditFilterSheet[0010][01]" = "Parameter #1";
-"TPI_ChatFilterEditFilterSheet[0010][02]" = "Parameter #2";
-"TPI_ChatFilterEditFilterSheet[0010][03]" = "Parameter #3";
-"TPI_ChatFilterEditFilterSheet[0010][04]" = "Parameter #4";
-"TPI_ChatFilterEditFilterSheet[0010][05]" = "Parameter #5";
-"TPI_ChatFilterEditFilterSheet[0010][06]" = "Parameter #6";
-"TPI_ChatFilterEditFilterSheet[0010][07]" = "Parameter #7";
-"TPI_ChatFilterEditFilterSheet[0010][08]" = "Parameter #8";
-"TPI_ChatFilterEditFilterSheet[0010][09]" = "Parameter #9";
+"kph-dc" = "Parameter #1";
+"8bd-nt" = "Parameter #2";
+"4vk-v8" = "Parameter #3";
+"kvz-ej" = "Parameter #4";
+"2pa-ju" = "Parameter #5";
+"jen-7o" = "Parameter #6";
+"t5v-4o" = "Parameter #7";
+"vyf-el" = "Parameter #8";
+"0x4-ib" = "Parameter #9";
 
-"TPI_ChatFilterEditFilterSheet[0011]" = "Please enter a shorter destination";
-"TPI_ChatFilterEditFilterSheet[0012]" = "Please enter a properly formatted destination.\n\nAccepted characters: a-z, A-Z, 0-9, dashes (-), underscores (_), and spaces.";
+"m0u-tw" = "Please enter a shorter destination";
+"5kd-jt" = "Please enter a properly formatted destination.\n\nAccepted characters: a-z, A-Z, 0-9, dashes (-), underscores (_), and spaces.";
 
-"TPI_ChatFilterEditFilterSheet[0013]" = "Please enter a properly formatted list of commands.\n\n• Commands must be a comma (,) separated list.\n• Commands must only contain the characters: a-z, A-Z, 0-9\n• Numerics must be whole numbers that are greater than zero (0) and less than or equal to 999.";
+"9ri-sd" = "Please enter a properly formatted list of commands.\n\n• Commands must be a comma (,) separated list.\n• Commands must only contain the characters: a-z, A-Z, 0-9\n• Numerics must be whole numbers that are greater than zero (0) and less than or equal to 999.";

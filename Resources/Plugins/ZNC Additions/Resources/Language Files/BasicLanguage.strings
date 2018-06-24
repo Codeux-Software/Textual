@@ -35,8 +35,8 @@
  *
  *********************************************************************** */
 
-"BasicLanguage[1000]" = "This command is not available because you aren't connected to ZNC";
-"BasicLanguage[1001]" = "The \002detach\002 command has been sent for the channel \002%@\002. Automatic join on connect for this channel has been disabled as well. Use the command \002attach\002 at any time to be returned to this channel and have automatic join turned back on.";
+"xex-nl" = "This command is not available because you aren't connected to ZNC";
+"0fr-kb" = "The \002detach\002 command has been sent for the channel \002%@\002. Automatic join on connect for this channel has been disabled as well. Use the command \002attach\002 at any time to be returned to this channel and have automatic join turned back on.";
 
-"BasicLanguage[1003]" = "No information is available";
-"BasicLanguage[1004]" = "An error occurred while converting certificate information to a friendlier format";
+"moh-hg" = "No information is available";
+"wco-zv" = "An error occurred while converting certificate information to a friendlier format";

@@ -99,7 +99,7 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizedString(@"BasicLanguage[1028]");
+	return TPILocalizedString(@"BasicLanguage[8o8-tj]");
 }
 
 - (NSView *)pluginPreferencesPaneView
@@ -110,9 +110,9 @@
 - (void)preferencesChanged:(id)sender
 {
 	[TDCAlert alertSheetWithWindow:[NSApp keyWindow]
-							  body:TPILocalizedString(@"BasicLanguage[1027][2]")
-							 title:TPILocalizedString(@"BasicLanguage[1027][1]")
-					 defaultButton:TPILocalizedString(@"BasicLanguage[1027][3]")
+							  body:TPILocalizedString(@"BasicLanguage[ei0-4a]")
+							 title:TPILocalizedString(@"BasicLanguage[0h8-o3]")
+					 defaultButton:TPILocalizedString(@"BasicLanguage[4qo-gl]")
 				   alternateButton:nil
 					   otherButton:nil];
 }
@@ -170,9 +170,9 @@
 {
 	[self performBlockOnMainThread:^{
 		if ([self isPluginEnabled] == NO) {
-			[TDCAlert alertWithMessage:TPILocalizedString(@"BasicLanguage[1030][2]", [commandString lowercaseString])
-								 title:TPILocalizedString(@"BasicLanguage[1030][1]")
-						 defaultButton:TPILocalizedString(@"BasicLanguage[1030][3]")
+			[TDCAlert alertWithMessage:TPILocalizedString(@"BasicLanguage[87t-ge]", [commandString lowercaseString])
+								 title:TPILocalizedString(@"BasicLanguage[qb6-7a]")
+						 defaultButton:TPILocalizedString(@"BasicLanguage[oyj-zy]")
 					   alternateButton:nil
 						suppressionKey:nil
 					   suppressionText:nil];
@@ -191,24 +191,24 @@
 				if (NSObjectIsEmpty(_messageString)) {
 					[TPIBlowfishEncryption setEncryptionKey:nil forChannel:c];
 					
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1026]") inChannel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[ime-kt]") inChannel:c];
 				} else {
 					if (NSObjectIsNotEmpty(encryptionKey)) {
 						if ([encryptionKey isEqualToString:_messageString] == NO) {
-							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1024]") inChannel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[9k1-jc]") inChannel:c];
 						}
 					} else {
 						if ([c isPrivateMessage]) {
-							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]") inChannel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[rhu-sw]") inChannel:c];
 						} else {
-							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1025]") inChannel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1dv-qi]") inChannel:c];
 						}
 					}
 
 					if ([_messageString length] > 56) {
 						 _messageString = [_messageString substringToIndex:56];
 
-						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1032]") inChannel:c];
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[fmt-65]") inChannel:c];
 					}
 
 					[TPIBlowfishEncryption setEncryptionKey:_messageString forChannel:c];
@@ -216,38 +216,38 @@
 			} else if ([commandString isEqualToString:@"DELKEY"]) {
 				[TPIBlowfishEncryption setEncryptionKey:nil forChannel:c];
 				
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1026]") inChannel:c];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[ime-kt]") inChannel:c];
 			} else if ([commandString isEqualToString:@"KEY"]) {
 				if (NSObjectIsNotEmpty(encryptionKey)) {
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", encryptionKey) inChannel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[st5-x8]", encryptionKey) inChannel:c];
 				} else {	
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") inChannel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[sd4-2b]") inChannel:c];
 				}
 			} else if ([commandString isEqualToString:@"SETKEYMODE"]) {
 				if ([_messageString isEqualIgnoringCase:@"CBC"]) {
 					[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionCBCModeOfOperation forChannel:c];
 					
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1020]") inChannel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[vph-s9]") inChannel:c];
 				} else {
 					[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionECBModeOfOperation forChannel:c];
 					
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1021]") inChannel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[5e8-56]") inChannel:c];
 				}
 			} else if ([commandString isEqualToString:@"KEYX"]) {
 				if ([c isPrivateMessage] == NO) {
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1008]") inChannel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[2kj-i5]") inChannel:c];
 				} else {
 					if ([self keyExchangeRequestExists:c]) {
-						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [c name]) inChannel:c];
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[wi6-cy]", [c name]) inChannel:c];
 					} else if (NSObjectIsNotEmpty(encryptionKey)) {
-						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1016]", [c name]) inChannel:c];
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[2oq-wt]", [c name]) inChannel:c];
 					} else {
 						EKBlowfishEncryptionKeyExchange *keyRequest = [EKBlowfishEncryptionKeyExchange new];
 
 						NSString *publicKey = [keyRequest generatePublicKey];
 
 						if (NSObjectIsEmpty(publicKey)) {
-							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") inChannel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[wo2-d2]") inChannel:c];
 						} else {
 							NSString *requestKey = [self keyExchangeDictionaryKey:c];
 							
@@ -265,7 +265,7 @@
 
 							[self keyExchangeSetupTimeoutTimer:requestKey];
 							
-							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1011]", [c name]) inChannel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[ezp-nq]", [c name]) inChannel:c];
 						}
 					}
 				}
@@ -391,7 +391,7 @@
 	NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:channel];
 	
     if (NSObjectIsNotEmpty(encryptionKey)) {
-        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) inChannel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[9eq-sn]", [channel name]) inChannel:channel];
 
         return;
     }
@@ -420,11 +420,11 @@
 	//LogToConsoleDebug("	Message: %@", requestData);
 	
 	if ([requestData length] <= 0) {
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1019]") inChannel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[lo0-tu]") inChannel:channel];
 	} else {
 		if ([self keyExchangeRequestExists:channel]) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) inChannel:channel];
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[8nu-ow]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[wi6-cy]", [channel name]) inChannel:channel];
 		} else {
 			EKBlowfishEncryptionKeyExchange *keyRequest = [EKBlowfishEncryptionKeyExchange new];
 
@@ -432,7 +432,7 @@
 			NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
 			if (NSObjectIsEmpty(theSecret)) {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[tr4-jd]") inChannel:channel];
 
 				return;
 			}
@@ -443,7 +443,7 @@
 			NSString *publicKey = [keyRequest generatePublicKey];
 
 			if (NSObjectIsEmpty(publicKey)) {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[wo2-d2]") inChannel:channel];
 
 				return;
 			}
@@ -462,19 +462,19 @@
 
 			[client send:@"NOTICE", [channel name], requestMsg, nil];
 
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) inChannel:channel];
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1013]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[8nu-ow]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[184-19]", [channel name]) inChannel:channel];
 			
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[jmi-xp]", [channel name]) inChannel:channel];
 			
 			if (mode == EKBlowfishEncryptionDefaultModeOfOperation || mode == EKBlowfishEncryptionECBModeOfOperation) {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[5p8-18]") inChannel:channel];
 			} else {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[3px-4w]") inChannel:channel];
 			}
 			
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) inChannel:channel];
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[cdb-6z]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[7sz-gy]", [channel name]) inChannel:channel];
 		}
 	}
 }
@@ -512,17 +512,17 @@
 		IRCChannel *channel = exchangeData[1];
 		
 		if ([responseData length] <= 0) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1019]") inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[lo0-tu]") inChannel:channel];
 		} else {
 			NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:channel];
 			
 			if (NSObjectIsNotEmpty(encryptionKey)) {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[9eq-sn]", [channel name]) inChannel:channel];
 				
 				return;
 			}
 			
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1014]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[eqo-bn]", [channel name]) inChannel:channel];
 			
 			/* Compute the public key received against our own. Our original public key
 			 was sent to the user which has responded by computing their own against
@@ -530,7 +530,7 @@
 			NSString *theSecret = [request secretKeyFromPublicKey:responseData];
 			
 			if (NSObjectIsEmpty(theSecret)) {
-				return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") inChannel:channel];
+				return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[tr4-jd]") inChannel:channel];
 			}
 			
 			//LogToConsoleDebug("	Shared Secret: %@", theSecret);
@@ -539,16 +539,16 @@
 			[TPIBlowfishEncryption setEncryptionModeOfOperation:mode forChannel:channel];
 			
 			/* Finish up. */
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[jmi-xp]", [channel name]) inChannel:channel];
 			
 			if (mode == EKBlowfishEncryptionDefaultModeOfOperation || mode == EKBlowfishEncryptionECBModeOfOperation) {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[5p8-18]") inChannel:channel];
 			} else {
-				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") inChannel:channel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[3px-4w]") inChannel:channel];
 			}
 			
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) inChannel:channel];
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[cdb-6z]", [channel name]) inChannel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[7sz-gy]", [channel name]) inChannel:channel];
 		}
 		
 		[[self keyExchangeRequests] removeObjectForKey:responseKey];
@@ -570,7 +570,7 @@
 	if (NSObjectIsNotEmpty(requestKey)) {
 		IRCChannel *channel = requestData[1];
 		
-		[[channel associatedClient] printDebugInformation:TPILocalizedString(@"BasicLanguage[1012]", [channel name]) inChannel:channel];
+		[[channel associatedClient] printDebugInformation:TPILocalizedString(@"BasicLanguage[c3y-2b]", [channel name]) inChannel:channel];
 
 		[[self keyExchangeRequests] removeObjectForKey:requestKey];
 	}

@@ -35,15 +35,13 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1009 */
+"jpw-cj" = "%@";
+"z68-5q" = " on %@";
 
-"TDCChannelSpotlightController[1001]" = "%@";
-"TDCChannelSpotlightController[1007]" = " on %@";
+"43s-x4" = "%@ unread message";
+"vzj-30" = "%@ unread messages";
+"0lz-oh" = "%@ highlight";
+"c4u-21" = "%@ highlights";
+"et7-c5" = "%1$@, %2$@";
 
-"TDCChannelSpotlightController[1002]" = "%@ unread message";
-"TDCChannelSpotlightController[1003]" = "%@ unread messages";
-"TDCChannelSpotlightController[1004]" = "%@ highlight";
-"TDCChannelSpotlightController[1005]" = "%@ highlights";
-"TDCChannelSpotlightController[1006]" = "%1$@, %2$@";
-
-"TDCChannelSpotlightController[1008]" = "No Results";
+"tyv-p6" = "No Results";

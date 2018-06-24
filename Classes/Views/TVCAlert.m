@@ -357,7 +357,7 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 
 		button.title = title;
 
-		[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[1006]", title) forObject:button];
+		[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[wbj-gr]", title) forObject:button];
 
 		[self.buttonsInt addObject:button];
 

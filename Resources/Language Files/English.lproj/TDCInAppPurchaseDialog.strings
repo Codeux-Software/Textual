@@ -39,77 +39,77 @@
 
 /* Product detail: Free Trial */
 /* 1 = Title, 2 = Description, 3 = Action button title */
-"TDCInAppPurchaseDialog[0001][1]" = "Free Trial";
-"TDCInAppPurchaseDialog[0001][2]" = "With the free 30 day trial, you can try all the features of Textual without having to purchase anything. When the trial ends, you can continue to use the app for free, but some features will be limited.";
-"TDCInAppPurchaseDialog[0001][3]" = "Begin Trial";
+"20h-oi" = "Free Trial";
+"4ad-nr" = "With the free 30 day trial, you can try all the features of Textual without having to purchase anything. When the trial ends, you can continue to use the app for free, but some features will be limited.";
+"xpq-66" = "Begin Trial";
 
 /* Product detail: Standard Edition */
-"TDCInAppPurchaseDialog[0002][1]" = "Standard Edition";
-"TDCInAppPurchaseDialog[0002][2]" = "All the features of Textual are in the Standard Edition.";
-"TDCInAppPurchaseDialog[0002][3]" = "Purchase";
+"yrh-s6" = "Standard Edition";
+"2xq-43" = "All the features of Textual are in the Standard Edition.";
+"k0r-mf" = "Purchase";
 
 /* Product detail: Upgrade from Textual 6 */
-"TDCInAppPurchaseDialog[0003][1]" = "Upgrade from Textual 6";
-"TDCInAppPurchaseDialog[0003][2]" = "You may be eligible for a discount if you already own Textual 5 or Textual 6 in the Mac App Store.";
-"TDCInAppPurchaseDialog[0003][3]" = "Check Eligibility";
+"gaw-8q" = "Upgrade from Textual 6";
+"e1e-6i" = "You may be eligible for a discount if you already own Textual 5 or Textual 6 in the Mac App Store.";
+"nf3-6r" = "Check Eligibility";
 
-/* "TDCInAppPurchaseDialog[0004][1]" = "Textual 6 Upgrade"; */
-/* "TDCInAppPurchaseDialog[0004][2]" = "You are eligible for a discounted upgrade to the Standard Edition of Textual 7."; */
-"TDCInAppPurchaseDialog[0004][1]" = "Standard Edition";
-"TDCInAppPurchaseDialog[0004][2]" = "All the features of Textual are in the Standard Edition.";
-"TDCInAppPurchaseDialog[0004][3]" = "Purchase";
+/* "ako-hb" = "Textual 6 Upgrade"; */
+/* "pnz-0z" = "You are eligible for a discounted upgrade to the Standard Edition of Textual 7."; */
+"ako-hb" = "Standard Edition";
+"pnz-0z" = "All the features of Textual are in the Standard Edition.";
+"xdz-gd" = "Purchase";
 
-/* "TDCInAppPurchaseDialog[0005][1]" = "Textual 6 Upgrade (free)"; */
-/* "TDCInAppPurchaseDialog[0005][2]" = "You are eligible for a free upgrade to the Standard Edition of Textual 7."; */
-"TDCInAppPurchaseDialog[0005][1]" = "Standard Edition";
-"TDCInAppPurchaseDialog[0005][2]" = "All the features of Textual are in the Standard Edition.";
-"TDCInAppPurchaseDialog[0005][3]" = "Unlock";
+/* "7g1-nd" = "Textual 6 Upgrade (free)"; */
+/* "877-q1" = "You are eligible for a free upgrade to the Standard Edition of Textual 7."; */
+"7g1-nd" = "Standard Edition";
+"877-q1" = "All the features of Textual are in the Standard Edition.";
+"j44-8p" = "Unlock";
 
 /* Everything else */
-"TDCInAppPurchaseDialog[0006][1]" = "Cannot unlock “%@“ because this product is not currently available";
-"TDCInAppPurchaseDialog[0006][2]" = "";
+"ziy-5r" = "Cannot unlock “%@“ because this product is not currently available";
+"ej5-pi" = "";
 
-"TDCInAppPurchaseDialog[0007]" = "Refreshing receipt…";
-"TDCInAppPurchaseDialog[0008]" = "Downloading list of products…";
-"TDCInAppPurchaseDialog[0009]" = "Waiting for order to be completed…";
+"uyd-ja" = "Refreshing receipt…";
+"703-d3" = "Downloading list of products…";
+"jpv-e7" = "Waiting for order to be completed…";
 
-"TDCInAppPurchaseDialog[0012][1]" = "The following error was returned while processing request:";
-"TDCInAppPurchaseDialog[0012][2]" = "%@";
+"qmn-og" = "The following error was returned while processing request:";
+"cco-a9" = "%@";
 
-"TDCInAppPurchaseDialog[0013][1]" = "Please select an item to unlock";
-"TDCInAppPurchaseDialog[0013][2]" = "";
+"e15-d5" = "Please select an item to unlock";
+"zyf-bl" = "";
 
-"TDCInAppPurchaseDialog[0014][1]" = "Please unlock the Standard Edition of Textual 7 to use this feature";
-"TDCInAppPurchaseDialog[0014][2]" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
-"TDCInAppPurchaseDialog[0014][3]" = "Unlock";
-"TDCInAppPurchaseDialog[0014][4]" = "Restore Purchase";
+"doy-jd" = "Please unlock the Standard Edition of Textual 7 to use this feature";
+"pan-12" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
+"wsb-3b" = "Unlock";
+"wl7-9j" = "Restore Purchase";
 
-"TDCInAppPurchaseDialog[0015][1]" = "Your trial of Textual 7 has expired. You can continue to use the app for free, but some features have been limited or outright disabled. Please unlock Standard Edition to lift these limitations.";
-"TDCInAppPurchaseDialog[0015][2]" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
-"TDCInAppPurchaseDialog[0015][3]" = "Unlock";
-"TDCInAppPurchaseDialog[0015][4]" = "Restore Purchase";
+"92e-sa" = "Your trial of Textual 7 has expired. You can continue to use the app for free, but some features have been limited or outright disabled. Please unlock Standard Edition to lift these limitations.";
+"cvb-30" = "Click the “Restore Purchase” button to restore your purchase if you have already unlocked Standard Edition.";
+"abg-mv" = "Unlock";
+"bt3-h3" = "Restore Purchase";
 
-"TDCInAppPurchaseDialog[0016][1]" = "Thank you for your purchase of Textual!";
-"TDCInAppPurchaseDialog[0016][2]" = "All limitations have been lifted.";
+"2g7-u2" = "Thank you for your purchase of Textual!";
+"get-1i" = "All limitations have been lifted.";
 
-"TDCInAppPurchaseDialog[0017]" = "Your trial of Textual 7 will expire in %@";
-"TDCInAppPurchaseDialog[0018]" = "Your trial of Textual 7 has expired.";
+"z2z-l6" = "Your trial of Textual 7 will expire in %@";
+"ouj-7m" = "Your trial of Textual 7 has expired.";
 
-"TDCInAppPurchaseDialog[0019][1]" = "Cannot continue because Textual's list of in-app products could not be downloaded";
-"TDCInAppPurchaseDialog[0019][2]" = "Please make sure your internet connection is able to access the Mac App Store.";
-"TDCInAppPurchaseDialog[0019][3]" = "Try Again";
-"TDCInAppPurchaseDialog[0019][4]" = "Contact Support";
+"qaj-hh" = "Cannot continue because Textual's list of in-app products could not be downloaded";
+"h2w-2l" = "Please make sure your internet connection is able to access the Mac App Store.";
+"4n7-1e" = "Try Again";
+"iot-5w" = "Contact Support";
 
-"TDCInAppPurchaseDialog[0021][1]" = "The following error was returned while processing request:";
-"TDCInAppPurchaseDialog[0021][2]" = "%@";
-"TDCInAppPurchaseDialog[0021][3]" = "Try Again";
-"TDCInAppPurchaseDialog[0021][4]" = "Contact Support";
+"dkh-er" = "The following error was returned while processing request:";
+"3q4-qb" = "%@";
+"3rs-ji" = "Try Again";
+"ywm-0b" = "Contact Support";
 
-"TDCInAppPurchaseDialog[0022][1]" = "Cannot continue because Textual's list of in-app products could not be downloaded";
-"TDCInAppPurchaseDialog[0022][2]" = "Asking the Mac App Store for a new copy of your receipt usually fixes this problem. Click “Continue” to have Textual do this on your behalf.";
+"dg7-y2" = "Cannot continue because Textual's list of in-app products could not be downloaded";
+"n09-d1" = "Asking the Mac App Store for a new copy of your receipt usually fixes this problem. Click “Continue” to have Textual do this on your behalf.";
 
-"TDCInAppPurchaseDialog[0023]" = "Request must not be cancelled.";
-"TDCInAppPurchaseDialog[0024]" = "Request failed.";
+"ftc-vw" = "Request must not be cancelled.";
+"5ga-lv" = "Request failed.";
 
-"TDCInAppPurchaseDialog[0025][1]" = "Textual is already unlocked";
-"TDCInAppPurchaseDialog[0025][2]" = "";
+"bgq-1w" = "Textual is already unlocked";
+"be0-0g" = "";

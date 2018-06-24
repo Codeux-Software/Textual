@@ -35,60 +35,51 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1034 */
+"71l-y7" = "None";
+"vbl-xi" = "Unknown";
 
-"BasicLanguage[1001]" = "None";
-"BasicLanguage[1002]" = "Unknown";
+"1dd-0f" = "Textual IRC Client: www.textualapp.com";
+"vfu-c0" = "Untitled Connection";
 
-"BasicLanguage[1003]" = "Textual IRC Client: www.textualapp.com";
-"BasicLanguage[1004]" = "Untitled Connection";
+"zhr-lq" = "My %@ has gone to sleep. ZZZzzz…";
+"qi7-5y" = "My Mac has gone to sleep. ZZZzzz…";
 
-"BasicLanguage[1005]" = "My %@ has gone to sleep. ZZZzzz…";
-"BasicLanguage[1006]" = "My Mac has gone to sleep. ZZZzzz…";
+"hri-l0" = "Close Query";
+"1f6-bg" = "Close Window";
+"w3a-je" = "Disconnect from %@";
+"5td-3f" = "Leave Channel";
+"x97-ro" = "Quit Textual 7";
 
-"BasicLanguage[1007]" = "Close Query";
-"BasicLanguage[1008]" = "Close Window";
-"BasicLanguage[1009]" = "Disconnect from %@";
-"BasicLanguage[1010]" = "Leave Channel";
-"BasicLanguage[1011]" = "Quit Textual 7";
+"3mf-zx" = "Connect";
+"op8-64" = "Connect Using IPv4";
 
-"BasicLanguage[1014][1]" = "Connect";
-"BasicLanguage[1014][2]" = "Connect Using IPv4";
+"6cw-ni" = "Copy Log as HTML";
+"ngd-ms" = "Force Reload Style";
+"tfj-m9" = "Open Web Inspector";
+"o5l-4s" = "Look Up in Dictionary";
+"zxs-yy" = "Look Up “%@”";
+"1ll-h9" = "Search With %@";
 
-"BasicLanguage[1015]" = "Copy Log as HTML";
-"BasicLanguage[1016]" = "Force Reload Style";
-"BasicLanguage[1017]" = "Open Web Inspector";
-"BasicLanguage[1018]" = "Look Up in Dictionary";
-"BasicLanguage[1019]" = "Look Up “%@”";
-"BasicLanguage[1020]" = "Search With %@";
+"eoq-pr-128" = "seconds";
+"eoq-pr-64" = "minutes";
+"eoq-pr-32" = "hours";
+"eoq-pr-16" = "days";
+"eoq-pr-8" = "months";
+"eoq-pr-4" = "years";
 
-"BasicLanguage[1021]" = "%@";
-"BasicLanguage[1022]" = "%@";
+"fko-64-128" = "second";
+"fko-64-64" = "minute";
+"fko-64-32" = "hour";
+"fko-64-16" = "day";
+"fko-64-8" = "month";
+"fko-64-4" = "year";
 
-"BasicLanguage[1023][128]" = "seconds";
-"BasicLanguage[1023][64]" = "minutes";
-"BasicLanguage[1023][32]" = "hours";
-"BasicLanguage[1023][16]" = "days";
-"BasicLanguage[1023][8]" = "months";
-"BasicLanguage[1023][4]" = "years";
+"4um-w4" = "%@ ago";
 
-"BasicLanguage[1024][128]" = "second";
-"BasicLanguage[1024][64]" = "minute";
-"BasicLanguage[1024][32]" = "hour";
-"BasicLanguage[1024][16]" = "day";
-"BasicLanguage[1024][8]" = "month";
-"BasicLanguage[1024][4]" = "year";
+"7kc-mo" = "No Actions Available";
 
-"BasicLanguage[1025]" = "%@ ago";
+"7lm-bq" = "Built-in";
+"bm2-4p" = "Custom";
+"aqy-6c" = "Custom — iCloud Drive";
 
-"BasicLanguage[1026]" = "No Actions Available";
-
-"BasicLanguage[1027]" = "Loading configuration…";
-"BasicLanguage[1028]" = "Waiting for in-app purchase…";
-"BasicLanguage[1029]" = "Importing preferences…";
-
-"BasicLanguage[1030]" = "Built-in";
-"BasicLanguage[1031]" = "Custom";
-"BasicLanguage[1032]" = "Custom — iCloud Drive";
-
-"BasicLanguage[1033]" = "Fill out this field";
+"fo8-1h" = "Fill out this field";

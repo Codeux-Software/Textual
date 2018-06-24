@@ -25,7 +25,6 @@
 		4CAC2A0C1F12B01700D06046 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */; };
 		4CAC2A151F12C64500D06046 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C72831F1201A000ED72DB /* TLOTimer.m */; };
 		4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-Wno-implicit-retain-self"; }; };
-		4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */; };
 		4CE07AE11F13C8790066007A /* GCDAsyncSocketTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +70,6 @@
 		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketCipherNames.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketCipherNames.h"; sourceTree = "<group>"; };
-		4CAC2A2D1F12DDC600D06046 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketTrustPanel.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketTrustPanel.m"; sourceTree = "<group>"; };
 		4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = "../../Classes (Shared)/Headers/Private/NSObjectHelperPrivate.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,7 +180,6 @@
 		4C6706CF1F1290F4009673EB /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */,
 				4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */,
 			);
 			name = "Language Files";
@@ -418,7 +415,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */,
-				4CAC2A2E1F12DDC600D06046 /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,15 +449,6 @@
 				4C6706D11F1290F4009673EB /* English */,
 			);
 			name = SecureTransportErrorCodes.strings;
-			path = "Resources/Language Files";
-			sourceTree = "<group>";
-		};
-		4CAC2A2C1F12DDC600D06046 /* BasicLanguage.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4CAC2A2D1F12DDC600D06046 /* English */,
-			);
-			name = BasicLanguage.strings;
 			path = "Resources/Language Files";
 			sourceTree = "<group>";
 		};

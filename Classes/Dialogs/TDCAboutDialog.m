@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *bundleVersion = [TPCApplicationInfo applicationVersionShort];
 
-	self.versionInfoTextField.stringValue = TXTLS(@"TDCAboutDialog[1000]", bundleVersion);
+	self.versionInfoTextField.stringValue = TXTLS(@"TDCAboutDialog[zjd-al]", bundleVersion);
 }
 
 - (void)show

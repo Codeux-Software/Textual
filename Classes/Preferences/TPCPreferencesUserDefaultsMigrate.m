@@ -288,9 +288,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)presentMigrationFailedErrorMessage
 {
-	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1138][1]")
-						 title:TXTLS(@"Prompts[1138][2]")
-				 defaultButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[xz5-6j]")
+						 title:TXTLS(@"Prompts[oh6-ke]")
+				 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 			   alternateButton:nil];
 }
 

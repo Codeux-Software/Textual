@@ -35,7 +35,5 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1002 */
-
-"TDCServerChannelListDialog[1000]" = "Channel List for “%@”";
-"TDCServerChannelListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
+"7qf-r0" = "Channel List for “%@”";
+"ct4-wh" = "Channel List — %@ Public Channels"; // %@ = channel count.

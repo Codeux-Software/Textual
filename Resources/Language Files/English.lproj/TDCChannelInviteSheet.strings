@@ -35,8 +35,6 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1002 */
-
-"TDCChannelInviteSheet[1000]" = "%ld users";
-"TDCChannelInviteSheet[1001]" = "Invite %@ to:";
-"TDCChannelInviteSheet[1002]" = "%1$@ and %2$@";
+"c8p-sb" = "%ld users";
+"0lg-er" = "Invite %@ to:";
+"7i1-ds" = "%1$@ and %2$@";

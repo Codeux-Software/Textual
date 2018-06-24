@@ -35,14 +35,12 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1003 */
+"wmk-xg" = "A problem was encountered when checking the upgrade eligibility for the license key “%@”";
+"8hb-y3" = "%@\n\nTry again in a few minutes then contact support if the problem persists.";
+"dn3-4r" = "Contact Support";
 
-"TDCLicenseUpgradeEligibilitySheet[1001][1]" = "A problem was encountered when checking the upgrade eligibility for the license key “%@”";
-"TDCLicenseUpgradeEligibilitySheet[1001][2]" = "%@\n\nTry again in a few minutes then contact support if the problem persists.";
-"TDCLicenseUpgradeEligibilitySheet[1001][3]" = "Contact Support";
-
-"TDCLicenseUpgradeEligibilitySheet[1002][1]" = "Service returned a non-zero response code: %ld";
-"TDCLicenseUpgradeEligibilitySheet[1002][2]" = "Service returned an empty status context.";
-"TDCLicenseUpgradeEligibilitySheet[1002][3]" = "Service returned an malformed status context.";
-"TDCLicenseUpgradeEligibilitySheet[1002][4]" = "Service returned an unusual eligibility: %lu";
-"TDCLicenseUpgradeEligibilitySheet[1002][5]" = "Request cannot be completed at this time.";
+"awy-4i" = "Service returned a non-zero response code: %ld";
+"z70-6s" = "Service returned an empty status context.";
+"gc5-ko" = "Service returned an malformed status context.";
+"5s6-sb" = "Service returned an unusual eligibility: %lu";
+"9uu-go" = "Request cannot be completed at this time.";

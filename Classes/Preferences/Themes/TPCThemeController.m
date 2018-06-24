@@ -347,10 +347,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	NSString *suppressionKey = [NSString stringWithFormat:
 					@"incompatible_theme_dialog_%lu", themeNameHash];
 
-	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1118][2]")
-						 title:TXTLS(@"Prompts[1118][1]", self.name)
-				 defaultButton:TXTLS(@"Prompts[1118][3]")
-			   alternateButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[76t-pn]")
+						 title:TXTLS(@"Prompts[py0-cr]", self.name)
+				 defaultButton:TXTLS(@"Prompts[2a3-5s]")
+			   alternateButton:TXTLS(@"Prompts[c7s-dq]")
 				suppressionKey:suppressionKey
 			   suppressionText:nil
 			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
@@ -377,10 +377,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	NSString *suppressionKey = [NSString stringWithFormat:
 								@"theme_appearance_dialog_%lu", themeNameHash];
 
-	[TDCAlert alertWithMessage:TXTLS(@"Prompts[1141][2]")
-						 title:TXTLS(@"Prompts[1141][1]", self.name)
-				 defaultButton:TXTLS(@"Prompts[1141][3]")
-			   alternateButton:TXTLS(@"Prompts[1141][4]")
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[193-6o]")
+						 title:TXTLS(@"Prompts[ezn-rm]", self.name)
+				 defaultButton:TXTLS(@"Prompts[hf0-w3]")
+			   alternateButton:TXTLS(@"Prompts[hv0-79]")
 				suppressionKey:suppressionKey
 			   suppressionText:nil
 			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
@@ -601,15 +601,15 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	switch (storageLocation) {
 		case TPCThemeControllerStorageBundleLocation:
 		{
-			return TXTLS(@"BasicLanguage[1030]");
+			return TXTLS(@"BasicLanguage[7lm-bq]");
 		}
 		case TPCThemeControllerStorageCustomLocation:
 		{
-			return TXTLS(@"BasicLanguage[1031]");
+			return TXTLS(@"BasicLanguage[bm2-4p]");
 		}
 		case TPCThemeControllerStorageCloudLocation:
 		{
-			return TXTLS(@"BasicLanguage[1032]");
+			return TXTLS(@"BasicLanguage[aqy-6c]");
 		}
 		default:
 		{

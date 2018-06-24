@@ -1724,26 +1724,26 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSMutableString *mutableMessage = [NSMutableString string];
 
-			[mutableMessage appendString:TXTLS(@"Notifications[1003]")];
+			[mutableMessage appendString:TXTLS(@"Notifications[qld-sa]")];
 
 			if (speakChannelName || speakNickname) {
 				if (speakChannelName) {
 					if (isChannel) {
-						[mutableMessage appendString:TXTLS(@"Notifications[1061]", channel.name.channelNameWithoutBang)]; // Channel
+						[mutableMessage appendString:TXTLS(@"Notifications[ke8-17]", channel.name.channelNameWithoutBang)]; // Channel
 					} else {
-						[mutableMessage appendString:TXTLS(@"Notifications[1062]")]; // Private Message
+						[mutableMessage appendString:TXTLS(@"Notifications[6nw-ec]")]; // Private Message
 					}
 				}
 
 				if (speakNickname) {
 					if (isChannel) {
-						[mutableMessage appendString:TXTLS(@"Notifications[1063]", nickname)]; // by <nickname>
+						[mutableMessage appendString:TXTLS(@"Notifications[qy9-86]", nickname)]; // by <nickname>
 					} else {
-						[mutableMessage appendString:TXTLS(@"Notifications[1064]", nickname)]; // from <nickname>
+						[mutableMessage appendString:TXTLS(@"Notifications[a7i-pu]", nickname)]; // from <nickname>
 					}
 				}
 
-				[mutableMessage appendString:TXTLS(@"Notifications[1065]")];
+				[mutableMessage appendString:TXTLS(@"Notifications[g9t-bt]")];
 			}
 
 			[mutableMessage appendString:text];
@@ -1780,20 +1780,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (speakChannelName || speakNickname) {
 				if (eventType == TXNotificationChannelMessageType) {
-					[mutableMessage appendString:TXTLS(@"Notifications[1001]")];
+					[mutableMessage appendString:TXTLS(@"Notifications[tao-i2]")];
 				} else if (eventType == TXNotificationChannelNoticeType) {
-					[mutableMessage appendString:TXTLS(@"Notifications[1002]")];
+					[mutableMessage appendString:TXTLS(@"Notifications[kk4-68]")];
 				}
 
 				if (speakChannelName) {
-					[mutableMessage appendString:TXTLS(@"Notifications[1061]", channel.name.channelNameWithoutBang)];
+					[mutableMessage appendString:TXTLS(@"Notifications[ke8-17]", channel.name.channelNameWithoutBang)];
 				}
 
 				if (speakNickname) {
-					[mutableMessage appendString:TXTLS(@"Notifications[1063]", nickname)];
+					[mutableMessage appendString:TXTLS(@"Notifications[qy9-86]", nickname)];
 				}
 
-				[mutableMessage appendString:TXTLS(@"Notifications[1065]")];
+				[mutableMessage appendString:TXTLS(@"Notifications[g9t-bt]")];
 			}
 
 			[mutableMessage appendString:text];
@@ -1816,11 +1816,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *formatter = nil;
 
 			if (eventType == TXNotificationNewPrivateMessageType) {
-				formatter = @"Notifications[1006]";
+				formatter = @"Notifications[rvb-9l]";
 			} else if (eventType == TXNotificationPrivateMessageType) {
-				formatter = @"Notifications[1007]";
+				formatter = @"Notifications[2bu-ep]";
 			} else if (eventType == TXNotificationPrivateNoticeType) {
-				formatter = @"Notifications[1008]";
+				formatter = @"Notifications[6jl-vh]";
 			}
 
 			formattedMessage = TXTLS(formatter, nickname, text);
@@ -1832,7 +1832,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSParameterAssert(channel != nil);
 			NSParameterAssert(nickname != nil);
 
-			NSString *formatter = @"Notifications[1005]";
+			NSString *formatter = @"Notifications[5yu-bf]";
 
 			formattedMessage = TXTLS(formatter, channel.name.channelNameWithoutBang, nickname);
 
@@ -1843,7 +1843,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSParameterAssert(nickname != nil);
 			NSParameterAssert(text != nil);
 
-			NSString *formatter = @"Notifications[1004]";
+			NSString *formatter = @"Notifications[l5i-at]";
 
 			formattedMessage = TXTLS(formatter, text.channelNameWithoutBang, nickname);
 
@@ -1855,9 +1855,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *formatter = nil;
 
 			if (eventType == TXNotificationConnectType) {
-				formatter = @"Notifications[1009]";
+				formatter = @"Notifications[z4p-yr]";
 			} else if (eventType == TXNotificationDisconnectType) {
-				formatter = @"Notifications[1010]";
+				formatter = @"Notifications[fd0-f8]";
 			}
 
 			formattedMessage = TXTLS(formatter, self.networkNameAlt);
@@ -1883,15 +1883,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *formatter = nil;
 
 			if (eventType == TXNotificationFileTransferSendSuccessfulType) {
-				formatter = @"Notifications[1011]";
+				formatter = @"Notifications[5e4-vg]";
 			} else if (eventType == TXNotificationFileTransferReceiveSuccessfulType) {
-				formatter = @"Notifications[1012]";
+				formatter = @"Notifications[4cd-p3]";
 			} else if (eventType == TXNotificationFileTransferSendFailedType) {
-				formatter = @"Notifications[1012]";
+				formatter = @"Notifications[f0u-32]";
 			} else if (eventType == TXNotificationFileTransferReceiveFailedType) {
-				formatter = @"Notifications[1014]";
+				formatter = @"Notifications[mak-bj]";
 			} else if (eventType == TXNotificationFileTransferReceiveRequestedType) {
-				formatter = @"Notifications[1015]";
+				formatter = @"Notifications[at0-vi]";
 			}
 
 			formattedMessage = TXTLS(formatter, nickname);
@@ -1907,9 +1907,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *formatter = nil;
 
 			if (eventType == TXNotificationUserJoinedType) {
-				formatter = @"Notifications[1066]";
+				formatter = @"Notifications[bwu-ps]";
 			} else if (eventType == TXNotificationUserPartedType) {
-				formatter = @"Notifications[1068]";
+				formatter = @"Notifications[4aq-hz]";
 			}
 
 			formattedMessage = TXTLS(formatter, nickname, channel.name.channelNameWithoutBang);
@@ -1920,7 +1920,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSParameterAssert(nickname != nil);
 
-			NSString *formatter = @"Notifications[1081]";
+			NSString *formatter = @"Notifications[sqf-4y]";
 
 			formattedMessage = TXTLS(formatter, nickname);
 
@@ -2150,7 +2150,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			eventTitle = self.networkNameAlt;
 
-			eventDescription = TXTLS(@"Notifications[1035]", nickname, target.name, text);
+			eventDescription = TXTLS(@"Notifications[fkt-p3]", nickname, target.name, text);
 
 			break;
 		}
@@ -2161,7 +2161,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			eventTitle = self.networkNameAlt;
 
-			eventDescription = TXTLS(@"Notifications[1034]", nickname, text);
+			eventDescription = TXTLS(@"Notifications[xl5-dn]", nickname, text);
 
 			break;
 		}
@@ -2172,7 +2172,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			eventTitle = self.networkNameAlt;
 
-			eventDescription = TXTLS(@"Notifications[1073]", nickname, target.name);
+			eventDescription = TXTLS(@"Notifications[yas-us]", nickname, target.name);
 
 			break;
 		}
@@ -2185,9 +2185,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			eventTitle = self.networkNameAlt;
 
 			if (text == nil || text.length == 0) {
-				eventDescription = TXTLS(@"Notifications[1074]", nickname, target.name);
+				eventDescription = TXTLS(@"Notifications[bu2-9m]", nickname, target.name);
 			} else {
-				eventDescription = TXTLS(@"Notifications[1075]", nickname, target.name, text);
+				eventDescription = TXTLS(@"Notifications[3ur-i8]", nickname, target.name, text);
 			}
 
 			break;
@@ -2200,9 +2200,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			eventTitle = self.networkNameAlt;
 
 			if (text == nil || text.length == 0) {
-				eventDescription = TXTLS(@"Notifications[1076]", nickname);
+				eventDescription = TXTLS(@"Notifications[7ao-n8]", nickname);
 			} else {
-				eventDescription = TXTLS(@"Notifications[1077]", nickname, text);
+				eventDescription = TXTLS(@"Notifications[ssw-m6]", nickname, text);
 			}
 
 			break;
@@ -2715,7 +2715,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(string != nil);
 
 	if (self.isConnected == NO) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1005]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[6rj-2r]")];
 
 		return;
 	}
@@ -2811,10 +2811,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Warn if the split value is above 4 lines or if the total string 
 	 length exceeds TXMaximumIRCBodyLength times 4. */
 	if (lines.count > 4 || (stringIn.length > (TXMaximumIRCBodyLength * 4))) {
-		BOOL continueInput = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1108][2]")
-													   title:TXTLS(@"Prompts[1108][1]")
-											   defaultButton:TXTLS(@"Prompts[0001]")
-											 alternateButton:TXTLS(@"Prompts[0002]")
+		BOOL continueInput = [TDCAlert modalAlertWithMessage:TXTLS(@"IRC[lql-8i]")
+													   title:TXTLS(@"IRC[u4c-7i]")
+											   defaultButton:TXTLS(@"Prompts[mvh-ms]")
+											 alternateButton:TXTLS(@"Prompts[99q-gg]")
 											  suppressionKey:@"input_text_possible_flood_warning"
 											 suppressionText:nil];
 
@@ -3170,7 +3170,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSUInteger commentMaximumLength = client.supportInfo.maximumAwayLength;
 
 				if (commentMaximumLength > 0 && comment.length > commentMaximumLength) {
-					[client printDebugInformation:TXTLS(@"IRC[1165]", self.networkNameAlt, commentMaximumLength)];
+					[client printDebugInformation:TXTLS(@"IRC[41y-p2]", self.networkNameAlt, commentMaximumLength)];
 				}
 
 				[client toggleAwayStatusWithComment:comment];
@@ -3198,9 +3198,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *capabilites = self.enabledCapabilitiesStringValue;
 
 			if (capabilites.length == 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1036]")];
+				[self printDebugInformation:TXTLS(@"IRC[5wa-lb]")];
 			} else {
-				[self printDebugInformation:TXTLS(@"IRC[1037]", capabilites)];
+				[self printDebugInformation:TXTLS(@"IRC[7p9-rs]", capabilites)];
 			}
 
 			break;
@@ -3219,7 +3219,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			IRCChannel *channel = [self findChannel:channelName];
 
 			if (channel == nil) {
-				[self printDebugInformation:TXTLS(@"IRC[1131]", channelName)];
+				[self printDebugInformation:TXTLS(@"IRC[pxa-ox]", channelName)];
 				
 				break;
 			}
@@ -3278,7 +3278,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			IRCChannel *channel = [self findChannel:channelName];
 
 			if (channel == nil) {
-				[self printDebugInformation:TXTLS(@"IRC[1131]", channelName)];
+				[self printDebugInformation:TXTLS(@"IRC[pxa-ox]", channelName)];
 				
 				break;
 			}
@@ -3293,7 +3293,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (serverAddress.length > 0) {
 				if (serverAddress.isValidInternetAddress == NO) {
-					[self printDebugInformation:TXTLS(@"IRC[1135]")];
+					[self printDebugInformation:TXTLS(@"IRC[zef-q9]")];
 					
 					break;
 				}
@@ -3355,7 +3355,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			if (targetChannel == nil || targetChannel.isChannel == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1133]")];
+				[self printDebugInformation:TXTLS(@"IRC[g01-qn]")];
 				
 				break;
 			}
@@ -3390,7 +3390,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if ([self.supportInfo modeSymbolIsUserPrefix:modeSymbol] == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1021]", modeSymbol)];
+				[self printDebugInformation:TXTLS(@"IRC[dwi-d1]", modeSymbol)];
 
 				break;
 			}
@@ -3399,7 +3399,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					[self printDebugInformation:TXTLS(@"IRC[g01-qn]")];
 					
 					break;
 				}
@@ -3455,7 +3455,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandDefaultsIndex: // Command: DEFAULTS
 		{
 			if (stringIn.length == 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1012]")];
+				[self printDebugInformation:TXTLS(@"IRC[1dz-jb]")];
 
 				break;
 			}
@@ -3465,14 +3465,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Present help */
 			if ([action isEqualToString:@"help"])
 			{
-				[self printDebugInformation:TXTLS(@"IRC[1013][01]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][02]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][03]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][04]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][05]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][06]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][07]")];
-				[self printDebugInformation:TXTLS(@"IRC[1013][08]")];
+				[self printDebugInformation:TXTLS(@"IRC[bkk-lo]")];
+				[self printDebugInformation:TXTLS(@"IRC[znw-02]")];
+				[self printDebugInformation:TXTLS(@"IRC[xw4-rr]")];
+				[self printDebugInformation:TXTLS(@"IRC[0g8-7m]")];
+				[self printDebugInformation:TXTLS(@"IRC[wag-2j]")];
+				[self printDebugInformation:TXTLS(@"IRC[hob-ky]")];
+				[self printDebugInformation:TXTLS(@"IRC[8mk-t8]")];
+				[self printDebugInformation:TXTLS(@"IRC[whg-ky]")];
 
 				break;
 			}
@@ -3505,7 +3505,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			/* Cannot toggle feature if the user doesn't tell us which */
 			if (feature.length == 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1012]")];
+				[self printDebugInformation:TXTLS(@"IRC[1dz-jb]")];
 
 				break;
 			}
@@ -3513,9 +3513,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Make sure the feature exists */
 			if ([features containsKey:feature] == NO) {
 				if (enableFeature) {
-					[self printDebugInformation:TXTLS(@"IRC[1014]", feature)];
+					[self printDebugInformation:TXTLS(@"IRC[pc4-67]", feature)];
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1015]", feature)];
+					[self printDebugInformation:TXTLS(@"IRC[d7y-pv]", feature)];
 				}
 
 				break;
@@ -3544,9 +3544,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				toggleFeature(client, feature, enableFeature);
 
 				if (enableFeature) {
-					[client printDebugInformation:TXTLS(@"IRC[1016]", feature)];
+					[client printDebugInformation:TXTLS(@"IRC[5ke-18]", feature)];
 				} else {
-					[client printDebugInformation:TXTLS(@"IRC[1017]", feature)];
+					[client printDebugInformation:TXTLS(@"IRC[0gn-cb]", feature)];
 				}
 			}
 
@@ -3698,17 +3698,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Cancel if there is nothing to change */
 			if (isIgnoreCommand) {
 				if (matchedIgnores.count > 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1118]", member.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[5ix-zn]", member.nickname)];
 
 					break;
 				}
 			} else {
 				if (matchedIgnores.count == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1117]", member.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[wu0-jp]", member.nickname)];
 
 					break;
 				} else if (matchedIgnores.count > 1) {
-					[self printDebugInformation:TXTLS(@"IRC[1129]", member.nickname)];
+					[self printDebugInformation:TXTLS(@"IRC[vrx-1f]", member.nickname)];
 					
 					break;
 				}
@@ -3721,13 +3721,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				IRCAddressBookEntry *ignore =
 				[IRCAddressBookEntry newIgnoreEntryForHostmask:member.banMask];
 
-				[self printDebugInformation:TXTLS(@"IRC[1115]", member.nickname, ignore.hostmask)];
+				[self printDebugInformation:TXTLS(@"IRC[ret-20]", member.nickname, ignore.hostmask)];
 
 				[mutableIgnoreList addObject:ignore];
 			} else{
 				IRCAddressBookEntry *ignore = matchedIgnores[0];
 				
-				[self printDebugInformation:TXTLS(@"IRC[1116]", member.nickname, ignore.hostmask)];
+				[self printDebugInformation:TXTLS(@"IRC[jzg-g8]", member.nickname, ignore.hostmask)];
 
 				[mutableIgnoreList removeObjectIdenticalTo:ignore];
 			}
@@ -3766,7 +3766,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					[self printDebugInformation:TXTLS(@"IRC[g01-qn]")];
 					
 					break;
 				}
@@ -3813,7 +3813,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					[self printDebugInformation:TXTLS(@"IRC[g01-qn]")];
 					
 					break;
 				}
@@ -3875,7 +3875,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if (targetChannel && targetChannel.isChannel) {
 					targetChannelName = targetChannel.name;
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1133]")];
+					[self printDebugInformation:TXTLS(@"IRC[g01-qn]")];
 					
 					break;
 				}
@@ -3919,7 +3919,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 
 				if ([self.supportInfo modeSymbolIsUserPrefix:modeSymbol]) {
-					[self printDebugInformation:TXTLS(@"IRC[1021]", modeSymbol)];
+					[self printDebugInformation:TXTLS(@"IRC[dwi-d1]", modeSymbol)];
 
 					break;
 				}
@@ -3946,7 +3946,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSUInteger reasonMaximumLength = self.supportInfo.maximumKickLength;
 
 				if (reasonMaximumLength > 0 && reason.length > reasonMaximumLength) {
-					[self printDebugInformation:TXTLS(@"IRC[1167]", self.networkNameAlt, reasonMaximumLength)];
+					[self printDebugInformation:TXTLS(@"IRC[59a-ir]", self.networkNameAlt, reasonMaximumLength)];
 				}
 
 				[self send:@"KICK", targetChannelName, nickname, reason, nil];
@@ -4004,7 +4004,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 						command:@"LAGCHECK"
 						   text:ctcpContext];
 
-			[self printDebugInformation:TXTLS(@"IRC[1023]")];
+			[self printDebugInformation:TXTLS(@"IRC[qoh-kt]")];
 
 			break;
 		}
@@ -4084,9 +4084,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandMuteIndex: // Command: MUTE
 		{
 			if ([TPCPreferences soundIsMuted]) {
-				[self printDebugInformation:TXTLS(@"IRC[1097]")];
+				[self printDebugInformation:TXTLS(@"IRC[sdn-yr]")];
 			} else {
-				[self printDebugInformation:TXTLS(@"IRC[1100]")];
+				[self printDebugInformation:TXTLS(@"IRC[u48-aa]")];
 
 				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			}
@@ -4103,15 +4103,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *downloadSource = nil;
 
 			if ([buildScheme isEqualToString:@"appstore"]) {
-				downloadSource = TXTLS(@"IRC[1028]");
+				downloadSource = TXTLS(@"IRC[9fp-8h]");
 			} else {
-				downloadSource = TXTLS(@"IRC[1029]");
+				downloadSource = TXTLS(@"IRC[b8p-44]");
 			}
 
-			NSString *message = TXTLS(@"IRC[1027]", applicationName, versionShort, versionLong, downloadSource);
+			NSString *message = TXTLS(@"IRC[ccb-ur]", applicationName, versionShort, versionLong, downloadSource);
 
 			if (targetChannel) {
-				message = TXTLS(@"IRC[1030]", message);
+				message = TXTLS(@"IRC[pqj-1y]", message);
 
 				[self sendPrivmsg:message toChannel:targetChannel];
 			} else {
@@ -4214,7 +4214,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if ([self stringIsNickname:nickname] == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1135]")];
+				[self printDebugInformation:TXTLS(@"IRC[zef-q9]")];
 				
 				break;
 			}
@@ -4271,7 +4271,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandSetcolorIndex: // Command: SETCOLOR
 		{
 			if ([TPCPreferences disableNicknameColorHashing]) {
-				[self printDebugInformation:TXTLS(@"IRC[1108]")];
+				[self printDebugInformation:TXTLS(@"IRC[026-qv]")];
 
 				break;
 			}
@@ -4285,7 +4285,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if ([self stringIsNickname:nickname] == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1110]", nickname)];
+				[self printDebugInformation:TXTLS(@"IRC[8dy-6f]", nickname)];
 
 				break;
 			}
@@ -4297,7 +4297,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandSetquerynameIndex: // Command: SETQUERYNAME
 		{
 			if (targetChannel == nil || targetChannel.isPrivateMessage == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1134]")];
+				[self printDebugInformation:TXTLS(@"IRC[m6o-z1]")];
 
 				break;
 			}
@@ -4311,7 +4311,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if ([self stringIsNickname:nickname] == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1135]")];
+				[self printDebugInformation:TXTLS(@"IRC[zef-q9]")];
 
 				break;
 			}
@@ -4320,10 +4320,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (oldQuery) {
 				BOOL deleteOldQuery =
-				[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1139][2]")
-										  title:TXTLS(@"Prompts[1139][1]", oldQuery.name)
-								  defaultButton:TXTLS(@"Prompts[0001]")
-								alternateButton:TXTLS(@"Prompts[0002]")];
+				[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[61s-jc]")
+										  title:TXTLS(@"Prompts[d22-76]", oldQuery.name)
+								  defaultButton:TXTLS(@"Prompts[mvh-ms]")
+								alternateButton:TXTLS(@"Prompts[99q-gg]")];
 
 				if (deleteOldQuery) {
 					[worldController() destroyChannel:oldQuery];
@@ -4362,7 +4362,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSTimeInterval timePassed = [NSDate timeIntervalSinceNow:[TPCApplicationInfo applicationBirthday]];
 
-			NSString *message = TXTLS(@"IRC[1101]", TXHumanReadableTimeInterval(timePassed, NO, 0));
+			NSString *message = TXTLS(@"IRC[v9x-18]", TXHumanReadableTimeInterval(timePassed, NO, 0));
 
 			if (targetChannel) {
 				[self sendPrivmsg:message toChannel:targetChannel];
@@ -4375,7 +4375,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandTimerIndex: // Command: TIMER
 		{
 			if (stringIn.length == 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1138]")];
+				[self printDebugInformation:TXTLS(@"IRC[jj9-94]")];
 
 				break;
 			}
@@ -4389,76 +4389,76 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				if ([topic isEqualToStringIgnoringCase:@"add"])
 				{
-					[self printDebugInformation:TXTLS(@"IRC[1163]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][01]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][02]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][03]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][04]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][05]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][06]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][07]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][08]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][09]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][10]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][11]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][12]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][13]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][14]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][15]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][16]")];
-					[self printDebugInformation:TXTLS(@"IRC[1158][17]")];
+					[self printDebugInformation:TXTLS(@"IRC[aox-zz]")];
+					[self printDebugInformation:TXTLS(@"IRC[6r0-il]")];
+					[self printDebugInformation:TXTLS(@"IRC[ohz-iz]")];
+					[self printDebugInformation:TXTLS(@"IRC[dxi-nz]")];
+					[self printDebugInformation:TXTLS(@"IRC[uah-l1]")];
+					[self printDebugInformation:TXTLS(@"IRC[382-83]")];
+					[self printDebugInformation:TXTLS(@"IRC[9j0-3p]")];
+					[self printDebugInformation:TXTLS(@"IRC[g55-ap]")];
+					[self printDebugInformation:TXTLS(@"IRC[90m-qy]")];
+					[self printDebugInformation:TXTLS(@"IRC[my0-q6]")];
+					[self printDebugInformation:TXTLS(@"IRC[goz-y6]")];
+					[self printDebugInformation:TXTLS(@"IRC[e0a-99]")];
+					[self printDebugInformation:TXTLS(@"IRC[9qu-ho]")];
+					[self printDebugInformation:TXTLS(@"IRC[yds-m4]")];
+					[self printDebugInformation:TXTLS(@"IRC[jik-p7]")];
+					[self printDebugInformation:TXTLS(@"IRC[1p8-a7]")];
+					[self printDebugInformation:TXTLS(@"IRC[h1a-gx]")];
+					[self printDebugInformation:TXTLS(@"IRC[vwi-10]")];
 
 				}
 				else if ([topic isEqualToStringIgnoringCase:@"remove"])
 				{
-					[self printDebugInformation:TXTLS(@"IRC[1163]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][01]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][02]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][03]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][04]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][05]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][06]")];
-					[self printDebugInformation:TXTLS(@"IRC[1162][07]")];
+					[self printDebugInformation:TXTLS(@"IRC[aox-zz]")];
+					[self printDebugInformation:TXTLS(@"IRC[i2d-x5]")];
+					[self printDebugInformation:TXTLS(@"IRC[ip5-lz]")];
+					[self printDebugInformation:TXTLS(@"IRC[t5d-hd]")];
+					[self printDebugInformation:TXTLS(@"IRC[mkz-fb]")];
+					[self printDebugInformation:TXTLS(@"IRC[7dp-ew]")];
+					[self printDebugInformation:TXTLS(@"IRC[0m7-9k]")];
+					[self printDebugInformation:TXTLS(@"IRC[qa0-8e]")];
 				}
 				else if ([topic isEqualToStringIgnoringCase:@"list"])
 				{
-					[self printDebugInformation:TXTLS(@"IRC[1163]")];
-					[self printDebugInformation:TXTLS(@"IRC[1159][01]")];
-					[self printDebugInformation:TXTLS(@"IRC[1159][02]")];
-					[self printDebugInformation:TXTLS(@"IRC[1159][03]")];
+					[self printDebugInformation:TXTLS(@"IRC[aox-zz]")];
+					[self printDebugInformation:TXTLS(@"IRC[x1n-ve]")];
+					[self printDebugInformation:TXTLS(@"IRC[3ks-34]")];
+					[self printDebugInformation:TXTLS(@"IRC[96w-fo]")];
 				}
 				else if ([topic isEqualToStringIgnoringCase:@"stop"])
 				{
-					[self printDebugInformation:TXTLS(@"IRC[1163]")];
-					[self printDebugInformation:TXTLS(@"IRC[1160][01]")];
-					[self printDebugInformation:TXTLS(@"IRC[1160][02]")];
-					[self printDebugInformation:TXTLS(@"IRC[1160][03]")];
-					[self printDebugInformation:TXTLS(@"IRC[1160][04]")];
-					[self printDebugInformation:TXTLS(@"IRC[1160][05]")];
+					[self printDebugInformation:TXTLS(@"IRC[aox-zz]")];
+					[self printDebugInformation:TXTLS(@"IRC[bx2-n1]")];
+					[self printDebugInformation:TXTLS(@"IRC[t6t-x2]")];
+					[self printDebugInformation:TXTLS(@"IRC[i3c-vz]")];
+					[self printDebugInformation:TXTLS(@"IRC[8h4-ac]")];
+					[self printDebugInformation:TXTLS(@"IRC[a5z-ot]")];
 				}
 				else if ([topic isEqualToStringIgnoringCase:@"restart"])
 				{
-					[self printDebugInformation:TXTLS(@"IRC[1163]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][01]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][02]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][03]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][04]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][05]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][06]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][07]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][08]")];
-					[self printDebugInformation:TXTLS(@"IRC[1161][09]")];
+					[self printDebugInformation:TXTLS(@"IRC[aox-zz]")];
+					[self printDebugInformation:TXTLS(@"IRC[r27-tv]")];
+					[self printDebugInformation:TXTLS(@"IRC[zrf-v2]")];
+					[self printDebugInformation:TXTLS(@"IRC[wd8-v9]")];
+					[self printDebugInformation:TXTLS(@"IRC[6xo-al]")];
+					[self printDebugInformation:TXTLS(@"IRC[g69-sc]")];
+					[self printDebugInformation:TXTLS(@"IRC[mjg-bn]")];
+					[self printDebugInformation:TXTLS(@"IRC[xd3-g1]")];
+					[self printDebugInformation:TXTLS(@"IRC[77t-x9]")];
+					[self printDebugInformation:TXTLS(@"IRC[6bp-ft]")];
 				}
 				else
 				{
-					[self printDebugInformation:TXTLS(@"IRC[1163]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][01]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][02]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][03]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][04]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][05]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][06]")];
-					[self printDebugInformation:TXTLS(@"IRC[1157][07]")];
+					[self printDebugInformation:TXTLS(@"IRC[aox-zz]")];
+					[self printDebugInformation:TXTLS(@"IRC[xkq-rt]")];
+					[self printDebugInformation:TXTLS(@"IRC[ohr-m0]")];
+					[self printDebugInformation:TXTLS(@"IRC[ham-fp]")];
+					[self printDebugInformation:TXTLS(@"IRC[lbg-dy]")];
+					[self printDebugInformation:TXTLS(@"IRC[lbh-46]")];
+					[self printDebugInformation:TXTLS(@"IRC[9dz-b4]")];
+					[self printDebugInformation:TXTLS(@"IRC[s3r-ve]")];
 				}
 
 				break;
@@ -4470,7 +4470,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSString *identifier = stringIn.tokenAsString;
 
 				if (identifier.length == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1141]")];
+					[self printDebugInformation:TXTLS(@"IRC[p6l-o4]")];
 
 					break;
 				}
@@ -4478,20 +4478,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				IRCTimedCommand *timedCommand = [self timedCommandWithIdentifier:identifier];
 
 				if (timedCommand == nil) {
-					[self printDebugInformation:TXTLS(@"IRC[1142]", identifier)];
+					[self printDebugInformation:TXTLS(@"IRC[vzu-xh]", identifier)];
 
 					break;
 				}
 
 				if (timedCommand.timerIsActive == NO) {
-					[self printDebugInformation:TXTLS(@"IRC[1144]", identifier)];
+					[self printDebugInformation:TXTLS(@"IRC[ax6-n9]", identifier)];
 
 					break;
 				}
 
 				[self stopTimedCommand:timedCommand];
 
-				[self printDebugInformation:TXTLS(@"IRC[1145]", identifier)];
+				[self printDebugInformation:TXTLS(@"IRC[hs0-up]", identifier)];
 
 				break;
 			}
@@ -4502,7 +4502,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSString *identifier = stringIn.tokenAsString;
 
 				if (identifier.length == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1141]")];
+					[self printDebugInformation:TXTLS(@"IRC[p6l-o4]")];
 
 					break;
 				}
@@ -4510,15 +4510,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				IRCTimedCommand *timedCommand = [self timedCommandWithIdentifier:identifier];
 
 				if (timedCommand == nil) {
-					[self printDebugInformation:TXTLS(@"IRC[1142]", identifier)];
+					[self printDebugInformation:TXTLS(@"IRC[vzu-xh]", identifier)];
 
 					break;
 				}
 
 				if ([self restartTimedCommand:timedCommand]) {
-					[self printDebugInformation:TXTLS(@"IRC[1147]", identifier)];
+					[self printDebugInformation:TXTLS(@"IRC[qb7-mi]", identifier)];
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1146]", identifier)];
+					[self printDebugInformation:TXTLS(@"IRC[dgp-d4]", identifier)];
 				}
 
 				break;
@@ -4530,7 +4530,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSString *identifier = stringIn.tokenAsString;
 
 				if (identifier.length == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1141]")];
+					[self printDebugInformation:TXTLS(@"IRC[p6l-o4]")];
 
 					break;
 				}
@@ -4538,7 +4538,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				if ([identifier isEqualToStringIgnoringCase:@"all"]) {
 					[self removeTimedCommands];
 
-					[self printDebugInformation:TXTLS(@"IRC[1164]")];
+					[self printDebugInformation:TXTLS(@"IRC[808-bs]")];
 
 					break;
 				}
@@ -4546,14 +4546,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				IRCTimedCommand *timedCommand = [self timedCommandWithIdentifier:identifier];
 
 				if (timedCommand == nil) {
-					[self printDebugInformation:TXTLS(@"IRC[1142]", identifier)];
+					[self printDebugInformation:TXTLS(@"IRC[vzu-xh]", identifier)];
 
 					break;
 				}
 
 				[self removeTimedCommand:timedCommand];
 
-				[self printDebugInformation:TXTLS(@"IRC[1148]", identifier)];
+				[self printDebugInformation:TXTLS(@"IRC[p7s-is]", identifier)];
 
 				break;
 			}
@@ -4566,13 +4566,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				NSUInteger numberOfTimers = timedCommands.count;
 
 				if (numberOfTimers == 0) {
-					[self printDebugInformation:TXTLS(@"IRC[1150]")];
+					[self printDebugInformation:TXTLS(@"IRC[pqk-5k]")];
 
 					break;
 				} else if (numberOfTimers == 1) {
-					[self printDebugInformation:TXTLS(@"IRC[1152]", numberOfTimers)];
+					[self printDebugInformation:TXTLS(@"IRC[6ts-oi]", numberOfTimers)];
 				} else {
-					[self printDebugInformation:TXTLS(@"IRC[1151]", numberOfTimers)];
+					[self printDebugInformation:TXTLS(@"IRC[q1m-1e]", numberOfTimers)];
 				}
 
 				for (IRCTimedCommand *timedCommand in timedCommands) {
@@ -4603,7 +4603,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *intervalString = action;
 
 			if (intervalString.length == 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1138]")];
+				[self printDebugInformation:TXTLS(@"IRC[jj9-94]")];
 
 				break;
 			}
@@ -4611,7 +4611,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSInteger interval = intervalString.integerValue;
 
 			if (interval <= 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1139]")];
+				[self printDebugInformation:TXTLS(@"IRC[327-pv]")];
 
 				break;
 			}
@@ -4649,13 +4649,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			/* Perform additional validation */
 			if (repeat < 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1140]")];
+				[self printDebugInformation:TXTLS(@"IRC[eud-kc]")];
 
 				break;
 			}
 
 			if (command.length == 0) {
-				[self printDebugInformation:TXTLS(@"IRC[1138]")];
+				[self printDebugInformation:TXTLS(@"IRC[jj9-94]")];
 
 				break;
 			}
@@ -4708,7 +4708,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSUInteger topicLenghtMaximum = self.supportInfo.maximumTopicLength;
 
 			if (topicLenghtMaximum > 0 && topicLength > topicLenghtMaximum) {
-				[self printDebugInformation:TXTLS(@"IRC[1166]", self.networkNameAlt, topicLenghtMaximum)];
+				[self printDebugInformation:TXTLS(@"IRC[1oo-3b]", self.networkNameAlt, topicLenghtMaximum)];
 			}
 
 			[self send:@"TOPIC", targetChannelName, topic, nil];
@@ -4730,9 +4730,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandUnmuteIndex: // Command: UNMUTE
 		{
 			if ([TPCPreferences soundIsMuted] == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1099]")];
+				[self printDebugInformation:TXTLS(@"IRC[5rf-mj]")];
 			} else {
-				[self printDebugInformation:TXTLS(@"IRC[1098]")];
+				[self printDebugInformation:TXTLS(@"IRC[190-f2]")];
 
 				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			}
@@ -4782,7 +4782,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (isModifierCommand) {
-				[self printDebugInformation:TXTLS(@"IRC[1137]")];
+				[self printDebugInformation:TXTLS(@"IRC[khw-4y]")];
 
 				break;
 			}
@@ -4853,7 +4853,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			/* Where would se send data to? */
 			if (self.isLoggedIn == NO) {
-				[self printDebugInformationToConsole:TXTLS(@"IRC[1005]")];
+				[self printDebugInformationToConsole:TXTLS(@"IRC[6rj-2r]")];
 
 				break;
 			}
@@ -4912,7 +4912,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				 not exist, then fail here. The user may be trying to send something 
 				 secret with an expectation for privacy and we cannot deliver that. */
 				if (channelNamePrefix == nil) {
-					[self printDebugInformation:TXTLS(@"IRC[1136]", @"o")];
+					[self printDebugInformation:TXTLS(@"IRC[54l-h7]", @"o")];
 
 					break;
 				}
@@ -5083,7 +5083,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound)
 			{
-				[self printDebugInformation:TXTLS(@"IRC[1001]", uppercaseCommand)];
+				[self printDebugInformation:TXTLS(@"IRC[d3c-9b]", uppercaseCommand)];
 				
 				break;
 			}
@@ -5136,7 +5136,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 	
-	[self printDebugInformation:TXTLS(@"IRC[1130]", syntax)];
+	[self printDebugInformation:TXTLS(@"IRC[atq-93]", syntax)];
 }
 
 #pragma mark -
@@ -5199,9 +5199,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *localization = nil;
 
 	if (toNewSession) {
-		localization = @"IRC[1095]";
+		localization = @"IRC[qrg-ua]";
 	} else {
-		localization = @"IRC[1096]";
+		localization = @"IRC[d5d-uy]";
 	}
 
 	TVCLogLineMutable *logLine = [TVCLogLineMutable new];
@@ -5585,7 +5585,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		sequenceMessage = [message sequence:sequence];
 	}
 
-	NSString *errorMessage = TXTLS(@"IRC[1055]", message.commandNumeric, sequenceMessage);
+	NSString *errorMessage = TXTLS(@"IRC[3yo-gw]", message.commandNumeric, sequenceMessage);
 
 	[self print:errorMessage by:nil inChannel:channel asType:TVCLogLineDebugType command:message.command];
 }
@@ -5685,7 +5685,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(channel != nil);
 
-	[self printDebugInformation:TXTLS(@"IRC[1121]") inChannel:channel];
+	[self printDebugInformation:TXTLS(@"IRC[z2r-sd]") inChannel:channel];
 }
 
 #pragma mark -
@@ -5802,20 +5802,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSString *disconnectMessage = nil;
 
 		if (self.disconnectType == IRCClientDisconnectNormalMode) {
-			disconnectMessage = TXTLS(@"IRC[1052]");
+			disconnectMessage = TXTLS(@"IRC[9b4-10]");
 		} else if (self.disconnectType == IRCClientDisconnectComputerSleepMode) {
-			disconnectMessage = TXTLS(@"IRC[1048]");
+			disconnectMessage = TXTLS(@"IRC[drg-b7]");
 		} else if (self.disconnectType == IRCClientDisconnectBadCertificateMode) {
-			disconnectMessage = TXTLS(@"IRC[1050]");
+			disconnectMessage = TXTLS(@"IRC[zro-bg]");
 		} else if (self.disconnectType == IRCClientDisconnectServerRedirectMode) {
-			disconnectMessage = TXTLS(@"IRC[1049]");
+			disconnectMessage = TXTLS(@"IRC[wcl-po]");
 		} else if (self.disconnectType == IRCClientDisconnectReachabilityChangeMode) {
-			disconnectMessage = TXTLS(@"IRC[1051]");
+			disconnectMessage = TXTLS(@"IRC[isx-fi]");
 		}
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 		else if (self.disconnectType == IRCClientDisconnectSoftwareTrialMode) {
-			disconnectMessage = TXTLS(@"IRC[1125]");
+			disconnectMessage = TXTLS(@"IRC[t8r-ak]");
 		}
 #endif
 
@@ -5862,11 +5862,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	IRCConnectionSocketProxyType proxyType = self.socket.config.proxyType;
 
 	if (proxyType == IRCConnectionSocketSocks4ProxyType) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1057]", proxyHost, proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[p7h-un]", proxyHost, proxyPort)];
 	} else if (proxyType == IRCConnectionSocketSocks5ProxyType) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1058]", proxyHost, proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[ni5-cy]", proxyHost, proxyPort)];
 	} else if (proxyType == IRCConnectionSocketHTTPProxyType) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1059]", proxyHost, proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[oby-av]", proxyHost, proxyPort)];
 	}
 }
 
@@ -5885,12 +5885,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *description = nil;
 
 	if ([GCDAsyncSocket isCipherSuiteDeprecated:cipherSuite] == NO) {
-		description = TXTLS(@"IRC[1112][1]", protocolDescription, cipherDescription);
+		description = TXTLS(@"IRC[uyz-4r]", protocolDescription, cipherDescription);
 	} else {
-		description = TXTLS(@"IRC[1112][2]", protocolDescription, cipherDescription);
+		description = TXTLS(@"IRC[xwj-xy]", protocolDescription, cipherDescription);
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1047]", description)];
+	[self printDebugInformationToConsole:TXTLS(@"IRC[ex4-f8]", description)];
 }
 
 - (void)ircConnectionDidConnect:(IRCConnection *)sender
@@ -5908,9 +5908,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *connectedAddress = self.socket.connectedAddress;
 
 	if (connectedAddress == nil || self.socket.config.serverAddress.IPAddress) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1045]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[4vt-ow]")];
 	} else {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1046]", connectedAddress)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[l21-p7]", connectedAddress)];
 	}
 
 	self.isConnecting = NO;
@@ -6007,7 +6007,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1120]")];
+	[self printDebugInformationToConsole:TXTLS(@"IRC[5h5-sl]")];
 }
 
 /* This delegate call is not invoked on the main thread
@@ -6253,7 +6253,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[mainWindow() select:query];
 
-	[self rawDataLog:TXTLS(@"IRC[1092]")];
+	[self rawDataLog:TXTLS(@"IRC[ik6-dl]")];
 }
 
 - (void)destroyRawDataLogQuery
@@ -6989,7 +6989,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		__weak IRCClient *weakSelf = self;
 
 		self.disconnectCallback = ^{
-			[weakSelf printDebugInformationToConsole:TXTLS(@"IRC[1114]")];
+			[weakSelf printDebugInformationToConsole:TXTLS(@"IRC[5i4-qq]")];
 
 			[weakSelf connect:IRCClientConnectReconnectMode];
 		};
@@ -7030,7 +7030,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Ignore query if the user has configured Textual to do so */
 	if ([TPCPreferences replyToCTCPRequests] == NO) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1032]", command, sender)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[bg3-h2]", command, sender)];
 
 		return;
 	}
@@ -7051,7 +7051,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		printTarget = [mainWindow() selectedChannelOn:self];
 	}
 
-	NSString *messageToPrint = TXTLS(@"IRC[1065]", command, sender);
+	NSString *messageToPrint = TXTLS(@"IRC[6o8-eu]", command, sender);
 
 	if (isLagCheckQuery == NO) {
 		[self print:messageToPrint
@@ -7071,13 +7071,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* CLIENTINFO command */
 	else if ([command isEqualToString:@"CLIENTINFO"])
 	{
-		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[1034]")];
+		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[jer-ju]")];
 	}
 
 	/* FINGER command */
 	else if ([command isEqualToString:@"FINGER"])
 	{
-		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[1035]")];
+		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[en6-mw]")];
 	}
 
 	/* PING command */
@@ -7122,7 +7122,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSString *applicationName = [TPCApplicationInfo applicationNameWithoutVersion];
 		NSString *versionShort = [TPCApplicationInfo applicationVersionShort];
 
-		NSString *text = TXTLS(@"IRC[1026]", applicationName, versionShort);
+		NSString *text = TXTLS(@"IRC[vzu-u7]", applicationName, versionShort);
 
 		[self sendCTCPReply:sender command:command text:text];
 	}
@@ -7158,24 +7158,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *ratingString = nil;
 	
 	if (delta < 10) { // Yeah, okay…
-		ratingString = TXTLS(@"IRC[1025][00]");
+		ratingString = TXTLS(@"IRC[58g-m9]");
 	} else if (delta > 10 && delta <= 25) { // Are you plugged into the server?
-		ratingString = TXTLS(@"IRC[1025][01]");
+		ratingString = TXTLS(@"IRC[0jp-93]");
 	} else if (delta > 25 && delta <= 100) { // Pretty good
-		ratingString = TXTLS(@"IRC[1025][02]");
+		ratingString = TXTLS(@"IRC[yym-8y]");
 	} else if (delta > 100 && delta <= 125) { // Not bad
-		ratingString = TXTLS(@"IRC[1025][03]");
+		ratingString = TXTLS(@"IRC[mic-qe]");
 	} else if (delta > 125 && delta <= 200) { // Okay
-		ratingString = TXTLS(@"IRC[1025][04]");
+		ratingString = TXTLS(@"IRC[mqg-wi]");
 	} else if (delta > 200 && delta <= 225) { // Needs work
-		ratingString = TXTLS(@"IRC[1025][05]");
+		ratingString = TXTLS(@"IRC[ut8-7s]");
 	} else if (delta > 225 && delta <= 300) { // Slow
-		ratingString = TXTLS(@"IRC[1025][06]");
+		ratingString = TXTLS(@"IRC[8fo-ss]");
 	} else if (delta > 300) { // Very Slow
-		ratingString = TXTLS(@"IRC[1025][07]");
+		ratingString = TXTLS(@"IRC[4oc-p2]");
 	}
 	
-	NSString *message = TXTLS(@"IRC[1022]", self.serverAddress, delta, ratingString);
+	NSString *message = TXTLS(@"IRC[5bf-jp]", self.serverAddress, delta, ratingString);
 	
 	NSString *channelName = lagCheckContext[@"channel"];
 	
@@ -7227,9 +7227,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if ([command isEqualToString:@"PING"]) {
 		double delta = ([NSDate timeIntervalSince1970] - textMutable.doubleValue);
 
-		messageToPrint = TXTLS(@"IRC[1063]", sender, command, delta);
+		messageToPrint = TXTLS(@"IRC[vy7-pk]", sender, command, delta);
 	} else {
-		messageToPrint = TXTLS(@"IRC[1064]", sender, command, textMutable);
+		messageToPrint = TXTLS(@"IRC[dri-l7]", sender, command, textMutable);
 	}
 
 	[self print:messageToPrint
@@ -7298,7 +7298,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (senderQuery && senderQuery.isActive == NO) {
 			[senderQuery activate];
 
-			[self print:TXTLS(@"IRC[1071]", sender)
+			[self print:TXTLS(@"IRC[q0q-ch]", sender)
 					 by:nil
 			  inChannel:senderQuery
 				 asType:TVCLogLineJoinType
@@ -7333,7 +7333,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (printMessage) {
-		NSString *message = TXTLS(@"IRC[1077]", sender, m.senderUsername, m.senderAddress.stringByAppendingIRCFormattingStop);
+		NSString *message = TXTLS(@"IRC[ziu-p9]", sender, m.senderUsername, m.senderAddress.stringByAppendingIRCFormattingStop);
 
 		[self print:message
 				 by:nil
@@ -7420,10 +7420,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (printMessage) {
-		NSString *message = TXTLS(@"IRC[1079]", sender, m.senderUsername, m.senderAddress.stringByAppendingIRCFormattingStop);
+		NSString *message = TXTLS(@"IRC[nkr-kf]", sender, m.senderUsername, m.senderAddress.stringByAppendingIRCFormattingStop);
 
 		if (comment.length > 0) {
-			message = TXTLS(@"IRC[1080]", message, comment.stringByAppendingIRCFormattingStop);
+			message = TXTLS(@"IRC[ozy-6i]", message, comment.stringByAppendingIRCFormattingStop);
 		}
 
 		[self print:message
@@ -7474,7 +7474,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			/* Rejoin channel */
 			if ([TPCPreferences rejoinOnKick] && channel.errorOnLastJoinAttempt == NO) {
-				[self printDebugInformation:TXTLS(@"IRC[1043]") inChannel:channel];
+				[self printDebugInformation:TXTLS(@"IRC[zzj-2h]") inChannel:channel];
 
 				[self cancelPerformRequestsWithSelector:@selector(joinKickedChannel:) object:channel];
 
@@ -7505,7 +7505,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (printMessage) {
-		NSString *message = TXTLS(@"IRC[1078]", sender, target, comment.stringByAppendingIRCFormattingStop);
+		NSString *message = TXTLS(@"IRC[9aj-bd]", sender, target, comment.stringByAppendingIRCFormattingStop);
 
 		[self print:message
 				 by:nil
@@ -7564,10 +7564,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	NSString *messageToPrint = TXTLS(@"IRC[1069]", sender, m.senderUsername, m.senderAddress.stringByAppendingIRCFormattingStop);
+	NSString *messageToPrint = TXTLS(@"IRC[53b-dm]", sender, m.senderUsername, m.senderAddress.stringByAppendingIRCFormattingStop);
 
 	if (comment.length > 0) {
-		messageToPrint = TXTLS(@"IRC[1066]", messageToPrint, comment.stringByAppendingIRCFormattingStop);
+		messageToPrint = TXTLS(@"IRC[tok-st]", messageToPrint, comment.stringByAppendingIRCFormattingStop);
 	}
 
 	void (^printingBlock)(IRCChannel *) = ^(IRCChannel *channel)
@@ -7630,7 +7630,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 		else // -isChannel
 		{
-			message = TXTLS(@"IRC[1070]", sender);
+			message = TXTLS(@"IRC[8bk-mx]", sender);
 		}
 
 		[self print:message
@@ -7772,9 +7772,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *messageToPrint = nil;
 
 	if (myself) {
-		messageToPrint = TXTLS(@"IRC[1068][1]", newNickname);
+		messageToPrint = TXTLS(@"IRC[rr6-yo]", newNickname);
 	} else {
-		messageToPrint = TXTLS(@"IRC[1068][0]", oldNickname, newNickname);
+		messageToPrint = TXTLS(@"IRC[fxw-5s]", oldNickname, newNickname);
 	}
 
 	void (^printingBlock)(IRCChannel *) = ^(IRCChannel *channel)
@@ -7890,7 +7890,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		BOOL printMessage = [self postReceivedCommand:@"UMODE" withText:modeString destinedFor:nil referenceMessage:m];
 
 		if (printMessage) {
-			[self print:TXTLS(@"IRC[1062]", sender, modeString)
+			[self print:TXTLS(@"IRC[v5d-ix]", sender, modeString)
 					 by:nil
 			  inChannel:nil
 				 asType:TVCLogLineModeType
@@ -7927,7 +7927,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (printMessage) {
-		[self print:TXTLS(@"IRC[1062]", sender, modeString)
+		[self print:TXTLS(@"IRC[v5d-ix]", sender, modeString)
 				 by:nil
 		  inChannel:channel
 			 asType:TVCLogLineModeType
@@ -7966,7 +7966,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	BOOL printMessage = [self postReceivedMessage:m withText:topic destinedFor:channel];
 
 	if (printMessage) {
-		[self print:TXTLS(@"IRC[1044]", sender, topic)
+		[self print:TXTLS(@"IRC[qq2-66]", sender, topic)
 				 by:nil
 		  inChannel:channel
 			 asType:TVCLogLineTopicType
@@ -7985,7 +7985,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *channelName = [m paramAt:1];
 
-	NSString *message = TXTLS(@"IRC[1074]", sender, m.senderUsername, m.senderAddress, channelName);
+	NSString *message = TXTLS(@"IRC[qw4-t3]", sender, m.senderUsername, m.senderAddress, channelName);
 
 	/* Invite notifications are sent to frontmost channel on server of if it is
 	 not on server, then it will be redirected to console. */
@@ -9125,7 +9125,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			printMessage = [self postReceivedMessage:m withText:modeString destinedFor:nil];
 
 			if (printMessage) {
-				[self print:TXTLS(@"IRC[1072]", nickname, modeString)
+				[self print:TXTLS(@"IRC[ipj-34]", nickname, modeString)
 						 by:nil
 				  inChannel:nil
 					 asType:TVCLogLineDebugType
@@ -9144,7 +9144,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			IRCChannel *channel = [self findChannel:awayNickname];
 
-			NSString *message = TXTLS(@"IRC[1075]", awayNickname, awayComment);
+			NSString *message = TXTLS(@"IRC[c1h-fq]", awayNickname, awayComment);
 
 			if (channel == nil) {
 				channel = [mainWindow() selectedChannelOn:self];
@@ -9230,9 +9230,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *message = nil;
 
 			if (self.inWhowasResponse) { // bahamut sends RPL_WHOISACTUALLY in WHOWAS
-				message = TXTLS(@"IRC[1169]", nickname, hostmask, ipAddress);
+				message = TXTLS(@"IRC[x69-rz]", nickname, hostmask, ipAddress);
 			} else {
-				message = TXTLS(@"IRC[1168]", nickname, hostmask, ipAddress);
+				message = TXTLS(@"IRC[3oa-mv]", nickname, hostmask, ipAddress);
 			}
 
 			[self print:message
@@ -9265,11 +9265,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			if (self.inWhowasResponse) {
 				if (printMessage) {
-					message = TXTLS(@"IRC[1086]", nickname, username, address, realName);
+					message = TXTLS(@"IRC[32c-87]", nickname, username, address, realName);
 				}
 			} else {
 				if (printMessage) {
-					message = TXTLS(@"IRC[1083]", nickname, username, address, realName);
+					message = TXTLS(@"IRC[plg-lr]", nickname, username, address, realName);
 				}
 
 				/* Update local cache of our hostmask */
@@ -9310,9 +9310,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					timeInfo = serverInfo;
 				}
 
-				message = TXTLS(@"IRC[1085]", nickname, serverAddress, timeInfo);
+				message = TXTLS(@"IRC[cdu-ed]", nickname, serverAddress, timeInfo);
 			} else {
-				message = TXTLS(@"IRC[1082]", nickname, serverAddress, serverInfo);
+				message = TXTLS(@"IRC[h19-n2]", nickname, serverAddress, serverInfo);
 			}
 
 			[self print:message
@@ -9340,7 +9340,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			connectTime = TXFormatDateLongStyle(connTimeDate, YES);
 
-			NSString *message = TXTLS(@"IRC[1084]", nickname, connectTime, idleTime);
+			NSString *message = TXTLS(@"IRC[6hn-o6]", nickname, connectTime, idleTime);
 
 			[self print:message
 					 by:nil
@@ -9360,7 +9360,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
 
-			NSString *message = TXTLS(@"IRC[1081]", nickname, channels);
+			NSString *message = TXTLS(@"IRC[onk-l5]", nickname, channels);
 
 			[self print:message
 					 by:nil
@@ -9445,7 +9445,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (printMessage) {
 				NSString *message = channel.modeInfo.stringWithMaskedPassword;
 
-				[self print:TXTLS(@"IRC[1039]", message)
+				[self print:TXTLS(@"IRC[obp-ww]", message)
 						 by:nil
 				  inChannel:channel
 					 asType:TVCLogLineModeType
@@ -9473,7 +9473,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			channel.topic = topic;
 
 			if (printMessage) {
-				[self print:TXTLS(@"IRC[1040]", topic)
+				[self print:TXTLS(@"IRC[7nm-7v]", topic)
 						 by:nil
 				  inChannel:channel
 					 asType:TVCLogLineTopicType
@@ -9510,7 +9510,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			setTime = TXFormatDateLongStyle(setTimeDate, YES);
 
-			NSString *message = TXTLS(@"IRC[1041]", topicSetter, setTime);
+			NSString *message = TXTLS(@"IRC[y7s-3e]", topicSetter, setTime);
 
 			[self print:message
 					 by:nil
@@ -9540,7 +9540,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				break;
 			}
 
-			[self print:TXTLS(@"IRC[1073]", nickname, channelName)
+			[self print:TXTLS(@"IRC[wk4-rv]", nickname, channelName)
 					 by:nil
 			  inChannel:channel
 				 asType:TVCLogLineDebugType
@@ -10040,19 +10040,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *localization = nil;
 
 			if (numeric == RPL_BANLIST) {
-				localization = @"1102";
+				localization = @"c04-d0";
 			} else if (numeric == RPL_INVITELIST) {
-				localization = @"1103";
+				localization = @"py2-qh";
 			} else if (numeric == RPL_EXCEPTLIST) {
-				localization = @"1104";
+				localization = @"ov2-ci";
 			} else if (numeric == RPL_QUIETLIST) {
-				localization = @"1119";
+				localization = @"u5z-az";
 			}
 
 			if (extendedLine) {
-				localization = [NSString stringWithFormat:@"IRC[%@][1]", localization];
+				localization = [NSString stringWithFormat:@"%@-1", localization];
 			} else {
-				localization = [NSString stringWithFormat:@"IRC[%@][2]", localization];
+				localization = [NSString stringWithFormat:@"%@-2", localization];
 			}
 
 			NSString *message = nil;
@@ -10100,7 +10100,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (printMessage) {
-				[self print:TXTLS(@"IRC[1076]", m.senderNickname)
+				[self print:TXTLS(@"IRC[6bh-br]", m.senderNickname)
 						 by:nil
 				  inChannel:nil
 					 asType:TVCLogLineDebugType
@@ -10125,7 +10125,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				return;
 			}
 
-			[self print:TXTLS(@"IRC[1042]", website)
+			[self print:TXTLS(@"IRC[8tq-g6]", website)
 					 by:nil
 			  inChannel:channel
 				 asType:TVCLogLineWebsiteType
@@ -10370,7 +10370,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			NSString *nickname = [m paramAt:1];
 
-			[self printDebugInformation:TXTLS(@"IRC[1088]", nickname)];
+			[self printDebugInformation:TXTLS(@"IRC[11i-ev]", nickname)];
 
 			break;
 		}
@@ -10389,7 +10389,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				channel = [mainWindow() selectedChannelOn:self];
 			}
 
-			[self printDebugInformation:TXTLS(@"IRC[1089]", nickname, hostmask) inChannel:channel];
+			[self printDebugInformation:TXTLS(@"IRC[3yj-in]", nickname, hostmask) inChannel:channel];
 
 			break;
 		}
@@ -10653,7 +10653,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *tryingNickname = self.tryingNicknameSentNickname;
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1171]", tryingNickname)];
+	[self printDebugInformationToConsole:TXTLS(@"IRC[js3-9v]", tryingNickname)];
 
 	NSUInteger tryingNicknameNumber = self.tryingNicknameNumber;
 
@@ -10725,7 +10725,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* This message is posted to the server console and the 
 	 front most channel if it is on this server. */
-	NSString *text = TXTLS(@"IRC[1122]");
+	NSString *text = TXTLS(@"IRC[r5h-fj]");
 
 	[self printDebugInformationToConsole:text];
 
@@ -10950,7 +10950,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* If EOF Received when we were not expecting it, then timeout regardless
 		 of user preference once our timeout interval is reached. */
 		if (self.socket.EOFReceived || self.config.performDisconnectOnPongTimer) {
-			[self printDebugInformation:TXTLS(@"IRC[1053]", (timeSpent / 60.0)) inChannel:nil];
+			[self printDebugInformation:TXTLS(@"IRC[bps-la]", (timeSpent / 60.0)) inChannel:nil];
 
 			[self performBlockOnMainThread:^{
 				[self disconnect];
@@ -10962,7 +10962,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		if (self.timeoutWarningShownToUser == NO) {
 			self.timeoutWarningShownToUser = YES;
 
-			[self printDebugInformation:TXTLS(@"IRC[1054]", (timeSpent / 60.0)) inChannel:nil];
+			[self printDebugInformation:TXTLS(@"IRC[gzo-54]", (timeSpent / 60.0)) inChannel:nil];
 		}
 	}
 	else if (timeSpent >= _pingInterval)
@@ -11108,7 +11108,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		NSTimeInterval timeRemaining = (_softwareTrialDisconnectInterval - timerInterval);
 
-		[self printDebugInformationInAllViews:TXTLS(@"IRC[1126]", (timeRemaining / 60.0)) escapeMessage:NO];
+		[self printDebugInformationInAllViews:TXTLS(@"IRC[v4t-zw]", (timeRemaining / 60.0)) escapeMessage:NO];
 
 		NSTimeInterval nextStepInterval = 0;
 
@@ -11163,7 +11163,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[mainWindow() select:query];
 
-	[self printDebugInformation:TXTLS(@"IRC[1170]") inChannel:query];
+	[self printDebugInformation:TXTLS(@"IRC[yem-td]") inChannel:query];
 }
 
 - (void)printReplyToHiddenCommandResponsesQuery:(IRCMessage *)message
@@ -11202,9 +11202,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		inputString = @"(no input)";
 	}
 
-	[self printDebugInformation:TXTLS(@"IRC[1003]", filename, inputString, errorDescription)];
+	[self printDebugInformation:TXTLS(@"IRC[2mc-h0]", filename, inputString, errorDescription)];
 
-	LogToConsoleError("%{public}@", TXTLS(@"IRC[1002]", errorDescription));
+	LogToConsoleError("%{public}@", TXTLS(@"IRC[ax0-mt]", errorDescription));
 }
 
 - (void)sendTextualCmdScriptResult:(NSString *)resultString toChannel:(nullable NSString *)channel
@@ -11471,7 +11471,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSArray *servers = self.config.serverList;
 
 	if (servers.count == 0) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1123]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[iaa-0u]")];
 
 		return;
 	}
@@ -11543,12 +11543,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[mainWindow() updateTitleFor:self];
 
 	if (connectMode == IRCClientConnectReconnectMode) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1060]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[xxb-y2]")];
 	} else if (connectMode == IRCClientConnectRetryMode) {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1061]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[ky3-36]")];
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1056]", serverAddress, serverPort)];
+	[self printDebugInformationToConsole:TXTLS(@"IRC[o77-ls]", serverAddress, serverPort)];
 
 	[RZNotificationCenter() postNotificationName:IRCClientWillConnectNotification object:self];
 
@@ -11639,7 +11639,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		return;
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", connectDelay)];
+	[self printDebugInformationToConsole:TXTLS(@"IRC[3s6-e6]", connectDelay)];
 
 	[self performSelectorInCommonModes:@selector(autoConnectAfterWakeUpPerformConnect) withObject:nil afterDelay:connectDelay];
 }
@@ -12069,7 +12069,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self toggleAwayStatus:NO withComment:nil];
 	} else {
 		if (comment.length == 0) {
-			comment = TXTLS(@"IRC[1031]");
+			comment = TXTLS(@"IRC[xog-in]");
 		}
 
 		[self toggleAwayStatus:YES withComment:comment];
@@ -12078,7 +12078,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)toggleAwayStatus:(BOOL)setAway
 {
-	NSString *comment = TXTLS(@"IRC[1031]");
+	NSString *comment = TXTLS(@"IRC[xog-in]");
 
 	[self toggleAwayStatus:setAway withComment:comment];
 }
@@ -12413,31 +12413,31 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	switch (type) {
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			description = TXTLS(@"Notifications[1036]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[fhn-dd]", filename, totalFilesize);
 
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			description = TXTLS(@"Notifications[1037]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[oqh-pn]", filename, totalFilesize);
 
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			description = TXTLS(@"Notifications[1038]", filename);
+			description = TXTLS(@"Notifications[9r4-cq]", filename);
 
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			description = TXTLS(@"Notifications[1039]", filename);
+			description = TXTLS(@"Notifications[cqq-ci]", filename);
 
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			description = TXTLS(@"Notifications[1040]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[wik-wq]", filename, totalFilesize);
 
 			break;
 		}
@@ -12683,7 +12683,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	// Report an error
 present_error:
-	[self print:TXTLS(@"IRC[1020]", sender) by:nil inChannel:nil asType:TVCLogLineDCCFileTransferType command:TVCLogLineDefaultCommandValue];
+	[self print:TXTLS(@"IRC[y3w-la]", sender) by:nil inChannel:nil asType:TVCLogLineDCCFileTransferType command:TVCLogLineDefaultCommandValue];
 }
 
 - (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(uint16_t)port filesize:(uint64_t)totalFilesize token:(nullable NSString *)transferToken
@@ -12692,7 +12692,7 @@ present_error:
 	NSParameterAssert(filename != nil);
 	NSParameterAssert(address != nil);
 
-	NSString *message = TXTLS(@"IRC[1019]", nickname, filename, totalFilesize);
+	NSString *message = TXTLS(@"IRC[snf-45]", nickname, filename, totalFilesize);
 
 	[self print:message by:nil inChannel:nil asType:TVCLogLineDCCFileTransferType command:TVCLogLineDefaultCommandValue];
 
@@ -12768,7 +12768,7 @@ present_error:
 
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:stringToSend];
 
-	NSString *message = TXTLS(@"IRC[1018]", nickname, filename, totalFilesize);
+	NSString *message = TXTLS(@"IRC[ags-s8]", nickname, filename, totalFilesize);
 
 	[self print:message by:nil inChannel:nil asType:TVCLogLineDCCFileTransferType command:TVCLogLineDefaultCommandValue];
 }
@@ -12841,13 +12841,13 @@ present_error:
 	NSString *timerStatus = nil;
 
 	if (timedCommand.timerIsActive == NO) {
-		timerStatus = TXTLS(@"IRC[1155][02]");
+		timerStatus = TXTLS(@"IRC[ww4-sn]");
 	} else {
-		timerStatus = TXTLS(@"IRC[1155][01]");
+		timerStatus = TXTLS(@"IRC[bhz-9e]");
 	}
 
 	if (timedCommand.repeatTimer == NO) {
-		return TXTLS(@"IRC[1153]",
+		return TXTLS(@"IRC[4n6-2x]",
 					 timedCommand.identifier,
 					 timerStatus,
 					 timerInterval,
@@ -12859,12 +12859,12 @@ present_error:
 		NSString *repeatLimitDescriptor = nil;
 
 		if (repeatLimit == 0) {
-			repeatLimitDescriptor = TXTLS(@"IRC[1156]");
+			repeatLimitDescriptor = TXTLS(@"IRC[o26-ae]");
 		} else {
 			repeatLimitDescriptor = [NSString stringWithUnsignedInteger:repeatLimit];
 		}
 
-		return TXTLS(@"IRC[1154]",
+		return TXTLS(@"IRC[uw0-v2]",
 					 timedCommand.identifier,
 					 timerStatus,
 					 timerInterval,
@@ -13000,11 +13000,11 @@ present_error:
 	NSString *message = nil;
 
 	if (newStatus == IRCAddressBookUserTrackingSignedOnStatus) {
-		message = TXTLS(@"Notifications[1043]", nickname);
+		message = TXTLS(@"Notifications[xk2-1l]", nickname);
 	} else if (newStatus == IRCAddressBookUserTrackingSignedOffStatus) {
-		message = TXTLS(@"Notifications[1042]", nickname);
+		message = TXTLS(@"Notifications[rif-9r]", nickname);
 	} else if (newStatus == IRCAddressBookUserTrackingIsAvailalbeStatus) {
-		message = TXTLS(@"Notifications[1041]", nickname);
+		message = TXTLS(@"Notifications[97r-0l]", nickname);
 	}
 
 	if (message == nil) {

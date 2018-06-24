@@ -35,7 +35,4 @@
  *
  *********************************************************************** */
 
-/* Next unusued key: 1003 */
-
-"TDCAddressBookSheet[0001]" = "Please enter a properly formatted ignore mask.";
-"TDCAddressBookSheet[0002]" = "Please enter a properly formatted nickname.";
+"csu-bv" = "Please enter a properly formatted ignore mask.";

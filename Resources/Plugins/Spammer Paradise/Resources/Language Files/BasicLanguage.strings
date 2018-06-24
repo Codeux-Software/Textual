@@ -35,11 +35,11 @@
  *
  *********************************************************************** */
 
-"BasicLanguage[1000]" = "No users found in %@";
-"BasicLanguage[1001]" = "No clones found";
-"BasicLanguage[1002]" = "%1$lu clone(s) found in %2$@";
-"BasicLanguage[1003]" = "Bad input";
-"BasicLanguage[1004]" = "%1$lu user(s) found in %2$@ with a cached hostmask.";
-"BasicLanguage[1005]" = "%1$lu user(s) found in %2$@ with a cached hostmask containing the search string “%3$@”";
-"BasicLanguage[1006]" = "No users found in %2$@ with a cached hostmask.";
-"BasicLanguage[1007]" = "No users found in %2$@ with a cached hostmask containing the search string “%3$@”";
+"5dx-rs" = "No users found in %@";
+"gxq-47" = "No clones found";
+"iaa-5v" = "%1$lu clone(s) found in %2$@";
+"r6x-ih" = "Bad input";
+"nn7-6s" = "%1$lu user(s) found in %2$@ with a cached hostmask.";
+"oq7-mg" = "%1$lu user(s) found in %2$@ with a cached hostmask containing the search string “%3$@”";
+"1ab-27" = "No users found in %2$@ with a cached hostmask.";
+"n1j-tp" = "No users found in %2$@ with a cached hostmask containing the search string “%3$@”";

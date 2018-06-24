@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Update accessibility */
 	NSTextFieldCell *textFieldCell = textField.cell;
 
-	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1000]", stringValueNew) forObject:textFieldCell];
+	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[alq-6s]", stringValueNew) forObject:textFieldCell];
 }
 
 - (void)updateDrawingForYosemiteWithAppearance:(TVCMemberListAppearance *)appearance inContext:(TVCMemberListCellDrawingContext *)drawingContext
@@ -618,7 +618,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *hostmaskUsername = cellItem.user.username;
 
 	if (hostmaskUsername.length == 0) {
-		hostmaskUsername = TXTLS(@"TVCMainWindow[1010]");
+		hostmaskUsername = TXTLS(@"TVCMainWindow[d85-9n]");
 	}
 
 	userInfoPopover.usernameField.stringValue = hostmaskUsername;
@@ -630,7 +630,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *hostmaskAddress = cellItem.user.address;
 
 	if (hostmaskAddress.length == 0) {
-		hostmaskAddress = TXTLS(@"TVCMainWindow[1010]");
+		hostmaskAddress = TXTLS(@"TVCMainWindow[d85-9n]");
 	}
 
 	if (stripIRCFormatting) {
@@ -649,7 +649,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *realName = cellItem.user.realName;
 
 	if (realName.length == 0) {
-		realName = TXTLS(@"TVCMainWindow[1010]");
+		realName = TXTLS(@"TVCMainWindow[d85-9n]");
 	}
 
 	if (stripIRCFormatting) {
@@ -666,9 +666,9 @@ NS_ASSUME_NONNULL_BEGIN
 	/* =============================================== */
 
 	if (cellItem.user.isAway) {
-		userInfoPopover.awayStatusField.stringValue = TXTLS(@"TVCMainWindow[1008]");
+		userInfoPopover.awayStatusField.stringValue = TXTLS(@"TVCMainWindow[jkr-ed]");
 	} else {
-		userInfoPopover.awayStatusField.stringValue = TXTLS(@"TVCMainWindow[1009]");
+		userInfoPopover.awayStatusField.stringValue = TXTLS(@"TVCMainWindow[gi6-wf]");
 	}
 
 	/* =============================================== */
@@ -682,19 +682,19 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *userPrivileges = nil;
 
 	if (userRank == IRCUserIRCopByModeRank) {
-		userPrivileges = TXTLS(@"TVCMainWindow[1007]");
+		userPrivileges = TXTLS(@"TVCMainWindow[i8t-vb]");
 	} else if (userRank == IRCUserChannelOwnerRank) {
-		userPrivileges = TXTLS(@"TVCMainWindow[1006]");
+		userPrivileges = TXTLS(@"TVCMainWindow[p1z-sc]");
 	} else if (userRank == IRCUserSuperOperatorRank) {
-		userPrivileges = TXTLS(@"TVCMainWindow[1005]");
+		userPrivileges = TXTLS(@"TVCMainWindow[som-zo]");
 	} else if (userRank == IRCUserNormalOperatorRank) {
-		userPrivileges = TXTLS(@"TVCMainWindow[1004]");
+		userPrivileges = TXTLS(@"TVCMainWindow[0kn-s5]");
 	} else if (userRank == IRCUserHalfOperatorRank) {
-		userPrivileges = TXTLS(@"TVCMainWindow[1003]");
+		userPrivileges = TXTLS(@"TVCMainWindow[0nn-te]");
 	} else if (userRank == IRCUserVoicedRank) {
-		userPrivileges = TXTLS(@"TVCMainWindow[1002]");
+		userPrivileges = TXTLS(@"TVCMainWindow[ya1-sk]");
 	} else {
-		userPrivileges = TXTLS(@"TVCMainWindow[1001]");
+		userPrivileges = TXTLS(@"TVCMainWindow[tjj-z2]");
 	}
 
 	userInfoPopover.privilegesField.stringValue = userPrivileges;

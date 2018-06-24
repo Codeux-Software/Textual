@@ -168,7 +168,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	}
 
 	if (suppressKey && (suppressText == nil || suppressText.length == 0)) {
-		suppressText = TXTLS(@"Prompts[1040]");
+		suppressText = TXTLS(@"Prompts[68u-z9]");
 	}
 
 	/* Construct alert */
@@ -318,7 +318,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	}
 
 	if (suppressKey && (suppressText == nil || suppressText.length == 0)) {
-		suppressText = TXTLS(@"Prompts[1040]");
+		suppressText = TXTLS(@"Prompts[68u-z9]");
 	}
 
 	/* Construct alert */
@@ -486,7 +486,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	}
 
 	if (suppressKey && (suppressText == nil || suppressText.length == 0)) {
-		suppressText = TXTLS(@"Prompts[1040]");
+		suppressText = TXTLS(@"Prompts[68u-z9]");
 	}
 
 	/* Construct alert */

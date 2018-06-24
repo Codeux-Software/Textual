@@ -83,7 +83,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.tnewNicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue isHostmaskNicknameOn:self.client] == NO) {
-			return TXTLS(@"TDCServerChangeNicknameSheet[0001]");
+			return TXTLS(@"CommonErrors[och-j5]");
 		}
 
 		return nil;

@@ -112,10 +112,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	NSString *filename = url.lastPathComponent;
 
-	BOOL performInstall = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1130][2]")
-													title:TXTLS(@"Prompts[1130][1]", filename)
-											defaultButton:TXTLS(@"Prompts[0001]")
-										  alternateButton:TXTLS(@"Prompts[0002]")];
+	BOOL performInstall = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[6tj-yp]")
+													title:TXTLS(@"Prompts[xfl-8e]", filename)
+											defaultButton:TXTLS(@"Prompts[mvh-ms]")
+										  alternateButton:TXTLS(@"Prompts[99q-gg]")];
 
 	if (performInstall == NO) {
 		return;
@@ -128,9 +128,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	if (didImport) {
 		NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
 
-		[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1128][2]")
-								  title:TXTLS(@"Prompts[1128][1]", filenameWithoutExtension)
-						  defaultButton:TXTLS(@"Prompts[0005]")
+		[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[k69-q0]")
+								  title:TXTLS(@"Prompts[xek-0t]", filenameWithoutExtension)
+						  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 						alternateButton:nil];
 	}
 }
@@ -148,8 +148,8 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 			userInfo[NSURLErrorKey] = url;
 
-			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"Prompts[1126][1]");
-			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"Prompts[1126][2]");
+			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"Prompts[m2r-gv]");
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"Prompts[ztu-nv]");
 
 			*outError = [NSError errorWithDomain:TXErrorDomain code:27984 userInfo:userInfo];
 		}
@@ -167,10 +167,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	NSString *filename = url.lastPathComponent;
 
 	/* Ask user before installing. */
-	BOOL performInstall = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1130][2]")
-													title:TXTLS(@"Prompts[1130][1]", filename)
-											defaultButton:TXTLS(@"Prompts[0001]")
-										  alternateButton:TXTLS(@"Prompts[0002]")];
+	BOOL performInstall = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[6tj-yp]")
+													title:TXTLS(@"Prompts[xfl-8e]", filename)
+											defaultButton:TXTLS(@"Prompts[mvh-ms]")
+										  alternateButton:TXTLS(@"Prompts[99q-gg]")];
 
 	if (performInstall == NO) {
 		return; // Do not install.
@@ -201,9 +201,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	d.directoryURL = folderRep;
 
-	d.title = TXTLS(@"Prompts[1125][1]");
+	d.title = TXTLS(@"Prompts[6hx-ni]");
 
-	d.message = TXTLS(@"Prompts[1125][2]", bundleID);
+	d.message = TXTLS(@"Prompts[0bj-ic]", bundleID);
 
 	d.nameFieldStringValue = url.lastPathComponent;
 
@@ -231,9 +231,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
 
-	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1127][2]", filenameWithoutExtension)
-							  title:TXTLS(@"Prompts[1127][1]", filenameWithoutExtension)
-					  defaultButton:TXTLS(@"Prompts[0005]")
+	[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[3ze-xh]", filenameWithoutExtension)
+							  title:TXTLS(@"Prompts[4ua-v5]", filenameWithoutExtension)
+					  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 					alternateButton:nil];
 }
 

@@ -82,12 +82,12 @@ NS_ASSUME_NONNULL_BEGIN
 	if (nicknameCount == 1) {
 		headerTitle = self.nicknames[0];
 	} else if (nicknameCount == 2) {
-		headerTitle = TXTLS(@"TDCChannelInviteSheet[1002]", self.nicknames[0], self.nicknames[1]);
+		headerTitle = TXTLS(@"TDCChannelInviteSheet[7i1-ds]", self.nicknames[0], self.nicknames[1]);
 	} else {
-		headerTitle = TXTLS(@"TDCChannelInviteSheet[1000]", nicknameCount);
+		headerTitle = TXTLS(@"TDCChannelInviteSheet[c8p-sb]", nicknameCount);
 	}
 
-	self.headerTitleTextField.stringValue = TXTLS(@"TDCChannelInviteSheet[1001]", headerTitle);
+	self.headerTitleTextField.stringValue = TXTLS(@"TDCChannelInviteSheet[0lg-er]", headerTitle);
 }
 
 - (void)startWithChannels:(NSArray<NSString *> *)channels

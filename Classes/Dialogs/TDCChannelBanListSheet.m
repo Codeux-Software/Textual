@@ -108,13 +108,13 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *headerTitle = nil;
 
 	if (self.entryType == TDCChannelBanListSheetBanEntryType) {
-		headerTitle = TXTLS(@"TDCChannelBanListSheet[1000]", self.channel.name);
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[rhc-ke]", self.channel.name);
 	} else if (self.entryType == TDCChannelBanListSheetBanExceptionEntryType) {
-		headerTitle = TXTLS(@"TDCChannelBanListSheet[1001]", self.channel.name);
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[gbi-wn]", self.channel.name);
 	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
-		headerTitle = TXTLS(@"TDCChannelBanListSheet[1002]", self.channel.name);
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[ylc-6e]", self.channel.name);
 	} else if (self.entryType == TDCChannelBanListSheetQuietEntryType) {
-		headerTitle = TXTLS(@"TDCChannelBanListSheet[1003]", self.channel.name);
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[g4r-t6]", self.channel.name);
 	}
 
 	self.headerTitleTextField.stringValue = headerTitle;
@@ -135,7 +135,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(entryMask != nil);
 
 	if (entryAuthor == nil) {
-		entryAuthor = TXTLS(@"BasicLanguage[1002]"); // "Unknown"
+		entryAuthor = TXTLS(@"BasicLanguage[vbl-xi]"); // "Unknown"
 	}
 
 	TDCChannelBanListSheetEntry *newEntry = [TDCChannelBanListSheetEntry new];
@@ -224,7 +224,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSDate *entryCreationDate = self.entryCreationDate;
 
 	if (entryCreationDate == nil) {
-		return TXTLS(@"BasicLanguage[1002]"); // "Unknown"
+		return TXTLS(@"BasicLanguage[vbl-xi]"); // "Unknown"
 	}
 
 	return TXFormatDateLongStyle(entryCreationDate, YES);

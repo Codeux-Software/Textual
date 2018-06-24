@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizedString(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[3kj-8f]");
 }
 
 - (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType

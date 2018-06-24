@@ -85,7 +85,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	defaults[@"cachedLastServerTimeCapabilityReceivedAtTimestamp"] = @(0);
 	defaults[@"cipherSuites"] = @(GCDAsyncSocketCipherSuiteDefaultVersion);
-	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[1004]");
+	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[vfu-c0]");
 	defaults[@"connectionPrefersIPv4"] = @(NO);
 	defaults[@"excludedFromCloudSyncing"] = @(NO);
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
@@ -93,7 +93,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"floodControlMaximumMessages"] = @(IRCConnectionConfigFloodControlDefaultMessageCount);
 	defaults[@"hideAutojoinDelayedWarnings"] = @(NO);
 	defaults[@"hideNetworkUnavailabilityNotices"] = @(NO);
-	defaults[@"normalLeavingComment"] = TXTLS(@"BasicLanguage[1003]");
+	defaults[@"normalLeavingComment"] = TXTLS(@"BasicLanguage[1dd-0f]");
 	defaults[@"performDisconnectOnPongTimer"] = @(NO);
 	defaults[@"performDisconnectOnReachabilityChange"] = @(YES);
 	defaults[@"performPongTimer"] = @(YES);
@@ -112,9 +112,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		NSString *macintoshModel = [XRSystemInformation systemModelName];
 
 		if (macintoshModel == nil) {
-			defaults[@"sleepModeLeavingComment"] = TXTLS(@"BasicLanguage[1006]");
+			defaults[@"sleepModeLeavingComment"] = TXTLS(@"BasicLanguage[qi7-5y]");
 		} else {
-			defaults[@"sleepModeLeavingComment"] = TXTLS(@"BasicLanguage[1005]", macintoshModel);
+			defaults[@"sleepModeLeavingComment"] = TXTLS(@"BasicLanguage[zhr-lq]", macintoshModel);
 		}
 	}
 

@@ -271,7 +271,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		for (NSString *nickname in nicknames) {
 			if (nickname.isHostmaskNickname == NO) {
-				return TXTLS(@"TDCServerPropertiesSheet[1020]", nickname);
+				return TXTLS(@"TDCServerPropertiesSheet[wlz-tb]", nickname);
 			}
 		}
 
@@ -287,7 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.awayNicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isHostmaskNickname == NO) {
-			return TXTLS(@"TDCServerPropertiesSheet[1011]");
+			return TXTLS(@"CommonErrors[och-j5]");
 		}
 
 		return nil;
@@ -302,7 +302,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.nicknameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isHostmaskNickname == NO) {
-			return TXTLS(@"TDCServerPropertiesSheet[1011]");
+			return TXTLS(@"CommonErrors[och-j5]");
 		}
 
 		return nil;
@@ -317,7 +317,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.usernameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isHostmaskUsername == NO) {
-			return TXTLS(@"TDCServerPropertiesSheet[1012]");
+			return TXTLS(@"TDCServerPropertiesSheet[8iw-q8]");
 		}
 
 		return nil;
@@ -332,7 +332,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.realNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCServerPropertiesSheet[1019]");
+			return TXTLS(@"TDCServerPropertiesSheet[agy-bp]");
 		}
 
 		return nil;
@@ -347,11 +347,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.normalLeavingCommentTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCServerPropertiesSheet[1013]");
+			return TXTLS(@"CommonErrors[gas-v8]");
 		}
 
 		if (currentValue.length > 390) {
-			return TXTLS(@"TDCServerPropertiesSheet[1014]", 390);
+			return TXTLS(@"CommonErrors[2cb-af]", 390);
 		}
 
 		return nil;
@@ -366,11 +366,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.sleepModeQuitMessageTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCServerPropertiesSheet[1013]");
+			return TXTLS(@"CommonErrors[gas-v8]");
 		}
 
 		if (currentValue.length > 390) {
-			return TXTLS(@"TDCServerPropertiesSheet[1014]", 390);
+			return TXTLS(@"CommonErrors[2cb-af]", 390);
 		}
 
 		return nil;
@@ -385,7 +385,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.connectionNameTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
-			return TXTLS(@"TDCServerPropertiesSheet[1018]");
+			return TXTLS(@"CommonErrors[gas-v8]");
 		}
 
 		return nil;
@@ -400,7 +400,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.serverAddressComboBox.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isValidInternetAddress == NO) {
-			return TXTLS(@"TDCServerPropertiesSheet[1015]");
+			return TXTLS(@"CommonErrors[yyx-l3]");
 		}
 
 		return nil;
@@ -415,7 +415,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.serverPortTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		if (currentValue.isValidInternetPort == NO) {
-			return TXTLS(@"TDCServerPropertiesSheet[1016]");
+			return TXTLS(@"CommonErrors[l0c-nb]");
 		}
 
 		return nil;
@@ -439,7 +439,7 @@ NS_ASSUME_NONNULL_BEGIN
 			proxyType == IRCConnectionSocketHTTPSProxyType)
 		{
 			if (currentValue.isValidInternetAddress == NO) {
-				return TXTLS(@"TDCServerPropertiesSheet[1017]");
+				return TXTLS(@"TDCServerPropertiesSheet[tlo-b6]");
 			}
 		}
 
@@ -466,7 +466,7 @@ NS_ASSUME_NONNULL_BEGIN
 			proxyType == IRCConnectionSocketHTTPSProxyType)
 		{
 			if (currentValue.isValidInternetPort == NO) {
-				return TXTLS(@"TDCServerPropertiesSheet[1016]");
+				return TXTLS(@"CommonErrors[l0c-nb]");
 			}
 		}
 
@@ -510,32 +510,32 @@ NS_ASSUME_NONNULL_BEGIN
 	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:TDCServerPropertiesSheet ##_identifier_## Selection view:self.contentView ##_identifier_ firstResponder:nil]
 
 	NSArray *generalSectionChildren = @[
-		_childItem(@"TDCServerPropertiesSheet[1006][04]", AddressBook),
-		_childItem(@"TDCServerPropertiesSheet[1006][05]", Autojoin),
-		_childItem(@"TDCServerPropertiesSheet[1006][06]", ConnectCommands),
-		_childItem(@"TDCServerPropertiesSheet[1006][07]", Encoding),
-		_childItem(@"TDCServerPropertiesSheet[1006][08]", General),
-		_childItem(@"TDCServerPropertiesSheet[1006][09]", Identity),
-		_childItem(@"TDCServerPropertiesSheet[1006][10]", Highlights),
-		_childItem(@"TDCServerPropertiesSheet[1006][11]", DisconnectMessages),
+		_childItem(@"TDCServerPropertiesSheet[8zc-6y]", AddressBook),
+		_childItem(@"TDCServerPropertiesSheet[5oz-07]", Autojoin),
+		_childItem(@"TDCServerPropertiesSheet[hip-13]", ConnectCommands),
+		_childItem(@"TDCServerPropertiesSheet[8ug-ka]", Encoding),
+		_childItem(@"TDCServerPropertiesSheet[ehx-4d]", General),
+		_childItem(@"TDCServerPropertiesSheet[8ik-qo]", Identity),
+		_childItem(@"TDCServerPropertiesSheet[jtx-hn]", Highlights),
+		_childItem(@"TDCServerPropertiesSheet[j34-yr]", DisconnectMessages),
 	];
 
 	NSArray *vendorSectionChildren = @[
-		_childItem(@"TDCServerPropertiesSheet[1006][12]", ZncBouncer)
+		_childItem(@"TDCServerPropertiesSheet[fsj-7f]", ZncBouncer)
 	];
 
 	NSArray *advancedSectionChildren = @[
-		_childItem(@"TDCServerPropertiesSheet[1006][13]", ClientCertificate),
-		_childItem(@"TDCServerPropertiesSheet[1006][14]", FloodControl),
-		_childItem(@"TDCServerPropertiesSheet[1006][15]", NetworkSocket),
-		_childItem(@"TDCServerPropertiesSheet[1006][16]", ProxyServer),
-		_childItem(@"TDCServerPropertiesSheet[1006][17]", Redundancy)
+		_childItem(@"TDCServerPropertiesSheet[ce7-kc]", ClientCertificate),
+		_childItem(@"TDCServerPropertiesSheet[fcr-w8]", FloodControl),
+		_childItem(@"TDCServerPropertiesSheet[ffy-xt]", NetworkSocket),
+		_childItem(@"TDCServerPropertiesSheet[t52-7a]", ProxyServer),
+		_childItem(@"TDCServerPropertiesSheet[36n-u9]", Redundancy)
 	];
 
 	NSArray *navigationTreeMatrix = @[
-		_groupItem(@"TDCServerPropertiesSheet[1006][01]", generalSectionChildren),
-		_groupItem(@"TDCServerPropertiesSheet[1006][02]", vendorSectionChildren),
-		_groupItem(@"TDCServerPropertiesSheet[1006][03]", advancedSectionChildren)
+		_groupItem(@"TDCServerPropertiesSheet[lww-pc]", generalSectionChildren),
+		_groupItem(@"TDCServerPropertiesSheet[v27-8w]", vendorSectionChildren),
+		_groupItem(@"TDCServerPropertiesSheet[8uw-tz]", advancedSectionChildren)
 	];
 
 #undef _groupItem
@@ -871,10 +871,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSWindow *window = self.sheet.deepestWindow;
 	
 	[TDCAlert alertSheetWithWindow:window
-							  body:TXTLS(@"Prompts[1116][2]")
-							 title:TXTLS(@"Prompts[1116][1]")
-					 defaultButton:TXTLS(@"Prompts[0001]")
-				   alternateButton:TXTLS(@"Prompts[0002]")
+							  body:TXTLS(@"TDCServerPropertiesSheet[oz4-kb]")
+							 title:TXTLS(@"TDCServerPropertiesSheet[bzh-il]")
+					 defaultButton:TXTLS(@"Prompts[mvh-ms]")
+				   alternateButton:TXTLS(@"Prompts[99q-gg]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked != TDCAlertResponseDefaultButton) {
@@ -1362,9 +1362,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	(void)[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[1136][2]")
-									title:TXTLS(@"Prompts[1136][1]")
-							defaultButton:TXTLS(@"Prompts[0005]")
+	(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TDCServerPropertiesSheet[26u-j8]")
+									title:TXTLS(@"TDCServerPropertiesSheet[94r-eq]")
+							defaultButton:TXTLS(@"Prompts[c7s-dq]")
 						  alternateButton:nil];
 }
 
@@ -1387,9 +1387,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *cipherSuitesTitle = self.preferredCipherSuitesButton.titleOfSelectedItem;
 
 	[TDCAlert alertSheetWithWindow:self.sheet
-							  body:TXTLS(@"TDCServerPropertiesSheet[1010][2]", cipherSuitesDescription)
-							 title:TXTLS(@"TDCServerPropertiesSheet[1010][1]", cipherSuitesTitle)
-					 defaultButton:TXTLS(@"Prompts[0005]")
+							  body:TXTLS(@"TDCServerPropertiesSheet[k50-8n]", cipherSuitesDescription)
+							 title:TXTLS(@"TDCServerPropertiesSheet[yko-5g]", cipherSuitesTitle)
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:nil
 					   otherButton:nil];
 }
@@ -1472,10 +1472,10 @@ NS_ASSUME_NONNULL_BEGIN
 		NSWindow *window = self.sheet;
 
 		[TDCAlert alertSheetWithWindow:window
-								  body:TXTLS(@"TDCServerPropertiesSheet[1002][2]")
-								 title:TXTLS(@"TDCServerPropertiesSheet[1002][1]")
-						 defaultButton:TXTLS(@"Prompts[0001]")
-					   alternateButton:TXTLS(@"Prompts[0002]")
+								  body:TXTLS(@"TDCServerPropertiesSheet[sqc-nw]")
+								 title:TXTLS(@"TDCServerPropertiesSheet[x08-ko]")
+						 defaultButton:TXTLS(@"Prompts[mvh-ms]")
+					   alternateButton:TXTLS(@"Prompts[99q-gg]")
 						   otherButton:nil
 					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 						   if (buttonClicked == TDCAlertResponseAlternateButton) {
@@ -1644,11 +1644,11 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL hasNoCertificate = (commonName.length == 0);
 
 	if (hasNoCertificate) {
-		self.clientCertificateCommonNameField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
+		self.clientCertificateCommonNameField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
 
-		self.clientCertificateSHA2FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
-		self.clientCertificateSHA1FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
-		self.clientCertificateMD5FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[1008]");
+		self.clientCertificateSHA2FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
+		self.clientCertificateSHA1FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
+		self.clientCertificateMD5FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
 	} else {
 		self.clientCertificateCommonNameField.stringValue = commonName;
 
@@ -1693,13 +1693,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.clientCertificateSelectCertificatePanel = panel;
 
-	[panel setInformativeText:TXTLS(@"TDCServerPropertiesSheet[1009][2]")];
+	[panel setInformativeText:TXTLS(@"TDCServerPropertiesSheet[mi4-fd]")];
 
-	[panel setAlternateButtonTitle:TXTLS(@"Prompts[0004]")];
+	[panel setAlternateButtonTitle:TXTLS(@"Prompts[qso-2g]")];
 
 	NSInteger panelResponse =
 	[panel runModalForIdentities:(__bridge NSArray *)(identities)
-						 message:TXTLS(@"TDCServerPropertiesSheet[1009][1]")];
+						 message:TXTLS(@"TDCServerPropertiesSheet[6wq-i4]")];
 
 	CFRelease(identities);
 
@@ -2168,14 +2168,14 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 			}
 
-			return TXTLS(@"TDCServerPropertiesSheet[1003]");
+			return TXTLS(@"TDCServerPropertiesSheet[61f-6b]");
 		}
 		else if ([columnId isEqualToString:@"type"])
 		{
 			if (config.matchIsExcluded) {
-				return TXTLS(@"TDCServerPropertiesSheet[1004]");
+				return TXTLS(@"TDCServerPropertiesSheet[qcc-b4]");
 			} else {
-				return TXTLS(@"TDCServerPropertiesSheet[1005]");
+				return TXTLS(@"TDCServerPropertiesSheet[tet-dk]");
 			}
 		}
 	}
@@ -2190,9 +2190,9 @@ NS_ASSUME_NONNULL_BEGIN
 		else if ([columnId isEqualToString:@"type"])
 		{
 			if (config.entryType == IRCAddressBookIgnoreEntryType) {
-				return TXTLS(@"TDCServerPropertiesSheet[1000]");
+				return TXTLS(@"TDCServerPropertiesSheet[f7o-x4]");
 			} else {
-				return TXTLS(@"TDCServerPropertiesSheet[1001]");
+				return TXTLS(@"TDCServerPropertiesSheet[b0g-0x]");
 			}
 		}
 	}

@@ -155,10 +155,10 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(errorMessage != nil);
 
 	[TDCAlert alertSheetWithWindow:self.window
-							  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][2]", errorMessage)
-							 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][1]", self.licenseKey.prettyLicenseKey)
-					 defaultButton:TXTLS(@"Prompts[0005]")
-				   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1001][3]")
+							  body:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[8hb-y3]", errorMessage)
+							 title:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[wmk-xg]", self.licenseKey.prettyLicenseKey)
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
+				   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[dn3-4r]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 					   if (buttonClicked == TDCAlertResponseAlternateButton) {
@@ -243,9 +243,9 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *errorMessage = nil;
 
 		if (statusCode == TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater) {
-			errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][5]");
+			errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[9uu-go]");
 		} else {
-			errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][1]", statusCode);
+			errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[awy-4i]", statusCode);
 		}
 
 		_presentEligibilityCheckFailedSheet
@@ -253,7 +253,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* There is never a time a status context should be nil for this check. */
 	if (statusContext == nil) {
-		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][2]");
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[z70-6s]");
 
 		_presentEligibilityCheckFailedSheet
 	}
@@ -264,7 +264,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (eligibilityObject == nil || [eligibilityObject isKindOfClass:[NSNumber class]] == NO) {
 		LogToConsoleError("'licenseUpgradeEligibility' is nil or not of kind 'NSNumber'");
 
-		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][3]");
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[gc5-ko]");
 
 		_presentEligibilityCheckFailedSheet
 	}
@@ -277,7 +277,7 @@ ClassWithDesignatedInitializerInitMethod
 		eligibility != TLOLicenseUpgradeNotEligible &&
 		eligibility != TLOLicenseUpgradeAlreadyUpgraded)
 	{
-		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[1002][4]", eligibility);
+		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[5s6-sb]", eligibility);
 
 		_presentEligibilityCheckFailedSheet
 	}

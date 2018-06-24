@@ -266,10 +266,10 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	if (lastGenLicenseKey != nil) {
 		BOOL upgradeLicense =
-		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1024][2]", lastGenLicenseKey.prettyLicenseKey)
-								  title:TXTLS(@"TLOLicenseManager[1024][1]")
-						  defaultButton:TXTLS(@"TLOLicenseManager[1024][3]")
-						alternateButton:TXTLS(@"TLOLicenseManager[1024][4]")];
+		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[dpo-ln]", lastGenLicenseKey.prettyLicenseKey)
+								  title:TXTLS(@"TLOLicenseManager[12h-3w]")
+						  defaultButton:TXTLS(@"TLOLicenseManager[qrx-aq]")
+						alternateButton:TXTLS(@"TLOLicenseManager[zp8-8q]")];
 
 		if (upgradeLicense) {
 			[self showUpgradeDialogForLicenseKey:lastGenLicenseKey];
@@ -361,9 +361,9 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 	 outside influence. Everything else is internalized which means this check is
 	 only necessary here... at least for now. */
 	if (self.operationInProgress) {
-		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1020][2]")
-								  title:TXTLS(@"TLOLicenseManager[1020][1]", licenseKey.prettyLicenseKey)
-						  defaultButton:TXTLS(@"Prompts[0005]")
+		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[vnu-5e]")
+								  title:TXTLS(@"TLOLicenseManager[0uc-io]", licenseKey.prettyLicenseKey)
+						  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 						alternateButton:nil];
 
 		return;
@@ -371,9 +371,9 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	/* Do not activate license we are already using. */
 	if (licenseKey == TLOLicenseManagerLicenseKey()) {
-		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1021][2]")
-								  title:TXTLS(@"TLOLicenseManager[1021][1]", licenseKey.prettyLicenseKey)
-						  defaultButton:TXTLS(@"Prompts[0005]")
+		[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[fxu-su]")
+								  title:TXTLS(@"TLOLicenseManager[bw3-sc]", licenseKey.prettyLicenseKey)
+						  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 						alternateButton:nil];
 
 		return;
@@ -407,9 +407,9 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		NSString *lastGenLicenseKey = [TLOLicenseManagerLastGen licenseKeyForLicenseContents:statusContext];
 
 		if (lastGenLicenseKey != nil) {
-			[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1022][2]")
-									  title:TXTLS(@"TLOLicenseManager[1022][1]", lastGenLicenseKey.prettyLicenseKey)
-							  defaultButton:TXTLS(@"TLOLicenseManager[1022][3]")
+			[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[5bu-ov]")
+									  title:TXTLS(@"TLOLicenseManager[pmv-qp]", lastGenLicenseKey.prettyLicenseKey)
+							  defaultButton:TXTLS(@"TLOLicenseManager[53u-lt]")
 							alternateButton:nil];
 
 			[weakSelf showUpgradeDialogForLicenseKey:lastGenLicenseKey];
@@ -702,10 +702,10 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 - (void)registeredViewDeactivateTextual:(id)sender
 {
-	BOOL deactivateCopy = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[1007][2]")
-													title:TXTLS(@"TLOLicenseManager[1007][1]")
-											defaultButton:TXTLS(@"Prompts[0001]")
-										  alternateButton:TXTLS(@"Prompts[0002]")];
+	BOOL deactivateCopy = [TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[z87-wb]")
+													title:TXTLS(@"TLOLicenseManager[pg1-a9]")
+											defaultButton:TXTLS(@"Prompts[mvh-ms]")
+										  alternateButton:TXTLS(@"Prompts[99q-gg]")];
 
 	if (deactivateCopy == NO) {
 		return; // Cancel operation...
@@ -836,12 +836,12 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
 
 	if (timeLeft >= 0) {
-		return TXTLS(@"TLOLicenseManager[1016]");
+		return TXTLS(@"TLOLicenseManager[kn7-ju]");
 	}
 
 	NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
 
-	return TXTLS(@"TLOLicenseManager[1015]", formattedTimeRemainingString);
+	return TXTLS(@"TLOLicenseManager[wdl-3f]", formattedTimeRemainingString);
 }
 
 - (void)scheduleTimeRemainingInTrialNotification
@@ -854,7 +854,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	notification.deliveryDate = [NSDate date];
 
-	notification.informativeText = TXTLS(@"TLOLicenseManager[1017][2]");
+	notification.informativeText = TXTLS(@"TLOLicenseManager[ccj-ag]");
 
 	notification.title = [self timeRemainingInTrialFormattedMessage];
 
@@ -862,7 +862,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 
 	[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-	notification.actionButtonTitle = TXTLS(@"TLOLicenseManager[1017][3]");
+	notification.actionButtonTitle = TXTLS(@"TLOLicenseManager[b8b-sg]");
 
 	[RZUserNotificationCenter() scheduleNotification:notification];
 }

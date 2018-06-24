@@ -60,14 +60,23 @@ NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 	NSCParameterAssert(args != NULL);
 
 	NSInteger openBracketPosition = [key stringPosition:@"["];
+	NSInteger closeBracketPosition = [key stringPosition:@"]"];
 
-	if (openBracketPosition > 0) {
-		NSString *table = [key substringToIndex:openBracketPosition];
-
-		return [TLOLanguagePreferences localizedStringWithKey:key from:bundle table:table arguments:args];
-	} else {
+	if (openBracketPosition <= 0 || closeBracketPosition <= 0) {
 		return [TLOLanguagePreferences localizedStringWithKey:key from:bundle arguments:args];
 	}
+
+	/* Given keys in the format "<table>[<tableKey>]",
+	 extract the two values and lookup the result. */
+	NSString *table = [key substringToIndex:openBracketPosition];
+	NSString *tableKey = [key substringFromIndex:(openBracketPosition + 1) toIndex:closeBracketPosition];
+
+	/* Backwards compatability for plugins */
+	if ([tableKey contains:@"-"] == NO) {
+		tableKey = key;
+	}
+
+	return [TLOLanguagePreferences localizedStringWithKey:tableKey from:bundle table:table arguments:args];
 }
 
 NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
