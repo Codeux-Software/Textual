@@ -1205,7 +1205,7 @@ static NSArray<NSString *> *_matchKeywords = nil;
 }
 #endif
 
-+ (void)_migrateAppearanceToVersion7011
++ (void)_migrateAppearanceToVersion7011 /* 7.0.11 turned into 7.1.0 */
 {
 
 #define _defaultsKey @"TPCPreferences -> Migration -> Appearance (7011)"
