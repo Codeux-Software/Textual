@@ -316,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		/* Remove any keys that were marked for removal */
 		for (NSString *key in self.keysToRemove) {
-			LogToConsoleDebug("Key (%{public}@) is being removed from iCloud as it was marked to be", key);
+			LogToConsoleDebug("Key (%@) is being removed from iCloud as it was marked to be", key);
 
 			[self removeObjectForKey:key];
 
@@ -418,10 +418,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (unhashedKey == nil || unhashedValue == nil) {
 				unhashedKey = [self unhashedKeyFromHashedKey:hashedKey];
 
-				LogToConsoleDebug("Hashed key (%{public}@) is missing a value or key name. Possible key name: %@", hashedKey, unhashedKey);
+				LogToConsoleDebug("Hashed key (%@) is missing a value or key name. Possible key name: %@", hashedKey, unhashedKey);
 
 				if (unhashedKey) {
-					LogToConsoleDebug("Asking for permission to remove key (%{public}@) from local defaults store", unhashedKey);
+					LogToConsoleDebug("Asking for permission to remove key (%@) from local defaults store", unhashedKey);
 
 					if ([self keyIsNotPermittedFromCloud:unhashedKey]) {
 						continue;

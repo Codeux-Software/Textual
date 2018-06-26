@@ -404,7 +404,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (isConnected == NO) {
 		if (connectionError) {
-			LogToConsoleError("DCC Connect Error: %{public}@", connectionError.localizedDescription);
+			LogToConsoleError("DCC Connect Error: %@", connectionError.localizedDescription);
 		}
 
 		[self closeWithLocalizedError:@"TDCFileTransferDialog[fn8-sx]"];
@@ -490,12 +490,12 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.portMapping.isMapped) {
 		[self updateIPAddress];
 
-		LogToConsoleInfo("Successful port mapping on port %{public}hu", self.hostPort);
+		LogToConsoleInfo("Successful port mapping on port %hu", self.hostPort);
 
 		return;
 	}
 
-	LogToConsoleError("Port mapping failed with error code: %{public}i", self.portMapping.error);
+	LogToConsoleError("Port mapping failed with error code: %i", self.portMapping.error);
 
 	if (self.isReversed) {
 		[self closeWithLocalizedError:@"TDCFileTransferDialog[vxc-sd]"];
@@ -516,7 +516,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *address = self.transferDialog.IPAddress;
 
-	LogToConsoleDebug("TDCFileTransferDialog cached IP address: %{public}@", address);
+	LogToConsoleDebug("TDCFileTransferDialog cached IP address: %@", address);
 
 	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
 	
@@ -525,7 +525,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (address == nil && manuallyDetect == NO) {
 		NSString *publicAddress = self.portMapping.publicAddress;
 
-		LogToConsoleDebug("Port mapper public IP address: %{public}@", publicAddress);
+		LogToConsoleDebug("Port mapper public IP address: %@", publicAddress);
 
 		if (publicAddress.isIPAddress) {
 			self.transferDialog.IPAddress = publicAddress;

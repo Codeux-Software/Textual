@@ -1033,7 +1033,7 @@ NS_ASSUME_NONNULL_BEGIN
 													   error:&bookmarkError];
 
 			if (bookmark == nil) {
-				LogToConsoleError("Error creating bookmark for URL (%{public}@): %{public}@",
+				LogToConsoleError("Error creating bookmark for URL (%@): %@",
 				  path, bookmarkError.localizedDescription);
 			}
 
@@ -1108,7 +1108,7 @@ NS_ASSUME_NONNULL_BEGIN
 													   error:&bookmarkError];
 
 			if (bookmark == nil) {
-				LogToConsoleError("Error creating bookmark for URL (%{public}@): %{public}@",
+				LogToConsoleError("Error creating bookmark for URL (%@): %@",
 					  path, bookmarkError.localizedDescription);
 
 				return;
@@ -1428,7 +1428,7 @@ NS_ASSUME_NONNULL_BEGIN
 	OSStatus aeDescStatus = AECreateDesc('ptru', "Proxies", 7,  &aeDesc);
 
 	if (aeDescStatus != noErr) {
-		LogToConsoleError("aeDescStatus returned value other than noErr: %{public}i", aeDescStatus);
+		LogToConsoleError("aeDescStatus returned value other than noErr: %i", aeDescStatus);
 
 		return;
 	}
@@ -1662,7 +1662,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSError *deleteThemesError = nil;
 
 	if ([RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemes] error:&deleteThemesError] == NO) {
-		LogToConsoleError("Delete Error: %{public}@",
+		LogToConsoleError("Delete Error: %@",
 			  deleteThemesError.localizedDescription);
 	}
 }

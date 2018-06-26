@@ -163,7 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSData *receiptData = [NSData dataWithContentsOfURL:receiptFileURL options:0 error:&receiptDataReadError];
 
 	if (receiptData == nil) {
-		LogToConsoleError("Failed to read the contents of the receipt file: %{public}@",
+		LogToConsoleError("Failed to read the contents of the receipt file: %@",
 		  receiptDataReadError.localizedDescription);
 
 		return nil;

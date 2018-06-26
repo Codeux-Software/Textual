@@ -185,7 +185,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 													error:&trialInformationPropertyListError];
 
 		if (trialInformationPropertyList == nil) {
-			LogToConsoleError("Failed to create trial information property list: %{public}@", trialInformationPropertyListError.localizedDescription);
+			LogToConsoleError("Failed to create trial information property list: %@", trialInformationPropertyListError.localizedDescription);
 
 			return 0; // Cannot continue function...
 		}
@@ -193,7 +193,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		NSError *trialInformationWriteError = nil;
 
 		if ([trialInformationPropertyList writeToURL:trialInformationFilePath options:NSDataWritingAtomic error:&trialInformationWriteError] == NO) {
-			LogToConsoleError("Failed to write trial information to disk: %{public}@", trialInformationWriteError.localizedDescription);
+			LogToConsoleError("Failed to write trial information to disk: %@", trialInformationWriteError.localizedDescription);
 
 			return 0; // Cannot continue function...
 		}
@@ -201,7 +201,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		NSError *modifyTrialInformationAttributesError = nil;
 
 		if ([trialInformationFilePath setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifyTrialInformationAttributesError] == NO) {
-			LogToConsoleError("Failed to modify attributes of trial information file: %{public}@", modifyTrialInformationAttributesError.localizedDescription);
+			LogToConsoleError("Failed to modify attributes of trial information file: %@", modifyTrialInformationAttributesError.localizedDescription);
 
 			return 0; // Cannot continue function...
 		}
@@ -209,7 +209,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		NSError *lockTrialInformationFileError = nil;
 
 		if ([RZFileManager() lockItemAtPath:trialInformationFilePath.path error:&lockTrialInformationFileError] == NO) {
-			LogToConsoleError("Failed to lock the trial information file: %{public}@", lockTrialInformationFileError.localizedDescription);
+			LogToConsoleError("Failed to lock the trial information file: %@", lockTrialInformationFileError.localizedDescription);
 
 			return 0; // Cannot continue function...
 		}
@@ -221,7 +221,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 	NSData *trialInformationData = [NSData dataWithContentsOfURL:trialInformationFilePath options:0 error:&trialInformationDataReadError];
 
 	if (trialInformationData == nil) {
-		LogToConsoleError("Failed to read contents of trial information file: %{public}@", trialInformationDataReadError.localizedDescription);
+		LogToConsoleError("Failed to read contents of trial information file: %@", trialInformationDataReadError.localizedDescription);
 
 		return 0; // Cannot continue function...
 	}
@@ -235,7 +235,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 												error:&trialInformationPropertyListError];
 
 	if (trialInformation == nil) {
-		LogToConsoleError("Failed to convert property list to NSDictionary: %{public}@", trialInformationPropertyListError.localizedDescription);
+		LogToConsoleError("Failed to convert property list to NSDictionary: %@", trialInformationPropertyListError.localizedDescription);
 
 		return 0; // Cannot continue function...
 	}
@@ -502,7 +502,7 @@ BOOL TLOLicenseManagerWriteLicenseFileContents(NSData * _Nullable newContents)
 		NSError *writeFileError = nil;
 
 		if ([newContents writeToURL:licenseFilePath options:NSDataWritingAtomic error:&writeFileError] == NO) {
-			LogToConsoleError("Failed to write user license file with error: %{public}@", writeFileError.localizedDescription);
+			LogToConsoleError("Failed to write user license file with error: %@", writeFileError.localizedDescription);
 
 			return NO;
 		}
@@ -512,7 +512,7 @@ BOOL TLOLicenseManagerWriteLicenseFileContents(NSData * _Nullable newContents)
 		NSError *deleteError = nil;
 
 		if ([RZFileManager() removeItemAtURL:licenseFilePath error:&deleteError] == NO) {
-			LogToConsoleError("Failed to delete user license file with error: %{public}@", deleteError.localizedDescription);
+			LogToConsoleError("Failed to delete user license file with error: %@", deleteError.localizedDescription);
 
 			return NO;
 		}
@@ -555,7 +555,7 @@ NSData * _Nullable TLOLicenseManagerLicenseFileContents(void)
 	NSData *licenseContents = [NSData dataWithContentsOfURL:licenseFilePath options:0 error:&readError];
 
 	if (licenseContents == nil) {
-		LogToConsoleError("Unable to read user license file. Error: %{public}@", readError.localizedDescription);
+		LogToConsoleError("Unable to read user license file. Error: %@", readError.localizedDescription);
 
 		return nil;
 	}
@@ -608,7 +608,7 @@ NSDictionary<NSString *, id> *TLOLicenseManagerLicenseDictionaryWithData(NSData 
 
 	if (licenseDictionary == nil || [licenseDictionary isKindOfClass:[NSDictionary class]] == NO) {
 		if (readError) {
-			LogToConsoleError("Failed to convert contents of user license into dictionary. Error: %{public}@",
+			LogToConsoleError("Failed to convert contents of user license into dictionary. Error: %@",
 				  readError.localizedDescription);
 		}
 
@@ -643,7 +643,7 @@ NSData * _Nullable TLOLicenseManagerPublicKeyContents(void)
 	NSData *publicKeyContents = [NSData dataWithContentsOfURL:publicKeyPath options:0 error:&readError];
 
 	if (publicKeyContents == nil) {
-		LogToConsoleError("Unable to read contents of the public key used for verifying signatures. Error: %{public}@",
+		LogToConsoleError("Unable to read contents of the public key used for verifying signatures. Error: %@",
 			  readError.localizedDescription);
 
 		return nil;
@@ -711,7 +711,7 @@ void TLOLicenseManagerPopulatePublicKeyRef(void)
 		return;
 	}
 
-	LogToConsoleError("SecItemImport() failed to import public key with status code: %{public}i",
+	LogToConsoleError("SecItemImport() failed to import public key with status code: %i",
 		  operationStatus);
 }
 
@@ -820,7 +820,7 @@ void TLOLicenseManagerDeleteLicenseFileIfBlacklisted(void)
 		return;
 	}
 
-	LogToConsoleInfo("License key '%{public}@' is blacklisted", licenseKey);
+	LogToConsoleInfo("License key '%@' is blacklisted", licenseKey);
 
 	TLOLicenseManagerDeleteLicenseFile();
 }

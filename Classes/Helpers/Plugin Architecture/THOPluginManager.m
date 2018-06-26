@@ -249,11 +249,11 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 			NSString *command = fileWithoutExtension.lowercaseString;
 
 			if ([scriptExtensions containsObject:fileExtension] == NO) {
-				LogToConsoleDebug("WARNING: File “%{public}@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
+				LogToConsoleDebug("WARNING: File “%@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
 
 				continue;
 			} else if ([forbiddenCommands containsObject:command]) {
-				LogToConsoleDebug("WARNING: The command “%{public}@“ exists as a script file, but it is being ignored because the command name is forbidden.", fileWithoutExtension);
+				LogToConsoleDebug("WARNING: The command “%@“ exists as a script file, but it is being ignored because the command name is forbidden.", fileWithoutExtension);
 
 				continue;
 			}

@@ -124,7 +124,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		if ([self socksProxyPopulateSystemSocksProxy:&proxyPopulateError] == NO) {
 			if (proxyPopulateError) {
-				LogToConsoleError("%{public}@", proxyPopulateError);
+				LogToConsoleError("%@", proxyPopulateError);
 			}
 		} else {
 			[self tpcClientWillConnectToProxy:self.config.proxyAddress port:self.config.proxyPort];
@@ -394,7 +394,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		errorMessage = error.localizedDescription;
 	}
 
-	LogToConsoleInfo("Disconnect failure reason: %{public}", error.localizedFailureReason);
+	LogToConsoleInfo("Disconnect failure reason: %", error.localizedFailureReason);
 
 	[self tcpClientDidError:errorMessage];
 

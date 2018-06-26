@@ -120,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSError *attributesChangeError = nil;
 
 	if ([componentPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&attributesChangeError] == NO) {
-		LogToConsoleError("Failed to hide the folder at the path '%{public}@': %{public}@",
+		LogToConsoleError("Failed to hide the folder at the path '%@': %@",
 			  componentPathURL, attributesChangeError.localizedDescription);
 	}
 
@@ -151,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSError *attributesChangeError = nil;
 
 	if ([pathURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&attributesChangeError] == NO) {
-		LogToConsoleError("Failed to exclude the files at the path '%{public}@' from backup: %{public}@",
+		LogToConsoleError("Failed to exclude the files at the path '%@' from backup: %@",
 			  pathURL, attributesChangeError.localizedDescription);
 	}
 }

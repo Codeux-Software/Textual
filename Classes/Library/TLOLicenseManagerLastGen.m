@@ -137,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSData *licenseContents = [NSData dataWithContentsOfURL:licenseFilePath options:0 error:&readError];
 
 	if (licenseContents == nil) {
-		LogToConsoleError("Unable to read user license file. Error: %{public}@", readError.localizedDescription);
+		LogToConsoleError("Unable to read user license file. Error: %@", readError.localizedDescription);
 
 		return nil;
 	}
@@ -171,7 +171,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (licenseDictionary == nil || [licenseDictionary isKindOfClass:[NSDictionary class]] == NO) {
 		if (readError) {
-			LogToConsoleError("Failed to convert contents of user license into dictionary. Error: %{public}@",
+			LogToConsoleError("Failed to convert contents of user license into dictionary. Error: %@",
 				  readError.localizedDescription);
 		}
 

@@ -212,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* A hard limit exists to prevent a bad person continously sending file transfers 
 	 which appear in the file transfer, exhausting resources. */
 	if ([self receiverCount] > _addReceiverHardLimit) {
-		LogToConsoleError("Max receiver count of %{public}i exceeded.", _addReceiverHardLimit);
+		LogToConsoleError("Max receiver count of %i exceeded.", _addReceiverHardLimit);
 
 		return nil;
 	}
@@ -844,7 +844,7 @@ NS_ASSUME_NONNULL_BEGIN
 								error:&resolvedBookmarkError];
 
 	if (resolvedBookmark == nil) {
-		LogToConsoleError("Error creating bookmark for URL: %{public}@",
+		LogToConsoleError("Error creating bookmark for URL: %@",
 			  resolvedBookmarkError.localizedDescription);
 
 		return;
