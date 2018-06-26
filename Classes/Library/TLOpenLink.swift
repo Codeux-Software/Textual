@@ -55,7 +55,7 @@ public class OpenLink: NSObject
 			return
 		}
 
-		self.open(url: urlToOpen, inBackground: inBackground)
+		open(url: urlToOpen, inBackground: inBackground)
 	}
 }
 
@@ -63,12 +63,12 @@ extension OpenLink {
 	@objc(open:)
 	public static func openBridged(url: URL)
 	{
-		self.open(url: url)
+		open(url: url)
 	}
 
 	@objc(openWithString:)
 	public static func openBridged(string: String)
 	{
-		self.open(string: string)
+		open(string: string)
 	}
 }
