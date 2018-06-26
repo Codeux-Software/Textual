@@ -248,7 +248,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 		if (propertyList == nil || [propertyList isKindOfClass:[NSDictionary class]] == NO) {
 			if (propertyListReadError) {
-				LogToConsoleError("Failed to convert contents of request into dictionary. Error: %{public}@",
+				LogToConsoleError("Failed to convert contents of request into dictionary. Error: %@",
 					  propertyListReadError.localizedDescription);
 			}
 		}
@@ -499,7 +499,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					goto present_fatal_error;
 				}
 
-				LogToConsoleError("Receipt validation failed:\n%{public}@", errorMessage);
+				LogToConsoleError("Receipt validation failed:\n%@", errorMessage);
 
 				(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[ujo-cd]", errorMessage)
 												title:TXTLS(@"TLOLicenseManager[p9s-ak]")
@@ -739,7 +739,7 @@ perform_return:
 {
 	[self destroyConnectionRequest]; // Destroy the existing request
 
-	LogToConsoleError("Failed to complete connection request with error: %{public}@", error.localizedDescription);
+	LogToConsoleError("Failed to complete connection request with error: %@", error.localizedDescription);
 
 	if ( self.delegate) {
 		[self.delegate processResponseForRequestType:self.requestType

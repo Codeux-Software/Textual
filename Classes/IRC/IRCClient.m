@@ -11204,7 +11204,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self printDebugInformation:TXTLS(@"IRC[2mc-h0]", filename, inputString, errorDescription)];
 
-	LogToConsoleError("%{public}@", TXTLS(@"IRC[ax0-mt]", errorDescription));
+	LogToConsoleError("%@", TXTLS(@"IRC[ax0-mt]", errorDescription));
 }
 
 - (void)sendTextualCmdScriptResult:(NSString *)resultString toChannel:(nullable NSString *)channel
@@ -12607,7 +12607,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			if (hostPortInt == 0)
 			{
 				if (e != nil) {
-					LogToConsoleError("Fatal error: Received reverse DCC request with token '%{public}@' but the token already exists.", transferToken);
+					LogToConsoleError("Fatal error: Received reverse DCC request with token '%@' but the token already exists.", transferToken);
 
 					goto present_error;
 				}

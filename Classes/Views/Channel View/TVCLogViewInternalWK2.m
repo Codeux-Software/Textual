@@ -403,12 +403,12 @@ create_normal_pool:
 	}
 
 	if (lineNumber == nil || errorMessage == nil || sourceURL == nil) {
-		LogToConsoleError("JavaScript Error in %{public}@: %{public}@", channelName, error.localizedDescription);
+		LogToConsoleError("JavaScript Error in %@: %@", channelName, error.localizedDescription);
 
 		return;
 	}
 
-	LogToConsoleError("A JavaScript error occurred in %{public}@ on line %{public}ld of %{public}@: %{public}@",
+	LogToConsoleError("A JavaScript error occurred in %@ on line %ld of %@: %@",
 		  channelName, lineNumber.unsignedIntegerValue, sourceURL.path, errorMessage);
 }
 

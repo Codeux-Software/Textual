@@ -283,7 +283,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSError *createDirectoryError = nil;
 
 		if ([RZFileManager() createDirectoryAtPath:writePath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
-			LogToConsoleError("Error Creating Folder: %{public}@",
+			LogToConsoleError("Error Creating Folder: %@",
 				 createDirectoryError.localizedDescription);
 
 			return;
@@ -294,7 +294,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSError *writeFileError = nil;
 
 		if ([@"" writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
-			LogToConsoleError("Error Creating File: %{public}@",
+			LogToConsoleError("Error Creating File: %@",
 				  writeFileError.localizedDescription);
 
 			return;
@@ -304,7 +304,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
 
 	if (fileHandle == nil) {
-		LogToConsoleError("Failed to open file handle at path '%{public}@'", filePath);
+		LogToConsoleError("Failed to open file handle at path '%@'", filePath);
 
 		return;
 	}

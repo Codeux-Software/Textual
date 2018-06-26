@@ -331,7 +331,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (propertyList == nil) {
 		if (parseError) {
-			LogToConsoleError("Error Creating Property List: %{public}@", parseError.localizedDescription);
+			LogToConsoleError("Error Creating Property List: %@", parseError.localizedDescription);
 		}
 
 		return NO;
