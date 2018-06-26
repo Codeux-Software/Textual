@@ -512,7 +512,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)updateIPAddress
 {
-	LogCurrentStackTraceWithType(LogToConsoleTypeDebug)
+	LogStackTraceWithType(LogToConsoleTypeDebug);
 
 	NSString *address = self.transferDialog.IPAddress;
 
@@ -571,7 +571,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)noteIPAddressLookupSucceeded
 {
-	LogCurrentStackTraceWithType(LogToConsoleTypeDebug);
+	LogStackTraceWithType(LogToConsoleTypeDebug);
 
 	if (self.isSender) {
 		if (self.isReversed) {
@@ -1013,7 +1013,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 		@catch (NSException *exception) {
 			LogToConsoleError("Caught exception: %@", exception.reason);
-			LogToConsoleCurrentStackTrace
+			LogStackTrace();
 
 			if ([exception.reason contains:@"No space left on device"]) {
 				[self failWithNoSpaceLeftOnDevice];

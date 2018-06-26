@@ -166,7 +166,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 		@catch (NSException *exception) {
 			LogToConsoleError("Caught exception: %@", exception.reason);
-			LogToConsoleCurrentStackTrace
+			LogStackTrace();
 
 			if ([exception.reason contains:@"No space left on device"]) {
 				[self failWithNoSpaceLeftOnDevice];
@@ -232,7 +232,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	@catch (NSException *exception) {
 		LogToConsoleError("Caught exception: %@", exception.reason);
-		LogToConsoleCurrentStackTrace
+		LogStackTrace();
 	}
 
 	[self.fileHandle closeFile];
