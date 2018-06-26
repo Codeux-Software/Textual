@@ -693,7 +693,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	}
 	@catch (NSException *exception) {
 		LogToConsoleError("Caught exception: %@", exception.reason);
-		LogToConsoleCurrentStackTrace
+		LogStackTrace();
 	}
 
 	@synchronized(self.clients) {
@@ -745,7 +745,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 		}
 		@catch (NSException *exception) {
 			LogToConsoleError("Caught exception: %@", exception.reason);
-			LogToConsoleCurrentStackTrace
+			LogStackTrace();
 		}
 
 		[client removeChannel:channel];

@@ -98,7 +98,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)startSheet
 {
 	LogToConsoleError("This method does nothing. Use -checkEligibility instead.");
-	LogToConsoleCurrentStackTrace
+	LogStackTrace();
 }
 
 - (void)endSheet

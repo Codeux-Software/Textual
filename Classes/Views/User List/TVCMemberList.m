@@ -117,8 +117,8 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 						  inParent:nil
 					 withAnimation:NSTableViewAnimationEffectNone];
 	} @catch (NSException *exception) {
-		LogToConsoleCurrentStackTrace
 		LogToConsoleError("Caught exception: %@", exception.reason);
+		LogStackTrace();
 	}
 }
 

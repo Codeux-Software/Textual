@@ -1387,7 +1387,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (data == nil) {
 		LogToConsoleError("NSData encode failure (%@)", string);
-		LogToConsoleCurrentStackTrace
+		LogStackTrace();
 	}
 
 	return data;
@@ -1409,7 +1409,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (string == nil) {
 		LogToConsoleError("NSData decode failure (%@)", data);
-		LogToConsoleCurrentStackTrace
+		LogStackTrace();
 	}
 
 	return string;
