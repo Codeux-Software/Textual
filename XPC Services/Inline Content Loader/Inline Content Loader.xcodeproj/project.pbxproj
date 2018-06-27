@@ -668,9 +668,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C03B5561FA6389100748FE7 /* XPC Service - ICL.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -678,9 +675,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C03B5541FA6389100748FE7 /* XPC Service - ICL.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -712,9 +706,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C03B5551FA6389100748FE7 /* XPC Service - ICL.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				SWIFT_VERSION = 4.0;
 			};
 			name = "Release (App Store)";
 		};
