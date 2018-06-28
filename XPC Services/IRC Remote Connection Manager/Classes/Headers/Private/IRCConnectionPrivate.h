@@ -35,47 +35,23 @@
  *
  *********************************************************************** */
 
+#import "RCMConnectionManagerProtocol.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCConnection : NSObject
-@property (nonatomic, copy) IRCConnectionConfig *config;
-@property (nonatomic, assign) BOOL isConnecting;
-@property (nonatomic, assign) BOOL isConnected;
-@property (nonatomic, assign) BOOL isDisconnecting;
-@property (nonatomic, assign) BOOL isSending;
-@property (nonatomic, assign) BOOL isSecured;
-@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign) BOOL isFloodControlEnforced;
-@property (nonatomic, assign) BOOL EOFReceived;
-@property (nonatomic, copy) NSString *uniqueIdentifier;
-@property (nonatomic, strong, nullable) dispatch_queue_t socketDelegateQueue;
-@property (nonatomic, strong, nullable) dispatch_queue_t socketReadWriteQueue;
-@property (nonatomic, strong, nullable) dispatch_queue_t workerQueue;
-@property (nonatomic, strong, nullable) GCDAsyncSocket *socketConnection;
-@property (nonatomic, copy, nullable) NSError *alternateDisconnectError;
-
 - (instancetype)initWithConfig:(IRCConnectionConfig *)config onConnection:(NSXPCConnection *)connection NS_DESIGNATED_INITIALIZER;
 
 - (void)open;
 - (void)close;
 
-- (void)sendData:(NSData *)data;
+- (void)sendData:(NSData *)data bypassQueue:(BOOL)bypassQueue;
 
 - (void)enforceFloodControl;
 
 - (void)clearSendQueue;
 
-- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(uint16_t)proxyPort;
-- (void)tcpClientDidConnectToHost:(nullable NSString *)host;
-- (void)tcpClientDidSecureConnectionWithProtocolVersion:(SSLProtocol)protocolVersion
-											cipherSuite:(SSLCipherSuite)cipherSuite;
-- (void)tcpClientDidCloseReadStream;
-- (void)tcpClientDidError:(NSString *)error;
-- (void)tcpClientDidDisconnect:(nullable NSError *)disconnectError;
-- (void)tcpClientDidReceiveData:(NSData *)data;
-- (void)tcpClientRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock;
-- (void)tcpClientWillSendData:(NSData *)data;
-- (void)tcpClientDidSendData;
+- (BOOL)exportSecureConnectionInformation:(RCMSecureConnectionInformationCompletionBlock)completionBlock error:(NSError * _Nullable * _Nullable)error;
 @end
 
 NS_ASSUME_NONNULL_END

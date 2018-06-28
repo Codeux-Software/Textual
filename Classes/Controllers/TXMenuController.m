@@ -569,7 +569,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			BOOL condition = (u.isConnected || u.isConnecting||
-					u.config.proxyType == IRCConnectionSocketNoProxyType);
+					u.config.proxyType == IRCConnectionSocketProxyTypeNone);
 
 			menuItem.hidden = condition;
 

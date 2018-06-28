@@ -74,7 +74,6 @@ NS_ASSUME_NONNULL_BEGIN
 					 withProtocolVersion:(SSLProtocol)protocolVersion
 							 cipherSuite:(SSLCipherSuite)cipherSuite;
 - (void)ircConnectionDidCloseReadStream:(IRCConnection *)sender;
-- (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error;
 - (void)ircConnection:(IRCConnection *)sender didDisconnectWithError:(nullable NSError *)disconnectError;
 - (void)ircConnection:(IRCConnection *)sender didReceiveData:(NSString *)data;
 - (void)ircConnection:(IRCConnection *)sender willSendData:(NSString *)data;

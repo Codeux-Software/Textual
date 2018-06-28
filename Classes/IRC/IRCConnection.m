@@ -170,7 +170,8 @@ ClassWithDesignatedInitializerInitMethod
 	if ((self.isConnecting || self.isConnected) &&
 		self.connectionInvalidatedVoluntarily == NO)
 	{
-		[self ircConnectionDidError:TXTLS(@"IRC[vdy-jk]")];
+#warning TODO: Replace with new error handler
+//		[self ircConnectionDidError:TXTLS(@"IRC[vdy-jk]")];
 
 		[self _ircConnectionDidDisconnectWithError:nil];
 	}
@@ -460,13 +461,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self.client ircConnectionDidCloseReadStream:self];
-	});
-}
-
-- (void)ircConnectionDidError:(NSString *)error
-{
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self.client ircConnection:self didError:error];
 	});
 }
 

@@ -100,7 +100,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"prefersSecuredConnection"] = @(NO);
 	defaults[@"primaryEncoding"] = @(TXDefaultPrimaryStringEncoding);
 	defaults[@"proxyPort"] = @(IRCConnectionDefaultProxyPort);
-	defaults[@"proxyType"] = @(IRCConnectionSocketSystemSocksProxyType);
+	defaults[@"proxyType"] = @(IRCConnectionSocketProxyTypeSystemSocks);
 	defaults[@"saslAuthenticationDisableExternalMechanism"] = @(NO);
 	defaults[@"sendAuthenticationRequestsToUserServ"] = @(NO);
 	defaults[@"sendWhoCommandRequestsToChannels"] = @(YES);

@@ -433,10 +433,10 @@ NS_ASSUME_NONNULL_BEGIN
 	self.proxyAddressTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
 
-		if (proxyType == IRCConnectionSocketSocks4ProxyType ||
-			proxyType == IRCConnectionSocketSocks5ProxyType ||
-			proxyType == IRCConnectionSocketHTTPProxyType ||
-			proxyType == IRCConnectionSocketHTTPSProxyType)
+		if (proxyType == IRCConnectionSocketProxyTypeSocks4 ||
+			proxyType == IRCConnectionSocketProxyTypeSocks5 ||
+			proxyType == IRCConnectionSocketProxyTypeHTTP ||
+			proxyType == IRCConnectionSocketProxyTypeHTTPS)
 		{
 			if (currentValue.isValidInternetAddress == NO) {
 				return TXTLS(@"TDCServerPropertiesSheet[tlo-b6]");
@@ -460,10 +460,10 @@ NS_ASSUME_NONNULL_BEGIN
 	self.proxyPortTextField.validationBlock = ^NSString *(NSString *currentValue) {
 		NSInteger proxyType = self.proxyTypeButton.selectedTag;
 
-		if (proxyType == IRCConnectionSocketSocks4ProxyType ||
-			proxyType == IRCConnectionSocketSocks5ProxyType ||
-			proxyType == IRCConnectionSocketHTTPProxyType ||
-			proxyType == IRCConnectionSocketHTTPSProxyType)
+		if (proxyType == IRCConnectionSocketProxyTypeSocks4 ||
+			proxyType == IRCConnectionSocketProxyTypeSocks5 ||
+			proxyType == IRCConnectionSocketProxyTypeHTTP ||
+			proxyType == IRCConnectionSocketProxyTypeHTTPS)
 		{
 			if (currentValue.isValidInternetPort == NO) {
 				return TXTLS(@"CommonErrors[l0c-nb]");
@@ -1398,13 +1398,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSInteger proxyType = self.proxyTypeButton.selectedTag;
 
-	BOOL isSystemSocksProxyEnabled = (proxyType == IRCConnectionSocketSystemSocksProxyType);
-	BOOL isTorBrowserProxyEnabled = (proxyType == IRCConnectionSocketTorBrowserType);
+	BOOL isSystemSocksProxyEnabled = (proxyType == IRCConnectionSocketProxyTypeSystemSocks);
+	BOOL isTorBrowserProxyEnabled = (proxyType == IRCConnectionSocketProxyTypeTor);
 
-	BOOL supportsAuthentication = (proxyType == IRCConnectionSocketSocks5ProxyType);
+	BOOL supportsAuthentication = (proxyType == IRCConnectionSocketProxyTypeSocks5);
 
-	BOOL httpsEnabled = (proxyType == IRCConnectionSocketHTTPProxyType || proxyType == IRCConnectionSocketHTTPSProxyType);
-	BOOL socksEnabled = (proxyType == IRCConnectionSocketSocks4ProxyType || proxyType == IRCConnectionSocketSocks5ProxyType);
+	BOOL httpsEnabled = (proxyType == IRCConnectionSocketProxyTypeHTTP || proxyType == IRCConnectionSocketProxyTypeHTTPS);
+	BOOL socksEnabled = (proxyType == IRCConnectionSocketProxyTypeSocks4 || proxyType == IRCConnectionSocketProxyTypeSocks5);
 
 	BOOL enabled = (httpsEnabled || socksEnabled);
 

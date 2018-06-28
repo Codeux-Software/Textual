@@ -57,7 +57,6 @@
 #import "TLOTimer.h"
 #import "IRCConnectionConfig.h"
 #import "IRCConnectionPrivate.h"
-#import "IRCConnectionSocketPrivate.h"
 #import "RCMConnectionManagerProtocol.h"
 #import "RCMProcessDelegatePrivate.h"
 #import "RCMProcessMainPrivate.h"

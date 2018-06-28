@@ -5,8 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ *    Copyright (c) 2018 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,24 +35,4 @@
  *
  *********************************************************************** */
 
-#import "RCMConnectionManagerProtocol.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface IRCConnection (IRCConnectionSocket)
-- (void)openSocket;
-- (void)closeSocket;
-
-// When using a proxy, -connectedAddress will always return nil
-// In proxy mode we do not know the actual address that the proxy
-// connected to, only the proxy address itself. While we could
-// return the address the proxy was instructed to connect to, that
-// does not equal the resolved address.
-@property (readonly, copy, nullable) NSString *connectedAddress;
-
-- (void)writeDataToSocket:(NSData *)data;
-
-- (void)exportSecureConnectionInformation:(NS_NOESCAPE RCMSecureConnectionInformationCompletionBlock)completionBlock;
-@end
-
-NS_ASSUME_NONNULL_END
+#import "RCMProcessPCHPrivate.h"
