@@ -116,7 +116,12 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 			}
 		}
 
-		connect(to: config.serverAddress, on: config.serverPort)
+		let serverAddress = config.serverAddress
+		let serverPort = config.serverPort
+
+		delegate?.connection(self, willConnectTo: serverAddress, on: serverPort)
+
+		connect(to: serverAddress, on: serverPort)
 	}
 
 	fileprivate func connect(to host: String, on port: UInt16)
@@ -134,6 +139,12 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 	func close()
 	{
+		if (disconnected || disconnecting) {
+			return
+		}
+
+		disconnecting = true
+
 		connection?.disconnect()
 	}
 
@@ -176,6 +187,21 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 							 withTimeout: Timeout.none.rawValue,
 							 maxLength: UInt(maximumDataLength),
 							 tag: Tag.none.rawValue)
+	}
+
+	func readIn(_ data: Data)
+	{
+		if (disconnected || disconnecting) {
+			return
+		}
+
+		/* We read until \n appears.
+		 Data returned by socket will include the \n
+		 and \r if it's present. We therefore trim the
+		 data of \r and \n when we read it in. */
+		let trimmedData = data.newlinesTrimmedFromEnd()
+
+		delegate?.connection(self, received: trimmedData)
 	}
 
 	// MARK: - Properties

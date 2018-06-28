@@ -246,21 +246,6 @@ protocol ConnectionSocketProtocol
 
 extension ConnectionSocketProtocol where Self: ConnectionSocket
 {
-	func readIn(_ data: Data)
-	{
-		if (disconnected || disconnecting) {
-			return
-		}
-
-		/* We read until \n appears.
-	 	 Data returned by socket will include the \n
-		 and \r if it's present. We therefore trim the
-		 data of \r and \n when we read it in. */
-		let trimmedData = data.newlinesTrimmedFromEnd()
-
-		delegate?.connection(self, received: trimmedData)
-	}
-
 	func close(with error: String)
 	{
 		let errorEnum = ConnectionError.otherError(message: error)
