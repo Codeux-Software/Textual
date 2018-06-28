@@ -92,7 +92,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSAssert((self.connection != nil),
 		 @"Method invoked without performing setup first");
 
-	[self.connection sendData:data];
+	[self.connection sendData:data bypassQueue:bypassQueue];
 }
 
 - (void)exportSecureConnectionInformation:(NS_NOESCAPE RCMSecureConnectionInformationCompletionBlock)completionBlock
@@ -100,7 +100,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSAssert((self.connection != nil),
 		 @"Method invoked without performing setup first");
 
-	[self.connection exportSecureConnectionInformation:completionBlock];
+	[self.connection exportSecureConnectionInformation:completionBlock error:NULL];
 }
 
 - (void)enforceFloodControl

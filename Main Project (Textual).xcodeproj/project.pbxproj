@@ -2972,6 +2972,7 @@
 		4C46F3F11943A654004CA8BA /* FormattingColor_Rainbow.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = FormattingColor_Rainbow.tif; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow.tif"; sourceTree = "<group>"; };
 		4C46F3F21943A654004CA8BA /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = "<group>"; };
 		4C4733CD20C7599800713C91 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C48B46320E4D06900CF5F84 /* MergeSwift.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = MergeSwift.sh; path = "Main Project (Textual).xcodeproj/MergeSwift.sh"; sourceTree = "<group>"; };
 		4C4A0D6C1C973E9000064A23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Resources/Property Lists/Application Properties/Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C4A0D6D1C973E9000064A23 /* InfoAppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoAppStore.plist; path = "Resources/Property Lists/Application Properties/InfoAppStore.plist"; sourceTree = SOURCE_ROOT; };
 		4C4A1AE61D12245B004FBF12 /* TXGlobalModelsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXGlobalModelsPrivate.h; path = Classes/Headers/Private/TXGlobalModelsPrivate.h; sourceTree = "<group>"; };
@@ -5156,6 +5157,7 @@
 				5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */,
 				4C761BAE1E155CB100A505B7 /* BuildServices.sh */,
 				4CD6F7BB1CA7747600842597 /* ExportArchive.sh */,
+				4C48B46320E4D06900CF5F84 /* MergeSwift.sh */,
 				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
 			);
 			name = "Build Scripts";
@@ -6231,6 +6233,7 @@
 				4C0BA6D21990798800857343 /* Copy Acknowledgements */,
 				4C761BB11E155E0000A505B7 /* Build XPC Services */,
 				4C761B901E155B7300A505B7 /* Copy XPC Services */,
+				4C48B46420E4D34E00CF5F84 /* Merge Swift Libraries */,
 			);
 			buildRules = (
 			);
@@ -6256,6 +6259,7 @@
 				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
 				4C761BAF1E155D7400A505B7 /* Build XPC Services */,
 				4C761BA61E155C6E00A505B7 /* Copy XPC Services */,
+				4C48B46620E4D38F00CF5F84 /* Merge Swift Libraries */,
 			);
 			buildRules = (
 			);
@@ -6281,6 +6285,7 @@
 				4C4733C220C7599800713C91 /* Copy Acknowledgements */,
 				4C4733C420C7599800713C91 /* Build XPC Services */,
 				4C4733C520C7599800713C91 /* Copy XPC Services */,
+				4C48B46720E4D3A600CF5F84 /* Merge Swift Libraries */,
 			);
 			buildRules = (
 			);
@@ -6304,6 +6309,7 @@
 				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
 				4C761BB01E155DD900A505B7 /* Build XPC Services */,
 				4C761BA41E155C4300A505B7 /* Copy XPC Services */,
+				4C48B46520E4D37C00CF5F84 /* Merge Swift Libraries */,
 			);
 			buildRules = (
 			);
@@ -7167,6 +7173,78 @@
 			shellPath = /bin/sh;
 			shellScript = "\nexec \"${PROJECT_FILE_PATH}/BuildServices.sh\" | tee \"${PROJECT_DIR}/.tmp/Script-Logs/BuildServices.txt\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4C48B46420E4D34E00CF5F84 /* Merge Swift Libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Merge Swift Libraries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/MergeSwift.sh\"\n";
+		};
+		4C48B46520E4D37C00CF5F84 /* Merge Swift Libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Merge Swift Libraries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/MergeSwift.sh\"\n";
+		};
+		4C48B46620E4D38F00CF5F84 /* Merge Swift Libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Merge Swift Libraries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/MergeSwift.sh\"\n";
+		};
+		4C48B46720E4D3A600CF5F84 /* Merge Swift Libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Merge Swift Libraries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nexec \"${PROJECT_FILE_PATH}/MergeSwift.sh\"\n";
 		};
 		4C761BAF1E155D7400A505B7 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;

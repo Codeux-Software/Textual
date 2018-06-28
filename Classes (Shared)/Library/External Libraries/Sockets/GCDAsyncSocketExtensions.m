@@ -48,8 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-+ (nullable NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode
++ (nullable NSString *)sslHandshakeErrorStringFromError:(NSError *)error
 {
+	NSParameterAssert(error != nil);
+
+	if ([self isBadSSLCertificateError:error] == NO) {
+		return nil;
+	}
+
+	NSInteger errorCode = error.code;
+
 	if (errorCode > (-9800) || errorCode < (-9865)) {
 		return nil;
 	}

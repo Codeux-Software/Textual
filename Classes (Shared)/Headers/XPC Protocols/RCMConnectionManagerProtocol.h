@@ -95,7 +95,6 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(
 - (void)ircConnectionDidSecureConnectionWithProtocolVersion:(SSLProtocol)protocolVersion
 												cipherSuite:(SSLCipherSuite)cipherSuite;
 - (void)ircConnectionDidCloseReadStream;
-- (void)ircConnectionDidError:(NSString *)error;
 - (void)ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError;
 - (void)ircConnectionDidReceiveData:(NSData *)data;
 - (void)ircConnectionRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock;

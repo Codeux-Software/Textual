@@ -5760,6 +5760,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)changeStateOff
 {
+	[self changeStateOffWithError:nil];
+}
+
+- (void)changeStateOffWithError:(nullable NSError *)disconnectError
+{
 	if (self.isConnecting == NO && self.isConnected == NO) {
 		return;
 	}
@@ -5799,25 +5804,61 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		 all operations for this client for us during termination. */
 		[[TXSharedApplication sharedPrintingQueue] cancelOperationsForClient:self];
 
+		IRCClientDisconnectMode disconnectType = self.disconnectType;
+
+		if (disconnectError) {
+			// TODO: Don't hardcode the error domain
+			if ([disconnectError.domain isEqualToString:@"Textual.ConnectionError.unableToSecure"]) {
+				disconnectType = IRCClientDisconnectBadCertificateMode;
+			}
+
+			[self printError:disconnectError.localizedDescription asCommand:TVCLogLineDefaultCommandValue];
+		}
+
 		NSString *disconnectMessage = nil;
 
-		if (self.disconnectType == IRCClientDisconnectNormalMode) {
-			disconnectMessage = TXTLS(@"IRC[9b4-10]");
-		} else if (self.disconnectType == IRCClientDisconnectComputerSleepMode) {
-			disconnectMessage = TXTLS(@"IRC[drg-b7]");
-		} else if (self.disconnectType == IRCClientDisconnectBadCertificateMode) {
-			disconnectMessage = TXTLS(@"IRC[zro-bg]");
-		} else if (self.disconnectType == IRCClientDisconnectServerRedirectMode) {
-			disconnectMessage = TXTLS(@"IRC[wcl-po]");
-		} else if (self.disconnectType == IRCClientDisconnectReachabilityChangeMode) {
-			disconnectMessage = TXTLS(@"IRC[isx-fi]");
-		}
+		switch (disconnectType) {
+			case IRCClientDisconnectNormalMode:
+			{
+				disconnectMessage = TXTLS(@"IRC[9b4-10]");
+
+				break;
+			}
+			case IRCClientDisconnectComputerSleepMode:
+			{
+				disconnectMessage = TXTLS(@"IRC[drg-b7]");
+
+				break;
+			}
+			case IRCClientDisconnectBadCertificateMode:
+			{
+				disconnectMessage = TXTLS(@"IRC[zro-bg]");
+
+				break;
+			}
+			case IRCClientDisconnectServerRedirectMode:
+			{
+				disconnectMessage = TXTLS(@"IRC[wcl-po]");
+
+				break;
+			}
+			case IRCClientDisconnectReachabilityChangeMode:
+			{
+				disconnectMessage = TXTLS(@"IRC[isx-fi]");
+
+				break;
+			}
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-		else if (self.disconnectType == IRCClientDisconnectSoftwareTrialMode) {
-			disconnectMessage = TXTLS(@"IRC[t8r-ak]");
-		}
+			case IRCClientDisconnectSoftwareTrialMode:
+			{
+				disconnectMessage = TXTLS(@"IRC[t8r-ak]");
+
+				break;
+			}
 #endif
+
+		} // switch()
 
 		for (IRCChannel *channel in self.channelList) {
 			if (channel.isActive == NO) {
@@ -5861,11 +5902,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCConnectionSocketProxyType proxyType = self.socket.config.proxyType;
 
-	if (proxyType == IRCConnectionSocketSocks4ProxyType) {
+	if (proxyType == IRCConnectionSocketProxyTypeSocks4) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[p7h-un]", proxyHost, proxyPort)];
-	} else if (proxyType == IRCConnectionSocketSocks5ProxyType) {
+	} else if (proxyType == IRCConnectionSocketProxyTypeSocks5) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[ni5-cy]", proxyHost, proxyPort)];
-	} else if (proxyType == IRCConnectionSocketHTTPProxyType) {
+	} else if (proxyType == IRCConnectionSocketProxyTypeHTTP) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[oby-av]", proxyHost, proxyPort)];
 	}
 }
@@ -5962,31 +6003,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 //		return;
 //	}
 
-	if (disconnectError && [GCDAsyncSocket isBadSSLCertificateError:disconnectError]) {
-		self.disconnectType = IRCClientDisconnectBadCertificateMode;
+	[self changeStateOffWithError:disconnectError];
+
+	if (self.disconnectCallback) {
+		self.disconnectCallback();
+		self.disconnectCallback = nil;
 	}
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self changeStateOff];
-
-		if (self.disconnectCallback) {
-			self.disconnectCallback();
-			self.disconnectCallback = nil;
-		}
-
-		[RZNotificationCenter() postNotificationName:IRCClientDidDisconnectNotification object:self];
-	});
-}
-
-- (void)ircConnection:(IRCConnection *)sender didError:(NSString *)error
-{
-	NSParameterAssert(sender == self.socket);
-
-	if (self.isTerminating) {
-		return;
-	}
-
-	[self printError:error asCommand:TVCLogLineDefaultCommandValue];
+	[RZNotificationCenter() postNotificationName:IRCClientDidDisconnectNotification object:self];
 }
 
 - (void)ircConnectionDidCloseReadStream:(IRCConnection *)sender
@@ -11570,10 +11594,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (bypassProxy == NO) {
 		socketConfig.proxyType = self.config.proxyType;
 
-		if (socketConfig.proxyType == IRCConnectionSocketSocks4ProxyType ||
-			socketConfig.proxyType == IRCConnectionSocketSocks5ProxyType ||
-			socketConfig.proxyType == IRCConnectionSocketHTTPProxyType ||
-			socketConfig.proxyType == IRCConnectionSocketHTTPSProxyType)
+		if (socketConfig.proxyType == IRCConnectionSocketProxyTypeSocks4 ||
+			socketConfig.proxyType == IRCConnectionSocketProxyTypeSocks5 ||
+			socketConfig.proxyType == IRCConnectionSocketProxyTypeHTTP ||
+			socketConfig.proxyType == IRCConnectionSocketProxyTypeHTTPS)
 		{
 			socketConfig.proxyPort = self.config.proxyPort;
 			socketConfig.proxyAddress = self.config.proxyAddress;
