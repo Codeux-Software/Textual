@@ -12,7 +12,7 @@
 		4C2C52D91F130AA6009701E0 /* RCMSecureTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* RCMSecureTransport.m */; };
 		4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */; };
 		4C48B46120E4AD1C00CF5F84 /* IRCConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C48B46020E4AD1C00CF5F84 /* IRCConnection.swift */; };
-		4C48B46920E4F63200CF5F84 /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C48B46820E4F63200CF5F84 /* Network.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		4C48B46920E4F63200CF5F84 /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C48B46820E4F63200CF5F84 /* Network.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4C48B46C20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C48B46B20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift */; };
 		4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
