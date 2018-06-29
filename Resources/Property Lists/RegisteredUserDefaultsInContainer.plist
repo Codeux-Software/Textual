@@ -188,6 +188,8 @@
 	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Sending) -&gt; Enabled</key>
 	<true/>
+	<key>PreferModernSockets</key>
+	<false/>
 	<key>Off-the-Record Messaging -&gt; Automatically Enable Service</key>
 	<false/>
 	<key>Off-the-Record Messaging -&gt; Enable Encryption</key>
