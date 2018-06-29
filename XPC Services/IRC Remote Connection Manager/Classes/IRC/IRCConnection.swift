@@ -94,7 +94,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	@objc
 	func open()
 	{
-		LogToConsoleDebug("Opening connection %@...", socket.uniqueIdentifier)
+		LogToConsoleDebug("Opening connection \(socket.uniqueIdentifier)...")
 
 		if (socket.disconnected == false) {
 			LogToConsoleError("Already connected")
@@ -114,7 +114,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	@objc
 	func close()
 	{
-		LogToConsoleDebug("Closing connection %@...", socket.uniqueIdentifier)
+		LogToConsoleDebug("Closing connection \(socket.uniqueIdentifier)...")
 
 		if (socket.disconnected) {
 			LogToConsoleError("Not connected")

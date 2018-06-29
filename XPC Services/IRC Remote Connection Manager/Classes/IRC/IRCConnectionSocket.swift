@@ -170,7 +170,7 @@ class ConnectionSocket: NSObject
 		var status = SecKeychainItemCopyFromPersistentReference(certificateDataInRef, &keychainRef)
 
 		if (status != noErr) {
-			LogToConsoleError("Operation Failed (1): %i", status)
+			LogToConsoleError("Operation Failed (1): \(status)")
 
 			return nil
 		}
@@ -187,7 +187,7 @@ class ConnectionSocket: NSObject
 		status = SecIdentityCreateWithCertificate(nil, certificateRef, &identityRef)
 
 		if (status != noErr) {
-			LogToConsoleError("Operation Failed (2): %i", status)
+			LogToConsoleError("Operation Failed (2): \(status)")
 
 			return nil
 		}
