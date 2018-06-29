@@ -12,6 +12,8 @@
 		4C2C52D91F130AA6009701E0 /* RCMSecureTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* RCMSecureTransport.m */; };
 		4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */; };
 		4C48B46120E4AD1C00CF5F84 /* IRCConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C48B46020E4AD1C00CF5F84 /* IRCConnection.swift */; };
+		4C48B46920E4F63200CF5F84 /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C48B46820E4F63200CF5F84 /* Network.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		4C48B46C20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C48B46B20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift */; };
 		4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */; };
 		4C8C72D81F1208F200ED72DB /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 		4C8C72DA1F1208F200ED72DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D51F1208F200ED72DB /* Foundation.framework */; };
@@ -45,6 +47,8 @@
 		4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketExtensions.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketExtensions.m"; sourceTree = "<group>"; };
 		4C48B46020E4AD1C00CF5F84 /* IRCConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IRCConnection.swift; path = Classes/IRC/IRCConnection.swift; sourceTree = "<group>"; };
 		4C48B46220E4BCDF00CF5F84 /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionPrivate.h; path = Classes/Headers/Private/IRCConnectionPrivate.h; sourceTree = "<group>"; };
+		4C48B46820E4F63200CF5F84 /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = System/Library/Frameworks/Network.framework; sourceTree = SDKROOT; };
+		4C48B46B20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IRCConnectionSocketNWF.swift; path = Classes/IRC/IRCConnectionSocketNWF.swift; sourceTree = "<group>"; };
 		4C4CC2AF1F13C8E2000BBDD6 /* RCMTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCMTrustPanel.h; path = "../../Classes (Shared)/Headers/RCMTrustPanel.h"; sourceTree = "<group>"; };
 		4C6706D11F1290F4009673EB /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
 		4C6EF2E41F4431CD00A80A7B /* IRCConnectionConfigInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfigInternal.h; path = "../../Classes (Shared)/Headers/Internal/IRCConnectionConfigInternal.h"; sourceTree = "<group>"; };
@@ -81,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C48B46920E4F63200CF5F84 /* Network.framework in Frameworks */,
 				4C2C52D21F12ED5A009701E0 /* AppKit.framework in Frameworks */,
 				4CAC2A0C1F12B01700D06046 /* SystemConfiguration.framework in Frameworks */,
 				4CAC2A091F12AFFB00D06046 /* Security.framework in Frameworks */,
@@ -273,6 +278,7 @@
 		4C8C72D71F1208F200ED72DB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C48B46820E4F63200CF5F84 /* Network.framework */,
 				4C8C72D31F1208F200ED72DB /* External Frameworks */,
 				4C8C72D61F1208F200ED72DB /* System Frameworks */,
 			);
@@ -305,6 +311,7 @@
 				4C48B46020E4AD1C00CF5F84 /* IRCConnection.swift */,
 				4CD09D3C20E0508E008BADA5 /* IRCConnectionSocket.swift */,
 				4CD09D3F20E05448008BADA5 /* IRCConnectionSocketClassic.swift */,
+				4C48B46B20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
@@ -430,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */,
+				4C48B46C20E4FBB600CF5F84 /* IRCConnectionSocketNWF.swift in Sources */,
 				4C8C73011F121EF000ED72DB /* RCMProcessMain.m in Sources */,
 				4C8C73071F1221C600ED72DB /* IRCConnectionConfig.m in Sources */,
 				4CD09D3D20E0508E008BADA5 /* IRCConnectionSocket.swift in Sources */,
@@ -481,8 +489,16 @@
 				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Resources/Sandbox/Entitlements/ConnectionManager.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildResults-Frameworks/\"",
+					"$(inherited)",
+				);
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 				INFOPLIST_FILE = Resources/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"\"${TEXTUAL_PROJECT_DIR}/.tmp/SharedBuildResults-Frameworks/\"",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
 				PRODUCT_NAME = RemoteConnectionManager;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
