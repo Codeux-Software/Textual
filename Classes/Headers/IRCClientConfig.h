@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL autoSleepModeDisconnect;
 @property (readonly) BOOL autojoinWaitsForNickServ;
 @property (readonly) BOOL connectionPrefersIPv4;
+@property (readonly) BOOL connectionPrefersModernSockets;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (readonly) BOOL excludedFromCloudSyncing;
@@ -132,6 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL autoSleepModeDisconnect;
 @property (nonatomic, assign, readwrite) BOOL autojoinWaitsForNickServ;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4;
+@property (nonatomic, assign, readwrite) BOOL connectionPrefersModernSockets;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign, readwrite) BOOL excludedFromCloudSyncing;

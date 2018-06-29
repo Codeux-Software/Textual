@@ -65,6 +65,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @interface IRCConnectionConfig : NSObject <NSCopying, NSMutableCopying, NSCoding, NSSecureCoding>
 @property (readonly) BOOL connectionPrefersIPv4;
 @property (readonly) BOOL connectionPrefersModernCiphersOnly;
+@property (readonly) BOOL connectionPrefersModernSockets;
 @property (readonly) BOOL connectionPrefersSecuredConnection;
 @property (readonly) BOOL connectionShouldValidateCertificateChain;
 @property (readonly) IRCConnectionSocketProxyType proxyType;
@@ -88,6 +89,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @interface IRCConnectionConfigMutable : IRCConnectionConfig
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersModernCiphersOnly;
+@property (nonatomic, assign, readwrite) BOOL connectionPrefersModernSockets;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign, readwrite) BOOL connectionShouldValidateCertificateChain;
 @property (nonatomic, assign, readwrite) IRCConnectionSocketProxyType proxyType;
