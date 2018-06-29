@@ -35,6 +35,23 @@
 *
 *********************************************************************** */
 
+extension ConnectionSocket
+{
+	class func socket(with config: IRCConnectionConfig) -> ConnectionSocket & ConnectionSocketProtocol
+	{
+
+#if canImport(Network)
+		if #available(macOS 10.14, *) {
+			if (config.connectionPrefersModernSockets) {
+				return ConnectionSocketNWF(with: config)
+			}
+		}
+#endif
+
+		return ConnectionSocketClassic(with: config)
+	}
+}
+
 @objc(IRCConnection)
 class Connection: NSObject, ConnectionSocketDelegate
 {
@@ -66,7 +83,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	{
 		self.config = config
 
-		socket = ConnectionSocketClassic(with: config)
+		socket = ConnectionSocket.socket(with: config)
 
 		serviceConnection = connection
 
