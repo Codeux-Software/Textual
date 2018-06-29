@@ -87,6 +87,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"cipherSuites"] = @(RCMCipherSuiteCollectionDefault);
 	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[vfu-c0]");
 	defaults[@"connectionPrefersIPv4"] = @(NO);
+	defaults[@"connectionPrefersModernSockets"] = @(NO);
 	defaults[@"excludedFromCloudSyncing"] = @(NO);
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
 	defaults[@"floodControlDelayTimerInterval"] = @(IRCConnectionConfigFloodControlDefaultDelayInterval);
@@ -325,6 +326,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[defaultsMutable assignBoolTo:&self->_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
 	[defaultsMutable assignBoolTo:&self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
+	[defaultsMutable assignBoolTo:&self->_connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[defaultsMutable assignBoolTo:&self->_excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
@@ -760,6 +762,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[dic setBool:self.autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
 	[dic setBool:self.connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
+	[dic setBool:self.connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
@@ -1104,6 +1107,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 @dynamic connectionName;
 @dynamic connectionPrefersIPv4;
 @dynamic connectionPrefersModernCiphers;
+@dynamic connectionPrefersModernSockets;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @dynamic excludedFromCloudSyncing;
@@ -1198,6 +1202,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)setConnectionPrefersModernCiphers:(BOOL)connectionPrefersModernCiphers
 {
 	TEXTUAL_DEPRECATED_WARNING
+}
+
+- (void)setConnectionPrefersModernSockets:(BOOL)connectionPrefersModernSockets
+{
+	if (self->_connectionPrefersModernSockets != connectionPrefersModernSockets) {
+		self->_connectionPrefersModernSockets = connectionPrefersModernSockets;
+	}
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

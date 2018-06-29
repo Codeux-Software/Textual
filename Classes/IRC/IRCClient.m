@@ -11583,6 +11583,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	socketConfig.serverPort = serverPort;
 
 	socketConfig.connectionPrefersIPv4 = preferIPv4;
+	socketConfig.connectionPrefersModernSockets = self.config.connectionPrefersModernSockets;
 
 	socketConfig.cipherSuites = self.config.cipherSuites;
 

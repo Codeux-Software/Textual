@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
 	BOOL _connectionPrefersIPv4;
 	BOOL _connectionPrefersModernCiphersOnly;
+	BOOL _connectionPrefersModernSockets;
 	BOOL _connectionPrefersSecuredConnection;
 	BOOL _connectionShouldValidateCertificateChain;
 	IRCConnectionSocketProxyType _proxyType;

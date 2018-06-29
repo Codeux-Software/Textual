@@ -99,6 +99,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	self->_connectionPrefersIPv4 = [aDecoder decodeBoolForKey:@"connectionPrefersIPv4"];
 	self->_connectionPrefersModernCiphersOnly = [aDecoder decodeBoolForKey:@"connectionPrefersModernCiphersOnly"];
+	self->_connectionPrefersModernSockets = [aDecoder decodeBoolForKey:@"connectionPrefersModernSockets"];
 	self->_connectionPrefersSecuredConnection = [aDecoder decodeBoolForKey:@"connectionPrefersSecuredConnection"];
 	self->_connectionShouldValidateCertificateChain = [aDecoder decodeBoolForKey:@"connectionShouldValidateCertificateChain"];
 	self->_floodControlDelayInterval = [aDecoder decodeUnsignedIntegerForKey:@"floodControlDelayInterval"];
@@ -122,6 +123,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	[aCoder encodeBool:self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 	[aCoder encodeBool:self->_connectionPrefersModernCiphersOnly forKey:@"connectionPrefersModernCiphersOnly"];
+	[aCoder encodeBool:self->_connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 	[aCoder encodeBool:self->_connectionPrefersSecuredConnection forKey:@"connectionPrefersSecuredConnection"];
 	[aCoder encodeBool:self->_connectionShouldValidateCertificateChain forKey:@"connectionShouldValidateCertificateChain"];
 	[aCoder encodeUnsignedInteger:self->_floodControlDelayInterval forKey:@"floodControlDelayInterval"];
@@ -150,6 +152,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	object->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
 	object->_connectionPrefersModernCiphersOnly = self->_connectionPrefersModernCiphersOnly;
+	object->_connectionPrefersModernSockets = self->_connectionPrefersModernSockets;
 	object->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
 	object->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
 	object->_floodControlDelayInterval = self->_floodControlDelayInterval;
@@ -175,6 +178,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 	((IRCConnectionConfig *)object)->_connectionPrefersIPv4 = self->_connectionPrefersIPv4;
 	((IRCConnectionConfig *)object)->_connectionPrefersModernCiphersOnly = self->_connectionPrefersModernCiphersOnly;
+	((IRCConnectionConfig *)object)->_connectionPrefersModernSockets = self->_connectionPrefersModernSockets;
 	((IRCConnectionConfig *)object)->_connectionPrefersSecuredConnection = self->_connectionPrefersSecuredConnection;
 	((IRCConnectionConfig *)object)->_connectionShouldValidateCertificateChain = self->_connectionShouldValidateCertificateChain;
 	((IRCConnectionConfig *)object)->_floodControlDelayInterval = self->_floodControlDelayInterval;
@@ -207,6 +211,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 
 @dynamic connectionPrefersIPv4;
 @dynamic connectionPrefersModernCiphersOnly;
+@dynamic connectionPrefersModernSockets;
 @dynamic connectionPrefersSecuredConnection;
 @dynamic connectionShouldValidateCertificateChain;
 @dynamic floodControlDelayInterval;
@@ -239,6 +244,13 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 {
 	if (self->_connectionPrefersModernCiphersOnly != connectionPrefersModernCiphersOnly) {
 		self->_connectionPrefersModernCiphersOnly = connectionPrefersModernCiphersOnly;
+	}
+}
+
+- (void)setConnectionPrefersModernSockets:(BOOL)connectionPrefersModernSockets
+{
+	if (self->_connectionPrefersModernSockets != connectionPrefersModernSockets) {
+		self->_connectionPrefersModernSockets = connectionPrefersModernSockets;
 	}
 }
 
