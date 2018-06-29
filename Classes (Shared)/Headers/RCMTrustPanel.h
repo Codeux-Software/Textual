@@ -37,22 +37,20 @@
 
 #import <SecurityInterface/SFCertificateTrustPanel.h>
 
-#import "GCDAsyncSocket.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^GCDAsyncSocketTrustResponseCompletionBlock)(BOOL trusted);
+typedef void (^RCMTrustResponse)(BOOL trusted);
 
-typedef void (^GCDAsyncSocketTrustPanelCompletionBlock)(SecTrustRef trustRef, BOOL trusted, id _Nullable contextInfo);
+typedef void (^RCMTrustPanelCompletionBlock)(SecTrustRef trustRef, BOOL trusted, id _Nullable contextInfo);
 
-@interface GCDAsyncSocket (GCDsyncSocketTrustPanel)
+@interface RCMTrustPanel : NSObject
 + (SFCertificateTrustPanel *)presentTrustPanelInWindow:(nullable NSWindow *)window
 												  body:(NSString *)bodyText
 												 title:(NSString *)titleText
 										 defaultButton:(NSString *)buttonDefault
 									   alternateButton:(nullable NSString *)buttonAlternate
 											  trustRef:(SecTrustRef)trustRef
-									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock;
+									   completionBlock:(RCMTrustPanelCompletionBlock)completionBlock;
 
 + (SFCertificateTrustPanel *)presentTrustPanelInWindow:(nullable NSWindow *)window
 												  body:(NSString *)bodyText
@@ -60,7 +58,7 @@ typedef void (^GCDAsyncSocketTrustPanelCompletionBlock)(SecTrustRef trustRef, BO
 										 defaultButton:(NSString *)buttonDefault
 									   alternateButton:(nullable NSString *)buttonAlternate
 											  trustRef:(SecTrustRef)trustRef
-									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock
+									   completionBlock:(RCMTrustPanelCompletionBlock)completionBlock
 										   contextInfo:(nullable id)contextInfo;
 @end
 

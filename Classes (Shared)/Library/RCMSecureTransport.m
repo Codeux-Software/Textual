@@ -54,7 +54,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "GCDAsyncSocketCipherNames.h"
+#import "RCMSecureTransport.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -298,7 +298,7 @@ static const char * _Nonnull kMacNames[] = {
 	// 7 is reserved to indicate an AEAD cipher suite.
 };
 
-@implementation GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
+@implementation RCMSecureTransport
 
 + (nullable NSString *)descriptionForProtocolVersion:(SSLProtocol)protocolVersion
 {
@@ -354,14 +354,14 @@ static const char * _Nonnull kMacNames[] = {
 	return protocolString;
 }
 
-+ (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version
++ (NSArray<NSString *> *)descriptionsForCipherListCollection:(RCMCipherSuiteCollection)collection
 {
-	return [self descriptionsForCipherListVersion:version withProtocol:NO];
+	return [self descriptionsForCipherListCollection:collection withProtocol:NO];
 }
 
-+ (NSArray<NSString *> *)descriptionsForCipherListVersion:(GCDAsyncSocketCipherSuiteVersion)version withProtocol:(BOOL)appendProtocol
++ (NSArray<NSString *> *)descriptionsForCipherListCollection:(RCMCipherSuiteCollection)collection withProtocol:(BOOL)appendProtocol
 {
-	NSArray *cipherSuites = [self cipherListOfVersion:version];
+	NSArray *cipherSuites = [self cipherSuitesInCollection:collection];
 
 	return [self descriptionsForCipherSuites:cipherSuites withProtocol:appendProtocol];
 }
@@ -438,28 +438,28 @@ static const char * _Nonnull kMacNames[] = {
 	return [[self cipherListDeprecated] containsObject:@(cipherSuite)];
 }
 
-+ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version includeDeprecatedCiphers:(BOOL)includeDepecatedCiphers
++ (NSArray<NSNumber *> *)cipherSuitesInCollection:(RCMCipherSuiteCollection)collection includeDeprecated:(BOOL)includeDepecated
 {
-	if (includeDepecatedCiphers == NO) {
-		return [self cipherListOfVersion:version];
+	if (includeDepecated == NO) {
+		return [self cipherSuitesInCollection:collection];
 	}
 
 	NSMutableArray<NSNumber *> *_cipherList = [NSMutableArray array];
 
-	[_cipherList addObjectsFromArray:[self cipherListOfVersion:version]];
+	[_cipherList addObjectsFromArray:[self cipherSuitesInCollection:collection]];
 	[_cipherList addObjectsFromArray:[self cipherListDeprecated]];
 
 	return [_cipherList copy];
 }
 
-+ (NSArray<NSNumber *> *)cipherListOfVersion:(GCDAsyncSocketCipherSuiteVersion)version
++ (NSArray<NSNumber *> *)cipherSuitesInCollection:(RCMCipherSuiteCollection)collection
 {
-	switch (version) {
-		case GCDAsyncSocketCipherSuiteNonePreferred:
+	switch (collection) {
+		case RCMCipherSuiteCollectionNone:
 		{
 			return @[];
 		}
-		case GCDAsyncSocketCipherSuite2015Version:
+		case RCMCipherSuiteCollectionMozilla2015:
 		{
 			/* The following list of ciphers, which is ordered from most important
 			 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
@@ -491,8 +491,8 @@ static const char * _Nonnull kMacNames[] = {
 
 			break;
 		}
-		case GCDAsyncSocketCipherSuiteDefaultVersion:
-		case GCDAsyncSocketCipherSuite2017Version:
+		case RCMCipherSuiteCollectionDefault:
+		case RCMCipherSuiteCollectionMozilla2017:
 		default:
 		{
 			/* The following list of ciphers, which is ordered from most important
@@ -551,6 +551,149 @@ static const char * _Nonnull kMacNames[] = {
 		 @(TLS_RSA_WITH_AES_128_CBC_SHA),					// AES128-SHA
 		 @(TLS_RSA_WITH_AES_256_CBC_SHA)					// AES256-SHA
 	];
+}
+
++ (nullable NSString *)sslHandshakeErrorStringFromError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	if ([self isBadSSLCertificateError:error] == NO) {
+		return nil;
+	}
+
+	return [self sslHandshakeErrorStringFromErrorCode:error.code];
+}
+
++ (nullable NSString *)sslHandshakeErrorStringFromErrorCode:(NSInteger)errorCode
+{
+	if (errorCode > (-9800) || errorCode < (-9865)) {
+		return nil;
+	}
+
+	/* Request the heading for the formatted error message. */
+	NSString *headingFormat =
+	[[NSBundle mainBundle] localizedStringForKey:@"heading"
+										   value:@""
+										   table:@"SecureTransportErrorCodes"];
+
+	/* Request the reason for the formatting error message. */
+	NSString *lookupKey = [NSString stringWithInteger:errorCode];
+
+	NSString *localizedError =
+	[[NSBundle mainBundle] localizedStringForKey:lookupKey
+										   value:@""
+										   table:@"SecureTransportErrorCodes"];
+
+	/* Maybe format the error message. */
+	return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
+}
+
++ (BOOL)isBadSSLCertificateError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	return [error.domain isEqualToString:@"kCFStreamErrorDomainSSL"];
+}
+
++ (SecTrustRef)trustFromCertificateChain:(NSArray<NSData *> *)certificatecChain withPolicyName:(NSString *)policyName
+{
+	NSParameterAssert(certificatecChain != nil);
+	NSParameterAssert(policyName != nil);
+
+	CFMutableArrayRef certificatesMutableRef = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+
+	for (NSData *certificate in certificatecChain) {
+		CFDataRef certificateDataRef = (__bridge CFDataRef)certificate;
+
+		SecCertificateRef certificateRef = SecCertificateCreateWithData(kCFAllocatorDefault, certificateDataRef);
+
+		if (certificateRef == NULL) {
+			continue;
+		}
+
+		CFArrayAppendValue(certificatesMutableRef, certificateRef);
+
+		CFRelease(certificateRef);
+	}
+
+	SecPolicyRef policyRef = SecPolicyCreateSSL(TRUE, (__bridge CFStringRef)policyName);
+
+	SecTrustRef trustRef;
+
+	OSStatus trustRefStatus = SecTrustCreateWithCertificates(certificatesMutableRef, policyRef, &trustRef);
+
+	if (trustRefStatus != noErr) {
+		LogToConsoleError("SecTrustCreateWithCertificates() returned %i", trustRefStatus);
+	}
+
+	CFRelease(certificatesMutableRef);
+	CFRelease(policyRef);
+
+	return trustRef;
+}
+
++ (nullable NSArray<NSData *> *)certificatesInTrust:(SecTrustRef)trustRef
+{
+	NSParameterAssert(trustRef != NULL);
+
+	CFIndex trustCertificateCount = SecTrustGetCertificateCount(trustRef);
+
+	NSMutableArray<NSData *> *results = [NSMutableArray arrayWithCapacity:trustCertificateCount];
+
+	for (CFIndex trustCertificateIndex = 0; trustCertificateIndex < trustCertificateCount; trustCertificateIndex++) {
+		SecCertificateRef certificateRef = SecTrustGetCertificateAtIndex(trustRef, trustCertificateIndex);
+
+		NSData *certificateData = (__bridge_transfer NSData *)SecCertificateCopyData(certificateRef);
+
+		if (certificateData == nil) {
+			LogToConsoleError("Bad certificate data at index: %lu", trustCertificateIndex);
+
+			continue;
+		}
+
+		[results addObject:certificateData];
+	}
+
+	return [results copy];
+}
+
++ (nullable NSString *)policyNameInTrust:(SecTrustRef)trustRef
+{
+	NSParameterAssert(trustRef != NULL);
+
+	CFArrayRef trustPolicies = NULL;
+
+	OSStatus trustPoliciesStatus = SecTrustCopyPolicies(trustRef, &trustPolicies);
+
+	if (trustPoliciesStatus != noErr) {
+		LogToConsoleError("SecTrustCopyPolicies() returned %i", trustPoliciesStatus);
+
+		return nil;
+	}
+
+	NSString *policyName = nil;
+
+	CFIndex trustPolicyCount = CFArrayGetCount(trustPolicies);
+
+	for (CFIndex trustPolicyIndex = 0; trustPolicyIndex < trustPolicyCount; trustPolicyIndex++) {
+		SecPolicyRef policy = (SecPolicyRef)CFArrayGetValueAtIndex(trustPolicies, trustPolicyIndex);
+
+		CFDictionaryRef properties = SecPolicyCopyProperties(policy);
+
+		if (properties) {
+			if (CFGetTypeID(properties) == CFDictionaryGetTypeID()) {
+				CFStringRef name = CFDictionaryGetValue(properties, kSecPolicyName);
+
+				if (name && CFGetTypeID(name) == CFStringGetTypeID()) {
+					policyName = (__bridge NSString *)(name);
+				}
+			}
+
+			CFRelease(properties);
+		}
+	}
+
+	return policyName;
 }
 
 @end
