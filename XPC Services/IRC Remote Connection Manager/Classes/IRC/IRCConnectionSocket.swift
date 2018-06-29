@@ -291,10 +291,6 @@ extension ConnectionSocketProtocol where Self: ConnectionSocket
 
 	func exportSecureConnectionInformation(to receiver: RCMSecureConnectionInformationCompletionBlock) throws
 	{
-		if (secured == false) {
-			throw ConnectionError(otherError: "Connection is not secured")
-		}
-
 		let policyName = tlsPolicyName
 
 		let protocolVersion = tlsNegotiatedProtocol ?? SSLProtocol.sslProtocolUnknown
