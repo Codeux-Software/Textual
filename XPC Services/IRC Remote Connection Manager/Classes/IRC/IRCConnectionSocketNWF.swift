@@ -483,7 +483,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 					return ConnectionError.unableToSecure(failureReason: tlsError)
 				}
 			default:
-p				break
+				break
 		}
 
 		return ConnectionError(socketError: error)
