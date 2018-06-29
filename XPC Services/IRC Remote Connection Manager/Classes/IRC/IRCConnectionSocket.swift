@@ -178,7 +178,9 @@ class ConnectionSocket: NSObject
 		/* "A SecKeychainItem object for a certificate that is stored
 		 in a keychain can be safely cast to a SecCertificate for use
 		 with Certificate, Key, and Trust Services." */
-		let certificateRef = keychainRef as! SecCertificate
+		/* Contrary to the statement above, as stated in documentation,
+		 casting was crashing. This is a workaround until that's fixed. */
+		let certificateRef = unsafeBitCast(keychainRef, to: SecCertificate.self)
 
 		/* ====================================== */
 
