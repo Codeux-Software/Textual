@@ -189,6 +189,8 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
 + (BOOL)setAwayOnScreenSleep;
 + (BOOL)disconnectOnSleep;
 
++ (BOOL)preferModernSockets;
+
 + (BOOL)autoAddScrollbackMark;
 + (BOOL)showInlineImages TEXTUAL_DEPRECATED("Use -showInlineMedia instead");
 + (BOOL)showInlineMedia;
