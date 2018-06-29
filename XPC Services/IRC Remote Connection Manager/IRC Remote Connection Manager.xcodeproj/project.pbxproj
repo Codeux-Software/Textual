@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C2C52CC1F12E238009701E0 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */; };
 		4C2C52D21F12ED5A009701E0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2C52D11F12ED5A009701E0 /* AppKit.framework */; };
-		4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */; };
+		4C2C52D91F130AA6009701E0 /* RCMSecureTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52D81F130AA6009701E0 /* RCMSecureTransport.m */; };
 		4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */; };
 		4C48B46120E4AD1C00CF5F84 /* IRCConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C48B46020E4AD1C00CF5F84 /* IRCConnection.swift */; };
 		4C6706D21F1290F4009673EB /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C6706D01F1290F4009673EB /* SecureTransportErrorCodes.strings */; };
@@ -26,7 +26,7 @@
 		4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-Wno-implicit-retain-self"; }; };
 		4CD09D3D20E0508E008BADA5 /* IRCConnectionSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD09D3C20E0508E008BADA5 /* IRCConnectionSocket.swift */; };
 		4CD09D4020E05448008BADA5 /* IRCConnectionSocketClassic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD09D3F20E05448008BADA5 /* IRCConnectionSocketClassic.swift */; };
-		4CE07AE11F13C8790066007A /* GCDAsyncSocketTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */; };
+		4CE07AE11F13C8790066007A /* RCMTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE07AE01F13C8790066007A /* RCMTrustPanel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,11 +41,11 @@
 		4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLanguagePreferences.m; path = "../../Classes (Shared)/Library/TLOLanguagePreferences.m"; sourceTree = "<group>"; };
 		4C2C52D11F12ED5A009701E0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketExtensions.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketExtensions.h"; sourceTree = "<group>"; };
-		4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketCipherNames.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketCipherNames.m"; sourceTree = "<group>"; };
+		4C2C52D81F130AA6009701E0 /* RCMSecureTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCMSecureTransport.m; path = "../../Classes (Shared)/Library/RCMSecureTransport.m"; sourceTree = "<group>"; };
 		4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketExtensions.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketExtensions.m"; sourceTree = "<group>"; };
 		4C48B46020E4AD1C00CF5F84 /* IRCConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IRCConnection.swift; path = Classes/IRC/IRCConnection.swift; sourceTree = "<group>"; };
 		4C48B46220E4BCDF00CF5F84 /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionPrivate.h; path = Classes/Headers/Private/IRCConnectionPrivate.h; sourceTree = "<group>"; };
-		4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketTrustPanel.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketTrustPanel.h"; sourceTree = "<group>"; };
+		4C4CC2AF1F13C8E2000BBDD6 /* RCMTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCMTrustPanel.h; path = "../../Classes (Shared)/Headers/RCMTrustPanel.h"; sourceTree = "<group>"; };
 		4C6706D11F1290F4009673EB /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
 		4C6EF2E41F4431CD00A80A7B /* IRCConnectionConfigInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfigInternal.h; path = "../../Classes (Shared)/Headers/Internal/IRCConnectionConfigInternal.h"; sourceTree = "<group>"; };
 		4C6EF2E51F44324400A80A7B /* NSObjectHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = "../../Classes (Shared)/Helpers/Cocoa (Objective-C)/NSObjectHelper.m"; sourceTree = "<group>"; };
@@ -68,11 +68,11 @@
 		4CAC2A071F12AFFB00D06046 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketCipherNames.h; path = "../../Classes (Shared)/Headers/External Libraries/GCDAsyncSocketCipherNames.h"; sourceTree = "<group>"; };
+		4CAC2A1B1F12D11900D06046 /* RCMSecureTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCMSecureTransport.h; path = "../../Classes (Shared)/Headers/RCMSecureTransport.h"; sourceTree = "<group>"; };
 		4CD09D3C20E0508E008BADA5 /* IRCConnectionSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IRCConnectionSocket.swift; path = Classes/IRC/IRCConnectionSocket.swift; sourceTree = "<group>"; };
 		4CD09D3E20E050AF008BADA5 /* SwiftBridgingHeaderPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SwiftBridgingHeaderPrivate.h; path = Classes/Headers/Private/SwiftBridgingHeaderPrivate.h; sourceTree = "<group>"; };
 		4CD09D3F20E05448008BADA5 /* IRCConnectionSocketClassic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IRCConnectionSocketClassic.swift; path = Classes/IRC/IRCConnectionSocketClassic.swift; sourceTree = "<group>"; };
-		4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocketTrustPanel.m; path = "../../Classes (Shared)/Library/External Libraries/Sockets/GCDAsyncSocketTrustPanel.m"; sourceTree = "<group>"; };
+		4CE07AE01F13C8790066007A /* RCMTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCMTrustPanel.m; path = "../../Classes (Shared)/Dialogs/RCMTrustPanel.m"; sourceTree = "<group>"; };
 		4CF880AF1F127F8100ED9EA2 /* NSObjectHelperPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSObjectHelperPrivate.h; path = "../../Classes (Shared)/Headers/Private/NSObjectHelperPrivate.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,9 +206,9 @@
 			isa = PBXGroup;
 			children = (
 				4C8C72641F1201A000ED72DB /* GCDAsyncSocket.h */,
-				4CAC2A1B1F12D11900D06046 /* GCDAsyncSocketCipherNames.h */,
+				4CAC2A1B1F12D11900D06046 /* RCMSecureTransport.h */,
 				4C2C52D31F130A19009701E0 /* GCDAsyncSocketExtensions.h */,
-				4C4CC2AF1F13C8E2000BBDD6 /* GCDAsyncSocketTrustPanel.h */,
+				4C4CC2AF1F13C8E2000BBDD6 /* RCMTrustPanel.h */,
 			);
 			name = "External Libraries";
 			sourceTree = "<group>";
@@ -225,6 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				4C8C727D1F1201A000ED72DB /* External Libraries */,
+				4C2C52D81F130AA6009701E0 /* RCMSecureTransport.m */,
+				4CE07AE01F13C8790066007A /* RCMTrustPanel.m */,
 				4C2C52CB1F12E238009701E0 /* TLOLanguagePreferences.m */,
 				4C8C72831F1201A000ED72DB /* TLOTimer.m */,
 			);
@@ -243,9 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8C727F1F1201A000ED72DB /* GCDAsyncSocket.m */,
-				4C2C52D81F130AA6009701E0 /* GCDAsyncSocketCipherNames.m */,
 				4C2C52DA1F130ABF009701E0 /* GCDAsyncSocketExtensions.m */,
-				4CE07AE01F13C8790066007A /* GCDAsyncSocketTrustPanel.m */,
 			);
 			name = Sockets;
 			sourceTree = "<group>";
@@ -435,10 +435,10 @@
 				4CD09D3D20E0508E008BADA5 /* IRCConnectionSocket.swift in Sources */,
 				4CD09D4020E05448008BADA5 /* IRCConnectionSocketClassic.swift in Sources */,
 				4CAC2A161F12C68B00D06046 /* GCDAsyncSocket.m in Sources */,
-				4C2C52D91F130AA6009701E0 /* GCDAsyncSocketCipherNames.m in Sources */,
+				4C2C52D91F130AA6009701E0 /* RCMSecureTransport.m in Sources */,
 				4C48B46120E4AD1C00CF5F84 /* IRCConnection.swift in Sources */,
 				4C8C73021F121EF000ED72DB /* main.m in Sources */,
-				4CE07AE11F13C8790066007A /* GCDAsyncSocketTrustPanel.m in Sources */,
+				4CE07AE11F13C8790066007A /* RCMTrustPanel.m in Sources */,
 				4CAC2A151F12C64500D06046 /* TLOTimer.m in Sources */,
 				4C2C52DB1F130ABF009701E0 /* GCDAsyncSocketExtensions.m in Sources */,
 				4C8C73001F121EF000ED72DB /* RCMProcessDelegate.m in Sources */,

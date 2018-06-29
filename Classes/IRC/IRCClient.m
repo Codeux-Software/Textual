@@ -5915,9 +5915,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(sender == self.socket);
 
-	NSString *protocolDescription = [GCDAsyncSocket descriptionForProtocolVersion:protocolVersion];
+	NSString *protocolDescription = [RCMSecureTransport descriptionForProtocolVersion:protocolVersion];
 
-	NSString *cipherDescription = [GCDAsyncSocket descriptionForCipherSuite:cipherSuite];
+	NSString *cipherDescription = [RCMSecureTransport descriptionForCipherSuite:cipherSuite];
 
 	if (protocolDescription == nil || cipherDescription == nil) {
 		return;
@@ -5925,7 +5925,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *description = nil;
 
-	if ([GCDAsyncSocket isCipherSuiteDeprecated:cipherSuite] == NO) {
+	if ([RCMSecureTransport isCipherSuiteDeprecated:cipherSuite] == NO) {
 		description = TXTLS(@"IRC[uyz-4r]", protocolDescription, cipherDescription);
 	} else {
 		description = TXTLS(@"IRC[xwj-xy]", protocolDescription, cipherDescription);

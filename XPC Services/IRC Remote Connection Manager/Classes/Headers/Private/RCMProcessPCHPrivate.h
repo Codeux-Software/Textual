@@ -39,19 +39,15 @@
 
 #import <Security/Security.h>
 
-#import <SecurityInterface/SFCertificatePanel.h>
-#import <SecurityInterface/SFCertificateTrustPanel.h>
-#import <SecurityInterface/SFChooseIdentityPanel.h>
-
 #import <SystemConfiguration/SystemConfiguration.h>
 
 #import <CocoaExtensions/CocoaExtensions.h>
 
 #import "StaticDefinitions.h"
 #import "GCDAsyncSocket.h"
-#import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
-#import "GCDAsyncSocketTrustPanel.h"
+#import "RCMSecureTransport.h"
+#import "RCMTrustPanel.h"
 #import "NSObjectHelperPrivate.h"
 #import "TLOLanguagePreferences.h"
 #import "TLOTimer.h"

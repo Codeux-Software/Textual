@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "GCDAsyncSocketCipherNames.h"
+#import "RCMSecureTransport.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -79,7 +79,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (readonly, copy, nullable) NSData *identityClientSideCertificate;
 @property (readonly) NSStringEncoding primaryEncoding NS_UNAVAILABLE;
 @property (readonly) NSStringEncoding fallbackEncoding NS_UNAVAILABLE;
-@property (readonly) GCDAsyncSocketCipherSuiteVersion cipherSuites;
+@property (readonly) RCMCipherSuiteCollection cipherSuites;
 @end
 
 #pragma mark -
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, copy, readwrite, nullable) NSData *identityClientSideCertificate;
 @property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding NS_UNAVAILABLE;
 @property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding NS_UNAVAILABLE;
-@property (nonatomic, assign, readwrite) GCDAsyncSocketCipherSuiteVersion cipherSuites;
+@property (nonatomic, assign, readwrite) RCMCipherSuiteCollection cipherSuites;
 @end
 
 NS_ASSUME_NONNULL_END

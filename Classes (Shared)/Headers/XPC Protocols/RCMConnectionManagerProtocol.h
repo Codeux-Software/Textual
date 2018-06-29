@@ -37,7 +37,7 @@
 
 /* *** XPC PROTOCOL HEADERS ARE PRIVATE *** */
 
-#import "GCDAsyncSocketTrustPanel.h"
+#import "RCMTrustPanel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -97,7 +97,7 @@ typedef void (^RCMSecureConnectionInformationCompletionBlock)(
 - (void)ircConnectionDidCloseReadStream;
 - (void)ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError;
 - (void)ircConnectionDidReceiveData:(NSData *)data;
-- (void)ircConnectionRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock;
+- (void)ircConnectionRequestInsecureCertificateTrust:(RCMTrustResponse)trustBlock;
 - (void)ircConnectionWillSendData:(NSData *)data;
 - (void)ircConnectionDidSendData;
 @end

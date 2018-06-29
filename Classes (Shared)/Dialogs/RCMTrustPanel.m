@@ -35,17 +35,17 @@
  *
  *********************************************************************** */
 
-#import "GCDAsyncSocketTrustPanel.h"
+#import "RCMTrustPanel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GCDAsyncSocketTrustPanelContext : NSObject
+@interface RCMTrustPanelContext : NSObject
 @property (nonatomic, assign) SecTrustRef trustRef;
-@property (nonatomic, copy) GCDAsyncSocketTrustPanelCompletionBlock completionBlock;
+@property (nonatomic, copy) RCMTrustPanelCompletionBlock completionBlock;
 @property (nonatomic, strong, nullable) id contextInfo;
 @end
 
-@implementation GCDAsyncSocket (GCDsyncSocketTrustPanel)
+@implementation RCMTrustPanel
 
 + (SFCertificateTrustPanel *)presentTrustPanelInWindow:(nullable NSWindow *)window
 												  body:(NSString *)bodyText
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 										 defaultButton:(NSString *)buttonDefault
 									   alternateButton:(nullable NSString *)buttonAlternate
 											  trustRef:(SecTrustRef)trustRef
-									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock
+									   completionBlock:(RCMTrustPanelCompletionBlock)completionBlock
 {
 	return
 	[self presentTrustPanelInWindow:window
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 										 defaultButton:(NSString *)buttonDefault
 									   alternateButton:(nullable NSString *)buttonAlternate
 											  trustRef:(SecTrustRef)trustRef
-									   completionBlock:(GCDAsyncSocketTrustPanelCompletionBlock)completionBlock
+									   completionBlock:(RCMTrustPanelCompletionBlock)completionBlock
 										   contextInfo:(nullable id)contextInfo
 {
 	/* Always work on the main thread */
@@ -98,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 	CFRetain(trustRef);
 
 	/* Crate context for callback selector */
-	GCDAsyncSocketTrustPanelContext *promptObject = [GCDAsyncSocketTrustPanelContext new];
+	RCMTrustPanelContext *promptObject = [RCMTrustPanelContext new];
 
 	promptObject.trustRef = trustRef;
 
@@ -126,12 +126,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)_trustPanelCallback_stage1:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	GCDAsyncSocketTrustPanelContext *panelData = (GCDAsyncSocketTrustPanelContext *)CFBridgingRelease(contextInfo);
+	RCMTrustPanelContext *panelData = (RCMTrustPanelContext *)CFBridgingRelease(contextInfo);
 
 	[self _trustPanelCallback_stage2:sheet returnCode:returnCode contextInfo:panelData];
 }
 
-+ (void)_trustPanelCallback_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(GCDAsyncSocketTrustPanelContext *)contextInfo
++ (void)_trustPanelCallback_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(RCMTrustPanelContext *)contextInfo
 {
 	SecTrustRef trustRef = contextInfo.trustRef;
 
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 
-@implementation GCDAsyncSocketTrustPanelContext
+@implementation RCMTrustPanelContext
 @end
 
 NS_ASSUME_NONNULL_END

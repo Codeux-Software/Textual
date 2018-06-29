@@ -41,9 +41,9 @@
 #import <objc/message.h>
 
 #import "NSObjectHelperPrivate.h"
-#import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
-#import "GCDAsyncSocketTrustPanel.h"
+#import "RCMSecureTransport.h"
+#import "RCMTrustPanel.h"
 #import "TLOLanguagePreferences.h"
 #import "TPCPreferencesLocal.h"
 #import "IRCClient.h"
@@ -259,15 +259,15 @@ ClassWithDesignatedInitializerInitMethod
 			return;
 		}
 
-		SecTrustRef trustRef = [GCDAsyncSocket trustFromCertificateChain:certificateChain withPolicyName:policyName];
+		SecTrustRef trustRef = [RCMSecureTransport trustFromCertificateChain:certificateChain withPolicyName:policyName];
 
 		if (trustRef == NULL) {
 			return;
 		}
 
-		NSString *protocolDescription = [GCDAsyncSocket descriptionForProtocolVersion:protocolVersion];
+		NSString *protocolDescription = [RCMSecureTransport descriptionForProtocolVersion:protocolVersion];
 
-		NSString *cipherDescription = [GCDAsyncSocket descriptionForCipherSuite:cipherSuites];
+		NSString *cipherDescription = [RCMSecureTransport descriptionForCipherSuite:cipherSuites];
 
 		if (protocolDescription == nil || cipherDescription == nil) {
 			CFRelease(trustRef);
@@ -277,7 +277,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		NSString *protocolSummary = nil;
 
-		if ([GCDAsyncSocket isCipherSuiteDeprecated:cipherSuites] == NO) {
+		if ([RCMSecureTransport isCipherSuiteDeprecated:cipherSuites] == NO) {
 			protocolSummary = TXTLS(@"Prompts[2jq-t5]", protocolDescription, cipherDescription);
 		} else {
 			protocolSummary = TXTLS(@"Prompts[8ou-pu]", protocolDescription, cipherDescription);
@@ -296,19 +296,19 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		(void)
-		[GCDAsyncSocket presentTrustPanelInWindow:[NSApp keyWindow]
-											 body:promptInformativeText
-											title:promptTitleText
-									defaultButton:defaultButtonTitle
-								  alternateButton:alternateButtonTitle
-										 trustRef:trustRef
-								  completionBlock:^(SecTrustRef trustRef, BOOL trusted, id contextInfo) {
-									  CFRelease(trustRef);
-								  }];
+		[RCMTrustPanel presentTrustPanelInWindow:[NSApp keyWindow]
+											body:promptInformativeText
+										   title:promptTitleText
+								   defaultButton:defaultButtonTitle
+								 alternateButton:alternateButtonTitle
+										trustRef:trustRef
+								 completionBlock:^(SecTrustRef trustRef, BOOL trusted, id contextInfo) {
+									 CFRelease(trustRef);
+								 }];
 	}];
 }
 
-- (void)openInsecureCertificateTrustPanel:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock
+- (void)openInsecureCertificateTrustPanel:(RCMTrustResponse)trustBlock
 {
 	if (self.isConnected == NO || self.trustPanel != nil) {
 		return;
@@ -319,7 +319,7 @@ ClassWithDesignatedInitializerInitMethod
 			return;
 		}
 
-		SecTrustRef trustRef = [GCDAsyncSocket trustFromCertificateChain:certificateChain withPolicyName:policyName];
+		SecTrustRef trustRef = [RCMSecureTransport trustFromCertificateChain:certificateChain withPolicyName:policyName];
 
 		if (trustRef == NULL) {
 			return;
@@ -334,26 +334,26 @@ ClassWithDesignatedInitializerInitMethod
 		__weak typeof(self) weakSelf = self;
 
 		self.trustPanel =
-		[GCDAsyncSocket presentTrustPanelInWindow:nil
-											 body:promptInformativeText
-											title:promptTitleText
-									defaultButton:defaultButtonTitle
-								  alternateButton:alternateButtonTitle
-										 trustRef:trustRef
-								  completionBlock:^(SecTrustRef trustRef, BOOL trusted, id contextInfo) {
-									  CFRelease(trustRef);
+		[RCMTrustPanel presentTrustPanelInWindow:nil
+											body:promptInformativeText
+										   title:promptTitleText
+								   defaultButton:defaultButtonTitle
+								 alternateButton:alternateButtonTitle
+										trustRef:trustRef
+								 completionBlock:^(SecTrustRef trustRef, BOOL trusted, id contextInfo) {
+									 CFRelease(trustRef);
 
-									  weakSelf.trustPanel = nil;
+									 weakSelf.trustPanel = nil;
 
-									  if (weakSelf.trustPanelDoNotInvokeCompletionBlock) {
-										  weakSelf.trustPanelDoNotInvokeCompletionBlock = NO;
+									 if (weakSelf.trustPanelDoNotInvokeCompletionBlock) {
+										 weakSelf.trustPanelDoNotInvokeCompletionBlock = NO;
 
-										  return;
-									  }
+										 return;
+									 }
 
-									  ((GCDAsyncSocketTrustResponseCompletionBlock)contextInfo)(trusted);
-								  }
-									  contextInfo:trustBlock];
+									 ((RCMTrustResponse)contextInfo)(trusted);
+								 }
+									 contextInfo:trustBlock];
 	}];
 }
 
@@ -494,7 +494,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self.client ircConnection:self didReceiveData:dataString];
 }
 
-- (void)ircConnectionRequestInsecureCertificateTrust:(GCDAsyncSocketTrustResponseCompletionBlock)trustBlock
+- (void)ircConnectionRequestInsecureCertificateTrust:(RCMTrustResponse)trustBlock
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self openInsecureCertificateTrustPanel:trustBlock];

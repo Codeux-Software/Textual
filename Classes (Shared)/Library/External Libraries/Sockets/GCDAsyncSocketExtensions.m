@@ -35,8 +35,7 @@
  *
  *********************************************************************** */
 
-#import <SecurityInterface/SFCertificateTrustPanel.h>
-
+#import "RCMSecureTransport.h"
 #import "GCDAsyncSocketExtensions.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -48,46 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-+ (nullable NSString *)sslHandshakeErrorStringFromError:(NSError *)error
-{
-	NSParameterAssert(error != nil);
-
-	if ([self isBadSSLCertificateError:error] == NO) {
-		return nil;
-	}
-
-	NSInteger errorCode = error.code;
-
-	if (errorCode > (-9800) || errorCode < (-9865)) {
-		return nil;
-	}
-
-	/* Request the heading for the formatted error message. */
-	NSString *headingFormat =
-	[[NSBundle mainBundle] localizedStringForKey:@"heading"
-										   value:@""
-										   table:@"SecureTransportErrorCodes"];
-
-	/* Request the reason for the formatting error message. */
-	NSString *lookupKey = [NSString stringWithInteger:errorCode];
-
-	NSString *localizedError =
-	[[NSBundle mainBundle] localizedStringForKey:lookupKey
-										   value:@""
-										   table:@"SecureTransportErrorCodes"];
-
-	/* Maybe format the error message. */
-	return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
-}
-
-+ (BOOL)isBadSSLCertificateError:(NSError *)error
-{
-	NSParameterAssert(error != nil);
-
-	return [error.domain isEqualToString:@"kCFStreamErrorDomainSSL"];
-}
-
-- (SSLProtocol)sslNegotiatedProtocolVersion
+- (SSLProtocol)tlsNegotiatedProtocol
 {
 	__block SSLProtocol protocol;
 
@@ -102,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return protocol;
 }
 
-- (SSLCipherSuite)sslNegotiatedCipherSuite
+- (SSLCipherSuite)tlsNegotiatedCipherSuite
 {
 	__block SSLCipherSuite cipher;
 
@@ -117,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return cipher;
 }
 
-- (SecTrustRef)sslNegotiatedCertificateTrustRef
+- (SecTrustRef)tlsTrustRef
 {
 	__block SecTrustRef trust;
 
@@ -132,141 +92,26 @@ NS_ASSUME_NONNULL_BEGIN
 	return trust;
 }
 
-- (nullable NSArray<NSData *> *)sslNegotiatedCertificatesData
+- (nullable NSArray<NSData *> *)tlsCertificateChainData
 {
-	SecTrustRef trustRef = self.sslNegotiatedCertificateTrustRef;
+	SecTrustRef trustRef = self.tlsTrustRef;
 
 	if (trustRef == NULL) {
 		return nil;
 	}
 
-	CFIndex trustCertificateCount = SecTrustGetCertificateCount(trustRef);
-
-	NSMutableArray<NSData *> *results = [NSMutableArray arrayWithCapacity:trustCertificateCount];
-
-	for (CFIndex trustCertificateIndex = 0; trustCertificateIndex < trustCertificateCount; trustCertificateIndex++) {
-		SecCertificateRef certificateRef = SecTrustGetCertificateAtIndex(trustRef, trustCertificateIndex);
-
-		NSData *certificateData = (__bridge_transfer NSData *)SecCertificateCopyData(certificateRef);
-
-		if (certificateData == nil) {
-			LogToConsoleError("Bad certificate data at index: %lu", trustCertificateIndex);
-
-			continue;
-		}
-
-		[results addObject:certificateData];
-	}
-
-	return [results copy];
+	return [RCMSecureTransport certificatesInTrust:trustRef];
 }
 
-- (nullable NSString *)sslNegotiatedCertificatePolicyName
+- (nullable NSString *)tlsPolicyName
 {
-	NSString *certificateHost = nil;
-
-	SecTrustRef trustRef = self.sslNegotiatedCertificateTrustRef;
+	SecTrustRef trustRef = self.tlsTrustRef;
 
 	if (trustRef == NULL) {
 		return nil;
 	}
 
-	CFArrayRef trustPolicies = NULL;
-
-	OSStatus trustPoliciesStatus = SecTrustCopyPolicies(trustRef, &trustPolicies);
-
-	if (trustPoliciesStatus != noErr) {
-		LogToConsoleError("SecTrustCopyPolicies() returned %i", trustPoliciesStatus);
-
-		return nil;
-	}
-
-	CFIndex trustPolicyCount = CFArrayGetCount(trustPolicies);
-
-	for (CFIndex trustPolicyIndex = 0; trustPolicyIndex < trustPolicyCount; trustPolicyIndex++) {
-		SecPolicyRef policy = (SecPolicyRef)CFArrayGetValueAtIndex(trustPolicies, trustPolicyIndex);
-
-		CFDictionaryRef properties = SecPolicyCopyProperties(policy);
-
-		if (properties) {
-			if (CFGetTypeID(properties) == CFDictionaryGetTypeID()) {
-				CFStringRef name = CFDictionaryGetValue(properties, kSecPolicyName);
-
-				if (name && CFGetTypeID(name) == CFStringGetTypeID()) {
-					certificateHost = (__bridge NSString *)(name);
-				}
-			}
-
-			CFRelease(properties);
-		}
-	}
-
-	return certificateHost;
-}
-
-+ (SecTrustRef)trustFromCertificateChain:(NSArray<NSData *> *)certificatecChain withPolicyName:(NSString *)policyName
-{
-	NSParameterAssert(certificatecChain != nil);
-	NSParameterAssert(policyName != nil);
-
-	CFMutableArrayRef certificatesMutableRef = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-
-	for (NSData *certificate in certificatecChain) {
-		CFDataRef certificateDataRef = (__bridge CFDataRef)certificate;
-
-		SecCertificateRef certificateRef = SecCertificateCreateWithData(kCFAllocatorDefault, certificateDataRef);
-
-		if (certificateRef == NULL) {
-			continue;
-		}
-
-		CFArrayAppendValue(certificatesMutableRef, certificateRef);
-
-		CFRelease(certificateRef);
-	}
-
-	SecPolicyRef policyRef = SecPolicyCreateSSL(TRUE, (__bridge CFStringRef)policyName);
-
-	SecTrustRef trustRef;
-	OSStatus trustRefStatus = SecTrustCreateWithCertificates(certificatesMutableRef, policyRef, &trustRef);
-
-	if (trustRefStatus != noErr) {
-		LogToConsoleError("SecTrustCreateWithCertificates() returned %i", trustRefStatus);
-	}
-
-	CFRelease(certificatesMutableRef);
-	CFRelease(policyRef);
-
-	return trustRef;
-}
-
-+ (void)presentTrustPanelForTrust:(SecTrustRef)trustRef
-				  panelHostWindow:(NSWindow *)panelHostWindow
-					   panelTitle:(NSString *)panelTitleText
-			 panelInformativeText:(NSString *)panelInformativeText
-			   panelPrimaryButton:(NSString *)panelPrimaryButton
-			 panelAlternateButton:(nullable NSString *)panelAlternateButton
-{
-	NSParameterAssert(trustRef != NULL);
-	NSParameterAssert(panelTitleText != nil);
-	NSParameterAssert(panelInformativeText != nil);
-	NSParameterAssert(panelPrimaryButton != nil);
-
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
-
-		[panel setDefaultButtonTitle:panelPrimaryButton];
-		[panel setAlternateButtonTitle:panelAlternateButton];
-
-		[panel setInformativeText:panelInformativeText];
-
-		[panel beginSheetForWindow:panelHostWindow
-					 modalDelegate:nil
-					didEndSelector:NULL
-					   contextInfo:NULL
-							 trust:trustRef
-						   message:panelTitleText];
-	});
+	return [RCMSecureTransport policyNameInTrust:trustRef];
 }
 
 @end

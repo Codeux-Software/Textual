@@ -61,18 +61,10 @@ class ConnectionSocket: NSObject
 
 	var alternateDisconnectError: ConnectionError?
 
-	let readDelimiter = Data(bytes: [0x0a]) // \n
-
 	final let torProxyTypeAddress = "127.0.0.1"
 	final let torProxyTypePort: UInt16 = 9150
 
 	final let maximumDataLength = (1000 * 1000 * 100) // 100 megabytes
-
-	enum Timeout : Double
-	{
-		case normal = 30.0
-		case none = -1.0
-	}
 
 	enum ConnectionError : Error
 	{
@@ -134,6 +126,33 @@ class ConnectionSocket: NSObject
 		EOFReceived = false
 
 		alternateDisconnectError = nil
+	}
+
+	func tlsVerify(_ trust: SecTrust, response: @escaping RCMTrustResponse)
+	{
+		if (config.connectionShouldValidateCertificateChain == false) {
+			response(true)
+
+			return
+		}
+
+		var evaluationResult: SecTrustResultType = .invalid
+
+		let evaluationStatus = SecTrustEvaluate(trust, &evaluationResult)
+
+		if (evaluationStatus == errSecSuccess) {
+			if (evaluationResult == .unspecified || evaluationResult == .proceed) {
+				response(true)
+
+				return
+			} else if (evaluationResult == .recoverableTrustFailure) {
+				delegate?.connection(self, requiresTrust: response)
+
+				return
+			}
+		}
+
+		response(false)
 	}
 
 	var clientSideCertificate: (identity: SecIdentity, certificate: SecCertificate)?
@@ -242,6 +261,12 @@ protocol ConnectionSocketProtocol
 	/// about the secured connection including policy name,
 	/// protocol version, cipher suite, and certificates.
 	func exportSecureConnectionInformation(to receiver: RCMSecureConnectionInformationCompletionBlock) throws
+
+	/// TLS Information
+	var tlsNegotiatedProtocol: SSLProtocol? { get }
+	var tlsNegotiatedCipherSuite: SSLCipherSuite? { get }
+	var tlsCertificateChainData: [Data]? { get }
+	var tlsPolicyName: String? { get }
 }
 
 extension ConnectionSocketProtocol where Self: ConnectionSocket
@@ -262,5 +287,22 @@ extension ConnectionSocketProtocol where Self: ConnectionSocket
 		alternateDisconnectError = error
 
 		close()
+	}
+
+	func exportSecureConnectionInformation(to receiver: RCMSecureConnectionInformationCompletionBlock) throws
+	{
+		if (secured == false) {
+			throw ConnectionError(otherError: "Connection is not secured")
+		}
+
+		let policyName = tlsPolicyName
+
+		let protocolVersion = tlsNegotiatedProtocol ?? SSLProtocol.sslProtocolUnknown
+
+		let cipherSuite = tlsNegotiatedCipherSuite ?? SSL_NO_SUCH_CIPHERSUITE
+
+		let certificateChain = tlsCertificateChainData ?? []
+
+		receiver(policyName, protocolVersion, cipherSuite, certificateChain)
 	}
 }

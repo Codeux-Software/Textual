@@ -348,7 +348,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	}
 }
 
-- (void)setCipherSuites:(GCDAsyncSocketCipherSuiteVersion)cipherSuites
+- (void)setCipherSuites:(RCMCipherSuiteCollection)cipherSuites
 {
 	if (self->_cipherSuites != cipherSuites) {
 		self->_cipherSuites = cipherSuites;

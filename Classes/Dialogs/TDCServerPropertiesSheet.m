@@ -1373,14 +1373,14 @@ NS_ASSUME_NONNULL_BEGIN
 	NSInteger cipherSuites = self.preferredCipherSuitesButton.selectedTag;
 
 	self.viewListOfPreferredCipherSuitesButton.enabled =
-	(cipherSuites != GCDAsyncSocketCipherSuiteNonePreferred);
+	(cipherSuites != RCMCipherSuiteCollectionNone);
 }
 
 - (void)preferredCipherSuitesViewList:(id)sender
 {
 	NSInteger cipherSuites = self.preferredCipherSuitesButton.selectedTag;
 
-	NSArray *cipherSuitesDescriptions = [GCDAsyncSocket descriptionsForCipherListVersion:cipherSuites withProtocol:YES];
+	NSArray *cipherSuitesDescriptions = [RCMSecureTransport descriptionsForCipherListCollection:cipherSuites withProtocol:YES];
 
 	NSString *cipherSuitesDescription = [cipherSuitesDescriptions componentsJoinedByString:@"\n"];
 

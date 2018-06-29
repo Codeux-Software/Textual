@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSString *proxyPassword;
 @property (readonly, copy, nullable) NSString *proxyPasswordFromKeychain;
 @property (readonly, copy, nullable) NSString *proxyUsername;
-@property (readonly) GCDAsyncSocketCipherSuiteVersion cipherSuites;
+@property (readonly) RCMCipherSuiteCollection cipherSuites;
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic ignorePrivateMessages:(BOOL)ignorePrivateMessages NS_DESIGNATED_INITIALIZER;
@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyAddress;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyPassword;
 @property (nonatomic, copy, readwrite, nullable) NSString *proxyUsername;
-@property (nonatomic, assign, readwrite) GCDAsyncSocketCipherSuiteVersion cipherSuites;
+@property (nonatomic, assign, readwrite) RCMCipherSuiteCollection cipherSuites;
 
 /* Deprecated */
 /* Trying to set one of the following properties will throw an exception. */

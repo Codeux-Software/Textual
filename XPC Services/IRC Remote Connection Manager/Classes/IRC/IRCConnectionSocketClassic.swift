@@ -47,6 +47,12 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		case socksProxyAuthenticateUser = 10500
 	}
 
+	fileprivate enum Timeout : Double
+	{
+		case normal = 30.0
+		case none = -1.0
+	}
+
 	fileprivate let httpHeaderResponseStatusRegularExpression = "^HTTP\\/([1-2]{1})(\\.([0-2]{1}))?\\s([0-9]{3,4})\\s(.*)$"
 
 	fileprivate var socketDelegateQueue: DispatchQueue?
@@ -54,6 +60,8 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 	fileprivate var workerQueue: DispatchQueue?
 
 	fileprivate var connection: GCDAsyncSocket?
+
+	fileprivate let readDelimiter = Data(bytes: [0x0a]) // \n
 
 	// MARK: - Grand Centeral Dispatch
 
@@ -199,7 +207,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		 Data returned by socket will include the \n
 		 and \r if it's present. We therefore trim the
 		 data of \r and \n when we read it in. */
-		let trimmedData = data.newlinesTrimmedFromEnd()
+		let trimmedData = data.withoutNewlinesAtEnd
 
 		delegate?.connection(self, received: trimmedData)
 	}
@@ -229,9 +237,9 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 			kCFStreamSSLPeerName as String : config.serverAddress as NSString
 		]
 
-		if (config.cipherSuites != .suiteNonePreferred) {
+		if (config.cipherSuites != .none) {
 			settings[GCDAsyncSocketSSLCipherSuites] =
-				GCDAsyncSocket.cipherList(of: config.cipherSuites, includeDeprecatedCiphers: config.connectionPrefersModernCiphersOnly) as NSArray
+				RCMSecureTransport.cipherSuites(in: config.cipherSuites, includeDeprecated: (config.connectionPrefersModernCiphersOnly == false)) as NSArray
 		}
 
 		if let certificate = clientSideCertificate {
@@ -243,7 +251,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		connection?.startTLS(settings)
 	}
 
-	fileprivate func onSuccessfulConnect()
+	fileprivate func onConnect()
 	{
 		beginTLSNegotiation()
 
@@ -255,33 +263,49 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		delegate?.connection(self, didConnectTo: connectedHost)
 	}
 
+	fileprivate func onSecured()
+	{
+		secured = true
+
+		let protocolVersion = connection?.tlsNegotiatedProtocol ?? SSLProtocol.sslProtocolUnknown
+
+		let cipherSuite = connection?.tlsNegotiatedCipherSuite ?? SSL_NO_SUCH_CIPHERSUITE
+
+		delegate?.connection(self, securedWith: protocolVersion, cipherSuite: cipherSuite)
+	}
+
+	fileprivate func onDisconnect(with error: Error?)
+	{
+		defer {
+			resetState()
+		}
+
+		var errorPayload: ConnectionError?
+
+		if let alternateError = alternateDisconnectError {
+			errorPayload = alternateError
+		} else if let err = error {
+			if let failureReason = RCMSecureTransport.sslHandshakeErrorString(fromError: err) {
+				errorPayload = ConnectionError.unableToSecure(failureReason: failureReason)
+			} else if (err.code != errSSLClosedGraceful) {
+				errorPayload = ConnectionError(socketError: error!)
+			}
+		}
+
+		if (errorPayload == nil) {
+			delegate?.connectionDisconnected(self)
+		} else {
+			delegate?.connection(self, disconnectedWith: errorPayload!)
+		}
+	}
+
 	// MARK: - GCDAsyncSocketDelegate
 
 	func socket(_ sock: GCDAsyncSocket, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void)
 	{
-		if (config.connectionShouldValidateCertificateChain == false) {
-			completionHandler(true)
-
-			return
+		tlsVerify(trust) { (underlyingResponse) in
+			completionHandler(underlyingResponse)
 		}
-
-		var evaluationResult: SecTrustResultType = .invalid
-
-		let evaluationStatus = SecTrustEvaluate(trust, &evaluationResult)
-
-		if (evaluationStatus == errSecSuccess) {
-			if (evaluationResult == .unspecified || evaluationResult == .proceed) {
-				completionHandler(true)
-
-				return
-			} else if (evaluationResult == .recoverableTrustFailure) {
-				delegate?.connection(self, requiresTrust: completionHandler)
-
-				return
-			}
-		}
-
-		completionHandler(false)
 	}
 
 	func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16)
@@ -298,7 +322,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 			return
 		}
 
-		onSuccessfulConnect()
+		onConnect()
 	}
 
 	func socketDidCloseReadStream(_ sock: GCDAsyncSocket)
@@ -310,27 +334,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 	func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?)
 	{
-		defer {
-			resetState()
-		}
-
-		var errorPayload: ConnectionError?
-
-		if let alternateError = alternateDisconnectError {
-			errorPayload = alternateError
-		} else if let error = err {
-			if let failureReason = GCDAsyncSocket.sslHandshakeErrorString(fromError: error) {
-				errorPayload = ConnectionError.unableToSecure(failureReason: failureReason)
-			} else if (error.code != errSSLClosedGraceful) {
-				errorPayload = ConnectionError(socketError: err!)
-			}
-		}
-
-		if (errorPayload == nil) {
-			delegate?.connectionDisconnected(self)
-		} else {
-			delegate?.connection(self, disconnectedWith: errorPayload!)
-		}
+		onDisconnect(with: err)
 	}
 
 	func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int)
@@ -365,32 +369,29 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 	func socketDidSecure(_ sock: GCDAsyncSocket)
 	{
-		secured = true
-
-		let protocolVersion = connection?.sslNegotiatedProtocolVersion ?? SSLProtocol.sslProtocolUnknown
-
-		let cipherSuite = connection?.sslNegotiatedCipherSuite ?? SSL_NO_SUCH_CIPHERSUITE
-
-		delegate?.connection(self, securedWith: protocolVersion, cipherSuite: cipherSuite)
+		onSecured()
 	}
 
-	// MARK: - SSL Certificate Trust Message
+	// MARK: - Security
 
-	func exportSecureConnectionInformation(to receiver: RCMSecureConnectionInformationCompletionBlock) throws
+	var tlsNegotiatedProtocol: SSLProtocol?
 	{
-		if (secured == false) {
-			throw ConnectionError(otherError: "Connection is not secured")
-		}
+		return connection?.tlsNegotiatedProtocol
+	}
 
-		let policyName = connection?.sslNegotiatedCertificatePolicyName
+	var tlsNegotiatedCipherSuite: SSLCipherSuite?
+	{
+		return connection?.tlsNegotiatedCipherSuite
+	}
 
-		let protocolVersion = connection?.sslNegotiatedProtocolVersion ?? SSLProtocol.sslProtocolUnknown
+	var tlsCertificateChainData: [Data]?
+	{
+		return connection?.tlsCertificateChainData
+	}
 
-		let cipherSuite = connection?.sslNegotiatedCipherSuite ?? SSL_NO_SUCH_CIPHERSUITE
-
-		let certificateChain = connection?.sslNegotiatedCertificatesData ?? []
-
-		receiver(policyName, protocolVersion, cipherSuite, certificateChain)
+	var tlsPolicyName: String?
+	{
+		return connection?.tlsPolicyName
 	}
 
 	// MARK: - SOCKS Proxy Support
@@ -705,7 +706,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 			if (version == 5 && reply == 0)
 			{
-				onSuccessfulConnect()
+				onConnect()
 			}
 			else
 			{
@@ -875,7 +876,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 		switch reply {
 			case 0x5a:
-				onSuccessfulConnect()
+				onConnect()
 			case 0x5b:
 				throw ConnectionError(otherError: "SOCKS4 Error: Request rejected or failed")
 			case 0x5c:
@@ -996,7 +997,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		let statusCode = statusResponse.substring(with: statusCodeRange!)!
 
 		if (Int(statusCode) == 200) {
-			onSuccessfulConnect()
+			onConnect()
 		} else {
 			let statusMessageRange = statusResponseRegexResult?.range(at: 5)
 			let statusMessage = statusResponse.substring(with: statusMessageRange!)!

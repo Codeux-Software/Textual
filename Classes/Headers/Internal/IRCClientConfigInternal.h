@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger _floodControlMaximumMessages;
 	uint16_t _proxyPort;
 	uint16_t _serverPort;
-	GCDAsyncSocketCipherSuiteVersion _cipherSuites;
+	RCMCipherSuiteCollection _cipherSuites;
 
 @private
 	BOOL _objectInitialized;

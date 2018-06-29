@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 	uint16_t _serverPort;
 	NSStringEncoding _primaryEncoding;
 	NSStringEncoding _fallbackEncoding;
-	GCDAsyncSocketCipherSuiteVersion _cipherSuites;
+	RCMCipherSuiteCollection _cipherSuites;
 
 @private
 	BOOL _objectInitialized;

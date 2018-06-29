@@ -84,7 +84,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 TEXTUAL_IGNORE_DEPRECATION_END
 
 	defaults[@"cachedLastServerTimeCapabilityReceivedAtTimestamp"] = @(0);
-	defaults[@"cipherSuites"] = @(GCDAsyncSocketCipherSuiteDefaultVersion);
+	defaults[@"cipherSuites"] = @(RCMCipherSuiteCollectionDefault);
 	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[vfu-c0]");
 	defaults[@"connectionPrefersIPv4"] = @(NO);
 	defaults[@"excludedFromCloudSyncing"] = @(NO);
@@ -523,7 +523,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		NSNumber *connectionPrefersModernCiphers = dic[@"connectionPrefersModernCiphers"];
 
 		if (connectionPrefersModernCiphers && connectionPrefersModernCiphers.boolValue == NO) {
-			self->_cipherSuites = GCDAsyncSocketCipherSuiteNonePreferred;
+			self->_cipherSuites = RCMCipherSuiteCollectionNone;
 		}
 	}
 
@@ -1084,7 +1084,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (BOOL)connectionPrefersModernCiphers_
 {
-	return (self.cipherSuites != GCDAsyncSocketCipherSuiteNonePreferred);
+	return (self.cipherSuites != RCMCipherSuiteCollectionNone);
 }
 
 @end
@@ -1541,7 +1541,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	TEXTUAL_DEPRECATED_ASSERT
 }
 
-- (void)setCipherSuites:(GCDAsyncSocketCipherSuiteVersion)cipherSuites
+- (void)setCipherSuites:(RCMCipherSuiteCollection)cipherSuites
 {
 	if (self->_cipherSuites != cipherSuites) {
 		self->_cipherSuites = cipherSuites;
