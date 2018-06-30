@@ -28,4 +28,24 @@ find . -type f -name "libswift*" \
  -exec cp '{}' ./Frameworks/ \; \
  -exec rm '{}' \;
 
+#
+# libswiftNetwork.dylib contains a hard link against /usr/lib/libnetwork.dylib
+# which doesn't exist on Mavericks (10.9). I have filed a radar with Apple
+# to change this to a soft link, but until then, this is the workaround.
+# I have a utility on my Mac that will replace the loader command in the
+# library with one which makes it weak.
+#
+
+FIX_LIBNETWORK_UTILITY="${HOME}/Projects/bin/patch_libswiftNetwork"
+
+if [ -x "${FIX_LIBNETWORK_UTILITY}" ]; then
+	echo "Replacing loader command for libnetwork.dylib to weak"
+
+	"${FIX_LIBNETWORK_UTILITY}" ./Frameworks/libswiftNetwork.dylib
+
+	/usr/bin/codesign --force --sign $EXPANDED_CODE_SIGN_IDENTITY --verbose ./Frameworks/libswiftNetwork.dylib
+else
+	echo "No utility in place to fix libnetwork.dylib link"
+fi
+
 exit 0;
