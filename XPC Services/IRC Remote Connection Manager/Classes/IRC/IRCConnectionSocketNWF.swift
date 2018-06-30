@@ -335,6 +335,14 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 			return
 		}
 
+		if (contentContext?.isFinal == true && isComplete) {
+			EOFReceived = true
+
+			delegate?.connectionClosedReadStream(self)
+
+			return
+		}
+
 		if (content == nil) {
 			close(with: "Unexpected condition: There is no data when there is no error")
 
