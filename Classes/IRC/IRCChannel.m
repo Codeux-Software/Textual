@@ -265,7 +265,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (self.logFile == nil) {
 		writePath = [TLOFileLogger writePathForItem:self];
 	} else {
-		writePath = self.logFile.writePath.stringByDeletingLastPathComponent;
+		writePath = self.logFile.writePath;
 	}
 
 	return [NSURL fileURLWithPath:writePath];
