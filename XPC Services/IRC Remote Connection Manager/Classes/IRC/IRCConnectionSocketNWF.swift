@@ -325,6 +325,10 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 	func readCompletionHandler(_ content: Data?, _ contentContext: NWConnection.ContentContext?, _ isComplete: Bool, _ error: NWError?)
 	{
+		if (disconnecting) {
+			return
+		}
+
 		if let error = error {
 			close(with: error)
 
@@ -344,6 +348,10 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 	func writeCompletionHandler(_ error: NWError?)
 	{
+		if (disconnecting) {
+			return
+		}
+
 		sending = false
 
 		if let error = error {
