@@ -444,7 +444,7 @@ ClassWithDesignatedInitializerInitMethod
 	return [self writePathForItem:item relativeTo:sourcePath];
 }
 
-+ (NSString *)writePathForItem:(IRCTreeItem *)item relativeTo:(NSString *)sourcePath
++ (nullable NSString *)writePathForItem:(IRCTreeItem *)item relativeTo:(NSString *)sourcePath
 {
 	NSParameterAssert(sourcePath != nil);
 	NSParameterAssert(item != nil);
@@ -452,10 +452,16 @@ ClassWithDesignatedInitializerInitMethod
 	return [self writePathForItem:item relativeTo:sourcePath withUniqueIdentifier:YES];
 }
 
-+ (NSString *)writePathForItem:(IRCTreeItem *)item relativeTo:(NSString *)sourcePath withUniqueIdentifier:(BOOL)withUniqueIdentifier
++ (nullable NSString *)writePathForItem:(IRCTreeItem *)item relativeTo:(NSString *)sourcePath withUniqueIdentifier:(BOOL)withUniqueIdentifier
 {
 	NSParameterAssert(sourcePath != nil);
 	NSParameterAssert(item != nil);
+
+	IRCChannel *channel = item.associatedChannel;
+
+	if (channel && channel.isUtility) {
+		return nil;
+	}
 	
 	IRCClient *client = item.associatedClient;
 	
@@ -480,8 +486,6 @@ ClassWithDesignatedInitializerInitMethod
 	} else {
 		clientName = client.name;
 	}
-	
-	IRCChannel *channel = item.associatedChannel;
 
 	NSString *basePath = nil;
 	
@@ -501,7 +505,7 @@ ClassWithDesignatedInitializerInitMethod
 	return self.filePath.stringByDeletingLastPathComponent;
 }
 
-- (NSString *)writePathRelativeTo:(NSString *)sourcePath
+- (nullable NSString *)writePathRelativeTo:(NSString *)sourcePath
 {
 	NSParameterAssert(sourcePath != nil);
 
@@ -536,6 +540,10 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	NSString *writePath = [self writePathRelativeTo:sourcePath];
+
+	if (writePath == nil) {
+		return NO;
+	}
 
 	NSString *fileName = self.fileName_;
 
