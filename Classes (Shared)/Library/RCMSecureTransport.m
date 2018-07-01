@@ -553,18 +553,25 @@ static const char * _Nonnull kMacNames[] = {
 	];
 }
 
-+ (nullable NSString *)sslHandshakeErrorStringFromError:(NSError *)error
++ (BOOL)isTLSError:(NSError *)error
 {
 	NSParameterAssert(error != nil);
 
-	if ([self isBadSSLCertificateError:error] == NO) {
+	return [error.domain isEqualToString:@"kCFStreamErrorDomainSSL"];
+}
+
++ (nullable NSString *)descriptionForError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	if ([self isTLSError:error] == NO) {
 		return nil;
 	}
 
-	return [self sslHandshakeErrorStringFromErrorCode:error.code];
+	return [self descriptionForErrorCode:error.code];
 }
 
-+ (nullable NSString *)sslHandshakeErrorStringFromErrorCode:(NSInteger)errorCode
++ (nullable NSString *)descriptionForErrorCode:(NSInteger)errorCode
 {
 	if (errorCode > (-9800) || errorCode < (-9865)) {
 		return nil;
@@ -588,11 +595,63 @@ static const char * _Nonnull kMacNames[] = {
 	return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
 }
 
-+ (BOOL)isBadSSLCertificateError:(NSError *)error
++ (nullable NSString *)descriptionForBadCertificateError:(NSError *)error
 {
 	NSParameterAssert(error != nil);
 
-	return [error.domain isEqualToString:@"kCFStreamErrorDomainSSL"];
+	if ([self isTLSError:error] == NO) {
+		return nil;
+	}
+
+	return [self descriptionForErrorCode:error.code];
+}
+
++ (nullable NSString *)descriptionForBadCertificateErrorCode:(NSInteger)errorCode
+{
+	if ([self isBadCertificateErrorCode:errorCode] == NO) {
+		return nil;
+	}
+
+	return [self descriptionForErrorCode:errorCode];
+}
+
++ (BOOL)isBadCertificateError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	if ([self isTLSError:error] == NO) {
+		return NO;
+	}
+
+	return [self isBadCertificateErrorCode:error.code];
+}
+
++ (BOOL)isBadCertificateErrorCode:(NSInteger)errorCode
+{
+	switch (errorCode) {
+		case errSSLBadCert:
+		case errSSLNoRootCert:
+		case errSSLCertExpired:
+		case errSSLPeerBadCert:
+		case errSSLPeerCertRevoked:
+		case errSSLPeerCertExpired:
+		case errSSLPeerCertUnknown:
+		case errSSLUnknownRootCert:
+		case errSSLCertNotYetValid:
+		case errSSLXCertChainInvalid:
+		case errSSLPeerUnsupportedCert:
+		case errSSLPeerUnknownCA:
+		case errSSLHostNameMismatch:
+		{
+			return YES;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	return NO;
 }
 
 + (SecTrustRef)trustFromCertificateChain:(NSArray<NSData *> *)certificatecChain withPolicyName:(NSString *)policyName

@@ -68,40 +68,20 @@ class ConnectionSocket: NSObject
 
 	enum ConnectionError : Error
 	{
-		/// unableToSecure are errors returned when the connection
-		/// cannot be secured for some reason. e.g. bad certificate
-		case unableToSecure(failureReason: String)
-
-		// otherError are errors returned by ConnectionSocket instances.
-		case otherError(message: String)
-
-		init (otherError message: String) {
-			self = .otherError(message: message)
-		}
-
 		/// socketError are errors returned by the connection library.
 		/// For example: GCDAsyncSocket, Network.framework, etc.
 		case socketError(_ error: Error)
 
-		init (socketError: Error) {
-			self = .socketError(socketError)
-		}
+		// otherError are errors returned by ConnectionSocket instances.
+		case otherError(message: String)
 
-		func toNSError() -> NSError?
-		{
-			switch self {
-				case .unableToSecure(let failureReason):
-					return NSError(domain: "Textual.ConnectionError.unableToSecure",
-								   code: 1005,
-								   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
-				case .otherError(let message):
-					return NSError(domain: "Textual.ConnectionError.otherError",
-								   code: 1000,
-								   userInfo: [ NSLocalizedDescriptionKey : message ])
-				case .socketError(let error):
-					return error as NSError
-			}
-		} // toNSError()
+		/// invalidCertificate are errors returned when the connection
+		/// cannot be secured because of problem with certificate.
+		case badCertificate(failureReason: String)
+
+		/// unableToSecure are errors returned when the connection
+		/// cannot be secured for some reason. e.g. handshake failure
+		case unableToSecure(failureReason: String)
 	} // ConnectionError
 
 	init (with config: IRCConnectionConfig)
@@ -223,6 +203,63 @@ class ConnectionSocket: NSObject
 	{
 		changeProxy()
 	}
+}
+
+extension ConnectionSocket.ConnectionError
+{
+	init (socketError: Error)
+	{
+		self = .socketError(socketError)
+	}
+
+	init (otherError message: String)
+	{
+		self = .otherError(message: message)
+	}
+
+	init? (tlsError error: Error)
+	{
+		if (RCMSecureTransport.isTLSError(error) == false) {
+			return nil
+		}
+
+		self.init(tlsError: error.code)
+	}
+
+	init? (tlsError errorCode: Int)
+	{
+		if let certError = RCMSecureTransport.description(forBadCertificateErrorCode: errorCode) {
+			self = .badCertificate(failureReason: certError)
+
+			return
+		} else if let tlsError = RCMSecureTransport.description(forErrorCode: errorCode) {
+			self = .unableToSecure(failureReason: tlsError)
+
+			return
+		}
+
+		return nil
+	}
+
+	func toNSError() -> NSError?
+	{
+		switch self {
+			case .socketError(let error):
+				return error as NSError
+			case .otherError(let message):
+				return NSError(domain: "Textual.ConnectionError.otherError",
+							   code: 1000,
+							   userInfo: [ NSLocalizedDescriptionKey : message ])
+			case .badCertificate(let failureReason):
+				return NSError(domain: "Textual.ConnectionError.badCertificate",
+							   code: 1001,
+							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
+			case .unableToSecure(let failureReason):
+				return NSError(domain: "Textual.ConnectionError.unableToSecure",
+							   code: 1002,
+							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
+		}
+	} // toNSError()
 }
 
 protocol ConnectionSocketDelegate: class

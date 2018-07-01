@@ -292,10 +292,10 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		if let alternateError = alternateDisconnectError {
 			errorPayload = alternateError
 		} else if let err = error {
-			if let failureReason = RCMSecureTransport.sslHandshakeErrorString(fromError: err) {
-				errorPayload = ConnectionError.unableToSecure(failureReason: failureReason)
+			if let tlsError = ConnectionError(tlsError: err) {
+				errorPayload = tlsError
 			} else if (err.code != errSSLClosedGraceful) {
-				errorPayload = ConnectionError(socketError: error!)
+				errorPayload = ConnectionError(socketError: err)
 			}
 		}
 
