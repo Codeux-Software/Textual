@@ -407,7 +407,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 	{
 		let proxyType = config.proxyType
 
-		return (proxyType == .systemSocks	||
+		return (proxyType == .automatic		||
 				proxyType == .socks4		||
 				proxyType == .socks5		||
 				proxyType == .tor			||
@@ -433,7 +433,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 	{
 		let proxyType = config.proxyType
 
-		if (proxyType == .systemSocks)
+		if (proxyType == .automatic)
 		{
 			/* Being unable to read proxy values is considered non-ftal
 			 error which why an failure reason is never assigned. */

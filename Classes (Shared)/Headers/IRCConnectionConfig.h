@@ -51,7 +51,7 @@ TEXTUAL_EXTERN uint16_t const IRCConnectionDefaultProxyPort;
 
 typedef NS_ENUM(NSUInteger, IRCConnectionProxyType) {
 	IRCConnectionProxyTypeNone = 0,
-	IRCConnectionProxyTypeSystemSocks = 1,
+	IRCConnectionProxyTypeAutomatic = 1,
 	IRCConnectionProxyTypeSocks4 = 4,
 	IRCConnectionProxyTypeSocks5 = 5,
 	IRCConnectionProxyTypeHTTP = 6,

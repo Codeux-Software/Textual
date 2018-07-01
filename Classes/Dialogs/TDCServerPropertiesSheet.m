@@ -1404,7 +1404,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSInteger proxyType = self.proxyTypeButton.selectedTag;
 
-	BOOL isSystemSocksProxyEnabled = (proxyType == IRCConnectionProxyTypeSystemSocks);
+	BOOL isSystemSocksProxyEnabled = (proxyType == IRCConnectionProxyTypeAutomatic);
 	BOOL isTorBrowserProxyEnabled = (proxyType == IRCConnectionProxyTypeTor);
 
 	BOOL supportsAuthentication = (proxyType == IRCConnectionProxyTypeSocks5);
