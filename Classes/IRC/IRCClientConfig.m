@@ -87,7 +87,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"cachedLastServerTimeCapabilityReceivedAtTimestamp"] = @(0);
 	defaults[@"cipherSuites"] = @(RCMCipherSuiteCollectionDefault);
 	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[vfu-c0]");
-	defaults[@"connectionPrefersModernSockets"] = @(NO);
 	defaults[@"excludedFromCloudSyncing"] = @(NO);
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
 	defaults[@"floodControlDelayTimerInterval"] = @(IRCConnectionConfigFloodControlDefaultDelayInterval);
@@ -325,7 +324,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_autoReconnect forKey:@"autoReconnect"];
 	[defaultsMutable assignBoolTo:&self->_autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[defaultsMutable assignBoolTo:&self->_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
-	[defaultsMutable assignBoolTo:&self->_connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[defaultsMutable assignBoolTo:&self->_excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
@@ -800,7 +798,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic setBool:self.autoReconnect forKey:@"autoReconnect"];
 	[dic setBool:self.autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[dic setBool:self.autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
-	[dic setBool:self.connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludedFromCloudSyncing"];
@@ -1148,7 +1145,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 @dynamic connectionName;
 @dynamic connectionPrefersIPv4;
 @dynamic connectionPrefersModernCiphers;
-@dynamic connectionPrefersModernSockets;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @dynamic excludedFromCloudSyncing;
@@ -1245,13 +1241,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)setConnectionPrefersModernCiphers:(BOOL)connectionPrefersModernCiphers
 {
 	TEXTUAL_DEPRECATED_WARNING
-}
-
-- (void)setConnectionPrefersModernSockets:(BOOL)connectionPrefersModernSockets
-{
-	if (self->_connectionPrefersModernSockets != connectionPrefersModernSockets) {
-		self->_connectionPrefersModernSockets = connectionPrefersModernSockets;
-	}
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
