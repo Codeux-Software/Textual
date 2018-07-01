@@ -199,7 +199,7 @@ class ConnectionSocket: NSObject
 		return (identity: identityRef!, certificate: certificateRef)
 	}
 
-	func changeProxy(to type: IRCConnectionSocketProxyType = .none, at host: String? = nil, on port: UInt16 = 0, username: String? = nil, password: String? = nil)
+	func changeProxy(to type: IRCConnectionProxyType = .none, at host: String? = nil, on port: UInt16 = 0, username: String? = nil, password: String? = nil)
 	{
 		let mutableConfig: IRCConnectionConfigMutable = config.mutableCopy() as! IRCConnectionConfigMutable
 

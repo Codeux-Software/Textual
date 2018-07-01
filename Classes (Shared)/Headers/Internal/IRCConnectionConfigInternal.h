@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _connectionPrefersModernSockets;
 	BOOL _connectionPrefersSecuredConnection;
 	BOOL _connectionShouldValidateCertificateChain;
-	IRCConnectionSocketProxyType _proxyType;
+	IRCConnectionProxyType _proxyType;
 	NSData *_identityClientSideCertificate;
 	NSString *_proxyAddress;
 	NSString *_proxyPassword;

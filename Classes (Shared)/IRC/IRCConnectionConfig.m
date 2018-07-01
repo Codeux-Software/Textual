@@ -268,7 +268,7 @@ uint16_t const IRCConnectionDefaultProxyPort = 1080;
 	}
 }
 
-- (void)setProxyType:(IRCConnectionSocketProxyType)proxyType
+- (void)setProxyType:(IRCConnectionProxyType)proxyType
 {
 	if (self->_proxyType != proxyType) {
 		self->_proxyType = proxyType;

@@ -5900,13 +5900,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(sender == self.socket);
 
-	IRCConnectionSocketProxyType proxyType = self.socket.config.proxyType;
+	IRCConnectionProxyType proxyType = self.socket.config.proxyType;
 
-	if (proxyType == IRCConnectionSocketProxyTypeSocks4) {
+	if (proxyType == IRCConnectionProxyTypeSocks4) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[p7h-un]", proxyHost, proxyPort)];
-	} else if (proxyType == IRCConnectionSocketProxyTypeSocks5) {
+	} else if (proxyType == IRCConnectionProxyTypeSocks5) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[ni5-cy]", proxyHost, proxyPort)];
-	} else if (proxyType == IRCConnectionSocketProxyTypeHTTP) {
+	} else if (proxyType == IRCConnectionProxyTypeHTTP) {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[oby-av]", proxyHost, proxyPort)];
 	}
 }
@@ -11595,10 +11595,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (bypassProxy == NO) {
 		socketConfig.proxyType = self.config.proxyType;
 
-		if (socketConfig.proxyType == IRCConnectionSocketProxyTypeSocks4 ||
-			socketConfig.proxyType == IRCConnectionSocketProxyTypeSocks5 ||
-			socketConfig.proxyType == IRCConnectionSocketProxyTypeHTTP ||
-			socketConfig.proxyType == IRCConnectionSocketProxyTypeHTTPS)
+		if (socketConfig.proxyType == IRCConnectionProxyTypeSocks4 ||
+			socketConfig.proxyType == IRCConnectionProxyTypeSocks5 ||
+			socketConfig.proxyType == IRCConnectionProxyTypeHTTP ||
+			socketConfig.proxyType == IRCConnectionProxyTypeHTTPS)
 		{
 			socketConfig.proxyPort = self.config.proxyPort;
 			socketConfig.proxyAddress = self.config.proxyAddress;
