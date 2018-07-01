@@ -101,7 +101,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"prefersSecuredConnection"] = @(NO);
 	defaults[@"primaryEncoding"] = @(TXDefaultPrimaryStringEncoding);
 	defaults[@"proxyPort"] = @(IRCConnectionDefaultProxyPort);
-	defaults[@"proxyType"] = @(IRCConnectionSocketProxyTypeSystemSocks);
+	defaults[@"proxyType"] = @(IRCConnectionProxyTypeSystemSocks);
 	defaults[@"saslAuthenticationDisableExternalMechanism"] = @(NO);
 	defaults[@"sendAuthenticationRequestsToUserServ"] = @(NO);
 	defaults[@"sendWhoCommandRequestsToChannels"] = @(YES);
@@ -1330,7 +1330,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 }
 
-- (void)setProxyType:(IRCConnectionSocketProxyType)proxyType
+- (void)setProxyType:(IRCConnectionProxyType)proxyType
 {
 	if (self->_proxyType != proxyType) {
 		self->_proxyType = proxyType;

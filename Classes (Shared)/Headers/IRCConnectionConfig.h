@@ -49,14 +49,14 @@ NS_ASSUME_NONNULL_BEGIN
 TEXTUAL_EXTERN uint16_t const IRCConnectionDefaultServerPort;
 TEXTUAL_EXTERN uint16_t const IRCConnectionDefaultProxyPort;
 
-typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
-	IRCConnectionSocketProxyTypeNone = 0,
-	IRCConnectionSocketProxyTypeSystemSocks = 1,
-	IRCConnectionSocketProxyTypeSocks4 = 4,
-	IRCConnectionSocketProxyTypeSocks5 = 5,
-	IRCConnectionSocketProxyTypeHTTP = 6,
-	IRCConnectionSocketProxyTypeHTTPS = 7,
-	IRCConnectionSocketProxyTypeTor = 8
+typedef NS_ENUM(NSUInteger, IRCConnectionProxyType) {
+	IRCConnectionProxyTypeNone = 0,
+	IRCConnectionProxyTypeSystemSocks = 1,
+	IRCConnectionProxyTypeSocks4 = 4,
+	IRCConnectionProxyTypeSocks5 = 5,
+	IRCConnectionProxyTypeHTTP = 6,
+	IRCConnectionProxyTypeHTTPS = 7,
+	IRCConnectionProxyTypeTor = 8
 };
 
 #pragma mark -
@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (readonly) BOOL connectionPrefersModernSockets;
 @property (readonly) BOOL connectionPrefersSecuredConnection;
 @property (readonly) BOOL connectionShouldValidateCertificateChain;
-@property (readonly) IRCConnectionSocketProxyType proxyType;
+@property (readonly) IRCConnectionProxyType proxyType;
 @property (readonly) NSUInteger floodControlDelayInterval;
 @property (readonly) NSUInteger floodControlMaximumMessages;
 @property (readonly) uint16_t proxyPort;
@@ -92,7 +92,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersModernSockets;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign, readwrite) BOOL connectionShouldValidateCertificateChain;
-@property (nonatomic, assign, readwrite) IRCConnectionSocketProxyType proxyType;
+@property (nonatomic, assign, readwrite) IRCConnectionProxyType proxyType;
 @property (nonatomic, assign, readwrite) NSUInteger floodControlDelayInterval;
 @property (nonatomic, assign, readwrite) NSUInteger floodControlMaximumMessages;
 @property (nonatomic, assign, readwrite) uint16_t proxyPort;
