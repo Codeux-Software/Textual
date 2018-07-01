@@ -105,7 +105,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA1FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA2FingerprintCopyButton;
-@property (nonatomic, weak) IBOutlet NSButton *connectionPrefersIPv4Check;
+@property (nonatomic, weak) IBOutlet NSButton *connectionIPv4AddressTypeCheck;
+@property (nonatomic, weak) IBOutlet NSButton *connectionIPv6AddressTypeCheck;
+@property (nonatomic, weak) IBOutlet NSButton *connectionDefaultddressTypeCheck;
 @property (nonatomic, weak) IBOutlet NSButton *deleteAddressBookEntryButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteHighlightButton;
@@ -212,6 +214,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)preferredCipherSuitesChanged:(id)sender;
 - (IBAction)preferredCipherSuitesViewList:(id)sender;
+
+- (IBAction)preferredInternetProtocolChanged:(id)sender;
 @end
 
 #pragma clang diagnostic push
@@ -912,7 +916,11 @@ NS_ASSUME_NONNULL_BEGIN
 	self.zncOnlyPlaybackLatestCheck.state = self.config.zncOnlyPlaybackLatest;
 
 	/* Network Socket */
-	self.connectionPrefersIPv4Check.state = self.config.connectionPrefersIPv4;
+	IRCConnectionAddressType addressType = self.config.addressType;
+
+	self.connectionIPv4AddressTypeCheck.state = (addressType == IRCConnectionAddressTypeIPv4);
+	self.connectionIPv6AddressTypeCheck.state = (addressType == IRCConnectionAddressTypeIPv6);
+	self.connectionDefaultddressTypeCheck.state = (addressType == IRCConnectionAddressTypeDefault);
 
 	self.pongTimerCheck.state = self.config.performPongTimer;
 	self.performDisconnectOnPongTimerCheck.state = self.config.performDisconnectOnPongTimer;
@@ -1072,8 +1080,6 @@ NS_ASSUME_NONNULL_BEGIN
 	self.config.zncOnlyPlaybackLatest = (self.zncOnlyPlaybackLatestCheck.state == NSOnState);
 
 	/* Network Socket */
-	self.config.connectionPrefersIPv4 = (self.connectionPrefersIPv4Check.state == NSOnState);
-
 	self.config.performPongTimer = (self.pongTimerCheck.state == NSOnState);
 	self.config.performDisconnectOnPongTimer = (self.performDisconnectOnPongTimerCheck.state == NSOnState);
 
@@ -1491,6 +1497,19 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 #endif
+
+- (void)preferredInternetProtocolChanged:(id)sender
+{
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
+	/* Changing the property triggers a deprecation log to console
+	 which is just unncessary output when each time we change it. */
+	if (self.config.connectionPrefersIPv4) {
+		self.config.connectionPrefersIPv4 = NO;
+	}
+TEXTUAL_IGNORE_DEPRECATION_END
+
+	self.config.addressType = [sender tag];
+}
 
 #pragma mark -
 #pragma mark SSL Certificate

@@ -50,7 +50,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define IRCClientConfigDictionaryVersionLatest		704
+#define IRCClientConfigDictionaryVersionLatest		710
 
 #define IRCClientConfigFloodControlDefaultDelayIntervalLimited		2
 #define IRCClientConfigFloodControlDefaultMessageCountLimited		2 // freenode gets a special case 'cause they are strict about flood control
@@ -75,6 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* This allows NO values to be stripped from output dictionary. */
 	NSMutableDictionary<NSString *, id> *defaults = [NSMutableDictionary dictionary];
 
+	defaults[@"addressType"] = @(IRCConnectionAddressTypeDefault);
 	defaults[@"autoConnect"] = @(NO);
 	defaults[@"autoReconnect"] = @(NO);
 	defaults[@"autoSleepModeDisconnect"] = @(YES);
@@ -86,7 +87,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	defaults[@"cachedLastServerTimeCapabilityReceivedAtTimestamp"] = @(0);
 	defaults[@"cipherSuites"] = @(RCMCipherSuiteCollectionDefault);
 	defaults[@"connectionName"] = TXTLS(@"BasicLanguage[vfu-c0]");
-	defaults[@"connectionPrefersIPv4"] = @(NO);
 	defaults[@"connectionPrefersModernSockets"] = @(NO);
 	defaults[@"excludedFromCloudSyncing"] = @(NO);
 	defaults[@"fallbackEncoding"] = @(TXDefaultFallbackStringEncoding);
@@ -325,7 +325,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_autoReconnect forKey:@"autoReconnect"];
 	[defaultsMutable assignBoolTo:&self->_autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[defaultsMutable assignBoolTo:&self->_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
-	[defaultsMutable assignBoolTo:&self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 	[defaultsMutable assignBoolTo:&self->_connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -363,6 +362,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 	[defaultsMutable assignStringTo:&self->_username forKey:@"username"];
 
+	[defaultsMutable assignUnsignedIntegerTo:&self->_addressType forKey:@"addressType"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_cipherSuites forKey:@"cipherSuites"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_fallbackEncoding forKey:@"fallbackEncoding"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_floodControlDelayTimerInterval forKey:@"floodControlDelayTimerInterval"];
@@ -372,6 +372,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable assignUnsignedShortTo:&self->_proxyPort forKey:@"proxyPort"];
 	[defaultsMutable assignUnsignedShortTo:&self->_serverPort forKey:@"serverPort"];
+
+	/* -connectionPrefersIPv4 is a special exception to legacy support.
+	 We still load its value, regardless of dictionary version, so that
+	 we can show a user a warning when -connectionPrefersIPv4 == YES
+	 and -addressType == IPv6 (which is automatically migrates to).
+	 We then change value to NO when user modifies -addressType. */
+	[defaultsMutable assignBoolTo:&self->_connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 
 	/* If this is a copy operation, then we can just stop here. The rest of the data processed below,
 	 such as other configurations and backwards keys are already taken care of. */
@@ -437,14 +444,49 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self->_serverList = [serverListOut copy];
 
-	/* Load legacy keys (if they exist) */
-	if (self->_dictionaryVersion == IRCClientConfigDictionaryVersionLatest) {
-		return;
-	}
-
+	/* Perform migration */
 	/* If legacy keys were assigned before new keys, then a transition would not occur properly. */
 	/* Since the new keys will read from -defaults if they are not present in /dic/, then those
 	 would override legacy keys when performing a first pass. */
+
+	/* Is everything up to date? */
+	NSUInteger dictionaryVersion = self->_dictionaryVersion;
+
+	if (dictionaryVersion == IRCClientConfigDictionaryVersionLatest) {
+		return;
+	}
+
+	/* 710 is latest version which means we migrate it at all times */
+	[self _migrate710Dictionary:dic withDefaults:defaultsMutable];
+
+	/* 704 is no longer the latest version but there was no version before
+	 it which means we only have to migrate it when the version is unknown. */
+	if (dictionaryVersion == 0) {
+		[self _migrate704Dictionary:dic withDefaults:defaultsMutable];
+	}
+
+	/* Update version */
+	self->_dictionaryVersion = IRCClientConfigDictionaryVersionLatest;
+}
+
+- (void)_migrate710Dictionary:(NSDictionary *)dic withDefaults:(NSMutableDictionary *)defaultsMutable
+{
+	NSParameterAssert(dic != nil);
+	NSParameterAssert(defaultsMutable != nil);
+
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
+	if (self.connectionPrefersIPv4) {
+TEXTUAL_IGNORE_DEPRECATION_END
+
+		self->_addressType = IRCConnectionAddressTypeIPv4;
+	}
+}
+
+- (void)_migrate704Dictionary:(NSDictionary *)dic withDefaults:(NSMutableDictionary *)defaultsMutable
+{
+	NSParameterAssert(dic != nil);
+	NSParameterAssert(defaultsMutable != nil);
+
 	[defaultsMutable assignArrayTo:&self->_alternateNicknames forKey:@"identityAlternateNicknames"];
 
 	[defaultsMutable assignBoolTo:&self->_autoConnect forKey:@"connectOnLaunch"];
@@ -531,9 +573,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* Migrate servers */
 	[self _migrateDictionaryToServerListV1Layout:defaultsMutable];
-
-	/* Assign version */
-	self->_dictionaryVersion = IRCClientConfigDictionaryVersionLatest;
 }
 
 - (void)_migrateDictionaryToServerListV1Layout:(NSDictionary *)dic
@@ -761,7 +800,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.autoReconnect forKey:@"autoReconnect"];
 	[dic setBool:self.autoSleepModeDisconnect forKey:@"autoSleepModeDisconnect"];
 	[dic setBool:self.autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServ"];
-	[dic setBool:self.connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 	[dic setBool:self.connectionPrefersModernSockets forKey:@"connectionPrefersModernSockets"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -783,6 +821,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.zncIgnoreUserNotifications forKey:@"zncIgnoreUserNotifications"];
 	[dic setBool:self.zncOnlyPlaybackLatest forKey:@"zncOnlyPlaybackLatest"];
 
+	[dic setUnsignedInteger:self.addressType forKey:@"addressType"];
 	[dic setUnsignedInteger:self.cipherSuites forKey:@"cipherSuites"];
 	[dic setUnsignedInteger:self.fallbackEncoding forKey:@"fallbackEncoding"];
 	[dic setUnsignedInteger:self.floodControlDelayTimerInterval forKey:@"floodControlDelayTimerInterval"];
@@ -808,6 +847,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 TEXTUAL_IGNORE_DEPRECATION_BEGIN
 	[dic maybeSetObject:self.serverAddress_ forKey:@"serverAddress"];
 
+	[dic setBool:self.connectionPrefersIPv4 forKey:@"connectionPrefersIPv4"];
 	[dic setBool:self.connectionPrefersModernCiphers_ forKey:@"connectionPrefersModernCiphers"];
 
 	[dic setBool:self.prefersSecuredConnection_ forKey:@"prefersSecuredConnection"];
@@ -1096,6 +1136,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 @implementation IRCClientConfigMutable
 
+@dynamic addressType;
 @dynamic alternateNicknames;
 @dynamic autoConnect;
 @dynamic autoReconnect;
@@ -1194,6 +1235,8 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)setConnectionPrefersIPv4:(BOOL)connectionPrefersIPv4
 {
+	TEXTUAL_DEPRECATED_WARNING
+
 	if (self->_connectionPrefersIPv4 != connectionPrefersIPv4) {
 		self->_connectionPrefersIPv4 = connectionPrefersIPv4;
 	}
@@ -1327,6 +1370,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	if (self->_zncOnlyPlaybackLatest != zncOnlyPlaybackLatest) {
 		self->_zncOnlyPlaybackLatest = zncOnlyPlaybackLatest;
+	}
+}
+
+- (void)setAddressType:(IRCConnectionAddressType)addressType
+{
+	if (self->_addressType != addressType) {
+		self->_addressType = addressType;
 	}
 }
 

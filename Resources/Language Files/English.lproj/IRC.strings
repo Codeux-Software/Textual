@@ -263,6 +263,9 @@
 /* /topic/ command errors */
 "1oo-3b" = "You have exceeded the maximum topic length for %1$@ which is %2$ld characters. The end of your topic may have been cut off.";
 
+/* Address type migration warning */
+"w05-ph" = "\0034\002Please take notice:\002\003 The preference labeled “Prefer IPv4”, which you had enabled, no longer exists. \002IPv6 has been disabled for this connection\002 to offer you similar behavior. See the \002Network Socket\002 section of \002Server Properties\002 to change which protocols are enabled (IPv4 and/or IPv6).";
+
 /* Common command errors */
 "atq-93" = "Invalid syntax: “%@“";
 "pxa-ox" = "Cannot find channel named “%@“";
