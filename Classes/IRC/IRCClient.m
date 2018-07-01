@@ -11471,12 +11471,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)connect:(IRCClientConnectMode)connectMode
 {
-	BOOL preferIPv4 = self.config.connectionPrefersIPv4;
-
-	[self connect:connectMode preferIPv4:preferIPv4 bypassProxy:NO];
+	[self connect:connectMode bypassProxy:NO];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4 bypassProxy:(BOOL)bypassProxy
+{
+	[self connect:connectMode bypassProxy:bypassProxy];
+}
+#pragma clang diagnostic pop
+
+- (void)connect:(IRCClientConnectMode)connectMode bypassProxy:(BOOL)bypassProxy
 {
 	/* Do not allow a connect to occur until the current 
 	 socket has completed disconnecting */
@@ -11572,6 +11578,21 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self printDebugInformationToConsole:TXTLS(@"IRC[ky3-36]")];
 	}
 
+	/* To provide user with similiar behavior, when migrating -connectionPrefersIPv4
+	 in IRCClientConfig, we set the address type to IRCConnectionAddressTypeIPv4.
+	 We check if both values are set to offer the user a warning that the preference
+	 they had has changed in a way they may not want. When user changes the address
+	 type in Server Properties, we unset -connectionPrefersIPv4 so that the warning
+	 does not appear again, ever. */
+	IRCConnectionAddressType addressType = self.config.addressType;
+
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
+	if (addressType == IRCConnectionAddressTypeIPv4 && self.config.connectionPrefersIPv4) {
+TEXTUAL_IGNORE_DEPRECATION_END
+
+		[self printDebugInformation:TXTLS(@"IRC[w05-ph]")];
+	}
+
 	[self printDebugInformationToConsole:TXTLS(@"IRC[o77-ls]", serverAddress, serverPort)];
 
 	[RZNotificationCenter() postNotificationName:IRCClientWillConnectNotification object:self];
@@ -11579,10 +11600,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	/* Create socket */
 	IRCConnectionConfigMutable *socketConfig = [IRCConnectionConfigMutable new];
 
+	socketConfig.addressType = addressType;
+
 	socketConfig.serverAddress = serverAddress;
 	socketConfig.serverPort = serverPort;
 
-	socketConfig.connectionPrefersIPv4 = preferIPv4;
 	socketConfig.connectionPrefersModernSockets = ([TPCPreferences preferModernSockets] || self.config.connectionPrefersModernSockets);
 
 	socketConfig.cipherSuites = self.config.cipherSuites;

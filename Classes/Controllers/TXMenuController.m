@@ -524,32 +524,10 @@ NS_ASSUME_NONNULL_BEGIN
 				return NO;
 			}
 
-			/* We do not return NO for the condition right away so
-			 that we can have time to update the title and action. */
 			BOOL connected = (u.isConnected || u.isConnecting);
 			
 			menuItem.hidden = connected;
 
-			BOOL prefersIPv4 = u.config.connectionPrefersIPv4;
-			
-			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
-			
-			if (flags == NSShiftKeyMask) {
-				if (prefersIPv4 == NO) {
-					prefersIPv4 = YES;
-					
-					menuItem.title = TXTLS(@"BasicLanguage[op8-64]");
-				}
-			} else {
-				menuItem.title = TXTLS(@"BasicLanguage[3mf-zx]");
-			}
-			
-			if (prefersIPv4) {
-				menuItem.action = @selector(connectPreferringIPv4:);
-			} else {
-				menuItem.action = @selector(connectPreferringIPv6:);
-			}
-			
 			return (connected == NO && u.isQuitting == NO);
 		}
 		case MTMMServerConnectWithoutProxy: // "Connect Without Proxy"
@@ -568,7 +546,7 @@ NS_ASSUME_NONNULL_BEGIN
 				return NO;
 			}
 
-			BOOL condition = (u.isConnected || u.isConnecting||
+			BOOL condition = (u.isConnected || u.isConnecting ||
 					u.config.proxyType == IRCConnectionProxyTypeNone);
 
 			menuItem.hidden = condition;
@@ -1560,31 +1538,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)connect:(id)sender
 {
-	NSAssert(NO, @"This method should not be invoked directly");
-}
-
-- (void)connectPreferringIPv6:(id)sender
-{
 	IRCClient *u = self.selectedClient;
 
 	if (u == nil || u.isConnecting || u.isConnected || u.isQuitting) {
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode preferIPv4:NO bypassProxy:NO];
-
-	[mainWindow() expandClient:u];
-}
-
-- (void)connectPreferringIPv4:(id)sender
-{
-	IRCClient *u = self.selectedClient;
-
-	if (u == nil || u.isConnecting || u.isConnected || u.isQuitting) {
-		return;
-	}
-
-	[u connect:IRCClientConnectNormalMode preferIPv4:YES bypassProxy:NO];
+	[u connect];
 
 	[mainWindow() expandClient:u];
 }
@@ -1597,7 +1557,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode preferIPv4:u.config.connectionPrefersIPv4 bypassProxy:YES];
+	[u connect:IRCClientConnectNormalMode bypassProxy:YES];
 
 	[mainWindow() expandClient:u];
 }

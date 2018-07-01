@@ -135,7 +135,7 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)connectMode;
-- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4 bypassProxy:(BOOL)bypassProxy;
+- (void)connect:(IRCClientConnectMode)connectMode bypassProxy:(BOOL)bypassProxy;
 
 - (void)quit;
 - (void)quitWithComment:(NSString *)comment;
@@ -356,6 +356,8 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 #pragma mark -
 
 @interface IRCClient (Deprecated)
+- (void)connect:(IRCClientConnectMode)connectMode preferIPv4:(BOOL)preferIPv4 bypassProxy:(BOOL)bypassProxy TEXTUAL_DEPRECATED("No alternative available. preferIPv4 is ignored.");
+
 @property (readonly) BOOL inUserInvokedIsonRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
 @property (readonly) BOOL inUserInvokedJoinRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");
 @property (readonly) BOOL inUserInvokedModeRequest TEXTUAL_DEPRECATED("No alternative available. Will always return NO.");

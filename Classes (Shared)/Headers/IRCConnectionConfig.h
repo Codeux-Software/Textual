@@ -59,15 +59,24 @@ typedef NS_ENUM(NSUInteger, IRCConnectionProxyType) {
 	IRCConnectionProxyTypeTor = 8
 };
 
+/* Select specific protocol to use. This does not define preference.
+ When a specific protocol is enabled, its counterpart is disabled. */
+typedef NS_ENUM(NSUInteger, IRCConnectionAddressType)
+{
+	IRCConnectionAddressTypeDefault = 0, // enable both
+	IRCConnectionAddressTypeIPv4 NS_SWIFT_NAME(v4) = 1,
+	IRCConnectionAddressTypeIPv6 NS_SWIFT_NAME(v6) = 2
+};
+
 #pragma mark -
 #pragma mark Immutable Object
 
 @interface IRCConnectionConfig : NSObject <NSCopying, NSMutableCopying, NSCoding, NSSecureCoding>
-@property (readonly) BOOL connectionPrefersIPv4;
 @property (readonly) BOOL connectionPrefersModernCiphersOnly;
 @property (readonly) BOOL connectionPrefersModernSockets;
 @property (readonly) BOOL connectionPrefersSecuredConnection;
 @property (readonly) BOOL connectionShouldValidateCertificateChain;
+@property (readonly) IRCConnectionAddressType addressType;
 @property (readonly) IRCConnectionProxyType proxyType;
 @property (readonly) NSUInteger floodControlDelayInterval;
 @property (readonly) NSUInteger floodControlMaximumMessages;
@@ -81,17 +90,21 @@ typedef NS_ENUM(NSUInteger, IRCConnectionProxyType) {
 @property (readonly) NSStringEncoding primaryEncoding NS_UNAVAILABLE;
 @property (readonly) NSStringEncoding fallbackEncoding NS_UNAVAILABLE;
 @property (readonly) RCMCipherSuiteCollection cipherSuites;
+
+/* Deprecated */
+/* -connectionPrefersIPv4 will always return NO */
+@property (readonly) BOOL connectionPrefersIPv4 TEXTUAL_DEPRECATED("Use -addressType instead");
 @end
 
 #pragma mark -
 #pragma mark Mutable Object
 
 @interface IRCConnectionConfigMutable : IRCConnectionConfig
-@property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersModernCiphersOnly;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersModernSockets;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign, readwrite) BOOL connectionShouldValidateCertificateChain;
+@property (nonatomic, assign, readwrite) IRCConnectionAddressType addressType;
 @property (nonatomic, assign, readwrite) IRCConnectionProxyType proxyType;
 @property (nonatomic, assign, readwrite) NSUInteger floodControlDelayInterval;
 @property (nonatomic, assign, readwrite) NSUInteger floodControlMaximumMessages;
@@ -105,6 +118,10 @@ typedef NS_ENUM(NSUInteger, IRCConnectionProxyType) {
 @property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding NS_UNAVAILABLE;
 @property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding NS_UNAVAILABLE;
 @property (nonatomic, assign, readwrite) RCMCipherSuiteCollection cipherSuites;
+
+/* Deprecated */
+/* Trying to set one of the following properties will throw an exception. */
+@property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4 TEXTUAL_DEPRECATED("Use -addressType instead");
 @end
 
 NS_ASSUME_NONNULL_END

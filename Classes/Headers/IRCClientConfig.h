@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL autoReconnect;
 @property (readonly) BOOL autoSleepModeDisconnect;
 @property (readonly) BOOL autojoinWaitsForNickServ;
-@property (readonly) BOOL connectionPrefersIPv4;
 @property (readonly) BOOL connectionPrefersModernSockets;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -73,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL zncIgnorePlaybackNotifications;
 @property (readonly) BOOL zncIgnoreUserNotifications;
 @property (readonly) BOOL zncOnlyPlaybackLatest;
+@property (readonly) IRCConnectionAddressType addressType;
 @property (readonly) IRCConnectionProxyType proxyType;
 @property (readonly) NSStringEncoding fallbackEncoding;
 @property (readonly) NSStringEncoding primaryEncoding;
@@ -115,6 +115,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)uniqueCopyMutable;
 
 /* Deprecated */
+@property (readonly) BOOL connectionPrefersIPv4 TEXTUAL_DEPRECATED("Use -addressType instead");
+
 /* Accessing one of these properties will return the value from the first server in -serverList */
 @property (readonly) BOOL prefersSecuredConnection TEXTUAL_DEPRECATED("Access property through -serverList");
 @property (readonly) uint16_t serverPort TEXTUAL_DEPRECATED("Access property through -serverList");
@@ -132,7 +134,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL autoReconnect;
 @property (nonatomic, assign, readwrite) BOOL autoSleepModeDisconnect;
 @property (nonatomic, assign, readwrite) BOOL autojoinWaitsForNickServ;
-@property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4;
 @property (nonatomic, assign, readwrite) BOOL connectionPrefersModernSockets;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -154,6 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) BOOL zncIgnorePlaybackNotifications;
 @property (nonatomic, assign, readwrite) BOOL zncIgnoreUserNotifications;
 @property (nonatomic, assign, readwrite) BOOL zncOnlyPlaybackLatest;
+@property (nonatomic, assign, readwrite) IRCConnectionAddressType addressType;
 @property (nonatomic, assign, readwrite) IRCConnectionProxyType proxyType;
 @property (nonatomic, assign, readwrite) NSStringEncoding fallbackEncoding;
 @property (nonatomic, assign, readwrite) NSStringEncoding primaryEncoding;
@@ -182,6 +184,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) RCMCipherSuiteCollection cipherSuites;
 
 /* Deprecated */
+@property (nonatomic, assign, readwrite) BOOL connectionPrefersIPv4 TEXTUAL_DEPRECATED("Use -addressType instead");
+
 /* Trying to set one of the following properties will throw an exception. */
 @property (nonatomic, assign, readwrite) BOOL prefersSecuredConnection TEXTUAL_DEPRECATED("Modify property using -serverList instead");
 @property (nonatomic, assign, readwrite) uint16_t serverPort TEXTUAL_DEPRECATED("Modify property using -serverList instead");

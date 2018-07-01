@@ -33,8 +33,10 @@
                 <outlet property="clientCertificateSHA2FingerprintCopyButton" destination="758-2B-Ka3" id="zlF-cP-CFR"/>
                 <outlet property="clientCertificateSHA2FingerprintField" destination="2ie-9H-xb2" id="DRq-p4-jeL"/>
                 <outlet property="connectCommandsField" destination="2310" id="2Ht-9D-ef5"/>
+                <outlet property="connectionDefaultddressTypeCheck" destination="zOI-7i-HTQ" id="atT-V9-DBS"/>
+                <outlet property="connectionIPv4AddressTypeCheck" destination="Doi-rA-9aF" id="wyV-Fd-Ii1"/>
+                <outlet property="connectionIPv6AddressTypeCheck" destination="dd4-fZ-E2b" id="6Eh-9M-sx5"/>
                 <outlet property="connectionNameTextField" destination="1539" id="f2G-5T-09V"/>
-                <outlet property="connectionPrefersIPv4Check" destination="2530" id="HQX-yt-KqL"/>
                 <outlet property="contentViewAddressBook" destination="1817" id="d5R-wV-sv5"/>
                 <outlet property="contentViewAutojoin" destination="1738" id="GdW-S9-Mmc"/>
                 <outlet property="contentViewClientCertificate" destination="Ti4-Q4-cYX" id="dRg-gZ-hNm"/>
@@ -931,7 +933,7 @@ Gw
                     <rect key="frame" x="35" y="240" width="460" height="36"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Fx0-Yf-kbO">
                         <rect key="frame" x="0.0" y="0.0" width="460" height="36"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
                                 <rect key="frame" x="0.0" y="0.0" width="460" height="36"/>
@@ -1036,7 +1038,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1193,7 +1195,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1344,7 +1346,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="179"/>
@@ -1449,7 +1451,7 @@ Gw
                     <rect key="frame" x="57" y="54" width="416" height="200"/>
                     <clipView key="contentView" drawsBackground="NO" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="414" height="198"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -1749,7 +1751,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
@@ -1999,42 +2001,35 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2536">
-                    <rect key="frame" x="49" y="162" width="355" height="18"/>
+                    <rect key="frame" x="49" y="159" width="355" height="18"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when no PING response is received" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2537">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="7Re-Oa-iNx">
-                    <rect key="frame" x="49" y="114" width="303" height="18"/>
+                    <rect key="frame" x="49" y="111" width="303" height="18"/>
                     <buttonCell key="cell" type="check" title="Validate the certificate chain when connecting" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="w5K-aH-URS">
-                    <rect key="frame" x="49" y="142" width="303" height="18"/>
+                    <rect key="frame" x="49" y="139" width="303" height="18"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when reachability changes" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mLI-Vm-l2s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
-                    <rect key="frame" x="49" y="182" width="338" height="18"/>
+                    <rect key="frame" x="49" y="179" width="338" height="18"/>
                     <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="2530">
-                    <rect key="frame" x="49" y="210" width="90" height="18"/>
-                    <buttonCell key="cell" type="check" title="Prefer IPv4" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2533">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="46W-2g-sYj">
-                    <rect key="frame" x="49" y="84" width="88" height="17"/>
+                    <rect key="frame" x="49" y="81" width="88" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cipher suites:" id="Qfh-rz-IdC">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2042,7 +2037,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xo6-bb-4qn">
-                    <rect key="frame" x="141" y="78" width="250" height="26"/>
+                    <rect key="frame" x="141" y="75" width="250" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="245" id="51q-ri-dPn"/>
                     </constraints>
@@ -2063,7 +2058,7 @@ Gw
                     </connections>
                 </popUpButton>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BoR-WW-sT2">
-                    <rect key="frame" x="390" y="74" width="95" height="32"/>
+                    <rect key="frame" x="390" y="71" width="95" height="32"/>
                     <buttonCell key="cell" type="push" title="View List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LuK-ZI-qT9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2072,16 +2067,56 @@ Gw
                         <action selector="preferredCipherSuitesViewList:" target="-2" id="UQs-lq-m95"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T3E-ox-F6h">
+                    <rect key="frame" x="49" y="210" width="96" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connect using:" id="B8q-jl-QtB">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Doi-rA-9aF">
+                    <rect key="frame" x="148" y="209" width="49" height="18"/>
+                    <buttonCell key="cell" type="radio" title="IPv4" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="rrw-wu-OBL">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferredInternetProtocolChanged:" target="-2" id="IdA-5M-B2J"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="dd4-fZ-E2b">
+                    <rect key="frame" x="202" y="209" width="49" height="18"/>
+                    <buttonCell key="cell" type="radio" title="IPv6" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="PI4-um-V5J">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferredInternetProtocolChanged:" target="-2" id="xAK-Lf-84J"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zOI-7i-HTQ">
+                    <rect key="frame" x="256" y="209" width="152" height="18"/>
+                    <buttonCell key="cell" type="radio" title="Automatically choose" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="YkZ-0c-BeT">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferredInternetProtocolChanged:" target="-2" id="1Fm-cM-XZY"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="7Re-Oa-iNx" firstAttribute="top" secondItem="w5K-aH-URS" secondAttribute="bottom" constant="14" id="1te-Bt-Za4"/>
                 <constraint firstItem="BoR-WW-sT2" firstAttribute="leading" secondItem="xo6-bb-4qn" secondAttribute="trailing" constant="8" id="2F2-UY-sVm"/>
+                <constraint firstItem="2531" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="51" id="2dm-0J-8Pw"/>
+                <constraint firstAttribute="trailing" secondItem="zOI-7i-HTQ" secondAttribute="trailing" constant="124" id="5Fa-EQ-u9v"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="top" secondItem="2536" secondAttribute="bottom" constant="6" symbolic="YES" id="6Ix-p9-Rd7"/>
-                <constraint firstItem="46W-2g-sYj" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="15" id="7dL-Xs-QZN"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2530" secondAttribute="trailing" constant="20" id="8tS-05-aCl"/>
                 <constraint firstItem="46W-2g-sYj" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="51" id="Dm9-Ps-yoM"/>
                 <constraint firstItem="2536" firstAttribute="leading" secondItem="w5K-aH-URS" secondAttribute="leading" id="EA6-QO-79Q"/>
+                <constraint firstItem="Doi-rA-9aF" firstAttribute="leading" secondItem="T3E-ox-F6h" secondAttribute="trailing" constant="6" id="EOj-J2-dB0"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="leading" secondItem="7Re-Oa-iNx" secondAttribute="leading" id="KVr-tH-94d"/>
+                <constraint firstItem="zOI-7i-HTQ" firstAttribute="firstBaseline" secondItem="dd4-fZ-E2b" secondAttribute="firstBaseline" id="NR8-q7-wXz"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2531" secondAttribute="trailing" constant="20" id="SZI-rQ-QjK"/>
                 <constraint firstItem="BoR-WW-sT2" firstAttribute="baseline" secondItem="xo6-bb-4qn" secondAttribute="baseline" id="TBZ-CP-co8"/>
                 <constraint firstItem="2536" firstAttribute="top" secondItem="2531" secondAttribute="bottom" constant="6" symbolic="YES" id="V1d-cP-qJf"/>
@@ -2090,14 +2125,18 @@ Gw
                 <constraint firstItem="2531" firstAttribute="leading" secondItem="2536" secondAttribute="leading" id="cGt-cj-hzU"/>
                 <constraint firstItem="xo6-bb-4qn" firstAttribute="baseline" secondItem="46W-2g-sYj" secondAttribute="baseline" id="cYh-AE-mUc"/>
                 <constraint firstItem="xo6-bb-4qn" firstAttribute="leading" secondItem="46W-2g-sYj" secondAttribute="trailing" constant="8" id="d6Q-qc-hXF"/>
-                <constraint firstItem="2530" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="51" id="f8b-Hh-PW6"/>
-                <constraint firstItem="2530" firstAttribute="leading" secondItem="2531" secondAttribute="leading" id="fbV-dI-oEE"/>
+                <constraint firstItem="dd4-fZ-E2b" firstAttribute="leading" secondItem="Doi-rA-9aF" secondAttribute="trailing" constant="8" id="fFf-iQ-kBd"/>
+                <constraint firstItem="Doi-rA-9aF" firstAttribute="firstBaseline" secondItem="T3E-ox-F6h" secondAttribute="firstBaseline" id="hRu-8N-kLQ"/>
+                <constraint firstItem="2531" firstAttribute="top" secondItem="T3E-ox-F6h" secondAttribute="bottom" constant="15" id="iin-Gr-gI7"/>
+                <constraint firstItem="xo6-bb-4qn" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="14" id="j43-Ga-Ckd"/>
+                <constraint firstItem="T3E-ox-F6h" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="51" id="o3v-dH-5fi"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Re-Oa-iNx" secondAttribute="trailing" constant="20" id="tdl-t1-96o"/>
-                <constraint firstItem="2531" firstAttribute="top" secondItem="2530" secondAttribute="bottom" constant="14" id="w1S-6W-u5R"/>
-                <constraint firstItem="2530" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="81" id="w64-4H-lvT"/>
+                <constraint firstItem="T3E-ox-F6h" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="80" id="vnj-fm-KQ5"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2536" secondAttribute="trailing" constant="20" id="wg6-fI-HVl"/>
+                <constraint firstItem="zOI-7i-HTQ" firstAttribute="leading" secondItem="dd4-fZ-E2b" secondAttribute="trailing" constant="8" id="xkL-0g-N5I"/>
+                <constraint firstItem="dd4-fZ-E2b" firstAttribute="firstBaseline" secondItem="Doi-rA-9aF" secondAttribute="firstBaseline" id="zzC-QE-eTx"/>
             </constraints>
-            <point key="canvasLocation" x="521" y="113.5"/>
+            <point key="canvasLocation" x="582" y="540"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ti4-Q4-cYX" userLabel="CertFP View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>

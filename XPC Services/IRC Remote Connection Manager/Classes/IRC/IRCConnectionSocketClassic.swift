@@ -99,7 +99,14 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 		connection.useStrictTimers = true
 
-		connection.isIPv4PreferredOverIPv6 = config.connectionPrefersIPv4
+		switch config.addressType {
+			case .v4:
+				connection.isIPv6Enabled = false
+			case .v6:
+				connection.isIPv4Enabled = false
+			default:
+				connection.isIPv4PreferredOverIPv6 = false
+		}
 
 		self.connection = connection
 

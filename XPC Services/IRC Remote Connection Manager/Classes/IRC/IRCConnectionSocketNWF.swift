@@ -77,6 +77,17 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 		parameters.preferNoProxies = (config.proxyType == .none)
 
+		if let internetProtocol = parameters.defaultProtocolStack.internetProtocol as? NWProtocolIP.Options {
+			switch config.addressType {
+				case .v4:
+					internetProtocol.version = .v4
+				case .v6:
+					internetProtocol.version = .v6
+				default:
+					break
+			}
+		}
+
 		return parameters
 	}
 
