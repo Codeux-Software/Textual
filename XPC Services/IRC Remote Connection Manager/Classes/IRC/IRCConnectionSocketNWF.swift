@@ -506,8 +506,8 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 			case .tls(let errorCode):
 				let tlsErrorCode = Int(errorCode)
 
-				if let tlsError = RCMSecureTransport.sslHandshakeErrorString(fromErrorCode: tlsErrorCode) {
-					return ConnectionError.unableToSecure(failureReason: tlsError)
+				if let tlsError = ConnectionError(tlsError: tlsErrorCode) {
+					return tlsError
 				}
 			default:
 				break

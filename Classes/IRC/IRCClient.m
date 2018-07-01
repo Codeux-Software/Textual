@@ -5808,7 +5808,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		if (disconnectError) {
 			// TODO: Don't hardcode the error domain
-			if ([disconnectError.domain isEqualToString:@"Textual.ConnectionError.unableToSecure"]) {
+			if ([disconnectError.domain isEqualToString:@"Textual.ConnectionError.badCertificate"]) {
 				disconnectType = IRCClientDisconnectBadCertificateMode;
 			}
 
