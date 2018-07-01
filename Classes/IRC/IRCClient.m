@@ -11605,7 +11605,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	socketConfig.serverAddress = serverAddress;
 	socketConfig.serverPort = serverPort;
 
-	socketConfig.connectionPrefersModernSockets = ([TPCPreferences preferModernSockets] || self.config.connectionPrefersModernSockets);
+	IRCConnectionProxyType proxyType = self.config.proxyType;
+
+	/* Network.framework cannot use a custom proxy so we can only either use none
+	 or allow it to automatically configure the connection using the system proxy. */
+	socketConfig.connectionPrefersModernSockets = ([TPCPreferences preferModernSockets] &&
+												   (proxyType == IRCConnectionProxyTypeNone ||
+													proxyType == IRCConnectionProxyTypeAutomatic));
 
 	socketConfig.cipherSuites = self.config.cipherSuites;
 
@@ -11615,7 +11621,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	socketConfig.identityClientSideCertificate = self.config.identityClientSideCertificate;
 
 	if (bypassProxy == NO) {
-		socketConfig.proxyType = self.config.proxyType;
+		socketConfig.proxyType = proxyType;
 
 		if (socketConfig.proxyType == IRCConnectionProxyTypeSocks4 ||
 			socketConfig.proxyType == IRCConnectionProxyTypeSocks5 ||
