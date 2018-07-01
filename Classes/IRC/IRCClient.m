@@ -11639,7 +11639,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	socketConfig.floodControlMaximumMessages = self.config.floodControlMaximumMessages;
 
 	// TODO: Make this configurable outside of command line
-	socketConfig.connectionPrefersModernCiphersOnly = [RZUserDefaults() boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
+	socketConfig.connectionPrefersModernCiphersOnly = ([RZUserDefaults() boolForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"] == NO);
 
 	self.socket = [[IRCConnection alloc] initWithConfig:socketConfig onClient:self];
 
