@@ -39,7 +39,7 @@
 import Network
 
 @available(macOS 10.14, *)
-class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
+final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 {
 	fileprivate var readInBuffer: Data?
 
@@ -163,7 +163,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 		connection?.cancel()
 	}
 
-	func close(with error: NWError)
+	fileprivate func close(with error: NWError)
 	{
 		close(with: translateError(error))
 	}
@@ -264,7 +264,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 	// MARK: - Properties
 
-	var connectedHost: String?
+	fileprivate var connectedHost: String?
 	{
 		guard let endpoint = connection?.currentPath?.remoteEndpoint else {
 			return nil
@@ -334,7 +334,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 	// NWConnection Delegate
 
-	func readCompletionHandler(_ content: Data?, _ contentContext: NWConnection.ContentContext?, _ isComplete: Bool, _ error: NWError?)
+	final func readCompletionHandler(_ content: Data?, _ contentContext: NWConnection.ContentContext?, _ isComplete: Bool, _ error: NWError?)
 	{
 		if (disconnecting) {
 			return
@@ -365,7 +365,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 		read()
 	}
 
-	func writeCompletionHandler(_ error: NWError?)
+	final func writeCompletionHandler(_ error: NWError?)
 	{
 		if (disconnecting) {
 			return
@@ -382,7 +382,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 		delegate?.connectionDidSend(self)
 	}
 
-	func statusUpdateHandler(_ status: NWConnection.State)
+	final func statusUpdateHandler(_ status: NWConnection.State)
 	{
 		switch status {
 			case .waiting(let error):
@@ -400,7 +400,7 @@ class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 	// MARK: - Security
 
-	func tlsVerifySecProtocol(_ trust: sec_trust_t, response: @escaping sec_protocol_verify_complete_t)
+	final func tlsVerifySecProtocol(_ trust: sec_trust_t, response: @escaping sec_protocol_verify_complete_t)
 	{
 		let trustRef = sec_trust_copy_ref(trust).takeUnretainedValue()
 
