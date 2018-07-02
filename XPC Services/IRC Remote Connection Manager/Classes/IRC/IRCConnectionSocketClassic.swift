@@ -35,7 +35,7 @@
 *
 *********************************************************************** */
 
-class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAsyncSocketDelegate
+final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAsyncSocketDelegate
 {
 	fileprivate enum Tag : Int
 	{
@@ -221,7 +221,7 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 	// MARK: - Properties
 
-	var connectedHost: String?
+	final var connectedHost: String?
 	{
 		if (proxyInUse) {
 			return nil
@@ -308,14 +308,14 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 
 	// MARK: - GCDAsyncSocketDelegate
 
-	func socket(_ sock: GCDAsyncSocket, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void)
+	final func socket(_ sock: GCDAsyncSocket, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void)
 	{
 		tlsVerify(trust) { (underlyingResponse) in
 			completionHandler(underlyingResponse)
 		}
 	}
 
-	func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16)
+	final func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16)
 	{
 		if (proxyInUse) {
 			do {
@@ -332,19 +332,19 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		onConnect()
 	}
 
-	func socketDidCloseReadStream(_ sock: GCDAsyncSocket)
+	final func socketDidCloseReadStream(_ sock: GCDAsyncSocket)
 	{
 		EOFReceived = true
 
 		delegate?.connectionClosedReadStream(self)
 	}
 
-	func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?)
+	final func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?)
 	{
 		onDisconnect(with: err)
 	}
 
-	func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int)
+	final func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int)
 	{
 		if (proxyInUse) {
 			do {
@@ -367,14 +367,14 @@ class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol, GCDAs
 		read()
 	}
 
-	func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int)
+	final func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int)
 	{
 		sending = false
 
 		delegate?.connectionDidSend(self)
 	}
 
-	func socketDidSecure(_ sock: GCDAsyncSocket)
+	final func socketDidSecure(_ sock: GCDAsyncSocket)
 	{
 		onSecured()
 	}

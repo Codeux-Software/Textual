@@ -37,7 +37,7 @@
 
 extension ConnectionSocket
 {
-	class func socket(with config: IRCConnectionConfig) -> ConnectionSocket & ConnectionSocketProtocol
+	static func socket(with config: IRCConnectionConfig) -> ConnectionSocket & ConnectionSocketProtocol
 	{
 
 #if canImport(Network)
@@ -53,7 +53,7 @@ extension ConnectionSocket
 }
 
 @objc(IRCConnection)
-class Connection: NSObject, ConnectionSocketDelegate
+final class Connection: NSObject, ConnectionSocketDelegate
 {
 	fileprivate let config: IRCConnectionConfig
 
@@ -109,7 +109,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	// MARK: - Open/Close
 
 	@objc
-	func open()
+	final func open()
 	{
 		LogToConsoleDebug("Opening connection \(socket.uniqueIdentifier)...")
 
@@ -129,7 +129,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	}
 
 	@objc
-	func close()
+	final func close()
 	{
 		LogToConsoleDebug("Closing connection \(socket.uniqueIdentifier)...")
 
@@ -150,7 +150,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 		socket.close()
 	}
 
-	func resetState()
+	final func resetState()
 	{
 		/* Method invoked when a disconnect occurs. */
 		/* disconnectingManually prevents us doing redundant work. */
@@ -208,7 +208,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	}
 
 	@objc
-	func clearSendQueue()
+	final func clearSendQueue()
 	{
 		workerQueue?.sync {
 			sendQueue.removeAll()
@@ -249,7 +249,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	}
 
 	@objc(sendData:bypassQueue:)
-	func send(_ data: Data, bypassQueue: Bool = false)
+	final func send(_ data: Data, bypassQueue: Bool = false)
 	{
 		if (socket.disconnected) {
 			LogToConsoleError("Cannot send data while disconnected")
@@ -278,7 +278,7 @@ class Connection: NSObject, ConnectionSocketDelegate
 	// MARK: - Flood Control
 
 	@objc
-	func enforceFloodControl()
+	final func enforceFloodControl()
 	{
 		floodControlEnforced = true
 	}
@@ -315,73 +315,73 @@ class Connection: NSObject, ConnectionSocketDelegate
 	// MARK: - Sockety Proxy
 
 	@objc(exportSecureConnectionInformation:error:)
-	func exportSecureConnectionInformation(to receiver: RCMSecureConnectionInformationCompletionBlock) throws
+	final func exportSecureConnectionInformation(to receiver: RCMSecureConnectionInformationCompletionBlock) throws
 	{
 		try socket.exportSecureConnectionInformation(to: receiver)
 	}
 
 	// MARK: - Socket Delegate
 
-	var remoteObjectProxy: RCMConnectionManagerClientProtocol
+	final var remoteObjectProxy: RCMConnectionManagerClientProtocol
 	{
 		return serviceConnection.remoteObjectProxy as! RCMConnectionManagerClientProtocol
 	}
 
-	func connection(_ connection: ConnectionSocket, willConnectToProxy address: String, on port: UInt16)
+	final func connection(_ connection: ConnectionSocket, willConnectToProxy address: String, on port: UInt16)
 	{
 		remoteObjectProxy.ircConnectionWillConnect(toProxy: address, port: port)
 	}
 
-	func connection(_ connection: ConnectionSocket, willConnectTo address: String, on port: UInt16)
+	final func connection(_ connection: ConnectionSocket, willConnectTo address: String, on port: UInt16)
 	{
 
 	}
 
-	func connection(_ connection: ConnectionSocket, didConnectTo address: String?)
+	final func connection(_ connection: ConnectionSocket, didConnectTo address: String?)
 	{
 		remoteObjectProxy.ircConnectionDidConnect(toHost: address)
 	}
 
-	func connection(_ connection: ConnectionSocket, securedWith protocol: SSLProtocol, cipherSuite: SSLCipherSuite)
+	final func connection(_ connection: ConnectionSocket, securedWith protocol: SSLProtocol, cipherSuite: SSLCipherSuite)
 	{
 		remoteObjectProxy.ircConnectionDidSecureConnection(withProtocolVersion: `protocol`, cipherSuite: cipherSuite)
 	}
 
-	func connection(_ connection: ConnectionSocket, requiresTrust response: @escaping (Bool) -> Void)
+	final func connection(_ connection: ConnectionSocket, requiresTrust response: @escaping (Bool) -> Void)
 	{
 		remoteObjectProxy.ircConnectionRequestInsecureCertificateTrust(response)
 	}
 
-	func connectionClosedReadStream(_ connection: ConnectionSocket)
+	final func connectionClosedReadStream(_ connection: ConnectionSocket)
 	{
 		remoteObjectProxy.ircConnectionDidCloseReadStream()
 	}
 
-	func connectionDisconnected(_ connection: ConnectionSocket)
+	final func connectionDisconnected(_ connection: ConnectionSocket)
 	{
 		resetState()
 
 		remoteObjectProxy.ircConnectionDidDisconnectWithError(nil)
 	}
 
-	func connection(_ connection: ConnectionSocket, disconnectedWith error: ConnectionSocket.ConnectionError)
+	final func connection(_ connection: ConnectionSocket, disconnectedWith error: ConnectionSocket.ConnectionError)
 	{
 		resetState()
 
 		remoteObjectProxy.ircConnectionDidDisconnectWithError(error.toNSError())
 	}
 
-	func connection(_ connection: ConnectionSocket, received data: Data)
+	final func connection(_ connection: ConnectionSocket, received data: Data)
 	{
 		remoteObjectProxy.ircConnectionDidReceive(data)
 	}
 
-	func connection(_ connection: ConnectionSocket, willSend data: Data)
+	final func connection(_ connection: ConnectionSocket, willSend data: Data)
 	{
 		remoteObjectProxy.ircConnectionWillSend(data)
 	}
 
-	func connectionDidSend(_ connection: ConnectionSocket)
+	final func connectionDidSend(_ connection: ConnectionSocket)
 	{
 		remoteObjectProxy.ircConnectionDidSendData()
 

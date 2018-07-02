@@ -135,7 +135,7 @@ class ConnectionSocket: NSObject
 		response(false)
 	}
 
-	var clientSideCertificate: (identity: SecIdentity, certificate: SecCertificate)?
+	final var clientSideCertificate: (identity: SecIdentity, certificate: SecCertificate)?
 	{
 		guard let certificateDataIn = config.identityClientSideCertificate else {
 			return nil
@@ -179,7 +179,7 @@ class ConnectionSocket: NSObject
 		return (identity: identityRef!, certificate: certificateRef)
 	}
 
-	func changeProxy(to type: IRCConnectionProxyType = .none, at host: String? = nil, on port: UInt16 = 0, username: String? = nil, password: String? = nil)
+	final func changeProxy(to type: IRCConnectionProxyType = .none, at host: String? = nil, on port: UInt16 = 0, username: String? = nil, password: String? = nil)
 	{
 		let mutableConfig: IRCConnectionConfigMutable = config.mutableCopy() as! IRCConnectionConfigMutable
 
@@ -194,12 +194,12 @@ class ConnectionSocket: NSObject
 		config = mutableConfig
 	}
 
-	func changeProxyToTor()
+	final func changeProxyToTor()
 	{
 		changeProxy(to: .socks5, at: torProxyTypeAddress, on: torProxyTypePort)
 	}
 
-	func changeProxyToNone()
+	final func changeProxyToNone()
 	{
 		changeProxy()
 	}
