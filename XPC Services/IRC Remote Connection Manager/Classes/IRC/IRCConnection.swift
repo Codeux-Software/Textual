@@ -59,6 +59,24 @@ final class Connection: NSObject, ConnectionSocketDelegate
 
 	fileprivate var disconnectingManually = false
 
+	enum ConnectionError : Error
+	{
+		/// socketError are errors returned by the connection library.
+		/// For example: GCDAsyncSocket, Network.framework, etc.
+		case socketError(_ error: Error)
+
+		// otherError are errors returned by ConnectionSocket instances.
+		case otherError(message: String)
+
+		/// invalidCertificate are errors returned when the connection
+		/// cannot be secured because of problem with certificate.
+		case badCertificate(failureReason: String)
+
+		/// unableToSecure are errors returned when the connection
+		/// cannot be secured for some reason. e.g. handshake failure
+		case unableToSecure(failureReason: String)
+	} // ConnectionError
+
 	// MARK: - Initialization
 
 	@objc(initWithConfig:onConnection:)
@@ -347,7 +365,7 @@ final class Connection: NSObject, ConnectionSocketDelegate
 		remoteObjectProxy.ircConnectionDidDisconnectWithError(nil)
 	}
 
-	final func connection(_ connection: ConnectionSocket, disconnectedWith error: ConnectionSocket.ConnectionError)
+	final func connection(_ connection: ConnectionSocket, disconnectedWith error: ConnectionError)
 	{
 		resetState()
 
@@ -373,6 +391,31 @@ final class Connection: NSObject, ConnectionSocketDelegate
 }
 
 // MARK: - Extensions
+
+typealias ConnectionError = Connection.ConnectionError
+
+extension ConnectionError
+{
+	func toNSError() -> NSError?
+	{
+		switch self {
+			case .socketError(let error):
+				return error as NSError
+			case .otherError(let message):
+				return NSError(domain: "Textual.ConnectionError.otherError",
+							   code: 1000,
+							   userInfo: [ NSLocalizedDescriptionKey : message ])
+			case .badCertificate(let failureReason):
+				return NSError(domain: "Textual.ConnectionError.badCertificate",
+							   code: 1001,
+							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
+			case .unableToSecure(let failureReason):
+				return NSError(domain: "Textual.ConnectionError.unableToSecure",
+							   code: 1002,
+							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
+		}
+	} // toNSError()
+}
 
 extension ConnectionSocket
 {
