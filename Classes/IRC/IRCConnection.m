@@ -170,10 +170,14 @@ ClassWithDesignatedInitializerInitMethod
 	if ((self.isConnecting || self.isConnected) &&
 		self.connectionInvalidatedVoluntarily == NO)
 	{
-#warning TODO: Replace with new error handler
-//		[self ircConnectionDidError:TXTLS(@"IRC[vdy-jk]")];
+		NSString *errorMessage = TXTLS(@"IRC[vdy-jk]");
 
-		[self _ircConnectionDidDisconnectWithError:nil];
+		// TODO: Don't hardcode the error domain and code
+		NSError *error = [NSError errorWithDomain:@"Textual.ConnectionError"
+											 code:1000
+										 userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
+
+		[self _ircConnectionDidDisconnectWithError:error];
 	}
 
 	[self resetState];
