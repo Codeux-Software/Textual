@@ -75,6 +75,33 @@ final class Connection: NSObject, ConnectionSocketDelegate
 		/// unableToSecure are errors returned when the connection
 		/// cannot be secured for some reason. e.g. handshake failure
 		case unableToSecure(failureReason: String)
+
+		/* socketError is not mapped to a domain or code because
+		 we preserve the values of the underlying NSError. */
+		/* IRCConnection.m and IRCClient.m the in main project
+		 currently hard codes same values presented below.
+		 Keep them in sync with changes made here. */
+		/* TODO: Share values between projects. (July 2, 2018) */
+		var domain: String? {
+			if case .socketError(_) = self {
+				return nil
+			}
+
+			return "Textual.ConnectionError"
+		}
+
+		var code: Int {
+			switch self {
+				case .otherError(_):
+					return 1000
+				case .badCertificate(_):
+					return 1001
+				case .unableToSecure(_):
+					return 1002
+				default:
+					return 0
+			}
+		}
 	} // ConnectionError
 
 	// MARK: - Initialization
@@ -401,18 +428,12 @@ extension ConnectionError
 		switch self {
 			case .socketError(let error):
 				return error as NSError
-			case .otherError(let message):
-				return NSError(domain: "Textual.ConnectionError.otherError",
-							   code: 1000,
+			case .otherError(let message),
+				 .badCertificate(let message),
+				 .unableToSecure(let message):
+				return NSError(domain: domain,
+							   code: code,
 							   userInfo: [ NSLocalizedDescriptionKey : message ])
-			case .badCertificate(let failureReason):
-				return NSError(domain: "Textual.ConnectionError.badCertificate",
-							   code: 1001,
-							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
-			case .unableToSecure(let failureReason):
-				return NSError(domain: "Textual.ConnectionError.unableToSecure",
-							   code: 1002,
-							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
 		}
 	} // toNSError()
 }
