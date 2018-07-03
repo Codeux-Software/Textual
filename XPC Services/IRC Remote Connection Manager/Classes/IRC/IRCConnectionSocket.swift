@@ -66,24 +66,6 @@ class ConnectionSocket: NSObject
 
 	final let maximumDataLength = (1000 * 1000 * 100) // 100 megabytes
 
-	enum ConnectionError : Error
-	{
-		/// socketError are errors returned by the connection library.
-		/// For example: GCDAsyncSocket, Network.framework, etc.
-		case socketError(_ error: Error)
-
-		// otherError are errors returned by ConnectionSocket instances.
-		case otherError(message: String)
-
-		/// invalidCertificate are errors returned when the connection
-		/// cannot be secured because of problem with certificate.
-		case badCertificate(failureReason: String)
-
-		/// unableToSecure are errors returned when the connection
-		/// cannot be secured for some reason. e.g. handshake failure
-		case unableToSecure(failureReason: String)
-	} // ConnectionError
-
 	init (with config: IRCConnectionConfig)
 	{
 		self.config = config
@@ -205,7 +187,7 @@ class ConnectionSocket: NSObject
 	}
 }
 
-extension ConnectionSocket.ConnectionError
+extension ConnectionError
 {
 	init (socketError: Error)
 	{
@@ -240,26 +222,6 @@ extension ConnectionSocket.ConnectionError
 
 		return nil
 	}
-
-	func toNSError() -> NSError?
-	{
-		switch self {
-			case .socketError(let error):
-				return error as NSError
-			case .otherError(let message):
-				return NSError(domain: "Textual.ConnectionError.otherError",
-							   code: 1000,
-							   userInfo: [ NSLocalizedDescriptionKey : message ])
-			case .badCertificate(let failureReason):
-				return NSError(domain: "Textual.ConnectionError.badCertificate",
-							   code: 1001,
-							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
-			case .unableToSecure(let failureReason):
-				return NSError(domain: "Textual.ConnectionError.unableToSecure",
-							   code: 1002,
-							   userInfo: [ NSLocalizedDescriptionKey : failureReason ])
-		}
-	} // toNSError()
 }
 
 protocol ConnectionSocketDelegate: class
@@ -271,7 +233,7 @@ protocol ConnectionSocketDelegate: class
 	func connection(_ connection: ConnectionSocket, requiresTrust response: @escaping (Bool) -> Void)
 	func connectionClosedReadStream(_ connection: ConnectionSocket)
 	func connectionDisconnected(_ connection: ConnectionSocket)
-	func connection(_ connection: ConnectionSocket, disconnectedWith error: ConnectionSocket.ConnectionError)
+	func connection(_ connection: ConnectionSocket, disconnectedWith error: ConnectionError)
 	func connection(_ connection: ConnectionSocket, received data: Data)
 	func connection(_ connection: ConnectionSocket, willSend data: Data)
 	func connectionDidSend(_ connection: ConnectionSocket)
@@ -285,7 +247,7 @@ protocol ConnectionSocketProtocol
 	/// Logic for closing socket
 	func close()
 	func close(with error: String)
-	func close(with error: ConnectionSocket.ConnectionError)
+	func close(with error: ConnectionError)
 
 	/// Logic for writing data (sending)
 	func write(_ data: Data)
