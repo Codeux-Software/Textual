@@ -13,3 +13,6 @@
 [submodule "Frameworks/Apple Receipt Loader"]
 	path = Frameworks/Apple Receipt Loader
 	url = https://github.com/Codeux-Software/Apple-Receipt-Loader.git
+[submodule "Sources/Plugins/Sample Code/Swift Bot"]
+	path = Sources/Plugins/Sample Code/Swift Bot
+	url = https://github.com/Codeux/Textual-Swift-Plugin.git
