@@ -215,13 +215,13 @@
 		4C06E04720EC4A100055D09A /* DIGreenBadgeRightMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C31536320EB676400448776 /* DIGreenBadgeRightMavericks.png */; };
 		4C06E04820EC4A100055D09A /* DIGreenBadgeLeftMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C31536420EB676400448776 /* DIGreenBadgeLeftMavericks.png */; };
 		4C06E04920EC4A100055D09A /* DIGreenBadgeCenterMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C31536520EB676400448776 /* DIGreenBadgeCenterMavericks.png */; };
-		4C06E04A20EC4A2E0055D09A /* application.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* application.iconset */; };
+		4C06E04A20EC4A2E0055D09A /* applicationIcon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* applicationIcon.iconset */; };
 		4C06E04B20EC4A2E0055D09A /* applicationIconBirthday.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535A20EB676400448776 /* applicationIconBirthday.icns */; };
-		4C06E04C20EC4A2E0055D09A /* application.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* application.iconset */; };
+		4C06E04C20EC4A2E0055D09A /* applicationIcon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* applicationIcon.iconset */; };
 		4C06E04D20EC4A2E0055D09A /* applicationIconBirthday.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535A20EB676400448776 /* applicationIconBirthday.icns */; };
-		4C06E04E20EC4A2F0055D09A /* application.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* application.iconset */; };
+		4C06E04E20EC4A2F0055D09A /* applicationIcon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* applicationIcon.iconset */; };
 		4C06E04F20EC4A2F0055D09A /* applicationIconBirthday.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535A20EB676400448776 /* applicationIconBirthday.icns */; };
-		4C06E05020EC4A2F0055D09A /* application.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* application.iconset */; };
+		4C06E05020EC4A2F0055D09A /* applicationIcon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535920EB676400448776 /* applicationIcon.iconset */; };
 		4C06E05120EC4A2F0055D09A /* applicationIconBirthday.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535A20EB676400448776 /* applicationIconBirthday.icns */; };
 		4C06E05220EC4A3D0055D09A /* Copyright Information for Images.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535620EB676400448776 /* Copyright Information for Images.txt */; };
 		4C06E05320EC4A3D0055D09A /* Copyright Information for Images.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C31535620EB676400448776 /* Copyright Information for Images.txt */; };
@@ -3464,7 +3464,7 @@
 		4C31535320EB676400448776 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4C31535620EB676400448776 /* Copyright Information for Images.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Copyright Information for Images.txt"; sourceTree = "<group>"; };
 		4C31535820EB676400448776 /* applicationIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = applicationIcon.icns; sourceTree = "<group>"; };
-		4C31535920EB676400448776 /* application.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = application.iconset; sourceTree = "<group>"; };
+		4C31535920EB676400448776 /* applicationIcon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = applicationIcon.iconset; sourceTree = "<group>"; };
 		4C31535A20EB676400448776 /* applicationIconBirthday.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = applicationIconBirthday.icns; sourceTree = "<group>"; };
 		4C31535F20EB676400448776 /* DIGreenBadgeLeftYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeLeftYosemite.png; sourceTree = "<group>"; };
 		4C31536020EB676400448776 /* DIGreenBadgeRightYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeRightYosemite.png; sourceTree = "<group>"; };
@@ -4904,7 +4904,7 @@
 		4C31535720EB676400448776 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				4C31535920EB676400448776 /* application.iconset */,
+				4C31535920EB676400448776 /* applicationIcon.iconset */,
 				4C31535820EB676400448776 /* applicationIcon.icns */,
 				4C31535A20EB676400448776 /* applicationIconBirthday.icns */,
 			);
@@ -6677,7 +6677,7 @@
 				4C06E2FC20EC4FF00055D09A /* TDCPreferencesController.strings in Resources */,
 				4C06E0EE20EC4A5C0055D09A /* channelRoomStatusIconYosemiteDarkInactive@2x.tif in Resources */,
 				4C06DFAE20EC49FA0055D09A /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
-				4C06E04A20EC4A2E0055D09A /* application.iconset in Resources */,
+				4C06E04A20EC4A2E0055D09A /* applicationIcon.iconset in Resources */,
 				4C06E31820EC4FF00055D09A /* TDCChannelModifyModesSheet.strings in Resources */,
 				4C06DFC020EC49FA0055D09A /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4C06E10420EC4A620055D09A /* TPWTB_Style.png in Resources */,
@@ -6804,7 +6804,7 @@
 				4C06E02020EC4A060055D09A /* DIRedBadgeRightYosemite.png in Resources */,
 				4C06E1C420EC4AC40055D09A /* TVCChannelSelectionView.xib in Resources */,
 				4C06E03920EC4A0F0055D09A /* DIGreenBadgeRightYosemite.png in Resources */,
-				4C06E04E20EC4A2F0055D09A /* application.iconset in Resources */,
+				4C06E04E20EC4A2F0055D09A /* applicationIcon.iconset in Resources */,
 				4C06E1FC20EC4AC50055D09A /* TDCAboutDialog.xib in Resources */,
 				4C06E05320EC4A3D0055D09A /* Copyright Information for Images.txt in Resources */,
 				4C06DFF620EC49FB0055D09A /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
@@ -6985,7 +6985,7 @@
 				4C06E01A20EC4A050055D09A /* DIRedBadgeRightYosemite.png in Resources */,
 				4C06E1C520EC4AC40055D09A /* TVCChannelSelectionView.xib in Resources */,
 				4C06E03320EC4A0F0055D09A /* DIGreenBadgeRightYosemite.png in Resources */,
-				4C06E05020EC4A2F0055D09A /* application.iconset in Resources */,
+				4C06E05020EC4A2F0055D09A /* applicationIcon.iconset in Resources */,
 				4C06E1FD20EC4AC50055D09A /* TDCAboutDialog.xib in Resources */,
 				4C06E05220EC4A3D0055D09A /* Copyright Information for Images.txt in Resources */,
 				4C06E01120EC49FB0055D09A /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
@@ -7166,7 +7166,7 @@
 				4C06E02620EC4A060055D09A /* DIRedBadgeRightYosemite.png in Resources */,
 				4C06E1C320EC4AC40055D09A /* TVCChannelSelectionView.xib in Resources */,
 				4C06E03F20EC4A100055D09A /* DIGreenBadgeRightYosemite.png in Resources */,
-				4C06E04C20EC4A2E0055D09A /* application.iconset in Resources */,
+				4C06E04C20EC4A2E0055D09A /* applicationIcon.iconset in Resources */,
 				4C06E1FB20EC4AC50055D09A /* TDCAboutDialog.xib in Resources */,
 				4C06E05420EC4A3E0055D09A /* Copyright Information for Images.txt in Resources */,
 				4C06DFDB20EC49FA0055D09A /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
