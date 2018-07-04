@@ -35,11 +35,9 @@
  *
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+#import <CocoaExtensions/CocoaExtensions.h>
 
 #import <CoreData/CoreData.h>
-
-#import <CocoaExtensions/CocoaExtensions.h>
 
 #import "TVCLogLineXPCPrivate.h"
 

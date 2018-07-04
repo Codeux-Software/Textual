@@ -1,8 +1,0 @@
-
-// Textual Extensions *.xcconfig file contains settings that are
-// specific to extensions for Textual itself (the main project).
-
-#include "../Common/Foundation.xcconfig"
-#include "../Common/Foundation Debug.xcconfig"
-#include "Enabled Features.xcconfig"
-#include "../Common/Textual Extensions.xcconfig"

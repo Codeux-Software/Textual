@@ -35,8 +35,6 @@
  *
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
-
 #import <CocoaExtensions/CocoaExtensions.h>
 
 #define NSBundleForClass() 	\

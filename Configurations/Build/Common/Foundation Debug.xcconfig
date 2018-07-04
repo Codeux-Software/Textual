@@ -1,0 +1,15 @@
+
+// Foundation Debug.xcconfig acts as a base for ALL projects.
+// This configuration should NEVER contain any settings
+// which may be unique to a specific project.
+
+#include "Foundation.xcconfig"
+
+GCC_OPTIMIZATION_LEVEL = 0
+GCC_PREPROCESSOR_DEFINITIONS = DEBUG
+VERSION_INFO_BUILDER = ${USER}
+ONLY_ACTIVE_ARCH = YES
+ENABLE_NS_ASSERTIONS = YES
+RUN_CLANG_STATIC_ANALYZER = NO
+SWIFT_COMPILATION_MODE = singlefile
+SWIFT_OPTIMIZATION_LEVEL = -Onone

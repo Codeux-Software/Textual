@@ -51,7 +51,7 @@ The latest version of Textual requires two things to be built. One is a valid (d
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will work fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
 
-Once you have your code signing certificate, **do not modify the Build Settings of Textual through Xcode**. Instead,    modify the file at the path: **Resources ➜ Build Configurations ➜ Code Signing Identity.xcconfig** — The contents of this file defines the name of the certificate which will be used for code signing.
+Once you have your code signing certificate, **do not modify the Build Settings of Textual through Xcode**. Instead,    modify the file at the path: **Configurations ➜ Build ➜ Code Signing Identity.xcconfig** — The contents of this file defines the name of the certificate which will be used for code signing.
 
 After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
 

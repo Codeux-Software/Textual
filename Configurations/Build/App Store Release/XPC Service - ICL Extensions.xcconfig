@@ -1,0 +1,4 @@
+
+#include "../Common/Foundation.xcconfig"
+#include "Textual.xcconfig"
+#include "../Common/XPC Service - ICL Extensions.xcconfig"
