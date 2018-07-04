@@ -496,12 +496,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
 	return representedObject;
 }
 
-#ifdef TXSystemIsOSXHighSierraOrLater
 - (nullable id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString:(NSString *)editingString
-#else
-- (id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString:(NSString *)editingString
-#endif
-
 {
 	if (tokenField == self.filterActionTokenField) {
 		NSArray *tokenTitles = [self.filterActionAutoCompletedTokens filteredArrayUsingPredicate:

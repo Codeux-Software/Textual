@@ -111,11 +111,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-#ifdef TXSystemIsOSXSierraOrLater
 	if (TEXTUAL_RUNNING_ON_SIERRA) {
 		LogToConsoleSetDefaultSubsystem(os_log_create(TXBundleBuildProductIdentifierCString, "General"));
 	}
-#endif
 
 	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 

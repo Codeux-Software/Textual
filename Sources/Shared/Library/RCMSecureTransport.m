@@ -335,16 +335,12 @@ static const char * _Nonnull kMacNames[] = {
 
 			break;
 		}
-
-#ifdef TXSystemIsOSXHighSierraOrLater
 		case kTLSProtocol13:
 		{
 			protocolString = @"Transport Layer Security (TLS), version 1.3";
 
 			break;
 		}
-#endif
-
 		default:
 		{
 			break;
@@ -507,21 +503,15 @@ static const char * _Nonnull kMacNames[] = {
 
 			return @[
 				 /* TLS 1.3 */
-#ifdef TXSystemIsOSXHighSierraOrLater
 				 @(TLS_AES_256_GCM_SHA384),
 				 @(TLS_CHACHA20_POLY1305_SHA256),
 				 @(TLS_AES_128_GCM_SHA256),
-#endif
 
 				 /* TLS 1.2 */
 				 @(TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384), 	// ECDHE-ECDSA-AES256-GCM-SHA384
 				 @(TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384), 		// ECDHE-RSA-AES256-GCM-SHA384
-
-#ifdef TXSystemIsOSXHighSierraOrLater
 				 @(TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256), // ECDHE-ECDSA-CHACHA20-POLY1305
 				 @(TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256), // ECDHE-RSA-CHACHA20-POLY1305
-#endif
-
 				 @(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256), 	// ECDHE-ECDSA-AES128-GCM-SHA256
 				 @(TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256), 		// ECDHE-RSA-AES128-GCM-SHA256
 				 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384), 	// ECDHE-ECDSA-AES256-SHA384
