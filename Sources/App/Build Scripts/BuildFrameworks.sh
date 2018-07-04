@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -e
+
+CONFIGURATION_BUILD_DIR="${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedBuildProducts-Frameworks"
+
+# Apple Receipt Loader
+
+if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
+cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Apple Receipt Loader/"
+
+xcodebuild -target "libreceipt" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
+ CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
+ CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
+ DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
+ PROVISIONING_PROFILE_SPECIFIER=""
+fi
+
+# Auto Hyperlinks
+cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Auto Hyperlinks/"
+
+xcodebuild -target "AutoHyperlinks.framework" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
+ CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
+ CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
+ DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
+ PROVISIONING_PROFILE_SPECIFIER=""
+
+# Encryption Kit
+cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Encryption Kit/"
+
+xcodebuild -target "EncryptionKit" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
+ CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
+ CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
+ DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
+ PROVISIONING_PROFILE_SPECIFIER=""
+
+# Cocoa Extensions
+cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Cocoa Extensions/"
+
+xcodebuild -target "CocoaExtensions (OS X)" \
+ -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
+ CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
+ CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
+ DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
+ PROVISIONING_PROFILE_SPECIFIER=""
+
+exit 0;

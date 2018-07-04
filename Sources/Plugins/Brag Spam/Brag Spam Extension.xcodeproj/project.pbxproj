@@ -1,0 +1,345 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C46A0DA20EC6BDF00094EA4 /* TPIBragSpam.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A0D820EC6BDF00094EA4 /* TPIBragSpam.m */; };
+		4C46A0E020EC6BEE00094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A0DE20EC6BEE00094EA4 /* BasicLanguage.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4C1D0F6820EBF1D000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4C1D0F6920EBF1D000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F6D20EBF1D000E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F7120EBF1D000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4C1D0F7220EBF1D000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F7620EBF1D000E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F7B20EBF1D000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4C1D0F7C20EBF1D000E72D80 /* Preserve Symbols.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Preserve Symbols.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F7D20EBF1D000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F7F20EBF1D000E72D80 /* Foundation.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Foundation.xcconfig; sourceTree = "<group>"; };
+		4C1D0F8220EBF1D000E72D80 /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Foundation Debug.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F8720EBF1D000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4C1D0F8820EBF1D000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F8C20EBF1D000E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F9020EBF1D000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4C1D0F9120EBF1D000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F9520EBF1D000E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4C1D0F9720EBF1D100E72D80 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
+		4C46A0D820EC6BDF00094EA4 /* TPIBragSpam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIBragSpam.m; sourceTree = "<group>"; };
+		4C46A0D920EC6BDF00094EA4 /* TPIBragSpam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIBragSpam.h; sourceTree = "<group>"; };
+		4C46A0DC20EC6BEE00094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C46A0DE20EC6BEE00094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
+		8D576316048677EA00EA77CD /* BragSpam.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BragSpam.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D576313048677EA00EA77CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* BragSpam */ = {
+			isa = PBXGroup;
+			children = (
+				4C46A0D720EC6BDF00094EA4 /* Classes */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = BragSpam;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C69188516E3275D00BDE3A8 /* Configurations */,
+				4C46A0DD20EC6BEE00094EA4 /* Language Files */,
+				4C46A0DB20EC6BEE00094EA4 /* Property Lists */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D576316048677EA00EA77CD /* BragSpam.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C1D0F6420EBF1D000E72D80 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F6E20EBF1D000E72D80 /* App Store Release */,
+				4C1D0F7820EBF1D000E72D80 /* Common */,
+				4C1D0F8D20EBF1D000E72D80 /* Debug */,
+				4C1D0F6520EBF1D000E72D80 /* Standard Release */,
+				4C1D0F8420EBF1D000E72D80 /* Standard Release Sandboxed */,
+			);
+			path = Build;
+			sourceTree = "<group>";
+		};
+		4C1D0F6520EBF1D000E72D80 /* Standard Release */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F6D20EBF1D000E72D80 /* Enabled Features.xcconfig */,
+				4C1D0F6920EBF1D000E72D80 /* Textual Extensions.xcconfig */,
+				4C1D0F6820EBF1D000E72D80 /* Textual.xcconfig */,
+			);
+			path = "Standard Release";
+			sourceTree = "<group>";
+		};
+		4C1D0F6E20EBF1D000E72D80 /* App Store Release */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F7620EBF1D000E72D80 /* Enabled Features.xcconfig */,
+				4C1D0F7220EBF1D000E72D80 /* Textual Extensions.xcconfig */,
+				4C1D0F7120EBF1D000E72D80 /* Textual.xcconfig */,
+			);
+			path = "App Store Release";
+			sourceTree = "<group>";
+		};
+		4C1D0F7820EBF1D000E72D80 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F8220EBF1D000E72D80 /* Foundation Debug.xcconfig */,
+				4C1D0F7F20EBF1D000E72D80 /* Foundation.xcconfig */,
+				4C1D0F7C20EBF1D000E72D80 /* Preserve Symbols.xcconfig */,
+				4C1D0F7D20EBF1D000E72D80 /* Textual Extensions.xcconfig */,
+				4C1D0F7B20EBF1D000E72D80 /* Textual.xcconfig */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4C1D0F8420EBF1D000E72D80 /* Standard Release Sandboxed */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F8720EBF1D000E72D80 /* Textual.xcconfig */,
+				4C1D0F8820EBF1D000E72D80 /* Textual Extensions.xcconfig */,
+				4C1D0F8C20EBF1D000E72D80 /* Enabled Features.xcconfig */,
+			);
+			path = "Standard Release Sandboxed";
+			sourceTree = "<group>";
+		};
+		4C1D0F8D20EBF1D000E72D80 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F9520EBF1D000E72D80 /* Enabled Features.xcconfig */,
+				4C1D0F9120EBF1D000E72D80 /* Textual Extensions.xcconfig */,
+				4C1D0F9020EBF1D000E72D80 /* Textual.xcconfig */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		4C1D0F9620EBF1D100E72D80 /* Sandbox */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F9720EBF1D100E72D80 /* Inherited.entitlements */,
+			);
+			path = Sandbox;
+			sourceTree = "<group>";
+		};
+		4C46A0D720EC6BDF00094EA4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4C46A0D920EC6BDF00094EA4 /* TPIBragSpam.h */,
+				4C46A0D820EC6BDF00094EA4 /* TPIBragSpam.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4C46A0DB20EC6BEE00094EA4 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C46A0DC20EC6BEE00094EA4 /* Info.plist */,
+			);
+			path = "Property Lists";
+			sourceTree = "<group>";
+		};
+		4C46A0DD20EC6BEE00094EA4 /* Language Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C46A0DE20EC6BEE00094EA4 /* BasicLanguage.strings */,
+			);
+			path = "Language Files";
+			sourceTree = "<group>";
+		};
+		4C69188516E3275D00BDE3A8 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4C1D0F6420EBF1D000E72D80 /* Build */,
+				4C1D0F9620EBF1D100E72D80 /* Sandbox */,
+			);
+			name = Configurations;
+			path = ../../../Configurations;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D57630D048677EA00EA77CD /* BragSpam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "BragSpam" */;
+			buildPhases = (
+				8D57630F048677EA00EA77CD /* Resources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
+				8D576311048677EA00EA77CD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BragSpam;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = BragSpam;
+			productReference = 8D576316048677EA00EA77CD /* BragSpam.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				TargetAttributes = {
+					8D57630D048677EA00EA77CD = {
+						DevelopmentTeam = 8482Q6EPL6;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Brag Spam Extension" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D57630D048677EA00EA77CD /* BragSpam */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D57630F048677EA00EA77CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C46A0E020EC6BEE00094EA4 /* BasicLanguage.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D576311048677EA00EA77CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C46A0DA20EC6BDF00094EA4 /* TPIBragSpam.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB911B08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BragSpam";
+				PRODUCT_NAME = BragSpam;
+			};
+			name = Debug;
+		};
+		1DEB911C08733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BragSpam";
+				PRODUCT_NAME = BragSpam;
+			};
+			name = Release;
+		};
+		1DEB911F08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C1D0F9120EBF1D000E72D80 /* Textual Extensions.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		1DEB912008733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C1D0F6920EBF1D000E72D80 /* Textual Extensions.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		4CCD21DE1FA41D950056F5FE /* Release (App Store) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C1D0F7220EBF1D000E72D80 /* Textual Extensions.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (App Store)";
+		};
+		4CCD21DF1FA41D950056F5FE /* Release (App Store) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BragSpam";
+				PRODUCT_NAME = BragSpam;
+			};
+			name = "Release (App Store)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "BragSpam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911B08733D790010E9CD /* Debug */,
+				1DEB911C08733D790010E9CD /* Release */,
+				4CCD21DF1FA41D950056F5FE /* Release (App Store) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Brag Spam Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+				4CCD21DE1FA41D950056F5FE /* Release (App Store) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

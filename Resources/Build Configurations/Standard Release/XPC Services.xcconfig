@@ -1,4 +1,0 @@
-
-#include "../Common/Foundation.xcconfig"
-#include "Enabled Features.xcconfig"
-#include "../Common/XPC Services.xcconfig"

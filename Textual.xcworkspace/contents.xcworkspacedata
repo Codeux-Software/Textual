@@ -2,28 +2,28 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:Main Project (Textual).xcodeproj">
+      location = "group:Sources/App/Textual App.xcodeproj">
    </FileRef>
    <Group
       location = "container:"
       name = "Extensions">
       <FileRef
-         location = "group:Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
+         location = "group:Sources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Resources/Plugins/ZNC Additions/../Chat Filter/Chat Filter Extension.xcodeproj">
+         location = "group:Sources/Plugins/Chat Filter/Chat Filter Extension.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj">
+         location = "group:Sources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
+         location = "group:Sources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
+         location = "group:Sources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj">
+         location = "group:Sources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj">
       </FileRef>
    </Group>
    <Group

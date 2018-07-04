@@ -35,13 +35,11 @@
  *
  *********************************************************************** */
 
-#import <Foundation/Foundation.h>
+#import <CocoaExtensions/CocoaExtensions.h>
 
 #import <Security/Security.h>
 
 #import <SystemConfiguration/SystemConfiguration.h>
-
-#import <CocoaExtensions/CocoaExtensions.h>
 
 #import "StaticDefinitions.h"
 #import "GCDAsyncSocket.h"
