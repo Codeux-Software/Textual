@@ -1,6 +1,6 @@
 # Textual [![GitHub release](https://img.shields.io/github/tag/Codeux-Software/Textual.svg)](https://github.com/Codeux-Software/Textual/blob/master) [![Platform](https://img.shields.io/badge/platform-OS%20X-lightgrey.svg)](http://www.textualapp.com/mac-app-store)
 
-Textual is an customizable application for interacting with Internet Relay Chat (IRC) on OS X.
+Textual is a customizable application for interacting with Internet Relay Chat (IRC) on macOS.
 
 Textual can be customized with styles written in CSS 3, HTML 5, and JavaScript;  [plugins](https://help.codeux.com/textual/Writing-Plugins.kb) written in Objective-C and Swift, and [scripts](https://help.codeux.com/textual/Writing-Scripts.kb) written in AppleScript (and many other languages)
 
@@ -47,11 +47,11 @@ If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANA
 
 ## Building Textual
 
-The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 7.0 or newer on OS X El Capitan. **Building on OS X Yosemite or earlier is not possible.**
+The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 10.0 or newer on macOS High Sierra. **Building on anything earlier is not supported because of Swift 4.2 code.**
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will work fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
 
-Once you have your code signing certificate, **do not modify the Build Settings of Textual through Xcode**. Instead,    modify the file at the path: **Configurations ➜ Build ➜ Code Signing Identity.xcconfig** — The contents of this file defines the name of the certificate which will be used for code signing.
+Once you have your code signing certificate, **DO NOT modify the Build Settings of Textual through Xcode**. Instead,  modify the file at the path: **Configurations ➜ Build ➜ Code Signing Identity.xcconfig** — The contents of this file defines the name of the certificate which will be used for code signing.
 
 After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
 
