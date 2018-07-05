@@ -35,25 +35,25 @@
  *
  *********************************************************************** */
 
-"0o0-v5" = "I am in %ld channel while connected to ";
-"30l-sx" = "I am in %ld channels while connected to ";
+"30l-sx-1" = "I am in %ld channel while connected to ";
+"30l-sx-2" = "I am in %ld channels while connected to ";
 
-"t4z-lg" = "%ld network. ";
-"rks-0t" = "%ld networks. ";
+"rks-0t-1" = "%ld network. ";
+"rks-0t-2" = "%ld networks. ";
 
-"xzp-xm" = "I have %ld o:line, ";
-"614-ac" = "I have %ld o:lines, ";
+"614-ac-1" = "I have %ld o:line, ";
+"614-ac-2" = "I have %ld o:lines, ";
 
-"7vs-i8" = "%ld op, ";
-"qne-b5" = "%ld ops, ";
+"qne-b5-1" = "%ld op, ";
+"qne-b5-2" = "%ld ops, ";
 
-"7lp-mb" = "%ld halfop, ";
-"431-yv" = "%ld halfops, ";
+"431-yv-1" = "%ld halfop, ";
+"431-yv-2" = "%ld halfops, ";
 
-"71o-kq" = "and %ld voice ";
-"x1m-jp" = "and %ld voices ";
+"x1m-jp-1" = "and %ld voice ";
+"x1m-jp-2" = "and %ld voices ";
 
-"lif-u5" = "with power over %ld user.";
-"ny4-wd" = "with power over %ld individual users.";
+"ny4-wd-1" = "with power over %ld user.";
+"ny4-wd-2" = "with power over %ld unique users.";
 
 "jpi-po" = "I have no power whatsoever.";

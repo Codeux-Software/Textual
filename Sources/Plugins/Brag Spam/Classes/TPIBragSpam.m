@@ -41,14 +41,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPIBragSpam
 
-- (void)appendPluralOrSingular:(NSMutableString *)resultString valueToken:(NSUInteger)valueToken value:(NSInteger)value
+- (void)appendPluralOrSingular:(NSMutableString *)resultString valueToken:(NSString *)valueToken value:(NSInteger)value
 {
 	NSString *valueKey = nil;
 
 	if (value != 1) {
-		valueKey = [NSString stringWithFormat:@"BasicLanguage[%lu][1]", valueToken];
+		valueKey = [NSString stringWithFormat:@"BasicLanguage[%@-1]", valueToken];
 	} else {
-		valueKey = [NSString stringWithFormat:@"BasicLanguage[%lu][0]", valueToken];
+		valueKey = [NSString stringWithFormat:@"BasicLanguage[%@-2]", valueToken];
 	}
 
 	[resultString appendString:TPILocalizedString(valueKey, value)];
@@ -148,22 +148,21 @@ NS_ASSUME_NONNULL_BEGIN
 					}
 				}
 			}
-
 		}
 
 		NSMutableString *resultString = [NSMutableString string];
 
-		[self appendPluralOrSingular:resultString valueToken:1000 value:channelCount];
-		[self appendPluralOrSingular:resultString valueToken:1001 value:networkCount];
+		[self appendPluralOrSingular:resultString valueToken:@"30l-sx" value:channelCount];
+		[self appendPluralOrSingular:resultString valueToken:@"rks-0t" value:networkCount];
 
 		if (powerOverCount == 0) {
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[jpi-po]")];
 		} else {
-			[self appendPluralOrSingular:resultString valueToken:1002 value:operCount];
-			[self appendPluralOrSingular:resultString valueToken:1003 value:channelOpCount];
-			[self appendPluralOrSingular:resultString valueToken:1004 value:channelHalfopCount];
-			[self appendPluralOrSingular:resultString valueToken:1005 value:channelVoiceCount];
-			[self appendPluralOrSingular:resultString valueToken:1006 value:powerOverCount];
+			[self appendPluralOrSingular:resultString valueToken:@"614-ac" value:operCount];
+			[self appendPluralOrSingular:resultString valueToken:@"qne-b5" value:channelOpCount];
+			[self appendPluralOrSingular:resultString valueToken:@"431-yv" value:channelHalfopCount];
+			[self appendPluralOrSingular:resultString valueToken:@"x1m-jp" value:channelVoiceCount];
+			[self appendPluralOrSingular:resultString valueToken:@"ny4-wd" value:powerOverCount];
 		}
 
 		[client sendPrivmsg:[resultString copy] toChannel:selectedChannel];
