@@ -568,7 +568,6 @@
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
 				PRODUCT_NAME = RemoteConnectionManager;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
 			};
 			name = Debug;
 		};
@@ -582,7 +581,6 @@
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
 				PRODUCT_NAME = RemoteConnectionManager;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
 			};
 			name = Release;
 		};
@@ -604,7 +602,6 @@
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
 				PRODUCT_NAME = RemoteConnectionManager;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
 			};
 			name = "Release (App Store)";
 		};
