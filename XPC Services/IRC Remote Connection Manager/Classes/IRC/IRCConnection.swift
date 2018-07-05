@@ -46,7 +46,8 @@ final class Connection: NSObject, ConnectionSocketDelegate
 
 	fileprivate var sendQueue: [Data] = []
 
-	fileprivate lazy var floodControlTimer: TLOTimer = {
+	fileprivate lazy var floodControlTimer: TLOTimer =
+	{
 		return TLOTimer(actionBlock: { _ in
 			self.onFloodControlTimer()
 		}, on: DispatchQueue.global(priority: .default))
@@ -82,7 +83,8 @@ final class Connection: NSObject, ConnectionSocketDelegate
 		 currently hard codes same values presented below.
 		 Keep them in sync with changes made here. */
 		/* TODO: Share values between projects. (July 2, 2018) */
-		var domain: String? {
+		var domain: String?
+		{
 			if case .socketError(_) = self {
 				return nil
 			}
@@ -90,7 +92,8 @@ final class Connection: NSObject, ConnectionSocketDelegate
 			return "Textual.ConnectionError"
 		}
 
-		var code: Int {
+		var code: Int
+		{
 			switch self {
 				case .otherError(_):
 					return 1000
@@ -442,14 +445,13 @@ extension ConnectionSocket
 {
 	static func socket(with config: IRCConnectionConfig) -> ConnectionSocket & ConnectionSocketProtocol
 	{
-
-		#if canImport(Network)
+#if canImport(Network)
 		if #available(macOS 10.14, *) {
 			if (config.connectionPrefersModernSockets) {
 				return ConnectionSocketNWF(with: config)
 			}
 		}
-		#endif
+#endif
 
 		return ConnectionSocketClassic(with: config)
 	}
