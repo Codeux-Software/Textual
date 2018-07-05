@@ -304,7 +304,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCChannelSpotlightSearchResultRowView
 
-- (instancetype)initWithController:(TDCChannelSpotlightController *)controller;
+- (instancetype)initWithController:(TDCChannelSpotlightController *)controller
 {
 	NSParameterAssert(controller != nil);
 

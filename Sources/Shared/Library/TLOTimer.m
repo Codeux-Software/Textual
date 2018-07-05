@@ -104,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self start:timerInterval onRepeat:repeatTimer iterations:0];
 }
 
-- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations;
+- (void)start:(NSTimeInterval)timerInterval onRepeat:(BOOL)repeatTimer iterations:(NSUInteger)iterations
 {
 	NSParameterAssert(timerInterval > 0);
 
