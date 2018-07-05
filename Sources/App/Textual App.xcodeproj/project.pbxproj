@@ -767,7 +767,6 @@
 		4C06E41720EC52D60055D09A /* ICLPayloadLocalPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C06E41520EC52D50055D09A /* ICLPayloadLocalPrivate.h */; };
 		4C06E41820EC52D60055D09A /* ICLPayloadLocalPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C06E41520EC52D50055D09A /* ICLPayloadLocalPrivate.h */; };
 		4C06E41920EC52D60055D09A /* ICLPayloadLocalPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C06E41520EC52D50055D09A /* ICLPayloadLocalPrivate.h */; };
-		4C06E42820EC534F0055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4C06E42920EC53620055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4C06E42A20EC53620055D09A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C06E42B20EC53620055D09A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8EC621B63C2970087BF72 /* CoreServices.framework */; };
@@ -3685,7 +3684,6 @@
 				4C06E43320EC53620055D09A /* SystemConfiguration.framework in Frameworks */,
 				4C06E43720EC539E0055D09A /* CocoaExtensions.framework in Frameworks */,
 				4C06E43420EC53620055D09A /* WebKit.framework in Frameworks */,
-				4C06E42820EC534F0055D09A /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
