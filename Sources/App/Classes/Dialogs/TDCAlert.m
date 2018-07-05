@@ -283,7 +283,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		  suppressionKey:(nullable NSString *)suppressKey
 		 suppressionText:(nullable NSString *)suppressText
 		   accessoryView:(nullable NSView *)accessoryView
-		 completionBlock:(nullable TDCAlertCompletionBlock)completionBlock;
+		 completionBlock:(nullable TDCAlertCompletionBlock)completionBlock
 {
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);

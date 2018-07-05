@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 						defaultButton:(NSString *)buttonDefault
 					  alternateButton:(nullable NSString *)buttonAlternate
 						prefillString:(nullable NSString *)prefillString
-						 resultString:(NSString * _Nonnull * _Nonnull )resultString;
+						 resultString:(NSString * _Nonnull * _Nonnull )resultString
 {
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);
