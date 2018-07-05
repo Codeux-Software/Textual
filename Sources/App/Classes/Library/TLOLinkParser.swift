@@ -47,12 +47,11 @@ public class LinkParser: NSObject
 	}
 
 	@objc
-	public static var bannedLineTypes: [String] {
-		return [
-			TVCLogLine.string(for: .modeType),
-			TVCLogLine.string(for: .joinType),
-			TVCLogLine.string(for: .nickType),
-			TVCLogLine.string(for: .inviteType)
-		].compactMap { $0 }
-	} // bannedLineTypes
+	public static let bannedLineTypes =
+	[
+		TVCLogLine.string(for: .modeType),
+		TVCLogLine.string(for: .joinType),
+		TVCLogLine.string(for: .nickType),
+		TVCLogLine.string(for: .inviteType)
+	].compactMap { $0 }
 }
