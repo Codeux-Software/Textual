@@ -145,14 +145,14 @@ NS_ASSUME_NONNULL_BEGIN
 	Class principalClass = bundle.principalClass;
 
 	if (principalClass == NULL) {
-		LogToConsoleError("Failed to load bundle '%@' because of NULL principal class");
+		LogToConsoleError("Failed to load bundle '%@' because of NULL principal class", bundle.bundleURL);
 
 		return nil;
 	}
 
 	/* Check for conformity */
 	if ([principalClass conformsToProtocol:@protocol(ICLPluginProtocol)] == NO) {
-		LogToConsoleError("Failed to load bundle '%@' because it does not conform to the ICLPluginProtocol protocol");
+		LogToConsoleError("Failed to load bundle '%@' because it does not conform to the ICLPluginProtocol protocol", bundle.bundleURL);
 
 		return nil;
 	}
