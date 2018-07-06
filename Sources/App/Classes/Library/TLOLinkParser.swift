@@ -39,11 +39,9 @@
 public class LinkParser: NSObject
 {
 	@objc(locateLinksInString:)
-	public static func locateLinks(inString string: String) -> [AHHyperlinkScannerResult]
+	public static func locateLinks(in string: String) -> [AHHyperlinkScannerResult]
 	{
-		let scanner = AHHyperlinkScanner()
-
-		return scanner.matches(for: string)
+		return AHHyperlinkScanner.matches(in: string, strictMatching: false)
 	}
 
 	@objc

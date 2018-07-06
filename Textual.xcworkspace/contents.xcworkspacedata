@@ -6,6 +6,19 @@
    </FileRef>
    <Group
       location = "container:"
+      name = "Frameworks">
+      <FileRef
+         location = "group:Frameworks/Cocoa Extensions/Cocoa Extensions.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Frameworks/Encryption Kit/Encryption Kit.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/michael/Projects/Textual/Frameworks/Auto Hyperlinks/Hyperlink Processor.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
       name = "Extensions">
       <FileRef
          location = "group:Sources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
