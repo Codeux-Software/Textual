@@ -1384,9 +1384,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateAttributes[@"formattedTimestamp"] = logLine.formattedTimestamp;
 
-	if ([TPCPreferences generateLocalizedTimestampTemplateToken]) {
-		templateAttributes[@"localizedTimestamp"] = TXFormatDateLongStyle(logLine.receivedAt, NO);
-	}
+	templateAttributes[@"localizedTimestamp"] = TXFormatDateLongStyle(logLine.receivedAt, NO);
 
 	// ---- //
 
