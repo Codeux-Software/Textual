@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C06DE7D20EC48560055D09A /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE1445520EBF641000E01C9 /* Network.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4C06DE7E20EC48560055D09A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A071F12AFFB00D06046 /* Security.framework */; };
 		4C06DE7F20EC48560055D09A /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */; };
 		4C06DE8020EC48570055D09A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */; };
@@ -94,7 +93,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CE144EB20EC04F1000E01C9 /* CocoaExtensions.framework in Frameworks */,
-				4C06DE7D20EC48560055D09A /* Network.framework in Frameworks */,
 				4C06DE7E20EC48560055D09A /* Security.framework in Frameworks */,
 				4C06DE7F20EC48560055D09A /* SecurityInterface.framework in Frameworks */,
 				4C06DE8020EC48570055D09A /* SystemConfiguration.framework in Frameworks */,

@@ -191,12 +191,12 @@ extension ConnectionError
 {
 	init (socketError: Error)
 	{
-		self = .socketError(socketError)
+		self = .socket(error: socketError)
 	}
 
 	init (otherError message: String)
 	{
-		self = .otherError(message: message)
+		self = .other(message: message)
 	}
 
 	init? (tlsError error: Error)
@@ -274,7 +274,7 @@ extension ConnectionSocketProtocol where Self: ConnectionSocket
 {
 	func close(with error: String)
 	{
-		let errorEnum = ConnectionError.otherError(message: error)
+		let errorEnum = ConnectionError.other(message: error)
 
 		close(with: errorEnum)
 	}
