@@ -303,6 +303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SmileyConverter";
 				PRODUCT_NAME = SmileyConverter;
 			};
 			name = Debug;
@@ -311,6 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SmileyConverter";
 				PRODUCT_NAME = SmileyConverter;
 			};
 			name = Release;
@@ -340,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SmileyConverter";
 				PRODUCT_NAME = SmileyConverter;
 			};
 			name = "Release (App Store)";

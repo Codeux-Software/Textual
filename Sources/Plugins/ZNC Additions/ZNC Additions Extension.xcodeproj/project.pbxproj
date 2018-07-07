@@ -226,7 +226,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1000;
 				TargetAttributes = {
 					8D57630D048677EA00EA77CD = {
 						DevelopmentTeam = 8482Q6EPL6;
@@ -280,6 +280,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-ZNCAdditions";
 				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Debug;
@@ -288,6 +289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-ZNCAdditions";
 				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Release;
@@ -317,6 +319,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-ZNCAdditions";
 				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = "Release (App Store)";
