@@ -35,11 +35,11 @@
 		4C469F8520EC60F100094EA4 /* ICLPayloadShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F5E20EC60F000094EA4 /* ICLPayloadShared.m */; };
 		4C469F8620EC60F100094EA4 /* ICLPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F5F20EC60F000094EA4 /* ICLPluginManager.m */; };
 		4C469F8720EC60F100094EA4 /* ICLMediaAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F6020EC60F000094EA4 /* ICLMediaAssessment.m */; };
-		4C469F8820EC60F100094EA4 /* ICMAssessedMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6320EC60F000094EA4 /* ICMAssessedMedia.h */; };
+		4C469F8820EC60F100094EA4 /* ICMAssessedMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6320EC60F000094EA4 /* ICMAssessedMedia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C469F8920EC60F100094EA4 /* ICMAssessedMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F6420EC60F000094EA4 /* ICMAssessedMedia.m */; };
-		4C469F8A20EC60F100094EA4 /* ICMInlineVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6620EC60F000094EA4 /* ICMInlineVideo.h */; };
-		4C469F8B20EC60F100094EA4 /* ICMInlineHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6720EC60F000094EA4 /* ICMInlineHTML.h */; };
-		4C469F8C20EC60F100094EA4 /* ICMInlineImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6820EC60F000094EA4 /* ICMInlineImage.h */; };
+		4C469F8A20EC60F100094EA4 /* ICMInlineVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6620EC60F000094EA4 /* ICMInlineVideo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C469F8B20EC60F100094EA4 /* ICMInlineHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6720EC60F000094EA4 /* ICMInlineHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C469F8C20EC60F100094EA4 /* ICMInlineImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C469F6820EC60F000094EA4 /* ICMInlineImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C469F8D20EC60F100094EA4 /* ICMInlineVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F6920EC60F000094EA4 /* ICMInlineVideo.m */; };
 		4C469F8E20EC60F100094EA4 /* ICMInlineImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F6A20EC60F000094EA4 /* ICMInlineImage.m */; };
 		4C469F8F20EC60F100094EA4 /* ICMInlineHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469F6B20EC60F000094EA4 /* ICMInlineHTML.m */; };
