@@ -6,7 +6,7 @@ TEXTUAL_PRODUCT_LOCATION="${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}"
 TEXTUAL_PRODUCT_BINARY="${TARGET_BUILD_DIR}/${EXECUTABLE_PATH}"
 
 cd "${TEXTUAL_WORKSPACE_DIR}/Sources/Plugins/Brag Spam"
-xcodebuild -target "BragSpam" \
+xcodebuild -target "Brag Spam Extension" \
  -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -16,7 +16,7 @@ xcodebuild -target "BragSpam" \
  TEXTUAL_PRODUCT_BINARY="${TEXTUAL_PRODUCT_BINARY}"
 
 cd "${TEXTUAL_WORKSPACE_DIR}/Sources/Plugins/Chat Filter"
-xcodebuild -target "ChatFilterExtension" \
+xcodebuild -target "Chat Filter Extension" \
  -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -26,7 +26,7 @@ xcodebuild -target "ChatFilterExtension" \
  TEXTUAL_PRODUCT_BINARY="${TEXTUAL_PRODUCT_BINARY}"
 
 cd "${TEXTUAL_WORKSPACE_DIR}/Sources/Plugins/Smiley Converter"
-xcodebuild -target "SmileyConverter" \
+xcodebuild -target "Smiley Converter Extension" \
  -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -36,7 +36,7 @@ xcodebuild -target "SmileyConverter" \
  TEXTUAL_PRODUCT_BINARY="${TEXTUAL_PRODUCT_BINARY}"
 
 cd "${TEXTUAL_WORKSPACE_DIR}/Sources/Plugins/Spammer Paradise"
-xcodebuild -target "SpammerParadise" \
+xcodebuild -target "Spammer Paradise Extension" \
  -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -46,7 +46,7 @@ xcodebuild -target "SpammerParadise" \
  TEXTUAL_PRODUCT_BINARY="${TEXTUAL_PRODUCT_BINARY}"
 
 cd "${TEXTUAL_WORKSPACE_DIR}/Sources/Plugins/System Profiler"
-xcodebuild -target "SystemProfiler" \
+xcodebuild -target "System Profiler Extension" \
  -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
@@ -56,7 +56,7 @@ xcodebuild -target "SystemProfiler" \
  TEXTUAL_PRODUCT_BINARY="${TEXTUAL_PRODUCT_BINARY}"
 
 cd "${TEXTUAL_WORKSPACE_DIR}/Sources/Plugins/ZNC Additions"
-xcodebuild -target "ZNCAdditions" \
+xcodebuild -target "ZNC Additions Extension" \
  -configuration "${TEXTUAL_EXTENSION_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
