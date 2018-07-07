@@ -30,7 +30,7 @@ xcodebuild -target "AutoHyperlinks.framework" \
 # Encryption Kit
 cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Encryption Kit/"
 
-xcodebuild -target "EncryptionKit" \
+xcodebuild -target "EncryptionKit.framework" \
  -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
@@ -40,7 +40,7 @@ xcodebuild -target "EncryptionKit" \
 # Cocoa Extensions
 cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Cocoa Extensions/"
 
-xcodebuild -target "CocoaExtensions (OS X)" \
+xcodebuild -target "CocoaExtensions.framework" \
  -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
