@@ -236,9 +236,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D57630D048677EA00EA77CD /* ChatFilterExtension */ = {
+		8D57630D048677EA00EA77CD /* Chat Filter Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "ChatFilterExtension" */;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Chat Filter Extension" */;
 			buildPhases = (
 				8D57630F048677EA00EA77CD /* Resources */,
 				8D576313048677EA00EA77CD /* Frameworks */,
@@ -248,7 +248,7 @@
 			);
 			dependencies = (
 			);
-			name = ChatFilterExtension;
+			name = "Chat Filter Extension";
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = PreferencePaneExample;
 			productReference = 8D576316048677EA00EA77CD /* ChatFilterExtension.bundle */;
@@ -282,7 +282,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D57630D048677EA00EA77CD /* ChatFilterExtension */,
+				8D57630D048677EA00EA77CD /* Chat Filter Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -396,7 +396,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "ChatFilterExtension" */ = {
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Chat Filter Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB911C08733D790010E9CD /* Debug */,

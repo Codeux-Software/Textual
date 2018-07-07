@@ -224,9 +224,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D57630D048677EA00EA77CD /* SystemProfiler */ = {
+		8D57630D048677EA00EA77CD /* System Profiler Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "SystemProfiler" */;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "System Profiler Extension" */;
 			buildPhases = (
 				4CD69D80131E2BB500F4618E /* Resources */,
 				8D576313048677EA00EA77CD /* Frameworks */,
@@ -236,7 +236,7 @@
 			);
 			dependencies = (
 			);
-			name = SystemProfiler;
+			name = "System Profiler Extension";
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = BlowfishCommandLine;
 			productReference = 8D576316048677EA00EA77CD /* SystemProfiler.bundle */;
@@ -271,7 +271,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D57630D048677EA00EA77CD /* SystemProfiler */,
+				8D57630D048677EA00EA77CD /* System Profiler Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -365,7 +365,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "SystemProfiler" */ = {
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "System Profiler Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
