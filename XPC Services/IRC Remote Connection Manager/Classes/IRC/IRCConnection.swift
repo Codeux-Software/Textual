@@ -64,10 +64,10 @@ final class Connection: NSObject, ConnectionSocketDelegate
 	{
 		/// socketError are errors returned by the connection library.
 		/// For example: GCDAsyncSocket, Network.framework, etc.
-		case socketError(_ error: Error)
+		case socket(error: Error)
 
 		// otherError are errors returned by ConnectionSocket instances.
-		case otherError(message: String)
+		case other(message: String)
 
 		/// invalidCertificate are errors returned when the connection
 		/// cannot be secured because of problem with certificate.
@@ -85,7 +85,7 @@ final class Connection: NSObject, ConnectionSocketDelegate
 		/* TODO: Share values between projects. (July 2, 2018) */
 		var domain: String?
 		{
-			if case .socketError(_) = self {
+			if case .socket(_) = self {
 				return nil
 			}
 
@@ -95,7 +95,7 @@ final class Connection: NSObject, ConnectionSocketDelegate
 		var code: Int
 		{
 			switch self {
-				case .otherError(_):
+				case .other(_):
 					return 1000
 				case .badCertificate(_):
 					return 1001
@@ -429,9 +429,9 @@ extension ConnectionError
 	func toNSError() -> NSError?
 	{
 		switch self {
-			case .socketError(let error):
+			case .socket(let error):
 				return error as NSError
-			case .otherError(let message),
+			case .other(let message),
 				 .badCertificate(let message),
 				 .unableToSecure(let message):
 				return NSError(domain: domain,
@@ -456,3 +456,13 @@ extension ConnectionSocket
 		return ConnectionSocketClassic(with: config)
 	}
 }
+
+#if !swift(>=4.2)
+public extension Array where Element == Data
+{
+	func firstIndex(of element: Element) -> Int?
+	{
+		return index(of: element)
+	}
+}
+#endif

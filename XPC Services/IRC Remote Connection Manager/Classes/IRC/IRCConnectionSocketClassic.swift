@@ -574,7 +574,7 @@ final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol,
 		}
 
 		/* "...big-endian byte order is also referred to as network byte order... */
-		let destinationPortBytes = withUnsafeBytes(of: config.serverPort.bigEndian) { Array($0) }
+		let destinationPortBytes = config.serverPort.bigEndian.data
 
 		/* Assemble the packet of data that will be sent */
 		var packetData = Data()
@@ -626,11 +626,11 @@ final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol,
 				packetData.append(addressBytes)
 			} // Address
 
-			packetData.append(destinationPortBytes, count: destinationPortBytes.count)
+			packetData.append(destinationPortBytes)
 		}
 		else // .socks5
 		{
-			packetData.append(destinationPortBytes, count: destinationPortBytes.count)
+			packetData.append(destinationPortBytes)
 
 			guard let addressBytes = destination.IPv4AddressBytes else {
 				throw ConnectionError(otherError: "SOCKS4 Error: Unable to convert address into network bytes")
