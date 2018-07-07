@@ -411,11 +411,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"DisplayPublicMessageCountInDockBadge"];
 }
 
-+ (BOOL)generateLocalizedTimestampTemplateToken
-{
-	return [RZUserDefaults() boolForKey:@"GenerateLocalizedTimestampTemplateToken"];
-}
-
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname
 {
 	[RZUserDefaults() setBool:highlightCurrentNickname forKey:@"TrackNicknameHighlightsOfLocalUser"];
@@ -479,6 +474,16 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 + (BOOL)focusMainTextViewOnSelectionChange
 {
 	return [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
+}
+
++ (BOOL)preferModernCiphers
+{
+	/* The name of this preference is somewhat of a misnomer.
+	 Modern ciphers are always used, regardless of its value.
+	 This preference defines whether the "deprecated" ciphers
+	 are used as well. Whether we should prefer modern only. */
+
+	return [RZUserDefaults() boolForKey:@"PreferModernCiphers"];
 }
 
 + (BOOL)preferModernSockets

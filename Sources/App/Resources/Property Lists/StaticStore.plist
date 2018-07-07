@@ -112,6 +112,10 @@
 		<string>=</string>
 		<key>Theme -&gt; Timestamp Format Preference Enabled</key>
 		<string>=</string>
+		<key>GenerateLocalizedTimestampTemplateToken</key>
+		<string>=</string>
+		<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
+		<string>=</string>
 	</dict>
 	<key>IRCClient List of NickServ Successfully Identified Tokens</key>
 	<array>

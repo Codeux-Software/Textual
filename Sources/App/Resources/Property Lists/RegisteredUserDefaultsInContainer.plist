@@ -92,10 +92,6 @@
 	<true/>
 	<key>FocusSelectionOnMessageCommandExecution</key>
 	<true/>
-	<key>GenerateLocalizedTimestampTemplateToken</key>
-	<true/>
-	<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
-	<true/>
 	<key>IRCopDefaultLocalizaiton -&gt; G:Line Reason</key>
 	<string>35d Your behavior is not conducive to the desired environment.</string>
 	<key>IRCopDefaultLocalizaiton -&gt; Kill Reason</key>
@@ -188,6 +184,8 @@
 	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Sending) -&gt; Enabled</key>
 	<true/>
+	<key>PreferModernCiphers</key>
+	<false/>
 	<key>PreferModernSockets</key>
 	<true/>
 	<key>Off-the-Record Messaging -&gt; Automatically Enable Service</key>
@@ -234,13 +232,9 @@
 	<real>15000</real>
 	<key>ScrollbackMaximumVisibleLineCount</key>
 	<integer>0</integer>
-	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
-	<false/>
 	<key>SwipeMinimumLength</key>
 	<integer>30</integer>
 	<key>SyncPreferencesToTheCloud</key>
-	<false/>
-	<key>SyncPreferencesToTheCloudIncludesKeychainItems</key>
 	<false/>
 	<key>SyncPreferencesToTheCloudLimitedToServers</key>
 	<false/>
