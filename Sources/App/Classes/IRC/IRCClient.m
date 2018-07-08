@@ -10074,9 +10074,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			if (extendedLine) {
-				localization = [NSString stringWithFormat:@"%@-1", localization];
+				localization = [NSString stringWithFormat:@"IRC[%@-1]", localization];
 			} else {
-				localization = [NSString stringWithFormat:@"%@-2", localization];
+				localization = [NSString stringWithFormat:@"IRC[%@-2]", localization];
 			}
 
 			NSString *message = nil;
