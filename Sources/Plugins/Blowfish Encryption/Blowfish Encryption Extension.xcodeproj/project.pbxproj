@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C36AAFD20F27F8E007CA939 /* TPIBlowfishEncryption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAFB20F27F8E007CA939 /* TPIBlowfishEncryption.xib */; };
+		4C36AB0020F27F95007CA939 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAFE20F27F95007CA939 /* BasicLanguage.strings */; };
 		4C46A1BF20EC705F00094EA4 /* BlowfishEncryptionBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A1B520EC705F00094EA4 /* BlowfishEncryptionBase.m */; };
 		4C46A1C020EC705F00094EA4 /* TPIBlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A1B620EC705F00094EA4 /* TPIBlowfishEncryption.m */; };
 		4C46A1C120EC705F00094EA4 /* BlowfishEncryptionKeyExchange.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A1B720EC705F00094EA4 /* BlowfishEncryptionKeyExchange.mm */; };
@@ -14,8 +16,6 @@
 		4C46A1C320EC705F00094EA4 /* TPIBlowfishEncryptionSwizzledClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A1BB20EC705F00094EA4 /* TPIBlowfishEncryptionSwizzledClasses.m */; };
 		4C46A1C420EC705F00094EA4 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A1BC20EC705F00094EA4 /* NSDataHelper.m */; };
 		4C46A1C520EC705F00094EA4 /* BlowfishEncryptionKeyExchangeBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A1BD20EC705F00094EA4 /* BlowfishEncryptionKeyExchangeBase.mm */; };
-		4C46A1CE20EC70A200094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A1CA20EC70A200094EA4 /* BasicLanguage.strings */; };
-		4C46A1CF20EC70A200094EA4 /* TPIBlowfishEncryption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A1CC20EC70A200094EA4 /* TPIBlowfishEncryption.xib */; };
 		4C46A1D420EC70B600094EA4 /* LICENSE-GPLv2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A1D120EC70B600094EA4 /* LICENSE-GPLv2.txt */; };
 		4C46A1D520EC70B600094EA4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A1D220EC70B600094EA4 /* LICENSE.txt */; };
 		4C46A1D620EC70B600094EA4 /* ACKNOWLEDGEMENT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A1D320EC70B600094EA4 /* ACKNOWLEDGEMENT.txt */; };
@@ -24,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C36AAFC20F27F8E007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TPIBlowfishEncryption.xib; sourceTree = "<group>"; };
+		4C36AAFF20F27F95007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4C46A1AF20EC705F00094EA4 /* TPIBlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIBlowfishEncryption.h; sourceTree = "<group>"; };
 		4C46A1B120EC705F00094EA4 /* BlowfishEncryptionKeyExchangeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionKeyExchangeBase.h; sourceTree = "<group>"; };
 		4C46A1B220EC705F00094EA4 /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption.h; sourceTree = "<group>"; };
@@ -39,8 +41,6 @@
 		4C46A1BC20EC705F00094EA4 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
 		4C46A1BD20EC705F00094EA4 /* BlowfishEncryptionKeyExchangeBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlowfishEncryptionKeyExchangeBase.mm; sourceTree = "<group>"; };
 		4C46A1C820EC70A200094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4C46A1CA20EC70A200094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
-		4C46A1CC20EC70A200094EA4 /* TPIBlowfishEncryption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPIBlowfishEncryption.xib; sourceTree = "<group>"; };
 		4C46A1D120EC70B600094EA4 /* LICENSE-GPLv2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2.txt"; sourceTree = SOURCE_ROOT; };
 		4C46A1D220EC70B600094EA4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		4C46A1D320EC70B600094EA4 /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = SOURCE_ROOT; };
@@ -153,7 +153,7 @@
 		4C46A1C920EC70A200094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A1CA20EC70A200094EA4 /* BasicLanguage.strings */,
+				4C36AAFE20F27F95007CA939 /* BasicLanguage.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -161,7 +161,7 @@
 		4C46A1CB20EC70A200094EA4 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A1CC20EC70A200094EA4 /* TPIBlowfishEncryption.xib */,
+				4C36AAFB20F27F8E007CA939 /* TPIBlowfishEncryption.xib */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -318,13 +318,10 @@
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Blowfish Encryption Extension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BlowfishCommandLine */;
 			projectDirPath = "";
@@ -340,10 +337,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C46A1CE20EC70A200094EA4 /* BasicLanguage.strings in Resources */,
+				4C36AAFD20F27F8E007CA939 /* TPIBlowfishEncryption.xib in Resources */,
+				4C36AB0020F27F95007CA939 /* BasicLanguage.strings in Resources */,
 				4C46A1D420EC70B600094EA4 /* LICENSE-GPLv2.txt in Resources */,
 				4C46A1D520EC70B600094EA4 /* LICENSE.txt in Resources */,
-				4C46A1CF20EC70A200094EA4 /* TPIBlowfishEncryption.xib in Resources */,
 				4C46A1D620EC70B600094EA4 /* ACKNOWLEDGEMENT.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,6 +363,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C36AAFB20F27F8E007CA939 /* TPIBlowfishEncryption.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AAFC20F27F8E007CA939 /* en */,
+			);
+			name = TPIBlowfishEncryption.xib;
+			sourceTree = "<group>";
+		};
+		4C36AAFE20F27F95007CA939 /* BasicLanguage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AAFF20F27F95007CA939 /* en */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB911B08733D790010E9CD /* Debug */ = {

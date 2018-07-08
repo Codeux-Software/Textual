@@ -8,15 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		4C06DE7C20EC45F10055D09A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C06DE7B20EC45F10055D09A /* CoreFoundation.framework */; };
+		4C36AADC20F27CFA007CA939 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AADA20F27CFA007CA939 /* BasicLanguage.strings */; };
 		4C46A09B20EC6B0900094EA4 /* TPISpammerParadise.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A09920EC6B0900094EA4 /* TPISpammerParadise.m */; };
-		4C46A0A020EC6B1800094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A09D20EC6B1800094EA4 /* BasicLanguage.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4C06DE7B20EC45F10055D09A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4C36AADB20F27CFA007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4C46A09920EC6B0900094EA4 /* TPISpammerParadise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISpammerParadise.m; sourceTree = "<group>"; };
 		4C46A09A20EC6B0900094EA4 /* TPISpammerParadise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISpammerParadise.h; sourceTree = "<group>"; };
-		4C46A09D20EC6B1800094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
 		4C46A09F20EC6B1800094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CE1433920EBF4F3000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4CE1433A20EBF4F3000E01C9 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 		4C46A09C20EC6B1800094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A09D20EC6B1800094EA4 /* BasicLanguage.strings */,
+				4C36AADA20F27CFA007CA939 /* BasicLanguage.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -232,13 +232,10 @@
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Spammer Paradise Extension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
 			projectDirPath = "";
@@ -254,7 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C46A0A020EC6B1800094EA4 /* BasicLanguage.strings in Resources */,
+				4C36AADC20F27CFA007CA939 /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +267,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C36AADA20F27CFA007CA939 /* BasicLanguage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AADB20F27CFA007CA939 /* en */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB911B08733D790010E9CD /* Debug */ = {

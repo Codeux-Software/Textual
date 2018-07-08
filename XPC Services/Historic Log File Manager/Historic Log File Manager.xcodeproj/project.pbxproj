@@ -359,7 +359,7 @@
 			};
 			buildConfigurationList = 4C442C831E13B3D200B187F4 /* Build configuration list for PBXProject "Historic Log File Manager" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
