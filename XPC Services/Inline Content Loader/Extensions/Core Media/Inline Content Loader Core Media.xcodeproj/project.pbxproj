@@ -78,7 +78,7 @@
 		4C469F3220EC608E00094EA4 /* ICMTwitchClips.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMTwitchClips.mustache; sourceTree = "<group>"; };
 		4C469F3420EC608E00094EA4 /* ICMTwitchLive.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMTwitchLive.mustache; sourceTree = "<group>"; };
 		4C469F3620EC608E00094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4CA1FE581FA606890095901F /* Inline Content Loader Core Media.mediaPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Inline Content Loader Core Media.mediaPlugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CA1FE581FA606890095901F /* Core Media.mediaPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Core Media.mediaPlugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE144E720EC0448000E01C9 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../../.tmp/SharedBuildProducts-Frameworks/CocoaExtensions.framework"; sourceTree = SOURCE_ROOT; };
 		4CE145B220EC0D5A000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4CE145B620EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
@@ -429,7 +429,7 @@
 		4CA1FE591FA606890095901F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CA1FE581FA606890095901F /* Inline Content Loader Core Media.mediaPlugin */,
+				4CA1FE581FA606890095901F /* Core Media.mediaPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -560,7 +560,7 @@
 			);
 			name = "Inline Content Loader Core Media";
 			productName = "Core Media";
-			productReference = 4CA1FE581FA606890095901F /* Inline Content Loader Core Media.mediaPlugin */;
+			productReference = 4CA1FE581FA606890095901F /* Core Media.mediaPlugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -660,7 +660,7 @@
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICPCoreMediaPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.InlineContentLoader-CoreMedia";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Core Media";
 				WRAPPER_EXTENSION = mediaPlugin;
 			};
 			name = Debug;
@@ -671,7 +671,7 @@
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICPCoreMediaPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.InlineContentLoader-CoreMedia";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Core Media";
 				WRAPPER_EXTENSION = mediaPlugin;
 			};
 			name = Release;

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-               BuildableName = "BlowfishEncryption.bundle"
-               BlueprintName = "BlowfishEncryption"
-               ReferencedContainer = "container:Blowfish Encryption Extension.xcodeproj">
+               BuildableName = "WikiStyleLinkParser.bundle"
+               BlueprintName = "Wiki-style Link Parser Extension"
+               ReferencedContainer = "container:Wiki-style Link Parser Extension.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "BlowfishEncryption.bundle"
-            BlueprintName = "BlowfishEncryption"
-            ReferencedContainer = "container:Blowfish Encryption Extension.xcodeproj">
+            BuildableName = "WikiStyleLinkParser.bundle"
+            BlueprintName = "Wiki-style Link Parser Extension"
+            ReferencedContainer = "container:Wiki-style Link Parser Extension.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "BlowfishEncryption.bundle"
-            BlueprintName = "BlowfishEncryption"
-            ReferencedContainer = "container:Blowfish Encryption Extension.xcodeproj">
+            BuildableName = "WikiStyleLinkParser.bundle"
+            BlueprintName = "Wiki-style Link Parser Extension"
+            ReferencedContainer = "container:Wiki-style Link Parser Extension.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
