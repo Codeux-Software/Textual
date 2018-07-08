@@ -209,9 +209,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D57630D048677EA00EA77CD /* WikiStyleLinkParser */ = {
+		8D57630D048677EA00EA77CD /* Wiki-style Link Parser Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "WikiStyleLinkParser" */;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Wiki-style Link Parser Extension" */;
 			buildPhases = (
 				8D57630F048677EA00EA77CD /* Resources */,
 				8D576313048677EA00EA77CD /* Frameworks */,
@@ -221,7 +221,7 @@
 			);
 			dependencies = (
 			);
-			name = WikiStyleLinkParser;
+			name = "Wiki-style Link Parser Extension";
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = BragSpam;
 			productReference = 8D576316048677EA00EA77CD /* WikiStyleLinkParser.bundle */;
@@ -252,7 +252,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D57630D048677EA00EA77CD /* WikiStyleLinkParser */,
+				8D57630D048677EA00EA77CD /* Wiki-style Link Parser Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -351,7 +351,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "WikiStyleLinkParser" */ = {
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Wiki-style Link Parser Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,

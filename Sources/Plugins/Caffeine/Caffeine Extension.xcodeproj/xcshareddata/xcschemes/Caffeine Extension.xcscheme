@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-               BuildableName = "WikiStyleLinkParser.bundle"
-               BlueprintName = "WikiStyleLinkParser"
-               ReferencedContainer = "container:Wiki-style Link Parser Extension.xcodeproj">
+               BuildableName = "Caffeine.bundle"
+               BlueprintName = "Caffeine Extension"
+               ReferencedContainer = "container:Caffeine Extension.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "WikiStyleLinkParser.bundle"
-            BlueprintName = "WikiStyleLinkParser"
-            ReferencedContainer = "container:Wiki-style Link Parser Extension.xcodeproj">
+            BuildableName = "Caffeine.bundle"
+            BlueprintName = "Caffeine Extension"
+            ReferencedContainer = "container:Caffeine Extension.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "WikiStyleLinkParser.bundle"
-            BlueprintName = "WikiStyleLinkParser"
-            ReferencedContainer = "container:Wiki-style Link Parser Extension.xcodeproj">
+            BuildableName = "Caffeine.bundle"
+            BlueprintName = "Caffeine Extension"
+            ReferencedContainer = "container:Caffeine Extension.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-               BuildableName = "Caffeine.bundle"
-               BlueprintName = "Caffeine"
-               ReferencedContainer = "container:Caffeine Extension.xcodeproj">
+               BuildableName = "BlowfishEncryption.bundle"
+               BlueprintName = "Blowfish Encryption Extension"
+               ReferencedContainer = "container:Blowfish Encryption Extension.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "Caffeine.bundle"
-            BlueprintName = "Caffeine"
-            ReferencedContainer = "container:Caffeine Extension.xcodeproj">
+            BuildableName = "BlowfishEncryption.bundle"
+            BlueprintName = "Blowfish Encryption Extension"
+            ReferencedContainer = "container:Blowfish Encryption Extension.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "Caffeine.bundle"
-            BlueprintName = "Caffeine"
-            ReferencedContainer = "container:Caffeine Extension.xcodeproj">
+            BuildableName = "BlowfishEncryption.bundle"
+            BlueprintName = "Blowfish Encryption Extension"
+            ReferencedContainer = "container:Blowfish Encryption Extension.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

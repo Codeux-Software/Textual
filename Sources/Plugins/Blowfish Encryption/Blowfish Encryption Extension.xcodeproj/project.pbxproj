@@ -284,9 +284,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D57630D048677EA00EA77CD /* BlowfishEncryption */ = {
+		8D57630D048677EA00EA77CD /* Blowfish Encryption Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "BlowfishEncryption" */;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Blowfish Encryption Extension" */;
 			buildPhases = (
 				4CD4026F16C8CE4E00FEA686 /* Resources */,
 				8D576313048677EA00EA77CD /* Frameworks */,
@@ -296,7 +296,7 @@
 			);
 			dependencies = (
 			);
-			name = BlowfishEncryption;
+			name = "Blowfish Encryption Extension";
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = BlowfishCommandLine;
 			productReference = 8D576316048677EA00EA77CD /* BlowfishEncryption.bundle */;
@@ -327,7 +327,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D57630D048677EA00EA77CD /* BlowfishEncryption */,
+				8D57630D048677EA00EA77CD /* Blowfish Encryption Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -462,7 +462,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "BlowfishEncryption" */ = {
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Blowfish Encryption Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
